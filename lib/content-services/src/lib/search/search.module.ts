@@ -35,9 +35,9 @@ import { SearchNumberRangeComponent } from './components/search-number-range/sea
 import { SearchCheckListComponent } from './components/search-check-list/search-check-list.component';
 import { SearchDateRangeComponent } from './components/search-date-range/search-date-range.component';
 import { SearchSortingPickerComponent } from './components/search-sorting-picker/search-sorting-picker.component';
-import { SearchHeaderComponent } from './components/search-header/search-header.component';
 import { SEARCH_QUERY_SERVICE_TOKEN } from './search-query-service.token';
 import { SearchQueryBuilderService } from './search-query-builder.service';
+import { SearchFilterContainerComponent } from './components/search-filter-container/search-filter-container.component';
 
 @NgModule({
     imports: [
@@ -61,7 +61,7 @@ import { SearchQueryBuilderService } from './search-query-builder.service';
         SearchCheckListComponent,
         SearchDateRangeComponent,
         SearchSortingPickerComponent,
-        SearchHeaderComponent
+        SearchFilterContainerComponent
     ],
     exports: [
         SearchComponent,
@@ -77,7 +77,7 @@ import { SearchQueryBuilderService } from './search-query-builder.service';
         SearchCheckListComponent,
         SearchDateRangeComponent,
         SearchSortingPickerComponent,
-        SearchHeaderComponent
+        SearchFilterContainerComponent
     ],
     providers: [
         { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService },

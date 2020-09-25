@@ -41,7 +41,6 @@ import {
     CustomLoadingContentTemplateDirective,
     CustomNoPermissionTemplateDirective,
     CustomEmptyContentTemplateDirective,
-    CustomHeaderFilterTemplateDirective,
     RequestPaginationModel,
     AlfrescoApiService,
     UserPreferenceValues,
@@ -58,6 +57,7 @@ import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
+import { FilterSearch } from './../../search/filter-search.interface';
 import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
@@ -68,7 +68,7 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['./document-list.component.scss'],
     templateUrl: './document-list.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: {class: 'adf-document-list'}
+    host: { class: 'adf-document-list' }
 })
 export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent, NavigableComponentInterface {
 
@@ -82,6 +82,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         totalItems: 0
     });
 
+    DEFAULT_SORTING: DataSorting[] = [
+        new DataSorting('name', 'asc'),
+        new DataSorting('isFolder', 'desc')
+    ];
+
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
 
@@ -93,9 +98,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     customNoContentTemplate: CustomEmptyContentTemplateDirective;
-
-    @ContentChild(CustomHeaderFilterTemplateDirective)
-    customHeaderFilterTemplate: CustomHeaderFilterTemplateDirective;
 
     /** Include additional information about the node in the server request. For example: association, isLink, isLocked and others. */
     @Input()
@@ -183,14 +185,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * override the default sorting detected by the component based on columns.
      */
     @Input()
-    sorting = ['name', 'asc'];
+    sorting: string[] | DataSorting = ['name', 'asc'];
 
     /** Defines default sorting. The format is an array of strings `[key direction, otherKey otherDirection]`
      * i.e. `['name desc', 'nodeType asc']` or `['name asc']`. Set this value if you want a base
      * rule to be added to the sorting apart from the one driven by the header.
      */
     @Input()
-    additionalSorting = ['isFolder DESC'];
+    additionalSorting: DataSorting = new DataSorting('isFolder', 'desc');
 
     /** Defines sorting mode. Can be either `client` (items in the list
      * are sorted client-side) or `server` (the ordering supplied by the
@@ -255,6 +257,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     stickyHeader: boolean = false;
 
+    /** Toggles the header filters mode. */
+    @Input()
+    headerFilters: boolean = false;
+
+    /** Initial value for filter. */
+    @Input()
+    filterValue: any;
+
     /** The ID of the folder node to display or a reserved string alias for special sources */
     @Input()
     currentFolderId: string = null;
@@ -305,6 +315,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Output()
     nodeSelected: EventEmitter<NodeEntry[]> = new EventEmitter<NodeEntry[]>();
 
+    /** Emitted when a filter value is selected */
+    @Output()
+    filterSelection: EventEmitter<FilterSearch[]> = new EventEmitter();
+
     @ViewChild('dataTable', { static: true })
     dataTable: DataTableComponent;
 
@@ -315,13 +329,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     selection = new Array<NodeEntry>();
     $folderNode: Subject<Node> = new Subject<Node>();
     allowFiltering: boolean = true;
-    orderBy: string[] = ['name ASC'];
+    orderBy: string[] = null;
 
     // @deprecated 3.0.0
     folderNode: Node;
 
     private _pagination: PaginationModel = this.DEFAULT_PAGINATION;
     pagination: BehaviorSubject<PaginationModel> = new BehaviorSubject<PaginationModel>(this.DEFAULT_PAGINATION);
+    sortingSubject: BehaviorSubject<DataSorting[]> = new BehaviorSubject<DataSorting[]>(this.DEFAULT_SORTING);
 
     private layoutPresets = {};
     private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
@@ -367,10 +382,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     private getDefaultSorting(): DataSorting {
         let defaultSorting: DataSorting;
-        if (this.sorting) {
+        if (Array.isArray(this.sorting)) {
             const [key, direction] = this.sorting;
             defaultSorting = new DataSorting(key, direction);
+        } else {
+            defaultSorting = new DataSorting(this.sorting.key, this.sorting.direction);
         }
+
         return defaultSorting;
     }
 
@@ -440,9 +458,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     ngOnChanges(changes: SimpleChanges) {
         this.resetSelection();
 
-        if (this.sorting) {
+        if (Array.isArray(this.sorting)) {
             const [key, direction] = this.sorting;
             this.orderBy = this.buildOrderByArray(key, direction);
+        } else {
+            this.orderBy = this.buildOrderByArray(this.sorting.key, this.sorting.direction);
         }
 
         if (this.data) {
@@ -493,6 +513,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (this.node) {
                 this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectNodesBasedOnSelectionMode());
                 this.onPreselectNodes();
+                this.syncPagination();
                 this.onDataReady(this.node);
             } else {
                 this.loadFolder();
@@ -586,14 +607,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (typeof node === 'string') {
             this.resetNewFolderPagination();
             this.currentFolderId = node;
-            this.folderChange.emit(new NodeEntryEvent(<Node> {id: node}));
+            this.folderChange.emit(new NodeEntryEvent(<Node> { id: node }));
             this.reload();
             return true;
         } else {
             if (this.canNavigateFolder(node)) {
                 this.resetNewFolderPagination();
                 this.currentFolderId = this.getNodeFolderDestinationId(node);
-                this.folderChange.emit(new NodeEntryEvent(<Node> {id: this.currentFolderId}));
+                this.folderChange.emit(new NodeEntryEvent(<Node> { id: this.currentFolderId }));
                 this.reload();
                 return true;
             }
@@ -690,14 +711,16 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     onSortingChanged(event: CustomEvent) {
-        this.orderBy = this.buildOrderByArray(event.detail.sortingKey, event.detail.direction);
+        this.orderBy = this.buildOrderByArray(event.detail.key, event.detail.direction);
         this.reload();
+        this.sortingSubject.next([this.additionalSorting, event.detail]);
     }
 
-    private buildOrderByArray(currentKey: string, currentDirection: string ): string[] {
-        const orderArray = [...this.additionalSorting];
-        orderArray.push(''.concat(currentKey, ' ', currentDirection));
-        return orderArray;
+    private buildOrderByArray(currentKey: string, currentDirection: string): string[] {
+        return [
+            `${this.additionalSorting.key} ${this.additionalSorting.direction}`,
+            `${currentKey} ${currentDirection}`
+        ];
     }
 
     /**
@@ -872,6 +895,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this._pagination.merge = requestPaginationModel.merge;
         this._pagination.skipCount = requestPaginationModel.skipCount;
         this.reload();
+    }
+
+    private syncPagination() {
+        this.node.list.pagination.maxItems = this._pagination.maxItems;
+        this.node.list.pagination.skipCount = this._pagination.skipCount;
+    }
+
+    onFilterSelectionChange(activeFilters: FilterSearch[]) {
+        this.filterSelection.emit(activeFilters);
     }
 
     private resetNewFolderPagination() {

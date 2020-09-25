@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, ContentChild, TemplateRef } from '@angular/core';
-
-@Directive({
-    selector: 'adf-custom-header-filter-template'
-})
-export class CustomHeaderFilterTemplateDirective {
-
-    @ContentChild(TemplateRef)
-    template: any;
-
+export interface FilterSearch {
+    key: string;
+    value: any;
 }

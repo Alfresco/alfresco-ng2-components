@@ -1,0 +1,10 @@
+<div *ngIf="isFilterServiceActive">
+    <adf-header-filter-template>
+        <ng-template let-col>
+            <adf-search-filter-container [col]="col"
+                                         [value]="value"
+                                         (filterChange)="onFilterSelectionChange()">
+            </adf-search-filter-container>
+        </ng-template>
+    </adf-header-filter-template>
+</div>

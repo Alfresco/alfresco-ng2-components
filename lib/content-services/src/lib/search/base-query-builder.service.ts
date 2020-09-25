@@ -46,14 +46,14 @@ export abstract class BaseQueryBuilderService {
     executed = new Subject<ResultSetPaging>();
     error = new Subject();
 
-    categories: Array<SearchCategory> = [];
+    categories: SearchCategory[] = [];
     queryFragments: { [id: string]: string } = {};
     filterQueries: FilterQuery[] = [];
     paging: { maxItems?: number; skipCount?: number } = null;
-    sorting: Array<SearchSortingDefinition> = [];
-    sortingOptions: Array<SearchSortingDefinition> = [];
+    sorting: SearchSortingDefinition[] = [];
+    sortingOptions: SearchSortingDefinition[] = [];
 
-    protected userFacetBuckets: { [key: string]: Array<FacetFieldBucket> } = {};
+    protected userFacetBuckets: { [key: string]: FacetFieldBucket[] } = {};
 
     get userQuery(): string {
         return this._userQuery;

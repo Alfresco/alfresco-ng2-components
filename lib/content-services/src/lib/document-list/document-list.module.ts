@@ -32,6 +32,8 @@ import { LibraryStatusColumnComponent } from './components/library-status-column
 import { LibraryRoleColumnComponent } from './components/library-role-column/library-role-column.component';
 import { LibraryNameColumnComponent } from './components/library-name-column/library-name-column.component';
 import { NameColumnComponent } from './components/name-column/name-column.component';
+import { FilterHeaderComponent } from './components/filter-header/filter-header.component';
+import { SearchModule } from './../search/search.module';
 
 @NgModule({
     imports: [
@@ -40,7 +42,8 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         FlexLayoutModule,
         MaterialModule,
         UploadModule,
-        EditJsonDialogModule
+        EditJsonDialogModule,
+        SearchModule
     ],
     declarations: [
         DocumentListComponent,
@@ -50,7 +53,8 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         LibraryNameColumnComponent,
         NameColumnComponent,
         ContentActionComponent,
-        ContentActionListComponent
+        ContentActionListComponent,
+        FilterHeaderComponent
     ],
     exports: [
         DocumentListComponent,
@@ -60,7 +64,8 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         LibraryNameColumnComponent,
         NameColumnComponent,
         ContentActionComponent,
-        ContentActionListComponent
+        ContentActionListComponent,
+        FilterHeaderComponent
     ]
 })
 export class DocumentListModule {}

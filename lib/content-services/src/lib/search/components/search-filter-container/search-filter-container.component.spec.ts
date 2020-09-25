@@ -18,16 +18,16 @@ import { Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchService, setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
-import { SearchHeaderComponent } from './search-header.component';
-import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
+import { SearchFilterQueryBuilderService } from '../../search-filter-query-builder.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { fakeNodePaging } from '../../../mock';
+import { fakeNodePaging } from './../../../mock/document-list.component.mock';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { By } from '@angular/platform-browser';
-import { SimpleChange } from '@angular/core';
+import { SearchFilterContainerComponent } from './search-filter-container.component';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { SearchCategory } from '../../search-category.interface';
 
-const mockCategory: any = {
+const mockCategory: SearchCategory = {
     'id': 'queryName',
     'name': 'Name',
     'columnKey': 'name',
@@ -43,10 +43,10 @@ const mockCategory: any = {
     }
 };
 
-describe('SearchHeaderComponent', () => {
-    let fixture: ComponentFixture<SearchHeaderComponent>;
-    let component: SearchHeaderComponent;
-    let queryBuilder: SearchHeaderQueryBuilderService;
+describe('SearchFilterContainerComponent', () => {
+    let fixture: ComponentFixture<SearchFilterContainerComponent>;
+    let component: SearchFilterContainerComponent;
+    let queryBuilder: SearchFilterQueryBuilderService;
     let alfrescoApiService: AlfrescoApiService;
 
     const searchMock: any = {
@@ -60,14 +60,14 @@ describe('SearchHeaderComponent', () => {
         ],
         providers: [
             { provide: SearchService, useValue: searchMock },
-            { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService }
+            { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchFilterQueryBuilderService }
         ]
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SearchHeaderComponent);
+        fixture = TestBed.createComponent(SearchFilterContainerComponent);
         component = fixture.componentInstance;
-        queryBuilder = fixture.componentInstance['searchHeaderQueryBuilder'];
+        queryBuilder = fixture.componentInstance['searchFilterQueryBuilder'];
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         component.col = {key: '123', type: 'text'};
         spyOn(queryBuilder, 'getCategoryForColumn').and.returnValue(mockCategory);
@@ -79,17 +79,33 @@ describe('SearchHeaderComponent', () => {
     });
 
     it('should show the filter when a category is found', async () => {
+        await fixture.whenStable();
+        fixture.detectChanges();
         expect(queryBuilder.isFilterServiceActive()).toBe(true);
         const element = fixture.nativeElement.querySelector('.adf-filter');
         expect(element).not.toBeNull();
         expect(element).not.toBeUndefined();
     });
 
-    it('should emit the node paging received from the queryBuilder after the Apply button is clicked', async (done) => {
+    it('should set new active filter after the Apply button is clicked', async () => {
+        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+        menuButton.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        component.widgetContainer.componentRef.instance.value = 'searchText';
+        const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
+        applyButton.triggerEventHandler('click', {});
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(queryBuilder.getActiveFilters().length).toBe(1);
+        expect(queryBuilder.getActiveFilters()[0].key).toBe('name');
+        expect(queryBuilder.getActiveFilters()[0].value).toBe('searchText');
+    });
+
+    it('should emit filterChange after the Apply button is clicked', async (done) => {
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        component.update.subscribe((newNodePaging) => {
-            expect(newNodePaging).toBe(fakeNodePaging);
+        component.filterChange.subscribe(() => {
             done();
         });
         const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
@@ -103,11 +119,42 @@ describe('SearchHeaderComponent', () => {
         await fixture.whenStable();
     });
 
-    it('should emit the node paging received from the queryBuilder after the Enter key is pressed', async (done) => {
+    it('should remove active filter after the Clear button is clicked', async () => {
+        queryBuilder.setActiveFilter('name', 'searchText');
+        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+        menuButton.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        component.widgetContainer.componentRef.instance.value = 'searchText';
+        const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
+        const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
+        clearButton.triggerEventHandler('click', fakeEvent);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(queryBuilder.getActiveFilters().length).toBe(0);
+    });
+
+    it('should emit filterChange after the Clear button is clicked', async (done) => {
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        component.update.subscribe((newNodePaging) => {
-            expect(newNodePaging).toBe(fakeNodePaging);
+        component.filterChange.subscribe(() => {
+            done();
+        });
+        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+        menuButton.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        component.widgetContainer.componentRef.instance.value = 'searchText';
+        const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
+        const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
+        clearButton.triggerEventHandler('click', fakeEvent);
+        fixture.detectChanges();
+        await fixture.whenStable();
+    });
+
+    it('should emit filterChange after the Enter key is pressed', async (done) => {
+        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
+        component.filterChange.subscribe(() => {
             done();
         });
         const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
@@ -119,134 +166,6 @@ describe('SearchHeaderComponent', () => {
         widgetContainer.triggerEventHandler('keypress', {key: 'Enter'});
         fixture.detectChanges();
         await fixture.whenStable();
-    });
-
-    it('should execute a new query when the page size is changed', async (done) => {
-        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        component.update.subscribe((newNodePaging) => {
-            expect(newNodePaging).toBe(fakeNodePaging);
-            done();
-        });
-
-        const maxItem = new SimpleChange(10, 20, false);
-        component.ngOnChanges({ 'maxItems': maxItem });
-        fixture.detectChanges();
-        await fixture.whenStable();
-    });
-
-    it('should execute a new query when a new page is requested', async (done) => {
-        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        component.update.subscribe((newNodePaging) => {
-            expect(newNodePaging).toBe(fakeNodePaging);
-            done();
-        });
-
-        const skipCount = new SimpleChange(0, 10, false);
-        component.ngOnChanges({ 'skipCount': skipCount });
-        fixture.detectChanges();
-        await fixture.whenStable();
-    });
-
-    it('should execute a new query when a new sorting is requested', async (done) => {
-        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        component.update.subscribe((newNodePaging) => {
-            expect(newNodePaging).toBe(fakeNodePaging);
-            done();
-        });
-
-        const skipCount = new SimpleChange(null, '123-asc', false);
-        component.ngOnChanges({ 'sorting': skipCount });
-        fixture.detectChanges();
-        await fixture.whenStable();
-    });
-
-    it('should emit the clear event when no filter has been selected', async (done) => {
-        spyOn(queryBuilder, 'isNoFilterActive').and.returnValue(true);
-        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        spyOn(component.widgetContainer, 'resetInnerWidget').and.stub();
-        spyOn(component, 'isActive').and.returnValue(true);
-        const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
-        component.clear.subscribe(() => {
-            done();
-        });
-
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
-        menuButton.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
-        clearButton.triggerEventHandler('click', fakeEvent);
-        fixture.detectChanges();
-        await fixture.whenStable();
-    });
-
-    it('should execute the query again if there are more filter actives after a clear', async (done) => {
-        spyOn(queryBuilder, 'isNoFilterActive').and.returnValue(false);
-        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        spyOn(component, 'isActive').and.returnValue(true);
-        queryBuilder.queryFragments['fake'] = 'test';
-        spyOn(component.widgetContainer, 'resetInnerWidget').and.callThrough();
-        const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
-        component.update.subscribe((newNodePaging) => {
-            expect(newNodePaging).toBe(fakeNodePaging);
-            done();
-        });
-
-        menuButton.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
-        clearButton.triggerEventHandler('click', fakeEvent);
-        fixture.detectChanges();
-        await fixture.whenStable();
-    });
-
-    it('should emit the clear event when no filter has valued applied', async (done) => {
-        spyOn(queryBuilder, 'isNoFilterActive').and.returnValue(true);
-        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        spyOn(component, 'isActive').and.returnValue(true);
-        spyOn(component.widgetContainer, 'resetInnerWidget').and.stub();
-        component.widgetContainer.componentRef.instance.value = '';
-        const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
-        component.clear.subscribe(() => {
-            done();
-        });
-
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
-        menuButton.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
-        applyButton.triggerEventHandler('click', fakeEvent);
-        fixture.detectChanges();
-        await fixture.whenStable();
-    });
-
-    it('should not emit clear event when currentFolderNodeId changes and no filter was applied', async () => {
-        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-        spyOn(component, 'isActive').and.returnValue(false);
-        spyOn(component.clear, 'emit');
-
-        component.ngOnChanges({ currentFolderNodeId: currentFolderNodeIdChange });
-        fixture.detectChanges();
-        expect(component.clear.emit).not.toHaveBeenCalled();
-    });
-
-    it('should emit clear event when currentFolderNodeId changes and filter was applied', async () => {
-        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-        spyOn(component.clear, 'emit');
-        spyOn(component, 'isActive').and.returnValue(true);
-
-        component.ngOnChanges({ currentFolderNodeId: currentFolderNodeIdChange });
-        fixture.detectChanges();
-        expect(component.clear.emit).toHaveBeenCalled();
     });
 
     describe('Accessibility', () => {

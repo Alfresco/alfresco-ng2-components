@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, NodesApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, NodesApiService, DataSorting } from '@alfresco/adf-core';
 import { SearchConfiguration } from './search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 import { SearchCategory } from './search-category.interface';
@@ -24,23 +24,26 @@ import { MinimalNode, QueryBody } from '@alfresco/js-api';
 import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SearchSortingDefinition } from './search-sorting-definition.interface';
+import { FilterSearch } from './filter-search.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
+export class SearchFilterQueryBuilderService extends BaseQueryBuilderService {
 
     private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 
-    activeFilters: Map<string, string> = new Map();
+    activeFilters: FilterSearch[] = [];
 
-    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
+    constructor(appConfig: AppConfigService,
+                alfrescoApiService: AlfrescoApiService,
+                private nodeApiService: NodesApiService) {
         super(appConfig, alfrescoApiService);
 
         this.updated.pipe(
             filter((query: QueryBody) => !!query)).subscribe(() => {
-            this.execute();
-        });
+                this.execute();
+            });
     }
 
     public isFilterServiceActive(): boolean {
@@ -61,35 +64,53 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     }
 
     setActiveFilter(columnActivated: string, filterValue: string) {
-        this.activeFilters.set(columnActivated, filterValue);
+        const filterIndex = this.activeFilters.find((activeFilter) => activeFilter.key === columnActivated);
+        if (!filterIndex) {
+            this.activeFilters.push(<FilterSearch> {
+                key: columnActivated,
+                value: filterValue
+            });
+        }
+
     }
 
-    getActiveFilters(): Map<string, string> {
+    resetActiveFilters() {
+        this.activeFilters = [];
+    }
+
+    getActiveFilters(): FilterSearch[] {
         return this.activeFilters;
     }
 
     isNoFilterActive(): boolean {
-        return this.activeFilters.size === 0;
+        return this.activeFilters.length === 0;
     }
 
     removeActiveFilter(columnRemoved: string) {
-        if (this.activeFilters.get(columnRemoved) !== null) {
-            this.activeFilters.delete(columnRemoved);
+        const filterIndex = this.activeFilters.map((activeFilter) => activeFilter.key).indexOf(columnRemoved);
+        if (filterIndex >= 0) {
+            this.activeFilters.splice(filterIndex, 1);
         }
     }
 
-    setSorting(column: string, direction: string) {
-        const optionAscending = direction.toLocaleLowerCase() === 'asc' ? true : false;
-        const fieldValue = this.getSortingFieldFromColumnName(column);
-        const currentSort: SearchSortingDefinition = { key: column, label: 'current', type: 'FIELD', field: fieldValue, ascending: optionAscending};
-        this.sorting = [currentSort];
+    setSorting(dataSorting: DataSorting[]) {
+        this.sorting = [];
+        dataSorting.forEach((columnSorting: DataSorting) => {
+            const fieldValue = this.getSortingFieldFromColumnName(columnSorting.key);
+            if (fieldValue) {
+                const optionAscending = columnSorting.direction.toLocaleLowerCase() === 'asc' ? true : false;
+                const currentSort: SearchSortingDefinition = { key: columnSorting.key, label: 'current', type: 'FIELD', field: fieldValue, ascending: optionAscending };
+                this.sorting.push(currentSort);
+            }
+        });
+
         this.execute();
     }
 
     private getSortingFieldFromColumnName(columnName: string) {
         if (this.sortingOptions.length > 0) {
             const sortOption: SearchSortingDefinition = this.sortingOptions.find((option: SearchSortingDefinition) => option.key === columnName);
-            return sortOption.field;
+            return sortOption ? sortOption.field : '';
         }
         return '';
     }
@@ -116,6 +137,8 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         this.filterQueries = [{
             query: `PARENT:"workspace://SpacesStore/${currentFolderId}"`
         }];
+
+        this.execute();
     }
 
     isCustomSourceNode(currentNodeId: string): boolean {

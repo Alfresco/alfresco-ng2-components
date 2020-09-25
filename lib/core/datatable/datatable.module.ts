@@ -42,7 +42,6 @@ import { HeaderFilterTemplateDirective } from './directives/header-filter-templa
 import { CustomEmptyContentTemplateDirective } from './directives/custom-empty-content-template.directive';
 import { CustomLoadingContentTemplateDirective } from './directives/custom-loading-template.directive';
 import { CustomNoPermissionTemplateDirective } from './directives/custom-no-permission-template.directive';
-import { CustomHeaderFilterTemplateDirective } from './directives/custom-header-filter-template.directive';
 import { JsonCellComponent } from './components/json-cell/json-cell.component';
 import { ClipboardModule } from '../clipboard/clipboard.module';
 import { DropZoneDirective } from './directives/drop-zone.directive';
@@ -79,7 +78,6 @@ import { DataColumnModule } from '../data-column/data-column.module';
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
-        CustomHeaderFilterTemplateDirective,
         DropZoneDirective
     ],
     exports: [
@@ -101,7 +99,6 @@ import { DataColumnModule } from '../data-column/data-column.module';
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
-        CustomHeaderFilterTemplateDirective,
         DropZoneDirective
     ]
 
