@@ -30,7 +30,7 @@ import {
 import { ConfigurableFocusTrapFactory, ConfigurableFocusTrap } from '@angular/cdk/a11y';
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
-import { SearchHeaderQueryBuilderService } from '../../search-filter-query-builder.service';
+import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
 import { SearchCategory } from '../../search-category.interface';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { Subject } from 'rxjs';

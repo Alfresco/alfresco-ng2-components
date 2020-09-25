@@ -17,7 +17,7 @@
 
 import { SearchConfiguration } from './search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
-import { SearchHeaderQueryBuilderService } from './search-filter-query-builder.service';
+import { SearchHeaderQueryBuilderService } from './search-header-query-builder.service';
 
 describe('SearchHeaderQueryBuilderService', () => {
 

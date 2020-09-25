@@ -21,7 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SearchService, setupTestBed, DataTableComponent, DataSorting } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
-import { SearchHeaderQueryBuilderService } from './../../../search/search-filter-query-builder.service';
+import { SearchHeaderQueryBuilderService } from './../../../search/search-header-query-builder.service';
 import { SEARCH_QUERY_SERVICE_TOKEN } from './../../../search/search-query-service.token';
 import { DocumentListComponent } from './../document-list.component';
 import { FilterHeaderComponent } from './filter-header.component';

@@ -19,7 +19,7 @@ import { Component, Inject, OnInit, OnChanges, SimpleChanges, Input, Output, Eve
 import { PaginationModel, DataSorting } from '@alfresco/adf-core';
 import { DocumentListComponent } from '../document-list.component';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../../search/search-query-service.token';
-import { SearchHeaderQueryBuilderService } from '../../../search/search-filter-query-builder.service';
+import { SearchHeaderQueryBuilderService } from '../../../search/search-header-query-builder.service';
 import { FilterSearch } from './../../../search/filter-search.interface';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
