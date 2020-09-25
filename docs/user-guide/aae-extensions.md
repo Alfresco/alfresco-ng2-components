@@ -120,65 +120,63 @@ Once wired with a new task it should look like the following within AAE Process 
 ![adf form widget](../docassets/images/aae-unresolved-widget.png)
 
 
-Let's create an Angular component to render missing content:
+To render the missing content:
 
-```ts
-import { Component } from '@angular/core';
-import { WidgetComponent } from '@alfresco/adf-core';
+1. Create an Angular component:
 
-@Component({
-    selector: 'app-demo-widget',
-    template: `<div style="color: green">ADF version of custom form widget</div>`
-})
-export class DemoWidgetComponent extends WidgetComponent {}
-```
+    ```ts
+    import { Component } from '@angular/core';
+    import { WidgetComponent } from '@alfresco/adf-core';
+    @Component({
+        selector: 'app-demo-widget',
+        template: `<div style="color: green">ADF version of custom form widget</div>`
+    })
+    export class DemoWidgetComponent extends WidgetComponent {}
+    ```
 
-Put it inside custom module:
+2. Place it inside the custom module:
 
-```ts
-import { NgModule } from '@angular/core';
-import { DemoWidgetComponent } from './demo-widget.component';
+    ```ts
+    import { NgModule } from '@angular/core';
+    import { DemoWidgetComponent } from './demo-widget.component';
+    @NgModule({
+        declarations: [ DemoWidgetComponent ],
+        exports: [ DemoWidgetComponent ]
+    })
+    export class CustomWidgetsModule {}
+    ```
 
-@NgModule({
-    declarations: [ DemoWidgetComponent ],
-    exports: [ DemoWidgetComponent ]
-})
-export class CustomWidgetsModule {}
-```
+3. Import it into your Application Module:
 
-And import into your Application Module
+    ```ts
+    @NgModule({
+        imports: [
+            // ...
+            CustomWidgetsModule
+            // ...
+        ],
+        providers: [],
+        bootstrap: [ AppComponent ]
+    })
+    export class AppModule {}
+    ```
 
-```ts
-@NgModule({
-    imports: [
-        // ...
-        CustomWidgetsModule
-        // ...
-    ],
-    providers: [],
-    bootstrap: [ AppComponent ]
-})
-export class AppModule {}
-```
+4. Import the [`FormRenderingService`](../core/services/form-rendering.service.md) in any of your Views and provide the new mapping:
 
-Now you can import [`FormRenderingService`](../core/services/form-rendering.service.md) in any of your Views and provide new mapping:
-
-```ts
-import { Component } from '@angular/core';
-import { DemoWidgetComponent } from './demo-widget.component';
-
-@Component({...})
-export class MyView {
-
-    constructor(formRenderingService: FormRenderingService) {
-        this.formRenderingService.register({
-            'custom-editor': () => DemoWidgetComponent
-        });
+    ```ts
+    import { Component } from '@angular/core';
+    import { DemoWidgetComponent } from './demo-widget.component';
+    @Component({...})
+    export class MyView {
+        constructor(formRenderingService: FormRenderingService) {
+            this.formRenderingService.register({
+                'custom-editor': () => DemoWidgetComponent
+            });
+        }
     }
-}
-```
+    ```
 
-At runtime you should now see your custom Angular component rendered in place of the form widgets:
+At runtime you should now see your custom Angular component rendered in place of the original form widgets:
 
 ![adf form widget runtime](../docassets/images/aae-resolved-widget.png)
 
