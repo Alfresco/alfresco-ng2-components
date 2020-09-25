@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchCheckListComponent, SearchListOption } from './search-check-list.component';
+import { SearchCheckListComponent, SearchListOption } from '../search-check-list/search-check-list.component';
 import { SearchFilterList } from '../search-filter/models/search-filter-list.model';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';

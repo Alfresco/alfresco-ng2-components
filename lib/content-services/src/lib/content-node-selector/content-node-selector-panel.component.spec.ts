@@ -23,7 +23,6 @@ import { SearchService, SitesService, setupTestBed, NodesApiService } from '@alf
 import { Observable, Observer, of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
-import { ContentNodeSelectorService } from './content-node-selector.service';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
@@ -53,7 +52,6 @@ describe('ContentNodeSelectorComponent', () => {
     const debounceSearch = 200;
     let component: ContentNodeSelectorPanelComponent;
     let fixture: ComponentFixture<ContentNodeSelectorPanelComponent>;
-    let contentNodeSelectorService: ContentNodeSelectorService;
     let searchService: SearchService;
     let nodeService: NodesApiService;
     let sitesService: SitesService;
@@ -92,11 +90,10 @@ describe('ContentNodeSelectorComponent', () => {
 
             searchService = TestBed.inject(SearchService);
             nodeService = TestBed.inject(NodesApiService);
-            contentNodeSelectorService = TestBed.inject(ContentNodeSelectorService);
             sitesService = TestBed.inject(SitesService);
 
             spyOn(nodeService,  'getNode').and.returnValue(of({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } }));
-            cnSearchSpy = spyOn(contentNodeSelectorService, 'search').and.callThrough();
+            cnSearchSpy = spyOn(searchService, 'search').and.callThrough();
             searchSpy = spyOn(searchService, 'searchByQueryBody').and.callFake(() => {
                 return new Observable((observer: Observer<NodePaging>) => {
                     _observer = observer;
