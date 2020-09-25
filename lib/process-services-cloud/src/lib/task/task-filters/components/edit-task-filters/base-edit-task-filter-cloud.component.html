@@ -98,6 +98,7 @@
                         <adf-cloud-date-range-filter *ngIf="isDateRangeType(taskFilterProperty)"
                                                      [processFilterProperty]="taskFilterProperty"
                                                      [options]="taskFilterProperty.dateFilterOptions"
+                                                     (dateTypeChange)="onDateTypeChange($event, taskFilterProperty)"
                                                      (dateChanged)="onDateRangeFilterChanged($event, taskFilterProperty)">
                         </adf-cloud-date-range-filter>
                     </ng-container>

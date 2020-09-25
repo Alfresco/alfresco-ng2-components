@@ -79,7 +79,7 @@ export const fakeTaskCloudList = {
     }
 };
 
-export let fakeGlobalTask = {
+export const fakeGlobalTask = {
     list: {
         entries: [
             {
@@ -117,7 +117,7 @@ export let fakeGlobalTask = {
     }
 };
 
-export let fakeServiceTask = {
+export const fakeServiceTask = {
     list: {
         entries: [
             {
@@ -151,7 +151,7 @@ export let fakeServiceTask = {
     }
 };
 
-export let fakeCustomSchema =
+export const fakeCustomSchema =
     [
         new ObjectDataColumn({
             'key': 'fakeName',

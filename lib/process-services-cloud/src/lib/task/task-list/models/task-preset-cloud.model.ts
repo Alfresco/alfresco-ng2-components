@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let taskPresetsCloudDefaultModel = {
+export const taskPresetsCloudDefaultModel = {
     'default': [
         {
             'key': 'entry.name',
@@ -40,7 +40,7 @@ export let taskPresetsCloudDefaultModel = {
     ]
 };
 
-export let serviceTaskPresetsCloudDefaultModel = {
+export const serviceTaskPresetsCloudDefaultModel = {
     'default': [
         {
             'key': 'entry.activityName',

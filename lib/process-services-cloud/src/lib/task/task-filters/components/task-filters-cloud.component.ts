@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
@@ -28,7 +28,7 @@ import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.compone
     templateUrl: './base-task-filters-cloud.component.html',
     styleUrls: ['base-task-filters-cloud.component.scss']
 })
-export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
+export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
     /** Emitted when a filter in the list is clicked. */
     @Output()
     filterClick: EventEmitter<TaskFilterCloudModel> = new EventEmitter<TaskFilterCloudModel>();
@@ -54,10 +54,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilterAndEmit(filter.currentValue);
         }
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
     }
 
     /**

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FilterParamsModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
@@ -28,7 +28,7 @@ import { ServiceTaskFilterCloudService } from '../services/service-task-filter-c
     templateUrl: './base-task-filters-cloud.component.html',
     styleUrls: ['base-task-filters-cloud.component.scss']
 })
-export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
+export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
 
     /** Emitted when a filter in the list is clicked. */
     @Output()
@@ -55,10 +55,6 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilterAndEmit(filter.currentValue);
         }
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
     }
 
     /**

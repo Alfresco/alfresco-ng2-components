@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnChanges, Input, AfterContentInit, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ViewEncapsulation, Input } from '@angular/core';
 import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
@@ -27,7 +27,7 @@ import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
     styleUrls: ['./base-task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskListCloudComponent extends BaseTaskListCloudComponent implements OnChanges, AfterContentInit, OnDestroy, OnInit {
+export class TaskListCloudComponent extends BaseTaskListCloudComponent {
 
     static PRESET_KEY = 'adf-cloud-task-list.presets';
 
@@ -111,22 +111,6 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent implement
                 appConfigService: AppConfigService,
                 userPreferences: UserPreferencesService) {
         super(appConfigService, userPreferences, TaskListCloudComponent.PRESET_KEY);
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        super.ngOnChanges(changes);
-    }
-
-    ngAfterContentInit() {
-        super.ngAfterContentInit();
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
     }
 
     load(requestNode: TaskQueryCloudRequestModel) {

@@ -16,9 +16,9 @@
  */
 
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { TaskListCloudSortingModel, TaskFilterCloudModel, ServiceTaskListCloudComponent } from '@alfresco/adf-process-services-cloud';
-import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
-import { CloudLayoutService } from './services/cloud-layout.service';
+import { TaskListCloudSortingModel, ServiceTaskListCloudComponent, ServiceTaskFilterCloudModel } from '@alfresco/adf-process-services-cloud';
+import { UserPreferencesService, AppConfigService, PaginationModel } from '@alfresco/adf-core';
+import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -39,7 +39,7 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
     selectedRow: any;
 
     sortArray: TaskListCloudSortingModel[];
-    editedFilter: TaskFilterCloudModel;
+    editedFilter: ServiceTaskFilterCloudModel;
     taskFilterProperties: any  = { filterProperties: [], sortProperties: [], actions: [] };
 
     multiselect: boolean;
@@ -59,7 +59,7 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
         private appConfig: AppConfigService) {
 
         const properties = this.appConfig.get<Array<any>>(ServiceTaskListCloudDemoComponent.TASK_FILTER_PROPERTY_KEYS);
-        if (properties) {
+        if (properties === this.taskFilterProperties) {
             this.taskFilterProperties = properties;
         }
     }
@@ -76,7 +76,7 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    setCurrentSettings(settings) {
+    setCurrentSettings(settings: CloudServiceSettings) {
         if (settings) {
             this.multiselect = settings.multiselect;
             this.selectionMode = settings.selectionMode;
@@ -86,7 +86,7 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
         }
     }
 
-    onChangePageSize(event) {
+    onChangePageSize(event: PaginationModel) {
         this.userPreference.paginationSize = event.maxItems;
     }
 
@@ -94,7 +94,7 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
         this.selectedRows = [];
     }
 
-    onFilterChange(filter: any) {
+    onFilterChange(filter: ServiceTaskFilterCloudModel) {
         this.editedFilter = Object.assign({}, filter);
         this.sortArray = [new TaskListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order })];
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, Output, EventEmitter, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -36,7 +36,7 @@ import { BaseEditTaskFilterCloudComponent } from './base-edit-task-filter-cloud.
     templateUrl: './base-edit-task-filter-cloud.component.html',
     styleUrls: ['./base-edit-task-filter-cloud.component.scss']
 })
-export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestroy {
+export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent {
 
     public static DEFAULT_TASK_FILTER_PROPERTIES = ['appName', 'activityName', 'status', 'sort', 'order'];
     public static DEFAULT_TASK_SORT_PROPERTIES = ['id', 'name', 'startedDate', 'completedDate'];
@@ -65,18 +65,6 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
         protected appsProcessCloudService: AppsProcessCloudService,
         protected taskCloudService: TaskCloudService) {
         super(formBuilder, dateAdapter, userPreferencesService, appsProcessCloudService, taskCloudService);
-    }
-
-    ngOnInit() {
-       super.ngOnInit();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        super.ngOnChanges(changes);
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
     }
 
     assignNewFilter(formValues: ServiceTaskFilterCloudModel) {

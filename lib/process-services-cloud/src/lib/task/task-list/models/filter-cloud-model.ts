@@ -75,7 +75,7 @@ export class TaskQueryCloudRequestModel {
     }
 }
 
-export class ServiceTaskQueryCloudRequestModel {
+export interface ServiceTaskQueryCloudRequestModel {
     appName: string;
     appVersion?: string;
     id?: string;
@@ -96,29 +96,4 @@ export class ServiceTaskQueryCloudRequestModel {
     serviceName?: string;
     serviceVersion?: string;
     startedDate?: Date;
-
-    constructor(obj?: any) {
-
-        if (obj) {
-            this.appName = obj.appName;
-            this.appVersion = obj.appVersion;
-            this.id = obj.id;
-            this.status = obj.status;
-            this.maxItems = obj.maxItems;
-            this.skipCount = obj.skipCount;
-            this.sorting = obj.sorting;
-            this.activityName = obj.activityName;
-            this.activityType = obj.activityType;
-            this.elementId = obj.elementId;
-            this.executionId = obj.executionId;
-            this.processDefinitionKey = obj.processDefinitionKey;
-            this.processDefinitionVersion = obj.processDefinitionVersion;
-            this.processInstanceId = obj.processInstanceId;
-            this.completedDate = obj.completedDate;
-            this.startedDate = obj.startedDate;
-            this.serviceVersion = obj.serviceVersion;
-            this.serviceName = obj.serviceName;
-            this.serviceFullName = obj.serviceFullName;
-        }
-    }
 }

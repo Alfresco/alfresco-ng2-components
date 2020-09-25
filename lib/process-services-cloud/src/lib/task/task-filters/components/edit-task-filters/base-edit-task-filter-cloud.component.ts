@@ -21,7 +21,7 @@ import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from './../../../../app/models/application-instance.model';
 import { ProcessDefinitionCloud } from './../../../../models/process-definition-cloud.model';
-import { DateRangeFilter } from './../../../../models/date-cloud-filter.model';
+import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
 import moment, { Moment } from 'moment';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
@@ -288,10 +288,10 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
     }
 
     onDateRangeFilterChanged(dateRange: DateRangeFilter, property: TaskFilterProperties) {
-        this.editTaskFilterForm.get(property.rangeKeys.from).setValue(
+        this.editTaskFilterForm.get(property.attributes?.from).setValue(
             dateRange.startDate ? dateRange.startDate.toISOString() : null
         );
-        this.editTaskFilterForm.get(property.rangeKeys.to).setValue(
+        this.editTaskFilterForm.get(property.attributes?.to).setValue(
             dateRange.endDate ? dateRange.endDate.toISOString() : null
         );
     }
@@ -375,22 +375,30 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
 
     getFormControlsConfig(taskFilterProperties: TaskFilterProperties[]): any {
         const properties = taskFilterProperties.map((property: TaskFilterProperties) => {
-            if (!property.rangeKeys) {
-                return { [property.key]: property.value };
+            if (!!property.attributes) {
+                return this.getAttributesControlConfig(property);
             } else {
-                return {
-                    [property.rangeKeys.from]: property.value[property.rangeKeys.from],
-                    [property.rangeKeys.to]: property.value[property.rangeKeys.to]
-                };
+                return { [property.key]: property.value };
             }
         });
         return properties.reduce(((result, current) => Object.assign(result, current)), {});
+    }
+
+    private getAttributesControlConfig(property: TaskFilterProperties) {
+        return Object.values(property.attributes).reduce((result, key) => {
+            result[key] = property.value[key];
+            return result;
+        }, {});
     }
 
     buildForm(taskFilterProperties: TaskFilterProperties[]) {
         this.formHasBeenChanged = false;
         this.editTaskFilterForm = this.formBuilder.group(this.getFormControlsConfig(taskFilterProperties));
         this.onFilterChange();
+    }
+
+    onDateTypeChange(dateType: DateCloudFilterType, property: TaskFilterProperties) {
+        this.editTaskFilterForm.get(property.attributes.dateType).setValue(dateType);
     }
 
     abstract save(action: TaskFilterAction): void;

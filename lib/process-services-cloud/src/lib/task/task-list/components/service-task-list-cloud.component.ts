@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, OnChanges, AfterContentInit, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ViewEncapsulation, Input } from '@angular/core';
 import {
     AppConfigService, UserPreferencesService
 } from '@alfresco/adf-core';
@@ -29,7 +29,7 @@ import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
     styleUrls: ['./base-task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent implements OnChanges, AfterContentInit, OnDestroy, OnInit {
+export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
 
     static PRESET_KEY = 'adf-cloud-service-task-list.presets';
 
@@ -40,22 +40,6 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
                 appConfigService: AppConfigService,
                 userPreferences: UserPreferencesService) {
         super(appConfigService, userPreferences, ServiceTaskListCloudComponent.PRESET_KEY);
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        super.ngOnChanges(changes);
-    }
-
-    ngAfterContentInit() {
-        super.ngAfterContentInit();
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
     }
 
     load(requestNode: ServiceTaskQueryCloudRequestModel) {
@@ -94,6 +78,6 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
             skipCount: this.skipCount,
             sorting: this.sorting
         };
-        return new ServiceTaskQueryCloudRequestModel(requestNode);
+        return <ServiceTaskQueryCloudRequestModel> requestNode;
     }
 }

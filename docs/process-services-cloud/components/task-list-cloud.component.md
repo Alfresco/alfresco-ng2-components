@@ -76,8 +76,6 @@ when the task list is empty:
 | standalone          | `boolean`                                                                                                                       | false         | Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true.                                                                                                                                |
 | status              | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with status equal to the supplied value.                                                                                                                                                                                                |
 | stickyHeader        | `boolean`                                                                                                                       | false         | Toggles the sticky header mode.                                                                                                                                                                                                                                              |
-| TaskType | `string` | userTask | The type of tasks to be listed. `userTask | serviceTask` |
-| queryFilter | `Object` | {} | An object containing a key/value for each of the properties that a service task will be filtered by. |
 
 ### Events
 
@@ -335,31 +333,6 @@ must have a `title` property.
 When an action is selected in the dropdown menu, the [`TaskListCloudComponent`](../../process-services-cloud/components/task-list-cloud.component.md) invokes the `executeRowAction` event.
 Use this to handle the response, inspect the action payload (and all custom properties defined
 earlier), and perform the corresponding actions.
-
-#### Listing service tasks
-
-Emitted when the user executes a row action.
-
-This usually accompanies a `showRowActionsMenu` event.
-The [`TaskListCloudComponent`](../../process-services-cloud/components/task-list-cloud.component.md) itself does not execute actions but provides support for external
-integration. If actions are provided using the `showRowActionsMenu` event
-then `executeRowAction` will be automatically executed when the user clicks a
-corresponding menu item.
-
-```ts
-const queryParams = {
-    activityName: "serviceTask1",
-    maxItems: 10, 
-    skipCount: 0
-}
-```
-
-```html
-<adf-cloud-task-list
-    [taskType]="'serviceTask'"
-    [queryParams]="queryParams">
-</adf-cloud-task-list>
-```
 
 ## See also
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, Output, EventEmitter, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -38,7 +38,7 @@ import { BaseEditTaskFilterCloudComponent } from './base-edit-task-filter-cloud.
     templateUrl: './base-edit-task-filter-cloud.component.html',
     styleUrls: ['./base-edit-task-filter-cloud.component.scss']
 })
-export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestroy {
+export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent {
 
     public static DEFAULT_TASK_FILTER_PROPERTIES = ['status', 'assignee', 'sort', 'order'];
     public static DEFAULT_TASK_SORT_PROPERTIES = ['id', 'name', 'createdDate', 'priority'];
@@ -68,18 +68,6 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         protected appsProcessCloudService: AppsProcessCloudService,
         protected taskCloudService: TaskCloudService) {
         super(formBuilder, dateAdapter, userPreferencesService, appsProcessCloudService, taskCloudService);
-    }
-
-    ngOnInit() {
-       super.ngOnInit();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        super.ngOnChanges(changes);
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
     }
 
     assignNewFilter(formValues: TaskFilterCloudModel) {
@@ -328,8 +316,12 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE',
                 type: 'date-range',
                 key: 'dueDate',
-                rangeKeys: { from: 'dueDateFrom', to: 'dueDateTo' },
-                value: this.taskFilter.dueDate || false,
+                attributes: { dateType: 'dueDateType', from: '_dueDateFrom', to: '_dueDateTo'},
+                value: {
+                    dueDateType: this.taskFilter.dueDateType || null,
+                    _dueDateFrom: this.taskFilter.dueDateFrom || null,
+                    _dueDateTo: this.taskFilter.dueDateTo || null
+                },
                 dateFilterOptions: [
                     DateCloudFilterType.NO_DATE,
                     DateCloudFilterType.TOMORROW,
