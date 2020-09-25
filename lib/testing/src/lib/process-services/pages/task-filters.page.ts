@@ -50,20 +50,48 @@ export class TaskFiltersPage {
         await this.filtersPage.clickFilterButton(this.involvedTask);
     }
 
+    async clickCustomFilterButton(customFilterName): Promise<void> {
+        await this.filtersPage.clickFilterButton(element(by.css(`[data-automation-id="${customFilterName}_filter"]`)));
+    }
+
     async isMyTasksFilterHighlighted(): Promise<boolean> {
         return this.filtersPage.isFilterHighlighted(this.defaultTaskFilters.myTasks);
+    }
+
+    async isMyTasksFilterNotHighlighted(): Promise<boolean> {
+        return this.filtersPage.isFilterNotHighlighted(this.defaultTaskFilters.myTasks);
     }
 
     async isQueuedFilterHighlighted(): Promise<boolean> {
         return this.filtersPage.isFilterHighlighted(this.defaultTaskFilters.queuedTasks);
     }
 
+    async isQueuedFilterNotHighlighted(): Promise<boolean> {
+        return this.filtersPage.isFilterNotHighlighted(this.defaultTaskFilters.queuedTasks);
+    }
+
     async isCompletedFilterHighlighted(): Promise<boolean> {
         return this.filtersPage.isFilterHighlighted(this.defaultTaskFilters.completedTasks);
     }
 
+    async isCompletedFilterNotHighlighted(): Promise<boolean> {
+        return this.filtersPage.isFilterNotHighlighted(this.defaultTaskFilters.completedTasks);
+    }
+
     async isInvolvedFilterHighlighted(): Promise<boolean> {
         return this.filtersPage.isFilterHighlighted(this.defaultTaskFilters.involvedTasks);
+    }
+
+    async isInvolvedFilterNotHighlighted(): Promise<boolean> {
+        return this.filtersPage.isFilterNotHighlighted(this.defaultTaskFilters.involvedTasks);
+    }
+
+    async isCustomFilterHighlighted(customFilterName): Promise<boolean> {
+        return this.filtersPage.isFilterHighlighted(`${customFilterName}`);
+    }
+
+    async isCustomFilterNotHighlighted(customFilterName): Promise<boolean> {
+        return this.filtersPage.isFilterNotHighlighted(`${customFilterName}`);
     }
 
     async isMyTasksFilterDisplayed(): Promise<boolean> {
@@ -80,5 +108,9 @@ export class TaskFiltersPage {
 
     async isInvolvedFilterDisplayed(): Promise<boolean> {
         return this.filtersPage.isFilterDisplayed(this.defaultTaskFilters.involvedTasks);
+    }
+
+    async isCustomFilterDisplayed(customFilterName): Promise<boolean> {
+        return this.filtersPage.isFilterDisplayed(customFilterName);
     }
 }
