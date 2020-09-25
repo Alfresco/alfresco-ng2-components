@@ -22,7 +22,7 @@ import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class EditProcessFilterCloudComponentPage {
 
-    customiseFilter = element(by.id('adf-edit-process-filter-title-id'));
+    customiseFilter = element(by.id('adf-edit-process-filter-sub-title-id'));
     saveButton = element(by.css('button[data-automation-id="adf-filter-action-save"]'));
     saveAsButton = element(by.css('button[data-automation-id="adf-filter-action-saveAs"]'));
     deleteButton = element(by.css('button[data-automation-id="adf-filter-action-delete"]'));
