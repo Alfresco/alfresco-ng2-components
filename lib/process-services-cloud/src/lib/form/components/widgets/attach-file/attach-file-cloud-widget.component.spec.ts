@@ -461,7 +461,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         describe('FilesSource', () => {
-            it('Should set default root alias (-root-) as rootNodeId if fileSource set only to Alfresco Content', async () => {
+            it('Should set default user alias (-my-) as rootNodeId if fileSource set only to Alfresco Content', async () => {
                 widget.field = new FormFieldModel(new FormModel(), {
                     type: FormFieldTypes.UPLOAD,
                     value: []
@@ -478,8 +478,8 @@ describe('AttachFileCloudWidgetComponent', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(widget.rootNodeId).toEqual('-root-');
-                expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-root-', 'single', false);
+                expect(widget.rootNodeId).toEqual('-my-');
+                expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', false);
             });
 
             it('should display tooltip when tooltip is set', async(() => {

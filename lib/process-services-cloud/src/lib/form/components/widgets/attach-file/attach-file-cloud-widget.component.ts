@@ -64,7 +64,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     static RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 
     typeId = 'AttachFileCloudWidgetComponent';
-    rootNodeId = AttachFileCloudWidgetComponent.ALIAS_ROOT_FOLDER;
+    rootNodeId = AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
     selectedNode: Node;
 
     constructor(
