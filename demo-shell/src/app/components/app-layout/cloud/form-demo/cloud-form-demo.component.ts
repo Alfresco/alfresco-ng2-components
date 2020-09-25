@@ -64,7 +64,15 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
         private formRenderingService: FormRenderingService) {
         this.formRenderingService.register({
             'demo-widget': () => CustomEditorComponent,
-            'custom-text': () => CustomWidgetComponent
+            'custom-editor': () => CustomEditorComponent,
+            'custom-string': () => CustomWidgetComponent,
+            'custom-datetime': () => CustomWidgetComponent,
+            'custom-file': () => CustomWidgetComponent,
+            'custom-number': () => CustomWidgetComponent,
+            'custom-something': () => CustomWidgetComponent,
+            'custom-boolean': () => CustomWidgetComponent,
+            'custom-date': () => CustomWidgetComponent,
+            'custom': () => CustomWidgetComponent
         });
     }
 

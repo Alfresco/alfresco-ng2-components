@@ -38,20 +38,21 @@ export class CustomEditorComponent extends WidgetComponent {
     template: `
         <div style="color: red">
             <p *ngIf="field.readOnly || readOnly">
-                <span>{{displayValue | json}}</span>
+                <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
+                <span>{{field.value}}</span>
             </p>
 
             <mat-form-field *ngIf="!(field.readOnly || readOnly)">
                 <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
-                <textarea matInput
+                <input matInput
                        class="adf-input"
                        type="text"
                        [id]="field.id"
                        [required]="isRequired()"
-                       [value]="field.value | json"
+                       [value]="field.value"
                        [(ngModel)]="field.value"
                        (ngModelChange)="onFieldChanged(field)">
-                </textarea>
+                <mat-hint>{{field.placeholder}}</mat-hint>
             </mat-form-field>
             <error-widget [error]="field.validationSummary"></error-widget>
             <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
@@ -60,13 +61,11 @@ export class CustomEditorComponent extends WidgetComponent {
 })
 export class CustomWidgetComponent extends WidgetComponent  implements OnInit {
 
-    displayValue: any;
-
     constructor(public formService: FormService) {
         super(formService);
     }
 
     ngOnInit() {
-        this.displayValue = this.field.value;
+        this.field.value = typeof this.field.value === 'object' ? JSON.stringify(this.field.value) : this.field.value;
     }
 }
