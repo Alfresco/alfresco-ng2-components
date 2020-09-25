@@ -17,9 +17,9 @@
 
 import { SearchConfiguration } from './search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
-import { SearchFilterQueryBuilderService } from './search-filter-query-builder.service';
+import { SearchHeaderQueryBuilderService } from './search-filter-query-builder.service';
 
-describe('SearchFilterQueryBuilderService', () => {
+describe('SearchHeaderQueryBuilderService', () => {
 
     const buildConfig = (searchSettings): AppConfigService => {
         const config = new AppConfigService(null);
@@ -36,7 +36,7 @@ describe('SearchFilterQueryBuilderService', () => {
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
 
-        const builder = new SearchFilterQueryBuilderService(
+        const builder = new SearchHeaderQueryBuilderService(
             buildConfig(config),
             null,
             null
@@ -63,7 +63,7 @@ describe('SearchFilterQueryBuilderService', () => {
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
 
-        const service = new SearchFilterQueryBuilderService(
+        const service = new SearchHeaderQueryBuilderService(
             buildConfig(config),
             null,
             null
@@ -76,7 +76,7 @@ describe('SearchFilterQueryBuilderService', () => {
     });
 
     it('should have empty user query by default', () => {
-        const builder = new SearchFilterQueryBuilderService(
+        const builder = new SearchHeaderQueryBuilderService(
             buildConfig({}),
             null,
             null
@@ -97,7 +97,7 @@ describe('SearchFilterQueryBuilderService', () => {
             { query: 'PARENT:"workspace://SpacesStore/fake-node-id"' }
         ];
 
-        const searchHeaderService = new SearchFilterQueryBuilderService(
+        const searchHeaderService = new SearchHeaderQueryBuilderService(
             buildConfig(config),
             null,
             null
@@ -122,7 +122,7 @@ describe('SearchFilterQueryBuilderService', () => {
             filterQueries: expectedResult
         };
 
-        const searchHeaderService = new SearchFilterQueryBuilderService(
+        const searchHeaderService = new SearchHeaderQueryBuilderService(
             buildConfig(config),
             null,
             null
@@ -148,7 +148,7 @@ describe('SearchFilterQueryBuilderService', () => {
             ]
         };
 
-        const searchHeaderService = new SearchFilterQueryBuilderService(
+        const searchHeaderService = new SearchHeaderQueryBuilderService(
             buildConfig(config),
             null,
             null
