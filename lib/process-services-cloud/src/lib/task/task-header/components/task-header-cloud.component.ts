@@ -318,8 +318,12 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         return this.taskCloudService.isTaskEditable(this.taskDetails);
     }
 
+    /**
+     * as per [ACA-3960] it required an empty array argument for now
+     * Empty array will be replaced with candidateGroups in feature
+     */
     isAssigneePropertyClickable(): boolean {
-        return this.taskCloudService.isAssigneePropertyClickable(this.taskDetails, this.candidateUsers, this.candidateGroups);
+        return this.taskCloudService.isAssigneePropertyClickable(this.taskDetails, this.candidateUsers, []);
     }
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
