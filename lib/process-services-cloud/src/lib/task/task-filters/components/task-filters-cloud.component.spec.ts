@@ -349,6 +349,6 @@ describe('TaskFiltersCloudComponent', () => {
 
         expect(component.currentFilter).toBeUndefined();
         component.selectFilter(filter);
-        expect(component.getCurrentFilter()).toBe(fakeGlobalFilter[0]);
+        expect(component.currentFilter).toBe(fakeGlobalFilter[0]);
     });
 });

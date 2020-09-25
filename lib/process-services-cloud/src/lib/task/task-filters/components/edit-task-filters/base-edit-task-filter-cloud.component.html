@@ -10,7 +10,7 @@
                 <mat-panel-description fxLayoutAlign="space-between center"
                                        id="adf-edit-task-filter-sub-title-id">
                     <span *ngIf="showTitle">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}</span>
-                    <div *ngIf="showActions()"
+                    <div *ngIf="showFilterActions"
                          class="adf-cloud-edit-task-filter-actions">
                         <ng-container *ngIf="toggleFilterActions">
                             <button *ngFor="let filterAction of taskFilterActions"

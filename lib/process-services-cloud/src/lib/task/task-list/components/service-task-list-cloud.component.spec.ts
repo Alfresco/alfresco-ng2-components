@@ -236,7 +236,7 @@ describe('ServiceTaskListCloudComponent', () => {
         const rowEvent = new DataRowEvent(row, null);
         component.rowClick.subscribe((taskId) => {
             expect(taskId).toEqual('999');
-            expect(component.getCurrentId()).toEqual('999');
+            expect(component.currentInstanceId).toEqual('999');
             done();
         });
         component.onRowClick(rowEvent);
@@ -259,19 +259,10 @@ describe('ServiceTaskListCloudComponent', () => {
         it('should reload the task list when input parameters changed', () => {
             const getServiceTaskByRequestSpy = spyOn(taskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
             component.appName = 'mock-app-name';
-            // component.priority = 1;
-            // component.status = 'mock-status';
-            // component.lastModifiedFrom = 'mock-lastmodified-date';
-            // component.owner = 'mock-owner-name';
-            const priorityChange = new SimpleChange(undefined, 1, true);
-            const statusChange = new SimpleChange(undefined, 'mock-status', true);
-            const lastModifiedFromChange = new SimpleChange(undefined, 'mock-lastmodified-date', true);
-            const ownerChange = new SimpleChange(undefined, 'mock-owner-name', true);
+            component.queryParams.status = 'mock-status';
+            const queryParams = new SimpleChange(undefined, { status: 'mock-status' }, true);
             component.ngOnChanges({
-                'priority': priorityChange,
-                'status': statusChange,
-                'lastModifiedFrom': lastModifiedFromChange,
-                'owner': ownerChange
+                'queryParams': queryParams
             });
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeFalsy();

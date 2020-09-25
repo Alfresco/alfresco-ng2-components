@@ -68,7 +68,7 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
     }
 
     assignNewFilter(formValues: ServiceTaskFilterCloudModel) {
-        this.changedTaskFilter = new ServiceTaskFilterCloudModel(Object.assign({}, this.taskFilter, formValues));
+        this.changedTaskFilter = Object.assign({}, this.taskFilter, formValues) as ServiceTaskFilterCloudModel;
         this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
         this.filterChange.emit(this.changedTaskFilter);
     }
@@ -84,7 +84,7 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
                 takeUntil(this.onDestroy$)
             )
             .subscribe(response => {
-                this.taskFilter = new ServiceTaskFilterCloudModel(response);
+                this.taskFilter =  response as ServiceTaskFilterCloudModel;
                 this.taskFilterProperties = this.createAndFilterProperties();
                 this.taskFilterActions = this.createAndFilterActions();
                 this.buildForm(this.taskFilterProperties);

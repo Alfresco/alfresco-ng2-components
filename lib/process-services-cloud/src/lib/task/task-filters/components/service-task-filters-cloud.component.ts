@@ -107,13 +107,6 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
     }
 
     /**
-     * Return the current task
-     */
-    getCurrentFilter(): ServiceTaskFilterCloudModel {
-        return this.currentFilter;
-    }
-
-    /**
      * Check if the filter list is empty
      */
     isFilterListEmpty(): boolean {

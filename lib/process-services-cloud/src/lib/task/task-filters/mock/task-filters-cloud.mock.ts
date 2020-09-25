@@ -17,7 +17,7 @@
 
 import { TaskFilterCloudModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
 
-export let fakeGlobalFilter = [
+export const fakeGlobalFilter = [
     new TaskFilterCloudModel({
         name: 'FakeInvolvedTasks',
         key: 'fake-involved-tasks',
@@ -44,31 +44,31 @@ export let fakeGlobalFilter = [
     })
 ];
 
-export let fakeGlobalServiceFilters = [
-    new ServiceTaskFilterCloudModel({
+export const fakeGlobalServiceFilters = [
+    {
         name: 'FakeServiceTasks',
         key: 'fake-involved-tasks',
         icon: 'adjust',
-        id: 10,
+        id: '10',
         status: 'open'
-    }),
-    new ServiceTaskFilterCloudModel({
+    } as ServiceTaskFilterCloudModel,
+    {
         name: 'FakeMyServiceTasks1',
         key: 'fake-my-tast1',
         icon: 'done',
-        id: 11,
+        id: '11',
         status: 'open'
-    }),
-    new ServiceTaskFilterCloudModel({
+    } as ServiceTaskFilterCloudModel,
+    {
         name: 'FakeMyServiceTasks2',
         key: 'fake-my-tast2',
         icon: 'inbox',
-        id: 12,
+        id: '12',
         status: 'open'
-    })
+    } as ServiceTaskFilterCloudModel
 ];
 
-export let fakeFilter = new TaskFilterCloudModel({
+export const fakeFilter = new TaskFilterCloudModel({
     name: 'FakeInvolvedTasks',
     icon: 'adjust',
     id: 'mock-task-filter-id',
@@ -80,7 +80,7 @@ export let fakeFilter = new TaskFilterCloudModel({
     sort: 'id'
 });
 
-export let fakeServiceFilter = new ServiceTaskFilterCloudModel({
+export const fakeServiceFilter = {
     name: 'FakeInvolvedTasks',
     icon: 'adjust',
     id: 'mock-task-filter-id',
@@ -90,9 +90,9 @@ export let fakeServiceFilter = new ServiceTaskFilterCloudModel({
     activityName: 'fake-activity',
     order: 'ASC',
     sort: 'id'
-});
+} as ServiceTaskFilterCloudModel;
 
-export let fakeAllTaskFilter = new TaskFilterCloudModel({
+export const fakeAllTaskFilter = new TaskFilterCloudModel({
     name: 'AllTasks',
     icon: 'adjust',
     id: 'mock-task-filter-id',

@@ -349,6 +349,6 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
         expect(component.currentFilter).toBeUndefined();
         component.selectFilter(filter);
-        expect(component.getCurrentFilter()).toBe(fakeGlobalServiceFilters[2]);
+        expect(component.currentFilter).toBe(fakeGlobalServiceFilters[2]);
     });
 });

@@ -139,12 +139,10 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.isPropertyChanged(changes, 'sorting')) {
+        if (changes['sorting']) {
             this.formatSorting(changes['sorting'].currentValue);
         }
-        if (this.isAnyPropertyChanged(changes)) {
-            this.reload();
-        }
+        this.reload();
     }
 
     ngOnDestroy() {
@@ -154,23 +152,6 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
 
     ngAfterContentInit() {
         this.createDatatableSchema();
-    }
-
-    getCurrentId(): string {
-        return this.currentInstanceId;
-    }
-
-    private isAnyPropertyChanged(changes: SimpleChanges): boolean {
-        for (const property in changes) {
-            if (this.isPropertyChanged(changes, property)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private isPropertyChanged(changes: SimpleChanges, property: string): boolean {
-        return changes.hasOwnProperty(property);
     }
 
     reload() {

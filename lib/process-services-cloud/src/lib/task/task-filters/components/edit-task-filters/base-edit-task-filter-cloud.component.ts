@@ -166,10 +166,6 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
         return false;
     }
 
-    showActions(): boolean {
-        return this.showFilterActions;
-    }
-
     onExpand(): void {
         this.toggleFilterActions = true;
     }
@@ -304,7 +300,7 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
         return this.filterProperties.indexOf(BaseEditTaskFilterCloudComponent.LAST_MODIFIED) >= 0;
     }
 
-    get createSortProperties(): any {
+    get createSortProperties(): FilterOptions[] {
         this.checkMandatorySortProperties();
         const sortProperties = this.sortProperties.map((property: string) => {
             return <FilterOptions> { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };

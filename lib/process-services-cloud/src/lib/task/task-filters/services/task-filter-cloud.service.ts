@@ -17,9 +17,9 @@
 
 import { IdentityUserService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
-import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 
@@ -54,8 +54,7 @@ export class TaskFilterCloudService {
                 } else {
                     return of(this.findFiltersByKeyInPreferences(preferences, key));
                 }
-            }),
-            catchError((err) => this.handleTaskError(err))
+            })
         ).subscribe((filters) => {
             this.addFiltersToStream(filters);
         });
@@ -133,8 +132,7 @@ export class TaskFilterCloudService {
                 return filters.filter((filter: TaskFilterCloudModel) => {
                     return filter.id === id;
                 })[0];
-            }),
-            catchError((err) => this.handleTaskError(err))
+            })
         );
     }
 
@@ -157,8 +155,7 @@ export class TaskFilterCloudService {
             map((filters: TaskFilterCloudModel[]) => {
                 this.addFiltersToStream(filters);
                 return filters;
-            }),
-            catchError((err) => this.handleTaskError(err))
+            })
         );
     }
 
@@ -174,7 +171,7 @@ export class TaskFilterCloudService {
     updateFilter(updatedFilter: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
         const key: string = this.prepareKey(updatedFilter.appName);
         return this.getTaskFiltersByKey(updatedFilter.appName, key).pipe(
-            switchMap((filters: any) => {
+            switchMap((filters: TaskFilterCloudModel[]) => {
                 if (filters && filters.length === 0) {
                     return this.createTaskFilters(updatedFilter.appName, key, <TaskFilterCloudModel[]> [updatedFilter]);
                 } else {
@@ -186,8 +183,7 @@ export class TaskFilterCloudService {
             map((updatedFilters: TaskFilterCloudModel[]) => {
                 this.addFiltersToStream(updatedFilters);
                 return updatedFilters;
-            }),
-            catchError((err) => this.handleTaskError(err))
+            })
         );
     }
 
@@ -199,7 +195,7 @@ export class TaskFilterCloudService {
     deleteFilter(deletedFilter: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
         const key = this.prepareKey(deletedFilter.appName);
         return this.getTaskFiltersByKey(deletedFilter.appName, key).pipe(
-            switchMap((filters: any) => {
+            switchMap((filters: TaskFilterCloudModel[]) => {
                 if (filters && filters.length > 0) {
                     filters = filters.filter(filter => filter.id !== deletedFilter.id);
                     return this.updateTaskFilters(deletedFilter.appName, key, filters);
@@ -209,8 +205,7 @@ export class TaskFilterCloudService {
             map(filters => {
                 this.addFiltersToStream(filters);
                 return filters;
-            }),
-            catchError((err) => this.handleTaskError(err))
+            })
         );
     }
 
@@ -236,21 +231,12 @@ export class TaskFilterCloudService {
     }
 
     /**
-     * Gets the username field from the access token.
-     * @returns Username string
-     */
-    getUsername(): string {
-        const user = this.identityUserService.getCurrentUserInfo();
-        return user.username;
-    }
-
-    /**
      * Creates a uniq key with appName and username
      * @param appName Name of the target app
      * @returns String of task filters preference key
      */
     private prepareKey(appName: string): string {
-        return `task-filters-${appName}-${this.getUsername()}`;
+        return `task-filters-${appName}-${this.identityUserService.getCurrentUserInfo().username}`;
     }
 
     /**
@@ -261,10 +247,6 @@ export class TaskFilterCloudService {
     private findFiltersByKeyInPreferences(preferences: any, key: string): TaskFilterCloudModel[] {
         const result = preferences.find((filter: any) => { return filter.entry.key === key; });
         return result && result.entry ? JSON.parse(result.entry.value) : [];
-    }
-
-    private handleTaskError(error: any) {
-        return throwError(error || 'Server error');
     }
 
     /**
@@ -280,7 +262,7 @@ export class TaskFilterCloudService {
                 icon: 'inbox',
                 appName,
                 status: 'ASSIGNED',
-                assignee: this.getUsername(),
+                assignee: this.identityUserService.getCurrentUserInfo().username,
                 sort: 'createdDate',
                 order: 'DESC'
             }),

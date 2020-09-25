@@ -17,9 +17,9 @@
 
 import { IdentityUserService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
-import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 
@@ -54,8 +54,7 @@ export class ServiceTaskFilterCloudService {
                 } else {
                     return of(this.findFiltersByKeyInPreferences(preferences, key));
                 }
-            }),
-            catchError((err) => this.handleTaskError(err))
+            })
         ).subscribe((filters) => {
             this.addFiltersToStream(filters);
         });
@@ -133,8 +132,7 @@ export class ServiceTaskFilterCloudService {
                 return filters.filter((filter: ServiceTaskFilterCloudModel) => {
                     return filter.id === id;
                 })[0];
-            }),
-            catchError((err) => this.handleTaskError(err))
+            })
         );
     }
 
@@ -146,7 +144,7 @@ export class ServiceTaskFilterCloudService {
     addFilter(newFilter: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
         const key: string = this.prepareKey(newFilter.appName);
         return this.getTaskFiltersByKey(newFilter.appName, key).pipe(
-            switchMap((filters: any) => {
+            switchMap((filters: ServiceTaskFilterCloudModel[]) => {
                 if (filters && filters.length === 0) {
                     return this.createTaskFilters(newFilter.appName, key, <ServiceTaskFilterCloudModel[]> [newFilter]);
                 } else {
@@ -157,8 +155,7 @@ export class ServiceTaskFilterCloudService {
             map((filters: ServiceTaskFilterCloudModel[]) => {
                 this.addFiltersToStream(filters);
                 return filters;
-            }),
-            catchError((err) => this.handleTaskError(err))
+            })
         );
     }
 
@@ -174,7 +171,7 @@ export class ServiceTaskFilterCloudService {
     updateFilter(updatedFilter: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
         const key: string = this.prepareKey(updatedFilter.appName);
         return this.getTaskFiltersByKey(updatedFilter.appName, key).pipe(
-            switchMap((filters: any) => {
+            switchMap((filters: ServiceTaskFilterCloudModel[]) => {
                 if (filters && filters.length === 0) {
                     return this.createTaskFilters(updatedFilter.appName, key, <ServiceTaskFilterCloudModel[]> [updatedFilter]);
                 } else {
@@ -186,8 +183,7 @@ export class ServiceTaskFilterCloudService {
             map((updatedFilters: ServiceTaskFilterCloudModel[]) => {
                 this.addFiltersToStream(updatedFilters);
                 return updatedFilters;
-            }),
-            catchError((err) => this.handleTaskError(err))
+            })
         );
     }
 
@@ -199,7 +195,7 @@ export class ServiceTaskFilterCloudService {
     deleteFilter(deletedFilter: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
         const key = this.prepareKey(deletedFilter.appName);
         return this.getTaskFiltersByKey(deletedFilter.appName, key).pipe(
-            switchMap((filters: any) => {
+            switchMap((filters: ServiceTaskFilterCloudModel[]) => {
                 if (filters && filters.length > 0) {
                     filters = filters.filter(filter => filter.id !== deletedFilter.id);
                     return this.updateTaskFilters(deletedFilter.appName, key, filters);
@@ -209,8 +205,7 @@ export class ServiceTaskFilterCloudService {
             map(filters => {
                 this.addFiltersToStream(filters);
                 return filters;
-            }),
-            catchError((err) => this.handleTaskError(err))
+            })
         );
     }
 
@@ -236,21 +231,12 @@ export class ServiceTaskFilterCloudService {
     }
 
     /**
-     * Gets the username field from the access token.
-     * @returns Username string
-     */
-    getUsername(): string {
-        const user = this.identityUserService.getCurrentUserInfo();
-        return user.username;
-    }
-
-    /**
      * Creates a uniq key with appName and username
      * @param appName Name of the target app
      * @returns String of task filters preference key
      */
     private prepareKey(appName: string): string {
-        return `task-filters-${appName}-${this.getUsername()}`;
+        return `task-filters-${appName}-${this.identityUserService.getCurrentUserInfo().username}`;
     }
 
     /**
@@ -263,10 +249,6 @@ export class ServiceTaskFilterCloudService {
         return result && result.entry ? JSON.parse(result.entry.value) : [];
     }
 
-    private handleTaskError(error: any) {
-        return throwError(error || 'Server error');
-    }
-
     /**
      * Creates and returns the default filters for a task app.
      * @param appName Name of the target app
@@ -274,7 +256,8 @@ export class ServiceTaskFilterCloudService {
      */
     private defaultServiceTaskFilters(appName?: string): ServiceTaskFilterCloudModel[] {
         return [
-            new ServiceTaskFilterCloudModel({
+            {
+                id: this.generateRandomId(),
                 name: 'ADF_CLOUD_SERVICE_TASK_FILTERS.ALL_SERVICE_TASKS',
                 key: 'my-service-tasks',
                 icon: 'inbox',
@@ -282,8 +265,9 @@ export class ServiceTaskFilterCloudService {
                 status: 'ALL',
                 sort: 'startedDate',
                 order: 'DESC'
-            }),
-            new ServiceTaskFilterCloudModel({
+            } as ServiceTaskFilterCloudModel,
+            {
+                id: this.generateRandomId(),
                 name: 'ADF_CLOUD_SERVICE_TASK_FILTERS.COMPLETED_TASKS',
                 key: 'completed-tasks',
                 icon: 'done',
@@ -291,8 +275,9 @@ export class ServiceTaskFilterCloudService {
                 status: 'COMPLETED',
                 sort: 'completedDate',
                 order: 'DESC'
-            }),
-            new ServiceTaskFilterCloudModel({
+            } as ServiceTaskFilterCloudModel,
+            {
+                id: this.generateRandomId(),
                 name: 'ADF_CLOUD_SERVICE_TASK_FILTERS.ERRORED_TASKS',
                 key: 'errored-service-tasks',
                 icon: 'error',
@@ -300,7 +285,11 @@ export class ServiceTaskFilterCloudService {
                 status: 'ERROR',
                 sort: 'startedDate',
                 order: 'DESC'
-            })
+            } as ServiceTaskFilterCloudModel
         ];
+    }
+
+    generateRandomId(): string {
+        return Math.random().toString(36).substr(2, 9);
     }
 }

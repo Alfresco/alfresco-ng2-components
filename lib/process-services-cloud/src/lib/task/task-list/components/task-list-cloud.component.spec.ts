@@ -239,7 +239,7 @@ describe('TaskListCloudComponent', () => {
         component.reload();
     });
 
-    it('should emit row click event', (done) => {
+    it('should emit row click event', async (done) => {
         const row = new ObjectDataRow({
             entry: {
                 id: '999'
@@ -248,7 +248,7 @@ describe('TaskListCloudComponent', () => {
         const rowEvent = new DataRowEvent(row, null);
         component.rowClick.subscribe((taskId) => {
             expect(taskId).toEqual('999');
-            expect(component.getCurrentId()).toEqual('999');
+            expect(component.currentInstanceId).toEqual('999');
             done();
         });
         component.onRowClick(rowEvent);
