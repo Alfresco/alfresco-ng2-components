@@ -188,6 +188,9 @@ exports.config = {
         htmlOnExpect: 'none',
         htmlOnSpec: 'none',
         clearFoldersBeforeTest: false
+    }, {
+        package: 'protractor-console',
+        logLevels: ['debug']
     }],
 
     onCleanUp(results) {

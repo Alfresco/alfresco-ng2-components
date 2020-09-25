@@ -186,6 +186,7 @@ export class NavigationBarPage {
         try {
             await BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
         } catch (error) {
+            Logger.log('Logout section NOT find');
         }
     }
 
