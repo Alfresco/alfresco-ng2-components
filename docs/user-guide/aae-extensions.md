@@ -9,7 +9,7 @@ This page describes how you can customize ADF forms to your own specification.
 ## Contents
 There are two ways to customize the form
 -   [Replace default form widgets with custom components](#replace-default-form-widgets-with-aae-form-widgets)
--   [Create a custom form widget with custom components](#create-a-custom-form-widget-with-custom-components)
+-   [Replace custom form widget with custom components](#replace-custom-form-widgets-with-custom-components)
 -   [See Also](#see-also)
 
 ## Replace default form widgets with AAE form widgets
@@ -21,7 +21,7 @@ rendered within the `<adf-form>` component.
 
     ![default text widget](../docassets/images/aae-simple-form.png)
 
-    Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) must inherit the [`WidgetComponent`](../insights/components/widget.component.md) class in order to function properly:
+    Every custom widget component must inherit the [`WidgetComponent`](../insights/components/widget.component.md) class in order to function properly:
 
     ```ts
     import { Component } from '@angular/core';
@@ -47,7 +47,7 @@ rendered within the `<adf-form>` component.
     export class CustomEditorsModule {}
     ```
 
-3. Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) should be added into the the collections `declarations` and `exports`. If you decided to store custom widgets in a separate dedicated module (and optionally as a separate re-distributable library) don't forget to import it into the main application one:
+3. Every custom widget component should be added into the the collections `declarations` and `exports`. If you decided to store custom widgets in a separate dedicated module (and optionally as a separate re-distributable library) don't forget to import it into the main application one:
 
     ```ts
     @NgModule({
@@ -81,23 +81,18 @@ rendered within the `<adf-form>` component.
 
     ![custom text widget](../docassets/images/aae-simple-override-form.png)
 
-Create a custom form widget with custom components
+
+## Replace custom form widgets with custom components
 
 This is an example of rendering custom form widgets using custom Angular components.
 
 ### Create a custom form widget
 
-To begin,  create a basic form widget and call it `Custom Editor`:
+To begin, create a basic form widget and call it `demo-widget`:
 
 ![custom form widget](../docassets/images/aae-form-widget.png)
 
 **Note**: The `type` is important as it will become the `field type` when the form is rendered.
-
-Input some simple html for the [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`runtime template` and the [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`editor template` fields:
-
-```html
-<div style="color: blue">Custom form widget</div>
-```
 
 You can now design a form that uses your custom form widget:
 
