@@ -118,7 +118,7 @@ describe('Start Task - Custom App', () => {
         }));
 
         await loginPage.login(processUserModel.email, processUserModel.password);
-   });
+    });
 
     describe('', () => {
         beforeEach(async () => {
@@ -448,9 +448,10 @@ describe('Start Task - Custom App', () => {
             await taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[0].name);
             await taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[1].name);
             await taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[2].name);
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
-                await expect(ArrayUtil.arrayContainsArray(list, allTasksName)).toEqual(true);
-            });
+
+            const list = await taskListSinglePage.taskList().getAllRowsNameColumn();
+
+            await expect(ArrayUtil.arrayContainsArray(list, allTasksName)).toEqual(true);
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(20);
         });
 
@@ -461,9 +462,10 @@ describe('Start Task - Custom App', () => {
             await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[0].name);
             await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[1].name);
             await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[2].name);
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
-                await expect(ArrayUtil.arrayContainsArray(list, allTasksName)).toEqual(true);
-            });
+
+            const list = await taskListSinglePage.taskList().getAllRowsNameColumn();
+            await expect(ArrayUtil.arrayContainsArray(list, allTasksName)).toEqual(true);
+
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(23);
         });
     });
@@ -476,11 +478,10 @@ describe('Start Task - Custom App', () => {
         await taskListSinglePage.clickResetButton();
 
         await taskListSinglePage.typeProcessDefinitionId(processDefinitionId.processDefinitionId);
-        await taskListSinglePage.taskList().getDataTable().waitTillContentLoaded();
         await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(4);
-        await taskListSinglePage.getAllProcessDefinitionIds().then(async (list) => {
-            await expect(ArrayUtil.arrayContainsArray(list, processDefinitionIds)).toEqual(true);
-        });
+
+        const list = await taskListSinglePage.getAllProcessDefinitionIds();
+        await expect(ArrayUtil.arrayContainsArray(list, processDefinitionIds)).toEqual(true);
     });
 
     it('[C286623] Should be able to see No tasks found when typing an invalid processDefinitionId', async () => {
@@ -503,9 +504,8 @@ describe('Start Task - Custom App', () => {
         await expect(await taskListSinglePage.getProcessInstanceId()).toEqual(processDefinitionId.id);
 
         await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
-        await taskListSinglePage.getAllProcessInstanceIds().then(async (list) => {
-            await expect(ArrayUtil.arrayContainsArray(list, processInstanceIds)).toEqual(true);
-        });
+        const list = await taskListSinglePage.getAllProcessInstanceIds();
+        await expect(ArrayUtil.arrayContainsArray(list, processInstanceIds)).toEqual(true);
     });
 
     it('[C286623] Should be able to see No tasks found when typing an invalid processInstanceId', async () => {

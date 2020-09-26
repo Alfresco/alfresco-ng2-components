@@ -83,6 +83,7 @@ export class TaskListDemoPage {
 
     async typeProcessDefinitionId(input: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.processDefinitionId, input);
+        await this.taskList().getDataTable().waitTillContentLoaded();
     }
 
     async getProcessDefinitionId(): Promise<string> {

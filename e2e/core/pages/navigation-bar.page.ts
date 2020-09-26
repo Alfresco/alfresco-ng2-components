@@ -180,10 +180,10 @@ export class NavigationBarPage {
 
     async clickLogoutButton(): Promise<void> {
         Logger.log('Logout');
-        await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.clickExecuteScript('.app-sidenav-link[adf-logout]');
-
         try {
+            await BrowserActions.closeMenuAndDialogs();
+            await BrowserActions.clickExecuteScript('.app-sidenav-link[adf-logout]');
+
             await BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
         } catch (error) {
             Logger.log('Logout section NOT find');

@@ -46,7 +46,7 @@ export class NodePermissionService {
                         const siteName = siteNodeList.list.entries[0].entry.name;
                         return this.getGroupMembersBySiteName(siteName);
                     } else {
-                        return of(node.permissions.settable);
+                        return of(node.permissions?.settable);
                     }
                 })
             );
