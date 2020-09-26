@@ -24,7 +24,7 @@ import { DataTableComponentPage } from '../../core/pages/data-table-component.pa
 
 export class EditTaskFilterCloudComponentPage {
 
-    customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
+    customiseFilter = element(by.id('adf-edit-task-filter-sub-title-id'));
     assignee = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
     priority = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
     taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
