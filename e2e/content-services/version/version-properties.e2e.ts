@@ -23,7 +23,7 @@ import {
     LoginPage,
     UploadActions,
     UserModel,
-    UsersActions
+    UsersActions, ViewerPage
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { VersionManagePage } from '../../core/pages/version-manager.page';
@@ -36,6 +36,7 @@ describe('Version Properties', () => {
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
+    const viewerPage = new ViewerPage();
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
@@ -71,14 +72,33 @@ describe('Version Properties', () => {
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
+    });
+
+    beforeEach(async () => {
         await contentServicesPage.versionManagerContent(txtFileModel.name);
-   });
+    });
+
+    it('[C277277] Should show/hide actions menu when readOnly is true/false', async () => {
+        await versionManagePage.disableReadOnly();
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
+        await versionManagePage.enableReadOnly();
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
+    });
+
+    it('[C279994] Should show/hide upload new version button when readOnly is true/false', async () => {
+        await versionManagePage.disableReadOnly();
+        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
+        await versionManagePage.enableReadOnly();
+        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.showNewVersionButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
+    });
 
     it('[C272817] Should NOT be present the download action when allowDownload property is false', async () => {
         await versionManagePage.disableDownload();
         await versionManagePage.clickActionButton('1.0');
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
         await versionManagePage.closeDisabledActionsMenu();
+        await viewerPage.clickCloseButton();
     });
 
     it('[C279992] Should be present the download action when allowDownload property is true', async () => {
@@ -98,18 +118,4 @@ describe('Version Properties', () => {
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-item-comment-1.1"]`)));
     });
 
-    it('[C277277] Should show/hide actions menu when readOnly is true/false', async () => {
-        await versionManagePage.disableReadOnly();
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
-        await versionManagePage.enableReadOnly();
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-menu-button-1.0"]`)));
-    });
-
-    it('[C279994] Should show/hide upload new version button when readOnly is true/false', async () => {
-        await versionManagePage.disableReadOnly();
-        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
-        await versionManagePage.enableReadOnly();
-        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.showNewVersionButton);
-        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
-    });
 });

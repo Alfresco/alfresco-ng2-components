@@ -64,9 +64,11 @@ describe('Favorite directive', () => {
         testFolder4 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         testFile = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
 
+        await browser.sleep(browser.params.testConfig.timeouts.index_search);
+
         await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
-   });
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -75,12 +77,12 @@ describe('Favorite directive', () => {
         await uploadActions.deleteFileOrFolder(testFolder2.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder3.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder4.entry.id);
-   });
+    });
 
     beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-   });
+    });
 
     it('[C260247] Should be able to mark a file as favorite', async () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
@@ -168,10 +170,12 @@ describe('Favorite directive', () => {
 
         await contentServicesPage.getDocumentList().rightClickOnRow(testFile.entry.name);
         await contentServicesPage.pressContextMenuActionNamed('Move');
+
         await contentNodeSelector.checkDialogIsDisplayed();
         await contentNodeSelector.typeIntoNodeSelectorSearchField(testFolder1.entry.name);
         await contentNodeSelector.clickContentNodeSelectorResult(testFolder1.entry.name);
         await contentNodeSelector.clickMoveCopyButton();
+
         await contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
         await contentServicesPage.openFolder(testFolder1.entry.name);
         await contentServicesPage.checkContentIsDisplayed(testFile.entry.name);
@@ -217,5 +221,5 @@ describe('Favorite directive', () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', testFolder3.entry.name);
         await expect(await contentServicesPage.getDocumentList().dataTablePage().getNumberOfSelectedRows()).toBe(1);
         await contentServicesPage.checkIsMarkedFavorite();
-   });
+    });
 });
