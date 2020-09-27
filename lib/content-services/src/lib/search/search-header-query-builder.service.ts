@@ -29,7 +29,7 @@ import { FilterSearch } from './filter-search.interface';
 @Injectable({
     providedIn: 'root'
 })
-export class SearchFilterQueryBuilderService extends BaseQueryBuilderService {
+export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
 
     private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 

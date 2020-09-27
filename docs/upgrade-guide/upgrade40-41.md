@@ -59,4 +59,3 @@ This is all you'll need to set it up in your app. Alternatively, you can also pa
     (filterSelection)="onFilterSelected($event)">
 </adf-document-list>
 ```
-Notice that for this feature in ADF 4.0 to work you also needed to overwrite the `SearchFilterQueryBuilderService` with `SEARCH_QUERY_SERVICE_TOKEN` at an app level to make it work. That is no longer the case with the new version. The component will handle everything for you.

@@ -27,7 +27,7 @@ export * from './search-configuration.interface';
 export * from './search-query-builder.service';
 export * from './search-range.interface';
 export * from './search-query-service.token';
-export * from './search-filter-query-builder.service';
+export * from './search-header-query-builder.service';
 
 export * from './components/search.component';
 export * from './components/search-control.component';

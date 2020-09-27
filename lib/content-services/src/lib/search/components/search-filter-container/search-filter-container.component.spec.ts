@@ -18,7 +18,7 @@ import { Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchService, setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
-import { SearchFilterQueryBuilderService } from '../../search-filter-query-builder.service';
+import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { fakeNodePaging } from './../../../mock/document-list.component.mock';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
@@ -46,7 +46,7 @@ const mockCategory: SearchCategory = {
 describe('SearchFilterContainerComponent', () => {
     let fixture: ComponentFixture<SearchFilterContainerComponent>;
     let component: SearchFilterContainerComponent;
-    let queryBuilder: SearchFilterQueryBuilderService;
+    let queryBuilder: SearchHeaderQueryBuilderService;
     let alfrescoApiService: AlfrescoApiService;
 
     const searchMock: any = {
@@ -60,7 +60,7 @@ describe('SearchFilterContainerComponent', () => {
         ],
         providers: [
             { provide: SearchService, useValue: searchMock },
-            { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchFilterQueryBuilderService }
+            { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService }
         ]
     });
 

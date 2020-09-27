@@ -30,7 +30,7 @@ import {
 import { ConfigurableFocusTrapFactory, ConfigurableFocusTrap } from '@angular/cdk/a11y';
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
-import { SearchFilterQueryBuilderService } from '../../search-filter-query-builder.service';
+import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
 import { SearchCategory } from '../../search-category.interface';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { Subject } from 'rxjs';
@@ -68,7 +68,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchFilterQueryBuilder: SearchFilterQueryBuilderService,
+    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
                 private translationService: TranslationService,
                 private focusTrapFactory: ConfigurableFocusTrapFactory) {
     }
