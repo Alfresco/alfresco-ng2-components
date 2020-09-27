@@ -146,7 +146,7 @@
     "karma-mocha-reporter": "2.2.5",
     "license-checker": "^25.0.1",
     "lint-staged": "^10.2.11",
-    "lite-server": "^2.4.0",
+    "lite-server": "^2.5.4",
     "markdownlint-cli": "^0.23.2",
     "mdast": "^3.0.0",
     "mdast-util-compact": "^2.0.1",

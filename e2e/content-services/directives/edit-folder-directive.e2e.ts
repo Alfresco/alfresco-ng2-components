@@ -113,8 +113,11 @@ describe('Edit folder directive', () => {
         await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', editFolder.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', editFolder.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().checkRowIsSelected('Display name', editFolder.entry.name);
+
         await expect(await contentServicesPage.isEditFolderButtonEnabled()).toBe(true);
+
         await contentServicesPage.clickOnEditFolder();
+
         await editFolderDialog.checkFolderDialogIsDisplayed();
         await editFolderDialog.checkCreateUpdateBtnIsEnabled();
         await editFolderDialog.addFolderName(editFolder.entry.name + 'a');

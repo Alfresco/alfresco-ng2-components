@@ -18,7 +18,7 @@ env:
         - REDIRECT_URI=/
         - REDIRECT_URI_LOGOUT=/logout/
         - BROWSER_RUN=true
-        - MAXINSTANCES=1
+        - MAXINSTANCES=3
 
 branches:
   only:
@@ -44,7 +44,7 @@ stages:
     if: type = cron OR branch = master
 
 addons:
-    chrome: beta
+    chrome: stable
 before_script:
     - export GIT_HASH=`git rev-parse HEAD`
 services:
