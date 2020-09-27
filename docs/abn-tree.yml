@@ -2,7 +2,6 @@
     title: Tutorials
     children:
         - creating-your-first-adf-application.md: 'Creating your first ADF application'
-        - creating-the-app-using-yeoman.md: 'Creating your ADF application using Yeoman'
         - creating-javascript-app-using-alfresco-js-api.md: 'Creating your JavaScript application using alfresco-js-api'
         - new-component.md: 'Adding a new component'
         - new-view.md: 'Adding a new view'

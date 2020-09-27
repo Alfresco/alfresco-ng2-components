@@ -62,7 +62,7 @@ When Activiti 7 is up and running again, you will be then ready to build your ow
 ## Building the ADF application
 
 You can create an ADF application easily using the [Yeoman generator](https://yeoman.io/).
-See our [tutorial](creating-the-app-using-yeoman.md) for a full description of
+See our [tutorial](creating-your-first-adf-application.md) for a full description of
 how to do this. Make sure you select "Process Services with Activiti" as the type of project
 to create.
 
