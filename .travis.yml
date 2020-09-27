@@ -44,7 +44,7 @@ stages:
     if: type = cron OR branch = master
 
 addons:
-    chrome: stable
+    chrome: beta
 before_script:
     - export GIT_HASH=`git rev-parse HEAD`
 services:
