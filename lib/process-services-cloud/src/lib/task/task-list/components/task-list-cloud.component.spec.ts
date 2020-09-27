@@ -239,7 +239,7 @@ describe('TaskListCloudComponent', () => {
         component.reload();
     });
 
-    it('should emit row click event', async (done) => {
+    it('should emit row click event', (done) => {
         const row = new ObjectDataRow({
             entry: {
                 id: '999'
@@ -262,8 +262,8 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('should NOT reload the task list when no parameters changed', () => {
+            spyOn(taskListCloudService, 'getTaskByRequest');
             component.rows = null;
-            component.ngOnChanges({});
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeTruthy();
         });

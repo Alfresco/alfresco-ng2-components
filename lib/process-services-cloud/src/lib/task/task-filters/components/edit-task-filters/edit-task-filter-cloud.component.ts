@@ -315,7 +315,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE',
                 type: 'date-range',
-                key: 'dueDate',
+                key: 'dueDateRange',
                 attributes: { dateType: 'dueDateType', from: '_dueDateFrom', to: '_dueDateTo'},
                 value: {
                     dueDateType: this.taskFilter.dueDateType || null,

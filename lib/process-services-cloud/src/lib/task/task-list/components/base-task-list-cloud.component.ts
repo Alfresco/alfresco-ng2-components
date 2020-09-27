@@ -252,6 +252,5 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     }
 
     abstract load(requestNode);
-
     abstract createRequestNode();
 }

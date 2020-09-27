@@ -250,8 +250,8 @@ describe('ServiceTaskListCloudComponent', () => {
         });
 
         it('should NOT reload the task list when no parameters changed', () => {
+            spyOn(taskListCloudService, 'getTaskByRequest');
             component.rows = null;
-            component.ngOnChanges({});
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeTruthy();
         });
