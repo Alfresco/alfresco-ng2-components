@@ -28,9 +28,8 @@ export class SearchService {
 
     dataLoaded: Subject<ResultSetPaging> = new Subject();
 
-    constructor(protected apiService: AlfrescoApiService,
-                protected searchConfigurationService: SearchConfigurationService) {
-    }
+    constructor(private apiService: AlfrescoApiService,
+                private searchConfigurationService: SearchConfigurationService) {}
 
     /**
      * Gets a list of nodes that match the given search criteria.

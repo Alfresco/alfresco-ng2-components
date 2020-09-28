@@ -47,7 +47,8 @@ import { debounceTime, takeUntil, scan } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { Subject } from 'rxjs';
-import { SEARCH_QUERY_SERVICE_TOKEN, SearchQueryBuilderService } from '../search';
+import { SEARCH_QUERY_SERVICE_TOKEN } from '../search/search-query-service.token';
+import { SearchQueryBuilderService } from '../search/search-query-builder.service';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
