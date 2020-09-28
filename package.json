@@ -153,7 +153,7 @@
     "mdast-util-heading-range": "^2.1.0",
     "mdast-util-toc": "^5.0.3",
     "mdast-zone": "^4.0.0",
-    "mini-css-extract-plugin": "^0.10.0",
+    "mini-css-extract-plugin": "^0.11.2",
     "nconf": "^0.10.0",
     "ng-packagr": "^10.1.0",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
