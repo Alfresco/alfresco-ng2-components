@@ -24,7 +24,7 @@ import { LocalPreferenceCloudService } from '../../../services/local-preference-
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
-import { DateCloudFilterType } from 'process-services-cloud/src/lib/models/date-cloud-filter.model';
+import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;
