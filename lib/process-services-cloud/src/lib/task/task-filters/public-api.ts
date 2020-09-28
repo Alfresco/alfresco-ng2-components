@@ -16,6 +16,7 @@
  */
 
 export * from './components/task-filters-cloud.component';
+export * from './components/service-task-filters-cloud.component';
 export * from './components/edit-task-filters/edit-task-filter-cloud.component';
 export * from './components/edit-task-filters/edit-service-task-filter-cloud.component';
 
