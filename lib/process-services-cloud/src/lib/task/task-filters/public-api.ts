@@ -23,5 +23,6 @@ export * from './components/edit-task-filters/edit-service-task-filter-cloud.com
 export * from './models/filter-cloud.model';
 
 export * from './services/task-filter-cloud.service';
+export * from './services/service-task-filter-cloud.service';
 
 export * from './task-filters-cloud.module';
