@@ -12,14 +12,13 @@
 </div>
 
 <div *ngIf="field?.form?.enableFixedSpace else fixingTemplate">
-    <mat-grid-list cols="{{numberOfColumns}}" class="adf-grid-list" *ngIf="content?.isExpanded">
-        <mat-grid-tile class="adf-grid-list-item"
-            *ngFor="let field of fields"
-            [colspan]="(field?.colspan || 1)"
-            [rowspan]="(field?.rowspan || 1)">
+    <div class="adf-grid-list" [ngStyle]="{ 'grid-template-columns': 'repeat('+numberOfColumns+', 1fr)'}"
+        *ngIf="content?.isExpanded">
+        <div class="adf-grid-list-item" *ngFor="let field of fields"
+            [ngStyle]="{'grid-area': 'auto / auto / span '+(field?.rowspan || 1)+' / span '+(field?.colspan || 1)}">
             <adf-form-field *ngIf="field" [field]="field"></adf-form-field>
-        </mat-grid-tile>
-    </mat-grid-list>
+        </div>
+    </div>
 </div>
 
 <ng-template #fixingTemplate>

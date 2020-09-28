@@ -329,15 +329,15 @@ describe('Form Renderer Component', () => {
             formRendererComponent.formDefinition = formService.parseForm(colspanForm.formRepresentation.formDefinition, null , false, false);
             fixture.detectChanges();
             await fixture.whenStable();
-            const formSizedElement = fixture.nativeElement.querySelector('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container mat-grid-list.adf-grid-list');
+            const formSizedElement = fixture.nativeElement.querySelector('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container div.adf-grid-list');
             expectElementToBeVisible(formSizedElement);
-            const sectionGridElement: HTMLElement[] = fixture.nativeElement.querySelectorAll('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container mat-grid-list .adf-grid-list-item');
+            const sectionGridElement: HTMLElement[] = fixture.nativeElement.querySelectorAll('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container div .adf-grid-list-item');
             sectionGridElement.forEach((element) => {
-                expect(element.style['width']).toBe('calc((50% - 0.5px) * 1 + 0px)', 'Elemens is wrong sized for this section');
+                expect(element.style['grid-area']).toBe('auto / auto / span 1 / span 1', 'Elemens is wrong sized for this section');
             });
 
-            const fullWidthElement = fixture.nativeElement.querySelector('#field-d52ada4e-cbdc-4f0c-a480-5b85fa00e4f8-container mat-grid-list.adf-grid-list .adf-grid-list-item');
-            expect(fullWidthElement.style['width']).toBe('calc((50% - 0.5px) * 2 + 1px)');
+            const fullWidthElement = fixture.nativeElement.querySelector('#field-d52ada4e-cbdc-4f0c-a480-5b85fa00e4f8-container div.adf-grid-list .adf-grid-list-item');
+            expect(fullWidthElement.style['grid-area']).toBe('auto / auto / span 1 / span 2');
         });
 
         it('[C309655] - Should display validation error message when Number widget has invalid value', async () => {

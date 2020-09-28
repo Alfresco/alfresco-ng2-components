@@ -57,8 +57,7 @@
         }
 
         .adf-grid-list {
-            margin-left: -1%;
-            margin-right: -1%;
+            display: grid;
         }
 
         .adf-grid-list-item {
@@ -114,6 +113,10 @@
         .mat-grid-tile {
             overflow: visible;
             width: 80%;
+        }
+
+        adf-form-field {
+            width: 100%;
         }
 
     }
