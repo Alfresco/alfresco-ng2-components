@@ -21,7 +21,7 @@ import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { DownloadZipService } from '../../services/download-zip.service';
-import { Observable } from 'rxjs/index';
+import { Observable } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('DownloadZipDialogComponent', () => {

@@ -25,7 +25,7 @@ import { TranslationService } from '../../../services/translation.service';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 import { FormControl } from '@angular/forms';
 import { debounceTime, takeUntil, filter } from 'rxjs/operators';
-import { Subject } from 'rxjs/internal/Subject';
+import { Subject } from 'rxjs';
 
 export const DEFAULT_SEPARATOR = ', ';
 const templateTypes = {
