@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy, Inject, Input } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { TranslationService } from '@alfresco/adf-core';
+import { TranslationService, SearchService } from '@alfresco/adf-core';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 import { FacetField } from '../../facet-field.interface';
 import { SearchFilterList } from './models/search-filter-list.model';
 import { takeUntil } from 'rxjs/operators';
-import { GenericBucket, GenericFacetResponse, ResultSetContext } from '@alfresco/js-api';
+import { GenericBucket, GenericFacetResponse, ResultSetContext, ResultSetPaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 
@@ -40,6 +40,9 @@ export interface SelectedBucket {
     host: { class: 'adf-search-filter' }
 })
 export class SearchFilterComponent implements OnInit, OnDestroy {
+
+    @Input()
+    showContextFacets: boolean = true;
 
     private DEFAULT_PAGE_SIZE = 5;
 
@@ -60,6 +63,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService,
+                private searchService: SearchService,
                 private translationService: TranslationService) {
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
@@ -80,16 +84,14 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-
-        // problematic as it adds the defaults facet fields, needs investigation on if it can be removed
-        // if (this.queryBuilder) {
-        //     this.queryBuilder.executed
-        //         .pipe(takeUntil(this.onDestroy$))
-        //         .subscribe((resultSetPaging: ResultSetPaging) => {
-        //             this.onDataLoaded(resultSetPaging);
-        //             this.searchService.dataLoaded.next(resultSetPaging);
-        //         });
-        // }
+        if (this.queryBuilder) {
+            this.queryBuilder.executed
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe((resultSetPaging: ResultSetPaging) => {
+                    this.onDataLoaded(resultSetPaging);
+                    this.searchService.dataLoaded.next(resultSetPaging);
+                });
+        }
     }
 
     ngOnDestroy() {
@@ -211,7 +213,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
 
                 this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
-            } else if (responseField) {
+            } else if (responseField && this.showContextFacets) {
 
                 const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
                 bucketList.filter = this.getBucketFilterFunction(bucketList);
@@ -266,7 +268,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
 
                 this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
-            } else if (responseField) {
+            } else if (responseField && this.showContextFacets) {
 
                 const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, this.facetQueriesPageSize);
                 bucketList.filter = this.getBucketFilterFunction(bucketList);

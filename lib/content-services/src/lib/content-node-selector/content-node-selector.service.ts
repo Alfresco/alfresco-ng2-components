@@ -49,10 +49,13 @@ export class ContentNodeSelectorService {
                 skipCount: skipCount
             },
             filterQueries: [
-                { query: `TYPE:'cm:folder'${ showFiles ? " OR TYPE:'cm:content'" : '' }` },
+                { query: `TYPE:'cm:folder'${showFiles ? " OR TYPE:'cm:content'" : ''}` },
                 { query: 'NOT cm:creator:System' },
                 ...parentFiltering
-            ]
+            ],
+            scope: {
+                locations: 'nodes'
+            }
         };
 
     }

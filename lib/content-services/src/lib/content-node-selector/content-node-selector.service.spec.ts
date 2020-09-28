@@ -53,7 +53,7 @@ describe('ContentNodeSelectorService', () => {
     it('should make the search restricted to nodes only', () => {
         const queryBody = service.createQuery('nuka cola quantum');
 
-        expect(queryBody.scope.locations).toEqual(['nodes']);
+        expect(queryBody.scope.locations).toEqual('nodes');
     });
 
     it('should set the maxItems and paging properly by parameters', () => {

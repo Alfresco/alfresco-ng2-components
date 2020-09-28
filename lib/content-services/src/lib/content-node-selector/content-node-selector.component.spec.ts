@@ -30,7 +30,7 @@ import { DocumentListComponent } from '../document-list/components/document-list
 import { ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('ContentNodeSelectorDialogComponent', () => {
+describe('ContentNodeSelectorComponent', () => {
 
     let component: ContentNodeSelectorComponent;
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;

@@ -245,7 +245,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private customResourcesService: CustomResourcesService,
-                @Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilderService: SearchQueryBuilderService,
+                @Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilderService: SearchQueryBuilderService,
                 private userPreferencesService: UserPreferencesService,
                 private nodesApiService: NodesApiService,
                 private uploadService: UploadService,
