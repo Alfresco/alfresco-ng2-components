@@ -57,7 +57,6 @@ export class LoginPage {
         Logger.log('Login With ' + username);
 
         const authType = await LocalStorageUtil.getConfigField('authType');
-        const oauth: any = await LocalStorageUtil.getConfigField('oauth2');
 
         if (!authType || authType === 'OAUTH') {
             await this.loginSSOIdentityService(username, password);
