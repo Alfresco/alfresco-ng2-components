@@ -267,6 +267,8 @@ export class DataTableComponentPage {
             if (retry < 3) {
                 retry++;
                 await this.checkContentIsDisplayed(columnName, columnValue, retry);
+            } else {
+                throw error;
             }
         }
     }
@@ -281,6 +283,8 @@ export class DataTableComponentPage {
             if (retry < 3) {
                 retry++;
                 await this.checkContentIsNotDisplayed(columnName, columnValue, retry);
+            } else {
+                throw error;
             }
         }
     }
