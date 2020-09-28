@@ -68,7 +68,7 @@ export class InMemoryFormService extends FormService {
         });
     }
 
-    parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
+    parseForm(json: any, data?: FormValues, readOnly: boolean = false, prefixedSpace: boolean = true): FormModel {
         if (json) {
             const flattenForm = {
                 ...json.formRepresentation,
@@ -81,7 +81,7 @@ export class InMemoryFormService extends FormService {
                 formValues[variable.name] = variable.value;
             });
 
-            const form = new FormModel(flattenForm, formValues, readOnly, this);
+            const form = new FormModel(flattenForm, formValues, readOnly, this, prefixedSpace);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(<any> form, {

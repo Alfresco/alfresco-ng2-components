@@ -6,6 +6,7 @@
                 <adf-form
                     [showRefreshButton]="false"
                     [form]="form"
+                    [enableFixedSpacedForm]="keepPrefixedSpace"
                     (formError)="logErrors($event)">
                 </adf-form>
             </div>
@@ -46,6 +47,11 @@
                 </a>
             </div>
 
+        </mat-tab>
+        <mat-tab label="Options">
+            <mat-slide-toggle [checked]="keepPrefixedSpace" (change)="togglePrefixedSpace()" >
+                Keep prefixed space for hidden field
+            </mat-slide-toggle>
         </mat-tab>
 
     </mat-tab-group>

@@ -38,6 +38,7 @@ export class FormComponent implements OnInit, OnDestroy {
     errorFields: FormFieldModel[] = [];
     formConfig: string;
     editor: any;
+    keepPrefixedSpace = true;
 
     editorOptions = {
         theme: 'vs-dark',
@@ -85,7 +86,7 @@ export class FormComponent implements OnInit, OnDestroy {
     }
 
     parseForm() {
-        this.form = this.formService.parseForm(JSON.parse(this.formConfig));
+        this.form = this.formService.parseForm(JSON.parse(this.formConfig), null, false, this.keepPrefixedSpace);
     }
 
     onSaveFormConfig() {
@@ -112,5 +113,9 @@ export class FormComponent implements OnInit, OnDestroy {
         this.onInitFormEditor(this.editor);
 
         $event.target.value = '';
+    }
+
+    togglePrefixedSpace() {
+        this.keepPrefixedSpace = !this.keepPrefixedSpace;
     }
 }
