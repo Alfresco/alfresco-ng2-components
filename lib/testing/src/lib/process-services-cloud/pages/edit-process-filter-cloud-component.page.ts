@@ -32,11 +32,13 @@ export class EditProcessFilterCloudComponentPage {
     private locatorStatusDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-status']`));
     private locatorSortDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-sort']`));
     private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`));
+    private locatorProcessDefinitionNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`));
 
     appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
     statusDropdown = new DropdownPage(this.locatorStatusDropdown);
     sortDropdown = new DropdownPage(this.locatorSortDropdown);
     orderDropdown = new DropdownPage(this.locatorOrderDropdown);
+    processDefinitionNameDropdown = new DropdownPage(this.locatorProcessDefinitionNameDropdown);
 
     editProcessFilterDialogPage = new EditProcessFilterDialogPage();
 
@@ -88,6 +90,10 @@ export class EditProcessFilterCloudComponentPage {
 
     async setAppNameDropDown(option: string): Promise<void> {
         await this.appNameDropdown.selectDropdownOption(option);
+    }
+
+    async setProcessDefinitionNameDropDown(option: string): Promise<void> {
+        await this.processDefinitionNameDropdown.selectDropdownOption(option);
     }
 
     async getApplicationSelected(): Promise<string> {
