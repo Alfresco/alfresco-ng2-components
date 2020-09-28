@@ -25,13 +25,12 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
-import { of, throwError } from 'rxjs';
+import { of, throwError, Observable } from 'rxjs';
 import { OauthConfigModel } from '../../models/oauth-config.model';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { Observable } from 'rxjs/index';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginComponent', () => {
