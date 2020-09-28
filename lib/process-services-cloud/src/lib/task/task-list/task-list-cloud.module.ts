@@ -19,6 +19,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material.module';
 import { TaskListCloudComponent } from './components/task-list-cloud.component';
+import { ServiceTaskListCloudComponent } from './components/service-task-list-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
@@ -27,7 +28,13 @@ import { CoreModule } from '@alfresco/adf-core';
         MaterialModule,
         CoreModule
     ],
-    declarations: [TaskListCloudComponent],
-    exports: [TaskListCloudComponent]
+    declarations: [
+        TaskListCloudComponent,
+        ServiceTaskListCloudComponent
+    ],
+    exports: [
+        TaskListCloudComponent,
+        ServiceTaskListCloudComponent
+    ]
 })
 export class TaskListCloudModule { }

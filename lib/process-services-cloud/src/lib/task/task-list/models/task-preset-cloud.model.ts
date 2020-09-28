@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let taskPresetsCloudDefaultModel = {
+export const taskPresetsCloudDefaultModel = {
     'default': [
         {
             'key': 'entry.name',
@@ -34,6 +34,37 @@ export let taskPresetsCloudDefaultModel = {
             'key': 'entry.assignee',
             'type': 'text',
             'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE',
+            'cssClass': 'hidden',
+            'sortable': true
+        }
+    ]
+};
+
+export const serviceTaskPresetsCloudDefaultModel = {
+    'default': [
+        {
+            'key': 'entry.activityName',
+            'type': 'text',
+            'title': 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.ACTIVITY_NAME',
+            'sortable': true
+        },
+        {
+            'key': 'entry.status',
+            'type': 'text',
+            'title': 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STATUS',
+            'sortable': true
+        },
+        {
+            'key': 'entry.startedDate',
+            'type': 'text',
+            'title': 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STARTED_DATE',
+            'cssClass': 'hidden',
+            'sortable': true
+        },
+        {
+            'key': 'entry.completedDate',
+            'type': 'text',
+            'title': 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.COMPLETED_DATE',
             'cssClass': 'hidden',
             'sortable': true
         }

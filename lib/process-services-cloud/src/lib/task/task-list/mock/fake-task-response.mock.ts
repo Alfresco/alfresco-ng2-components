@@ -79,7 +79,7 @@ export const fakeTaskCloudList = {
     }
 };
 
-export let fakeGlobalTask = {
+export const fakeGlobalTask = {
     list: {
         entries: [
             {
@@ -117,7 +117,41 @@ export let fakeGlobalTask = {
     }
 };
 
-export let fakeCustomSchema =
+export const fakeServiceTask = {
+    list: {
+        entries: [
+            {
+                entry: {
+                    activityType: 'serviceTask',
+                    activityName: 'serviceTaskName',
+                    appName: 'simpleapp',
+                    completedDate: '2020-09-22T16:03:37.482+0000',
+                    elementId: 'ServiceTask_0lszm0x',
+                    executionId: '2023b099-fced-11ea-b116-62141048995a',
+                    id: '04fdf69f-4ddd-48ab-9563-da776c9b163c',
+                    processDefinitionId: 'Process_24rkVVSR:1:0db78dcd-fc14-11ea-bce0-62141048995a',
+                    processDefinitionKey: 'Process_24rkVVSR',
+                    processDefinitionVersion: 1,
+                    processInstanceId: '2023b097-fced-11ea-b116-62141048995a',
+                    serviceFullName: 'simpleapp-rb',
+                    serviceName: 'simpleapp-rb',
+                    serviceVersion: '',
+                    startedDate: '2020-09-22T16:03:37.444+0000',
+                    status: 'COMPLETED'
+                }
+            }
+        ],
+        pagination: {
+            skipCount: 0,
+            maxItems: 100,
+            count: 1,
+            hasMoreItems: false,
+            totalItems: 1
+        }
+    }
+};
+
+export const fakeCustomSchema =
     [
         new ObjectDataColumn({
             'key': 'fakeName',

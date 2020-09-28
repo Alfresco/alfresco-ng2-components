@@ -23,12 +23,14 @@ import { TaskFiltersCloudComponent } from './components/task-filters-cloud.compo
 import { MaterialModule } from '../../material.module';
 import { CoreModule, MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
 import { HttpClientModule } from '@angular/common/http';
-import { EditTaskFilterCloudComponent } from './components/edit-task-filter-cloud.component';
-import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog-cloud.component';
 import { AppListCloudModule } from './../../app/app-list-cloud.module';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ProcessCommonModule } from '../../common/process-common.module';
 import { PeopleCloudModule } from '../../people/people-cloud.module';
+import { EditServiceTaskFilterCloudComponent } from './components/edit-task-filters/edit-service-task-filter-cloud.component';
+import { EditTaskFilterCloudComponent } from './components/edit-task-filters/edit-task-filter-cloud.component';
+import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog/task-filter-dialog-cloud.component';
+import { ServiceTaskFiltersCloudComponent } from './components/service-task-filters-cloud.component';
 
 @NgModule({
     imports: [
@@ -43,8 +45,19 @@ import { PeopleCloudModule } from '../../people/people-cloud.module';
         ProcessCommonModule,
         PeopleCloudModule
     ],
-    declarations: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent, TaskFilterDialogCloudComponent],
-    exports: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent],
+    declarations: [
+        TaskFiltersCloudComponent,
+        ServiceTaskFiltersCloudComponent,
+        EditTaskFilterCloudComponent,
+        EditServiceTaskFilterCloudComponent,
+        TaskFilterDialogCloudComponent
+    ],
+    exports: [
+        TaskFiltersCloudComponent,
+        ServiceTaskFiltersCloudComponent,
+        EditTaskFilterCloudComponent,
+        EditServiceTaskFilterCloudComponent
+    ],
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }

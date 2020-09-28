@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { TaskFilterCloudModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
 
-export let fakeGlobalFilter = [
+export const fakeGlobalFilter = [
     new TaskFilterCloudModel({
         name: 'FakeInvolvedTasks',
         key: 'fake-involved-tasks',
@@ -44,7 +44,31 @@ export let fakeGlobalFilter = [
     })
 ];
 
-export let fakeFilter = new TaskFilterCloudModel({
+export const fakeGlobalServiceFilters = [
+    {
+        name: 'FakeServiceTasks',
+        key: 'fake-involved-tasks',
+        icon: 'adjust',
+        id: '10',
+        status: 'open'
+    } as ServiceTaskFilterCloudModel,
+    {
+        name: 'FakeMyServiceTasks1',
+        key: 'fake-my-tast1',
+        icon: 'done',
+        id: '11',
+        status: 'open'
+    } as ServiceTaskFilterCloudModel,
+    {
+        name: 'FakeMyServiceTasks2',
+        key: 'fake-my-tast2',
+        icon: 'inbox',
+        id: '12',
+        status: 'open'
+    } as ServiceTaskFilterCloudModel
+];
+
+export const fakeFilter = new TaskFilterCloudModel({
     name: 'FakeInvolvedTasks',
     icon: 'adjust',
     id: 'mock-task-filter-id',
@@ -56,7 +80,19 @@ export let fakeFilter = new TaskFilterCloudModel({
     sort: 'id'
 });
 
-export let fakeAllTaskFilter = new TaskFilterCloudModel({
+export const fakeServiceFilter = {
+    name: 'FakeInvolvedTasks',
+    icon: 'adjust',
+    id: 'mock-task-filter-id',
+    status: 'COMPLETED',
+    appName: 'mock-app-name',
+    processDefinitionId: 'process-def-id',
+    activityName: 'fake-activity',
+    order: 'ASC',
+    sort: 'id'
+} as ServiceTaskFilterCloudModel;
+
+export const fakeAllTaskFilter = new TaskFilterCloudModel({
     name: 'AllTasks',
     icon: 'adjust',
     id: 'mock-task-filter-id',

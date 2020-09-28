@@ -101,9 +101,24 @@
       }
     }
   },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "Activity name",
+      "ACTIVITY_TYPE": "Status",
+      "ID": "Id",
+      "COMPLETED_DATE": "Completed date",
+      "STARTED_DATE": "Started date",
+      "STATUS": "Status"
+    }
+  },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "My Tasks",
     "QUEUED_TASKS": "Queued Tasks",
+    "COMPLETED_TASKS": "Completed Tasks"
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "All Service Tasks",
+    "ERRORED_TASKS": "Errored Tasks",
     "COMPLETED_TASKS": "Completed Tasks"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -151,6 +166,24 @@
       "TITLE": "Save filter as",
       "SAVE": "SAVE",
       "CANCEL": "CANCEL"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "ApplicationName",
+      "SERVICE_TASK_ID": "ServiceTaskId",
+      "SERVICE_NAME": "ServiceName",
+      "ELEMENT_ID": "ElementId",
+      "PROCESS_DEF_NAME": "ProcessDefinitionName",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
+      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
+      "STATUS": "Status",
+      "DIRECTION": "Direction",
+      "ACTIVITY_NAME": "ActivityName",
+      "ACTIVITY_TYPE": "ActivityType",
+      "SORT": "Sort",
+      "STARTED_DATE": "StartedDate",
+      "COMPLETED_DATE": "CompletedDate"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {

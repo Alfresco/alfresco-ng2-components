@@ -19,7 +19,7 @@ import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
 import { ComponentSelectionMode } from '../../../types';
 
-export class TaskFilterCloudModel  {
+export class TaskFilterCloudModel {
     id: string;
     name: string;
     key: string;
@@ -116,6 +116,38 @@ export class TaskFilterCloudModel  {
         return !!this.dateRangeFilterService.isDateRangeType(type);
     }
 }
+
+export interface ServiceTaskFilterCloudModel {
+    id?: string;
+    name?: string;
+    key?: string;
+    icon?: string;
+    index?: number;
+    appName?: string;
+    status?: string;
+    sort?: string;
+    order?: string;
+    activityName?: string;
+    activityType?: string;
+    completedDate?: Date;
+    elementId?: string;
+    executionId?: string;
+    processDefinitionId?: string;
+    processDefinitionKey?: string;
+    processDefinitionVersion?: number;
+    processInstanceId?: string;
+    serviceTaskId?: string;
+    serviceFullName?: string;
+    serviceName?: string;
+    serviceVersion?: string;
+    startedDate?: Date;
+}
+
+export enum TaskType {
+    UserTask = 'userTask',
+    ServiceTask = 'serviceTask'
+}
+
 export class FilterParamsModel {
 
     id?: string;
@@ -137,7 +169,7 @@ export class TaskFilterAction {
     actionType: string;
     icon: string;
     tooltip: string;
-    filter: TaskFilterCloudModel;
+    filter: TaskFilterCloudModel | ServiceTaskFilterCloudModel;
 
     constructor(obj?: any) {
         if (obj) {

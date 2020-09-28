@@ -17,27 +17,28 @@
 
 import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
-import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
+import { FilterParamsModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 import { takeUntil } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
+import { ServiceTaskFilterCloudService } from '../services/service-task-filter-cloud.service';
 
 @Component({
-    selector: 'adf-cloud-task-filters',
+    selector: 'adf-cloud-service-task-filters',
     templateUrl: './base-task-filters-cloud.component.html',
     styleUrls: ['base-task-filters-cloud.component.scss']
 })
-export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
+export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
+
     /** Emitted when a filter in the list is clicked. */
     @Output()
-    filterClick: EventEmitter<TaskFilterCloudModel> = new EventEmitter<TaskFilterCloudModel>();
+    filterClick: EventEmitter<ServiceTaskFilterCloudModel> = new EventEmitter<ServiceTaskFilterCloudModel>();
 
-    filters$: Observable<TaskFilterCloudModel[]>;
-    filters: TaskFilterCloudModel[] = [];
-    currentFilter: TaskFilterCloudModel;
+    filters$: Observable<ServiceTaskFilterCloudModel[]>;
+    filters: ServiceTaskFilterCloudModel[] = [];
+    currentFilter: ServiceTaskFilterCloudModel;
 
-    constructor(private taskFilterCloudService: TaskFilterCloudService,
+    constructor(private serviceTaskFilterCloudService: ServiceTaskFilterCloudService,
                 private translationService: TranslationService) {
             super();
     }
@@ -60,10 +61,10 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
      * Return the filter list filtered by appName
      */
     getFilters(appName: string) {
-        this.filters$ = this.taskFilterCloudService.getTaskListFilters(appName);
+        this.filters$ = this.serviceTaskFilterCloudService.getTaskListFilters(appName);
 
         this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
-            (res: TaskFilterCloudModel[]) => {
+            (res: ServiceTaskFilterCloudModel[]) => {
                 this.resetFilter();
                 this.filters = Object.assign([], res);
                 this.selectFilterAndEmit(this.filterParam);
@@ -77,7 +78,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     public selectFilter(paramFilter: FilterParamsModel) {
         if (paramFilter) {
-            this.currentFilter = this.filters.find((filter: any, index) =>
+            this.currentFilter = (this.filters as Array<ServiceTaskFilterCloudModel>).find((filter: any, index) =>
                 paramFilter.index === index ||
                 paramFilter.key === filter.key ||
                 paramFilter.id === filter.id ||
