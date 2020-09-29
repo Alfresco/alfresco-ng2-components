@@ -328,6 +328,17 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                     DateCloudFilterType.NEXT_7_DAYS,
                     DateCloudFilterType.RANGE
                 ]
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_DATE',
+                type: 'date-range',
+                key: 'completedDateRange',
+                attributes: { dateType: 'completedDateType', from: '_completedFrom', to: '_completedTo'},
+                value: {
+                    completedDateType: this.taskFilter.completedDateType || null,
+                    _completedFrom: this.taskFilter.completedFrom || null,
+                    _completedTo: this.taskFilter.completedTo || null
+                }
             })
         ];
     }
