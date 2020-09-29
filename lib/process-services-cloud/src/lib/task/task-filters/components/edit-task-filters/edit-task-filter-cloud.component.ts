@@ -339,6 +339,13 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                     _completedFrom: this.taskFilter.completedFrom || null,
                     _completedTo: this.taskFilter.completedTo || null
                 }
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_BY',
+                type: 'people',
+                key: 'completedBy',
+                value: this.taskFilter.completedBy ? [this.taskFilter.completedBy] : null,
+                selectionMode: 'single'
             })
         ];
     }

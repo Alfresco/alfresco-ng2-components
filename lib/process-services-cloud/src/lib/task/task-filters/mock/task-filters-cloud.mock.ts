@@ -77,7 +77,11 @@ export const fakeFilter = new TaskFilterCloudModel({
     processDefinitionId: 'process-def-id',
     assignee: 'fake-involved',
     order: 'ASC',
-    sort: 'id'
+    sort: 'id',
+    completedBy: {
+        id: 'mock-id',
+        username: 'testCompletedByUser'
+    }
 });
 
 export const fakeServiceFilter = {

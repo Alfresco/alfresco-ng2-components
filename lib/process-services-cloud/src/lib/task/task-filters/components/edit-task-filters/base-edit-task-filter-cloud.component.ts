@@ -27,7 +27,7 @@ import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
-import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { IdentityUserModel, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
 @Directive()
 // tslint:disable-next-line: directive-class-suffix
@@ -182,6 +182,10 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
         return property.type === 'date-range';
     }
 
+    isUserSelectType(property: TaskFilterProperties): boolean {
+        return property.type === 'people';
+    }
+
     isSelectType(property: TaskFilterProperties): boolean {
         return property.type === 'select';
     }
@@ -290,6 +294,10 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
         this.editTaskFilterForm.get(property.attributes?.to).setValue(
             dateRange.endDate ? dateRange.endDate : null
         );
+    }
+
+    onChangedUser(users: IdentityUserModel[], userProperty: TaskFilterProperties) {
+        this.getPropertyController(userProperty).setValue(users[0]);
     }
 
     hasError(property: TaskFilterProperties): boolean {
