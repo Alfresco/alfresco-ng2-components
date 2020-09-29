@@ -528,6 +528,64 @@ describe('EditTaskFilterCloudComponent', () => {
             });
             component.onFilterChange();
         });
+
+        it('should set the correct completed date range when date range option is changed', (done) => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedDateRange'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+
+            const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('completedDateType');
+            startedDateTypeControl.setValue(DateCloudFilterType.TODAY);
+            const dateFilter = {
+                startFrom: moment().startOf('day').toDate(),
+                startTo: moment().endOf('day').toDate()
+            };
+
+            component.filterChange.subscribe(() => {
+                expect(component.changedTaskFilter.completedFrom).toEqual(dateFilter.startFrom.toISOString());
+                expect(component.changedTaskFilter.completedTo).toEqual(dateFilter.startTo.toISOString());
+                done();
+            });
+            component.onFilterChange();
+        });
+
+        it('should update form on date range when completed value is updated', (done) => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedDateRange'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+
+            const dateFilter = {
+                startDate: moment().startOf('day').toDate(),
+                endDate: moment().endOf('day').toDate()
+            };
+
+            const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('completedDateType');
+            startedDateTypeControl.setValue(DateCloudFilterType.RANGE);
+
+            component.onDateRangeFilterChanged(dateFilter, {
+                key: 'completedDateType',
+                label: '',
+                type: 'date-range',
+                value: '',
+                attributes: {
+                    dateType: 'completedDateType',
+                    from: '_completedFrom',
+                    to: '_completedTo'
+                }
+            });
+
+            fixture.detectChanges();
+            component.filterChange.subscribe(() => {
+                expect(component.changedTaskFilter.completedFrom).toEqual(dateFilter.startDate.toISOString());
+                expect(component.changedTaskFilter.completedTo).toEqual(dateFilter.endDate.toISOString());
+                done();
+            });
+            component.onFilterChange();
+        });
     });
 
     describe('sort properties', () => {
