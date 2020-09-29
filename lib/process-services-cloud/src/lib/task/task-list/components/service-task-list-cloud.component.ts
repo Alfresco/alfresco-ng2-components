@@ -34,7 +34,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
     static PRESET_KEY = 'adf-cloud-service-task-list.presets';
 
     @Input()
-    queryParams: { [key: string]: string } = {};
+    queryParams: { [key: string]: any } = {};
 
     constructor(private taskListCloudService: TaskListCloudService,
                 appConfigService: AppConfigService,
@@ -57,13 +57,27 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
     }
 
     createRequestNode(): ServiceTaskQueryCloudRequestModel {
-        const requestNode = {
-            ...this.queryParams,
+        const requestNode: ServiceTaskQueryCloudRequestModel = {
             appName: this.appName,
             maxItems: this.size,
             skipCount: this.skipCount,
-            sorting: this.sorting
-        };
-        return <ServiceTaskQueryCloudRequestModel> requestNode;
+            sorting: this.sorting,
+            id: this.queryParams.serviceTaskId,
+            activityName: this.queryParams.activityName,
+            activityType: this.queryParams.activityType,
+            completedDate: this.queryParams.completedDate,
+            elementId: this.queryParams.elementId,
+            executionId: this.queryParams.executionId,
+            processDefinitionId: this.queryParams.processDefinitionId,
+            processDefinitionKey: this.queryParams.processDefinitionKey,
+            processDefinitionVersion: this.queryParams.processDefinitionVersion,
+            processInstanceId: this.queryParams.processInstanceId,
+            serviceFullName: this.queryParams.serviceFullName,
+            serviceName: this.queryParams.serviceName,
+            serviceVersion: this.queryParams.serviceVersion,
+            startedDate: this.queryParams.startedDate,
+            status: this.queryParams.status
+        } as ServiceTaskQueryCloudRequestModel;
+        return requestNode;
     }
 }

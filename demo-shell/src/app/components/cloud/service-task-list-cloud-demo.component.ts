@@ -34,6 +34,8 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
     @ViewChild('taskCloud')
     taskCloud: ServiceTaskListCloudComponent;
 
+    appName = 'simpleapp';
+
     isFilterLoaded = false;
 
     selectedRow: any;
@@ -50,6 +52,7 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
     selectedAction: { id: number, name: string, actionType: string};
     selectedContextAction: { id: number, name: string, actionType: string};
     selectionMode: string;
+    filterId: string;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -86,6 +89,11 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
         }
     }
 
+    onTaskFilterSelected(filter: ServiceTaskFilterCloudModel) {
+        this.filterId = filter.id;
+        this.editedFilter = filter;
+    }
+
     onChangePageSize(event: PaginationModel) {
         this.userPreference.paginationSize = event.maxItems;
     }
@@ -95,6 +103,7 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     onFilterChange(filter: ServiceTaskFilterCloudModel) {
+        this.appName = filter.appName;
         this.editedFilter = Object.assign({}, filter);
         this.sortArray = [new TaskListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order })];
     }
