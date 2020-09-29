@@ -236,7 +236,7 @@ export class ServiceTaskFilterCloudService {
      * @returns String of task filters preference key
      */
     private prepareKey(appName: string): string {
-        return `task-filters-${appName}-${this.identityUserService.getCurrentUserInfo().username}`;
+        return `service-task-filters-${appName}-${this.identityUserService.getCurrentUserInfo().username}`;
     }
 
     /**
@@ -262,7 +262,7 @@ export class ServiceTaskFilterCloudService {
                 key: 'my-service-tasks',
                 icon: 'inbox',
                 appName,
-                status: 'ALL',
+                status: '',
                 sort: 'startedDate',
                 order: 'DESC'
             } as ServiceTaskFilterCloudModel,

@@ -248,7 +248,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     }
 
     isValidSorting(sorting: TaskListCloudSortingModel[]) {
-        return sorting.length && sorting[0].orderBy && sorting[0].direction;
+        return sorting && sorting.length && sorting[0].orderBy && sorting[0].direction;
     }
 
     abstract load(requestNode);
