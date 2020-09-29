@@ -107,6 +107,18 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
     @Input()
     standalone: boolean = false;
 
+    /** Filter the tasks. Display only tasks with completedDate equal to the supplied date. */
+    @Input()
+    completedDate: string = '';
+
+    /** Filter the tasks. Display only tasks with completedFrom equal to the supplied date. */
+    @Input()
+    completedFrom: string = '';
+
+    /** Filter the tasks. Display only tasks with completedTo equal to the supplied date. */
+    @Input()
+    completedTo: string = '';
+
     constructor(private taskListCloudService: TaskListCloudService,
                 appConfigService: AppConfigService,
                 userPreferences: UserPreferencesService) {
