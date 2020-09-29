@@ -160,7 +160,8 @@
       "DUE_DATE": "DueDate",
       "SORT": "Sort",
       "START_DATE": "StartDate",
-      "COMPLETED_BY": "Completed By"
+      "COMPLETED_BY": "Completed By",
+      "COMPLETED_DATE": "CompletedDate"
     },
     "DIALOG": {
       "TITLE": "Save filter as",

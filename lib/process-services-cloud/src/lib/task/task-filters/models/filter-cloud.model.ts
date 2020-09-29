@@ -45,7 +45,11 @@ export class TaskFilterCloudModel {
     lastModifiedFrom: Date;
     lastModifiedTo: Date;
     completedBy: string;
+    completedDateType: DateCloudFilterType;
+    completedDate: Date;
 
+    private _completedFrom: string;
+    private _completedTo: string;
     private _dueDateFrom: string;
     private _dueDateTo: string;
     private dateRangeFilterService = new DateRangeFilterService();
@@ -79,6 +83,10 @@ export class TaskFilterCloudModel {
             this.lastModifiedFrom = obj.lastModifiedFrom || null;
             this.lastModifiedTo = obj.lastModifiedTo || null;
             this.completedBy = obj.completedBy || null;
+            this.completedDateType = obj.completedDateType || null;
+            this.completedFrom = obj._completedFrom || null;
+            this.completedTo = obj._completedTo || null;
+            this.completedDate = obj.completedDate || null;
         }
     }
 
@@ -102,6 +110,28 @@ export class TaskFilterCloudModel {
             return this._dueDateTo;
         }
         return this.getEndDate(this.dueDateType);
+    }
+
+    set completedFrom(completedFrom: string) {
+        this._completedFrom = completedFrom;
+    }
+
+    set completedTo(completedTo: string) {
+        this._completedTo = completedTo;
+    }
+
+    get completedFrom(): string {
+        if (this.isDateRangeType(this.completedDateType)) {
+            return this._completedFrom;
+        }
+        return this.getStartDate(this.completedDateType);
+    }
+
+    get completedTo(): string {
+        if (this.isDateRangeType(this.completedDateType)) {
+            return this._completedTo;
+        }
+        return this.getEndDate(this.completedDateType);
     }
 
     private getStartDate(key: DateCloudFilterType) {
