@@ -162,7 +162,10 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
             skipCount: this.skipCount,
             sorting: this.sorting,
             standalone: this.standalone,
-            completedBy: this.completedBy
+            completedBy: this.completedBy,
+            completedFrom: this.completedFrom,
+            completedTo: this.completedTo,
+            completedDate: this.completedDate
         };
         return new TaskQueryCloudRequestModel(requestNode);
     }
