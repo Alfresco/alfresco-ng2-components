@@ -20,9 +20,7 @@ import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { SearchConfiguration } from './search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 
-@Injectable({
-    providedIn: 'any'
-})
+@Injectable()
 export class SearchQueryBuilderService extends BaseQueryBuilderService {
 
     public isFilterServiceActive(): boolean {

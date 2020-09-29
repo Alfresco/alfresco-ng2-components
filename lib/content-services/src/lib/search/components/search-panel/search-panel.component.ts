@@ -23,7 +23,6 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 @Component({
     selector: 'adf-search-panel',
     templateUrl: './search-panel.component.html',
-    styleUrls: ['./search-panel.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-panel' }
 
