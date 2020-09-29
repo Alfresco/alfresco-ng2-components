@@ -43,6 +43,9 @@ export class TaskQueryCloudRequestModel {
     maxItems: number;
     skipCount: number;
     sorting?: TaskListCloudSortingModel[];
+    completedDate?: Date;
+    completedFrom?: string;
+    completedTo?: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -71,6 +74,9 @@ export class TaskQueryCloudRequestModel {
             this.maxItems = obj.maxItems;
             this.skipCount = obj.skipCount;
             this.sorting = obj.sorting;
+            this.completedFrom = obj.completedFrom;
+            this.completedTo = obj.completedTo;
+            this.completedDate = obj.completedDate;
         }
     }
 }
