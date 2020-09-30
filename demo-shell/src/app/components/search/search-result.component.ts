@@ -62,7 +62,6 @@ export class SearchResultComponent implements OnInit, OnDestroy {
             .subscribe(() => {
                 this.sorting = this.getSorting();
                 this.isLoading = true;
-                this.queryBuilder.execute();
             });
 
         this.queryBuilder.executed
