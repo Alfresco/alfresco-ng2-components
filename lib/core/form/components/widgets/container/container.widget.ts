@@ -74,15 +74,7 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
      * Serializes column fields
      */
     private getFields(): FormFieldModel[] {
-        const fields = [];
-        const toBeComputed = [];
-        const rowspanOffset = [];
-        let size = 0;
-        for (let i = 0; i < this.numberOfColumns; i++) {
-            toBeComputed.push(this.content.columns[i]?.fields?.length || 0);
-            rowspanOffset[i] = 0;
-            size += (this.content.columns[i]?.fields?.length || 0);
-        }
+        const { size, rowspanOffset, numberOfColumnElementsToBeProcessedRemaining , fields } = this.initializeHelpers();
 
         for (let i = 0; i < size; i++) {
             let fieldExist = false;
@@ -90,30 +82,60 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
             while (columnIndex < this.numberOfColumns) {
                 let field;
                 if (rowspanOffset[columnIndex] > 0) {
-                    rowspanOffset[columnIndex] = rowspanOffset[columnIndex] - 1;
+                    this.decreaseRowspanOffsetForColumn(rowspanOffset, columnIndex);
                 } else {
-                    const rowToCompute = (this.content.columns[columnIndex]?.fields?.length || 0) - toBeComputed[columnIndex];
-                    field = this.content.columns[columnIndex]?.fields[rowToCompute];
+                    field = this.getNextFieldToAdd(columnIndex, numberOfColumnElementsToBeProcessedRemaining, field);
                     fields.push(field);
                     if (field) {
                         fieldExist = true;
                     }
-                    for (let k = 0; k < (field?.colspan || 1); k++) {
-                        rowspanOffset[columnIndex + k] = field?.rowspan > 0 ? field?.rowspan - 1 : 0;
-                    }
-                    toBeComputed[columnIndex] = toBeComputed[columnIndex] - 1;
+                    this.updateColumnsRowspanOffsetWithFieldRowspan(field, rowspanOffset, columnIndex);
+                    numberOfColumnElementsToBeProcessedRemaining[columnIndex] = numberOfColumnElementsToBeProcessedRemaining[columnIndex] - 1;
                 }
                 columnIndex = columnIndex + (field?.colspan || 1);
             }
             if (!fieldExist) {
-                // delete last row and exit
-                for (let j = 0; j < this.numberOfColumns; j++) {
-                    fields.pop();
-                }
-                i = size;
+                i = this.deleteLastEmptyRowAndExit(fields, i, size);
             }
         }
         return fields;
+    }
+
+    private updateColumnsRowspanOffsetWithFieldRowspan(field: any, rowspanOffset: any[], columnIndex: number) {
+        for (let k = 0; k < (field?.colspan || 1); k++) {
+            rowspanOffset[columnIndex + k] = field?.rowspan > 0 ? field?.rowspan - 1 : 0;
+        }
+    }
+
+    private getNextFieldToAdd(columnIndex: number, numberOfColumnElementsToBeProcessedRemaining: any[], field: any) {
+        const rowToCompute = (this.content.columns[columnIndex]?.fields?.length || 0) - numberOfColumnElementsToBeProcessedRemaining[columnIndex];
+        field = this.content.columns[columnIndex]?.fields[rowToCompute];
+        return field;
+    }
+
+    private decreaseRowspanOffsetForColumn(rowspanOffset: any[], columnIndex: number) {
+        rowspanOffset[columnIndex] = rowspanOffset[columnIndex] - 1;
+    }
+
+    private initializeHelpers() {
+        const fields = [];
+        const numberOfColumnElementsToBeProcessedRemaining = [];
+        const rowspanOffset = [];
+        let size = 0;
+        for (let i = 0; i < this.numberOfColumns; i++) {
+            numberOfColumnElementsToBeProcessedRemaining.push(this.content.columns[i]?.fields?.length || 0);
+            rowspanOffset[i] = 0;
+            size += (this.content.columns[i]?.fields?.length || 0);
+        }
+        return { size, rowspanOffset, numberOfColumnElementsToBeProcessedRemaining, fields };
+    }
+
+    private deleteLastEmptyRowAndExit(fields: any[], i: number, size: number) {
+        for (let j = 0; j < this.numberOfColumns; j++) {
+            fields.pop();
+        }
+        i = size;
+        return i;
     }
 
     /**
