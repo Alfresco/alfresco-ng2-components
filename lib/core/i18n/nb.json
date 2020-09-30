@@ -180,9 +180,9 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Bruk et nummerformat",
         "INT_VALIDATION_ERROR": "Bruk heltall",
-        "LENGTH_VALIDATION_ERROR": "Verdiens lengde skal være minimum {{ minLength }} og maksimum {{ maxLength }}",
+        "LENGTH_VALIDATION_ERROR": "Verdiens lengde skal være mellom {{ minLength }} og {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "Verdien samsvarer ikke med mønsteret: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Verdien skal være mellom minimum {{ minValue }} og maksimum {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Verdien skal være mellom {{ minValue }} og {{ maxValue }}"
       },
       "MORE": "Mer"
     },
@@ -353,7 +353,8 @@
       "ROTATE_LEFT": "Roter mot venstre",
       "ROTATE_RIGHT": "Roter mot høyre",
       "RESET": "Tilbakestill",
-      "THUMBNAILS": "Miniatyrbilder for dokument"
+      "THUMBNAILS": "Miniatyrbilder for dokument",
+      "THUMBNAILS_PANLEL_CLOSE": "Lukk miniatyrbildepanel"
     },
     "PAGE_LABEL": {
       "SHOWING": "Viser",

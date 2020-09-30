@@ -180,9 +180,9 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Använd ett nummerformat",
         "INT_VALIDATION_ERROR": "Använd ett heltalsformat",
-        "LENGTH_VALIDATION_ERROR": "Värdet ska vara minst {{ minLength }} och högst {{ maxLength }} långt",
+        "LENGTH_VALIDATION_ERROR": "Värdet ska vara mellan {{ minLength }} och {{ maxLength }} i längd",
         "MATCH_VALIDATION_ERROR": "Värdet matchar inte mönstret: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Värdet ska ligga mellan {{ minValue }} och {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Värdet ska vara mellan {{ minValue }} och {{ maxValue }}"
       },
       "MORE": "Mer"
     },
@@ -353,7 +353,8 @@
       "ROTATE_LEFT": "Rotera till vänster",
       "ROTATE_RIGHT": "Rotera till höger",
       "RESET": "Återställ",
-      "THUMBNAILS": "Dokumentminiatyrbilder"
+      "THUMBNAILS": "Dokumentminiatyrbilder",
+      "THUMBNAILS_PANLEL_CLOSE": "Stäng panel för miniatyrbilder"
     },
     "PAGE_LABEL": {
       "SHOWING": "Visar",

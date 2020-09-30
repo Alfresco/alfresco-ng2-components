@@ -180,9 +180,9 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "使用数字格式",
         "INT_VALIDATION_ERROR": "使用整数格式",
-        "LENGTH_VALIDATION_ERROR": "数值的最小长度应为 {{ minLength }} ，最大长度应为 {{ maxLength }}",
+        "LENGTH_VALIDATION_ERROR": "值的长度应该在 {{ minLength }} 和 {{ maxLength }} 之间",
         "MATCH_VALIDATION_ERROR": "数值与模式不匹配：{{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "数值应在最小值 {{ minValue }} 和最大值 {{ maxValue }} 之间"
+        "MINMAX_VALIDATION_ERROR": "值应该在 {{ minValue }} 和 {{ maxValue }} 之间"
       },
       "MORE": "更多"
     },
@@ -353,7 +353,8 @@
       "ROTATE_LEFT": "向左旋转",
       "ROTATE_RIGHT": "向右旋转",
       "RESET": "重置",
-      "THUMBNAILS": "文档缩略图"
+      "THUMBNAILS": "文档缩略图",
+      "THUMBNAILS_PANLEL_CLOSE": "关闭“缩略图”面板"
     },
     "PAGE_LABEL": {
       "SHOWING": "正在显示",

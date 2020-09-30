@@ -180,9 +180,9 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Použít formát čísla",
         "INT_VALIDATION_ERROR": "Použít formát celého čísla",
-        "LENGTH_VALIDATION_ERROR": "Hodnota by měla mít minimálně {{ minLength }} a maximálně {{ maxLength }} znaků.",
+        "LENGTH_VALIDATION_ERROR": "Hodnota musí mít délku v rozmezí od {{ minLength }} do {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "Hodnota nevyhovuje schématu: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Hodnota by měla být minimálně {{ minValue }} a maximálně {{ maxValue }}."
+        "MINMAX_VALIDATION_ERROR": "Hodnota musí být v rozmezí od {{ minValue }} do {{ maxValue }}"
       },
       "MORE": "Více"
     },
@@ -353,7 +353,8 @@
       "ROTATE_LEFT": "Otočit vlevo",
       "ROTATE_RIGHT": "Otočit vpravo",
       "RESET": "Reset",
-      "THUMBNAILS": "Miniatury dokumentů"
+      "THUMBNAILS": "Miniatury dokumentů",
+      "THUMBNAILS_PANLEL_CLOSE": "Zavřít panel Miniatury"
     },
     "PAGE_LABEL": {
       "SHOWING": "Zobrazeno",

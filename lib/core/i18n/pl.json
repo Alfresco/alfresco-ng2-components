@@ -180,9 +180,9 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Użyj formatu liczby",
         "INT_VALIDATION_ERROR": "Użyj formatu liczby całkowitej",
-        "LENGTH_VALIDATION_ERROR": "Wartość powinna mieć długość minimum {{ minLength }} i maksimum {{ maxLength }}",
+        "LENGTH_VALIDATION_ERROR": "Wartość powinna mieć długość od {{ minLength }} do {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "Wartość nie pasuje do wzorca: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Wartość powinna mieć minimum {{ minValue }} i maksimum {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Wartość powinna mieścić się w zakresie od {{ minValue }} do {{ maxValue }}"
       },
       "MORE": "Więcej"
     },
@@ -353,7 +353,8 @@
       "ROTATE_LEFT": "Obróć w lewo",
       "ROTATE_RIGHT": "Obróć w prawo",
       "RESET": "Resetuj",
-      "THUMBNAILS": "Miniatura dokumentu"
+      "THUMBNAILS": "Miniatura dokumentu",
+      "THUMBNAILS_PANLEL_CLOSE": "Zamknij panel miniatur"
     },
     "PAGE_LABEL": {
       "SHOWING": "Wyświetlanie",

@@ -180,9 +180,9 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "استخدام تنسيق رقم",
         "INT_VALIDATION_ERROR": "استخدام تنسيق عدد صحيح",
-        "LENGTH_VALIDATION_ERROR": "ينبغي أن يكون طول القيمة بحد أدنى {{ minLength }} وحد أقصى {{ maxLength }}",
+        "LENGTH_VALIDATION_ERROR": "ينبغي أن تكون القيمة بطول بين {{ minLength }} كحد أدنى و{{ maxLength }} كحد أقصى",
         "MATCH_VALIDATION_ERROR": "القيمة لا تطابق النمط: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "ينبغي أن تكون القيمة بين الحد الأدنى {{ minValue }} والحد الأقصى {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "ينبغي أن تكون القيمة بين {{ minValue }} و{{ maxValue }}"
       },
       "MORE": "المزيد"
     },
@@ -353,7 +353,8 @@
       "ROTATE_LEFT": "تدوير لليسار",
       "ROTATE_RIGHT": "تدوير لليمين",
       "RESET": "إعادة تعيين",
-      "THUMBNAILS": "الصور المصغرة للمستندات"
+      "THUMBNAILS": "الصور المصغرة للمستندات",
+      "THUMBNAILS_PANLEL_CLOSE": "إغلاق لوحة الصور المصغرة"
     },
     "PAGE_LABEL": {
       "SHOWING": "إظهار",

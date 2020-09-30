@@ -180,9 +180,9 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Käytä numeromuotoa",
         "INT_VALIDATION_ERROR": "Käytä kokonaislukumuotoa",
-        "LENGTH_VALIDATION_ERROR": "Arvon tulee olla vähintään {{ minLength }} ja enintään {{ maxLength }} pituudeltaan",
+        "LENGTH_VALIDATION_ERROR": "Arvon tulee olla pituudeltaan {{ minLength }} ja {{ maxLength }} välillä",
         "MATCH_VALIDATION_ERROR": "Arvo ei vastaa kaavaa: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Arvon tulee olla vähintään {{ minValue }} ja enintään {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Arvon tulee olla {{ minValue }} ja {{ maxValue }} välillä"
       },
       "MORE": "Lisää"
     },
@@ -353,7 +353,8 @@
       "ROTATE_LEFT": "Käännä vasemmalle",
       "ROTATE_RIGHT": "Käännä oikealle",
       "RESET": "Nollaa",
-      "THUMBNAILS": "Asiakirjojen esikatselukuvakkeet"
+      "THUMBNAILS": "Asiakirjojen esikatselukuvakkeet",
+      "THUMBNAILS_PANLEL_CLOSE": "Sulje pikkukuvapaneeli"
     },
     "PAGE_LABEL": {
       "SHOWING": "Näytetään",

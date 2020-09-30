@@ -180,9 +180,9 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utiliser un format de numéro",
         "INT_VALIDATION_ERROR": "Utiliser un format d'entier",
-        "LENGTH_VALIDATION_ERROR": "La taille de la valeur doit être de {{ minLength }} minimum et de {{ maxLength }} maximum",
+        "LENGTH_VALIDATION_ERROR": "La taille de la valeur doit être comprise entre {{ minLength }} et {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "La valeur ne correspond pas au modèle : {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "La valeur doit être comprise entre {{ minValue }} minimum et {{ maxValue }} maximum"
+        "MINMAX_VALIDATION_ERROR": "La valeur doit être comprise entre {{ minValue }} et {{ maxValue }}"
       },
       "MORE": "Plus"
     },
@@ -353,7 +353,8 @@
       "ROTATE_LEFT": "Faire pivoter à gauche",
       "ROTATE_RIGHT": "Faire pivoter à droite",
       "RESET": "Réinitialiser",
-      "THUMBNAILS": "Miniatures des documents"
+      "THUMBNAILS": "Miniatures des documents",
+      "THUMBNAILS_PANLEL_CLOSE": "Fermer le panneau des miniatures"
     },
     "PAGE_LABEL": {
       "SHOWING": "Affichage en cours",

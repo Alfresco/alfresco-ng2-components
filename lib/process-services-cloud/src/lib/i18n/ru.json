@@ -10,6 +10,8 @@
       "CREATED": "Создано",
       "STATUS": "Статус",
       "START_DATE": "Дата начала",
+      "COMPLETED_DATE": "Дата выполнения",
+      "COMPLETED_BY": "Выполнил(-а)",
       "ID": "Идентификатор",
       "INITIATOR": "Инициатор",
       "APP_NAME": "Имя приложения",
@@ -88,7 +90,8 @@
       "LAST_MODIFIED": "Дата последнего изменения",
       "DUE_DATE": "Срок",
       "CREATED": "Создано",
-      "JSON_CELL": "Json"
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "Выполнил(-а)"
     },
     "LIST": {
       "MESSAGES": {
@@ -126,6 +129,7 @@
     "LABEL": {
       "APP_NAME": "Название приложения",
       "TASK_ID": "ИД задачи",
+      "PROCESS_DEF_NAME": "Имя определения процесса",
       "PROCESS_DEF_ID": "Идентификатор определения процесса",
       "STATUS": "Статус",
       "ASSIGNMENT": "Исполнитель",
@@ -140,7 +144,8 @@
       "OWNER": "Владелец",
       "DUE_DATE": "Срок выполнения",
       "SORT": "Сортировать",
-      "START_DATE": "Дата начала"
+      "START_DATE": "Дата начала",
+      "COMPLETED_BY": "Выполнил(-а)"
     },
     "DIALOG": {
       "TITLE": "Сохранить фильтр как",
@@ -165,10 +170,31 @@
       "LAST_MODIFIED_DATE_FORM": "Начальная дата последнего изменения",
       "LAST_MODIFIED_TO": "Конечная дата последнего изменения",
       "PROCESS_NAME": "Имя процесса",
-      "APP_VERSION": "Версия выпуска приложения"
+      "APP_VERSION": "Версия выпуска приложения",
+      "STARTED_DATE": "Дата начала",
+      "COMPLETED_DATE": "Дата выполнения",
+      "DATE_RANGE": {
+        "NO_DATE": "Нет срока",
+        "TODAY": "Сегодня",
+        "TOMORROW": "Завтра",
+        "NEXT_7_DAYS": "В течение следующих 7 дней",
+        "WEEK": "На этой неделе",
+        "MONTH": "В этом месяце",
+        "QUARTER": "В этом квартале",
+        "YEAR": "В этом году",
+        "RANGE": "Дата в рамках"
+      },
+      "DATE_RANGE_TITLE": "Дата начала - дата окончания",
+      "START_DATE": "Дата начала",
+      "END_DATE": "Дата окончания",
+      "ID": "Идентификатор",
+      "BUSINESS_KEY": "Бизнес-ключ"
     },
     "ERROR": {
-      "DATE": "Формат даты ДД.ММ.ГГГГ"
+      "DATE": "Формат даты ДД.ММ.ГГГГ",
+      "INDALID_START_DATE": "Недействительная дата начала",
+      "INDALID_END_DATE": "Недействительная дата окончания",
+      "INVALID_DATE_FILTER": "Фильтр по дате не поддерживается"
     },
     "TOOL_TIP": {
       "SAVE": "Сохранить фильтр",
@@ -242,15 +268,15 @@
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "Идентификатор",
-      "NAME": "Имя",
+      "NAME": "Имя процесса",
       "NAME_DEFAULT": "Нет имени",
       "DESCRIPTION": "Описание",
       "DESCRIPTION_DEFAULT": "Нет описания",
       "STATUS": "Статус",
       "BUSINESS_KEY": "Бизнес-ключ",
       "INITIATOR": "Инициатор",
-      "START_DATE": "Дата начала",
-      "LAST_MODIFIED": "Дата последнего изменения",
+      "START_DATE": "Запущено",
+      "LAST_MODIFIED": "Обновлено",
       "PARENT_ID": "ID родителя",
       "NONE": "Нет"
     }
@@ -269,5 +295,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Неверный путь доступа к папке назначения"
     }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "Заполните поля формы метаданными этого файла"
   }
 }

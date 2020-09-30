@@ -25,7 +25,7 @@
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Inclusief Pass Through-stappen zoals start events en gateways"
+        "TYPE-FILTERING": "Inclusief Pass Through-stappen zoals startgebeurtenissen en gateways"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
         "PROCESS-DEFINITION": "Procesdefinitie",

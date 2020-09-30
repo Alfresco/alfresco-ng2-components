@@ -56,7 +56,7 @@
   "APP_LAYOUT": {
     "APP": "App",
     "APP_NAME": "ADF-demotoepassing",
-    "FILTERED_SEARCH": "Filterkoptekst",
+    "FILTERED_SEARCH": "Filterkop",
     "HOME": "Home",
     "NODE-SELECTOR": "Selectiefunctie voor node",
     "SITES": "Sites",
@@ -336,7 +336,7 @@
       "KEY": "Key",
       "TITLE": "Titel",
       "ICON": "Pictogram",
-      "TASK_ID": "Taak-ID",
+      "TASK_ID": "Taak-id",
       "PROCESS_ID": "Procesinstantie-ID",
       "ACTION_TYPE": "Actietype"
     }

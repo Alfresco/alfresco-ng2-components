@@ -347,13 +347,14 @@
     "ARIA": {
       "PREVIOUS_PAGE": "Vorherige Seite",
       "NEXT_PAGE": "Nächste Seite",
-      "ZOOM_IN": "Vergrößern",
-      "ZOOM_OUT": "Verkleinern",
+      "ZOOM_IN": "Hineinzoomen",
+      "ZOOM_OUT": "Herauszoomen",
       "FIT_PAGE": "Seite anpassen",
       "ROTATE_LEFT": "Nach links drehen",
       "ROTATE_RIGHT": "Nach rechts drehen",
       "RESET": "Zurücksetzen",
-      "THUMBNAILS": "Dokumenten-Miniaturansichten"
+      "THUMBNAILS": "Dokumenten-Miniaturansichten",
+      "THUMBNAILS_PANLEL_CLOSE": "Miniaturansichten-Fenster schließen"
     },
     "PAGE_LABEL": {
       "SHOWING": "Angezeigt",

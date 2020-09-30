@@ -10,6 +10,8 @@
       "CREATED": "Erstellt",
       "STATUS": "Status",
       "START_DATE": "Startdatum",
+      "COMPLETED_DATE": "Abschlussdatum",
+      "COMPLETED_BY": "Abgeschlossen von",
       "ID": "ID",
       "INITIATOR": "Initiator",
       "APP_NAME": "Anwendungsname",
@@ -88,7 +90,8 @@
       "LAST_MODIFIED": "Zuletzt geändert",
       "DUE_DATE": "Fälligkeitsdatum",
       "CREATED": "Erstellt",
-      "JSON_CELL": "Json"
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "Abgeschlossen von"
     },
     "LIST": {
       "MESSAGES": {
@@ -126,6 +129,7 @@
     "LABEL": {
       "APP_NAME": "Anwendungsname",
       "TASK_ID": "Aufgaben-ID",
+      "PROCESS_DEF_NAME": "Name der Prozessdefinition",
       "PROCESS_DEF_ID": "Prozessdefinitions-ID",
       "STATUS": "Status",
       "ASSIGNMENT": "Zugewiesener Benutzer",
@@ -140,7 +144,8 @@
       "OWNER": "Besitzer",
       "DUE_DATE": "Fällig bis",
       "SORT": "Sortieren",
-      "START_DATE": "Startdatum"
+      "START_DATE": "Startdatum",
+      "COMPLETED_BY": "Abgeschlossen von"
     },
     "DIALOG": {
       "TITLE": "Filter speichern als",
@@ -161,14 +166,35 @@
       "PROCESS_DEF_ID": "Prozessdefinitions-ID",
       "PROCESS_DEF_NAME": "Name der Prozessdefinition",
       "PROCESS_DEF_KEY": "Prozessdefinitionsschlüssel",
-      "LAST_MODIFIED": "Zuletzt bearbeitet",
+      "LAST_MODIFIED": "Zuletzt geändert",
       "LAST_MODIFIED_DATE_FORM": "Zuletzt bearbeitet von",
       "LAST_MODIFIED_TO": "Zuletzt bearbeitet zu",
       "PROCESS_NAME": "Prozessname",
-      "APP_VERSION": "Endgültige App-Version"
+      "APP_VERSION": "Endgültige App-Version",
+      "STARTED_DATE": "Startdatum",
+      "COMPLETED_DATE": "Abschlussdatum",
+      "DATE_RANGE": {
+        "NO_DATE": "kein Datum",
+        "TODAY": "heute",
+        "TOMORROW": "morgen",
+        "NEXT_7_DAYS": "nächste 7 Tage",
+        "WEEK": "diese Woche",
+        "MONTH": "diesen Monat",
+        "QUARTER": "dieses Quartal",
+        "YEAR": "dieses Jahr",
+        "RANGE": "Datumsbereich"
+      },
+      "DATE_RANGE_TITLE": "Startdatum – Enddatum",
+      "START_DATE": "Startdatum",
+      "END_DATE": "Enddatum",
+      "ID": "ID",
+      "BUSINESS_KEY": "Geschäftsschlüssel"
     },
     "ERROR": {
-      "DATE": "Datumsformat TT.MM.JJJJ"
+      "DATE": "Datumsformat TT.MM.JJJJ",
+      "INDALID_START_DATE": "Startdatum unzulässig",
+      "INDALID_END_DATE": "Enddatum unzulässig",
+      "INVALID_DATE_FILTER": "Datumsfilter-Option nicht unterstützt"
     },
     "TOOL_TIP": {
       "SAVE": "Filter speichern",
@@ -242,15 +268,15 @@
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "ID",
-      "NAME": "Name",
+      "NAME": "Prozessname",
       "NAME_DEFAULT": "Kein Name",
       "DESCRIPTION": "Beschreibung",
       "DESCRIPTION_DEFAULT": "Keine Beschreibung",
       "STATUS": "Status",
       "BUSINESS_KEY": "Geschäftsschlüssel",
       "INITIATOR": "Initiator",
-      "START_DATE": "Startdatum",
-      "LAST_MODIFIED": "Zuletzt geändert",
+      "START_DATE": "Gestartet",
+      "LAST_MODIFIED": "Aktualisiert",
       "PARENT_ID": "Übergeordnete ID",
       "NONE": "Keine"
     }
@@ -269,5 +295,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Unzulässiger Pfad für Zielordner"
     }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "Formularfelder mit den Metadaten dieser Datei ausfüllen"
   }
 }

@@ -10,6 +10,8 @@
       "CREATED": "Opprettet",
       "STATUS": "Status",
       "START_DATE": "Startdato",
+      "COMPLETED_DATE": "Fullført dato",
+      "COMPLETED_BY": "Fullført av",
       "ID": "ID",
       "INITIATOR": "Oppretter",
       "APP_NAME": "Programnavn",
@@ -88,7 +90,8 @@
       "LAST_MODIFIED": "Sist endret",
       "DUE_DATE": "Forfallsdato",
       "CREATED": "Opprettet",
-      "JSON_CELL": "Json"
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "Fullført av"
     },
     "LIST": {
       "MESSAGES": {
@@ -126,6 +129,7 @@
     "LABEL": {
       "APP_NAME": "Programnavn",
       "TASK_ID": "Oppgave-ID",
+      "PROCESS_DEF_NAME": "Prosessdefinisjonsnavn",
       "PROCESS_DEF_ID": "Prosessdefinisjons-ID",
       "STATUS": "Status",
       "ASSIGNMENT": "Tilordnet",
@@ -140,7 +144,8 @@
       "OWNER": "Eier",
       "DUE_DATE": "Forfallsdato",
       "SORT": "Sorter",
-      "START_DATE": "Startdato"
+      "START_DATE": "Startdato",
+      "COMPLETED_BY": "Fullført av"
     },
     "DIALOG": {
       "TITLE": "Lagre filter som",
@@ -165,10 +170,31 @@
       "LAST_MODIFIED_DATE_FORM": "Sist endret fra",
       "LAST_MODIFIED_TO": "Sist endret til",
       "PROCESS_NAME": "Prosessnavn",
-      "APP_VERSION": "Programutgaveversjon"
+      "APP_VERSION": "Programutgaveversjon",
+      "STARTED_DATE": "Startet dato",
+      "COMPLETED_DATE": "Fullført dato",
+      "DATE_RANGE": {
+        "NO_DATE": "Ingen dato",
+        "TODAY": "I dag",
+        "TOMORROW": "I morgen",
+        "NEXT_7_DAYS": "De neste 7 dagene",
+        "WEEK": "Denne uken",
+        "MONTH": "Denne måneden",
+        "QUARTER": "Dette kvartalet",
+        "YEAR": "Dette året",
+        "RANGE": "Dato innen"
+      },
+      "DATE_RANGE_TITLE": "Startdato – sluttdato",
+      "START_DATE": "Startdato",
+      "END_DATE": "Sluttdato",
+      "ID": "ID",
+      "BUSINESS_KEY": "Forretningsnøkkel"
     },
     "ERROR": {
-      "DATE": "Datoformat DD.MM.ÅÅÅÅ"
+      "DATE": "Datoformat DD.MM.ÅÅÅÅ",
+      "INDALID_START_DATE": "Ugyldig startdato",
+      "INDALID_END_DATE": "Ugyldig sluttdato",
+      "INVALID_DATE_FILTER": "Datofilteralternativet støttes ikke"
     },
     "TOOL_TIP": {
       "SAVE": "Lagre filter",
@@ -242,15 +268,15 @@
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "ID",
-      "NAME": "Navn",
+      "NAME": "Prosessnavn",
       "NAME_DEFAULT": "Uten navn",
       "DESCRIPTION": "Beskrivelse",
       "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
       "STATUS": "Status",
       "BUSINESS_KEY": "Forretningsnøkkel",
       "INITIATOR": "Oppretter",
-      "START_DATE": "Startdato",
-      "LAST_MODIFIED": "Sist endret",
+      "START_DATE": "Startet",
+      "LAST_MODIFIED": "Oppdatert",
       "PARENT_ID": "Overordnet ID",
       "NONE": "Ingen"
     }
@@ -269,5 +295,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Ugyldig målmappebane"
     }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "Fyll ut skjemafeltene med denne filens metadata"
   }
 }

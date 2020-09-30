@@ -56,7 +56,7 @@
   "APP_LAYOUT": {
     "APP": "Application",
     "APP_NAME": "Application Démo ADF",
-    "FILTERED_SEARCH": "Filtres",
+    "FILTERED_SEARCH": "En-tête du filtre",
     "HOME": "Accueil",
     "NODE-SELECTOR": "Sélecteur de nœud",
     "SITES": "Sites",
@@ -79,7 +79,7 @@
     "FORM_LOADING": "Chargement du formulaire",
     "UPLOADER": "Chargeur",
     "WEBSCRIPT": "Script Web",
-    "TAG": "Tag",
+    "TAG": "Balise",
     "PIPES": "Tuyaux",
     "TRASHCAN": "Corbeille",
     "SOCIAL": "Réseaux sociaux",
@@ -139,7 +139,7 @@
     "COLUMNS": {
       "DISPLAY_NAME": "Nom affiché",
       "IS_LOCKED": "Verrouiller",
-      "TAG": "Tag",
+      "TAG": "Balise",
       "NODE_ID": "ID du nœud",
       "CREATED_BY": "Créé par",
       "CREATED_ON": "Créé le",
@@ -255,9 +255,9 @@
     "RATING": "Composant d'évaluation"
   },
   "TAG": {
-    "LIST": "Liste de tags Content Services",
+    "LIST": "Liste de balises Content Services",
     "INSERT": "Insérer l'ID du nœud",
-    "NODE_LIST": "Liste de tags par ID de nœud"
+    "NODE_LIST": "Liste de balises par ID de nœud"
   },
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Hériter les droits d'accès",
