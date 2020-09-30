@@ -52,52 +52,50 @@ export class DateRangeFilterService {
 
     private getNext7DaysDateRange(): DateRangeFilter {
         return {
-            startDate: moment().startOf('day').toDate(),
-            endDate: moment().add(7, 'days').endOf('day').toDate()
+            startDate: moment().startOf('day').toISOString(true),
+            endDate: moment().add(7, 'days').endOf('day').toISOString(true)
         };
     }
 
     private getTomorrowDateRange(): DateRangeFilter {
         return {
-            startDate: moment().endOf('day').toDate(),
-            endDate: moment().add(1, 'days').startOf('day').toDate()
+            startDate: moment().endOf('day').toISOString(true),
+            endDate: moment().add(1, 'days').startOf('day').toISOString(true)
         };
     }
 
     private getCurrentYearDateRange(): DateRangeFilter {
         return {
-            startDate: moment().startOf('year').toDate(),
-            endDate: moment().endOf('year').toDate()
+            startDate: moment().startOf('year').toISOString(true),
+            endDate: moment().endOf('year').toISOString(true)
         };
     }
 
     private getTodayDateRange(): DateRangeFilter {
         return {
-            startDate: moment().startOf('day').toDate(),
-            endDate: moment().endOf('day').toDate()
+            startDate: moment().startOf('day').toISOString(true),
+            endDate: moment().endOf('day').toISOString(true)
         };
     }
 
     private getCurrentWeekRange(): DateRangeFilter {
         return  {
-            startDate: moment().startOf('week').toDate(),
-            endDate: moment().endOf('week').toDate()
+            startDate: moment().startOf('week').toISOString(true),
+            endDate: moment().endOf('week').toISOString(true)
         };
     }
 
     private getCurrentMonthDateRange(): DateRangeFilter {
         return {
-            startDate: moment().startOf('month').toDate(),
-            endDate: moment().endOf('month').toDate()
+            startDate: moment().startOf('month').toISOString(true),
+            endDate: moment().endOf('month').toISOString(true)
         };
     }
 
     private getQuarterDateRange(): DateRangeFilter {
-        const quarter = Math.floor((this.currentDate.getMonth() / 3));
-        const firstDate = new Date(this.currentDate.getFullYear(), quarter * 3, 1);
         return {
-            startDate: firstDate,
-            endDate: new Date(firstDate.getFullYear(), firstDate.getMonth() + 3, 0)
+            startDate: moment().startOf('quarter').toISOString(true),
+            endDate: moment().endOf('quarter').toISOString(true)
         };
     }
 }

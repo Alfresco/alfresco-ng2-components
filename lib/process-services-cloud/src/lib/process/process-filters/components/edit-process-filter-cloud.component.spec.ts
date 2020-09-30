@@ -793,13 +793,13 @@ describe('EditProcessFilterCloudComponent', () => {
             const startedDateTypeControl: AbstractControl = component.editProcessFilterForm.get('completedDateType');
             startedDateTypeControl.setValue(DateCloudFilterType.TODAY);
             const dateFilter = {
-                startFrom: moment().startOf('day').toDate(),
-                startTo: moment().endOf('day').toDate()
+                startFrom: moment().startOf('day').toISOString(true),
+                startTo: moment().endOf('day').toISOString(true)
             };
 
             component.filterChange.subscribe(() => {
-                expect(component.changedProcessFilter.completedFrom).toEqual(dateFilter.startFrom.toISOString());
-                expect(component.changedProcessFilter.completedTo).toEqual(dateFilter.startTo.toISOString());
+                expect(component.changedProcessFilter.completedFrom).toEqual(dateFilter.startFrom);
+                expect(component.changedProcessFilter.completedTo).toEqual(dateFilter.startTo);
                 done();
             });
             component.onFilterChange();
@@ -813,8 +813,8 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
 
             const dateFilter = {
-                startDate: moment().startOf('day').toDate(),
-                endDate: moment().endOf('day').toDate()
+                startDate: moment().startOf('day').toISOString(true),
+                endDate: moment().endOf('day').toISOString(true)
             };
 
             const startedDateTypeControl: AbstractControl = component.editProcessFilterForm.get('completedDateType');
@@ -834,8 +834,8 @@ describe('EditProcessFilterCloudComponent', () => {
 
             fixture.detectChanges();
             component.filterChange.subscribe(() => {
-                expect(component.changedProcessFilter.completedFrom).toEqual(dateFilter.startDate.toISOString());
-                expect(component.changedProcessFilter.completedTo).toEqual(dateFilter.endDate.toISOString());
+                expect(component.changedProcessFilter.completedFrom).toEqual(dateFilter.startDate);
+                expect(component.changedProcessFilter.completedTo).toEqual(dateFilter.endDate);
                 done();
             });
             component.onFilterChange();

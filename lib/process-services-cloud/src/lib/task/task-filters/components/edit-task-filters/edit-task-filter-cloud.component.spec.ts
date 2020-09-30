@@ -481,13 +481,13 @@ describe('EditTaskFilterCloudComponent', () => {
             const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('dueDateType');
             startedDateTypeControl.setValue(DateCloudFilterType.TODAY);
             const dateFilter = {
-                startFrom: moment().startOf('day').toDate(),
-                startTo: moment().endOf('day').toDate()
+                startFrom: moment().startOf('day').toISOString(true),
+                startTo: moment().endOf('day').toISOString(true)
             };
 
             component.filterChange.subscribe(() => {
-                expect(component.changedTaskFilter.dueDateFrom).toEqual(dateFilter.startFrom.toISOString());
-                expect(component.changedTaskFilter.dueDateTo).toEqual(dateFilter.startTo.toISOString());
+                expect(component.changedTaskFilter.dueDateFrom).toEqual(dateFilter.startFrom);
+                expect(component.changedTaskFilter.dueDateTo).toEqual(dateFilter.startTo);
                 done();
             });
             component.onFilterChange();
@@ -501,8 +501,8 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
 
             const dateFilter = {
-                startDate: moment().startOf('day').toDate(),
-                endDate: moment().endOf('day').toDate()
+                startDate: moment().startOf('day').toISOString(true),
+                endDate: moment().endOf('day').toISOString(true)
             };
 
             const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('dueDateType');
@@ -522,8 +522,8 @@ describe('EditTaskFilterCloudComponent', () => {
 
             fixture.detectChanges();
             component.filterChange.subscribe(() => {
-                expect(component.changedTaskFilter.dueDateFrom).toEqual(dateFilter.startDate.toISOString());
-                expect(component.changedTaskFilter.dueDateTo).toEqual(dateFilter.endDate.toISOString());
+                expect(component.changedTaskFilter.dueDateFrom).toEqual(dateFilter.startDate);
+                expect(component.changedTaskFilter.dueDateTo).toEqual(dateFilter.endDate);
                 done();
             });
             component.onFilterChange();
@@ -539,13 +539,13 @@ describe('EditTaskFilterCloudComponent', () => {
             const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('completedDateType');
             startedDateTypeControl.setValue(DateCloudFilterType.TODAY);
             const dateFilter = {
-                startFrom: moment().startOf('day').toDate(),
-                startTo: moment().endOf('day').toDate()
+                startFrom: moment().startOf('day').toISOString(true),
+                startTo: moment().endOf('day').toISOString(true)
             };
 
             component.filterChange.subscribe(() => {
-                expect(component.changedTaskFilter.completedFrom).toEqual(dateFilter.startFrom.toISOString());
-                expect(component.changedTaskFilter.completedTo).toEqual(dateFilter.startTo.toISOString());
+                expect(component.changedTaskFilter.completedFrom).toEqual(dateFilter.startFrom);
+                expect(component.changedTaskFilter.completedTo).toEqual(dateFilter.startTo);
                 done();
             });
             component.onFilterChange();
@@ -559,8 +559,8 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
 
             const dateFilter = {
-                startDate: moment().startOf('day').toDate(),
-                endDate: moment().endOf('day').toDate()
+                startDate: moment().startOf('day').toISOString(true),
+                endDate: moment().endOf('day').toISOString(true)
             };
 
             const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('completedDateType');
@@ -580,8 +580,8 @@ describe('EditTaskFilterCloudComponent', () => {
 
             fixture.detectChanges();
             component.filterChange.subscribe(() => {
-                expect(component.changedTaskFilter.completedFrom).toEqual(dateFilter.startDate.toISOString());
-                expect(component.changedTaskFilter.completedTo).toEqual(dateFilter.endDate.toISOString());
+                expect(component.changedTaskFilter.completedFrom).toEqual(dateFilter.startDate);
+                expect(component.changedTaskFilter.completedTo).toEqual(dateFilter.endDate);
                 done();
             });
             component.onFilterChange();

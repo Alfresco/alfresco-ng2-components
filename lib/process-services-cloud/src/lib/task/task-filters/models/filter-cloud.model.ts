@@ -135,11 +135,11 @@ export class TaskFilterCloudModel {
     }
 
     private getStartDate(key: DateCloudFilterType) {
-        return this.dateRangeFilterService.getDateRange(key).startDate?.toISOString();
+        return this.dateRangeFilterService.getDateRange(key).startDate;
     }
 
     private getEndDate(key: DateCloudFilterType) {
-        return this.dateRangeFilterService.getDateRange(key).endDate?.toISOString();
+        return this.dateRangeFilterService.getDateRange(key).endDate;
     }
 
     private isDateRangeType(type: DateCloudFilterType) {

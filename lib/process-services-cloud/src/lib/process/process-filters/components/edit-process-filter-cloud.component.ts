@@ -326,10 +326,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     onDateRangeFilterChanged(dateRange: DateRangeFilter, property: ProcessFilterProperties) {
         this.editProcessFilterForm.get(property.attributes?.from).setValue(
-            dateRange.startDate ? dateRange.startDate.toISOString() : null
+            dateRange.startDate ? dateRange.startDate : null
         );
         this.editProcessFilterForm.get(property.attributes?.to).setValue(
-            dateRange.endDate ? dateRange.endDate.toISOString() : null
+            dateRange.endDate ? dateRange.endDate : null
         );
     }
 

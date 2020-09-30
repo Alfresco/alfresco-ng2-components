@@ -285,10 +285,10 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
 
     onDateRangeFilterChanged(dateRange: DateRangeFilter, property: TaskFilterProperties) {
         this.editTaskFilterForm.get(property.attributes?.from).setValue(
-            dateRange.startDate ? dateRange.startDate.toISOString() : null
+            dateRange.startDate ? dateRange.startDate : null
         );
         this.editTaskFilterForm.get(property.attributes?.to).setValue(
-            dateRange.endDate ? dateRange.endDate.toISOString() : null
+            dateRange.endDate ? dateRange.endDate : null
         );
     }
 

@@ -28,8 +28,8 @@ export enum DateCloudFilterType {
 }
 
 export interface DateRangeFilter {
-    startDate: Date;
-    endDate: Date;
+    startDate: string;
+    endDate: string;
 }
 export interface RangeKeys {
     from: string;
