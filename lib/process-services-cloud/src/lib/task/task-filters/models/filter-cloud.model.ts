@@ -42,9 +42,9 @@ export class TaskFilterCloudModel {
     parentTaskId: string;
     priority: number;
     standalone: boolean;
-    lastModifiedFrom: Date;
-    lastModifiedTo: Date;
     completedBy: string;
+    lastModifiedFrom: string;
+    lastModifiedTo: string;
     completedDateType: DateCloudFilterType;
     completedDate: Date;
 

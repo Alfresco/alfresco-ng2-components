@@ -219,12 +219,12 @@ describe('Edit task filters and task list properties', () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(beforeDate);
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
 
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(afterDate);
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(afterDate);
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
-        it('[C297689] Task is not displayed when typing into lastModifiedFrom field the same date as tasks CreatedDate', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(currentDate);
+        it('[C297689] Task is not displayed when typing into lastModifiedTo field the same date as tasks CreatedDate', async () => {
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(currentDate);
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 

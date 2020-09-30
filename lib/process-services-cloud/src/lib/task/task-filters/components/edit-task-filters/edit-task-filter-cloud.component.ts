@@ -118,7 +118,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 minute: 59,
                 second: 59
             });
-            formValues.lastModifiedTo = lastModifiedToFilterValue.toDate();
+            formValues.lastModifiedTo = lastModifiedToFilterValue.toISOString(true);
         }
     }
 
