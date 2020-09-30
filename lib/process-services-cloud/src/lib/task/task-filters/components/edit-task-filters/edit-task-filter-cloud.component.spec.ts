@@ -718,7 +718,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
             component.filterChange.subscribe(() => {
                 if (component.changedTaskFilter instanceof TaskFilterCloudModel) {
-                    expect(component.changedTaskFilter.lastModifiedTo.toISOString()).toEqual(lastModifiedToFilter.toISOString());
+                    expect(component.changedTaskFilter.lastModifiedTo).toEqual(lastModifiedToFilter.toISOString(true));
                 }
                 done();
             });
