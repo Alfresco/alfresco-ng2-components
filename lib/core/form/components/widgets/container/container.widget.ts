@@ -44,6 +44,7 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
 
     content: ContainerWidgetComponentModel;
     numberOfColumns: number;
+    fields: FormFieldModel[];
 
     constructor(public formService: FormService) {
         super(formService);
@@ -58,16 +59,21 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
     ngOnInit() {
         if (this.field) {
             this.content = new ContainerWidgetComponentModel(this.field);
-            this.numberOfColumns = (this.content.json?.numberOfColumns || 1) > (this.content.columns?.length || 1) ?
-                (this.content.json?.numberOfColumns || 1) :
-                (this.content.columns?.length || 1);
+            this.getNumberOfColumnsFromTheBiggestBetweenJsonAndColumnsLengthOrOne();
+            this.fields = this.getFields();
         }
+    }
+
+    private getNumberOfColumnsFromTheBiggestBetweenJsonAndColumnsLengthOrOne() {
+        this.numberOfColumns = (this.content.json?.numberOfColumns || 1) > (this.content.columns?.length || 1) ?
+            (this.content.json?.numberOfColumns || 1) :
+            (this.content.columns?.length || 1);
     }
 
     /**
      * Serializes column fields
      */
-    get fields(): FormFieldModel[] {
+    private getFields(): FormFieldModel[] {
         const fields = [];
         const toBeComputed = [];
         const rowspanOffset = [];

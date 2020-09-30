@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContainerColumnModel } from './../core/container-column.model';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
@@ -117,37 +116,22 @@ describe('ContainerWidgetComponent', () => {
     describe('fields', () => {
 
         it('should serializes the content fields', () => {
-            const field1 = <FormFieldModel> { id: '1' },
-                field2 = <FormFieldModel> { id: '2' },
-                field3 = <FormFieldModel> { id: '3' },
-                field4 = <FormFieldModel> { id: '4' },
-                field5 = <FormFieldModel> { id: '5' },
-                field6 = <FormFieldModel> { id: '6' };
-
-            const container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel()));
-            container.columns = [
-                <ContainerColumnModel> {
-                    fields: [
-                        field1,
-                        field2,
-                        field3
-                    ]
-                },
-                <ContainerColumnModel> {
-                    fields: [
-                        field4,
-                        field5
-                    ]
-                },
-                <ContainerColumnModel> {
-                    fields: [
-                        field6
-                    ]
+            const form = new FormModel();
+            const json = {
+                id: 'test',
+                name: 'test',
+                type: 'container',
+                tab: null,
+                fields: {
+                    '1' : [{ id: '1' }, { id: '2' }, { id: '3' }],
+                    '2' : [{ id: '4' }, { id: '5' }],
+                    '3' : [{ id: '6' }]
                 }
-            ];
+            };
 
-            widget.content = container;
-            widget.numberOfColumns = 3;
+            const field = new FormFieldModel(form, json);
+            widget.field = field;
+            widget.ngOnInit();
 
             expect(widget.fields[0].id).toEqual('1');
             expect(widget.fields[1].id).toEqual('4');
