@@ -141,7 +141,7 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
             }),
             new TaskFilterAction({
                 actionType: BaseEditTaskFilterCloudComponent.ACTION_SAVE_AS,
-                icon: 'unarchive',
+                icon: 'adf:save-as',
                 tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS'
             }),
             new TaskFilterAction({
