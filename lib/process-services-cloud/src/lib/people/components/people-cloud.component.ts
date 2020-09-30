@@ -27,18 +27,34 @@ import {
     OnChanges,
     OnDestroy,
     ChangeDetectionStrategy,
-    ViewChild, ElementRef, SimpleChange
+    ViewChild,
+    ElementRef,
+    SimpleChange
 } from '@angular/core';
-import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
-import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, map, takeUntil } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import {
+    switchMap,
+    debounceTime,
+    distinctUntilChanged,
+    tap,
+    filter,
+    takeUntil,
+    mergeMap
+} from 'rxjs/operators';
 import {
     FullNamePipe,
     IdentityUserModel,
-    IdentityUserService,
     LogService
 } from '@alfresco/adf-core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import {
+    trigger,
+    state,
+    style,
+    transition,
+    animate
+} from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
+import { PeopleServiceImplementation } from '../services/people-service-implementation';
 
 @Component({
     selector: 'adf-cloud-people',
@@ -57,9 +73,7 @@ import { ComponentSelectionMode } from '../../types';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-
 export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
-
     /** Name of the application. If specified, this shows the users who have access to the app. */
     @Input()
     appName: string;
@@ -100,7 +114,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** FormControl to list of users */
     @Input()
-    userChipsCtrl: FormControl = new FormControl({ value: '', disabled: false });
+    userChipsCtrl: FormControl = new FormControl({
+        value: '',
+        disabled: false
+    });
 
     /** FormControl to search the user */
     @Input()
@@ -148,8 +165,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     searchLoading = false;
 
     constructor(
-        private identityUserService: IdentityUserService,
-        private logService: LogService) {}
+        private identityUserService: PeopleServiceImplementation,
+        private logService: LogService
+    ) {}
 
     ngOnInit(): void {
         this.loadClientId();
@@ -157,10 +175,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-
-        if (this.valueChanged(changes.preSelectUsers)
-            || this.valueChanged(changes.mode)
-            || this.valueChanged(changes.validate)
+        if (
+            this.valueChanged(changes.preSelectUsers) ||
+            this.valueChanged(changes.mode) ||
+            this.valueChanged(changes.validate)
         ) {
             if (this.hasPreSelectUsers()) {
                 this.loadPreSelectUsers();
@@ -180,62 +198,72 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private async loadClientId(): Promise<void> {
-        this.clientId = await this.identityUserService.getClientIdByApplicationName(this.appName).toPromise();
+        this.clientId = await this.identityUserService
+            .getClientIdByApplicationName(this.appName)
+            .toPromise();
         if (this.clientId) {
             this.searchUserCtrl.enable();
         }
     }
 
     private initSearch(): void {
-        this.searchUserCtrl.valueChanges.pipe(
-            filter((value) => {
-                this.searchLoading = true;
-                return typeof value === 'string';
-            }),
-            tap((value: string) => {
-                if (value) {
-                    this.setTypingError();
-                }
-            }),
-            debounceTime(500),
-            distinctUntilChanged(),
-            tap((value: string) => {
-                if (value.trim()) {
-                    this.searchedValue = value;
-                } else {
-                    this.searchUserCtrl.markAsPristine();
-                    this.searchUserCtrl.markAsUntouched();
-                }
-            }),
-            tap(() => {
-                this.resetSearchUsers();
-            }),
-            switchMap((search) =>
-                this.identityUserService.findUsersByName(search.trim())),
-            mergeMap((users) => {
-                this.resetSearchUsers();
-                this.searchLoading = false;
-                return users;
-            }),
-            filter(user => !this.isUserAlreadySelected(user) && !this.isExcludedUser(user)),
-            mergeMap(user => {
-                if (this.appName) {
-                    return this.checkUserHasAccess(user.id).pipe(
-                        mergeMap(
-                            hasRole => hasRole ? of(user) : of()
-                        )
-                    );
-                } else if (this.hasRoles()) {
-                    return this.filterUsersByRoles(user);
-                } else {
-                    return of(user);
-                }
-            }),
-            takeUntil(this.onDestroy$)
-        ).subscribe(user => {
-            this._searchUsers.push(user);
-            this.searchUsers$.next(this._searchUsers);
-        });
+        this.searchUserCtrl.valueChanges
+            .pipe(
+                filter(value => {
+                    this.searchLoading = true;
+                    return typeof value === 'string';
+                }),
+                tap((value: string) => {
+                    if (value) {
+                        this.setTypingError();
+                    }
+                }),
+                debounceTime(500),
+                distinctUntilChanged(),
+                // tap((value: string) => {
+                //     if (value.trim()) {
+                //         this.searchedValue = value;
+                //     } else {
+                //         this.searchUserCtrl.markAsPristine();
+                //         this.searchUserCtrl.markAsUntouched();
+                //     }
+                // }),
+                // tap(() => {
+                //     this.resetSearchUsers();
+                // }),
+                // switchMap((search) =>{
+                //     // if (this.appName) {
+                //     return this.identityUserService.(user.id).pipe(
+                //         mergeMap(
+                //             hasRole => hasRole ? of(user) : of()
+                //         )
+                //     );
+                // } else if (this.hasRoles()) {
+                //     return this.filterUsersByRoles(user);
+                // } else {
+                //     return of(user);
+                // }
+
+                // }),
+                switchMap((s) => {
+                    let results$: Observable<IdentityUserModel[]>;
+                    if (this.appName) {
+                        results$ = this.identityUserService.findUsersBasedAppName(this.appName, this.roles, s);
+                    } else if (this.hasRoles()) {
+                        results$ = this.identityUserService.filterUsersBasedOnRoles(this.roles, s);
+                    } else {
+                        results$ = this.identityUserService.findUsers(s);
+                    }
+
+                    return results$;
+                }),
+                mergeMap(res => res),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(user => {
+                this._searchUsers.push(user);
+                this.searchUsers$.next(this._searchUsers);
+            });
     }
 
     ngOnDestroy(): void {
@@ -244,35 +272,43 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private isAppNameChanged(change: SimpleChange): boolean {
-        return change && change.previousValue !== change.currentValue && this.appName && this.appName.length > 0;
+        return (
+            change &&
+            change.previousValue !== change.currentValue &&
+            this.appName &&
+            this.appName.length > 0
+        );
     }
 
     isValidationEnabled(): boolean {
         return this.validate === true;
     }
 
-    private checkUserHasAccess(userId: string): Observable<boolean> {
-        if (this.hasRoles()) {
-            return this.identityUserService.checkUserHasAnyClientAppRole(userId, this.clientId, this.roles);
-        } else {
-            return this.identityUserService.checkUserHasClientApp(userId, this.clientId);
-        }
-    }
+    // private checkUserHasAccess(userId: string): Observable<boolean> {
+    //     if (this.hasRoles()) {
+    //         // return this.identityUserService.checkUserHasAnyClientAppRole(userId, this.clientId, this.roles);
+    //     } else {
+    //         // return this.identityUserService.checkUserHasClientApp(userId, this.clientId);
+    //     }
+
+    //     return null;
+    // }
 
     private hasRoles(): boolean {
         return this.roles && this.roles.length > 0;
     }
 
     filterUsersByRoles(user: IdentityUserModel): Observable<IdentityUserModel> {
-        return this.identityUserService.checkUserHasRole(user.id, this.roles).pipe(
-            map((hasRole: boolean) => ({ hasRole: hasRole, user: user })),
-            filter((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.hasRole),
-            map((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.user));
+        // return this.identityUserService.checkUserHasRole(user.id, this.roles).pipe(
+        //     map((hasRole: boolean) => ({ hasRole: hasRole, user: user })),
+        //     filter((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.hasRole),
+        //     map((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.user));
+        return null;
     }
 
     private isUserAlreadySelected(searchUser: IdentityUserModel): boolean {
         if (this.selectedUsers && this.selectedUsers.length > 0) {
-            const result = this.selectedUsers.find((selectedUser) => {
+            const result = this.selectedUsers.find(selectedUser => {
                 return this.compare(selectedUser, searchUser);
             });
 
@@ -294,7 +330,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         if (this.isSingleMode()) {
             this.selectedUsers = [this.preSelectUsers[0]];
         } else {
-            this.selectedUsers = this.removeDuplicatedUsers(this.preSelectUsers);
+            this.selectedUsers = this.removeDuplicatedUsers(
+                this.preSelectUsers
+            );
         }
         this.userChipsCtrl.setValue(this.selectedUsers[0].username);
         if (this.isValidationEnabled()) {
@@ -336,11 +374,17 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.selectedUsers = validUsers.concat(this.invalidUsers);
     }
 
-    compare(preselectedUser: IdentityUserModel, identityUser: IdentityUserModel): boolean {
+    compare(
+        preselectedUser: IdentityUserModel,
+        identityUser: IdentityUserModel
+    ): boolean {
         if (preselectedUser && identityUser) {
             const uniquePropertyIdentifiers = ['id', 'username', 'email'];
             for (const property of Object.keys(preselectedUser)) {
-                if (preselectedUser[property] !== undefined && uniquePropertyIdentifiers.includes(property)) {
+                if (
+                    preselectedUser[property] !== undefined &&
+                    uniquePropertyIdentifiers.includes(property)
+                ) {
                     return preselectedUser[property] === identityUser[property];
                 }
             }
@@ -365,21 +409,33 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
         switch (key) {
             case 'id':
-                return this.identityUserService.findUserById(user[key]).toPromise();
+                return this.identityUserService
+                    .findUserById(user[key])
+                    .toPromise();
             case 'username':
-                return (await this.identityUserService.findUserByUsername(user[key]).toPromise())[0];
+                return (await this.identityUserService
+                    .findUserByUsername(user[key])
+                    .toPromise())[0];
             case 'email':
-                return (await this.identityUserService.findUserByEmail(user[key]).toPromise())[0];
+                return (await this.identityUserService
+                    .findUserByEmail(user[key])
+                    .toPromise())[0];
             default:
                 return null;
         }
     }
 
     removeDuplicatedUsers(users: IdentityUserModel[]): IdentityUserModel[] {
-        return users.filter((user, index, self) =>
-            index === self.findIndex(auxUser =>
-                user.id === auxUser.id && user.username === auxUser.username && user.email === auxUser.email
-            ));
+        return users.filter(
+            (user, index, self) =>
+                index ===
+                self.findIndex(
+                    auxUser =>
+                        user.id === auxUser.id &&
+                        user.username === auxUser.username &&
+                        user.email === auxUser.email
+                )
+        );
     }
 
     checkPreselectValidationErrors(): void {
@@ -423,7 +479,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.changedUsers.emit(this.selectedUsers);
         if (this.selectedUsers.length === 0) {
             this.userChipsCtrlValue('');
-
         } else {
             this.userChipsCtrlValue(this.selectedUsers[0].username);
         }
@@ -442,11 +497,17 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.userChipsCtrl.markAsTouched();
     }
 
-    private removeUserFromSelected({ id, username, email }: IdentityUserModel): void {
+    private removeUserFromSelected({
+        id,
+        username,
+        email
+    }: IdentityUserModel): void {
         const indexToRemove = this.selectedUsers.findIndex(user => {
-            return user.id === id
-                && user.username === username
-                && user.email === email;
+            return (
+                user.id === id &&
+                user.username === username &&
+                user.email === email
+            );
         });
 
         if (indexToRemove !== -1) {
@@ -454,11 +515,17 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    private removeUserFromValidation({ id, username, email }: IdentityUserModel): void {
+    private removeUserFromValidation({
+        id,
+        username,
+        email
+    }: IdentityUserModel): void {
         const indexToRemove = this.invalidUsers.findIndex(user => {
-            return user.id === id
-                && user.username === username
-                && user.email === email;
+            return (
+                user.id === id &&
+                user.username === username &&
+                user.email === email
+            );
         });
 
         if (indexToRemove !== -1) {
@@ -486,8 +553,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     hasPreselectError(): boolean {
-        return this.invalidUsers
-            && this.invalidUsers.length > 0;
+        return this.invalidUsers && this.invalidUsers.length > 0;
     }
 
     getDisplayName(user): string {
@@ -503,26 +569,28 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private isSingleSelectionReadonly(): boolean {
-        return this.isSingleMode()
-            && this.selectedUsers.length === 1
-            && this.selectedUsers[0].readonly === true;
+        return (
+            this.isSingleMode() &&
+            this.selectedUsers.length === 1 &&
+            this.selectedUsers[0].readonly === true
+        );
     }
 
     private hasPreSelectUsers(): boolean {
-        return this.preSelectUsers
-            && this.preSelectUsers.length > 0;
+        return this.preSelectUsers && this.preSelectUsers.length > 0;
     }
 
     private valueChanged(change: SimpleChange): boolean {
-        return change
-            && change.currentValue !== change.previousValue;
+        return change && change.currentValue !== change.previousValue;
     }
 
     private hasPreselectedUsersCleared(changes: SimpleChanges): boolean {
-        return changes
-            && changes.preSelectUsers
-            && changes.preSelectUsers.currentValue
-            && changes.preSelectUsers.currentValue.length === 0;
+        return (
+            changes &&
+            changes.preSelectUsers &&
+            changes.preSelectUsers.currentValue &&
+            changes.preSelectUsers.currentValue.length === 0
+        );
     }
 
     private resetSearchUsers(): void {
