@@ -10,6 +10,8 @@
       "CREATED": "تم الإنشاء",
       "STATUS": "الحالة",
       "START_DATE": "تاريخ البدء",
+      "COMPLETED_DATE": "تاريخ الإكمال",
+      "COMPLETED_BY": "إكمال بواسطة",
       "ID": "المعرف",
       "INITIATOR": "بادئ",
       "APP_NAME": "اسم التطبيق",
@@ -88,7 +90,8 @@
       "LAST_MODIFIED": "آخر تعديل",
       "DUE_DATE": "تاريخ الاستحقاق",
       "CREATED": "تم الإنشاء",
-      "JSON_CELL": "Json"
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "إكمال بواسطة"
     },
     "LIST": {
       "MESSAGES": {
@@ -126,6 +129,7 @@
     "LABEL": {
       "APP_NAME": "اسم التطبيق",
       "TASK_ID": "معرف المهمة",
+      "PROCESS_DEF_NAME": "اسم تعريف العملية",
       "PROCESS_DEF_ID": "رقم تعريف العملية",
       "STATUS": "الحالة",
       "ASSIGNMENT": "معين له",
@@ -140,7 +144,8 @@
       "OWNER": "مالك",
       "DUE_DATE": "تاريخ الاستحقاق",
       "SORT": "فرز",
-      "START_DATE": "تاريخ البدء"
+      "START_DATE": "تاريخ البدء",
+      "COMPLETED_BY": "إكمال بواسطة"
     },
     "DIALOG": {
       "TITLE": "حفظ عامل التصفية باسم",
@@ -165,10 +170,31 @@
       "LAST_MODIFIED_DATE_FORM": "آخر تعديل من",
       "LAST_MODIFIED_TO": "آخر تعديل إلى",
       "PROCESS_NAME": "اسم العملية",
-      "APP_VERSION": "إصدار التطبيق"
+      "APP_VERSION": "إصدار التطبيق",
+      "STARTED_DATE": "تاريخ البدء",
+      "COMPLETED_DATE": "تاريخ الإكمال",
+      "DATE_RANGE": {
+        "NO_DATE": "لا يوجد تاريخ",
+        "TODAY": "اليوم",
+        "TOMORROW": "غدًا",
+        "NEXT_7_DAYS": "7 أيام التالية",
+        "WEEK": "هذا الأسبوع",
+        "MONTH": "هذا الشهر",
+        "QUARTER": "هذا الربع",
+        "YEAR": "هذا العام",
+        "RANGE": "تاريخ بين"
+      },
+      "DATE_RANGE_TITLE": "تاريخ البدء - تاريخ الانتهاء",
+      "START_DATE": "تاريخ البدء",
+      "END_DATE": "تاريخ الانتهاء",
+      "ID": "المعرف",
+      "BUSINESS_KEY": "مفتاح أعمال"
     },
     "ERROR": {
-      "DATE": "تنسيق التاريخ ي‎ي/ش‎ش/س‎س‎س‎س"
+      "DATE": "تنسيق التاريخ ي‎ي/ش‎ش/س‎س‎س‎س",
+      "INDALID_START_DATE": "تاريخ بدء غير صالح",
+      "INDALID_END_DATE": "تاريخ انتهاء غير صالح",
+      "INVALID_DATE_FILTER": "خيار عامل تصفية التاريخ غير مدعوم"
     },
     "TOOL_TIP": {
       "SAVE": "حفظ عامل التصفية",
@@ -242,15 +268,15 @@
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "المعرف",
-      "NAME": "الاسم",
+      "NAME": "اسم العملية",
       "NAME_DEFAULT": "بدون اسم",
       "DESCRIPTION": "الوصف",
       "DESCRIPTION_DEFAULT": "لا يوجد وصف",
       "STATUS": "الحالة",
       "BUSINESS_KEY": "مفتاح أعمال",
       "INITIATOR": "بادئ",
-      "START_DATE": "تاريخ البدء",
-      "LAST_MODIFIED": "آخر تعديل",
+      "START_DATE": "بدأ",
+      "LAST_MODIFIED": "تم التحديث",
       "PARENT_ID": "المعرف الأصلي",
       "NONE": "بلا"
     }
@@ -269,5 +295,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "مسار مجلد وجهة غير صحيح"
     }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "ملء حقول النموذج ببيانات تعريف هذا الملف"
   }
 }

@@ -180,9 +180,9 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "番号形式を使用してください",
         "INT_VALIDATION_ERROR": "整数形式を使用してください",
-        "LENGTH_VALIDATION_ERROR": "値は {{ minLength }} ～ {{ maxLength }} 文字で入力してください",
+        "LENGTH_VALIDATION_ERROR": "値は {{ minLength }} ～ {{ maxLength }} 文字以内で入力してください",
         "MATCH_VALIDATION_ERROR": "値がパターンと一致していません: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "値には {{ minValue }} ～ {{ maxValue }} の数字を入力してください"
+        "MINMAX_VALIDATION_ERROR": "値は {{ minValue }} ～ {{ maxValue }} でなければなりません"
       },
       "MORE": "詳細"
     },
@@ -353,7 +353,8 @@
       "ROTATE_LEFT": "左に回転",
       "ROTATE_RIGHT": "右に回転",
       "RESET": "リセット",
-      "THUMBNAILS": "文書のサムネイル"
+      "THUMBNAILS": "文書のサムネイル",
+      "THUMBNAILS_PANLEL_CLOSE": "サムネイルパネルを閉じる"
     },
     "PAGE_LABEL": {
       "SHOWING": "表示中",

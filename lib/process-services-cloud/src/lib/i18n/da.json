@@ -10,6 +10,8 @@
       "CREATED": "Oprettet",
       "STATUS": "Status",
       "START_DATE": "Startdato",
+      "COMPLETED_DATE": "Fuldførelsesdato",
+      "COMPLETED_BY": "Fuldført af",
       "ID": "Id",
       "INITIATOR": "Initiativtager",
       "APP_NAME": "Appnavn",
@@ -88,7 +90,8 @@
       "LAST_MODIFIED": "Senest ændret",
       "DUE_DATE": "Forfaldsdato",
       "CREATED": "Oprettet",
-      "JSON_CELL": "Json"
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "Fuldført af"
     },
     "LIST": {
       "MESSAGES": {
@@ -126,6 +129,7 @@
     "LABEL": {
       "APP_NAME": "Programnavn",
       "TASK_ID": "Opgave-id",
+      "PROCESS_DEF_NAME": "ProcessDefinitionName",
       "PROCESS_DEF_ID": "Procesdefinitions-id",
       "STATUS": "Status",
       "ASSIGNMENT": "Modtager",
@@ -140,7 +144,8 @@
       "OWNER": "Ejer",
       "DUE_DATE": "Forfaldsdato",
       "SORT": "Sortér",
-      "START_DATE": "Startdato"
+      "START_DATE": "Startdato",
+      "COMPLETED_BY": "Fuldført af"
     },
     "DIALOG": {
       "TITLE": "Gem filter som",
@@ -161,14 +166,35 @@
       "PROCESS_DEF_ID": "Procesdefinitions-id",
       "PROCESS_DEF_NAME": "ProcessDefinitionName",
       "PROCESS_DEF_KEY": "Procesdefinitionsnøgle",
-      "LAST_MODIFIED": "Sidst redigeret",
+      "LAST_MODIFIED": "Sidst ændret",
       "LAST_MODIFIED_DATE_FORM": "Sidst redigeret fra",
       "LAST_MODIFIED_TO": "Sidst redigeret til",
       "PROCESS_NAME": "Procesnavn",
-      "APP_VERSION": "Release-version af appen"
+      "APP_VERSION": "Release-version af appen",
+      "STARTED_DATE": "Startdato",
+      "COMPLETED_DATE": "Fuldførelsesdato",
+      "DATE_RANGE": {
+        "NO_DATE": "Ingen dato",
+        "TODAY": "I dag",
+        "TOMORROW": "I morgen",
+        "NEXT_7_DAYS": "Næste 7 dage",
+        "WEEK": "I denne uge",
+        "MONTH": "I denne måned",
+        "QUARTER": "Dette kvartal",
+        "YEAR": "I år",
+        "RANGE": "Dato indenfor"
+      },
+      "DATE_RANGE_TITLE": "Startdato - slutdato",
+      "START_DATE": "Startdato",
+      "END_DATE": "Slutdato",
+      "ID": "Id",
+      "BUSINESS_KEY": "Forretningsnøgle"
     },
     "ERROR": {
-      "DATE": "Datoformat DD/MM/ÅÅÅÅ"
+      "DATE": "Datoformat DD/MM/ÅÅÅÅ",
+      "INDALID_START_DATE": "Ugyldig  startdato",
+      "INDALID_END_DATE": "Ugyldig slutdato",
+      "INVALID_DATE_FILTER": "Datofilterindstilling understøttes ikke"
     },
     "TOOL_TIP": {
       "SAVE": "Gem filter",
@@ -242,15 +268,15 @@
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "Id",
-      "NAME": "Navn",
+      "NAME": "Procesnavn",
       "NAME_DEFAULT": "Intet navn",
       "DESCRIPTION": "Beskrivelse",
       "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
       "STATUS": "Status",
       "BUSINESS_KEY": "Forretningsnøgle",
       "INITIATOR": "Initiativtager",
-      "START_DATE": "Startdato",
-      "LAST_MODIFIED": "Senest ændret",
+      "START_DATE": "Startet",
+      "LAST_MODIFIED": "Opdateret",
       "PARENT_ID": "Overordnet-id",
       "NONE": "Ingen"
     }
@@ -269,5 +295,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Ugyldig destinationsfolder"
     }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "Udfyld felter med denne fils metadata"
   }
 }

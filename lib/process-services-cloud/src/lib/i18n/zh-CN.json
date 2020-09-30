@@ -10,6 +10,8 @@
       "CREATED": "已创建",
       "STATUS": "状态",
       "START_DATE": "启动日期",
+      "COMPLETED_DATE": "完成日期",
+      "COMPLETED_BY": "完成者",
       "ID": "ID",
       "INITIATOR": "发起者",
       "APP_NAME": "应用程序名称",
@@ -88,7 +90,8 @@
       "LAST_MODIFIED": "最近一次修改时间",
       "DUE_DATE": "截止日期",
       "CREATED": "已创建",
-      "JSON_CELL": "Json"
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "完成者"
     },
     "LIST": {
       "MESSAGES": {
@@ -126,6 +129,7 @@
     "LABEL": {
       "APP_NAME": "应用程序名称",
       "TASK_ID": "任务 ID",
+      "PROCESS_DEF_NAME": "流程定义名称",
       "PROCESS_DEF_ID": "流程定义 ID",
       "STATUS": "状态",
       "ASSIGNMENT": "被指派者",
@@ -140,7 +144,8 @@
       "OWNER": "所有者",
       "DUE_DATE": "截止日期",
       "SORT": "排序",
-      "START_DATE": "开始日期"
+      "START_DATE": "开始日期",
+      "COMPLETED_BY": "完成者"
     },
     "DIALOG": {
       "TITLE": "另存筛选器为",
@@ -165,10 +170,31 @@
       "LAST_MODIFIED_DATE_FORM": "上一次修改开始日期",
       "LAST_MODIFIED_TO": "上一次修改结束日期",
       "PROCESS_NAME": "流程名称",
-      "APP_VERSION": "App 释放版本"
+      "APP_VERSION": "App 释放版本",
+      "STARTED_DATE": "开始日期",
+      "COMPLETED_DATE": "完成日期",
+      "DATE_RANGE": {
+        "NO_DATE": "没有日期",
+        "TODAY": "今天",
+        "TOMORROW": "明天",
+        "NEXT_7_DAYS": "未来 7 天",
+        "WEEK": "本周",
+        "MONTH": "本月",
+        "QUARTER": "本季度",
+        "YEAR": "今年",
+        "RANGE": "位于以下日期之间"
+      },
+      "DATE_RANGE_TITLE": "开始日期 - 结束日期",
+      "START_DATE": "开始日期",
+      "END_DATE": "结束日期",
+      "ID": "ID",
+      "BUSINESS_KEY": "商业 Key"
     },
     "ERROR": {
-      "DATE": "日期格式 (YYYY/MM/DD)"
+      "DATE": "日期格式 (YYYY/MM/DD)",
+      "INDALID_START_DATE": "开始日期无效",
+      "INDALID_END_DATE": "结束日期无效",
+      "INVALID_DATE_FILTER": "不支持日期筛选器选项"
     },
     "TOOL_TIP": {
       "SAVE": "保存筛选器",
@@ -242,15 +268,15 @@
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "ID",
-      "NAME": "名称",
+      "NAME": "流程名称",
       "NAME_DEFAULT": "没有名称",
       "DESCRIPTION": "说明",
       "DESCRIPTION_DEFAULT": "没有描述",
       "STATUS": "状态",
       "BUSINESS_KEY": "商业 Key",
       "INITIATOR": "发起者",
-      "START_DATE": "启动日期",
-      "LAST_MODIFIED": "最近一次修改时间",
+      "START_DATE": "已启动",
+      "LAST_MODIFIED": "已更新",
       "PARENT_ID": "父 ID",
       "NONE": "无"
     }
@@ -269,5 +295,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "无效的目标文件夹路径"
     }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "用此文件的元数据填充表单字段"
   }
 }

@@ -10,6 +10,8 @@
       "CREATED": "作成日",
       "STATUS": "ステータス",
       "START_DATE": "開始日",
+      "COMPLETED_DATE": "完了日",
+      "COMPLETED_BY": "完了者",
       "ID": "ID",
       "INITIATOR": "開始者",
       "APP_NAME": "アプリケーション名",
@@ -88,7 +90,8 @@
       "LAST_MODIFIED": "最終更新日時",
       "DUE_DATE": "期限",
       "CREATED": "作成日",
-      "JSON_CELL": "JSON"
+      "JSON_CELL": "JSON",
+      "COMPLETED_BY": "完了者"
     },
     "LIST": {
       "MESSAGES": {
@@ -126,6 +129,7 @@
     "LABEL": {
       "APP_NAME": "アプリケーション名",
       "TASK_ID": "タスク ID",
+      "PROCESS_DEF_NAME": "プロセス定義名",
       "PROCESS_DEF_ID": "プロセス定義 ID",
       "STATUS": "ステータス",
       "ASSIGNMENT": "担当者",
@@ -140,7 +144,8 @@
       "OWNER": "所有者",
       "DUE_DATE": "期限",
       "SORT": "表示順",
-      "START_DATE": "開始日"
+      "START_DATE": "開始日",
+      "COMPLETED_BY": "完了者"
     },
     "DIALOG": {
       "TITLE": "フィルタに名前を付けて保存",
@@ -165,10 +170,31 @@
       "LAST_MODIFIED_DATE_FORM": "最終変更日 - 開始",
       "LAST_MODIFIED_TO": "最終変更日 - 終了",
       "PROCESS_NAME": "プロセス名",
-      "APP_VERSION": "アプリケーションのリリースバージョン"
+      "APP_VERSION": "アプリケーションのリリースバージョン",
+      "STARTED_DATE": "開始日",
+      "COMPLETED_DATE": "完了日",
+      "DATE_RANGE": {
+        "NO_DATE": "日付なし",
+        "TODAY": "今日",
+        "TOMORROW": "明日",
+        "NEXT_7_DAYS": "翌 7 日間",
+        "WEEK": "今週",
+        "MONTH": "今月",
+        "QUARTER": "今四半期",
+        "YEAR": "今年",
+        "RANGE": "次の期間"
+      },
+      "DATE_RANGE_TITLE": "開始日 ～ 終了日",
+      "START_DATE": "開始日",
+      "END_DATE": "終了日",
+      "ID": "ID",
+      "BUSINESS_KEY": "ビジネスキー"
     },
     "ERROR": {
-      "DATE": "日付形式: YYYY-MM-DD"
+      "DATE": "日付形式: YYYY-MM-DD",
+      "INDALID_START_DATE": "開始日が無効です",
+      "INDALID_END_DATE": "終了日が無効です",
+      "INVALID_DATE_FILTER": "日付フィルタオプションは使用できません"
     },
     "TOOL_TIP": {
       "SAVE": "フィルタの保存",
@@ -242,7 +268,7 @@
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "ID",
-      "NAME": "名前",
+      "NAME": "プロセス名",
       "NAME_DEFAULT": "名前なし",
       "DESCRIPTION": "説明",
       "DESCRIPTION_DEFAULT": "説明なし",
@@ -250,7 +276,7 @@
       "BUSINESS_KEY": "ビジネスキー",
       "INITIATOR": "開始者",
       "START_DATE": "開始日",
-      "LAST_MODIFIED": "最終更新日時",
+      "LAST_MODIFIED": "更新日",
       "PARENT_ID": "親 ID",
       "NONE": "なし"
     }
@@ -269,5 +295,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "対象フォルダのパスが無効です"
     }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "フォームの各フィールドにこのファイルのメタデータを入力してください"
   }
 }

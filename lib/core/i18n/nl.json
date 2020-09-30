@@ -180,9 +180,9 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Gebruik een getalnotatie",
         "INT_VALIDATION_ERROR": "Gebruik een notatie voor gehele getallen",
-        "LENGTH_VALIDATION_ERROR": "Waarde moet een minimale {{ minLength }} en maximale {{ maxLength }} lengte hebben",
+        "LENGTH_VALIDATION_ERROR": "Lengte van waarde moet liggen tussen {{ minLength }} en {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "Waarde komt niet overeen met patroon: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Waarde moet liggen tussen minimaal {{ minValue }} en maximaal {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Waarde moet liggen tussen {{ minValue }} en {{ maxValue }}"
       },
       "MORE": "Meer"
     },
@@ -353,7 +353,8 @@
       "ROTATE_LEFT": "Linksom draaien",
       "ROTATE_RIGHT": "Rechtsom draaien",
       "RESET": "Opnieuw instellen",
-      "THUMBNAILS": "Documentminiaturen"
+      "THUMBNAILS": "Documentminiaturen",
+      "THUMBNAILS_PANLEL_CLOSE": "Venster met miniaturen sluiten"
     },
     "PAGE_LABEL": {
       "SHOWING": "Wordt weergegeven",
@@ -496,7 +497,7 @@
     "EXTENSIONS": {
       "TITLE": "Plug-ins",
       "TABLE_HEADERS": {
-        "ID": "ID",
+        "ID": "Id",
         "NAME": "Naam",
         "VERSION": "Versie",
         "VENDOR": "Leverancier",

@@ -180,9 +180,9 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Использовать формат числа",
         "INT_VALIDATION_ERROR": "Использовать формат целого числа",
-        "LENGTH_VALIDATION_ERROR": "По длине значение должно быть минимум {{ minLength }} и максимум {{ maxLength }}",
+        "LENGTH_VALIDATION_ERROR": "Значение должно находиться в пределах от {{ minLength }} до {{ maxLength }} по длине",
         "MATCH_VALIDATION_ERROR": "Значение не совпадает с шаблоном: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Значение должно быть минимум {{ minValue }} и максимум {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Значение должно находиться в пределах от {{ minValue }} до {{ maxValue }}"
       },
       "MORE": "Больше"
     },
@@ -353,7 +353,8 @@
       "ROTATE_LEFT": "Повернуть влево",
       "ROTATE_RIGHT": "Повернуть вправо",
       "RESET": "Сброс",
-      "THUMBNAILS": "Миниатюры документов"
+      "THUMBNAILS": "Миниатюры документов",
+      "THUMBNAILS_PANLEL_CLOSE": "Закрыть панель эскизов"
     },
     "PAGE_LABEL": {
       "SHOWING": "Отображается",

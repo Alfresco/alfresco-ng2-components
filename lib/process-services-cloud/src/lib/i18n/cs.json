@@ -10,6 +10,8 @@
       "CREATED": "Vytvořeno",
       "STATUS": "Stav",
       "START_DATE": "Datum zahájení",
+      "COMPLETED_DATE": "Datum dokončení",
+      "COMPLETED_BY": "Dokončil(a)",
       "ID": "ID",
       "INITIATOR": "Iniciátor",
       "APP_NAME": "Název aplikace",
@@ -88,7 +90,8 @@
       "LAST_MODIFIED": "Poslední úprava",
       "DUE_DATE": "Termín",
       "CREATED": "Vytvořeno",
-      "JSON_CELL": "Json"
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "Dokončil(a)"
     },
     "LIST": {
       "MESSAGES": {
@@ -126,6 +129,7 @@
     "LABEL": {
       "APP_NAME": "Název aplikace",
       "TASK_ID": "ID úkolu",
+      "PROCESS_DEF_NAME": "Název definice procesu",
       "PROCESS_DEF_ID": "ID definice procesu",
       "STATUS": "Stav",
       "ASSIGNMENT": "Pověřená osoba",
@@ -140,7 +144,8 @@
       "OWNER": "Vlastník",
       "DUE_DATE": "Termín",
       "SORT": "Třídění",
-      "START_DATE": "Datum zahájení"
+      "START_DATE": "Datum zahájení",
+      "COMPLETED_BY": "Dokončil(a)"
     },
     "DIALOG": {
       "TITLE": "Uložit filtr jako",
@@ -165,10 +170,31 @@
       "LAST_MODIFIED_DATE_FORM": "Poslední úprava od",
       "LAST_MODIFIED_TO": "Poslední úprava do",
       "PROCESS_NAME": "Název procesu",
-      "APP_VERSION": "Verze vydání aplikace"
+      "APP_VERSION": "Verze vydání aplikace",
+      "STARTED_DATE": "Datum zahájení",
+      "COMPLETED_DATE": "Datum dokončení",
+      "DATE_RANGE": {
+        "NO_DATE": "Žádné datum",
+        "TODAY": "Dnes",
+        "TOMORROW": "Zítra",
+        "NEXT_7_DAYS": "Příštích 7 dní",
+        "WEEK": "Tento týden",
+        "MONTH": "Tento měsíc",
+        "QUARTER": "Toto čtvrtletí",
+        "YEAR": "Letos",
+        "RANGE": "Datum v rozmezí"
+      },
+      "DATE_RANGE_TITLE": "Datum zahájení – datum ukončení",
+      "START_DATE": "Datum zahájení",
+      "END_DATE": "Datum ukončení",
+      "ID": "ID",
+      "BUSINESS_KEY": "Obchodní klíč"
     },
     "ERROR": {
-      "DATE": "Formát data je DD/MM/RRRR"
+      "DATE": "Formát data je DD/MM/RRRR",
+      "INDALID_START_DATE": "Neplatné datum zahájení",
+      "INDALID_END_DATE": "Neplatné datum ukončení",
+      "INVALID_DATE_FILTER": "Možnost filtru data není podporována"
     },
     "TOOL_TIP": {
       "SAVE": "Uložit filtr",
@@ -242,15 +268,15 @@
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "ID",
-      "NAME": "Název",
+      "NAME": "Název procesu",
       "NAME_DEFAULT": "Bez názvu",
       "DESCRIPTION": "Popis",
       "DESCRIPTION_DEFAULT": "Žádný popis",
       "STATUS": "Stav",
       "BUSINESS_KEY": "Obchodní klíč",
       "INITIATOR": "Iniciátor",
-      "START_DATE": "Datum zahájení",
-      "LAST_MODIFIED": "Poslední úprava",
+      "START_DATE": "Zahájeno",
+      "LAST_MODIFIED": "Aktualizováno",
       "PARENT_ID": "ID nadřazené položky",
       "NONE": "Žádné"
     }
@@ -269,5 +295,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Neplatná cesta k cílové složce"
     }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "Vyplnit pole formuláře metadaty tohoto souboru"
   }
 }

@@ -110,13 +110,13 @@
   },
   "TAG": {
     "LABEL": {
-      "NEWTAG": "Nouveau Tag"
+      "NEWTAG": "Nouvelle balise"
     },
     "MESSAGES": {
-      "EXIST": "Le tag existe déjà"
+      "EXIST": "La balise existe déjà"
     },
     "BUTTON": {
-      "ADD": "Ajouter un Tag"
+      "ADD": "Ajouter une balise"
     }
   },
   "ADF_FILE_UPLOAD": {

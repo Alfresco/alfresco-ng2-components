@@ -10,6 +10,8 @@
       "CREATED": "Luotu",
       "STATUS": "Tila",
       "START_DATE": "Alkamispäivä",
+      "COMPLETED_DATE": "Suorituspäivä",
+      "COMPLETED_BY": "Suorittaja",
       "ID": "Tunnus",
       "INITIATOR": "Käynnistäjä",
       "APP_NAME": "Sovelluksen nimi",
@@ -88,7 +90,8 @@
       "LAST_MODIFIED": "Muokattu viimeksi",
       "DUE_DATE": "Määräpäivä",
       "CREATED": "Luotu",
-      "JSON_CELL": "Json"
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "Suorittaja"
     },
     "LIST": {
       "MESSAGES": {
@@ -126,6 +129,7 @@
     "LABEL": {
       "APP_NAME": "Sovelluksen nimi",
       "TASK_ID": "Tehtävätunnus",
+      "PROCESS_DEF_NAME": "Prosessimääritelmän nimi",
       "PROCESS_DEF_ID": "Prosessimääritelmätunnus",
       "STATUS": "Tila",
       "ASSIGNMENT": "Vastuuhenkilö",
@@ -140,7 +144,8 @@
       "OWNER": "Omistaja",
       "DUE_DATE": "Määräpäivä",
       "SORT": "Lajittele",
-      "START_DATE": "Alkamispäivä"
+      "START_DATE": "Alkamispäivä",
+      "COMPLETED_BY": "Suorittaja"
     },
     "DIALOG": {
       "TITLE": "Tallenna suodatin nimellä",
@@ -165,10 +170,31 @@
       "LAST_MODIFIED_DATE_FORM": "Muokattu viimeksi kohteesta",
       "LAST_MODIFIED_TO": "Muokattu viimeksi kohteeseen",
       "PROCESS_NAME": "Prosessin nimi",
-      "APP_VERSION": "Sovelluksen julkaisuversio"
+      "APP_VERSION": "Sovelluksen julkaisuversio",
+      "STARTED_DATE": "Alkamispäivä",
+      "COMPLETED_DATE": "Suorituspäivä",
+      "DATE_RANGE": {
+        "NO_DATE": "Ei päivämäärää",
+        "TODAY": "Tänään",
+        "TOMORROW": "Huomenna",
+        "NEXT_7_DAYS": "Seuraavat 7 päivää",
+        "WEEK": "Tällä viikolla",
+        "MONTH": "Tässä kuussa",
+        "QUARTER": "Tämä neljännesvuosi",
+        "YEAR": "Tänä vuonna",
+        "RANGE": "Aseta aikaväli"
+      },
+      "DATE_RANGE_TITLE": "Alkamispäivä - Päättymispäivä",
+      "START_DATE": "Alkamispäivä",
+      "END_DATE": "Päättymispäivä",
+      "ID": "Tunnus",
+      "BUSINESS_KEY": "Liiketoiminta-avain"
     },
     "ERROR": {
-      "DATE": "Päivämäärämuoto: PP/KK/VVVV"
+      "DATE": "Päivämäärämuoto: PP/KK/VVVV",
+      "INDALID_START_DATE": "Virheellinen alkamispäivä",
+      "INDALID_END_DATE": "Virheellinen päättymispäivä",
+      "INVALID_DATE_FILTER": "Päivämäärasuodatin ei ole tuettu"
     },
     "TOOL_TIP": {
       "SAVE": "Tallenna suodatin",
@@ -242,15 +268,15 @@
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "Tunnus",
-      "NAME": "Nimi",
+      "NAME": "Prosessin nimi",
       "NAME_DEFAULT": "Ei nimeä",
       "DESCRIPTION": "Kuvaus",
       "DESCRIPTION_DEFAULT": "Ei kuvausta",
       "STATUS": "Tila",
       "BUSINESS_KEY": "Liiketoiminta-avain",
       "INITIATOR": "Käynnistäjä",
-      "START_DATE": "Alkamispäivä",
-      "LAST_MODIFIED": "Muokattu viimeksi",
+      "START_DATE": "Aloitettu",
+      "LAST_MODIFIED": "Päivitetty",
       "PARENT_ID": "Ylätason tunnus",
       "NONE": "Ei mitään"
     }
@@ -269,5 +295,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Virheellinen kohdekansion polku"
     }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "Täytä lomakekentät tämän tiedoston metatiedoilla"
   }
 }

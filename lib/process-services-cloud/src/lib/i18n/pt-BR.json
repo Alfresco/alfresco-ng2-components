@@ -10,6 +10,8 @@
       "CREATED": "Criado",
       "STATUS": "Status",
       "START_DATE": "Data de início",
+      "COMPLETED_DATE": "Data de conclusão",
+      "COMPLETED_BY": "Concluído por",
       "ID": "ID",
       "INITIATOR": "Iniciador",
       "APP_NAME": "Nome do aplicativo",
@@ -88,7 +90,8 @@
       "LAST_MODIFIED": "Modificado por último",
       "DUE_DATE": "Data de vencimento",
       "CREATED": "Criado",
-      "JSON_CELL": "Json"
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "Concluída por"
     },
     "LIST": {
       "MESSAGES": {
@@ -126,6 +129,7 @@
     "LABEL": {
       "APP_NAME": "Nome de aplicativo",
       "TASK_ID": "ID de tarefa",
+      "PROCESS_DEF_NAME": "Nome da definição de processo",
       "PROCESS_DEF_ID": "ID de Definição de Processo",
       "STATUS": "Status",
       "ASSIGNMENT": "Destinatário",
@@ -140,7 +144,8 @@
       "OWNER": "Proprietário",
       "DUE_DATE": "Data de vencimento",
       "SORT": "Classificar",
-      "START_DATE": "Data de início"
+      "START_DATE": "Data de início",
+      "COMPLETED_BY": "Concluída por"
     },
     "DIALOG": {
       "TITLE": "Salvar filtro como",
@@ -161,14 +166,35 @@
       "PROCESS_DEF_ID": "ID de Definição de Processo",
       "PROCESS_DEF_NAME": "Nome da definição de processo",
       "PROCESS_DEF_KEY": "Chave de Definição de Processo",
-      "LAST_MODIFIED": "Última Modificação",
+      "LAST_MODIFIED": "Modificado por último",
       "LAST_MODIFIED_DATE_FORM": "Última Modificação De",
       "LAST_MODIFIED_TO": "Última Modificação Para",
-      "PROCESS_NAME": "Nome do Processo",
-      "APP_VERSION": "Versão do aplicativo"
+      "PROCESS_NAME": "Nome de processo",
+      "APP_VERSION": "Versão do aplicativo",
+      "STARTED_DATE": "Data de início",
+      "COMPLETED_DATE": "Data de conclusão",
+      "DATE_RANGE": {
+        "NO_DATE": "Nenhuma data",
+        "TODAY": "Hoje",
+        "TOMORROW": "Amanhã",
+        "NEXT_7_DAYS": "Próximos 7 dias",
+        "WEEK": "Esta semana",
+        "MONTH": "Este mês",
+        "QUARTER": "Este trimestre",
+        "YEAR": "Este ano",
+        "RANGE": "Data no intervalo"
+      },
+      "DATE_RANGE_TITLE": "Data de início - Data de término",
+      "START_DATE": "Data de início",
+      "END_DATE": "Data de término",
+      "ID": "ID",
+      "BUSINESS_KEY": "Chave de negócios"
     },
     "ERROR": {
-      "DATE": "Formato de data DD/MM/AAAA"
+      "DATE": "Formato de data DD/MM/AAAA",
+      "INDALID_START_DATE": "Data de início inválida",
+      "INDALID_END_DATE": "Data de término inválida",
+      "INVALID_DATE_FILTER": "A opção de filtro de data não é compatível"
     },
     "TOOL_TIP": {
       "SAVE": "Salvar filtro",
@@ -242,16 +268,16 @@
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "ID",
-      "NAME": "Nome",
+      "NAME": "Nome de processo",
       "NAME_DEFAULT": "Nenhum nome",
       "DESCRIPTION": "Descrição",
       "DESCRIPTION_DEFAULT": "Nenhuma descrição",
       "STATUS": "Status",
       "BUSINESS_KEY": "Chave de negócios",
       "INITIATOR": "Iniciador",
-      "START_DATE": "Data de início",
-      "LAST_MODIFIED": "Modificado por último",
-      "PARENT_ID": "ID primária",
+      "START_DATE": "Iniciado",
+      "LAST_MODIFIED": "Atualizado",
+      "PARENT_ID": "ID primário",
       "NONE": "Nenhum"
     }
   },
@@ -269,5 +295,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Caminho inválido da pasta de destino"
     }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "Preencher campos de formulário com os metadados deste arquivo"
   }
 }

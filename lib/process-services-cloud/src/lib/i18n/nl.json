@@ -10,9 +10,11 @@
       "CREATED": "Gemaakt",
       "STATUS": "Status",
       "START_DATE": "Begindatum",
+      "COMPLETED_DATE": "Voltooiingsdatum",
+      "COMPLETED_BY": "Voltooid door",
       "ID": "Id",
       "INITIATOR": "Initiator",
-      "APP_NAME": "Naam toepassing",
+      "APP_NAME": "Toepassingsnaam",
       "BUSINESS_KEY": "Business key",
       "DESCRIPTION": "Beschrijving",
       "LAST_MODIFIED": "Laatst gewijzigd",
@@ -88,7 +90,8 @@
       "LAST_MODIFIED": "Laatst gewijzigd",
       "DUE_DATE": "Vervaldatum",
       "CREATED": "Gemaakt",
-      "JSON_CELL": "Json"
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "Voltooid door"
     },
     "LIST": {
       "MESSAGES": {
@@ -125,7 +128,8 @@
     },
     "LABEL": {
       "APP_NAME": "Toepassingsnaam",
-      "TASK_ID": "Taak-ID",
+      "TASK_ID": "Taak-id",
+      "PROCESS_DEF_NAME": "Naam procesdefinitie",
       "PROCESS_DEF_ID": "Procesdefinitie-id",
       "STATUS": "Status",
       "ASSIGNMENT": "Toegewezen persoon",
@@ -140,7 +144,8 @@
       "OWNER": "Eigenaar",
       "DUE_DATE": "Einddatum",
       "SORT": "Sorteren",
-      "START_DATE": "Begindatum"
+      "START_DATE": "Begindatum",
+      "COMPLETED_BY": "Voltooid door"
     },
     "DIALOG": {
       "TITLE": "Filter opslaan als",
@@ -161,14 +166,35 @@
       "PROCESS_DEF_ID": "Procesdefinitie-id",
       "PROCESS_DEF_NAME": "Naam procesdefinitie",
       "PROCESS_DEF_KEY": "Procesdefinitiesleutel",
-      "LAST_MODIFIED": "Laatst veranderd",
+      "LAST_MODIFIED": "Laatst gewijzigd",
       "LAST_MODIFIED_DATE_FORM": "Laatst veranderd van",
       "LAST_MODIFIED_TO": "Laatst veranderd in",
       "PROCESS_NAME": "Procesnaam",
-      "APP_VERSION": "App-releaseversie"
+      "APP_VERSION": "App-releaseversie",
+      "STARTED_DATE": "Begindatum",
+      "COMPLETED_DATE": "Voltooiingsdatum",
+      "DATE_RANGE": {
+        "NO_DATE": "Geen datum",
+        "TODAY": "Vandaag",
+        "TOMORROW": "Morgen",
+        "NEXT_7_DAYS": "Volgende 7 dagen",
+        "WEEK": "Deze week",
+        "MONTH": "Deze maand",
+        "QUARTER": "Dit kwartaal",
+        "YEAR": "Dit jaar",
+        "RANGE": "Datum binnen"
+      },
+      "DATE_RANGE_TITLE": "Begindatum - Einddatum",
+      "START_DATE": "Begindatum",
+      "END_DATE": "Einddatum",
+      "ID": "Id",
+      "BUSINESS_KEY": "Business key"
     },
     "ERROR": {
-      "DATE": "Datumnotatie dd-mm-jjjj"
+      "DATE": "Datumnotatie dd-mm-jjjj",
+      "INDALID_START_DATE": "Ongeldige begindatum",
+      "INDALID_END_DATE": "Ongeldige einddatum",
+      "INVALID_DATE_FILTER": "Filteroptie voor datum wordt niet ondersteund"
     },
     "TOOL_TIP": {
       "SAVE": "Filter opslaan",
@@ -241,16 +267,16 @@
   },
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
-      "ID": "ID",
-      "NAME": "Naam",
+      "ID": "Id",
+      "NAME": "Procesnaam",
       "NAME_DEFAULT": "Geen naam",
       "DESCRIPTION": "Beschrijving",
       "DESCRIPTION_DEFAULT": "Geen beschrijving",
       "STATUS": "Status",
       "BUSINESS_KEY": "Business key",
       "INITIATOR": "Initiator",
-      "START_DATE": "Begindatum",
-      "LAST_MODIFIED": "Laatst gewijzigd",
+      "START_DATE": "Gestart",
+      "LAST_MODIFIED": "Bijgewerkt",
       "PARENT_ID": "Bovenliggende ID",
       "NONE": "Geen"
     }
@@ -269,5 +295,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Ongeldig pad doelmap"
     }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "Formuliervelden invullen met de metagegevens van dit bestand"
   }
 }
