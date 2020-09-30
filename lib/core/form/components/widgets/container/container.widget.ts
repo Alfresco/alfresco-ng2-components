@@ -80,7 +80,7 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
             let fieldExist = false;
             let columnIndex = 0;
             while (columnIndex < this.numberOfColumns) {
-                let field;
+                let field: FormFieldModel;
                 if (rowspanOffset[columnIndex] > 0) {
                     this.decreaseRowspanOffsetForColumn(rowspanOffset, columnIndex);
                 } else {
@@ -101,13 +101,13 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
         return fields;
     }
 
-    private updateColumnsRowspanOffsetWithFieldRowspan(field: any, rowspanOffset: any[], columnIndex: number) {
+    private updateColumnsRowspanOffsetWithFieldRowspan(field: FormFieldModel, rowspanOffset: any[], columnIndex: number) {
         for (let k = 0; k < (field?.colspan || 1); k++) {
             rowspanOffset[columnIndex + k] = field?.rowspan > 0 ? field?.rowspan - 1 : 0;
         }
     }
 
-    private getNextFieldToAdd(columnIndex: number, numberOfColumnElementsToBeProcessedRemaining: any[], field: any) {
+    private getNextFieldToAdd(columnIndex: number, numberOfColumnElementsToBeProcessedRemaining: any[], field: FormFieldModel): FormFieldModel {
         const rowToCompute = (this.content.columns[columnIndex]?.fields?.length || 0) - numberOfColumnElementsToBeProcessedRemaining[columnIndex];
         field = this.content.columns[columnIndex]?.fields[rowToCompute];
         return field;
@@ -117,10 +117,15 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
         rowspanOffset[columnIndex] = rowspanOffset[columnIndex] - 1;
     }
 
-    private initializeHelpers() {
+    private initializeHelpers(): {
+        size: number;
+        rowspanOffset: number[];
+        numberOfColumnElementsToBeProcessedRemaining: number[];
+        fields: FormFieldModel[];
+    } {
         const fields = [];
-        const numberOfColumnElementsToBeProcessedRemaining = [];
-        const rowspanOffset = [];
+        const numberOfColumnElementsToBeProcessedRemaining: number[] = [];
+        const rowspanOffset: number[] = [];
         let size = 0;
         for (let i = 0; i < this.numberOfColumns; i++) {
             numberOfColumnElementsToBeProcessedRemaining.push(this.content.columns[i]?.fields?.length || 0);
@@ -130,7 +135,7 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
         return { size, rowspanOffset, numberOfColumnElementsToBeProcessedRemaining, fields };
     }
 
-    private deleteLastEmptyRowAndExit(fields: any[], i: number, size: number) {
+    private deleteLastEmptyRowAndExit(fields: FormFieldModel[], i: number, size: number) {
         for (let j = 0; j < this.numberOfColumns; j++) {
             fields.pop();
         }
