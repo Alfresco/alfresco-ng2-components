@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { Observable, from } from 'rxjs';
+import { Oauth2Auth } from '@alfresco/js-api';
 
 export const JSON_TYPE = ['application/json'];
 
@@ -33,7 +34,7 @@ export interface OAuth2RequestParams {
 export class OAuth2Service {
     constructor(private alfrescoApiService: AlfrescoApiService) {}
 
-    get apiClient() {
+    get apiClient(): Oauth2Auth {
         return this.alfrescoApiService.getInstance().oauth2Auth;
     }
 

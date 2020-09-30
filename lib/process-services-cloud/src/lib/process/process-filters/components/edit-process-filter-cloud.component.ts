@@ -332,8 +332,12 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         );
     }
 
-    onUsersChange(users: IdentityUserModel[], property: ProcessFilterProperties) {
-        this.getPropertyController(property).setValue(users.map(user => user.username));
+    onChangedUser(users: IdentityUserModel[], property: ProcessFilterProperties) {
+        if (property.attributes) {
+            this.editProcessFilterForm.get(property.attributes?.customKey).setValue(users);
+        } else {
+            this.getPropertyController(property).setValue(users);
+        }
     }
 
     hasError(property: ProcessFilterProperties): boolean {
@@ -495,6 +499,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return property.type === 'number';
     }
 
+    isUserSelectType(property: ProcessFilterProperties): boolean {
+        return property.type === 'people';
+    }
+
     isDisabledAction(action: ProcessFilterAction): boolean {
         return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
     }
@@ -508,6 +516,13 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             this.processFilterCloudService.isDefaultFilter(this.processFilter.name) &&
             this.actionDisabledForDefault.includes(action.actionType)
         );
+    }
+
+    getPropertyValue(property: ProcessFilterProperties, key: string) {
+        if (!!property.attributes) {
+            return property.value[key];
+        }
+        return property.value;
     }
 
     hasFormChanged(action: ProcessFilterAction): boolean {
@@ -721,6 +736,16 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 type: 'date',
                 key: 'completedDate',
                 value: currentProcessFilter.completedDate || false
+            }),
+             new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STARTED_BY',
+                type: 'people',
+                key: 'startedBy',
+                attributes: { customKey: 'initiator' },
+                value: {
+                    initiator: currentProcessFilter.initiator || []
+                },
+                selectionMode: 'multiple'
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COMPLETED_DATE',

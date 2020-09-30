@@ -19,7 +19,7 @@ import { Component, ViewEncapsulation, OnChanges, AfterContentInit, ContentChild
 import { DataTableSchema, PaginatedComponent,
          CustomEmptyContentTemplateDirective, AppConfigService,
          UserPreferencesService, PaginationModel,
-         UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective, DataCellEvent, DataRowActionEvent } from '@alfresco/adf-core';
+         UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective, DataCellEvent, DataRowActionEvent, IdentityUserModel } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { BehaviorSubject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
@@ -53,7 +53,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     /** Name of the initiator of the process. */
     @Input()
-    initiator: string = '';
+    initiator: string | IdentityUserModel[];
 
     /** Filter the processes to display only the ones with this ID. */
     @Input()
@@ -110,9 +110,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     /** Filter the processes. Display only process with completedDate equal to the supplied date. */
     @Input()
     completedDate: string = '';
-    /** Filter the processes. Display only process with startedBy equal to the supplied values. */
-    @Input()
-    startedBy: string[] = [];
 
     /**
      * Row selection mode. Can be "none", "single" or "multiple".
@@ -331,7 +328,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             appVersion: this.appVersion,
             maxItems: this.size,
             skipCount: this.skipCount,
-            initiator: this.initiator,
+            initiator: this.getInitiatorValue(),
             id: this.id,
             name: this.name,
             processDefinitionId: this.processDefinitionId,
@@ -346,7 +343,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             completedFrom: this.completedFrom,
             completedTo: this.completedTo,
             completedDate: this.completedDate,
-            startedBy: this.startedBy?.join(','),
             sorting: this.sorting
         };
         return new ProcessQueryCloudRequestModel(requestNode);
@@ -369,5 +365,13 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     isValidSorting(sorting: ProcessListCloudSortingModel[]) {
         return sorting.length && sorting[0].orderBy && sorting[0].direction;
+    }
+
+    private getInitiatorValue() {
+        if (!!this.initiator) {
+            const users = Object.values(this.initiator);
+            return users.length ? users.map(item => item.username).join(',') : this.initiator;
+        }
+        return this.initiator;
     }
 }

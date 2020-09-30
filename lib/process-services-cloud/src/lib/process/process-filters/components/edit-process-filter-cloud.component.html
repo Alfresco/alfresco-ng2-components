@@ -72,6 +72,16 @@
                             [options]="processFilterProperty.dateFilterOptions"
                             (dateTypeChange)="onDateTypeChange($event, processFilterProperty)"
                             (dateChanged)="onDateRangeFilterChanged($event, processFilterProperty)"></adf-cloud-date-range-filter>
+
+                        <div fxFlex="23%" *ngIf="isUserSelectType(processFilterProperty)">
+                            <adf-cloud-people
+                                [preSelectUsers]="getPropertyValue(processFilterProperty, 'initiator')"
+                                [title]="processFilterProperty.label"
+                                [validate]="true"
+                                [appName]="appName"
+                                [mode]="processFilterProperty.selectionMode"
+                                (changedUsers)="onChangedUser($event, processFilterProperty)"></adf-cloud-people>
+                        </div>
                     </ng-container>
                 </div>
             </form>

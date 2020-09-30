@@ -16,6 +16,8 @@
  */
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
+import { ComponentSelectionMode } from '../../../types';
+import { IdentityUserModel } from '@alfresco/adf-core';
 
 export class ProcessFilterCloudModel {
 
@@ -30,7 +32,7 @@ export class ProcessFilterCloudModel {
     appVersion?: number;
     processName: string;
     processInstanceId: string;
-    initiator: string;
+    initiator: string | IdentityUserModel[];
     status: string;
     sort: string;
     order: string;
@@ -49,7 +51,6 @@ export class ProcessFilterCloudModel {
     private _completedTo: string;
     private _startFrom: string;
     private _startTo: string;
-    startedBy: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -80,7 +81,6 @@ export class ProcessFilterCloudModel {
             this.completedFrom = obj._completedFrom || null;
             this.completedTo = obj._completedTo || null;
             this.completedDate = obj.completedDate || null;
-            this.startedBy = obj.startedBy || null;
         }
     }
 
@@ -170,6 +170,7 @@ export class ProcessFilterProperties {
     attributes?: { [key: string]: string; };
     options?: ProcessFilterOptions[];
     dateFilterOptions?: DateCloudFilterType[];
+    selectionMode?: ComponentSelectionMode;
 
     constructor(obj?: any) {
         if (obj) {
@@ -180,6 +181,7 @@ export class ProcessFilterProperties {
             this.attributes = obj.attributes || null;
             this.options = obj.options || null;
             this.dateFilterOptions = obj.dateFilterOptions || null;
+            this.selectionMode = obj.selectionMode || null;
         }
     }
 }
