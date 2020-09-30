@@ -538,7 +538,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             }),
             new ProcessFilterAction({
                 actionType: EditProcessFilterCloudComponent.ACTION_SAVE_AS,
-                icon: 'unarchive',
+                icon: 'adf:save-as',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE_AS'
             }),
             new ProcessFilterAction({

@@ -19,7 +19,7 @@
                                     [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType"
                                     [disabled]="isDisabledAction(filterAction)"
                                     (click)="executeFilterActions(filterAction)">
-                                <mat-icon>{{filterAction.icon}}</mat-icon>
+                                <adf-icon [value]="filterAction.icon"></adf-icon>
                             </button>
                         </ng-container>
                     </div>
