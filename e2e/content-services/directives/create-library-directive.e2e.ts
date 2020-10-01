@@ -172,7 +172,7 @@ describe('Create library directive', () => {
 
         for (let i = 0; i < 3; i++) {
             await createLibraryDialog.typeLibraryName(name[i]);
-            await expect(await createLibraryDialog.getLibraryIdText()).toMatch(libraryId[i]);
+            await createLibraryDialog.waitUntilibraryIdTextHasValue(libraryId[i]);
             await createLibraryDialog.clearLibraryName();
         }
     });
@@ -185,7 +185,7 @@ describe('Create library directive', () => {
 
         for (let i = 0; i < 3; i++) {
             await createLibraryDialog.typeLibraryId(libraryId[i]);
-            await expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
+            await createLibraryDialog.waitErrorMessageIsDisplayed();
             await expect(await createLibraryDialog.getErrorMessage()).toMatch('Use numbers and letters only');
         }
     });
@@ -196,7 +196,7 @@ describe('Create library directive', () => {
 
         await createLibraryDialog.typeLibraryName(name);
         await createLibraryDialog.typeLibraryId(libraryId);
-        await expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
+        await createLibraryDialog.waitErrorMessageIsDisplayed();
         await expect(await createLibraryDialog.getErrorMessage()).toMatch('Title must be at least 2 characters long');
     });
 
@@ -207,7 +207,7 @@ describe('Create library directive', () => {
         await createLibraryDialog.typeLibraryName(name);
         await createLibraryDialog.typeLibraryId(libraryId);
 
-        await expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
+        await createLibraryDialog.waitErrorMessageIsDisplayed();
         await expect(await createLibraryDialog.getErrorMessage()).toMatch("Library name can't contain only spaces");
     });
 
@@ -224,7 +224,7 @@ describe('Create library directive', () => {
 
         await createLibraryDialog.typeLibraryName(name);
         await createLibraryDialog.typeLibraryId(libraryId);
-        await expect(await createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
+        await createLibraryDialog.waitErrorMessageIsDisplayed();
         await expect(await createLibraryDialog.getErrorMessage()).toMatch("This Library ID isn't available. Try a different Library ID.");
     });
 

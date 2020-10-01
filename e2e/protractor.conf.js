@@ -1,4 +1,4 @@
-const { LocalStorageUtil, Logger } = require('@alfresco/adf-testing');
+const {LocalStorageUtil, Logger} = require('@alfresco/adf-testing');
 const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
@@ -286,13 +286,14 @@ exports.config = {
             let retryCount = 1;
             if (argv.retry) {
                 retryCount = ++argv.retry;
+                browser.params.testConfig.timeouts.index_search *= retryCount;
             }
             try {
                 await uploadScreenshot(retryCount, (process.env.FOLDER || ''));
             } catch (error) {
                 console.error('Error saving screenshot', error);
             }
-        }else{
+        } else {
             console.log(`Save screenshot disabled`);
         }
 

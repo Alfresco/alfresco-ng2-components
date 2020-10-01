@@ -39,7 +39,7 @@ export class CreateLibraryDialogPage {
     }
 
     async waitForDialogToOpen(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.libraryDialog);
+        await BrowserVisibility.waitUntilElementIsVisible(this.libraryDialog);
     }
 
     async waitForDialogToClose(): Promise<void> {
@@ -54,12 +54,12 @@ export class CreateLibraryDialogPage {
         return BrowserActions.getText(this.libraryTitle);
     }
 
-    async getLibraryIdText(): Promise<string> {
-        return this.libraryIdField.getAttribute('value');
+    async waitUntilibraryIdTextHasValue(value: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementHasValue(this.libraryIdField, value);
     }
 
-    async isErrorMessageDisplayed(): Promise<boolean> {
-        return this.errorMessage.isDisplayed();
+    async waitErrorMessageIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.errorMessage, 60000);
     }
 
     async getErrorMessage(): Promise<string> {

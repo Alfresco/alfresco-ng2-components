@@ -398,7 +398,7 @@ describe('TaskFormCloudComponent', () => {
             component.loading = true;
             fixture.detectChanges();
 
-            const loadingTemplate = debugElement.query(By.css('mat-spinner'));
+            const loadingTemplate = debugElement.query(By.css('mat-progress-spinner'));
 
             expect(loadingTemplate).toBeDefined();
         });
@@ -411,7 +411,7 @@ describe('TaskFormCloudComponent', () => {
             component.loadTask();
             fixture.detectChanges();
 
-            const loadingTemplate = debugElement.query(By.css('mat-spinner'));
+            const loadingTemplate = debugElement.query(By.css('mat-progress-spinner'));
 
             expect(loadingTemplate).toBeNull();
         });

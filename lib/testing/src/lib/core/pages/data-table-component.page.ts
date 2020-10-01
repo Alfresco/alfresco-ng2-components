@@ -315,7 +315,7 @@ export class DataTableComponentPage {
 
         if (await this.isSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-spinner')));
+            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')));
 
             if (await this.isEmpty()) {
                 Logger.log('empty page');
@@ -325,8 +325,10 @@ export class DataTableComponentPage {
         } else {
             try {
                 Logger.log('wait datatable loading spinner is present');
-                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-spinner')), 2000);
+                await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(by.tagName('mat-progress-spinner')));
+                await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')));
             } catch (error) {
+                Logger.log('Error', error);
             }
 
             if (await this.isEmpty()) {
@@ -341,7 +343,7 @@ export class DataTableComponentPage {
         let isSpinnerPresent;
 
         try {
-            isSpinnerPresent = await element(by.tagName('mat-spinner')).isDisplayed();
+            isSpinnerPresent = await element(by.tagName('mat-progress-spinner')).isDisplayed();
         } catch (error) {
             isSpinnerPresent = false;
         }
