@@ -21,6 +21,7 @@
         [showDropdownSiteList]="data?.showDropdownSiteList"
         [showFilesInResult]="data?.showFilesInResult"
         (select)="onSelect($event)"
+        (disableUploadButton)="onDisableUploadButton($event)"
         (siteChange)="onSiteChange($event)"
         (navigationChange)="onNavigationChange($event)">
     </adf-content-node-selector-panel>
@@ -33,6 +34,7 @@
             [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
             [multipleFiles]="isMultipleSelection()"
             [rootFolderId]="currentDirectoryId"
+            [disabled]="disableUploadButton"
             (error)="onError($event)">
         </adf-upload-button>
     </div>
