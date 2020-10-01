@@ -19,7 +19,7 @@ import { Component, ViewEncapsulation, Input } from '@angular/core';
 import {
     AppConfigService, UserPreferencesService
 } from '@alfresco/adf-core';
-import { ServiceTaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
 

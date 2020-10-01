@@ -19,7 +19,7 @@ import { async } from '@angular/core/testing';
 import { setupTestBed, StorageService, AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
 import { fakeTaskCloudList } from '../mock/fake-task-response.mock';
 import { ServiceTaskListCloudService } from './service-task-list-cloud.service';
-import { ServiceTaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
 
 describe('Activiti ServiceTaskList Cloud Service', () => {
 
