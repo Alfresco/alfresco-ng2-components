@@ -18,6 +18,7 @@
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
 import { ComponentSelectionMode } from '../../../types';
+import { IdentityUserModel } from '@alfresco/adf-core';
 
 export class TaskFilterCloudModel {
     id: string;
@@ -42,11 +43,11 @@ export class TaskFilterCloudModel {
     parentTaskId: string;
     priority: number;
     standalone: boolean;
-    completedBy: string;
     lastModifiedFrom: string;
     lastModifiedTo: string;
     completedDateType: DateCloudFilterType;
     completedDate: Date;
+    completedBy: IdentityUserModel;
 
     private _completedFrom: string;
     private _completedTo: string;

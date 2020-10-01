@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { setupTestBed } from '@alfresco/adf-core';
+import { AlfrescoApiService, IdentityUserModel, setupTestBed } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -38,6 +38,7 @@ import moment from 'moment-es6';
 import { TranslateModule } from '@ngx-translate/core';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
 import { TaskFilterCloudModel } from '../../models/filter-cloud.model';
+import { PeopleCloudModule } from '../../../../people/people-cloud.module';
 
 describe('EditTaskFilterCloudComponent', () => {
     let component: EditTaskFilterCloudComponent;
@@ -45,15 +46,23 @@ describe('EditTaskFilterCloudComponent', () => {
     let appsService: AppsProcessCloudService;
     let fixture: ComponentFixture<EditTaskFilterCloudComponent>;
     let dialog: MatDialog;
+    let alfrescoApiService: AlfrescoApiService;
     let getTaskFilterSpy: jasmine.Spy;
     let getRunningApplicationsSpy: jasmine.Spy;
     let taskService: TaskCloudService;
+
+    const mock = {
+        oauth2Auth: {
+            callCustomApi: () => Promise.resolve(fakeApplicationInstance)
+        }
+    };
 
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule,
-            TaskFiltersCloudModule
+            TaskFiltersCloudModule,
+            PeopleCloudModule
         ],
         providers: [
             MatDialog,
@@ -67,6 +76,7 @@ describe('EditTaskFilterCloudComponent', () => {
         service = TestBed.inject(TaskFilterCloudService);
         appsService = TestBed.inject(AppsProcessCloudService);
         taskService = TestBed.inject(TaskCloudService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
         spyOn(dialog, 'open').and.returnValue({
             afterClosed: of({
@@ -75,6 +85,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 name: 'fake-name'
             })
         });
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
         getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(of(fakeFilter));
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         fixture.detectChanges();
@@ -470,6 +481,64 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(appController.value).toBe('mock-app-name');
             });
         }));
+
+        it('should fetch data in completedBy filter', async(() => {
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedBy'];
+            fixture.detectChanges();
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            const appController = component.editTaskFilterForm.get('completedBy');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(appController).toBeDefined();
+                expect(JSON.stringify(appController.value)).toBe(JSON.stringify({
+                    id: 'mock-id',
+                    username: 'testCompletedByUser'
+                }));
+            });
+        }));
+
+        it('should show completedBy filter', async(() => {
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedBy'];
+            fixture.detectChanges();
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const peopleCloudComponent = fixture.debugElement.nativeElement.querySelector('adf-cloud-people');
+                expect(peopleCloudComponent).toBeTruthy();
+            });
+        }));
+
+        it('should update form on completed by user is updated', (done) => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedBy'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+
+            const mockUser: IdentityUserModel[] = [{
+                id: 'id',
+                username: 'test'
+            }];
+
+            const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('completedBy');
+            startedDateTypeControl.setValue('hruser');
+
+            component.onChangedUser(mockUser, {
+                key: 'completedBy',
+                label: '',
+                type: 'people',
+                value: null
+            });
+
+            fixture.detectChanges();
+            component.filterChange.subscribe(() => {
+                expect(component.changedTaskFilter.completedBy).toEqual(mockUser[0]);
+                done();
+            });
+            component.onFilterChange();
+        });
 
         it('should set the correct started date range when date range option is changed', (done) => {
             component.appName = 'fake';
