@@ -209,7 +209,7 @@ export abstract class BaseQueryBuilderService {
         try {
             const query = queryBody ? queryBody : this.buildQuery();
             if (query) {
-                const resultSetPaging: ResultSetPaging = await this.alfrescoApiService.getInstance().search.searchApi.search(queryBody);
+                const resultSetPaging: ResultSetPaging = await this.alfrescoApiService.searchApi.search(query);
                 this.executed.next(resultSetPaging);
             }
         } catch (error) {
