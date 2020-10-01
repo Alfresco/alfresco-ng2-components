@@ -80,26 +80,3 @@ export class TaskQueryCloudRequestModel {
         }
     }
 }
-
-export interface ServiceTaskQueryCloudRequestModel {
-    appName: string;
-    appVersion?: string;
-    id?: string;
-    status?: string;
-    maxItems: number;
-    skipCount: number;
-    sorting?: TaskListCloudSortingModel[];
-    activityName?: string;
-    activityType?: string;
-    completedDate?: Date;
-    elementId?: string;
-    executionId?: string;
-    processDefinitionId?: string;
-    processDefinitionKey?: string;
-    processDefinitionVersion?: number;
-    processInstanceId?: string;
-    serviceFullName?: string;
-    serviceName?: string;
-    serviceVersion?: string;
-    startedDate?: Date;
-}

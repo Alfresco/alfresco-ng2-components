@@ -1,15 +1,12 @@
-<div fxLayout="row"
-     fxFill
-     fxLayoutGap="2px">
+<div fxLayout
+     fxFill>
     <adf-cloud-service-task-filters [appName]="appName"
                                     [filterParam]="{index: 0}"
                                     (filterClick)="onTaskFilterSelected($event)">
 
     </adf-cloud-service-task-filters>
     <div fxLayout="column"
-         fxFill
-         fxLayoutGap="2px">
-
+         fxFlex>
         <adf-cloud-edit-service-task-filter [id]="filterId"
                                             [appName]="appName"
                                             [filterProperties]="taskFilterProperties.filterProperties"
@@ -19,6 +16,7 @@
         </adf-cloud-edit-service-task-filter>
         <div fxLayout="column"
              fxFlex
+             fxFill
              fxLayoutAlign="space-between"
              *ngIf="editedFilter">
             <adf-cloud-service-task-list #taskCloud

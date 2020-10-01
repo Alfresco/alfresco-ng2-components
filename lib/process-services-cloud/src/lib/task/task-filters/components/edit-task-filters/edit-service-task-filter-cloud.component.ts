@@ -39,7 +39,7 @@ import { BaseEditTaskFilterCloudComponent } from './base-edit-task-filter-cloud.
 export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent {
 
     public static DEFAULT_TASK_FILTER_PROPERTIES = ['appName', 'activityName', 'status', 'sort', 'order'];
-    public static DEFAULT_TASK_SORT_PROPERTIES = ['id', 'name', 'startedDate', 'completedDate'];
+    public static DEFAULT_TASK_SORT_PROPERTIES = ['id', 'activityName', 'startedDate', 'completedDate'];
     public static DEFAULT_TASK_STATUS_PROPERTIES = [
         { label: 'ALL', value: '' },
         { label: 'STARTED', value: 'STARTED' },

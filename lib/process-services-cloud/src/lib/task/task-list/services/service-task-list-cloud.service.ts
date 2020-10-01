@@ -17,13 +17,13 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { ServiceTaskQueryCloudRequestModel, ServiceTaskIntegrationContextCloudModel } from '../models/service-task-cloud.model';
 import { Observable, throwError } from 'rxjs';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 
 @Injectable({ providedIn: 'root' })
-export class TaskListCloudService extends BaseCloudService {
+export class ServiceTaskListCloudService extends BaseCloudService {
 
     constructor(apiService: AlfrescoApiService,
                 appConfigService: AppConfigService,
@@ -36,9 +36,9 @@ export class TaskListCloudService extends BaseCloudService {
      * @param requestNode Query object
      * @returns Task information
      */
-    getTaskByRequest(requestNode: TaskQueryCloudRequestModel): Observable<any> {
+    getServiceTaskByRequest(requestNode: ServiceTaskQueryCloudRequestModel): Observable<any> {
         if (requestNode.appName || requestNode.appName === '') {
-            const queryUrl = `${this.getBasePath(requestNode.appName)}/query/v1/tasks`;
+            const queryUrl = `${this.getBasePath(requestNode.appName)}/query/admin/v1/service-tasks`;
             const queryParams = this.buildQueryParams(requestNode);
             const sortingParams = this.buildSortingParam(requestNode.sorting);
             if (sortingParams) {
@@ -51,7 +51,23 @@ export class TaskListCloudService extends BaseCloudService {
         }
     }
 
-    private buildQueryParams(requestNode: TaskQueryCloudRequestModel): Object {
+    /**
+     * Finds a service task integration context using an object with optional query properties.
+     * @param appName string
+     * @param serviceTaskId string
+     * @returns Service Task Integration Context information
+     */
+    getServiceTaskStatus(appName: string, serviceTaskId: string): Observable<ServiceTaskIntegrationContextCloudModel> {
+        if (appName) {
+            const queryUrl = `${this.getBasePath(appName)}/query/admin/v1/service-tasks/${serviceTaskId}/integration-context`;
+            return this.get(queryUrl);
+        } else {
+            this.logService.error('Appname is mandatory for querying task');
+            return throwError('Appname not configured');
+        }
+    }
+
+    private buildQueryParams(requestNode: ServiceTaskQueryCloudRequestModel): Object {
         const queryParam: Object = {};
         for (const property in requestNode) {
             if (requestNode.hasOwnProperty(property) &&
