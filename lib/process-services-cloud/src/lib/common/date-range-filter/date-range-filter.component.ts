@@ -68,8 +68,8 @@ import moment from 'moment-es6';
 
     onDateRangeClosed() {
         const dateRange = {
-            startDate: this.dateRangeForm.controls.from.value,
-            endDate: this.dateRangeForm.controls.to.value
+            startDate: moment(this.dateRangeForm.controls.from.value).startOf('day').toISOString(true),
+            endDate: moment(this.dateRangeForm.controls.to.value).endOf('day').toISOString(true)
         };
         this.dateChanged.emit(dateRange);
     }

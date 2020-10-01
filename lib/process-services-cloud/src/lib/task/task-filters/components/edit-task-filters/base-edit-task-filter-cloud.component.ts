@@ -275,7 +275,7 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
             const momentDate = moment(newDateValue, BaseEditTaskFilterCloudComponent.FORMAT_DATE, true);
 
             if (momentDate.isValid()) {
-                this.getPropertyController(dateProperty).setValue(momentDate.toDate());
+                this.getPropertyController(dateProperty).setValue(momentDate.toISOString(true));
                 this.getPropertyController(dateProperty).setErrors(null);
             } else {
                 this.getPropertyController(dateProperty).setErrors({ invalid: true });
@@ -285,10 +285,10 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
 
     onDateRangeFilterChanged(dateRange: DateRangeFilter, property: TaskFilterProperties) {
         this.editTaskFilterForm.get(property.attributes?.from).setValue(
-            dateRange.startDate ? dateRange.startDate.toISOString() : null
+            dateRange.startDate ? dateRange.startDate : null
         );
         this.editTaskFilterForm.get(property.attributes?.to).setValue(
-            dateRange.endDate ? dateRange.endDate.toISOString() : null
+            dateRange.endDate ? dateRange.endDate : null
         );
     }
 
