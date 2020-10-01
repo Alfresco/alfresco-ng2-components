@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { TaskQueryCloudRequestModel, ServiceTaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { TaskQueryCloudRequestModel, ServiceTaskQueryCloudRequestModel, ServiceTaskIntegrationContextCloudModel } from '../models/filter-cloud-model';
 import { Observable, throwError } from 'rxjs';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
@@ -65,6 +65,22 @@ export class TaskListCloudService extends BaseCloudService {
                 queryParams['sort'] = sortingParams;
             }
             return this.get(queryUrl, queryParams);
+        } else {
+            this.logService.error('Appname is mandatory for querying task');
+            return throwError('Appname not configured');
+        }
+    }
+
+    /**
+     * Finds a service task integration context using an object with optional query properties.
+     * @param appName string
+     * @param serviceTaskId string
+     * @returns Service Task Integration Context information
+     */
+    getServiceTaskStatus(appName: string, serviceTaskId: string): Observable<ServiceTaskIntegrationContextCloudModel> {
+        if (appName) {
+            const queryUrl = `${this.getBasePath(appName)}/query/admin/v1/service-tasks/${serviceTaskId}/integration-context`;
+            return this.get(queryUrl);
         } else {
             this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');

@@ -103,3 +103,10 @@ export interface ServiceTaskQueryCloudRequestModel {
     serviceVersion?: string;
     startedDate?: Date;
 }
+
+export interface ServiceTaskIntegrationContextCloudModel extends ServiceTaskQueryCloudRequestModel {
+    errorDate?: Date;
+    errorClassName?: string;
+    errorCode?: string;
+    errorMessage?: string;
+}
