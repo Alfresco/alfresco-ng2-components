@@ -20,8 +20,8 @@ import {
     AppConfigService, UserPreferencesService
 } from '@alfresco/adf-core';
 import { ServiceTaskQueryCloudRequestModel } from '../models/filter-cloud-model';
-import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
+import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
 
 @Component({
     selector: 'adf-cloud-service-task-list',
@@ -36,7 +36,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
     @Input()
     queryParams: { [key: string]: any } = {};
 
-    constructor(private taskListCloudService: TaskListCloudService,
+    constructor(private serviceTaskListCloudService: ServiceTaskListCloudService,
                 appConfigService: AppConfigService,
                 userPreferences: UserPreferencesService) {
         super(appConfigService, userPreferences, ServiceTaskListCloudComponent.PRESET_KEY);
@@ -44,7 +44,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
 
     load(requestNode: ServiceTaskQueryCloudRequestModel) {
         this.isLoading = true;
-        this.taskListCloudService.getServiceTaskByRequest(requestNode).subscribe(
+        this.serviceTaskListCloudService.getServiceTaskByRequest(requestNode).subscribe(
             (tasks) => {
                 this.rows = tasks.list.entries;
                 this.success.emit(tasks);
