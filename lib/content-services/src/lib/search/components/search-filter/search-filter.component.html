@@ -24,7 +24,7 @@
         </adf-search-widget-container>
     </mat-expansion-panel>
 
-    <ng-container *ngIf="responseFacets">
+    <ng-container *ngIf="responseFacets && showContextFacets">
         <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+field.label" *ngFor="let field of responseFacets"
                              [expanded]="shouldExpand(field)">
             <mat-expansion-panel-header>

@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { SearchService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { ResultSetPaging } from '@alfresco/js-api';
-import { Observable } from 'rxjs';
+import { QueryBody } from '@alfresco/js-api';
 
 /**
  * Internal service used by ContentNodeSelector component.
@@ -28,23 +26,7 @@ import { Observable } from 'rxjs';
 })
 export class ContentNodeSelectorService {
 
-    constructor(private searchService: SearchService) {
-    }
-
-    /**
-     * Performs a search for content node selection
-     *
-     * @param searchTerm    The term to search for
-     * @param rootNodeId    The root is to start the search from
-     * @param skipCount     From where to start the loading
-     * @param maxItems      How many items to load
-     * @param [extraNodeIds]  List of extra node ids to search from. This last parameter is necessary when
-     * the rootNodeId is one of the supported aliases (e.g. '-my-', '-root-', '-mysites-', etc.)
-     * and search is not supported for that alias, but can be performed on its corresponding nodes.
-     * @param [showFiles]   shows the files in the dialog search result
-     */
-    public search(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25, extraNodeIds?: string[], showFiles?: boolean): Observable<ResultSetPaging> {
-
+    createQuery(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25, extraNodeIds?: string[], showFiles?: boolean): QueryBody {
         let extraParentFiltering = '';
 
         if (extraNodeIds && extraNodeIds.length) {
@@ -57,7 +39,7 @@ export class ContentNodeSelectorService {
 
         const parentFiltering = rootNodeId ? [{ query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'${extraParentFiltering}` }] : [];
 
-        const defaultSearchNode: any = {
+        return {
             query: {
                 query: `${searchTerm}*`
             },
@@ -67,15 +49,14 @@ export class ContentNodeSelectorService {
                 skipCount: skipCount
             },
             filterQueries: [
-                { query: `TYPE:'cm:folder'${ showFiles ? " OR TYPE:'cm:content'" : '' }` },
+                { query: `TYPE:'cm:folder'${showFiles ? " OR TYPE:'cm:content'" : ''}` },
                 { query: 'NOT cm:creator:System' },
                 ...parentFiltering
             ],
             scope: {
-                locations: ['nodes']
+                locations: 'nodes'
             }
         };
 
-        return this.searchService.searchByQueryBody(defaultSearchNode);
     }
 }

@@ -34,6 +34,7 @@ export * from './components/search-control.component';
 export * from './components/empty-search-result.component';
 export * from './components/search-control.component';
 export * from './components/search.component';
+export * from './components/search-panel/search-panel.component';
 export * from './components/search-check-list/search-check-list.component';
 export * from './components/search-chip-list/search-chip-list.component';
 export * from './components/search-date-range/search-date-range.component';

@@ -15,7 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation,
+    OnDestroy,
+    Inject
+} from '@angular/core';
 import {
     HighlightDirective,
     UserPreferencesService,
@@ -37,6 +47,8 @@ import { debounceTime, takeUntil, scan } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { Subject } from 'rxjs';
+import { SEARCH_QUERY_SERVICE_TOKEN } from '../search/search-query-service.token';
+import { SearchQueryBuilderService } from '../search/search-query-builder.service';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -47,7 +59,11 @@ export const defaultValidation = () => true;
     styleUrls: ['./content-node-selector-panel.component.scss'],
     templateUrl: './content-node-selector-panel.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-content-node-selector-panel' }
+    host: { 'class': 'adf-content-node-selector-panel' },
+    providers: [{
+        provide: SEARCH_QUERY_SERVICE_TOKEN,
+        useClass: SearchQueryBuilderService
+    }]
 })
 export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
@@ -230,6 +246,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private customResourcesService: CustomResourcesService,
+                @Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilderService: SearchQueryBuilderService,
                 private userPreferencesService: UserPreferencesService,
                 private nodesApiService: NodesApiService,
                 private uploadService: UploadService,
@@ -252,6 +269,12 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 takeUntil(this.onDestroy$)
             )
             .subscribe(searchValue => this.search(searchValue));
+
+        this.queryBuilderService.executed
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe( (results: NodePaging) => {
+                this.showSearchResults(results);
+            });
 
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
@@ -421,15 +444,15 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
             this.customResourcesService.getCorrespondingNodeIds(this.siteId)
                 .subscribe((nodeIds) => {
-                        this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, nodeIds, this.showFiles)
-                            .subscribe(this.showSearchResults.bind(this));
-                    },
+                    const query = this.contentNodeSelectorService.createQuery(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, nodeIds, this.showFiles);
+                    this.queryBuilderService.execute(query);
+                },
                     () => {
                         this.showSearchResults({ list: { entries: [] } });
                     });
         } else {
-            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, [], this.showFiles)
-                .subscribe(this.showSearchResults.bind(this));
+            const query = this.contentNodeSelectorService.createQuery(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, [], this.showFiles);
+            this.queryBuilderService.execute(query);
         }
     }
 

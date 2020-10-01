@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy, Inject, Input } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { SearchService, TranslationService } from '@alfresco/adf-core';
+import { TranslationService, SearchService } from '@alfresco/adf-core';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 import { FacetField } from '../../facet-field.interface';
@@ -40,6 +40,9 @@ export interface SelectedBucket {
     host: { class: 'adf-search-filter' }
 })
 export class SearchFilterComponent implements OnInit, OnDestroy {
+
+    @Input()
+    showContextFacets: boolean = true;
 
     private DEFAULT_PAGE_SIZE = 5;
 
@@ -77,7 +80,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
         this.queryBuilder.updated
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => this.queryBuilder.execute());
+            .subscribe((query) => this.queryBuilder.execute(query));
     }
 
     ngOnInit() {
@@ -210,7 +213,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
 
                 this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
-            } else if (responseField) {
+            } else if (responseField && this.showContextFacets) {
 
                 const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
                 bucketList.filter = this.getBucketFilterFunction(bucketList);
@@ -265,7 +268,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
 
                 this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
-            } else if (responseField) {
+            } else if (responseField && this.showContextFacets) {
 
                 const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, this.facetQueriesPageSize);
                 bucketList.filter = this.getBucketFilterFunction(bucketList);

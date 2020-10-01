@@ -16,14 +16,13 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { tick, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NodeEntry, Node, SiteEntry, SitePaging, NodePaging } from '@alfresco/js-api';
-import { SearchService, SitesService, setupTestBed, NodesApiService } from '@alfresco/adf-core';
-import { Observable, Observer, of, throwError } from 'rxjs';
+import { NodeEntry, Node, SiteEntry, SitePaging, NodePaging, ResultSetPaging } from '@alfresco/js-api';
+import { SitesService, setupTestBed, NodesApiService } from '@alfresco/adf-core';
+import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
-import { ContentNodeSelectorService } from './content-node-selector.service';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
@@ -31,38 +30,40 @@ import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.componen
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
+import { SearchQueryBuilderService } from '../search';
+import { ContentNodeSelectorService } from './content-node-selector.service';
 
-const ONE_FOLDER_RESULT = {
+const fakeResultSetPaging: ResultSetPaging = {
     list: {
+        pagination: {
+            totalItems: 1
+        },
         entries: [
             {
                 entry: {
-                    id: '123', name: 'MyFolder', isFile: false, isFolder: true,
-                    createdByUser: { displayName: 'John Doe' },
-                    modifiedByUser: { displayName: 'John Doe' }
+                    id: '123',
+                    name: 'MyFolder',
+                    isFile: false,
+                    isFolder: true,
+                    nodeType: 'mock'
                 }
             }
-        ],
-        pagination: {
-            hasMoreItems: true
-        }
+        ]
     }
 };
 
-describe('ContentNodeSelectorComponent', () => {
+describe('ContentNodeSelectorPanelComponent', () => {
     const debounceSearch = 200;
     let component: ContentNodeSelectorPanelComponent;
     let fixture: ComponentFixture<ContentNodeSelectorPanelComponent>;
-    let contentNodeSelectorService: ContentNodeSelectorService;
-    let searchService: SearchService;
     let nodeService: NodesApiService;
     let sitesService: SitesService;
     let searchSpy: jasmine.Spy;
     let cnSearchSpy: jasmine.Spy;
     const fakeNodeEntry = new Node({ id: 'fakeId' });
     const nodeEntryEvent = new NodeEntryEvent(fakeNodeEntry);
-
-    let _observer: Observer<NodePaging>;
+    let searchQueryBuilderService: SearchQueryBuilderService;
+    let contentNodeSelectorService: ContentNodeSelectorService;
 
     function typeToSearchBox(searchTerm = 'string-to-search') {
         const searchInput = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-input"]'));
@@ -71,8 +72,8 @@ describe('ContentNodeSelectorComponent', () => {
         fixture.detectChanges();
     }
 
-    function respondWithSearchResults(result) {
-        _observer.next(result);
+    function triggerSearchResults(searchResults: ResultSetPaging) {
+        component.queryBuilderService.executed.next(searchResults);
     }
 
     setupTestBed({
@@ -90,18 +91,14 @@ describe('ContentNodeSelectorComponent', () => {
             component = fixture.componentInstance;
             component.debounceSearch = 0;
 
-            searchService = TestBed.inject(SearchService);
             nodeService = TestBed.inject(NodesApiService);
-            contentNodeSelectorService = TestBed.inject(ContentNodeSelectorService);
             sitesService = TestBed.inject(SitesService);
+            contentNodeSelectorService = TestBed.inject(ContentNodeSelectorService);
+            searchQueryBuilderService = component.queryBuilderService;
 
             spyOn(nodeService,  'getNode').and.returnValue(of({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } }));
-            cnSearchSpy = spyOn(contentNodeSelectorService, 'search').and.callThrough();
-            searchSpy = spyOn(searchService, 'searchByQueryBody').and.callFake(() => {
-                return new Observable((observer: Observer<NodePaging>) => {
-                    _observer = observer;
-                });
-            });
+            cnSearchSpy = spyOn(contentNodeSelectorService, 'createQuery').and.callThrough();
+            searchSpy = spyOn(searchQueryBuilderService, 'execute');
             const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
             spyOn(sitesService, 'getSite').and.returnValue(of(fakeSite));
         });
@@ -242,73 +239,40 @@ describe('ContentNodeSelectorComponent', () => {
                 });
             });
 
-            it('should not show the breadcrumb if search was performed as last action', fakeAsync(() => {
-                typeToSearchBox();
-                tick(debounceSearch);
+            it('should not show the breadcrumb if search was performed as last action', async () => {
+                triggerSearchResults(fakeResultSetPaging);
 
                 fixture.detectChanges();
-
-                respondWithSearchResults(ONE_FOLDER_RESULT);
-
-                tick(debounceSearch);
-
-                fixture.detectChanges();
-
-                tick(debounceSearch);
+                await fixture.whenStable();
 
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
                 expect(breadcrumb).toBeNull();
-            }));
+            });
 
-            it('should show the breadcrumb again on folder navigation in the results list', fakeAsync(() => {
-                typeToSearchBox();
-                tick(debounceSearch);
-
-                fixture.detectChanges();
-
-                respondWithSearchResults(ONE_FOLDER_RESULT);
-                tick(debounceSearch);
-
-                fixture.detectChanges();
-
-                tick(debounceSearch);
+            it('should show the breadcrumb again on folder navigation in the results list', async () => {
+                triggerSearchResults(fakeResultSetPaging);
 
                 component.onFolderChange(nodeEntryEvent);
                 fixture.detectChanges();
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
                 expect(breadcrumb).not.toBeNull();
 
-            }));
+            });
 
-            it('should show the breadcrumb for the selected node when search results are displayed', fakeAsync(() => {
-                typeToSearchBox();
-
-                tick(debounceSearch);
-
-                fixture.detectChanges();
-
-                respondWithSearchResults(ONE_FOLDER_RESULT);
-                fixture.detectChanges();
-
-                tick(debounceSearch);
+            it('should show the breadcrumb for the selected node when search results are displayed', async () => {
+                triggerSearchResults(fakeResultSetPaging);
 
                 const chosenNode = new Node({ path: { elements: ['one'] } });
                 component.onCurrentSelection([ { entry: chosenNode } ]);
                 fixture.detectChanges();
 
-                tick(debounceSearch);
-
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
                 expect(breadcrumb).not.toBeNull();
                 expect(breadcrumb.componentInstance.folderNode.path).toBe(chosenNode.path);
-            }));
+            });
 
-            it('should NOT show the breadcrumb for the selected node when not on search results list', fakeAsync(() => {
-                typeToSearchBox();
-
-                fixture.detectChanges();
-
-                respondWithSearchResults(ONE_FOLDER_RESULT);
+            it('should NOT show the breadcrumb for the selected node when not on search results list', async () => {
+                triggerSearchResults(fakeResultSetPaging);
                 fixture.detectChanges();
 
                 component.onFolderChange(nodeEntryEvent);
@@ -318,12 +282,10 @@ describe('ContentNodeSelectorComponent', () => {
                 component.onCurrentSelection([ { entry: chosenNode } ]);
                 fixture.detectChanges();
 
-                tick(debounceSearch);
-
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
                 expect(breadcrumb).not.toBeNull();
                 expect(breadcrumb.componentInstance.folderNode).toEqual(undefined);
-            }));
+            });
 
             it('should keep breadcrumb folderNode unchanged if breadcrumbTransform is NOT defined', (done) => {
                 fixture.detectChanges();
@@ -418,7 +380,7 @@ describe('ContentNodeSelectorComponent', () => {
                         ...parentFiltering
                     ],
                     scope: {
-                        locations: ['nodes']
+                        locations: 'nodes'
                     }
                 };
 
@@ -484,11 +446,11 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.chosenNode).toBeNull();
             }));
 
-            it('should update the breadcrumb when changing to a custom site', fakeAsync(() => {
+            it('should update the breadcrumb when changing to a custom site', async () => {
                 component.siteChanged(<SiteEntry> { entry: { guid: '-mysites-', title: 'My Sites' } });
 
                 expect(component.breadcrumbFolderTitle).toBe('My Sites');
-            }));
+            });
 
             it('should call the search api on changing the site selectBox value', fakeAsync(() => {
                 typeToSearchBox('vegeta');
@@ -503,7 +465,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('vegeta', 'namek')]);
             }));
 
-            it('should call the content node selector\'s search with the right parameters on changing the site selectbox\'s value', fakeAsync(() => {
+            it('should create the query with the right parameters on changing the site selectbox\'s value', fakeAsync(() => {
                 typeToSearchBox('vegeta');
 
                 tick(debounceSearch);
@@ -517,7 +479,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId'], false);
             }));
 
-            it('should call the content node selector\'s search with the right parameters on changing the site selectBox value from a custom dropdown menu', fakeAsync(() => {
+            it('should create the query with the right parameters on changing the site selectBox value from a custom dropdown menu', fakeAsync(() => {
                 component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
                 fixture.detectChanges();
 
@@ -638,7 +600,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.showingSearchResults).toBeFalsy();
             });
 
-            it('should restrict the search to the currentFolderId in case is defined', () => {
+            it('should the query restrict the search to the currentFolderId in case is defined', () => {
                 component.currentFolderId = 'my-root-id';
                 component.restrictRootToCurrentFolderId = true;
                 component.ngOnInit();
@@ -647,7 +609,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(cnSearchSpy).toHaveBeenCalledWith('search', 'my-root-id', 0, 25, [], false);
             });
 
-            it('should restrict the search to the site and not to the currentFolderId in case is changed', () => {
+            it('should the query restrict the search to the site and not to the currentFolderId in case is changed', () => {
                 component.currentFolderId = 'my-root-id';
                 component.restrictRootToCurrentFolderId = true;
                 component.ngOnInit();
@@ -671,7 +633,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.breadcrumbRootId).toBeUndefined();
             });
 
-            it('should clear the search field, nodes and chosenNode when deleting the search input', fakeAsync(() => {
+            it('should clear the search field, nodes and chosenNode when deleting the search input', fakeAsync (() => {
                 spyOn(component, 'clear').and.callThrough();
                 typeToSearchBox('a');
 
@@ -690,26 +652,19 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
             }));
 
-            it('should clear the search field, nodes and chosenNode on folder navigation in the results list', fakeAsync(() => {
+            it('should clear the search field, nodes and chosenNode on folder navigation in the results list', async () => {
                 spyOn(component, 'clearSearch').and.callThrough();
-                typeToSearchBox('a');
+                triggerSearchResults(fakeResultSetPaging);
 
-                tick(debounceSearch);
-                fixture.detectChanges();
-
-                respondWithSearchResults(ONE_FOLDER_RESULT);
-
-                tick();
                 fixture.detectChanges();
 
                 component.onFolderChange(nodeEntryEvent);
                 fixture.detectChanges();
 
                 expect(component.clearSearch).toHaveBeenCalled();
+            });
 
-            }));
-
-            it('should show nodes from the same folder as selected in the dropdown on clearing the search input', fakeAsync(() => {
+            it('should show nodes from the same folder as selected in the dropdown on clearing the search input', fakeAsync (() => {
                 typeToSearchBox('piccolo');
                 tick(debounceSearch);
 
@@ -789,7 +744,7 @@ describe('ContentNodeSelectorComponent', () => {
                 typeToSearchBox();
 
                 setTimeout(() => {
-                    respondWithSearchResults(ONE_FOLDER_RESULT);
+                    triggerSearchResults(fakeResultSetPaging);
 
                     fixture.detectChanges();
                     const documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
@@ -803,7 +758,7 @@ describe('ContentNodeSelectorComponent', () => {
                 typeToSearchBox('My');
 
                 setTimeout(() => {
-                    respondWithSearchResults(ONE_FOLDER_RESULT);
+                    triggerSearchResults(fakeResultSetPaging);
                     fixture.detectChanges();
 
                     fixture.whenStable().then(() => {
@@ -818,7 +773,7 @@ describe('ContentNodeSelectorComponent', () => {
                 typeToSearchBox();
 
                 setTimeout(() => {
-                    respondWithSearchResults(ONE_FOLDER_RESULT);
+                    triggerSearchResults(fakeResultSetPaging);
                     fixture.detectChanges();
 
                     fixture.whenStable().then(() => {
@@ -835,22 +790,21 @@ describe('ContentNodeSelectorComponent', () => {
                 }, 300);
             });
 
-            it('should reload the original documentList when clearing the search input', fakeAsync(() => {
-                typeToSearchBox('shenron');
+            it('should reload the original folderId when clearing the search input', async() => {
+                component.search('mock-type-search');
 
-                tick(debounceSearch);
-
-                respondWithSearchResults(ONE_FOLDER_RESULT);
-
-                typeToSearchBox('');
-
-                tick(debounceSearch);
-
+                triggerSearchResults(fakeResultSetPaging);
                 fixture.detectChanges();
+                await fixture.whenStable();
 
-                const documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
-                expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
-            }));
+                expect(component.folderIdToShow).toBe(null);
+
+                component.clear();
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku');
+            });
 
             it('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', (done) => {
                 component.siteChanged(<SiteEntry> { entry: { guid: 'Kame-Sennin Muten Roshi' } });
@@ -895,7 +849,7 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(searchSpy).not.toHaveBeenCalled();
                 });
 
-                it('should set its loading state to true after search was started', fakeAsync(() => {
+                it('should set its loading state to true after search was started', fakeAsync (() => {
                     component.showingSearchResults = true;
 
                     typeToSearchBox('shenron');
@@ -911,7 +865,7 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(paginationLoading).not.toBeNull();
                 }));
 
-                it('Should infinite pagination target be null when we use it for search ', fakeAsync(() => {
+                it('Should infinite pagination target be null when we use it for search ', fakeAsync (() => {
                     component.showingSearchResults = true;
 
                     typeToSearchBox('shenron');
@@ -925,7 +879,7 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(component.target).toBeNull();
                 }));
 
-                it('Should infinite pagination target be present when search finish', fakeAsync(() => {
+                it('Should infinite pagination target be present when search finish', fakeAsync (() => {
                     component.showingSearchResults = true;
 
                     typeToSearchBox('shenron');
@@ -971,7 +925,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.isSelectionValid = returnHasPermission;
                 });
 
-                it('should NOT be null after selecting node with the necessary permissions', async(() => {
+                it('should NOT be null after selecting node with the necessary permissions', async () => {
                     hasAllowableOperations = true;
                     component.documentList.folderNode = entry;
 
@@ -982,9 +936,9 @@ describe('ContentNodeSelectorComponent', () => {
                     });
 
                     component.documentList.ready.emit(nodePage);
-                }));
+                });
 
-                it('should be null after selecting node without the necessary permissions', async(() => {
+                it('should be null after selecting node without the necessary permissions', async () => {
                     hasAllowableOperations = false;
                     component.documentList.folderNode = entry;
 
@@ -995,9 +949,9 @@ describe('ContentNodeSelectorComponent', () => {
                     });
 
                     component.documentList.ready.emit(nodePage);
-                }));
+                });
 
-                it('should NOT be null after clicking on a node (with the right permissions) in the list (onNodeSelect)', async(() => {
+                it('should NOT be null after clicking on a node (with the right permissions) in the list (onNodeSelect)', async() => {
                     hasAllowableOperations = true;
 
                     component.select.subscribe((nodes) => {
@@ -1007,9 +961,9 @@ describe('ContentNodeSelectorComponent', () => {
                     });
 
                     component.onCurrentSelection([ { entry } ]);
-                }));
+                });
 
-                it('should remain empty when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', async(() => {
+                it('should remain empty when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', async () => {
                     hasAllowableOperations = false;
 
                     component.select.subscribe((nodes) => {
@@ -1019,9 +973,9 @@ describe('ContentNodeSelectorComponent', () => {
                     });
 
                     component.onCurrentSelection([ { entry } ]);
-                }));
+                });
 
-                it('should become empty when clicking on a node (with the WRONG permissions) after previously selecting a right node', async(() => {
+                it('should become empty when clicking on a node (with the WRONG permissions) after previously selecting a right node', async () => {
                     component.select.subscribe((nodes) => {
                         if (hasAllowableOperations) {
                             expect(nodes).toBeDefined();
@@ -1039,10 +993,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                     hasAllowableOperations = false;
                     component.onCurrentSelection([{ entry }]);
+                });
 
-                }));
-
-                it('should be empty when the chosenNode is reset', async(() => {
+                it('should be empty when the chosenNode is reset', async () => {
                     hasAllowableOperations = true;
                     component.onCurrentSelection([{ entry: <Node> {} }]);
 
@@ -1053,7 +1006,7 @@ describe('ContentNodeSelectorComponent', () => {
                     });
 
                     component.resetChosenNode();
-                }));
+                });
             });
 
             describe('in the case when isSelectionValid is null', () => {
@@ -1062,7 +1015,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.isSelectionValid = null;
                 });
 
-                it('should NOT be null after selecting node because isSelectionValid would be reset to defaultValidation function', async(() => {
+                it('should NOT be null after selecting node because isSelectionValid would be reset to defaultValidation function', async () => {
                     component.documentList.folderNode = entry;
                     fixture.detectChanges();
 
@@ -1075,9 +1028,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.documentList.ready.emit(nodePage);
                     fixture.detectChanges();
-                }));
+                });
 
-                it('should NOT be null after clicking on a node in the list (onNodeSelect)', async(() => {
+                it('should NOT be null after clicking on a node in the list (onNodeSelect)', async () => {
                     fixture.detectChanges();
 
                     component.select.subscribe((nodes) => {
@@ -1089,9 +1042,9 @@ describe('ContentNodeSelectorComponent', () => {
                     });
 
                     component.onCurrentSelection([{ entry }]);
-                }));
+                });
 
-                it('should be null when the chosenNode is reset', async(() => {
+                it('should be null when the chosenNode is reset', async () => {
                     fixture.detectChanges();
                     component.onCurrentSelection([{ entry: <Node> {} }]);
 
@@ -1104,7 +1057,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.resetChosenNode();
                     fixture.detectChanges();
-                }));
+                });
             });
 
             describe('in the case when isSelectionValid is not defined', () => {
@@ -1113,7 +1066,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.isSelectionValid = undefined;
                 });
 
-                it('should NOT be null after selecting node because isSelectionValid would be the defaultValidation function', async(() => {
+                it('should NOT be null after selecting node because isSelectionValid would be the defaultValidation function', async () => {
                     component.documentList.folderNode = entry;
                     fixture.detectChanges();
 
@@ -1126,9 +1079,9 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.documentList.ready.emit(nodePage);
                     fixture.detectChanges();
-                }));
+                });
 
-                it('should be null when the chosenNode is reset', async(() => {
+                it('should be null when the chosenNode is reset', async () => {
                     fixture.detectChanges();
                     component.onCurrentSelection([{ entry: <Node> {} }]);
 
@@ -1141,7 +1094,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                     component.resetChosenNode();
                     fixture.detectChanges();
-                }));
+                });
             });
 
         });
