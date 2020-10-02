@@ -214,8 +214,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
                 this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
             } else if (responseField && this.showContextFacets) {
-
-                // New feature: Hide facet if the field doesn't have filter category
                 if(responseBuckets.length > 0) {
                     const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
                     bucketList.filter = this.getBucketFilterFunction(bucketList);
@@ -272,8 +270,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
                 this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
             } else if (responseField && this.showContextFacets) {
-
-                // New feature: Hide facet if the field doesn't have filter category
                 if(responseBuckets.length > 0) {
                     const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, this.facetQueriesPageSize);
                     bucketList.filter = this.getBucketFilterFunction(bucketList);
