@@ -235,7 +235,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this._rowFilter = rowFilter;
         if (this.data) {
             this.data.setFilter(this._rowFilter);
-            if (this.internalCurrentFolderId) {
+            if (this.currentFolderId) {
                 this.reload();
             }
         }
@@ -268,8 +268,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     /** The ID of the folder node to display or a reserved string alias for special sources */
     @Input()
     currentFolderId: string = null;
-
-    internalCurrentFolderId: string = null;
 
     /** Array of nodes to be pre-selected. All nodes in the
      * array are pre-selected in multi selection mode, but only the first node
@@ -453,7 +451,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
         const columns = this.data.getColumns();
         if (!columns || columns.length === 0) {
-            this.setupDefaultColumns(this.internalCurrentFolderId);
+            this.setupDefaultColumns(this.currentFolderId);
         }
     }
 
@@ -483,8 +481,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             }
         }
 
-        if (changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
-            this.internalCurrentFolderId = this.currentFolderId;
+        if (this.currentFolderId && changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
+            console.log('currentValue ' + changes['currentFolderId']?.currentValue );
+            console.log('previousValue ' + changes['currentFolderId']?.previousValue );
             this.loadFolder();
         }
 
@@ -599,15 +598,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     navigateTo(node: Node | string): boolean {
         if (typeof node === 'string') {
             this.resetNewFolderPagination();
-            this.internalCurrentFolderId = node;
+            this.currentFolderId = node;
             this.folderChange.emit(new NodeEntryEvent(<Node> { id: node }));
             this.reload();
             return true;
         } else {
             if (this.canNavigateFolder(node)) {
                 this.resetNewFolderPagination();
-                this.internalCurrentFolderId = this.getNodeFolderDestinationId(node);
-                this.folderChange.emit(new NodeEntryEvent(<Node> { id: this.internalCurrentFolderId }));
+                this.currentFolderId = this.getNodeFolderDestinationId(node);
+                this.folderChange.emit(new NodeEntryEvent(<Node> { id: this.currentFolderId }));
                 this.reload();
                 return true;
             }
@@ -625,7 +624,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     updateCustomSourceData(nodeId: string): void {
-        this.internalCurrentFolderId = nodeId;
+        this.currentFolderId = nodeId;
     }
 
     /**
@@ -673,14 +672,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         if (!this.hasCustomLayout) {
-            this.setupDefaultColumns(this.internalCurrentFolderId);
+            this.setupDefaultColumns(this.currentFolderId);
         }
 
-        if (this.documentListService.isCustomSourceService(this.internalCurrentFolderId)) {
-            this.updateCustomSourceData(this.internalCurrentFolderId);
+        if (this.documentListService.isCustomSourceService(this.currentFolderId)) {
+            this.updateCustomSourceData(this.currentFolderId);
         }
 
-        this.documentListService.loadFolderByNodeId(this.internalCurrentFolderId, this._pagination, this.includeFields, this.where, this.orderBy)
+        this.documentListService.loadFolderByNodeId(this.currentFolderId, this._pagination, this.includeFields, this.where, this.orderBy)
             .subscribe((documentNode: DocumentLoaderNode) => {
                 if (documentNode.currentNode) {
                     this.folderNode = documentNode.currentNode.entry;
