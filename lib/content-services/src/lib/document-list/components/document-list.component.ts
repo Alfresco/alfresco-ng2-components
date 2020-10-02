@@ -445,7 +445,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             schema = this.columnList.columns.map((c) => <DataColumn> c);
         }
 
-        console.log('data 1');
         if (!this.data) {
             this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, schema, this.getDefaultSorting(), this.sortingMode);
         } else if (schema && schema.length > 0) {
