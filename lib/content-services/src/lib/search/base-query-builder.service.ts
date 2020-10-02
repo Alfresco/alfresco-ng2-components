@@ -245,7 +245,7 @@ export abstract class BaseQueryBuilderService {
 
         const include = this.config.include || [];
         if (include.length === 0) {
-            include.push('path', 'allowableOperations');
+            include.push('path', 'allowableOperations', 'aspectNames', 'properties', 'isLink');
         }
 
         if (query) {
