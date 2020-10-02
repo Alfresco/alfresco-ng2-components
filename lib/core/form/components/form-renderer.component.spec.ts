@@ -30,10 +30,14 @@ import { formDisplayValueVisibility,
          numberMinMaxForm,
          textWidgetVisibility,
          numberWidgetVisibilityForm,
-         radioWidgetVisibiltyForm } from './mock/form-renderer.component.mock';
+         radioWidgetVisibiltyForm,
+         customWidgetForm,
+         customWidgetFormWithVisibility } from './mock/form-renderer.component.mock';
 import { FormService } from '../services/form.service';
 import { CoreTestingModule } from '../../testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormRenderingService } from '../services/form-rendering.service';
+import { TextWidgetComponent } from './widgets';
 
 function typeIntoInput(targetInput: HTMLInputElement, message: string ) {
     expect(targetInput).not.toBeNull('Expected input to set to be valid and not null');
@@ -75,6 +79,7 @@ describe('Form Renderer Component', () => {
     let formRendererComponent: FormRendererComponent;
     let fixture: ComponentFixture<FormRendererComponent>;
     let formService: FormService;
+    let formRenderingService: FormRenderingService;
 
     setupTestBed({
         imports: [
@@ -88,6 +93,7 @@ describe('Form Renderer Component', () => {
         fixture = TestBed.createComponent(FormRendererComponent);
         formRendererComponent = fixture.componentInstance;
         formService = TestBed.inject(FormService);
+        formRenderingService = TestBed.inject(FormRenderingService);
     });
 
     afterEach(() => {
@@ -557,6 +563,36 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
             radioButtonContainer = fixture.nativeElement.querySelector('#field-Radiobuttons03rkbo-container');
             expectElementToBeVisible(radioButtonContainer);
+        });
+
+    });
+
+    describe('Custom Widget', () => {
+
+        it('Should be able to correctly display a custom process cloud widget', async () => {
+            formRenderingService.register({'bananaforevah': () => TextWidgetComponent}, true);
+            formRendererComponent.formDefinition = formService.parseForm(customWidgetForm.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const textInputElement = fixture.nativeElement.querySelector('#Text0vdi18');
+            const customWidgetElement = fixture.nativeElement.querySelector('#bananaforevah0k8gui');
+            expectElementToBeVisible(textInputElement);
+            expectElementToBeVisible(customWidgetElement);
+        });
+
+        it('Should be able to correctly use visibility in a custom process cloud widget ', async () => {
+            formRenderingService.register({'bananaforevah': () => TextWidgetComponent}, true);
+            formRendererComponent.formDefinition = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const textInputElement = fixture.nativeElement.querySelector('#Text0vdi18');
+            let customWidgetElementContainer = fixture.nativeElement.querySelector('#field-bananaforevah0k8gui-container');
+            expectElementToBeHidden(customWidgetElementContainer);
+            typeIntoInput(textInputElement, 'no');
+            fixture.detectChanges();
+            await fixture.whenStable();
+            customWidgetElementContainer = fixture.nativeElement.querySelector('#field-bananaforevah0k8gui-container');
+            expectElementToBeVisible(customWidgetElementContainer);
         });
 
     });

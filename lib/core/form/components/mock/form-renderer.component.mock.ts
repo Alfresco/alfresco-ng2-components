@@ -1334,3 +1334,139 @@ export const radioWidgetVisibiltyForm = {
         }
     }
 };
+
+export const customWidgetForm = {
+    formRepresentation: {
+        id: 'form-bf7fe50b-c193-41c0-b835-637bf6593e41',
+        name: 'formformformformbananaform',
+        description: 'Read it while you sing banana phone please',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: '07672e71-2f3d-4e3a-a0c6-ccaf76a8d3a1',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        '1': [
+                            {
+                                id: 'Text0vdi18',
+                                name: 'herejustoshowstandardones',
+                                type: 'text',
+                                readOnly: false,
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        '2': [
+                            {
+                                id: 'bananaforevah0k8gui',
+                                name: 'bananaforevah',
+                                type: 'bananaforevah',
+                                required: true,
+                                readOnly: false,
+                                isCustomType: true,
+                                valueType: 'json',
+                                widgetId: '72f32b8b-505c-4f55-a08c-e2d0edd5bc9d',
+                                colspan: 1,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
+    }
+};
+
+export const customWidgetFormWithVisibility = {
+    formRepresentation: {
+        id: 'form-bf7fe50b-c193-41c0-b835-637bf6593e41',
+        name: 'formformformformbananaform',
+        description: 'Read it while you sing banana phone please',
+        version: 0,
+        standAlone: true,
+        formDefinition: {
+            tabs: [],
+            fields: [
+                {
+                    id: '07672e71-2f3d-4e3a-a0c6-ccaf76a8d3a1',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        '1': [
+                            {
+                                id: 'Text0vdi18',
+                                name: 'herejustoshowstandardones',
+                                type: 'text',
+                                readOnly: false,
+                                required: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        '2': [
+                            {
+                                id: 'bananaforevah0k8gui',
+                                name: 'bananaforevah',
+                                type: 'bananaforevah',
+                                required: true,
+                                readOnly: false,
+                                isCustomType: true,
+                                valueType: 'json',
+                                widgetId: '72f32b8b-505c-4f55-a08c-e2d0edd5bc9d',
+                                colspan: 1,
+                                visibilityCondition: {
+                                    leftType: 'field',
+                                    leftValue: 'Text0vdi18',
+                                    operator: '==',
+                                    rightValue: 'no',
+                                    rightType: 'value',
+                                    nextConditionOperator: '',
+                                    nextCondition: null
+                                },
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            outcomes: [],
+            metadata: {},
+            variables: []
+        }
+    }
+};
