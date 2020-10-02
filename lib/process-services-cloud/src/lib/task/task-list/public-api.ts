@@ -24,5 +24,6 @@ export * from './models/task-list-sorting.model';
 export * from './models/task-preset-cloud.model';
 
 export * from './services/task-list-cloud.service';
+export * from './services/service-task-list-cloud.service';
 
 export * from './task-list-cloud.module';
