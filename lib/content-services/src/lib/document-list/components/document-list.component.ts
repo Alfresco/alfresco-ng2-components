@@ -482,8 +482,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         if (this.currentFolderId && changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
-            console.log('currentValue ' + changes['currentFolderId']?.currentValue );
-            console.log('previousValue ' + changes['currentFolderId']?.previousValue );
             this.loadFolder();
         }
 
