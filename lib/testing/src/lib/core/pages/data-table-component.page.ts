@@ -311,7 +311,6 @@ export class DataTableComponentPage {
     }
 
     async waitTillContentLoaded(): Promise<void> {
-        await browser.sleep(500);
 
         if (await this.isSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
@@ -322,13 +321,15 @@ export class DataTableComponentPage {
             } else {
                 await this.waitFirstElementPresent();
             }
+
+        } else if (await this.isEmpty()) {
+            Logger.log('empty page');
         } else {
             try {
                 Logger.log('wait datatable loading spinner is present');
-                await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(by.tagName('mat-progress-spinner')));
+                await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), 2000);
                 await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')));
             } catch (error) {
-                Logger.log('Error', error);
             }
 
             if (await this.isEmpty()) {

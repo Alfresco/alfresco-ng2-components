@@ -172,7 +172,7 @@ describe('Create library directive', () => {
 
         for (let i = 0; i < 3; i++) {
             await createLibraryDialog.typeLibraryName(name[i]);
-            await createLibraryDialog.waitUntilibraryIdTextHasValue(libraryId[i]);
+            await createLibraryDialog.waitUntiLibraryIdTextHasValue(libraryId[i]);
             await createLibraryDialog.clearLibraryName();
         }
     });

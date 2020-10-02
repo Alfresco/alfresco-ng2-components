@@ -43,7 +43,7 @@ export class CreateLibraryDialogPage {
     }
 
     async waitForDialogToClose(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.libraryDialog);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.libraryDialog, 60000);
     }
 
     async isDialogOpen(): Promise<any> {
@@ -54,7 +54,7 @@ export class CreateLibraryDialogPage {
         return BrowserActions.getText(this.libraryTitle);
     }
 
-    async waitUntilibraryIdTextHasValue(value: string): Promise<void> {
+    async waitUntiLibraryIdTextHasValue(value: string): Promise<void> {
         await BrowserVisibility.waitUntilElementHasValue(this.libraryIdField, value);
     }
 
