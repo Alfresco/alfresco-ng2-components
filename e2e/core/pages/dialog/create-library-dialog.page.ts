@@ -54,7 +54,7 @@ export class CreateLibraryDialogPage {
         return BrowserActions.getText(this.libraryTitle);
     }
 
-    async waitUntiLibraryIdTextHasValue(value: string): Promise<void> {
+    async waitUntilLibraryIdTextHasValue(value: string): Promise<void> {
         await BrowserVisibility.waitUntilElementHasValue(this.libraryIdField, value);
     }
 
