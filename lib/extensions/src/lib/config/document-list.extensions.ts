@@ -26,4 +26,5 @@ export interface DocumentListPresetRef extends ExtensionElement {
   sortable: boolean;
   template: string;
   desktopOnly: boolean;
+  sortingKey: string;
 }
