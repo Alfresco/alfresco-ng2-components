@@ -30,6 +30,7 @@ branches:
 
 stages:
   - name: Lint & Build Dist & Release
+    if: tag IS blank
   - name: Check bundle
     if: type = push AND tag IS blank
   - name: Trigger ADF child build
