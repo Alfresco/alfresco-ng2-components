@@ -36,6 +36,8 @@ export class DataTableComponentPage {
     emptyListTitle: ElementFinder;
     emptyListSubtitle: ElementFinder;
 
+    MAX_LOADING_TIME = 120000;
+
     constructor(rootElement = element.all(by.css('adf-datatable')).first()) {
         this.rootElement = rootElement;
         this.list = this.rootElement.all(by.css(`div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`));
@@ -314,7 +316,7 @@ export class DataTableComponentPage {
 
         if (await this.isSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')));
+            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), this.MAX_LOADING_TIME);
 
             if (await this.isEmpty()) {
                 Logger.log('empty page');
@@ -328,7 +330,7 @@ export class DataTableComponentPage {
             try {
                 Logger.log('wait datatable loading spinner is present');
                 await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), 2000);
-                await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')));
+                await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), this.MAX_LOADING_TIME);
             } catch (error) {
             }
 
@@ -344,7 +346,7 @@ export class DataTableComponentPage {
         let isSpinnerPresent;
 
         try {
-            isSpinnerPresent = await element(by.tagName('mat-progress-spinner')).isDisplayed();
+            isSpinnerPresent = await this.rootElement.element(by.tagName('mat-progress-spinner')).isDisplayed();
         } catch (error) {
             isSpinnerPresent = false;
         }
@@ -356,7 +358,7 @@ export class DataTableComponentPage {
         let isSpinnerPresent;
 
         try {
-            isSpinnerPresent = await element(by.tagName('mat-progress-bar')).isDisplayed();
+            isSpinnerPresent = await this.rootElement.element(by.tagName('mat-progress-bar')).isDisplayed();
         } catch (error) {
             isSpinnerPresent = false;
         }

@@ -24,7 +24,7 @@ import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../services/translation.service';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 import { FormControl } from '@angular/forms';
-import { debounceTime, takeUntil, filter } from 'rxjs/operators';
+import { throttleTime, takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 export const DEFAULT_SEPARATOR = ', ';
@@ -77,7 +77,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
             this.textInput.valueChanges
                 .pipe(
                     filter(textInputValue => textInputValue !== this.editedValue),
-                    debounceTime(500),
+                    throttleTime(500),
                     takeUntil(this.onDestroy$)
                 )
                 .subscribe(textInputValue => {
