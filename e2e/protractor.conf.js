@@ -286,7 +286,6 @@ exports.config = {
             let retryCount = 1;
             if (argv.retry) {
                 retryCount = ++argv.retry;
-                browser.params.testConfig.timeouts.index_search *= retryCount;
             }
             try {
                 await uploadScreenshot(retryCount, (process.env.FOLDER || ''));
