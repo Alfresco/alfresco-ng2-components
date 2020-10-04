@@ -136,11 +136,9 @@ describe('Info Drawer', () => {
         await expect(await taskPage.taskDetails().getPriority()).toEqual(taskDetails.priority);
         await taskPage.taskDetails().updatePriority('40');
         await taskPage.taskDetails().checkTaskDetailsDisplayed();
-        await browser.sleep(2000);
         await expect(await taskPage.taskDetails().getPriority()).toEqual('40');
         await taskPage.taskDetails().updatePriority();
         await taskPage.taskDetails().checkTaskDetailsDisplayed();
-        await browser.sleep(2000);
         await expect(await taskPage.taskDetails().getPriority()).toEqual('0');
 
         await taskPage.taskDetails().clickCompleteFormTask();

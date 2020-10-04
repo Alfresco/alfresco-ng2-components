@@ -77,7 +77,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
             this.textInput.valueChanges
                 .pipe(
                     filter(textInputValue => textInputValue !== this.editedValue),
-                    debounceTime(200),
+                    debounceTime(50),
                     takeUntil(this.onDestroy$)
                 )
                 .subscribe(textInputValue => {
