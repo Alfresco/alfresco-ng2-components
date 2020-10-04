@@ -25,8 +25,9 @@ export interface NavBarLinkRef extends ExtensionElement {
     icon: string;
     title: string;
     route: string;
-    provider?: string;
 
+    provider?: string;
+    component?: string;
     url?: string; // evaluated at runtime based on route ref
     description?: string;
     children?: Array<NavBarLinkRef>;
