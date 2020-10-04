@@ -1588,12 +1588,12 @@ describe('DocumentList', () => {
 
             expect(nodeSelectedSpy).not.toHaveBeenCalled();
         });
-   });
+    });
 });
 
 @Component({
     template: `
-        <adf-document-list currentFolderId="-my-" #customDocumentList>
+        <adf-document-list  #customDocumentList>
             <adf-custom-loading-content-template>
                 <span id="custom-loading-template">This is a custom loading template</span>
             </adf-custom-loading-content-template>
@@ -1685,4 +1685,5 @@ describe('DocumentListComponent rendering', () => {
         const cell3 = fixture.nativeElement.querySelector('div[title="Id"][data-automation-id="Name 3"]');
         expect(cell3.innerText).toBe('3');
     });
+
 });

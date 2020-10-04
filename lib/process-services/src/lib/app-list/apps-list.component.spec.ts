@@ -82,7 +82,7 @@ describe('AppsListComponent', () => {
         component.loading = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-        const loadingSpinner = fixture.nativeElement.querySelector('mat-spinner');
+        const loadingSpinner = fixture.nativeElement.querySelector('mat-progress-spinner');
         expect(loadingSpinner).toBeDefined();
         });
     }));

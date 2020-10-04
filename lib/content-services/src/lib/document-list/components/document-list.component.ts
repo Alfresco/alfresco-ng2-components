@@ -481,18 +481,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             }
         }
 
-        if (changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
-            if (this.data) {
-                this.data.loadPage(null, false, null, this.getPreselectNodesBasedOnSelectionMode());
-                this.onPreselectNodes();
-                this.resetNewFolderPagination();
-            }
-
-            if (changes['currentFolderId'].currentValue) {
-
-                this.loadFolder();
-            }
-
+        if (this.currentFolderId && changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
+            this.loadFolder();
         }
 
         if (this.data) {
@@ -659,14 +649,19 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private setLoadingState(value: boolean) {
-        if (value) {
-            clearTimeout(this.loadingTimeout);
-            this.loadingTimeout = setTimeout(() => {
-                this.loading = true;
-            }, 1000);
+        if (this.data?.getRows().length > 0) {
+            if (value) {
+                clearTimeout(this.loadingTimeout);
+                this.loadingTimeout = setTimeout(() => {
+                    this.loading = true;
+                }, 1000);
+            } else {
+                clearTimeout(this.loadingTimeout);
+                this.loading = false;
+            }
         } else {
             clearTimeout(this.loadingTimeout);
-            this.loading = false;
+            this.loading = value;
         }
     }
 

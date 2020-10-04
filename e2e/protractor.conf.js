@@ -1,4 +1,4 @@
-const { LocalStorageUtil, Logger } = require('@alfresco/adf-testing');
+const {LocalStorageUtil, Logger} = require('@alfresco/adf-testing');
 const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
@@ -292,7 +292,7 @@ exports.config = {
             } catch (error) {
                 console.error('Error saving screenshot', error);
             }
-        }else{
+        } else {
             console.log(`Save screenshot disabled`);
         }
 

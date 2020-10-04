@@ -43,11 +43,9 @@ describe('Document List Component - Properties', () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             acsUser = await usersActions.createUser();
-
             await apiService.getInstance().login(acsUser.email, acsUser.password);
 
             parentFolder = await uploadActions.createFolder('parentFolder', '-my-');
-
             subFolder = await uploadActions.createFolder('subFolder', parentFolder.entry.id);
 
             await loginPage.login(acsUser.email, acsUser.password);
@@ -57,13 +55,16 @@ describe('Document List Component - Properties', () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await uploadActions.deleteFileOrFolder(subFolder.entry.id);
             await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
+            await navigationBar.clickLogoutButton();
         });
 
         it('[C299154] Should disallow upload content on a folder row if allowDropFiles is false', async () => {
             await navigationBar.clickContentServicesButton();
-            await contentServicesPage.openFolder(parentFolder.entry.name);
+            await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
 
+            await contentServicesPage.openFolder(parentFolder.entry.name);
             await contentServicesPage.disableDropFilesInAFolder();
+            await browser.sleep(1000);
 
             const dragAndDropArea = contentServicesPage.getRowByName(subFolder.entry.name);
 
@@ -75,9 +76,11 @@ describe('Document List Component - Properties', () => {
 
         it('[C91319] Should allow upload content on a folder row if allowDropFiles is true', async () => {
             await navigationBar.clickContentServicesButton();
-            await contentServicesPage.openFolder(parentFolder.entry.name);
+            await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
 
+            await contentServicesPage.openFolder(parentFolder.entry.name);
             await contentServicesPage.enableDropFilesInAFolder();
+            await browser.sleep(1000);
 
             const dragAndDropArea = contentServicesPage.getRowByName(subFolder.entry.name);
 

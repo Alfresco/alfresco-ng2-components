@@ -127,7 +127,6 @@ export class DocumentListService implements DocumentListLoader {
      * @returns Details of the folder
      */
     getNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
-
         const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'definition', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
@@ -146,7 +145,6 @@ export class DocumentListService implements DocumentListLoader {
      * @returns Details of the folder
      */
     getFolderNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
-
         const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
@@ -184,7 +182,7 @@ export class DocumentListService implements DocumentListLoader {
     }
 
     private retrieveDocumentNode(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string, orderBy?: string[]): Observable<DocumentLoaderNode> {
-        return forkJoin(
+        return forkJoin([
             this.getFolderNode(nodeId, includeFields),
             this.getFolder(null, {
                 maxItems: pagination.maxItems,
@@ -192,7 +190,7 @@ export class DocumentListService implements DocumentListLoader {
                 orderBy: orderBy,
                 rootFolderId: nodeId,
                 where: where
-            }, includeFields)).pipe(
+            }, includeFields)]).pipe(
                 map((results) => new DocumentLoaderNode(results[0], results[1]))
             );
     }

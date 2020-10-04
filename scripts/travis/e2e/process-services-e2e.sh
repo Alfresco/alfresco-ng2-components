@@ -23,7 +23,7 @@ fi;
 
 RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -host_sso "$HOST_SSO" -identity_admin_email "$E2E_ADMIN_EMAIL_IDENTITY" -identity_admin_password "$E2E_ADMIN_PASSWORD_IDENTITY" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --use-dist || exit 1)
 
-if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" || "${TRAVIS_EVENT_TYPE}" == "push"  ]]; then
+if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" || "${TRAVIS_EVENT_TYPE}" == "push" ||  "${TRAVIS_EVENT_TYPE}" == "api"  ]]; then
     echo "Run all e2e $CONTEXT_ENV"
     $RUN_E2E --folder $CONTEXT_ENV
 else if [[ $AFFECTED_E2E == "e2e/$CONTEXT_ENV" ]]; then

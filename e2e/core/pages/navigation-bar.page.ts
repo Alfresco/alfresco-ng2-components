@@ -184,7 +184,7 @@ export class NavigationBarPage {
             await BrowserActions.closeMenuAndDialogs();
             await BrowserActions.clickExecuteScript('.app-sidenav-link[adf-logout]');
 
-            await BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
+            await BrowserVisibility.waitUntilElementIsPresent(this.logoutSection);
         } catch (error) {
             Logger.log('Logout section NOT found');
         }

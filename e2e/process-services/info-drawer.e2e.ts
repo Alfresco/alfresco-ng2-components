@@ -102,8 +102,7 @@ describe('Info Drawer', () => {
     it('[C260319] New Task - displayed details', async () => {
         const name = StringUtil.generateRandomString(5);
         await taskPage.createTask({ ...taskDetails, formName: app.formName, name });
-        await taskPage.tasksListPage().checkTaskListIsLoaded();
-        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(name);
         await taskPage.tasksListPage().selectRow(name);
@@ -128,8 +127,7 @@ describe('Info Drawer', () => {
     it('[C260323] Priority - Editing field', async () => {
         const name = StringUtil.generateRandomString(5);
         await taskPage.createTask({ ...taskDetails, formName: app.formName, name });
-        await taskPage.tasksListPage().checkTaskListIsLoaded();
-        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(name);
         await taskPage.tasksListPage().selectRow(name);
@@ -138,11 +136,9 @@ describe('Info Drawer', () => {
         await expect(await taskPage.taskDetails().getPriority()).toEqual(taskDetails.priority);
         await taskPage.taskDetails().updatePriority('40');
         await taskPage.taskDetails().checkTaskDetailsDisplayed();
-        await browser.sleep(2000);
         await expect(await taskPage.taskDetails().getPriority()).toEqual('40');
         await taskPage.taskDetails().updatePriority();
         await taskPage.taskDetails().checkTaskDetailsDisplayed();
-        await browser.sleep(2000);
         await expect(await taskPage.taskDetails().getPriority()).toEqual('0');
 
         await taskPage.taskDetails().clickCompleteFormTask();
@@ -151,8 +147,7 @@ describe('Info Drawer', () => {
     it('[C260325] Due Date - Changing', async () => {
         const name = StringUtil.generateRandomString(5);
         await taskPage.createTask({ ...taskDetails, formName: app.formName, name });
-        await taskPage.tasksListPage().checkTaskListIsLoaded();
-        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(name);
         await taskPage.tasksListPage().selectRow(name);
@@ -194,8 +189,7 @@ describe('Info Drawer', () => {
     it('[C260329] Task with no form', async () => {
         const name = StringUtil.generateRandomString(5);
         await taskPage.createTask(<any> { ...taskDetails, formName: '', name });
-        await taskPage.tasksListPage().checkTaskListIsLoaded();
-        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(name);
         await taskPage.tasksListPage().selectRow(name);
@@ -212,8 +206,7 @@ describe('Info Drawer', () => {
     it('[C260320] Assign user to the task', async () => {
         const name = StringUtil.generateRandomString(5);
         await taskPage.createTask(<any> { ...taskDetails, formName: app.formName, name });
-        await taskPage.tasksListPage().checkTaskListIsLoaded();
-        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(name);
         await taskPage.tasksListPage().selectRow(name);
@@ -253,9 +246,7 @@ describe('Info Drawer', () => {
         });
 
         await taskPage.taskDetails().updateAssignee(assigneeUserModelFullName);
-
-        await taskPage.tasksListPage().checkTaskListIsLoaded();
-        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
         await taskPage.tasksListPage().checkContentIsNotDisplayed(app.taskName);
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -279,8 +270,7 @@ describe('Info Drawer', () => {
         await startProcess.clickStartProcessButton();
 
         await processServiceTabBarPage.clickTasksButton();
-        await taskPage.tasksListPage().checkTaskListIsLoaded();
-        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
 
         await taskPage.tasksListPage().checkContentIsDisplayed(app.taskName);
@@ -304,8 +294,7 @@ describe('Info Drawer', () => {
     it('[C260328] Description - Editing field', async () => {
         const name = StringUtil.generateRandomString(5);
         await taskPage.createTask({ ...taskDetails, formName: app.formName, name });
-        await taskPage.tasksListPage().checkTaskListIsLoaded();
-        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(name);
         await taskPage.tasksListPage().selectRow(name);
@@ -334,8 +323,7 @@ describe('Info Drawer', () => {
 
         const name = StringUtil.generateRandomString(5);
         await taskPage.createTask({ ...taskDetails, formName: app.formName, name });
-        await taskPage.tasksListPage().checkTaskListIsLoaded();
-        await taskPage.tasksListPage().getDataTable().waitForTableBody();
+        await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(name);
         await taskPage.tasksListPage().selectRow(name);

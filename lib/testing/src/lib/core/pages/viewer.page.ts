@@ -119,11 +119,11 @@ export class ViewerPage {
 
         if (this.isSpinnerPresent()) {
             Logger.log('wait spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-spinner')));
+            await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-progress-spinner')));
         } else {
             try {
                 Logger.log('wait spinner is present');
-                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-spinner')));
+                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-progress-spinner')));
             } catch (error) {
             }
         }
@@ -133,7 +133,7 @@ export class ViewerPage {
         let isSpinnerPresent;
 
         try {
-            isSpinnerPresent = await element(by.tagName('mat-spinner')).isDisplayed();
+            isSpinnerPresent = await element(by.tagName('mat-progress-spinner')).isDisplayed();
         } catch (error) {
             isSpinnerPresent = false;
         }
