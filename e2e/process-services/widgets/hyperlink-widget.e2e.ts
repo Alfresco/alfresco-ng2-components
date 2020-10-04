@@ -45,20 +45,20 @@ describe('Hyperlink widget', () => {
     let deployedApp, process;
 
     beforeAll(async () => {
-       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-       processUserModel = await usersActions.createUser();
+        processUserModel = await usersActions.createUser();
 
-       await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-       const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
-       deployedApp = appDefinitions.data.find((currentApp) => {
+        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
+        deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-       process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
-       await loginPage.login(processUserModel.email, processUserModel.password);
-   });
+        process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
+        await loginPage.login(processUserModel.email, processUserModel.password);
+    });
 
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
@@ -71,7 +71,7 @@ describe('Hyperlink widget', () => {
         await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-   });
+    });
 
     it('[C276728] Should be able to set visibility properties for Hyperlink widget', async () => {
         await taskPage.formFields().checkWidgetIsHidden(app.FIELD.hyperlink_id);
