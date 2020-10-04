@@ -660,6 +660,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 this.loading = false;
             }
         } else {
+            clearTimeout(this.loadingTimeout);
             this.loading = value;
         }
     }
