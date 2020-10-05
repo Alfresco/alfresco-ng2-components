@@ -225,6 +225,7 @@ describe('Edit task filters and task list properties', () => {
 
         it('[C297689] Task is not displayed when typing into lastModifiedFrom field the same date as tasks CreatedDate', async () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(currentDate);
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setTaskName(createdTask.entry.name);
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
@@ -238,6 +239,7 @@ describe('Edit task filters and task list properties', () => {
 
         it('[C297690] Task is not displayed when typing into lastModifiedTo field the same date as tasks CreatedDate', async () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(currentDate);
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setTaskName(createdTask.entry.name);
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
