@@ -149,7 +149,7 @@
     "lite-server": "^2.5.4",
     "markdownlint-cli": "^0.23.2",
     "mdast": "^3.0.0",
-    "mdast-util-compact": "^2.0.1",
+    "mdast-util-compact": "^3.0.0",
     "mdast-util-heading-range": "^2.1.0",
     "mdast-util-toc": "^5.0.3",
     "mdast-zone": "^4.0.0",
