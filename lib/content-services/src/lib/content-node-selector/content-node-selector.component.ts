@@ -88,7 +88,7 @@ export class ContentNodeSelectorComponent {
         return this.chosenNode?.length > 0;
     }
 
-    onDisableUploadButton(value: boolean) {
+    onShowingSearch(value: boolean) {
         this.disableUploadButton = value;
     }
 }

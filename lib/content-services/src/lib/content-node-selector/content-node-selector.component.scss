@@ -57,4 +57,13 @@
             }
         }
     }
+
+    .content-node-upload-button-warning-message {
+        margin-left: 20px;
+        display: flex;
+        font-size: 12px;
+        mat-icon {
+            font-size: 16px;
+        }
+    }
 }

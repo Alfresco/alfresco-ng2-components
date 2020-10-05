@@ -21,7 +21,7 @@
         [showDropdownSiteList]="data?.showDropdownSiteList"
         [showFilesInResult]="data?.showFilesInResult"
         (select)="onSelect($event)"
-        (disableUploadButton)="onDisableUploadButton($event)"
+        (showingSearch)="onShowingSearch($event)"
         (siteChange)="onSiteChange($event)"
         (navigationChange)="onNavigationChange($event)">
     </adf-content-node-selector-panel>
@@ -37,6 +37,12 @@
             [disabled]="disableUploadButton"
             (error)="onError($event)">
         </adf-upload-button>
+        <ng-container *ngIf="data?.showLocalUploadButton && disableUploadButton">
+            <div class="content-node-upload-button-warning-message">
+                <mat-icon>warning</mat-icon>
+                <span>{{ 'NODE_SELECTOR.UPLOAD_BUTTON_WARNING_MESSAGE' | translate }}</span>
+            </div>
+        </ng-container>
     </div>
     <div>
         <button

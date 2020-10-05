@@ -89,7 +89,8 @@
     "NO_RESULTS": "No results found",
     "SEARCH": "Search",
     "SEARCH_RESULTS": "Search results",
-    "SELECT_LOCATION": "Select Location"
+    "SELECT_LOCATION": "Select Location",
+    "UPLOAD_BUTTON_WARNING_MESSAGE": "You can't upload a file while a search is still running"
   },
   "OPERATION": {
     "SUCCESS": {
