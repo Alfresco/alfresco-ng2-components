@@ -32,7 +32,7 @@ export class ContentCloudNodeSelectorService {
     private dialog: MatDialog) {
   }
 
-  openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean): Observable<Node[]> {
+  openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {
     const select = new Subject<Node[]>();
     select.subscribe({
       complete: this.close.bind(this)
@@ -41,7 +41,7 @@ export class ContentCloudNodeSelectorService {
       title: 'Select a file',
       actionName: 'Attach',
       currentFolderId,
-      restrictRootToCurrentFolderId: isAllFileSources,
+      restrictRootToCurrentFolderId,
       select,
       selectionMode,
       isSelectionValid: (entry: Node) => entry.isFile,

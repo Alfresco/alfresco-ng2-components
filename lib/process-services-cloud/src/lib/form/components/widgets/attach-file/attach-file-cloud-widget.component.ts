@@ -124,17 +124,18 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     async openSelectDialog() {
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
+        let destinationFolderPath = <DestinationFolderPathModel> { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: '' };
         if (this.isAlfrescoAndLocal()) {
-            const destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath);
+            destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath);
             destinationFolderPath.path = this.replaceAppNameAliasWithValue(destinationFolderPath.path);
-            const nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
-            this.rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
         }
+        const nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
+        this.rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
 
         this.contentNodeSelectorPanelService.customModels = this.field.params.customModels;
 
         this.contentNodeSelectorService
-            .openUploadFileDialog(this.rootNodeId, selectedMode, this.isAlfrescoAndLocal())
+            .openUploadFileDialog(this.rootNodeId, selectedMode, this.isAlfrescoAndLocal(), true)
             .subscribe((selections: Node[]) => {
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);
