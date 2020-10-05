@@ -224,7 +224,7 @@ describe('ContentNodeSelectorComponent', () => {
             component.disableUploadButton = true;
             component.data.showLocalUploadButton = true;
             fixture.detectChanges();
-            const warnningMessage = fixture.debugElement.query(By.css('.content-node-upload-button-warning-message span'));
+            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
 
             expect(warnningMessage).not.toBeNull();
             expect(warnningMessage.nativeElement.innerText).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_WARNING_MESSAGE');
@@ -233,7 +233,7 @@ describe('ContentNodeSelectorComponent', () => {
         it('should not be able to show warning message if showLocalUploadButton set to false', () => {
             component.data.showLocalUploadButton = false;
             component.disableUploadButton = false;
-            const warnningMessage = fixture.debugElement.query(By.css('.content-node-upload-button-warning-message'));
+            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message'));
 
             expect(warnningMessage).toBeNull();
         });
@@ -241,7 +241,7 @@ describe('ContentNodeSelectorComponent', () => {
         it('should not be able to show warning message if disableUploadButton set to false', () => {
             component.data.showLocalUploadButton = true;
             component.disableUploadButton = false;
-            const warnningMessage = fixture.debugElement.query(By.css('.content-node-upload-button-warning-message'));
+            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message'));
 
             expect(warnningMessage).toBeNull();
         });
