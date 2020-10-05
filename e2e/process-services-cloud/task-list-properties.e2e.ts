@@ -47,7 +47,7 @@ describe('Edit task filters and task list properties', () => {
 
     const noTasksFoundMessage = 'No Tasks Found';
     let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask,
-        otherOwnerTask, testUser, groupInfo;
+        otherOwnerTask, testUser, groupInfo, simpleTask;
     const priority = 30;
 
     const beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
@@ -70,6 +70,7 @@ describe('Edit task filters and task list properties', () => {
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         await tasksService.claimTask(createdTask.entry.id, simpleApp);
 
+        simpleTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         notAssigned = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: priority });
         await tasksService.claimTask(priorityTask.entry.id, simpleApp);
@@ -225,7 +226,8 @@ describe('Edit task filters and task list properties', () => {
 
         it('[C297689] Task is not displayed when typing into lastModifiedFrom field the same date as tasks CreatedDate', async () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(currentDate);
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setTaskName(simpleTask.entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(simpleTask.entry.name);
         });
 
         it('[C297485] Task is displayed when typing into lastModifiedTo field a date after the task CreatedDate', async () => {
@@ -238,7 +240,8 @@ describe('Edit task filters and task list properties', () => {
 
         it('[C297690] Task is not displayed when typing into lastModifiedTo field the same date as tasks CreatedDate', async () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(currentDate);
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setTaskName(simpleTask.entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(simpleTask.entry.name);
         });
 
         it('[C297691] Task is not displayed when typing into lastModifiedFrom field a date before the task due date  ' +
