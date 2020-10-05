@@ -95,7 +95,7 @@
     "minimatch-browser": "1.0.0",
     "moment": "2.29.0",
     "moment-es6": "^1.0.0",
-    "ng2-charts": "2.3.3",
+    "ng2-charts": "2.4.2",
     "ngx-monaco-editor": "8.1.1",
     "pdfjs-dist": "2.5.207",
     "raphael": "2.3.0",
