@@ -38,7 +38,7 @@ import {
     FileUploadCompleteEvent
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
-import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry } from '@alfresco/js-api';
+import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, QueryBody } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
@@ -226,6 +226,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     siteId: null | string;
     breadcrumbRootId: null | string;
     searchTerm: string = '';
+    userSearchTerm: string = '';
     showingSearchResults: boolean = false;
     loadingSearchResults: boolean = false;
     inDialog: boolean = false;
@@ -272,7 +273,21 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 debounceTime(this.debounceSearch),
                 takeUntil(this.onDestroy$)
             )
-            .subscribe(searchValue => this.search(searchValue));
+            .subscribe(searchValue => {
+                this.userSearchTerm = searchValue;
+                this.queryBuilderService.userQuery = searchValue;
+                this.queryBuilderService.update();
+            });
+
+        this.queryBuilderService.updated
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((queryBody: QueryBody) => {
+                if (queryBody) {
+                    this.search(queryBody.query.query);
+                } else {
+                    this.clearSearch();
+                }
+            });
 
         this.queryBuilderService.executed
             .pipe(takeUntil(this.onDestroy$))
@@ -397,14 +412,16 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Clear the search input and reset to last folder node in which search was performed
      */
     clear(): void {
-        this.clearSearch();
-        this.folderIdToShow = this.siteId || this.currentFolderId;
+        this.userSearchTerm = '';
+        this.queryBuilderService.userQuery = '';
+        this.queryBuilderService.update();
     }
 
     /**
      * Clear the search input and search related data
      */
     clearSearch() {
+        this.folderIdToShow = this.siteId || this.currentFolderId;
         this.searchTerm = '';
         this.nodePaging = null;
         this.pagination.maxItems = this.pageSize;

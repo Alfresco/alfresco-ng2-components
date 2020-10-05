@@ -41,7 +41,7 @@ export class ContentNodeSelectorService {
 
         return {
             query: {
-                query: `${searchTerm}*`
+                query: `${searchTerm}`
             },
             include: ['path', 'allowableOperations', 'properties'],
             paging: {

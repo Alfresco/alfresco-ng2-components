@@ -77,10 +77,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             this.facetExpanded['interval'] = queryBuilder.config.facetIntervals.expanded;
         }
         this.displayResetButton = this.queryBuilder.config && !!this.queryBuilder.config.resetButton;
-
-        this.queryBuilder.updated
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((query) => this.queryBuilder.execute(query));
     }
 
     ngOnInit() {
