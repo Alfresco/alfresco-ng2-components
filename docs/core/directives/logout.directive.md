@@ -19,10 +19,10 @@ Logs the user out when the decorated element is clicked.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| enableRedirect | `boolean` | true | Enable redirecting after logout |
-| redirectUri | `string` | "/login" | URI to redirect to after logging out. |
+| Name           | Type      | Default value | Description                           |
+| -------------- | --------- | ------------- | ------------------------------------- |
+| enableRedirect | `boolean` | true          | Enable redirecting after logout       |
+| redirectUri    | `string`  | "/login"      | URI to redirect to after logging out. |
 
 ## Kerberos
 

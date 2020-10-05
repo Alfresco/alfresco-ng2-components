@@ -342,38 +342,38 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| actions | `boolean` | false | Toggles the data actions column. |
-| actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
-| allowFiltering | `boolean` | false | Flag that indicate if the datatable allow the use facet [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) search for filtering. |
-| columns | `any[]` | \[] | The columns that the datatable will show. |
-| contextMenu | `boolean` | false | Toggles custom context menu for the component. |
-| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source for the table |
-| display | `string` | DisplayMode.List | Selects the display mode of the table. Can be "list" or "gallery". |
-| fallbackThumbnail | `string` |  | Fallback image for rows where the thumbnail is missing. |
-| loading | `boolean` | false | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
-| multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row. |
-| noPermission | `boolean` | false | Flag that indicates if the datatable should show the "no permission" template. |
-| resolverFn | `Function` | null | Custom resolver function which is used to parse dynamic column objects see the docs to learn how to configure a resolverFn. |
-| rowMenuCacheEnabled | `boolean` | true | Should the items for the row actions menu be cached for reuse after they are loaded the first time? |
-| rowStyle | `string` |  | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
-| rowStyleClass | `string` | "" | The CSS class to apply to every row. |
-| rows | `any[]` | \[] | The rows that the datatable will show. |
-| selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| showHeader | `string` |  | Toggles the header. |
-| sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
-| stickyHeader | `boolean` | false | Toggles the sticky header mode. |
+| Name                | Type                                                                        | Default value       | Description                                                                                                                                                                |
+| ------------------- | --------------------------------------------------------------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| actions             | `boolean`                                                                   | false               | Toggles the data actions column.                                                                                                                                           |
+| actionsPosition     | `string`                                                                    | "right"             | Position of the actions dropdown menu. Can be "left" or "right".                                                                                                           |
+| allowFiltering      | `boolean`                                                                   | false               | Flag that indicate if the datatable allow the use facet [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) search for filtering.                     |
+| columns             | `any[]`                                                                     | \[]                 | The columns that the datatable will show.                                                                                                                                  |
+| contextMenu         | `boolean`                                                                   | false               | Toggles custom context menu for the component.                                                                                                                             |
+| data                | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |                     | Data source for the table                                                                                                                                                  |
+| display             | `string`                                                                    | DisplayMode.List    | Selects the display mode of the table. Can be "list" or "gallery".                                                                                                         |
+| fallbackThumbnail   | `string`                                                                    |                     | Fallback image for rows where the thumbnail is missing.                                                                                                                    |
+| loading             | `boolean`                                                                   | false               | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template).               |
+| multiselect         | `boolean`                                                                   | false               | Toggles multiple row selection, which renders checkboxes at the beginning of each row.                                                                                     |
+| noPermission        | `boolean`                                                                   | false               | Flag that indicates if the datatable should show the "no permission" template.                                                                                             |
+| resolverFn          | `Function`                                                                  | null                | Custom resolver function which is used to parse dynamic column objects see the docs to learn how to configure a resolverFn.                                                |
+| rowMenuCacheEnabled | `boolean`                                                                   | true                | Should the items for the row actions menu be cached for reuse after they are loaded the first time?                                                                        |
+| rowStyle            | `string`                                                                    |                     | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
+| rowStyleClass       | `string`                                                                    | ""                  | The CSS class to apply to every row.                                                                                                                                       |
+| rows                | `any[]`                                                                     | \[]                 | The rows that the datatable will show.                                                                                                                                     |
+| selectionMode       | `string`                                                                    | "single"            | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.    |
+| showHeader          | `string`                                                                    | ShowHeaderMode.Data | Toggles the header.                                                                                                                                                        |
+| sorting             | `any[]`                                                                     | \[]                 | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`]                                     |
+| stickyHeader        | `boolean`                                                                   | false               | Toggles the sticky header mode.                                                                                                                                            |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
-| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user clicks a row. |
-| rowDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user double-clicks a row. |
-| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
-| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
+| Name               | Type                                                                                                                                                    | Description                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| executeRowAction   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action.            |
+| rowClick           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>`              | Emitted when the user clicks a row.                     |
+| rowDblClick        | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>`              | Emitted when the user double-clicks a row.              |
+| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>`            | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>`            | Emitted before the context menu is displayed for a row. |
 
 ## Details
 
@@ -395,18 +395,18 @@ for more information.
 Below are the DOM events emitted by the DataTable component.
 These events bubble up the component tree and can be handled by any parent component.
 
-| Name | Description |
-| ---- | ----------- |
-| row-click | Raised when user clicks a row |
-| row-dblclick | Raised when user double-clicks a row |
-| row-select | Raised after user selects a row |
-| row-unselect | Raised after user unselects a row |
-| row-keyup | Raised on the 'keyup' event for the focused row. |
+| Name            | Description                                          |
+| --------------- | ---------------------------------------------------- |
+| row-click       | Raised when user clicks a row                        |
+| row-dblclick    | Raised when user double-clicks a row                 |
+| row-select      | Raised after user selects a row                      |
+| row-unselect    | Raised after user unselects a row                    |
+| row-keyup       | Raised on the 'keyup' event for the focused row.     |
 | sorting-changed | Raised after user clicks the sortable column header. |
-| header-dragover | Raised when dragging content over the header. |
-| header-drop | Raised when data is dropped on the column header. |
-| cell-dragover | Raised when dragging data over the cell. |
-| cell-drop | Raised when data is dropped on the column cell. |
+| header-dragover | Raised when dragging content over the header.        |
+| header-drop     | Raised when data is dropped on the column header.    |
+| cell-dragover   | Raised when dragging data over the cell.             |
+| cell-drop       | Raised when data is dropped on the column cell.      |
 
 #### Drop Events
 

@@ -17,7 +17,6 @@ Searches processes.
 
     -   _appName:_ `string`  - 
     -   **Returns** `string` - 
-
 -   **getProcessByRequest**(requestNode: [`ProcessQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/process/process-list/models/process-cloud-query-request.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Finds a process using an object with optional query properties.
     -   _requestNode:_ [`ProcessQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/process/process-list/models/process-cloud-query-request.model.ts)  - Query object

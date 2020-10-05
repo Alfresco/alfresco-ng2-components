@@ -24,7 +24,7 @@ Stores preferences for the app and for individual components.
 -   **getPropertyKey**(property: `string`): `string`<br/>
     Gets the full property key with prefix.
     -   _property:_ `string`  - The property name
-    -   **Returns** `string` - [Property](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/property.ts) key
+    -   **Returns** `string` - [Property](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) key
 -   **getStoragePrefix**(): `string`<br/>
     Gets the active storage prefix for preferences.
     -   **Returns** `string` - Storage prefix
@@ -92,12 +92,12 @@ class AppComponent {
 
 The service also provides quick access to a set of the "known" properties used across ADF components:
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| authType | `string` | Authorization type (can be "ECM", "BPM" or "ALL"). |
-| disableCSRF | `boolean` | Prevents the CSRF Token from being submitted if true. Only valid for Process Services. |
-| paginationSize | `number` | [`Pagination`](../../../lib/content-services/document-list/models/document-library.model.ts) size. |
-| locale | `string` | Current locale setting. |
+| Name           | Type      | Description                                                                                        |
+| -------------- | --------- | -------------------------------------------------------------------------------------------------- |
+| authType       | `string`  | Authorization type (can be "ECM", "BPM" or "ALL").                                                 |
+| disableCSRF    | `boolean` | Prevents the CSRF Token from being submitted if true. Only valid for Process Services.             |
+| paginationSize | `number`  | [`Pagination`](../../../lib/content-services/document-list/models/document-library.model.ts) size. |
+| locale         | `string`  | Current locale setting.                                                                            |
 
 ## User Preference onChange Stream
 

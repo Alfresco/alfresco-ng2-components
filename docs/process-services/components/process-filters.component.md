@@ -32,21 +32,21 @@ Collection of criteria used to filter process instances, which may be customized
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
-| appName | `string` |  | Display filters available to the current user for the application with the specified name. |
-| filterParam | [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts) |  | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
-| showIcon | `boolean` | true | Toggle to show or hide the filter's icon. |
+| Name        | Type                                                                                                                    | Default value | Description                                                                                                                         |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| appId       | `number`                                                                                                                |               | Display filters available to the current user for the application with the specified ID.                                            |
+| appName     | `string`                                                                                                                |               | Display filters available to the current user for the application with the specified name.                                          |
+| filterParam | [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts) |               | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
+| showIcon    | `boolean`                                                                                                               | true          | Toggle to show or hide the filter's icon.                                                                                           |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/UserProcessInstanceFilterRepresentation.md)`>` | Emitted when the user selects a filter from the list. |
-| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md)`>` | Emitted when a process filter is selected. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md)`[]>` | Emitted when the list of filters has been successfully loaded from the server. |
+| Name           | Type                                                                                                                                                                                                                                            | Description                                                                    |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| error          | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                                                                                               | Emitted when an error occurs.                                                  |
+| filterClick    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/UserProcessInstanceFilterRepresentation.md)`>` | Emitted when the user selects a filter from the list.                          |
+| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md)`>`         | Emitted when a process filter is selected.                                     |
+| success        | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md)`[]>`       | Emitted when the list of filters has been successfully loaded from the server. |
 
 ## Details
 
@@ -78,11 +78,11 @@ You can use inside the filterParam one of the properties defined by [`FilterPara
 }
 ```
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| id | string | The id of the task filter. |
-| name | string | The name of the task filter, lowercase is checked. |
-| index | number | Zero-based position of the filter in the array. |
+| Name  | Type   | Description                                        |
+| ----- | ------ | -------------------------------------------------- |
+| id    | string | The id of the task filter.                         |
+| name  | string | The name of the task filter, lowercase is checked. |
+| index | number | Zero-based position of the filter in the array.    |
 
 ## See also
 

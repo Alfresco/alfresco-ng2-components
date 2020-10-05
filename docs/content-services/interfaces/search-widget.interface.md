@@ -32,11 +32,11 @@ export interface SearchWidget {
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| id | `string` |  | Unique identifying value for the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) |
-| settings | [`SearchWidgetSettings`](../../../lib/content-services/src/lib/search/search-widget-settings.interface.ts) |  | Settings for component properties |
-| context | [`SearchQueryBuilderService`](../../content-services/services/search-query-builder.service.md) |  | Instance of the [Search Query Builder service](../services/search-query-builder.service.md) to process the query |
+| Name     | Type                                                                                                       | Default value | Description                                                                                                      |
+| -------- | ---------------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------- |
+| id       | `string`                                                                                                   |               | Unique identifying value for the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts)        |
+| settings | [`SearchWidgetSettings`](../../../lib/content-services/src/lib/search/search-widget-settings.interface.ts) |               | Settings for component properties                                                                                |
+| context  | [`SearchQueryBuilderService`](../../content-services/services/search-query-builder.service.md)             |               | Instance of the [Search Query Builder service](../services/search-query-builder.service.md) to process the query |
 
 ## Details
 

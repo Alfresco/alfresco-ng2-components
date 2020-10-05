@@ -42,9 +42,9 @@ with the following names:
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| showHeader | `boolean` | true | The visibility of the header. |
+| Name       | Type      | Default value | Description                   |
+| ---------- | --------- | ------------- | ----------------------------- |
+| showHeader | `boolean` | true          | The visibility of the header. |
 
 ## Details
 

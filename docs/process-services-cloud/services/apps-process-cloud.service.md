@@ -21,7 +21,6 @@ Gets details of deployed apps for the current user.
 -   **hasDeployedApps**(): `boolean`<br/>
 
     -   **Returns** `boolean` - 
-
 -   **loadApps**()<br/>
 
 ## Details

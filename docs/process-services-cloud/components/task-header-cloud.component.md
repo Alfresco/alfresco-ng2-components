@@ -24,18 +24,18 @@ Shows all the information related to a task.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| appName | `string` | "" | (Required) The name of the application. |
-| showTitle | `boolean` | true | Show/Hide the task title |
-| taskId | `string` |  | (Required) The id of the task. |
+| Name      | Type      | Default value | Description                             |
+| --------- | --------- | ------------- | --------------------------------------- |
+| appName   | `string`  | ""            | (Required) The name of the application. |
+| showTitle | `boolean` | true          | Show/Hide the task title                |
+| taskId    | `string`  |               | (Required) The id of the task.          |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| claim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is claimed. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the given task has errors. |
+| Name    | Type                                                              | Description                                        |
+| ------- | ----------------------------------------------------------------- | -------------------------------------------------- |
+| claim   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is claimed.                  |
+| error   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the given task has errors.            |
 | unclaim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is unclaimed (ie, requeued). |
 
 ## Details

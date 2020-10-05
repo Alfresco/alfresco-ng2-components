@@ -209,9 +209,11 @@ update your code to use the suggested fix for each item that affects your projec
     component. See the
     [`mat-expansion-panel`](https://material.angular.io/components/expansion/overview)
     doc page for an example of how to do this.
+
 -   [Viewer component](../core/components/viewer.component.md): The `allowShare` input has been removed. Inject the
     [Share Directive](../content-services/directives/content-node-share.directive.md) in a
     [custom toolbar](../core/components/viewer.component.md#custom-toolbar) to recreate the behavior of the Share button.
+
 -   [Viewer component](../core/components/viewer.component.md): The handling of the sidebar has been updated to allow left and right sidebars
     at the same time. The following properties have changed, so you should
     update your code to use the new properties:
@@ -224,14 +226,18 @@ update your code to use the suggested fix for each item that affects your projec
 
 -   The `createFolder` event of the [`UploadBase`](../../lib/content-services/src/lib/upload/components/base-upload/upload-base.ts)
     class (emitted when a folder was created) has been removed. You should modify your code to use the `success` event instead.
+
 -   [Login component](../core/components/login.component.md): Two inputs have been removed: `disableCsrf` and `providers`. Set the
     properties with the same names in `app.config.json` to get the same effect.
+
 -   [File Draggable Directive](../content-services/directives/file-draggable.directive.md): The `file-draggable` event has been removed.
     Use `filesDropped` instead to get the same effect.
+
 -   [Search control component](../content-services/components/search-control.component.md): The `QueryBody`, and
     `customQueryBody` inputs of the [`SearchControlComponent`](../content-services/components/search-control.component.md) have been removed. See the
     [Search configuration interface](../core/interfaces/search-configuration.interface.md)
     page to learn how to get the same functionality.
+
 -   [Document list component](../content-services/components/document-list.component.md): Several inputs have been removed or replaced:
 
     -   The `skipCount` input has been removed. You can define
@@ -244,6 +250,7 @@ update your code to use the suggested fix for each item that affects your projec
 
 -   The `SettingsService` class has been removed. Access the equivalent properties with the
     [App config service](../core/services/app-config.service.md)
+
 -   [Form service](../core/services/form.service.md): the `addFieldsToAForm` method has been removed.
 
 ## Relocated classes

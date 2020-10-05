@@ -58,18 +58,18 @@ A default template will be used if you don't supply a custom one to override it:
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| disabled | `boolean` | false | Disable/Enable read-only mode for attachment list. |
-| processInstanceId | `string` |  | (**required**) The ID of the process instance to display. |
+| Name              | Type      | Default value | Description                                               |
+| ----------------- | --------- | ------------- | --------------------------------------------------------- |
+| disabled          | `boolean` | false         | Disable/Enable read-only mode for attachment list.        |
+| processInstanceId | `string`  |               | (**required**) The ID of the process instance to display. |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name            | Type                                                              | Description                                                                                                                                                                                                                                                 |
+| --------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | attachmentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the attachment is double-clicked or the view option is selected from the context menu by the user from within the component. Returns a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) representing the object that was clicked. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the attachment list is not able to fetch the attachments (eg, following a network error). |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the attachment list has fetched all the attachments. Returns a list of attachments. |
+| error           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the attachment list is not able to fetch the attachments (eg, following a network error).                                                                                                                                                      |
+| success         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the attachment list has fetched all the attachments. Returns a list of attachments.                                                                                                                                                            |
 
 ## Details
 

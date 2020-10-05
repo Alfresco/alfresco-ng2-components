@@ -28,14 +28,14 @@ export class CustomEditorComponent extends WidgetComponent {}
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| field | `any` |  | field. |
+| Name  | Type  | Default value | Description |
+| ----- | ----- | ------------- | ----------- |
+| field | `any` |               | field.      |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name         | Type                                                              | Description   |
+| ------------ | ----------------------------------------------------------------- | ------------- |
 | fieldChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | fieldChanged. |
 
 ## Details

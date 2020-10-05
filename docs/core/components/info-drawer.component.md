@@ -47,16 +47,16 @@ have any content you like:
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| selectedIndex | `number` | 0 | The selected index tab. |
-| showHeader | `boolean` | true | The visibility of the header. |
-| title | `string \| null` | null | The title of the info drawer (string or translation key). |
+| Name          | Type             | Default value | Description                                               |
+| ------------- | ---------------- | ------------- | --------------------------------------------------------- |
+| selectedIndex | `number`         | 0             | The selected index tab.                                   |
+| showHeader    | `boolean`        | true          | The visibility of the header.                             |
+| title         | `string \| null` | null          | The title of the info drawer (string or translation key). |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name       | Type                                                                 | Description                                    |
+| ---------- | -------------------------------------------------------------------- | ---------------------------------------------- |
 | currentTab | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<number>` | Emitted when the currently active tab changes. |
 
 ## Details

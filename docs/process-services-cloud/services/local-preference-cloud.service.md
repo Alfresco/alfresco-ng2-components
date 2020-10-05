@@ -38,7 +38,6 @@ Manages Local Storage preferences.
 
     -   _key:_ `string`  - 
     -   **Returns** `any` - 
-
 -   **updatePreference**(\_: `string`, key: `string`, updatedPreference: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Updates local preference.
     -   _\_:_ `string`  - Name of the target app

@@ -13,20 +13,20 @@ Maps a form field type string onto the corresponding form [widget component](../
 
 ### Methods
 
--   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<__type>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)<br/>
+-   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<Function>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)<br/>
     Gets the currently active [DynamicComponentResolveFunction](../../../lib/core/services/dynamic-component-mapper.service.ts) for a field type.
     -   _type:_ `string`  - The type whose resolver you want
-    -   _defaultValue:_ `Type<__type>`  - Default type returned for types that are not yet mapped
+    -   _defaultValue:_ `Type<Function>`  - Default type returned for types that are not yet mapped
     -   **Returns** [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts) - Resolver function
 -   **register**(components: `Function`, override: `boolean` = `false`)<br/>
     Register multiple components
     -   _components:_ `Function`  - 
     -   _override:_ `boolean`  - 
--   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
+-   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<Function>` = `this.defaultValue`): `Type<Function>`<br/>
     Finds the component type that is needed to render a form field.
     -   _model:_ [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) field model for the field to render
-    -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
-    -   **Returns** `Type<__type>` - Component type
+    -   _defaultValue:_ `Type<Function>`  - Default type returned for field types that are not yet mapped.
+    -   **Returns** `Type<Function>` - Component type
 -   **setComponentTypeResolver**(type: `string`, resolver: [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts), override: `boolean` = `true`)<br/>
     Sets or optionally replaces a [DynamicComponentResolveFunction](../../../lib/core/services/dynamic-component-mapper.service.ts) for a field type.
     -   _type:_ `string`  - The type whose resolver you want to set
@@ -66,25 +66,25 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 
 The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Rendering service is initialized with the mapping shown in the table below:
 
-| Stencil name | Field type string | Component type |
-| ------------ | ----------------- | -------------- |
-| Amount | "amount" | [`AmountWidgetComponent`](../../../lib/core/form/components/widgets/amount/amount.widget.ts) |
-| Attach | "upload" | AttachWidgetComponent or [`UploadWidgetComponent`](../../../lib/core/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
-| Checkbox | "boolean" | [`CheckboxWidgetComponent`](../../../lib/core/form/components/widgets/checkbox/checkbox.widget.ts) |
-| Date | "date" | [`DateWidgetComponent`](../../../lib/core/form/components/widgets/date/date.widget.ts) |
-| Display text | "readonly-text" | [`DisplayTextWidgetComponentComponent`](../../../lib/core/form/components/widgets/display-text/display-text.widget.ts) |
-| Display value | "readonly" | DisplayValueWidgetComponent |
-| Dropdown | "dropdown" | [`DropdownWidgetComponent`](../../../lib/core/form/components/widgets/dropdown/dropdown.widget.ts) |
-| Dynamic table | "dynamic-table" | [`DynamicTableWidgetComponent`](../../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |
-| Group of people | "functional-group" | [`FunctionalGroupWidgetComponent`](../../../lib/core/form/components/widgets/functional-group/functional-group.widget.ts) |
-| Header | "group" | [`ContainerWidgetComponent`](../../../lib/core/form/components/widgets/container/container.widget.ts) |
-| Hyperlink | "hyperlink" | [`HyperlinkWidgetComponent`](../../../lib/core/form/components/widgets/hyperlink/hyperlink.widget.ts) |
-| Multi-line text | "multi-line-text" | [`MultilineTextWidgetComponentComponent`](../../../lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts) |
-| Number | "integer" | [`NumberWidgetComponent`](../../../lib/core/form/components/widgets/number/number.widget.ts) |
-| People | "people" | [`PeopleWidgetComponent`](../../../lib/core/form/components/widgets/people/people.widget.ts) |
-| Radio buttons | "radio-buttons" | [`RadioButtonsWidgetComponent`](../../../lib/core/form/components/widgets/radio-buttons/radio-buttons.widget.ts) |
-| Text | "text" | [`TextWidgetComponent`](../../../lib/core/form/components/widgets/text/text.widget.ts) |
-| Typeahead | "typeahead" | [`TypeaheadWidgetComponent`](../../../lib/core/form/components/widgets/typeahead/typeahead.widget.ts) |
+| Stencil name    | Field type string  | Component type                                                                                                                            |
+| --------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Amount          | "amount"           | [`AmountWidgetComponent`](../../../lib/core/form/components/widgets/amount/amount.widget.ts)                                              |
+| Attach          | "upload"           | AttachWidgetComponent or [`UploadWidgetComponent`](../../../lib/core/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
+| Checkbox        | "boolean"          | [`CheckboxWidgetComponent`](../../../lib/core/form/components/widgets/checkbox/checkbox.widget.ts)                                        |
+| Date            | "date"             | [`DateWidgetComponent`](../../../lib/core/form/components/widgets/date/date.widget.ts)                                                    |
+| Display text    | "readonly-text"    | [`DisplayTextWidgetComponentComponent`](../../../lib/core/form/components/widgets/display-text/display-text.widget.ts)                    |
+| Display value   | "readonly"         | DisplayValueWidgetComponent                                                                                                               |
+| Dropdown        | "dropdown"         | [`DropdownWidgetComponent`](../../../lib/core/form/components/widgets/dropdown/dropdown.widget.ts)                                        |
+| Dynamic table   | "dynamic-table"    | [`DynamicTableWidgetComponent`](../../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.ts)                          |
+| Group of people | "functional-group" | [`FunctionalGroupWidgetComponent`](../../../lib/core/form/components/widgets/functional-group/functional-group.widget.ts)                 |
+| Header          | "group"            | [`ContainerWidgetComponent`](../../../lib/core/form/components/widgets/container/container.widget.ts)                                     |
+| Hyperlink       | "hyperlink"        | [`HyperlinkWidgetComponent`](../../../lib/core/form/components/widgets/hyperlink/hyperlink.widget.ts)                                     |
+| Multi-line text | "multi-line-text"  | [`MultilineTextWidgetComponentComponent`](../../../lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts)              |
+| Number          | "integer"          | [`NumberWidgetComponent`](../../../lib/core/form/components/widgets/number/number.widget.ts)                                              |
+| People          | "people"           | [`PeopleWidgetComponent`](../../../lib/core/form/components/widgets/people/people.widget.ts)                                              |
+| Radio buttons   | "radio-buttons"    | [`RadioButtonsWidgetComponent`](../../../lib/core/form/components/widgets/radio-buttons/radio-buttons.widget.ts)                          |
+| Text            | "text"             | [`TextWidgetComponent`](../../../lib/core/form/components/widgets/text/text.widget.ts)                                                    |
+| Typeahead       | "typeahead"        | [`TypeaheadWidgetComponent`](../../../lib/core/form/components/widgets/typeahead/typeahead.widget.ts)                                     |
 
 You can add new items to the mapping or replace existing items in order to customize the way
 fields are rendered.

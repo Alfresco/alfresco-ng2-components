@@ -188,13 +188,13 @@ The Sorting configuration section consists of two blocks:
 
 The properties of the `options` objects are as follows:
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| key | string | Unique key to identify the entry. This can also be used to map [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) instances. |
-| label | string | Display text, which can also be an [i18n resource key](../../user-guide/internationalization.md). |
-| type | string | This specifies how to order the results. It can be based on a field, based on the position of the document in the index, or by score/relevance. |
-| field | string | The name of the field. |
-| ascending | boolean | The sorting order defined as `true` for ascending order and `false` for descending order |
+| Name      | Type    | Description                                                                                                                                     |
+| --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| key       | string  | Unique key to identify the entry. This can also be used to map [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) instances. |
+| label     | string  | Display text, which can also be an [i18n resource key](../../user-guide/internationalization.md).                                               |
+| type      | string  | This specifies how to order the results. It can be based on a field, based on the position of the document in the index, or by score/relevance. |
+| field     | string  | The name of the field.                                                                                                                          |
+| ascending | boolean | The sorting order defined as `true` for ascending order and `false` for descending order                                                        |
 
 See the [Sort](https://docs.alfresco.com/5.2/concepts/search-api-sort.html)
 element in the [ACS Search API](https://docs.alfresco.com/5.2/concepts/search-api.html)
@@ -233,14 +233,14 @@ The Search Filter supports a number of widgets out of the box, each implemented
 by an ADF component. The `selector` property specifies which [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) is used for
 a category:
 
-| [`Widget`](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) name | Selector | Description |
-| ------------------------------------------------------------------------------- | -------- | ----------- |
-| [Check List](search-check-list.component.md) | `check-list` | Toggles individual query fragments for the search |
-| [Date Range](search-date-range.component.md) | `date-range` | Specifies a range f dates that a field may contain |
-| [Number Range](search-number-range.component.md) | `number-range` | Specifies a range of numeric values that a field may contain |
-| [Radio List](search-radio.component.md) | `radio` | Selects one query fragment from a list of options |
-| [Slider](search-slider.component.md) | `slider` | Selects a single numeric value in a given range that a field may contain |
-| [Text](search-text.component.md) | `text` | Specifies a text value that a field may contain |
+| [`Widget`](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) name | Selector       | Description                                                              |
+| ------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------ |
+| [Check List](search-check-list.component.md)                                    | `check-list`   | Toggles individual query fragments for the search                        |
+| [Date Range](search-date-range.component.md)                                    | `date-range`   | Specifies a range f dates that a field may contain                       |
+| [Number Range](search-number-range.component.md)                                | `number-range` | Specifies a range of numeric values that a field may contain             |
+| [Radio List](search-radio.component.md)                                         | `radio`        | Selects one query fragment from a list of options                        |
+| [Slider](search-slider.component.md)                                            | `slider`       | Selects a single numeric value in a given range that a field may contain |
+| [Text](search-text.component.md)                                                | `text`         | Specifies a text value that a field may contain                          |
 
 See the individual [Search Widget](../interfaces/search-widget.interface.md) pages for full details of their usage and settings.
 
@@ -291,15 +291,15 @@ the next block of results.
 
 #### FacetField Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| field | string |  | Specifies the facet field. |
-| mincount | number | 1 | Specifies the minimum count required for a facet field to be included in the response. The default value is 1. |
-| label | string |  | Specifies the label to include in place of the facet field. |
-| prefix | string |  | Restricts the possible constraints to only indexed values with a specified prefix. |
-| limit | number |  | Maximum number of results |
-| pageSize | number | 5 | Display page size |
-| offset | number |  | Offset position |
+| Name     | Type   | Default | Description                                                                                                    |
+| -------- | ------ | ------- | -------------------------------------------------------------------------------------------------------------- |
+| field    | string |         | Specifies the facet field.                                                                                     |
+| mincount | number | 1       | Specifies the minimum count required for a facet field to be included in the response. The default value is 1. |
+| label    | string |         | Specifies the label to include in place of the facet field.                                                    |
+| prefix   | string |         | Restricts the possible constraints to only indexed values with a specified prefix.                             |
+| limit    | number |         | Maximum number of results                                                                                      |
+| pageSize | number | 5       | Display page size                                                                                              |
+| offset   | number |         | Offset position                                                                                                |
 
 ### Facet Queries
 
@@ -378,10 +378,10 @@ use overlapping ranges if necessary.
 
 #### FacetIntervals Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| intervals | array | Specifies the fields to facet by interval. |
-| expanded | boolean | Toggles expanded state of the facet intervals. |
+| Name      | Type    | Description                                    |
+| --------- | ------- | ---------------------------------------------- |
+| intervals | array   | Specifies the fields to facet by interval.     |
+| expanded  | boolean | Toggles expanded state of the facet intervals. |
 
 Note: the `sets` parameter from the Search API (which sets the intervals for all fields)
 is not yet supported.

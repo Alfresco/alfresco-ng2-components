@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v4.1.0](#v410)
 -   [v4.0.0](#v400)
 -   [v3.9.0](#v390)
 -   [v3.8.0](#v380)
@@ -32,6 +33,12 @@ backend services have been tested with each released version of ADF.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
+## v4.1.0
+
+<!--v410 start-->
+
+<!--v410 end-->
+
 ## v4.0.0
 
 <!--v400 start-->
@@ -42,12 +49,12 @@ backend services have been tested with each released version of ADF.
 
 <!--v390 start-->
 
+-   [Audit service](content-services/services/audit.service.md)
 -   [Claim task cloud directive](process-services-cloud/directives/claim-task-cloud.directive.md)
 -   [Claim task directive](process-services/directives/claim-task.directive.md)
 -   [Form custom outcome component](process-services/components/form-custom-outcome.component.md)
 -   [Process name cloud pipe](process-services-cloud/pipes/process-name-cloud.pipe.md)
 -   [Process name pipe](process-services/pipes/process-name.pipe.md)
--   [Search header component](content-services/components/search-header.component.md)
 -   [Unclaim task cloud directive](process-services-cloud/directives/unclaim-task-cloud.directive.md)
 -   [Unclaim task directive](process-services/directives/unclaim-task.directive.md)
 -   [Version comparison component](content-services/components/version-comparison.component.md)

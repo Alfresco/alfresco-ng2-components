@@ -13,6 +13,11 @@ Performs CRUD operations on identity groups.
 
 ### Methods
 
+-   **assignRoles**(groupId: `string`, roles: [`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Assigns roles to the group
+    -   _groupId:_ `string`  - The ID of the group
+    -   _roles:_ [`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]`  - Array of roles to assign
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - 
 -   **checkGroupHasAnyClientAppRole**(groupId: `string`, clientId: `string`, roleNames: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
     Check if a group has any of the client app roles in the supplied list.
     -   _groupId:_ `string`  - Id of the target group
@@ -41,6 +46,10 @@ Performs CRUD operations on identity groups.
     Finds groups filtered by name.
     -   _searchParams:_ [`IdentityGroupSearchParam`](../../../lib/core/models/identity-group.model.ts)  - Object containing the name filter string
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]>` - List of group information
+-   **getAssignedRoles**(groupId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]>`<br/>
+    Gets assigned roles
+    -   _groupId:_ `string`  - Id of the group.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]>` - Array of available roles
 -   **getAvailableRoles**(groupId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]>`<br/>
     Gets available roles
     -   _groupId:_ `string`  - Id of the group.
@@ -54,6 +63,10 @@ Performs CRUD operations on identity groups.
     -   _groupId:_ `string`  - Id of the target group
     -   _clientId:_ `string`  - Id of the client
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]>` - List of roles
+-   **getEffectiveRoles**(groupId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]>`<br/>
+    Get effective roles
+    -   _groupId:_ `string`  - Id of the group
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]>` - Array of effective roles
 -   **getGroupRoles**(groupId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]>`<br/>
     Gets details for a specified group.
     -   _groupId:_ `string`  - Id of the target group
@@ -68,6 +81,11 @@ Performs CRUD operations on identity groups.
     Queries groups.
     -   _requestQuery:_ [`IdentityGroupQueryCloudRequestModel`](../../../lib/core/models/identity-group.model.ts)  - 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupQueryResponse`](../../../lib/core/models/identity-group.model.ts)`>` - Array of user information objects
+-   **removeRoles**(groupId: `string`, roles: [`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Removes roles from the group
+    -   _groupId:_ `string`  - The ID of the group
+    -   _roles:_ [`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]`  - Array of roles to remove
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - 
 -   **updateGroup**(groupId: `string`, updatedGroup: [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Updates group details.
     -   _groupId:_ `string`  - Id of the targeted group.

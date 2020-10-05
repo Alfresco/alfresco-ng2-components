@@ -13,10 +13,10 @@ Supports app configuration settings, stored server side.
 
 ### Methods
 
--   **get**(key: `string`, defaultValue?: )<br/>
+-   **get**(key: `string`, defaultValue?: \`\`)<br/>
     Gets the value of a named property.
     -   _key:_ `string`  - Name of the property
-    -   _defaultValue:_   - (Optional) Value to return if the key is not found
+    -   _defaultValue:_ \`\`  - (Optional) Value to return if the key is not found
 -   **getLocationHostname**(): `string`<br/>
     Gets the location.hostname property.
     -   **Returns** `string` - Value of the property
@@ -107,11 +107,11 @@ The [`AppConfigService`](../../core/services/app-config.service.md) supports a l
 
 The supported variables are:
 
-| Variable name | Runtime value |
-| ------------- | ------------- |
-| protocol | `location.protocol` |
-| hostname | `location.hostname` |
-| port | `location.port` |
+| Variable name | Runtime value       |
+| ------------- | ------------------- |
+| protocol      | `location.protocol` |
+| hostname      | `location.hostname` |
+| port          | `location.port`     |
 
 ## App Config onLoad Stream
 

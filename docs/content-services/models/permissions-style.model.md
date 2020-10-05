@@ -13,12 +13,12 @@ Sets custom CSS styles for rows of a Document List according to the item's permi
 
 ### Properties
 
-| [`Property`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/property.ts) | Type | Description |
-| ----------------------------------------------------------------------------------------------- | ---- | ----------- |
-| isFile | boolean | Does this style apply to files? |
-| isFolder | boolean | Does this style apply to folders? |
-| permission | Permissions | An enum value defining the permissions that this style applies to (see below) |
-| css | string | The name of the CSS class to add |
+| [`Property`](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) | Type        | Description                                                                   |
+| ----------------------------------------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------- |
+| isFile                                                                                                | boolean     | Does this style apply to files?                                               |
+| isFolder                                                                                              | boolean     | Does this style apply to folders?                                             |
+| permission                                                                                            | Permissions | An enum value defining the permissions that this style applies to (see below) |
+| css                                                                                                   | string      | The name of the CSS class to add                                              |
 
 ## Details
 

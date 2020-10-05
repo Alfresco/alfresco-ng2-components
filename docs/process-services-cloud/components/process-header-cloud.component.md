@@ -24,10 +24,10 @@ Shows all the information related to a process instance.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| appName | `string` | "" | (Required) The name of the application. |
-| processInstanceId | `string` |  | (Required) The id of the process instance. |
+| Name              | Type     | Default value | Description                                |
+| ----------------- | -------- | ------------- | ------------------------------------------ |
+| appName           | `string` | ""            | (Required) The name of the application.    |
+| processInstanceId | `string` |               | (Required) The id of the process instance. |
 
 ## Details
 

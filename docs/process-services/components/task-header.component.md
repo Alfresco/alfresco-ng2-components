@@ -23,17 +23,17 @@ Shows all the information related to a task.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| formName | `string` | null | The name of the form. |
-| showClaimRelease | `boolean` | true | Toggles display of the claim/release button. |
-| taskDetails | [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts) |  | (required) Details related to the task. |
+| Name             | Type                                                                                               | Default value | Description                                  |
+| ---------------- | -------------------------------------------------------------------------------------------------- | ------------- | -------------------------------------------- |
+| formName         | `string`                                                                                           | null          | The name of the form.                        |
+| showClaimRelease | `boolean`                                                                                          | true          | Toggles display of the claim/release button. |
+| taskDetails      | [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts) |               | (required) Details related to the task.      |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| claim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is claimed. |
+| Name    | Type                                                              | Description                                        |
+| ------- | ----------------------------------------------------------------- | -------------------------------------------------- |
+| claim   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is claimed.                  |
 | unclaim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is unclaimed (ie, requeued). |
 
 ## Details

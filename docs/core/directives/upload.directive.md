@@ -21,14 +21,14 @@ Uploads content in response to file drag and drop.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| accept | `string` |  | (Click mode only) MIME type filter for files to accept. |
-| data | `any` |  | Data to upload. |
-| directory | `boolean` |  | (Click mode only) Toggles uploading of directories. |
-| enabled | `boolean` | true | Enables/disables uploading. |
-| mode | `string[]` | ['drop'] | Upload mode. Can be "drop" (receives dropped files) or "click" (clicking opens a file dialog). Both modes can be active at once. |
-| multiple | `boolean` |  | Toggles multiple file uploads. |
+| Name      | Type       | Default value | Description                                                                                                                      |
+| --------- | ---------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| accept    | `string`   |               | (Click mode only) MIME type filter for files to accept.                                                                          |
+| data      | `any`      |               | Data to upload.                                                                                                                  |
+| directory | `boolean`  |               | (Click mode only) Toggles uploading of directories.                                                                              |
+| enabled   | `boolean`  | true          | Enables/disables uploading.                                                                                                      |
+| mode      | `string[]` | ['drop']      | Upload mode. Can be "drop" (receives dropped files) or "click" (clicking opens a file dialog). Both modes can be active at once. |
+| multiple  | `boolean`  |               | Toggles multiple file uploads.                                                                                                   |
 
 ## Details
 

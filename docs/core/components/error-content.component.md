@@ -21,9 +21,9 @@ this.router.navigate(['/error', errorCode]);
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| errorCode | `string` |  | Error code associated with this error. |
+| Name      | Type     | Default value | Description                            |
+| --------- | -------- | ------------- | -------------------------------------- |
+| errorCode | `string` |               | Error code associated with this error. |
 
 ## Details
 

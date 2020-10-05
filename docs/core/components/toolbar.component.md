@@ -72,10 +72,10 @@ pushed to the right by a spacer:
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |  | Toolbar color. Can be changed to empty value (default), `primary`, `accent` or `warn`. |
-| title | `string` | "" | Toolbar title. |
+| Name  | Type                                                                                                            | Default value | Description                                                                            |
+| ----- | --------------------------------------------------------------------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------- |
+| color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |               | Toolbar color. Can be changed to empty value (default), `primary`, `accent` or `warn`. |
+| title | `string`                                                                                                        | ""            | Toolbar title.                                                                         |
 
 ## Details
 

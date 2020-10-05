@@ -27,6 +27,9 @@ Displays and manages dialogs for selecting content to open, copy or upload.
     -   _permission:_ `string`  - (Optional) Permission for the operation
     -   _excludeSiteContent:_ `string[]`  - (Optional) The site content that should be filtered out
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`[]>` - Information about files that were copied/moved
+-   **openFileBrowseDialogByDefaultLocation**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`[]>`<br/>
+    Opens a file browser at a default myFile location. shows files and folders in the dialog search result.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`[]>` - Information about the selected file(s)
 -   **openFileBrowseDialogByFolderId**(folderNodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`[]>`<br/>
     Opens a file browser at a chosen folder location. shows files and folders in the dialog search result.
     -   _folderNodeId:_ `string`  - ID of the folder to use
