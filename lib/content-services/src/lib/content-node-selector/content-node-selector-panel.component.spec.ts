@@ -368,7 +368,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 const defaultSearchNode: any = {
                     query: {
-                        query: searchTerm ? `${searchTerm}*` : searchTerm
+                        query: searchTerm ? `(${searchTerm})` : searchTerm
                     },
                     include: ['path', 'allowableOperations', 'properties'],
                     paging: {
@@ -416,6 +416,60 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.documentList.ngOnInit();
 
                 fixture.detectChanges();
+            });
+
+            it('should the user query get updated when the user types in the search input', fakeAsync(() => {
+                const updateSpy = spyOn(searchQueryBuilderService, 'update');
+                typeToSearchBox('search-term');
+
+                tick(debounceSearch);
+                fixture.detectChanges();
+
+                expect(updateSpy).toHaveBeenCalled();
+                expect(searchQueryBuilderService.userQuery).toEqual('(search-term)');
+                expect(component.userSearchTerm).toEqual('search-term');
+            }));
+
+            it('should perform a search when the queryBody gets updated and it is defined', async () => {
+                spyOn(component, 'search');
+
+                searchQueryBuilderService.userQuery = 'search-term';
+                searchQueryBuilderService.update();
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(component.search).toHaveBeenCalledWith('(search-term)');
+            });
+
+            it('should NOT perform a search and clear the results when the queryBody gets updated and it is NOT defined', async () => {
+                spyOn(component, 'search');
+                spyOn(component, 'clearSearch');
+
+                searchQueryBuilderService.userQuery = '';
+                searchQueryBuilderService.update();
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(component.search).not.toHaveBeenCalled();
+                expect(component.clearSearch).toHaveBeenCalled();
+            });
+
+            it('should reset the search term when clicking the clear icon',  () => {
+                component.userSearchTerm = 'search-term';
+                searchQueryBuilderService.userQuery = 'search-term';
+                spyOn(component, 'clearSearch');
+
+                fixture.detectChanges();
+                const clearIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
+                clearIcon.nativeElement.click();
+
+                fixture.detectChanges();
+
+                expect(searchQueryBuilderService.userQuery).toEqual('');
+                expect(component.userSearchTerm).toEqual('');
+                expect(component.clearSearch).toHaveBeenCalled();
             });
 
             it('should load the results by calling the search api on search change', fakeAsync(() => {
@@ -476,8 +530,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(cnSearchSpy).toHaveBeenCalled();
                 expect(cnSearchSpy.calls.count()).toBe(2);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', undefined, 0, 25, [], false);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId'], false);
+                expect(cnSearchSpy).toHaveBeenCalledWith('(vegeta)', undefined, 0, 25, [], false);
+                expect(cnSearchSpy).toHaveBeenCalledWith('(vegeta)', '-sites-', 0, 25, ['123456testId', '09876543testId'], false);
             }));
 
             it('should create the query with the right parameters on changing the site selectBox value from a custom dropdown menu', fakeAsync(() => {
@@ -494,8 +548,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(cnSearchSpy).toHaveBeenCalled();
                 expect(cnSearchSpy.calls.count()).toBe(2);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', undefined, 0, 25, [], false);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId'], false);
+                expect(cnSearchSpy).toHaveBeenCalledWith('(vegeta)', undefined, 0, 25, [], false);
+                expect(cnSearchSpy).toHaveBeenCalledWith('(vegeta)', '-sites-', 0, 25, ['123456testId', '09876543testId'], false);
             }));
 
             it('should get the corresponding node ids on search when a known alias is selected from dropdown', fakeAsync(() => {
@@ -689,7 +743,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should clear the search field, nodes and chosenNode when deleting the search input', fakeAsync (() => {
-                spyOn(component, 'clear').and.callThrough();
+                spyOn(component, 'clearSearch').and.callThrough();
                 typeToSearchBox('a');
 
                 tick(debounceSearch);
@@ -703,7 +757,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 expect(searchSpy.calls.count()).toBe(1, 'no other search has been performed');
-                expect(component.clear).toHaveBeenCalled();
+                expect(component.clearSearch).toHaveBeenCalled();
                 expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
             }));
 
@@ -934,23 +988,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     expect(component.target).toBeNull();
                 }));
 
-                it('Should infinite pagination target be present when search finish', fakeAsync (() => {
-                    component.showingSearchResults = true;
-
-                    typeToSearchBox('shenron');
-
-                    tick(debounceSearch);
-
-                    fixture.detectChanges();
-
-                    typeToSearchBox('');
-
-                    tick(debounceSearch);
-
+                it('Should infinite pagination target be present when search finish', () => {
+                    triggerSearchResults(fakeResultSetPaging);
                     fixture.detectChanges();
 
                     expect(component.target).not.toBeNull();
-                }));
+                });
 
                 it('Should infinite pagination target on init be the document list', fakeAsync(() => {
                     component.showingSearchResults = true;

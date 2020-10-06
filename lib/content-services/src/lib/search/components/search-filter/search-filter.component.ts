@@ -45,7 +45,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     showContextFacets: boolean = true;
 
     @Input()
-    enableInternalSearch: boolean = true;
+    enableInnerSearch: boolean = true;
 
     private DEFAULT_PAGE_SIZE = 5;
 
@@ -80,12 +80,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             this.facetExpanded['interval'] = queryBuilder.config.facetIntervals.expanded;
         }
         this.displayResetButton = this.queryBuilder.config && !!this.queryBuilder.config.resetButton;
-
-        if (this.enableInternalSearch) {
-            this.queryBuilder.updated
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe((query) => this.queryBuilder.execute(query));
-        }
     }
 
     ngOnInit() {
@@ -95,6 +89,14 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 .subscribe((resultSetPaging: ResultSetPaging) => {
                     this.onDataLoaded(resultSetPaging);
                     this.searchService.dataLoaded.next(resultSetPaging);
+                });
+        }
+
+        if (this.enableInnerSearch) {
+            this.queryBuilder.updated
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe((query) => {
+                    this.queryBuilder.execute(query);
                 });
         }
     }

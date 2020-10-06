@@ -17,7 +17,7 @@
 
 import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Pagination, ResultSetPaging, QueryBody } from '@alfresco/js-api';
+import { Pagination, ResultSetPaging } from '@alfresco/js-api';
 import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
 import { UserPreferencesService, SearchService, AppConfigService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
@@ -59,10 +59,9 @@ export class SearchResultComponent implements OnInit, OnDestroy {
 
         this.queryBuilder.updated
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((queryBody: QueryBody) => {
+            .subscribe(() => {
                 this.sorting = this.getSorting();
                 this.isLoading = true;
-                this.queryBuilder.execute(queryBody);
             });
 
         this.queryBuilder.executed
