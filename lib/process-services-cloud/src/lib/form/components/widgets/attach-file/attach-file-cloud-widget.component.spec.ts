@@ -606,6 +606,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     describe('when a file is uploaded', () => {
         beforeEach(async () => {
             apiServiceSpy = spyOn(alfrescoApiService.getInstance().node, 'getNode').and.returnValue(new Promise(resolve => resolve({entry: fakeNodeWithProperties})));
+            spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(new Promise(resolve => resolve('fake-properties')));
             spyOn(
                 contentCloudNodeSelectorService,
                 'openUploadFileDialog'
@@ -703,6 +704,8 @@ describe('AttachFileCloudWidgetComponent', () => {
 
         it('should request form to be updated with metadata when retrieve is clicked', (done) => {
             updateFormSpy = spyOn(formService.updateFormValuesRequested, 'next');
+            widget.field.value = [fakeNodeWithProperties];
+            fixture.detectChanges();
 
             const menuButton: HTMLButtonElement = <HTMLButtonElement> (
                 fixture.debugElement.query(By.css('#file-fake-properties-option-menu'))
