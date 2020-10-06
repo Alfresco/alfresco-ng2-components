@@ -376,7 +376,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             expect(widget.rootNodeId).toEqual('-root-');
-            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-root-', 'single', true);
+            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-root-', 'single', true, true);
         });
 
         it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath contains wrong alias and single upload for Alfresco Content + Locale', async () => {
@@ -398,7 +398,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             expect(widget.rootNodeId).toEqual('-my-');
-            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', true);
+            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', true, true);
         });
 
         it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath contains wrong alias and multiple upload for Alfresco Content + Locale', async () => {
@@ -420,7 +420,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             expect(widget.rootNodeId).toEqual('-my-');
-            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'multiple', true);
+            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'multiple', true, true);
         });
 
         it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath does not have alias for Alfresco Content + Locale', async () => {
@@ -442,7 +442,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             expect(widget.rootNodeId).toEqual('-my-');
-            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'multiple', true);
+            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'multiple', true, true);
         });
 
         it('should return the application name in case -appname- placeholder is present', async() => {
@@ -461,7 +461,8 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         describe('FilesSource', () => {
-            it('Should set default user alias (-my-) as rootNodeId if fileSource set only to Alfresco Content', async () => {
+            it('Should be able to fetch nodeId of default user alias (-my-) if fileSource set only to Alfresco Content', async () => {
+                const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
                 widget.field = new FormFieldModel(new FormModel(), {
                     type: FormFieldTypes.UPLOAD,
                     value: []
@@ -478,8 +479,61 @@ describe('AttachFileCloudWidgetComponent', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
+                const alias = '-my-';
+                const opt = { relativePath: '' };
+
+                expect(fetchNodeIdFromRelativePathSpy).toHaveBeenCalledWith(alias, opt);
+                expect(widget.rootNodeId).toEqual('mock-node-id');
+                expect(openUploadFileDialogSpy).toHaveBeenCalledWith('mock-node-id', 'single', false, true);
+            });
+
+            it('Should be able to fetch nodeId of default user alias (-my-) if fileSource set to multiple upload for Alfresco Content', async () => {
+                const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
+                widget.field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.UPLOAD,
+                    value: []
+                });
+                widget.field.id = 'attach-file-alfresco';
+                widget.field.params = <FormFieldMetadata> contentSourceParam;
+                widget.field.params.multiple = true;
+                fixture.detectChanges();
+                await fixture.whenStable();
+                const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
+
+                expect(attachButton).not.toBeNull();
+
+                attachButton.click();
+                await fixture.whenStable();
+                fixture.detectChanges();
+
+                const alias = '-my-';
+                const opt = { relativePath: '' };
+
+                expect(fetchNodeIdFromRelativePathSpy).toHaveBeenCalledWith(alias, opt);
+                expect(widget.rootNodeId).toEqual('mock-node-id');
+                expect(openUploadFileDialogSpy).toHaveBeenCalledWith('mock-node-id', 'multiple', false, true);
+            });
+
+            it('Should be able to set default user alias (-my-) as rootNodeId if the nodeId of the alias is not fetched from the api', async () => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.UPLOAD,
+                    value: []
+                });
+                widget.field.id = 'attach-file-alfresco';
+                widget.field.params = <FormFieldMetadata> contentSourceParam;
+                widget.field.params.multiple = false;
+                fixture.detectChanges();
+                await fixture.whenStable();
+                const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
+
+                expect(attachButton).not.toBeNull();
+
+                attachButton.click();
+                await fixture.whenStable();
+                fixture.detectChanges();
+
                 expect(widget.rootNodeId).toEqual('-my-');
-                expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', false);
+                expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', false, true);
             });
 
             it('should display tooltip when tooltip is set', async(() => {
