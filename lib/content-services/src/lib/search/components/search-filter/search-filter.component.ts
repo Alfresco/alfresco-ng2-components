@@ -44,6 +44,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     @Input()
     showContextFacets: boolean = true;
 
+    @Input()
+    enableInternalSearch: boolean = true;
+
     private DEFAULT_PAGE_SIZE = 5;
 
     /** All facet field items to be displayed in the component. These are updated according to the response.
@@ -77,6 +80,12 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             this.facetExpanded['interval'] = queryBuilder.config.facetIntervals.expanded;
         }
         this.displayResetButton = this.queryBuilder.config && !!this.queryBuilder.config.resetButton;
+
+        if (this.enableInternalSearch) {
+            this.queryBuilder.updated
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe((query) => this.queryBuilder.execute(query));
+        }
     }
 
     ngOnInit() {

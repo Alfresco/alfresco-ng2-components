@@ -34,6 +34,7 @@ Represents a main container component for custom search and faceted search setti
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | showContextFacets | `boolean` | true | Toggles whether to show or not the context facet filters |
+| enableInternalSearch | `boolean` | true | Toggles whether the search is going to be triggered in this component every time the search query gets updated (disable this if you need to trigger the search functionality externally from a parent component)|
 
 ## Details
 
