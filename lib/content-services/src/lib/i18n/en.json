@@ -90,7 +90,7 @@
     "SEARCH": "Search",
     "SEARCH_RESULTS": "Search results",
     "SELECT_LOCATION": "Select Location",
-    "UPLOAD_BUTTON_WARNING_MESSAGE": "You can't upload a file while a search is still running"
+    "UPLOAD_BUTTON_WARNING_MESSAGE": "You can't upload a file whilst a search is still running"
   },
   "OPERATION": {
     "SUCCESS": {
