@@ -212,6 +212,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Output()
     siteChange: EventEmitter<string> = new EventEmitter<string>();
 
+    /** Emitted on search input. */
+    @Output()
+    showingSearch: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     @ViewChild('documentList', { static: true })
     documentList: DocumentListComponent;
 
@@ -406,6 +410,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.pagination.maxItems = this.pageSize;
         this.resetChosenNode();
         this.showingSearchResults = false;
+        this.showingSearch.emit(this.showingSearchResults);
     }
 
     /**
@@ -464,6 +469,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     private showSearchResults(nodePaging: NodePaging): void {
         this.showingSearchResults = true;
         this.loadingSearchResults = false;
+        this.showingSearch.emit(this.showingSearchResults);
 
         this.nodePaging = nodePaging;
     }

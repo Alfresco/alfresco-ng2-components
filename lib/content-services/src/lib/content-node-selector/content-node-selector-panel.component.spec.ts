@@ -359,6 +359,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
         describe('Search functionality', () => {
             let getCorrespondingNodeIdsSpy;
+            let customResourcesService: CustomResourcesService;
             const entry: Node = <Node> { id: 'fakeid'};
 
             const defaultSearchOptions = (searchTerm, rootNodeId = undefined, skipCount = 0, showFiles = false) => {
@@ -402,7 +403,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
 
-                const customResourcesService = TestBed.inject(CustomResourcesService);
+                customResourcesService = TestBed.inject(CustomResourcesService);
                 getCorrespondingNodeIdsSpy = spyOn(customResourcesService, 'getCorrespondingNodeIds').and
                     .callFake((id) => {
                         if (id === '-sites-') {
@@ -607,6 +608,60 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.search('search');
 
                 expect(cnSearchSpy).toHaveBeenCalledWith('search', 'my-root-id', 0, 25, [], false);
+            });
+
+            it('should emit showingSearch event with true while searching', async () => {
+                spyOn(customResourcesService, 'hasCorrespondingNodeIds').and.returnValue(true);
+                const showingSearchSpy = spyOn(component.showingSearch, 'emit');
+                component.search('search');
+
+                triggerSearchResults(fakeResultSetPaging);
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(component.showingSearchResults).toBe(true);
+                expect(showingSearchSpy).toHaveBeenCalledWith(true);
+            });
+
+            it('should emit showingSearch event with false if you remove search term without clicking on X (icon) icon', async () => {
+                const showingSearchSpy = spyOn(component.showingSearch, 'emit');
+                component.search('');
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(component.showingSearchResults).toBe(false);
+                expect(showingSearchSpy).toHaveBeenCalledWith(false);
+            });
+
+            it('should emit showingResults event with false when clicking on the X (clear) icon', () => {
+                const showingSearchSpy = spyOn(component.showingSearch, 'emit');
+                component.chosenNode = [entry];
+
+                component.nodePaging = {
+                    list: {
+                        entries: [{ entry }]
+                    }
+                };
+                component.searchTerm = 'piccolo';
+                component.showingSearchResults = true;
+
+                component.clear();
+
+                expect(component.showingSearchResults).toBe(false);
+                expect(showingSearchSpy).toHaveBeenCalledWith(false);
+            });
+
+            it('should emit showingResults event with false if search api fails', async () => {
+                getCorrespondingNodeIdsSpy.and.throwError('Failed');
+                const showingSearchSpy = spyOn(component.showingSearch, 'emit');
+                component.search('search');
+
+                triggerSearchResults(fakeResultSetPaging);
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(component.showingSearchResults).toBe(true);
+                expect(showingSearchSpy).toHaveBeenCalledWith(true);
             });
 
             it('should the query restrict the search to the site and not to the currentFolderId in case is changed', () => {

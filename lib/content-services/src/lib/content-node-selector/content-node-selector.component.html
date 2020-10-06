@@ -21,6 +21,7 @@
         [showDropdownSiteList]="data?.showDropdownSiteList"
         [showFilesInResult]="data?.showFilesInResult"
         (select)="onSelect($event)"
+        (showingSearch)="onShowingSearch($event)"
         (siteChange)="onSiteChange($event)"
         (navigationChange)="onNavigationChange($event)">
     </adf-content-node-selector-panel>
@@ -33,8 +34,15 @@
             [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
             [multipleFiles]="isMultipleSelection()"
             [rootFolderId]="currentDirectoryId"
+            [disabled]="disableUploadButton"
             (error)="onError($event)">
         </adf-upload-button>
+        <ng-container *ngIf="data?.showLocalUploadButton && disableUploadButton">
+            <div class="adf-content-node-upload-button-warning-message">
+                <mat-icon>warning</mat-icon>
+                <span>{{ 'NODE_SELECTOR.UPLOAD_BUTTON_WARNING_MESSAGE' | translate }}</span>
+            </div>
+        </ng-container>
     </div>
     <div>
         <button
