@@ -347,7 +347,7 @@
       "BUTTONS": {
         "COMPLETE": "COMPLETE",
         "CANCEL": "CANCEL",
-        "CLAIM": "ClAIM",
+        "CLAIM": "CLAIM",
         "UNCLAIM": "RELEASE"
       }
     },
