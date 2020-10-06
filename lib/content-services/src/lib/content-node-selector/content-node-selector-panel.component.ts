@@ -212,7 +212,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Output()
     siteChange: EventEmitter<string> = new EventEmitter<string>();
 
-    /** Emitted on search input. */
+    /** Emitted when search is running. */
     @Output()
     showingSearch: EventEmitter<boolean> = new EventEmitter<boolean>();
 
