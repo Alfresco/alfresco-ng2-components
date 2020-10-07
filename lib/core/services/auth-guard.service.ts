@@ -18,11 +18,11 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
-import { Observable } from 'rxjs';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { JwtHelperService } from './jwt-helper.service';
 import { MatDialog } from '@angular/material/dialog';
+import { StorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -35,8 +35,9 @@ export class AuthGuard extends AuthGuardBase {
                 authenticationService: AuthenticationService,
                 router: Router,
                 appConfigService: AppConfigService,
-                dialog: MatDialog) {
-        super(authenticationService, router, appConfigService, dialog);
+                dialog: MatDialog,
+                storageService: StorageService) {
+        super(authenticationService, router, appConfigService, dialog, storageService);
         this.ticketChangeBind = this.ticketChange.bind(this);
 
         window.addEventListener('storage', this.ticketChangeBind);
@@ -68,7 +69,7 @@ export class AuthGuard extends AuthGuardBase {
         window.removeEventListener('storage', this.ticketChangeBind);
     }
 
-    checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
+    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean> {
         if (this.authenticationService.isLoggedIn() || this.withCredentials) {
             return true;
         }
