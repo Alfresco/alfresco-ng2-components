@@ -17,7 +17,7 @@ env:
         - SAVE_SCREENSHOT=true
         - REDIRECT_URI=/
         - REDIRECT_URI_LOGOUT=/logout/
-        - BROWSER_RUN=false
+        - BROWSER_RUN=true
         - MAXINSTANCES=3
 
 branches:
