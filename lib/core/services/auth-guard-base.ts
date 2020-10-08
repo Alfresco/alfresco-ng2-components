@@ -20,9 +20,9 @@ import {
     CanActivate,
     ActivatedRouteSnapshot,
     RouterStateSnapshot,
-    CanActivateChild
+    CanActivateChild,
+    UrlTree
 } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import {
     AppConfigService,
@@ -30,12 +30,15 @@ import {
 } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material/dialog';
+import { StorageService } from './storage.service';
+import { Observable } from 'rxjs';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
+
     abstract checkLogin(
         activeRoute: ActivatedRouteSnapshot,
         redirectUrl: string
-    ): Observable<boolean> | Promise<boolean> | boolean;
+    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;
 
     protected get withCredentials(): boolean {
         return this.appConfigService.get<boolean>(
@@ -48,13 +51,25 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         protected authenticationService: AuthenticationService,
         protected router: Router,
         protected appConfigService: AppConfigService,
-        protected dialog: MatDialog
-    ) {}
+        protected dialog: MatDialog,
+        private storageService: StorageService
+    ) {
+    }
 
     canActivate(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
-    ): Observable<boolean> | Promise<boolean> | boolean {
+    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+
+        const redirectFragment = this.storageService.getItem('loginFragment');
+        if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
+            if (redirectFragment) {
+                this.storageService.removeItem('loginFragment');
+                return this.router.createUrlTree([redirectFragment]);
+            }
+            return true;
+        }
+
         const checkLogin = this.checkLogin(route, state.url);
 
         if (!checkLogin) {
@@ -67,7 +82,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     canActivateChild(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
-    ): Observable<boolean> | Promise<boolean> | boolean {
+    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this.canActivate(route, state);
     }
 

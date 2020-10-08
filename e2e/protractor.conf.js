@@ -131,7 +131,7 @@ exports.config = {
                     }
                 }
             },
-            args: ['--incognito',
+            args: [
                 `--window-size=${width},${height}`,
                 '--disable-gpu',
                 '--no-sandbox',

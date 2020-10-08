@@ -22,7 +22,6 @@ import {
 import { AuthenticationService } from './authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
-import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from './storage.service';
 
@@ -35,19 +34,11 @@ export class AuthGuardEcm extends AuthGuardBase {
                 router: Router,
                 appConfigService: AppConfigService,
                 dialog: MatDialog,
-                private storageService: StorageService) {
-        super(authenticationService, router, appConfigService, dialog);
+                storageService: StorageService) {
+        super(authenticationService, router, appConfigService, dialog, storageService);
     }
 
-    checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
-        const redirectFragment = this.storageService.getItem('loginFragment');
-        if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
-            if (redirectFragment) {
-                this.router.navigateByUrl(redirectFragment);
-                this.storageService.removeItem('loginFragment');
-            }
-            return true;
-        }
+    checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): boolean {
         this.redirectToUrl('ECM', redirectUrl);
         if (!this.authenticationService.isEcmLoggedIn() && this.isSilentLogin() && !this.authenticationService.isPublicUrl()) {
             this.authenticationService.ssoImplicitLogin();
