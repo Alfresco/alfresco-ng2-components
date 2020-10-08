@@ -26,8 +26,14 @@ Represents a main container component for custom search and faceted search setti
 ## Basic usage
 
 ```html
-<adf-search-filter #settings></adf-search-filter>
+<adf-search-filter #settings [showContextFacets]=true></adf-search-filter>
 ```
+
+### Properties
+
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| showContextFacets | `boolean` | true | Toggles whether to show or not the context facet filters |
 
 ## Details
 

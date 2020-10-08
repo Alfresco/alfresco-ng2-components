@@ -20,8 +20,8 @@ import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { AuthGuardBase } from './auth-guard-base';
-import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { StorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -31,12 +31,12 @@ export class AuthGuardBpm extends AuthGuardBase {
     constructor(authenticationService: AuthenticationService,
                 router: Router,
                 appConfigService: AppConfigService,
-                dialog: MatDialog
-    ) {
-        super(authenticationService, router, appConfigService, dialog);
+                dialog: MatDialog,
+                storageService: StorageService) {
+        super(authenticationService, router, appConfigService, dialog, storageService);
     }
 
-    checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
+    checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): boolean {
         if (this.authenticationService.isBpmLoggedIn() || this.withCredentials) {
             return true;
         }
