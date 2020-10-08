@@ -56,6 +56,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     context?: SearchQueryBuilderService;
     datePickerDateFormat = DEFAULT_FORMAT_DATE;
     maxDate: any;
+    fromMaxDate: any;
     isActive = false;
     startValue: any;
 
@@ -119,6 +120,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             from: this.from,
             to: this.to
         });
+
+        this.setFromMaxDate();
     }
 
     ngOnDestroy() {
@@ -178,8 +181,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
 
     onChangedHandler(event: any, formControl: FormControl) {
 
-        const inputValue = event.srcElement.value;
-
+        const inputValue = event.value;
         const formatDate = this.dateAdapter.parse(inputValue, this.datePickerDateFormat);
         if (formatDate && formatDate.isValid()) {
             formControl.setValue(formatDate);
@@ -192,6 +194,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
                 'required': true
             });
         }
+
+        this.setFromMaxDate();
     }
 
     setLocale(locale) {
@@ -207,13 +211,13 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         event.srcElement.click();
     }
 
-    getFromMaxDate(): any {
+    setFromMaxDate(): any {
         let maxDate: string;
         if (!this.to.value || this.maxDate && (moment(this.maxDate).isBefore(this.to.value))) {
             maxDate = this.maxDate;
         } else {
             maxDate = moment(this.to.value);
         }
-        return maxDate;
+        this.fromMaxDate = maxDate;
     }
 }
