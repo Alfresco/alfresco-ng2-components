@@ -1,4 +1,6 @@
-<adf-search-filter *ngIf="contentNodeSelectorSearchPanelService?.customModels?.length > 0"
-                   class="app-search-settings" #searchFilter
-                   [showContextFacets]="false"
-></adf-search-filter>
+<div class="adf-search-panel-scrollable">
+    <adf-search-filter *ngIf="contentNodeSelectorSearchPanelService?.customModels?.length > 0"
+                       class="app-search-settings"
+                       [showContextFacets]="false">
+    </adf-search-filter>
+</div>
