@@ -21,9 +21,9 @@ Enables/disables components based on ACS version in use.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| version | `void` |  | Minimum version required for component to work correctly . |
+| Name    | Type   | Default value | Description                                                |
+| ------- | ------ | ------------- | ---------------------------------------------------------- |
+| version | `void` |               | Minimum version required for component to work correctly . |
 
 ## Details
 

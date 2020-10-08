@@ -41,24 +41,24 @@ Shows/edits process filter details.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| actions | `string[]` |  | List of sort actions. |
-| appName | `string` | "" | The name of the application. |
-| filterProperties | `string[]` |  | List of process filter properties to display |
-| id | `string` |  | Id of the process instance filter. |
-| role | `string` | "" | roles to filter the apps |
-| showFilterActions | `boolean` | true | Toggles editing of process filter actions. |
-| showProcessFilterName | `boolean` | true | Toggles the appearance of the process filter name . |
-| showTitle | `boolean` | true | Toggles editing of the process filter title. |
-| sortProperties | `string[]` |  | List of sort properties to display. |
+| Name                  | Type       | Default value | Description                                         |
+| --------------------- | ---------- | ------------- | --------------------------------------------------- |
+| actions               | `string[]` |               | List of sort actions.                               |
+| appName               | `string`   | ""            | The name of the application.                        |
+| filterProperties      | `string[]` |               | List of process filter properties to display        |
+| id                    | `string`   |               | Id of the process instance filter.                  |
+| role                  | `string`   | ""            | roles to filter the apps                            |
+| showFilterActions     | `boolean`  | true          | Toggles editing of process filter actions.          |
+| showProcessFilterName | `boolean`  | true          | Toggles the appearance of the process filter name . |
+| showTitle             | `boolean`  | true          | Toggles editing of the process filter title.        |
+| sortProperties        | `string[]` |               | List of sort properties to display.                 |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterAction`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a filter action occurs i.e Save, SaveAs, Delete. |
-| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a process instance filter property changes. |
+| Name         | Type                                                                                                                                                                                                  | Description                                                   |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| action       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterAction`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>`     | Emitted when a filter action occurs i.e Save, SaveAs, Delete. |
+| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a process instance filter property changes.      |
 
 ## Details
 
@@ -79,18 +79,18 @@ You can supply various _filter properties_ to edit. These will determine
 which processes are found by a filter. The full set of properties is
 given below:
 
-| Name | Description |
-| ---- | ----------- |
-| **_appName_** | Name of the app |
-| **_id_** | Process instance ID |
-| **_name_** | Process name. |
-| **_initiator_** | ID of the user who initiated the process |
-| **_status_** | Execution status of the process. |
-| **_processDefinitionId_** | Process definition ID |
-| **_processDefinitionKey_** | Process definition key |
-| **_lastModified_** | Date the process was last modified. If lastModified defined the component will show the range **_lastModifiedTo_**, **_lastModifiedFrom_** |
-| **_sort_** | Field on which the filter results will be sorted. Can be "id", "name", "status", "startDate". |
-| **_order_** | Sort ordering of the filter results (this doesn't participate in the filtering itself) |
+| Name                       | Description                                                                                                                                |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **_appName_**              | Name of the app                                                                                                                            |
+| **_id_**                   | Process instance ID                                                                                                                        |
+| **_name_**                 | Process name.                                                                                                                              |
+| **_initiator_**            | ID of the user who initiated the process                                                                                                   |
+| **_status_**               | Execution status of the process.                                                                                                           |
+| **_processDefinitionId_**  | Process definition ID                                                                                                                      |
+| **_processDefinitionKey_** | Process definition key                                                                                                                     |
+| **_lastModified_**         | Date the process was last modified. If lastModified defined the component will show the range **_lastModifiedTo_**, **_lastModifiedFrom_** |
+| **_sort_**                 | Field on which the filter results will be sorted. Can be "id", "name", "status", "startDate".                                              |
+| **_order_**                | Sort ordering of the filter results (this doesn't participate in the filtering itself)                                                     |
 
 By default, the **_status_**, **_sort_** and **_order_** properties are
 displayed in the editor. However, you can also choose which properties
@@ -168,11 +168,11 @@ With this configuration, only the two listed sort properties will be shown.
 
 You can supply various _actions_ to apply on process filter.
 
-| Name | Description |
-| ---- | ----------- |
-| **_save_** | Save process filter. |
+| Name         | Description                   |
+| ------------ | ----------------------------- |
+| **_save_**   | Save process filter.          |
 | **_saveAs_** | Creates a new process filter. |
-| **_delete_** | Delete process filter. |
+| **_delete_** | Delete process filter.        |
 
 By default, the **_save_**, **_saveAs_** and **_delete_** actions are
 displayed in the editor. However, you can also choose which actions to

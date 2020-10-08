@@ -82,25 +82,25 @@ export class MyView {
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| disableWithNoPermission | `boolean` |  | Should this action be disabled in the menu if the user doesn't have permission for it? |
-| disabled | `boolean \| Function` | false | Is the menu item disabled? |
-| handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move". |
-| icon | `string` |  | The name of the icon to display next to the menu command (can be left blank). |
-| permission | `string` |  | The permission type. |
-| target | `string` |  | Type of item that the action applies to. Can be "document" or "folder" |
-| title | `string` | "Action" | The title of the action as shown in the menu. |
-| visible | `boolean \| Function` | true | Visibility state (see examples). |
+| Name                    | Type                  | Default value | Description                                                                            |
+| ----------------------- | --------------------- | ------------- | -------------------------------------------------------------------------------------- |
+| disableWithNoPermission | `boolean`             |               | Should this action be disabled in the menu if the user doesn't have permission for it? |
+| disabled                | `boolean \| Function` | false         | Is the menu item disabled?                                                             |
+| handler                 | `string`              |               | System actions. Can be "delete", "download", "copy" or "move".                         |
+| icon                    | `string`              |               | The name of the icon to display next to the menu command (can be left blank).          |
+| permission              | `string`              |               | The permission type.                                                                   |
+| target                  | `string`              |               | Type of item that the action applies to. Can be "document" or "folder"                 |
+| title                   | `string`              | "Action"      | The title of the action as shown in the menu.                                          |
+| visible                 | `boolean \| Function` | true          | Visibility state (see examples).                                                       |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during the action. Applies to copy and move actions. |
-| execute | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the user selects the action from the menu. |
-| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a permission error occurs |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the action succeeds with the success string message. Applies to copy, move and delete actions. |
+| Name            | Type                                                              | Description                                                                                                 |
+| --------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| error           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during the action. Applies to copy and move actions.                           |
+| execute         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the user selects the action from the menu.                                                     |
+| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a permission error occurs                                                                      |
+| success         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the action succeeds with the success string message. Applies to copy, move and delete actions. |
 
 ## Details
 

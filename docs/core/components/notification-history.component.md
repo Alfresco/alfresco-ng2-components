@@ -22,7 +22,7 @@ The main purpose of the [Notification history component](../../core/components/n
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| menuPositionX | `string` | "after" | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |
-| menuPositionY | `string` | "below" | Custom choice for opening the menu at the bottom. Can be `above` or `below`. |
+| Name          | Type     | Default value | Description                                                                   |
+| ------------- | -------- | ------------- | ----------------------------------------------------------------------------- |
+| menuPositionX | `string` | "after"       | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |
+| menuPositionY | `string` | "below"       | Custom choice for opening the menu at the bottom. Can be `above` or `below`.  |

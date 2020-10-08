@@ -158,7 +158,6 @@
     "ng-packagr": "^10.1.2",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "protractor": "^7.0.0",
-    "protractor-console": "^3.0.0",
     "protractor-retry": "^1.2.9",
     "protractor-screenshoter-plugin": "0.10.3",
     "protractor-smartrunner": "^0.1.1",

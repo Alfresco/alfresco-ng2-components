@@ -23,8 +23,9 @@ Stores information from all the custom search and faceted search widgets, compil
 -   **buildQuery**(): `QueryBody`<br/>
     Builds the current query.
     -   **Returns** `QueryBody` - The finished query
--   **execute**()<br/>
+-   **execute**(queryBody?: `QueryBody`)<br/>
     Builds and executes the current query.
+    -   _queryBody:_ `QueryBody`  - (Optional) (Optional) 
 -   **getFacetField**(label: `string`): [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts)<br/>
     Gets a facet field by label.
     -   _label:_ `string`  - Label of the facet field
@@ -54,11 +55,9 @@ Stores information from all the custom search and faceted search widgets, compil
 -   **isFilterServiceActive**(): `boolean`<br/>
 
     -   **Returns** `boolean` - 
-
 -   **loadConfiguration**(): [`SearchConfiguration`](../../../lib/content-services/src/lib/search/search-configuration.interface.ts)<br/>
 
     -   **Returns** [`SearchConfiguration`](../../../lib/content-services/src/lib/search/search-configuration.interface.ts) - 
-
 -   **removeFilterQuery**(query: `string`)<br/>
     Removes an existing filter query.
     -   _query:_ `string`  - The query to remove
@@ -67,9 +66,13 @@ Stores information from all the custom search and faceted search widgets, compil
     -   _field:_ [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts)  - The target field
     -   _bucket:_ [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts)  - Bucket to remove
 -   **resetToDefaults**()<br/>
+-   **search**(queryBody: `QueryBody`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>`<br/>
 
--   **update**()<br/>
+    -   _queryBody:_ `QueryBody`  - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>` - 
+-   **update**(queryBody?: `QueryBody`)<br/>
     Builds the current query and triggers the `updated` event.
+    -   _queryBody:_ `QueryBody`  - (Optional) (Optional)
 
 ## Details
 

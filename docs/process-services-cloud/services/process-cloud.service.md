@@ -22,7 +22,6 @@ Manages cloud process instances.
 
     -   _appName:_ `string`  - 
     -   **Returns** `string` - 
-
 -   **getProcessDefinitions**(appName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/models/process-definition-cloud.model.ts)`[]>`<br/>
     Gets the process definitions associated with an app.
     -   _appName:_ `string`  - Name of the target app

@@ -34,19 +34,19 @@ Searches items for supplied search terms.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| displayWith | `Function \| null` | null | Function that maps an option's value to its display value in the trigger. |
-| maxResults | `number` | 20 | Maximum number of results to show in the search. |
-| searchTerm | `string` | "" | Search term to use when executing the search. Updating this value will run a new search and update the results. |
-| skipResults | `number` | 0 | Number of results to skip from the results pagination. |
-| classList | `void` |  | CSS class for display. |
+| Name        | Type               | Default value | Description                                                                                                     |
+| ----------- | ------------------ | ------------- | --------------------------------------------------------------------------------------------------------------- |
+| displayWith | `Function \| null` | null          | Function that maps an option's value to its display value in the trigger.                                       |
+| maxResults  | `number`           | 20            | Maximum number of results to show in the search.                                                                |
+| searchTerm  | `string`           | ""            | Search term to use when executing the search. Updating this value will run a new search and update the results. |
+| skipResults | `number`           | 0             | Number of results to skip from the results pagination.                                                          |
+| classList   | `void`             |               | CSS class for display.                                                                                          |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| Name         | Type                                                                                                                                                                                 | Description                                    |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------- |
+| error        | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                                    | Emitted when an error occurs.                  |
 | resultLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when search results have fully loaded. |
 
 ## Details

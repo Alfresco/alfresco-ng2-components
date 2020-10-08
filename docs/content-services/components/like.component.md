@@ -21,14 +21,14 @@ Allows a user to add "likes" to an item.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| nodeId | `string` |  | Identifier of a node to apply likes to. |
+| Name   | Type     | Default value | Description                             |
+| ------ | -------- | ------------- | --------------------------------------- |
+| nodeId | `string` |               | Identifier of a node to apply likes to. |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name       | Type                                                              | Description                           |
+| ---------- | ----------------------------------------------------------------- | ------------------------------------- |
 | changeVote | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the "vote" gets changed. |
 
 ## See also

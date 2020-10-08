@@ -53,10 +53,10 @@ You can also combine `icon` and `label` properties.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| icon | `string` | null | Icon to render for the tab. |
-| label | `string` | "" | The title of the tab (string or translation key). |
+| Name  | Type     | Default value | Description                                       |
+| ----- | -------- | ------------- | ------------------------------------------------- |
+| icon  | `string` | null          | Icon to render for the tab.                       |
+| label | `string` | ""            | The title of the tab (string or translation key). |
 
 ## Details
 

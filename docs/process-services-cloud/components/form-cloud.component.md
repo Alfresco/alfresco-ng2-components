@@ -74,40 +74,40 @@ The template defined inside `empty-form` will be shown when no form definition i
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| appName | `string` | "" | App name to fetch corresponding form and values. |
-| appVersion | `number` |  | The application version to use when fetching data |
-| data | [`TaskVariableCloud`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`[]` |  | Custom form values map to be used with the rendered form. |
-| disableCompleteButton | `boolean` | false | If true then the `Complete` outcome button is shown but it will be disabled. |
-| disableSaveButton | `boolean` | false | If true then the `Save` outcome button is shown but will be disabled. |
-| disableStartProcessButton | `boolean` | false | If true then the `Start Process` outcome button is shown but it will be disabled. |
-| fieldValidators | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` |  | [FormFieldValidator](../../../lib/core/form/components/widgets/core/form-field-validator.ts) allow to override the form field validators provided. |
-| form | [`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts) |  | Underlying [form model](../../../lib/core/form/components/widgets/core/form.model.ts) instance. |
-| formId | `string` |  | Task id to fetch corresponding form and values. |
-| nameNode | `string` |  | Name to assign to the new node where the metadata are stored. |
-| path | `string` |  | Path of the folder where the metadata will be stored. |
-| processInstanceId | `string` |  | ProcessInstanceId id to fetch corresponding form and values. |
-| readOnly | `boolean` | false | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. |
-| showCompleteButton | `boolean` | true | Toggle rendering of the `Complete` outcome button. |
-| showRefreshButton | `boolean` | true | Toggle rendering of the `Refresh` button. |
-| showSaveButton | `boolean` | true | Toggle rendering of the `Save` outcome button. |
-| showTitle | `boolean` | true | Toggle rendering of the form title. |
-| showValidationIcon | `boolean` | true | Toggle rendering of the validation icon next to the form title. |
-| taskId | `string` |  | Task id to fetch corresponding form and values. |
+| Name                      | Type                                                                                                            | Default value | Description                                                                                                                                        |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| appName                   | `string`                                                                                                        | ""            | App name to fetch corresponding form and values.                                                                                                   |
+| appVersion                | `number`                                                                                                        |               | The application version to use when fetching data                                                                                                  |
+| data                      | [`TaskVariableCloud`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`[]` |               | Custom form values map to be used with the rendered form.                                                                                          |
+| disableCompleteButton     | `boolean`                                                                                                       | false         | If true then the `Complete` outcome button is shown but it will be disabled.                                                                       |
+| disableSaveButton         | `boolean`                                                                                                       | false         | If true then the `Save` outcome button is shown but will be disabled.                                                                              |
+| disableStartProcessButton | `boolean`                                                                                                       | false         | If true then the `Start Process` outcome button is shown but it will be disabled.                                                                  |
+| fieldValidators           | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]`              |               | [FormFieldValidator](../../../lib/core/form/components/widgets/core/form-field-validator.ts) allow to override the form field validators provided. |
+| form                      | [`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)                                     |               | Underlying [form model](../../../lib/core/form/components/widgets/core/form.model.ts) instance.                                                    |
+| formId                    | `string`                                                                                                        |               | Task id to fetch corresponding form and values.                                                                                                    |
+| nameNode                  | `string`                                                                                                        |               | Name to assign to the new node where the metadata are stored.                                                                                      |
+| path                      | `string`                                                                                                        |               | Path of the folder where the metadata will be stored.                                                                                              |
+| processInstanceId         | `string`                                                                                                        |               | ProcessInstanceId id to fetch corresponding form and values.                                                                                       |
+| readOnly                  | `boolean`                                                                                                       | false         | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled.                                                       |
+| showCompleteButton        | `boolean`                                                                                                       | true          | Toggle rendering of the `Complete` outcome button.                                                                                                 |
+| showRefreshButton         | `boolean`                                                                                                       | true          | Toggle rendering of the `Refresh` button.                                                                                                          |
+| showSaveButton            | `boolean`                                                                                                       | true          | Toggle rendering of the `Save` outcome button.                                                                                                     |
+| showTitle                 | `boolean`                                                                                                       | true          | Toggle rendering of the form title.                                                                                                                |
+| showValidationIcon        | `boolean`                                                                                                       | true          | Toggle rendering of the validation icon next to the form title.                                                                                    |
+| taskId                    | `string`                                                                                                        |               | Task id to fetch corresponding form and values.                                                                                                    |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
-| executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
-| formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
-| formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
-| formDataRefreshed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when form values are refreshed due to a data property change. |
-| formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../../core/models/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
-| formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
-| formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
+| Name               | Type                                                                                                                                                             | Description                                                                                            |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| error              | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                | Emitted when any error occurs.                                                                         |
+| executeOutcome     | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
+| formCompleted      | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>`                      | Emitted when the form is submitted with the `Complete` outcome.                                        |
+| formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../../lib/core/form/components/widgets/core/content-link.model.ts)`>`       | Emitted when form content is clicked.                                                                  |
+| formDataRefreshed  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>`                      | Emitted when form values are refreshed due to a data property change.                                  |
+| formError          | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../../core/models/form-field.model.md)`[]>`                                      | Emitted when the supplied form values have a validation error.                                         |
+| formLoaded         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>`                      | Emitted when the form is loaded or reloaded.                                                           |
+| formSaved          | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>`                      | Emitted when the form is submitted with the `Save` or custom outcomes.                                 |
 
 ## Details
 

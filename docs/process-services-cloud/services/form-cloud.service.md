@@ -42,12 +42,10 @@ class MyComponent {
     -   _nodeId:_ `string`  - 
     -   _contentHost:_ `string`  - 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - 
-
 -   **getBasePath**(appName: `string`): `string`<br/>
 
     -   _appName:_ `string`  - 
     -   **Returns** `string` - 
-
 -   **getDropDownJsonData**(url: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Parses JSON data to create a corresponding form.
     -   _url:_ `string`  - String data to make the request

@@ -101,14 +101,14 @@ export class AppComponent {
 
 There are 6 levels of logs that you can use:
 
-| Name | Level |
-| ---- | ----- |
-| TRACE | 5 |
-| DEBUG | 4 |
-| INFO | 3 |
-| WARN | 2 |
-| ERROR | 1 |
-| SILENT | 0 |
+| Name   | Level |
+| ------ | ----- |
+| TRACE  | 5     |
+| DEBUG  | 4     |
+| INFO   | 3     |
+| WARN   | 2     |
+| ERROR  | 1     |
+| SILENT | 0     |
 
 You can set the default log level using the **_logLevel_** property in `app.config.json`.
 The factory setting for this property is `TRACE`.

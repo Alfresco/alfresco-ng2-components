@@ -40,7 +40,7 @@ Replace `/deep/` with `::ng-deep` in your styles, read more about angular compon
 
 Angular now uses TypeScript 3.4, read more about errors that might arise from improved type checking.
 
-Make sure you are using Node 10 or later.
+Make sure you are using [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) 10 or later.
 
 The CLI's build command now automatically creates a modern ES2015 build with minimal polyfills and a compatible ES5 build for older browsers, and loads the appropriate file based on the browser. You may opt-out of this change by setting your target back to es5 in your tsconfig.json. Learn more on angular.io.
 
@@ -50,7 +50,7 @@ If you use ViewChild or ContentChild, we're updating the way we resolve these qu
 
 For lazy loaded modules via the router, make sure you are using dynamic imports. Importing via string is removed in v9. ng update should take care of this automatically. Learn more on angular.io.
 
-Make sure you are using Node 10.13 or later.
+Make sure you are using [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) 10.13 or later.
 
 Run `ng update @angular/core@8 @angular/cli@8` in your workspace directory to update to the latest 8.x version of @angular/core and @angular/cli and commit these changes.
 

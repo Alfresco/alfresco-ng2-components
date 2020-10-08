@@ -62,19 +62,19 @@ export class AppComponent {
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| contentType | `string` | "TEXT" | Content type to interpret the data received from the webscript. Can be "JSON" , "HTML" , "DATATABLE" or "TEXT" |
-| contextRoot | `string` | "alfresco" | Path where the application is deployed |
-| scriptArgs | `any` |  | Arguments to pass to the webscript. |
-| scriptPath | `string` |  | (required) Path to the webscript (as defined by webscript). |
-| servicePath | `string` | "service" | Path that the webscript service is mapped to. |
-| showData | `boolean` | true | Toggles whether to show or hide the data. |
+| Name        | Type      | Default value | Description                                                                                                    |
+| ----------- | --------- | ------------- | -------------------------------------------------------------------------------------------------------------- |
+| contentType | `string`  | "TEXT"        | Content type to interpret the data received from the webscript. Can be "JSON" , "HTML" , "DATATABLE" or "TEXT" |
+| contextRoot | `string`  | "alfresco"    | Path where the application is deployed                                                                         |
+| scriptArgs  | `any`     |               | Arguments to pass to the webscript.                                                                            |
+| scriptPath  | `string`  |               | (required) Path to the webscript (as defined by webscript).                                                    |
+| servicePath | `string`  | "service"     | Path that the webscript service is mapped to.                                                                  |
+| showData    | `boolean` | true          | Toggles whether to show or hide the data.                                                                      |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type                                                              | Description                                                                                                                                                            |
+| ------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the operation succeeds. You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application. |
 
 ## Details

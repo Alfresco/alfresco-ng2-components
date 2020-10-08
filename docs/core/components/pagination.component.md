@@ -40,21 +40,21 @@ Adds pagination to the component it is used with.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| supportedPageSizes | `number[]` |  | An array of page sizes. |
-| target | [`PaginatedComponent`](../../../lib/core/pagination/paginated-component.interface.ts) |  | Component that provides custom pagination support. |
-| pagination | [`PaginationModel`](../../../lib/core/models/pagination.model.ts) |  | Pagination object. |
+| Name               | Type                                                                                  | Default value | Description                                        |
+| ------------------ | ------------------------------------------------------------------------------------- | ------------- | -------------------------------------------------- |
+| supportedPageSizes | `number[]`                                                                            |               | An array of page sizes.                            |
+| target             | [`PaginatedComponent`](../../../lib/core/pagination/paginated-component.interface.ts) |               | Component that provides custom pagination support. |
+| pagination         | [`PaginationModel`](../../../lib/core/models/pagination.model.ts)                     |               | Pagination object.                                 |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| change | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when pagination changes in any way. |
-| changePageNumber | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the page number changes. |
-| changePageSize | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the page size changes. |
-| nextPage | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the next page is requested. |
-| prevPage | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the previous page is requested. |
+| Name             | Type                                                                                                                              | Description                                  |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| change           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when pagination changes in any way.  |
+| changePageNumber | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the page number changes.        |
+| changePageSize   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the page size changes.          |
+| nextPage         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the next page is requested.     |
+| prevPage         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the previous page is requested. |
 
 ## Details
 

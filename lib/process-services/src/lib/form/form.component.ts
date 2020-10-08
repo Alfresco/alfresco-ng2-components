@@ -58,7 +58,8 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     @Input()
     data: FormValues;
 
-    @Input()
+    /** The form will set a prefixed space for invisible fields. */
+     @Input()
     enableFixedSpacedForm: boolean = true;
 
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */

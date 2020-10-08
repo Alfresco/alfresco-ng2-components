@@ -41,15 +41,15 @@ export class MyComponent {
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| selection | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[] | Array of nodes to toggle as favorites. |
+| Name      | Type                                                                                                                    | Default value | Description                            |
+| --------- | ----------------------------------------------------------------------------------------------------------------------- | ------------- | -------------------------------------- |
+| selection | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[]           | Array of nodes to toggle as favorites. |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the favorite setting fails. |
+| Name   | Type                                                              | Description                                    |
+| ------ | ----------------------------------------------------------------- | ---------------------------------------------- |
+| error  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the favorite setting fails.       |
 | toggle | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the favorite setting is complete. |
 
 ## Details

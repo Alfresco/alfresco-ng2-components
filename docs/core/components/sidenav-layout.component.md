@@ -67,19 +67,19 @@ sub-components (note the use of `<ng-template>` in the sub-components' body sect
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| expandedSidenav | `boolean` | true | Should the navigation region be expanded initially? |
-| hideSidenav | `boolean` | false | Toggles showing/hiding the navigation region. |
-| position | `string` | "start" | The side that the drawer is attached to. Possible values are 'start' and 'end'. |
-| sidenavMax | `number` |  | Maximum size of the navigation region. |
-| sidenavMin | `number` |  | Minimum size of the navigation region. |
-| stepOver | `number` |  | Screen size at which display switches from small screen to large screen configuration. |
+| Name            | Type      | Default value | Description                                                                            |
+| --------------- | --------- | ------------- | -------------------------------------------------------------------------------------- |
+| expandedSidenav | `boolean` | true          | Should the navigation region be expanded initially?                                    |
+| hideSidenav     | `boolean` | false         | Toggles showing/hiding the navigation region.                                          |
+| position        | `string`  | "start"       | The side that the drawer is attached to. Possible values are 'start' and 'end'.        |
+| sidenavMax      | `number`  |               | Maximum size of the navigation region.                                                 |
+| sidenavMin      | `number`  |               | Minimum size of the navigation region.                                                 |
+| stepOver        | `number`  |               | Screen size at which display switches from small screen to large screen configuration. |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name     | Type                                                                  | Description                                                                           |
+| -------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | expanded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the menu toggle and the collapsed/expanded state of the sideNav changes. |
 
 ## Details
@@ -124,9 +124,9 @@ Each template is given a context containing the following methods:
 
 Beside the template context's **isMenuMinimized** variable, another way to listen to the component's menu's open/closed state is with the `menuOpenState$` observable, which is driven by a `BehaviorSubject` in the background. The value emitted by this observable is the opposite of the `isMenuMinimized` template variable.
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| menuOpenState$ | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;boolean> | true | Another way to listen to menu open/closed state |
+| Name           | Type                                                                          | Default | Description                                     |
+| -------------- | ----------------------------------------------------------------------------- | ------- | ----------------------------------------------- |
+| menuOpenState$ | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;boolean> | true    | Another way to listen to menu open/closed state |
 
 Every time the menu state is changed, the following values are emitted:
 

@@ -42,11 +42,11 @@ the following names:
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| expanded | `boolean` |  | Toggle the sidebar action menu on expand. |
-| title | `string` |  | The title of the sidebar action. |
-| width | `number` | 272 | Width in pixels for sidebar action menu options. |
+| Name     | Type      | Default value | Description                                      |
+| -------- | --------- | ------------- | ------------------------------------------------ |
+| expanded | `boolean` |               | Toggle the sidebar action menu on expand.        |
+| title    | `string`  |               | The title of the sidebar action.                 |
+| width    | `number`  | 272           | Width in pixels for sidebar action menu options. |
 
 ## Details
 

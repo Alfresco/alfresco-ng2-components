@@ -74,57 +74,57 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| allowDownload | `boolean` | true | Toggles downloading. |
-| allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
-| allowGoBack | `boolean` | true | Allows `back` navigation |
-| allowLeftSidebar | `boolean` | false | Allow the left the sidebar. |
-| allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
-| allowPrint | `boolean` | false | Toggles printing. |
-| allowRightSidebar | `boolean` | false | Allow the right sidebar. |
-| allowThumbnails | `boolean` | true | Toggles PDF thumbnails. |
-| blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
-| canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |
-| canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
-| displayName | `string` |  | Specifies the name of the file when it is not available from the URL. |
-| fileName | `string` |  | Content filename. |
-| maxRetries | `number` | 30 | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
-| mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension). |
-| nodeId | `string` | null | [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) Id of the file to load. |
-| overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
-| sharedLinkId | `string` | null | Shared link id (to display shared file). |
-| showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. |
-| showRightSidebar | `boolean` | false | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`. |
-| showToolbar | `boolean` | true | Hide or show the toolbar |
-| showViewer | `boolean` | true | Hide or show the viewer |
-| sidebarLeftTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded node data. |
-| sidebarRightTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the right sidebar. The template context contains the loaded node data. |
-| thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the pdf thumbnails. |
-| urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
-| urlFileViewer | `string` | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
-| versionId | `string` | null | Version Id of the file to load. |
+| Name                 | Type                                                            | Default value | Description                                                                                                                    |
+| -------------------- | --------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| allowDownload        | `boolean`                                                       | true          | Toggles downloading.                                                                                                           |
+| allowFullScreen      | `boolean`                                                       | true          | Toggles the 'Full Screen' feature.                                                                                             |
+| allowGoBack          | `boolean`                                                       | true          | Allows `back` navigation                                                                                                       |
+| allowLeftSidebar     | `boolean`                                                       | false         | Allow the left the sidebar.                                                                                                    |
+| allowNavigate        | `boolean`                                                       | false         | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection.                 |
+| allowPrint           | `boolean`                                                       | false         | Toggles printing.                                                                                                              |
+| allowRightSidebar    | `boolean`                                                       | false         | Allow the right sidebar.                                                                                                       |
+| allowThumbnails      | `boolean`                                                       | true          | Toggles PDF thumbnails.                                                                                                        |
+| blobFile             | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |               | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File                                                     |
+| canNavigateBefore    | `boolean`                                                       | true          | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled.                                                  |
+| canNavigateNext      | `boolean`                                                       | true          | Toggles the next (">") button. Requires `allowNavigate` to be enabled.                                                         |
+| displayName          | `string`                                                        |               | Specifies the name of the file when it is not available from the URL.                                                          |
+| fileName             | `string`                                                        |               | Content filename.                                                                                                              |
+| maxRetries           | `number`                                                        | 30            | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts.    |
+| mimeType             | `string`                                                        |               | MIME type of the file content (when not determined by the filename extension).                                                 |
+| nodeId               | `string`                                                        | null          | [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) Id of the file to load. |
+| overlayMode          | `boolean`                                                       | false         | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div.                   |
+| sharedLinkId         | `string`                                                        | null          | Shared link id (to display shared file).                                                                                       |
+| showLeftSidebar      | `boolean`                                                       | false         | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`.                                              |
+| showRightSidebar     | `boolean`                                                       | false         | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`.                                            |
+| showToolbar          | `boolean`                                                       | true          | Hide or show the toolbar                                                                                                       |
+| showViewer           | `boolean`                                                       | true          | Hide or show the viewer                                                                                                        |
+| sidebarLeftTemplate  | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null          | The template for the left sidebar. The template context contains the loaded node data.                                         |
+| sidebarRightTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null          | The template for the right sidebar. The template context contains the loaded node data.                                        |
+| thumbnailsTemplate   | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null          | The template for the pdf thumbnails.                                                                                           |
+| urlFile              | `string`                                                        | ""            | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from.  |
+| urlFileViewer        | `string`                                                        | null          | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
+| versionId            | `string`                                                        | null          | Version Id of the file to load.                                                                                                |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| extensionChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the filename extension changes. |
-| goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
-| invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the shared link used is not valid. |
-| navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<MouseEvent \| KeyboardEvent>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
-| navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<MouseEvent \| KeyboardEvent>` | Emitted when user clicks 'Navigate Next' (">") button. |
-| print | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button. |
-| showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer is shown or hidden. |
+| Name              | Type                                                                                                                       | Description                                                 |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| extensionChange   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                                                       | Emitted when the filename extension changes.                |
+| goBack            | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button.                 |
+| invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                          | Emitted when the shared link used is not valid.             |
+| navigateBefore    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<MouseEvent \| KeyboardEvent>`                                  | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
+| navigateNext      | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<MouseEvent \| KeyboardEvent>`                                  | Emitted when user clicks 'Navigate Next' (">") button.      |
+| print             | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button.                |
+| showViewerChange  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>`                                                      | Emitted when the viewer is shown or hidden.                 |
 
 ## Keyboard shortcuts
 
-| Name | Description |
-| ---- | ----------- |
-| Esc | Close the viewer (overlay mode only). |
-| Left | Invoke 'Navigate before' action. |
-| Right | Invoke 'Navigate next' action. |
-| Ctrl+F | Activate full-screen mode. |
+| Name   | Description                           |
+| ------ | ------------------------------------- |
+| Esc    | Close the viewer (overlay mode only). |
+| Left   | Invoke 'Navigate before' action.      |
+| Right  | Invoke 'Navigate next' action.        |
+| Ctrl+F | Activate full-screen mode.            |
 
 ## Details
 

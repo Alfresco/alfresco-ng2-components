@@ -23,9 +23,9 @@ Sub-component of the process details component, which renders some general infor
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| processInstance | [`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts) |  | (**required**) Full details of the process instance to display information about. |
+| Name            | Type                                                                                                     | Default value | Description                                                                       |
+| --------------- | -------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------------------------------------- |
+| processInstance | [`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts) |               | (**required**) Full details of the process instance to display information about. |
 
 ## Details
 

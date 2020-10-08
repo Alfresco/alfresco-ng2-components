@@ -22,12 +22,10 @@ Gets a list of items a user has marked as their favorites.
 
     -   _entries:_ `any[]`  - 
     -   **Returns** `any[]` - 
-
 -   **remapFavoritesData**(data: `any` = `{}`): [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)<br/>
 
     -   _data:_ `any`  - 
     -   **Returns** [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) - 
-
 -   **remapEntry**(\_\_namedParameters: `Function`): `any`<br/>
 
     -   _\_\_namedParameters:_ `Function`  - 

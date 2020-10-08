@@ -28,7 +28,6 @@ Manages user preferences.
 
     -   _appName:_ `string`  - 
     -   **Returns** `string` - 
-
 -   **getPreferenceByKey**(appName: `string`, key: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets user preference.
     -   _appName:_ `string`  - Name of the target app

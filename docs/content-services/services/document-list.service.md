@@ -42,7 +42,6 @@ Implements node operations used by the [Document List component](../components/d
 
     -   _nodeId:_ `any`  - 
     -   **Returns** `boolean` - 
-
 -   **loadFolderByNodeId**(nodeId: `string`, pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), includeFields: `string[]`, where?: `string`, orderBy?: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/src/lib/document-list/models/document-folder.model.ts)`>`<br/>
     Load a folder by Node Id.
     -   _nodeId:_ `string`  - ID of the folder node
