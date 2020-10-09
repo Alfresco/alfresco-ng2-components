@@ -20,6 +20,7 @@ import { FileModel, FileUploadOptions, FileUploadStatus, setupTestBed } from '@a
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { By } from '@angular/platform-browser';
 
 describe('FileUploadingListRowComponent', () => {
     let fixture: ComponentFixture<FileUploadingListRowComponent>;
@@ -82,5 +83,53 @@ describe('FileUploadingListRowComponent', () => {
         uploadCompleteIcon.dispatchEvent(new MouseEvent('click'));
 
         expect(component.remove.emit).not.toHaveBeenCalled();
+    });
+
+    it('should show cancel button when upload is in progress', async () => {
+        component.file = new FileModel(<File> { name: 'fake-name' });
+        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
+        component.file.status = FileUploadStatus.Progress;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const cancelButton = fixture.debugElement.query(By.css('[data-automation-id="cancel-upload-progress"]'));
+        expect(cancelButton).not.toBeNull();
+    });
+
+    it('should show cancel button when upload is starting', async () => {
+        component.file = new FileModel(<File> { name: 'fake-name' });
+        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
+        component.file.status = FileUploadStatus.Starting;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const cancelButton = fixture.debugElement.query(By.css('[data-automation-id="cancel-upload-progress"]'));
+        expect(cancelButton).not.toBeNull();
+    });
+
+    it('should hide cancel button when upload is complete', async () => {
+        component.file = new FileModel(<File> { name: 'fake-name' });
+        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
+        component.file.status = FileUploadStatus.Complete;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const cancelButton = fixture.debugElement.query(By.css('[data-automation-id="cancel-upload-progress"]'));
+        expect(cancelButton).toBeNull();
+    });
+
+    it('should provide tooltip for the cancel button', async () => {
+        component.file = new FileModel(<File> { name: 'fake-name' });
+        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
+        component.file.status = FileUploadStatus.Progress;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const cancelButton: HTMLDivElement = fixture.debugElement.query(By.css('[data-automation-id="cancel-upload-progress"]')).nativeElement;
+        expect(cancelButton.title).toBe('ADF_FILE_UPLOAD.BUTTON.CANCEL_FILE');
     });
 });
