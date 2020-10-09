@@ -189,10 +189,6 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             formControl.setErrors({
                 'invalidOnChange': true
             });
-        } else {
-            formControl.setErrors({
-                'required': true
-            });
         }
 
         this.setFromMaxDate();
