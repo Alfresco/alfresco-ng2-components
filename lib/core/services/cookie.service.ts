@@ -70,9 +70,11 @@ export class CookieService {
     /**
      * Delete a cookie Key.
      * @param key Key to identify the cookie
+     * @param path "Pathname" to store the cookie
      */
-    deleteCookie(key: string): void {
-        document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    deleteCookie(key: string, path: string | null = null): void {
+        document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;' +
+            (path ? `;path=${path}` : ';path=/');
     }
 
     /** Placeholder for testing purposes - do not use. */
