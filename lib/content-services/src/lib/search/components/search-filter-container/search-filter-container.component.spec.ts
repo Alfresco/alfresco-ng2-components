@@ -87,7 +87,7 @@ describe('SearchFilterContainerComponent', () => {
         expect(element).not.toBeUndefined();
     });
 
-    it('should set new active filter after the Apply button is clicked', async () => {
+    it('should set/update the active filter after the Apply button is clicked', async () => {
         const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
         menuButton.click();
         fixture.detectChanges();
@@ -100,6 +100,17 @@ describe('SearchFilterContainerComponent', () => {
         expect(queryBuilder.getActiveFilters().length).toBe(1);
         expect(queryBuilder.getActiveFilters()[0].key).toBe('name');
         expect(queryBuilder.getActiveFilters()[0].value).toBe('searchText');
+
+        menuButton.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        component.widgetContainer.componentRef.instance.value = 'updated text';
+        applyButton.triggerEventHandler('click', {});
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(queryBuilder.getActiveFilters().length).toBe(1);
+        expect(queryBuilder.getActiveFilters()[0].key).toBe('name');
+        expect(queryBuilder.getActiveFilters()[0].value).toBe('updated text');
     });
 
     it('should emit filterChange after the Apply button is clicked', async (done) => {
