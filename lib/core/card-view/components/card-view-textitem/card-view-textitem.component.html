@@ -13,7 +13,6 @@
                    *ngIf="!property.multiline"
                    class="adf-property-value"
                    [placeholder]="property.default"
-                   [value]="editedValue"
                    [formControl]="textInput"
                    (dblclick)="copyToClipboard(property.displayValue)"
                    matTooltipShowDelay="1000"
