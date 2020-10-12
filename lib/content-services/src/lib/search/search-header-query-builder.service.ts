@@ -64,14 +64,15 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     }
 
     setActiveFilter(columnActivated: string, filterValue: string) {
-        const filterIndex = this.activeFilters.find((activeFilter) => activeFilter.key === columnActivated);
-        if (!filterIndex) {
+        const selectedFilter = this.activeFilters.find((activeFilter) => activeFilter.key === columnActivated);
+        if (!selectedFilter) {
             this.activeFilters.push(<FilterSearch> {
                 key: columnActivated,
                 value: filterValue
             });
+        } else {
+            selectedFilter.value = filterValue;
         }
-
     }
 
     resetActiveFilters() {
