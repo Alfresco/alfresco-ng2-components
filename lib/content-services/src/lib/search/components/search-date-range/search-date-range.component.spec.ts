@@ -74,7 +74,7 @@ describe('SearchDateRangeComponent', () => {
             const momentFromInput = moment(inputString, dateFormatFixture);
             expect(momentFromInput.isValid()).toBeTruthy();
 
-            component.onChangedHandler({ srcElement: { value: inputString } }, component.from);
+            component.onChangedHandler({ value: inputString }, component.from);
             expect(component.from.value.toString()).toEqual(momentFromInput.toString());
         });
 
@@ -86,7 +86,7 @@ describe('SearchDateRangeComponent', () => {
             const momentFromInput = moment(inputString, dateFormatFixture);
             expect(momentFromInput.isValid()).toBeFalsy();
 
-            component.onChangedHandler({ srcElement: { value: inputString } }, component.from);
+            component.onChangedHandler({ value: inputString }, component.from);
             expect(component.from.value.toString()).not.toEqual(momentFromInput.toString());
         });
 
@@ -156,7 +156,7 @@ describe('SearchDateRangeComponent', () => {
             fixture.detectChanges();
             const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
             input.value = '10-05-18';
-            input.dispatchEvent(new Event('focusout'));
+            input.dispatchEvent(new Event('input'));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(component.getFromValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.INVALID-DATE');
@@ -167,7 +167,7 @@ describe('SearchDateRangeComponent', () => {
             fixture.detectChanges();
             const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
             input.value = '10/10/2018';
-            input.dispatchEvent(new Event('focusout'));
+            input.dispatchEvent(new Event('input'));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
