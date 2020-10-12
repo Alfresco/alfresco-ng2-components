@@ -706,7 +706,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     onSortingChanged(event: CustomEvent) {
-        this.orderBy = this.buildOrderByArray(event.detail.key, event.detail.direction);
+        this.orderBy = this.buildOrderByArray(event.detail.sortingKey, event.detail.direction);
         this.reload();
         this.sortingSubject.next([this.additionalSorting, event.detail]);
     }
