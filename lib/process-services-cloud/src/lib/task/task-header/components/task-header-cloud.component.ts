@@ -284,7 +284,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     if (taskDetails) {
                         this.taskDetails = taskDetails;
                     }
-                    this.refreshData();
                 });
     }
 
