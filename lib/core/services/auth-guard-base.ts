@@ -65,7 +65,10 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
             if (redirectFragment) {
                 this.storageService.removeItem('loginFragment');
-                return this.router.createUrlTree([redirectFragment]);
+                const routeRedirectTo = route.routeConfig.children.filter( (routeTo) => routeTo.path === '' );
+                if (routeRedirectTo?.length > 0) {
+                    routeRedirectTo[0].redirectTo = redirectFragment;
+                }
             }
             return true;
         }
