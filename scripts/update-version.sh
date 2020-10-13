@@ -124,7 +124,9 @@ only_components() {
 update_component_version() {
    echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
    DESTDIR="$DIR/../lib/${1}"
-   sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
+   cd $DESTDIR
+   npm version --allow-same-version --no-git-tag-version --force ${VERSION}
+   cd -
 }
 
 update_component_dependency_version(){
@@ -161,13 +163,6 @@ update_total_build_dependency_js_version(){
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-
-    # not needed for not
-    #JSAPINODE="alfresco-js-api-node"
-
-    #sed "${sedi[@]}" "s/\"${JSAPINODE}\": \".*\"/\"${JSAPINODE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    #sed "${sedi[@]}" "s/\"${JSAPINODE}\": \"~.*\"/\"${JSAPINODE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    #sed "${sedi[@]}" "s/\"${JSAPINODE}\": \"^.*\"/\"${JSAPINODE}\": \"${1}\"/g"  ${DESTDIR}/package.json
 }
 
 update_component_js_version(){
@@ -262,5 +257,8 @@ fi
 echo "====== UPDATE DEMO SHELL ======"
 
 DESTDIR="$DIR/../demo-shell/"
-sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../demo-shell/package.json
-sed "${sedi[@]}" "s/\"version\": \".*\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../package.json
+npm version --allow-same-version --no-git-tag-version --force ${VERSION}
+
+cd $DESTDIR
+npm version --allow-same-version --no-git-tag-version --force ${VERSION}
+cd -
