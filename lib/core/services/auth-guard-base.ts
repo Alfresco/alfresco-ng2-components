@@ -69,6 +69,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
                 if (routeRedirectTo?.length > 0) {
                     routeRedirectTo[0].redirectTo = redirectFragment;
                 }
+                return this.router.createUrlTree([redirectFragment]);
             }
             return true;
         }
