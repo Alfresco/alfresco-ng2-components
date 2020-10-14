@@ -324,6 +324,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 },
                 dateFilterOptions: [
                     DateCloudFilterType.NO_DATE,
+                    DateCloudFilterType.TODAY,
                     DateCloudFilterType.TOMORROW,
                     DateCloudFilterType.NEXT_7_DAYS,
                     DateCloudFilterType.RANGE

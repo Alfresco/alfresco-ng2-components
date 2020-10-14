@@ -562,6 +562,25 @@ describe('EditTaskFilterCloudComponent', () => {
             component.onFilterChange();
         });
 
+        it('should have correct options on dueDate filters', () => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'dueDateRange'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-dueDateRange"] .mat-select-trigger');
+            stateElement.click();
+            fixture.detectChanges();
+
+            const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+            expect(sortOptions.length).toEqual(5);
+            sortOptions[1].nativeElement.click('TODAY');
+            sortOptions[2].nativeElement.click('TOMOROW');
+            sortOptions[3].nativeElement.click('NEXT_7_DAYS');
+            sortOptions[4].nativeElement.click('RANGE');
+        });
+
         it('should update form on date range value is updated', (done) => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'dueDateRange'];
