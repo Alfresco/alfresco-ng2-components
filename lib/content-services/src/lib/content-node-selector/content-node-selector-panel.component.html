@@ -5,16 +5,16 @@
             [formControl]="searchInput"
             type="text"
             placeholder="{{'NODE_SELECTOR.SEARCH' | translate}}"
-            [value]="userSearchTerm"
+            [value]="searchTerm"
             data-automation-id="content-node-selector-search-input">
 
-        <mat-icon *ngIf="userSearchTerm.length > 0"
+        <mat-icon *ngIf="searchTerm.length > 0"
             matSuffix (click)="clear()"
             class="adf-content-node-selector-content-input-icon"
             data-automation-id="content-node-selector-search-clear">clear
         </mat-icon>
 
-        <mat-icon *ngIf="userSearchTerm.length === 0"
+        <mat-icon *ngIf="searchTerm.length === 0"
             matSuffix
             class="adf-content-node-selector-content-input-icon"
             data-automation-id="content-node-selector-search-icon">search
@@ -59,7 +59,7 @@
         data-automation-id="content-node-selector-content-list">
         <adf-document-list
             #documentList
-            [adf-highlight]="userSearchTerm"
+            [adf-highlight]="searchTerm"
             adf-highlight-selector=".adf-name-location-cell-name"
             [showHeader]="false"
             [node]="nodePaging"
