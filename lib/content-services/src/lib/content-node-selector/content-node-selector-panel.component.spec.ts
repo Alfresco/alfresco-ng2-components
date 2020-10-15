@@ -932,7 +932,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 });
 
                 it('should set its loading state to true to perform a new search', async() => {
-                    component.prepareDialogForNewSearch();
+                    component.prepareDialogForNewSearch(mockQueryBody);
                     fixture.detectChanges();
                     await fixture.whenStable();
 

@@ -275,9 +275,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((queryBody: QueryBody) => {
                 if (queryBody) {
-                    this.prepareDialogForNewSearch();
+                    this.prepareDialogForNewSearch(queryBody);
                     this.queryBuilderService.execute(queryBody);
                 } else {
+                    this.resetFolderToShow();
                     this.clearSearch();
                 }
             });
@@ -393,10 +394,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Resets the dialog for a new search
+     * Prepares the dialog for a new search
      */
-    prepareDialogForNewSearch(): void {
-        this.target = this.searchTerm.length > 0 ? null : this.documentList;
+    prepareDialogForNewSearch(queryBody: QueryBody): void {
+        this.target = queryBody ? null : this.documentList;
         if (this.target) {
             this.infinitePaginationComponent.reset();
         }
@@ -416,10 +417,16 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Resets the folder to be shown with the site selection or the initial landing folder
+     */
+    resetFolderToShow(): void {
+        this.folderIdToShow = this.siteId || this.currentFolderId;
+    }
+
+    /**
      * Clear the search input and search related data
      */
     clearSearch() {
-        this.folderIdToShow = this.siteId || this.currentFolderId;
         this.searchTerm = '';
         this.nodePaging = null;
         this.resetPagination();
