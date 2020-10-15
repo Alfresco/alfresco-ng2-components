@@ -63,7 +63,7 @@ describe('Document List Component', () => {
     beforeAll(async () => {
         folderName = StringUtil.generateRandomString(5);
         sameNameFolder = StringUtil.generateRandomString(5);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(anotherAcsUser);
         site = await apiService.getInstance().core.sitesApi.createSite({
@@ -74,7 +74,7 @@ describe('Document List Component', () => {
             id: anotherAcsUser.email,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         destinationFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         sourceFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -103,7 +103,7 @@ describe('Document List Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
         await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
         await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);

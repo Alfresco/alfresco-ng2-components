@@ -57,13 +57,13 @@ describe('Social component', () => {
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(componentOwner);
         await usersActions.createUser(componentVisitor);
         await usersActions.createUser(secondComponentVisitor);
 
-        await apiService.getInstance().login(componentOwner.email, componentOwner.password);
+        await apiService.login(componentOwner.email, componentOwner.password);
 
         emptyFile = await uploadActions.uploadFile(emptyFileModel.location, emptyFileModel.name, '-my-');
 
@@ -86,7 +86,7 @@ describe('Social component', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(emptyFile.entry.email);
     });
 

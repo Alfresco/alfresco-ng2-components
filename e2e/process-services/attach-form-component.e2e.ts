@@ -50,13 +50,13 @@ describe('Attach Form Component', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         user = await usersActions.createUser();
 
         tenantId = user.tenantId;
 
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
 
         appModel = await applicationService.importPublishDeployApp(app.file_path);
 
@@ -67,7 +67,7 @@ describe('Attach Form Component', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appModel.id);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
    });
 

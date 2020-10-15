@@ -49,10 +49,10 @@ describe('Dynamic Table widget ', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             processUserModel = await usersActions.createUser();
 
-            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+            await apiService.login(processUserModel.email, processUserModel.password);
             appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
             const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
@@ -70,7 +70,7 @@ describe('Dynamic Table widget ', () => {
 
         afterAll(async () => {
             await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
             await navigationBarPage.clickLogoutButton();
         });
@@ -98,10 +98,10 @@ describe('Dynamic Table widget ', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE_USERS;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             processUserModel = await usersActions.createUser();
 
-            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+            await apiService.login(processUserModel.email, processUserModel.password);
             appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
             const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
@@ -112,7 +112,7 @@ describe('Dynamic Table widget ', () => {
 
         afterAll(async () => {
             await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
             await navigationBarPage.clickLogoutButton();
         });
@@ -153,10 +153,10 @@ describe('Dynamic Table widget ', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             processUserModel = await usersActions.createUser();
 
-            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+            await apiService.login(processUserModel.email, processUserModel.password);
             const application = await applicationsService.importPublishDeployApp(app.file_path);
 
             const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
@@ -166,7 +166,7 @@ describe('Dynamic Table widget ', () => {
 
         afterAll(async () => {
             await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
         });
 

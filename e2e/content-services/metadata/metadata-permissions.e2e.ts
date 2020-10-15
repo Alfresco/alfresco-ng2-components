@@ -65,7 +65,7 @@ describe('permissions', () => {
     const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(consumerUser);
         await usersActions.createUser(collaboratorUser);

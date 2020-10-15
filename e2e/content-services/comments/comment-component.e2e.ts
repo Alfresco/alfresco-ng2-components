@@ -64,7 +64,7 @@ describe('Comment Component', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
     });
 
@@ -73,7 +73,7 @@ describe('Comment Component', () => {
     });
 
     beforeEach(async () => {
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
@@ -88,7 +88,7 @@ describe('Comment Component', () => {
     });
 
     afterEach(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(nodeId);
     });
 
@@ -168,7 +168,7 @@ describe('Comment Component', () => {
         let site, pngUploadedFile;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             site = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),

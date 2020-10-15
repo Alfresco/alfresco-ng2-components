@@ -86,6 +86,15 @@ export class ApiService {
         await this.apiService.login(username, password);
     }
 
+    /**
+     * Login using one of the account profiles from the `browser.params.testConfig`.
+     * Example: loginWithProfile('admin')
+     */
+    async loginWithProfile(profileName: string): Promise<void> {
+        const profile = browser.params.testConfig[profileName];
+        await this.apiService.login(profile.email, profile.password);
+    }
+
     async performBpmOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         return new Promise((resolve, reject) => {
             const uri = this.config.hostBpm + path;

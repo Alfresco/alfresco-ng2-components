@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 import { AboutPage, ApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 
 describe('About Content Services', () => {
@@ -28,9 +27,9 @@ describe('About Content Services', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async() => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
         await loginPage.login(acsUser.email, acsUser.password);
         await navigationBarPage.clickAboutButton();
     });

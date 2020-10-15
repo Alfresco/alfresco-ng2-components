@@ -32,7 +32,7 @@ describe('Error Component', () => {
     const contentServicesPage = new ContentServicesPage();
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();

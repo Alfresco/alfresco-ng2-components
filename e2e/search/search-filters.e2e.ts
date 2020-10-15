@@ -88,11 +88,11 @@ describe('Search Filters', () => {
     let jsonFile;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         fileUploaded = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
         fileTypePng = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
@@ -108,7 +108,7 @@ describe('Search Filters', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         await uploadActions.deleteFileOrFolder(fileUploaded.entry.id);
         await uploadActions.deleteFileOrFolder(fileTypePng.entry.id);

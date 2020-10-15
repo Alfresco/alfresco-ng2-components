@@ -68,10 +68,10 @@ describe('Restore content directive', () => {
         siteFile;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(anotherAcsUser);
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         await uploadActions.createFolder(folderName, '-my-');
         folderWithContent = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -85,7 +85,7 @@ describe('Restore content directive', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(folderWithContent.entry.id);
         await uploadActions.deleteFileOrFolder(folderWithFolder.entry.id);
     });
@@ -237,7 +237,7 @@ describe('Restore content directive', () => {
 
     describe('Restore deleted library', () => {
         beforeAll(async () => {
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
             const publicSiteName = `00${StringUtil.generateRandomString(5)}`;
             const publicSiteBody = { visibility: 'PUBLIC', title: publicSiteName };
             publicSite = await apiService.getInstance().core.sitesApi.createSite(publicSiteBody);
@@ -276,7 +276,7 @@ describe('Restore content directive', () => {
         let parentFolder, folderWithin, pdfFile, pngFile, mainFile, mainFolder;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(anotherAcsUser.email, anotherAcsUser.password);
+            await apiService.login(anotherAcsUser.email, anotherAcsUser.password);
             await uploadActions.createFolder(folderName, '-my-');
             parentFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
             folderWithin = await uploadActions.createFolder(StringUtil.generateRandomString(5), parentFolder.entry.id);
@@ -290,7 +290,7 @@ describe('Restore content directive', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
             await uploadActions.deleteFileOrFolder(mainFolder.entry.id);
             await uploadActions.deleteFileOrFolder(mainFile.entry.id);

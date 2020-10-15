@@ -66,9 +66,9 @@ describe('Document List Component - Actions', () => {
 
         beforeAll(async () => {
             folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             acsUser = await usersActions.createUser();
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
             pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
             await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
             uploadedFolder = await uploadActions.createFolder(folderName, '-my-');

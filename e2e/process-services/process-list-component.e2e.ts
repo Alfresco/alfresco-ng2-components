@@ -58,11 +58,11 @@ describe('Process List Test', () => {
     let procWithDate, completedProcWithDate, completedProcWithUserWidget;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         user = await usersActions.createUser();
 
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
 
         appDateModel = await applicationsUtil.importPublishDeployApp(appWithDateField.file_path);
 
@@ -91,7 +91,7 @@ describe('Process List Test', () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appDateModel.id);
         await apiService.getInstance().activiti.modelsApi.deleteModel(appUserWidgetModel.id);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });

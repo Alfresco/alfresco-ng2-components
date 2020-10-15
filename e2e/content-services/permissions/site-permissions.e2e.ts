@@ -86,14 +86,14 @@ describe('Permissions Component', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(folderOwnerUser);
         await usersActions.createUser(siteConsumerUser);
         await usersActions.createUser(consumerUser);
         await usersActions.createUser(contributorUser);
         await usersActions.createUser(collaboratorUser);
         await usersActions.createUser(managerUser);
-        await apiService.getInstance().login(folderOwnerUser.email, folderOwnerUser.password);
+        await apiService.login(folderOwnerUser.email, folderOwnerUser.password);
 
         await browser.sleep(15000);
 
@@ -155,7 +155,7 @@ describe('Permissions Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
         await apiService.getInstance().core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
     });

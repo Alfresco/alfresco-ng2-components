@@ -57,7 +57,7 @@ describe('Task Assignee', () => {
         let user: UserModel;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             user = await usersActions.createUser(new UserModel({
                 firstName: app.candidate.firstName,
@@ -73,14 +73,14 @@ describe('Task Assignee', () => {
             } catch (e) {
             }
 
-            await apiService.getInstance().login(user.email, user.password);
+            await apiService.login(user.email, user.password);
             await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
 
             await loginPage.login(user.email, user.password);
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
             await navigationBarPage.clickLogoutButton();
         });
@@ -127,7 +127,7 @@ describe('Task Assignee', () => {
         let candidate2: UserModel;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             user = await usersActions.createUser();
             candidate1 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
             candidate2 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
@@ -157,14 +157,14 @@ describe('Task Assignee', () => {
             } catch (e) {
             }
 
-            await apiService.getInstance().login(user.email, user.password);
+            await apiService.login(user.email, user.password);
             const appModel = await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
 
             await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processNames[1]);
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 

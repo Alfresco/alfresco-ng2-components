@@ -41,11 +41,11 @@ describe('Modify applications', () => {
     let firstApp, appVersionToBeDeleted;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         const user = await usersActions.createUser();
 
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
 
         firstApp = await applicationService.importPublishDeployApp(app.file_path);
         appVersionToBeDeleted = await applicationService.importPublishDeployApp(appToBeDeleted.file_path);

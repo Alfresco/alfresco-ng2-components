@@ -52,11 +52,11 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             await usersActions.createUser(acsUser);
 
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
 
             site = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
@@ -144,12 +144,12 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             await usersActions.createUser(userUploadingTxt);
             await usersActions.createUser(userUploadingImg);
 
-            await apiService.getInstance().login(userUploadingTxt.email, userUploadingTxt.password);
+            await apiService.login(userUploadingTxt.email, userUploadingTxt.password);
 
             site = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
@@ -163,7 +163,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
-            await apiService.getInstance().login(userUploadingImg.email, userUploadingImg.password);
+            await apiService.login(userUploadingImg.email, userUploadingImg.password);
 
             jpgFile = await uploadActions.uploadFile(jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
 
@@ -205,11 +205,11 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             await usersActions.createUser(acsUser);
 
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
 
             site = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),

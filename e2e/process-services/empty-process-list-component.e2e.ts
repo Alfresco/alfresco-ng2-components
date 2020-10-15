@@ -42,13 +42,13 @@ describe('Empty Process List Test', () => {
     beforeAll(async () => {
         const usersActions = new UsersActions(apiService);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         const applicationsService = new ApplicationsUtil(apiService);
 
         user = await usersActions.createUser();
 
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
 
         await applicationsService.importPublishDeployApp(appWithProcess.file_path);
         await applicationsService.importPublishDeployApp(simpleAppWithUserForm.file_path);

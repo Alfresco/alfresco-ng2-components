@@ -71,7 +71,7 @@ describe('Version component permissions', () => {
     const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(consumerUser);
         await usersActions.createUser(collaboratorUser);
@@ -117,13 +117,13 @@ describe('Version component permissions', () => {
                 lifetime: 'PERSISTENT'
             });
 
-        await apiService.getInstance().login(fileCreatorUser.email, fileCreatorUser.password);
+        await apiService.login(fileCreatorUser.email, fileCreatorUser.password);
 
         await uploadActions.uploadFile(differentCreatorFile.location, differentCreatorFile.name, site.entry.guid);
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
@@ -134,7 +134,7 @@ describe('Version component permissions', () => {
         });
 
         beforeAll(async () => {
-            await apiService.getInstance().login(managerUser.email, managerUser.password);
+            await apiService.login(managerUser.email, managerUser.password);
 
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
@@ -206,7 +206,7 @@ describe('Version component permissions', () => {
         });
 
         beforeAll(async () => {
-            await apiService.getInstance().login(contributorUser.email, contributorUser.password);
+            await apiService.login(contributorUser.email, contributorUser.password);
 
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
@@ -261,7 +261,7 @@ describe('Version component permissions', () => {
         });
 
         beforeAll(async () => {
-            await apiService.getInstance().login(collaboratorUser.email, collaboratorUser.password);
+            await apiService.login(collaboratorUser.email, collaboratorUser.password);
 
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);

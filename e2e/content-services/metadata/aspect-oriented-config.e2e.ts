@@ -54,7 +54,7 @@ describe('Aspect oriented config', () => {
     beforeAll(async () => {
         uploadActions = new UploadActions(apiService);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         try {
             await apiService.getInstance().core.customModelApi.createCustomModel('ACTIVE', modelOneName, modelOneName, modelOneName, modelOneName);
@@ -68,7 +68,7 @@ describe('Aspect oriented config', () => {
 
         acsUser = await usersActions.createUser();
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         const uploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 

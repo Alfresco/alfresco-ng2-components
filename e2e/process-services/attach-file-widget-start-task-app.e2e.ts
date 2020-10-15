@@ -52,15 +52,15 @@ describe('Start Task - Task App', () => {
     const appFields = app.form_fields;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
         await loginPage.login(user.email, user.password);
    });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 

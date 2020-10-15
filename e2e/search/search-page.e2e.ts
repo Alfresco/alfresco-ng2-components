@@ -70,10 +70,10 @@ describe('Search component - Search Page', () => {
             'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
         });
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         await uploadActions.createFolder(emptyFolderModel.name, '-my-');
         const newFolderModelUploaded = await uploadActions.createFolder(newFolderModel.name, '-my-');
@@ -82,7 +82,7 @@ describe('Search component - Search Page', () => {
 
         await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await uploadActions.createEmptyFiles(adminFileNames, newFolderModelUploaded.entry.id);
 

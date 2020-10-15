@@ -24,7 +24,6 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { FolderModel } from '../models/ACS/folder.model';
 import { ContentServicesPage } from '../core/pages/content-services.page';
 import { InfinitePaginationPage } from './pages/infinite-pagination.page';
@@ -59,7 +58,7 @@ describe('Enable infinite scrolling', () => {
     beforeAll(async () => {
         const uploadActions = new UploadActions(apiService);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 
@@ -68,7 +67,7 @@ describe('Enable infinite scrolling', () => {
         fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
         deleteFileNames = StringUtil.generateFilesNames(1, nrOfDeletedFiles, files.base, files.extension);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         const folderUploadedModel = await uploadActions.createFolder(folderModel.name, '-my-');
         emptyFolderModel = await uploadActions.createFolder('emptyFolder', '-my-');

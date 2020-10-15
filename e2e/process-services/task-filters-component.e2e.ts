@@ -47,10 +47,10 @@ describe('Task', () => {
         let appId: number, user: UserModel;
 
         beforeEach(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             user = await usersActions.createUser();
 
-            await apiService.getInstance().login(user.email, user.password);
+            await apiService.login(user.email, user.password);
             const applicationsService = new ApplicationsUtil(apiService);
             const { id } = await applicationsService.importPublishDeployApp(app.file_path);
             appId = id;
@@ -63,7 +63,7 @@ describe('Task', () => {
 
         afterEach(async () => {
             await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
             await navigationBarPage.clickLogoutButton();
         });
@@ -186,10 +186,10 @@ describe('Task', () => {
 
         beforeAll(async () => {
             const usersActions = new UsersActions(apiService);
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             user = await usersActions.createUser();
 
-            await apiService.getInstance().login(user.email, user.password);
+            await apiService.login(user.email, user.password);
             const applicationsService = new ApplicationsUtil(apiService);
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
@@ -199,7 +199,7 @@ describe('Task', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 

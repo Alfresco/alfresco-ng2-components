@@ -55,7 +55,7 @@ describe('Login component', () => {
     beforeAll(async () => {
         await LocalStorageUtil.setStorageItem('authType', 'BASIC');
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(userA);
         await usersActions.createUser(userB);

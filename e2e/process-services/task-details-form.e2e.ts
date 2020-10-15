@@ -71,9 +71,9 @@ describe('Task Details - Form', () => {
             'stencilSet': 0
         };
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
 
         attachedForm = await apiService.getInstance().activiti.modelsApi.createModel(attachedFormModel);
         newForm = await apiService.getInstance().activiti.modelsApi.createModel(newFormModel);
@@ -88,7 +88,7 @@ describe('Task Details - Form', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 

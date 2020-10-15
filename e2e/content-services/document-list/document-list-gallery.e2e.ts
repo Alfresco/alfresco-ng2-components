@@ -59,9 +59,9 @@ describe('Document List Component', () => {
         let filePdfNode, fileTestNode, fileDocxNode, folderNode, filePDFSubNode;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             acsUser = await usersActions.createUser();
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
             fileTestNode = await uploadActions.uploadFile(testFile.location, testFile.name, '-my-');
             fileDocxNode = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
@@ -74,7 +74,7 @@ describe('Document List Component', () => {
         afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
 
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             if (filePdfNode) {
                 await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
             }

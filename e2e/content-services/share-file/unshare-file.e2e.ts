@@ -59,7 +59,7 @@ describe('Unshare file', () => {
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
 
         const site = {
@@ -99,7 +99,7 @@ describe('Unshare file', () => {
             }
         });
         await apiService.getInstance().core.sharedlinksApi.addSharedLink({ nodeId: testFile1Id });
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         nodeId = pngUploadedFile.entry.id;
@@ -120,7 +120,7 @@ describe('Unshare file', () => {
 
     describe('with permission', () => {
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await uploadActions.deleteFileOrFolder(nodeId);
         });
 
@@ -168,7 +168,7 @@ describe('Unshare file', () => {
 
     describe('without permission', () => {
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().core.sitesApi.deleteSite(siteName, { permanent: true });
         });
 

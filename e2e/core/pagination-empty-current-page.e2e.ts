@@ -71,13 +71,13 @@ describe('Pagination - returns to previous page when current is empty', () => {
     beforeAll(async () => {
         const uploadActions = new UploadActions(apiService);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 
         fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         const folderUploadedModel = await uploadActions.createFolder(folderModel.name, '-my-');
 

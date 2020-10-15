@@ -50,7 +50,7 @@ describe('Viewer', () => {
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(8),
@@ -60,11 +60,11 @@ describe('Viewer', () => {
             id: acsUser.email,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
         await navigationBarPage.clickLogoutButton();
     });

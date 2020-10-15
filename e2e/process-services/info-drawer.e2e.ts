@@ -74,7 +74,7 @@ describe('Info Drawer', () => {
     beforeAll(async () => {
         const usersActions = new UsersActions(apiService);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         const assigneeUserModel = await usersActions.createUser();
         assigneeUserModelFullName = assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName;
@@ -82,7 +82,7 @@ describe('Info Drawer', () => {
         processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
         processUserModelFullName = processUserModel.firstName + ' ' + processUserModel.lastName;
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.email, processUserModel.password);
         appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
         await loginPage.login(processUserModel.email, processUserModel.password);
@@ -90,7 +90,7 @@ describe('Info Drawer', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appCreated.id);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 

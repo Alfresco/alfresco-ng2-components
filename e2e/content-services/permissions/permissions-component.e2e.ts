@@ -86,11 +86,11 @@ describe('Permissions Component', () => {
     const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.email + ' / role -> Contributor';
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(fileOwnerUser);
         await usersActions.createUser(filePermissionUser);
         await apiService.getInstance().core.groupsApi.createGroup(groupBody);
-        await apiService.getInstance().login(fileOwnerUser.email, fileOwnerUser.password);
+        await apiService.login(fileOwnerUser.email, fileOwnerUser.password);
 
         roleConsumerFolder = await uploadActions.createFolder(roleConsumerFolderModel.name, '-my-');
         roleCoordinatorFolder = await uploadActions.createFolder(roleCoordinatorFolderModel.name, '-my-');
@@ -168,7 +168,7 @@ describe('Permissions Component', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         for (const folder of folders) {
             await uploadActions.deleteFileOrFolder(folder.entry.id);
         }
@@ -177,7 +177,7 @@ describe('Permissions Component', () => {
     describe('Inherit and assigning permissions', () => {
 
         beforeEach(async () => {
-            await apiService.getInstance().login(fileOwnerUser.email, fileOwnerUser.password);
+            await apiService.login(fileOwnerUser.email, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
 
             await loginPage.login(fileOwnerUser.email, fileOwnerUser.password);
@@ -249,7 +249,7 @@ describe('Permissions Component', () => {
     describe('Changing and duplicate Permissions', () => {
 
         beforeEach(async () => {
-            await apiService.getInstance().login(fileOwnerUser.email, fileOwnerUser.password);
+            await apiService.login(fileOwnerUser.email, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
             await loginPage.login(fileOwnerUser.email, fileOwnerUser.password);
             await contentServicesPage.goToDocumentList();
