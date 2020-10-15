@@ -92,7 +92,11 @@ export class ApiService {
      */
     async loginWithProfile(profileName: string): Promise<void> {
         const profile = browser.params.testConfig[profileName];
-        await this.apiService.login(profile.email, profile.password);
+        if (profile) {
+            await this.apiService.login(profile.email, profile.password);
+        } else {
+            throw new Error(`Login profile "${profileName}" not found on "browser.params.testConfig".`);
+        }
     }
 
     async performBpmOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
