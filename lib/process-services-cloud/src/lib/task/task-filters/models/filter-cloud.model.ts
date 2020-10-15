@@ -46,6 +46,7 @@ export class TaskFilterCloudModel {
     lastModifiedFrom: string;
     lastModifiedTo: string;
     completedDateType: DateCloudFilterType;
+    createdDateType: DateCloudFilterType;
     completedDate: Date;
     completedBy: IdentityUserModel;
 
@@ -53,6 +54,8 @@ export class TaskFilterCloudModel {
     private _completedTo: string;
     private _dueDateFrom: string;
     private _dueDateTo: string;
+    private _createdFrom: string;
+    private _createdTo: string;
     private dateRangeFilterService = new DateRangeFilterService();
 
     constructor(obj?: any) {
@@ -88,6 +91,9 @@ export class TaskFilterCloudModel {
             this.completedFrom = obj._completedFrom || null;
             this.completedTo = obj._completedTo || null;
             this.completedDate = obj.completedDate || null;
+            this.createdDateType = obj.createdDateType || null;
+            this.createdFrom = obj._createdFrom || null;
+            this.createdTo = obj._createdTo || null;
         }
     }
 
@@ -133,6 +139,28 @@ export class TaskFilterCloudModel {
             return this._completedTo;
         }
         return this.getEndDate(this.completedDateType);
+    }
+
+    set createdFrom(createdFrom: string) {
+        this._createdFrom = createdFrom;
+    }
+
+    set createdTo(createdTo: string) {
+        this._createdTo = createdTo;
+    }
+
+    get createdFrom() {
+        if (this.isDateRangeType(this.createdDateType)) {
+            return this._createdFrom;
+        }
+        return this.getStartDate(this.createdDateType);
+    }
+
+    get createdTo() {
+        if (this.isDateRangeType(this.createdDateType)) {
+            return this._createdTo;
+        }
+        return this.getEndDate(this.createdDateType);
     }
 
     private getStartDate(key: DateCloudFilterType) {
