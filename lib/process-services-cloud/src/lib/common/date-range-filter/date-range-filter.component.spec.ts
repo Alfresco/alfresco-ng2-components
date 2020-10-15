@@ -20,7 +20,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from 'core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { By } from '@angular/platform-browser';
 import { MatSelectChange } from '@angular/material/select';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from './date-range-filter.service';
@@ -64,12 +63,24 @@ describe('DateRangeFilterComponent', () => {
         stateElement.click();
         fixture.detectChanges();
 
-        const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-        options[2].nativeElement.click();
+        const weekOption = document.querySelector('[data-automation-id="adf-cloud-edit-process-property-options-WEEK"]') as HTMLElement;
+        weekOption.click();
         fixture.detectChanges();
         await fixture.whenStable();
         expect(service.getDateRange).not.toHaveBeenCalled();
         expect(component.dateTypeChange.emit).toHaveBeenCalled();
+    });
+
+    it('should not emit event on `RANGE` option change', async () => {
+        spyOn(component.dateTypeChange, 'emit');
+        const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-createdDate"] .mat-select-trigger');
+        stateElement.click();
+        fixture.detectChanges();
+        const rangeOption = document.querySelector('[data-automation-id="adf-cloud-edit-process-property-options-RANGE"]') as HTMLElement;
+        rangeOption.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(component.dateTypeChange.emit).not.toHaveBeenCalled();
     });
 
     it('should reset date range when no_date type is selected', () => {
