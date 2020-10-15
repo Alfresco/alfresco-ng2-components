@@ -43,6 +43,14 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
     @Input()
     createdDate: string = '';
 
+    /** Filter the tasks. Display only tasks with createdFrom equal to the supplied date. */
+    @Input()
+    createdFrom: string = '';
+
+    /** Filter the tasks. Display only tasks with createdTo equal to the supplied date. */
+    @Input()
+    createdTo: string = '';
+
     /** Filter the tasks. Display only tasks with dueDate equal to the supplied date. */
     @Input()
     dueDate: string = '';
@@ -158,6 +166,8 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
             status: this.status,
             dueDate: this.dueDate,
             createdDate: this.createdDate,
+            createdFrom: this.createdFrom,
+            createdTo: this.createdTo,
             maxItems: this.size,
             skipCount: this.skipCount,
             sorting: this.sorting,
