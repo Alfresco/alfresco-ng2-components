@@ -15,10 +15,24 @@
  * limitations under the License.
  */
 
-export * from './document-library.model.mock';
-export * from './document-list.component.mock';
-export * from './search.component.mock';
-export * from './search.service.mock';
-export * from './search-filter-mock';
-export * from './sites-dropdown.component.mock';
-export * from './search-query.mock';
+import { QueryBody } from '@alfresco/js-api';
+
+export const mockQueryBody: QueryBody = <QueryBody> {
+    query: {
+        query: '(search-term)',
+        language: 'afts'
+    },
+    include: ['path', 'allowableOperations'],
+    paging: {
+        maxItems: 25,
+        skipCount: 0
+    },
+    fields: undefined,
+    filterQueries: [],
+    facetQueries: null,
+    facetIntervals: null,
+    facetFields: null,
+    sort: [],
+    highlight: null,
+    facetFormat: 'V2'
+};

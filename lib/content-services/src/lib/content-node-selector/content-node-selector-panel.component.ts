@@ -275,7 +275,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((queryBody: QueryBody) => {
                 if (queryBody) {
-                    this.folderIdToShow = null;
+                    this.prepareDialogForNewSearch();
                     this.queryBuilderService.execute(queryBody);
                 } else {
                     this.clearSearch();
@@ -307,8 +307,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
         this.onFileUploadEvent();
-        this.queryBuilderService.paging = this.DEFAULT_PAGINATION;
-        this.addCorrespondingNodeIdsQuery();
+        this.resetPagination();
     }
 
     ngOnDestroy() {
@@ -373,9 +372,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      */
     siteChanged(chosenSite: SiteEntry): void {
         this.siteId = chosenSite.entry.guid;
-        this.addCorrespondingNodeIdsQuery();
         this.setTitleIfCustomSite(chosenSite);
         this.siteChange.emit(chosenSite.entry.title);
+        this.queryBuilderService.update();
     }
 
     /**
@@ -394,6 +393,20 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Resets the dialog for a new search
+     */
+    prepareDialogForNewSearch(): void {
+        this.target = this.searchTerm.length > 0 ? null : this.documentList;
+        if (this.target) {
+            this.infinitePaginationComponent.reset();
+        }
+        this.folderIdToShow = null;
+        this.loadingSearchResults = true;
+        this.addCorrespondingNodeIdsQuery();
+        this.resetChosenNode();
+    }
+
+    /**
      * Clear the search input and reset to last folder node in which search was performed
      */
     clear(): void {
@@ -409,7 +422,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.folderIdToShow = this.siteId || this.currentFolderId;
         this.searchTerm = '';
         this.nodePaging = null;
-        this.queryBuilderService.paging.maxItems = this.pageSize;
+        this.resetPagination();
         this.resetChosenNode();
         this.showingSearchResults = false;
         this.showingSearch.emit(this.showingSearchResults);
@@ -553,5 +566,12 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         }
 
         return selectedNodes;
+    }
+
+    private resetPagination(): void {
+        this.queryBuilderService.paging = {
+            maxItems: this.pageSize,
+            skipCount: this.DEFAULT_PAGINATION.skipCount
+        };
     }
 }
