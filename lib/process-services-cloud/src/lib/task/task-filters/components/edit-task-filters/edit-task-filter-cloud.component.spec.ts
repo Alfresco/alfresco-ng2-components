@@ -674,6 +674,64 @@ describe('EditTaskFilterCloudComponent', () => {
             });
             component.onFilterChange();
         });
+
+        it('should set the correct created date range when date range option is changed', (done) => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'createdDateRange'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+
+            const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('createdDateType');
+            startedDateTypeControl.setValue(DateCloudFilterType.TODAY);
+            const dateFilter = {
+                startDate: moment().startOf('day').toISOString(true),
+                endDate: moment().endOf('day').toISOString(true)
+            };
+
+            component.filterChange.subscribe(() => {
+                expect(component.changedTaskFilter.createdFrom).toEqual(dateFilter.startDate);
+                expect(component.changedTaskFilter.createdTo).toEqual(dateFilter.endDate);
+                done();
+            });
+            component.onFilterChange();
+        });
+
+        it('should update form on date range when createdDate value is updated', (done) => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'createdDateRange'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+
+            const dateFilter = {
+                startDate: moment().startOf('day').toISOString(true),
+                endDate: moment().endOf('day').toISOString(true)
+            };
+
+            const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('createdDateType');
+            startedDateTypeControl.setValue(DateCloudFilterType.RANGE);
+
+            component.onDateRangeFilterChanged(dateFilter, {
+                key: 'createdDateType',
+                label: '',
+                type: 'date-range',
+                value: '',
+                attributes: {
+                    dateType: 'createdDateType',
+                    from: '_createdFrom',
+                    to: '_createdTo'
+                }
+            });
+
+            fixture.detectChanges();
+            component.filterChange.subscribe(() => {
+                expect(component.changedTaskFilter.createdFrom).toEqual(dateFilter.startDate);
+                expect(component.changedTaskFilter.createdTo).toEqual(dateFilter.endDate);
+                done();
+            });
+            component.onFilterChange();
+        });
     });
 
     describe('sort properties', () => {
