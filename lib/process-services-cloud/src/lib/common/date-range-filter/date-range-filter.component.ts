@@ -59,7 +59,9 @@ import moment from 'moment-es6';
 
     onSelectionChange(option: MatSelectChange) {
         this.type = option.value;
-        this.dateTypeChange.emit(this.type);
+        if (!this.isDateRangeType()) {
+            this.dateTypeChange.emit(this.type);
+        }
     }
 
     isDateRangeType(): boolean {
