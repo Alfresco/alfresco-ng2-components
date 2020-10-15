@@ -342,6 +342,17 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 }
             }),
             new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE',
+                type: 'date-range',
+                key: 'createdDateRange',
+                attributes: { dateType: 'createdDateType', from: '_createdFrom', to: '_createdTo'},
+                value: {
+                    createdDateType: this.taskFilter.createdDateType || null,
+                    _createdFrom: this.taskFilter.createdFrom || null,
+                    _createdTo: this.taskFilter.createdTo || null
+                }
+            }),
+            new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_BY',
                 type: 'people',
                 key: 'completedBy',
