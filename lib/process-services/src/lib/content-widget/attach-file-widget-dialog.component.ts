@@ -54,20 +54,21 @@ export class AttachFileWidgetDialogComponent {
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `ATTACH-FILE.ACTIONS.${this.action}`;
         this.updateTitle('DROPDOWN.MY_FILES_OPTION');
-        this.toggleExternalHostLoginDialog();
+        this.updateExternalHost();
     }
 
-    private toggleExternalHostLoginDialog() {
+    updateExternalHost() {
+        this.authenticationService.onLogin.subscribe(() => this.registerAndClose());
         if (this.externalApiService.getInstance().isLoggedIn()) {
-            this.closeDialog();
+            this.registerAndClose();
         }
-        this.authenticationService.onLogin.subscribe(() => this.closeDialog());
     }
 
-    private closeDialog() {
+    private registerAndClose() {
+        this.data.registerExternalHost(this.data.accountIdentifier, this.externalApiService);
         if (this.data.loginOnly) {
-            this.data.login.next(this.externalApiService);
-            this.matDialogRef.close(this.externalApiService);
+            this.data.selected.complete();
+            this.matDialogRef.close();
         }
     }
 
@@ -80,7 +81,6 @@ export class AttachFileWidgetDialogComponent {
     }
 
     close() {
-        this.data.login.complete();
         this.data.selected.complete();
     }
 
@@ -93,7 +93,6 @@ export class AttachFileWidgetDialogComponent {
     }
 
     onClick() {
-        this.data.login.complete();
         this.data.selected.next(this.chosenNode);
         this.data.selected.complete();
     }

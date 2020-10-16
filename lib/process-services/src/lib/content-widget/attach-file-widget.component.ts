@@ -195,9 +195,8 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         }
         if (file.sourceId) {
             const sourceHost = this.findSource(file.source);
-            if (this.isExternalHost(sourceHost)) {
+            if (sourceHost && this.isExternalHost(sourceHost)) {
                 this.attachDialogService.downloadURL(sourceHost, file.sourceId).subscribe((nodeUrl) => {
-                    console.log(nodeUrl);
                     this.downloadService.downloadUrl(nodeUrl, file.name);
                 });
             } else {
@@ -217,14 +216,13 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     openSelectDialog(repository: AlfrescoEndpointRepresentation) {
-        const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
         if (this.isExternalHost(repository)) {
             this.uploadFileFromExternalCS(repository);
         } else {
             this.contentDialog.openFileBrowseDialogByDefaultLocation().subscribe(
                 (selections: Node[]) => {
                     this.tempFilesList.push(...selections);
-                    this.uploadFileFromCS(selections, accountIdentifier);
+                    this.uploadFileFromCS(selections, `alfresco-${repository.id}-${repository.name}`);
                 });
         }
     }
@@ -236,20 +234,15 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     private findSource(sourceIdentifier: string): AlfrescoEndpointRepresentation {
-        return this.repositoryList.find(repository => {
-            const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
-            return sourceIdentifier === accountIdentifier;
-        });
+        return this.repositoryList.find(repository => sourceIdentifier === `alfresco-${repository.id}-${repository.name}`);
     }
 
     private uploadFileFromExternalCS(repository: AlfrescoEndpointRepresentation, currentFolderId?: string) {
-        const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
-
         this.attachDialogService.openLogin(repository, currentFolderId).subscribe(
             (selections: any[]) => {
                 selections.forEach((node) => node.isExternal = true);
                 this.tempFilesList.push(...selections);
-                this.uploadFileFromCS(selections, accountIdentifier);
+                this.uploadFileFromCS(selections, `alfresco-${repository.id}-${repository.name}`);
             });
     }
 

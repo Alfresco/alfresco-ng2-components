@@ -44,6 +44,8 @@ describe('AttachFileWidgetDialogComponent', () => {
     let siteService: SitesService;
     let nodeService: NodesApiService;
     let documentListService: DocumentListService;
+    let apiService: AlfrescoApiService;
+    let matDialogRef: MatDialogRef<AttachFileWidgetDialogComponent>;
 
     let isLogged = false;
     const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
@@ -70,6 +72,8 @@ describe('AttachFileWidgetDialogComponent', () => {
         siteService = fixture.debugElement.injector.get(SitesService);
         nodeService = fixture.debugElement.injector.get(NodesApiService);
         documentListService = fixture.debugElement.injector.get(DocumentListService);
+        matDialogRef = fixture.debugElement.injector.get(MatDialogRef);
+        apiService = fixture.debugElement.injector.get(AlfrescoApiService);
 
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
         spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
@@ -170,4 +174,39 @@ describe('AttachFileWidgetDialogComponent', () => {
             expect(titleElement.nativeElement.innerText).toBe('ATTACH-FILE.ACTIONS.CHOOSE_ITEM');
         });
    });
+
+    describe('login only', () => {
+        beforeEach(async(() => {
+            spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket'}));
+            spyOn(matDialogRef, 'close').and.callThrough();
+            fixture.detectChanges();
+            widget.data.loginOnly = true;
+            widget.data.registerExternalHost = () => {};
+            isLogged = false;
+        }));
+
+        it('should close the dialog once user loggedIn', () => {
+            fixture.detectChanges();
+            isLogged = true;
+            const loginButton: HTMLButtonElement = element.querySelector('button[data-automation-id="attach-file-dialog-actions-login"]');
+            const usernameInput: HTMLInputElement = element.querySelector('#username');
+            const passwordInput: HTMLInputElement = element.querySelector('#password');
+            usernameInput.value = 'fake-user';
+            passwordInput.value = 'fake-user';
+            usernameInput.dispatchEvent(new Event('input'));
+            passwordInput.dispatchEvent(new Event('input'));
+            loginButton.click();
+            authService.onLogin.next('logged In');
+            fixture.detectChanges();
+            expect(matDialogRef.close).toHaveBeenCalled();
+        });
+
+        it('should close the dialog immediately if user already loggedIn', () => {
+            isLogged = true;
+            fixture.detectChanges();
+            spyOn(apiService, 'getInstance').and.returnValue({ isLoggedIn: () => true });
+            widget.updateExternalHost();
+            expect(matDialogRef.close).toHaveBeenCalled();
+        });
+    });
 });

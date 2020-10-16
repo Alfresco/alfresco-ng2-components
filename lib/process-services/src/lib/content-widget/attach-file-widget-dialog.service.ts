@@ -18,7 +18,7 @@
 import { MatDialog } from '@angular/material/dialog';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
-import { Observable, of, race, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { AlfrescoEndpointRepresentation, Node } from '@alfresco/js-api';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
@@ -29,7 +29,7 @@ import { switchMap } from 'rxjs/operators';
 })
 // tslint:disable-next-line: directive-class-suffix
 export class AttachFileWidgetDialogService {
-    private endpointAuthServices: { [key: string]: AlfrescoApiService } = {};
+    private externalApis: { [key: string]: AlfrescoApiService } = {};
 
     /** Emitted when an error occurs. */
     @Output()
@@ -46,15 +46,15 @@ export class AttachFileWidgetDialogService {
      * @returns Information about the chosen file(s)
      */
     openLogin(repository: AlfrescoEndpointRepresentation, currentFolderId = '-my-'): Observable<Node[]> {
-        const { ecmHost, login, selected } = this.constructPayload(repository);
+        const { title, ecmHost, selected, registerExternalHost } = this.constructPayload(repository);
         const data: AttachFileWidgetDialogComponentData = {
-            title : this.getLoginTitleTranslation(ecmHost),
+            title,
             selected,
             ecmHost,
             currentFolderId,
             isSelectionValid: (entry: Node) => entry.isFile,
             showFilesInResult: true,
-            login: login
+            registerExternalHost
         };
 
         this.openLoginDialog(data, 'adf-attach-file-widget-dialog', '630px');
@@ -66,40 +66,42 @@ export class AttachFileWidgetDialogService {
     }
 
     private showExternalHostLoginDialog(repository: AlfrescoEndpointRepresentation): Observable<AlfrescoApiService> {
-        const { login, selected, ecmHost } = this.constructPayload(repository);
         const data = {
-            title : this.getLoginTitleTranslation(ecmHost),
-            selected,
-            ecmHost,
-            login,
+            ...this.constructPayload(repository),
             loginOnly: true
         };
-        return race(this.dialog.open(AttachFileWidgetDialogComponent, { data, panelClass: 'adf-attach-file-widget-dialog', width: '630px' }).afterClosed(), data.login);
+        return this.dialog.open(AttachFileWidgetDialogComponent, { data, panelClass: 'adf-attach-file-widget-dialog', width: '630px' })
+            .afterClosed();
     }
 
     downloadURL(repository: AlfrescoEndpointRepresentation, sourceId: string): Observable<string> {
-        const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
-        if (this.endpointAuthServices[accountIdentifier]?.getInstance()?.isLoggedIn()) {
-            return of(this.endpointAuthServices[accountIdentifier].contentApi.getContentUrl(sourceId));
+        const { accountIdentifier } = this.constructPayload(repository);
+
+        if (this.externalApis[accountIdentifier]?.getInstance()?.isLoggedIn()) {
+            return of(this.externalApis[accountIdentifier].contentApi.getContentUrl(sourceId));
         }
-        return this.showExternalHostLoginDialog(repository).pipe(switchMap((apiService) => {
-            this.endpointAuthServices[accountIdentifier] = apiService;
-            return of(this.endpointAuthServices[accountIdentifier].getInstance().content.getContentUrl(sourceId));
-        }));
+
+        return this.showExternalHostLoginDialog(repository).pipe(
+            switchMap(() => of(this.externalApis[accountIdentifier].getInstance().content.getContentUrl(sourceId)))
+        );
     }
 
     private constructPayload(repository: AlfrescoEndpointRepresentation) {
         const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
         const ecmHost = repository.repositoryUrl.replace('/alfresco', '');
-        const login = new Subject<AlfrescoApiService>();
         const selected = new Subject<Node[]>();
         selected.subscribe({
             complete: this.close.bind(this)
         });
-        login.subscribe({
-            next: (externalApiService) => this.endpointAuthServices[accountIdentifier] = externalApiService
-        });
-        return { ecmHost, login, selected };
+        const title = this.getLoginTitleTranslation(ecmHost);
+        const registerExternalHost = this.addService.bind(this);
+        return { ecmHost, accountIdentifier, selected, title, registerExternalHost };
+    }
+
+    addService(accountIdentifier: string, apiService: AlfrescoApiService) {
+        if (!this.externalApis[accountIdentifier]) {
+            this.externalApis[accountIdentifier] = apiService;
+        }
     }
 
     /** Closes the currently open dialog. */

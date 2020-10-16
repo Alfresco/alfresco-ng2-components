@@ -17,7 +17,6 @@
 
 import { Subject } from 'rxjs';
 import { Node } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 
 export interface AttachFileWidgetDialogComponentData {
     title: string;
@@ -29,5 +28,6 @@ export interface AttachFileWidgetDialogComponentData {
     isSelectionValid?: (entry: Node) => boolean;
     showFilesInResult?: boolean;
     loginOnly?: boolean;
-    login?: Subject<AlfrescoApiService>;
+    accountIdentifier?: string;
+    registerExternalHost?: Function;
 }
