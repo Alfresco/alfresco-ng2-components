@@ -29,7 +29,8 @@ import {
     ChangeDetectionStrategy,
     ViewChild,
     ElementRef,
-    SimpleChange
+    SimpleChange,
+    Inject
 } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import {
@@ -54,7 +55,11 @@ import {
     animate
 } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
-import { PeopleServiceImplementation } from '../services/people-service-implementation';
+// import { PeopleCloudService } from '../services/people-cloud.service';
+import { PEOPLE_SEARCH_SERVICE_TOKEN } from '../../services/cloud-token.service';
+import { PeopleCloudServiceInterface } from '../../services/people-cloud-service.interface';
+import { PeopleCloudService } from '../services/people-cloud.service';
+// import { ExampleService } from '../services/exmple.service';
 
 @Component({
     selector: 'adf-cloud-people',
@@ -165,7 +170,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     searchLoading = false;
 
     constructor(
-        private identityUserService: PeopleServiceImplementation,
+        @Inject(PEOPLE_SEARCH_SERVICE_TOKEN)
+        public identityUserService: PeopleCloudServiceInterface,
         private logService: LogService
     ) {}
 
@@ -243,11 +249,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
                     return results$;
                 }),
-                mergeMap(res => res),
                 takeUntil(this.onDestroy$)
             )
-            .subscribe(user => {
-                this._searchUsers.push(user);
+            .subscribe((users) => {
+                this._searchUsers = users;
                 this.searchUsers$.next(this._searchUsers);
             });
     }
@@ -270,26 +275,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         return this.validate === true;
     }
 
-    // private checkUserHasAccess(userId: string): Observable<boolean> {
-    //     if (this.hasRoles()) {
-    //         // return this.identityUserService.checkUserHasAnyClientAppRole(userId, this.clientId, this.roles);
-    //     } else {
-    //         // return this.identityUserService.checkUserHasClientApp(userId, this.clientId);
-    //     }
-
-    //     return null;
-    // }
-
     private hasRoles(): boolean {
         return this.roles && this.roles.length > 0;
-    }
-
-    filterUsersByRoles(user: IdentityUserModel): Observable<IdentityUserModel> {
-        // return this.identityUserService.checkUserHasRole(user.id, this.roles).pipe(
-        //     map((hasRole: boolean) => ({ hasRole: hasRole, user: user })),
-        //     filter((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.hasRole),
-        //     map((filteredUser: { hasRole: boolean, user: IdentityUserModel }) => filteredUser.user));
-        return null;
     }
 
     private isUserAlreadySelected(searchUser: IdentityUserModel): boolean {
@@ -396,15 +383,15 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         switch (key) {
             case 'id':
                 return this.identityUserService
-                    .findUserById(user[key])
+                    .findUsersById(user[key])
                     .toPromise();
             case 'username':
                 return (await this.identityUserService
-                    .findUserByUsername(user[key])
+                    .findUsersByUsername(user[key])
                     .toPromise())[0];
             case 'email':
                 return (await this.identityUserService
-                    .findUserByEmail(user[key])
+                    .findUsersByEmail(user[key])
                     .toPromise())[0];
             default:
                 return null;

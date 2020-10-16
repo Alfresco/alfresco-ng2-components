@@ -18,9 +18,12 @@
 import { Observable } from 'rxjs';
 import { IdentityUserModel } from '@alfresco/adf-core';
 
-export interface PeopleServiceInterface {
+export interface PeopleCloudServiceInterface {
+    getClientIdByApplicationName(appName: string): Observable<string>;
     findUsers(searchTerm: string): Observable<IdentityUserModel[]>;
-
+    findUsersById(id: string): Observable<any>;
+    findUsersByUsername(userName: string): Observable<IdentityUserModel[]>;
+    findUsersByEmail(email: string): Observable<IdentityUserModel[]>;
     findUsersBasedOnAppName(
         clientId: string,
         roles: string[],

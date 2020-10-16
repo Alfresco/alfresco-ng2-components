@@ -22,6 +22,8 @@ import { MaterialModule } from '../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PEOPLE_SEARCH_SERVICE_TOKEN } from '../services/public-api';
+import { PeopleCloudService } from './services/people-cloud.service';
 
 @NgModule({
     imports: [
@@ -33,9 +35,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CoreModule
     ],
     declarations: [PeopleCloudComponent],
-    exports: [
-        PeopleCloudComponent
-    ]
+    providers: [
+        { provide: PEOPLE_SEARCH_SERVICE_TOKEN, useClass: PeopleCloudService }
+    ],
+    exports: [PeopleCloudComponent]
 })
-export class PeopleCloudModule {
-}
+export class PeopleCloudModule {}

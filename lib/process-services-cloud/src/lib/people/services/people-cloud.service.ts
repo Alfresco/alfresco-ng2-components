@@ -16,7 +16,7 @@
  */
 
 import { IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
-import { PeopleServiceInterface } from './people-service.interface';
+import { PeopleCloudServiceInterface } from '../../services/people-cloud-service.interface';
 import {
     mergeMap,
     map,
@@ -25,9 +25,10 @@ import {
 } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-
-@Injectable({ providedIn: 'root' })
-export class PeopleServiceImplementation implements PeopleServiceInterface {
+@Injectable({
+    providedIn: 'root'
+})
+export class PeopleCloudService implements PeopleCloudServiceInterface {
     constructor(private identityUserService: IdentityUserService) {}
 
     findUsers(searchTerm: string): Observable<IdentityUserModel[]> {
@@ -91,15 +92,15 @@ export class PeopleServiceImplementation implements PeopleServiceInterface {
         }
     }
 
-    findUserById(id) {
+    findUsersById(id: string) {
         return this.identityUserService.findUserById(id);
     }
 
-    findUserByUsername(name) {
+    findUsersByUsername(name: string) {
         return this.identityUserService.findUserByUsername(name);
     }
 
-    findUserByEmail(email) {
+    findUsersByEmail(email: string) {
         return this.identityUserService.findUserByEmail(email);
     }
 }
