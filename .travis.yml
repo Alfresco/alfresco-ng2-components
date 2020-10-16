@@ -4,7 +4,9 @@ git:
 
 language: node_js
 arch: arm64-graviton2
-dist: bionic
+virt: lxd
+group: edge
+dist: focal
 node_js:
   - '12.18.4'
 
