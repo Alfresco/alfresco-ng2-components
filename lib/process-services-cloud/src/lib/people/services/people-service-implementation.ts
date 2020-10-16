@@ -17,8 +17,13 @@
 
 import { IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
 import { PeopleServiceInterface } from './people-service.interface';
-import { mergeMap, map, filter, switchMap, concatMap, withLatestFrom, toArray } from 'rxjs/operators';
-import { Observable, of, combineLatest } from 'rxjs';
+import {
+    mergeMap,
+    map,
+    toArray,
+    concatMap
+} from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
@@ -28,62 +33,39 @@ export class PeopleServiceImplementation implements PeopleServiceInterface {
     findUsers(searchTerm: string): Observable<IdentityUserModel[]> {
         return this.identityUserService.findUsersByName(searchTerm.trim());
     }
-    findUsersBasedAppName(
-        clientId: string,
+
+    findUsersBasedOnAppName(
+        clientId: any,
         roles: string[],
         searchTerm: string
     ): Observable<IdentityUserModel[]> {
-        return withLatestFrom(this.findUsers(searchTerm.trim()).pipe(
-            mergeMap(item => item )
-            );
-        // return combineLatest(this.identityUserService
-        //     .getClientIdByApplicationName(appName)
-        //     .pipe(
-        //         switchMap(clientId => {
-        //             return this.findUsers(searchTerm.trim()).pipe(
-        //                 mergeMap(users => users),
-        //                 switchMap(user => {
-        //                     return this.checkUserHasAccess(
-        //                         user.id,
-        //                         clientId,
-        //                         roles
-        //                     ).pipe(
-        //                         map(hasRole => (hasRole ? of(user) : of()))
-        //                     );
-        //                 })
-        //             );
-        //         }),
-        //         withLatestFrom()
-        //     ));
+        return this.findUsers(searchTerm.trim()).pipe(
+            mergeMap(users => users),
+            concatMap((user) => {
+                return this.checkUserHasAccess(user.id, clientId, roles).pipe(
+                    mergeMap((hasRole) => hasRole ? of(user) : of())
+                );
+            }),
+            toArray(),
+            map((filteredUsers) => filteredUsers.filter((filteredUser) => !!filteredUser))
+        );
     }
 
-    filterUsersBasedOnRoles(roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
-        return combineLatest(this.findUsers(searchTerm.trim()).pipe(
+    filterUsersBasedOnRoles(
+        roles: string[],
+        searchTerm: string
+    ): Observable<IdentityUserModel[]> {
+
+        return this.findUsers(searchTerm.trim()).pipe(
             mergeMap(users => users),
-            switchMap(user => {
-                return this.identityUserService
-                    .checkUserHasRole(user.id, roles)
-                    .pipe(
-                        map((hasRole: boolean) => ({
-                            hasRole: hasRole,
-                            user: user
-                        })),
-                        filter(
-                            (filteredUser: {
-                                hasRole: boolean;
-                                user: IdentityUserModel;
-                            }) => filteredUser.hasRole
-                        ),
-                        map(
-                            (filteredUser: {
-                                hasRole: boolean;
-                                user: IdentityUserModel;
-                            }) => filteredUser.user
-                        )
-                    );
+            concatMap((user) => {
+                return this.identityUserService.checkUserHasRole(user.id, roles).pipe(
+                    mergeMap((hasRole) => hasRole ? of(user) : of())
+                );
             }),
-            withLatestFrom()
-        ));
+            toArray(),
+            map((filteredUsers) => filteredUsers.filter((filteredUser) => !!filteredUser))
+        );
     }
 
     getClientIdByApplicationName(appName: string) {
@@ -95,7 +77,7 @@ export class PeopleServiceImplementation implements PeopleServiceInterface {
         clientId: string,
         roles: string[]
     ): Observable<boolean> {
-        if (roles) {
+        if (roles?.length) {
             return this.identityUserService.checkUserHasAnyClientAppRole(
                 userId,
                 clientId,

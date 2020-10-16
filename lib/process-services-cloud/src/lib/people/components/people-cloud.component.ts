@@ -220,35 +220,21 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                 }),
                 debounceTime(500),
                 distinctUntilChanged(),
-                // tap((value: string) => {
-                //     if (value.trim()) {
-                //         this.searchedValue = value;
-                //     } else {
-                //         this.searchUserCtrl.markAsPristine();
-                //         this.searchUserCtrl.markAsUntouched();
-                //     }
-                // }),
-                // tap(() => {
-                //     this.resetSearchUsers();
-                // }),
-                // switchMap((search) =>{
-                //     // if (this.appName) {
-                //     return this.identityUserService.(user.id).pipe(
-                //         mergeMap(
-                //             hasRole => hasRole ? of(user) : of()
-                //         )
-                //     );
-                // } else if (this.hasRoles()) {
-                //     return this.filterUsersByRoles(user);
-                // } else {
-                //     return of(user);
-                // }
-
-                // }),
+                tap((value: string) => {
+                    if (value.trim()) {
+                        this.searchedValue = value;
+                    } else {
+                        this.searchUserCtrl.markAsPristine();
+                        this.searchUserCtrl.markAsUntouched();
+                    }
+                }),
+                tap(() => {
+                    this.resetSearchUsers();
+                }),
                 switchMap((s) => {
                     let results$: Observable<IdentityUserModel[]>;
                     if (this.appName) {
-                        results$ = this.identityUserService.findUsersBasedAppName(this.appName, this.roles, s);
+                        results$ = this.identityUserService.findUsersBasedOnAppName(this.clientId, this.roles, s);
                     } else if (this.hasRoles()) {
                         results$ = this.identityUserService.filterUsersBasedOnRoles(this.roles, s);
                     } else {

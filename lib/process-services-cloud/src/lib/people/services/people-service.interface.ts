@@ -21,8 +21,8 @@ import { IdentityUserModel } from '@alfresco/adf-core';
 export interface PeopleServiceInterface {
     findUsers(searchTerm: string): Observable<IdentityUserModel[]>;
 
-    findUsersBasedAppName(
-        appName: string,
+    findUsersBasedOnAppName(
+        clientId: string,
         roles: string[],
         searchTerm: string
     ): Observable<IdentityUserModel[]>;
