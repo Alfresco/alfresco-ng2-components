@@ -99,7 +99,7 @@ export class FormModel {
             this.className = json.className || '';
             this.variables = json.variables || [];
             this.processVariables = json.processVariables || [];
-            this.enableFixedSpace = enableFixedSpace;
+            this.enableFixedSpace = enableFixedSpace || true;
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 
