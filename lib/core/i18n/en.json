@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
       "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
       "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
-      "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ERROR-CSRF": "CSRF exception, set \"disableCSRF\": true in app.config.json",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services repository is in read-only mode",
       "SSO-WRONG-CONFIGURATION": "SSO Authentication server unreachable"
     },

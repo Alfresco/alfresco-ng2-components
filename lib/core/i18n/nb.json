@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Du har angitt ukjent brukernavn eller passord",
       "LOGIN-ERROR-PROVIDERS": "Leverandører kan ikke være udefinert",
       "LOGIN-ERROR-CORS": "CORS-unntak, kontroller serverkonfigurasjonen",
-      "LOGIN-ERROR-CSRF": "CSRF-unntak, still inn [disableCsrf]=\"sannt\" i påloggingskomponent",
+      "LOGIN-ERROR-CSRF": "CSRF-unntak, still inn \"disableCSRF\": true i pål app.config.json",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services-database i skrivebeskyttet modus",
       "SSO-WRONG-CONFIGURATION": "SSO-godkjenningsserver kan ikke nås"
     },

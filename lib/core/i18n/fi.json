@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Annoit tuntemattoman käyttäjänimen tai salasanan",
       "LOGIN-ERROR-PROVIDERS": "Palveluiden määritystä ei voi poistaa",
       "LOGIN-ERROR-CORS": "Ilmeni CORS-poikkeus, tarkista palvelinmääritykset",
-      "LOGIN-ERROR-CSRF": "Ilmeni CSRF-poikkeus, määritä asetuksen [disableCsrf] arvoksi \"true\" kohteessa login.component",
+      "LOGIN-ERROR-CSRF": "Ilmeni CSRF-poikkeus, määritä asetuksen \"disableCSRF\": true kohteessa app.config.json",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services -säilö on Vain luku -tilassa",
       "SSO-WRONG-CONFIGURATION": "Kertakirjautumisen todennuspalvelimeen ei saada yhteyttä"
     },

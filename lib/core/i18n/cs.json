@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Zadali jste neznámé uživatelské jméno nebo heslo",
       "LOGIN-ERROR-PROVIDERS": "Poskytovatele nelze ponechat nedefinované",
       "LOGIN-ERROR-CORS": "Výjimka CORS. Zkontrolujte konfiguraci serveru.",
-      "LOGIN-ERROR-CSRF": "Výjimka CSRF. Použijte u parametru „login.component“ hodnotu [disableCsrf]=\"true\".",
+      "LOGIN-ERROR-CSRF": "Výjimka CSRF. Použijte u parametru „app.config.json“ hodnotu \"disableCSRF\": true.",
       "LOGIN-ECM-LICENSE": "Úložiště Alfresco Content Services je v režimu „Pouze ke čtení“.",
       "SSO-WRONG-CONFIGURATION": "Server ověrování pomocí jednotného přihlášení je nedostupný"
     },
