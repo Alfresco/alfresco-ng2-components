@@ -40,10 +40,10 @@ describe('Document List Component - Properties', () => {
 
     describe('Allow drop files property', () => {
         beforeEach(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             acsUser = await usersActions.createUser();
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
 
             parentFolder = await uploadActions.createFolder('parentFolder', '-my-');
             subFolder = await uploadActions.createFolder('subFolder', parentFolder.entry.id);
@@ -52,7 +52,7 @@ describe('Document List Component - Properties', () => {
         });
 
         afterEach(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await uploadActions.deleteFileOrFolder(subFolder.entry.id);
             await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
             await navigationBar.clickLogoutButton();

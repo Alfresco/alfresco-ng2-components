@@ -37,10 +37,10 @@ describe('Task Details - No form', () => {
     beforeAll(async () => {
         const usersActions = new UsersActions(apiService);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         processUserModel = await usersActions.createUser();
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.email, processUserModel.password);
         const applicationsService = new ApplicationsUtil(apiService);
         importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         await new ProcessUtil(apiService).startProcessOfApp(importedApp.name);
@@ -48,7 +48,7 @@ describe('Task Details - No form', () => {
    });
 
     afterAll( async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 

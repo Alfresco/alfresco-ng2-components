@@ -55,10 +55,10 @@ describe('Attach widget - File', () => {
     const appFields = app.form_fields;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         processUserModel = await usersActions.createUser();
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.email, processUserModel.password);
 
         await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.login(processUserModel.email, processUserModel.password);
@@ -79,7 +79,7 @@ describe('Attach widget - File', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 

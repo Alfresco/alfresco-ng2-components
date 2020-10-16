@@ -53,11 +53,11 @@ describe('Items per page set to 15 and adding of tasks', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         processUserModel = await usersActions.createUser();
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.email, processUserModel.password);
 
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 

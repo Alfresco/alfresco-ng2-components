@@ -18,7 +18,6 @@
 import { ApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { TreeViewPage } from './pages/tree-view.page';
-import { browser } from 'protractor';
 
 describe('Tree View Component', () => {
 
@@ -43,11 +42,11 @@ describe('Tree View Component', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         acsUser = await usersActions.createUser();
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         treeFolder = await apiService.getInstance().nodes.addNode(nodeNames.parentFolder, {
             name: nodeNames.folder,
@@ -74,7 +73,7 @@ describe('Tree View Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await uploadActions.deleteFileOrFolder(treeFolder.entry.id);
         await uploadActions.deleteFileOrFolder(secondTreeFolder.entry.id);

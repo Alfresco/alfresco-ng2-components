@@ -51,7 +51,7 @@ describe('Upload - User permission', () => {
     let acsUser, acsUserTwo, consumerSite, managerSite;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         acsUser = await usersActions.createUser(acsUser);
         acsUserTwo = await usersActions.createUser(acsUserTwo);

@@ -49,12 +49,12 @@ describe('Lock File', () => {
     let nodeId, site, documentLibrary, lockedFileNodeId;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(adminUser);
         await usersActions.createUser(managerUser);
 
-        await apiService.getInstance().login(adminUser.email, adminUser.password);
+        await apiService.login(adminUser.email, adminUser.password);
 
         site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
@@ -96,7 +96,7 @@ describe('Lock File', () => {
 
         afterEach(async () => {
             try {
-                await apiService.getInstance().login(adminUser.email, adminUser.password);
+                await apiService.login(adminUser.email, adminUser.password);
 
                 await uploadActions.deleteFileOrFolder(nodeId);
 
@@ -106,7 +106,7 @@ describe('Lock File', () => {
 
         afterAll(async () => {
             try {
-                await apiService.getInstance().login(adminUser.email, adminUser.password);
+                await apiService.login(adminUser.email, adminUser.password);
 
                 await apiService.getInstance().core.nodesApi.unlockNode(lockedFileNodeId);
 
@@ -172,7 +172,7 @@ describe('Lock File', () => {
         });
 
         afterEach(async () => {
-            await apiService.getInstance().login(adminUser.email, adminUser.password);
+            await apiService.login(adminUser.email, adminUser.password);
 
             try {
                 await apiService.getInstance().core.nodesApi.unlockNode(nodeId);
@@ -263,7 +263,7 @@ describe('Lock File', () => {
     });
 
         afterEach(async () => {
-            await apiService.getInstance().login(adminUser.email, adminUser.password);
+            await apiService.login(adminUser.email, adminUser.password);
 
             try {
                 await uploadActions.deleteFileOrFolder(nodeId);

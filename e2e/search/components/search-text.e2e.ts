@@ -50,11 +50,11 @@ describe('Search component - Text widget', () => {
     const newFolderModel = new FolderModel({ 'description': 'newDescription' });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         await apiService.getInstance().nodes.addNode('-my-', {
             'name': newFolderModel.name,

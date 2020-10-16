@@ -83,13 +83,13 @@ describe('Start Process Component', () => {
     describe('Provider: BPM', () => {
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             const usersActions = new UsersActions(apiService);
             procUserModel = await usersActions.createUser();
             secondProcUserModel = await usersActions.createUser(new UserModel({ tenantId: procUserModel.tenantId }));
 
-            await apiServiceUserTwo.getInstance().login(secondProcUserModel.email, secondProcUserModel.password);
+            await apiServiceUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);
 
             const applicationsService = new ApplicationsUtil(apiServiceUserTwo);
             appCreated = await applicationsService.importPublishDeployApp(app.file_path);

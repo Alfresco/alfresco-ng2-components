@@ -64,7 +64,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             acsUser = await usersActions.createUser();
 
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
 
             folder = await uploadActions.createFolder(folderName, '-my-');
 
@@ -85,7 +85,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
         afterAll(async () => {
             try {
-                await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+                await apiService.loginWithProfile('admin');
                 await uploadActions.deleteFileOrFolder(folder.entry.id);
                 await identityService.deleteIdentityUser(acsUser.email);
             } catch (error) {

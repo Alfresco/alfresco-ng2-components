@@ -86,6 +86,19 @@ export class ApiService {
         await this.apiService.login(username, password);
     }
 
+    /**
+     * Login using one of the account profiles from the `browser.params.testConfig`.
+     * Example: loginWithProfile('admin')
+     */
+    async loginWithProfile(profileName: string): Promise<void> {
+        const profile = browser.params.testConfig[profileName];
+        if (profile) {
+            await this.apiService.login(profile.email, profile.password);
+        } else {
+            throw new Error(`Login profile "${profileName}" not found on "browser.params.testConfig".`);
+        }
+    }
+
     async performBpmOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         return new Promise((resolve, reject) => {
             const uri = this.config.hostBpm + path;

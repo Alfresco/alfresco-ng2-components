@@ -34,7 +34,7 @@ describe('Document List Component', () => {
     let testFileNode, pdfBFileNode;
 
     afterEach(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         if (uploadedFolder) {
             await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
             uploadedFolder = null;
@@ -78,18 +78,18 @@ describe('Document List Component', () => {
             /* cspell:disable-next-line */
             folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
 
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             acsUser = await usersActions.createUser();
 
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
             uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
             pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
             docxUploadedNode = await uploadActions.uploadFile(docxFileModel.location, docxFileModel.name, '-my-');
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             if (pdfUploadedNode) {
                 await uploadActions.deleteFileOrFolder(pdfUploadedNode.entry.id);
@@ -126,7 +126,7 @@ describe('Document List Component', () => {
         });
 
         it('[C279928] Should be able to display date with timeAgo', async () => {
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
             timeAgoUploadedNode = await uploadActions.uploadFile(timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
             await contentServicesPage.goToDocumentList();
             const dateValue = await contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
@@ -134,7 +134,7 @@ describe('Document List Component', () => {
         });
 
         it('[C279929] Should be able to display the date with date type', async () => {
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
             mediumDateUploadedNode = await uploadActions.uploadFile(mediumFileModel.location, mediumFileModel.name, '-my-');
             const createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
             await contentServicesPage.goToDocumentList();
@@ -163,10 +163,10 @@ describe('Document List Component', () => {
         let fileANode, fileBNode, fileCNode;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             const user = await usersActions.createUser();
-            await apiService.getInstance().login(user.email, user.password);
+            await apiService.login(user.email, user.password);
 
             fileANode = await uploadActions.uploadFile(fakeFileA.location, fakeFileA.name, '-my-');
             fileBNode = await uploadActions.uploadFile(fakeFileB.location, fakeFileB.name, '-my-');
@@ -178,7 +178,7 @@ describe('Document List Component', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             if (fileANode) {
                 await uploadActions.deleteFileOrFolder(fileANode.entry.id);
             }
@@ -217,7 +217,7 @@ describe('Document List Component', () => {
 
     it('[C279959] Should display empty folder state for new folders', async () => {
         const folderName = 'BANANA';
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
@@ -234,9 +234,9 @@ describe('Document List Component', () => {
         });
         /* cspell:disable-next-line */
         const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
@@ -247,7 +247,7 @@ describe('Document List Component', () => {
     });
 
     it('[C261997] Should be able to clean Recent Files history', async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         const cleanUser = await usersActions.createUser();
         await loginPage.login(cleanUser.email, cleanUser.password);
         await contentServicesPage.clickOnContentServices();
@@ -262,9 +262,9 @@ describe('Document List Component', () => {
     it('[C279970] Should display Islocked field for folders', async () => {
         const folderNameA = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         const folderNameB = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderNameA, '-my-');
         uploadedFolderExtra = await uploadActions.createFolder(folderNameB, '-my-');
         await loginPage.login(acsUser.email, acsUser.password);
@@ -284,9 +284,9 @@ describe('Document List Component', () => {
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
             location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
         });
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
         testFileNode = await uploadActions.uploadFile(testFileA.location, testFileA.name, '-my-');
         pdfBFileNode = await uploadActions.uploadFile(testFileB.location, testFileB.name, '-my-');
         await loginPage.login(acsUser.email, acsUser.password);
@@ -302,9 +302,9 @@ describe('Document List Component', () => {
 
         beforeAll(async () => {
             folderCreated = [];
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             acsUser = await usersActions.createUser();
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
             let folderName = '';
             let folder = null;
 
@@ -338,9 +338,9 @@ describe('Document List Component', () => {
         const viewer = new ViewerPage();
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             acsUser = await usersActions.createUser();
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
             file = await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
 
             await loginPage.login(acsUser.email, acsUser.password);

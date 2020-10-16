@@ -141,7 +141,7 @@ describe('Start Task Form', () => {
             'businessKey': StringUtil.generateRandomString()
         });
 
-        await apiService.getInstance().login(testUser.email, testUser.password);
+        await apiService.login(testUser.email, testUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(testFileModel.location, testFileModel.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);

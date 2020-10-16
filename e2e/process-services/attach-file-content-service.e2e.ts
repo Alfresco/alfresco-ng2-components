@@ -78,7 +78,7 @@ describe('Attach File - Content service', () => {
     beforeAll(async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
-        await apiService.getInstance().login(email, password);
+        await apiService.login(email, password);
         user = await usersActions.createUser();
 
         await apiServiceExternal.login(email, password);
@@ -95,7 +95,7 @@ describe('Attach File - Content service', () => {
             host: browser.params.testConfig.adf_external_acs.host
         });
 
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, '-my-');
         await applicationService.importPublishDeployApp(app.file_path);
 
@@ -104,7 +104,7 @@ describe('Attach File - Content service', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(email, password);
+        await apiService.login(email, password);
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 

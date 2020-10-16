@@ -63,11 +63,11 @@ describe('Process List - Pagination', () => {
     let totalPages;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         processUserModel = await usersActions.createUser();
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.email, processUserModel.password);
 
         deployedTestApp = await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -76,7 +76,7 @@ describe('Process List - Pagination', () => {
 
     describe('With processes Pagination', () => {
         beforeAll(async () => {
-            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+            await apiService.login(processUserModel.email, processUserModel.password);
 
             for (let i = 0; i < nrOfProcesses; i++) {
                 await new ProcessUtil(apiService).startProcessOfApp(deployedTestApp.name);

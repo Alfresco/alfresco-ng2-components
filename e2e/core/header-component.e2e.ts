@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 import { ApiService, HeaderPage, LoginPage, SettingsPage, UserModel, UsersActions } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 
 describe('Header Component', () => {
@@ -45,7 +44,7 @@ describe('Header Component', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
         await loginPage.login(acsUser.email, acsUser.password);

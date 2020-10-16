@@ -55,7 +55,7 @@ describe('Attach Folder', () => {
     beforeAll(async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
 
         await integrationService.addCSIntegration({
@@ -63,7 +63,7 @@ describe('Attach Folder', () => {
             name: 'adf dev',
             host: browser.params.testConfig.appConfig.ecmHost
         });
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
         await new UploadActions(apiService).createFolder(folderName, '-my-');
         await searchService.isSearchable(folderName);
@@ -71,7 +71,7 @@ describe('Attach Folder', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 

@@ -43,11 +43,11 @@ describe('Process Instance Details', () => {
     const PROCESS_DATE_FORMAT = 'll';
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         user = await usersActions.createUser();
 
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
         const processModel = await new ProcessUtil(apiService).startProcessOfApp(appModel.name);
@@ -65,7 +65,7 @@ describe('Process Instance Details', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appModel.id);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 

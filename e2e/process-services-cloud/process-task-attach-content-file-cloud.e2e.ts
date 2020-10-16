@@ -93,7 +93,7 @@ describe('Process Task - Attach content file', () => {
 
         const task = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
         await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
-        await apiService.getInstance().login(testUser.email, testUser.password);
+        await apiService.login(testUser.email, testUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(pdfFileOne.location, pdfFileOne.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, uploadedFolder.entry.id);

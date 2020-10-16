@@ -61,11 +61,11 @@ describe('Attachment list action menu for tasks', () => {
 
     beforeAll(async () => {
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         const user = await usersActions.createUser();
         tenantId = user.tenantId;
 
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
         const applicationsService = new ApplicationsUtil(apiService);
         const { id } = await applicationsService.importPublishDeployApp(app.file_path);
         appId = id;
@@ -75,7 +75,7 @@ describe('Attachment list action menu for tasks', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 

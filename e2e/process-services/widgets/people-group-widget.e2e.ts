@@ -37,11 +37,11 @@ describe('People and Group widget', () => {
     let user: UserModel;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         user = await usersActions.createUser();
         await createGroupAndUsers(user.tenantId);
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
 
         await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
 
@@ -115,7 +115,7 @@ describe('People and Group widget', () => {
     });
 
     async function createGroupAndUsers(tenantId: number) {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         const userCreated = await Promise.all(app.groupUser.map(usersToCreate =>
             usersActions.createUser(new UserModel({

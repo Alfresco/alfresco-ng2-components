@@ -51,11 +51,11 @@ describe('Form widgets', () => {
         const appFields = appWidget.form_fields;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             processUserModel = await usersActions.createUser();
 
-            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+            await apiService.login(processUserModel.email, processUserModel.password);
 
             appModelWidget = await applicationsService.importPublishDeployApp(appWidget.file_path);
 
@@ -83,7 +83,7 @@ describe('Form widgets', () => {
 
         afterAll(async () => {
             await new NavigationBarPage().clickLogoutButton();
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
             await apiService.getInstance().logout();
@@ -199,11 +199,11 @@ describe('Form widgets', () => {
         let appModel;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             processUserModel = await usersActions.createUser();
 
-            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+            await apiService.login(processUserModel.email, processUserModel.password);
             appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
             const processUtil = new ProcessUtil(apiService);
@@ -220,7 +220,7 @@ describe('Form widgets', () => {
 
         afterAll(async () => {
             await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
         });
 

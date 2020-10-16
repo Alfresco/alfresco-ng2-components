@@ -19,7 +19,6 @@ import { ApiService, BrowserActions, LoginPage, StringUtil, UserModel, UsersActi
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { CreateLibraryDialogPage } from '../../core/pages/dialog/create-library-dialog.page';
 import { CustomSourcesPage } from '../../core/pages/custom-sources.page';
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Create library directive', () => {
@@ -43,7 +42,7 @@ describe('Create library directive', () => {
     let acsUser: UserModel;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         acsUser = await usersActions.createUser();
         createSite = await apiService.getInstance().core.sitesApi.createSite({
