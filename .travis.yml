@@ -3,6 +3,7 @@ git:
   quiet: true
 
 language: node_js
+arch: arm64-graviton2
 dist: bionic
 node_js:
   - '12.18.4'
