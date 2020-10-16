@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Du har angett ett okänt användarnamn eller lösenord",
       "LOGIN-ERROR-PROVIDERS": "Leverantörer kan inte avdefinieras",
       "LOGIN-ERROR-CORS": "CORS-undantag, kontrollera din serverkonfiguration",
-      "LOGIN-ERROR-CSRF": "CSRF-undantag, ställ in [disableCsrf]=\"true\" i login.component",
+      "LOGIN-ERROR-CSRF": "CSRF-undantag, ställ in \"disableCSRF\": true i app.config.json",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services-datakatalog är i skrivskyddat läge",
       "SSO-WRONG-CONFIGURATION": "SSO-autentiseringsserver kan inte nås"
     },

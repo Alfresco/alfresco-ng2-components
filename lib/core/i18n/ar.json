@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "لقد أدخلت اسم مستخدم أو كلمة سر غير معروفة",
       "LOGIN-ERROR-PROVIDERS": "لا يمكن أن يكون الموفرون غير محددين",
       "LOGIN-ERROR-CORS": "استثناء CORS، تحقق من تكوين الخادم لديك",
-      "LOGIN-ERROR-CSRF": "استثناء CSRF، قم بتعيين [disableCsrf]=\"true\" في login.component",
+      "LOGIN-ERROR-CSRF": "استثناء CSRF، قم بتعيين \"disableCSRF\": true في app.config.json",
       "LOGIN-ECM-LICENSE": "مستودع Alfresco Content Services في وضع للقراءة فقط",
       "SSO-WRONG-CONFIGURATION": "خادم مصادقة SSO غير قابل للوصول"
     },

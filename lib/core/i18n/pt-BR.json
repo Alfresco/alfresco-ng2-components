@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Você inseriu um nome de usuário ou senha desconhecida",
       "LOGIN-ERROR-PROVIDERS": "Provedores não podem ficar indefinidos",
       "LOGIN-ERROR-CORS": "Exceção CORS, verifique a configuração do servidor",
-      "LOGIN-ERROR-CSRF": "Exceção CSRF, set [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ERROR-CSRF": "Exceção CSRF, set \"disableCSRF\": true in app.config.json",
       "LOGIN-ECM-LICENSE": "O repositório do Alfresco Content Services está em modo somente leitura",
       "SSO-WRONG-CONFIGURATION": "Servidor de autenticação SSO inacessível"
     },

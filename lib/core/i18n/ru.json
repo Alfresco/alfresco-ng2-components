@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Вы ввели неверное имя пользователя или пароль",
       "LOGIN-ERROR-PROVIDERS": "Поставщики не могут оставаться неопределенными",
       "LOGIN-ERROR-CORS": "Исключение CORS, проверьте конфигурацию сервера",
-      "LOGIN-ERROR-CSRF": "Исключение CSRF, установите [disableCsrf]=\"true\" в login.component",
+      "LOGIN-ERROR-CSRF": "Исключение CSRF, установите \"disableCSRF\": true в app.config.json",
       "LOGIN-ECM-LICENSE": "Репозиторий Alfresco Content Services находится в режиме только для чтения",
       "SSO-WRONG-CONFIGURATION": "Сервер авторизации SSO недоступен"
     },

@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Wprowadzono nieznaną nazwę użytkownika lub hasło.",
       "LOGIN-ERROR-PROVIDERS": "Nie można zidentyfikować dostawców.",
       "LOGIN-ERROR-CORS": "Wystąpił wyjątek CORS. Sprawdź konfigurację serwera.",
-      "LOGIN-ERROR-CSRF": "Wystąpił wyjątek CSRF. Ustaw w składniku logowania wartość [disableCsrf]=\"true\".",
+      "LOGIN-ERROR-CSRF": "Wystąpił wyjątek CSRF. Ustaw w app.config.json wartość \"disableCSRF\": true .",
       "LOGIN-ECM-LICENSE": "Repozytorium usług Alfresco Content Services jest w trybie tylko do odczytu.",
       "SSO-WRONG-CONFIGURATION": "Serwer uwierzytelniania SSO jest nieosiągalny"
     },

@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Sie haben einen unbekannten Benutzernamen oder ein falsches Passwort eingegeben",
       "LOGIN-ERROR-PROVIDERS": "Provider müssen definiert werden",
       "LOGIN-ERROR-CORS": "CORS-Ausnahme; überprüfen Sie Ihre Serverkonfiguration",
-      "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
+      "LOGIN-ERROR-CSRF": "CSRF exception, set \"disableCSRF\": true in app.config.json",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services-Repository ist schreibgeschützt",
       "SSO-WRONG-CONFIGURATION": "Server für SSO-Authentifizierung nicht erreichbar"
     },

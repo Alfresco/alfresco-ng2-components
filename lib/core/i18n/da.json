@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Du har skrevet et ukendt brugernavn eller en ukendt adgangskode",
       "LOGIN-ERROR-PROVIDERS": "Der skal angives en definition for udbydere",
       "LOGIN-ERROR-CORS": "CORS-undtagelse. Kontrollér din serverkonfiguration",
-      "LOGIN-ERROR-CSRF": "CSRF-undtagelse. Angiv [disableCsrf]=\"true\" i login.component",
+      "LOGIN-ERROR-CSRF": "CSRF-undtagelse. Angiv \"disableCSRF\": true i app.config.json",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services-lageret er i skrivebeskyttet tilstand",
       "SSO-WRONG-CONFIGURATION": "Der kan ikke oprettes forbindelse til SSO-godkendelsesserveren"
     },
