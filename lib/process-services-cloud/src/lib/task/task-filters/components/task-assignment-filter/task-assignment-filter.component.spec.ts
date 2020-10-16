@@ -46,6 +46,14 @@ describe('EditTaskFilterCloudComponent', () => {
         fixture = TestBed.createComponent(TaskAssignmentFilterCloudComponent);
         component = fixture.componentInstance;
         identityUserService = TestBed.inject(IdentityUserService);
+        component.taskFilterProperty = {
+            key: 'assignment',
+            label: 'mock-filter',
+            value: null,
+            type: 'dateRange',
+            attributes: null,
+            options: null
+        };
         fixture.detectChanges();
     });
 

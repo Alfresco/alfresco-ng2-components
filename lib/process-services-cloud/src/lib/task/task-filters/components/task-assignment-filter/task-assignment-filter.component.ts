@@ -47,8 +47,10 @@ export class TaskAssignmentFilterCloudComponent implements OnInit {
     constructor(private identityUserService: IdentityUserService) {}
 
     ngOnInit() {
-        this.setDefaultAssignedGroups();
-        this.setDefaultAssignmentType();
+        if (this.isFilterPropertyDefined()) {
+            this.setDefaultAssignedGroups();
+            this.setDefaultAssignmentType();
+        }
     }
 
     isCandidateGroupsType(): boolean {
@@ -84,5 +86,9 @@ export class TaskAssignmentFilterCloudComponent implements OnInit {
     private setDefaultAssignedGroups() {
         const assignmentGroupsAttr = this.taskFilterProperty.attributes['candidateGroups'];
         this.candidateGroups = this.taskFilterProperty.value[assignmentGroupsAttr];
+    }
+
+    private isFilterPropertyDefined(): boolean {
+        return !!this.taskFilterProperty.attributes && !!this.taskFilterProperty.value;
     }
 }
