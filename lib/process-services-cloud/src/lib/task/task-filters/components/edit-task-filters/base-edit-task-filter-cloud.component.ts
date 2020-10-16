@@ -27,7 +27,7 @@ import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
-import { IdentityUserModel, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { IdentityGroupModel, IdentityUserModel, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
 @Directive()
 // tslint:disable-next-line: directive-class-suffix
@@ -202,6 +202,10 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
         return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
     }
 
+    isAssignmentType(property: TaskFilterProperties): boolean {
+        return property.type === 'assignment';
+    }
+
     /**
      * Return filter name
      * @param filterName
@@ -298,6 +302,16 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
 
     onChangedUser(users: IdentityUserModel[], userProperty: TaskFilterProperties) {
         this.getPropertyController(userProperty).setValue(users[0]);
+    }
+
+    onAssignedChange(assignedValue: IdentityUserModel) {
+        this.editTaskFilterForm.get('candidateGroups').setValue([]);
+        this.editTaskFilterForm.get('assignee').setValue(assignedValue?.username);
+    }
+
+    onAssignedGroupsChange(groups: IdentityGroupModel[]) {
+        this.editTaskFilterForm.get('assignee').setValue(null);
+        this.editTaskFilterForm.get('candidateGroups').setValue(groups);
     }
 
     hasError(property: TaskFilterProperties): boolean {

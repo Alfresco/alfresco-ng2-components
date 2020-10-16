@@ -30,6 +30,7 @@ export class TaskFilterCloudModel  {
     status: string;
     sort: string;
     assignee: string;
+    candidateGroups: IdentityGroupModel[];
     order: string;
     owner: string;
     processDefinitionName?: string;
@@ -47,9 +48,9 @@ export class TaskFilterCloudModel  {
     lastModifiedTo: string;
     completedDateType: DateCloudFilterType;
     createdDateType: DateCloudFilterType;
+    assignmentType: AssignmentType;
     completedDate: Date;
     completedBy: IdentityUserModel;
-    candidateGroups: IdentityGroupModel[];
 
     private _completedFrom: string;
     private _completedTo: string;

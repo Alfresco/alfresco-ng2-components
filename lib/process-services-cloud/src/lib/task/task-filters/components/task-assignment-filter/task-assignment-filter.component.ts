@@ -18,7 +18,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { IdentityGroupModel, IdentityUserModel, IdentityUserService } from '@alfresco/adf-core';
-import { AssignmentType } from '../../models/filter-cloud.model';
+import { AssignmentType, TaskFilterProperties } from '../../models/filter-cloud.model';
 
 @Component({
     selector: 'adf-cloud-task-assignment-filter',
@@ -29,15 +29,17 @@ export class TaskAssignmentFilterCloudComponent implements OnInit {
 
     @Input() appName: string;
 
-    @Input() assignment: IdentityUserModel | IdentityGroupModel[];
+    @Input() taskFilterProperty: TaskFilterProperties;
 
-    @Output() assignedChange = new EventEmitter<IdentityGroupModel[] | IdentityUserModel>();
+    @Output() assignedChange = new EventEmitter<IdentityUserModel>();
+
+    @Output() assignedGroupChange = new EventEmitter<IdentityGroupModel[]>();
 
     assignmentType: AssignmentType;
-    currentGroup: IdentityGroupModel[] = [];
+    candidateGroups: IdentityGroupModel[] = [];
     groupForm: AbstractControl = new FormControl('');
     assignmentTypeList = {
-        unassinged: AssignmentType.UNASSIGNED,
+        unassigned: AssignmentType.UNASSIGNED,
         currentUser: AssignmentType.CURRENT_USER,
         candidateGroups: AssignmentType.CANDIDATE_GROUPS
     };
@@ -45,13 +47,8 @@ export class TaskAssignmentFilterCloudComponent implements OnInit {
     constructor(private identityUserService: IdentityUserService) {}
 
     ngOnInit() {
-        if (!this.assignment) {
-            this.assignmentType = AssignmentType.UNASSIGNED;
-        } else if (Array.isArray(this.assignment)) {
-            this.assignmentType = AssignmentType.CANDIDATE_GROUPS;
-        } else {
-            this.assignmentType = AssignmentType.CURRENT_USER;
-        }
+        this.setDefaultAssignedGroups();
+        this.setDefaultAssignmentType();
     }
 
     isCandidateGroupsType(): boolean {
@@ -59,6 +56,7 @@ export class TaskAssignmentFilterCloudComponent implements OnInit {
     }
 
     onAssignmentTypeChange(type: any) {
+        this.candidateGroups = [];
         if (type === AssignmentType.CURRENT_USER) {
             this.assignedChange.emit(this.identityUserService.getCurrentUserInfo());
         } else if (type === AssignmentType.UNASSIGNED) {
@@ -67,6 +65,24 @@ export class TaskAssignmentFilterCloudComponent implements OnInit {
     }
 
     onChangedGroups(groups: IdentityGroupModel[]) {
-        this.assignedChange.emit(groups);
+        this.assignedGroupChange.emit(groups);
+    }
+
+    private setDefaultAssignmentType() {
+        const assignmentAttr = this.taskFilterProperty.attributes['assignee'];
+        const assignee = this.taskFilterProperty.value[assignmentAttr];
+
+        if (this.candidateGroups.length > 0) {
+            this.assignmentType = AssignmentType.CANDIDATE_GROUPS;
+        } else if (assignee) {
+            this.assignmentType = AssignmentType.CURRENT_USER;
+        } else {
+            this.assignmentType = AssignmentType.UNASSIGNED;
+        }
+    }
+
+    private setDefaultAssignedGroups() {
+        const assignmentGroupsAttr = this.taskFilterProperty.attributes['candidateGroups'];
+        this.candidateGroups = this.taskFilterProperty.value[assignmentGroupsAttr];
     }
 }
