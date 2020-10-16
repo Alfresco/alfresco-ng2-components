@@ -119,7 +119,8 @@
     ],
     "include": [
       "path",
-      "allowableOperations"
+      "allowableOperations",
+      "properties"
     ],
     "sorting": {
       "options": [
