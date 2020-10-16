@@ -44,11 +44,13 @@ export class EditTaskFilterCloudComponentPage {
     private locatorStatusDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-status']`));
     private locatorSortDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-sort']`));
     private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`));
+    private locatorCompletedDateDropdown = element(by.css(`mat-select[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`));
 
     appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
     statusDropdown = new DropdownPage(this.locatorStatusDropdown);
     sortDropdown = new DropdownPage(this.locatorSortDropdown);
     orderDropdown = new DropdownPage(this.locatorOrderDropdown);
+    completedDateDropdown = new DropdownPage(this.locatorCompletedDateDropdown);
 
     editTaskFilterDialogPage = new EditTaskFilterDialogPage();
 
@@ -92,6 +94,11 @@ export class EditTaskFilterCloudComponentPage {
 
     async getOrderFilterDropDownValue(): Promise<string> {
         return this.orderDropdown.getSelectedOptionText();
+    }
+
+    async setCompleteDateFilterDropDown(option: string): Promise<void> {
+        await this.completedDateDropdown.selectDropdownOption(option);
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async setAssignee(option: string): Promise<void> {
