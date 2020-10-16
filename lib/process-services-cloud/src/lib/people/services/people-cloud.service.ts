@@ -35,11 +35,7 @@ export class PeopleCloudService implements PeopleCloudServiceInterface {
         return this.identityUserService.findUsersByName(searchTerm.trim());
     }
 
-    findUsersBasedOnAppName(
-        clientId: any,
-        roles: string[],
-        searchTerm: string
-    ): Observable<IdentityUserModel[]> {
+    findUsersBasedOnApp(clientId: string, roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
         return this.findUsers(searchTerm.trim()).pipe(
             mergeMap(users => users),
             concatMap((user) => {
@@ -52,11 +48,7 @@ export class PeopleCloudService implements PeopleCloudServiceInterface {
         );
     }
 
-    filterUsersBasedOnRoles(
-        roles: string[],
-        searchTerm: string
-    ): Observable<IdentityUserModel[]> {
-
+    filterUsersBasedOnRoles(roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
         return this.findUsers(searchTerm.trim()).pipe(
             mergeMap(users => users),
             concatMap((user) => {
@@ -69,38 +61,47 @@ export class PeopleCloudService implements PeopleCloudServiceInterface {
         );
     }
 
-    getClientIdByApplicationName(appName: string) {
+    getClientIdByApplicationName(appName: string): Observable<string> {
         return this.identityUserService.getClientIdByApplicationName(appName);
     }
 
-    private checkUserHasAccess(
-        userId: string,
-        clientId: string,
-        roles: string[]
-    ): Observable<boolean> {
+    private checkUserHasAccess(userId: string, clientId: string, roles: string[]): Observable<boolean> {
+        let hasAccess$: Observable<boolean>;
         if (roles?.length) {
-            return this.identityUserService.checkUserHasAnyClientAppRole(
+            hasAccess$ = this.identityUserService.checkUserHasAnyClientAppRole(
                 userId,
                 clientId,
                 roles
             );
         } else {
-            return this.identityUserService.checkUserHasClientApp(
+            hasAccess$ = this.identityUserService.checkUserHasClientApp(
                 userId,
                 clientId
             );
         }
+
+        return hasAccess$;
     }
 
-    findUsersById(id: string) {
-        return this.identityUserService.findUserById(id);
+    validatePreselectedUser(preselectedUser: IdentityUserModel): Observable<IdentityUserModel> {
+       const key = preselectedUser.id ? 'id' : preselectedUser.email ? 'email' : preselectedUser.username ? 'username' : null;
+       let result$:  Observable<IdentityUserModel>;
+
+       switch (key) {
+            case 'id':
+                result$ = this.identityUserService.findUserById(preselectedUser[key]);
+                break;
+            case 'username':
+                result$ = this.identityUserService.findUserByUsername(preselectedUser[key]).pipe(map((users: IdentityUserModel[]) => users[0]));
+                break;
+            case 'email':
+                result$ = this.identityUserService.findUserByEmail(preselectedUser[key]).pipe(map((users: IdentityUserModel[]) => users[0]));
+                break;
+            default:
+                result$ = of();
+        }
+
+       return result$;
     }
 
-    findUsersByUsername(name: string) {
-        return this.identityUserService.findUserByUsername(name);
-    }
-
-    findUsersByEmail(email: string) {
-        return this.identityUserService.findUserByEmail(email);
-    }
 }

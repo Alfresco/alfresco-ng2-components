@@ -16,5 +16,5 @@
  */
 
 export * from './components/people-cloud.component';
-
+export * from './services/people-cloud.service';
 export * from './people-cloud.module';
