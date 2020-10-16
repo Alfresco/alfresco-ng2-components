@@ -17,22 +17,27 @@
 
 /* tslint:disable:component-selector */
 
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import {
-    UploadWidgetComponent,
+    ActivitiContentService,
+    AppConfigService,
+    AppConfigValues,
+    ContentService,
+    DownloadService,
     FormService,
     LogService,
-    ThumbnailService,
     ProcessContentService,
-    ActivitiContentService,
-    AppConfigValues,
-    AppConfigService,
-    DownloadService,
-    ContentService
+    ThumbnailService,
+    UploadWidgetComponent
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
-import { Node, RelatedContentRepresentation, NodeChildAssociation } from '@alfresco/js-api';
-import { from, zip, of, Subject } from 'rxjs';
+import {
+    AlfrescoEndpointRepresentation,
+    Node,
+    NodeChildAssociation,
+    RelatedContentRepresentation
+} from '@alfresco/js-api';
+import { from, of, Subject, zip } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 
@@ -56,7 +61,7 @@ import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.servi
 export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit, OnDestroy {
 
     typeId = 'AttachFileWidgetComponent';
-    repositoryList = [];
+    repositoryList: AlfrescoEndpointRepresentation[] = [];
     private tempFilesList = [];
     private onDestroy$ = new Subject<boolean>();
 
@@ -126,9 +131,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     isDefinedSourceFolder(): boolean {
-        return !!this.field.params &&
-            !!this.field.params.fileSource &&
-            !!this.field.params.fileSource.selectedFolder;
+        return !!this.field.params?.fileSource?.selectedFolder;
     }
 
     isTemporaryFile(file): boolean {
@@ -141,7 +144,10 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     openSelectDialogFromFileSource() {
         const params = this.field.params;
-        if (this.isDefinedSourceFolder()) {
+        const repository = this.repositoryList.find((repo) => repo.name === params?.fileSource?.name);
+        if (repository && this.isExternalHost(repository)) {
+            this.uploadFileFromExternalCS(repository, params?.fileSource?.selectedFolder?.pathId);
+        } else {
             this.contentDialog.openFileBrowseDialogByFolderId(params.fileSource.selectedFolder.pathId).subscribe(
                 (selections: Node[]) => {
                     this.tempFilesList.push(...selections);
@@ -188,8 +194,16 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             }
         }
         if (file.sourceId) {
-            const nodeUrl = this.contentService.getContentUrl(file.sourceId);
-            this.downloadService.downloadUrl(nodeUrl, file.name);
+            const sourceHost = this.findSource(file.source);
+            if (this.isExternalHost(sourceHost)) {
+                this.attachDialogService.downloadURL(sourceHost, file.sourceId).subscribe((nodeUrl) => {
+                    console.log(nodeUrl);
+                    this.downloadService.downloadUrl(nodeUrl, file.name);
+                });
+            } else {
+                const nodeUrl = this.contentService.getContentUrl(file.sourceId);
+                this.downloadService.downloadUrl(nodeUrl, file.name);
+            }
         } else {
             this.processContentService.getFileRawContent((<any> file).id).subscribe(
                 (blob: Blob) => {
@@ -202,18 +216,10 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         }
     }
 
-    openSelectDialog(repository) {
+    openSelectDialog(repository: AlfrescoEndpointRepresentation) {
         const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
-        const currentECMHost = this.getDomainHost(this.appConfigService.get(AppConfigValues.ECMHOST));
-        const chosenRepositoryHost = this.getDomainHost(repository.repositoryUrl);
-        if (chosenRepositoryHost !== currentECMHost) {
-            const formattedRepositoryHost = repository.repositoryUrl.replace('/alfresco', '');
-            this.attachDialogService.openLogin(formattedRepositoryHost).subscribe(
-                (selections: any[]) => {
-                    selections.forEach((node) => node.isExternal = true);
-                    this.tempFilesList.push(...selections);
-                    this.uploadFileFromCS(selections, accountIdentifier);
-                });
+        if (this.isExternalHost(repository)) {
+            this.uploadFileFromExternalCS(repository);
         } else {
             this.contentDialog.openFileBrowseDialogByDefaultLocation().subscribe(
                 (selections: Node[]) => {
@@ -221,6 +227,30 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                     this.uploadFileFromCS(selections, accountIdentifier);
                 });
         }
+    }
+
+    private isExternalHost(repository: AlfrescoEndpointRepresentation): boolean {
+        const currentECMHost = this.getDomainHost(this.appConfigService.get(AppConfigValues.ECMHOST));
+        const chosenRepositoryHost = this.getDomainHost(repository.repositoryUrl);
+        return chosenRepositoryHost !== currentECMHost;
+    }
+
+    private findSource(sourceIdentifier: string): AlfrescoEndpointRepresentation {
+        return this.repositoryList.find(repository => {
+            const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
+            return sourceIdentifier === accountIdentifier;
+        });
+    }
+
+    private uploadFileFromExternalCS(repository: AlfrescoEndpointRepresentation, currentFolderId?: string) {
+        const accountIdentifier = 'alfresco-' + repository.id + '-' + repository.name;
+
+        this.attachDialogService.openLogin(repository, currentFolderId).subscribe(
+            (selections: any[]) => {
+                selections.forEach((node) => node.isExternal = true);
+                this.tempFilesList.push(...selections);
+                this.uploadFileFromCS(selections, accountIdentifier);
+            });
     }
 
     private uploadFileFromCS(fileNodeList: any[], accountId: string, siteId?: string) {

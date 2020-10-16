@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ContentModule, ContentNodeSelectorPanelComponent, DocumentListService } from '@alfresco/adf-content-services';
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
@@ -56,7 +56,8 @@ describe('AttachFileWidgetDialogComponent', () => {
         ],
         providers: [
             { provide: MAT_DIALOG_DATA, useValue: data },
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: MatDialogRef, useValue: { close: () => of() } }
         ],
         schemas: [NO_ERRORS_SCHEMA]
     });
