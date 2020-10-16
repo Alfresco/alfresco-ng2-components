@@ -53,7 +53,7 @@ import { ContentNodeSelectorPanelService } from '@alfresco/adf-content-services'
     },
     encapsulation: ViewEncapsulation.None
 })
-export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit, OnDestroy {
+export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit {
 
     static ALIAS_ROOT_FOLDER = '-root-';
     static ALIAS_USER_FOLDER = '-my-';
@@ -216,9 +216,5 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     isValidAlias(alias: string): boolean {
         return alias && AttachFileCloudWidgetComponent.VALID_ALIAS.includes(alias);
-    }
-
-    ngOnDestroy() {
-        this.contentNodeSelectorPanelService.customModels = [];
     }
 }
