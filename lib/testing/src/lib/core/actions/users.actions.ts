@@ -39,6 +39,10 @@ export class UsersActions {
     }
 
     async createUser(userModel?: UserModel): Promise<UserModel> {
+        if (!this.api.apiService.isLoggedIn()) {
+            await this.api.apiService.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        }
+
         const user = new UserModel({ ...(userModel ? userModel : {}) });
 
         try {
@@ -99,7 +103,7 @@ export class UsersActions {
     }
 
     async createUserWithName(firstName: string, lastName: string): Promise<UserModel> {
-        const user = new UserModel({ firstName:  firstName, lastName: lastName});
+        const user = new UserModel({ firstName: firstName, lastName: lastName });
         return this.createUser(user);
     }
 
