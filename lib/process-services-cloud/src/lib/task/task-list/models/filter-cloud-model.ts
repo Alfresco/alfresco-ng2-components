@@ -23,6 +23,8 @@ export class TaskQueryCloudRequestModel {
     assignee?: string;
     claimedDate?: string;
     createdDate?: Date;
+    createdFrom?: string;
+    createdTo?: string;
     description?: string;
     dueDate?: null;
     lastModifiedFrom?: null;
@@ -54,6 +56,8 @@ export class TaskQueryCloudRequestModel {
             this.assignee = obj.assignee;
             this.claimedDate = obj.claimedDate;
             this.createdDate = obj.createdDate;
+            this.createdFrom = obj.createdFrom;
+            this.createdTo = obj.createdTo;
             this.description = obj.description;
             this.dueDate = obj.dueDate;
             this.lastModifiedFrom = obj.lastModifiedFrom;

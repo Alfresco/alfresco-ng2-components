@@ -161,7 +161,8 @@
       "SORT": "Sort",
       "START_DATE": "StartDate",
       "COMPLETED_BY": "Completed By",
-      "COMPLETED_DATE": "CompletedDate"
+      "COMPLETED_DATE": "CompletedDate",
+      "CREATED_DATE": "CreatedDate"
     },
     "DIALOG": {
       "TITLE": "Save filter as",
