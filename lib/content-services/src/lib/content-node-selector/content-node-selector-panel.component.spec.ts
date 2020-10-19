@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { tick, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NodeEntry, Node, SiteEntry, SitePaging, NodePaging, ResultSetPaging } from '@alfresco/js-api';
+import { NodeEntry, Node, SiteEntry, SitePaging, NodePaging, ResultSetPaging, RequestScope } from '@alfresco/js-api';
 import { SitesService, setupTestBed, NodesApiService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
@@ -963,6 +963,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                     expect(component.target).toEqual(component.documentList);
                 }));
+
+                it('Should set the scope to nodes when the component inits', () => {
+                    const expectedScope: RequestScope = { locations: 'nodes' };
+                    const setScopeSpy = spyOn(component.queryBuilderService, 'setScope');
+                    component.ngOnInit();
+
+                    expect(setScopeSpy).toHaveBeenCalledWith(expectedScope);
+                });
             });
         });
 

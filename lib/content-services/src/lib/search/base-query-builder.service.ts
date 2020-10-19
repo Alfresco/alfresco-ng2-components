@@ -24,7 +24,8 @@ import {
     RequestFacetField,
     RequestSortDefinitionInner,
     ResultSetPaging,
-    RequestHighlight
+    RequestHighlight,
+    RequestScope
 } from '@alfresco/js-api';
 import { SearchCategory } from './search-category.interface';
 import { FilterQuery } from './filter-query.interface';
@@ -52,6 +53,7 @@ export abstract class BaseQueryBuilderService {
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: SearchSortingDefinition[] = [];
     sortingOptions: SearchSortingDefinition[] = [];
+    private scope: RequestScope;
 
     protected userFacetBuckets: { [key: string]: FacetFieldBucket[] } = {};
 
@@ -193,6 +195,14 @@ export abstract class BaseQueryBuilderService {
         return null;
     }
 
+    setScope(scope: RequestScope) {
+        this.scope = scope;
+    }
+
+    getScope(): RequestScope {
+        return this.scope;
+    }
+
     /**
      * Builds the current query and triggers the `updated` event.
      */
@@ -264,6 +274,10 @@ export abstract class BaseQueryBuilderService {
                 sort: this.sort,
                 highlight: this.highlight
             };
+
+            if (this.scope) {
+                result['scope'] = this.scope;
+            }
 
             result['facetFormat'] = 'V2';
             return result;

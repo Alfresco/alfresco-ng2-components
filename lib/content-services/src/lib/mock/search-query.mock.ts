@@ -33,6 +33,9 @@ export const mockQueryBody: QueryBody = <QueryBody> {
     facetIntervals: null,
     facetFields: null,
     sort: [],
+    scope: {
+        locations: 'nodes'
+    },
     highlight: null,
     facetFormat: 'V2'
 };
