@@ -37,7 +37,6 @@ export class ProcessQueryCloudRequestModel {
    completedFrom?: string;
    completedTo?: string;
    completedDate?: string;
-   startedBy?: string;
    maxItems: number;
    skipCount: number;
    sorting?: ProcessListCloudSortingModel[];
@@ -62,7 +61,6 @@ export class ProcessQueryCloudRequestModel {
            this.completedFrom = obj.completedFrom;
            this.completedTo = obj.completedTo;
            this.completedDate = obj.completedDate;
-           this.startedBy = obj.startedBy,
            this.maxItems = obj.maxItems;
            this.skipCount = obj.skipCount;
            this.sorting = obj.sorting;

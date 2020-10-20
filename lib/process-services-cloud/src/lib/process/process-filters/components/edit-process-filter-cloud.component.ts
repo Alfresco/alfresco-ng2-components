@@ -720,7 +720,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STARTED_BY',
                 type: 'people',
                 key: 'initiator',
-                attributes: { customKey: 'initiator' },
                 value: currentProcessFilter.initiator,
                 selectionMode: 'multiple'
             }),

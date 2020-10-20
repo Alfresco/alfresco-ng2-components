@@ -53,7 +53,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     /** Name of the initiator of the process. */
     @Input()
-    initiator: string;
+    initiator: string = '';
 
     /** Filter the processes to display only the ones with this ID. */
     @Input()
