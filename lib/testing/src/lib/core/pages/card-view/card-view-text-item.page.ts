@@ -71,7 +71,7 @@ export class CardTextItemPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.readOnlyField));
     }
 
-    async clickElement(): Promise<void> {
+    async clickField(): Promise<void> {
         await BrowserActions.click(this.rootElement.element(by.css(`button[data-automation-id*='clickable-icon']`)));
     }
 }

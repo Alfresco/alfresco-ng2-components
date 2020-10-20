@@ -66,7 +66,7 @@ export class PeopleCloudComponentPage {
         return this.assigneeChipList.all(by.css('mat-chip')).first().getText();
     }
 
-    async getChipAssigneeNo(): Promise<number> {
+    async getChipAssigneeCount(): Promise<number> {
         await BrowserVisibility.waitUntilElementIsVisible(this.assigneeChipList);
         return this.assigneeChipList.all(by.css('mat-chip')).count();
     }
@@ -87,7 +87,7 @@ export class PeopleCloudComponentPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
     }
 
-    async getNoOfUsersDisplayed(): Promise<number> {
+    async getUsersDisplayedCount(): Promise<number> {
         return this.noOfUsersDisplayed.count();
     }
 
