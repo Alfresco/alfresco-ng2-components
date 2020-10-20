@@ -332,12 +332,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         );
     }
 
-    onChangedUser(users: IdentityUserModel[], property: ProcessFilterProperties) {
-        if (property.attributes) {
-            this.editProcessFilterForm.get(property.attributes?.customKey).setValue(users);
-        } else {
-            this.getPropertyController(property).setValue(users);
-        }
+    onChangedUser(users: IdentityUserModel[], processProperty: ProcessFilterProperties) {
+        this.getPropertyController(processProperty).setValue(users);
     }
 
     hasError(property: ProcessFilterProperties): boolean {
@@ -507,22 +503,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
     }
 
-    isUserSelectionType(property: ProcessFilterProperties): boolean {
-        return property.type === 'user';
-    }
-
     isDisabledForDefaultFilters(action: ProcessFilterAction): boolean {
         return (
             this.processFilterCloudService.isDefaultFilter(this.processFilter.name) &&
             this.actionDisabledForDefault.includes(action.actionType)
         );
-    }
-
-    getPropertyValue(property: ProcessFilterProperties, key: string) {
-        if (!!property.attributes) {
-            return property.value[key];
-        }
-        return property.value;
     }
 
     hasFormChanged(action: ProcessFilterAction): boolean {
@@ -611,7 +596,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 value: 'status'
             },
             {
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.INITIATOR',
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STARTED_BY',
                 key: 'initiator',
                 value: 'initiator'
             },
@@ -693,12 +678,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 options: this.processDefinitionNames
             }),
             new ProcessFilterProperties({
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.INITIATOR',
-                type: 'text',
-                key: 'initiator',
-                value: currentProcessFilter.initiator || ''
-            }),
-            new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
@@ -740,11 +719,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
              new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STARTED_BY',
                 type: 'people',
-                key: 'startedBy',
+                key: 'initiator',
                 attributes: { customKey: 'initiator' },
-                value: {
-                    initiator: currentProcessFilter.initiator || []
-                },
+                value: currentProcessFilter.initiator,
                 selectionMode: 'multiple'
             }),
             new ProcessFilterProperties({

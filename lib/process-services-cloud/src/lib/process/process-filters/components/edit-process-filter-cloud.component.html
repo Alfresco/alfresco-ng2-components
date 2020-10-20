@@ -75,7 +75,7 @@
 
                         <div fxFlex="23%" *ngIf="isUserSelectType(processFilterProperty)">
                             <adf-cloud-people
-                                [preSelectUsers]="getPropertyValue(processFilterProperty, 'initiator')"
+                                [preSelectUsers]="processFilterProperty.value"
                                 [title]="processFilterProperty.label"
                                 [validate]="true"
                                 [appName]="appName"

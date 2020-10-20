@@ -356,7 +356,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_BY',
                 type: 'people',
                 key: 'completedBy',
-                value: this.taskFilter.completedBy ? [this.taskFilter.completedBy] : null,
+                value: this.taskFilter.completedBy ? this.taskFilter.completedBy : null,
                 selectionMode: 'single'
             })
         ];
