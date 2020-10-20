@@ -111,6 +111,12 @@
                                 [mode]="taskFilterProperty.selectionMode"
                                 (changedUsers)="onChangedUser($event, taskFilterProperty)"></adf-cloud-people>
                         </div>
+
+                        <adf-cloud-task-assignment-filter
+                            *ngIf="isAssignmentType(taskFilterProperty)"
+                            [taskFilterProperty]="taskFilterProperty"
+                            (assignedChange)="onAssignedChange($event)"
+                            (assignedGroupChange)="onAssignedGroupsChange($event)"></adf-cloud-task-assignment-filter>
                     </ng-container>
                 </div>
             </form>

@@ -358,6 +358,16 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 key: 'completedBy',
                 value: this.taskFilter.completedBy ? [this.taskFilter.completedBy] : null,
                 selectionMode: 'single'
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
+                type: 'assignment',
+                key: 'assignment',
+                attributes: { assignee: 'assignee', candidateGroups: 'candidateGroups'},
+                value: {
+                    assignee: this.taskFilter.assignee || null,
+                    candidateGroups: this.taskFilter.candidateGroups || []
+                }
             })
         ];
     }

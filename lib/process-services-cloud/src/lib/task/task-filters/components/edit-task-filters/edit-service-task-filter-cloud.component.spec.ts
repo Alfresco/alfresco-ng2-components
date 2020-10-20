@@ -580,7 +580,6 @@ describe('EditServiceTaskFilterCloudComponent', () => {
                 expect(deleteButton).toBeFalsy();
             });
         }));
-
     });
 
     describe('edit filter actions', () => {

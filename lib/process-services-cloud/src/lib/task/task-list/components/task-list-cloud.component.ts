@@ -127,6 +127,10 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
     @Input()
     completedTo: string = '';
 
+    /** Filter the tasks. Display only tasks with candidateGroups equal to the supplied value. */
+    @Input()
+    candidateGroupId: string = '';
+
     constructor(private taskListCloudService: TaskListCloudService,
                 appConfigService: AppConfigService,
                 userPreferences: UserPreferencesService) {
@@ -175,7 +179,8 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
             completedBy: this.completedBy,
             completedFrom: this.completedFrom,
             completedTo: this.completedTo,
-            completedDate: this.completedDate
+            completedDate: this.completedDate,
+            candidateGroupId: this.candidateGroupId
         };
         return new TaskQueryCloudRequestModel(requestNode);
     }

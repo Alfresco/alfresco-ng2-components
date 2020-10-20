@@ -162,7 +162,8 @@
       "START_DATE": "StartDate",
       "COMPLETED_BY": "Completed By",
       "COMPLETED_DATE": "CompletedDate",
-      "CREATED_DATE": "CreatedDate"
+      "CREATED_DATE": "CreatedDate",
+      "CANDIDATE_GROUPS": "CandidateGroups"
     },
     "DIALOG": {
       "TITLE": "Save filter as",
@@ -333,5 +334,12 @@
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Fill form fields with this file's metadata"
+  },
+  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
+    "ASSIGNED_TO_ME": "Assigned to me",
+    "UNASSIGNED": "Unassigned",
+    "LIST_OF_CANDIDATE_USERS": "List of candidate users",
+    "ASSIGNEE": "Assignee",
+    "ASSIGNMENT_TYPE": "Assignment type"
   }
 }

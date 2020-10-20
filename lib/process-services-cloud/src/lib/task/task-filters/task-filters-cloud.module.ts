@@ -31,6 +31,8 @@ import { EditServiceTaskFilterCloudComponent } from './components/edit-task-filt
 import { EditTaskFilterCloudComponent } from './components/edit-task-filters/edit-task-filter-cloud.component';
 import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog/task-filter-dialog-cloud.component';
 import { ServiceTaskFiltersCloudComponent } from './components/service-task-filters-cloud.component';
+import { TaskAssignmentFilterCloudComponent } from './components/task-assignment-filter/task-assignment-filter.component';
+import { GroupCloudModule } from '../../group/group-cloud.module';
 
 @NgModule({
     imports: [
@@ -42,6 +44,7 @@ import { ServiceTaskFiltersCloudComponent } from './components/service-task-filt
         MaterialModule,
         AppListCloudModule,
         CoreModule,
+        GroupCloudModule,
         ProcessCommonModule,
         PeopleCloudModule
     ],
@@ -50,7 +53,8 @@ import { ServiceTaskFiltersCloudComponent } from './components/service-task-filt
         ServiceTaskFiltersCloudComponent,
         EditTaskFilterCloudComponent,
         EditServiceTaskFilterCloudComponent,
-        TaskFilterDialogCloudComponent
+        TaskFilterDialogCloudComponent,
+        TaskAssignmentFilterCloudComponent
     ],
     exports: [
         TaskFiltersCloudComponent,

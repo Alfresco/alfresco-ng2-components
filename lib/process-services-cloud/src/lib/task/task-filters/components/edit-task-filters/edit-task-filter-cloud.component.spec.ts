@@ -694,6 +694,32 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(component.changedTaskFilter.createdTo).toEqual(dateFilter.endDate);
                 done();
             });
+
+            component.onFilterChange();
+        });
+
+        it('should show the task assignment filter', () => {
+            component.appName = 'fake';
+            component.filterProperties = ['assignment'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+            const assignmentComponent = fixture.debugElement.nativeElement.querySelector('adf-cloud-task-assignment-filter');
+            expect(assignmentComponent).toBeTruthy();
+        });
+
+        it('should filter by user assignment', (done) => {
+            const identityUserMock = { firstName: 'fake-identity-first-name', username: 'username', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
+            component.appName = 'fake';
+            component.filterProperties = ['assignment'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            component.onAssignedChange(identityUserMock);
+
+            component.filterChange.subscribe(() => {
+                expect(component.changedTaskFilter.assignee).toEqual(identityUserMock.username);
+                done();
+            });
             component.onFilterChange();
         });
 
@@ -728,6 +754,26 @@ describe('EditTaskFilterCloudComponent', () => {
             component.filterChange.subscribe(() => {
                 expect(component.changedTaskFilter.createdFrom).toEqual(dateFilter.startDate);
                 expect(component.changedTaskFilter.createdTo).toEqual(dateFilter.endDate);
+                done();
+            });
+
+            component.onFilterChange();
+        });
+
+        it('should filter by candidateGroups assignment', (done) => {
+            const identityGroupsMock = [
+                { name: 'group1'},
+                { name: 'group2'}
+            ];
+            component.appName = 'fake';
+            component.filterProperties = ['assignment'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+            component.onAssignedGroupsChange(identityGroupsMock);
+
+            component.filterChange.subscribe(() => {
+                expect(component.changedTaskFilter.candidateGroups).toEqual(identityGroupsMock);
                 done();
             });
             component.onFilterChange();
