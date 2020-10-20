@@ -10,6 +10,7 @@
       "processwithstarteventform": "processwithstarteventform",
       "processwithjsonfilemapping": "processwithjsonfilemapping",
       "assigneeProcess": "assigneeprocess",
+      "candidateusersgroups": "candidateusersgroups",
       "errorStartEventProcess": {
         "process_name": "errorstartevent",
         "error_id": "Error_END_EVENT",
