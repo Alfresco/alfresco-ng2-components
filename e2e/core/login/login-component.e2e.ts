@@ -157,7 +157,7 @@ describe('Login component', () => {
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage..loginWithProfile('admin');
+        await loginPage.loginWithProfile('admin');
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await navigationBarPage.clickContentServicesButton();
@@ -169,7 +169,7 @@ describe('Login component', () => {
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage..loginWithProfile('admin');
+        await loginPage.loginWithProfile('admin');
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.checkAcsContainer();
     });
@@ -179,7 +179,7 @@ describe('Login component', () => {
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage..loginWithProfile('admin');
+        await loginPage.loginWithProfile('admin');
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await navigationBarPage.clickContentServicesButton();
@@ -192,7 +192,7 @@ describe('Login component', () => {
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
 
         await loginPage.goToLoginPage();
-        await loginPage..loginWithProfile('admin');
+        await loginPage.loginWithProfile('admin');
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-ECM");');
         await BrowserActions.getUrl(browser.baseUrl + '/files');
         await loginPage.waitForElements();
@@ -204,13 +204,13 @@ describe('Login component', () => {
         await loginPage.goToLoginPage();
         await loginPage.enableSuccessRouteSwitch();
         await loginPage.enterSuccessRoute('activiti');
-        await loginPage..loginWithProfile('admin');
+        await loginPage.loginWithProfile('admin');
         await processServicesPage.checkApsContainer();
     });
 
     it('[C279931] Should the user be redirect to the login page when the Process Service session expire', async () => {
         await loginPage.goToLoginPage();
-        await loginPage..loginWithProfile('admin');
+        await loginPage.loginWithProfile('admin');
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-BPM");');
         await BrowserActions.getUrl(browser.baseUrl + '/activiti');
         await loginPage.waitForElements();
@@ -218,7 +218,7 @@ describe('Login component', () => {
 
     it('[C279930] Should a user still be logged-in when open a new tab', async () => {
         await loginPage.goToLoginPage();
-        await loginPage..loginWithProfile('admin');
+        await loginPage.loginWithProfile('admin');
 
         await browser.executeScript("window.open('about: blank', '_blank');");
 
