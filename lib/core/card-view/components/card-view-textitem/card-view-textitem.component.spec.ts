@@ -393,6 +393,25 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
             expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('myValueToCopy', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
         });
+
+        it('should clear value when clear value icon is clicked', async () => {
+            component.property.value = 'testValue';
+            component.property.icon = 'FAKE_ICON';
+            component.property.clickable = true;
+            component.property.editable = true;
+            component.editable = true;
+            component.property.isValid = () => true;
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+            const clickEl = fixture.debugElement.query(By.css(`.adf-property-clear-value`));
+            clickEl.triggerEventHandler('click', new MouseEvent('click'));
+
+            fixture.detectChanges();
+            const elementValue = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            expect(elementValue.nativeElement.textContent).toEqual('');
+        });
     });
 
     describe('Update', () => {
