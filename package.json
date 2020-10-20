@@ -175,7 +175,7 @@
     "typedoc": "^0.19.2",
     "typescript": "3.9.7",
     "unist-util-select": "^3.0.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^4.1.0"
   },
   "license": "Apache-2.0",
   "bundlesize": [
