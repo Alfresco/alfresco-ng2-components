@@ -15,11 +15,27 @@
  * limitations under the License.
  */
 
-export * from './name-location-cell/name-location-cell.component';
-export * from './content-node-selector.component-data.interface';
-export * from './content-node-selector-panel.component';
-export * from './content-node-selector.component';
-export * from './content-node-dialog.service';
-export * from './content-node-selector-panel.service';
+import { QueryBody } from '@alfresco/js-api';
 
-export * from './content-node-selector.module';
+export const mockQueryBody: QueryBody = <QueryBody> {
+    query: {
+        query: '(search-term)',
+        language: 'afts'
+    },
+    include: ['path', 'allowableOperations'],
+    paging: {
+        maxItems: 25,
+        skipCount: 0
+    },
+    fields: undefined,
+    filterQueries: [],
+    facetQueries: null,
+    facetIntervals: null,
+    facetFields: null,
+    sort: [],
+    scope: {
+        locations: 'nodes'
+    },
+    highlight: null,
+    facetFormat: 'V2'
+};

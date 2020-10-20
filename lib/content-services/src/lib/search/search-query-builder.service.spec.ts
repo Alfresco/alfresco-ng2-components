@@ -618,4 +618,47 @@ describe('SearchQueryBuilder', () => {
 
         builder.execute();
     });
+
+    it('should include contain the path and allowableOperations by default', () => {
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
+        builder.userQuery = 'nuka cola quantum';
+        const queryBody = builder.buildQuery();
+
+        expect(queryBody.include).toEqual(['path', 'allowableOperations']);
+    });
+
+    it('should fetch the include config from the app config', () => {
+        const includeConfig = ['path', 'allowableOperations', 'properties'];
+        const config: SearchConfiguration = {
+            include: includeConfig
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        builder.userQuery = 'nuka cola quantum';
+        const queryBody = builder.buildQuery();
+
+        expect(queryBody.include).toEqual(includeConfig);
+    });
+
+    it('should the query contain the pagination', () => {
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
+        builder.userQuery = 'nuka cola quantum';
+        const mockPagination = {
+            maxItems: 10,
+            skipCount: 0
+        };
+        builder.paging = mockPagination;
+        const queryBody = builder.buildQuery();
+
+        expect(queryBody.paging).toEqual(mockPagination);
+    });
+
+    it('should the query contain the scope in case it is defined', () => {
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
+        const mockScope = { locations: 'mock-location' };
+        builder.userQuery = 'nuka cola quantum';
+        builder.setScope(mockScope);
+        const queryBody = builder.buildQuery();
+
+        expect(queryBody.scope).toEqual(mockScope);
+    });
 });

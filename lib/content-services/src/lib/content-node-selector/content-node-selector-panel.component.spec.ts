@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { tick, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NodeEntry, Node, SiteEntry, SitePaging, NodePaging, ResultSetPaging } from '@alfresco/js-api';
+import { NodeEntry, Node, SiteEntry, SitePaging, NodePaging, ResultSetPaging, RequestScope } from '@alfresco/js-api';
 import { SitesService, setupTestBed, NodesApiService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
@@ -31,7 +31,7 @@ import { CustomResourcesService } from '../document-list/services/custom-resourc
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../search';
-import { ContentNodeSelectorService } from './content-node-selector.service';
+import { mockQueryBody } from '../mock/search-query.mock';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {
@@ -59,11 +59,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
     let nodeService: NodesApiService;
     let sitesService: SitesService;
     let searchSpy: jasmine.Spy;
-    let cnSearchSpy: jasmine.Spy;
     const fakeNodeEntry = new Node({ id: 'fakeId' });
     const nodeEntryEvent = new NodeEntryEvent(fakeNodeEntry);
     let searchQueryBuilderService: SearchQueryBuilderService;
-    let contentNodeSelectorService: ContentNodeSelectorService;
 
     function typeToSearchBox(searchTerm = 'string-to-search') {
         const searchInput = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-input"]'));
@@ -93,11 +91,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             nodeService = TestBed.inject(NodesApiService);
             sitesService = TestBed.inject(SitesService);
-            contentNodeSelectorService = TestBed.inject(ContentNodeSelectorService);
             searchQueryBuilderService = component.queryBuilderService;
 
             spyOn(nodeService,  'getNode').and.returnValue(of({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } }));
-            cnSearchSpy = spyOn(contentNodeSelectorService, 'createQuery').and.callThrough();
             searchSpy = spyOn(searchQueryBuilderService, 'execute');
             const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
             spyOn(sitesService, 'getSite').and.returnValue(of(fakeSite));
@@ -362,32 +358,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
             let customResourcesService: CustomResourcesService;
             const entry: Node = <Node> { id: 'fakeid'};
 
-            const defaultSearchOptions = (searchTerm, rootNodeId = undefined, skipCount = 0, showFiles = false) => {
-
-                const parentFiltering = rootNodeId ? [{ query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'` }] : [];
-
-                const defaultSearchNode: any = {
-                    query: {
-                        query: searchTerm ? `${searchTerm}*` : searchTerm
-                    },
-                    include: ['path', 'allowableOperations', 'properties'],
-                    paging: {
-                        maxItems: 25,
-                        skipCount: skipCount
-                    },
-                    filterQueries: [
-                        { query: `TYPE:'cm:folder'${ showFiles ? " OR TYPE:'cm:content'" : '' }` },
-                        { query: 'NOT cm:creator:System' },
-                        ...parentFiltering
-                    ],
-                    scope: {
-                        locations: 'nodes'
-                    }
-                };
-
-                return defaultSearchNode;
-            };
-
             beforeEach(() => {
                 const documentListService = TestBed.inject(DocumentListService);
                 const expectedDefaultFolderNode = <NodeEntry> { entry: { path: { elements: [] } } };
@@ -418,23 +388,79 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
             });
 
-            it('should load the results by calling the search api on search change', fakeAsync(() => {
-                typeToSearchBox('kakarot');
+            it('should the user query get updated when the user types in the search input', fakeAsync(() => {
+                const updateSpy = spyOn(searchQueryBuilderService, 'update');
+                typeToSearchBox('search-term');
 
                 tick(debounceSearch);
                 fixture.detectChanges();
 
-                expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot'));
+                expect(updateSpy).toHaveBeenCalled();
+                expect(searchQueryBuilderService.userQuery).toEqual('(search-term)');
+                expect(component.searchTerm).toEqual('search-term');
             }));
 
-            it('should show files in results by calling the search api on search change', fakeAsync(() => {
-                component.showFilesInResult = true;
-                typeToSearchBox('kakarot');
+            it('should perform a search when the queryBody gets updated and it is defined', async () => {
+                searchQueryBuilderService.userQuery = 'search-term';
+                searchQueryBuilderService.update();
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(searchSpy).toHaveBeenCalledWith(mockQueryBody);
+            });
+
+            it('should NOT perform a search and clear the results when the queryBody gets updated and it is NOT defined', async () => {
+                spyOn(component, 'clearSearch');
+
+                searchQueryBuilderService.userQuery = '';
+                searchQueryBuilderService.update();
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(searchSpy).not.toHaveBeenCalled();
+                expect(component.clearSearch).toHaveBeenCalled();
+            });
+
+            it('should reset the search term when clicking the clear icon',  () => {
+                component.searchTerm = 'search-term';
+                searchQueryBuilderService.userQuery = 'search-term';
+                spyOn(component, 'clearSearch');
+
+                fixture.detectChanges();
+                const clearIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
+                clearIcon.nativeElement.click();
+
+                fixture.detectChanges();
+
+                expect(searchQueryBuilderService.userQuery).toEqual('');
+                expect(component.searchTerm).toEqual('');
+                expect(component.clearSearch).toHaveBeenCalled();
+            });
+
+            it('should load the results by calling the search api on search change', fakeAsync(() => {
+                typeToSearchBox('search-term');
 
                 tick(debounceSearch);
                 fixture.detectChanges();
 
-                expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, 0, true));
+                expect(searchSpy).toHaveBeenCalledWith(mockQueryBody);
+            }));
+
+            it('should the query include the show files filterQuery', fakeAsync(() => {
+                component.showFilesInResult = true;
+                typeToSearchBox('search-term');
+
+                const expectedQueryBody = mockQueryBody;
+                expectedQueryBody.filterQueries.push({
+                    query: `TYPE:'cm:folder' OR TYPE:'cm:content'`
+                });
+
+                tick(debounceSearch);
+                fixture.detectChanges();
+
+                expect(searchSpy).toHaveBeenCalledWith(expectedQueryBody);
             }));
 
             it('should reset the currently chosen node in case of starting a new search', fakeAsync(() => {
@@ -453,8 +479,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.breadcrumbFolderTitle).toBe('My Sites');
             });
 
-            it('should call the search api on changing the site selectBox value', fakeAsync(() => {
-                typeToSearchBox('vegeta');
+            it('should perform a search when selecting a site with the correct query', fakeAsync(() => {
+                typeToSearchBox('search-term');
 
                 tick(debounceSearch);
 
@@ -462,40 +488,34 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
 
+                const expectedQueryBody = mockQueryBody;
+                expectedQueryBody.filterQueries = [ { query: `ANCESTOR:'workspace://SpacesStore/namek'`} ];
+
                 expect(searchSpy.calls.count()).toBe(2, 'Search count should be two after the site change');
-                expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('vegeta', 'namek')]);
-            }));
-
-            it('should create the query with the right parameters on changing the site selectbox\'s value', fakeAsync(() => {
-                typeToSearchBox('vegeta');
-
-                tick(debounceSearch);
-                expect(cnSearchSpy.calls.count()).toBe(1);
-
-                component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
-
-                expect(cnSearchSpy).toHaveBeenCalled();
-                expect(cnSearchSpy.calls.count()).toBe(2);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', undefined, 0, 25, [], false);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId'], false);
+                expect(searchSpy).toHaveBeenCalledWith(expectedQueryBody);
             }));
 
             it('should create the query with the right parameters on changing the site selectBox value from a custom dropdown menu', fakeAsync(() => {
                 component.dropdownSiteList = <SitePaging> { list: { entries: [<SiteEntry> { entry: { guid: '-sites-' } }, <SiteEntry> { entry: { guid: 'namek' } }] } };
                 fixture.detectChanges();
 
-                typeToSearchBox('vegeta');
+                typeToSearchBox('search-term');
 
                 tick(debounceSearch);
 
-                expect(cnSearchSpy.calls.count()).toBe(1);
+                expect(searchSpy.calls.count()).toBe(1);
 
                 component.siteChanged(<SiteEntry> { entry: { guid: '-sites-' } });
 
-                expect(cnSearchSpy).toHaveBeenCalled();
-                expect(cnSearchSpy.calls.count()).toBe(2);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', undefined, 0, 25, [], false);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId'], false);
+                const expectedQueryBodyWithSiteChange = mockQueryBody;
+                expectedQueryBodyWithSiteChange.filterQueries = [
+                    { query: `ANCESTOR:'workspace://SpacesStore/-sites-' OR ANCESTOR:'workspace://SpacesStore/123456testId' OR ANCESTOR:'workspace://SpacesStore/09876543testId'` }
+                ];
+
+                expect(searchSpy).toHaveBeenCalled();
+                expect(searchSpy.calls.count()).toBe(2);
+                expect(searchSpy).toHaveBeenCalledWith(mockQueryBody);
+                expect(searchSpy).toHaveBeenCalledWith(expectedQueryBodyWithSiteChange);
             }));
 
             it('should get the corresponding node ids on search when a known alias is selected from dropdown', fakeAsync(() => {
@@ -601,19 +621,24 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.showingSearchResults).toBeFalsy();
             });
 
-            it('should the query restrict the search to the currentFolderId in case is defined', () => {
+            it('should the query restrict the search to the currentFolderId in case is defined', fakeAsync(() => {
                 component.currentFolderId = 'my-root-id';
                 component.restrictRootToCurrentFolderId = true;
                 component.ngOnInit();
-                component.search('search');
+                typeToSearchBox('search-term');
+                tick(debounceSearch);
 
-                expect(cnSearchSpy).toHaveBeenCalledWith('search', 'my-root-id', 0, 25, [], false);
-            });
+                const expectedQueryBody = mockQueryBody;
+                expectedQueryBody.filterQueries = [ { query: `ANCESTOR:'workspace://SpacesStore/my-root-id'`} ];
+
+                expect(searchSpy).toHaveBeenCalledWith(expectedQueryBody);
+            }));
 
             it('should emit showingSearch event with true while searching', async () => {
                 spyOn(customResourcesService, 'hasCorrespondingNodeIds').and.returnValue(true);
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
-                component.search('search');
+
+                component.queryBuilderService.execute({ query: { query: 'search' } });
 
                 triggerSearchResults(fakeResultSetPaging);
                 fixture.detectChanges();
@@ -623,15 +648,16 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(showingSearchSpy).toHaveBeenCalledWith(true);
             });
 
-            it('should emit showingSearch event with false if you remove search term without clicking on X (icon) icon', async () => {
+            it('should emit showingSearch event with false if you remove search term without clicking on X (icon) icon', fakeAsync(() => {
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
-                component.search('');
+                typeToSearchBox('');
+                tick(debounceSearch);
+
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 expect(component.showingSearchResults).toBe(false);
                 expect(showingSearchSpy).toHaveBeenCalledWith(false);
-            });
+            }));
 
             it('should emit showingResults event with false when clicking on the X (clear) icon', () => {
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
@@ -654,7 +680,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             it('should emit showingResults event with false if search api fails', async () => {
                 getCorrespondingNodeIdsSpy.and.throwError('Failed');
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
-                component.search('search');
+                component.queryBuilderService.execute({ query: { query: 'search' } });
 
                 triggerSearchResults(fakeResultSetPaging);
                 fixture.detectChanges();
@@ -665,13 +691,17 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should the query restrict the search to the site and not to the currentFolderId in case is changed', () => {
+                component.queryBuilderService.userQuery = 'search-term';
                 component.currentFolderId = 'my-root-id';
                 component.restrictRootToCurrentFolderId = true;
-                component.ngOnInit();
                 component.siteChanged(<SiteEntry> { entry: { guid: 'my-site-id' } });
-                component.search('search');
 
-                expect(cnSearchSpy).toHaveBeenCalledWith('search', 'my-site-id', 0, 25, [], false);
+                const expectedQueryBodyWithSiteChange = mockQueryBody;
+                expectedQueryBodyWithSiteChange.filterQueries = [
+                    { query: `ANCESTOR:'workspace://SpacesStore/my-site-id'` }
+                ];
+
+                expect(searchSpy).toHaveBeenCalledWith(expectedQueryBodyWithSiteChange);
             });
 
             it('should restrict the breadcrumb to the currentFolderId in case restrictedRoot is true', () => {
@@ -689,7 +719,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should clear the search field, nodes and chosenNode when deleting the search input', fakeAsync (() => {
-                spyOn(component, 'clear').and.callThrough();
+                spyOn(component, 'clearSearch').and.callThrough();
                 typeToSearchBox('a');
 
                 tick(debounceSearch);
@@ -703,7 +733,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 expect(searchSpy.calls.count()).toBe(1, 'no other search has been performed');
-                expect(component.clear).toHaveBeenCalled();
+                expect(component.clearSearch).toHaveBeenCalled();
                 expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
             }));
 
@@ -728,7 +758,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.siteChanged(<SiteEntry> { entry: { guid: 'namek' } });
 
                 expect(searchSpy.calls.count()).toBe(2);
-                expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('piccolo', 'namek')]);
 
                 component.clear();
 
@@ -845,21 +874,19 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 }, 300);
             });
 
-            it('should reload the original folderId when clearing the search input', async() => {
-                component.search('mock-type-search');
-
-                triggerSearchResults(fakeResultSetPaging);
+            it('should reload the original folderId when clearing the search input', fakeAsync(() => {
+                typeToSearchBox('search-term');
+                tick(debounceSearch);
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 expect(component.folderIdToShow).toBe(null);
 
-                component.clear();
+                typeToSearchBox('');
+                tick(debounceSearch);
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku');
-            });
+            }));
 
             it('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', (done) => {
                 component.siteChanged(<SiteEntry> { entry: { guid: 'Kame-Sennin Muten Roshi' } });
@@ -900,63 +927,50 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     expect(component.searchTerm).toBe('');
 
                     expect(component.infiniteScroll).toBeTruthy();
-                    expect(component.pagination.maxItems).toBe(45);
+                    expect(component.queryBuilderService.paging.maxItems).toBe(45);
                     expect(searchSpy).not.toHaveBeenCalled();
                 });
 
-                it('should set its loading state to true after search was started', fakeAsync (() => {
-                    component.showingSearchResults = true;
-
-                    typeToSearchBox('shenron');
-
-                    tick(debounceSearch);
-
+                it('should set its loading state to true to perform a new search', async() => {
+                    component.prepareDialogForNewSearch(mockQueryBody);
                     fixture.detectChanges();
-
-                    tick(debounceSearch);
+                    await fixture.whenStable();
 
                     const spinnerSelector = By.css('[data-automation-id="content-node-selector-search-pagination"] [data-automation-id="adf-infinite-pagination-spinner"]');
                     const paginationLoading = fixture.debugElement.query(spinnerSelector);
+
                     expect(paginationLoading).not.toBeNull();
-                }));
+                });
 
                 it('Should infinite pagination target be null when we use it for search ', fakeAsync (() => {
                     component.showingSearchResults = true;
-
                     typeToSearchBox('shenron');
-
                     tick(debounceSearch);
-
                     fixture.detectChanges();
-
-                    tick(debounceSearch);
 
                     expect(component.target).toBeNull();
                 }));
 
-                it('Should infinite pagination target be present when search finish', fakeAsync (() => {
-                    component.showingSearchResults = true;
-
-                    typeToSearchBox('shenron');
-
-                    tick(debounceSearch);
-
-                    fixture.detectChanges();
-
-                    typeToSearchBox('');
-
-                    tick(debounceSearch);
-
+                it('Should infinite pagination target be present when search finish', () => {
+                    triggerSearchResults(fakeResultSetPaging);
                     fixture.detectChanges();
 
                     expect(component.target).not.toBeNull();
-                }));
+                });
 
                 it('Should infinite pagination target on init be the document list', fakeAsync(() => {
                     component.showingSearchResults = true;
 
                     expect(component.target).toEqual(component.documentList);
                 }));
+
+                it('Should set the scope to nodes when the component inits', () => {
+                    const expectedScope: RequestScope = { locations: 'nodes' };
+                    const setScopeSpy = spyOn(component.queryBuilderService, 'setScope');
+                    component.ngOnInit();
+
+                    expect(setScopeSpy).toHaveBeenCalledWith(expectedScope);
+                });
             });
         });
 

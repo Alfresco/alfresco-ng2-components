@@ -21,3 +21,4 @@ export * from './search.component.mock';
 export * from './search.service.mock';
 export * from './search-filter-mock';
 export * from './sites-dropdown.component.mock';
+export * from './search-query.mock';
