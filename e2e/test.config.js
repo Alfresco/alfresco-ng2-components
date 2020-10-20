@@ -79,7 +79,7 @@ module.exports = {
         rootPath: __dirname
     },
 
-    users :{
+    users: {
 
         admin: {
             username: USERNAME_ADF,
