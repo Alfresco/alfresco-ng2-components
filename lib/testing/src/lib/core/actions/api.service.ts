@@ -91,9 +91,9 @@ export class ApiService {
      * Example: loginWithProfile('admin')
      */
     async loginWithProfile(profileName: string): Promise<void> {
-        const profile = browser.params.testConfig[profileName];
+        const profile = browser.params.testConfig.users[profileName];
         if (profile) {
-            await this.apiService.login(profile.email, profile.password);
+            await this.apiService.login(profile.username, profile.password);
         } else {
             throw new Error(`Login profile "${profileName}" not found on "browser.params.testConfig".`);
         }

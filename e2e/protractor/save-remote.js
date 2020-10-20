@@ -21,7 +21,7 @@ async function uploadScreenshot(retryCount, suffixFileName) {
         hostEcm: TestConfig.screenshot.url
     });
 
-    await alfrescoJsApi.login(TestConfig.screenshot.username, TestConfig.screenshot.password);
+    await alfrescoJsApi.login(TestConfig.users.screenshot.username, TestConfig.users.screenshot.password);
 
     let folderNode;
 
