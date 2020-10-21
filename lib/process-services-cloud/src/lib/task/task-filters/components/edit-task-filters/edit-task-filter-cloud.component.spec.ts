@@ -529,7 +529,8 @@ describe('EditTaskFilterCloudComponent', () => {
                 key: 'completedBy',
                 label: '',
                 type: 'people',
-                value: null
+                value: null,
+                selectionMode: 'single'
             });
 
             fixture.detectChanges();
