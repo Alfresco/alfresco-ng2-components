@@ -31,7 +31,7 @@
         [value]="startSiteGuid"
         data-automation-id="content-node-selector-sites-combo">
     </adf-sites-dropdown>
-    <button
+    <button *ngIf="hasCustomModels()"
         data-automation-id="adf-toggle-search-panel-button"
         mat-icon-button
         (click)="toggleSearchPanel()">

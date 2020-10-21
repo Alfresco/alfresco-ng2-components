@@ -32,6 +32,8 @@ import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../search';
 import { mockQueryBody } from '../mock/search-query.mock';
+import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
+import { mockContentModelProperty } from '../mock/content-model.mock';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {
@@ -62,6 +64,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
     const fakeNodeEntry = new Node({ id: 'fakeId' });
     const nodeEntryEvent = new NodeEntryEvent(fakeNodeEntry);
     let searchQueryBuilderService: SearchQueryBuilderService;
+    let contentNodeSelectorPanelService: ContentNodeSelectorPanelService;
 
     function typeToSearchBox(searchTerm = 'string-to-search') {
         const searchInput = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-input"]'));
@@ -91,6 +94,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             nodeService = TestBed.inject(NodesApiService);
             sitesService = TestBed.inject(SitesService);
+            contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
             searchQueryBuilderService = component.queryBuilderService;
 
             spyOn(nodeService,  'getNode').and.returnValue(of({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } }));
@@ -1169,8 +1173,15 @@ describe('ContentNodeSelectorPanelComponent', () => {
         });
 
         describe('Search panel', () => {
-            it ('should search panel be collapsed by default and expand when clicking the filter button', async () => {
+
+            beforeEach(() => {
+                contentNodeSelectorPanelService.customModels = undefined;
+            });
+
+            it ('should search panel be collapsed by default and expand when clicking the filter button', async() => {
+                contentNodeSelectorPanelService.customModels = [mockContentModelProperty];
                 fixture.detectChanges();
+
                 expect(component.searchPanelExpanded).toEqual(false);
 
                 const toggleFiltersPanelButton = fixture.debugElement.query(By.css('[data-automation-id="adf-toggle-search-panel-button"]'));
@@ -1182,15 +1193,30 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.searchPanelExpanded).toEqual(true);
             });
 
-            it ('should search panel be present when the filter section is expanded', async () => {
+            it ('should search panel be present when the filter section is expanded',  () => {
                 component.searchPanelExpanded = true;
-
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 const searchPanelContainer = fixture.debugElement.query(By.css('[data-automation-id="adf-search-panel-container"]'));
 
                 expect(searchPanelContainer).not.toBe(null);
+            });
+
+            it('should filter button be present only when there are custom models',  () => {
+                contentNodeSelectorPanelService.customModels = [mockContentModelProperty];
+                fixture.detectChanges();
+
+                const toggleFiltersPanelButton = fixture.debugElement.query(By.css('[data-automation-id="adf-toggle-search-panel-button"]'));
+
+                expect(toggleFiltersPanelButton).not.toEqual(null);
+            });
+
+            it('should filter button not be present when there are no custom models',  () => {
+                fixture.detectChanges();
+
+                const toggleFiltersPanelButton = fixture.debugElement.query(By.css('[data-automation-id="adf-toggle-search-panel-button"]'));
+
+                expect(toggleFiltersPanelButton).toEqual(null);
             });
         });
     });
