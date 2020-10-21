@@ -1167,5 +1167,31 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
         });
+
+        describe('Search panel', () => {
+            it ('should search panel be collapsed by default and expand when clicking the filter button', async () => {
+                fixture.detectChanges();
+                expect(component.searchPanelExpanded).toEqual(false);
+
+                const toggleFiltersPanelButton = fixture.debugElement.query(By.css('[data-automation-id="adf-toggle-search-panel-button"]'));
+                toggleFiltersPanelButton.nativeElement.click();
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(component.searchPanelExpanded).toEqual(true);
+            });
+
+            it ('should search panel be present when the filter section is expanded', async () => {
+                component.searchPanelExpanded = true;
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const searchPanelContainer = fixture.debugElement.query(By.css('[data-automation-id="adf-search-panel-container"]'));
+
+                expect(searchPanelContainer).not.toBe(null);
+            });
+        });
     });
 });

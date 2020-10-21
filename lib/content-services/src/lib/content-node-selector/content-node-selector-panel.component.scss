@@ -16,6 +16,14 @@
 
     .adf-content-node-selector {
 
+        &-search-panel-container {
+            display: flex;
+        }
+
+        &-document-list-container {
+            width: 100%;
+        }
+
         &-content {
             padding-top: 0;
 
@@ -86,7 +94,7 @@
             }
 
             &-list {
-                height: 200px;
+                height: 300px;
                 overflow: auto;
                 border: 1px solid mat-color($foreground, base, 0.07);
                 border-top: 0;

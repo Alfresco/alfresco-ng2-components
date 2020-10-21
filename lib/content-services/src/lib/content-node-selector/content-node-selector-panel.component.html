@@ -21,9 +21,6 @@
         </mat-icon>
 
     </mat-form-field>
-    <adf-search-panel>
-
-    </adf-search-panel>
     <adf-sites-dropdown
         *ngIf="showDropdownSiteList"
         class="full-width"
@@ -34,7 +31,17 @@
         [value]="startSiteGuid"
         data-automation-id="content-node-selector-sites-combo">
     </adf-sites-dropdown>
-
+    <button
+        data-automation-id="adf-toggle-search-panel-button"
+        mat-icon-button
+        (click)="toggleSearchPanel()">
+        <mat-icon>filter_list</mat-icon>
+        {{ 'SEARCH.SEARCH_HEADER.TITLE' | translate }}
+    </button>
+    <div class="adf-content-node-selector-search-panel-container">
+        <adf-search-panel *ngIf="searchPanelExpanded">
+        </adf-search-panel>
+        <div class="adf-content-node-selector-document-list-container">
     <adf-toolbar>
         <adf-toolbar-title>
             <ng-container *ngIf="!showBreadcrumbs()">
@@ -104,5 +111,7 @@
             data-automation-id="content-node-selector-search-pagination">
             {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
         </adf-infinite-pagination>
+    </div>
+        </div>
     </div>
 </div>

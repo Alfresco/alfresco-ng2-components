@@ -240,6 +240,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     target: PaginatedComponent;
     preselectNodes: NodeEntry[] = [];
 
+    searchPanelExpanded: boolean = false;
+
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private customResourcesService: CustomResourcesService,
@@ -315,6 +317,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
+    }
+
+    toggleSearchPanel() {
+        this.searchPanelExpanded = !this.searchPanelExpanded;
     }
 
     private onFileUploadEvent() {
