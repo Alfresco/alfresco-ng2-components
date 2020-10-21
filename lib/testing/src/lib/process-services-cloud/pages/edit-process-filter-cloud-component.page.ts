@@ -19,6 +19,7 @@ import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
+import { PeopleCloudComponentPage } from './people-cloud-component.page';
 
 export class EditProcessFilterCloudComponentPage {
 
@@ -39,6 +40,7 @@ export class EditProcessFilterCloudComponentPage {
     sortDropdown = new DropdownPage(this.locatorSortDropdown);
     orderDropdown = new DropdownPage(this.locatorOrderDropdown);
     processDefinitionNameDropdown = new DropdownPage(this.locatorProcessDefinitionNameDropdown);
+    peopleCloudComponent = new PeopleCloudComponentPage();
 
     editProcessFilterDialogPage = new EditProcessFilterDialogPage();
 
@@ -133,6 +135,10 @@ export class EditProcessFilterCloudComponentPage {
         await this.setProperty('processName', option);
     }
 
+    async setInitiator(value: string): Promise<void> {
+        await this.peopleCloudComponent.searchAssigneeAndSelect(value);
+    }
+
     async getProcessInstanceId(): Promise<string> {
         return this.getProperty('processInstanceId');
     }
@@ -205,7 +211,7 @@ export class EditProcessFilterCloudComponentPage {
         if (status) { await this.setStatusFilterDropDown(status); }
         if (sort)   { await this.setSortFilterDropDown(sort);     }
         if (order)  { await this.setOrderFilterDropDown(order);   }
-        if (initiator)  { await this.setProperty('initiator', initiator);   }
+        if (initiator)  { await this.setInitiator(initiator);   }
         if (processName)  { await this.setProcessName(processName);   }
         await this.openFilter();
     }
