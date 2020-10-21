@@ -32,7 +32,7 @@ import {
     SimpleChange,
     Inject
 } from '@angular/core';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import {
     switchMap,
     debounceTime,
@@ -172,7 +172,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.loadClientId();
+        if (this.appName) {
+            this.loadClientId();
+        }
         this.initSearch();
     }
 
@@ -234,7 +236,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                     this.resetSearchUsers();
                 }),
                 switchMap((searchTerm) => {
-                    let results$: Observable<IdentityUserModel[]>;
+                    let results$: Observable<IdentityUserModel[]> = of([]);
                     if (this.appName) {
                         results$ = this.peopleCloudService.findUsersBasedOnApp(this.clientId, this.roles, searchTerm);
                     } else if (this.hasRoles()) {
@@ -247,7 +249,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                 takeUntil(this.onDestroy$)
             )
             .subscribe((users) => {
-                this._searchUsers = users;
+                this._searchUsers = users.filter((user) => !this.isUserAlreadySelected(user));
                 this.searchUsers$.next(this._searchUsers);
             });
     }

@@ -15,54 +15,72 @@
  * limitations under the License.
  */
 
-import { IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
-import { PeopleCloudServiceInterface } from '../../services/people-cloud-service.interface';
 import {
     mergeMap,
     map,
     toArray,
-    concatMap
+    concatMap,
+    catchError
 } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { IdentityUserService, IdentityUserModel, LogService } from '@alfresco/adf-core';
+import { PeopleCloudServiceInterface } from '../../services/people-cloud-service.interface';
+
 @Injectable({
     providedIn: 'root'
 })
 export class PeopleCloudService implements PeopleCloudServiceInterface {
-    constructor(private identityUserService: IdentityUserService) {}
+    constructor(private identityUserService: IdentityUserService, private logService: LogService) {}
 
     findUsers(searchTerm: string): Observable<IdentityUserModel[]> {
-        return this.identityUserService.findUsersByName(searchTerm.trim());
+        return this.identityUserService.findUsersByName(searchTerm.trim()).pipe(
+            catchError((error) => this.handleError(error))
+        );
     }
 
     findUsersBasedOnApp(clientId: string, roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
-        return this.findUsers(searchTerm.trim()).pipe(
-            mergeMap(users => users),
-            concatMap((user) => {
-                return this.checkUserHasAccess(user.id, clientId, roles).pipe(
-                    mergeMap((hasRole) => hasRole ? of(user) : of())
-                );
-            }),
-            toArray(),
-            map((filteredUsers) => filteredUsers.filter((filteredUser) => !!filteredUser))
-        );
+        if (clientId) {
+            return this.findUsers(searchTerm.trim()).pipe(
+                mergeMap(users => users),
+                concatMap((user) => {
+                    return this.checkUserHasAccess(user.id, clientId, roles).pipe(
+                        mergeMap((hasRole) => hasRole ? of(user) : of())
+                    );
+                }),
+                toArray(),
+                map((filteredUsers) => filteredUsers.filter((filteredUser) => !!filteredUser)),
+                catchError((error) => this.handleError(error))
+            );
+        } else {
+            return this.handleError('client is mandatory to search users based on the application');
+        }
     }
 
     filterUsersBasedOnRoles(roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
-        return this.findUsers(searchTerm.trim()).pipe(
-            mergeMap(users => users),
-            concatMap((user) => {
-                return this.identityUserService.checkUserHasRole(user.id, roles).pipe(
-                    mergeMap((hasRole) => hasRole ? of(user) : of())
-                );
-            }),
-            toArray(),
-            map((filteredUsers) => filteredUsers.filter((filteredUser) => !!filteredUser))
-        );
+        if (roles?.length) {
+            return this.findUsers(searchTerm.trim()).pipe(
+                mergeMap(users => users),
+                concatMap((user) => {
+                    return this.identityUserService.checkUserHasRole(user.id, roles).pipe(
+                        mergeMap((hasRole) => hasRole ? of(user) : of())
+                    );
+                }),
+                toArray(),
+                map((filteredUsers) => filteredUsers.filter((filteredUser) => !!filteredUser)),
+                catchError((error) => this.handleError(error))
+            );
+        } else {
+            return this.handleError('roles are mandatory to search users based on the roles');
+        }
     }
 
     getClientIdByApplicationName(appName: string): Observable<string> {
-        return this.identityUserService.getClientIdByApplicationName(appName);
+        if (appName) {
+            return this.identityUserService.getClientIdByApplicationName(appName).pipe(catchError((error) => this.handleError(error)));
+        } else {
+            return this.handleError('appName is mandatory to fetch clientId based on the appname');
+        }
     }
 
     private checkUserHasAccess(userId: string, clientId: string, roles: string[]): Observable<boolean> {
@@ -80,7 +98,7 @@ export class PeopleCloudService implements PeopleCloudServiceInterface {
             );
         }
 
-        return hasAccess$;
+        return hasAccess$.pipe(catchError((error) => this.handleError(error)));
     }
 
     validatePreselectedUser(preselectedUser: IdentityUserModel): Observable<IdentityUserModel> {
@@ -101,7 +119,11 @@ export class PeopleCloudService implements PeopleCloudServiceInterface {
                 result$ = of();
         }
 
-       return result$;
+       return result$.pipe(catchError((error) => this.handleError(error)));
     }
 
+    private handleError(error: any) {
+        this.logService.error(error);
+        return throwError(error);
+    }
 }
