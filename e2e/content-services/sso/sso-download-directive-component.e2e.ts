@@ -60,7 +60,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
         beforeAll(async () => {
-            await apiService.login(browser.params.testConfig.users.admin.email, browser.params.testConfig.users.admin.password);
+            await apiService.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
 
             acsUser = await usersActions.createUser();
 

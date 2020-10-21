@@ -487,7 +487,7 @@ describe('Start Process Component', () => {
 
             const usersActions = new UsersActions(apiServiceAll);
 
-            await apiServiceAll.login(browser.params.testConfig.users.admin.email, browser.params.testConfig.users.admin.password);
+            await apiServiceAll.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
 
             processUserModel = await usersActions.createUser();
 

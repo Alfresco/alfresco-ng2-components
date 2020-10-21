@@ -79,7 +79,7 @@ describe('Settings component', () => {
             await settingsPage.setContentServicesURL('http://localhost:7070');
             await settingsPage.clickApply();
             await loginPage.waitForElements();
-            await loginPage.enterUsername(browser.params.testConfig.users.admin.email);
+            await loginPage.enterUsername(browser.params.testConfig.users.admin.username);
             await loginPage.enterPassword(browser.params.testConfig.users.admin.password);
             await loginPage.clickSignInButton();
             await loginPage.checkLoginErrorIsDisplayed(loginError);
@@ -90,7 +90,7 @@ describe('Settings component', () => {
             await settingsPage.setProcessServicesURL('http://localhost:7070');
             await settingsPage.clickApply();
             await loginPage.waitForElements();
-            await loginPage.enterUsername(browser.params.testConfig.users.admin.email);
+            await loginPage.enterUsername(browser.params.testConfig.users.admin.username);
             await loginPage.enterPassword(browser.params.testConfig.users.admin.password);
             await loginPage.clickSignInButton();
             await loginPage.checkLoginErrorIsDisplayed(loginError);
@@ -135,7 +135,7 @@ describe('Settings component', () => {
             await settingsPage.checkProviderDropdownIsDisplayed();
             await settingsPage.setProviderBpm();
             await loginPage.waitForElements();
-            await loginPage.enterUsername(browser.params.testConfig.users.admin.email);
+            await loginPage.enterUsername(browser.params.testConfig.users.admin.username);
             await loginPage.enterPassword(browser.params.testConfig.users.admin.password);
             await loginPage.clickSignInButton();
             await navigationBarPage.navigateToProcessServicesPage();
@@ -165,7 +165,7 @@ describe('Settings component', () => {
             await settingsPage.checkProviderDropdownIsDisplayed();
             await settingsPage.setProviderEcm();
             await loginPage.waitForElements();
-            await loginPage.enterUsername(browser.params.testConfig.users.admin.email);
+            await loginPage.enterUsername(browser.params.testConfig.users.admin.username);
             await loginPage.enterPassword(browser.params.testConfig.users.admin.password);
             await loginPage.clickSignInButton();
             await navigationBarPage.clickContentServicesButton();
@@ -192,7 +192,7 @@ describe('Settings component', () => {
             await settingsPage.checkProviderDropdownIsDisplayed();
             await settingsPage.setProviderEcmBpm();
             await loginPage.waitForElements();
-            await loginPage.enterUsername(browser.params.testConfig.users.admin.email);
+            await loginPage.enterUsername(browser.params.testConfig.users.admin.username);
             await loginPage.enterPassword(browser.params.testConfig.users.admin.password);
             await loginPage.clickSignInButton();
             await navigationBarPage.clickContentServicesButton();

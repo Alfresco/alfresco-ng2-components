@@ -40,7 +40,7 @@ export class UsersActions {
 
     async createUser(userModel?: UserModel): Promise<UserModel> {
         if (!this.api.apiService.isLoggedIn()) {
-            await this.api.apiService.login(browser.params.testConfig.users.admin.email, browser.params.testConfig.users.admin.password);
+            await this.api.apiService.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
         }
 
         const user = new UserModel({ ...(userModel ? userModel : {}) });
