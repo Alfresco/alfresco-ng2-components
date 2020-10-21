@@ -30,11 +30,15 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 })
 export class SearchPanelComponent implements OnInit {
 
-    constructor(public contentNodeSelectorSearchPanelService: ContentNodeSelectorPanelService,
+    constructor(private contentNodeSelectorPanelService: ContentNodeSelectorPanelService,
                 @Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilderService: SearchQueryBuilderService) {
     }
 
     ngOnInit(): void {
-        this.queryBuilderService.categories = this.contentNodeSelectorSearchPanelService.convertCustomModelPropertiesToSearchCategories();
+        this.queryBuilderService.categories = this.contentNodeSelectorPanelService.convertCustomModelPropertiesToSearchCategories();
+    }
+
+    hasCustomModels(): boolean {
+        return this.contentNodeSelectorPanelService?.customModels?.length > 0;
     }
 }

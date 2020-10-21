@@ -47,6 +47,7 @@ import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { Subject } from 'rxjs';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../search/search-query-service.token';
 import { SearchQueryBuilderService } from '../search/search-query-builder.service';
+import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -240,6 +241,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     target: PaginatedComponent;
     preselectNodes: NodeEntry[] = [];
 
+    searchPanelExpanded: boolean = false;
+
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private customResourcesService: CustomResourcesService,
@@ -247,7 +250,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 private userPreferencesService: UserPreferencesService,
                 private nodesApiService: NodesApiService,
                 private uploadService: UploadService,
-                private sitesService: SitesService) {
+                private sitesService: SitesService,
+                private contentNodeSelectorPanelService: ContentNodeSelectorPanelService) {
     }
 
     set chosenNode(value: Node[]) {
@@ -315,6 +319,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
+    }
+
+    toggleSearchPanel() {
+        this.searchPanelExpanded = !this.searchPanelExpanded;
+    }
+
+    hasCustomModels(): boolean {
+        return this.contentNodeSelectorPanelService?.customModels?.length > 0;
     }
 
     private onFileUploadEvent() {

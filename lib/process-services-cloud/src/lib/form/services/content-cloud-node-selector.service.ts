@@ -49,7 +49,7 @@ export class ContentCloudNodeSelectorService {
       showDropdownSiteList: false,
       showLocalUploadButton: isAllFileSources
   };
-    this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+    this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '66%');
     return select;
   }
 
