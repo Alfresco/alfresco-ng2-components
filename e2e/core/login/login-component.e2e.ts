@@ -120,7 +120,7 @@ describe('Login component', () => {
 
     it('[C260045] Should enable login button after entering a valid username and a password', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.enterUsername(browser.params.testConfig.admin.email);
+        await loginPage.enterUsername(browser.params.testconfig.users.admin.email);
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
         await loginPage.enterPassword('a');
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);

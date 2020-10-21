@@ -30,7 +30,7 @@ describe('User Info - SSO', () => {
     let identityUser;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.login(browser.params.testconfig.users.admin.email, browser.params.testconfig.users.admin.password);
 
         identityUser = await usersActions.createUser();
 
