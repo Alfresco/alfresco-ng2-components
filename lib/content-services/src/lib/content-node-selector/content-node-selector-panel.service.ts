@@ -16,17 +16,24 @@
  */
 
 import { Injectable } from '@angular/core';
-import { SearchCategory } from '../search';
+import { SearchCategory } from '../search/search-category.interface';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ContentNodeSelectorPanelService {
 
+    propertyTypes = ['d:text', 'd:date'];
+    modelPropertyTypeToSearchFilterTypeMap = new Map<string, string> ();
     customModels: any[];
 
-    convertCustomModelPropertiesToSearchCategories(): any[] {
-        const searchConfig = [];
+    constructor() {
+        this.modelPropertyTypeToSearchFilterTypeMap.set(this.propertyTypes[0], 'text');
+        this.modelPropertyTypeToSearchFilterTypeMap.set(this.propertyTypes[1], 'date-range');
+    }
+
+    convertCustomModelPropertiesToSearchCategories(): SearchCategory[] {
+        const searchConfig: SearchCategory[] = [];
         this.customModels?.forEach( (propertyModel) => {
             searchConfig.push(this.convertModelPropertyIntoSearchFilter(propertyModel));
         });
@@ -36,14 +43,14 @@ export class ContentNodeSelectorPanelService {
 
     convertModelPropertyIntoSearchFilter(modelProperty: any): SearchCategory {
         let filterSearch: SearchCategory;
-        if (modelProperty.dataType === 'd:text') {
+        if (this.isDataTypeSupported(modelProperty.dataType)) {
             filterSearch = {
                 id : modelProperty.prefixedName,
                 name: modelProperty.prefixedName,
                 expanded: false,
                 enabled: true,
                 component: {
-                    selector: 'text',
+                    selector: this.modelPropertyTypeToSearchFilterTypeMap.get(modelProperty.dataType),
                     settings: {
                         pattern: `${modelProperty.prefixedName}:'(.*?)'`,
                         field: `${modelProperty.prefixedName}`,
@@ -53,6 +60,10 @@ export class ContentNodeSelectorPanelService {
             };
         }
         return filterSearch;
+    }
+
+    isDataTypeSupported(dataType: string): boolean {
+        return this.propertyTypes.includes(dataType);
     }
 
 }
