@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-export const mockContentModelProperty = {
+import { SearchCategory } from '../search/search-category.interface';
+
+export const mockContentModelTextProperty = {
     name: 'name',
     prefixedName: 'account:name',
     title: 'name',
@@ -30,3 +32,50 @@ export const mockContentModelProperty = {
     indexTokenisationMode: '',
     constraints: []
 };
+
+export const mockContentModelDateProperty = {
+    name: 'creation',
+    prefixedName: 'account:creation',
+    title: 'creation',
+    description: '',
+    dataType: 'd:date',
+    multiValued: false,
+    mandatory: false,
+    defaultValue: '',
+    mandatoryEnforced: false,
+    indexed: false,
+    facetable: 'FALSE',
+    indexTokenisationMode: '',
+    constraints: []
+};
+
+export const mockConvertedSearchCategoriesFromModels: SearchCategory[] = [
+    {
+        id: 'account:name',
+        name: 'account:name',
+        expanded: false,
+        enabled: true,
+        component: {
+            selector: 'text',
+            settings: {
+                pattern: `account:name:'(.*?)'`,
+                field: `account:name`,
+                placeholder: `Enter the name`
+            }
+        }
+    },
+    {
+        id: 'account:creation',
+        name: 'account:creation',
+        expanded: false,
+        enabled: true,
+        component: {
+            selector: 'date-range',
+            settings: {
+                pattern: `account:creation:'(.*?)'`,
+                field: `account:creation`,
+                placeholder: `Enter the creation`
+            }
+        }
+    }
+];

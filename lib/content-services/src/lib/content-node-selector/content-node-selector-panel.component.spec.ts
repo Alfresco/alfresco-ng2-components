@@ -33,7 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../search';
 import { mockQueryBody } from '../mock/search-query.mock';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
-import { mockContentModelProperty } from '../mock/content-model.mock';
+import { mockContentModelTextProperty } from '../mock/content-model.mock';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {
@@ -1179,7 +1179,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it ('should search panel be collapsed by default and expand when clicking the filter button', async() => {
-                contentNodeSelectorPanelService.customModels = [mockContentModelProperty];
+                contentNodeSelectorPanelService.customModels = [mockContentModelTextProperty];
                 fixture.detectChanges();
 
                 expect(component.searchPanelExpanded).toEqual(false);
@@ -1203,7 +1203,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should filter button be present only when there are custom models',  () => {
-                contentNodeSelectorPanelService.customModels = [mockContentModelProperty];
+                contentNodeSelectorPanelService.customModels = [mockContentModelTextProperty];
                 fixture.detectChanges();
 
                 const toggleFiltersPanelButton = fixture.debugElement.query(By.css('[data-automation-id="adf-toggle-search-panel-button"]'));
