@@ -114,7 +114,7 @@ describe('People Cloud Service', () => {
         });
     });
 
-    it('Should not list users who does not have access to the applicatin', (done) => {
+    it('Should not list users who do not have access to the applicatin', (done) => {
         checkUserHasClientAppSpy.and.returnValue(of(false));
         peopleCloudService.findUsersBasedOnApp('mock-client-id', [], 'searchTerm').subscribe((response) => {
             expect(response.length).toBe(0);

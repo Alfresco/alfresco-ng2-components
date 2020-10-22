@@ -22,7 +22,7 @@ import { MaterialModule } from '../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PEOPLE_SEARCH_SERVICE_TOKEN } from '../services/public-api';
+import { PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN } from '../services/public-api';
 import { PeopleCloudService } from './services/people-cloud.service';
 
 @NgModule({
@@ -36,7 +36,7 @@ import { PeopleCloudService } from './services/people-cloud.service';
     ],
     declarations: [PeopleCloudComponent],
     providers: [
-        { provide: PEOPLE_SEARCH_SERVICE_TOKEN, useClass: PeopleCloudService }
+        { provide: PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN, useClass: PeopleCloudService }
     ],
     exports: [PeopleCloudComponent]
 })

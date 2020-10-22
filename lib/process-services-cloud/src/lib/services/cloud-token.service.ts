@@ -23,4 +23,4 @@ export const PROCESS_FILTERS_SERVICE_TOKEN = new InjectionToken<PreferenceCloudS
 
 export const TASK_FILTERS_SERVICE_TOKEN = new InjectionToken<PreferenceCloudServiceInterface>('task-filters-cloud');
 
-export const PEOPLE_SEARCH_SERVICE_TOKEN = new InjectionToken<PeopleCloudServiceInterface>('people-cloud-search');
+export const PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN = new InjectionToken<PeopleCloudServiceInterface>('people-cloud-search');

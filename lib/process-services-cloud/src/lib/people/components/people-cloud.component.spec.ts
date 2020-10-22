@@ -29,7 +29,7 @@ import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { PeopleCloudServiceInterface } from '../../services/people-cloud-service.interface';
 import { CustomMockPeopleCloudService, customServiceMockUsers } from '../mock/custom-people-cloud-mock.service';
-import { PEOPLE_SEARCH_SERVICE_TOKEN } from '../../services/cloud-token.service';
+import { PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN } from '../../services/cloud-token.service';
 
 describe('PeopleCloudComponent', () => {
     let component: PeopleCloudComponent;
@@ -88,8 +88,9 @@ describe('PeopleCloudComponent', () => {
 
     describe('Search user', () => {
         beforeEach((() => {
-            fixture.detectChanges();
+            // fixture.detectChanges();
             element = fixture.nativeElement;
+            fixture.detectChanges();
         }));
 
         it('should list the users as dropdown options if the search term has results', async () => {
@@ -99,20 +100,6 @@ describe('PeopleCloudComponent', () => {
             input.dispatchEvent(new Event('keyup'));
             input.dispatchEvent(new Event('input'));
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            expect(fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]')).length).toEqual(3);
-            expect(findUsersSpy).toHaveBeenCalled();
-        });
-
-        it('should list the users as dropdown options if the search term has results', async () => {
-            const input = getElement<HTMLInputElement>('input');
-            input.focus();
-            input.value = 'first';
-            input.dispatchEvent(new Event('keyup'));
-            input.dispatchEvent(new Event('input'));
             fixture.detectChanges();
             await fixture.whenStable();
             fixture.detectChanges();
@@ -251,9 +238,7 @@ describe('PeopleCloudComponent', () => {
 
             component.onSelect(user);
             fixture.detectChanges();
-
             await fixture.whenStable();
-            fixture.detectChanges();
 
             expect(selectEmitSpy).toHaveBeenCalledWith(user);
             expect(changedUsersSpy).toHaveBeenCalledWith([user]);
@@ -501,7 +486,6 @@ describe('PeopleCloudComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-            fixture.detectChanges();
 
             const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
             const removeIcon = getElement(`[data-automation-id="adf-people-cloud-chip-remove-icon-${mockPreselectedUsers[0].username}"]`);
@@ -646,7 +630,7 @@ describe('PeopleCloudComponent with Custom service', () => {
             ProcessServiceCloudTestingModule
         ],
         providers: [
-            { provide: PEOPLE_SEARCH_SERVICE_TOKEN, useClass: CustomMockPeopleCloudService }
+            { provide: PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN, useClass: CustomMockPeopleCloudService }
         ],
         schemas: [NO_ERRORS_SCHEMA]
     });

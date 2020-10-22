@@ -54,7 +54,7 @@ import {
     animate
 } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
-import { PEOPLE_SEARCH_SERVICE_TOKEN } from '../../services/cloud-token.service';
+import { PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN } from '../../services/cloud-token.service';
 import { PeopleCloudServiceInterface } from '../../services/people-cloud-service.interface';
 
 @Component({
@@ -166,7 +166,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     searchLoading = false;
 
     constructor(
-        @Inject(PEOPLE_SEARCH_SERVICE_TOKEN)
+        @Inject(PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN)
         public peopleCloudService: PeopleCloudServiceInterface,
         private logService: LogService
     ) {}
