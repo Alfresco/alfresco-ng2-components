@@ -34,7 +34,7 @@ import {
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ContentModule } from '@alfresco/adf-content-services';
+import { ContentModule, ContentNodeSelectorPanelService } from '@alfresco/adf-content-services';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { Node } from '@alfresco/js-api';
@@ -51,6 +51,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     let formService: FormService;
     let downloadService: DownloadService;
     let alfrescoApiService: AlfrescoApiService;
+    let contentNodeSelectorPanelService: ContentNodeSelectorPanelService;
     let apiServiceSpy: jasmine.Spy;
     let contentModelFormFileHandlerSpy: jasmine.Spy;
     let updateFormSpy: jasmine.Spy;
@@ -208,6 +209,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         );
         formService = TestBed.inject(FormService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
     }));
 
     afterEach(() => {
@@ -324,6 +326,13 @@ describe('AttachFileCloudWidgetComponent', () => {
         fixture.whenStable().then(() => {
             expect(element.querySelector('label').innerText).toEqual('Label');
         });
+    });
+
+    it('should reset the custom models when the component gets destroyed', () => {
+        contentNodeSelectorPanelService.customModels = ['mock-value'];
+        widget.ngOnDestroy();
+
+        expect(contentNodeSelectorPanelService.customModels).toEqual([]);
     });
 
     describe('destinationFolderPath', () => {
