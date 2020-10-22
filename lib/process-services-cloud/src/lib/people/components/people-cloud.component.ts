@@ -39,7 +39,8 @@ import {
     distinctUntilChanged,
     tap,
     filter,
-    takeUntil
+    takeUntil,
+    map
 } from 'rxjs/operators';
 import {
     FullNamePipe,
@@ -246,10 +247,14 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                     }
                     return results$;
                 }),
+                map((users) => {
+                    return users.filter((user) => !this.isUserAlreadySelected(user));
+                }),
                 takeUntil(this.onDestroy$)
             )
-            .subscribe((users) => {
-                this._searchUsers = users.filter((user) => !this.isUserAlreadySelected(user));
+            .subscribe((searchResults) => {
+                this.searchLoading = false;
+                this._searchUsers = searchResults;
                 this.searchUsers$.next(this._searchUsers);
             });
     }

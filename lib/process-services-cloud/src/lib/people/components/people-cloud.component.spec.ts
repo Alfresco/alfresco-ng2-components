@@ -88,7 +88,6 @@ describe('PeopleCloudComponent', () => {
 
     describe('Search user', () => {
         beforeEach((() => {
-            // fixture.detectChanges();
             element = fixture.nativeElement;
             fixture.detectChanges();
         }));
