@@ -79,7 +79,7 @@ describe('Attach File - Content service', () => {
         await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
 
-        await apiServiceExternal.login('admin');
+        await apiServiceExternal.loginWithProfile('admin');
         await usersActionsExternal.createUser(user);
 
         await integrationService.addCSIntegration({
