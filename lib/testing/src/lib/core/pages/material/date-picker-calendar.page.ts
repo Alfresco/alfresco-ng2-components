@@ -71,4 +71,13 @@ export class DatePickerCalendarPage {
     async checkDatePickerIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.datePicker);
     }
+
+    async selectDateRange(startDay: number, endDay: number): Promise<void> {
+        const startDayElement = element(by.cssContainingText(`div.mat-calendar-body-cell-content.mat-focus-indicator`, `${startDay}`));
+        const endDayElement = element(by.cssContainingText(`div.mat-calendar-body-cell-content.mat-focus-indicator`, `${endDay}`));
+        await this.checkDatePickerIsDisplayed();
+        await BrowserActions.click(startDayElement);
+        await BrowserActions.click(endDayElement);
+        await this.checkDatePickerIsNotDisplayed();
+      }
 }
