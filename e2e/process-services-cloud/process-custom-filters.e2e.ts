@@ -51,7 +51,7 @@ describe('Process list cloud', () => {
         const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
 
         beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
 
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
 
@@ -99,7 +99,7 @@ describe('Process list cloud', () => {
         afterAll(async () => {
             await apiService.login(testUser.email, testUser.password);
             await processInstancesService.deleteProcessInstance(anotherProcessInstance.entry.id, candidateBaseApp);
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         });
 

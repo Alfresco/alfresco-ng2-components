@@ -71,7 +71,7 @@ describe('People and Group of people Widgets', () => {
     };
 
     beforeAll(async () => {
-        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
         await navigationBarPage.navigateToFormCloudPage();
     });
 

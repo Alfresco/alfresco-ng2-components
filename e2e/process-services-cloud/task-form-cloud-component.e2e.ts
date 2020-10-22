@@ -67,7 +67,7 @@ describe('Task form cloud component', () => {
     let dateTimerTaskId, dateTimerTask, dateTimerChangedTaskId, dateTimerChangedTask, dropdownOptionsTask;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await apiService.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
 
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
 
@@ -126,7 +126,7 @@ describe('Task form cloud component', () => {
         assigneeReleaseTask = await queryService.getProcessInstanceTasks(assigneeProcess.entry.id, simpleApp);
         assigneeTaskId = assigneeReleaseTask.list.entries[0].entry.id;
 
-        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
 
     }, 5 * 60 * 1000);
 

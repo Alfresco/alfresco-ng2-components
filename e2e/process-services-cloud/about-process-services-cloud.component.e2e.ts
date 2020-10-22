@@ -31,7 +31,7 @@ describe('About Process Services Cloud', () => {
     let testUser;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_DEVOPS]);
         await loginSSOPage.login(testUser.email, testUser.password);
         await apiService.login(testUser.email, testUser.password);
@@ -39,7 +39,7 @@ describe('About Process Services Cloud', () => {
     });
 
     afterAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 

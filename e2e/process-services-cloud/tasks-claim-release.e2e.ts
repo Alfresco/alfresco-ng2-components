@@ -52,13 +52,13 @@ describe('Task claim/release', () => {
 
     describe('candidate user', () => {
         beforeAll(async () => {
-            await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+            await apiService.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
             const processDefinition = await processDefinitionService.getProcessDefinitionByName(candidateApp.processes.candidateUserProcess, candidateApp.name);
             processInstance = (await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateApp.name)).entry;
         });
 
         beforeEach(async () => {
-            await navigateToApp(browser.params.testConfig.hrUser);
+            await navigateToApp(browser.params.testConfig.users.hrUser);
         });
 
         afterAll(async () => {
@@ -84,7 +84,7 @@ describe('Task claim/release', () => {
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
 
             await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.hrUser.email);
+            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.users.hrUser.email);
 
             await taskFormCloudComponent.clickReleaseButton();
             await browser.refresh();
@@ -103,29 +103,29 @@ describe('Task claim/release', () => {
         let candidate;
 
         beforeAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
             candidate = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
             const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(candidate.idIdentityService, groupInfo.id);
 
-            await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+            await apiService.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
             const processDefinition = await processDefinitionService.getProcessDefinitionByName(candidateApp.processes.uploadFileProcess, candidateApp.name);
             processInstance = (await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateApp.name)).entry;
         });
 
         afterAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
             await identityService.deleteIdentityUser(candidate.idIdentityService);
 
-            await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+            await apiService.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
             await processInstancesService.deleteProcessInstance(processInstance.id, processInstance.appName);
             await navigationBarPage.clickLogoutButton();
         });
 
         it('[C306875] should be able to Claim/Release a process task which has a candidate group', async () => {
-            await navigateToApp(browser.params.testConfig.hrUser);
+            await navigateToApp(browser.params.testConfig.users.hrUser);
             await setTaskFilter('CREATED', processInstance.id);
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(candidateApp.tasks.uploadFileTask);
@@ -142,7 +142,7 @@ describe('Task claim/release', () => {
 
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
             await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.hrUser.email);
+            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.users.hrUser.email);
 
             await taskFormCloudComponent.clickReleaseButton();
             await browser.refresh();

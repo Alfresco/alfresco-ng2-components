@@ -60,7 +60,7 @@ describe('Task filters cloud', () => {
         const nrOfTasks = 3;
 
         beforeAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
 
             testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
 
@@ -96,7 +96,7 @@ describe('Task filters cloud', () => {
         }, 5 * 60 * 1000);
 
         afterAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
 
         }, 60000);

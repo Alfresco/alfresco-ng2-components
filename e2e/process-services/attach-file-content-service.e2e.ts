@@ -59,8 +59,6 @@ describe('Attach File - Content service', () => {
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 
-    const { email, password } = browser.params.testConfig.admin;
-
     const pdfFileOne = {
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
@@ -78,10 +76,10 @@ describe('Attach File - Content service', () => {
     beforeAll(async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
-        await apiService.login(email, password);
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
 
-        await apiServiceExternal.login(email, password);
+        await apiServiceExternal.login('admin');
         await usersActionsExternal.createUser(user);
 
         await integrationService.addCSIntegration({
@@ -104,7 +102,7 @@ describe('Attach File - Content service', () => {
     });
 
     afterAll(async () => {
-        await apiService.login(email, password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 

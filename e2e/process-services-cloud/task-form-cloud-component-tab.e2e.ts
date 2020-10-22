@@ -84,7 +84,7 @@ describe('Task form cloud component', () => {
     const completedTasksFilter = 'completed-tasks';
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);
@@ -151,7 +151,7 @@ describe('Task form cloud component', () => {
 
     afterAll(async () => {
         try {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         } catch (error) {
         }

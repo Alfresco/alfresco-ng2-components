@@ -65,7 +65,7 @@ describe('Process filters cloud', () => {
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await apiService.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
 
         simpleProcessDefinition = (await processDefinitionService
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.processstring, simpleApp)).entry;
@@ -73,7 +73,7 @@ describe('Process filters cloud', () => {
         taskAssigned = (await queryService.getProcessInstanceTasks(processInstance.id, simpleApp)).list.entries;
         taskName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.processstring;
 
-        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
         await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
     });
