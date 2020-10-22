@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import {
     FormService,
     LogService,
@@ -53,7 +53,7 @@ import { ContentNodeSelectorPanelService } from '@alfresco/adf-content-services'
     },
     encapsulation: ViewEncapsulation.None
 })
-export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit {
+export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit, OnDestroy {
 
     static ALIAS_ROOT_FOLDER = '-root-';
     static ALIAS_USER_FOLDER = '-my-';
@@ -216,5 +216,9 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     isValidAlias(alias: string): boolean {
         return alias && AttachFileCloudWidgetComponent.VALID_ALIAS.includes(alias);
+    }
+
+    ngOnDestroy() {
+        this.contentNodeSelectorPanelService.customModels = [];
     }
 }
