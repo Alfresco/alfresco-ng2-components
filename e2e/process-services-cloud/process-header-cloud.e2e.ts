@@ -126,7 +126,7 @@ describe('Process Header cloud component', () => {
             await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.COMPLETED);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ initiator: testUser.username });
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ initiator: `${testUser.firstName} ${testUser.lastName}` });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(childCompleteProcess.entry.name);
 
