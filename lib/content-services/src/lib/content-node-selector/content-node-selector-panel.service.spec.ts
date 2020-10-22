@@ -22,15 +22,26 @@ describe('ContentNodeSelectorPanelService', () => {
 
     const contentNodeSelectorPanelService = new ContentNodeSelectorPanelService();
 
-    it('should supported types be text and date', () => {
+    it('should support text type', () => {
+        expect(contentNodeSelectorPanelService.modelPropertyTypeToSearchFilterTypeMap.get('d:text')).toEqual('text');
+        expect(contentNodeSelectorPanelService.isTypeSupported('d:text')).toEqual(true);
+    });
+
+    it('should support date type', () => {
+        expect(contentNodeSelectorPanelService.modelPropertyTypeToSearchFilterTypeMap.get('d:date')).toEqual('date-range');
+        expect(contentNodeSelectorPanelService.isTypeSupported('d:date')).toEqual(true);
+    });
+
+    it('should return false for an unsupported type', () => {
+        expect(contentNodeSelectorPanelService.isTypeSupported('d:unsupported')).toEqual(false);
+    });
+
+    it('should modelPropertyTypeToSearchFilterTypeMap contain only the supported types', () => {
         const expectedSupportedTypesMap = new Map<string, string> ();
         expectedSupportedTypesMap.set('d:text', 'text');
         expectedSupportedTypesMap.set('d:date', 'date-range');
 
-        expect(contentNodeSelectorPanelService.propertyTypes).toEqual(['d:text', 'd:date']);
         expect(contentNodeSelectorPanelService.modelPropertyTypeToSearchFilterTypeMap).toEqual(expectedSupportedTypesMap);
-        expect(contentNodeSelectorPanelService.isDataTypeSupported('d:text')).toEqual(true);
-        expect(contentNodeSelectorPanelService.isDataTypeSupported('d:date')).toEqual(true);
     });
 
     it('should search config contain the correct filters converted from the custom content model properties', () => {

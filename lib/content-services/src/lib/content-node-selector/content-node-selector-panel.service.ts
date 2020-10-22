@@ -43,7 +43,7 @@ export class ContentNodeSelectorPanelService {
 
     convertModelPropertyIntoSearchFilter(modelProperty: any): SearchCategory {
         let filterSearch: SearchCategory;
-        if (this.isDataTypeSupported(modelProperty.dataType)) {
+        if (this.isTypeSupported(modelProperty.dataType)) {
             filterSearch = {
                 id : modelProperty.prefixedName,
                 name: modelProperty.prefixedName,
@@ -62,7 +62,7 @@ export class ContentNodeSelectorPanelService {
         return filterSearch;
     }
 
-    isDataTypeSupported(dataType: string): boolean {
+    isTypeSupported(dataType: string): boolean {
         return this.propertyTypes.includes(dataType);
     }
 
