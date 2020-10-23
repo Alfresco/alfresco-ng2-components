@@ -181,6 +181,60 @@ describe('PeopleCloudComponent', () => {
             });
         });
 
+        it('should not be able to search for a user that his email matches one of the excluded users email', (done) => {
+            component.excludedUsers = [{ email: mockUsers[0].email }];
+            fixture.detectChanges();
+
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'first-name';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
+                done();
+            });
+        });
+
+        it('should not be able to search for a user that his id matches one of the excluded users id', (done) => {
+            component.excludedUsers = [{ email: mockUsers[0].email }];
+            fixture.detectChanges();
+
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'first-name';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
+                done();
+            });
+        });
+
+        it('should not be able to search for a user that his username matches one of the excluded users username', (done) => {
+            component.excludedUsers = [{ email: mockUsers[0].email }];
+            fixture.detectChanges();
+
+            const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = 'first-name';
+            inputHTMLElement.dispatchEvent(new Event('keyup'));
+            inputHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
+                done();
+            });
+        });
+
         it('should hide result list if input is empty', (done) => {
             fixture.detectChanges();
 
