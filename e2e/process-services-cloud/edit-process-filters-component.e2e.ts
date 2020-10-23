@@ -47,7 +47,7 @@ describe('Edit process filters cloud', () => {
     const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
@@ -57,7 +57,7 @@ describe('Edit process filters cloud', () => {
     });
 
     afterAll(async () => {
-        await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 

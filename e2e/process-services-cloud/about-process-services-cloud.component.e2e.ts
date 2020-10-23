@@ -16,7 +16,6 @@
  */
 
 import { ApiService, IdentityService, AboutPage, LoginPage } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 
 describe('About Process Services Cloud', () => {
@@ -31,7 +30,7 @@ describe('About Process Services Cloud', () => {
     let testUser;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_DEVOPS]);
         await loginSSOPage.login(testUser.email, testUser.password);
         await apiService.login(testUser.email, testUser.password);
@@ -39,7 +38,7 @@ describe('About Process Services Cloud', () => {
     });
 
     afterAll(async () => {
-        await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 

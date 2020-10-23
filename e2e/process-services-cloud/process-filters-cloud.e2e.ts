@@ -57,7 +57,7 @@ describe('Process filters cloud', () => {
         const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
         beforeAll(async () => {
-            await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
 
             testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
 
@@ -87,7 +87,7 @@ describe('Process filters cloud', () => {
         }, 5 * 60 * 1000);
 
         afterAll(async () => {
-            await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         });
 

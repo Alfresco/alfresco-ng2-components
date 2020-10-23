@@ -21,7 +21,6 @@ import {
     LoginPage,
     ProcessCloudWidgetPage
 } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import {
     peopleSingleModeFormMock,
     peopleMultipleModeFormMock,
@@ -71,7 +70,7 @@ describe('People and Group of people Widgets', () => {
     };
 
     beforeAll(async () => {
-        await loginSSOPage.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
+        await loginSSOPage.loginWithProfile('hrUser');
         await navigationBarPage.navigateToFormCloudPage();
     });
 

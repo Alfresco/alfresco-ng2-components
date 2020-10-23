@@ -52,7 +52,7 @@ describe('Task claim/release', () => {
 
     describe('candidate user', () => {
         beforeAll(async () => {
-            await apiService.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
+            await apiService.loginWithProfile('hrUser');
             const processDefinition = await processDefinitionService.getProcessDefinitionByName(candidateApp.processes.candidateUserProcess, candidateApp.name);
             processInstance = (await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateApp.name)).entry;
         });
@@ -103,23 +103,23 @@ describe('Task claim/release', () => {
         let candidate;
 
         beforeAll(async () => {
-            await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
             candidate = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
             const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(candidate.idIdentityService, groupInfo.id);
 
-            await apiService.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
+            await apiService.loginWithProfile('hrUser');
             const processDefinition = await processDefinitionService.getProcessDefinitionByName(candidateApp.processes.uploadFileProcess, candidateApp.name);
             processInstance = (await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateApp.name)).entry;
         });
 
         afterAll(async () => {
-            await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(candidate.idIdentityService);
 
-            await apiService.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
+            await apiService.loginWithProfile('hrUser');
             await processInstancesService.deleteProcessInstance(processInstance.id, processInstance.appName);
             await navigationBarPage.clickLogoutButton();
         });

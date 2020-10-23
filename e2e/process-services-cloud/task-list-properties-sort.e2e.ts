@@ -44,7 +44,7 @@ describe('Edit task filters and task list properties', () => {
     const priority = 30;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
 
@@ -111,7 +111,7 @@ describe('Edit task filters and task list properties', () => {
     }, 5 * 60 * 1000);
 
     afterAll(async (done) => {
-        await apiService.login(browser.params.testConfig.users.identityAdmin.email, browser.params.users.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
         done();
     });

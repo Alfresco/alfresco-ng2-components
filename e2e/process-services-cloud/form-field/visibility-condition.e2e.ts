@@ -16,7 +16,6 @@
  */
 
 import { FormCloudComponentPage, LoginPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
@@ -81,7 +80,7 @@ describe('Visibility conditions - cloud', () => {
     };
 
     beforeAll(async () => {
-        await loginSSOPage.login(browser.params.testConfig.users.hrUser.email, browser.params.testConfig.users.hrUser.password);
+        await loginSSOPage.loginWithProfile('hrUser');
         await navigationBarPage.navigateToFormCloudPage();
         await formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
     });
