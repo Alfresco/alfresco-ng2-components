@@ -116,6 +116,10 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         }
     }
 
+    getInitiatorValue(): string {
+        return this.editedFilter.initiator?.map(initiator => initiator.username).join(',');
+    }
+
     onChangePageSize(event: Pagination) {
         this.userPreference.paginationSize = event.maxItems;
     }

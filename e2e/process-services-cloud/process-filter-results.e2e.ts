@@ -150,7 +150,7 @@ describe('Process filters cloud', () => {
     it('[C306887] Should be able to filter by appName', async () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
+        await processCloudDemoPage.editProcessFilterCloudComponent().setInitiator(`${testUser.firstName} ${testUser.lastName}`);
 
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
@@ -160,14 +160,14 @@ describe('Process filters cloud', () => {
     it('[C306889] Should be able to see "No process found" when using an app with no processes in the appName field', async () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown('subprocessapp');
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
+        await processCloudDemoPage.editProcessFilterCloudComponent().setInitiator(`${testUser.firstName} ${testUser.lastName}`);
 
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
 
     it('[C306890] Should be able to filter by initiator', async () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
+        await processCloudDemoPage.editProcessFilterCloudComponent().setInitiator(`${testUser.firstName} ${testUser.lastName}`);
 
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);

@@ -61,7 +61,7 @@ export class ProcessListCloudConfiguration {
                     {
                         'key': 'entry.initiator',
                         'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.INITIATOR',
+                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.STARTED_BY',
                         'sortable': true
                     },
                     {

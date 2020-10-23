@@ -301,7 +301,13 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
     }
 
     onChangedUser(users: IdentityUserModel[], userProperty: TaskFilterProperties) {
-        this.getPropertyController(userProperty).setValue(users[0]);
+        let selectedUsers;
+        if (userProperty.selectionMode === 'single') {
+            selectedUsers = users[0];
+        } else {
+            selectedUsers = users;
+        }
+        this.getPropertyController(userProperty).setValue(selectedUsers);
     }
 
     onAssignedChange(assignedValue: IdentityUserModel) {

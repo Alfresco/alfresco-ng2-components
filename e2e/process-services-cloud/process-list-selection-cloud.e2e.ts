@@ -96,7 +96,8 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setInitiator(`${testUser.firstName} ${testUser.lastName}`);
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkNoRowIsSelected();
         });
@@ -108,7 +109,7 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsSelectedById(processInstances[0]);
@@ -124,7 +125,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsSelectedById(processInstances[0]);
@@ -141,7 +142,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);
@@ -158,7 +159,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await browser.sleep(1000);
@@ -182,7 +183,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);

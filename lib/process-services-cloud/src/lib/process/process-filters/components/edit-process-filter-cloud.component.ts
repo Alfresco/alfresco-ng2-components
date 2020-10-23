@@ -23,10 +23,9 @@ import { debounceTime, filter, takeUntil, finalize, switchMap } from 'rxjs/opera
 import { Subject, Observable } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
-
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions, ProcessSortFilterProperties } from '../models/process-filter-cloud.model';
-import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { IdentityUserModel, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
@@ -333,6 +332,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         );
     }
 
+    onChangedUser(users: IdentityUserModel[], processProperty: ProcessFilterProperties) {
+        this.getPropertyController(processProperty).setValue(users);
+    }
+
     hasError(property: ProcessFilterProperties): boolean {
         return this.getPropertyController(property).errors && this.getPropertyController(property).errors.invalid;
     }
@@ -492,6 +495,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return property.type === 'number';
     }
 
+    isUserSelectType(property: ProcessFilterProperties): boolean {
+        return property.type === 'people';
+    }
+
     isDisabledAction(action: ProcessFilterAction): boolean {
         return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
     }
@@ -589,7 +596,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 value: 'status'
             },
             {
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.INITIATOR',
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STARTED_BY',
                 key: 'initiator',
                 value: 'initiator'
             },
@@ -671,12 +678,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 options: this.processDefinitionNames
             }),
             new ProcessFilterProperties({
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.INITIATOR',
-                type: 'text',
-                key: 'initiator',
-                value: currentProcessFilter.initiator || ''
-            }),
-            new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
@@ -714,6 +715,13 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 type: 'date',
                 key: 'completedDate',
                 value: currentProcessFilter.completedDate || false
+            }),
+             new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STARTED_BY',
+                type: 'people',
+                key: 'initiator',
+                value: currentProcessFilter.initiator,
+                selectionMode: 'multiple'
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COMPLETED_DATE',

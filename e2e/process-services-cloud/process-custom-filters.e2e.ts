@@ -145,15 +145,15 @@ describe('Process list cloud', () => {
             await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Status')).toBe(true);
         });
 
-        it('[C305054] Should display processes ordered by initiator when Initiator is selected from sort dropdown', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'ALL', sort: 'Initiator', order: 'ASC' });
+        it('[C305054] Should display processes ordered by started by when Started By is selected from sort dropdown', async () => {
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'ALL', sort: 'Started by', order: 'ASC' });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
 
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Initiator')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Started by')).toBe(true);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: 'DESC'});
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Initiator')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Started by')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by processdefinitionid date when ProcessDefinitionId is selected from sort dropdown', async () => {

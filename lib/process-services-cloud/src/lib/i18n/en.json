@@ -14,6 +14,7 @@
       "COMPLETED_BY": "Completed By",
       "ID": "Id",
       "INITIATOR": "Initiator",
+      "STARTED_BY": "Started by",
       "APP_NAME": "Application Name",
       "BUSINESS_KEY": "Business Key",
       "DESCRIPTION": "Description",
@@ -208,6 +209,7 @@
       "PROCESS_NAME": "Process Name",
       "APP_VERSION": "AppReleaseVersion",
       "STARTED_DATE": "Started Date",
+      "STARTED_BY": "Started by",
       "COMPLETED_DATE": "Completed Date",
       "DATE_RANGE": {
         "NO_DATE": "No Date",
