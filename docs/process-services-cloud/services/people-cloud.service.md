@@ -1,8 +1,8 @@
 ---
 Title: People Cloud service
-Added: v3.0.0
-Status: Active
-Last reviewed: 2019-07-12
+Added: v4.1.0
+Status: Experimental
+Last reviewed: 2020-10-23
 ---
 
 # [People Cloud service](../../../lib/process-services-cloud/src/lib/people/services/people-cloud.service.ts "Defined in process-cloud.service.ts")
