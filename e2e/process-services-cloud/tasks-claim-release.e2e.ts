@@ -84,7 +84,7 @@ describe('Task claim/release', () => {
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
 
             await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.users.hrUser.email);
+            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.users.hrUser.username);
 
             await taskFormCloudComponent.clickReleaseButton();
             await browser.refresh();
@@ -142,7 +142,7 @@ describe('Task claim/release', () => {
 
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
             await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.users.hrUser.email);
+            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.users.hrUser.username);
 
             await taskFormCloudComponent.clickReleaseButton();
             await browser.refresh();
