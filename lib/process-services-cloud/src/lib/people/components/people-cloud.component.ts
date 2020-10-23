@@ -282,7 +282,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private isExcludedUser(searchUser: IdentityUserModel): boolean {
-        if (this.excludedUsers && this.excludedUsers.length > 0) {
+        if (this.excludedUsers?.length > 0) {
             return !!this.excludedUsers.find(excludedUser => this.compare(excludedUser, searchUser));
         }
         return false;
