@@ -79,3 +79,53 @@ const preSelectUsers = [
 ```
 
 from above `preSelectUsers`, `username2` is removable from the `preSelectUsers` whereas `username1`, `username3` are readonly you can not remove them.
+
+## Inject Custom service
+
+Token: [`PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN`](../../../lib/process-services-cloud/src/lib/services/cloud-token.service.ts)
+A DI token that maps to the dependency to be injected.
+
+[`People Cloud Service`](../../../lib/process-services-cloud/src/lib/people/services/people-cloud.service.ts "Defined in people-cloud.service.ts") is by default injected. If you would like to inject a custom service then your custom service should implement [`People Cloud Service Interface`](../../../lib/process-services-cloud/src/lib/services/people-cloud-service.interface.ts)
+
+```ts
+import { Injectable } from '@angular/core';
+import { PeopleCloudServiceInterface } from '@alfresco/adf-process-services-cloud';
+import { IdentityUserModel } from '@alfresco/adf-core';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class ExampleCustomPeopleService implements PeopleCloudServiceInterface {
+    findUsers(searchTerm: string): Observable<IdentityUserModel[]> {
+        throw new Error("Method not implemented.");
+    }
+    findUsersBasedOnApp(clientId: string, roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
+        throw new Error("Method not implemented.");
+    }
+    filterUsersBasedOnRoles(roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
+        throw new Error("Method not implemented.");
+    }
+    validatePreselectedUser(preselectedUser: IdentityUserModel): Observable<IdentityUserModel> {
+        throw new Error("Method not implemented.");
+    }
+    getClientIdByApplicationName(appName: string): Observable<string> {
+        throw new Error("Method not implemented.");
+    }
+}
+```
+
+```ts
+import { NgModule } from '@angular/core';
+import { PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN } from '@alfresco/adf-process-services-cloud';
+import { ExampleCustomPeopleService } from './exmaple-custom-people.service';
+
+@NgModule({
+    imports: [
+        ...Import Required Modules
+    ],
+    providers: [
+        { provide: PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN, useClass: ExampleCustomPeopleService }
+    ]
+})
+export class ExampleModule {}
+```
