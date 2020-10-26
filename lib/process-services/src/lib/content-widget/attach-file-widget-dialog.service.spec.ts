@@ -49,7 +49,7 @@ describe('AttachFileWidgetDialogService', () => {
     });
 
     it('should be able to open the dialog when node has permission', () => {
-        service.openLogin('fake-title', 'fake-action');
+        service.openLogin({ id: 1, name: 'fake-title', repositoryUrl: 'http://fakeurl.com/alfresco' }, 'fake-action');
         expect(spyOnDialogOpen).toHaveBeenCalled();
     });
 

@@ -34,6 +34,7 @@ import { of } from 'rxjs';
 import { Node } from '@alfresco/js-api';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 
 const fakeRepositoryListAnswer = [
     {
@@ -50,7 +51,16 @@ const fakeRepositoryListAnswer = [
         'metaDataAllowed': true,
         'name': 'GOKUSHARE',
         'repositoryUrl': 'http://localhost:0000/GOKUSHARE'
-    }];
+    },
+    {
+        'authorized': true,
+        'serviceId': 'alfresco-2000-external',
+        'metaDataAllowed': true,
+        'name': 'external',
+        'repositoryUrl': 'http://externalhost.com/alfresco',
+        'id': 2000
+    }
+];
 
 const onlyLocalParams = {
     fileSource: {
@@ -78,6 +88,16 @@ const definedSourceParams = {
         name: 'pippo-baudo',
         selectedFolder: {
             accountId: 'goku-share-account-id'
+        }
+    }
+};
+
+const externalDefinedSourceParams = {
+    fileSource: {
+        serviceId: 'external-sources',
+        name: 'external',
+        selectedFolder: {
+            accountId: 'external-account-id'
         }
     }
 };
@@ -130,6 +150,7 @@ describe('AttachFileWidgetComponent', () => {
     let processContentService: ProcessContentService;
     let downloadService: DownloadService;
     let formService: FormService;
+    let attachFileWidgetDialogService: AttachFileWidgetDialogService;
 
     setupTestBed({
         imports: [
@@ -148,6 +169,7 @@ describe('AttachFileWidgetComponent', () => {
         processContentService = TestBed.inject(ProcessContentService);
         downloadService = TestBed.inject(DownloadService);
         formService = TestBed.inject(FormService);
+        attachFileWidgetDialogService = TestBed.inject(AttachFileWidgetDialogService);
     }));
 
     afterEach(() => {
@@ -532,4 +554,23 @@ describe('AttachFileWidgetComponent', () => {
             expect(showOption.disabled).toBeTruthy();
         });
    });
+
+    it('should be able to upload files when a defined folder from external content service', async(() => {
+        widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.UPLOAD, value: [] });
+        widget.field.id = 'attach-external-file-attach';
+        widget.field.params = <FormFieldMetadata> externalDefinedSourceParams;
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
+        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of(fakePngAnswer));
+        spyOn(attachFileWidgetDialogService, 'openLogin').and.returnValue(of([fakeMinimalNode]));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-external-file-attach');
+            attachButton.click();
+            fixture.detectChanges();
+            fixture.debugElement.query(By.css('#attach-external')).nativeElement.click();
+            fixture.detectChanges();
+            expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+        });
+    }));
 });

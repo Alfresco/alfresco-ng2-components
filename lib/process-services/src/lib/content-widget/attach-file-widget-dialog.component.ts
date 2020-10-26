@@ -16,7 +16,7 @@
  */
 
 import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ExternalAlfrescoApiService, AlfrescoApiService, LoginDialogPanelComponent, SearchService, TranslationService, AuthenticationService, SitesService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { DocumentListService } from '@alfresco/adf-content-services';
@@ -32,7 +32,7 @@ import { Node } from '@alfresco/js-api';
         DocumentListService,
         SitesService,
         SearchService,
-        { provide: AlfrescoApiService, useClass: ExternalAlfrescoApiService} ]
+        { provide: AlfrescoApiService, useClass: ExternalAlfrescoApiService } ]
 })
 export class AttachFileWidgetDialogComponent {
 
@@ -46,11 +46,29 @@ export class AttachFileWidgetDialogComponent {
 
     constructor(private translation: TranslationService,
                 @Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
-                private externalApiService: AlfrescoApiService) {
+                private externalApiService: AlfrescoApiService,
+                private authenticationService: AuthenticationService,
+                private matDialogRef: MatDialogRef<AttachFileWidgetDialogComponent>) {
         (<any> externalApiService).init(data.ecmHost, data.context);
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `ATTACH-FILE.ACTIONS.${this.action}`;
         this.updateTitle('DROPDOWN.MY_FILES_OPTION');
+        this.updateExternalHost();
+    }
+
+    updateExternalHost() {
+        this.authenticationService.onLogin.subscribe(() => this.registerAndClose());
+        if (this.externalApiService.getInstance().isLoggedIn()) {
+            this.registerAndClose();
+        }
+    }
+
+    private registerAndClose() {
+        this.data.registerExternalHost(this.data.accountIdentifier, this.externalApiService);
+        if (this.data.loginOnly) {
+            this.data.selected.complete();
+            this.matDialogRef.close();
+        }
     }
 
     isLoggedIn() {
