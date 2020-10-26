@@ -120,7 +120,7 @@ function main(args) {
         setContext(args);
         useContext(args);
         let namespaces: string [];
-        if (namespaces === undefined || args.namespaces === null || args.namespaces === 'default') {
+        if (args.namespaces === null || args.namespaces === 'default') {
             logger.info(`No namespaces provided. Fetch all of them`);
             namespaces = getNamespaces();
         } else {
