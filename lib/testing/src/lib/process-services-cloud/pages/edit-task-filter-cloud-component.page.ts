@@ -109,6 +109,10 @@ export class EditTaskFilterCloudComponentPage {
         return BrowserActions.getText(this.assignee);
     }
 
+    async setCompletedBy(option: string): Promise<void> {
+        await this.setProperty('completedBy', option);
+    }
+
     async setPriority(option): Promise<void> {
         await this.setProperty('priority', option);
     }
