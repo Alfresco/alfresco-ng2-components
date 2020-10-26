@@ -92,6 +92,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     preSelectUsers: IdentityUserModel[] = [];
 
+    /** Array of users to be excluded.
+     * Mandatory properties are: id, email, username
+     */
+    @Input()
+    excludedUsers: IdentityUserModel[] = [];
+
     /** FormControl to list of users */
     @Input()
     userChipsCtrl: FormControl = new FormControl({ value: '', disabled: false });
@@ -211,7 +217,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                 this.searchLoading = false;
                 return users;
             }),
-            filter(user => !this.isUserAlreadySelected(user)),
+            filter(user => !this.isUserAlreadySelected(user) && !this.isExcludedUser(user)),
             mergeMap(user => {
                 if (this.appName) {
                     return this.checkUserHasAccess(user.id).pipe(
@@ -271,6 +277,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             });
 
             return !!result;
+        }
+        return false;
+    }
+
+    private isExcludedUser(searchUser: IdentityUserModel): boolean {
+        if (this.excludedUsers?.length > 0) {
+            return !!this.excludedUsers.find(excludedUser => this.compare(excludedUser, searchUser));
         }
         return false;
     }
