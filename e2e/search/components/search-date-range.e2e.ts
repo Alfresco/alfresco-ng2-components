@@ -35,7 +35,7 @@ describe('Search Date Range Filter', () => {
     const dataTable = new DataTableComponentPage();
 
     beforeAll(async () => {
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.loginWithProfile('admin');
 
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();

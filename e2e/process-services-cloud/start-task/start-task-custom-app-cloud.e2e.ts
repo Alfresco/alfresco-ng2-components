@@ -58,7 +58,7 @@ describe('Start Task', () => {
     let apsUser, testUser, activitiUser, groupInfo;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
         apsUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_USER]);
@@ -84,7 +84,7 @@ describe('Start Task', () => {
         taskId = await tasksService.getTaskId(reassignTaskName, simpleApp);
         await tasksService.deleteTask(taskId, simpleApp);
 
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(activitiUser.idIdentityService);
         await identityService.deleteIdentityUser(apsUser.idIdentityService);
         await identityService.deleteIdentityUser(testUser.idIdentityService);

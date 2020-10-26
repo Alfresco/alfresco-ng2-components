@@ -44,7 +44,7 @@ describe('Login component - SSO', () => {
                 browser.params.testConfig.appConfig.oauth2.clientId,
                 browser.params.testConfig.appConfig.oauth2.redirectUriLogout);
 
-            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
         });
 
         it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', async () => {
@@ -57,7 +57,7 @@ describe('Login component - SSO', () => {
                 browser.params.testConfig.appConfig.oauth2.clientId,
                 browser.params.testConfig.appConfig.oauth2.redirectUriLogout);
 
-            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
         });
     });
 
@@ -73,8 +73,8 @@ describe('Login component - SSO', () => {
 
             await loginPage.waitForElements();
 
-            await loginPage.enterUsername(browser.params.testConfig.admin.email);
-            await loginPage.enterPassword(browser.params.testConfig.admin.password);
+            await loginPage.enterUsername(browser.params.testConfig.users.admin.username);
+            await loginPage.enterPassword(browser.params.testConfig.users.admin.password);
             await loginPage.clickSignInButton();
 
             await BrowserVisibility.waitUntilElementIsVisible(loginPage.sidenavLayout);

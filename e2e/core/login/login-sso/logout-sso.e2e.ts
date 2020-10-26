@@ -27,7 +27,7 @@ describe('Logout component - SSO', () => {
         await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
             browser.params.testConfig.appConfig.oauth2.host,
             browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId, '/login');
-        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
         await BrowserActions.clickExecuteScript('.app-sidenav-link[adf-logout]');
 
         await browser.sleep(2000);

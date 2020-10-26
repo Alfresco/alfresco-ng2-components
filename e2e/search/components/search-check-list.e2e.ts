@@ -89,7 +89,7 @@ describe('Search Checklist Component', () => {
     });
 
     afterAll(async () => {
-        await apiService.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);

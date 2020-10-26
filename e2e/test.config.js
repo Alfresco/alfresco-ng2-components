@@ -79,25 +79,31 @@ module.exports = {
         rootPath: __dirname
     },
 
-    admin: {
-        email: USERNAME_ADF,
-        password: PASSWORD_ADF
-    },
+    users: {
 
-    identityAdmin: {
-        email: IDENTITY_ADMIN_EMAIL,
-        password: IDENTITY_ADMIN_PASSWORD
-    },
+        admin: {
+            username: USERNAME_ADF,
+            password: PASSWORD_ADF
+        },
 
-    hrUser: {
-        email: HR_USER,
-        password: HR_USER_PASSWORD
+        identityAdmin: {
+            username: IDENTITY_ADMIN_EMAIL,
+            password: IDENTITY_ADMIN_PASSWORD
+        },
+
+        hrUser: {
+            username: HR_USER,
+            password: HR_USER_PASSWORD
+        },
+
+        screenshot: {
+            username: USERNAME_ADF,
+            password: PASSWORD_ADF
+        },
     },
 
     screenshot: {
         url: HOST_ECM,
-        username: USERNAME_ADF,
-        password: PASSWORD_ADF
     },
 
     adf_external_acs: {

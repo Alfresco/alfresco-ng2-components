@@ -210,4 +210,8 @@ export class LoginShellPage {
     async login(username: string, password: string): Promise<void> {
         await this.loginSSOPage.login(username, password);
     }
+
+    async loginWithProfile(profile: string): Promise<void> {
+        await this.loginSSOPage.loginWithProfile(profile);
+    }
 }

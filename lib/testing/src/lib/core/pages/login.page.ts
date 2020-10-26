@@ -53,6 +53,15 @@ export class LoginPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.txtPasswordBasicAuth);
     }
 
+    async loginWithProfile(profileName: string): Promise<void> {
+        const profile = browser.params.testConfig.users[profileName];
+        if (profile) {
+            await this.login(profile.username, profile.password);
+        } else {
+            throw new Error(`Login profile "${profileName}" not found on "browser.params.testConfig".`);
+        }
+    }
+
     async login(username: string, password: string) {
         Logger.log('Login With ' + username);
 
