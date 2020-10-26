@@ -103,7 +103,7 @@ describe('Task claim/release', () => {
         let candidate;
 
         beforeAll(async () => {
-            await apiService.login(browser.params.identityAdmin.username, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
             candidate = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
@@ -116,7 +116,7 @@ describe('Task claim/release', () => {
         });
 
         afterAll(async () => {
-            await apiService.login(browser.params.identityAdmin.username, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(candidate.idIdentityService);
 
             await apiService.login(browser.params.testConfig.users.hrUser.username, browser.params.testConfig.users.hrUser.password);
