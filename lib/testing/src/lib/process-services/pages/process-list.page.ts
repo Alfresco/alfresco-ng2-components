@@ -56,11 +56,13 @@ export class ProcessListPage {
         }
     }
 
-    checkContentIsDisplayedByColumn(column: string, processName: string): Promise<void> {
+    async checkContentIsDisplayedByColumn(column: string, processName: string): Promise<void> {
+        await this.dataTable.waitTillContentLoaded();
         return this.dataTable.checkContentIsDisplayed(column, processName);
     }
 
-    checkContentIsNotDisplayedByColumn(column: string, processName: string): Promise<void> {
+    async checkContentIsNotDisplayedByColumn(column: string, processName: string): Promise<void> {
+        await this.dataTable.waitTillContentLoaded();
         return this.dataTable.checkContentIsNotDisplayed(column, processName);
     }
 
