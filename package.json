@@ -88,7 +88,7 @@
     "@mat-datetimepicker/moment": "^5.0.1",
     "@ngx-translate/core": "^13.0.0",
     "adf-tslint-rules": "0.0.7",
-    "chart.js": "2.9.3",
+    "chart.js": "2.9.4",
     "classlist.js": "1.1.20150312",
     "custom-event-polyfill": "^1.0.7",
     "minimatch": "^3.0.4",
