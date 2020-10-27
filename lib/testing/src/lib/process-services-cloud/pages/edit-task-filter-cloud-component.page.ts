@@ -21,6 +21,7 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
+import { PeopleCloudComponentPage } from './people-cloud-component.page';
 
 export class EditTaskFilterCloudComponentPage {
 
@@ -53,6 +54,7 @@ export class EditTaskFilterCloudComponentPage {
     completedDateDropdown = new DropdownPage(this.locatorCompletedDateDropdown);
 
     editTaskFilterDialogPage = new EditTaskFilterDialogPage();
+    peopleCloudComponent = new PeopleCloudComponentPage();
 
     dataTable = new DataTableComponentPage( element(by.css('adf-cloud-task-list')));
 
@@ -110,7 +112,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setCompletedBy(option: string): Promise<void> {
-        await this.setProperty('completedBy', option);
+        await this.peopleCloudComponent.searchAssigneeAndSelect(option);
     }
 
     async setPriority(option): Promise<void> {
