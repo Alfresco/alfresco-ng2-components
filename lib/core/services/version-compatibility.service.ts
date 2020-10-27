@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { DiscoveryApiService } from './discovery-api.service';
 import { VersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { filter } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -26,10 +27,17 @@ import { filter } from 'rxjs/operators';
 export class VersionCompatibilityService {
     private acsVersion: VersionModel;
 
+    acsVersionInitialized$ = new ReplaySubject();
+
     constructor(private discoveryApiService: DiscoveryApiService) {
         this.discoveryApiService.ecmProductInfo$
             .pipe(filter(acsInfo => !!acsInfo))
-            .subscribe((acsInfo: EcmProductVersionModel) => this.acsVersion = acsInfo.version);
+            .subscribe((acsInfo: EcmProductVersionModel) => this.initializeAcsVersion(acsInfo.version));
+    }
+
+    private initializeAcsVersion(acsVersion: VersionModel) {
+        this.acsVersion = acsVersion;
+        this.acsVersionInitialized$.next();
     }
 
     getAcsVersion(): VersionModel {
