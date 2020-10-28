@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, EventEmitter, Output, OnDestroy, OnChanges, OnInit } from '@angular/core';
-import { takeUntil, concatMap, catchError } from 'rxjs/operators';
+import { takeUntil, concatMap, catchError, finalize } from 'rxjs/operators';
 import { Subject, of, forkJoin } from 'rxjs';
 import {
     CardViewDateItemModel,
@@ -122,7 +122,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     this.taskCloudService.getCandidateUsers(this.appName, this.taskId),
                     this.taskCloudService.getCandidateGroups(this.appName, this.taskId)
                 )
-            )
+            ),
+            finalize(() => (this.isLoading = false))
         ).subscribe(([taskDetails, candidateUsers, candidateGroups]) => {
                 this.taskDetails = taskDetails;
                 this.candidateGroups = candidateGroups.map((user) => <CardViewArrayItem> { icon: 'group', value: user });
@@ -132,10 +133,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                 } else {
                     this.refreshData();
                 }
-                this.isLoading = false;
             },
             (err) => {
-                this.isLoading = false;
                 this.error.emit(err);
             });
     }
