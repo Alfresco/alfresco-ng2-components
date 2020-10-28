@@ -45,7 +45,9 @@ import {
 import {
     FullNamePipe,
     IdentityUserModel,
-    LogService
+    LogService,
+    USER_SERVICE_TOKEN,
+    UserServiceInterface
 } from '@alfresco/adf-core';
 import {
     trigger,
@@ -55,8 +57,6 @@ import {
     animate
 } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
-import { PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN } from '../../services/cloud-token.service';
-import { PeopleCloudServiceInterface } from '../../services/people-cloud-service.interface';
 
 @Component({
     selector: 'adf-cloud-people',
@@ -167,8 +167,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     searchLoading = false;
 
     constructor(
-        @Inject(PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN)
-        public peopleCloudService: PeopleCloudServiceInterface,
+        @Inject(USER_SERVICE_TOKEN)
+        public userService: UserServiceInterface,
         private logService: LogService
     ) {}
 
@@ -203,7 +203,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private async loadClientId(): Promise<void> {
-        this.clientId = await this.peopleCloudService
+        this.clientId = await this.userService
             .getClientIdByApplicationName(this.appName)
             .toPromise();
         if (this.clientId) {
@@ -237,13 +237,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                     this.resetSearchUsers();
                 }),
                 switchMap((searchTerm) => {
-                    let results$: Observable<IdentityUserModel[]> = of([]);
+                    let results$: Observable<any[]> = of([]);
                     if (this.appName) {
-                        results$ = this.peopleCloudService.findUsersBasedOnApp(this.clientId, this.roles, searchTerm);
+                        results$ = this.userService.findUsersByApp(this.clientId, this.roles, searchTerm);
                     } else if (this.hasRoles()) {
-                        results$ = this.peopleCloudService.filterUsersBasedOnRoles(this.roles, searchTerm);
+                        results$ = this.userService.findUsersByRoles(this.roles, searchTerm);
                     } else {
-                        results$ = this.peopleCloudService.findUsers(searchTerm);
+                        results$ = this.userService.findUsersByName(searchTerm);
                     }
                     return results$;
                 }),
@@ -368,7 +368,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     async searchUser(user: IdentityUserModel): Promise<IdentityUserModel> {
-        const result = await this.peopleCloudService.validatePreselectedUser(user).toPromise();
+        const result = <IdentityUserModel> await this.userService.validatePreselectedUser(user).toPromise();
         return result;
     }
 

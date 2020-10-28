@@ -17,14 +17,16 @@
 
 import { Pagination } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { map, switchMap, catchError, mergeMap, concatMap, toArray } from 'rxjs/operators';
 import { AppConfigService } from '../app-config/app-config.service';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { IdentityUserModel } from '../models/identity-user.model';
 import { JwtHelperService } from './jwt-helper.service';
 import { OAuth2Service } from './oauth2.service';
+import { UserServiceInterface } from '../interface/user-service.interface';
+import { LogService } from './log.service';
 
 export interface IdentityUserQueryResponse {
 
@@ -52,12 +54,13 @@ export interface IdentityJoinGroupRequestModel {
 @Injectable({
     providedIn: 'root'
 })
-export class IdentityUserService {
+export class IdentityUserService implements UserServiceInterface {
 
     constructor(
         private jwtHelperService: JwtHelperService,
         private oAuth2Service: OAuth2Service,
-        private appConfigService: AppConfigService) { }
+        private appConfigService: AppConfigService,
+        private logService: LogService) { }
 
     private get identityHost(): string {
         return `${this.appConfigService.get('identityHost')}`;
@@ -84,14 +87,71 @@ export class IdentityUserService {
      * @param search Search query string
      * @returns List of users
      */
-    findUsersByName(search: string): Observable<IdentityUserModel[]> {
-        if (search === '') {
+    findUsersByName(searchTerm: string): Observable<IdentityUserModel[]> {
+        if (searchTerm === '') {
             return of([]);
         }
         const url = this.buildUserUrl();
-        const queryParams = { search: search };
+        const queryParams = { search: searchTerm };
 
         return this.oAuth2Service.get({ url, queryParams });
+    }
+
+    findUsersByApp(clientId?: string, roles?: string[], searchTerm?: string): Observable<IdentityUserModel[]> {
+        if (clientId) {
+            return this.findUsersByName(searchTerm.trim()).pipe(
+                mergeMap(users => users),
+                concatMap((user) => {
+                    return this.checkUserHasAccessToApp(user.id, clientId, roles).pipe(
+                        mergeMap((hasRole) => hasRole ? of(user) : of())
+                    );
+                }),
+                toArray(),
+                map((filteredUsers) => filteredUsers.filter((filteredUser) => !!filteredUser)),
+                catchError((error) => this.handleError(error))
+            );
+        } else {
+            return this.handleError('client is mandatory to search users based on the application');
+        }
+    }
+
+    findUsersByRoles(roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
+        if (roles?.length) {
+            return this.findUsersByName(searchTerm.trim()).pipe(
+                mergeMap(users => users),
+                concatMap((user) => {
+                    return this.checkUserHasRole(user.id, roles).pipe(
+                        mergeMap((hasRole) => hasRole ? of(user) : of())
+                    );
+                }),
+                toArray(),
+                map((filteredUsers) => filteredUsers.filter((filteredUser) => !!filteredUser)),
+                catchError((error) => this.handleError(error))
+            );
+        } else {
+            return this.handleError('roles are mandatory to search users');
+        }
+    }
+
+    validatePreselectedUser(preselectedUser: IdentityUserModel): Observable<IdentityUserModel> {
+        const key = preselectedUser.id ? 'id' : preselectedUser.email ? 'email' : preselectedUser.username ? 'username' : null;
+        let result$:  Observable<IdentityUserModel>;
+
+        switch (key) {
+             case 'id':
+                 result$ = this.findUserById(preselectedUser[key]);
+                 break;
+             case 'username':
+                 result$ = this.findUserByUsername(preselectedUser[key]).pipe(map((users: IdentityUserModel[]) => users[0]));
+                 break;
+             case 'email':
+                 result$ = this.findUserByEmail(preselectedUser[key]).pipe(map((users: IdentityUserModel[]) => users[0]));
+                 break;
+             default:
+                 result$ = of();
+         }
+
+        return result$.pipe(catchError((error) => this.handleError(error)));
     }
 
     /**
@@ -508,5 +568,32 @@ export class IdentityUserService {
         const bodyParam = JSON.stringify(removedRoles);
 
         return this.oAuth2Service.delete({ url, bodyParam });
+    }
+
+    private checkUserHasAccessToApp(userId: string, clientId: string, roles: string[]): Observable<boolean> {
+        let hasAccess$: Observable<boolean>;
+        if (roles?.length) {
+            hasAccess$ = this.checkUserHasAnyClientAppRole(
+                userId,
+                clientId,
+                roles
+            );
+        } else {
+            hasAccess$ = this.checkUserHasClientApp(
+                userId,
+                clientId
+            );
+        }
+
+        return hasAccess$.pipe(catchError((error) => this.handleError(error)));
+    }
+
+    findUsersByTaskId(_searchTerm: string, _taskId: string, _appName: string): Observable<IdentityUserModel[]> {
+        throw new Error('Method not implemented.');
+    }
+
+    private handleError(error: any) {
+        this.logService.error(error);
+        return throwError(error);
     }
 }

@@ -19,7 +19,9 @@ import { PeopleCloudComponent } from './people-cloud.component';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import {
     setupTestBed,
-    IdentityUserModel
+    IdentityUserModel,
+    UserServiceInterface,
+    USER_SERVICE_TOKEN
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
@@ -27,15 +29,13 @@ import { mockUsers } from '../mock/user-cloud.mock';
 import { SimpleChange, NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
-import { PeopleCloudServiceInterface } from '../../services/people-cloud-service.interface';
 import { CustomMockPeopleCloudService, customServiceMockUsers } from '../mock/custom-people-cloud-mock.service';
-import { PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN } from '../../services/cloud-token.service';
 
 describe('PeopleCloudComponent', () => {
     let component: PeopleCloudComponent;
     let fixture: ComponentFixture<PeopleCloudComponent>;
     let element: HTMLElement;
-    let peopleCloudService: PeopleCloudServiceInterface;
+    let userService: UserServiceInterface;
     let findUsersBasedOnAppSpy: jasmine.Spy;
     let filterUsersBasedOnRolesSpy: jasmine.Spy;
     let findUsersSpy: jasmine.Spy;
@@ -63,12 +63,12 @@ describe('PeopleCloudComponent', () => {
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;
 
-        peopleCloudService = component.peopleCloudService;
-        findUsersSpy = spyOn(peopleCloudService, 'findUsers').and.returnValue(of(mockUsers));
-        findUsersBasedOnAppSpy = spyOn(peopleCloudService, 'findUsersBasedOnApp').and.returnValue(of(mockUsers));
-        filterUsersBasedOnRolesSpy = spyOn(peopleCloudService, 'filterUsersBasedOnRoles').and.returnValue(of(mockUsers));
-        validatePreselectedUserSpy = spyOn(peopleCloudService, 'validatePreselectedUser').and.returnValue(of(mockUsers[0]));
-        getClientIdByApplicationNameSpy = spyOn(peopleCloudService, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
+        userService = component.userService;
+        findUsersSpy = spyOn(userService, 'findUsersByName').and.returnValue(of(mockUsers));
+        findUsersBasedOnAppSpy = spyOn(userService, 'findUsersByApp').and.returnValue(of(mockUsers));
+        filterUsersBasedOnRolesSpy = spyOn(userService, 'findUsersByRoles').and.returnValue(of(mockUsers));
+        validatePreselectedUserSpy = spyOn(userService, 'validatePreselectedUser').and.returnValue(of(mockUsers[0]));
+        getClientIdByApplicationNameSpy = spyOn(userService, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
     });
 
     it('should populate placeholder when title is present', () => {
@@ -617,10 +617,10 @@ describe('PeopleCloudComponent', () => {
     });
 });
 
-describe('PeopleCloudComponent with Custom service', () => {
+describe('PeopleCloudComponent with Custom User Service', () => {
     let component: PeopleCloudComponent;
     let fixture: ComponentFixture<PeopleCloudComponent>;
-    let customPeopleCloudService: CustomMockPeopleCloudService;
+    let customPeopleCloudService: UserServiceInterface;
     let findUsersSpy: jasmine.Spy;
 
     setupTestBed({
@@ -629,7 +629,7 @@ describe('PeopleCloudComponent with Custom service', () => {
             ProcessServiceCloudTestingModule
         ],
         providers: [
-            { provide: PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN, useClass: CustomMockPeopleCloudService }
+            { provide: USER_SERVICE_TOKEN, useClass: CustomMockPeopleCloudService }
         ],
         schemas: [NO_ERRORS_SCHEMA]
     });
@@ -638,14 +638,14 @@ describe('PeopleCloudComponent with Custom service', () => {
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;
 
-        customPeopleCloudService = component.peopleCloudService;
-        findUsersSpy = spyOn(customPeopleCloudService, 'findUsers').and.returnValue(of(customServiceMockUsers));
+        customPeopleCloudService = component.userService;
+        findUsersSpy = spyOn(customPeopleCloudService, 'findUsersByName').and.returnValue(of(customServiceMockUsers));
     });
 
     it('Should be able to create/inject custom serivce to the people component', () => {
         fixture.detectChanges();
 
-        expect(component.peopleCloudService instanceof CustomMockPeopleCloudService).toBe(true);
+        expect(component.userService instanceof CustomMockPeopleCloudService).toBe(true);
     });
 
     it('Should be able to search/fetch users from custom serivce', async () => {

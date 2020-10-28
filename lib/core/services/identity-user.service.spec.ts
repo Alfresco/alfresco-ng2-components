@@ -684,4 +684,83 @@ describe('IdentityUserService', () => {
                 }
             );
     });
+
+    describe('Find users', () => {
+
+        let findUserByIdSpy: jasmine.Spy;
+        let findUserByUsernameSpy: jasmine.Spy;
+        let findUserByEmailSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            findUserByIdSpy = spyOn(service, 'findUserById').and.returnValue(of(mockIdentityUsers[0]));
+            findUserByUsernameSpy = spyOn(service, 'findUserByUsername').and.returnValue(of([mockIdentityUsers[1]]));
+            findUserByEmailSpy = spyOn(service, 'findUserByEmail').and.returnValue(of([mockIdentityUsers[2]]));
+        });
+
+        it('should be able to find users by clientId', (done) => {
+            spyOn(alfrescoApiService, 'getInstance').and.returnValue(queryUsersMockApi);
+            service.findUsersByApp('mock-client-id', [], 'searchTerm').subscribe((users) => {
+                expect(users.length).toBe(5);
+                done();
+            });
+        });
+
+        it('should thrown an error and not to call an API if clientId is not defined', (done) => {
+            const findUsersByNameSpy = spyOn(service, 'findUsersByName');
+            service.findUsersByApp(null, [], 'searchTerm').subscribe(() => {},
+            (error) => {
+                expect(error).toBe('client is mandatory to search users based on the application');
+                expect(findUsersByNameSpy).not.toHaveBeenCalled();
+                done();
+            });
+        });
+
+        it('should be able to filter/search users by given roles', (done) => {
+            const findUsersByNameSpy = spyOn(service, 'findUsersByName').and.returnValue(of(mockIdentityUsers));
+            const checkUserHasRoleSpy = spyOn(service, 'checkUserHasRole').and.returnValue(of(true));
+            service.findUsersByRoles(['mock-user-role', 'mock-admin-role'], 'searchTerm').subscribe((users) => {
+                expect(users.length).toBe(5);
+                expect(findUsersByNameSpy).toHaveBeenCalledWith('searchTerm');
+                expect(checkUserHasRoleSpy).toHaveBeenCalledTimes(5);
+                done();
+            });
+        });
+
+        it('Should thrown an error and not to call the role mapping API if roles are not specified', (done) => {
+            const findUsersByNameSpy = spyOn(service, 'findUsersByName');
+            service.findUsersByRoles([], 'searchTerm').subscribe(() => {},
+            (error) => {
+                expect(error).toBe('roles are mandatory to search users');
+                expect(findUsersByNameSpy).not.toHaveBeenCalled();
+                done();
+            });
+        });
+
+        it('Should be able to validate user by given userId', (done) => {
+            const mockPreselectedUser = { id: 'mock-user-id-1' };
+            service.validatePreselectedUser(mockPreselectedUser).subscribe((response) => {
+                expect(response.id).toBe('mock-user-id-1');
+                expect(findUserByIdSpy).toHaveBeenCalledWith(mockPreselectedUser.id);
+                done();
+            });
+        });
+
+        it('Should be able to validate user by given username', (done) => {
+            const mockPreselectedUser = { username: 'first-name-2 last-name-2' };
+            service.validatePreselectedUser(mockPreselectedUser).subscribe((response) => {
+                expect(response.username).toBe('userName2');
+                expect(findUserByUsernameSpy).toHaveBeenCalledWith(mockPreselectedUser.username);
+                done();
+            });
+        });
+
+        it('Should be able to validate user by given email', (done) => {
+            const mockPreselectedUser = { email: 'abcde@xyz.com' };
+            service.validatePreselectedUser(mockPreselectedUser).subscribe((response) => {
+                expect(response.email).toBe('abcde@xyz.com');
+                expect(findUserByEmailSpy).toHaveBeenCalledWith(mockPreselectedUser.email);
+                done();
+            });
+        });
+    });
 });

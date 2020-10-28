@@ -18,3 +18,4 @@
 export * from './authentication.interface';
 export * from './injection.tokens';
 export * from './search-configuration.interface';
+export * from './user-service.interface';

@@ -16,9 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { PeopleCloudServiceInterface } from '../../services/people-cloud-service.interface';
 import { Observable, of } from 'rxjs';
-import { IdentityUserModel } from 'core';
+import {
+
+    IdentityUserModel,
+    UserServiceInterface
+} from '@alfresco/adf-core';
 
 export const customServiceMockUsers = [
     { id: 'custom-fake-id-1', username: 'custom first-name-1 last-name-1', firstName: 'custom-first-name-1', lastName: 'custom-last-name-1', email: 'custom-abc@xyz.com' },
@@ -26,20 +29,24 @@ export const customServiceMockUsers = [
 ];
 
 @Injectable()
-export class CustomMockPeopleCloudService implements PeopleCloudServiceInterface {
-    findUsers(_searchTerm: string): Observable<IdentityUserModel[]> {
-        return of(customServiceMockUsers);
+export class CustomMockPeopleCloudService implements UserServiceInterface {
+    findUsersByName(_searchTerm: string): Observable<IdentityUserModel[]> {
+        throw new Error('Method not implemented.');
     }
-    findUsersBasedOnApp(_clientId: string, _roles: string[], _searchTerm: string): Observable<IdentityUserModel[]> {
-        return of(customServiceMockUsers);
+    findUsersByTaskId(_searchTerm: string, _taskId: string, _appName?: string): Observable<IdentityUserModel[]> {
+        throw new Error('Method not implemented.');
     }
-    filterUsersBasedOnRoles(_roles: string[], _searchTerm: string): Observable<IdentityUserModel[]> {
-        return of(customServiceMockUsers);
+    findUsersByApp(_clientId: string, _roles: string[], _searchTerm: string): Observable<IdentityUserModel[]> {
+        throw new Error('Method not implemented.');
+    }
+    findUsersByRoles(_roles: string[], _searchTerm: string): Observable<IdentityUserModel[]> {
+        throw new Error('Method not implemented.');
     }
     validatePreselectedUser(_preselectedUser: IdentityUserModel): Observable<IdentityUserModel> {
-        return of(customServiceMockUsers[0]);
+        throw new Error('Method not implemented.');
     }
-    getClientIdByApplicationName(_appName: string): Observable<string> {
+    getClientIdByApplicationName(_applicationName: string): Observable<string> {
         return of ('custom-service-mock-client-id');
     }
+
 }

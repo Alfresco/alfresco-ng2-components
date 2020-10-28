@@ -16,5 +16,8 @@
  */
 
 import { Component, InjectionToken } from '@angular/core';
+import { UserServiceInterface } from './user-service.interface';
 
 export const EXTENDIBLE_COMPONENT = new InjectionToken<Component>('extendible.component');
+
+export const USER_SERVICE_TOKEN = new InjectionToken<UserServiceInterface>('user-service-token');
