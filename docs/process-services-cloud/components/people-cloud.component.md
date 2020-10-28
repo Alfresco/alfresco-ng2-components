@@ -82,33 +82,35 @@ from above `preSelectUsers`, `username2` is removable from the `preSelectUsers` 
 
 ## Inject Custom service
 
-Token: [`PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN`](../../../lib/process-services-cloud/src/lib/services/cloud-token.service.ts)
+Token: [`USER_SERVICE_TOKEN`](../../../lib/core/interface/injection.tokens.ts)
 A DI token that maps to the dependency to be injected.
 
-[`People Cloud Service`](../../../lib/process-services-cloud/src/lib/people/services/people-cloud.service.ts "Defined in people-cloud.service.ts") is by default injected. If you would like to inject a custom service then your custom service should implement [`People Cloud Service Interface`](../../../lib/process-services-cloud/src/lib/services/people-cloud-service.interface.ts)
+[`Identity User Service`](../../../lib/core/services/identity-user.service.ts "Defined in identity-user.service.ts") is injected by default in [`People Cloud Component`](../../../lib/process-services-cloud/src/lib/people/components/people-cloud.component.ts "Defined in people-cloud.component.ts"). If you would like to inject a custom service then your custom service should implement [`User Service Interface`](../../../lib/core/interface/user-service.interface.ts)
 
 ```ts
 import { Injectable } from '@angular/core';
-import { PeopleCloudServiceInterface } from '@alfresco/adf-process-services-cloud';
-import { IdentityUserModel } from '@alfresco/adf-core';
+import { IdentityUserModel, UserServiceInterface } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ExampleCustomPeopleService implements PeopleCloudServiceInterface {
-    findUsers(searchTerm: string): Observable<IdentityUserModel[]> {
+export class ExampleCustomPeopleService implements UserServiceInterface {
+    findUsersByName(searchTerm: string): Observable<IdentityUserModel[]> {
         throw new Error("Method not implemented.");
     }
-    findUsersBasedOnApp(clientId: string, roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
+    findUsersByTaskId(searchTerm: string, taskId: string, appName?: string): Observable<IdentityUserModel[]> {
         throw new Error("Method not implemented.");
     }
-    filterUsersBasedOnRoles(roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
+    findUsersByApp(clientId: string, roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
+        throw new Error("Method not implemented.");
+    }
+    findUsersByRoles(roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
         throw new Error("Method not implemented.");
     }
     validatePreselectedUser(preselectedUser: IdentityUserModel): Observable<IdentityUserModel> {
         throw new Error("Method not implemented.");
     }
-    getClientIdByApplicationName(appName: string): Observable<string> {
+    getClientIdByApplicationName(applicationName: string): Observable<string> {
         throw new Error("Method not implemented.");
     }
 }
@@ -116,7 +118,7 @@ export class ExampleCustomPeopleService implements PeopleCloudServiceInterface {
 
 ```ts
 import { NgModule } from '@angular/core';
-import { PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN } from '@alfresco/adf-process-services-cloud';
+import { USER_SERVICE_TOKEN } from '@alfresco/adf-core';
 import { ExampleCustomPeopleService } from './exmaple-custom-people.service';
 
 @NgModule({
@@ -124,7 +126,7 @@ import { ExampleCustomPeopleService } from './exmaple-custom-people.service';
         ...Import Required Modules
     ],
     providers: [
-        { provide: PEOPLE_CLOUD_SEARCH_SERVICE_TOKEN, useClass: ExampleCustomPeopleService }
+        { provide: USER_SERVICE_TOKEN, useClass: ExampleCustomPeopleService }
     ]
 })
 export class ExampleModule {}
