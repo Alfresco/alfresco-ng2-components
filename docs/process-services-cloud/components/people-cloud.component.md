@@ -98,9 +98,6 @@ export class ExampleCustomPeopleService implements UserServiceInterface {
     findUsersByName(searchTerm: string): Observable<IdentityUserModel[]> {
         throw new Error("Method not implemented.");
     }
-    findUsersByTaskId(searchTerm: string, taskId: string, appName?: string): Observable<IdentityUserModel[]> {
-        throw new Error("Method not implemented.");
-    }
     findUsersByApp(clientId: string, roles: string[], searchTerm: string): Observable<IdentityUserModel[]> {
         throw new Error("Method not implemented.");
     }

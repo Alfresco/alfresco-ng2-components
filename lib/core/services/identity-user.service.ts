@@ -588,10 +588,6 @@ export class IdentityUserService implements UserServiceInterface {
         return hasAccess$.pipe(catchError((error) => this.handleError(error)));
     }
 
-    findUsersByTaskId(_searchTerm: string, _taskId: string, _appName: string): Observable<IdentityUserModel[]> {
-        throw new Error('Method not implemented.');
-    }
-
     private handleError(error: any) {
         this.logService.error(error);
         return throwError(error);

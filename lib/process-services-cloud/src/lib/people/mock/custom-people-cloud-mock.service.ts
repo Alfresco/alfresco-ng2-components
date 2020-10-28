@@ -33,9 +33,6 @@ export class CustomMockPeopleCloudService implements UserServiceInterface {
     findUsersByName(_searchTerm: string): Observable<IdentityUserModel[]> {
         throw new Error('Method not implemented.');
     }
-    findUsersByTaskId(_searchTerm: string, _taskId: string, _appName?: string): Observable<IdentityUserModel[]> {
-        throw new Error('Method not implemented.');
-    }
     findUsersByApp(_clientId: string, _roles: string[], _searchTerm: string): Observable<IdentityUserModel[]> {
         throw new Error('Method not implemented.');
     }

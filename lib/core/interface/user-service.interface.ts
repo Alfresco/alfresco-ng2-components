@@ -17,13 +17,11 @@
 
 import { Observable } from 'rxjs';
 import { IdentityUserModel } from './../models/identity-user.model';
-import { UserProcessModel } from './../models/user-process.model';
 
 export interface UserServiceInterface {
-    findUsersByName(searchTerm: string): Observable<IdentityUserModel[] | UserProcessModel[]>;
-    findUsersByTaskId(searchTerm: string, taskId: string, appName?: string): Observable<IdentityUserModel[] | UserProcessModel[]>;
-    findUsersByApp(clientId: string, roles: string[], searchTerm: string): Observable<IdentityUserModel[] | UserProcessModel[]>;
-    findUsersByRoles(roles: string[], searchTerm: string): Observable<IdentityUserModel[] | UserProcessModel[]>;
-    validatePreselectedUser(preselectedUser: IdentityUserModel| UserProcessModel): Observable<IdentityUserModel | UserProcessModel>;
+    findUsersByName(searchTerm: string): Observable<IdentityUserModel[]>;
+    findUsersByApp(clientId: string, roles: string[], searchTerm: string): Observable<IdentityUserModel[]>;
+    findUsersByRoles(roles: string[], searchTerm: string): Observable<IdentityUserModel[]>;
+    validatePreselectedUser(preselectedUser: IdentityUserModel): Observable<IdentityUserModel>;
     getClientIdByApplicationName(applicationName: string): Observable<string>;
 }

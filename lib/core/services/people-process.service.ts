@@ -21,12 +21,11 @@ import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { catchError, map } from 'rxjs/operators';
-import { UserServiceInterface } from './../interface/user-service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class PeopleProcessService implements UserServiceInterface {
+export class PeopleProcessService {
 
     constructor(private alfrescoJsApi: AlfrescoApiService,
                 private logService: LogService) {
@@ -39,7 +38,12 @@ export class PeopleProcessService implements UserServiceInterface {
      * @returns Array of user information objects
      */
     getWorkflowUsers(taskId?: string, searchWord?: string): Observable<UserProcessModel[]> {
-        return this.findUsersByTaskId(taskId, searchWord, null);
+        const option = { excludeTaskId: taskId, filter: searchWord };
+        return from(this.getWorkflowUserApi(option))
+            .pipe(
+                map((response: any) => <UserProcessModel[]> response.data || []),
+                catchError((err) => this.handleError(err))
+            );
     }
 
     /**
@@ -93,35 +97,6 @@ export class PeopleProcessService implements UserServiceInterface {
 
     private getUserProfileImageApi(userId: string): string {
         return this.alfrescoJsApi.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
-    }
-
-    findUsersByTaskId(searchTerm: string, taskId: string, _appName: string): Observable<UserProcessModel[]> {
-        const option = { excludeTaskId: taskId, filter: searchTerm };
-        return from(this.getWorkflowUserApi(option))
-            .pipe(
-                map((response: any) => <UserProcessModel[]> response.data || []),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    findUsersByName(_searchTerm: string): Observable<UserProcessModel[]> {
-        throw new Error('Method not implemented.');
-    }
-
-    findUsersByApp(_clientId: string, _roles: string[], _searchTerm: string): Observable<UserProcessModel[]> {
-        throw new Error('Method not implemented.');
-    }
-
-    findUsersByRoles(_roles: string[], _searchTerm: string): Observable<UserProcessModel[]> {
-        throw new Error('Method not implemented.');
-    }
-
-    validatePreselectedUser(_preselectedUser: UserProcessModel): Observable<UserProcessModel> {
-        throw new Error('Method not implemented.');
-    }
-
-    getClientIdByApplicationName(_applicationName: string): Observable<string> {
-        throw new Error('Method not implemented.');
     }
 
     /**
