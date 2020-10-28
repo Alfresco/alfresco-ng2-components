@@ -29,13 +29,13 @@ export class ProcessUtil {
         this.api = api;
     }
 
-    async startProcessByDefinitionName(appName: string, processDefinitionName: string): Promise<any> {
+    async startProcessByDefinitionName(appName: string, processDefinitionName: string, processName?: string): Promise<any> {
         try {
             const appDefinition = await new ApplicationsUtil(this.api).getAppDefinitionByName(appName);
 
             const processDefinition = await this.getProcessDefinitionByName(appDefinition.deploymentId, processDefinitionName);
 
-            const startProcessOptions: any = { processDefinitionId: processDefinition.id, name: processDefinitionName };
+            const startProcessOptions: any = { processDefinitionId: processDefinition.id, name: processName ? processName : processDefinitionName + StringUtil.generateRandomString(5).toLowerCase() };
 
             return this.api.apiService.activiti.processApi.startNewProcessInstance(startProcessOptions);
         } catch (error) {
