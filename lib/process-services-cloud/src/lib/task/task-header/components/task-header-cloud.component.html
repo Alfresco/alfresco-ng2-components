@@ -4,7 +4,7 @@
     <mat-card *ngIf="isTaskValid()" class="adf-card-container">
         <mat-card-content>
             <adf-card-view
-                *ngIf="properties; else loadingTemplate"
+                *ngIf="!isLoading; else loadingTemplate"
                 [properties]="properties"
                 [editable]="isTaskEditable()"
                 [displayClearAction]="displayDateClearAction">

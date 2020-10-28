@@ -210,11 +210,11 @@ describe('TaskHeaderCloudComponent', () => {
             expect(taskCloudService.updateTask).toHaveBeenCalled();
         }));
 
-        it('should show loading spinner when properties are not loaded', () => {
-            component.properties = null;
+        it('should show spinner before loading task details', () => {
+            component.isLoading = true;
             fixture.detectChanges();
             const loading = fixture.debugElement.query(By.css('.adf-task-header-loading'));
-            expect(loading).toBeTruthy();
+            expect(loading).not.toBe(null);
         });
 
         it('should not render edit icon if the task in assigned state and assingned user is different from current logged-in user', () => {

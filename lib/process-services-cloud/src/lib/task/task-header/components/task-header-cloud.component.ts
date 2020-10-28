@@ -76,6 +76,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     dateTimeFormat: string;
     dateLocale: string;
     displayDateClearAction = false;
+    isLoading = true;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -113,6 +114,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     loadTaskDetailsById(appName: string, taskId: string) {
+        this.isLoading = true;
         this.taskCloudService.getTaskById(appName, taskId).pipe(
             concatMap((task) =>
                 forkJoin(
@@ -130,8 +132,12 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                 } else {
                     this.refreshData();
                 }
+                this.isLoading = false;
             },
-            (err) => this.error.emit(err));
+            (err) => {
+                this.isLoading = false;
+                this.error.emit(err);
+            });
     }
 
     private initDefaultProperties() {
