@@ -248,7 +248,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                     return results$;
                 }),
                 map((users) => {
-                    return users.filter((user) => !this.isUserAlreadySelected(user));
+                    return users.filter((user) => !this.isUserAlreadySelected(user) && !this.isExcludedUser(user));
                 }),
                 takeUntil(this.onDestroy$)
             )
