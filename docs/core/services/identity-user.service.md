@@ -74,6 +74,21 @@ Gets OAuth2 personal details and roles for users and performs CRUD operations on
     Find users based on search input.
     -   _search:_ `string`  - Search query string
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>` - List of users
+-   **findUsersByApp**(clientId: `string`, roles: `string[]` searchTerm: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>`<br/>
+    Find/Search users based on application access.
+    -  _clientId:_ `string[]`  - ClientId of the application
+    -  _roles:_ `string[]`  - List of role names to find/search users based on roles
+    -   _searchTerm:_ `string`  - Search query string
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>` - List of users
+-   **findUsersByRoles**(roles: `string[]` searchTerm: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>`<br/>
+    Find/Search users based on roles.
+    -  _roles:_ `string[]`  - List of role names to find/search users based on roles
+    -   _searchTerm:_ `string`  - Search query string
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>` - List of users
+-   **validatePreselectedUser**(preselectedUser: [`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)<br/>
+    Checks preselected user exists or not.
+    -   preselectedUser:_ [`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)  - Preselected user details
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>` - List of users
 -   **getAssignedRoles**(userId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]>`<br/>
     Gets assigned roles.
     -   _userId:_ `string`  - Id of the user.

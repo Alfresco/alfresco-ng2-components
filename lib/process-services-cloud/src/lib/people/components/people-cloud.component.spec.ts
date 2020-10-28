@@ -155,15 +155,13 @@ describe('PeopleCloudComponent', () => {
             inputHTMLElement.dispatchEvent(new Event('keyup'));
             inputHTMLElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
-                done();
-            });
+            expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
         });
 
-        it('should not be able to search for a user that his email matches one of the excluded users email', (done) => {
+        it('should not be able to search for a user that his email matches one of the excluded users email', async () => {
             component.excludedUsers = [{ email: mockUsers[0].email }];
             fixture.detectChanges();
 
@@ -173,15 +171,13 @@ describe('PeopleCloudComponent', () => {
             inputHTMLElement.dispatchEvent(new Event('keyup'));
             inputHTMLElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
-                done();
-            });
+            expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
         });
 
-        it('should not be able to search for a user that his id matches one of the excluded users id', (done) => {
+        it('should not be able to search for a user that his id matches one of the excluded users id', async () => {
             component.excludedUsers = [{ email: mockUsers[0].email }];
             fixture.detectChanges();
 
@@ -191,15 +187,13 @@ describe('PeopleCloudComponent', () => {
             inputHTMLElement.dispatchEvent(new Event('keyup'));
             inputHTMLElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
-                done();
-            });
+            expect(fixture.debugElement.queryAll(By.css('mat-option')).length).toEqual(2);
         });
 
-        it('should not be able to search for a user that his username matches one of the excluded users username', (done) => {
+        it('should not be able to search for a user that his username matches one of the excluded users username', async () => {
             component.excludedUsers = [{ email: mockUsers[0].email }];
             fixture.detectChanges();
 
