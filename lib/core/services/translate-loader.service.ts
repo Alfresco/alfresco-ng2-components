@@ -134,7 +134,6 @@ export class TranslateLoaderService implements TranslateLoader {
             ...this.getComponentToFetch(lang).map((observable) => {
                 return observable.pipe(
                     catchError((error) => {
-                        console.warn(error);
                         hasFailures = true;
                         return of(error);
                     })
