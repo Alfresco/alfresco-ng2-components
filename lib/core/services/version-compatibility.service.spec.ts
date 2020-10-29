@@ -73,4 +73,11 @@ describe('VersionCompatibilityService', () => {
         expect(versionCompatibilityService.isVersionSupported('7.0.0')).toBe(true);
         expect(versionCompatibilityService.isVersionSupported('6.0.0')).toBe(true);
     });
+
+    it('should emit versionCompatibilityInitialized after retrieving acs version', (done) => {
+        versionCompatibilityService.acsVersionInitialized$.subscribe(() => {
+            expect(versionCompatibilityService.getAcsVersion()).toEqual({ display: '7.0.1', major: '7', minor: '0', patch: '1' } as any);
+            done();
+        });
+    });
 });

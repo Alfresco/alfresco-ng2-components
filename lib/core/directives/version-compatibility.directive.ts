@@ -37,10 +37,12 @@ export class VersionCompatibilityDirective {
     }
 
     private validateAcsVersion(requiredVersion: string) {
-        if (requiredVersion && this.versionCompatibilityService.isVersionSupported(requiredVersion)) {
-            this.viewContainer.createEmbeddedView(this.templateRef);
-        } else {
-            this.viewContainer.clear();
-        }
+        this.versionCompatibilityService.acsVersionInitialized$.subscribe(() => {
+            if (requiredVersion && this.versionCompatibilityService.isVersionSupported(requiredVersion)) {
+                this.viewContainer.createEmbeddedView(this.templateRef);
+            } else {
+                this.viewContainer.clear();
+            }
+        });
     }
 }
