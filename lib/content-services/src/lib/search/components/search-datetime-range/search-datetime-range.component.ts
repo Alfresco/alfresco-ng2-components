@@ -67,16 +67,16 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     }
 
     getFromValidationMessage(): string {
-        return this.from.hasError('invalidOnChange') || this.hasParseError(this.from) ? 'SEARCH.FILTER.VALIDATION.INVALID-DATE' :
-            this.from.hasError('matDatepickerMax') ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATE' :
+        return this.from.hasError('invalidOnChange') || this.hasParseError(this.from) ? 'SEARCH.FILTER.VALIDATION.INVALID-DATETIME' :
+            this.from.hasError('matDatepickerMax') ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATETIME' :
             this.from.hasError('required') ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' :
             '';
     }
 
     getToValidationMessage(): string {
-        return this.to.hasError('invalidOnChange') || this.hasParseError(this.to) ? 'SEARCH.FILTER.VALIDATION.INVALID-DATE' :
+        return this.to.hasError('invalidOnChange') || this.hasParseError(this.to) ? 'SEARCH.FILTER.VALIDATION.INVALID-DATETIME' :
             this.to.hasError('matDatepickerMin') ? 'SEARCH.FILTER.VALIDATION.NO-DAYS' :
-            this.to.hasError('matDatepickerMax') ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATE' :
+            this.to.hasError('matDatepickerMax') ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATETIME' :
             this.to.hasError('required') ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' :
             '';
     }
@@ -127,8 +127,8 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         if (isValid && this.id && this.context && this.settings && this.settings.field) {
             this.isActive = true;
 
-            const start = moment(model.from).format();
-            const end = moment(model.to).format();
+            const start = moment(model.from).startOf('minute').format();
+            const end = moment(model.to).endOf('minute').format();
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
             this.context.update();
@@ -144,8 +144,10 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     }
 
     getCurrentValue() {
-        return { from : this.dateAdapter.format(this.form.value.from, this.datetimePickerDateFormat),
-                to: this.dateAdapter.format(this.form.value.from, this.datetimePickerDateFormat) };
+        return {
+            from: this.dateAdapter.format(this.form.value.from, this.datetimePickerDateFormat),
+            to: this.dateAdapter.format(this.form.value.from, this.datetimePickerDateFormat)
+        };
     }
 
     setValue(parsedDate: string) {

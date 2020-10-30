@@ -37,8 +37,8 @@ const DEFAULT_FORMAT_DATE: string = 'DD/MM/YYYY';
     templateUrl: './search-date-range.component.html',
     styleUrls: ['./search-date-range.component.scss'],
     providers: [
-        {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}
+        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
     ],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
@@ -150,8 +150,10 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     }
 
     getCurrentValue() {
-        return { from : this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat),
-                to: this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat) };
+        return {
+            from: this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat),
+            to: this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat)
+        };
     }
 
     setValue(parsedDate: string) {

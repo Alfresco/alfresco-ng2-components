@@ -251,7 +251,9 @@
         "NO-DAYS": "No days selected.",
         "INVALID-FORMAT": "Invalid Format",
         "INVALID-DATE": "Invalid date. The date must be in the format '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "The date is beyond the maximum date."
+        "BEYOND-MAX-DATE": "The date is beyond the maximum date.",
+        "INVALID-DATETIME": "Invalid datetime. The datetime must be in the format '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "The datetime is beyond the maximum datetime."
       }
     },
     "ICONS": {
