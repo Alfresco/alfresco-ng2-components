@@ -104,6 +104,14 @@ describe('SearchDateRangeComponent', () => {
             expect(component.form.value).toEqual({ from: '', to: '' });
         });
 
+        it ('should reset fromMaxDate when on reset', () => {
+            fixture.detectChanges();
+            component.fromMaxDate = fromDate;
+            component.reset();
+
+            expect(component.fromMaxDate).toEqual(undefined);
+        });
+
         it('should update query builder on reset', () => {
             const context: any = {
                 queryFragments: {

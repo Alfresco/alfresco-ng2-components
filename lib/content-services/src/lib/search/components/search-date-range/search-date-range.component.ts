@@ -177,6 +177,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             this.context.queryFragments[this.id] = '';
             this.context.update();
         }
+        this.setFromMaxDate();
     }
 
     onChangedHandler(event: any, formControl: FormControl) {

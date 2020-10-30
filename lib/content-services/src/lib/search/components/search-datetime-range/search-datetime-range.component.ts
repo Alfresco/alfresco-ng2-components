@@ -171,6 +171,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
             this.context.queryFragments[this.id] = '';
             this.context.update();
         }
+        this.setFromMaxDatetime();
     }
 
     onChangedHandler(event: any, formControl: FormControl) {
