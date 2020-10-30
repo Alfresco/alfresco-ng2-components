@@ -43,7 +43,7 @@ export class ProcessUtil {
         }
     }
 
-    async startProcessByDefinitionNameWithValues(appName: string, processDefinitionName: string, values: any, processName?: string): Promise<any> {
+    async startProcessByDefinitionNameWithFormValues(appName: string, processDefinitionName: string, values: any, processName?: string): Promise<any> {
         try {
             const appDefinition = await new ApplicationsUtil(this.api).getAppDefinitionByName(appName);
 
