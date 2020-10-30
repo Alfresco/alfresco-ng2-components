@@ -23,13 +23,14 @@ import { SearchCategory } from '../search/search-category.interface';
 })
 export class ContentNodeSelectorPanelService {
 
-    propertyTypes = ['d:text', 'd:date'];
+    propertyTypes = ['d:text', 'd:date', 'd:datetime'];
     modelPropertyTypeToSearchFilterTypeMap = new Map<string, string> ();
     customModels: any[];
 
     constructor() {
         this.modelPropertyTypeToSearchFilterTypeMap.set(this.propertyTypes[0], 'text');
         this.modelPropertyTypeToSearchFilterTypeMap.set(this.propertyTypes[1], 'date-range');
+        this.modelPropertyTypeToSearchFilterTypeMap.set(this.propertyTypes[2], 'datetime-range');
     }
 
     convertCustomModelPropertiesToSearchCategories(): SearchCategory[] {

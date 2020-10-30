@@ -39,6 +39,7 @@ import { SearchSortingPickerComponent } from './components/search-sorting-picker
 import { SEARCH_QUERY_SERVICE_TOKEN } from './search-query-service.token';
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { SearchFilterContainerComponent } from './components/search-filter-container/search-filter-container.component';
+import { SearchDatetimeRangeComponent } from './components/search-datetime-range/search-datetime-range.component';
 
 @NgModule({
     imports: [
@@ -62,6 +63,7 @@ import { SearchFilterContainerComponent } from './components/search-filter-conta
         SearchPanelComponent,
         SearchCheckListComponent,
         SearchDateRangeComponent,
+        SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
         SearchFilterContainerComponent
     ],
@@ -79,6 +81,7 @@ import { SearchFilterContainerComponent } from './components/search-filter-conta
         SearchPanelComponent,
         SearchCheckListComponent,
         SearchDateRangeComponent,
+        SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
         SearchFilterContainerComponent
     ],
