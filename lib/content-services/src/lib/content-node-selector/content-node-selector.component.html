@@ -20,6 +20,7 @@
         [showSearch]="data?.showSearch"
         [showDropdownSiteList]="data?.showDropdownSiteList"
         [showFilesInResult]="data?.showFilesInResult"
+        (currentFolder)="onCurrentFolder($event)"
         (select)="onSelect($event)"
         (showingSearch)="onShowingSearch($event)"
         (siteChange)="onSiteChange($event)"
@@ -34,13 +35,14 @@
             [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
             [multipleFiles]="isMultipleSelection()"
             [rootFolderId]="currentDirectoryId"
-            [disabled]="disableUploadButton"
+            [disabled]="disableUploadButton || isAllowed()"
             (error)="onError($event)">
         </adf-upload-button>
-        <ng-container *ngIf="data?.showLocalUploadButton && disableUploadButton">
+        <ng-container *ngIf="data?.showLocalUploadButton && (disableUploadButton || isAllowed())">
             <div class="adf-content-node-upload-button-warning-message">
                 <mat-icon>warning</mat-icon>
-                <span>{{ 'NODE_SELECTOR.UPLOAD_BUTTON_WARNING_MESSAGE' | translate }}</span>
+                <span *ngIf="disableUploadButton">{{ 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE' | translate }}</span>
+                <span *ngIf="isAllowed()">{{ 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE' | translate }}</span>
             </div>
         </ng-container>
     </div>

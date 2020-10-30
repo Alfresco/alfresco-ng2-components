@@ -227,7 +227,7 @@ describe('ContentNodeSelectorComponent', () => {
             const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
 
             expect(warnningMessage).not.toBeNull();
-            expect(warnningMessage.nativeElement.innerText).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_WARNING_MESSAGE');
+            expect(warnningMessage.nativeElement.innerText).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE');
         });
 
         it('should not be able to show warning message if showLocalUploadButton set to false', () => {
