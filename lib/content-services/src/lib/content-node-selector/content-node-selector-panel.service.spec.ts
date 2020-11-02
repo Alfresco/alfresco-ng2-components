@@ -40,6 +40,7 @@ describe('ContentNodeSelectorPanelService', () => {
         const expectedSupportedTypesMap = new Map<string, string> ();
         expectedSupportedTypesMap.set('d:text', 'text');
         expectedSupportedTypesMap.set('d:date', 'date-range');
+        expectedSupportedTypesMap.set('d:datetime', 'datetime-range');
 
         expect(contentNodeSelectorPanelService.modelPropertyTypeToSearchFilterTypeMap).toEqual(expectedSupportedTypesMap);
     });
