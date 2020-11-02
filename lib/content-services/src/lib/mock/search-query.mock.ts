@@ -19,7 +19,7 @@ import { QueryBody } from '@alfresco/js-api';
 
 export const mockQueryBody: QueryBody = <QueryBody> {
     query: {
-        query: '(search-term)',
+        query: '(search-term*)',
         language: 'afts'
     },
     include: ['path', 'allowableOperations'],
