@@ -262,6 +262,50 @@
       "processchild": "processchild",
       "processparent": "processparent"
     },
+    "contentModels": {
+      "contentmodel1": {
+        "name": "contentmodel1",
+        "customType1": {
+          "name": "customType1",
+          "properties": {
+            "textProperty": "text1",
+            "longProperty": "long",
+            "intProperty": "int",
+            "mltextProperty": "mltext",
+            "booleanProperty": "boolean",
+            "floatProperty": "float",
+            "doubleProperty": "double",
+            "dateProperty": "date",
+            "datetimeProperty": "datetime"
+          }
+        },
+        "customAspect2": {
+          "name": "customAspect2",
+          "properties": {
+            "textProperty": "aspecttext",
+            "longProperty": "aspectlong",
+            "intProperty": "aspectint",
+            "mltextProperty": "aspectmltext",
+            "booleanProperty": "aspectboolean",
+            "floatProperty": "aspectfloat",
+            "doubleProperty": "aspectdouble",
+            "dateProperty": "aspectdate",
+            "datetimeProperty": "aspectdatetime"
+          }
+        }
+      },
+      "contentmodel2": {
+        "name": "contentmodel2",
+        "customType1": {
+          "name": "customType2",
+          "properties": {
+            "textProperty": "text",
+            "dateProperty": "date",
+            "datetimeProperty": "datetime"
+          }
+        }
+      }
+    },
     "security": [
       { "role": "ACTIVITI_ADMIN", "groups": [], "users": ["superadminuser"] },
       {
