@@ -30,6 +30,7 @@ import {
     expandableCategories,
     expandedCategories,
     filteredResult,
+    getMockSearchResultWithResponseBucket,
     mockSearchResult,
     searchFilter,
     simpleCategories,
@@ -340,7 +341,7 @@ describe('SearchFilterComponent', () => {
             };
 
             component.onDataLoaded(data);
-            expect(component.responseFacets.length).toEqual(2);
+            expect(component.responseFacets.length).toEqual(1);
             expect(component.responseFacets[0].buckets.items[0].count).toEqual(10);
             expect(component.responseFacets[0].buckets.items[1].count).toEqual(1);
         });
@@ -706,9 +707,8 @@ describe('SearchFilterComponent', () => {
 
             component.onDataLoaded(data);
 
-            expect(component.responseFacets.length).toBe(2);
+            expect(component.responseFacets.length).toBe(1);
             expect(component.responseFacets[0].buckets.length).toEqual(1);
-            expect(component.responseFacets[1].buckets.length).toEqual(0);
         });
     });
 
@@ -799,8 +799,26 @@ describe('SearchFilterComponent', () => {
             fixture.detectChanges();
 
             panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
-            expect(panels.length).toBe(16);
+            expect(panels.length).toBe(8);
         }));
+
+        it('should add a panel only for the response buckets that are present in the response', async () => {
+            appConfigService.config.search = searchFilter;
+            queryBuilder.resetToDefaults();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const inputElement = fixture.debugElement.query(By.css('[data-automation-id="expansion-panel-Name"] input'));
+            inputElement.triggerEventHandler('change', { target: { value: '*' } });
+
+            queryBuilder.executed.next(<any> getMockSearchResultWithResponseBucket());
+            fixture.detectChanges();
+
+            const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
+
+            expect(panels.length).toBe(9);
+        });
 
         it('should show the long facet options list with pagination', () => {
             const panel = '[data-automation-id="expansion-panel-Size facet queries"]';
