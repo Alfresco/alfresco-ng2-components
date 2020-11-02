@@ -30,20 +30,24 @@
 
 <mat-dialog-actions>
     <div>
-        <adf-upload-button
-            *ngIf="data?.showLocalUploadButton"
-            [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
-            [multipleFiles]="isMultipleSelection()"
-            [rootFolderId]="currentDirectoryId"
-            [disabled]="disableUploadButton || isAllowed()"
-            (error)="onError($event)">
-        </adf-upload-button>
-        <ng-container *ngIf="data?.showLocalUploadButton && (disableUploadButton || isAllowed())">
-            <div class="adf-content-node-upload-button-warning-message">
-                <mat-icon>warning</mat-icon>
-                <span *ngIf="disableUploadButton">{{ 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE' | translate }}</span>
-                <span *ngIf="isAllowed()">{{ 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE' | translate }}</span>
-            </div>
+        <ng-container *ngIf="data?.showLocalUploadButton">
+            <adf-upload-button
+                [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
+                [multipleFiles]="isMultipleSelection()"
+                [rootFolderId]="currentDirectoryId"
+                [disabled]="disableUploadButton || isAllowedToUploadFiles"
+                (error)="onError($event)">
+            </adf-upload-button>
+            <ng-container>
+                <div class="adf-content-node-upload-button-warning-message" *ngIf="disableUploadButton">
+                    <mat-icon>warning</mat-icon>
+                    <span>{{ 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE' | translate }}</span>
+                </div>
+                <div class="adf-content-node-upload-button-warning-message" *ngIf="isAllowedToUploadFiles">
+                    <mat-icon>warning</mat-icon>
+                    <span>{{ 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE' | translate }}</span>
+                </div>
+            </ng-container>
         </ng-container>
     </div>
     <div>
