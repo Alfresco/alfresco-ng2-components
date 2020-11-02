@@ -74,6 +74,18 @@ export class ProcessUtil {
         }
     }
 
+    async getProcessInstanceByName(processInstanceName: string): Promise<any> {
+        try {
+            const processInstanceList = await this.api.apiService.activiti.processApi.getProcessInstances({state: 'all'});
+            const chosenProcessInstance = processInstanceList.data.find( (processInstanace) => {
+                return processInstanace.name === processInstanceName;
+            });
+            return chosenProcessInstance;
+        } catch (error) {
+            Logger.error('Get Process Instance by Name - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+        }
+    }
+
     async getProcessTaskId(processId: string): Promise<TaskRepresentation> {
         const taskList = await this.api.apiService.activiti.taskApi.listTasks({});
         let wantedtask;
