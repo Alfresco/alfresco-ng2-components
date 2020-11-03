@@ -174,36 +174,8 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
         this.toggleFilterActions = false;
     }
 
-    isDateType(property: TaskFilterProperties): boolean {
-        return property.type === 'date';
-    }
-
-    isDateRangeType(property: TaskFilterProperties): boolean {
-        return property.type === 'date-range';
-    }
-
-    isUserSelectType(property: TaskFilterProperties): boolean {
-        return property.type === 'people';
-    }
-
-    isSelectType(property: TaskFilterProperties): boolean {
-        return property.type === 'select';
-    }
-
-    isTextType(property: TaskFilterProperties): boolean {
-        return property.type === 'text';
-    }
-
-    isCheckBoxType(property: TaskFilterProperties): boolean {
-        return property.type === 'checkbox';
-    }
-
     isDisabledAction(action: TaskFilterAction): boolean {
         return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
-    }
-
-    isAssignmentType(property: TaskFilterProperties): boolean {
-        return property.type === 'assignment';
     }
 
     /**
@@ -330,10 +302,10 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
 
     get createSortProperties(): FilterOptions[] {
         this.checkMandatorySortProperties();
-        const sortProperties = this.sortProperties.map((property: string) => {
-            return <FilterOptions> { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
+
+        return this.sortProperties.map((property: string) => {
+            return { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
         });
-        return sortProperties;
     }
 
     createAndFilterActions(): TaskFilterAction[] {

@@ -40,7 +40,7 @@
                      fxLayoutAlign="start center">
                     <ng-container *ngFor="let taskFilterProperty of taskFilterProperties">
                         <mat-form-field fxFlex="23%"
-                                        *ngIf="isSelectType(taskFilterProperty)"
+                                        *ngIf="taskFilterProperty.type === 'select'"
                                         [attr.data-automation-id]="taskFilterProperty.key">
                             <mat-select placeholder="{{taskFilterProperty.label | translate}}"
                                         [formControlName]="taskFilterProperty.key"
@@ -53,7 +53,7 @@
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field fxFlex="23%"
-                                        *ngIf="isTextType(taskFilterProperty)"
+                                        *ngIf="taskFilterProperty.type === 'text'"
                                         [attr.data-automation-id]="taskFilterProperty.key">
                             <input matInput
                                    [formControlName]="taskFilterProperty.key"
@@ -62,7 +62,7 @@
                                    [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key" />
                         </mat-form-field>
                         <mat-form-field fxFlex="23%"
-                                        *ngIf="isDateType(taskFilterProperty)"
+                                        *ngIf="taskFilterProperty.type === 'date'"
                                         [attr.data-automation-id]="taskFilterProperty.key">
                             <mat-label>{{taskFilterProperty.label | translate}}</mat-label>
                             <input matInput
@@ -70,7 +70,7 @@
                                    (dateChange)="onDateChanged($event.value, taskFilterProperty)"
                                    [matDatepicker]="dateController"
                                    placeholder="{{taskFilterProperty.label | translate}}"
-                                   [attr.data-automation-id]="'adf-cloud-edit-task-`perty-' + taskFilterProperty.key">
+                                   [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
                             <mat-datepicker-toggle matSuffix
                                                    [for]="dateController"
                                                    [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle-' + taskFilterProperty.key">
@@ -87,7 +87,7 @@
                             </div>
                         </mat-form-field>
                         <div class="adf-edit-task-filter-checkbox"
-                             *ngIf="isCheckBoxType(taskFilterProperty)">
+                             *ngIf="taskFilterProperty.type === 'checkbox'">
                             <mat-checkbox color="primary"
                                           [formControlName]="taskFilterProperty.key"
                                           [attr.data-automation-id]="taskFilterProperty.key">
@@ -95,14 +95,14 @@
                             </mat-checkbox>
                         </div>
 
-                        <adf-cloud-date-range-filter *ngIf="isDateRangeType(taskFilterProperty)"
+                        <adf-cloud-date-range-filter *ngIf="taskFilterProperty.type === 'date-range'"
                                                      [processFilterProperty]="taskFilterProperty"
                                                      [options]="taskFilterProperty.dateFilterOptions"
                                                      (dateTypeChange)="onDateTypeChange($event, taskFilterProperty)"
                                                      (dateChanged)="onDateRangeFilterChanged($event, taskFilterProperty)">
                         </adf-cloud-date-range-filter>
 
-                        <div fxFlex="23%" class="{{ 'adf-edit-task-filter-' + taskFilterProperty.key }}" *ngIf="isUserSelectType(taskFilterProperty)">
+                        <div fxFlex="23%" class="{{ 'adf-edit-task-filter-' + taskFilterProperty.key }}" *ngIf="taskFilterProperty.type === 'people'">
                             <adf-cloud-people
                                 [preSelectUsers]="taskFilterProperty.value"
                                 [title]="taskFilterProperty.label"
@@ -113,7 +113,7 @@
                         </div>
 
                         <adf-cloud-task-assignment-filter
-                            *ngIf="isAssignmentType(taskFilterProperty)"
+                            *ngIf="taskFilterProperty.type === 'assignment'"
                             [taskFilterProperty]="taskFilterProperty"
                             (assignedChange)="onAssignedChange($event)"
                             (assignedGroupChange)="onAssignedGroupsChange($event)"></adf-cloud-task-assignment-filter>

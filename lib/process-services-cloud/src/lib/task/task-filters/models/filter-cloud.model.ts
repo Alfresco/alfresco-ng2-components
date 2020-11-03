@@ -205,11 +205,6 @@ export interface ServiceTaskFilterCloudModel {
     startedDate?: Date;
 }
 
-export enum TaskType {
-    UserTask = 'userTask',
-    ServiceTask = 'serviceTask'
-}
-
 export class FilterParamsModel {
 
     id?: string;
