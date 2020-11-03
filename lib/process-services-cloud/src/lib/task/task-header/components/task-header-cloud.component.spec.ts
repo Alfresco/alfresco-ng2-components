@@ -214,7 +214,7 @@ describe('TaskHeaderCloudComponent', () => {
             component.isLoading = true;
             fixture.detectChanges();
             const loading = fixture.debugElement.query(By.css('.adf-task-header-loading'));
-            expect(loading).not.toBe(null);
+            expect(loading).toBeTruthy();
         });
 
         it('should not render edit icon if the task in assigned state and assingned user is different from current logged-in user', () => {
