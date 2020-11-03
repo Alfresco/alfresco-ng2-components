@@ -34,9 +34,8 @@ export class ContentNodeSelectorComponent {
     buttonActionName: string;
     chosenNode: Node[];
     currentDirectoryId: string;
-    disableUploadButton = false;
-    isAllowedToUploadFiles = false;
-    currentFolder: any;
+    showingSearch = false;
+    hasPermission = false;
 
     constructor(private translation: TranslationService,
                 private contentService: ContentService,
@@ -92,12 +91,15 @@ export class ContentNodeSelectorComponent {
     }
 
     onShowingSearch(value: boolean) {
-        this.disableUploadButton = value;
-        this.isAllowedToUploadFiles = false;
+        this.showingSearch = value;
+        this.hasPermission = false;
     }
 
     onCurrentFolder(currentFolder: Node) {
-        this.currentFolder = currentFolder;
-        this.isAllowedToUploadFiles = !this.contentService.hasAllowableOperations(this.currentFolder, AllowableOperationsEnum.CREATE);
+        this.hasPermission = !this.contentService.hasAllowableOperations(currentFolder, AllowableOperationsEnum.CREATE);
+    }
+
+    isAllowedToUpload() {
+        return this.showingSearch || this.hasPermission;
     }
 }

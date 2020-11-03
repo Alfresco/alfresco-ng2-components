@@ -19,10 +19,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { Node } from '@alfresco/js-api';
-import { ContentNodeSelectorPanelComponent } from '@alfresco/adf-content-services';
+import { Node, NodeEntry } from '@alfresco/js-api';
+import { ContentNodeSelectorPanelComponent, UploadModule } from '@alfresco/adf-content-services';
 import { By } from '@angular/platform-browser';
-import { setupTestBed, SitesService } from '@alfresco/adf-core';
+import { setupTestBed, SitesService, ContentService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
@@ -41,13 +41,27 @@ describe('ContentNodeSelectorComponent', () => {
         rowFilter: (shareDataRow: ShareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
         imageResolver: () => 'piccolo',
         currentFolderId: 'cat-girl-nuku-nuku',
+        selectionMode: 'multiple',
         showLocalUploadButton: true
     };
+
+    const fakeFolderNodeWithPermission = new NodeEntry({
+        entry: {
+            allowableOperations: [
+                'create',
+                'update'
+            ],
+            isFolder: true,
+            name: 'Folder Fake Name',
+            nodeType: 'cm:folder'
+        }
+    });
 
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            ContentTestingModule
+            ContentTestingModule,
+            UploadModule
         ],
         providers: [
             { provide: MAT_DIALOG_DATA, useValue: data }
@@ -58,18 +72,23 @@ describe('ContentNodeSelectorComponent', () => {
     beforeEach(() => {
         const documentListService: DocumentListService = TestBed.inject(DocumentListService);
         const sitesService: SitesService = TestBed.inject(SitesService);
+
         spyOn(documentListService, 'getFolder').and.returnValue(of({ list: [] }));
         spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: {} }));
         spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
 
         fixture = TestBed.createComponent(ContentNodeSelectorComponent);
         component = fixture.componentInstance;
+        const contentService = TestBed.inject(ContentService);
+        spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);
+        spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
 
         fixture.detectChanges();
     });
 
     afterEach(() => {
         fixture.destroy();
+        TestBed.resetTestingModule();
     });
 
     describe('Data injecting with the "Material dialog way"', () => {
@@ -202,8 +221,8 @@ describe('ContentNodeSelectorComponent', () => {
             expect(adfUploadButton.nativeElement.innerText).toEqual('file_uploadFORM.FIELD.UPLOAD');
         });
 
-        it('should be able to disable UploadButton if disableUploadButton set to true', () => {
-            component.disableUploadButton = true;
+        it('should be able to disable UploadButton if showingSearch set to true', () => {
+            component.showingSearch = true;
             fixture.detectChanges();
             const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
 
@@ -211,8 +230,8 @@ describe('ContentNodeSelectorComponent', () => {
             expect(adfUploadButton.nativeElement.disabled).toBe(true);
         });
 
-        it('should be able to enable UploadButton if disableUploadButton set to false', () => {
-            component.disableUploadButton = false;
+        it('should be able to enable UploadButton if showingSearch set to false', () => {
+            component.showingSearch = false;
             fixture.detectChanges();
             const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
 
@@ -220,8 +239,8 @@ describe('ContentNodeSelectorComponent', () => {
             expect(adfUploadButton.nativeElement.disabled).toBe(false);
         });
 
-        it('should be able to show warning message if showLocalUploadButton and disableUploadButton set to true', () => {
-            component.disableUploadButton = true;
+        it('should be able to show warning message if showLocalUploadButton and showingSearch set to true', () => {
+            component.showingSearch = true;
             component.data.showLocalUploadButton = true;
             fixture.detectChanges();
             const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
@@ -232,7 +251,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         it('should not be able to show warning message if showLocalUploadButton set to false', () => {
             component.data.showLocalUploadButton = false;
-            component.disableUploadButton = false;
+            component.showingSearch = false;
             const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message'));
 
             expect(warnningMessage).toBeNull();
@@ -240,7 +259,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         it('should not be able to show warning message if disableUploadButton set to false', () => {
             component.data.showLocalUploadButton = true;
-            component.disableUploadButton = false;
+            component.showingSearch = false;
             const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message'));
 
             expect(warnningMessage).toBeNull();
