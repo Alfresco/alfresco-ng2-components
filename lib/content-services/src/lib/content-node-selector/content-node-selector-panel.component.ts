@@ -213,7 +213,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Output()
     showingSearch: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    /** Emitted when search is running. */
+    /** Emitted when current folder loaded. */
     @Output()
     currentFolder: EventEmitter<Node> = new EventEmitter<Node>();
 

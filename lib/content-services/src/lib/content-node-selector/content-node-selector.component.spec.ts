@@ -80,9 +80,12 @@ describe('ContentNodeSelectorComponent', () => {
         fixture = TestBed.createComponent(ContentNodeSelectorComponent);
         component = fixture.componentInstance;
         const contentService = TestBed.inject(ContentService);
-        spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);
+        spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
         spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
 
+        component.data.showLocalUploadButton = true;
+        component.hasAllowableOperations = true;
+        component.showingSearch = false;
         fixture.detectChanges();
     });
 
@@ -223,6 +226,8 @@ describe('ContentNodeSelectorComponent', () => {
 
         it('should be able to disable UploadButton if showingSearch set to true', () => {
             component.showingSearch = true;
+            component.hasAllowableOperations = true;
+
             fixture.detectChanges();
             const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
 
@@ -232,6 +237,8 @@ describe('ContentNodeSelectorComponent', () => {
 
         it('should be able to enable UploadButton if showingSearch set to false', () => {
             component.showingSearch = false;
+            component.hasAllowableOperations = true;
+
             fixture.detectChanges();
             const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
 
@@ -239,9 +246,11 @@ describe('ContentNodeSelectorComponent', () => {
             expect(adfUploadButton.nativeElement.disabled).toBe(false);
         });
 
-        it('should be able to show warning message if showLocalUploadButton and showingSearch set to true', () => {
-            component.showingSearch = true;
+        it('should be able to show warning message while searching', () => {
             component.data.showLocalUploadButton = true;
+            component.showingSearch = true;
+            component.hasAllowableOperations = false;
+
             fixture.detectChanges();
             const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
 
@@ -249,28 +258,57 @@ describe('ContentNodeSelectorComponent', () => {
             expect(warnningMessage.nativeElement.innerText).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE');
         });
 
-        it('should not be able to show warning message if showLocalUploadButton set to false', () => {
-            component.data.showLocalUploadButton = false;
-            component.showingSearch = false;
-            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message'));
-
-            expect(warnningMessage).toBeNull();
-        });
-
-        it('should not be able to show warning message if disableUploadButton set to false', () => {
+        it('should not be able to show warning message if it is not in search mode', () => {
             component.data.showLocalUploadButton = true;
             component.showingSearch = false;
-            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message'));
+
+            fixture.detectChanges();
+            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
 
             expect(warnningMessage).toBeNull();
         });
 
-        it('should not be able to show upload button if showLocalUploadButton set to false', () => {
-            component.data.showLocalUploadButton = false;
-            fixture.detectChanges();
-            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button span'));
+        it('should be able to disable UploadButton if user does not have allowable operations', () => {
+            component.hasAllowableOperations = false;
 
-            expect(adfUploadButton).toBeNull();
+            fixture.detectChanges();
+            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
+
+            expect(adfUploadButton).not.toBeNull();
+            expect(adfUploadButton.nativeElement.disabled).toBe(true);
+        });
+
+        it('should be able to enable UploadButton if user has allowable operations', () => {
+            component.hasAllowableOperations = true;
+
+            fixture.detectChanges();
+            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
+
+            expect(adfUploadButton).not.toBeNull();
+            expect(adfUploadButton.nativeElement.disabled).toBe(false);
+        });
+
+        it('should not be able to show warning message if user has allowable operations', () => {
+            component.data.showLocalUploadButton = true;
+            component.hasAllowableOperations = true;
+            component.showingSearch = false;
+
+            fixture.detectChanges();
+            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
+
+            expect(warnningMessage).toBeNull();
+        });
+
+        it('should be able to show warning message if user does not have allowable operations', () => {
+            component.data.showLocalUploadButton = true;
+            component.hasAllowableOperations = false;
+            component.showingSearch = false;
+
+            fixture.detectChanges();
+            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
+
+            expect(warnningMessage).not.toBeNull();
+            expect(warnningMessage.nativeElement.innerText).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE');
         });
     });
 });

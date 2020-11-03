@@ -54,6 +54,7 @@ Opens a [Content Node Selector](content-node-selector.component.md)  in its own 
 | select           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`[]>` | Emitted when the user has chosen an item. |
 | showingSearch | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when search is running. |
 | siteChange       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                                                                                                       | Emitted when the select site changes.     |
+| currentFolder           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`[]>` | Emitted when current folder loaded. |
 
 ## Details
 

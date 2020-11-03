@@ -43,7 +43,7 @@
                     <mat-icon>warning</mat-icon>
                     <span>{{ 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE' | translate }}</span>
                 </div>
-                <div class="adf-content-node-upload-button-warning-message" *ngIf="hasPermission">
+                <div class="adf-content-node-upload-button-warning-message" *ngIf="!hasAllowableOperations && !showingSearch">
                     <mat-icon>warning</mat-icon>
                     <span>{{ 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE' | translate }}</span>
                 </div>

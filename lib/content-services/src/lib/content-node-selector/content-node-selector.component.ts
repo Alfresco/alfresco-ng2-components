@@ -35,7 +35,7 @@ export class ContentNodeSelectorComponent {
     chosenNode: Node[];
     currentDirectoryId: string;
     showingSearch = false;
-    hasPermission = false;
+    hasAllowableOperations = false;
 
     constructor(private translation: TranslationService,
                 private contentService: ContentService,
@@ -92,14 +92,13 @@ export class ContentNodeSelectorComponent {
 
     onShowingSearch(value: boolean) {
         this.showingSearch = value;
-        this.hasPermission = false;
     }
 
     onCurrentFolder(currentFolder: Node) {
-        this.hasPermission = !this.contentService.hasAllowableOperations(currentFolder, AllowableOperationsEnum.CREATE);
+        this.hasAllowableOperations = this.contentService.hasAllowableOperations(currentFolder, AllowableOperationsEnum.CREATE);
     }
 
     isAllowedToUpload() {
-        return this.showingSearch || this.hasPermission;
+        return this.showingSearch || !this.hasAllowableOperations;
     }
 }
