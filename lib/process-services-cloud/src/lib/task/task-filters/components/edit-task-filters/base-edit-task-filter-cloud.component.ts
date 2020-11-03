@@ -177,6 +177,10 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
         return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
     }
 
+    protected deepCompare(left: any, right: any): boolean {
+        return JSON.stringify(left).toLowerCase() === JSON.stringify(right).toLowerCase();
+    }
+
     /**
      * Return filter name
      * @param filterName

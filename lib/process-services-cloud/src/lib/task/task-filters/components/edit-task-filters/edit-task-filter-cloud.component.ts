@@ -73,7 +73,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
     assignNewFilter(model: TaskFilterCloudModel) {
         this.setLastModifiedToFilter(model);
         this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, model));
-        this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
+        this.formHasBeenChanged = !this.deepCompare(this.changedTaskFilter, this.taskFilter);
         this.filterChange.emit(this.changedTaskFilter);
     }
 
@@ -122,10 +122,6 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         }
     }
 
-    private compareFilters(left: TaskFilterCloudModel, right: TaskFilterCloudModel): boolean {
-        return JSON.stringify(left).toLowerCase() === JSON.stringify(right).toLowerCase();
-    }
-
     save(saveAction: TaskFilterAction): void {
         this.taskFilterCloudService
             .updateFilter(this.changedTaskFilter)
@@ -133,7 +129,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
             .subscribe(() => {
                 saveAction.filter = this.changedTaskFilter;
                 this.action.emit(saveAction);
-                this.formHasBeenChanged = this.compareFilters(this.changedTaskFilter, this.taskFilter);
+                this.formHasBeenChanged = this.deepCompare(this.changedTaskFilter, this.taskFilter);
             });
     }
 

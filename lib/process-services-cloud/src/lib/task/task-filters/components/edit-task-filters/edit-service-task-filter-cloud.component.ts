@@ -50,7 +50,7 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
 
     /** Emitted when a task filter property changes. */
     @Output()
-    filterChange: EventEmitter<ServiceTaskFilterCloudModel> = new EventEmitter();
+    filterChange = new EventEmitter<ServiceTaskFilterCloudModel>();
 
     taskFilter: ServiceTaskFilterCloudModel;
     changedTaskFilter: ServiceTaskFilterCloudModel;
@@ -67,9 +67,9 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
         super(formBuilder, dateAdapter, userPreferencesService, appsProcessCloudService, taskCloudService);
     }
 
-    assignNewFilter(formValues: ServiceTaskFilterCloudModel) {
-        this.changedTaskFilter = Object.assign({}, this.taskFilter, formValues) as ServiceTaskFilterCloudModel;
-        this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
+    assignNewFilter(model: ServiceTaskFilterCloudModel) {
+        this.changedTaskFilter = { ...this.taskFilter, ...model };
+        this.formHasBeenChanged = !this.deepCompare(this.changedTaskFilter, this.taskFilter);
         this.filterChange.emit(this.changedTaskFilter);
     }
 
@@ -103,17 +103,6 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
         }
     }
 
-    /**
-     * Return true if both filters are same
-     * @param editedQuery, @param currentQuery
-     */
-    compareFilters(
-        editedQuery: ServiceTaskFilterCloudModel,
-        currentQuery: ServiceTaskFilterCloudModel
-    ): boolean {
-        return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
-    }
-
     save(saveAction: TaskFilterAction): void {
         this.serviceTaskFilterCloudService
             .updateFilter(this.changedTaskFilter)
@@ -121,7 +110,7 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
             .subscribe(() => {
                 saveAction.filter = this.changedTaskFilter;
                 this.action.emit(saveAction);
-                this.formHasBeenChanged = this.compareFilters(this.changedTaskFilter, this.taskFilter);
+                this.formHasBeenChanged = this.deepCompare(this.changedTaskFilter, this.taskFilter);
             });
     }
 
