@@ -75,14 +75,14 @@ export class AttachmentListPage {
 
     async doubleClickFile(name: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
-        const fileAttached = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.css(`div[data-automation-id="${name}"]`)).first());
+        const fileAttached = element.all(by.css(`div[data-automation-id="${name}"]`)).first();
         await BrowserActions.click(fileAttached);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
     async checkFileIsRemoved(name: string): Promise<void> {
-        const fileAttached = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
+        const fileAttached = element.all(by.css(`div[data-automation-id="${name}"]`)).first();
         await BrowserVisibility.waitUntilElementIsNotVisible(fileAttached);
     }
 

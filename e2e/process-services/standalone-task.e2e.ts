@@ -54,12 +54,12 @@ describe('Start Task - Task App', () => {
         await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
 
         await loginPage.login(processUserModel.email, processUserModel.password);
-   });
+    });
 
     beforeEach(async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-   });
+    });
 
     it('[C260421] Should a standalone task be displayed when creating a new task without form', async () => {
         const task = await taskPage.createNewTask();

@@ -133,6 +133,8 @@ describe('Attachment list action menu for processes', () => {
         await processFiltersPage.selectFromProcessList(processName.completed);
         await processDetailsPage.checkProcessTitleIsDisplayed();
 
+        await browser.sleep(1000);
+
         await attachmentListPage.clickAttachFileButton(pngFile.location);
         await attachmentListPage.checkFileIsAttached(pngFile.name);
 
