@@ -28,6 +28,11 @@ import { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+export interface DateRangeValue {
+    from: string;
+    to: string;
+}
+
 declare let moment: any;
 
 const DEFAULT_FORMAT_DATE: string = 'DD/MM/YYYY';
@@ -54,7 +59,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
-    datePickerDateFormat = DEFAULT_FORMAT_DATE;
+    datePickerFormat: string;
     maxDate: any;
     fromMaxDate: any;
     isActive = false;
@@ -82,11 +87,10 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     }
 
     ngOnInit() {
-        if (this.settings) {
-            this.datePickerDateFormat = this.settings.dateFormat || DEFAULT_FORMAT_DATE;
-        }
+        this.datePickerFormat = this.settings?.dateFormat ? this.settings.dateFormat : DEFAULT_FORMAT_DATE;
+
         const customDateAdapter = <MomentDateAdapter> <any> this.dateAdapter;
-        customDateAdapter.overrideDisplayFormat = this.datePickerDateFormat;
+        customDateAdapter.overrideDisplayFormat = this.datePickerFormat;
 
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
@@ -107,8 +111,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
 
         if (this.startValue) {
             const splitValue = this.startValue.split('||');
-            const fromValue = this.dateAdapter.parse(splitValue[0], this.datePickerDateFormat);
-            const toValue = this.dateAdapter.parse(splitValue[1], this.datePickerDateFormat);
+            const fromValue = this.dateAdapter.parse(splitValue[0], this.datePickerFormat);
+            const toValue = this.dateAdapter.parse(splitValue[1], this.datePickerFormat);
             this.from = new FormControl(fromValue, validators);
             this.to = new FormControl(toValue, validators);
         } else {
@@ -145,21 +149,21 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         this.apply(this.form.value, this.form.valid);
     }
 
-    hasValidValue() {
+    hasValidValue(): boolean {
         return this.form.valid;
     }
 
-    getCurrentValue() {
+    getCurrentValue(): DateRangeValue {
         return {
-            from: this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat),
-            to: this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat)
+            from: this.dateAdapter.format(this.form.value.from, this.datePickerFormat),
+            to: this.dateAdapter.format(this.form.value.from, this.datePickerFormat)
         };
     }
 
     setValue(parsedDate: string) {
         const splitValue = parsedDate.split('||');
-        const fromValue = this.dateAdapter.parse(splitValue[0], this.datePickerDateFormat);
-        const toValue = this.dateAdapter.parse(splitValue[1], this.datePickerDateFormat);
+        const fromValue = this.dateAdapter.parse(splitValue[0], this.datePickerFormat);
+        const toValue = this.dateAdapter.parse(splitValue[1], this.datePickerFormat);
         this.from.setValue(fromValue);
         this.from.markAsDirty();
         this.from.markAsTouched();
@@ -185,7 +189,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     onChangedHandler(event: any, formControl: FormControl) {
 
         const inputValue = event.value;
-        const formatDate = this.dateAdapter.parse(inputValue, this.datePickerDateFormat);
+        const formatDate = this.dateAdapter.parse(inputValue, this.datePickerFormat);
         if (formatDate && formatDate.isValid()) {
             formControl.setValue(formatDate);
         } else if (formatDate) {
@@ -202,7 +206,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         moment.locale(locale);
     }
 
-    hasParseError(formControl) {
+    hasParseError(formControl): boolean {
         return formControl.hasError('matDatepickerParse') && formControl.getError('matDatepickerParse').text;
     }
 
@@ -210,13 +214,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         event.srcElement.click();
     }
 
-    setFromMaxDate(): any {
-        let maxDate: string;
-        if (!this.to.value || this.maxDate && (moment(this.maxDate).isBefore(this.to.value))) {
-            maxDate = this.maxDate;
-        } else {
-            maxDate = moment(this.to.value);
-        }
-        this.fromMaxDate = maxDate;
+    setFromMaxDate() {
+        this.fromMaxDate = (!this.to.value || this.maxDate && (moment(this.maxDate).isBefore(this.to.value))) ? this.maxDate : moment(this.to.value);
     }
 }

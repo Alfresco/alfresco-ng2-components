@@ -171,7 +171,7 @@ describe('SearchDatetimeRangeComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component.getFromValidationMessage()).toBeFalsy();
+        expect(component.getFromValidationMessage()).toEqual('');
     });
 
     it('should have no maximum datetime by default', async(() => {

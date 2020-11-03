@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2020-11-02
 ---
 
-# [Search datetime range component](../../../lib/content-services/src/lib/search/components/search-datetime-range/search-datetime-range.component.ts "Defined in search-date-range.component.ts")
+# [Search datetime range component](../../../lib/content-services/src/lib/search/components/search-datetime-range/search-datetime-range.component.ts "Defined in search-datetime-range.component.ts")
 
 Implements a [search widget](../../../lib/content-services/src/lib/search/search-widget.interface.ts) for the [Search Filter component](search-filter.component.md).
 

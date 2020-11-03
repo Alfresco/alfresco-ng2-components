@@ -12,7 +12,7 @@
         <mat-datetimepicker-toggle matSuffix [for]="fromDatetimePicker" data-automation-id="datetime-range-from-date-toggle"></mat-datetimepicker-toggle>
         <mat-datetimepicker #fromDatetimePicker color="accent" type="datetime"></mat-datetimepicker>
         <mat-error *ngIf="from.invalid" data-automation-id="datetime-range-from-error">
-            {{ getFromValidationMessage() | translate: { requiredFormat: datetimePickerDateFormat } }}
+            {{ getFromValidationMessage() | translate: { requiredFormat: datetimePickerFormat } }}
         </mat-error>
     </mat-form-field>
 
@@ -30,7 +30,7 @@
         <mat-datetimepicker-toggle matSuffix [for]="toDatetimePicker" data-automation-id="datetime-range-to-date-toggle"></mat-datetimepicker-toggle>
         <mat-datetimepicker #toDatetimePicker color="accent" type="datetime"></mat-datetimepicker>
         <mat-error *ngIf="to.invalid" data-automation-id="datetime-range-to-error">
-            {{ getToValidationMessage() | translate: { requiredFormat: datetimePickerDateFormat } }}
+            {{ getToValidationMessage() | translate: { requiredFormat: datetimePickerFormat } }}
         </mat-error>
     </mat-form-field>
 

@@ -49,8 +49,10 @@ describe('SearchDateRangeComponent', () => {
     afterEach(() => fixture.destroy());
 
     it('should use moment adapter', () => {
+        fixture.detectChanges();
+
         expect(adapter instanceof MomentDateAdapter).toBe(true);
-        expect(component.datePickerDateFormat).toBe('DD/MM/YYYY');
+        expect(component.datePickerFormat).toBe('DD/MM/YYYY');
     });
 
     it('should setup form elements on init', () => {
@@ -190,7 +192,7 @@ describe('SearchDateRangeComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component.getFromValidationMessage()).toBeFalsy();
+        expect(component.getFromValidationMessage()).toEqual('');
     });
 
     it('should have no maximum date by default', async(() => {
