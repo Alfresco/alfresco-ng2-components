@@ -180,88 +180,88 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
 
     createTaskFilterProperties(): TaskFilterProperties[] {
         return [
-            new TaskFilterProperties({
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.APP_NAME',
                 type: 'select',
                 key: 'appName',
                 value: this.taskFilter.appName || '',
                 options: this.applicationNames
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.SERVICE_TASK_ID',
                 type: 'text',
                 key: 'serviceTaskId',
                 value: this.taskFilter.serviceTaskId || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.ELEMENT_ID',
                 type: 'text',
                 key: 'elementId',
                 value: this.taskFilter.elementId || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.ACTIVITY_NAME',
                 type: 'text',
                 key: 'activityName',
                 value: this.taskFilter.activityName || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.ACTIVITY_TYPE',
                 type: 'text',
                 key: 'activityType',
                 value: this.taskFilter.activityType || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.SORT',
                 type: 'select',
                 key: 'sort',
                 value: this.taskFilter.sort || this.createSortProperties[0].value,
                 options: this.createSortProperties
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
                 value: this.taskFilter.order || EditServiceTaskFilterCloudComponent.DIRECTIONS[0].value,
                 options: EditServiceTaskFilterCloudComponent.DIRECTIONS
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
                 value: this.taskFilter.status || EditServiceTaskFilterCloudComponent.DEFAULT_TASK_STATUS_PROPERTIES[0].value,
                 options: EditServiceTaskFilterCloudComponent.DEFAULT_TASK_STATUS_PROPERTIES
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.STARTED_DATE',
                 type: 'date',
                 key: 'startedDate',
                 value: this.taskFilter.completedDate || false
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.COMPLETED_DATE',
                 type: 'date',
                 key: 'completedDate',
                 value: this.taskFilter.completedDate || false
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.PROCESS_INSTANCE_ID',
                 type: 'text',
                 key: 'processInstanceId',
                 value: this.taskFilter.processInstanceId || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.PROCESS_DEF_ID',
                 type: 'text',
                 key: 'processDefinitionId',
                 value: this.taskFilter.processDefinitionId || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.SERVICE_NAME',
                 type: 'text',
                 key: 'serviceName',
                 value: this.taskFilter.serviceName || ''
-            })
+            }
         ];
     }
 }

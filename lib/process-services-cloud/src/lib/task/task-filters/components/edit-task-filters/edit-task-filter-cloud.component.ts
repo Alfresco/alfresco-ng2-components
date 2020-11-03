@@ -192,120 +192,119 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
 
     createLastModifiedProperty(): TaskFilterProperties[] {
         return [
-            new TaskFilterProperties({
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.LAST_MODIFIED_FROM',
                 type: 'date',
                 key: 'lastModifiedFrom',
                 value: ''
-            }),
-
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.LAST_MODIFIED_TO',
                 type: 'date',
                 key: 'lastModifiedTo',
                 value: ''
-            })
+            }
         ];
     }
 
     createTaskFilterProperties(): TaskFilterProperties[] {
         return [
-            new TaskFilterProperties({
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.APP_NAME',
                 type: 'select',
                 key: 'appName',
                 value: this.taskFilter.appName || '',
                 options: this.applicationNames
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.TASK_ID',
                 type: 'text',
                 key: 'taskId',
                 value: ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
                 value: this.taskFilter.status || EditTaskFilterCloudComponent.DEFAULT_TASK_STATUS_PROPERTIES[0].value,
                 options: EditTaskFilterCloudComponent.DEFAULT_TASK_STATUS_PROPERTIES
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
                 type: 'text',
                 key: 'assignee',
                 value: this.taskFilter.assignee || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_DEF_NAME',
                 type: 'select',
                 key: 'processDefinitionName',
                 value: this.taskFilter.processDefinitionName || '',
                 options: this.processDefinitionNames
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_INSTANCE_ID',
                 type: 'text',
                 key: 'processInstanceId',
                 value: this.taskFilter.processInstanceId || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_DEF_ID',
                 type: 'text',
                 key: 'processDefinitionId',
                 value: this.taskFilter.processDefinitionId || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.TASK_NAME',
                 type: 'text',
                 key: 'taskName',
                 value: this.taskFilter.taskName || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PARENT_TASK_ID',
                 type: 'text',
                 key: 'parentTaskId',
                 value: this.taskFilter.parentTaskId || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PRIORITY',
                 type: 'text',
                 key: 'priority',
                 value: this.taskFilter.priority || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.OWNER',
                 type: 'text',
                 key: 'owner',
                 value: this.taskFilter.owner || ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE',
                 type: 'date',
                 key: 'createdDate',
                 value: ''
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.SORT',
                 type: 'select',
                 key: 'sort',
                 value: this.taskFilter.sort || this.createSortProperties[0].value,
                 options: this.createSortProperties
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
                 value: this.taskFilter.order || EditTaskFilterCloudComponent.DIRECTIONS[0].value,
                 options: EditTaskFilterCloudComponent.DIRECTIONS
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STAND_ALONE',
                 type: 'checkbox',
                 key: 'standalone',
                 value: this.taskFilter.standalone || false
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE',
                 type: 'date-range',
                 key: 'dueDateRange',
@@ -322,8 +321,8 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                     DateCloudFilterType.NEXT_7_DAYS,
                     DateCloudFilterType.RANGE
                 ]
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_DATE',
                 type: 'date-range',
                 key: 'completedDateRange',
@@ -333,8 +332,8 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                     _completedFrom: this.taskFilter.completedFrom || null,
                     _completedTo: this.taskFilter.completedTo || null
                 }
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE',
                 type: 'date-range',
                 key: 'createdDateRange',
@@ -344,15 +343,15 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                     _createdFrom: this.taskFilter.createdFrom || null,
                     _createdTo: this.taskFilter.createdTo || null
                 }
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_BY',
                 type: 'people',
                 key: 'completedBy',
                 value: this.taskFilter.completedBy ? [this.taskFilter.completedBy] : null,
                 selectionMode: 'single'
-            }),
-            new TaskFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
                 type: 'assignment',
                 key: 'assignment',
@@ -361,7 +360,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                     assignee: this.taskFilter.assignee || null,
                     candidateGroups: this.taskFilter.candidateGroups || []
                 }
-            })
+            }
         ];
     }
 }

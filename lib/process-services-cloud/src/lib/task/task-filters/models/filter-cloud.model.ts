@@ -230,26 +230,13 @@ export enum AssignmentType {
     CANDIDATE_GROUPS = 'CANDIDATE_GROUPS'
 }
 
-export class TaskFilterProperties {
-    label: string;
-    type: string;
-    value: any;
-    key: string;
+export interface TaskFilterProperties {
+    label?: string;
+    type?: string;
+    value?: any;
+    key?: string;
     attributes?: { [key: string]: string; };
     options?: FilterOptions[];
     dateFilterOptions?: DateCloudFilterType[];
     selectionMode?: ComponentSelectionMode;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.label = obj.label || null;
-            this.type = obj.type || null;
-            this.value = obj.value || '';
-            this.key = obj.key || null;
-            this.attributes = obj.attributes || null;
-            this.options = obj.options || null;
-            this.dateFilterOptions = obj.dateFilterOptions || null;
-            this.selectionMode = obj.selectionMode || null;
-        }
-    }
 }
