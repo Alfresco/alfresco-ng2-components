@@ -19,14 +19,13 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
-import { filter, takeUntil, switchMap, map } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 
 import { TaskFilterCloudModel, TaskFilterProperties, TaskFilterAction } from '../../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
-import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
 import { TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
@@ -52,15 +51,15 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
     ];
 
     constructor(
-        protected formBuilder: FormBuilder,
-        public dialog: MatDialog,
-        private translateService: TranslationService,
+        formBuilder: FormBuilder,
+        dialog: MatDialog,
+        translateService: TranslationService,
         private taskFilterCloudService: TaskFilterCloudService,
-        protected dateAdapter: DateAdapter<Moment>,
-        protected userPreferencesService: UserPreferencesService,
-        protected appsProcessCloudService: AppsProcessCloudService,
-        protected taskCloudService: TaskCloudService) {
-        super(formBuilder, dateAdapter, userPreferencesService, appsProcessCloudService, taskCloudService);
+        dateAdapter: DateAdapter<Moment>,
+        userPreferencesService: UserPreferencesService,
+        appsProcessCloudService: AppsProcessCloudService,
+        taskCloudService: TaskCloudService) {
+        super(formBuilder, dateAdapter, userPreferencesService, appsProcessCloudService, taskCloudService, dialog, translateService);
     }
 
     assignNewFilter(model: TaskFilterCloudModel) {
@@ -115,57 +114,18 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         }
     }
 
-    save(saveAction: TaskFilterAction): void {
-        this.taskFilterCloudService
-            .updateFilter(this.changedTaskFilter)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => {
-                saveAction.filter = this.changedTaskFilter;
-                this.action.emit(saveAction);
-                this.formHasBeenChanged = this.deepCompare(this.changedTaskFilter, this.taskFilter);
-            });
+    protected updateFilter(filterToUpdate: TaskFilterCloudModel): Observable<any> {
+        return this.taskFilterCloudService.updateFilter(filterToUpdate);
     }
 
-    delete(deleteAction: TaskFilterAction): void {
-        this.taskFilterCloudService
-            .deleteFilter(this.taskFilter)
-            .pipe(
-                filter((filters) => {
-                    deleteAction.filter = this.taskFilter;
-                    this.action.emit(deleteAction);
-                    return filters.length === 0;
-                }),
-                switchMap(() => this.restoreDefaultTaskFilters()),
-                takeUntil(this.onDestroy$))
-            .subscribe(() => { });
+    protected deleteFilter(filterToDelete: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
+        return this.taskFilterCloudService.deleteFilter(filterToDelete);
     }
 
-    saveAs(saveAsAction: TaskFilterAction): void {
-        const dialogRef = this.dialog.open(TaskFilterDialogCloudComponent, {
-            data: {
-                name: this.translateService.instant(this.taskFilter.name)
-            },
-            height: 'auto',
-            minWidth: '30%'
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result && result.action === TaskFilterDialogCloudComponent.ACTION_SAVE) {
-                const filterId = Math.random().toString(36).substr(2, 9);
-                const filterKey = this.getSanitizeFilterName(result.name);
-                const newFilter = {
-                    name: result.name,
-                    icon: result.icon,
-                    id: filterId,
-                    key: 'custom-' + filterKey
-                };
-                const resultFilter: TaskFilterCloudModel = Object.assign({}, this.changedTaskFilter, newFilter);
-                this.taskFilterCloudService.addFilter(resultFilter)
-                    .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-                        saveAsAction.filter = resultFilter;
-                        this.action.emit(saveAsAction);
-                    });
-            }
-        });
+    protected addFilter(filterToAdd: TaskFilterCloudModel): Observable<any> {
+        return this.taskFilterCloudService
+            .addFilter(filterToAdd)
+            .pipe(takeUntil(this.onDestroy$));
     }
 
     isDisabledForDefaultFilters(action: TaskFilterAction): boolean {

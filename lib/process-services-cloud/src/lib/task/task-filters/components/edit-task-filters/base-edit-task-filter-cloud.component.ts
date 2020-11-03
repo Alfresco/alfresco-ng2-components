@@ -23,10 +23,12 @@ import { ApplicationInstanceModel } from './../../../../app/models/application-i
 import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
 import moment, { Moment } from 'moment';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { debounceTime, filter, finalize, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { debounceTime, filter, finalize, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
-import { IdentityGroupModel, IdentityUserModel, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { IdentityGroupModel, IdentityUserModel, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Directive()
 // tslint:disable-next-line: directive-class-suffix
@@ -116,7 +118,9 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         protected dateAdapter: DateAdapter<Moment>,
         protected userPreferencesService: UserPreferencesService,
         protected appsProcessCloudService: AppsProcessCloudService,
-        protected taskCloudService: TaskCloudService) {
+        protected taskCloudService: TaskCloudService,
+        protected dialog: MatDialog,
+        protected translateService: TranslationService) {
     }
 
     ngOnInit() {
@@ -419,9 +423,56 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             });
     }
 
-    abstract save(action: TaskFilterAction): void;
-    abstract saveAs(action: TaskFilterAction): void;
-    abstract delete(action: TaskFilterAction): void;
+    delete(deleteAction: TaskFilterAction): void {
+        this.deleteFilter(this.taskFilter)
+            .pipe(
+                filter((filters) => {
+                    deleteAction.filter = this.taskFilter;
+                    this.action.emit(deleteAction);
+                    return filters.length === 0;
+                }),
+                switchMap(() => this.restoreDefaultTaskFilters()),
+                takeUntil(this.onDestroy$))
+            .subscribe(() => { });
+    }
+
+    save(saveAction: TaskFilterAction): void {
+        this.updateFilter(this.changedTaskFilter)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
+                saveAction.filter = this.changedTaskFilter;
+                this.action.emit(saveAction);
+                this.formHasBeenChanged = this.deepCompare(this.changedTaskFilter, this.taskFilter);
+            });
+    }
+
+    saveAs(saveAsAction: TaskFilterAction): void {
+        const dialogRef = this.dialog.open(TaskFilterDialogCloudComponent, {
+            data: {
+                name: this.translateService.instant((this.taskFilter as any)?.name)
+            },
+            height: 'auto',
+            minWidth: '30%'
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result && result.action === TaskFilterDialogCloudComponent.ACTION_SAVE) {
+                const filterId = Math.random().toString(36).substr(2, 9);
+                const filterKey = this.getSanitizeFilterName(result.name);
+                const newFilter = {
+                    name: result.name,
+                    icon: result.icon,
+                    id: filterId,
+                    key: 'custom-' + filterKey
+                };
+                const resultFilter: T = Object.assign({}, this.changedTaskFilter, newFilter);
+                this.addFilter(resultFilter).subscribe(() => {
+                    saveAsAction.filter = resultFilter;
+                    this.action.emit(saveAsAction);
+                });
+            }
+        });
+    }
+
     abstract checkMandatorySortProperties(): void;
     abstract checkMandatoryFilterProperties(): void;
     abstract isDisabledForDefaultFilters(action: TaskFilterAction): boolean;
@@ -429,4 +480,8 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     protected abstract getTaskFilterById(appName: string, id: string);
     abstract assignNewFilter(formValues): void;
 
+    protected abstract restoreDefaultTaskFilters(): Observable<T[]>;
+    protected abstract addFilter(filterToAdd: T): Observable<any>;
+    protected abstract deleteFilter(filterToDelete: T): Observable<T[]>;
+    protected abstract updateFilter(filterToUpdate: T): Observable<any>;
 }
