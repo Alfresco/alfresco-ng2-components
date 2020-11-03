@@ -41,12 +41,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     public static ACTION_SAVE = 'save';
     public static ACTION_SAVE_AS = 'saveAs';
     public static ACTION_DELETE = 'delete';
-    public static APPLICATION_NAME: string = 'appName';
-    public static PROCESS_DEFINITION_NAME: string = 'processDefinitionName';
-    public static APP_RUNNING_STATUS: string = 'RUNNING';
-    public static LAST_MODIFIED: string = 'lastModified';
-    public static SORT: string = 'sort';
-    public static ORDER: string = 'order';
     public static DEFAULT_PROCESS_FILTER_PROPERTIES = ['status', 'sort', 'order', 'lastModified'];
     public static DEFAULT_SORT_PROPERTIES = ['id', 'name', 'status', 'startDate'];
     public static DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
@@ -90,11 +84,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     /** Emitted when a process instance filter property changes. */
     @Output()
-    filterChange: EventEmitter<ProcessFilterCloudModel> = new EventEmitter();
+    filterChange = new EventEmitter<ProcessFilterCloudModel>();
 
     /** Emitted when a filter action occurs i.e Save, SaveAs, Delete. */
     @Output()
-    action: EventEmitter<ProcessFilterAction> = new EventEmitter();
+    action = new EventEmitter<ProcessFilterAction>();
 
     processFilter: ProcessFilterCloudModel;
     changedProcessFilter: ProcessFilterCloudModel;
@@ -161,7 +155,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     getFormControlsConfig(processFilterProperties: ProcessFilterProperties[]): any {
-        const properties = processFilterProperties.map((property: ProcessFilterProperties) => {
+        const properties = processFilterProperties.map((property) => {
             if (!!property.attributes) {
                 return this.getAttributesControlConfig(property);
             } else {
@@ -217,16 +211,16 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     createAndFilterProperties(): ProcessFilterProperties[] {
         this.checkMandatoryFilterProperties();
-        if (this.checkForProperty(EditProcessFilterCloudComponent.APPLICATION_NAME)) {
+        if (this.checkForProperty('appName')) {
             this.applicationNames = [];
             this.getRunningApplications();
         }
-        if (this.checkForProperty(EditProcessFilterCloudComponent.PROCESS_DEFINITION_NAME)) {
+        if (this.checkForProperty('processDefinitionName')) {
             this.processDefinitionNames = [];
             this.getProcessDefinitions();
         }
         const defaultProperties = this.createProcessFilterProperties(this.processFilter);
-        let filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty.key));
+        let filteredProperties = defaultProperties.filter((filterProperty) => this.isValidProperty(this.filterProperties, filterProperty.key));
         if (!this.hasSortProperty()) {
             filteredProperties = this.removeOrderProperty(filteredProperties);
         }
@@ -250,19 +244,17 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return filterProperties ? filterProperties.indexOf(key) >= 0 : true;
     }
 
-    hasSortProperty(): boolean {
-        return this.filterProperties.indexOf(EditProcessFilterCloudComponent.SORT) >= 0;
+    private hasSortProperty(): boolean {
+        return this.filterProperties.includes('sort');
     }
 
-    hasLastModifiedProperty(): boolean {
-        return this.filterProperties.indexOf(EditProcessFilterCloudComponent.LAST_MODIFIED) >= 0;
+    private hasLastModifiedProperty(): boolean {
+        return this.filterProperties.includes('lastModified');
     }
 
     removeOrderProperty(filteredProperties: ProcessFilterProperties[]): ProcessFilterProperties[] {
         if (filteredProperties && filteredProperties.length > 0) {
-            return filteredProperties.filter(
-                property =>  property.key !== EditProcessFilterCloudComponent.ORDER
-            );
+            return filteredProperties.filter(property =>  property.key !== 'order');
         }
         return [];
     }
@@ -345,7 +337,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     getRunningApplications() {
         this.appsProcessCloudService
-            .getDeployedApplicationsByStatus(EditProcessFilterCloudComponent.APP_RUNNING_STATUS, this.role)
+            .getDeployedApplicationsByStatus('RUNNING', this.role)
             .subscribe((applications) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
@@ -468,30 +460,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.toggleFilterActions = false;
     }
 
-    isDateType(property: ProcessFilterProperties): boolean {
-        return property.type === 'date';
-    }
-
-    isDateRangeType(property: ProcessFilterProperties): boolean {
-        return property.type === 'date-range';
-    }
-
-    isSelectType(property: ProcessFilterProperties): boolean {
-        return property.type === 'select';
-    }
-
-    isTextType(property: ProcessFilterProperties): boolean {
-        return property.type === 'text';
-    }
-
-    isNumberType(property: ProcessFilterProperties): boolean {
-        return property.type === 'number';
-    }
-
-    isUserSelectType(property: ProcessFilterProperties): boolean {
-        return property.type === 'people';
-    }
-
     isDisabledAction(action: ProcessFilterAction): boolean {
         return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
     }
@@ -531,38 +499,38 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     createFilterActions(): ProcessFilterAction[] {
         return [
-            new ProcessFilterAction({
+            {
                 actionType: EditProcessFilterCloudComponent.ACTION_SAVE,
                 icon: 'save',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE'
-            }),
-            new ProcessFilterAction({
+            },
+            {
                 actionType: EditProcessFilterCloudComponent.ACTION_SAVE_AS,
                 icon: 'adf:save-as',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE_AS'
-            }),
-            new ProcessFilterAction({
+            },
+            {
                 actionType: EditProcessFilterCloudComponent.ACTION_DELETE,
                 icon: 'delete',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.DELETE'
-            })
+            }
         ];
     }
 
     createLastModifiedProperty(): ProcessFilterProperties[] {
         return [
-            new ProcessFilterProperties({
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.LAST_MODIFIED_DATE_FORM',
                 type: 'date',
                 key: 'lastModifiedFrom',
                 value: ''
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.LAST_MODIFIED_TO',
                 type: 'date',
                 key: 'lastModifiedTo',
                 value: ''
-            })
+            }
         ];
     }
 
@@ -638,85 +606,85 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     createProcessFilterProperties(currentProcessFilter: ProcessFilterCloudModel): ProcessFilterProperties[] {
         return [
-            new ProcessFilterProperties({
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_NAME',
                 type: 'select',
                 key: 'appName',
                 value: currentProcessFilter.appName || '',
                 options: this.applicationNames
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_VERSION',
                 type: 'number',
                 key: 'appVersion',
                 value: currentProcessFilter.appVersion
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',
                 type: 'text',
                 key: 'processInstanceId',
                 value: currentProcessFilter.processInstanceId || ''
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME',
                 type: 'text',
                 key: 'processName',
                 value: currentProcessFilter.processName || ''
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_NAME',
                 type: 'select',
                 key: 'processDefinitionName',
                 value: currentProcessFilter.processDefinitionName || '',
                 options: this.processDefinitionNames
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
                 value: currentProcessFilter.status || this.status[0].value,
                 options: this.status
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_ID',
                 type: 'text',
                 key: 'processDefinitionId',
                 value: currentProcessFilter.processDefinitionId || ''
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_KEY',
                 type: 'text',
                 key: 'processDefinitionKey',
                 value: currentProcessFilter.processDefinitionKey || ''
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.SORT',
                 type: 'select',
                 key: 'sort',
                 value: currentProcessFilter.sort || this.createSortProperties[0].value,
                 options: this.createSortProperties
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
                 value: currentProcessFilter.order || this.directions[0].value,
                 options: this.directions
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COMPLETED_DATE',
                 type: 'date',
                 key: 'completedDate',
                 value: currentProcessFilter.completedDate || false
-            }),
-             new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STARTED_BY',
                 type: 'people',
                 key: 'initiator',
                 value: currentProcessFilter.initiator,
                 selectionMode: 'multiple'
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COMPLETED_DATE',
                 type: 'date-range',
                 key: 'completedDateRange',
@@ -726,8 +694,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     _completedFrom: currentProcessFilter.completedFrom || null,
                     _completedTo: currentProcessFilter.completedTo || null
                 }
-            }),
-            new ProcessFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STARTED_DATE',
                 type: 'date-range',
                 key: 'startedDateRange',
@@ -737,7 +705,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     _startFrom: currentProcessFilter.startFrom || null,
                     _startTo: currentProcessFilter.startTo || null
                 }
-            })
+            }
         ];
     }
 }

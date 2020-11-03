@@ -246,12 +246,13 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
     onDateChanged(newDateValue: any, dateProperty: TaskFilterProperties) {
         if (newDateValue) {
             const momentDate = moment(newDateValue, BaseEditTaskFilterCloudComponent.FORMAT_DATE, true);
+            const controller = this.getPropertyController(dateProperty);
 
             if (momentDate.isValid()) {
-                this.getPropertyController(dateProperty).setValue(momentDate.toISOString(true));
-                this.getPropertyController(dateProperty).setErrors(null);
+                controller.setValue(momentDate.toISOString(true));
+                controller.setErrors(null);
             } else {
-                this.getPropertyController(dateProperty).setErrors({ invalid: true });
+                controller.setErrors({ invalid: true });
             }
         }
     }
@@ -286,7 +287,8 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
     }
 
     hasError(property: TaskFilterProperties): boolean {
-        return this.getPropertyController(property).errors && this.getPropertyController(property).errors.invalid;
+        const controller = this.getPropertyController(property);
+        return controller.errors && controller.errors.invalid;
     }
 
     hasLastModifiedProperty(): boolean {
@@ -306,8 +308,8 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
         return this.createFilterActions().filter(action => this.isValidAction(this.actions, action));
     }
 
-    isValidProperty(filterProperties: string[], filterProperty: any): boolean {
-        return filterProperties ? filterProperties.indexOf(filterProperty.key) >= 0 : true;
+    isValidProperty(filterProperties: string[], key: string): boolean {
+        return filterProperties ? filterProperties.indexOf(key) >= 0 : true;
     }
 
     checkForProperty(property: string): boolean {
@@ -338,7 +340,7 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
         }
 
         const defaultProperties = this.createTaskFilterProperties();
-        let filteredProperties = defaultProperties.filter((filterProperty) => this.isValidProperty(this.filterProperties, filterProperty));
+        let filteredProperties = defaultProperties.filter((filterProperty) => this.isValidProperty(this.filterProperties, filterProperty.key));
 
         if (!this.hasSortProperty()) {
             filteredProperties = this.removeOrderProperty(filteredProperties);
