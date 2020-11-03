@@ -31,7 +31,7 @@ import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.compone
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
     /** Emitted when a filter in the list is clicked. */
     @Output()
-    filterClick: EventEmitter<TaskFilterCloudModel> = new EventEmitter<TaskFilterCloudModel>();
+    filterClick = new EventEmitter<TaskFilterCloudModel>();
 
     filters$: Observable<TaskFilterCloudModel[]>;
     filters: TaskFilterCloudModel[] = [];
@@ -77,7 +77,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     public selectFilter(paramFilter: FilterParamsModel) {
         if (paramFilter) {
-            this.currentFilter = this.filters.find((filter: any, index) =>
+            this.currentFilter = this.filters.find((filter, index) =>
                 paramFilter.index === index ||
                 paramFilter.key === filter.key ||
                 paramFilter.id === filter.id ||

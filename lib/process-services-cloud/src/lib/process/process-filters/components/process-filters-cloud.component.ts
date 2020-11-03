@@ -44,15 +44,15 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /** Emitted when a filter is selected/clicked */
     @Output()
-    filterClick: EventEmitter<ProcessFilterCloudModel> = new EventEmitter<ProcessFilterCloudModel>();
+    filterClick = new EventEmitter<ProcessFilterCloudModel>();
 
     /** Emitted when filters are loaded successfully */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success = new EventEmitter<any>();
 
     /** Emitted when any error occurs while loading the filters */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     filters$: Observable<ProcessFilterCloudModel[]>;
 

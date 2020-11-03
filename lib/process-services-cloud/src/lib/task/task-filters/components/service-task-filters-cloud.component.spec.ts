@@ -239,7 +239,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     it('should select the task filter based on the input by id param', async(() => {
         spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = { id: 12 };
+        component.filterParam = { id: '12' };
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
@@ -257,7 +257,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     it('should emit an event when a filter is selected', async(() => {
         spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = { id: 12 };
+        component.filterParam = { id: '12' };
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
