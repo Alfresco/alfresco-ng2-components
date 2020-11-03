@@ -43,6 +43,24 @@ export class ProcessUtil {
         }
     }
 
+    async startProcessByDefinitionNameWithFormValues(appName: string, processDefinitionName: string, values: any, processName?: string): Promise<any> {
+        try {
+            const appDefinition = await new ApplicationsUtil(this.api).getAppDefinitionByName(appName);
+
+            const processDefinition = await this.getProcessDefinitionByName(appDefinition.deploymentId, processDefinitionName);
+
+            const startProcessOptions: any = {
+                processDefinitionId: processDefinition.id,
+                name: processName ? processName : processDefinitionName + StringUtil.generateRandomString(5).toLowerCase(),
+                values
+            };
+
+            return this.api.apiService.activiti.processApi.startNewProcessInstance(startProcessOptions);
+        } catch (error) {
+            Logger.error('Start Process - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+        }
+    }
+
     async startProcessOfApp(appName: string, processName?: string): Promise<any> {
         try {
             const appDefinition = await new ApplicationsUtil(this.api).getAppDefinitionByName(appName);

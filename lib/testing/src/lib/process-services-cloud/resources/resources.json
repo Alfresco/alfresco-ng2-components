@@ -262,6 +262,50 @@
       "processchild": "processchild",
       "processparent": "processparent"
     },
+    "contentModels": {
+      "contentmodelalltypes": {
+        "name": "contentmodelalltypes",
+        "singleCustomType": {
+          "name": "singleCustomType",
+          "properties": {
+            "textProperty": "customtypetext",
+            "longProperty": "customtypelong",
+            "intProperty": "customtypeint",
+            "mltextProperty": "customtypemltext",
+            "booleanProperty": "customtypeboolean",
+            "floatProperty": "customtypefloat",
+            "doubleProperty": "customtypedouble",
+            "dateProperty": "customtypedate",
+            "datetimeProperty": "customtypedatetime"
+          }
+        },
+        "singleCustomAspect": {
+          "name": "singleCustomAspect",
+          "properties": {
+            "textProperty": "aspecttext",
+            "longProperty": "aspectlong",
+            "intProperty": "aspectint",
+            "mltextProperty": "aspectmltext",
+            "booleanProperty": "aspectboolean",
+            "floatProperty": "aspectfloat",
+            "doubleProperty": "aspectdouble",
+            "dateProperty": "aspectdate",
+            "datetimeProperty": "aspectdatetime"
+          }
+        }
+      },
+      "contentmodelonlytypes": {
+        "name": "contentmodelonlytypes",
+        "customType1": {
+          "name": "customType",
+          "properties": {
+            "textProperty": "text",
+            "dateProperty": "date",
+            "datetimeProperty": "datetime"
+          }
+        }
+      }
+    },
     "security": [
       { "role": "ACTIVITI_ADMIN", "groups": [], "users": ["superadminuser"] },
       {
