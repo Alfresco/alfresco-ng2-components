@@ -205,21 +205,11 @@ export interface ServiceTaskFilterCloudModel {
     startedDate?: Date;
 }
 
-export class FilterParamsModel {
-
+export interface FilterParamsModel {
     id?: string;
     name?: string;
     key?: string;
     index?: number;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.name = obj.name || null;
-            this.key = obj.key || null;
-            this.index = obj.index;
-        }
-    }
 }
 
 export interface TaskFilterAction {
