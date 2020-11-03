@@ -17,7 +17,7 @@
     "downlevelIteration": true,
     "outDir": "./dist",
     "baseUrl": ".",
-    "types": ["jasmine"],
+    "types": ["jasmine", "jest", "node", "jasminewd2"],
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "paths": {
