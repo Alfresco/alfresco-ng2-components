@@ -54,8 +54,8 @@
                 <mat-icon id="add-person-icon" mat-list-icon>person_add</mat-icon>
             </ng-template>
             <p>
-             {{item.entry?.properties['cm:authorityName']?
-                                    item.entry?.properties['cm:authorityName'] :
+             {{item.entry?.properties['cm:authorityDisplayName']?
+                                    item.entry?.properties['cm:authorityDisplayName'] :
                                     item.entry?.properties['cm:owner']?.displayName}}</p>
         </mat-list-option>
     </mat-selection-list>
