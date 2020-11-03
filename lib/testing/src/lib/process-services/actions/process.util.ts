@@ -76,7 +76,7 @@ export class ProcessUtil {
 
     async getProcessInstanceByName(processInstanceName: string): Promise<any> {
         try {
-            const processInstanceList = await this.api.apiService.activiti.processApi.getProcessInstances({state: 'all'});
+            const processInstanceList = await this.api.apiService.activiti.processApi.getProcessInstances({state: 'all', size: 10000});
             const chosenProcessInstance = processInstanceList.data.find( (processInstanace) => {
                 return processInstanace.name === processInstanceName;
             });
