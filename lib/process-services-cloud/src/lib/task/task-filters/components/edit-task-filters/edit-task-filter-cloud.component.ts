@@ -70,9 +70,9 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         super(formBuilder, dateAdapter, userPreferencesService, appsProcessCloudService, taskCloudService);
     }
 
-    assignNewFilter(formValues: TaskFilterCloudModel) {
-        this.setLastModifiedToFilter(<TaskFilterCloudModel> formValues);
-        this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, formValues));
+    assignNewFilter(model: TaskFilterCloudModel) {
+        this.setLastModifiedToFilter(model);
+        this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, model));
         this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
         this.filterChange.emit(this.changedTaskFilter);
     }
@@ -122,15 +122,8 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         }
     }
 
-    /**
-     * Return true if both filters are same
-     * @param editedQuery, @param currentQuery
-     */
-    compareFilters(
-        editedQuery: TaskFilterCloudModel,
-        currentQuery: TaskFilterCloudModel
-    ): boolean {
-        return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
+    private compareFilters(left: TaskFilterCloudModel, right: TaskFilterCloudModel): boolean {
+        return JSON.stringify(left).toLowerCase() === JSON.stringify(right).toLowerCase();
     }
 
     save(saveAction: TaskFilterAction): void {

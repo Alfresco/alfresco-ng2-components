@@ -20,7 +20,6 @@ import { FilterOptions, TaskFilterAction, TaskFilterProperties } from '../../mod
 import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from './../../../../app/models/application-instance.model';
-import { ProcessDefinitionCloud } from './../../../../models/process-definition-cloud.model';
 import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
 import moment, { Moment } from 'moment';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
@@ -187,11 +186,7 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
         return nameWithHyphen.toLowerCase();
     }
 
-    /**
-     * Return name with hyphen
-     * @param name
-     */
-    replaceSpaceWithHyphen(name: string): string {
+    private replaceSpaceWithHyphen(name: string): string {
         const regExt = new RegExp(' ', 'g');
         return name.replace(regExt, '-');
     }
@@ -209,7 +204,6 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
     getRunningApplications() {
         this.appsProcessCloudService
             .getDeployedApplicationsByStatus(BaseEditTaskFilterCloudComponent.APP_RUNNING_STATUS, this.role)
-            .pipe(takeUntil(this.onDestroy$))
             .subscribe((applications: ApplicationInstanceModel[]) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
@@ -221,8 +215,7 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
 
     getProcessDefinitions() {
         this.taskCloudService.getProcessDefinitions(this.appName)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((processDefinitions: ProcessDefinitionCloud[]) => {
+            .subscribe((processDefinitions) => {
                 if (processDefinitions && processDefinitions.length > 0) {
                     this.processDefinitionNames.push(this.allProcessDefinitionNamesOption);
                     processDefinitions.map((processDefinition) => {

@@ -24,13 +24,11 @@ import { Subject, Observable } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions, ProcessSortFilterProperties } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions, ProcessSortFilterProperty } from '../models/process-filter-cloud.model';
 import { IdentityUserModel, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
-import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { ProcessCloudService } from '../../services/process-cloud.service';
-import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 
 @Component({
@@ -228,7 +226,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             this.getProcessDefinitions();
         }
         const defaultProperties = this.createProcessFilterProperties(this.processFilter);
-        let filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
+        let filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty.key));
         if (!this.hasSortProperty()) {
             filteredProperties = this.removeOrderProperty(filteredProperties);
         }
@@ -248,8 +246,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return this.filterProperties ? this.filterProperties.indexOf(property) >= 0 : false;
     }
 
-    private isValidProperty(filterProperties: string[], filterProperty: ProcessFilterProperties): boolean {
-        return filterProperties ? filterProperties.indexOf(filterProperty.key) >= 0 : true;
+    private isValidProperty(filterProperties: string[], key: string): boolean {
+        return filterProperties ? filterProperties.indexOf(key) >= 0 : true;
     }
 
     hasSortProperty(): boolean {
@@ -272,8 +270,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     get createSortProperties(): ProcessFilterOptions[] {
         this.checkMandatorySortProperties();
         const defaultSortProperties = this.createProcessSortProperties();
-        const sortProperties = defaultSortProperties.filter((sortProperty: ProcessFilterProperties) => this.isValidProperty(this.sortProperties, sortProperty));
-        return sortProperties;
+        return defaultSortProperties.filter((sortProperty) => this.isValidProperty(this.sortProperties, sortProperty.key));
     }
 
     checkMandatorySortProperties() {
@@ -285,7 +282,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     createAndFilterActions() {
         this.checkMandatoryActions();
         const actions = this.createFilterActions();
-        return actions.filter((action: ProcessFilterAction) => this.isValidAction(this.actions, action));
+        return actions.filter((action) => this.isValidAction(this.actions, action));
     }
 
     checkMandatoryActions() {
@@ -294,7 +291,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         }
     }
 
-    private isValidAction(actions: string[], action: any): boolean {
+    private isValidAction(actions: string[], action: ProcessFilterAction): boolean {
         return actions ? actions.indexOf(action.actionType) >= 0 : true;
     }
 
@@ -309,12 +306,13 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     onDateChanged(newDateValue: any, dateProperty: ProcessFilterProperties) {
         if (newDateValue) {
             const momentDate = moment(newDateValue, this.DATE_FORMAT, true);
+            const controller = this.getPropertyController(dateProperty);
 
             if (momentDate.isValid()) {
-                this.getPropertyController(dateProperty).setValue(momentDate.toDate());
-                this.getPropertyController(dateProperty).setErrors(null);
+                controller.setValue(momentDate.toDate());
+                controller.setErrors(null);
             } else {
-                this.getPropertyController(dateProperty).setErrors({ invalid: true });
+                controller.setErrors({ invalid: true });
             }
         }
     }
@@ -337,7 +335,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     hasError(property: ProcessFilterProperties): boolean {
-        return this.getPropertyController(property).errors && this.getPropertyController(property).errors.invalid;
+        const controller = this.getPropertyController(property);
+        return controller.errors && controller.errors.invalid;
     }
 
     compareFilters(editedQuery: ProcessFilterCloudModel, currentQuery: ProcessFilterCloudModel): boolean {
@@ -347,8 +346,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     getRunningApplications() {
         this.appsProcessCloudService
             .getDeployedApplicationsByStatus(EditProcessFilterCloudComponent.APP_RUNNING_STATUS, this.role)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((applications: ApplicationInstanceModel[]) => {
+            .subscribe((applications) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
                         this.applicationNames.push({ label: application.name, value: application.name });
@@ -358,9 +356,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     getProcessDefinitions() {
-        this.processCloudService.getProcessDefinitions(this.appName)
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe((processDefinitions: ProcessDefinitionCloud[]) => {
+        this.processCloudService.getProcessDefinitions(this.appName).subscribe((processDefinitions) => {
             if (processDefinitions && processDefinitions.length > 0) {
                 this.processDefinitionNames.push(this.allProcessDefinitionNamesOption);
                 processDefinitions.map((processDefinition) => {
@@ -383,7 +379,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     save(saveAction: ProcessFilterAction) {
         this.processFilterCloudService
             .updateFilter(this.changedProcessFilter)
-            .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => {
                 saveAction.filter = this.changedProcessFilter;
                 this.action.emit(saveAction);
@@ -403,8 +398,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     this.action.emit(deleteAction);
                     return filters.length === 0;
                 }),
-                switchMap(() => this.restoreDefaultProcessFilters()),
-                takeUntil(this.onDestroy$))
+                switchMap(() => this.restoreDefaultProcessFilters()))
             .subscribe(() => {});
     }
 
@@ -432,7 +426,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 const resultFilter: ProcessFilterCloudModel = Object.assign({}, this.changedProcessFilter, newFilter);
                 this.processFilterCloudService
                     .addFilter(resultFilter)
-                    .pipe(takeUntil(this.onDestroy$))
                     .subscribe(() => {
                         saveAsAction.filter = resultFilter;
                         this.action.emit(saveAsAction);
@@ -573,7 +566,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         ];
     }
 
-    createProcessSortProperties(): ProcessSortFilterProperties[] {
+    createProcessSortProperties(): ProcessSortFilterProperty[] {
         return [
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.ID',

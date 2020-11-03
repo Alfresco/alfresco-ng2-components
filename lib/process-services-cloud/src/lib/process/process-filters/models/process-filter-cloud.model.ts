@@ -186,7 +186,7 @@ export class ProcessFilterProperties {
     }
 }
 
-export interface ProcessSortFilterProperties {
+export interface ProcessSortFilterProperty {
     label: string;
     value: string | object;
     key: string;
