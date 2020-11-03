@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
-import { filter, takeUntil, finalize, switchMap } from 'rxjs/operators';
+import { filter, takeUntil, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Moment } from 'moment';
 
@@ -36,7 +36,7 @@ import { BaseEditTaskFilterCloudComponent } from './base-edit-task-filter-cloud.
     templateUrl: './base-edit-task-filter-cloud.component.html',
     styleUrls: ['./base-edit-task-filter-cloud.component.scss']
 })
-export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent {
+export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<ServiceTaskFilterCloudModel> {
 
     public static DEFAULT_TASK_FILTER_PROPERTIES = ['appName', 'activityName', 'status', 'sort', 'order'];
     public static DEFAULT_TASK_SORT_PROPERTIES = ['id', 'activityName', 'startedDate', 'completedDate'];
@@ -47,13 +47,6 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
         { label: 'CANCELLED', value: 'CANCELLED' },
         { label: 'ERROR', value: 'ERROR' }
     ];
-
-    /** Emitted when a task filter property changes. */
-    @Output()
-    filterChange = new EventEmitter<ServiceTaskFilterCloudModel>();
-
-    taskFilter: ServiceTaskFilterCloudModel;
-    changedTaskFilter: ServiceTaskFilterCloudModel;
 
     constructor(
         protected formBuilder: FormBuilder,
@@ -73,22 +66,8 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
         this.filterChange.emit(this.changedTaskFilter);
     }
 
-    /**
-     * Fetches task filter by application name and filter id and creates filter properties, build form
-     */
-    retrieveTaskFilterAndBuildForm() {
-        this.isLoading = true;
-        this.serviceTaskFilterCloudService.getTaskFilterById(this.appName, this.id)
-            .pipe(
-                finalize(() => this.isLoading = false),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe(response => {
-                this.taskFilter =  response as ServiceTaskFilterCloudModel;
-                this.taskFilterProperties = this.createAndFilterProperties();
-                this.taskFilterActions = this.createAndFilterActions();
-                this.buildForm(this.taskFilterProperties);
-            });
+    protected getTaskFilterById(appName: string, id: string) {
+        return this.serviceTaskFilterCloudService.getTaskFilterById(appName, id);
     }
 
     checkMandatoryFilterProperties() {

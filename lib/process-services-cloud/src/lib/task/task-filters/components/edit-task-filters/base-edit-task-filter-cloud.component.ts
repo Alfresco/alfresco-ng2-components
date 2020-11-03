@@ -23,14 +23,14 @@ import { ApplicationInstanceModel } from './../../../../app/models/application-i
 import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
 import moment, { Moment } from 'moment';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { debounceTime, filter, finalize, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
 import { IdentityGroupModel, IdentityUserModel, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
 @Directive()
 // tslint:disable-next-line: directive-class-suffix
-export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestroy {
+export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnChanges, OnDestroy {
 
     public static ACTION_SAVE = 'save';
     public static ACTION_SAVE_AS = 'saveAs';
@@ -100,6 +100,13 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
     taskFilterActions: TaskFilterAction[] = [];
     toggleFilterActions: boolean = false;
     allProcessDefinitionNamesOption = { label: 'All', value: '' };
+
+    taskFilter: T;
+    changedTaskFilter: T;
+
+    /** Emitted when a task filter property changes. */
+    @Output()
+    filterChange = new EventEmitter<T>();
 
     protected onDestroy$ = new Subject<boolean>();
     isLoading: boolean = false;
@@ -396,6 +403,22 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
         this.editTaskFilterForm.get(property.attributes.dateType).setValue(dateType);
     }
 
+    protected retrieveTaskFilterAndBuildForm() {
+        this.isLoading = true;
+
+        this.getTaskFilterById(this.appName, this.id)
+            .pipe(
+                finalize(() => this.isLoading = false),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(response => {
+                this.taskFilter = response;
+                this.taskFilterProperties = this.createAndFilterProperties();
+                this.taskFilterActions = this.createAndFilterActions();
+                this.buildForm(this.taskFilterProperties);
+            });
+    }
+
     abstract save(action: TaskFilterAction): void;
     abstract saveAs(action: TaskFilterAction): void;
     abstract delete(action: TaskFilterAction): void;
@@ -403,7 +426,7 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
     abstract checkMandatoryFilterProperties(): void;
     abstract isDisabledForDefaultFilters(action: TaskFilterAction): boolean;
     abstract createTaskFilterProperties(): TaskFilterProperties[];
-    abstract retrieveTaskFilterAndBuildForm(): void;
+    protected abstract getTaskFilterById(appName: string, id: string);
     abstract assignNewFilter(formValues): void;
 
 }

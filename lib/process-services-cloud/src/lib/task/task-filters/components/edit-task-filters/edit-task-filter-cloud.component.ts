@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
-import { filter, takeUntil, finalize, switchMap } from 'rxjs/operators';
+import { filter, takeUntil, switchMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
@@ -38,7 +38,7 @@ import { BaseEditTaskFilterCloudComponent } from './base-edit-task-filter-cloud.
     templateUrl: './base-edit-task-filter-cloud.component.html',
     styleUrls: ['./base-edit-task-filter-cloud.component.scss']
 })
-export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent {
+export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<TaskFilterCloudModel> {
 
     public static DEFAULT_TASK_FILTER_PROPERTIES = ['status', 'assignee', 'sort', 'order'];
     public static DEFAULT_TASK_SORT_PROPERTIES = ['id', 'name', 'createdDate', 'priority'];
@@ -50,13 +50,6 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         { label: 'CANCELLED', value: 'CANCELLED' },
         { label: 'COMPLETED', value: 'COMPLETED' }
     ];
-
-    /** Emitted when a task filter property changes. */
-    @Output()
-    filterChange = new EventEmitter<TaskFilterCloudModel>();
-
-    taskFilter: TaskFilterCloudModel;
-    changedTaskFilter: TaskFilterCloudModel;
 
     constructor(
         protected formBuilder: FormBuilder,
@@ -77,25 +70,25 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         this.filterChange.emit(this.changedTaskFilter);
     }
 
-    /**
-     * Fetches task filter by application name and filter id and creates filter properties, build form
-     */
-    retrieveTaskFilterAndBuildForm() {
-        this.isLoading = true;
-        this.taskFilterCloudService.getTaskFilterById(this.appName, this.id)
+    protected getTaskFilterById(appName: string, id: string) {
+        return this.taskFilterCloudService
+            .getTaskFilterById(appName, id)
             .pipe(
-                finalize(() => this.isLoading = false),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe(response => {
-                this.taskFilter = new TaskFilterCloudModel(response);
-                this.taskFilterProperties = this.createAndFilterProperties();
-                if (this.hasLastModifiedProperty()) {
-                    this.taskFilterProperties = [...this.taskFilterProperties, ...this.createLastModifiedProperty()];
-                }
-                this.taskFilterActions = this.createAndFilterActions();
-                this.buildForm(this.taskFilterProperties);
-            });
+                map(response => new TaskFilterCloudModel(response))
+            );
+    }
+
+    createAndFilterProperties() {
+        const result = super.createAndFilterProperties();
+
+        if (this.hasLastModifiedProperty()) {
+            return [
+                ...result,
+                ...this.createLastModifiedProperty()
+            ];
+        }
+
+        return result;
     }
 
     checkMandatoryFilterProperties() {
