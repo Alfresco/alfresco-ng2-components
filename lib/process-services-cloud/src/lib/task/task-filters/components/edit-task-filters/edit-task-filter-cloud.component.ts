@@ -53,7 +53,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
 
     /** Emitted when a task filter property changes. */
     @Output()
-    filterChange: EventEmitter<TaskFilterCloudModel> = new EventEmitter();
+    filterChange = new EventEmitter<TaskFilterCloudModel>();
 
     taskFilter: TaskFilterCloudModel;
     changedTaskFilter: TaskFilterCloudModel;

@@ -91,7 +91,7 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
 
     /** Emitted when a filter action occurs (i.e Save, Save As, Delete). */
     @Output()
-    action: EventEmitter<TaskFilterAction> = new EventEmitter();
+    action = new EventEmitter<TaskFilterAction>();
 
     protected applicationNames: any[] = [];
     protected processDefinitionNames: any[] = [];
@@ -134,21 +134,21 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
 
     createFilterActions(): TaskFilterAction[] {
         return [
-            new TaskFilterAction({
+            {
                 actionType: BaseEditTaskFilterCloudComponent.ACTION_SAVE,
                 icon: 'save',
                 tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE'
-            }),
-            new TaskFilterAction({
+            },
+            {
                 actionType: BaseEditTaskFilterCloudComponent.ACTION_SAVE_AS,
                 icon: 'adf:save-as',
                 tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS'
-            }),
-            new TaskFilterAction({
+            },
+            {
                 actionType: BaseEditTaskFilterCloudComponent.ACTION_DELETE,
                 icon: 'delete',
                 tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.DELETE'
-            })
+            }
         ];
     }
 
@@ -373,7 +373,7 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
         }
 
         const defaultProperties = this.createTaskFilterProperties();
-        let filteredProperties = defaultProperties.filter((filterProperty: TaskFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
+        let filteredProperties = defaultProperties.filter((filterProperty) => this.isValidProperty(this.filterProperties, filterProperty));
 
         if (!this.hasSortProperty()) {
             filteredProperties = this.removeOrderProperty(filteredProperties);
@@ -398,7 +398,7 @@ export abstract class BaseEditTaskFilterCloudComponent implements OnInit, OnChan
     }
 
     getFormControlsConfig(taskFilterProperties: TaskFilterProperties[]): any {
-        const properties = taskFilterProperties.map((property: TaskFilterProperties) => {
+        const properties = taskFilterProperties.map((property) => {
             if (!!property.attributes) {
                 return this.getAttributesControlConfig(property);
             } else {

@@ -227,20 +227,11 @@ export class FilterParamsModel {
     }
 }
 
-export class TaskFilterAction {
-    actionType: string;
-    icon: string;
-    tooltip: string;
-    filter: TaskFilterCloudModel | ServiceTaskFilterCloudModel;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.actionType = obj.actionType || null;
-            this.icon = obj.icon || null;
-            this.tooltip = obj.tooltip || null;
-            this.filter = obj.filter || null;
-        }
-    }
+export interface TaskFilterAction {
+    actionType?: string;
+    icon?: string;
+    tooltip?: string;
+    filter?: TaskFilterCloudModel | ServiceTaskFilterCloudModel;
 }
 
 export interface FilterOptions {
