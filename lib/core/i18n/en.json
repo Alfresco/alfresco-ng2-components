@@ -429,6 +429,16 @@
         "TEXT": "Back to home"
       }
     },
+    "503": {
+      "TITLE": "An error occurred.",
+      "DESCRIPTION": "Service Temporarily Unavailable [503].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Back to home"
+      }
+    },
     "504": {
       "TITLE": "An error occurred.",
       "DESCRIPTION": "The server timed out, try again or contact IT support [504].",
