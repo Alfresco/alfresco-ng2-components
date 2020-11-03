@@ -18,8 +18,12 @@
 export class TaskVariableCloud {
     name: string;
     value: any;
+    type: string;
+    id: string;
     constructor(obj) {
+        this.id = obj.name || null;
         this.name = obj.name || null;
         this.value = obj.value || null;
+        this.type = obj.type || null;
     }
 }

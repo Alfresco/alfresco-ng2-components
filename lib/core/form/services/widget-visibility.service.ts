@@ -43,8 +43,11 @@ export class WidgetVisibilityService {
                 private logService: LogService) {
     }
 
-    public refreshVisibility(form: FormModel) {
+    public refreshVisibility(form: FormModel, processVarList?: TaskProcessVariableModel[]) {
         this.form = form;
+        if (processVarList) {
+            this.processVarList = processVarList;
+        }
         if (form && form.tabs && form.tabs.length > 0) {
             form.tabs.map((tabModel) => this.refreshEntityVisibility(tabModel));
         }
