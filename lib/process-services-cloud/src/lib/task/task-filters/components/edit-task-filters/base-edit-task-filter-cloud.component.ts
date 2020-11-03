@@ -473,8 +473,20 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         });
     }
 
-    abstract checkMandatorySortProperties(): void;
-    abstract checkMandatoryFilterProperties(): void;
+    checkMandatoryFilterProperties() {
+        if (this.filterProperties === undefined || this.filterProperties.length === 0) {
+            this.filterProperties = this.getDefaultFilterProperties();
+        }
+    }
+
+    checkMandatorySortProperties(): void {
+        if (this.sortProperties === undefined || this.sortProperties.length === 0) {
+            this.sortProperties = this.getDefaultSortProperties();
+        }
+    }
+
+    abstract getDefaultFilterProperties(): string[];
+    abstract getDefaultSortProperties(): string[];
     abstract isDisabledForDefaultFilters(action: TaskFilterAction): boolean;
     abstract createTaskFilterProperties(): TaskFilterProperties[];
     protected abstract getTaskFilterById(appName: string, id: string);

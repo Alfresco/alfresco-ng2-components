@@ -36,17 +36,6 @@ import { BaseEditTaskFilterCloudComponent } from './base-edit-task-filter-cloud.
     styleUrls: ['./base-edit-task-filter-cloud.component.scss']
 })
 export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<ServiceTaskFilterCloudModel> {
-
-    public static DEFAULT_TASK_FILTER_PROPERTIES = ['appName', 'activityName', 'status', 'sort', 'order'];
-    public static DEFAULT_TASK_SORT_PROPERTIES = ['id', 'activityName', 'startedDate', 'completedDate'];
-    public static DEFAULT_TASK_STATUS_PROPERTIES = [
-        { label: 'ALL', value: '' },
-        { label: 'STARTED', value: 'STARTED' },
-        { label: 'COMPLETED', value: 'COMPLETED' },
-        { label: 'CANCELLED', value: 'CANCELLED' },
-        { label: 'ERROR', value: 'ERROR' }
-    ];
-
     constructor(
         formBuilder: FormBuilder,
         dialog: MatDialog,
@@ -69,16 +58,12 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
         return this.serviceTaskFilterCloudService.getTaskFilterById(appName, id);
     }
 
-    checkMandatoryFilterProperties() {
-        if (this.filterProperties === undefined || this.filterProperties.length === 0) {
-            this.filterProperties = EditServiceTaskFilterCloudComponent.DEFAULT_TASK_FILTER_PROPERTIES;
-        }
+    getDefaultFilterProperties(): string[] {
+        return ['appName', 'activityName', 'status', 'sort', 'order'];
     }
 
-    checkMandatorySortProperties(): void {
-        if (this.sortProperties === undefined || this.sortProperties.length === 0) {
-            this.sortProperties = EditServiceTaskFilterCloudComponent.DEFAULT_TASK_SORT_PROPERTIES;
-        }
+    getDefaultSortProperties(): string[] {
+        return ['id', 'activityName', 'startedDate', 'completedDate'];
     }
 
     protected updateFilter(filterToUpdate: ServiceTaskFilterCloudModel) {
@@ -104,6 +89,16 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
 
     restoreDefaultTaskFilters(): Observable<ServiceTaskFilterCloudModel[]> {
         return this.serviceTaskFilterCloudService.getTaskListFilters(this.appName);
+    }
+
+    private getDefaultProperties() {
+        return [
+            { label: 'ALL', value: '' },
+            { label: 'STARTED', value: 'STARTED' },
+            { label: 'COMPLETED', value: 'COMPLETED' },
+            { label: 'CANCELLED', value: 'CANCELLED' },
+            { label: 'ERROR', value: 'ERROR' }
+        ];
     }
 
     createTaskFilterProperties(): TaskFilterProperties[] {
@@ -157,8 +152,8 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
-                value: this.taskFilter.status || EditServiceTaskFilterCloudComponent.DEFAULT_TASK_STATUS_PROPERTIES[0].value,
-                options: EditServiceTaskFilterCloudComponent.DEFAULT_TASK_STATUS_PROPERTIES
+                value: this.taskFilter.status || this.getDefaultProperties()[0].value,
+                options: this.getDefaultProperties()
             },
             {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.STARTED_DATE',

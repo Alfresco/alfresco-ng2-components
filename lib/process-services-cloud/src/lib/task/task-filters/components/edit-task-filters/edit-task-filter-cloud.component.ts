@@ -38,18 +38,6 @@ import { BaseEditTaskFilterCloudComponent } from './base-edit-task-filter-cloud.
     styleUrls: ['./base-edit-task-filter-cloud.component.scss']
 })
 export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<TaskFilterCloudModel> {
-
-    public static DEFAULT_TASK_FILTER_PROPERTIES = ['status', 'assignee', 'sort', 'order'];
-    public static DEFAULT_TASK_SORT_PROPERTIES = ['id', 'name', 'createdDate', 'priority'];
-    public static DEFAULT_TASK_STATUS_PROPERTIES = [
-        { label: 'ALL', value: '' },
-        { label: 'CREATED', value: 'CREATED' },
-        { label: 'ASSIGNED', value: 'ASSIGNED' },
-        { label: 'SUSPENDED', value: 'SUSPENDED' },
-        { label: 'CANCELLED', value: 'CANCELLED' },
-        { label: 'COMPLETED', value: 'COMPLETED' }
-    ];
-
     constructor(
         formBuilder: FormBuilder,
         dialog: MatDialog,
@@ -90,16 +78,12 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         return result;
     }
 
-    checkMandatoryFilterProperties() {
-        if (this.filterProperties === undefined || this.filterProperties.length === 0) {
-            this.filterProperties = EditTaskFilterCloudComponent.DEFAULT_TASK_FILTER_PROPERTIES;
-        }
+    getDefaultFilterProperties(): string[] {
+        return ['status', 'assignee', 'sort', 'order'];
     }
 
-    checkMandatorySortProperties(): void {
-        if (this.sortProperties === undefined || this.sortProperties.length === 0) {
-            this.sortProperties = EditTaskFilterCloudComponent.DEFAULT_TASK_SORT_PROPERTIES;
-        }
+    getDefaultSortProperties(): string[] {
+        return ['id', 'name', 'createdDate', 'priority'];
     }
 
     private setLastModifiedToFilter(formValues: TaskFilterCloudModel) {
@@ -139,7 +123,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         return this.taskFilterCloudService.getTaskListFilters(this.appName);
     }
 
-    createLastModifiedProperty(): TaskFilterProperties[] {
+    private createLastModifiedProperty(): TaskFilterProperties[] {
         return [
             {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.LAST_MODIFIED_FROM',
@@ -153,6 +137,17 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 key: 'lastModifiedTo',
                 value: ''
             }
+        ];
+    }
+
+    private getDefaultProperties() {
+        return [
+            { label: 'ALL', value: '' },
+            { label: 'CREATED', value: 'CREATED' },
+            { label: 'ASSIGNED', value: 'ASSIGNED' },
+            { label: 'SUSPENDED', value: 'SUSPENDED' },
+            { label: 'CANCELLED', value: 'CANCELLED' },
+            { label: 'COMPLETED', value: 'COMPLETED' }
         ];
     }
 
@@ -175,8 +170,8 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
-                value: this.taskFilter.status || EditTaskFilterCloudComponent.DEFAULT_TASK_STATUS_PROPERTIES[0].value,
-                options: EditTaskFilterCloudComponent.DEFAULT_TASK_STATUS_PROPERTIES
+                value: this.taskFilter.status || this.getDefaultProperties()[0].value,
+                options: this.getDefaultProperties()
             },
             {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
