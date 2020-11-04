@@ -31,7 +31,7 @@ export class AmountWidgetPage {
 
     async getAmountFieldCurrency(fieldId: string): Promise<string> {
         const widget = await this.formFields.getWidget(fieldId);
-        return BrowserActions.getText(widget.element(this.currency));
+        return BrowserActions.getText(widget.element(this.currency).trim());
     }
 
     async setFieldValue(fieldId: string, value: any): Promise<void> {
