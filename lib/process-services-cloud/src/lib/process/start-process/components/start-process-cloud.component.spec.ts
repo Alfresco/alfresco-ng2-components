@@ -264,7 +264,8 @@ describe('StartProcessCloudComponent', () => {
         it('should be able to start a process with a prefilled valid form', fakeAsync(() => {
             component.processDefinitionName = 'processwithform';
             getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
-            component.values = [{ 'name': 'firstName', 'value': 'FakeName' }, {
+            component.values = [{'id': '1', 'type': 'string', 'name': 'firstName', 'value': 'FakeName' }, {
+                'id': '1', 'type': 'string',
                 'name': 'lastName',
                 'value': 'FakeLastName'
             }];
@@ -298,7 +299,8 @@ describe('StartProcessCloudComponent', () => {
         it('should NOT be able to start a process with a prefilled NOT valid form', fakeAsync(() => {
             component.processDefinitionName = 'processwithform';
             getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
-            component.values = [{ 'name': 'firstName', 'value': 'FakeName' }, {
+            component.values = [{ 'id': '1', 'type': 'string', 'name': 'firstName', 'value': 'FakeName' }, {
+                'id': '1', 'type': 'string',
                 'name': 'lastName',
                 'value': 'FakeLastName'
             }];
@@ -331,7 +333,8 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should create a process instance if the selection is valid', fakeAsync(() => {
-            component.values = [{ 'name': 'firstName', 'value': 'FakeName' }, {
+            component.values = [{ 'id': '1', 'type': 'string', 'name': 'firstName', 'value': 'FakeName' }, {
+                'id': '1', 'type': 'string',
                 'name': 'lastName',
                 'value': 'FakeLastName'
             }];
@@ -362,7 +365,8 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should have start button enabled when default values are set', fakeAsync(() => {
-            component.values = [{ 'name': 'firstName', 'value': 'FakeName' }, {
+            component.values = [{ 'id': '1', 'type': 'string', 'name': 'firstName', 'value': 'FakeName' }, {
+                'id': '1', 'type': 'string',
                 'name': 'lastName',
                 'value': 'FakeLastName'
             }];
