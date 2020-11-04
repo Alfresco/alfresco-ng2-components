@@ -829,6 +829,62 @@ describe('WidgetVisibilityCloudService', () => {
             });
         });
 
+        it('should use the process variables when they are passed to check the visibility', () => {
+
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'FIELD_FORM_EMPTY';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightType = WidgetTypeEnum.value;
+            visibilityObjTest.rightValue = 'PROCESS_RIGHT_FORM_FIELD_VALUE';
+
+            const myForm = new FormModel({
+                id: '9999',
+                name: 'FORM_PROCESS_VARIABLE_VISIBILITY',
+                processDefinitionId: 'PROCESS_TEST:9:9999',
+                processDefinitionName: 'PROCESS_TEST',
+                processDefinitionKey: 'PROCESS_TEST',
+                taskId: '999',
+                taskName: 'TEST',
+                fields: [
+                    {
+                        fieldType: 'ContainerRepresentation',
+                        id: '000000000000000000',
+                        name: 'Label',
+                        type: 'container',
+                        value: null,
+                        numberOfColumns: 2,
+                        fields: {
+                            1: [
+                                {
+                                    fieldType: 'FormFieldRepresentation',
+                                    id: 'FIELD_FORM_EMPTY',
+                                    name: 'FIELD_FORM_EMPTY',
+                                    type: 'text',
+                                    value: '',
+                                    visibilityCondition: null,
+                                    isVisible: true
+                                },
+                                {
+                                    fieldType: 'FormFieldRepresentation',
+                                    id: 'FIELD_FORM_WITH_CONDITION',
+                                    name: 'FIELD_FORM_WITH_CONDITION',
+                                    type: 'text',
+                                    value: 'field_form_with_condition_value',
+                                    visibilityCondition: visibilityObjTest,
+                                    isVisible: false
+                                }
+                            ]
+                        }
+                    }
+                ]
+            });
+
+            service.refreshVisibility(myForm, [{ id: 'FIELD_FORM_EMPTY', type: 'string', value: 'PROCESS_RIGHT_FORM_FIELD_VALUE' }]);
+
+            const fieldWithVisibilityAttached = myForm.getFieldById('FIELD_FORM_WITH_CONDITION');
+            expect(fieldWithVisibilityAttached.isVisible).toBeTruthy();
+        });
+
         it('should use the process value to evaluate the False visibility condition if the form value is empty', (done) => {
 
             service.getTaskProcessVariable('9999').subscribe(
