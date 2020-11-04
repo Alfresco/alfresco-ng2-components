@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, EventEmitter, Output, OnDestroy, OnChanges, OnInit } from '@angular/core';
-import { takeUntil, concatMap, catchError } from 'rxjs/operators';
+import { takeUntil, concatMap, catchError, finalize } from 'rxjs/operators';
 import { Subject, of, forkJoin } from 'rxjs';
 import {
     CardViewDateItemModel,
@@ -76,6 +76,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     dateTimeFormat: string;
     dateLocale: string;
     displayDateClearAction = false;
+    isLoading = true;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -113,6 +114,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     loadTaskDetailsById(appName: string, taskId: string) {
+        this.isLoading = true;
         this.taskCloudService.getTaskById(appName, taskId).pipe(
             concatMap((task) =>
                 forkJoin(
@@ -120,7 +122,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     this.taskCloudService.getCandidateUsers(this.appName, this.taskId),
                     this.taskCloudService.getCandidateGroups(this.appName, this.taskId)
                 )
-            )
+            ),
+            finalize(() => (this.isLoading = false))
         ).subscribe(([taskDetails, candidateUsers, candidateGroups]) => {
                 this.taskDetails = taskDetails;
                 this.candidateGroups = candidateGroups.map((user) => <CardViewArrayItem> { icon: 'group', value: user });
@@ -131,7 +134,9 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     this.refreshData();
                 }
             },
-            (err) => this.error.emit(err));
+            (err) => {
+                this.error.emit(err);
+            });
     }
 
     private initDefaultProperties() {

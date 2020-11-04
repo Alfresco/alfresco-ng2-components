@@ -210,8 +210,8 @@ describe('TaskHeaderCloudComponent', () => {
             expect(taskCloudService.updateTask).toHaveBeenCalled();
         }));
 
-        it('should show loading spinner when properties are not loaded', () => {
-            component.properties = null;
+        it('should show spinner before loading task details', () => {
+            component.isLoading = true;
             fixture.detectChanges();
             const loading = fixture.debugElement.query(By.css('.adf-task-header-loading'));
             expect(loading).toBeTruthy();
