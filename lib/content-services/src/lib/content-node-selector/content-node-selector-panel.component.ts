@@ -273,9 +273,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 debounceTime(this.debounceSearch),
                 takeUntil(this.onDestroy$)
             )
-            .subscribe(searchValue => {
+            .subscribe((searchValue: string) => {
                 this.searchTerm = searchValue;
-                this.queryBuilderService.userQuery = searchValue;
+                this.queryBuilderService.userQuery = searchValue.length > 0 ? `${searchValue}*` : searchValue ;
                 this.queryBuilderService.update();
             });
 

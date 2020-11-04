@@ -96,6 +96,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             sitesService = TestBed.inject(SitesService);
             contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
             searchQueryBuilderService = component.queryBuilderService;
+            component.queryBuilderService.resetToDefaults();
 
             spyOn(nodeService,  'getNode').and.returnValue(of({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } }));
             searchSpy = spyOn(searchQueryBuilderService, 'execute');
@@ -400,12 +401,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 expect(updateSpy).toHaveBeenCalled();
-                expect(searchQueryBuilderService.userQuery).toEqual('(search-term)');
+                expect(searchQueryBuilderService.userQuery).toEqual('(search-term*)');
                 expect(component.searchTerm).toEqual('search-term');
             }));
 
             it('should perform a search when the queryBody gets updated and it is defined', async () => {
-                searchQueryBuilderService.userQuery = 'search-term';
+                searchQueryBuilderService.userQuery = 'search-term*';
                 searchQueryBuilderService.update();
 
                 fixture.detectChanges();
@@ -695,7 +696,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should the query restrict the search to the site and not to the currentFolderId in case is changed', () => {
-                component.queryBuilderService.userQuery = 'search-term';
+                component.queryBuilderService.userQuery = 'search-term*';
                 component.currentFolderId = 'my-root-id';
                 component.restrictRootToCurrentFolderId = true;
                 component.siteChanged(<SiteEntry> { entry: { guid: 'my-site-id' } });
