@@ -21,6 +21,7 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "types": ["jasmine", "node", "jasminewd2"],
     "lib": [
       "es2018",
       "esnext.array",

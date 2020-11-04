@@ -141,20 +141,11 @@ export class ProcessFilterCloudModel {
     }
 }
 
-export class ProcessFilterAction {
-    actionType: string;
-    icon: string;
-    tooltip: string;
-    filter: ProcessFilterCloudModel;
-
-     constructor(obj?: any) {
-        if (obj) {
-            this.actionType = obj.actionType || null;
-            this.icon = obj.icon || null;
-            this.tooltip = obj.tooltip || null;
-            this.filter = obj.filter || null;
-        }
-    }
+export interface ProcessFilterAction {
+    actionType?: string;
+    icon?: string;
+    tooltip?: string;
+    filter?: ProcessFilterCloudModel;
 }
 
 export interface ProcessFilterOptions {
@@ -162,31 +153,18 @@ export interface ProcessFilterOptions {
     value?: string | object;
 }
 
-export class ProcessFilterProperties {
-    label: string;
-    type: string;
-    value: string | object;
-    key: string;
+export interface ProcessFilterProperties {
+    label?: string;
+    type?: string;
+    value?: any;
+    key?: string;
     attributes?: { [key: string]: string; };
     options?: ProcessFilterOptions[];
     dateFilterOptions?: DateCloudFilterType[];
     selectionMode?: ComponentSelectionMode;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.label = obj.label || null;
-            this.type = obj.type || null;
-            this.value = obj.value || '';
-            this.key = obj.key || null;
-            this.attributes = obj.attributes || null;
-            this.options = obj.options || null;
-            this.dateFilterOptions = obj.dateFilterOptions || null;
-            this.selectionMode = obj.selectionMode || null;
-        }
-    }
 }
 
-export interface ProcessSortFilterProperties {
+export interface ProcessSortFilterProperty {
     label: string;
     value: string | object;
     key: string;

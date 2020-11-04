@@ -32,7 +32,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
 
     /** Emitted when a filter in the list is clicked. */
     @Output()
-    filterClick: EventEmitter<ServiceTaskFilterCloudModel> = new EventEmitter<ServiceTaskFilterCloudModel>();
+    filterClick = new EventEmitter<ServiceTaskFilterCloudModel>();
 
     filters$: Observable<ServiceTaskFilterCloudModel[]>;
     filters: ServiceTaskFilterCloudModel[] = [];
@@ -78,7 +78,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
 
     public selectFilter(paramFilter: FilterParamsModel) {
         if (paramFilter) {
-            this.currentFilter = (this.filters as Array<ServiceTaskFilterCloudModel>).find((filter: any, index) =>
+            this.currentFilter = this.filters.find((filter, index) =>
                 paramFilter.index === index ||
                 paramFilter.key === filter.key ||
                 paramFilter.id === filter.id ||

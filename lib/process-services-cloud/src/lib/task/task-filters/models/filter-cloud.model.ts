@@ -205,42 +205,18 @@ export interface ServiceTaskFilterCloudModel {
     startedDate?: Date;
 }
 
-export enum TaskType {
-    UserTask = 'userTask',
-    ServiceTask = 'serviceTask'
-}
-
-export class FilterParamsModel {
-
+export interface FilterParamsModel {
     id?: string;
     name?: string;
     key?: string;
     index?: number;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.name = obj.name || null;
-            this.key = obj.key || null;
-            this.index = obj.index;
-        }
-    }
 }
 
-export class TaskFilterAction {
-    actionType: string;
-    icon: string;
-    tooltip: string;
-    filter: TaskFilterCloudModel | ServiceTaskFilterCloudModel;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.actionType = obj.actionType || null;
-            this.icon = obj.icon || null;
-            this.tooltip = obj.tooltip || null;
-            this.filter = obj.filter || null;
-        }
-    }
+export interface TaskFilterAction {
+    actionType?: string;
+    icon?: string;
+    tooltip?: string;
+    filter?: TaskFilterCloudModel | ServiceTaskFilterCloudModel;
 }
 
 export interface FilterOptions {
@@ -254,26 +230,13 @@ export enum AssignmentType {
     CANDIDATE_GROUPS = 'CANDIDATE_GROUPS'
 }
 
-export class TaskFilterProperties {
-    label: string;
-    type: string;
-    value: any;
-    key: string;
+export interface TaskFilterProperties {
+    label?: string;
+    type?: string;
+    value?: any;
+    key?: string;
     attributes?: { [key: string]: string; };
     options?: FilterOptions[];
     dateFilterOptions?: DateCloudFilterType[];
     selectionMode?: ComponentSelectionMode;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.label = obj.label || null;
-            this.type = obj.type || null;
-            this.value = obj.value || '';
-            this.key = obj.key || null;
-            this.attributes = obj.attributes || null;
-            this.options = obj.options || null;
-            this.dateFilterOptions = obj.dateFilterOptions || null;
-            this.selectionMode = obj.selectionMode || null;
-        }
-    }
 }

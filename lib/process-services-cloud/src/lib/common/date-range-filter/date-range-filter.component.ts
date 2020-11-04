@@ -51,7 +51,7 @@ import moment from 'moment-es6';
     ngOnInit() {
         this.options = this.options ? this.options : this.createDefaultRangeOptions();
         const defaultProperties = this.createDefaultDateOptions();
-        this.filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterOptions) => this.isValidProperty(this.options, filterProperty));
+        this.filteredProperties = defaultProperties.filter((filterProperty) => this.isValidProperty(this.options, filterProperty.value.toString()));
         if (this.hasPreselectedValues()) {
             this.setPreselectedValues();
         }
@@ -98,8 +98,8 @@ import moment from 'moment-es6';
         return this.processFilterProperty.value[attribute];
     }
 
-    private isValidProperty(filterProperties: string[], filterProperty: any): boolean {
-        return filterProperties ? filterProperties.indexOf(filterProperty.value) >= 0 : true;
+    private isValidProperty(filterProperties: string[], key: string): boolean {
+        return filterProperties ? filterProperties.indexOf(key) >= 0 : true;
     }
 
     private createDefaultRangeOptions(): DateCloudFilterType[] {

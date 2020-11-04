@@ -21,7 +21,6 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { from, Observable } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
-import { FilterParamsModel } from '../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
 import { By } from '@angular/platform-browser';
@@ -184,7 +183,7 @@ describe('TaskFiltersCloudComponent', () => {
     it('should select the task filter based on the input by name param', async(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new FilterParamsModel({ name: 'FakeMyTasks1' });
+        component.filterParam = { name: 'FakeMyTasks1' };
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
@@ -202,7 +201,7 @@ describe('TaskFiltersCloudComponent', () => {
     it('should select the default task filter if filter input does not exist', async(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new FilterParamsModel({ name: 'UnexistableFilter' });
+        component.filterParam = { name: 'UnexistableFilter' };
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
@@ -221,7 +220,7 @@ describe('TaskFiltersCloudComponent', () => {
     it('should select the task filter based on the input by index param', async(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new FilterParamsModel({ index: 2 });
+        component.filterParam = { index: 2 };
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
@@ -240,7 +239,7 @@ describe('TaskFiltersCloudComponent', () => {
     it('should select the task filter based on the input by id param', async(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new FilterParamsModel({ id: 12 });
+        component.filterParam = { id: '12' };
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
@@ -258,7 +257,7 @@ describe('TaskFiltersCloudComponent', () => {
     it('should emit an event when a filter is selected', async(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new FilterParamsModel({ id: 12 });
+        component.filterParam = { id: '12' };
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
@@ -344,7 +343,7 @@ describe('TaskFiltersCloudComponent', () => {
     });
 
     it('should return the current filter after one is selected', () => {
-        const filter = new FilterParamsModel({ name: 'FakeInvolvedTasks' });
+        const filter = { name: 'FakeInvolvedTasks' };
         component.filters = fakeGlobalFilter;
 
         expect(component.currentFilter).toBeUndefined();
