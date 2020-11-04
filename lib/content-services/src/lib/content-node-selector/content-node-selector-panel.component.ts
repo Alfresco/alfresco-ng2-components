@@ -213,6 +213,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Output()
     showingSearch: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    /** Emitted when current folder loaded. */
+    @Output()
+    currentFolder: EventEmitter<Node> = new EventEmitter<Node>();
+
     @ViewChild('documentList', { static: true })
     documentList: DocumentListComponent;
 
@@ -314,6 +318,12 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.onFileUploadEvent();
         this.resetPagination();
         this.setSearchScopeToNodes();
+
+        this.documentList.$folderNode
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe((currentNode: Node) => {
+            this.currentFolder.emit(currentNode);
+    });
     }
 
     ngOnDestroy() {
