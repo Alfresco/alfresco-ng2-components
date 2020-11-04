@@ -227,9 +227,9 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
-            await permissionsPage.addPermissionsDialog.searchUserOrGroup('GROUP_' + groupBody.id);
-            await permissionsPage.addPermissionsDialog.clickUserOrGroup('GROUP_' + groupBody.id);
-            await permissionsPage.addPermissionsDialog.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
+            await permissionsPage.addPermissionsDialog.searchUserOrGroup(groupBody.id);
+            await permissionsPage.addPermissionsDialog.clickUserOrGroup(groupBody.id);
+            await permissionsPage.addPermissionsDialog.checkUserOrGroupIsAdded(groupBody.id);
         });
 
         it('[C277100] Should display EVERYONE group in the search result set', async () => {
