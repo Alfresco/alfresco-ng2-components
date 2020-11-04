@@ -1,0 +1,45 @@
+<form [formGroup]="form" novalidate (ngSubmit)="apply(form.value, form.valid)">
+    <mat-form-field>
+        <input matInput
+                (input)="forcePlaceholder($event)"
+                [formControl]="from"
+                [errorStateMatcher]="matcher"
+                placeholder="{{ 'SEARCH.FILTER.RANGE.FROM-DATE' | translate }}"
+                [matDatetimepicker]="fromDatetimePicker"
+                [max]="fromMaxDatetime"
+                (dateChange)="onChangedHandler($event, from)"
+                data-automation-id="datetime-range-from-input">
+        <mat-datetimepicker-toggle matSuffix [for]="fromDatetimePicker" data-automation-id="datetime-range-from-date-toggle"></mat-datetimepicker-toggle>
+        <mat-datetimepicker #fromDatetimePicker color="accent" type="datetime"></mat-datetimepicker>
+        <mat-error *ngIf="from.invalid" data-automation-id="datetime-range-from-error">
+            {{ getFromValidationMessage() | translate: { requiredFormat: datetimePickerFormat } }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput
+                (input)="forcePlaceholder($event)"
+                [formControl]="to"
+                [errorStateMatcher]="matcher"
+                placeholder="{{ 'SEARCH.FILTER.RANGE.TO-DATE' | translate }}"
+                [matDatetimepicker]="toDatetimePicker"
+                [min]="from.value"
+                [max]="maxDatetime"
+                (dateChange)="onChangedHandler($event, to)"
+                data-automation-id="datetime-range-to-input">
+        <mat-datetimepicker-toggle matSuffix [for]="toDatetimePicker" data-automation-id="datetime-range-to-date-toggle"></mat-datetimepicker-toggle>
+        <mat-datetimepicker #toDatetimePicker color="accent" type="datetime"></mat-datetimepicker>
+        <mat-error *ngIf="to.invalid" data-automation-id="datetime-range-to-error">
+            {{ getToValidationMessage() | translate: { requiredFormat: datetimePickerFormat } }}
+        </mat-error>
+    </mat-form-field>
+
+    <div class="adf-facet-buttons adf-facet-buttons--topSpace">
+        <button mat-button color="primary" type="button" (click)="reset()" data-automation-id="datetime-range-clear-btn">
+            {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
+        </button>
+        <button mat-button color="primary" type="submit" [disabled]="!form.valid" data-automation-id="datetime-range-apply-btn">
+            {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
+        </button>
+    </div>
+</form>
