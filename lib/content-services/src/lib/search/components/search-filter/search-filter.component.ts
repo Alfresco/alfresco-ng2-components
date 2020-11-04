@@ -214,21 +214,22 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
                 this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
             } else if (responseField && this.showContextFacets) {
+                if (responseBuckets.length > 0) {
+                    const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
+                    bucketList.filter = this.getBucketFilterFunction(bucketList);
 
-                const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
-                bucketList.filter = this.getBucketFilterFunction(bucketList);
-
-                if (!this.responseFacets) {
-                    this.responseFacets = [];
+                    if (!this.responseFacets) {
+                        this.responseFacets = [];
+                    }
+                    this.responseFacets.push(<FacetField> {
+                        ...field,
+                        type: responseField.type || itemType,
+                        label: field.label,
+                        pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
+                        currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
+                        buckets: bucketList
+                    });
                 }
-                this.responseFacets.push(<FacetField> {
-                    ...field,
-                    type: responseField.type || itemType,
-                    label: field.label,
-                    pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
-                    currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
-                    buckets: bucketList
-                });
             }
         });
     }
@@ -269,21 +270,22 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
                 this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
             } else if (responseField && this.showContextFacets) {
+                if (responseBuckets.length > 0) {
+                    const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, this.facetQueriesPageSize);
+                    bucketList.filter = this.getBucketFilterFunction(bucketList);
 
-                const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, this.facetQueriesPageSize);
-                bucketList.filter = this.getBucketFilterFunction(bucketList);
-
-                if (!this.responseFacets) {
-                    this.responseFacets = [];
+                    if (!this.responseFacets) {
+                        this.responseFacets = [];
+                    }
+                    this.responseFacets.push(<FacetField> {
+                        field: group,
+                        type: responseField.type || 'query',
+                        label: group,
+                        pageSize: this.DEFAULT_PAGE_SIZE,
+                        currentPageSize: this.DEFAULT_PAGE_SIZE,
+                        buckets: bucketList
+                    });
                 }
-                this.responseFacets.push(<FacetField> {
-                    field: group,
-                    type: responseField.type || 'query',
-                    label: group,
-                    pageSize: this.DEFAULT_PAGE_SIZE,
-                    currentPageSize: this.DEFAULT_PAGE_SIZE,
-                    buckets: bucketList
-                });
             }
         });
 

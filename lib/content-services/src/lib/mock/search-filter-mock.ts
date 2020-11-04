@@ -609,3 +609,21 @@ export const filteredResult = [
     'my4 (665)',
     'my5 (1866)'
 ];
+
+export const mockContentSizeResponseBucket = {
+        'label': '5875',
+        'filterQuery': 'content.size:5875',
+        'metrics': [
+            {
+                'type': 'count',
+                'value': {
+                    'count': 364
+                }
+            }
+        ]
+    };
+
+export function getMockSearchResultWithResponseBucket() {
+    mockSearchResult.list.context.facets[3].buckets.push(mockContentSizeResponseBucket);
+    return mockSearchResult;
+}
