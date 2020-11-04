@@ -35,7 +35,7 @@
                 [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
                 [multipleFiles]="isMultipleSelection()"
                 [rootFolderId]="currentDirectoryId"
-                [disabled]="isAllowedToUpload()"
+                [disabled]="isNotAllowedToUpload()"
                 (error)="onError($event)">
             </adf-upload-button>
             <ng-container>

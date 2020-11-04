@@ -98,7 +98,7 @@ export class ContentNodeSelectorComponent {
         this.hasAllowableOperations = this.contentService.hasAllowableOperations(currentFolder, AllowableOperationsEnum.CREATE);
     }
 
-    isAllowedToUpload() {
+    isNotAllowedToUpload() {
         return this.showingSearch || !this.hasAllowableOperations;
     }
 }
