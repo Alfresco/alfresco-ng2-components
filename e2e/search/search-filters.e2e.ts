@@ -34,6 +34,7 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
+import moment from 'moment-es6';
 
 describe('Search Filters', () => {
 
@@ -177,6 +178,14 @@ describe('Search Filters', () => {
     });
 
     it('[C291980] Should group search facets under specified labels', async () => {
+        const currentYear = moment().year();
+
+        jsonFile.facetQueries.queries[0] = {'query': `created:${currentYear}`, 'label': 'SEARCH.FACET_QUERIES.CREATED_THIS_YEAR'};
+        jsonFile.facetQueries.queries[1] = {'query': `content.mimetype:text/html`, 'label': 'SEARCH.FACET_QUERIES.MIMETYPE', 'group': 'Type facet queries'};
+        jsonFile.facetQueries.queries[2] = {'query': `content.size:[0 TO 10240]`, 'label': 'SEARCH.FACET_QUERIES.XTRASMALL', 'group': 'Size facet queries'};
+
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
         await searchResults.dataTable.waitTillContentLoaded();

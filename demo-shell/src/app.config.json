@@ -215,7 +215,7 @@
       "mincount": 1,
       "queries": [
         {
-          "query": "created:2020",
+          "query": "created:2019",
           "label": "SEARCH.FACET_QUERIES.CREATED_THIS_YEAR"
         },
         {
