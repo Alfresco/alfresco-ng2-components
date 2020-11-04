@@ -48,5 +48,6 @@ export * from './components/search-chip-list/search-chip-list.component';
 export * from './components/search-sorting-picker/search-sorting-picker.component';
 export * from './components/search-text/search-text.component';
 export * from './components/search-widget-container/search-widget-container.component';
+export * from './components/search-datetime-range/search-datetime-range.component';
 
 export * from './search.module';
