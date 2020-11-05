@@ -41,6 +41,10 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     @Input()
     taskId: string;
 
+    /** Toggle rendering of the form title. */
+    @Input()
+    showTitle: boolean = true;
+
     /** Toggle rendering of the `Refresh` button. */
     @Input()
     showRefreshButton = false;
