@@ -77,7 +77,7 @@ export class PropertyGroupTranslatorService {
 
     private translate(property: Property, propertyValues: any, constraints: Constraint[]): CardViewItem {
         let propertyValue: any;
-        if (propertyValues && propertyValues[property.name]) {
+        if (propertyValues && !this.isEmpty(propertyValues[property.name])) {
             propertyValue = propertyValues[property.name];
         }
 
@@ -158,5 +158,9 @@ export class PropertyGroupTranslatorService {
         if (PropertyGroupTranslatorService.RECOGNISED_ECM_TYPES.indexOf(ecmPropertyType) === -1) {
             this.logService.error(`Unknown type for mapping: ${ecmPropertyType}`);
         }
+    }
+
+    private isEmpty(value: any): boolean {
+        return value === undefined || value === null || value === '';
     }
 }
