@@ -34,6 +34,17 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
+                        <mat-form-field fxFlex="23%" *ngIf="processFilterProperty.type === 'multi-select'" [attr.data-automation-id]="processFilterProperty.key">
+                            <mat-select
+                                placeholder="{{processFilterProperty.label | translate}}"
+                                [formControlName]="processFilterProperty.key"
+                                [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"
+                                [multiple]="true">
+                                <mat-option *ngFor="let propertyOption of processFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key">
+                                    {{ propertyOption.label | translate }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                         <mat-form-field fxFlex="23%" *ngIf="processFilterProperty.type === 'text'" [attr.data-automation-id]="processFilterProperty.key">
                             <input matInput
                                 [formControlName]="processFilterProperty.key"

@@ -214,7 +214,7 @@
       "LAST_MODIFIED_DATE_FORM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",
       "PROCESS_NAME": "Process Name",
-      "APP_VERSION": "AppReleaseVersion",
+      "APP_VERSION": "AppVersion",
       "STARTED_DATE": "Started Date",
       "STARTED_BY": "Started by",
       "COMPLETED_DATE": "Completed Date",

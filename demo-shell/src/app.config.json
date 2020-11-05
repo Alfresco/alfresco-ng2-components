@@ -1004,7 +1004,8 @@
       "status",
       "sort",
       "order",
-      "processName"
+      "processName",
+      "appVersion"
     ],
     "sortProperties": [
       "id",

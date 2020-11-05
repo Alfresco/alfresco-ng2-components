@@ -615,9 +615,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_VERSION',
-                type: 'number',
+                type: 'multi-select',
                 key: 'appVersion',
-                value: currentProcessFilter.appVersion
+                value: currentProcessFilter.appVersion,
+                options: [{ label: '1', value: '1' }, { label: '2', value: '2' }, { label: '3', value: '3' }]
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',
