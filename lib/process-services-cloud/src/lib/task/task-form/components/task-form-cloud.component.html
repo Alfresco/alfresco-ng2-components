@@ -26,7 +26,7 @@
                 <mat-card-title>
                     <h4>
                         <span class="adf-form-title">
-                            {{ taskDetails?.name ? taskDetails.name: 'FORM.FORM_RENDERER.NAMELESS_TASK' | translate }}
+                            {{ taskDetails?.name || 'FORM.FORM_RENDERER.NAMELESS_TASK' | translate }}
                         </span>
                     </h4>
                 </mat-card-title>
