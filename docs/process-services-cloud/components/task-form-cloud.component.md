@@ -37,6 +37,7 @@ Save and Complete buttons get disabled when at least one of the form's inputs ar
 | ------------------ | --------- | ------------- | ----------------------------------------------- |
 | appName            | `string`  | ""            | App id to fetch corresponding form and values.  |
 | readOnly           | `boolean` | false         | Toggle readonly state of the task.              |
+| showTitle          | `boolean` | true          | Toggle rendering of the form title.             |
 | showCancelButton   | `boolean` | true          | Toggle rendering of the `Cancel` button.        |
 | showCompleteButton | `boolean` | true          | Toggle rendering of the `Complete` button.      |
 | showRefreshButton  | `boolean` | false         | Toggle rendering of the `Refresh` button.       |

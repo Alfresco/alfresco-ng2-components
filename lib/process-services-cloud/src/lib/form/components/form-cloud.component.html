@@ -5,7 +5,7 @@
 
 <div *ngIf="hasForm()" class="adf-form-container">
     <mat-card>
-        <mat-card-header>
+        <mat-card-header *ngIf="showTitle || showRefreshButton || showValidationIcon">
             <mat-card-title>
                 <h4>
                     <div *ngIf="showValidationIcon" class="adf-form-validation-button">

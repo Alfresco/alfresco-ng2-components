@@ -416,4 +416,34 @@ describe('TaskFormCloudComponent', () => {
             expect(loadingTemplate).toBeNull();
         });
     });
+
+    it('should display task name as title on no form template if showTitle is true', () => {
+        component.taskId = taskDetails.id;
+
+        fixture.detectChanges();
+        const noFormTemplateTitle = debugElement.query(By.css('.adf-form-title'));
+
+        expect(noFormTemplateTitle.nativeElement.innerText).toEqual('Task1');
+    });
+
+    it('should display default name as title on no form template if the task name empty/undefined', () => {
+        const mockTaskDetailsWithOutName = { id: 'mock-task-id', name: null, formKey: null };
+        getTaskSpy.and.returnValue(of(mockTaskDetailsWithOutName));
+        component.taskId = 'mock-task-id';
+
+        fixture.detectChanges();
+        const noFormTemplateTitle = debugElement.query(By.css('.adf-form-title'));
+
+        expect(noFormTemplateTitle.nativeElement.innerText).toEqual('FORM.FORM_RENDERER.NAMELESS_TASK');
+    });
+
+    it('should not display no form title if showTitle is set to false', () => {
+        component.taskId = taskDetails.id;
+        component.showTitle = false;
+
+        fixture.detectChanges();
+        const noFormTemplateTitle = debugElement.query(By.css('.adf-form-title'));
+
+        expect(noFormTemplateTitle).toBeNull();
+    });
 });

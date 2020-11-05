@@ -3,6 +3,7 @@
                     [appName]="appName"
                     [appVersion]="taskDetails.appVersion"
                     [taskId]="taskId"
+                    [showTitle]="showTitle"
                     [processInstanceId]="taskDetails.processInstanceId"
                     [readOnly]="isReadOnly()"
                     [showRefreshButton]="showRefreshButton"
@@ -21,14 +22,11 @@
 
     <ng-template #withoutForm>
         <mat-card class="adf-task-form-container">
-            <mat-card-header>
+            <mat-card-header *ngIf="showTitle">
                 <mat-card-title>
                     <h4>
                         <span class="adf-form-title">
-                            {{taskDetails.name}}
-                            <ng-container *ngIf="!taskDetails.name">
-                                {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}
-                            </ng-container>
+                            {{ taskDetails?.name ? taskDetails.name: 'FORM.FORM_RENDERER.NAMELESS_TASK' | translate }}
                         </span>
                     </h4>
                 </mat-card-title>
