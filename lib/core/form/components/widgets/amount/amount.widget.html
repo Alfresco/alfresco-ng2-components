@@ -1,21 +1,25 @@
-<div class="adf-amount-widget__container adf-amount-widget {{field.className}}" [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
-    <mat-form-field class="adf-amount-widget__input"  floatLabel="never">
-        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
-        <span matPrefix class="adf-amount-widget__prefix-spacing">{{ currency }}</span>
+<div class="adf-amount-widget__container adf-amount-widget {{field.className}}"
+     [class.adf-invalid]="!field.isValid"
+     [class.adf-readonly]="field.readOnly">
+    <label class="adf-label"
+           [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
+    <mat-form-field class="adf-amount-widget__input">
+        <span matPrefix class="adf-amount-widget__prefix-spacing">{{ currency }} &nbsp;</span>
         <input matInput
-                [matTooltip]="field.tooltip"
-                matTooltipPosition="above"
-                matTooltipShowDelay="1000"
-                class="adf-input"
-                type="text"
-                [id]="field.id"
-                [required]="isRequired()"
-                [placeholder]="placeholder"
-                [value]="field.value"
-                [(ngModel)]="field.value"
-                (ngModelChange)="onFieldChanged(field)"
-                [disabled]="field.readOnly">
+               [matTooltip]="field.tooltip"
+               matTooltipPosition="above"
+               matTooltipShowDelay="1000"
+               class="adf-input"
+               type="text"
+               [id]="field.id"
+               [required]="isRequired()"
+               [placeholder]="placeholder"
+               [value]="field.value"
+               [(ngModel)]="field.value"
+               (ngModelChange)="onFieldChanged(field)"
+               [disabled]="field.readOnly">
     </mat-form-field>
-    <error-widget [error]="field.validationSummary" ></error-widget>
-    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    <error-widget [error]="field.validationSummary"></error-widget>
+    <error-widget *ngIf="isInvalidFieldRequired()"
+                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

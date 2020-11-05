@@ -126,7 +126,7 @@ describe('AmountWidgetComponent - rendering', () => {
         const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
         expect(widgetLabel.textContent).toBe('Test Amount*');
         const widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
-        expect(widgetPrefix.textContent).toBe('$');
+        expect(widgetPrefix.textContent.trim()).toBe('$');
         expect(widget.field.isValid).toBe(false);
         const widgetById: HTMLInputElement = fixture.nativeElement.querySelector('#TestAmount1');
         expect(widgetById).toBeDefined();

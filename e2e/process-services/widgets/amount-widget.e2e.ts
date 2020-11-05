@@ -74,7 +74,8 @@ describe('Amount Widget', () => {
         await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await expect(await widget.amountWidget().getAmountFieldLabel(app.FIELD.amount_input_id)).toContain('Amount');
         await expect(await widget.amountWidget().getPlaceholder(app.FIELD.amount_input_id)).toContain('Type amount');
-        await expect(await widget.amountWidget().getAmountFieldCurrency(app.FIELD.amount_input_id)).toBe('$');
+        const fieldCurrency = await widget.amountWidget().getAmountFieldCurrency(app.FIELD.amount_input_id);
+        await expect(fieldCurrency.trim()).toBe('$');
 
         await widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 4);
         await expect(await widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be less than 5');
