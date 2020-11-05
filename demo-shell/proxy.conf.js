@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var PROXY_HOST_ADF = process.env.PROXY_HOST_ADF;
 
 module.exports = {
