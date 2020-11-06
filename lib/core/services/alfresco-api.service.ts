@@ -48,6 +48,8 @@ export class AlfrescoApiService {
 
     lastConfig: AlfrescoApiConfig;
 
+    private whitelistUrl: string[] = ['/activiti-app/api/enterprise/system/properties'];
+
     getInstance(): AlfrescoApiCompatibility {
         return this.alfrescoApi;
     }
@@ -151,5 +153,10 @@ export class AlfrescoApiService {
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {
         return JSON.stringify(lastConfig) !== JSON.stringify(newConfig);
+    }
+
+    isWhiteListed(currentFullPath: string): boolean {
+        const formattedPath = currentFullPath.replace(this.lastConfig.hostBpm, '');
+        return this.whitelistUrl.includes(formattedPath);
     }
 }
