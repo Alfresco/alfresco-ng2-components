@@ -215,5 +215,4 @@ export class BrowserActions {
         stream.write(Buffer.from(pngData, 'base64'));
         stream.end();
     }
-
 }
