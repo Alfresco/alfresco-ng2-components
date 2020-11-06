@@ -48,7 +48,7 @@ export class AlfrescoApiService {
 
     lastConfig: AlfrescoApiConfig;
 
-    private whitelistUrl: string[] = ['/activiti-app/api/enterprise/system/properties'];
+    private excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
 
     getInstance(): AlfrescoApiCompatibility {
         return this.alfrescoApi;
@@ -156,7 +156,7 @@ export class AlfrescoApiService {
     }
 
     isExcludedErrorListener(currentFullPath: string): boolean {
-        const formattedPath = currentFullPath.replace(this.lastConfig.hostBpm, '');
-        return this.whitelistUrl.includes(formattedPath);
+        const formattedPath = currentFullPath.replace(this.lastConfig.hostBpm + '/' + this.lastConfig.contextRootBpm, '');
+        return this.excludedErrorUrl.includes(formattedPath);
     }
 }
