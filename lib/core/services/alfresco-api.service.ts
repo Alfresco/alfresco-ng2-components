@@ -155,7 +155,7 @@ export class AlfrescoApiService {
         return JSON.stringify(lastConfig) !== JSON.stringify(newConfig);
     }
 
-    isWhiteListed(currentFullPath: string): boolean {
+    isExcludedErrorListener(currentFullPath: string): boolean {
         const formattedPath = currentFullPath.replace(this.lastConfig.hostBpm, '');
         return this.whitelistUrl.includes(formattedPath);
     }
