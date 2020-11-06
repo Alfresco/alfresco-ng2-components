@@ -38,6 +38,12 @@ export class VersionUploadComponent {
     @Input()
     newFileVersion: File;
 
+    @Input()
+    showUploadButton: boolean = true;
+
+    @Input()
+    showCancelButton: boolean = true;
+
     @Output()
     success = new EventEmitter();
 
@@ -46,6 +52,12 @@ export class VersionUploadComponent {
 
     @Output()
     cancel = new EventEmitter();
+
+    @Output()
+    versionChanged = new EventEmitter<boolean>();
+
+    @Output()
+    commentChanged = new EventEmitter<string>();
 
     constructor(private contentService: ContentService) {
     }
@@ -60,6 +72,14 @@ export class VersionUploadComponent {
 
     cancelUpload() {
         this.cancel.emit();
+    }
+
+    onVersionChange() {
+        this.versionChanged.emit(this.isMajorVersion());
+    }
+
+    onCommentChange() {
+        this.commentChanged.emit(this.comment);
     }
 
 }
