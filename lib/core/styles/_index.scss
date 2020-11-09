@@ -37,7 +37,7 @@
 @import '../../core/clipboard/clipboard.component';
 @import '../../core/search-text/search-text-input.component';
 @import './snackbar';
-@import '../directives/tooltip-card/tooltip-card.component'
+@import '../directives/tooltip-card/tooltip-card.component';
 
 @mixin adf-core-theme($theme) {
     @include adf-colors-theme($theme);
