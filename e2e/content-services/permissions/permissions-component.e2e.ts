@@ -228,7 +228,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
             await permissionsPage.addPermissionsDialog.searchUserOrGroup(groupBody.id);
-            await permissionsPage.addPermissionsDialog.clickUserOrGroup(groupBody.id);
+            await permissionsPage.addPermissionsDialog.clickUserOrGroup(groupBody.displayName);
             await permissionsPage.addPermissionsDialog.checkUserOrGroupIsAdded(groupBody.id);
         });
 
