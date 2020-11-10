@@ -48,6 +48,8 @@ export class AlfrescoApiService {
 
     lastConfig: AlfrescoApiConfig;
 
+    private excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
+
     getInstance(): AlfrescoApiCompatibility {
         return this.alfrescoApi;
     }
@@ -151,5 +153,10 @@ export class AlfrescoApiService {
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {
         return JSON.stringify(lastConfig) !== JSON.stringify(newConfig);
+    }
+
+    isExcludedErrorListener(currentFullPath: string): boolean {
+        const formattedPath = currentFullPath.replace(this.lastConfig.hostBpm + '/' + this.lastConfig.contextRootBpm, '');
+        return this.excludedErrorUrl.includes(formattedPath);
     }
 }
