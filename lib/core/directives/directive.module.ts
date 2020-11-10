@@ -28,11 +28,14 @@ import { NodeRestoreDirective } from './node-restore.directive';
 import { UploadDirective } from './upload.directive';
 import { NodeDownloadDirective } from './node-download.directive';
 import { VersionCompatibilityDirective } from './version-compatibility.directive';
+import { TooltipCardDirective } from './tooltip-card/tooltip-card.directive';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        OverlayModule
     ],
     declarations: [
         HighlightDirective,
@@ -43,7 +46,8 @@ import { VersionCompatibilityDirective } from './version-compatibility.directive
         NodeRestoreDirective,
         NodeDownloadDirective,
         UploadDirective,
-        VersionCompatibilityDirective
+        VersionCompatibilityDirective,
+        TooltipCardDirective
     ],
     exports: [
         HighlightDirective,
@@ -54,7 +58,8 @@ import { VersionCompatibilityDirective } from './version-compatibility.directive
         NodeRestoreDirective,
         NodeDownloadDirective,
         UploadDirective,
-        VersionCompatibilityDirective
+        VersionCompatibilityDirective,
+        TooltipCardDirective
     ]
 })
 export class DirectiveModule {}
