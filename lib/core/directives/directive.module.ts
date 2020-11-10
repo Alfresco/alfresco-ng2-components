@@ -30,6 +30,7 @@ import { NodeDownloadDirective } from './node-download.directive';
 import { VersionCompatibilityDirective } from './version-compatibility.directive';
 import { TooltipCardDirective } from './tooltip-card/tooltip-card.directive';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
 
 @NgModule({
     imports: [
@@ -47,7 +48,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
         NodeDownloadDirective,
         UploadDirective,
         VersionCompatibilityDirective,
-        TooltipCardDirective
+        TooltipCardDirective,
+        TooltipCardComponent
     ],
     exports: [
         HighlightDirective,
