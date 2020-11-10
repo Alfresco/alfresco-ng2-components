@@ -46,6 +46,10 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     @Output()
     filterClick = new EventEmitter<ProcessFilterCloudModel>();
 
+    /** Emitted when the user selects a filter from the list. */
+    @Output()
+    filterClickedByUser = new EventEmitter<ProcessFilterCloudModel>();
+
     /** Emitted when filters are loaded successfully */
     @Output()
     success = new EventEmitter<any>();
@@ -142,6 +146,18 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
      */
     public selectFilterById(id: string) {
         this.selectFilterAndEmit(<ProcessFilterCloudModel> {id: id});
+    }
+
+    /**
+     * Selects and emits the filter selected by the user
+     */
+    public selectFilterByUserAction(filter: ProcessFilterCloudModel) {
+        if (filter) {
+            this.selectFilter(filter);
+            this.filterClickedByUser.emit(this.currentFilter);
+        } else {
+            this.currentFilter = undefined;
+        }
     }
 
     /**

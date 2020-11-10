@@ -34,6 +34,10 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
     @Output()
     filterClick = new EventEmitter<ServiceTaskFilterCloudModel>();
 
+    /** Emitted when the user selects a filter from the list. */
+    @Output()
+    filterClickedByUser = new EventEmitter<ServiceTaskFilterCloudModel>();
+
     filters$: Observable<ServiceTaskFilterCloudModel[]>;
     filters: ServiceTaskFilterCloudModel[] = [];
     currentFilter: ServiceTaskFilterCloudModel;
@@ -92,6 +96,18 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
         if (newParamFilter) {
             this.selectFilter(newParamFilter);
             this.filterClick.emit(this.currentFilter);
+        } else {
+            this.currentFilter = undefined;
+        }
+    }
+
+    /**
+     * Selects and emits the filter selected by the user
+     */
+    public selectFilterByUserAction(filter: FilterParamsModel) {
+        if (filter) {
+            this.selectFilter(filter);
+            this.filterClickedByUser.emit(this.currentFilter);
         } else {
             this.currentFilter = undefined;
         }

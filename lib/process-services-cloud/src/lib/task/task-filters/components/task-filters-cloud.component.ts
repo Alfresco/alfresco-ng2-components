@@ -33,6 +33,10 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     @Output()
     filterClick = new EventEmitter<TaskFilterCloudModel>();
 
+    /** Emitted when the user selects a filter from the list. */
+    @Output()
+    filterClickedByUser = new EventEmitter<TaskFilterCloudModel>();
+
     filters$: Observable<TaskFilterCloudModel[]>;
     filters: TaskFilterCloudModel[] = [];
     currentFilter: TaskFilterCloudModel;
@@ -91,6 +95,18 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         if (newParamFilter) {
             this.selectFilter(newParamFilter);
             this.filterClick.emit(this.currentFilter);
+        } else {
+            this.currentFilter = undefined;
+        }
+    }
+
+    /**
+     * Selects and emits the filter selected by the user
+     */
+    public selectFilterByUserAction(filter: FilterParamsModel) {
+        if (filter) {
+            this.selectFilter(filter);
+            this.filterClickedByUser.emit(this.currentFilter);
         } else {
             this.currentFilter = undefined;
         }
