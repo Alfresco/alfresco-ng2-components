@@ -42,11 +42,11 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     @Input()
     showIcons: boolean = false;
 
-    /** Emitted when a filter is selected. */
+    /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<ProcessFilterCloudModel>();
 
-    /** Emitted when the user selects a filter from the list. */
+    /** Emitted when a filter is being clicked from the UI. */
     @Output()
     filterClicked = new EventEmitter<ProcessFilterCloudModel>();
 

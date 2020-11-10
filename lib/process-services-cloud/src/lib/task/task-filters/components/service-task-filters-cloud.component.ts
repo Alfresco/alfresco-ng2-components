@@ -30,11 +30,11 @@ import { ServiceTaskFilterCloudService } from '../services/service-task-filter-c
 })
 export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
 
-    /** Emitted when a filter in the list is selected. */
+    /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<ServiceTaskFilterCloudModel>();
 
-    /** Emitted when the user selects a filter from the list. */
+    /** Emitted when a filter is being clicked from the UI. */
     @Output()
     filterClicked = new EventEmitter<ServiceTaskFilterCloudModel>();
 

@@ -29,11 +29,11 @@ import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.compone
     styleUrls: ['base-task-filters-cloud.component.scss']
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
-    /** Emitted when a filter in the list is clicked. */
+    /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<TaskFilterCloudModel>();
 
-    /** Emitted when the user selects a filter from the list. */
+    /** Emitted when a filter is being clicked from the UI. */
     @Output()
     filterClicked = new EventEmitter<TaskFilterCloudModel>();
 
