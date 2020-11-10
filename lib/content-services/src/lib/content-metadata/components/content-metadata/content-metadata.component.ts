@@ -201,7 +201,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     showGroup(group: CardViewGroup): boolean {
         const properties = group.properties.filter((property) => {
-            return !!property.displayValue;
+            return !this.isEmpty(property.displayValue);
         });
 
         return properties.length > 0;
@@ -224,5 +224,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (event.keyCode === 37 || event.keyCode === 39) { // ArrowLeft && ArrowRight
             event.stopPropagation();
         }
+    }
+
+    private isEmpty(value: any): boolean {
+        return value === undefined || value === null || value === '';
     }
 }
