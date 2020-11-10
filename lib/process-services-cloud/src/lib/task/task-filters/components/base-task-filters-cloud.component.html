@@ -1,6 +1,6 @@
 <ng-container *ngIf="filters$ | async as filterList; else loading">
     <div *ngFor="let filter of filterList" class="adf-filters__entry" [class.adf-active]="currentFilter === filter">
-        <button (click)="selectFilterByUserAction(filter)"
+        <button (click)="onFilterClick(filter)"
           [attr.aria-label]="filter.name | translate"
           [id]="filter.id"
           [attr.data-automation-id]="filter.key + '_filter'"

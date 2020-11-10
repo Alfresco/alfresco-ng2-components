@@ -38,7 +38,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /** Emitted when the user selects a filter from the list. */
     @Output()
-    filterClick: EventEmitter<UserProcessInstanceFilterRepresentation> = new EventEmitter<UserProcessInstanceFilterRepresentation>();
+    filterClicked: EventEmitter<UserProcessInstanceFilterRepresentation> = new EventEmitter<UserProcessInstanceFilterRepresentation>();
 
     /** Emitted when the list of filters has been successfully loaded from the server. */
     @Output()
@@ -149,7 +149,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     selectFilter(filter: ProcessInstanceFilterRepresentation) {
         this.currentFilter = filter;
         this.active = true;
-        this.filterClick.emit(filter);
+        this.filterClicked.emit(filter);
     }
 
     /**

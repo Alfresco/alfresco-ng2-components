@@ -31,11 +31,11 @@ import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.compone
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
     /** Emitted when a filter in the list is clicked. */
     @Output()
-    filterClick = new EventEmitter<TaskFilterCloudModel>();
+    filterSelected = new EventEmitter<TaskFilterCloudModel>();
 
     /** Emitted when the user selects a filter from the list. */
     @Output()
-    filterClickedByUser = new EventEmitter<TaskFilterCloudModel>();
+    filterClicked = new EventEmitter<TaskFilterCloudModel>();
 
     filters$: Observable<TaskFilterCloudModel[]>;
     filters: TaskFilterCloudModel[] = [];
@@ -94,7 +94,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     public selectFilterAndEmit(newParamFilter: FilterParamsModel) {
         if (newParamFilter) {
             this.selectFilter(newParamFilter);
-            this.filterClick.emit(this.currentFilter);
+            this.filterSelected.emit(this.currentFilter);
         } else {
             this.currentFilter = undefined;
         }
@@ -103,10 +103,10 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     /**
      * Selects and emits the filter selected by the user
      */
-    public selectFilterByUserAction(filter: FilterParamsModel) {
+    public onFilterClick(filter: FilterParamsModel) {
         if (filter) {
             this.selectFilter(filter);
-            this.filterClickedByUser.emit(this.currentFilter);
+            this.filterClicked.emit(this.currentFilter);
         } else {
             this.currentFilter = undefined;
         }

@@ -38,7 +38,11 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /** Emitted when a filter in the list is clicked. */
     @Output()
-    filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
+    filterClicked: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
+
+    /** Emitted when a filter in the list is clicked. */
+    @Output()
+    filterSelected: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
 
     /** Emitted when the list is loaded. */
     @Output()
@@ -170,7 +174,12 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     public selectFilterAndEmit(newFilter: FilterParamsModel) {
         this.selectFilter(newFilter);
-        this.filterClick.emit(this.currentFilter);
+        this.filterSelected.emit(this.currentFilter);
+    }
+
+    onFilterClick(filter: FilterParamsModel) {
+        this.selectFilter(filter);
+        this.filterClicked.emit(this.currentFilter);
     }
 
     /**
@@ -189,7 +198,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
             () => {
                 if (filteredFilterList.length > 0) {
                     this.selectFilter(filteredFilterList[0]);
-                    this.filterClick.emit(this.currentFilter);
+                    this.filterSelected.emit(this.currentFilter);
                 }
             });
     }

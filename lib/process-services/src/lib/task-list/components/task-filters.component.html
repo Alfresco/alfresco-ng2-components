@@ -1,5 +1,5 @@
 <div *ngFor="let filter of filters" class="adf-filters__entry" [class.adf-active]="currentFilter === filter">
-    <button (click)="selectFilterAndEmit(filter)"
+    <button (click)="onFilterClick(filter)"
       [attr.aria-label]="filter.name | translate"
       [id]="filter.id"
       [attr.data-automation-id]="filter.name + '_filter'"
