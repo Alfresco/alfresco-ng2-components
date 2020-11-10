@@ -164,7 +164,7 @@
     "remark": "^13.0.0",
     "remark-frontmatter": "^3.0.0",
     "rimraf": "^3.0.2",
-    "rxjs-tslint-rules": "^4.10.0",
+    "rxjs-tslint-rules": "^4.34.5",
     "sass-loader": "10.0.5",
     "scss-bundle": "2.3.2",
     "selenium-webdriver": "4.0.0-alpha.7",
