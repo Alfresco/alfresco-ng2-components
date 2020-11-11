@@ -180,7 +180,7 @@ echo "====== Update webdriver-manager ====="
 if [ "$CI" = "true" ]; then
     export chrome=$(google-chrome --product-version)
     echo "Updating wedriver-manager with chromedriver: $chrome."
-    webdriver-manager update --gecko=false --versions.chrome=$chrome
+    ./node_modules/protractor/bin/webdriver-manager update --gecko=false --versions.chrome=$chrome
 else
     echo "Updating wedriver-manager with latest chromedriver, be sure to use evergreen Chrome."
     ./node_modules/protractor/bin/webdriver-manager update --gecko=false
