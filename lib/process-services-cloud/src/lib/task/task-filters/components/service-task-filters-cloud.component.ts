@@ -102,7 +102,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
     }
 
     /**
-     * Selects and emits the filter selected by the user
+     * Selects and emits the clicked filter.
      */
     public onFilterClick(filter: FilterParamsModel) {
         if (filter) {

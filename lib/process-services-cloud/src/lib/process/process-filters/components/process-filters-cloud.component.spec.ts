@@ -197,7 +197,7 @@ describe('ProcessFiltersCloudComponent', () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        component.filterClick.subscribe((res) => {
+        component.filterSelected.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeRunningProcesses');
@@ -217,7 +217,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
         fixture.detectChanges();
 
-        component.filterClick.subscribe((res) => {
+        component.filterSelected.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
@@ -236,7 +236,7 @@ describe('ProcessFiltersCloudComponent', () => {
         const change = new SimpleChange(null, appName, true);
         fixture.detectChanges();
 
-        component.filterClick.subscribe((res) => {
+        component.filterSelected.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
@@ -255,7 +255,7 @@ describe('ProcessFiltersCloudComponent', () => {
         const change = new SimpleChange(null, appName, true);
         fixture.detectChanges();
 
-        component.filterClick.subscribe((res) => {
+        component.filterSelected.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
@@ -275,7 +275,7 @@ describe('ProcessFiltersCloudComponent', () => {
         component.ngOnChanges({ 'appName': change });
         fixture.detectChanges();
 
-        component.filterClick.subscribe((res) => {
+        component.filterClicked.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeAllProcesses');

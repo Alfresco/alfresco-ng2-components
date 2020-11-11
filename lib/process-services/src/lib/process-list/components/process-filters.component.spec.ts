@@ -199,7 +199,7 @@ describe('ProcessFiltersComponent', () => {
             filter: { state: 'open', assignment: 'fake-involved' }
         });
 
-        filterList.filterClick.subscribe((filter: FilterProcessRepresentationModel) => {
+        filterList.filterClicked.subscribe((filter: FilterProcessRepresentationModel) => {
             expect(filter).toBeDefined();
             expect(filter).toEqual(currentFilter);
             expect(filterList.currentFilter).toEqual(currentFilter);

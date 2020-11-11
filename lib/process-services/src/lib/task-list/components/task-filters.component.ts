@@ -177,6 +177,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
         this.filterSelected.emit(this.currentFilter);
     }
 
+    /**
+     * Selects and emits the clicked filter.
+     */
     onFilterClick(filter: FilterParamsModel) {
         this.selectFilter(filter);
         this.filterClicked.emit(this.currentFilter);

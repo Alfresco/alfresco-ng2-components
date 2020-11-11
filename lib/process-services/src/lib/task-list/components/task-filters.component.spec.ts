@@ -220,7 +220,7 @@ describe('TaskFiltersComponent', () => {
     it('should emit an event when a filter is selected', (done) => {
         const currentFilter = fakeGlobalFilter[0];
         component.filters = fakeGlobalFilter;
-        component.filterClick.subscribe((filter: FilterRepresentationModel) => {
+        component.filterClicked.subscribe((filter: FilterRepresentationModel) => {
             expect(filter).toBeDefined();
             expect(filter).toEqual(currentFilter);
             expect(component.currentFilter).toEqual(currentFilter);
