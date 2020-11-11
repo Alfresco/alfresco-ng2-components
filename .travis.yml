@@ -3,8 +3,10 @@ git:
   quiet: true
 
 language: node_js
+dist: focal
+group: edge
 arch: arm64-graviton2
-dist: bionic
+virt: lxd
 node_js:
   - '12.18.4'
 
