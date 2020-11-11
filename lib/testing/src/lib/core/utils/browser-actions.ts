@@ -36,7 +36,7 @@ export class BrowserActions {
             await this.click(elementToClick);
 
             try {
-                BrowserVisibility.waitUntilElementIsVisible(elementToFind);
+                await BrowserVisibility.waitUntilElementIsVisible(elementToFind);
                 return true;
             } catch (error) {
                 return false;
