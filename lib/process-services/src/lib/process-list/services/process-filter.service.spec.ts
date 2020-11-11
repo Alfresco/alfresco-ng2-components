@@ -16,7 +16,7 @@
  */
 
 import { async } from '@angular/core/testing';
-import { mockError, fakeProcessFilters } from '../../mock';
+import { mockError, fakeProcessFiltersResponse } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
 import { AlfrescoApiServiceMock, AlfrescoApiService, AppConfigService,
@@ -50,7 +50,7 @@ describe('Process filter', () => {
         beforeEach(() => {
             getFilters = spyOn(alfrescoApi.activiti.userFiltersApi, 'getUserProcessInstanceFilters')
                 .and
-                .returnValue(Promise.resolve(fakeProcessFilters));
+                .returnValue(Promise.resolve(fakeProcessFiltersResponse));
 
             jasmine.Ajax.install();
         });
@@ -164,7 +164,7 @@ describe('Process filter', () => {
                 .callFake((processfilter: FilterProcessRepresentationModel) => Promise.resolve(processfilter));
             });
 
-            const filter = fakeProcessFilters.data[0];
+            const filter = fakeProcessFiltersResponse.data[0];
 
             it('should call the API to create the filter', () => {
                 service.addProcessFilter(filter);

@@ -20,11 +20,8 @@ import { UserProcessModel, setupTestBed, CoreModule, StorageService, AlfrescoApi
 import { of } from 'rxjs';
 import {
     fakeCompletedTaskList,
-    fakeFilter,
     fakeFormList,
     fakeOpenTaskList,
-    fakeRepresentationFilter1,
-    fakeRepresentationFilter2,
     fakeTaskDetails,
     fakeTaskList,
     fakeTasksChecklist,
@@ -32,6 +29,7 @@ import {
     fakeUser2,
     secondFakeTaskList
 } from '../../mock';
+import { fakeRepresentationFilter1, fakeRepresentationFilter2, fakeFilter } from '../../mock/task/task-filters.mock';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './tasklist.service';

@@ -23,7 +23,7 @@ import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { fakeProcessFilters } from '../../mock';
+import { fakeProcessFilters } from '../../mock/process/process-filters.mock';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -47,28 +47,7 @@ describe('ProcessFiltersComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ProcessFiltersComponent);
         filterList = fixture.componentInstance;
-
-        fakeGlobalFilterPromise = Promise.resolve([
-            new FilterProcessRepresentationModel({
-                id: 10,
-                name: 'FakeCompleted',
-                icon: 'glyphicon-th',
-                filter: { state: 'open', assignment: 'fake-involved' }
-            }),
-            new FilterProcessRepresentationModel({
-                id: 20,
-                name: 'FakeAll',
-                icon: 'glyphicon-random',
-                filter: { state: 'open', assignment: 'fake-assignee' }
-            }),
-            new FilterProcessRepresentationModel({
-                id: 30,
-                name: 'Running',
-                icon: 'glyphicon-ok-sign',
-                filter: { state: 'open', assignment: 'fake-running' }
-            })
-        ]);
-
+        fakeGlobalFilterPromise = Promise.resolve(fakeProcessFilters);
         processFilterService = TestBed.inject(ProcessFilterService);
         appsProcessService = TestBed.inject(AppsProcessService);
     });
@@ -113,7 +92,7 @@ describe('ProcessFiltersComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should emit an event when a filter is selected', (done) => {
+    it('should emit the selected filter based on the filterParam input', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
         filterList.filterParam = new FilterProcessRepresentationModel({ id: 10 });
         const appId = '1';
@@ -130,15 +109,33 @@ describe('ProcessFiltersComponent', () => {
         fixture.detectChanges();
     });
 
+    it('should emit the clicked filter', async  () => {
+        filterList.filters = fakeProcessFilters;
+        spyOn(filterList.filterClicked, 'emit');
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${fakeProcessFilters[0].name}_filter"]`);
+        filterButton.click();
+
+        expect(filterList.filterClicked.emit).toHaveBeenCalledWith(fakeProcessFilters[0]);
+    });
+
     it('should reset selection when filterParam is a filter that does not exist', async () => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
-        filterList.currentFilter = fakeProcessFilters.data[0];
-        filterList.filterParam = new FilterProcessRepresentationModel({ name: 'non-existing-filter' });
+
+        const nonExistingFilterParam = { name: 'non-existing-filter' };
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
+
+        filterList.currentFilter = nonExistingFilterParam;
+        filterList.filterParam = new FilterProcessRepresentationModel(nonExistingFilterParam);
+
         filterList.ngOnChanges({ 'appId': change });
         fixture.detectChanges();
         await fixture.whenStable();
+
         expect(filterList.currentFilter).toBe(undefined);
     });
 

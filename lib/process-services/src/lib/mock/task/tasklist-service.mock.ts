@@ -15,36 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    AppDefinitionRepresentationModel,
-    FilterRepresentationModel
-} from '../../task-list/models/filter.model';
-
-export let fakeFilters = {
-    size: 2, total: 2, start: 0,
-    data: [
-        new AppDefinitionRepresentationModel(
-            {
-                id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
-                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' }
-            }
-        ),
-        {
-            id: 2, name: 'FakeMyTasks', recent: false, icon: 'glyphicon-align-left',
-            filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee' }
-        }
-    ]
-};
-
-export let fakeAppFilter = {
-    size: 1, total: 1, start: 0,
-    data: [
-        {
-            id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
-            filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' }
-        }
-    ]
-};
+import { fakeAppFilter } from './task-filters.mock';
 
 export let fakeApps = {
     size: 2, total: 2, start: 0,
@@ -58,10 +29,6 @@ export let fakeApps = {
             theme: 'theme-2-fake', icon: 'glyphicon-asterisk', 'deploymentId': '444', 'tenantId': null
         }
     ]
-};
-
-export let fakeFilter = {
-    sort: 'created-desc', text: '', state: 'open', assignment: 'fake-assignee'
 };
 
 export let fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
@@ -141,40 +108,6 @@ export let fakeTasksChecklist = {
         }
     ]
 };
-
-export let fakeRepresentationFilter1: FilterRepresentationModel = new FilterRepresentationModel({
-    appId: 1,
-    name: 'CONTAIN FILTER',
-    recent: true,
-    icon: 'glyphicon-align-left',
-    filter: {
-        processDefinitionId: null,
-        processDefinitionKey: null,
-        name: null,
-        state: 'open',
-        sort: 'created-desc',
-        assignment: 'involved',
-        dueAfter: null,
-        dueBefore: null
-    }
-});
-
-export let fakeRepresentationFilter2: FilterRepresentationModel = new FilterRepresentationModel({
-    appId: 2,
-    name: 'NO TASK FILTER',
-    recent: false,
-    icon: 'glyphicon-inbox',
-    filter: {
-        processDefinitionId: null,
-        processDefinitionKey: null,
-        name: null,
-        state: 'open',
-        sort: 'created-desc',
-        assignment: 'assignee',
-        dueAfter: null,
-        dueBefore: null
-    }
-});
 
 export let fakeAppPromise = new Promise(function (resolve) {
     resolve(fakeAppFilter);

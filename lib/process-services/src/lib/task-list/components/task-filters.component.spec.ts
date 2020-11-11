@@ -26,6 +26,7 @@ import { TaskFiltersComponent } from './task-filters.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
+import { fakeTaskFilters } from '../../mock/task/task-filters.mock';
 
 describe('TaskFiltersComponent', () => {
 
@@ -33,28 +34,8 @@ describe('TaskFiltersComponent', () => {
     let taskFilterService: TaskFilterService;
     let appsProcessService: AppsProcessService;
 
-    const fakeGlobalFilter = [];
-    fakeGlobalFilter.push(new FilterRepresentationModel({
-        name: 'FakeInvolvedTasks',
-        icon: 'glyphicon-align-left',
-        id: 10,
-        filter: { state: 'open', assignment: 'fake-involved' }
-    }));
-    fakeGlobalFilter.push(new FilterRepresentationModel({
-        name: 'FakeMyTasks1',
-        icon: 'glyphicon-ok-sign',
-        id: 11,
-        filter: { state: 'open', assignment: 'fake-assignee' }
-    }));
-    fakeGlobalFilter.push(new FilterRepresentationModel({
-        name: 'FakeMyTasks2',
-        icon: 'glyphicon-inbox',
-        id: 12,
-        filter: { state: 'open', assignment: 'fake-assignee' }
-    }));
-
     const fakeGlobalFilterPromise = new Promise(function (resolve) {
-        resolve(fakeGlobalFilter);
+        resolve(fakeTaskFilters);
     });
 
     const fakeGlobalEmptyFilter = {
@@ -217,17 +198,31 @@ describe('TaskFiltersComponent', () => {
         });
    });
 
-    it('should emit an event when a filter is selected', (done) => {
-        const currentFilter = fakeGlobalFilter[0];
-        component.filters = fakeGlobalFilter;
-        component.filterClicked.subscribe((filter: FilterRepresentationModel) => {
-            expect(filter).toBeDefined();
-            expect(filter).toEqual(currentFilter);
-            expect(component.currentFilter).toEqual(currentFilter);
-            done();
-        });
+    it('should emit the selected filter based on the filterParam input', () => {
+        spyOn(component.filterSelected, 'emit');
+        component.filters = fakeTaskFilters;
 
-        component.selectFilterAndEmit(currentFilter);
+        const filterParam = new FilterParamsModel({ id: 10 });
+        const change = new SimpleChange(null, filterParam, true);
+        component.filterParam = filterParam;
+
+        component.ngOnChanges({ 'filterParam': change });
+        fixture.detectChanges();
+
+        expect(component.filterSelected.emit).toHaveBeenCalledWith(fakeTaskFilters[0]);
+    });
+
+    it('should emit the clicked filter', async  () => {
+        component.filters = fakeTaskFilters;
+        spyOn(component.filterClicked, 'emit');
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${fakeTaskFilters[0].name}_filter"]`);
+        filterButton.click();
+
+        expect(component.filterClicked.emit).toHaveBeenCalledWith(fakeTaskFilters[0]);
     });
 
     it('should reload filters by appId on binding changes', () => {
@@ -251,25 +246,25 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should change current filter when filterParam (id) changes', async () => {
-        component.filters = fakeGlobalFilter;
+        component.filters = fakeTaskFilters;
         component.currentFilter = null;
 
         fixture.whenStable().then(() => {
-            expect(component.currentFilter.id).toEqual(fakeGlobalFilter[2].id);
+            expect(component.currentFilter.id).toEqual(fakeTaskFilters[2].id);
         });
-        const change = new SimpleChange(null, { id: fakeGlobalFilter[2].id }, true);
+        const change = new SimpleChange(null, { id: fakeTaskFilters[2].id }, true);
         component.ngOnChanges({ 'filterParam': change });
     });
 
     it('should change current filter when filterParam (name) changes', async () => {
-        component.filters = fakeGlobalFilter;
+        component.filters = fakeTaskFilters;
         component.currentFilter = null;
 
         fixture.whenStable().then(() => {
-            expect(component.currentFilter.name).toEqual(fakeGlobalFilter[2].name);
+            expect(component.currentFilter.name).toEqual(fakeTaskFilters[2].name);
         });
 
-        const change = new SimpleChange(null, { name: fakeGlobalFilter[2].name }, true);
+        const change = new SimpleChange(null, { name: fakeTaskFilters[2].name }, true);
         component.ngOnChanges({ 'filterParam': change });
     });
 
@@ -284,12 +279,11 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should return the current filter after one is selected', () => {
-        const filter = fakeGlobalFilter[1];
-        component.filters = fakeGlobalFilter;
+        component.filters = fakeTaskFilters;
 
         expect(component.currentFilter).toBeUndefined();
-        component.selectFilter(filter);
-        expect(component.getCurrentFilter()).toBe(filter);
+        component.selectFilter(fakeTaskFilters[1]);
+        expect(component.getCurrentFilter()).toBe(fakeTaskFilters[1]);
     });
 
     it('should load default list when app id is null', () => {
@@ -306,7 +300,7 @@ describe('TaskFiltersComponent', () => {
             name: 'FakeMyTasks',
             filter: { state: 'open', assignment: 'fake-assignee' }
         });
-        component.filters = fakeGlobalFilter;
+        component.filters = fakeTaskFilters;
         component.currentFilter = filter;
         spyOn(taskListService, 'isTaskRelatedToFilter').and.returnValue(of(null));
         component.selectFilterWithTask('111');
@@ -348,7 +342,7 @@ describe('TaskFiltersComponent', () => {
 
     it('should reset selection when filterParam is a filter that does not exist', async () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
-        component.currentFilter = fakeGlobalFilter[0];
+        component.currentFilter = fakeTaskFilters[0];
         component.filterParam = new FilterRepresentationModel( {name: 'non-existing-filter'});
         const appId = '1';
         const change = new SimpleChange(null, appId, true);

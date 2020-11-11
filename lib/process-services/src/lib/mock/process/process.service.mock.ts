@@ -16,25 +16,7 @@
  */
 
 import { AppDefinitionRepresentationModel, TaskDetailsModel } from '../../task-list';
-import { FilterProcessRepresentationModel } from '../../process-list/models/filter-process.model';
 import { ProcessDefinitionRepresentation } from '../../process-list/models/process-definition.model';
-
-export let fakeProcessFilters = {
-    size: 1, total: 1, start: 0,
-    data: [new FilterProcessRepresentationModel({
-        'name': 'Running',
-        'appId': '22',
-        'id': 333,
-        'recent': true,
-        'icon': 'glyphicon-random',
-        'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
-    })]
-};
-
-export let fakeEmptyFilters = {
-    size: 0, total: 0, start: 0,
-    data: []
-};
 
 export let mockError = {
     message: null,
