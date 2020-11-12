@@ -5,6 +5,7 @@
         <mat-card-content>
             <adf-card-view
                 *ngIf="!isLoading; else loadingTemplate"
+                [displayNoneOption]="false"
                 [properties]="properties"
                 [editable]="isTaskEditable()"
                 [displayClearAction]="displayDateClearAction">

@@ -29,11 +29,11 @@ import {
     UpdateNotification,
     CardViewUpdateService,
     CardViewDatetimeItemModel,
-    CardViewArrayItem
+    CardViewArrayItem,
+    CardViewSelectItemModel
 } from '@alfresco/adf-core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { NumericFieldValidator } from '../../../validators/numeric-field.validator';
 
 @Component({
     selector: 'adf-cloud-task-header',
@@ -158,13 +158,13 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     key: 'status'
                 }
             ),
-            new CardViewTextItemModel(
+            new CardViewSelectItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PRIORITY',
-                    value: this.taskDetails.priority,
+                    value: this.taskDetails.priority.toString(),
                     key: 'priority',
                     editable: true,
-                    validators: [new NumericFieldValidator()]
+                    options$: of(this.taskCloudService.priorities)
                 }
             ),
             new CardViewDatetimeItemModel(

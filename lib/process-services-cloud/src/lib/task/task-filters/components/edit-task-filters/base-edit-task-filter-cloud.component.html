@@ -48,7 +48,7 @@
                                 <mat-option *ngFor="let propertyOption of taskFilterProperty.options"
                                             [value]="propertyOption.value"
                                             [attr.data-automation-id]="'adf-cloud-edit-task-property-options-' + taskFilterProperty.key">
-                                    {{ propertyOption.label }}
+                                    {{ propertyOption.label | translate }}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>

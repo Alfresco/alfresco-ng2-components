@@ -127,27 +127,11 @@ describe('TaskHeaderCloudComponent', () => {
 
             await fixture.whenStable();
             fixture.detectChanges();
-            const priorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
-            expect(priorityEl.nativeElement.value).toBe('5');
-        });
+            const priorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-select-label-priority"]'));
+            expect(priorityEl.nativeElement).toBeDefined();
 
-        it('should display error if priority is not a number', async (done) => {
-            fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const formPriorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
-            formPriorityEl.nativeElement.value = 'stringValue';
-            formPriorityEl.nativeElement.dispatchEvent(new Event('input'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const errorMessageEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-priority"]'));
-            expect(errorMessageEl).not.toBeNull();
-            done();
-
+            const priorityValue = fixture.debugElement.query(By.css('[data-automation-id="header-priority"] .mat-select-value-text'));
+            expect(priorityValue.nativeElement.textContent).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
         });
 
         it('should display due date', async () => {
@@ -322,10 +306,8 @@ describe('TaskHeaderCloudComponent', () => {
 
         it('should render edit icon if the task in assigned state and assingee should be current user', () => {
             fixture.detectChanges();
-            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-priority"] [class*="adf-textitem-edit-icon"]`));
             const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-description"] [class*="adf-textitem-edit-icon"]`));
             const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(priorityEditIcon).not.toBeNull('Priority edit icon should be shown');
             expect(descriptionEditIcon).not.toBeNull('Description edit icon should be shown');
             expect(dueDateEditIcon).not.toBeNull('Due date edit icon should be shown');
         });

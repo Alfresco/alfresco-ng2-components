@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService, CardViewArrayItem } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService, CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
 import { throwError, Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
@@ -36,6 +36,7 @@ export class TaskCloudService extends BaseCloudService {
         apiService: AlfrescoApiService,
         appConfigService: AppConfigService,
         private logService: LogService,
+        private translateService: TranslationService,
         private identityUserService: IdentityUserService
     ) {
         super(apiService, appConfigService);
@@ -279,6 +280,24 @@ export class TaskCloudService extends BaseCloudService {
             return throwError('AppName/TaskId not configured');
         }
       }
+
+    getPriorityLabel(priority: number): string {
+        switch (priority) {
+            case 1: return this.translateService.instant('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
+            case 2: return this.translateService.instant('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL');
+            case 3: return this.translateService.instant('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH');
+            default: return this.translateService.instant('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NOT_SET');
+        }
+    }
+
+    get priorities(): any[] {
+        return [
+            { label: 'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NOT_SET', value: '0', key: '0' },
+            { label: 'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW', value: '1', key: '1' },
+            { label: 'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL', value: '2', key: '2' },
+            { label: 'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH', value: '3', key: '3' }
+        ];
+    }
 
     private isAssignedToMe(assignee: string): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
