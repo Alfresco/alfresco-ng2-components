@@ -73,7 +73,8 @@
           "CANDIDATE_GROUP": "Candidate Group",
           "FORM": "Form",
           "DATE": "Choose Date",
-          "NONE": "None"
+          "NONE": "None",
+          "PRIORITY": "Priority"
         },
         "ACTION": {
           "START": "Start",
@@ -92,7 +93,13 @@
       "DUE_DATE": "Due Date",
       "CREATED": "Created",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "Completed By"
+      "COMPLETED_BY": "Completed By",
+      "PRIORITY_VALUES": {
+        "NOT_SET": "Not set",
+        "LOW": "Low",
+        "NORMAL": "Normal",
+        "HIGH": "High"
+      }
     },
     "LIST": {
       "MESSAGES": {

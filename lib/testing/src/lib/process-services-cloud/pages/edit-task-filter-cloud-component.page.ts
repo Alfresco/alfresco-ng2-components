@@ -27,7 +27,7 @@ export class EditTaskFilterCloudComponentPage {
 
     customiseFilter = element(by.id('adf-edit-task-filter-sub-title-id'));
     assignee = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
-    priority = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
+    priority = element(by.css('[data-automation-id="adf-cloud-edit-task-property-priority"]'));
     taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
     id = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskId"]'));
     processDefinitionId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
@@ -50,6 +50,7 @@ export class EditTaskFilterCloudComponentPage {
     appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
     statusDropdown = new DropdownPage(this.locatorStatusDropdown);
     sortDropdown = new DropdownPage(this.locatorSortDropdown);
+    priorityDropdown = new DropdownPage(this.priority);
     orderDropdown = new DropdownPage(this.locatorOrderDropdown);
     completedDateDropdown = new DropdownPage(this.locatorCompletedDateDropdown);
 
@@ -116,7 +117,8 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setPriority(option): Promise<void> {
-        await this.setProperty('priority', option);
+        await this.priorityDropdown.selectDropdownOption(option);
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async getPriority(): Promise<string> {

@@ -212,9 +212,10 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
             },
             {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PRIORITY',
-                type: 'text',
+                type: 'select',
                 key: 'priority',
-                value: this.taskFilter.priority || ''
+                value: this.taskFilter.priority || '',
+                options: this.taskCloudService.priorities
             },
             {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.OWNER',
