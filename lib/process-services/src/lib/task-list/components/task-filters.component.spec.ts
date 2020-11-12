@@ -212,7 +212,7 @@ describe('TaskFiltersComponent', () => {
         expect(component.filterSelected.emit).toHaveBeenCalledWith(fakeTaskFilters[0]);
     });
 
-    it('should emit the clicked filter', async  () => {
+    it('should filterClicked emit when a filter is clicked from the UI', async  () => {
         component.filters = fakeTaskFilters;
         spyOn(component.filterClicked, 'emit');
 

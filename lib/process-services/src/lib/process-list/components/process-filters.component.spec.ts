@@ -109,7 +109,7 @@ describe('ProcessFiltersComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should emit the clicked filter', async  () => {
+    it('should filterClicked emit when a filter is clicked from the UI', async  () => {
         filterList.filters = fakeProcessFilters;
         spyOn(filterList.filterClicked, 'emit');
 

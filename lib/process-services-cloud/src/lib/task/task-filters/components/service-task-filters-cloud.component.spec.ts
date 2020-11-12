@@ -268,7 +268,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         expect(component.filterSelected.emit).toHaveBeenCalledWith(fakeGlobalServiceFilters[0]);
     });
 
-    it('should emit the clicked filter', async () => {
+    it('should filterClicked emit when a filter is clicked from the UI', async () => {
         spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
         spyOn(component.filterClicked, 'emit');
 

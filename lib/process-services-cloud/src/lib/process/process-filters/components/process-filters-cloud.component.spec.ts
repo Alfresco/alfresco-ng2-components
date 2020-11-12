@@ -241,7 +241,7 @@ describe('ProcessFiltersCloudComponent', () => {
         component.ngOnChanges({ 'appName': change });
     });
 
-    it('should emit an event when a filter is selected', (done) => {
+    it('should filterClicked emit when a filter is clicked from the UI', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
         component.filterParam = { id: '10' };
