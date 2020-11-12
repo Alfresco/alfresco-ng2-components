@@ -282,12 +282,8 @@ export class TaskCloudService extends BaseCloudService {
       }
 
     getPriorityLabel(priority: number): string {
-        switch (priority) {
-            case 1: return this.translateService.instant('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
-            case 2: return this.translateService.instant('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL');
-            case 3: return this.translateService.instant('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH');
-            default: return this.translateService.instant('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NOT_SET');
-        }
+        const priorityItem = this.priorities.find(item => item.value === priority.toString()) || this.priorities[0];
+        return this.translateService.instant(priorityItem.label);
     }
 
     get priorities(): any[] {
