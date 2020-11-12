@@ -31,7 +31,8 @@ Shows all available filters.
 | Name        | Type                                                                                                                                                                  | Description                                   |
 | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
 | error       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                     | Emitted when an error occurs during loading.  |
-| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when a filter in the list is clicked. |
+| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when a filter is being selected based on the filterParam input. |
+| filterClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when a filter is being clicked from the UI. |
 | success     | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                     | Emitted when the list is loaded.              |
 
 ## Details

@@ -62,7 +62,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
-    filterSelected: EventEmitter<ProcessInstanceFilterRepresentation> = new EventEmitter<ProcessInstanceFilterRepresentation>();
+    filterSelected: EventEmitter<UserProcessInstanceFilterRepresentation> = new EventEmitter<UserProcessInstanceFilterRepresentation>();
 
     filter$: Observable<ProcessInstanceFilterRepresentation>;
 
