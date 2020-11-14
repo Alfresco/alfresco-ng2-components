@@ -2,6 +2,10 @@
 
 pip install --user awscli
 
+# Settings for protractor-smartrunner -------------------------------------------------
+export SMART_RUNNER_DIRECTORY=".protractor-smartrunner"
+
+
 export NODE_OPTIONS="--max_old_space_size=30000"
 export GIT_HASH=`git rev-parse HEAD`
 echo "GIT_HASH: $GIT_HASH"
