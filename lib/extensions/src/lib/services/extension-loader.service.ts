@@ -166,4 +166,12 @@ export class ExtensionLoaderService {
         }
         return action;
     }
+
+    private filterIgnoredExtensions(extensions: string[], config: ExtensionConfig): string[] {
+        if (!config.$ignoreReferenceList || !config.$ignoreReferenceList.length) {
+            return extensions;
+        }
+
+        return extensions.map((file: string) => file.match('(?!.*\/).+')[0]).filter((fileName: string) => !config.$ignoreReferenceList.includes(fileName));
+    }
 }
