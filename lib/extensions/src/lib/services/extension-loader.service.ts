@@ -31,7 +31,7 @@ export class ExtensionLoaderService {
     constructor(private http: HttpClient) {
     }
 
-    load(configPath: string, pluginsPath: string, extensions?: ExtensionConfig[]): Promise<ExtensionConfig> {
+    load(configPath: string, pluginsPath: string, extensions?: string[]): Promise<ExtensionConfig> {
         return new Promise<any>((resolve) => {
             this.loadConfig(configPath, 0).then((result) => {
                 if (result) {
@@ -40,6 +40,10 @@ export class ExtensionLoaderService {
                     const override = sessionStorage.getItem('app.extension.config');
                     if (override) {
                         config = JSON.parse(override);
+                    }
+
+                    if (extensions && extensions.length) {
+                        config.$references.push(...this.filterIgnoredExtensions(extensions, config));
                     }
 
                     if (config.$references && config.$references.length > 0) {
@@ -52,10 +56,6 @@ export class ExtensionLoaderService {
                                 .filter((entry) => entry)
                                 .sort(sortByOrder)
                                 .map((entry) => entry.config);
-
-                            if (extensions && extensions.length > 0) {
-                                configs.push(...extensions);
-                            }
 
                             if (configs.length > 0) {
                                 config = mergeObjects(config, ...configs);
