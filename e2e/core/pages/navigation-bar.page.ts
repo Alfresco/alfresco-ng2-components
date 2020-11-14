@@ -30,31 +30,32 @@ export class NavigationBarPage {
     processServicesCloudHomeButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Home"]'));
     themeButton = element(by.css('button[data-automation-id="theme menu"]'));
     themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
-    languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
     appTitle = element(by.css('.adf-app-title'));
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Form"]'));
     peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="People/Group Cloud"]'));
     logoutSection: ElementFinder = element(by.css('div[data-automation-id="adf-logout-section"]'));
+    personalFiles: ElementFinder = element(by.css('div [title="Personal Files"]'));
 
-    async clickNavigationBarItem(title: string): Promise<void> {
+    async clickNavigationBarItem(title: string, untilElementIsVisible?: ElementFinder): Promise<void> {
         Logger.log(`clickNavigationBarItem ${title}`);
 
         const menu = element(by.css(`.app-sidenav-link[data-automation-id="${title}"]`));
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.click(menu);
+
+        if (untilElementIsVisible) {
+            await BrowserActions.clickUntilIsNotVisible(menu, untilElementIsVisible);
+        } else {
+            await BrowserActions.click(menu);
+        }
     }
 
     async clickHomeButton(): Promise<void> {
         await this.clickNavigationBarItem('Home');
     }
 
-    async clickContentServicesButton(): Promise<void> {
-        await this.clickNavigationBarItem('Content Services');
-    }
-
-    async clickCardViewButton(): Promise<void> {
-        await this.clickNavigationBarItem('CardView');
+    async navigateToContentServices(): Promise<void> {
+        await this.clickNavigationBarItem('Content Services', this.personalFiles);
     }
 
     async clickHeaderDataButton(): Promise<void> {
@@ -89,7 +90,7 @@ export class NavigationBarPage {
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
-    async clickProcessServicesButton() {
+    private async clickProcessServicesButton() {
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.clickUntilIsNotVisible(this.getMenuItem('Process Services'), this.linkMenuChildrenContainer);
     }
@@ -204,18 +205,6 @@ export class NavigationBarPage {
 
     async openContentServicesFolder(folderId): Promise<void> {
         await BrowserActions.getUrl(`${browser.baseUrl}/files/${folderId}`);
-    }
-
-    async openLanguageMenu(): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.click(this.languageMenuButton);
-        await BrowserVisibility.waitUntilElementIsVisible(this.appTitle);
-    }
-
-    async chooseLanguage(language): Promise<void> {
-        const buttonLanguage = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
-        await BrowserActions.click(buttonLanguage);
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     async checkMenuButtonIsDisplayed(): Promise<void> {

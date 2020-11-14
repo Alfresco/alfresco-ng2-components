@@ -80,7 +80,7 @@ describe('Favorite directive', () => {
     });
 
     beforeEach(async () => {
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
     });
 
@@ -95,7 +95,7 @@ describe('Favorite directive', () => {
         await customSourcesPage.selectFavoritesSourceType();
         await customSourcesPage.checkRowIsDisplayed(testFile.entry.name);
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);
@@ -117,7 +117,7 @@ describe('Favorite directive', () => {
         await customSourcesPage.selectFavoritesSourceType();
         await customSourcesPage.checkRowIsDisplayed(testFolder1.entry.name);
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFolder1.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFolder1.entry.name);
@@ -153,7 +153,7 @@ describe('Favorite directive', () => {
         await trashcanPage.contentList.dataTablePage().waitTillContentLoaded();
         await trashcanPage.checkTrashcanIsEmpty();
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         await contentServicesPage.getDocumentList().dataTablePage().checkContentIsDisplayed('Display name', testFile.entry.name);
         await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);

@@ -105,7 +105,7 @@ describe('Unshare file', () => {
         nodeId = pngUploadedFile.entry.id;
 
         await loginPage.login(acsUser.email, acsUser.password);
-        await navBar.clickContentServicesButton();
+        await navBar.navigateToContentServices();
         await contentServicesPage.waitForTableBody();
     });
 

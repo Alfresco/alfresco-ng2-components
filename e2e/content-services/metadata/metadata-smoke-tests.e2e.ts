@@ -83,7 +83,7 @@ describe('Metadata component', () => {
     describe('Viewer Metadata', () => {
         beforeAll(async () => {
             await loginPage.login(acsUser.email, acsUser.password);
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
             await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
                 presets: {
@@ -230,7 +230,7 @@ describe('Metadata component', () => {
             await uploadActions.createFolder(folderName, '-my-');
 
             await loginPage.login(acsUser.email, acsUser.password);
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
         });
 
@@ -280,7 +280,7 @@ describe('Metadata component', () => {
         await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
 
         await loginPage.login(acsUser.email, acsUser.password);
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
 
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.checkFileIsLoaded();

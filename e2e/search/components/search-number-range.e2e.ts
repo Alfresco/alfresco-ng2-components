@@ -379,7 +379,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C276928] Should be able to change the field property for number range', async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             jsonFile.categories[3].component.settings.field = 'cm:created';
 
@@ -418,7 +418,7 @@ describe('Search Number Range Filter', () => {
     });
 
         it('[C277139] Should be able to set To field to be exclusive', async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             jsonFile.categories[3].component.settings.format = '[{FROM} TO {TO}>';
 
@@ -457,7 +457,7 @@ describe('Search Number Range Filter', () => {
         });
 
         it('[C277140] Should be able to set From field to be exclusive', async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             jsonFile.categories[3].component.settings.format = '<{FROM} TO {TO}]';
 

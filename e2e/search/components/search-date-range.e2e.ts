@@ -176,7 +176,7 @@ describe('Search Date Range Filter', () => {
         });
 
         it('[C277117] Should be able to change date format', async () => {
-            await navigationBar.clickContentServicesButton();
+            await navigationBar.navigateToContentServices();
 
             jsonFile.categories[4].component.settings.dateFormat = 'MM-DD-YY';
 

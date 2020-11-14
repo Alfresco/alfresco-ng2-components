@@ -229,7 +229,8 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
             await permissionsPage.addPermissionsDialog.searchUserOrGroup(groupBody.id);
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(groupBody.displayName);
-            await permissionsPage.addPermissionsDialog.checkUserOrGroupIsAdded(groupBody.id);
+
+            await permissionsPage.addPermissionsDialog.checkGroupIsAdded(groupBody.id);
         });
 
         it('[C277100] Should display EVERYONE group in the search result set', async () => {
@@ -263,7 +264,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
             await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.email);
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(filePermissionUser.firstName);
-            await permissionsPage.addPermissionsDialog.checkUserOrGroupIsAdded(filePermissionUser.email);
+            await permissionsPage.addPermissionsDialog.checkUserIsAdded(filePermissionUser.email);
         });
 
         afterEach(async () => {
@@ -313,7 +314,7 @@ describe('Permissions Component', () => {
         it('[C276982] Should be able to remove User or Group from the locally set permissions', async () => {
             await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Contributor');
             await permissionsPage.addPermissionsDialog.clickDeletePermissionButton();
-            await permissionsPage.addPermissionsDialog.checkUserOrGroupIsDeleted(filePermissionUser.email);
+            await permissionsPage.addPermissionsDialog.checkUserIsDeleted(filePermissionUser.email);
         });
     });
 

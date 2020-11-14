@@ -70,12 +70,17 @@ export class AddPermissionsDialogPage {
         await BrowserActions.click(this.addButton);
     }
 
-    async checkUserOrGroupIsAdded(name: string): Promise<void> {
+    async checkUserIsAdded(name: string): Promise<void> {
         const userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(userOrGroupName);
     }
 
-    async checkUserOrGroupIsDeleted(name: string): Promise<void> {
+    async checkGroupIsAdded(name: string): Promise<void> {
+        const userOrGroupName = element(by.css('div[data-automation-id="text_GROUP_' + name + '"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(userOrGroupName);
+    }
+
+    async checkUserIsDeleted(name: string): Promise<void> {
         const userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
         await BrowserVisibility.waitUntilElementIsNotVisible(userOrGroupName);
     }
