@@ -593,6 +593,15 @@
       "minItems": 0,
       "uniqueItems": true
     },
+    "$ignoreReferenceList": {
+      "description": "Plugins references to exclude",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
     "rules": {
       "description": "List of rule definitions",
       "type": "array",
