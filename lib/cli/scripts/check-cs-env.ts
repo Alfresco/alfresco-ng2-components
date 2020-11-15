@@ -98,7 +98,6 @@ async function checkDiskSpaceFullEnv() {
     } catch (error) {
         counter++;
 
-        console.log('error', error);
         const retry = program.retry || MAX_RETRY;
         const time = program.time || TIMEOUT;
         if (retry === counter) {
@@ -108,7 +107,7 @@ async function checkDiskSpaceFullEnv() {
             console.log('=============================================================');
             process.exit(1);
         } else {
-            console.log(`Retry in 1 minute attempt N ${counter}`, error);
+            console.log(`Retry in 1 minute attempt N ${counter} ${error?.error?.starus}`);
             sleep(time);
             checkDiskSpaceFullEnv();
         }
