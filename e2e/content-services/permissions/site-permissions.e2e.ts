@@ -188,7 +188,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.searchUserOrGroup(consumerUser.email);
 
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(consumerUser.firstName);
-            await permissionsPage.addPermissionsDialog.checkUserOrGroupIsAdded(consumerUser.email);
+            await permissionsPage.addPermissionsDialog.checkUserIsAdded(consumerUser.email);
 
             await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.email)).toEqual('SiteCollaborator');
 
