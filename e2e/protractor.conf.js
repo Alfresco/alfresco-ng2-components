@@ -194,22 +194,14 @@ exports.config = {
         retry.onCleanUp(results);
     },
 
-    _setupCICapabilities() {
-        retry.onPrepare();
-        this._setupSmartRunner();
-    },
-
-    _setupSmartRunner() {
-        const repoHash = process.env.GIT_HASH || '';
-        const outputDirectory = process.env.SMART_RUNNER_DIRECTORY;
-        logger.info(`SmartRunner's repoHash: "${repoHash}"`);
-        logger.info(`SmartRunner's outputDirectory: "${outputDirectory}"`);
-        SmartRunner.apply({ outputDirectory, repoHash });
-    },
-
     async onPrepare() {
         if (process.env.CI) {
-            this._setupCICapabilities();
+            retry.onPrepare();
+            const repoHash = process.env.GIT_HASH || '';
+            const outputDirectory = process.env.SMART_RUNNER_DIRECTORY;
+            logger.info(`SmartRunner's repoHash: "${repoHash}"`);
+            logger.info(`SmartRunner's outputDirectory: "${outputDirectory}"`);
+            SmartRunner.apply({ outputDirectory, repoHash });
         }
 
         jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
