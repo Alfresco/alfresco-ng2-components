@@ -5,7 +5,7 @@ const retry = require('protractor-retry').retry;
 const tsConfig = require('./tsconfig.e2e.json');
 const testConfig = require('./test.config');
 const RESOURCES = require('./util/resources');
-const smartRunner = require('protractor-smartrunner');
+const SmartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
 const fs = require('fs');
 
@@ -165,7 +165,7 @@ exports.config = {
         includeStackTrace: true,
         print: () => {
         },
-        ...smartRunner.withOptionalExclusions(
+        ...SmartRunner.withOptionalExclusions(
             resolve(__dirname, './protractor.excludes.json')
         )
     },
