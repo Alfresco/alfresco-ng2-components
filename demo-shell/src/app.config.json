@@ -955,9 +955,7 @@
       "status",
       "assignee",
       "sort",
-      "order",
-      "priority",
-      "assignment"
+      "order"
     ],
     "sortProperties": [
       "id",
@@ -1073,12 +1071,6 @@
           "key": "entry.status",
           "type": "text",
           "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.STATUS",
-          "sortable": true
-        },
-        {
-          "key": "entry.assignee",
-          "type": "text",
-          "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE",
           "sortable": true
         },
         {
