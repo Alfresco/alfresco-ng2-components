@@ -287,12 +287,7 @@ export class TaskCloudService extends BaseCloudService {
     }
 
     get priorities(): any[] {
-        return [
-            { label: 'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NOT_SET', value: '0', key: '0' },
-            { label: 'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW', value: '1', key: '1' },
-            { label: 'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL', value: '2', key: '2' },
-            { label: 'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH', value: '3', key: '3' }
-        ];
+        return this.appConfigService.get('adf-cloud-priority-values', []);
     }
 
     private isAssignedToMe(assignee: string): boolean {

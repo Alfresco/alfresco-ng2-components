@@ -112,7 +112,7 @@
                                 (changedUsers)="onChangedUser($event, taskFilterProperty)"></adf-cloud-people>
                         </div>
 
-                        <adf-cloud-task-assignment-filter
+                        <adf-cloud-task-assignment-filter fxFlex="23%"
                             *ngIf="taskFilterProperty.type === 'assignment'"
                             [taskFilterProperty]="taskFilterProperty"
                             (assignedChange)="onAssignedChange($event)"

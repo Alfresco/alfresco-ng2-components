@@ -1,3 +1,11 @@
+.adf-cloud-assignment-container {
+    align-items: center;
+
+    mat-form-field {
+        width: 100%;
+    }
+}
+
 .adf-task-assignment-filter {
     margin-right: 10px;
 }
@@ -5,4 +13,5 @@
 .adf-group-cloud-filter {
     margin-left:15px;
     flex: 1;
+    width:100%;
 }

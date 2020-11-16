@@ -955,7 +955,9 @@
       "status",
       "assignee",
       "sort",
-      "order"
+      "order",
+      "priority",
+      "assignment"
     ],
     "sortProperties": [
       "id",
@@ -1074,6 +1076,12 @@
           "sortable": true
         },
         {
+          "key": "entry.assignee",
+          "type": "text",
+          "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE",
+          "sortable": true
+        },
+        {
           "key": "entry.priority",
           "type": "text",
           "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY",
@@ -1165,6 +1173,28 @@
       ]
     }
   },
+  "adf-cloud-priority-values": [
+    {
+      "key": "0",
+      "value": "0",
+      "label": "ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NOT_SET"
+    },
+    {
+      "key": "1",
+      "value": "1",
+      "label": "ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW"
+    },
+    {
+      "key": "2",
+      "value": "2",
+      "label": "ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL"
+    },
+    {
+      "key": "3",
+      "value": "3",
+      "label": "ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH"
+    }
+  ],
   "alfresco-deployed-apps": [
     {
       "name": "candidatebaseapp"

@@ -395,6 +395,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should clear value when clear value icon is clicked', async () => {
+            spyOn(component, 'update');
             component.property.value = 'testValue';
             component.property.icon = 'FAKE_ICON';
             component.property.clickable = true;
@@ -411,6 +412,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
             const elementValue = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             expect(elementValue.nativeElement.textContent).toEqual('');
+            expect(component.update).toHaveBeenCalled();
         });
     });
 
