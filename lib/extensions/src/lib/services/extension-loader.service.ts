@@ -42,8 +42,10 @@ export class ExtensionLoaderService {
                         config = JSON.parse(override);
                     }
 
-                    if (extensions && extensions.length) {
-                        config.$references.push(...this.filterIgnoredExtensions(extensions, config));
+                    if (!config.$references || !config.$references.length) {
+                        config.$references = this.filterIgnoredExtensions(extensions || [], config.$ignoreReferenceList);
+                    } else {
+                        config.$references = this.filterIgnoredExtensions(config.$references, config.$ignoreReferenceList);
                     }
 
                     if (config.$references && config.$references.length > 0) {
@@ -167,11 +169,11 @@ export class ExtensionLoaderService {
         return action;
     }
 
-    private filterIgnoredExtensions(extensions: string[], config: ExtensionConfig): string[] {
-        if (!config.$ignoreReferenceList || !config.$ignoreReferenceList.length) {
+    private filterIgnoredExtensions(extensions: Array<string | ExtensionRef>, ignoreReferenceList: string[]): Array<string | ExtensionRef> {
+        if (!ignoreReferenceList || !ignoreReferenceList.length) {
             return extensions;
         }
 
-        return extensions.map((file: string) => file.match('(?!.*\/).+')[0]).filter((fileName: string) => !config.$ignoreReferenceList.includes(fileName));
+        return extensions.map((file: string) => file.match('(?!.*\/).+')[0]).filter((fileName: string) => !ignoreReferenceList.includes(fileName));
     }
 }
