@@ -17,7 +17,7 @@
 
 import { Injectable, Type, InjectionToken, Inject } from '@angular/core';
 import { RuleEvaluator, RuleRef, RuleContext } from '../config/rule.extensions';
-import { ExtensionConfig, ExtensionRef } from '../config/extension.config';
+import { ExtensionConfig } from '../config/extension.config';
 import { ExtensionLoaderService } from './extension-loader.service';
 import { RouteRef } from '../config/routing.extensions';
 import { ActionRef } from '../config/action.extensions';
@@ -30,12 +30,12 @@ export function extensionJsonsFactory() {
     return [];
 }
 
-export const EXTENSION_JSONS = new InjectionToken<ExtensionRef[][]>('extension-jsons', {
+export const EXTENSION_JSONS = new InjectionToken<string[][]>('extension-jsons', {
     providedIn: 'root',
     factory: extensionJsonsFactory
 });
 
-export function provideExtensionConfig(jsons: ExtensionRef[]) {
+export function provideExtensionConfig(jsons: string[]) {
     return {
         provide: EXTENSION_JSONS,
         useValue: jsons,
@@ -62,7 +62,7 @@ export class ExtensionService {
         protected loader: ExtensionLoaderService,
         protected componentRegister: ComponentRegisterService,
         protected ruleService: RuleService,
-        @Inject(EXTENSION_JSONS) protected extensionJsons: ExtensionRef[]
+        @Inject(EXTENSION_JSONS) protected extensionJsons: string[]
     ) {
     }
 

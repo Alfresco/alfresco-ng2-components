@@ -41,4 +41,5 @@ export interface ExtensionRef {
 
 export interface ExtensionConfig extends ExtensionRef {
     $references?: Array<string | ExtensionRef>;
+    $ignoreReferenceList?: Array<string>;
 }
