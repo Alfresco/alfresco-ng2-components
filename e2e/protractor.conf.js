@@ -5,7 +5,7 @@ const retry = require('protractor-retry').retry;
 const tsConfig = require('./tsconfig.e2e.json');
 const testConfig = require('./test.config');
 const RESOURCES = require('./util/resources');
-const smartRunner = require('protractor-smartrunner');
+const SmartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
 const fs = require('fs');
 
@@ -165,7 +165,7 @@ exports.config = {
         includeStackTrace: true,
         print: () => {
         },
-        ...smartRunner.withOptionalExclusions(
+        ...SmartRunner.withOptionalExclusions(
             resolve(__dirname, './protractor.excludes.json')
         )
     },
@@ -196,10 +196,13 @@ exports.config = {
 
     async onPrepare() {
         if (process.env.CI) {
-            smartRunner.apply({repoHash: process.env.GIT_HASH || ''});
+            retry.onPrepare();
+            const repoHash = process.env.GIT_HASH || '';
+            const outputDirectory = process.env.SMART_RUNNER_DIRECTORY;
+            console.log(`SmartRunner's repoHash: "${repoHash}"`);
+            console.log(`SmartRunner's outputDirectory: "${outputDirectory}"`);
+            SmartRunner.apply({ outputDirectory, repoHash });
         }
-
-        retry.onPrepare();
 
         jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
 

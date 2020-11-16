@@ -154,7 +154,7 @@ describe('Search Slider Filter', () => {
 
         beforeEach(async () => {
             jsonFile = SearchConfiguration.getConfiguration();
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
         });
 
         it('[C276983] Should be able to disable thumb label in Search Size Slider', async () => {

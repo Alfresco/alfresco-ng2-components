@@ -71,7 +71,7 @@ describe('Version component actions', () => {
         Object.assign(txtFileModel, txtUploadedFile.entry);
         txtFileModel.update(txtUploadedFile.entry);
         await loginPage.login(acsUser.email, acsUser.password);
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.waitForTableBody();
    });
 
@@ -179,7 +179,7 @@ describe('Version component actions', () => {
 
         await browser.refresh();
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.checkContentIsDisplayed(txtFileModel.name);
     });

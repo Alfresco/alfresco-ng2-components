@@ -77,7 +77,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             await loginSsoPage.loginSSOIdentityService(acsUser.email, acsUser.password);
 
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
             await contentServicesPage.checkAcsContainer();
             await contentServicesPage.openFolder(folderName);
             await contentListPage.waitForTableBody();

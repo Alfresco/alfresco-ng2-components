@@ -100,7 +100,7 @@ describe('Search component - Text widget', () => {
 
             jsonFile.categories[0].component.settings.field = 'cm:description';
 
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
             await searchBarPage.clickOnSearchIcon();

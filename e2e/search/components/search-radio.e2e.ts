@@ -135,7 +135,7 @@ describe('Search Radio Component', () => {
         });
 
         it('[C277147] Should be able to customise the pageSize value', async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             jsonFile.categories[5].component.settings.pageSize = 10;
 
@@ -157,7 +157,7 @@ describe('Search Radio Component', () => {
 
             await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
 
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             jsonFile.categories[5].component.settings.pageSize = 11;
 
@@ -172,7 +172,7 @@ describe('Search Radio Component', () => {
 
             await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
 
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
             jsonFile.categories[5].component.settings.pageSize = 9;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
@@ -193,7 +193,7 @@ describe('Search Radio Component', () => {
         });
 
         it('[C277148] Should be able to click show more/less button', async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             jsonFile.categories[5].component.settings.pageSize = 0;
 
@@ -232,7 +232,7 @@ describe('Search Radio Component', () => {
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
             delete jsonFile.categories[5].component.settings.pageSize;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
@@ -278,7 +278,7 @@ describe('Search Radio Component', () => {
         });
 
         it('[C277033] Should be able to add a new option', async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             jsonFile.categories[5].component.settings.options.push({
                 'name': filterType.custom,

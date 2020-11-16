@@ -101,7 +101,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277271] Should be able to add a custom search sorter in the "sort by" option', async () => {
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
             'key': 'Modifier',
@@ -124,7 +124,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277272] Should be able to exclude a standard search sorter from the sorting option', async () => {
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         jsonFile = SearchConfiguration.getConfiguration();
         const removedOption = jsonFile.sorting.options.splice(0, 1);
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
@@ -141,7 +141,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277273] Should be able to set a default order for a search sorting option', async () => {
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
 
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options[0].ascending = false;
@@ -195,7 +195,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277288] Should be able to sort the search results by "Modified Date" ASC', async () => {
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
 
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({

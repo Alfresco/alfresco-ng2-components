@@ -277,7 +277,7 @@ describe('Search component - Search Bar', () => {
         const searchConfiguration = SearchConfiguration.getConfiguration();
 
         beforeAll(async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(searchConfiguration));
 

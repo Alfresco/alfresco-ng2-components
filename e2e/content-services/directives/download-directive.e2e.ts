@@ -84,7 +84,7 @@ describe('Version component actions', () => {
 
         await loginPage.login(acsUser.email, acsUser.password);
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.waitForTableBody();
    });
 

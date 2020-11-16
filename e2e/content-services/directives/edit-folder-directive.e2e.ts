@@ -88,7 +88,7 @@ describe('Edit folder directive', () => {
 
     beforeEach(async () => {
         await navigationBarPage.clickHomeButton();
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
     });
 

@@ -106,7 +106,7 @@ describe('Viewer', () => {
     });
 
     it('[C260106] Should be able to open a Word file shared via API', async () => {
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.waitForTableBody();
 
         await contentList.selectRow(wordFileInfo.name);

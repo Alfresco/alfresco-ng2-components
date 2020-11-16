@@ -83,7 +83,7 @@ describe('Enable infinite scrolling', () => {
     });
 
     beforeEach(async () => {
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
     });
 

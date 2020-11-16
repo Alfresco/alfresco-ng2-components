@@ -50,6 +50,8 @@ async function checkEnv() {
 }
 
 async function checkDiskSpaceFullEnv() {
+    console.log(`Start Check disk full space`);
+
     try {
 
         const alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
@@ -98,7 +100,6 @@ async function checkDiskSpaceFullEnv() {
     } catch (error) {
         counter++;
 
-        console.log('error', error);
         const retry = program.retry || MAX_RETRY;
         const time = program.time || TIMEOUT;
         if (retry === counter) {
@@ -108,7 +109,7 @@ async function checkDiskSpaceFullEnv() {
             console.log('=============================================================');
             process.exit(1);
         } else {
-            console.log(`Retry in 1 minute attempt N ${counter}`, error);
+            console.log(`Retry N ${counter} ${error?.error?.status}`);
             sleep(time);
             checkDiskSpaceFullEnv();
         }
@@ -118,6 +119,7 @@ async function checkDiskSpaceFullEnv() {
 }
 
 function sleep(delay) {
+    console.log(`Sleep ${delay}`);
     var start = new Date().getTime();
     while (new Date().getTime() < start + delay) ;
 }

@@ -87,7 +87,7 @@ describe('Document List Component - Actions', () => {
         });
 
         beforeEach(async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
             await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         });
 

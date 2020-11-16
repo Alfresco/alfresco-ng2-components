@@ -81,7 +81,7 @@ describe('Search Checklist Component', () => {
     });
 
     beforeEach(async () => {
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(randomName);
@@ -147,7 +147,7 @@ describe('Search Checklist Component', () => {
         });
 
         it('[C277143] Should be able to click show more/less button with pageSize set as default', async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
                 jsonFile.categories[1].component.settings.options.push({
@@ -185,7 +185,7 @@ describe('Search Checklist Component', () => {
         });
 
         it('[C277144] Should be able to click show more/less button with pageSize set with a custom value', async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             jsonFile.categories[1].component.settings.pageSize = 10;
 
@@ -209,7 +209,7 @@ describe('Search Checklist Component', () => {
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
 
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
             jsonFile.categories[1].component.settings.pageSize = 11;
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
@@ -225,7 +225,7 @@ describe('Search Checklist Component', () => {
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
 
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             jsonFile.categories[1].component.settings.pageSize = 9;
 
@@ -242,7 +242,7 @@ describe('Search Checklist Component', () => {
         });
 
         it('[C277145] Should be able to click show more/less button with pageSize set to zero', async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             jsonFile.categories[1].component.settings.pageSize = 0;
 
@@ -276,7 +276,7 @@ describe('Search Checklist Component', () => {
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
 
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             delete jsonFile.categories[1].component.settings.pageSize;
 
@@ -308,7 +308,7 @@ describe('Search Checklist Component', () => {
 
         beforeEach(async () => {
             jsonFile = SearchConfiguration.getConfiguration();
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
         });
 
         it('[C277018] Should be able to change the operator', async () => {

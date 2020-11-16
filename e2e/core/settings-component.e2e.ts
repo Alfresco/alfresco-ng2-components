@@ -168,7 +168,7 @@ describe('Settings component', () => {
             await loginPage.enterUsername(browser.params.testConfig.users.admin.username);
             await loginPage.enterPassword(browser.params.testConfig.users.admin.password);
             await loginPage.clickSignInButton();
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
             await contentServicesPage.checkAcsContainer();
             await navigationBarPage.clickSettingsButton();
             await expect(await settingsPage.getSelectedOptionText()).toBe('ECM');
@@ -195,7 +195,7 @@ describe('Settings component', () => {
             await loginPage.enterUsername(browser.params.testConfig.users.admin.username);
             await loginPage.enterPassword(browser.params.testConfig.users.admin.password);
             await loginPage.clickSignInButton();
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
             await contentServicesPage.checkAcsContainer();
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();

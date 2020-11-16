@@ -113,7 +113,7 @@ describe('Aspect oriented config', () => {
             }
         }));
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
 
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.clickInfoButton();
@@ -143,7 +143,7 @@ describe('Aspect oriented config', () => {
             }
         }));
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
 
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.clickInfoButton();
@@ -161,7 +161,7 @@ describe('Aspect oriented config', () => {
     it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided', async () => {
         await LocalStorageUtil.setConfigField('content-metadata', '{}');
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
 
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.clickInfoButton();
@@ -182,7 +182,7 @@ describe('Aspect oriented config', () => {
             }
         }));
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
 
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.clickInfoButton();
@@ -222,7 +222,7 @@ describe('Aspect oriented config', () => {
             '  }' +
             '}');
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
 
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.clickInfoButton();
@@ -249,7 +249,7 @@ describe('Aspect oriented config', () => {
             '    }' +
             '}');
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
 
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.clickInfoButton();
@@ -276,7 +276,7 @@ describe('Aspect oriented config', () => {
             '    }' +
             '}');
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
 
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.clickInfoButton();
@@ -298,7 +298,7 @@ describe('Aspect oriented config', () => {
             '    }' +
             '}');
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
 
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.clickInfoButton();

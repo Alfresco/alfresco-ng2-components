@@ -84,7 +84,7 @@ describe('Version component', () => {
 
         await loginPage.login(acsUser.email, acsUser.password);
 
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.versionManagerContent(txtFileModel.name);
    });

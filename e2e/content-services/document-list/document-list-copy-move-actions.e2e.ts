@@ -118,7 +118,7 @@ describe('Document List Component', () => {
 
         beforeEach(async () => {
             await BrowserActions.closeMenuAndDialogs();
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
             await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         });
 

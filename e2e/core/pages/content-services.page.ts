@@ -293,7 +293,7 @@ export class ContentServicesPage {
 
     async goToDocumentList(): Promise<void> {
         const navigationBarPage = new NavigationBarPage();
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await this.contentList.dataTablePage().waitTillContentLoaded();
     }
 

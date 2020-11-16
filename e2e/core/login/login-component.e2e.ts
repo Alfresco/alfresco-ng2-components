@@ -160,7 +160,7 @@ describe('Login component', () => {
         await loginPage.loginWithProfile('admin');
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await loginPage.waitForElements();
     });
 
@@ -170,7 +170,7 @@ describe('Login component', () => {
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
         await loginPage.loginWithProfile('admin');
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.checkAcsContainer();
     });
 
@@ -182,7 +182,7 @@ describe('Login component', () => {
         await loginPage.loginWithProfile('admin');
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await contentServicesPage.checkAcsContainer();
         await navigationBarPage.clickLoginButton();
         await loginPage.waitForElements();

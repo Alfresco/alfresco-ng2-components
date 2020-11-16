@@ -216,7 +216,7 @@ describe('Search Filters', () => {
     });
 
     it('[C299200] Should reset the filters facet with search query', async () => {
-        await navigationBarPage.clickContentServicesButton();
+        await navigationBarPage.navigateToContentServices();
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(fileTypeTxt1.entry.name);
@@ -244,7 +244,7 @@ describe('Search Filters', () => {
     describe('Change config', () => {
 
         it('[C291802] Should be able to filter facet fields with "Contains"', async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             jsonFile['filterWithContains'] = true;
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
@@ -258,7 +258,7 @@ describe('Search Filters', () => {
         });
 
         it('[C291981] Should group search facets under the default label, by default', async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
@@ -272,7 +272,7 @@ describe('Search Filters', () => {
         });
 
         it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', async () => {
-            await navigationBarPage.clickContentServicesButton();
+            await navigationBarPage.navigateToContentServices();
 
             jsonFile.facetFields.fields[0].label = 'My File Types';
             jsonFile.facetFields.fields[1].label = 'My File Sizes';
