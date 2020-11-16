@@ -33,6 +33,7 @@ import {
 } from '../mocks/task-details-cloud.mock';
 import moment from 'moment-es6';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatSelectModule } from '@angular/material/select';
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
@@ -58,7 +59,8 @@ describe('TaskHeaderCloudComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule,
-            TaskHeaderCloudModule
+            TaskHeaderCloudModule,
+            MatSelectModule
         ]
     });
 
@@ -124,14 +126,16 @@ describe('TaskHeaderCloudComponent', () => {
 
         it('should display priority', async () => {
             fixture.detectChanges();
-
-            await fixture.whenStable();
+            spyOn(appConfigService, 'get').and.returnValue([{
+                key: 0,
+                value: 0,
+                label: 'Low'
+            }]);
             fixture.detectChanges();
-            const priorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-select-label-priority"]'));
-            expect(priorityEl.nativeElement).toBeDefined();
 
-            const priorityValue = fixture.debugElement.query(By.css('[data-automation-id="header-priority"] .mat-select-value-text'));
-            expect(priorityValue.nativeElement.textContent).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
+            const priorityEl = fixture.debugElement.nativeElement.querySelector('[data-automation-id="header-priority"] .mat-select-trigger');
+            expect(priorityEl).toBeDefined();
+            expect(priorityEl).not.toBeNull();
         });
 
         it('should display due date', async () => {
