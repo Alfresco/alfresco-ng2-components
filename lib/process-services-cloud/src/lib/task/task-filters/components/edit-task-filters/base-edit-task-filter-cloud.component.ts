@@ -146,7 +146,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         return [
             {
                 actionType: BaseEditTaskFilterCloudComponent.ACTION_SAVE,
-                icon: 'save',
+                icon: 'adf:save',
                 tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE'
             },
             {

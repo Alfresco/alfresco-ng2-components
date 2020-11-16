@@ -501,7 +501,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return [
             {
                 actionType: EditProcessFilterCloudComponent.ACTION_SAVE,
-                icon: 'save',
+                icon: 'adf:save',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE'
             },
             {
