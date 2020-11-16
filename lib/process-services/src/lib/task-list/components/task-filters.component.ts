@@ -36,9 +36,13 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     @Input()
     filterParam: FilterParamsModel;
 
-    /** Emitted when a filter in the list is clicked. */
+    /** Emitted when a filter is being clicked from the UI. */
     @Output()
-    filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
+    filterClicked: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
+
+    /** Emitted when a filter is being selected based on the filterParam input. */
+    @Output()
+    filterSelected: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
 
     /** Emitted when the list is loaded. */
     @Output()
@@ -86,7 +90,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
         } else if (appId && appId.currentValue !== appId.previousValue) {
             this.getFiltersByAppId(appId.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
-            this.selectFilter(filter.currentValue);
+            this.selectFilterAndEmit(filter.currentValue);
         }
     }
 
@@ -170,7 +174,15 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     public selectFilterAndEmit(newFilter: FilterParamsModel) {
         this.selectFilter(newFilter);
-        this.filterClick.emit(this.currentFilter);
+        this.filterSelected.emit(this.currentFilter);
+    }
+
+    /**
+     * Selects and emits the clicked filter.
+     */
+    onFilterClick(filter: FilterParamsModel) {
+        this.selectFilter(filter);
+        this.filterClicked.emit(this.currentFilter);
     }
 
     /**
@@ -189,7 +201,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
             () => {
                 if (filteredFilterList.length > 0) {
                     this.selectFilter(filteredFilterList[0]);
-                    this.filterClick.emit(this.currentFilter);
+                    this.filterSelected.emit(this.currentFilter);
                 }
             });
     }

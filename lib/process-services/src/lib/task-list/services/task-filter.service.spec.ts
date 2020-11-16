@@ -16,7 +16,8 @@
  */
 
 import { async } from '@angular/core/testing';
-import { fakeAppFilter, fakeAppPromise, fakeFilters } from '../../mock';
+import { fakeAppPromise } from '../../mock';
+import { fakeFiltersResponse, fakeAppFilter } from '../../mock/task/task-filters.mock';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
 import { AlfrescoApiServiceMock, LogService, AppConfigService, setupTestBed, CoreModule, StorageService } from '@alfresco/adf-core';
@@ -58,7 +59,7 @@ describe('Activiti Task filter Service', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify(fakeFilters)
+                responseText: JSON.stringify(fakeFiltersResponse)
             });
         });
 
@@ -76,7 +77,7 @@ describe('Activiti Task filter Service', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify(fakeFilters)
+                responseText: JSON.stringify(fakeFiltersResponse)
             });
         });
 
@@ -95,7 +96,7 @@ describe('Activiti Task filter Service', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify(fakeFilters)
+                responseText: JSON.stringify(fakeFiltersResponse)
             });
         });
 

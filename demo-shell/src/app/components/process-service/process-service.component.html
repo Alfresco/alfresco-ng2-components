@@ -27,7 +27,8 @@
                             <adf-task-filters [filterParam]="filterSelected"
                                               [appId]="appId"
                                               [showIcon]="showTaskFilterIcon"
-                                              (filterClick)="onTaskFilterClick($event)"
+                                              (filterClicked)="onTaskFilterClick($event)"
+                                              (filterSelected)="onTaskFilterClick($event)"
                                               (success)="onSuccessTaskFilterList()" #activitiFilter>
                             </adf-task-filters>
                         </mat-expansion-panel>
@@ -145,7 +146,7 @@
                                     [appId]="appId"
                                     [filterParam]="filterSelected"
                                     [showIcon]="showProcessFilterIcon"
-                                    (filterClick)="onProcessFilterChange($event)"
+                                    (filterClicked)="onProcessFilterChange($event)"
                                     (filterSelected)="onProcessFilterChange($event)"
                                     (success)="onSuccessProcessFilterList()">
                             </adf-process-instance-filters>

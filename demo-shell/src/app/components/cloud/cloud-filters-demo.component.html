@@ -10,7 +10,8 @@
         [appName]="appName"
         [showIcons]="true"
         [filterParam]="currentTaskFilter$ | async"
-        (filterClick)="onTaskFilterSelected($event)">
+        (filterClicked)="onTaskFilterSelected($event)"
+        (filterSelected)="onTaskFilterSelected($event)">
       </adf-cloud-task-filters>
   </mat-expansion-panel>
 
@@ -25,7 +26,8 @@
         [appName]="appName"
         [showIcons]="true"
         [filterParam]="currentProcessFilter$ | async"
-        (filterClick)="onProcessFilterSelected($event)">
+        (filterClicked)="onProcessFilterSelected($event)"
+        (filterSelected)="onProcessFilterSelected($event)">
       </adf-cloud-process-filters>
   </mat-expansion-panel>
 </mat-accordion>

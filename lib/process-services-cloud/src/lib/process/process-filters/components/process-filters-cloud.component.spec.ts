@@ -19,7 +19,6 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { from, Observable } from 'rxjs';
-import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
 import { By } from '@angular/platform-browser';
@@ -28,43 +27,20 @@ import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { mockProcessFilters } from '../mock/process-filters-cloud.mock';
 
 describe('ProcessFiltersCloudComponent', () => {
 
     let processFilterService: ProcessFilterCloudService;
 
-    const fakeGlobalFilter = [
-        new ProcessFilterCloudModel({
-            name: 'FakeAllProcesses',
-            key: 'FakeAllProcesses',
-            icon: 'adjust',
-            id: '10',
-            status: ''
-        }),
-        new ProcessFilterCloudModel({
-            name: 'FakeRunningProcesses',
-            key: 'FakeRunningProcesses',
-            icon: 'inbox',
-            id: '11',
-            status: 'RUNNING'
-        }),
-        new ProcessFilterCloudModel({
-            name: 'FakeCompletedProcesses',
-            key: 'completed-processes',
-            icon: 'done',
-            id: '12',
-            status: 'COMPLETED'
-        })
-    ];
-
     const fakeGlobalFilterObservable =
         new Observable(function(observer) {
-            observer.next(fakeGlobalFilter);
+            observer.next(mockProcessFilters);
             observer.complete();
         });
 
     const fakeGlobalFilterPromise = new Promise(function (resolve) {
-        resolve(fakeGlobalFilter);
+        resolve(mockProcessFilters);
     });
 
     const mockErrorFilterList = {
@@ -197,7 +173,7 @@ describe('ProcessFiltersCloudComponent', () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        component.filterClick.subscribe((res) => {
+        component.filterSelected.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeRunningProcesses');
@@ -217,7 +193,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
         fixture.detectChanges();
 
-        component.filterClick.subscribe((res) => {
+        component.filterSelected.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
@@ -236,7 +212,7 @@ describe('ProcessFiltersCloudComponent', () => {
         const change = new SimpleChange(null, appName, true);
         fixture.detectChanges();
 
-        component.filterClick.subscribe((res) => {
+        component.filterSelected.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
@@ -255,7 +231,7 @@ describe('ProcessFiltersCloudComponent', () => {
         const change = new SimpleChange(null, appName, true);
         fixture.detectChanges();
 
-        component.filterClick.subscribe((res) => {
+        component.filterSelected.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
@@ -265,7 +241,7 @@ describe('ProcessFiltersCloudComponent', () => {
         component.ngOnChanges({ 'appName': change });
     });
 
-    it('should emit an event when a filter is selected', (done) => {
+    it('should filterClicked emit when a filter is clicked from the UI', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
         component.filterParam = { id: '10' };
@@ -275,14 +251,14 @@ describe('ProcessFiltersCloudComponent', () => {
         component.ngOnChanges({ 'appName': change });
         fixture.detectChanges();
 
-        component.filterClick.subscribe((res) => {
+        component.filterClicked.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeAllProcesses');
             done();
         });
 
-        const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${fakeGlobalFilter[0].key}_filter"]`);
+        const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${mockProcessFilters[0].key}_filter"]`);
         filterButton.click();
     });
 
@@ -318,14 +294,14 @@ describe('ProcessFiltersCloudComponent', () => {
     });
 
     it('should change current filter when filterParam (name) changes', () => {
-        component.filters = fakeGlobalFilter;
+        component.filters = mockProcessFilters;
         component.currentFilter = null;
 
         fixture.whenStable().then(() => {
-            expect(component.currentFilter.name).toEqual(fakeGlobalFilter[2].name);
+            expect(component.currentFilter.name).toEqual(mockProcessFilters[2].name);
         });
 
-        const change = new SimpleChange(null, { name: fakeGlobalFilter[2].name }, true);
+        const change = new SimpleChange(null, { name: mockProcessFilters[2].name }, true);
         component.ngOnChanges({ 'filterParam': change });
     });
 
@@ -340,11 +316,11 @@ describe('ProcessFiltersCloudComponent', () => {
     });
 
     it('should return the current filter after one is selected', () => {
-        const filter = fakeGlobalFilter[1];
-        component.filters = fakeGlobalFilter;
+        const filter = mockProcessFilters[1];
+        component.filters = mockProcessFilters;
 
         expect(component.currentFilter).toBeUndefined();
-        component.selectFilter(<ProcessFilterCloudModel> {id: filter.id});
+        component.selectFilter({ id: filter.id });
         expect(component.getCurrentFilter()).toBe(filter);
     });
 });

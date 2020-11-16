@@ -36,9 +36,9 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     @Input()
     filterParam: FilterProcessRepresentationModel;
 
-    /** Emitted when the user selects a filter from the list. */
+    /** Emitted when a filter is being clicked from the UI. */
     @Output()
-    filterClick: EventEmitter<UserProcessInstanceFilterRepresentation> = new EventEmitter<UserProcessInstanceFilterRepresentation>();
+    filterClicked: EventEmitter<UserProcessInstanceFilterRepresentation> = new EventEmitter<UserProcessInstanceFilterRepresentation>();
 
     /** Emitted when the list of filters has been successfully loaded from the server. */
     @Output()
@@ -60,9 +60,9 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     @Input()
     showIcon: boolean = true;
 
-    /** Emitted when a process filter is selected. */
+    /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
-    filterSelected: EventEmitter<ProcessInstanceFilterRepresentation> = new EventEmitter<ProcessInstanceFilterRepresentation>();
+    filterSelected: EventEmitter<UserProcessInstanceFilterRepresentation> = new EventEmitter<UserProcessInstanceFilterRepresentation>();
 
     filter$: Observable<ProcessInstanceFilterRepresentation>;
 
@@ -149,7 +149,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     selectFilter(filter: ProcessInstanceFilterRepresentation) {
         this.currentFilter = filter;
         this.active = true;
-        this.filterClick.emit(filter);
+        this.filterClicked.emit(filter);
     }
 
     /**

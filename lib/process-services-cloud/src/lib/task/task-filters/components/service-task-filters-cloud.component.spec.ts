@@ -254,22 +254,35 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
     }));
 
-    it('should emit an event when a filter is selected', async(() => {
+    it('should emit the selected filter based on the filterParam input', async () => {
         spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(component.filterSelected, 'emit');
 
-        component.filterParam = { id: '12' };
+        const filterParam = { id: '10' };
+        const change = new SimpleChange(null, filterParam, true);
+        component.filterParam = filterParam;
 
-        const appName = 'my-app-1';
-        const change = new SimpleChange(null, appName, true);
-        component.ngOnChanges({ 'appName': change });
+        component.ngOnChanges({ 'filterParam': change });
+        fixture.detectChanges();
+
+        expect(component.filterSelected.emit).toHaveBeenCalledWith(fakeGlobalServiceFilters[0]);
+    });
+
+    it('should filterClicked emit when a filter is clicked from the UI', async () => {
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(component.filterClicked, 'emit');
 
         fixture.detectChanges();
-        spyOn(component, 'selectFilterAndEmit').and.stub();
-        const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${fakeGlobalServiceFilters[1].key}_filter"]`);
+        await fixture.whenStable();
 
+        const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${fakeGlobalServiceFilters[0].key}_filter"]`);
         filterButton.click();
-        expect(component.selectFilterAndEmit).toHaveBeenCalledWith(fakeGlobalServiceFilters[1]);
-    }));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.filterClicked.emit).toHaveBeenCalledWith(fakeGlobalServiceFilters[0]);
+    });
 
     it('should reset the filter when the param is undefined', async(() => {
         spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);

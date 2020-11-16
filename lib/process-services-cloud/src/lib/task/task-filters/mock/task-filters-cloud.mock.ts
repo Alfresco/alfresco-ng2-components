@@ -22,7 +22,7 @@ export const fakeGlobalFilter = [
         name: 'FakeInvolvedTasks',
         key: 'fake-involved-tasks',
         icon: 'adjust',
-        id: 10,
+        id: '10',
         status: 'open',
         assignee: 'fake-involved'
     }),
@@ -30,7 +30,7 @@ export const fakeGlobalFilter = [
         name: 'FakeMyTasks1',
         key: 'fake-my-tast1',
         icon: 'done',
-        id: 11,
+        id: '11',
         status: 'open',
         assignee: 'fake-assignee'
     }),
@@ -38,7 +38,7 @@ export const fakeGlobalFilter = [
         name: 'FakeMyTasks2',
         key: 'fake-my-tast2',
         icon: 'inbox',
-        id: 12,
+        id: '12',
         status: 'open',
         assignee: 'fake-assignee'
     })
