@@ -69,8 +69,8 @@ describe('ExtensionLoaderService', () => {
             $vendor: 'Alfresco',
             $license: 'MIT',
             $runtime: '2.6.1',
-            $references: ['test.extension.1.json'],
-            $ignoreReferenceList: ['test.extension.3.json']
+            $references: [],
+            $ignoreReferenceList: []
         };
 
         spyOn(httpClient, 'get').and.callFake((url: string) => {
@@ -94,17 +94,28 @@ describe('ExtensionLoaderService', () => {
         });
     });
 
-    it('should merge app extension $references with provided extensions', async(() => {
-        extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins', ['test.extension.2.json']).then((config: ExtensionConfig) => {
+    it('should load default registered app extensions when no custom $references defined', async(() => {
+        extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins', ['test.extension.1.json']).then((config: ExtensionConfig) => {
             const pluginsReference = config.$references.map((entry: ExtensionConfig) => entry.$name);
-            expect(pluginsReference).toEqual(['test.extension.1', 'test.extension.2']);
+            expect(pluginsReference).toEqual(['test.extension.1']);
         });
     }));
 
-    it('should not merge app extension $references if provided extensions are in ignore list', async(() => {
-        extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins', ['test.extension.2.json', 'test.extension.3.json']).then((config: ExtensionConfig) => {
+    it('should ignore default registered app extension if defined in $ignoreReferenceList', async(() => {
+        appExtensionsConfig.$ignoreReferenceList = ['test.extension.1.json'];
+
+        extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins', ['test.extension.1.json']).then((config: ExtensionConfig) => {
             const pluginsReference = config.$references.map((entry: ExtensionConfig) => entry.$name);
-            expect(pluginsReference).toEqual(['test.extension.1', 'test.extension.2']);
+            expect(pluginsReference).toEqual([]);
+        });
+    }));
+
+    it('should load only extensions defined by $references', async(() => {
+        appExtensionsConfig.$references = ['test.extension.1.json'];
+
+        extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins', ['test.extension.2.json, test.extension.3.json']).then((config: ExtensionConfig) => {
+            const pluginsReference = config.$references.map((entry: ExtensionConfig) => entry.$name);
+            expect(pluginsReference).toEqual(['test.extension.1']);
         });
     }));
 });
