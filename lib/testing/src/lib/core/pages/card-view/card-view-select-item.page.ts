@@ -16,13 +16,14 @@
  */
 
 import { element, by, ElementFinder, Locator } from 'protractor';
-import { BrowserVisibility } from '../../utils/public-api';
+import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
 import { DropdownPage } from '../material/dropdown.page';
 
 export class CardSelectItemPage {
 
     rootElement: ElementFinder;
     labelLocator: Locator = by.css('div[data-automation-id*="card-select-label"]');
+    readOnlyField: Locator = by.css('[data-automation-class="read-only-value"]');
     dropdown: DropdownPage;
 
     constructor(label: string = 'fileSource') {
@@ -39,7 +40,16 @@ export class CardSelectItemPage {
         return this.dropdown.getSelectedOptionText();
     }
 
+    async getReadonlyValue() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.readOnlyField));
+        return BrowserActions.getText(this.rootElement.element(this.readOnlyField));
+    }
+
     async selectDropdownOption(option: string): Promise<void> {
         await this.dropdown.selectDropdownOption(option);
+    }
+
+    async checkElementIsReadonly(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.readOnlyField));
     }
 }

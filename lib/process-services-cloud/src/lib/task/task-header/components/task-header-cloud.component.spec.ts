@@ -124,18 +124,21 @@ describe('TaskHeaderCloudComponent', () => {
             expect(statusEl.nativeElement.value).toBe('ASSIGNED');
         });
 
-        it('should display priority', async () => {
-            fixture.detectChanges();
-            spyOn(appConfigService, 'get').and.returnValue([{
-                key: 0,
-                value: 0,
-                label: 'Low'
-            }]);
+        it('should display priority with default values', async () => {
             fixture.detectChanges();
 
             const priorityEl = fixture.debugElement.nativeElement.querySelector('[data-automation-id="header-priority"] .mat-select-trigger');
             expect(priorityEl).toBeDefined();
             expect(priorityEl).not.toBeNull();
+
+            priorityEl.click();
+            fixture.detectChanges();
+
+            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+            expect(options[0].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NOT_SET');
+            expect(options[1].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
+            expect(options[2].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL');
+            expect(options[3].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH');
         });
 
         it('should display due date', async () => {
