@@ -23,7 +23,7 @@ import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-tas
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
-import { DEFAULT_TASK_PRIORITIES } from '../models/task.model';
+import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
 
 @Injectable({
     providedIn: 'root'
@@ -287,7 +287,7 @@ export class TaskCloudService extends BaseCloudService {
         return this.translateService.instant(priorityItem.label);
     }
 
-    get priorities(): any[] {
+    get priorities(): TaskPriorityOption[] {
         return this.appConfigService.get('adf-cloud-priority-values') || DEFAULT_TASK_PRIORITIES;
     }
 

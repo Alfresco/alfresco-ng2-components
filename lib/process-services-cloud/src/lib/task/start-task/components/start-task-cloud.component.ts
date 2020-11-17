@@ -33,6 +33,7 @@ import { GroupCloudComponent } from '../../../group/components/group-cloud.compo
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { takeUntil } from 'rxjs/operators';
+import { TaskPriorityOption } from '../../models/task.model';
 
 @Component({
     selector: 'adf-cloud-start-task',
@@ -100,7 +101,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     formKey: string;
 
-    priorities: any;
+    priorities: TaskPriorityOption[];
 
     private assigneeForm: AbstractControl = new FormControl('');
     private groupForm: AbstractControl = new FormControl('');
