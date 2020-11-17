@@ -90,7 +90,6 @@ describe('Task Cloud Service', () => {
     });
 
     beforeEach(async(() => {
-        // alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         alfrescoApiMock = TestBed.inject(AlfrescoApiService);
         identityUserService = TestBed.inject(IdentityUserService);
         translateService = TestBed.inject(TranslationService);
