@@ -22,6 +22,7 @@ import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { map } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { TaskCloudEntryModel, TaskCloudNodePaging } from '../models/task-cloud.model';
 
 @Component({
     selector: 'adf-cloud-task-list',
@@ -142,8 +143,8 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
 
     load(requestNode: TaskQueryCloudRequestModel) {
         this.isLoading = true;
-        this.taskListCloudService.getTaskByRequest(<TaskQueryCloudRequestModel> requestNode).pipe(
-            map(tasks => this.replacePriorityValues(tasks)
+        this.taskListCloudService.getTaskByRequest(requestNode).pipe(
+            map((tasks: TaskCloudNodePaging) => this.replacePriorityValues(tasks)
         )).subscribe(
             (tasks) => {
                 this.rows = tasks.list.entries;
@@ -190,8 +191,8 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
         return new TaskQueryCloudRequestModel(requestNode);
     }
 
-    private replacePriorityValues(tasks: any) {
-        const entries = tasks.list.entries.map((item: any) => {
+    private replacePriorityValues(tasks: TaskCloudNodePaging) {
+        const entries = tasks.list.entries.map((item: TaskCloudEntryModel) => {
             return {
                 entry: {
                     ...item.entry,
