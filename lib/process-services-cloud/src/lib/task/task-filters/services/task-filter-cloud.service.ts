@@ -259,7 +259,7 @@ export class TaskFilterCloudService {
             new TaskFilterCloudModel({
                 name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
                 key: 'my-tasks',
-                icon: 'adf:task',
+                icon: 'inbox',
                 appName,
                 status: 'ASSIGNED',
                 assignee: this.identityUserService.getCurrentUserInfo().username,
