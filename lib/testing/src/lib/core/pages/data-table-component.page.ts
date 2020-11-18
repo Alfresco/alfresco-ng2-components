@@ -413,7 +413,7 @@ export class DataTableComponentPage {
         } else {
             try {
                 Logger.log('wait datatable loading spinner is present');
-                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-progress-bar')), 2000);
+                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-progress-bar')));
             } catch (error) {
             }
             if (await this.isEmpty()) {
