@@ -151,7 +151,7 @@ describe('Start Task', () => {
         await startTask.addName(standaloneTaskName);
         await startTask.addDescription('descriptions');
         await startTask.addDueDate('12/12/2018');
-        await startTask.addPriority('50');
+        await startTask.addPriority('Normal');
         await startTask.clickStartButton();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
     });

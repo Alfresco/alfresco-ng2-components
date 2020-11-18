@@ -40,7 +40,7 @@ export class CardSelectItemPage {
         return this.dropdown.getSelectedOptionText();
     }
 
-    async getReadonlyValue() {
+    async getReadonlyValue(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.readOnlyField));
         return BrowserActions.getText(this.rootElement.element(this.readOnlyField));
     }

@@ -18,13 +18,14 @@
 import { element, by, Key, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class StartTasksCloudPage {
 
     name = element(by.css('input[id="name_id"]'));
     dueDate = element(by.css('input[id="date_id"]'));
     description = element(by.css('textarea[id="description_id"]'));
-    priority = element(by.css('input[formcontrolname="priority"]'));
+    priority = element(by.css('mat-select[formcontrolname="priority"]'));
     startButton = element(by.css('button[id="button-start"]'));
     startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
     cancelButton = element(by.css('button[id="button-cancel"]'));
@@ -45,7 +46,9 @@ export class StartTasksCloudPage {
     }
 
     async addPriority(userPriority: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.priority, userPriority);
+        // await BrowserActions.clearSendKeys(this.priority, userPriority);
+        const priorityDropdown = new DropdownPage(this.priority);
+        await priorityDropdown.selectDropdownOption(userPriority);
     }
 
     async addDueDate(date: string): Promise<void> {
