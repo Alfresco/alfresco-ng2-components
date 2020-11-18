@@ -21,6 +21,7 @@ import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { Observable, throwError } from 'rxjs';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
+import { TaskCloudNodePaging } from '../models/task-cloud.model';
 
 @Injectable({ providedIn: 'root' })
 export class TaskListCloudService extends BaseCloudService {
@@ -44,7 +45,7 @@ export class TaskListCloudService extends BaseCloudService {
             if (sortingParams) {
                 queryParams['sort'] = sortingParams;
             }
-            return this.get(queryUrl, queryParams);
+            return this.get<TaskCloudNodePaging>(queryUrl, queryParams);
         } else {
             this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');

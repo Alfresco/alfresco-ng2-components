@@ -51,7 +51,7 @@ export const assignedTaskDetailsCloudMock: TaskDetailsCloudModel = {
     'createdDate': new Date(1545048055900),
     'dueDate': new Date(),
     'claimedDate': null,
-    'priority': 5,
+    'priority': 1,
     'category': null,
     'processDefinitionId': null,
     'processInstanceId': null,

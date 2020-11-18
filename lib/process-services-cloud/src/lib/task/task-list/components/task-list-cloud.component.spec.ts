@@ -208,7 +208,7 @@ describe('TaskListCloudComponent', () => {
             expect(component.rows[0].entry['createdDate']).toBe(1538059139420);
             expect(component.rows[0].entry['dueDate']).toBeNull();
             expect(component.rows[0].entry['claimedDate']).toBeNull();
-            expect(component.rows[0].entry['priority']).toBe(0);
+            expect(component.rows[0].entry['priority']).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NOT_SET');
             expect(component.rows[0].entry['category']).toBeNull();
             expect(component.rows[0].entry['processDefinitionId']).toBeNull();
             expect(component.rows[0].entry['processInstanceId']).toBeNull();

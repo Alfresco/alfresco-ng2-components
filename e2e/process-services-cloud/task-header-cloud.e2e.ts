@@ -26,7 +26,6 @@ import {
     StringUtil,
     TaskHeaderCloudPage,
     TasksService,
-    StartTasksCloudPage,
     PeopleCloudComponentPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
@@ -46,7 +45,6 @@ describe('Task Header cloud component', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
-    const startTaskCloudPage = new StartTasksCloudPage();
     const peopleCloudComponentPage = new PeopleCloudComponentPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
 
@@ -70,7 +68,7 @@ describe('Task Header cloud component', () => {
     let groupInfo: any;
     let testUser: any;
     let unclaimedTask: any;
-    const priority = 30;
+    const priority = 0; // Not set
     const description = 'descriptionTask';
     const formatDate = 'MMM D, YYYY';
     const dateTimeFormat = 'MMM D, Y, H:mm';
@@ -148,7 +146,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(isValueInvalid(basicCreatedTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : basicCreatedTask.entry.description);
         await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-        await expect(await taskHeaderCloudPage.getPriority()).toEqual(basicCreatedTask.entry.priority.toString());
+        await expect(await taskHeaderCloudPage.getPriority()).toEqual('Not set');
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!basicCreatedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : basicCreatedTask.entry.category);
         await expect(await taskHeaderCloudPage.getDueDate()).toEqual(isValueInvalid(basicCreatedTask.entry.dueDate) ?
@@ -172,7 +170,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(isValueInvalid(completedTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : completedTask.entry.description);
         await expect(await taskHeaderCloudPage.getStatus()).toEqual('COMPLETED');
-        await expect(await taskHeaderCloudPage.getPriority()).toEqual(completedTask.entry.priority.toString());
+        await expect(await taskHeaderCloudPage.getReadonlyPriority()).toEqual('Not set');
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!completedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : completedTask.entry.category);
         await expect(await taskHeaderCloudPage.getDueDate()).toEqual(isValueInvalid(completedTask.entry.dueDate) ?
@@ -196,7 +194,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(isValueInvalid(subTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : subTask.entry.description);
         await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-        await expect(await taskHeaderCloudPage.getPriority()).toEqual(subTask.entry.priority.toString());
+        await expect(await taskHeaderCloudPage.getPriority()).toEqual('Not set');
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!subTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : subTask.entry.category);
         await expect(await taskHeaderCloudPage.getDueDate()).toEqual(isValueInvalid(subTask.entry.dueDate) ? CONSTANTS.TASK_DETAILS.NO_DATE : subTaskCreatedDate);
@@ -206,30 +204,6 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getParentName()).toEqual(basicCreatedTask.entry.name);
         await expect(await taskHeaderCloudPage.getParentTaskId())
             .toEqual(isValueInvalid(subTask.entry.parentTaskId) ? '' : subTask.entry.parentTaskId);
-    });
-
-    it('[C309698] Should validate the Priority field', async () => {
-        const myTaskName = `Test_C309698_${StringUtil.generateRandomString()}`;
-        await tasksCloudDemoPage.clickStartNewTaskButton();
-        await startTaskCloudPage.addName(myTaskName);
-        await startTaskCloudPage.typePriorityOf('50');
-        await startTaskCloudPage.clickStartButton();
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(myTaskName);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(myTaskName);
-        await tasksCloudDemoPage.waitTillContentLoaded();
-
-        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-
-        await taskHeaderCloudPage.priorityCardTextItem.enterTextField('$$%£W21');
-        const errorMessage = await taskHeaderCloudPage.priorityCardTextItem.getErrorMessage();
-        await expect(errorMessage).toBe('Enter a different value');
-
-        await taskHeaderCloudPage.priorityCardTextItem.enterTextField('600');
-        const currentValue = await taskHeaderCloudPage.priorityCardTextItem.getFieldValue();
-        await expect(currentValue).toBe('600');
     });
 
     it('[C309698] Should validate the Priority field', async () => {
@@ -246,7 +220,7 @@ describe('Task Header cloud component', () => {
         const currentAssignee = await taskHeaderCloudPage.assigneeCardTextItem.getFieldValue();
         await expect(currentAssignee).toBe('No assignee');
 
-        await taskHeaderCloudPage.priorityCardTextItem.checkElementIsReadonly();
+        await taskHeaderCloudPage.priorityCardSelectItem.checkElementIsReadonly();
         await taskHeaderCloudPage.statusCardTextItem.checkElementIsReadonly();
     });
 

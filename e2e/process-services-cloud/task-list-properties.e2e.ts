@@ -48,7 +48,7 @@ describe('Edit task filters and task list properties', () => {
     const noTasksFoundMessage = 'No Tasks Found';
     let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask,
         otherOwnerTask, testUser, groupInfo, simpleTask;
-    const priority = 30;
+    const priority = 1;
 
     const beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
     const currentDate = DateUtil.formatDate('DD/MM/YYYY');
@@ -184,14 +184,14 @@ describe('Edit task filters and task list properties', () => {
         });
 
         it('[C297482] Should be able to see only tasks with specific priority when priority is set', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority(priority);
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority('Low');
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(priorityTask.entry.name);
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
         it('[C297687] Should be able to see No tasks found when typing unused value for priority field', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority('87650');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setPriority('Normal');
 
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });

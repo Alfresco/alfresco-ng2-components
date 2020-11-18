@@ -20,6 +20,9 @@ import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
+import { map } from 'rxjs/operators';
+import { TaskCloudService } from '../../services/task-cloud.service';
+import { TaskCloudEntryModel, TaskCloudNodePaging } from '../models/task-cloud.model';
 
 @Component({
     selector: 'adf-cloud-task-list',
@@ -132,6 +135,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
     candidateGroupId: string = '';
 
     constructor(private taskListCloudService: TaskListCloudService,
+                private taskCloudService: TaskCloudService,
                 appConfigService: AppConfigService,
                 userPreferences: UserPreferencesService) {
         super(appConfigService, userPreferences, TaskListCloudComponent.PRESET_KEY);
@@ -139,7 +143,9 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
 
     load(requestNode: TaskQueryCloudRequestModel) {
         this.isLoading = true;
-        this.taskListCloudService.getTaskByRequest(<TaskQueryCloudRequestModel> requestNode).subscribe(
+        this.taskListCloudService.getTaskByRequest(requestNode).pipe(
+            map((tasks: TaskCloudNodePaging) => this.replacePriorityValues(tasks)
+        )).subscribe(
             (tasks) => {
                 this.rows = tasks.list.entries;
                 this.success.emit(tasks);
@@ -183,5 +189,23 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent {
             candidateGroupId: this.candidateGroupId
         };
         return new TaskQueryCloudRequestModel(requestNode);
+    }
+
+    private replacePriorityValues(tasks: TaskCloudNodePaging) {
+        const entries = tasks.list.entries.map((item: TaskCloudEntryModel) => {
+            return {
+                entry: {
+                    ...item.entry,
+                    ['priority']: this.taskCloudService.getPriorityLabel(item.entry?.priority)
+                }
+            };
+        });
+
+        return {
+            list: {
+                ...tasks.list,
+                entries: [...entries]
+            }
+        };
     }
 }

@@ -16,13 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService, CardViewArrayItem } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService, CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
 import { throwError, Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
+import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
 
 @Injectable({
     providedIn: 'root'
@@ -36,6 +37,7 @@ export class TaskCloudService extends BaseCloudService {
         apiService: AlfrescoApiService,
         appConfigService: AppConfigService,
         private logService: LogService,
+        private translateService: TranslationService,
         private identityUserService: IdentityUserService
     ) {
         super(apiService, appConfigService);
@@ -279,6 +281,15 @@ export class TaskCloudService extends BaseCloudService {
             return throwError('AppName/TaskId not configured');
         }
       }
+
+    getPriorityLabel(priority: number): string {
+        const priorityItem = this.priorities.find(item => item.value === priority.toString()) || this.priorities[0];
+        return this.translateService.instant(priorityItem.label);
+    }
+
+    get priorities(): TaskPriorityOption[] {
+        return this.appConfigService.get('adf-cloud-priority-values') || DEFAULT_TASK_PRIORITIES;
+    }
 
     private isAssignedToMe(assignee: string): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;

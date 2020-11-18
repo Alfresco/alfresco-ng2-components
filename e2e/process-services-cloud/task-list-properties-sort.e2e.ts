@@ -41,7 +41,7 @@ describe('Edit task filters and task list properties', () => {
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     let createdTask, notDisplayedTask, priorityTask, subTask,
         otherOwnerTask, testUser, groupInfo;
-    const priority = 30;
+    const priority = 1;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');

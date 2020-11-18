@@ -33,10 +33,11 @@
                     </textarea>
                 </mat-form-field>
 
-                <mat-form-field fxFlex>
-                    <div style="height: 40px;">
-                        <input matInput type="number" placeholder="Priority" formControlName="priority">
-                    </div>
+                <mat-form-field fxFlex class="adf-cloud-priority-container">
+                    <mat-label>{{ 'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.PRIORITY' | translate }}</mat-label>
+                    <mat-select formControlName="priority">
+                        <mat-option *ngFor="let priorityOption of priorities" [value]="priorityOption.value">{{ priorityOption.label | translate }}</mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">

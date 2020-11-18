@@ -33,6 +33,7 @@ import { GroupCloudComponent } from '../../../group/components/group-cloud.compo
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { takeUntil } from 'rxjs/operators';
+import { TaskPriorityOption } from '../../models/task.model';
 
 @Component({
     selector: 'adf-cloud-start-task',
@@ -100,6 +101,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     formKey: string;
 
+    priorities: TaskPriorityOption[];
+
     private assigneeForm: AbstractControl = new FormControl('');
     private groupForm: AbstractControl = new FormControl('');
     private onDestroy$ = new Subject<boolean>();
@@ -119,6 +122,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
             .subscribe(locale => this.dateAdapter.setLocale(locale));
         this.loadCurrentUser();
         this.buildForm();
+        this.loadDefaultPriorities();
     }
 
     ngOnDestroy() {
@@ -129,7 +133,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     buildForm() {
         this.taskForm = this.formBuilder.group({
             name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
-            priority: new FormControl(),
+            priority: new FormControl(''),
             description: new FormControl('', [this.whitespaceValidator]),
             formKey: new FormControl()
         });
@@ -143,6 +147,10 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     private loadCurrentUser() {
         this.currentUser = this.identityUserService.getCurrentUserInfo();
         this.assigneeName = this.currentUser.username;
+    }
+
+    private loadDefaultPriorities() {
+        this.priorities = this.taskService.priorities;
     }
 
     public saveTask() {

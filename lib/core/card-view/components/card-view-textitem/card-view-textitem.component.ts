@@ -176,6 +176,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     clearValue() {
         this.editedValue = '';
         this.textInput.setValue('');
+        this.update();
     }
 
     copyToClipboard(valueToCopy: string) {

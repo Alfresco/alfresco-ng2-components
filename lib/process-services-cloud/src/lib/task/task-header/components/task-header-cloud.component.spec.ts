@@ -33,6 +33,7 @@ import {
 } from '../mocks/task-details-cloud.mock';
 import moment from 'moment-es6';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatSelectModule } from '@angular/material/select';
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
@@ -58,7 +59,8 @@ describe('TaskHeaderCloudComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule,
-            TaskHeaderCloudModule
+            TaskHeaderCloudModule,
+            MatSelectModule
         ]
     });
 
@@ -122,32 +124,21 @@ describe('TaskHeaderCloudComponent', () => {
             expect(statusEl.nativeElement.value).toBe('ASSIGNED');
         });
 
-        it('should display priority', async () => {
+        it('should display priority with default values', async () => {
             fixture.detectChanges();
 
-            await fixture.whenStable();
-            fixture.detectChanges();
-            const priorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
-            expect(priorityEl.nativeElement.value).toBe('5');
-        });
+            const priorityEl = fixture.debugElement.nativeElement.querySelector('[data-automation-id="header-priority"] .mat-select-trigger');
+            expect(priorityEl).toBeDefined();
+            expect(priorityEl).not.toBeNull();
 
-        it('should display error if priority is not a number', async (done) => {
-            fixture.detectChanges();
-            await fixture.whenStable();
+            priorityEl.click();
             fixture.detectChanges();
 
-            const formPriorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
-            formPriorityEl.nativeElement.value = 'stringValue';
-            formPriorityEl.nativeElement.dispatchEvent(new Event('input'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const errorMessageEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-priority"]'));
-            expect(errorMessageEl).not.toBeNull();
-            done();
-
+            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+            expect(options[0].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NOT_SET');
+            expect(options[1].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
+            expect(options[2].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL');
+            expect(options[3].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH');
         });
 
         it('should display due date', async () => {
@@ -322,10 +313,8 @@ describe('TaskHeaderCloudComponent', () => {
 
         it('should render edit icon if the task in assigned state and assingee should be current user', () => {
             fixture.detectChanges();
-            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-priority"] [class*="adf-textitem-edit-icon"]`));
             const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-description"] [class*="adf-textitem-edit-icon"]`));
             const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(priorityEditIcon).not.toBeNull('Priority edit icon should be shown');
             expect(descriptionEditIcon).not.toBeNull('Description edit icon should be shown');
             expect(dueDateEditIcon).not.toBeNull('Due date edit icon should be shown');
         });

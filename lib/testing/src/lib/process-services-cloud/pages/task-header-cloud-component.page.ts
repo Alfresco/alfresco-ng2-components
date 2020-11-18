@@ -19,12 +19,13 @@ import { element, by } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { CardTextItemPage } from '../../core/pages/card-view/card-view-text-item.page';
+import { CardSelectItemPage } from '../../core/pages/card-view/card-view-select-item.page';
 
 export class TaskHeaderCloudPage {
 
     assigneeCardTextItem = new CardTextItemPage('assignee');
     statusCardTextItem = new CardTextItemPage('status');
-    priorityCardTextItem = new CardTextItemPage('priority');
+    priorityCardSelectItem = new CardSelectItemPage('priority');
     dueDateField = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
     categoryCardTextItem = new CardTextItemPage('category');
     createdField = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
@@ -44,7 +45,11 @@ export class TaskHeaderCloudPage {
     }
 
     async getPriority(): Promise<string> {
-        return this.priorityCardTextItem.getFieldValue();
+        return this.priorityCardSelectItem.getSelectedOptionText();
+    }
+
+    async getReadonlyPriority(): Promise<string> {
+        return this.priorityCardSelectItem.getReadonlyValue();
     }
 
     async getCategory(): Promise<string> {
