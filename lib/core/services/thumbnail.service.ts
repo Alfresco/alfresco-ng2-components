@@ -159,7 +159,9 @@ export class ThumbnailService {
         'dynamic-feed': './assets/images/dynamic_feed-24px.svg',
         'ic-process': './assets/images/ic-process.svg',
         'filter': './assets/images/ft_ic_filter.svg',
-        'save-as': './assets/images/save-as.svg'
+        'save-as': './assets/images/save-as.svg',
+        'save': './assets/images/save.svg',
+        'task': './assets/images/task.svg'
     };
 
     constructor(protected apiService: AlfrescoApiService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
