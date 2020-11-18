@@ -117,7 +117,7 @@ describe('Enable infinite scrolling', () => {
         }
     });
 
-    it('[C299201] Should use default pagination settings for infinite pagination', async () => {
+    fit('[C299201] Should use default pagination settings for infinite pagination', async () => {
         await contentServicesPage.openFolder(folderModel.name);
 
         await contentServicesPage.enableInfiniteScrolling();
