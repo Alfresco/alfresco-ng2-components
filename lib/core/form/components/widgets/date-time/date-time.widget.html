@@ -1,5 +1,4 @@
-<div class="{{field.className}}"
-     id="data-time-widget" [class.adf-invalid]="!field.isValid" cdkTrapFocus>
+<div class="{{field.className}}" id="data-time-widget" [class.adf-invalid]="!field.isValid">
     <mat-form-field class="adf-date-time-widget">
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }} ({{field.dateDisplayFormat}})<span *ngIf="isRequired()">*</span></label>
         <input matInput
@@ -20,5 +19,5 @@
     </mat-form-field>
     <error-widget [error]="field.validationSummary"></error-widget>
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
-    <mat-datetimepicker #datetimePicker type="datetime" openOnFocus="true" timeInterval="5"></mat-datetimepicker>
+    <mat-datetimepicker #datetimePicker type="datetime" timeInterval="5"></mat-datetimepicker>
 </div>
