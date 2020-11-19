@@ -15,9 +15,20 @@
  * limitations under the License.
  */
 
-export * from './components/app-list-cloud.component';
-export * from './components/app-details-cloud.component';
-export * from './services/apps-process-cloud.service';
-export * from './models/application-instance.model';
-export * from './models/application-version.model';
-export * from './app-list-cloud.module';
+import { Pagination } from '@alfresco/js-api';
+
+export class ApplicationVersionModel {
+    entry: {
+        id: string;
+        name: string;
+        version: string;
+    };
+
+}
+
+export class ApplicationVersionResponseModel {
+    list: {
+        entries: ApplicationVersionModel[];
+        pagination: Pagination;
+    };
+}
