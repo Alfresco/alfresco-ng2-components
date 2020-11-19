@@ -133,15 +133,13 @@ describe('ContainerWidgetComponent', () => {
             widget.field = field;
             widget.ngOnInit();
 
+            expect(widget.fields.length).toEqual(6);
             expect(widget.fields[0].id).toEqual('1');
             expect(widget.fields[1].id).toEqual('4');
             expect(widget.fields[2].id).toEqual('6');
             expect(widget.fields[3].id).toEqual('2');
             expect(widget.fields[4].id).toEqual('5');
-            expect(widget.fields[5]).toEqual(undefined);
-            expect(widget.fields[6].id).toEqual('3');
-            expect(widget.fields[7]).toEqual(undefined);
-            expect(widget.fields[8]).toEqual(undefined);
+            expect(widget.fields[5].id).toEqual('3');
         });
 
         it('should serializes the content fields with rowspan', () => {
@@ -159,33 +157,46 @@ describe('ContainerWidgetComponent', () => {
                             rowspan: 1
                         },
                         {
-                            id: 'b'
+                            id: 'b',
+                            colspan: 2,
+                            rowspan: 1
                         },
                         {
-                            id: 'c'
+                            id: 'c',
+                            colspan: 2,
+                            rowspan: 1
                         },
                         {
-                            id: 'd'
+                            id: 'd',
+                            colspan: 2,
+                            rowspan: 1
                         },
                         {
                             id: 'e',
-                            colspan: 3
+                            colspan: 2,
+                            rowspan: 1
                         },
                         {
-                            id: 'f'
+                            id: 'f',
+                            colspan: 2,
+                            rowspan: 1
                         },
                         {
-                            id: 'g'
+                            id: 'g',
+                            colspan: 2,
+                            rowspan: 1
                         },
                         {
                             id: 'h',
-                            colspan: 2
+                            colspan: 2,
+                            rowspan: 1
                         }
                     ],
                     '2': [
                         {
                             id: '1',
-                            rowspan: 3
+                            rowspan: 3,
+                            colspan: 2
                         },
                         {
                             id: '2',
@@ -193,7 +204,8 @@ describe('ContainerWidgetComponent', () => {
                             colspan: 2
                         },
                         {
-                            id: '3'
+                            id: '3',
+                            colspan: 2
                         }
                     ],
                     '3': [
@@ -217,24 +229,32 @@ describe('ContainerWidgetComponent', () => {
             widget.field = field;
             widget.ngOnInit();
 
-            expect(widget.fields.length).toEqual(17);
+            expect(widget.fields.length).toEqual(25);
             expect(widget.fields[0].id).toEqual('a');
-            expect(widget.fields[1].id).toEqual('white');
-            expect(widget.fields[2].id).toEqual('b');
-            expect(widget.fields[3].id).toEqual('1');
-            expect(widget.fields[4].id).toEqual('black');
-            expect(widget.fields[5].id).toEqual('c');
-            expect(widget.fields[6].id).toEqual('green');
-            expect(widget.fields[7].id).toEqual('d');
-            expect(widget.fields[8].id).toEqual('e');
-            expect(widget.fields[9].id).toEqual('f');
-            expect(widget.fields[10].id).toEqual('2');
-            expect(widget.fields[11].id).toEqual('g');
-            expect(widget.fields[12].id).toEqual('h');
-            expect(widget.fields[13].id).toEqual('yellow');
-            expect(widget.fields[14]).toEqual(undefined);
-            expect(widget.fields[15].id).toEqual('3');
-            expect(widget.fields[16]).toEqual(undefined);
+            expect(widget.fields[1].id).toEqual('1');
+            expect(widget.fields[2].id).toEqual('white');
+            expect(widget.fields[3].id).toEqual('b');
+            expect(widget.fields[4].id).toEqual('2');
+            expect(widget.fields[5].id).toEqual('black');
+            expect(widget.fields[6].id).toEqual('c');
+            expect(widget.fields[7].id).toEqual('3');
+            expect(widget.fields[8].id).toEqual('green');
+            expect(widget.fields[9].id).toEqual('d');
+            expect(widget.fields[10]).toEqual(null);
+            expect(widget.fields[11]).toEqual(null);
+            expect(widget.fields[12].id).toEqual('yellow');
+            expect(widget.fields[13].id).toEqual('e');
+            expect(widget.fields[14]).toEqual(null);
+            expect(widget.fields[15]).toEqual(null);
+            expect(widget.fields[16].id).toEqual('f');
+            expect(widget.fields[17]).toEqual(null);
+            expect(widget.fields[18]).toEqual(null);
+            expect(widget.fields[19].id).toEqual('g');
+            expect(widget.fields[20]).toEqual(null);
+            expect(widget.fields[21]).toEqual(null);
+            expect(widget.fields[22].id).toEqual('h');
+            expect(widget.fields[23]).toEqual(null);
+            expect(widget.fields[24]).toEqual(null);
         });
     });
 
