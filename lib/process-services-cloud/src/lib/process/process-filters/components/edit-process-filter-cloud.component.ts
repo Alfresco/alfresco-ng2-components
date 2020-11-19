@@ -30,7 +30,7 @@ import { ProcessFilterCloudService } from '../services/process-filter-cloud.serv
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
-import { ApplicationVersionModel } from '../../../app/models/application-version.model';
+import { ApplicationVersionModel } from '../../../models/application-version.model';
 
 @Component({
     selector: 'adf-cloud-edit-process-filter',
@@ -139,9 +139,18 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        this.removeAppVersionDuplication();
+
         const id = changes['id'];
         if (id && id.currentValue !== id.previousValue) {
             this.retrieveProcessFilterAndBuildForm();
+        }
+    }
+
+    removeAppVersionDuplication() {
+        if (this.filterProperties.includes('appVersion') && this.filterProperties.includes('appVersionMultiple')) {
+            const appVersionIndex = this.filterProperties.indexOf('appVersion');
+            this.filterProperties.splice(appVersionIndex, 1);
         }
     }
 
@@ -221,7 +230,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             this.processDefinitionNames = [];
             this.getProcessDefinitions();
         }
-        if (this.checkForProperty('appVersion')) {
+        if (this.checkForProperty('appVersionMultiple')) {
             this.appVersionOptions = [];
             this.getAppVersionOptions();
         }
@@ -271,10 +280,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return defaultSortProperties.filter((sortProperty) => this.isValidProperty(this.sortProperties, sortProperty.key));
     }
 
-    getAppVersionOptions() {
-        this.appsProcessCloudService.getApplicationVersions(this.appName)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((appVersions: ApplicationVersionModel[]) => {
+    async getAppVersionOptions() {
+        await this.processCloudService.getApplicationVersions(this.appName)
+            .toPromise().then((appVersions: ApplicationVersionModel[]) => {
                 appVersions.forEach(appVersion => {
                     this.appVersionOptions.push({ label: appVersion.entry.version, value: appVersion.entry.version });
                 });
@@ -631,9 +639,15 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_VERSION',
-                type: 'multi-select',
+                type: 'number',
                 key: 'appVersion',
-                value: currentProcessFilter.appVersion,
+                value: currentProcessFilter.appVersion
+            },
+            {
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_VERSION',
+                type: 'multi-select',
+                key: 'appVersionMultiple',
+                value: currentProcessFilter.appVersionMultiple,
                 options: this.appVersionOptions
             },
             {

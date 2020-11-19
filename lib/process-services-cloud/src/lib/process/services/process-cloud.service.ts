@@ -18,10 +18,11 @@
 import { AlfrescoApiService, LogService, AppConfigService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
+import { ApplicationVersionModel, ApplicationVersionResponseModel } from '../../models/application-version.model';
 
 @Injectable({
     providedIn: 'root'
@@ -78,6 +79,22 @@ export class ProcessCloudService extends BaseCloudService {
         }
     }
 
+    getApplicationVersions(appName: string): Observable<ApplicationVersionModel[]> {
+        if (appName) {
+            const url = `${this.getBasePath(appName)}/query/v1/applications`;
+
+            return this.get<any>(url).pipe(
+                map((appEntities: ApplicationVersionResponseModel) => {
+                    return appEntities.list.entries;
+                }),
+                catchError((err) => this.handleError(err))
+            );
+        } else {
+            this.logService.error('AppName is mandatory for querying the versions of an application');
+            return throwError('AppName not configured');
+        }
+    }
+
     /**
      * Cancels a process.
      * @param appName Name of the app
@@ -97,5 +114,10 @@ export class ProcessCloudService extends BaseCloudService {
             this.logService.error('App name and Process id are mandatory for deleting a process');
             return throwError('App name and process id not configured');
         }
+    }
+
+    private handleError(error?: any) {
+        this.logService.error(error);
+        return throwError(error || 'Server error');
     }
 }

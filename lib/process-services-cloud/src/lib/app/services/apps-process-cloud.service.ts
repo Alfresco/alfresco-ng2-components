@@ -21,19 +21,16 @@ import { map, catchError } from 'rxjs/operators';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { Oauth2Auth } from '@alfresco/js-api';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
-import { BaseCloudService } from '../../services/base-cloud.service';
-import { ApplicationVersionModel, ApplicationVersionResponseModel } from '../models/application-version.model';
 
 @Injectable({ providedIn: 'root' })
-export class AppsProcessCloudService extends BaseCloudService {
+export class AppsProcessCloudService {
 
     deployedApps: ApplicationInstanceModel[];
 
     constructor(
-        apiService: AlfrescoApiService,
+        private apiService: AlfrescoApiService,
         private logService: LogService,
-        appConfigService: AppConfigService) {
-        super(apiService, appConfigService);
+        private appConfigService: AppConfigService) {
         this.loadApps();
     }
 
@@ -80,22 +77,6 @@ export class AppsProcessCloudService extends BaseCloudService {
                 }),
                 catchError((err) => this.handleError(err))
             );
-    }
-
-    getApplicationVersions(appName: string): Observable<ApplicationVersionModel[]> {
-        if (appName) {
-            const url = `${this.getBasePath(appName)}/query/v1/applications`;
-
-            return this.get<any>(url).pipe(
-                map((appEntities: ApplicationVersionResponseModel) => {
-                    return appEntities.list.entries;
-                }),
-                catchError((err) => this.handleError(err))
-            );
-        } else {
-            this.logService.error('AppName is mandatory for querying the versions of an application');
-            return throwError('AppName not configured');
-        }
     }
 
     private getApplicationUrl(): string {
