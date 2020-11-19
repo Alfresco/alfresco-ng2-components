@@ -60,17 +60,13 @@ export class TaskFilterService {
                     const filters: FilterRepresentationModel[] = [];
                     res.forEach((filter) => {
                         if (filter.name === involvedTasksFilter.name) {
-                            involvedTasksFilter.id = filter.id;
-                            filters.push(involvedTasksFilter);
+                            filters.push(new FilterRepresentationModel({ ...filter, filter: involvedTasksFilter.filter, appId }));
                         } else if (filter.name === myTasksFilter.name) {
-                            myTasksFilter.id = filter.id;
-                            filters.push(myTasksFilter);
+                            filters.push(new FilterRepresentationModel({ ...filter, filter: myTasksFilter.filter, appId }));
                         } else if (filter.name === queuedTasksFilter.name) {
-                            queuedTasksFilter.id = filter.id;
-                            filters.push(queuedTasksFilter);
+                            filters.push(new FilterRepresentationModel({ ...filter, filter: queuedTasksFilter.filter, appId }));
                         } else if (filter.name === completedTasksFilter.name) {
-                            completedTasksFilter.id = filter.id;
-                            filters.push(completedTasksFilter);
+                            filters.push(new FilterRepresentationModel({ ...filter, filter: completedTasksFilter.filter, appId }));
                         }
                     });
                     observer.next(filters);
