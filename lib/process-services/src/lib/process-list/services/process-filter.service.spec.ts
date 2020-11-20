@@ -143,6 +143,49 @@ describe('Process filter', () => {
                 });
             });
 
+            it('should be able create filters and add sorting information to the response', (done) => {
+                service.createDefaultFilters(1234).subscribe((res: FilterProcessRepresentationModel []) => {
+                    expect(res).toBeDefined();
+                    expect(res.length).toEqual(3);
+                    expect(res[0].name).toEqual('Running');
+                    expect(res[0].filter.sort).toEqual('created-desc');
+                    expect(res[0].filter.state).toEqual('running');
+
+                    expect(res[1].name).toEqual('Completed');
+                    expect(res[1].filter.sort).toEqual('created-desc');
+                    expect(res[1].filter.state).toEqual('completed');
+
+                    expect(res[2].name).toEqual('All');
+                    expect(res[2].filter.sort).toEqual('created-desc');
+                    expect(res[2].filter.state).toEqual('all');
+                    done();
+                });
+
+                jasmine.Ajax.requests.at(0).respondWith({
+                    'status': 200,
+                    contentType: 'application/json',
+                    responseText: JSON.stringify({
+                        appId: 1001, id: 111, name: 'Running', icon: 'fake-icon', recent: false
+                    })
+                });
+
+                jasmine.Ajax.requests.at(1).respondWith({
+                    'status': 200,
+                    contentType: 'application/json',
+                    responseText: JSON.stringify({
+                        appId: 1001, id: 222, name: 'Completed', icon: 'fake-icon', recent: false
+                    })
+                });
+
+                jasmine.Ajax.requests.at(2).respondWith({
+                    'status': 200,
+                    contentType: 'application/json',
+                    responseText: JSON.stringify({
+                        appId: 1001, id: 333, name: 'All', icon: 'fake-icon', recent: false
+                    })
+                });
+            });
+
             it('should pass on any error that is returned by the API', async(() => {
                 getFilters = getFilters.and.returnValue(Promise.reject(mockError));
 
