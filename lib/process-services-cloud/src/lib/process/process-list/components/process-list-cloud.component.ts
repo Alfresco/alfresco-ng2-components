@@ -47,11 +47,11 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     appName: string = '';
 
-    /** The release version of the application. */
+    /** The version of the application. */
     @Input()
     appVersion: number;
 
-    /** The release versions of the application. */
+    /** The versions of the application. */
     @Input()
     appVersionMultiple: number[];
 
@@ -329,7 +329,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     private createRequestNode(): ProcessQueryCloudRequestModel {
         const requestNode = {
             appName: this.appName,
-            appVersion: this.appVersion ? this.appVersion : (this.appVersionMultiple ? this.appVersionMultiple.join(',') : ''),
+            appVersion: this.getAppVersion(),
             maxItems: this.size,
             skipCount: this.skipCount,
             initiator: this.initiator,
@@ -350,6 +350,10 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             sorting: this.sorting
         };
         return new ProcessQueryCloudRequestModel(requestNode);
+    }
+
+    getAppVersion(): number | string {
+        return this.appVersion ? this.appVersion : (this.appVersionMultiple ? this.appVersionMultiple.join(',') : '');
     }
 
     setSorting(sortDetail) {

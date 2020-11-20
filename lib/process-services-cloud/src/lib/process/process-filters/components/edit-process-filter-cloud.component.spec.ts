@@ -38,6 +38,7 @@ import { LocalPreferenceCloudService } from '../../../services/local-preference-
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
+import { ApplicationVersionModel } from '../../../models/application-version.model';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
@@ -530,6 +531,49 @@ describe('EditProcessFilterCloudComponent', () => {
             expect(appVersionController.value).toEqual(1);
         });
     }));
+
+    it('should fetch appVersionMultiple options when appVersionMultiple filter property is set', async () => {
+        const mockAppVersion1: ApplicationVersionModel = {
+            entry: {
+                id: 'mock-version-1-id',
+                name: 'mock-version-1-name',
+                version: '1'
+            }
+        };
+
+        const mockAppVersion2: ApplicationVersionModel = {
+            entry: {
+                id: 'mock-version-2-id',
+                name: 'mock-version-2-name',
+                version: '2'
+            }
+        };
+
+        const applicationVersionsSpy = spyOn(processService, 'getApplicationVersions').and.returnValue(of([mockAppVersion1, mockAppVersion2]));
+        fixture.detectChanges();
+
+        component.filterProperties = ['appVersionMultiple'];
+        fixture.detectChanges();
+
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+
+        const controller = component.editProcessFilterForm.get('appVersionMultiple');
+        const appVersionMultiple = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-appVersionMultiple"]');
+        appVersionMultiple.click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const appVersionOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+
+        expect(applicationVersionsSpy).toHaveBeenCalled();
+        expect(controller).toBeDefined();
+        expect(appVersionOptions.length).toEqual(2);
+        expect(appVersionOptions[0].nativeElement.innerText).toEqual('1');
+        expect(appVersionOptions[1].nativeElement.innerText).toEqual('2');
+    });
 
     it('should fetch process definitions when processDefinitionName filter property is set', async(() => {
         const processSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of([{ id: 'fake-id', name: 'fake-name' }]));

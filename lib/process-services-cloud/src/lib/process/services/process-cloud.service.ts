@@ -79,6 +79,11 @@ export class ProcessCloudService extends BaseCloudService {
         }
     }
 
+    /**
+     * Gets the application versions associated with an app.
+     * @param appName Name of the target app
+     * @returns Array of Application Version Models
+     */
     getApplicationVersions(appName: string): Observable<ApplicationVersionModel[]> {
         if (appName) {
             const url = `${this.getBasePath(appName)}/query/v1/applications`;
