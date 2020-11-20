@@ -139,18 +139,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.removeAppVersionDuplication();
-
         const id = changes['id'];
         if (id && id.currentValue !== id.previousValue) {
             this.retrieveProcessFilterAndBuildForm();
-        }
-    }
-
-    removeAppVersionDuplication() {
-        if (this.filterProperties.includes('appVersion') && this.filterProperties.includes('appVersionMultiple')) {
-            const appVersionIndex = this.filterProperties.indexOf('appVersion');
-            this.filterProperties.splice(appVersionIndex, 1);
         }
     }
 
@@ -280,9 +271,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return defaultSortProperties.filter((sortProperty) => this.isValidProperty(this.sortProperties, sortProperty.key));
     }
 
-    async getAppVersionOptions() {
-        await this.processCloudService.getApplicationVersions(this.appName)
-            .toPromise().then((appVersions: ApplicationVersionModel[]) => {
+    getAppVersionOptions() {
+        this.processCloudService.getApplicationVersions(this.appName)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((appVersions: ApplicationVersionModel[]) => {
                 appVersions.forEach(appVersion => {
                     this.appVersionOptions.push({ label: appVersion.entry.version, value: appVersion.entry.version });
                 });

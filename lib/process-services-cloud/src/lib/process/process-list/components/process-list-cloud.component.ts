@@ -329,7 +329,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     private createRequestNode(): ProcessQueryCloudRequestModel {
         const requestNode = {
             appName: this.appName,
-            appVersion: this.appVersionMultiple ? this.appVersionMultiple.join(',') : this.appVersion,
+            appVersion: this.appVersion ? this.appVersion : (this.appVersionMultiple ? this.appVersionMultiple.join(',') : ''),
             maxItems: this.size,
             skipCount: this.skipCount,
             initiator: this.initiator,
