@@ -639,7 +639,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_VERSION',
                 type: 'multi-select',
                 key: 'appVersionMultiple',
-                value: currentProcessFilter.appVersionMultiple,
+                value: currentProcessFilter.appVersion,
                 options: this.appVersionOptions
             },
             {
