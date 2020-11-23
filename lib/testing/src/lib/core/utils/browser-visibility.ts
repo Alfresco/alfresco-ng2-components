@@ -38,7 +38,7 @@ export class BrowserVisibility {
     static async waitUntilElementIsLocated(elementToCheck: ElementFinder, waitTimeout: number = BrowserVisibility.DEFAULT_TIMEOUT): Promise<any> {
         Logger.info(`Wait Until Element Is Located ${elementToCheck.locator().toString()} for ${waitTimeout}`);
 
-        return browser.wait(until.elementLocated(by.css(css)), waitTimeout, 'Element is not located ' + elementToCheck.locator());
+        return browser.wait(until.elementLocated(elementToCheck), waitTimeout, 'Element is not located ' + elementToCheck.locator());
     }
 
     static async waitUntilElementIsPresent(elementToCheck: ElementFinder, waitTimeout: number = BrowserVisibility.DEFAULT_TIMEOUT): Promise<any> {
