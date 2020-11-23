@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder, protractor } from 'protractor';
+import { browser, by, element, ElementFinder, protractor, until } from 'protractor';
 import { Logger } from './logger';
 
 export class BrowserVisibility {
@@ -33,6 +33,12 @@ export class BrowserVisibility {
         if (browser && browser.params && browser.params.testConfig && browser.params.testConfig.timeouts) {
             return browser.params.testConfig.timeouts.no_visible_timeout;
         }
+    }
+
+    static async waitUntilElementIsLocated(elementToCheck: ElementFinder, waitTimeout: number = BrowserVisibility.DEFAULT_TIMEOUT): Promise<any> {
+        Logger.info(`Wait Until Element Is Located ${elementToCheck.locator().toString()} for ${waitTimeout}`);
+
+        return browser.wait(until.elementLocated(by.css(css)), waitTimeout, 'Element is not located ' + elementToCheck.locator());
     }
 
     static async waitUntilElementIsPresent(elementToCheck: ElementFinder, waitTimeout: number = BrowserVisibility.DEFAULT_TIMEOUT): Promise<any> {
