@@ -174,6 +174,61 @@ describe('Activiti Task filter Service', () => {
             });
         });
 
+        it('should be able create filters and add sorting information to the response', (done) => {
+            service.createDefaultFilters(1234).subscribe((res: FilterRepresentationModel []) => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(4);
+                expect(res[0].name).toEqual('My Tasks');
+                expect(res[0].filter.sort).toEqual('created-desc');
+                expect(res[0].filter.assignment).toEqual('assignee');
+
+                expect(res[1].name).toEqual('Involved Tasks');
+                expect(res[1].filter.sort).toEqual('created-desc');
+                expect(res[1].filter.assignment).toEqual('involved');
+
+                expect(res[2].name).toEqual('Queued Tasks');
+                expect(res[2].filter.sort).toEqual('created-desc');
+                expect(res[2].filter.assignment).toEqual('candidate');
+
+                expect(res[3].name).toEqual('Completed Tasks');
+                expect(res[3].filter.sort).toEqual('created-desc');
+                expect(res[3].filter.assignment).toEqual('involved');
+                done();
+            });
+
+            jasmine.Ajax.requests.at(0).respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({
+                    appId: 1001, id: 111, name: 'My Tasks', icon: 'fake-icon', recent: false
+                })
+            });
+
+            jasmine.Ajax.requests.at(1).respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({
+                    appId: 1001, id: 222, name: 'Involved Tasks', icon: 'fake-icon', recent: false
+                })
+            });
+
+            jasmine.Ajax.requests.at(2).respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({
+                    appId: 1001, id: 333, name: 'Queued Tasks', icon: 'fake-icon', recent: false
+                })
+            });
+
+            jasmine.Ajax.requests.at(3).respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({
+                    appId: 1001, id: 444, name: 'Completed Tasks', icon: 'fake-icon', recent: false
+                })
+            });
+        });
+
         it('should add a filter', (done) => {
             const filterFake = new FilterRepresentationModel({
                 name: 'FakeNameFilter',

@@ -108,14 +108,11 @@ export class ProcessFilterService {
                     const filters: FilterProcessRepresentationModel[] = [];
                     res.forEach((filter) => {
                         if (filter.name === runningFilter.name) {
-                            runningFilter.id = filter.id;
-                            filters.push(runningFilter);
+                            filters.push(new FilterProcessRepresentationModel({ ...filter, filter: runningFilter.filter, appId }));
                         } else if (filter.name === completedFilter.name) {
-                            completedFilter.id = filter.id;
-                            filters.push(completedFilter);
+                            filters.push(new FilterProcessRepresentationModel({ ...filter, filter: completedFilter.filter, appId }));
                         } else if (filter.name === allFilter.name) {
-                            allFilter.id = filter.id;
-                            filters.push(allFilter);
+                            filters.push(new FilterProcessRepresentationModel({ ...filter, filter: allFilter.filter, appId }));
                         }
                     });
                     observer.next(filters);
