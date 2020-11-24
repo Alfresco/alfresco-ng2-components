@@ -901,7 +901,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.filterSelection.emit(activeFilters);
     }
 
-    private resetNewFolderPagination() {
+    resetNewFolderPagination() {
         this._pagination.skipCount = 0;
         this._pagination.maxItems = this.maxItems;
     }
