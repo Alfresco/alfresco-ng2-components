@@ -29,7 +29,7 @@ export class ProcessFilterCloudModel {
     icon: string;
     index: number;
     appName: string;
-    appVersion?: number;
+    appVersion?: number | number[];
     processName: string;
     processInstanceId: string;
     initiator: IdentityUserModel[];
@@ -60,7 +60,7 @@ export class ProcessFilterCloudModel {
             this.icon = obj.icon || null;
             this.index = obj.index || null;
             this.appName = obj.appName || obj.appName === '' ? obj.appName : null;
-            this.appVersion = obj.appVersion || null;
+            this.appVersion = obj.appVersion ? obj.appVersion : (obj.appVersionMultiple instanceof Array ? obj.appVersionMultiple : null);
             this.processInstanceId = obj.processInstanceId || null;
             this.processName = obj.processName || null;
             this.initiator = obj.initiator || null;

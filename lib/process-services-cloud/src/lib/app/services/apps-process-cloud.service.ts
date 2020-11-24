@@ -31,7 +31,6 @@ export class AppsProcessCloudService {
         private apiService: AlfrescoApiService,
         private logService: LogService,
         private appConfigService: AppConfigService) {
-
         this.loadApps();
     }
 

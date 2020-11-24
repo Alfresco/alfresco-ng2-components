@@ -157,6 +157,30 @@ describe('ProcessListCloudComponent', () => {
         expect(component.rows.length).toEqual(3);
     });
 
+    it('should the payload contain the appVersion if it is defined', () => {
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+        component.appVersion = 1;
+        component.reload();
+
+        expect(component.requestNode.appVersion).toEqual('1');
+    });
+
+    it('should the payload contain all the app versions joined by a comma separator', () => {
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+        component.appVersion = [1, 2, 3];
+        component.reload();
+
+        expect(component.requestNode.appVersion).toEqual('1,2,3');
+    });
+
+    it('should the payload NOT contain any app version when appVersion does not have a value', () => {
+        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+        component.appVersion = undefined;
+        component.reload();
+
+        expect(component.requestNode.appVersion).toEqual('');
+    });
+
     it('should use the custom schemaColumn from app.config.json', () => {
         component.presetColumn = 'fakeCustomSchema';
         component.ngAfterContentInit();

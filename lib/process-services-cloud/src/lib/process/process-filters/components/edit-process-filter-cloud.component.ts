@@ -30,6 +30,7 @@ import { ProcessFilterCloudService } from '../services/process-filter-cloud.serv
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
+import { ApplicationVersionModel } from '../../../models/application-version.model';
 
 @Component({
     selector: 'adf-cloud-edit-process-filter',
@@ -114,6 +115,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     processFilterProperties: ProcessFilterProperties[] = [];
     processFilterActions: ProcessFilterAction[] = [];
     toggleFilterActions: boolean = false;
+    appVersionOptions: ProcessFilterOptions[];
 
     private onDestroy$ = new Subject<boolean>();
     isLoading: boolean = false;
@@ -219,6 +221,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             this.processDefinitionNames = [];
             this.getProcessDefinitions();
         }
+        if (this.checkForProperty('appVersionMultiple')) {
+            this.appVersionOptions = [];
+            this.getAppVersionOptions();
+        }
         const defaultProperties = this.createProcessFilterProperties(this.processFilter);
         let filteredProperties = defaultProperties.filter((filterProperty) => this.isValidProperty(this.filterProperties, filterProperty.key));
         if (!this.hasSortProperty()) {
@@ -263,6 +269,16 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.checkMandatorySortProperties();
         const defaultSortProperties = this.createProcessSortProperties();
         return defaultSortProperties.filter((sortProperty) => this.isValidProperty(this.sortProperties, sortProperty.key));
+    }
+
+    getAppVersionOptions() {
+        this.processCloudService.getApplicationVersions(this.appName)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((appVersions: ApplicationVersionModel[]) => {
+                appVersions.forEach(appVersion => {
+                    this.appVersionOptions.push({ label: appVersion.entry.version, value: appVersion.entry.version });
+                });
+            });
     }
 
     checkMandatorySortProperties() {
@@ -618,6 +634,13 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 type: 'number',
                 key: 'appVersion',
                 value: currentProcessFilter.appVersion
+            },
+            {
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_VERSION',
+                type: 'multi-select',
+                key: 'appVersionMultiple',
+                value: currentProcessFilter.appVersion,
+                options: this.appVersionOptions
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',

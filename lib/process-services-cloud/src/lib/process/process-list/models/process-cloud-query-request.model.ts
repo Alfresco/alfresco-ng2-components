@@ -19,7 +19,7 @@ import { ProcessListCloudSortingModel } from './process-list-sorting.model';
 
 export class ProcessQueryCloudRequestModel {
    appName: string;
-   appVersion?: number;
+   appVersion?: number | string;
    initiator?: null;
    id?: string;
    name?: string;
