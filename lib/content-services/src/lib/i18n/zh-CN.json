@@ -89,7 +89,9 @@
     "NO_RESULTS": "未找到结果",
     "SEARCH": "搜索",
     "SEARCH_RESULTS": "搜索结果",
-    "SELECT_LOCATION": "选择位置"
+    "SELECT_LOCATION": "选择位置",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "当搜索仍在运行时，您不能上传文件",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "用户没有向文件夹上传内容的权限"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -250,7 +252,9 @@
         "NO-DAYS": "未选择天数。",
         "INVALID-FORMAT": "格式无效",
         "INVALID-DATE": "日期无效。日期的格式必须为 '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "日期超过最大日期。"
+        "BEYOND-MAX-DATE": "日期超过最大日期。",
+        "INVALID-DATETIME": "无效的日期时间。日期时间的格式必须为“{{requiredFormat}}”",
+        "BEYOND-MAX-DATETIME": "日期时间超过了最大日期时间。"
       }
     },
     "ICONS": {

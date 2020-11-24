@@ -14,14 +14,15 @@
       "COMPLETED_BY": "Voltooid door",
       "ID": "Id",
       "INITIATOR": "Initiator",
+      "STARTED_BY": "Gestart door",
       "APP_NAME": "Toepassingsnaam",
       "BUSINESS_KEY": "Business key",
       "DESCRIPTION": "Beschrijving",
       "LAST_MODIFIED": "Laatst gewijzigd",
       "PROCESS_NAME": "Procesnaam",
       "PROCESS_DEFINITION_NAME": "Naam procesdefinitie",
-      "PARENT_TASK_ID": "ID bovenliggende taak",
-      "PROCESS_DEF_ID": "Procesdefinitie-ID",
+      "PARENT_TASK_ID": "Id bovenliggende taak",
+      "PROCESS_DEF_ID": "Procesdefinitie-id",
       "PROCESS_DEF_KEY": "Procesdefinitiesleutel",
       "APP_VERSION": "App-releaseversie"
     },
@@ -58,7 +59,7 @@
       },
       "ERROR": {
         "TITLE": "Er is een fout opgetreden",
-        "SUBTITLE": "Controleer of u machtiging hebt voor toegang tot de apps"
+        "SUBTITLE": "Controleer of u rechten hebt voor toegang tot de apps"
       }
     },
     "START_TASK": {
@@ -72,7 +73,8 @@
           "CANDIDATE_GROUP": "Kandidaatgroep",
           "FORM": "Formulier",
           "DATE": "Datum kiezen",
-          "NONE": "Geen"
+          "NONE": "Geen",
+          "PRIORITY": "Prioriteit"
         },
         "ACTION": {
           "START": "Start",
@@ -91,7 +93,13 @@
       "DUE_DATE": "Vervaldatum",
       "CREATED": "Gemaakt",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "Voltooid door"
+      "COMPLETED_BY": "Voltooid door",
+      "PRIORITY_VALUES": {
+        "NOT_SET": "Niet ingesteld",
+        "LOW": "Laag",
+        "NORMAL": "Normaal",
+        "HIGH": "Hoog"
+      }
     },
     "LIST": {
       "MESSAGES": {
@@ -101,9 +109,24 @@
       }
     }
   },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "Activiteitsnaam",
+      "ACTIVITY_TYPE": "Status",
+      "ID": "Id",
+      "COMPLETED_DATE": "Voltooiingsdatum",
+      "STARTED_DATE": "Begindatum",
+      "STATUS": "Status"
+    }
+  },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Mijn taken",
     "QUEUED_TASKS": "Taken in wachtrij",
+    "COMPLETED_TASKS": "Voltooide taken"
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "Alle servicetaken",
+    "ERRORED_TASKS": "Taken met fouten",
     "COMPLETED_TASKS": "Voltooide taken"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -145,12 +168,33 @@
       "DUE_DATE": "Einddatum",
       "SORT": "Sorteren",
       "START_DATE": "Begindatum",
-      "COMPLETED_BY": "Voltooid door"
+      "COMPLETED_BY": "Voltooid door",
+      "COMPLETED_DATE": "Voltooiingsdatum",
+      "CREATED_DATE": "Datum gemaakt",
+      "CANDIDATE_GROUPS": "Kandidaatgroepen"
     },
     "DIALOG": {
       "TITLE": "Filter opslaan als",
       "SAVE": "Opslaan",
       "CANCEL": "Annuleren"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "Toepassingsnaam",
+      "SERVICE_TASK_ID": "Servicetaak-id",
+      "SERVICE_NAME": "Servicenaam",
+      "ELEMENT_ID": "Element-id",
+      "PROCESS_DEF_NAME": "Naam procesdefinitie",
+      "PROCESS_DEF_ID": "Procesdefinitie-id",
+      "PROCESS_INSTANCE_ID": "Procesinstance-id",
+      "STATUS": "Status",
+      "DIRECTION": "Richting",
+      "ACTIVITY_NAME": "Activiteitsnaam",
+      "ACTIVITY_TYPE": "Activiteitstype",
+      "SORT": "Sorteren",
+      "STARTED_DATE": "Begindatum",
+      "COMPLETED_DATE": "Voltooiingsdatum"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -170,8 +214,9 @@
       "LAST_MODIFIED_DATE_FORM": "Laatst veranderd van",
       "LAST_MODIFIED_TO": "Laatst veranderd in",
       "PROCESS_NAME": "Procesnaam",
-      "APP_VERSION": "App-releaseversie",
+      "APP_VERSION": "App-versie",
       "STARTED_DATE": "Begindatum",
+      "STARTED_BY": "Gestart door",
       "COMPLETED_DATE": "Voltooiingsdatum",
       "DATE_RANGE": {
         "NO_DATE": "Geen datum",
@@ -277,7 +322,7 @@
       "INITIATOR": "Initiator",
       "START_DATE": "Gestart",
       "LAST_MODIFIED": "Bijgewerkt",
-      "PARENT_ID": "Bovenliggende ID",
+      "PARENT_ID": "Bovenliggende id",
       "NONE": "Geen"
     }
   },
@@ -298,5 +343,12 @@
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Formuliervelden invullen met de metagegevens van dit bestand"
+  },
+  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
+    "ASSIGNED_TO_ME": "Toegewezen aan mij",
+    "UNASSIGNED": "Niet toegewezen",
+    "LIST_OF_CANDIDATE_USERS": "Lijst met kandidaatgebruikers",
+    "ASSIGNEE": "Toegewezen persoon",
+    "ASSIGNMENT_TYPE": "Toewijzingstype"
   }
 }

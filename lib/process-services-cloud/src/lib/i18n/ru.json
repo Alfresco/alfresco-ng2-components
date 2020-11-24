@@ -14,6 +14,7 @@
       "COMPLETED_BY": "Выполнил(-а)",
       "ID": "Идентификатор",
       "INITIATOR": "Инициатор",
+      "STARTED_BY": "Запущено пользователем",
       "APP_NAME": "Имя приложения",
       "BUSINESS_KEY": "Бизнес-ключ",
       "DESCRIPTION": "Описание",
@@ -72,7 +73,8 @@
           "CANDIDATE_GROUP": "Группа-кандидат",
           "FORM": "Форма",
           "DATE": "Выбрать дату",
-          "NONE": "Нет"
+          "NONE": "Нет",
+          "PRIORITY": "Приоритет"
         },
         "ACTION": {
           "START": "Начать",
@@ -91,7 +93,13 @@
       "DUE_DATE": "Срок",
       "CREATED": "Создано",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "Выполнил(-а)"
+      "COMPLETED_BY": "Выполнил(-а)",
+      "PRIORITY_VALUES": {
+        "NOT_SET": "Не установлено",
+        "LOW": "Низкий",
+        "NORMAL": "Средний",
+        "HIGH": "Высокий"
+      }
     },
     "LIST": {
       "MESSAGES": {
@@ -101,9 +109,24 @@
       }
     }
   },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "Название действия",
+      "ACTIVITY_TYPE": "Статус",
+      "ID": "Идентификатор",
+      "COMPLETED_DATE": "Дата выполнения",
+      "STARTED_DATE": "Дата начала",
+      "STATUS": "Статус"
+    }
+  },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Мои задачи",
     "QUEUED_TASKS": "Задачи в очереди",
+    "COMPLETED_TASKS": "Завершенные задачи"
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "Все сервисные задачи",
+    "ERRORED_TASKS": "Задачи с ошибками",
     "COMPLETED_TASKS": "Завершенные задачи"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -145,12 +168,33 @@
       "DUE_DATE": "Срок выполнения",
       "SORT": "Сортировать",
       "START_DATE": "Дата начала",
-      "COMPLETED_BY": "Выполнил(-а)"
+      "COMPLETED_BY": "Выполнил(-а)",
+      "COMPLETED_DATE": "Дата завершения",
+      "CREATED_DATE": "Дата создания",
+      "CANDIDATE_GROUPS": "Группы кандидатов"
     },
     "DIALOG": {
       "TITLE": "Сохранить фильтр как",
       "SAVE": "Сохранить",
       "CANCEL": "Отмена"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "Название приложения",
+      "SERVICE_TASK_ID": "Идентификатор сервисной задачи",
+      "SERVICE_NAME": "Название сервиса",
+      "ELEMENT_ID": "Идентификатор элемента",
+      "PROCESS_DEF_NAME": "Имя определения процесса",
+      "PROCESS_DEF_ID": "Идентификатор определения процесса",
+      "PROCESS_INSTANCE_ID": "Идентификатор экземпляра процесса",
+      "STATUS": "Статус",
+      "DIRECTION": "Направление",
+      "ACTIVITY_NAME": "Название действия",
+      "ACTIVITY_TYPE": "Тип действия",
+      "SORT": "Сортировать",
+      "STARTED_DATE": "Дата начала",
+      "COMPLETED_DATE": "Дата завершения"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -170,8 +214,9 @@
       "LAST_MODIFIED_DATE_FORM": "Начальная дата последнего изменения",
       "LAST_MODIFIED_TO": "Конечная дата последнего изменения",
       "PROCESS_NAME": "Имя процесса",
-      "APP_VERSION": "Версия выпуска приложения",
+      "APP_VERSION": "Версия приложения",
       "STARTED_DATE": "Дата начала",
+      "STARTED_BY": "Запущено пользователем",
       "COMPLETED_DATE": "Дата выполнения",
       "DATE_RANGE": {
         "NO_DATE": "Нет срока",
@@ -298,5 +343,12 @@
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Заполните поля формы метаданными этого файла"
+  },
+  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
+    "ASSIGNED_TO_ME": "Назначенные мне",
+    "UNASSIGNED": "Неназначенные",
+    "LIST_OF_CANDIDATE_USERS": "Список пользователей-кандидатов",
+    "ASSIGNEE": "Исполнитель",
+    "ASSIGNMENT_TYPE": "Тип задания"
   }
 }

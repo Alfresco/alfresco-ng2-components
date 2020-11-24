@@ -105,7 +105,8 @@
     "PEOPLE_CLOUD": "Componente Cloud persone",
     "GROUPS_CLOUD": "Componente Cloud gruppi",
     "CONFIRM-DIALOG": "Finestra di conferma",
-    "COMMUNITY": "Community"
+    "COMMUNITY": "Community",
+    "SERVICE_TASK_LIST": "Elenco compiti servizio"
   },
   "TRASHCAN": {
     "ACTIONS": {

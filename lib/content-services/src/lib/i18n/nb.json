@@ -89,7 +89,9 @@
     "NO_RESULTS": "Ingen resultater funnet",
     "SEARCH": "Søk",
     "SEARCH_RESULTS": "Søkeresultater",
-    "SELECT_LOCATION": "Velg plassering"
+    "SELECT_LOCATION": "Velg plassering",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Du kan ikke laste opp en fil mens et søk fremdeles pågår",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Brukeren har ikke tillatelse til å laste opp innhold til mappen"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -250,7 +252,9 @@
         "NO-DAYS": "Ingen dager valgt.",
         "INVALID-FORMAT": "Ugyldig format",
         "INVALID-DATE": "Ugyldig dato. Datoen må være i formatet '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "Datoen er utover maksimumsdato."
+        "BEYOND-MAX-DATE": "Datoen er utover maksimumsdato.",
+        "INVALID-DATETIME": "Ugyldig dato/klokkeslett. Dato/klokkeslett må være i formatet '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "Dato/klokkeslett overgår maksimum dato/klokkeslett."
       }
     },
     "ICONS": {

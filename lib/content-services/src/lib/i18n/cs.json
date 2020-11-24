@@ -89,7 +89,9 @@
     "NO_RESULTS": "Nebyly nalezeny žádné výsledky",
     "SEARCH": "Hledat",
     "SEARCH_RESULTS": "Výsledky hledání",
-    "SELECT_LOCATION": "Vybrat umístění"
+    "SELECT_LOCATION": "Vybrat umístění",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Soubor nelze nahrát, když probíhá hledání.",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Uživatel nemá oprávnění nahrávat obsah do složky."
   },
   "OPERATION": {
     "SUCCESS": {
@@ -250,7 +252,9 @@
         "NO-DAYS": "Nejsou určeny žádné dny.",
         "INVALID-FORMAT": "Neplatný formát",
         "INVALID-DATE": "Neplatné datum. Datum musí být ve formátu '{{ requiredFormat }}'.",
-        "BEYOND-MAX-DATE": "Datum nesplňuje limit pro nejvzdálenější datum."
+        "BEYOND-MAX-DATE": "Datum nesplňuje limit pro nejvzdálenější datum.",
+        "INVALID-DATETIME": "Neplatné datum a čas. Datum a čas musí být ve formátu ‚{{ requiredFormat }}.",
+        "BEYOND-MAX-DATETIME": "Datum a čas překračuje maximální datum a čas."
       }
     },
     "ICONS": {

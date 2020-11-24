@@ -105,7 +105,8 @@
     "PEOPLE_CLOUD": "Ihmispilvi-komponentti",
     "GROUPS_CLOUD": "Ryhmäpilvi-komponentti",
     "CONFIRM-DIALOG": "Vahvistusvalintaikkuna",
-    "COMMUNITY": "Community"
+    "COMMUNITY": "Community",
+    "SERVICE_TASK_LIST": "Palvelutehtäväluettelo"
   },
   "TRASHCAN": {
     "ACTIONS": {
