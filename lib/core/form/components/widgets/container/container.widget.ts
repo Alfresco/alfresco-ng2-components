@@ -74,73 +74,34 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
      * Serializes column fields
      */
     private getFields(): FormFieldModel[] {
-        const { size, rowspanOffset, numberOfColumnElementsToBeProcessedRemaining , fields } = this.initializeHelpers();
-
-        for (let i = 0; i < size; i++) {
-            let fieldExist = false;
-            let columnIndex = 0;
-            while (columnIndex < this.numberOfColumns) {
-                let field: FormFieldModel;
-                if (rowspanOffset[columnIndex] > 0) {
-                    this.decreaseRowspanOffsetForColumn(rowspanOffset, columnIndex);
+        const serialisedFormFields: FormFieldModel[] = [];
+        const maxColumnFieldsSize = this.getMaxColumnFieldSize();
+        for (let rowIndex = 0; rowIndex < maxColumnFieldsSize; rowIndex++) {
+            this.content?.columns.flatMap((currentColumn) => {
+                if (!!currentColumn?.fields[rowIndex]) {
+                    serialisedFormFields.push(currentColumn?.fields[rowIndex]);
                 } else {
-                    field = this.getNextFieldToAdd(columnIndex, numberOfColumnElementsToBeProcessedRemaining, field);
-                    fields.push(field);
-                    if (field) {
-                        fieldExist = true;
+                    const firstRowElementColSpan = currentColumn?.fields[0]?.colspan;
+                    if (!!firstRowElementColSpan && rowIndex > 0 ) {
+                        for (let i = 0; i < firstRowElementColSpan; i++) {
+                            serialisedFormFields.push(null);
+                        }
                     }
-                    this.updateColumnsRowspanOffsetWithFieldRowspan(field, rowspanOffset, columnIndex);
-                    numberOfColumnElementsToBeProcessedRemaining[columnIndex] = numberOfColumnElementsToBeProcessedRemaining[columnIndex] - 1;
                 }
-                columnIndex = columnIndex + (field?.colspan || 1);
-            }
-            if (!fieldExist) {
-                i = this.deleteLastEmptyRowAndExit(fields, i, size);
-            }
+            });
         }
-        return fields;
+
+        return serialisedFormFields;
     }
 
-    private updateColumnsRowspanOffsetWithFieldRowspan(field: FormFieldModel, rowspanOffset: any[], columnIndex: number) {
-        for (let k = 0; k < (field?.colspan || 1); k++) {
-            rowspanOffset[columnIndex + k] = field?.rowspan > 0 ? field?.rowspan - 1 : 0;
+    private getMaxColumnFieldSize(): number {
+        let maxFieldSize = 0;
+        if (this.content?.columns?.length > 0) {
+            maxFieldSize = this.content?.columns?.reduce((prevColumn, currentColumn) => {
+                return currentColumn.fields.length > prevColumn?.fields?.length ? currentColumn : prevColumn;
+            })?.fields?.length;
         }
-    }
-
-    private getNextFieldToAdd(columnIndex: number, numberOfColumnElementsToBeProcessedRemaining: any[], field: FormFieldModel): FormFieldModel {
-        const rowToCompute = (this.content.columns[columnIndex]?.fields?.length || 0) - numberOfColumnElementsToBeProcessedRemaining[columnIndex];
-        field = this.content.columns[columnIndex]?.fields[rowToCompute];
-        return field;
-    }
-
-    private decreaseRowspanOffsetForColumn(rowspanOffset: any[], columnIndex: number) {
-        rowspanOffset[columnIndex] = rowspanOffset[columnIndex] - 1;
-    }
-
-    private initializeHelpers(): {
-        size: number;
-        rowspanOffset: number[];
-        numberOfColumnElementsToBeProcessedRemaining: number[];
-        fields: FormFieldModel[];
-    } {
-        const fields = [];
-        const numberOfColumnElementsToBeProcessedRemaining: number[] = [];
-        const rowspanOffset: number[] = [];
-        let size = 0;
-        for (let i = 0; i < this.numberOfColumns; i++) {
-            numberOfColumnElementsToBeProcessedRemaining.push(this.content.columns[i]?.fields?.length || 0);
-            rowspanOffset[i] = 0;
-            size += (this.content.columns[i]?.fields?.length || 0);
-        }
-        return { size, rowspanOffset, numberOfColumnElementsToBeProcessedRemaining, fields };
-    }
-
-    private deleteLastEmptyRowAndExit(fields: FormFieldModel[], i: number, size: number) {
-        for (let j = 0; j < this.numberOfColumns; j++) {
-            fields.pop();
-        }
-        i = size;
-        return i;
+        return maxFieldSize;
     }
 
     /**
