@@ -154,7 +154,7 @@
     "mdast-util-toc": "^5.0.3",
     "mdast-zone": "^4.0.1",
     "mini-css-extract-plugin": "^0.11.2",
-    "nconf": "^0.10.0",
+    "nconf": "^0.11.0",
     "ng-packagr": "^10.1.2",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "protractor": "^7.0.0",
