@@ -217,6 +217,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Output()
     currentFolder: EventEmitter<Node> = new EventEmitter<Node>();
 
+    @Output()
+    folderLoaded: EventEmitter<any> = new EventEmitter<any>();
+
     @ViewChild('documentList', { static: true })
     documentList: DocumentListComponent;
 
@@ -519,6 +522,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         if (!this.showingSearchResults) {
             this.attemptNodeSelection(this.documentList.folderNode);
         }
+        this.folderLoaded.emit();
     }
 
     /**

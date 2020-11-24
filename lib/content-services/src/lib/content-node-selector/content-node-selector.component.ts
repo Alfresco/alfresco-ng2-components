@@ -36,6 +36,7 @@ export class ContentNodeSelectorComponent {
     currentDirectoryId: string;
     showingSearch = false;
     hasAllowableOperations = false;
+    isLoading = true;
 
     constructor(private translation: TranslationService,
                 private contentService: ContentService,
@@ -61,6 +62,7 @@ export class ContentNodeSelectorComponent {
 
     onNavigationChange(pathElement: NodeEntryEvent) {
         this.currentDirectoryId = pathElement.value.id;
+        this.isLoading = true;
     }
 
     onClick(): void {
@@ -100,5 +102,9 @@ export class ContentNodeSelectorComponent {
 
     isNotAllowedToUpload() {
         return this.showingSearch || !this.hasAllowableOperations;
+    }
+
+    onFolderLoaded() {
+        this.isLoading = false;
     }
 }

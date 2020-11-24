@@ -303,12 +303,25 @@ describe('ContentNodeSelectorComponent', () => {
             component.data.showLocalUploadButton = true;
             component.hasAllowableOperations = false;
             component.showingSearch = false;
+            component.isLoading = false;
 
             fixture.detectChanges();
             const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
 
             expect(warnningMessage).not.toBeNull();
             expect(warnningMessage.nativeElement.innerText).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE');
+        });
+
+        it('should not be able to show warning message while loading documents', () => {
+            component.data.showLocalUploadButton = true;
+            component.hasAllowableOperations = false;
+            component.showingSearch = false;
+            component.isLoading = true;
+
+            fixture.detectChanges();
+            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
+
+            expect(warnningMessage).toBeNull();
         });
     });
 });
