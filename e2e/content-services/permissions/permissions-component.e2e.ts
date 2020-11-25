@@ -317,6 +317,12 @@ describe('Permissions Component', () => {
             await uploadActions.uploadFile(fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
             await uploadActions.uploadFile(fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
 
+            await apiService.login(filePermissionUser.email, filePermissionUser.password);
+            await apiService.getInstance().core.nodesApi.getNodeChildren(roleConsumerFolder.entry.id);
+            await apiService.getInstance().core.nodesApi.getNodeChildren(roleContributorFolder.entry.id);
+            await apiService.getInstance().core.nodesApi.getNodeChildren(roleCoordinatorFolder.entry.id);
+            await apiService.getInstance().core.nodesApi.getNodeChildren(roleCollaboratorFolder.entry.id);
+            await apiService.getInstance().core.nodesApi.getNodeChildren(roleEditorFolder.entry.id);
             await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
         });
 
