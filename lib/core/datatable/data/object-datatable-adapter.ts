@@ -27,6 +27,7 @@ import { Subject } from 'rxjs';
 export class ObjectDataTableAdapter implements DataTableAdapter {
 
     private _sorting: DataSorting;
+    private _sortingMode: string;
     private _rows: DataRow[];
     private _columns: DataColumn[];
 
@@ -56,7 +57,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         return schema;
     }
 
-    constructor(data: any[] = [], schema: DataColumn[] = []) {
+    constructor(data: any[] = [], schema: DataColumn[] = [], sortingMode?: string) {
         this._rows = [];
         this._columns = [];
 
@@ -76,6 +77,10 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
             if (sortable.length > 0) {
                 this.sort(sortable[0].key, 'asc');
             }
+        }
+
+        if (sortingMode) {
+            this.setSortingMode(sortingMode);
         }
 
         this.rowsChanged = new Subject<Array<DataRow>>();
@@ -99,7 +104,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         this._columns = columns || [];
     }
 
-    getValue(row: DataRow, col: DataColumn, resolver?: (row: DataRow, col: DataColumn) => any ): any {
+    getValue(row: DataRow, col: DataColumn, resolver?: (row: DataRow, col: DataColumn) => any): any {
         if (!row) {
             throw new Error('Row not found');
         }
@@ -119,6 +124,14 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         }
 
         return value;
+    }
+
+    getSortingMode(): string {
+        return this._sortingMode;
+    }
+
+    setSortingMode(sortingMode: string) {
+        this._sortingMode = sortingMode;
     }
 
     getSorting(): DataSorting {
@@ -152,11 +165,14 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     }
 
     sort(key?: string, direction?: string): void {
-        const sorting = this._sorting || new DataSorting();
-        if (key) {
-            sorting.key = key;
-            sorting.direction = direction || 'asc';
+        if (this.getSortingMode() !== 'server') {
+            const sorting = this._sorting || new DataSorting();
+            if (key) {
+                sorting.key = key;
+                sorting.direction = direction || 'asc';
+            }
+            this.setSorting(sorting);
         }
-        this.setSorting(sorting);
+
     }
 }
