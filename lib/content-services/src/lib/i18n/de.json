@@ -89,7 +89,9 @@
     "NO_RESULTS": "Keine Ergebnisse gefunden",
     "SEARCH": "Suchen",
     "SEARCH_RESULTS": "Ergebnisse durchsuchen",
-    "SELECT_LOCATION": "Speicherort auswählen"
+    "SELECT_LOCATION": "Speicherort auswählen",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Sie können während einer laufenden Suche keine Datei hochladen.",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Benutzer besitzt keine Berechtigung, um Inhalt in Ordner hochzuladen"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -250,7 +252,9 @@
         "NO-DAYS": "Keine Tage ausgewählt.",
         "INVALID-FORMAT": "Unzulässiges Format",
         "INVALID-DATE": "Unzulässiges Datum. Das Datum muss das Format '{{ requiredFormat }}' haben.",
-        "BEYOND-MAX-DATE": "Das Datum liegt nach dem maximal zulässigen Datum."
+        "BEYOND-MAX-DATE": "Das Datum liegt nach dem maximal zulässigen Datum.",
+        "INVALID-DATETIME": "Datum/Uhrzeit ungültig. Datum/Uhrzeit muss das Format '{{ requiredFormat }}' haben.",
+        "BEYOND-MAX-DATETIME": "Datum/Uhrzeit liegt über dem Höchstwert für Datum/Uhrzeit."
       }
     },
     "ICONS": {

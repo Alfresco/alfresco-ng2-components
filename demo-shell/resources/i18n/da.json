@@ -105,7 +105,8 @@
     "PEOPLE_CLOUD": "Personcloudkomponent",
     "GROUPS_CLOUD": "Gruppecloudkomponent",
     "CONFIRM-DIALOG": "Bekræftelsesdialogboks",
-    "COMMUNITY": "Community"
+    "COMMUNITY": "Community",
+    "SERVICE_TASK_LIST": "Opgaveliste for tjeneste"
   },
   "TRASHCAN": {
     "ACTIONS": {

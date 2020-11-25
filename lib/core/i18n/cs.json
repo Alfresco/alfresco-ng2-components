@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Zadali jste neznámé uživatelské jméno nebo heslo",
       "LOGIN-ERROR-PROVIDERS": "Poskytovatele nelze ponechat nedefinované",
       "LOGIN-ERROR-CORS": "Výjimka CORS. Zkontrolujte konfiguraci serveru.",
-      "LOGIN-ERROR-CSRF": "Výjimka CSRF. Použijte u parametru „app.config.json“ hodnotu \"disableCSRF\": true.",
+      "LOGIN-ERROR-CSRF": "Výjimka CSRF – Nastavte parametr „disableCSRF“ v souboru app.config.json na hodnotu true.",
       "LOGIN-ECM-LICENSE": "Úložiště Alfresco Content Services je v režimu „Pouze ke čtení“.",
       "SSO-WRONG-CONFIGURATION": "Server ověrování pomocí jednotného přihlášení je nedostupný"
     },
@@ -422,6 +422,16 @@
     "502": {
       "TITLE": "Došlo k chybě.",
       "DESCRIPTION": "Chybná brána. Zkuste to znovu nebo se obraťte na podporu IT [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zpět domů"
+      }
+    },
+    "503": {
+      "TITLE": "Došlo k chybě.",
+      "DESCRIPTION": "Služba dočasně nedostupná [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },

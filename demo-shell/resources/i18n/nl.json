@@ -26,7 +26,7 @@
     },
     "PERSONAL-FILES": "Persoonlijke bestanden",
     "WARN-MULTIPLE-UPLOADS": "Waarschuwing weergeven bij meerdere uploads.",
-    "CUSTOM-PERMISSION-MESSAGE": "Aangepast machtigingsbericht inschakelen",
+    "CUSTOM-PERMISSION-MESSAGE": "Aangepast rechtenbericht inschakelen",
     "MEDIUM-TIME-FORMAT": "Middellange tijdnotatie voor lijst met documenten inschakelen",
     "SEARCH": {
       "RADIO": {
@@ -105,7 +105,8 @@
     "PEOPLE_CLOUD": "Component Personencloud",
     "GROUPS_CLOUD": "Component Groepencloud",
     "CONFIRM-DIALOG": "Bevestigingsdialoogvenster",
-    "COMMUNITY": "Community"
+    "COMMUNITY": "Community",
+    "SERVICE_TASK_LIST": "Lijst met servicetaken"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -337,7 +338,7 @@
       "TITLE": "Titel",
       "ICON": "Pictogram",
       "TASK_ID": "Taak-id",
-      "PROCESS_ID": "Procesinstantie-ID",
+      "PROCESS_ID": "Procesinstantie-id",
       "ACTION_TYPE": "Actietype"
     }
   }

@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Le nom d'utilisateur ou le mot de passe entré est inconnu",
       "LOGIN-ERROR-PROVIDERS": "Le fournisseur ne peut pas être non défini",
       "LOGIN-ERROR-CORS": "Exception CORS, vérifiez la configuration du serveur",
-      "LOGIN-ERROR-CSRF": "Exception CSRF, set \"disableCSRF\": true in app.config.json",
+      "LOGIN-ERROR-CSRF": "Exception CSRF, définir \"disableCSRF\": true dans app.config.json",
       "LOGIN-ECM-LICENSE": "L'entrepôt Alfresco Content Services est en lecture seule",
       "SSO-WRONG-CONFIGURATION": "Serveur d'authentification SSO inaccessible"
     },
@@ -422,6 +422,16 @@
     "502": {
       "TITLE": "Une erreur est survenue.",
       "DESCRIPTION": "Passerelle incorrecte. Réessayez ou contactez le service informatique [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Retour à l'accueil"
+      }
+    },
+    "503": {
+      "TITLE": "Une erreur est survenue.",
+      "DESCRIPTION": "Service temporairement indisponible [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },

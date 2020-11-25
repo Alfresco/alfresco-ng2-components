@@ -105,7 +105,8 @@
     "PEOPLE_CLOUD": "Компонент облака «Пользователи»",
     "GROUPS_CLOUD": "Компонент облака «Группы»",
     "CONFIRM-DIALOG": "Диалоговое окно подтверждения",
-    "COMMUNITY": "Community"
+    "COMMUNITY": "Community",
+    "SERVICE_TASK_LIST": "Список сервисных задач"
   },
   "TRASHCAN": {
     "ACTIONS": {

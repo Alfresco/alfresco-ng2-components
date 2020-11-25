@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Nome utente o password sconosciuti",
       "LOGIN-ERROR-PROVIDERS": "I provider non possono essere non definiti",
       "LOGIN-ERROR-CORS": "Eccezione CORS, controlla la configurazione del server",
-      "LOGIN-ERROR-CSRF": "Eccezione CSRF, imposta \"disableCSRF\": true in app.config.json",
+      "LOGIN-ERROR-CSRF": "Eccezione CSRF, impostare \"disableCSRF\": true in app.config.json",
       "LOGIN-ECM-LICENSE": "Il repository Alfresco Content Services è in modalità di sola lettura",
       "SSO-WRONG-CONFIGURATION": "Server di autenticazione SSO non raggiungibile"
     },
@@ -422,6 +422,16 @@
     "502": {
       "TITLE": "Si è verificato un errore.",
       "DESCRIPTION": "Gateway non valido. Riprovare o contattare il supporto IT [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Torna alla home"
+      }
+    },
+    "503": {
+      "TITLE": "Si è verificato un errore.",
+      "DESCRIPTION": "Servizio temporaneamente non disponibile [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },

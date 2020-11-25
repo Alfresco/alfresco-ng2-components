@@ -89,7 +89,9 @@
     "NO_RESULTS": "Inga resultat hittades",
     "SEARCH": "Sök",
     "SEARCH_RESULTS": "Sökresultat",
-    "SELECT_LOCATION": "Välj plats"
+    "SELECT_LOCATION": "Välj plats",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Du kan inte ladda upp en fil medan en sökning pågår",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Användaren har inte tillstånd att ladda upp innehåll till mappen"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -250,7 +252,9 @@
         "NO-DAYS": "Inga dagar valda",
         "INVALID-FORMAT": "Ogiltigt format",
         "INVALID-DATE": "Ogiltigt datum. Datumet måste vara i formatet '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "Datumet ligger bortom maximidatum"
+        "BEYOND-MAX-DATE": "Datumet ligger bortom maximidatum",
+        "INVALID-DATETIME": "Ogiltig datumtid. Datumtiden måste ha formatet '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "Datumtiden är bortom den maximala datumtiden."
       }
     },
     "ICONS": {

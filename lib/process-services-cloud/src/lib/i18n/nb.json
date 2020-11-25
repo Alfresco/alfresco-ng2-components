@@ -14,6 +14,7 @@
       "COMPLETED_BY": "Fullført av",
       "ID": "ID",
       "INITIATOR": "Oppretter",
+      "STARTED_BY": "Startet av",
       "APP_NAME": "Programnavn",
       "BUSINESS_KEY": "Forretningsnøkkel",
       "DESCRIPTION": "Beskrivelse",
@@ -72,7 +73,8 @@
           "CANDIDATE_GROUP": "Kandidatgruppe",
           "FORM": "Skjema",
           "DATE": "Velg dato",
-          "NONE": "Ingen"
+          "NONE": "Ingen",
+          "PRIORITY": "Prioritet"
         },
         "ACTION": {
           "START": "Start",
@@ -91,7 +93,13 @@
       "DUE_DATE": "Forfallsdato",
       "CREATED": "Opprettet",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "Fullført av"
+      "COMPLETED_BY": "Fullført av",
+      "PRIORITY_VALUES": {
+        "NOT_SET": "Ikke angitt",
+        "LOW": "Lav",
+        "NORMAL": "Normal",
+        "HIGH": "Høy"
+      }
     },
     "LIST": {
       "MESSAGES": {
@@ -101,9 +109,24 @@
       }
     }
   },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "Aktivitetsnavn",
+      "ACTIVITY_TYPE": "Status",
+      "ID": "ID",
+      "COMPLETED_DATE": "Fullført dato",
+      "STARTED_DATE": "Startet dato",
+      "STATUS": "Status"
+    }
+  },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Mine oppgaver",
     "QUEUED_TASKS": "Oppgaver i kø",
+    "COMPLETED_TASKS": "Fullførte oppgaver"
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "Alle serviceoppgaver",
+    "ERRORED_TASKS": "Mislykkede oppgaver",
     "COMPLETED_TASKS": "Fullførte oppgaver"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -145,12 +168,33 @@
       "DUE_DATE": "Forfallsdato",
       "SORT": "Sorter",
       "START_DATE": "Startdato",
-      "COMPLETED_BY": "Fullført av"
+      "COMPLETED_BY": "Fullført av",
+      "COMPLETED_DATE": "Fullført dato",
+      "CREATED_DATE": "Opprettet dato",
+      "CANDIDATE_GROUPS": "Kandidatgrupper"
     },
     "DIALOG": {
       "TITLE": "Lagre filter som",
       "SAVE": "Lagre",
       "CANCEL": "Avbryt"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "Programnavn",
+      "SERVICE_TASK_ID": "Serviceoppgave-ID",
+      "SERVICE_NAME": "Servicenavn",
+      "ELEMENT_ID": "Element-ID",
+      "PROCESS_DEF_NAME": "Prosessdefinisjonsnavn",
+      "PROCESS_DEF_ID": "Prosessdefinisjons-ID",
+      "PROCESS_INSTANCE_ID": "Prosessforekomst-ID",
+      "STATUS": "Status",
+      "DIRECTION": "Retning",
+      "ACTIVITY_NAME": "Aktivitetsnavn",
+      "ACTIVITY_TYPE": "Aktivitetstype",
+      "SORT": "Sorter",
+      "STARTED_DATE": "Startet dato",
+      "COMPLETED_DATE": "Fullført dato"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -172,6 +216,7 @@
       "PROCESS_NAME": "Prosessnavn",
       "APP_VERSION": "Programutgaveversjon",
       "STARTED_DATE": "Startet dato",
+      "STARTED_BY": "Startet av",
       "COMPLETED_DATE": "Fullført dato",
       "DATE_RANGE": {
         "NO_DATE": "Ingen dato",
@@ -298,5 +343,12 @@
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Fyll ut skjemafeltene med denne filens metadata"
+  },
+  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
+    "ASSIGNED_TO_ME": "Tilordnet meg",
+    "UNASSIGNED": "Ikke tilordnet",
+    "LIST_OF_CANDIDATE_USERS": "Liste over kandidatbrukere",
+    "ASSIGNEE": "Tilordnet",
+    "ASSIGNMENT_TYPE": "Tilordningstype"
   }
 }

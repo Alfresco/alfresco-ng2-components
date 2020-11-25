@@ -89,7 +89,9 @@
     "NO_RESULTS": "Der blev ikke fundet nogen resultater",
     "SEARCH": "Søg",
     "SEARCH_RESULTS": "Søgeresultater",
-    "SELECT_LOCATION": "Vælg placering"
+    "SELECT_LOCATION": "Vælg placering",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Du kan ikke uploade en fil sideløbende med en søgning",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Bruger har ikke tilladelse til at uploade indhold til mappen"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -250,7 +252,9 @@
         "NO-DAYS": "Der er ikke valgt nogen dage.",
         "INVALID-FORMAT": "Ugyldigt format",
         "INVALID-DATE": "Ugyldig dato. Datoen skal være i formatet '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "Datoen er senere end tilladt."
+        "BEYOND-MAX-DATE": "Datoen er senere end tilladt.",
+        "INVALID-DATETIME": "Ugyldig dato/klokkeslæt. Dato/klokkeslæt skal være i formatet '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "Maks. dato/klokkeslæt er nået."
       }
     },
     "ICONS": {
