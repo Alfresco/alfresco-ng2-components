@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { Node, NodeEntry } from '@alfresco/js-api';
-import { ContentNodeSelectorPanelComponent, UploadModule } from '@alfresco/adf-content-services';
 import { By } from '@angular/platform-browser';
 import { setupTestBed, SitesService, ContentService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
@@ -29,16 +28,24 @@ import { DocumentListService } from '../document-list/services/document-list.ser
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
+import { UploadModule } from '../upload';
+import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 
 describe('ContentNodeSelectorComponent', () => {
-
     let component: ContentNodeSelectorComponent;
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;
+
+    const dialogRef = {
+        keydownEvents: () => of(null),
+        backdropClick: () => of(null),
+        close: jasmine.createSpy('close')
+    };
+
     const data: any = {
         title: 'Choose along citizen...',
         actionName: 'choose',
         select: new EventEmitter<Node>(),
-        rowFilter: (shareDataRow: ShareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
+        rowFilter: (shareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
         imageResolver: () => 'piccolo',
         currentFolderId: 'cat-girl-nuku-nuku',
         selectionMode: 'multiple',
@@ -61,10 +68,12 @@ describe('ContentNodeSelectorComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule,
+            MatDialogModule,
             UploadModule
         ],
         providers: [
-            { provide: MAT_DIALOG_DATA, useValue: data }
+            { provide: MAT_DIALOG_DATA, useValue: data },
+            { provide: MatDialogRef, useValue: dialogRef }
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
