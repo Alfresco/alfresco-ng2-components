@@ -23,7 +23,6 @@ import {
     BrowserActions,
     LoginPage,
     NotificationHistoryPage,
-    SearchService,
     StringUtil,
     UploadActions,
     UserModel,
@@ -47,7 +46,6 @@ describe('Permissions Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
-    const searchService = new SearchService(apiService);
 
     const contentList = contentServicesPage.getDocumentList();
     const viewerPage = new ViewerPage();
@@ -86,8 +84,6 @@ describe('Permissions Component', () => {
         await usersActions.createUser(fileOwnerUser);
         await usersActions.createUser(filePermissionUser);
         await apiService.getInstance().core.groupsApi.createGroup(groupBody);
-
-        await searchService.isSearchable(filePermissionUser.firstName, true);
     });
 
     describe('Inherit and assigning permissions', () => {

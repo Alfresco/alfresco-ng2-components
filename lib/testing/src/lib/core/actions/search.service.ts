@@ -27,8 +27,8 @@ export class SearchService {
         this.apiService = apiService;
     }
 
-    async isSearchable(name: string, searchUser = false): Promise<any> {
-        const query =  searchUser ? this.createSearchUserQuery(name) : this.createSearchQuery(name);
+    async isSearchable(name: string): Promise<any> {
+        const query = this.createSearchQuery(name);
 
         const predicate = (result: ResultSetPaging) => {
             return !!result?.list?.entries?.find(({ entry }) => entry.name === name);
@@ -69,31 +69,6 @@ export class SearchService {
                 },
                 {
                     "query": "NOT cm:creator:System"
-                }
-            ],
-            "scope": {
-                "locations": [
-                    "nodes"
-                ]
-            }
-        }`;
-    }
-
-    private createSearchUserQuery(name: string) {
-        return `{
-            "query": {
-                "query": "(email:*${name}* OR firstName:*${name}* OR lastName:*${name}* OR authorityName:*${name}* OR displayName:*${name}*) AND ANAME:('0/APP.DEFAULT')*"
-            },
-            "include": [
-                "properties"
-            ],
-            "paging": {
-                "maxItems": 20,
-                "skipCount": 0
-            },
-            "filterQueries": [
-                {
-                    "query": "TYPE:'cm:authority'"
                 }
             ],
             "scope": {
