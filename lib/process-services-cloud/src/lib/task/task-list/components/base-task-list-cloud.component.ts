@@ -115,6 +115,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     selectedInstances: any[];
     formattedSorting: any[];
     private defaultSorting = { key: 'startDate', direction: 'desc' };
+    boundReplacePriorityValues: Function;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -131,6 +132,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
             totalItems: 0
         });
 
+        this.boundReplacePriorityValues = this.replacePriorityValues.bind(this);
     }
 
     ngOnInit() {
