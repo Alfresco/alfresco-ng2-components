@@ -175,7 +175,7 @@
                                     [column]="col"
                                     [row]="row"
                                     [resolverFn]="resolverFn"
-                                    [tooltip]="getCellTooltip(row, col, resolverFn)">
+                                    [tooltip]="getCellTooltip(row, col)">
                                 </adf-datatable-cell>
                             </div>
                             <div *ngSwitchCase="'json'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value">
