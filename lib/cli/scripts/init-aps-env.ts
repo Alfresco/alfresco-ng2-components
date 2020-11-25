@@ -76,7 +76,7 @@ async function main() {
                     if (users[i].username.includes(defaultUser)) {
                         console.log(`***** Step verify default app already imported for ${defaultUser} *****`);
                         const isDefaultAppDepl = await isDefaultAppDeployed();
-                        if (isDefaultAppDepl != undefined && !isDefaultAppDepl) {
+                        if (isDefaultAppDepl !== undefined && !isDefaultAppDepl) {
                             const appDefinition = await importPublishApp();
                             await deployApp(appDefinition.appDefinition.id);
                         } else {
@@ -324,10 +324,11 @@ async function addContentRepoWithBasic(tenantId, name) {
         name: name,
         repositoryUrl: `${program.host}/alfresco`,
         shareUrl: `${program.host}/share`,
-        sitesFolder: '',
+        // sitesFolder: '', not working on activiti 1.11.1.1
         tenantId: tenantId,
         version: "6.1.1"
     };
+    
 
     try {
         const content = await alfrescoJsApi.oauth2Auth.callCustomApi(
