@@ -137,8 +137,8 @@
                             <div *ngSwitchCase="'icon'" class="adf-cell-value">
                                 <mat-icon>{{ data.getValue(row, col) }}</mat-icon>
                             </div>
-                            <div *ngSwitchCase="'date'" class="adf-cell-value" [attr.tabindex]="data.getValue(row, col)? 0 : -1"
-                                 [attr.data-automation-id]="'date_' + (data.getValue(row, col) | adfLocalizedDate: 'medium') ">
+                            <div *ngSwitchCase="'date'" class="adf-cell-value" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
+                                 [attr.data-automation-id]="'date_' + (data.getValue(row, col, resolverFn) | adfLocalizedDate: 'medium') ">
                                 <adf-date-cell class="adf-datatable-center-date-column-ie"
                                     [data]="data"
                                     [column]="col"
@@ -147,8 +147,8 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-date-cell>
                             </div>
-                            <div *ngSwitchCase="'location'" [attr.tabindex]="data.getValue(row, col)? 0 : -1"  class="adf-cell-value"
-                                 [attr.data-automation-id]="'location' + data.getValue(row, col)">
+                            <div *ngSwitchCase="'location'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"  class="adf-cell-value"
+                                 [attr.data-automation-id]="'location' + data.getValue(row, col, resolverFn)">
                                 <adf-location-cell
                                     [data]="data"
                                     [column]="col"
@@ -157,8 +157,8 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-location-cell>
                             </div>
-                            <div *ngSwitchCase="'fileSize'" [attr.tabindex]="data.getValue(row, col)? 0 : -1" class="adf-cell-value"
-                                 [attr.data-automation-id]="'fileSize_' + data.getValue(row, col)">
+                            <div *ngSwitchCase="'fileSize'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value"
+                                 [attr.data-automation-id]="'fileSize_' + data.getValue(row, col, resolverFn)">
                                 <adf-filesize-cell class="adf-datatable-center-size-column-ie"
                                     [data]="data"
                                     [column]="col"
@@ -167,18 +167,18 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-filesize-cell>
                             </div>
-                            <div *ngSwitchCase="'text'" [attr.tabindex]="data.getValue(row, col)? 0 : -1"  class="adf-cell-value"
-                                 [attr.data-automation-id]="'text_' + data.getValue(row, col)">
+                            <div *ngSwitchCase="'text'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"  class="adf-cell-value"
+                                 [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
                                 <adf-datatable-cell
                                     [copyContent]="col.copyContent"
                                     [data]="data"
                                     [column]="col"
                                     [row]="row"
                                     [resolverFn]="resolverFn"
-                                    [tooltip]="getCellTooltip(row, col)">
+                                    [tooltip]="getCellTooltip(row, col, resolverFn)">
                                 </adf-datatable-cell>
                             </div>
-                            <div *ngSwitchCase="'json'" [attr.tabindex]="data.getValue(row, col)? 0 : -1" class="adf-cell-value">
+                            <div *ngSwitchCase="'json'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value">
                                 <adf-json-cell
                                     [editable]="col.editable"
                                     [data]="data"
