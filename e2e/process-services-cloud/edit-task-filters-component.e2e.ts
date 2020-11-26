@@ -104,6 +104,13 @@ describe('Edit task filters cloud', () => {
         await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
     });
 
+    it('[C588499] Filter tasks by CompletedBy', async () => {
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
+        await tasksCloudDemoPage.editTaskFilterCloud.setCompletedBy(`${testUser.firstName} ${testUser.lastName}`);
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
+    });
+
     it('[C306896] Delete Save and Save as actions should be displayed and disabled when clicking on default filter header', async () => {
         await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
