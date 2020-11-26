@@ -82,7 +82,6 @@
     [showLoginActions]="showFooter"
     [showRememberMe]="showFooter && showRememberMe"
     copyrightText="{{ 'application.copyright' | adfAppConfig }}"
-    (success)="onLogin()"
     (error)="onError($event)">
     <div class="app-mobile-settings">
         <p>

@@ -16,7 +16,6 @@
  */
 
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { LogService } from '@alfresco/adf-core';
 
 @Component({
@@ -26,7 +25,7 @@ import { LogService } from '@alfresco/adf-core';
 })
 export class LoginComponent {
 
-    customSuccessRouteURI = '';
+    customSuccessRouteURI = 'home';
     customLogoImageURL = './assets/images/alfresco-logo.svg';
 
     disableCsrf = false;
@@ -35,12 +34,7 @@ export class LoginComponent {
     customSuccessRoute = false;
     customLogoImage = false;
 
-    constructor(private router: Router,
-                private logService: LogService) {
-    }
-
-    onLogin() {
-        this.router.navigate(['/home']);
+    constructor(private logService: LogService) {
     }
 
     onError(err: any) {
