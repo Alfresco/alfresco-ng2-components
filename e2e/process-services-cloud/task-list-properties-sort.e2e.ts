@@ -62,7 +62,7 @@ describe('Edit task filters and task list properties', () => {
         lowPriorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 1 });
         normalPriorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 2 });
         hightPriorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 3 });
-        await tasksService.claimTask(priorityTask0.entry.id, simpleApp);
+        await tasksService.claimTask(noPriorityTask.entry.id, simpleApp);
         await tasksService.claimTask(lowPriorityTask.entry.id, simpleApp);
         await tasksService.claimTask(normalPriorityTask.entry.id, simpleApp);
         await tasksService.claimTask(hightPriorityTask.entry.id, simpleApp);
