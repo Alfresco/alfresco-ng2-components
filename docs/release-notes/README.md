@@ -9,6 +9,7 @@ The first **General available** release was v2.0.0.
 
 ## General available
 
+- [4.2.0](RelNote420.md)
 - [4.1.0](RelNote410.md)
 - [4.0.0](RelNote400.md)
 - [3.9.0](RelNote390.md)
