@@ -22,6 +22,7 @@ import {
 import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
+import { TaskCloudService } from '../../services/task-cloud.service';
 
 @Component({
     selector: 'adf-cloud-service-task-list',
@@ -38,8 +39,9 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
 
     constructor(private serviceTaskListCloudService: ServiceTaskListCloudService,
                 appConfigService: AppConfigService,
+                taskCloudService: TaskCloudService,
                 userPreferences: UserPreferencesService) {
-        super(appConfigService, userPreferences, ServiceTaskListCloudComponent.PRESET_KEY);
+        super(appConfigService, taskCloudService, userPreferences, ServiceTaskListCloudComponent.PRESET_KEY);
     }
 
     load(requestNode: ServiceTaskQueryCloudRequestModel) {

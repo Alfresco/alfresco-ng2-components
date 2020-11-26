@@ -20,13 +20,14 @@ import {
     AppConfigService, UserPreferencesService,
     DataTableSchema, UserPreferenceValues,
     PaginatedComponent, PaginationModel,
-    DataRowEvent, CustomEmptyContentTemplateDirective, DataCellEvent, DataRowActionEvent
+    DataRowEvent, CustomEmptyContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataRow, DataColumn
 } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { takeUntil } from 'rxjs/operators';
+import { TaskCloudService } from '../../services/task-cloud.service';
 
 @Directive()
 // tslint:disable-next-line: directive-class-suffix
@@ -114,10 +115,12 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     selectedInstances: any[];
     formattedSorting: any[];
     private defaultSorting = { key: 'startDate', direction: 'desc' };
+    boundReplacePriorityValues: Function;
 
     private onDestroy$ = new Subject<boolean>();
 
     constructor(appConfigService: AppConfigService,
+                private taskCloudService: TaskCloudService,
                 private userPreferences: UserPreferencesService,
                 presetKey: string) {
         super(appConfigService, presetKey, taskPresetsCloudDefaultModel);
@@ -129,6 +132,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
             totalItems: 0
         });
 
+        this.boundReplacePriorityValues = this.replacePriorityValues.bind(this);
     }
 
     ngOnInit() {
@@ -249,6 +253,15 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
 
     isValidSorting(sorting: TaskListCloudSortingModel[]) {
         return sorting && sorting.length && sorting[0].orderBy && sorting[0].direction;
+    }
+
+    replacePriorityValues(row: DataRow, column: DataColumn) {
+        return column.key.split('.').reduce((source, key) => {
+            if (key === 'priority' && typeof(source[key]) === 'number') {
+                return source[key] = this.taskCloudService.getPriorityLabel(source[key]);
+            }
+            return source ? source[key] : '';
+        }, row.obj);
     }
 
     abstract load(requestNode);
