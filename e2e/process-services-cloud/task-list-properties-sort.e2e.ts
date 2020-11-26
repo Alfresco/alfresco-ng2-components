@@ -39,7 +39,7 @@ describe('Edit task filters and task list properties', () => {
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
-    let createdTask, notDisplayedTask, priorityTask0, priorityTask1, priorityTask2, priorityTask3, subTask,
+    let createdTask, notDisplayedTask, noPriorityTask, lowPriorityTask, normalPriorityTask, hightPriorityTask, subTask,
         otherOwnerTask, testUser, groupInfo;
 
     beforeAll(async () => {
@@ -58,14 +58,14 @@ describe('Edit task filters and task list properties', () => {
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         await tasksService.claimTask(createdTask.entry.id, simpleApp);
 
-        priorityTask0 = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 0 });
-        priorityTask1 = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 1 });
-        priorityTask2 = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 2 });
-        priorityTask3 = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 3 });
+        noPriorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 0 });
+        lowPriorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 1 });
+        normalPriorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 2 });
+        hightPriorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 3 });
         await tasksService.claimTask(priorityTask0.entry.id, simpleApp);
-        await tasksService.claimTask(priorityTask1.entry.id, simpleApp);
-        await tasksService.claimTask(priorityTask2.entry.id, simpleApp);
-        await tasksService.claimTask(priorityTask3.entry.id, simpleApp);
+        await tasksService.claimTask(lowPriorityTask.entry.id, simpleApp);
+        await tasksService.claimTask(normalPriorityTask.entry.id, simpleApp);
+        await tasksService.claimTask(hightPriorityTask.entry.id, simpleApp);
 
         notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
         await tasksService.claimTask(notDisplayedTask.entry.id, candidateBaseApp);
