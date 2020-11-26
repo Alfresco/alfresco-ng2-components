@@ -21,19 +21,13 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Location } from '@angular/common';
 import { AuthenticationService } from '../../services/authentication.service';
-import { LogService } from '../../services/log.service';
 import { TranslationService } from '../../services/translation.service';
 import { UserPreferencesService } from '../../services/user-preferences.service';
-
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSubmitEvent } from '../models/login-submit.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
-import {
-    AppConfigService,
-    AppConfigValues
-} from '../../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../../models/oauth-config.model';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
@@ -53,14 +47,11 @@ interface ValidationMessage {
 @Component({
     selector: 'adf-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: {
-        class: 'adf-login'
-    }
+    host: { class: 'adf-login' }
 })
 export class LoginComponent implements OnInit, OnDestroy {
-    isPasswordShow: boolean = false;
+    isPasswordShow = false;
 
     /**
      * Should the `Remember me` checkbox be shown? When selected, this
@@ -68,11 +59,11 @@ export class LoginComponent implements OnInit, OnDestroy {
      * to avoid logging in repeatedly.
      */
     @Input()
-    showRememberMe: boolean = true;
+    showRememberMe = true;
 
     /** Should the extra actions (`Need Help`, `Register`, etc) be shown? */
     @Input()
-    showLoginActions: boolean = true;
+    showLoginActions = true;
 
     /** Sets the URL of the NEED HELP link in the footer. */
     @Input()
@@ -84,15 +75,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /** Path to a custom logo image. */
     @Input()
-    logoImageUrl: string = './assets/images/alfresco-logo.svg';
+    logoImageUrl = './assets/images/alfresco-logo.svg';
 
     /** Path to a custom background image. */
     @Input()
-    backgroundImageUrl: string = './assets/images/background.svg';
+    backgroundImageUrl = './assets/images/background.svg';
 
     /** The copyright text below the login box. */
     @Input()
-    copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
+    copyrightText = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
 
     /** Custom validation rules for the login form. */
     @Input()
@@ -117,29 +108,27 @@ export class LoginComponent implements OnInit, OnDestroy {
     implicitFlow: boolean = false;
 
     form: FormGroup;
-    isError: boolean = false;
+    isError = false;
     errorMsg: string;
-    actualLoginStep: any = LoginSteps.Landing;
+    actualLoginStep = LoginSteps.Landing;
     LoginSteps = LoginSteps;
-    rememberMe: boolean = true;
+    rememberMe = true;
     formError: { [id: string]: string };
     minLength: number = 2;
     footerTemplate: TemplateRef<any>;
     headerTemplate: TemplateRef<any>;
     data: any;
 
-    private _message: { [id: string]: { [id: string]: ValidationMessage } };
+    private errorMessages: { [id: string]: { [id: string]: ValidationMessage } };
     private onDestroy$ = new Subject<boolean>();
 
     constructor(
-        private _fb: FormBuilder,
+        private formBuilder: FormBuilder,
         private authService: AuthenticationService,
         private translateService: TranslationService,
-        private logService: LogService,
         private router: Router,
         private appConfig: AppConfigService,
         private userPreferences: UserPreferencesService,
-        private location: Location,
         private route: ActivatedRoute,
         private sanitizer: DomSanitizer
     ) {}
@@ -150,14 +139,28 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.initFormFieldsMessages();
 
         if (this.authService.isOauth()) {
-            const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+            const oauth = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
             if (oauth && oauth.implicitFlow) {
                 this.implicitFlow = true;
             }
         }
 
+        this.tryRedirect();
+
+        if (this.fieldsValidation) {
+            this.form = this.formBuilder.group(this.fieldsValidation);
+        }
+
+        this.form.valueChanges
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(data => this.onValueChanged(data));
+    }
+
+    private tryRedirect() {
         if (this.authService.isEcmLoggedIn() || this.authService.isBpmLoggedIn()) {
-            this.location.forward();
+            if (this.successRoute) {
+                this.router.navigate([this.successRoute]);
+            }
         } else {
             this.route.queryParams.subscribe((params: Params) => {
                 const url = params['redirectUrl'];
@@ -166,14 +169,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                 this.authService.setRedirect({ provider, url });
             });
         }
-
-        if (this.fieldsValidation) {
-            this.form = this._fb.group(this.fieldsValidation);
-        }
-
-        this.form.valueChanges
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(data => this.onValueChanged(data));
     }
 
     ngOnDestroy() {
@@ -188,7 +183,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     /**
      * Method called on submit form
      * @param values
-     * @param event
      */
     onSubmit(values: any): void {
         this.disableError();
@@ -223,7 +217,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 if (hasError) {
                     for (const key in this.form.controls[field].errors) {
                         if (key) {
-                            const message = this._message[field][key];
+                            const message = this.errorMessages[field][key];
                             if (message && message.value) {
                                 const translated = this.translateService.instant(message.value, message.params);
                                 this.formError[field] += translated;
@@ -235,14 +229,23 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
+    private onLoginSuccess() {
+        const redirectUrl = this.authService.getRedirect();
+
+        if (redirectUrl) {
+            this.authService.setRedirect(null);
+            this.router.navigateByUrl(redirectUrl);
+        } else if (this.successRoute) {
+            this.router.navigate([this.successRoute]);
+        }
+    }
+
     private performLogin(values: any) {
         this.actualLoginStep = LoginSteps.Checking;
         this.authService
             .login(values.username, values.password, this.rememberMe)
             .subscribe(
                 (token: any) => {
-                    const redirectUrl = this.authService.getRedirect();
-
                     this.actualLoginStep = LoginSteps.Welcome;
                     this.userPreferences.setStoragePrefix(values.username);
                     values.password = null;
@@ -250,20 +253,14 @@ export class LoginComponent implements OnInit, OnDestroy {
                         new LoginSuccessEvent(token, values.username, null)
                     );
 
-                    if (redirectUrl) {
-                        this.authService.setRedirect(null);
-                        this.router.navigateByUrl(redirectUrl);
-                    } else if (this.successRoute) {
-                        this.router.navigate([this.successRoute]);
-                    }
+                    this.onLoginSuccess();
                 },
                 (err: any) => {
                     this.actualLoginStep = LoginSteps.Landing;
                     this.displayErrorMessage(err);
                     this.isError = true;
                     this.error.emit(new LoginErrorEvent(err));
-                },
-                () => this.logService.info('Login done')
+                }
             );
     }
 
@@ -298,7 +295,7 @@ export class LoginComponent implements OnInit, OnDestroy {
      * @param field
      * @param msg
      */
-    public addCustomFormError(field: string, msg: string) {
+    addCustomFormError(field: string, msg: string) {
         this.formError[field] += msg;
     }
 
@@ -307,6 +304,7 @@ export class LoginComponent implements OnInit, OnDestroy {
      * @param field
      * @param ruleId - i.e. required | minlength | maxlength
      * @param msg
+     * @param params
      */
     addCustomValidationError(
         field: string,
@@ -314,7 +312,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         msg: string,
         params?: any
     ) {
-        this._message[field][ruleId] = {
+        this.errorMessages[field][ruleId] = {
             value: msg,
             params
         };
@@ -332,7 +330,7 @@ export class LoginComponent implements OnInit, OnDestroy {
      * The method return if a field is valid or not
      * @param field
      */
-    isErrorStyle(field: AbstractControl) {
+    isErrorStyle(field: AbstractControl): boolean {
         return !field.valid && field.dirty && !field.pristine;
     }
 
@@ -361,7 +359,7 @@ export class LoginComponent implements OnInit, OnDestroy {
      * Init form fields messages
      */
     private initFormFieldsMessages() {
-        this._message = {
+        this.errorMessages = {
             username: {
                 required: {
                     value: 'LOGIN.MESSAGES.USERNAME-REQUIRED'
@@ -383,7 +381,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     private initFormFieldsDefault() {
-        this.form = this._fb.group({
+        this.form = this.formBuilder.group({
             username: ['', Validators.compose([Validators.required, Validators.minLength(this.minLength)])],
             password: ['', Validators.required]
         });
