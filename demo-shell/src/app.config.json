@@ -955,7 +955,8 @@
       "status",
       "assignee",
       "sort",
-      "order"
+      "order",
+      "completedBy"
     ],
     "sortProperties": [
       "id",
