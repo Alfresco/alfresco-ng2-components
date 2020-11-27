@@ -48,6 +48,7 @@ In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 |artifact-to-s3    |Get artifact to S3 |
 |docker-publish    |publish docker image|
 |init-aae-env      |Init env|
+|init-aps-env      |Init aps|
 |kubectl-delete    |delete kubectl |
 |kubectl-image     |This command allows you to update a specific service on the rancher env with a specific tag |
 |npm-publish    | publish on npm |
