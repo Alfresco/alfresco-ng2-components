@@ -57,6 +57,8 @@ export class SearchService {
                 "query": "${name}*"
             },
             "include": [
+                "path",
+                "allowableOperations",
                 "properties"
             ],
             "paging": {

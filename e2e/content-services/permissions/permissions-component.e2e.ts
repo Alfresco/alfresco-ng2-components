@@ -23,6 +23,7 @@ import {
     BrowserActions,
     LoginPage,
     NotificationHistoryPage,
+    SearchService,
     StringUtil,
     UploadActions,
     UserModel,
@@ -46,6 +47,7 @@ describe('Permissions Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const searchService = new SearchService(apiService);
 
     const contentList = contentServicesPage.getDocumentList();
     const viewerPage = new ViewerPage();
@@ -315,7 +317,12 @@ describe('Permissions Component', () => {
                         }]
                     }
                 });
-            await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
+            await apiService.login(filePermissionUser.email, filePermissionUser.password);
+            await searchService.isSearchable('RoleConsumer' + fileModel.name);
+            await searchService.isSearchable('RoleContributor' + fileModel.name);
+            await searchService.isSearchable('RoleCoordinator' + fileModel.name);
+            await searchService.isSearchable('RoleCollaborator' + fileModel.name);
+            await searchService.isSearchable('RoleEditor' + fileModel.name);
         });
 
         afterAll(async () => {
