@@ -14,6 +14,7 @@
       "COMPLETED_BY": "Ukończone przez",
       "ID": "Identyfikator",
       "INITIATOR": "Inicjator",
+      "STARTED_BY": "Uruchomione przez",
       "APP_NAME": "Nazwa aplikacji",
       "BUSINESS_KEY": "Klucz biznesowy",
       "DESCRIPTION": "Opis",
@@ -72,7 +73,8 @@
           "CANDIDATE_GROUP": "Grupa kandydatów",
           "FORM": "Formularz",
           "DATE": "Wybierz datę",
-          "NONE": "Brak"
+          "NONE": "Brak",
+          "PRIORITY": "Priorytet"
         },
         "ACTION": {
           "START": "Uruchom",
@@ -91,7 +93,13 @@
       "DUE_DATE": "Data ukończenia",
       "CREATED": "Utworzono",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "Ukończone przez"
+      "COMPLETED_BY": "Ukończone przez",
+      "PRIORITY_VALUES": {
+        "NOT_SET": "Nie ustawiony",
+        "LOW": "Niska",
+        "NORMAL": "Średni",
+        "HIGH": "Wysoki"
+      }
     },
     "LIST": {
       "MESSAGES": {
@@ -101,9 +109,24 @@
       }
     }
   },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "Nazwa działania",
+      "ACTIVITY_TYPE": "Status",
+      "ID": "Identyfikator",
+      "COMPLETED_DATE": "Data ukończenia",
+      "STARTED_DATE": "Data rozpoczęcia",
+      "STATUS": "Status"
+    }
+  },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Moje zadania",
     "QUEUED_TASKS": "Oczekujące zadania",
+    "COMPLETED_TASKS": "Ukończone zadania"
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "Wszystkie zadania serwisowe",
+    "ERRORED_TASKS": "Zadania błędne",
     "COMPLETED_TASKS": "Ukończone zadania"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -145,12 +168,33 @@
       "DUE_DATE": "Data ukończenia",
       "SORT": "Sortuj",
       "START_DATE": "Data rozpoczęcia",
-      "COMPLETED_BY": "Ukończone przez"
+      "COMPLETED_BY": "Ukończone przez",
+      "COMPLETED_DATE": "Data ukończenia",
+      "CREATED_DATE": "Data utworzenia",
+      "CANDIDATE_GROUPS": "Kandydujące grupy"
     },
     "DIALOG": {
       "TITLE": "Zapisz filtr jako",
       "SAVE": "Zapisz",
       "CANCEL": "Anuluj"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "Nazwa aplikacji",
+      "SERVICE_TASK_ID": "Identyfikator zadania serwisowego",
+      "SERVICE_NAME": "Nazwa usługi",
+      "ELEMENT_ID": "Identyfikator elementu",
+      "PROCESS_DEF_NAME": "Nazwa definicji procesu",
+      "PROCESS_DEF_ID": "Identyfikator definicji procesu",
+      "PROCESS_INSTANCE_ID": "Identyfikator wystąpienia procesu",
+      "STATUS": "Status",
+      "DIRECTION": "Kolejność",
+      "ACTIVITY_NAME": "Nazwa działania",
+      "ACTIVITY_TYPE": "Typ działania",
+      "SORT": "Sortuj",
+      "STARTED_DATE": "Data rozpoczęcia",
+      "COMPLETED_DATE": "Data ukończenia"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -164,14 +208,15 @@
       "SORT": "Sortuj",
       "DIRECTION": "Kolejność",
       "PROCESS_DEF_ID": "Identyfikator definicji procesu",
-      "PROCESS_DEF_NAME": "Nazwadefinicjiprocesu",
+      "PROCESS_DEF_NAME": "Nazwa definicji procesu",
       "PROCESS_DEF_KEY": "Klucz definicji procesu",
       "LAST_MODIFIED": "Ostatnia modyfikacja",
       "LAST_MODIFIED_DATE_FORM": "Ostatnia modyfikacja - od",
       "LAST_MODIFIED_TO": "Ostatnia modyfikacja - do",
       "PROCESS_NAME": "Nazwa procesu",
-      "APP_VERSION": "Wersja wydania aplikacji",
+      "APP_VERSION": "Wersja aplikacji",
       "STARTED_DATE": "Data rozpoczęcia",
+      "STARTED_BY": "Uruchomione przez",
       "COMPLETED_DATE": "Data ukończenia",
       "DATE_RANGE": {
         "NO_DATE": "Brak daty",
@@ -298,5 +343,12 @@
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Wypełnij pola formularza metadanymi z tego pliku"
+  },
+  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
+    "ASSIGNED_TO_ME": "Przypisane do mnie",
+    "UNASSIGNED": "Nieprzypisane",
+    "LIST_OF_CANDIDATE_USERS": "Lista kandydujących użytkowników",
+    "ASSIGNEE": "Osoba przypisana",
+    "ASSIGNMENT_TYPE": "Typ przypisania"
   }
 }

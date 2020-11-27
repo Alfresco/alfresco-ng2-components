@@ -89,7 +89,9 @@
     "NO_RESULTS": "Nenhum resultado encontrado",
     "SEARCH": "Pesquisar",
     "SEARCH_RESULTS": "Resultados da pesquisa",
-    "SELECT_LOCATION": "Selecionar localização"
+    "SELECT_LOCATION": "Selecionar localização",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Não é possível carregar um arquivo enquanto uma pesquisa está em execução",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "O usuário não tem permissão para carregar conteúdo na pasta"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -250,7 +252,9 @@
         "NO-DAYS": "Nenhum dia selecionado.",
         "INVALID-FORMAT": "Formato Inválido",
         "INVALID-DATE": "Data inválida. A data deve estar no formato '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "A data é posterior à data limite."
+        "BEYOND-MAX-DATE": "A data é posterior à data limite.",
+        "INVALID-DATETIME": "Data/hora inválida. Data/hora deve estar no formato '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "Data/hora está além da data/hora máxima."
       }
     },
     "ICONS": {

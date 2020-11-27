@@ -14,6 +14,7 @@
       "COMPLETED_BY": "完成者",
       "ID": "ID",
       "INITIATOR": "发起者",
+      "STARTED_BY": "启动者",
       "APP_NAME": "应用程序名称",
       "BUSINESS_KEY": "商业 Key",
       "DESCRIPTION": "说明",
@@ -72,7 +73,8 @@
           "CANDIDATE_GROUP": "候选组",
           "FORM": "表单",
           "DATE": "选择日期",
-          "NONE": "无"
+          "NONE": "无",
+          "PRIORITY": "优先级"
         },
         "ACTION": {
           "START": "开始",
@@ -91,7 +93,13 @@
       "DUE_DATE": "截止日期",
       "CREATED": "已创建",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "完成者"
+      "COMPLETED_BY": "完成者",
+      "PRIORITY_VALUES": {
+        "NOT_SET": "未设置",
+        "LOW": "低",
+        "NORMAL": "正常",
+        "HIGH": "高"
+      }
     },
     "LIST": {
       "MESSAGES": {
@@ -101,9 +109,24 @@
       }
     }
   },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "活动名称",
+      "ACTIVITY_TYPE": "状态",
+      "ID": "ID",
+      "COMPLETED_DATE": "完成日期",
+      "STARTED_DATE": "开始日期",
+      "STATUS": "状态"
+    }
+  },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "我的任务",
     "QUEUED_TASKS": "排队列的任务",
+    "COMPLETED_TASKS": "完成的任务"
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "所有服务任务",
+    "ERRORED_TASKS": "出错的任务",
     "COMPLETED_TASKS": "完成的任务"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -145,12 +168,33 @@
       "DUE_DATE": "截止日期",
       "SORT": "排序",
       "START_DATE": "开始日期",
-      "COMPLETED_BY": "完成者"
+      "COMPLETED_BY": "完成者",
+      "COMPLETED_DATE": "完成日期",
+      "CREATED_DATE": "创建日期",
+      "CANDIDATE_GROUPS": "候选组"
     },
     "DIALOG": {
       "TITLE": "另存筛选器为",
       "SAVE": "保存",
       "CANCEL": "取消"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "应用程序名称",
+      "SERVICE_TASK_ID": "服务任务 ID",
+      "SERVICE_NAME": "服务名称",
+      "ELEMENT_ID": "元素 ID",
+      "PROCESS_DEF_NAME": "流程定义名称",
+      "PROCESS_DEF_ID": "流程定义 ID",
+      "PROCESS_INSTANCE_ID": "流程实例 ID",
+      "STATUS": "状态",
+      "DIRECTION": "排序方向",
+      "ACTIVITY_NAME": "活动名称",
+      "ACTIVITY_TYPE": "活动类型",
+      "SORT": "排序",
+      "STARTED_DATE": "开始日期",
+      "COMPLETED_DATE": "完成日期"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -170,8 +214,9 @@
       "LAST_MODIFIED_DATE_FORM": "上一次修改开始日期",
       "LAST_MODIFIED_TO": "上一次修改结束日期",
       "PROCESS_NAME": "流程名称",
-      "APP_VERSION": "App 释放版本",
+      "APP_VERSION": "App 版本",
       "STARTED_DATE": "开始日期",
+      "STARTED_BY": "启动者",
       "COMPLETED_DATE": "完成日期",
       "DATE_RANGE": {
         "NO_DATE": "没有日期",
@@ -298,5 +343,12 @@
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "用此文件的元数据填充表单字段"
+  },
+  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
+    "ASSIGNED_TO_ME": "指派给我",
+    "UNASSIGNED": "未指派",
+    "LIST_OF_CANDIDATE_USERS": "候选者列表",
+    "ASSIGNEE": "被指派者",
+    "ASSIGNMENT_TYPE": "指派类型"
   }
 }

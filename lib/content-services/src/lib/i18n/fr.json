@@ -89,7 +89,9 @@
     "NO_RESULTS": "Aucun résultat trouvé",
     "SEARCH": "Rechercher",
     "SEARCH_RESULTS": "Résultats de la recherche",
-    "SELECT_LOCATION": "Sélectionner l'emplacement"
+    "SELECT_LOCATION": "Sélectionner l'emplacement",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Impossible d'importer un fichier pendant une recherche",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "L'utilisateur n'est pas autorisé à importer du contenu dans le dossier"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -250,7 +252,9 @@
         "NO-DAYS": "Aucun jour sélectionné.",
         "INVALID-FORMAT": "Format non valide",
         "INVALID-DATE": "Date non valide. La date doit être au format '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "La date est postérieure à la date maximum."
+        "BEYOND-MAX-DATE": "La date est postérieure à la date maximum.",
+        "INVALID-DATETIME": "Date et heure incorrectes. La date et l'heure doivent être au format '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "La date et l'heure sont postérieures à la limite autorisée."
       }
     },
     "ICONS": {

@@ -105,7 +105,8 @@
     "PEOPLE_CLOUD": "人员云组件",
     "GROUPS_CLOUD": "组云组件",
     "CONFIRM-DIALOG": "确认对话",
-    "COMMUNITY": "Community"
+    "COMMUNITY": "Community",
+    "SERVICE_TASK_LIST": "服务任务列表"
   },
   "TRASHCAN": {
     "ACTIONS": {

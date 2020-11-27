@@ -14,6 +14,7 @@
       "COMPLETED_BY": "Suorittaja",
       "ID": "Tunnus",
       "INITIATOR": "Käynnistäjä",
+      "STARTED_BY": "Aloittaja:",
       "APP_NAME": "Sovelluksen nimi",
       "BUSINESS_KEY": "Liiketoiminta-avain",
       "DESCRIPTION": "Kuvaus",
@@ -72,7 +73,8 @@
           "CANDIDATE_GROUP": "Kandidaattiryhmä",
           "FORM": "Lomake",
           "DATE": "Valitse päivämäärä",
-          "NONE": "Ei mitään"
+          "NONE": "Ei mitään",
+          "PRIORITY": "Prioriteetti"
         },
         "ACTION": {
           "START": "Aloita",
@@ -91,7 +93,13 @@
       "DUE_DATE": "Määräpäivä",
       "CREATED": "Luotu",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "Suorittaja"
+      "COMPLETED_BY": "Suorittaja",
+      "PRIORITY_VALUES": {
+        "NOT_SET": "Ei määritetty",
+        "LOW": "Matala",
+        "NORMAL": "Normaali",
+        "HIGH": "Korkea"
+      }
     },
     "LIST": {
       "MESSAGES": {
@@ -101,9 +109,24 @@
       }
     }
   },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "Toiminnon nimi",
+      "ACTIVITY_TYPE": "Tila",
+      "ID": "Tunnus",
+      "COMPLETED_DATE": "Suorituspäivä",
+      "STARTED_DATE": "Alkamispäivä",
+      "STATUS": "Tila"
+    }
+  },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Omat tehtävät",
     "QUEUED_TASKS": "Jonossa olevat tehtävät",
+    "COMPLETED_TASKS": "Suoritetut tehtävät"
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "Kaikki palvelutehtävät",
+    "ERRORED_TASKS": "Virheelliset tehtävät",
     "COMPLETED_TASKS": "Suoritetut tehtävät"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -145,12 +168,33 @@
       "DUE_DATE": "Määräpäivä",
       "SORT": "Lajittele",
       "START_DATE": "Alkamispäivä",
-      "COMPLETED_BY": "Suorittaja"
+      "COMPLETED_BY": "Suorittaja",
+      "COMPLETED_DATE": "Suorituspäivä",
+      "CREATED_DATE": "Luontipäivämäärä",
+      "CANDIDATE_GROUPS": "Kandidaattiryhmät"
     },
     "DIALOG": {
       "TITLE": "Tallenna suodatin nimellä",
       "SAVE": "Tallenna",
       "CANCEL": "Peruuta"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "Sovelluksen nimi",
+      "SERVICE_TASK_ID": "Palvelutehtävän tunnus",
+      "SERVICE_NAME": "Palvelun nimi",
+      "ELEMENT_ID": "Elementin tunnus",
+      "PROCESS_DEF_NAME": "Prosessimääritelmän nimi",
+      "PROCESS_DEF_ID": "Prosessimääritelmätunnus",
+      "PROCESS_INSTANCE_ID": "Prosessiesiintymätunnus",
+      "STATUS": "Tila",
+      "DIRECTION": "Suunta",
+      "ACTIVITY_NAME": "Toiminnon nimi",
+      "ACTIVITY_TYPE": "Toiminnon tyyppi",
+      "SORT": "Lajittele",
+      "STARTED_DATE": "Alkamispäivä",
+      "COMPLETED_DATE": "Suorituspäivä"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -170,8 +214,9 @@
       "LAST_MODIFIED_DATE_FORM": "Muokattu viimeksi kohteesta",
       "LAST_MODIFIED_TO": "Muokattu viimeksi kohteeseen",
       "PROCESS_NAME": "Prosessin nimi",
-      "APP_VERSION": "Sovelluksen julkaisuversio",
+      "APP_VERSION": "Sovellusversio",
       "STARTED_DATE": "Alkamispäivä",
+      "STARTED_BY": "Aloittaja:",
       "COMPLETED_DATE": "Suorituspäivä",
       "DATE_RANGE": {
         "NO_DATE": "Ei päivämäärää",
@@ -298,5 +343,12 @@
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Täytä lomakekentät tämän tiedoston metatiedoilla"
+  },
+  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
+    "ASSIGNED_TO_ME": "Määritetty minulle",
+    "UNASSIGNED": "Määrittämätön",
+    "LIST_OF_CANDIDATE_USERS": "Kandidaattikäyttäjien luettelo",
+    "ASSIGNEE": "Vastuuhenkilö",
+    "ASSIGNMENT_TYPE": "Määrityksen tyyppi"
   }
 }

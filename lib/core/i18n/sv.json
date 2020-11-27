@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Du har angett ett okänt användarnamn eller lösenord",
       "LOGIN-ERROR-PROVIDERS": "Leverantörer kan inte avdefinieras",
       "LOGIN-ERROR-CORS": "CORS-undantag, kontrollera din serverkonfiguration",
-      "LOGIN-ERROR-CSRF": "CSRF-undantag, ställ in \"disableCSRF\": true i app.config.json",
+      "LOGIN-ERROR-CSRF": "CSRF undantag, ange \"disableCSRF\": sann i app.config.json",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services-datakatalog är i skrivskyddat läge",
       "SSO-WRONG-CONFIGURATION": "SSO-autentiseringsserver kan inte nås"
     },
@@ -422,6 +422,16 @@
     "502": {
       "TITLE": "Ett fel inträffade.",
       "DESCRIPTION": "Felaktig gateway, försök igen eller kontakta IT-support [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tillbaka hem"
+      }
+    },
+    "503": {
+      "TITLE": "Ett fel inträffade.",
+      "DESCRIPTION": "Service för tillfället ej tillgänglig [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },

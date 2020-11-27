@@ -89,7 +89,9 @@
     "NO_RESULTS": "一致するアイテムはありません",
     "SEARCH": "検索",
     "SEARCH_RESULTS": "検索結果",
-    "SELECT_LOCATION": "場所の選択"
+    "SELECT_LOCATION": "場所の選択",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "検索がまだ実行中のため、ファイルをアップロードできません",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "ユーザーに、コンテンツをフォルダにアップロードする権限がありません"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -250,7 +252,9 @@
         "NO-DAYS": "日付が選択されていません。",
         "INVALID-FORMAT": "無効な形式",
         "INVALID-DATE": "無効な日付です。日付は '{{ requiredFormat }}' 形式で指定する必要があります",
-        "BEYOND-MAX-DATE": "この日付は最長の日付よりも後です。"
+        "BEYOND-MAX-DATE": "この日付は最長の日付よりも後です。",
+        "INVALID-DATETIME": "日時が無効です。日時は '{{ requiredFormat }}' 形式で指定する必要があります",
+        "BEYOND-MAX-DATETIME": "指定した日時は最大日時を超えています"
       }
     },
     "ICONS": {

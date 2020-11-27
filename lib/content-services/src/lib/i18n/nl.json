@@ -89,7 +89,9 @@
     "NO_RESULTS": "Geen resultaten gevonden",
     "SEARCH": "Zoeken",
     "SEARCH_RESULTS": "Zoekresultaten",
-    "SELECT_LOCATION": "Locatie selecteren"
+    "SELECT_LOCATION": "Locatie selecteren",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "U kunt geen bestand uploaden terwijl een zoekopdracht wordt uitgevoerd",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Gebruiker heeft geen rechten voor het uploaden van content naar de map"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -250,7 +252,9 @@
         "NO-DAYS": "Geen dagen geselecteerd.",
         "INVALID-FORMAT": "Ongeldige notatie",
         "INVALID-DATE": "Ongeldige datum. De datum moet de volgende notatie hebben: '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "De datum ligt na de laatste datum."
+        "BEYOND-MAX-DATE": "De datum ligt na de laatste datum.",
+        "INVALID-DATETIME": "Ongeldige datum/tijd. De datum/tijd moet de volgende notatie hebben: '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "De datum/tijd ligt na de laatste datum/tijd."
       }
     },
     "ICONS": {
@@ -363,7 +367,7 @@
       "AUTHORITY_ID": "Autoriteits-id",
       "ROLE": "Rol",
       "LOCALLY_SET": "Lokaal ingesteld",
-      "NO_PERMISSIONS": "Geen machtigingen"
+      "NO_PERMISSIONS": "Geen rechten"
     },
     "ADD-PERMISSION": {
       "SEARCH": "Zoeken",
@@ -375,8 +379,8 @@
       "EVERYONE": "Iedereen"
     },
     "ERROR": {
-      "DUPLICATE-PERMISSION": "Een of meerdere machtigingen die u hebt ingesteld zijn al aanwezig: {{list}}",
-      "NOT-ALLOWED": "Het is u niet toegestaan om machtigingen te wijzigen"
+      "DUPLICATE-PERMISSION": "Een of meerdere rechten die u hebt ingesteld zijn al aanwezig: {{list}}",
+      "NOT-ALLOWED": "Het is u niet toegestaan om rechten te wijzigen"
     }
   },
   "ADF-TREE-VIEW": {
@@ -417,7 +421,7 @@
     "ERRORS": {
       "GENERIC": "Er is een probleem opgetreden",
       "EXISTENT_SITE": "Deze bibliotheek-id is niet beschikbaar. Probeer een andere bibliotheek-id.",
-      "CONFLICT": "Deze bibliotheek wordt al gebruikt. Controleer de prullenbak.",
+      "CONFLICT": "Deze bibliotheek-id wordt al gebruikt. Controleer de prullenbak.",
       "ID_TOO_LONG": "Gebruik 72 tekens of minder voor de URL-naam",
       "DESCRIPTION_TOO_LONG": "Gebruik 512 tekens of minder voor de beschrijving",
       "TITLE_TOO_LONG": "Gebruik 256 tekens of minder voor de titel",

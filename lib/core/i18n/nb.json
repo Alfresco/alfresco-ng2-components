@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Du har angitt ukjent brukernavn eller passord",
       "LOGIN-ERROR-PROVIDERS": "Leverandører kan ikke være udefinert",
       "LOGIN-ERROR-CORS": "CORS-unntak, kontroller serverkonfigurasjonen",
-      "LOGIN-ERROR-CSRF": "CSRF-unntak, still inn \"disableCSRF\": true i pål app.config.json",
+      "LOGIN-ERROR-CSRF": "CSRF-unntak, angi \"disableCSRF\": true i app.config.json",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services-database i skrivebeskyttet modus",
       "SSO-WRONG-CONFIGURATION": "SSO-godkjenningsserver kan ikke nås"
     },
@@ -422,6 +422,16 @@
     "502": {
       "TITLE": "Det oppstod en feil.",
       "DESCRIPTION": "Ugyldig gateway. Prøv igjen eller kontakt IT-støtten [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden"
+      }
+    },
+    "503": {
+      "TITLE": "Det oppstod en feil.",
+      "DESCRIPTION": "Tjenesten er midlertidig utilgjengelig [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },

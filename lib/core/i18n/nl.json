@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "U hebt een onbekende gebruikersnaam of een onbekend wachtwoord ingevoerd",
       "LOGIN-ERROR-PROVIDERS": "De definitie van providers kan niet ongedaan worden gemaakt",
       "LOGIN-ERROR-CORS": "CORS-uitzondering, controleer uw serverconfiguratie",
-      "LOGIN-ERROR-CSRF": "CSRF exception, set \"disableCSRF\": true in app.config.json",
+      "LOGIN-ERROR-CSRF": "CSRF-uitzondering, stel \"disableCSRF\": true in in app.config.json",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services-repository bevindt zich in de modus Alleen-lezen",
       "SSO-WRONG-CONFIGURATION": "SSO-verificatieserver niet bereikbaar"
     },
@@ -390,7 +390,7 @@
       }
     },
     "403": {
-      "TITLE": "U hebt geen machtiging voor toegang tot deze server.",
+      "TITLE": "U hebt geen rechten voor toegang tot deze server.",
       "DESCRIPTION": "Het is u niet toegestaan toegang te krijgen tot deze resource op de server.",
       "SECONDARY_BUTTON": {
         "TEXT": "Probleem melden"
@@ -422,6 +422,16 @@
     "502": {
       "TITLE": "Er is een fout opgetreden.",
       "DESCRIPTION": "Ongeldige gateway, probeer het opnieuw of neem contact op met de IT-ondersteuning [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Terug naar Home"
+      }
+    },
+    "503": {
+      "TITLE": "Er is een fout opgetreden.",
+      "DESCRIPTION": "Service tijdelijk niet beschikbaar [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },

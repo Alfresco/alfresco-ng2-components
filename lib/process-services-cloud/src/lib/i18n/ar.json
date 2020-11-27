@@ -14,6 +14,7 @@
       "COMPLETED_BY": "إكمال بواسطة",
       "ID": "المعرف",
       "INITIATOR": "بادئ",
+      "STARTED_BY": "بدأ حسب",
       "APP_NAME": "اسم التطبيق",
       "BUSINESS_KEY": "مفتاح أعمال",
       "DESCRIPTION": "الوصف",
@@ -72,7 +73,8 @@
           "CANDIDATE_GROUP": "المجموعة المرشحة",
           "FORM": "نموذج",
           "DATE": "اختيار تاريخ",
-          "NONE": "بلا"
+          "NONE": "بلا",
+          "PRIORITY": "أولوية"
         },
         "ACTION": {
           "START": "بدء",
@@ -91,7 +93,13 @@
       "DUE_DATE": "تاريخ الاستحقاق",
       "CREATED": "تم الإنشاء",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "إكمال بواسطة"
+      "COMPLETED_BY": "إكمال بواسطة",
+      "PRIORITY_VALUES": {
+        "NOT_SET": "غير معين",
+        "LOW": "منخفضة",
+        "NORMAL": "متوسطة",
+        "HIGH": "مرتفعة"
+      }
     },
     "LIST": {
       "MESSAGES": {
@@ -101,9 +109,24 @@
       }
     }
   },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "اسم النشاط",
+      "ACTIVITY_TYPE": "الحالة",
+      "ID": "المعرف",
+      "COMPLETED_DATE": "تاريخ الإكمال",
+      "STARTED_DATE": "تاريخ البدء",
+      "STATUS": "الحالة"
+    }
+  },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "مهامي",
     "QUEUED_TASKS": "المهام بقائمة الانتظار",
+    "COMPLETED_TASKS": "مهام مكتملة"
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "كل مهام الخدمة",
+    "ERRORED_TASKS": "المهام التي بها أخطاء",
     "COMPLETED_TASKS": "مهام مكتملة"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -145,12 +168,33 @@
       "DUE_DATE": "تاريخ الاستحقاق",
       "SORT": "فرز",
       "START_DATE": "تاريخ البدء",
-      "COMPLETED_BY": "إكمال بواسطة"
+      "COMPLETED_BY": "إكمال بواسطة",
+      "COMPLETED_DATE": "تاريخ الإكمال",
+      "CREATED_DATE": "تاريخ الإنشاء",
+      "CANDIDATE_GROUPS": "مجموعات المرشحين"
     },
     "DIALOG": {
       "TITLE": "حفظ عامل التصفية باسم",
       "SAVE": "حفظ",
       "CANCEL": "إلغاء"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "اسم التطبيق",
+      "SERVICE_TASK_ID": "معرف مهمة الخدمة",
+      "SERVICE_NAME": "اسم الخدمة",
+      "ELEMENT_ID": "معرف العنصر",
+      "PROCESS_DEF_NAME": "اسم تعريف العملية",
+      "PROCESS_DEF_ID": "رقم تعريف العملية",
+      "PROCESS_INSTANCE_ID": "رقم مثيل العملية",
+      "STATUS": "الحالة",
+      "DIRECTION": "اتجاه",
+      "ACTIVITY_NAME": "اسم النشاط",
+      "ACTIVITY_TYPE": "نوع النشاط",
+      "SORT": "فرز",
+      "STARTED_DATE": "تاريخ البدء",
+      "COMPLETED_DATE": "تاريخ الإكمال"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -172,6 +216,7 @@
       "PROCESS_NAME": "اسم العملية",
       "APP_VERSION": "إصدار التطبيق",
       "STARTED_DATE": "تاريخ البدء",
+      "STARTED_BY": "بدأ حسب",
       "COMPLETED_DATE": "تاريخ الإكمال",
       "DATE_RANGE": {
         "NO_DATE": "لا يوجد تاريخ",
@@ -298,5 +343,12 @@
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "ملء حقول النموذج ببيانات تعريف هذا الملف"
+  },
+  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
+    "ASSIGNED_TO_ME": "معين لي",
+    "UNASSIGNED": "غير معين",
+    "LIST_OF_CANDIDATE_USERS": "قائمة المستخدمين المرشحين",
+    "ASSIGNEE": "معين له",
+    "ASSIGNMENT_TYPE": "نوع التعيين"
   }
 }
