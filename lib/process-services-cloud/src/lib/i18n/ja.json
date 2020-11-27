@@ -14,6 +14,7 @@
       "COMPLETED_BY": "完了者",
       "ID": "ID",
       "INITIATOR": "開始者",
+      "STARTED_BY": "開始者",
       "APP_NAME": "アプリケーション名",
       "BUSINESS_KEY": "ビジネスキー",
       "DESCRIPTION": "説明",
@@ -72,7 +73,8 @@
           "CANDIDATE_GROUP": "候補グループ",
           "FORM": "フォーム",
           "DATE": "日付の選択",
-          "NONE": "なし"
+          "NONE": "なし",
+          "PRIORITY": "優先度"
         },
         "ACTION": {
           "START": "開始",
@@ -91,7 +93,13 @@
       "DUE_DATE": "期限",
       "CREATED": "作成日",
       "JSON_CELL": "JSON",
-      "COMPLETED_BY": "完了者"
+      "COMPLETED_BY": "完了者",
+      "PRIORITY_VALUES": {
+        "NOT_SET": "設定なし",
+        "LOW": "低",
+        "NORMAL": "中",
+        "HIGH": "高"
+      }
     },
     "LIST": {
       "MESSAGES": {
@@ -101,9 +109,24 @@
       }
     }
   },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "アクティビティ名",
+      "ACTIVITY_TYPE": "ステータス",
+      "ID": "ID",
+      "COMPLETED_DATE": "完了日",
+      "STARTED_DATE": "開始日",
+      "STATUS": "ステータス"
+    }
+  },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "あなたのタスク",
     "QUEUED_TASKS": "キューに入っているタスク",
+    "COMPLETED_TASKS": "完了済みタスク"
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "すべてのサービスタスク",
+    "ERRORED_TASKS": "エラーのタスク",
     "COMPLETED_TASKS": "完了済みタスク"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -145,12 +168,33 @@
       "DUE_DATE": "期限",
       "SORT": "表示順",
       "START_DATE": "開始日",
-      "COMPLETED_BY": "完了者"
+      "COMPLETED_BY": "完了者",
+      "COMPLETED_DATE": "完了日",
+      "CREATED_DATE": "作成日",
+      "CANDIDATE_GROUPS": "候補グループ"
     },
     "DIALOG": {
       "TITLE": "フィルタに名前を付けて保存",
       "SAVE": "保存",
       "CANCEL": "キャンセル"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "アプリケーション名",
+      "SERVICE_TASK_ID": "サービスタスク ID",
+      "SERVICE_NAME": "サービス名",
+      "ELEMENT_ID": "要素 Id",
+      "PROCESS_DEF_NAME": "プロセス定義名",
+      "PROCESS_DEF_ID": "プロセス定義 ID",
+      "PROCESS_INSTANCE_ID": "プロセスインスタンス ID",
+      "STATUS": "ステータス",
+      "DIRECTION": "昇順/降順",
+      "ACTIVITY_NAME": "アクティビティ名",
+      "ACTIVITY_TYPE": "アクティビティの種類",
+      "SORT": "表示順",
+      "STARTED_DATE": "開始日",
+      "COMPLETED_DATE": "完了日"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -170,8 +214,9 @@
       "LAST_MODIFIED_DATE_FORM": "最終変更日 - 開始",
       "LAST_MODIFIED_TO": "最終変更日 - 終了",
       "PROCESS_NAME": "プロセス名",
-      "APP_VERSION": "アプリケーションのリリースバージョン",
+      "APP_VERSION": "新しいアプリケーションのバージョン",
       "STARTED_DATE": "開始日",
+      "STARTED_BY": "開始者",
       "COMPLETED_DATE": "完了日",
       "DATE_RANGE": {
         "NO_DATE": "日付なし",
@@ -298,5 +343,12 @@
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "フォームの各フィールドにこのファイルのメタデータを入力してください"
+  },
+  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
+    "ASSIGNED_TO_ME": "自分に割り当てられたタスク",
+    "UNASSIGNED": "未割り当てのタスク",
+    "LIST_OF_CANDIDATE_USERS": "候補ユーザーのリスト",
+    "ASSIGNEE": "担当者",
+    "ASSIGNMENT_TYPE": "割り当てタイプ"
   }
 }

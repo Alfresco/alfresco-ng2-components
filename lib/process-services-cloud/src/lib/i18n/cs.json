@@ -97,7 +97,7 @@
       "PRIORITY_VALUES": {
         "NOT_SET": "Není nastaven",
         "LOW": "Nízká",
-        "NORMAL": "Normální",
+        "NORMAL": "Střední",
         "HIGH": "Vysoká"
       }
     },

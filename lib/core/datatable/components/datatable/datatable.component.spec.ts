@@ -1268,15 +1268,15 @@ describe('DataTable', () => {
 
         const id1 = element.querySelector('[data-automation-id="text_1');
         const id2 = element.querySelector('[data-automation-id="text_2');
-        const names = element.querySelectorAll('[data-automation-id="text_undefined"]');
+        const namesId1 = element.querySelector('[data-automation-id="text_foo - bar"]');
+        const namesId2 = element.querySelector('[data-automation-id="text_bar - baz"]');
 
         expect(id1.innerText).toEqual('1');
-        expect(names[0].innerText).toEqual('foo - bar');
+        expect(namesId1.innerText).toEqual('foo - bar');
         expect(id2.innerText).toEqual('2');
-        expect(names[1].innerText).toEqual('bar - baz');
+        expect(namesId2.innerText).toEqual('bar - baz');
 
         expect(dataTable.data.getRows().length).toEqual(2);
-        expect(dataTable.resolverFn).toHaveBeenCalledTimes(4);
     });
 
     it('should update data columns when columns input changes', () => {

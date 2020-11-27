@@ -97,7 +97,7 @@
       "PRIORITY_VALUES": {
         "NOT_SET": "Nie ustawiony",
         "LOW": "Niska",
-        "NORMAL": "Normalny",
+        "NORMAL": "Średni",
         "HIGH": "Wysoki"
       }
     },

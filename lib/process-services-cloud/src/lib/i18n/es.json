@@ -97,7 +97,7 @@
       "PRIORITY_VALUES": {
         "NOT_SET": "Sin denifir",
         "LOW": "Baja",
-        "NORMAL": "Normal",
+        "NORMAL": "Media",
         "HIGH": "Alta"
       }
     },

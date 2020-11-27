@@ -56,7 +56,7 @@ describe('Task filters cloud', () => {
             assignedTaskName = StringUtil.generateRandomString(), deletedTaskName = StringUtil.generateRandomString();
         let assignedTask, deletedTask, testUser, groupInfo;
         const orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];
-        let priority = 30;
+        let priority = 1;
         const nrOfTasks = 3;
 
         beforeAll(async () => {
@@ -77,7 +77,7 @@ describe('Task filters cloud', () => {
             await tasksService.deleteTask(deletedTask.entry.id, simpleApp);
             for (let i = 0; i < nrOfTasks; i++) {
                 await tasksService.createStandaloneTask(orderByNameAndPriority[i], simpleApp, { priority: priority });
-                priority = priority + 20;
+                priority = priority + 1;
             }
 
             const processDefinition = await processDefinitionService
