@@ -427,14 +427,6 @@ describe('Content Services Viewer', () => {
             await changeFileNameInViewer(unsupportedFile.name, 'generic-unsupported-file-1st.3DS');
             await uploadNewVersion(jpgFile.name, unsupportedFileByLocation.location);
             await previewUnsupportedFile(unsupportedFileByLocation.name);
-
-            await changeFileNameInViewer(unsupportedFileByLocation.name, 'generic-unsupported-file-2nd.3DS');
-            await uploadNewVersion(pdfFile.name, unsupportedFileByLocation.location);
-            await previewUnsupportedFile(unsupportedFileByLocation.name);
-
-            await changeFileNameInViewer(unsupportedFileByLocation.name, 'generic-unsupported-file-3rd.3DS');
-            await uploadNewVersion(mp4File.name, unsupportedFileByLocation.location);
-            await previewUnsupportedFile(unsupportedFileByLocation.name);
         });
     });
 
