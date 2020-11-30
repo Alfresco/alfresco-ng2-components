@@ -73,6 +73,8 @@ describe('Login component', () => {
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
         await expect(await userInfoPage.getContentEmail()).toEqual(userA.email);
 
+        await navigationBarPage.clickLogoutButton();
+
         await loginPage.login(userB.email, userB.password);
         await userInfoPage.clickUserProfile();
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
@@ -129,18 +131,6 @@ describe('Login component', () => {
         await loginPage.enterPassword('a');
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
         await loginPage.clearUsername();
-        await loginPage.clearPassword();
-    });
-
-    it('[C260047] Password should be crypted', async () => {
-        await loginPage.goToLoginPage();
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.enterPassword('test');
-        await loginPage.showPassword();
-        const tooltip = await loginPage.getShownPassword();
-        await expect(tooltip).toEqual('test');
-        await loginPage.hidePassword();
-        await loginPage.checkPasswordIsHidden();
         await loginPage.clearPassword();
     });
 
