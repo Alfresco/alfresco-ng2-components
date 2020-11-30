@@ -61,6 +61,10 @@ describe('Login component', () => {
         await usersActions.createUser(userB);
    });
 
+    afterEach(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
 
