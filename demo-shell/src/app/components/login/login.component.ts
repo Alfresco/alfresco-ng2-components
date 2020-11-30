@@ -25,9 +25,6 @@ import { LogService } from '@alfresco/adf-core';
 })
 export class LoginComponent {
 
-    customSuccessRouteURI = 'home';
-    customLogoImageURL = './assets/images/alfresco-logo.svg';
-
     disableCsrf = false;
     showFooter = true;
     showRememberMe = true;
@@ -51,19 +48,5 @@ export class LoginComponent {
 
     toggleRememberMe() {
         this.showRememberMe = !this.showRememberMe;
-    }
-
-    toggleSuccessRoute() {
-        this.customSuccessRoute = !this.customSuccessRoute;
-        if (!this.customSuccessRoute) {
-            this.customSuccessRouteURI = null;
-        }
-    }
-
-    toggleLogo() {
-        this.customLogoImage = !this.customLogoImage;
-        if (!this.customLogoImage) {
-            this.customLogoImageURL = null;
-        }
     }
 }

@@ -28,46 +28,6 @@
             {{ 'LOGIN.SHOW_REMEMBERME'| translate }}
         </mat-slide-toggle>
     </p>
-    <p class="app-toggle">
-        <mat-slide-toggle
-            id="adf-toggle-show-successRoute"
-            color="primary"
-            (change)="toggleSuccessRoute()"
-            [checked]="customSuccessRoute">
-            {{ 'LOGIN.SHOW_SUCCESS_ROUTE'| translate }}
-        </mat-slide-toggle>
-    </p>
-    <p class="app-toggle">
-        <ng-container *ngIf="customSuccessRoute">
-            <mat-form-field floatPlaceholder="float">
-                <input matInput
-                       placeholder="Custom success route"
-                       [(ngModel)]="customSuccessRouteURI"
-                       data-automation-id="adf-success-route">
-            </mat-form-field>
-        </ng-container>
-    </p>
-
-    <p class="app-toggle">
-        <mat-slide-toggle
-            id="adf-toggle-logo"
-            color="primary"
-            (change)="toggleLogo()"
-            [checked]="customLogoImage">
-            {{ 'LOGIN.CUSTOM_LOGO'| translate }}
-        </mat-slide-toggle>
-    </p>
-    <p class="app-toggle">
-        <ng-container *ngIf="customLogoImage">
-            <mat-form-field floatPlaceholder="float">
-                <input matInput
-                       placeholder="Custom success Logo URL"
-                       [(ngModel)]="customLogoImageURL"
-                       data-automation-id="adf-url-logo">
-            </mat-form-field>
-        </ng-container>
-    </p>
-
 </div>
 
 <!--SETTING BUTTON-->
@@ -77,8 +37,6 @@
 </a>
 
 <adf-login
-    [successRoute]="customSuccessRouteURI"
-    [logoImageUrl]="customLogoImageURL"
     [showLoginActions]="showFooter"
     [showRememberMe]="showFooter && showRememberMe"
     copyrightText="{{ 'application.copyright' | adfAppConfig }}"
