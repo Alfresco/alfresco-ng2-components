@@ -15,5 +15,6 @@
   "C277003": "ADF-5283 Fix Permission Flaky test",
   "C277004": "ADF-5283 Fix Permission Flaky test",
   "C299187": "ADF-5285 Failing aspect test",
-  "C311290": ""
+  "C311290": "ADF-5293",
+  "C587084": "ACA-4202"
 }
