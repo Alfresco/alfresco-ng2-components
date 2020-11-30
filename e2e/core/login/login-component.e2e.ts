@@ -194,14 +194,6 @@ describe('Login component', () => {
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
     });
 
-    it('[C279932] Should successRoute property change the landing page when the user Login', async () => {
-        await loginPage.goToLoginPage();
-        await loginPage.enableSuccessRouteSwitch();
-        await loginPage.enterSuccessRoute('activiti');
-        await loginPage.loginWithProfile('admin');
-        await processServicesPage.checkApsContainer();
-    });
-
     it('[C279931] Should the user be redirect to the login page when the Process Service session expire', async () => {
         await loginPage.goToLoginPage();
         await loginPage.loginWithProfile('admin');
@@ -222,12 +214,5 @@ describe('Login component', () => {
         await processServicesPage.checkApsContainer();
         await BrowserActions.getUrl(browser.baseUrl + '/files');
         await contentServicesPage.checkAcsContainer();
-    });
-
-    it('[C279933] Should be possible change the login component logo when logoImageUrl is changed', async () => {
-        await loginPage.goToLoginPage();
-        await loginPage.enableLogoSwitch();
-        await loginPage.enterLogo('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
-        await loginPage.checkLoginImgURL();
     });
 });

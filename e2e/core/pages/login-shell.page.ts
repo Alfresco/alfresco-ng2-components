@@ -26,9 +26,6 @@ export class LoginShellPage {
     togglePage = new TogglePage();
     txtUsername = element(by.css('input[id="username"]'));
     txtPassword = element(by.css('input[id="password"]'));
-    logoImg = element(by.css('img[id="adf-login-img-logo"]'));
-    successRouteTxt = element(by.css('input[data-automation-id="adf-success-route"]'));
-    logoTxt = element(by.css('input[data-automation-id="adf-url-logo"]'));
     usernameError = element(by.css('span[data-automation-id="username-error"]'));
     passwordError = element(by.css('span[data-automation-id="password-required"]'));
     loginError = element(by.css('.adf-login-error-message'));
@@ -46,8 +43,6 @@ export class LoginShellPage {
     register = element(by.id('adf-login-action-right'));
     footerSwitch = element(by.id('switch4'));
     rememberMeSwitch = element(by.id('adf-toggle-show-rememberme'));
-    successRouteSwitch = element(by.id('adf-toggle-show-successRoute'));
-    logoSwitch = element(by.id('adf-toggle-logo'));
     header = element(by.id('adf-header'));
     settingsIcon = element(by.cssContainingText('a[data-automation-id="settings"] mat-icon', 'settings'));
     sidenavLayout = element(by.css(`[data-automation-id="sidenav-layout"]`));
@@ -94,11 +89,6 @@ export class LoginShellPage {
 
     async checkLoginErrorIsDisplayed(loginError: string): Promise<void> {
         await BrowserVisibility.waitUntilElementHasText(this.loginError, loginError);
-    }
-
-    async checkLoginImgURL(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.logoImg);
-        return this.logoImg.getAttribute('src');
     }
 
     async checkUsernameInactive(): Promise<void> {
@@ -189,22 +179,6 @@ export class LoginShellPage {
 
     async disableRememberMe(): Promise<void> {
         await this.togglePage.disableToggle(this.rememberMeSwitch);
-    }
-
-    async enableSuccessRouteSwitch(): Promise<void> {
-        await this.togglePage.enableToggle(this.successRouteSwitch);
-    }
-
-    async enableLogoSwitch(): Promise<void> {
-        await this.togglePage.enableToggle(this.logoSwitch);
-    }
-
-    async enterSuccessRoute(route: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.successRouteTxt, route);
-    }
-
-    async enterLogo(logo: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.logoTxt, logo);
     }
 
     async login(username: string, password: string): Promise<void> {
