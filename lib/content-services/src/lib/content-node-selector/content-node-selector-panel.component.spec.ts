@@ -322,6 +322,23 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     done();
                 });
             });
+
+            it('should be able to set current folder id based on breadcrumb navigation path option', async () => {
+                triggerSearchResults(fakeResultSetPaging);
+
+                const chosenNode = new Node({ path: { elements: [{ id: 'node-one-id',  name: 'one' }, { id: 'node-two-id',  name: 'two' }, { id: 'node-three-id',  name: 'three' }] } });
+                component.onCurrentSelection([ { entry: chosenNode } ]);
+                fixture.detectChanges();
+
+                const breadcrumb = document.querySelector('[data-automation-id="dropdown-breadcrumb-trigger"]');
+                breadcrumb.dispatchEvent(new MouseEvent('click'));
+                fixture.detectChanges();
+
+                const pathOption = document.querySelectorAll('.adf-dropdown-breadcrumb-path-option');
+                pathOption[0].dispatchEvent(new MouseEvent('click'));
+
+                expect(component.folderIdToShow).toBe('node-three-id');
+            });
         });
 
         describe('Site selection', () => {
