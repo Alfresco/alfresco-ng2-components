@@ -37,7 +37,7 @@ import {
     FileUploadCompleteEvent
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
-import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, QueryBody, RequestScope } from '@alfresco/js-api';
+import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, QueryBody, RequestScope, PathElementEntity } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
@@ -460,6 +460,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.resetChosenNode();
         this.showingSearchResults = false;
         this.showingSearch.emit(this.showingSearchResults);
+    }
+
+    onBreadcrumbNavigate(route: PathElementEntity) {
+        this.clearSearch();
+        this.folderIdToShow = route.id;
     }
 
     private addCorrespondingNodeIdsQuery() {

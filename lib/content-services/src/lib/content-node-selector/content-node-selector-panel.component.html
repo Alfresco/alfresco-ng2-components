@@ -49,7 +49,7 @@
             </ng-container>
             <adf-dropdown-breadcrumb *ngIf="showBreadcrumbs()"
                 class="adf-content-node-selector-content-breadcrumb"
-                (navigate)="clearSearch()"
+                (navigate)="onBreadcrumbNavigate($event)"
                 [target]="documentList"
                 [rootId]="breadcrumbRootId"
                 [transform]="breadcrumbTransform"
