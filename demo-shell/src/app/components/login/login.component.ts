@@ -28,8 +28,6 @@ export class LoginComponent {
     disableCsrf = false;
     showFooter = true;
     showRememberMe = true;
-    customSuccessRoute = false;
-    customLogoImage = false;
 
     constructor(private logService: LogService) {
     }
