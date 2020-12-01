@@ -46,7 +46,7 @@ export class PermissionsPage {
     async changePermission(name: string, role: string): Promise<void> {
         await this.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(name);
         await this.addPermissionsDialog.selectOption(role);
-        await browser.sleep(100);
+        await browser.sleep(500);
         await this.dataTableComponentPage.checkRowIsNotSelected('Authority ID', name);
     }
 

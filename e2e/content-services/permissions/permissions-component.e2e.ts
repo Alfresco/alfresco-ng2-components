@@ -163,6 +163,10 @@ describe('Permissions Component', () => {
 
     describe('Changing and duplicate Permissions', () => {
 
+        beforeAll(async () => {
+            await searchService.isUserSearchable(filePermissionUser);
+        });
+
         beforeEach(async () => {
             await apiService.login(fileOwnerUser.email, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
