@@ -329,13 +329,17 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 const chosenNode = new Node({ path: { elements: [{ id: 'node-one-id',  name: 'one' }, { id: 'node-two-id',  name: 'two' }, { id: 'node-three-id',  name: 'three' }] } });
                 component.onCurrentSelection([ { entry: chosenNode } ]);
                 fixture.detectChanges();
+                await fixture.whenStable();
 
                 const breadcrumb = document.querySelector('[data-automation-id="dropdown-breadcrumb-trigger"]');
                 breadcrumb.dispatchEvent(new MouseEvent('click'));
                 fixture.detectChanges();
+                await fixture.whenStable();
 
                 const pathOption = document.querySelectorAll('.adf-dropdown-breadcrumb-path-option');
                 pathOption[0].dispatchEvent(new MouseEvent('click'));
+                fixture.detectChanges();
+                await fixture.whenStable();
 
                 expect(component.folderIdToShow).toBe('node-three-id');
             });
