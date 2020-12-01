@@ -65,8 +65,6 @@ export class AuthGuard extends AuthGuardBase {
         } else {
             window.location.reload();
         }
-
-        window.removeEventListener('storage', this.ticketChangeBind);
     }
 
     async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean> {
