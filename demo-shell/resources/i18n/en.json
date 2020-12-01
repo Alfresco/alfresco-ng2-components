@@ -287,14 +287,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION ONE",
   "GROUP-TITLE2-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION TWO",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Back to home"
+    },
     "507": {
       "TITLE": "ACS Disk full",
       "DESCRIPTION": "Content exceeds overall storage quota limit configured for the network or system",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Back to home"
       }
     }
   },
