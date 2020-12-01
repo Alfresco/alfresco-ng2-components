@@ -36,13 +36,7 @@ export class LoginShellPage {
     usernameHighlighted = element(by.css('input[id="username"][aria-invalid="true"]'));
     passwordHighlighted = element(by.css('input[id="password"][aria-invalid="true"]'));
     signInButton = element(by.id('login-button'));
-    showPasswordElement = element(by.css('button[data-automation-id="show_password"]'));
-    hidePasswordElement = element(by.css('button[data-automation-id="hide_password"]'));
-    rememberMe = element(by.css('mat-checkbox[id="adf-login-remember"]'));
-    needHelp = element(by.id('adf-login-action-left'));
     register = element(by.id('adf-login-action-right'));
-    footerSwitch = element(by.id('switch4'));
-    rememberMeSwitch = element(by.id('adf-toggle-show-rememberme'));
     header = element(by.id('adf-header'));
     settingsIcon = element(by.cssContainingText('a[data-automation-id="settings"] mat-icon', 'settings'));
     sidenavLayout = element(by.css(`[data-automation-id="sidenav-layout"]`));
@@ -127,58 +121,6 @@ export class LoginShellPage {
 
     async clickSettingsIcon(): Promise<void> {
         await BrowserActions.click(this.settingsIcon);
-    }
-
-    async showPassword(): Promise<void> {
-        await BrowserActions.click(this.showPasswordElement);
-    }
-
-    async hidePassword(): Promise<void> {
-        await BrowserActions.click(this.hidePasswordElement);
-    }
-
-    async getShownPassword(): Promise<string> {
-        return this.txtPassword.getAttribute('value');
-    }
-
-    async checkPasswordIsHidden(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
-    }
-
-    async checkRememberIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.rememberMe);
-    }
-
-    async checkRememberIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.rememberMe);
-    }
-
-    async checkNeedHelpIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.needHelp);
-    }
-
-    async checkNeedHelpIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.needHelp);
-    }
-
-    async checkRegisterDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.register);
-    }
-
-    async checkRegisterIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.register);
-    }
-
-    async enableFooter(): Promise<void> {
-        await this.togglePage.enableToggle(this.footerSwitch);
-    }
-
-    async disableFooter(): Promise<void> {
-        await this.togglePage.disableToggle(this.footerSwitch);
-    }
-
-    async disableRememberMe(): Promise<void> {
-        await this.togglePage.disableToggle(this.rememberMeSwitch);
     }
 
     async login(username: string, password: string): Promise<void> {

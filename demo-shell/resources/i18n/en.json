@@ -223,11 +223,7 @@
   },
   "LOGIN": {
     "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Login footer",
-    "SHOW_REMEMBERME": "Show remember me",
-    "SHOW_SUCCESS_ROUTE": "Show success route",
-    "CUSTOM_LOGO": "Custom Logo"
+    "PROCESS_SERVICES": "Process Services"
   },
   "SEARCH": {
     "RESULTS": "Search results",

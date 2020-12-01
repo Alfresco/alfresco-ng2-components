@@ -1,65 +1,11 @@
-<!--BPM, ECN AND CSRF TOGGLE-->
-
-<div class="app-settings">
-    <p class="app-toggle">
-        <mat-slide-toggle
-            id="switch3"
-            color="primary"
-            (change)="toggleCSRF()"
-            [checked]="!disableCsrf">
-            CSRF
-        </mat-slide-toggle>
-    </p>
-    <p class="app-toggle">
-        <mat-slide-toggle
-            id="switch4"
-            color="primary"
-            (change)="toggleFooter()"
-            [checked]="showFooter">
-            {{ 'LOGIN.LOGIN_FOOTER'| translate }}
-        </mat-slide-toggle>
-    </p>
-    <p class="app-toggle">
-        <mat-slide-toggle
-            id="adf-toggle-show-rememberme"
-            color="primary"
-            (change)="toggleRememberMe()"
-            [checked]="showRememberMe">
-            {{ 'LOGIN.SHOW_REMEMBERME'| translate }}
-        </mat-slide-toggle>
-    </p>
-</div>
-
-<!--SETTING BUTTON-->
-
 <a mat-fab class="app-setting-button" data-automation-id="settings" href="" routerLink="/settings" color="accent">
     <mat-icon>settings</mat-icon>
 </a>
 
 <adf-login
-    [showLoginActions]="showFooter"
-    [showRememberMe]="showFooter && showRememberMe"
     copyrightText="{{ 'application.copyright' | adfAppConfig }}"
     (error)="onError($event)">
     <div class="app-mobile-settings">
-        <p>
-            <mat-slide-toggle
-                id="switch3-mobile"
-                color="primary"
-                (change)="toggleCSRF()"
-                [checked]="!disableCsrf">
-                CSRF
-            </mat-slide-toggle>
-        </p>
-        <p>
-            <mat-slide-toggle
-                id="switch4-mobile"
-                color="primary"
-                (change)="toggleFooter()"
-                [checked]="showFooter">
-                {{ 'LOGIN.LOGIN_FOOTER'| translate }}
-            </mat-slide-toggle>
-        </p>
         <button
             type="button"
             mat-raised-button

@@ -25,26 +25,10 @@ import { LogService } from '@alfresco/adf-core';
 })
 export class LoginComponent {
 
-    disableCsrf = false;
-    showFooter = true;
-    showRememberMe = true;
-
     constructor(private logService: LogService) {
     }
 
     onError(err: any) {
         this.logService.error(err);
-    }
-
-    toggleCSRF() {
-        this.disableCsrf = !this.disableCsrf;
-    }
-
-    toggleFooter() {
-        this.showFooter = !this.showFooter;
-    }
-
-    toggleRememberMe() {
-        this.showRememberMe = !this.showRememberMe;
     }
 }
