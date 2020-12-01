@@ -83,7 +83,7 @@
                         mat-icon-button
                         [disabled]="!canCreateContent(documentList.folderNode)"
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"
-                        (error)="openSnackMessage($event)"
+                        (error)="openSnackMessageError($event)"
                         (success)="documentList.reload()"
                         [adf-create-folder]="currentFolderId"
                         matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}">
@@ -101,7 +101,7 @@
                         mat-icon-button
                             [disabled]="!canEditFolder(documentList.selection)"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}"
-                            (error)="openSnackMessage($event)"
+                            (error)="openSnackMessageError($event)"
                             [adf-edit-folder]="documentList.selection[0]?.entry"
                             (success)="documentList.reload()"
                             matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}">
@@ -184,7 +184,7 @@
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}</span>
                     </button>
                     <button mat-menu-item
-                            (error)="openSnackMessage($event)"
+                            (error)="openSnackMessageError($event)"
                             [adf-create-folder]="currentFolderId">
                         <mat-icon>create_new_folder</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}</span>
@@ -196,7 +196,7 @@
                     </button>
                     <button mat-menu-item
                             [disabled]="!canEditFolder(documentList.selection)"
-                            (error)="openSnackMessage($event)"
+                            (error)="openSnackMessageError($event)"
                             [adf-edit-folder]="documentList.selection[0]?.entry">
                         <mat-icon>create</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}</span>
@@ -673,7 +673,7 @@
                 [multipleFiles]="multipleFileUpload"
                 [uploadFolders]="folderUpload"
                 [maxFilesSize]="maxSizeShow ? maxFilesSize : null"
-                (error)="openSnackMessage($event)"
+                (error)="openSnackMessageError($event)"
                 [versioning]="versioning"
                 [adf-check-allowable-operation]="'create'"
                 [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
@@ -691,7 +691,7 @@
                 [multipleFiles]="multipleFileUpload"
                 [uploadFolders]="folderUpload"
                 [versioning]="versioning"
-                (error)="openSnackMessage($event)"
+                (error)="openSnackMessageError($event)"
                 [adf-check-allowable-operation]="'create'"
                 [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
                 (permissionEvent)="handlePermissionError($event)">
@@ -718,4 +718,4 @@
     </div>
 </div>
 
-<adf-file-uploading-dialog #fileDialog (error)="openSnackMessage($event)"></adf-file-uploading-dialog>
+<adf-file-uploading-dialog #fileDialog (error)="openSnackMessageError($event)"></adf-file-uploading-dialog>

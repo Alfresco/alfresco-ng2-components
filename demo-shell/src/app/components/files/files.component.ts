@@ -407,12 +407,16 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             action: event.action,
             type: event.type
         }).subscribe((message) => {
-            this.openSnackMessage(message);
+            this.openSnackMessageError(message);
         });
     }
 
-    openSnackMessage(message: string) {
+    openSnackMessageError(message: string) {
         this.notificationService.showError(message);
+    }
+
+    openSnackMessageInfo(message: string) {
+        this.notificationService.showInfo(message);
     }
 
     emitReadyEvent(event: NodePaging) {
@@ -438,12 +442,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 translatedErrorMessage = this.translateService.instant('OPERATION.ERROR.UNKNOWN');
         }
 
-        this.openSnackMessage(translatedErrorMessage);
+        this.openSnackMessageError(translatedErrorMessage);
     }
 
     onContentActionSuccess(message: string) {
         const translatedMessage: any = this.translateService.instant(message);
-        this.openSnackMessage(translatedMessage);
+        this.openSnackMessageInfo(translatedMessage);
         this.documentList.reload();
     }
 
@@ -451,7 +455,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.uploadService.fileDeleted.next(message);
         this.deleteElementSuccess.emit();
         this.documentList.reload();
-        this.openSnackMessage(message);
+        this.openSnackMessageInfo(message);
     }
 
     onPermissionRequested(node: any) {
@@ -471,7 +475,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         } else {
             const translatedErrorMessage: any = this.translateService.instant('OPERATION.ERROR.PERMISSION');
-            this.openSnackMessage(translatedErrorMessage);
+            this.openSnackMessageError(translatedErrorMessage);
         }
     }
 
@@ -489,7 +493,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         } else {
             const translatedErrorMessage: any = this.translateService.instant('OPERATION.ERROR.PERMISSION');
-            this.openSnackMessage(translatedErrorMessage);
+            this.openSnackMessageError(translatedErrorMessage);
         }
     }
 
@@ -653,7 +657,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         } else {
             const translatedErrorMessage: any = this.translateService.instant('OPERATION.ERROR.PERMISSION');
-            this.openSnackMessage(translatedErrorMessage);
+            this.openSnackMessageError(translatedErrorMessage);
         }
     }
 
