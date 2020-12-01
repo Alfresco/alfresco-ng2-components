@@ -34,7 +34,6 @@ import { OverlayViewerComponent } from './components/overlay-viewer/overlay-view
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
-import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { AppComponent } from './app.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
@@ -425,10 +424,6 @@ export const appRoutes: Routes = [
                 path: 'overlay-viewer',
                 component: OverlayViewerComponent,
                 canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'report-issue',
-                component: ReportIssueComponent
             },
             {
                 path: 'datatable-lazy',
