@@ -144,7 +144,7 @@ exports.config = {
 
     directConnect: !SELENIUM_SERVER,
 
-    baseUrl: HOST,
+    baseUrl: HOST + '/#',
 
     params: {
         testConfig: testConfig,
@@ -201,7 +201,7 @@ exports.config = {
             const outputDirectory = process.env.SMART_RUNNER_DIRECTORY;
             console.log(`SmartRunner's repoHash: "${repoHash}"`);
             console.log(`SmartRunner's outputDirectory: "${outputDirectory}"`);
-            SmartRunner.apply({ outputDirectory, repoHash });
+            SmartRunner.apply({outputDirectory, repoHash});
         }
 
         jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
@@ -238,7 +238,7 @@ exports.config = {
         await browser.driver.executeScript(disableCSSAnimation);
 
         // @ts-ignore
-        await browser.get(`${HOST}/settings`);
+        await browser.get(`${HOST}/#/settings`);
         await LocalStorageUtil.clearStorage();
         // @ts-ignore
         await LocalStorageUtil.setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);
