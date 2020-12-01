@@ -26,6 +26,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { LogService } from '../../services/log.service';
 import { TranslationService } from '../../services/translation.service';
 import { UserPreferencesService } from '../../services/user-preferences.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSubmitEvent } from '../models/login-submit.event';
@@ -141,7 +142,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         private userPreferences: UserPreferencesService,
         private location: Location,
         private route: ActivatedRoute,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private alfrescoApiService: AlfrescoApiService
     ) {}
 
     ngOnInit() {
@@ -154,9 +156,13 @@ export class LoginComponent implements OnInit, OnDestroy {
             if (oauth && oauth.implicitFlow) {
                 this.implicitFlow = true;
             }
+
+            if (oauth && oauth.silentLogin && !this.authService.isLoggedIn()) {
+                this.alfrescoApiService.getInstance().oauth2Auth.implicitLogin();
+            }
         }
 
-        if (this.authService.isEcmLoggedIn() || this.authService.isBpmLoggedIn()) {
+        if (this.authService.isLoggedIn()) {
             this.location.forward();
         } else {
             this.route.queryParams.subscribe((params: Params) => {

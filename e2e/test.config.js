@@ -28,7 +28,7 @@ const USERNAME_ADF = process.env.USERNAME_ADF || "defaultuser";
 const PASSWORD_ADF = process.env.PASSWORD_ADF || "defaultuserpassword";
 
 const REDIRECT_URI = process.env.REDIRECT_URI || "/";
-const REDIRECT_URI_LOGOUT = process.env.REDIRECT_URI_LOGOUT || "/logout";
+const REDIRECT_URI_LOGOUT = process.env.REDIRECT_URI_LOGOUT || "#/logout";
 
 const EXTERNAL_ACS_HOST = process.env.EXTERNAL_ACS_HOST;
 const LOG_LEVEL = process.env.LOG_LEVEL || 'ERROR';
