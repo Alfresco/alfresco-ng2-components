@@ -42,13 +42,6 @@ describe('Login component', () => {
     const userA = new UserModel();
     const userB = new UserModel();
 
-    const errorMessages = {
-        username: 'Your username needs to be at least 2 characters.',
-        invalid_credentials: 'You\'ve entered an unknown username or password',
-        password: 'Enter your password to sign in',
-        required: 'Required'
-    };
-
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
 
@@ -87,51 +80,6 @@ describe('Login component', () => {
         await expect(await errorPage.getErrorCode()).toBe('403');
         await expect(await errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
         await expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
-    });
-
-    it('[C260036] Should require username', async () => {
-        await loginPage.goToLoginPage();
-        await loginPage.checkUsernameInactive();
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.enterUsername('A');
-        await expect(await loginPage.getUsernameTooltip()).toEqual(errorMessages.username);
-        await loginPage.clearUsername();
-        await expect(await loginPage.getUsernameTooltip()).toEqual(errorMessages.required);
-        await loginPage.checkUsernameHighlighted();
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-    });
-
-    it('[C260043] Should require password', async () => {
-        await loginPage.goToLoginPage();
-        await loginPage.checkPasswordInactive();
-        await loginPage.checkUsernameInactive();
-        await loginPage.enterPassword('A');
-        await loginPage.checkPasswordTooltipIsNotVisible();
-        await loginPage.clearPassword();
-        await expect(await loginPage.getPasswordTooltip()).toEqual(errorMessages.password);
-        await loginPage.checkPasswordHighlighted();
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-    });
-
-    it('[C260044] Username should be at least 2 characters long', async () => {
-        await loginPage.goToLoginPage();
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.enterUsername('A');
-        await expect(await loginPage.getUsernameTooltip()).toEqual(errorMessages.username);
-        await loginPage.enterUsername('AB');
-        await loginPage.checkUsernameTooltipIsNotVisible();
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.clearUsername();
-    });
-
-    it('[C260045] Should enable login button after entering a valid username and a password', async () => {
-        await loginPage.goToLoginPage();
-        await loginPage.enterUsername(browser.params.testConfig.users.admin.username);
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.enterPassword('a');
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
-        await loginPage.clearUsername();
-        await loginPage.clearPassword();
     });
 
     it('[C260049] Should be possible to login to Process Services with Content Services disabled', async () => {

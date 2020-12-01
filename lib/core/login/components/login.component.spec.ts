@@ -220,6 +220,14 @@ describe('LoginComponent', () => {
 
             expect(authService.login).toHaveBeenCalledWith('fake-username', 'fake-password', false);
         });
+
+        it('should hide remember me if showRememberMe is false', () => {
+            component.showRememberMe = false;
+
+            fixture.detectChanges();
+
+            expect(element.querySelector('#login-remember')).toBe(null);
+        });
     });
 
     it('should render Login form with all the keys to be translated', () => {
@@ -261,14 +269,6 @@ describe('LoginComponent', () => {
         expect(element.querySelector('input[type="text"]')).toBeDefined();
         expect(element.querySelector('input[type="password"]').value).toEqual('');
         expect(element.querySelector('input[type="text"]').value).toEqual('');
-    });
-
-    it('should hide remember me if showRememberMe is false', () => {
-        component.showRememberMe = false;
-
-        fixture.detectChanges();
-
-        expect(element.querySelector('#login-remember')).toBe(null);
     });
 
     it('should hide login actions if showLoginActions is false', () => {
