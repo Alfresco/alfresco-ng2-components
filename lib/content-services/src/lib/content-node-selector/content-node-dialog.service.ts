@@ -232,8 +232,13 @@ export class ContentNodeDialogService {
         return select;
     }
 
-    private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
-        this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
+    private openContentNodeDialog(data: ContentNodeSelectorComponentData, panelClass: string, width: string) {
+        this.dialog.open(ContentNodeSelectorComponent, {
+            data,
+            panelClass,
+            width,
+            disableClose: true
+        });
     }
 
     private imageResolver(row: ShareDataRow): string | null {

@@ -580,6 +580,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
      */
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
+        if (event && event.defaultPrevented) {
+            return;
+        }
+
         const key = event.keyCode;
 
         // Esc
