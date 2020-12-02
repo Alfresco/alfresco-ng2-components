@@ -21,7 +21,6 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Location } from '@angular/common';
 import { AuthenticationService } from '../../services/authentication.service';
 import { LogService } from '../../services/log.service';
 import { TranslationService } from '../../services/translation.service';
@@ -101,7 +100,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /** Route to redirect to on successful login. */
     @Input()
-    successRoute: string = null;
+    successRoute: string = "/'";
 
     /** Emitted when the login is successful. */
     @Output()
@@ -140,11 +139,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         private router: Router,
         private appConfig: AppConfigService,
         private userPreferences: UserPreferencesService,
-        private location: Location,
         private route: ActivatedRoute,
         private sanitizer: DomSanitizer,
         private alfrescoApiService: AlfrescoApiService
-    ) {}
+    ) {
+    }
 
     ngOnInit() {
         this.initFormError();
@@ -163,7 +162,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
 
         if (this.authService.isLoggedIn()) {
-            this.location.forward();
+            this.router.navigate([this.successRoute]);
         } else {
             this.route.queryParams.subscribe((params: Params) => {
                 const url = params['redirectUrl'];
@@ -210,6 +209,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     implicitLogin() {
+        if (this.authService.isLoggedIn()) {
+            this.router.navigate([this.successRoute]);
+        }
         this.authService.ssoImplicitLogin();
     }
 

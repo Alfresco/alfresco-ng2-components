@@ -23,7 +23,14 @@ import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule, CoreAutomationService, AuthBearerInterceptor } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    TRANSLATION_PROVIDER,
+    DebugAppConfigService,
+    CoreModule,
+    CoreAutomationService,
+    AuthBearerInterceptor
+} from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
@@ -128,7 +135,7 @@ registerLocaleData(localeSv);
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes, { initialNavigation: true,  useHash: true  }),
+        RouterModule.forRoot(appRoutes, { useHash: true, enableTracing: true }),
         FormsModule,
         HttpClientModule,
         MaterialModule,
