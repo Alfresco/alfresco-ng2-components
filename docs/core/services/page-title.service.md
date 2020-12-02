@@ -13,9 +13,9 @@ Sets the page title.
 
 ### Methods
 
--   **setTitle**(value: `string` = `""`)<br/>
+*   **setTitle**(value: `string` = `""`)<br/>
     Sets the page title.
-    -   _value:_ `string`  - The new title
+    *   *value:* `string`  - The new title
 
 ## Details
 
@@ -28,4 +28,4 @@ is not supplied then just the app name is used; this will default to
 
 ## See also
 
--   [App config service](app-config.service.md)
+*   [App config service](app-config.service.md)

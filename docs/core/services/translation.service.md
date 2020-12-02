@@ -13,31 +13,31 @@ Supports localisation.
 
 ### Methods
 
--   **addTranslationFolder**(name: `string` = `""`, path: `string` = `""`)<br/>
+*   **addTranslationFolder**(name: `string` = `""`, path: `string` = `""`)<br/>
     Adds a new folder of translation source files.
-    -   _name:_ `string`  - Name for the translation provider
-    -   _path:_ `string`  - Path to the folder
--   **get**(key: `string|Array<string>`, interpolateParams?: `Object`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string|any>`<br/>
+    *   *name:* `string`  - Name for the translation provider
+    *   *path:* `string`  - Path to the folder
+*   **get**(key: `string|Array<string>`, interpolateParams?: `Object`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string|any>`<br/>
     Gets the translation for the supplied key.
-    -   _key:_ `string|Array<string>`  - Key to translate
-    -   _interpolateParams:_ `Object`  - (Optional) String(s) to be interpolated into the main message
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string|any>` - Translated text
--   **instant**(key: `string|Array<string>`, interpolateParams?: `Object`): `string|any`<br/>
+    *   *key:* `string|Array<string>`  - Key to translate
+    *   *interpolateParams:* `Object`  - (Optional) String(s) to be interpolated into the main message
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string|any>` - Translated text
+*   **instant**(key: `string|Array<string>`, interpolateParams?: `Object`): `string|any`<br/>
     Directly returns the translation for the supplied key.
-    -   _key:_ `string|Array<string>`  - Key to translate
-    -   _interpolateParams:_ `Object`  - (Optional) String(s) to be interpolated into the main message
-    -   **Returns** `string|any` - Translated text
--   **loadTranslation**(lang: `string`, fallback?: `string`)<br/>
+    *   *key:* `string|Array<string>`  - Key to translate
+    *   *interpolateParams:* `Object`  - (Optional) String(s) to be interpolated into the main message
+    *   **Returns** `string|any` - Translated text
+*   **loadTranslation**(lang: `string`, fallback?: `string`)<br/>
     Loads a translation file.
-    -   _lang:_ `string`  - Language code for the language to load
-    -   _fallback:_ `string`  - (Optional) Language code to fall back to if the first one was unavailable
--   **onTranslationChanged**(lang: `string`)<br/>
+    *   *lang:* `string`  - Language code for the language to load
+    *   *fallback:* `string`  - (Optional) Language code to fall back to if the first one was unavailable
+*   **onTranslationChanged**(lang: `string`)<br/>
     Triggers a notification callback when the translation language changes.
-    -   _lang:_ `string`  - The new language code
--   **use**(lang: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    *   *lang:* `string`  - The new language code
+*   **use**(lang: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Sets the target language for translations.
-    -   _lang:_ `string`  - Code name for the language
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Translations available for the language
+    *   *lang:* `string`  - Code name for the language
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Translations available for the language
 
 ## Details
 
@@ -180,4 +180,4 @@ class MyComponent {
 
 ## See Also
 
--   [Internationalization](../../user-guide/internationalization.md)
+*   [Internationalization](../../user-guide/internationalization.md)

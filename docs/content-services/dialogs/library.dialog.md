@@ -25,10 +25,10 @@ Creates a new Content Services document library/site.
 
 ### Events
 
-| Name    | Type                                                              | Description                                                                                                                                                                                                                                            |
-| ------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| error   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs.                                                                                                                                                                                                                          |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the new library is created successfully. The event parameter is a [SiteEntry](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md) object with the details of the newly-created library. |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the new library is created successfully. The event parameter is a SiteEntry object with the details of the newly-created library. |
 
 ## Details
 
@@ -39,4 +39,4 @@ section of the Content Services documentation for more information.
 
 ## See also
 
--   [Sites dropdown component](../components/sites-dropdown.component.md)
+*   [Sites dropdown component](../components/sites-dropdown.component.md)

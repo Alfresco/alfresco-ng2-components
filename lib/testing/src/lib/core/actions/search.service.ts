@@ -16,68 +16,101 @@
  */
 
 import { ApiService } from './api.service';
-import { ResultSetPaging } from '@alfresco/js-api';
+import { ResultSetPaging, SearchApi } from '@alfresco/js-api';
 import { Logger } from '../utils/logger';
 import { ApiUtil } from './api.util';
+import { UserModel } from '../models/user.model';
 
 export class SearchService {
     apiService: ApiService;
+    searchApi: SearchApi;
 
     constructor(apiService: ApiService) {
         this.apiService = apiService;
+        this.searchApi = new SearchApi(this.apiService.getInstance());
     }
 
     async isSearchable(name: string): Promise<any> {
-        const query =  this.createSearchQuery(name);
+        const query = this.createSearchQuery(name);
 
         const predicate = (result: ResultSetPaging) => {
-            return result.list && result.list.entries.length > 0 && !!result.list.entries.find(({ entry }) => entry.name === name);
+            return !!result?.list?.entries?.find(({ entry }) => entry.name === name);
         };
 
+        return this.performSearch(query, predicate, 'Failed to search folder');
+    }
+
+    async performSearch(query, predicate, errorMessage): Promise<any> {
         const apiCall = async () => {
             try {
-                const path = '/alfresco/api/-default-/public/search/versions/1/search';
-                const method = 'POST';
-
-                const queryParams = {},
-                    postBody = JSON.parse(query);
-
-                return this.apiService.performECMOperation(path, method, queryParams, postBody);
+                return this.searchApi.search(query);
             } catch (error) {
-                Logger.error('Failed to search folder');
+                Logger.error(errorMessage);
+                return null;
             }
         };
 
         return ApiUtil.waitForApi(apiCall, predicate);
     }
 
-    private createSearchQuery(name: string) {
-        return `{
-            "query": {
-                "query": "${name}*"
+    async isUserSearchable(user: UserModel): Promise<any> {
+        const query = this.createUserSearchQuery(user);
+
+        const predicate = (result: ResultSetPaging) => {
+            return result.list && result.list.entries.length > 0 && !!result.list.entries.find(({ entry }) => entry.properties['cm:email'] === user.email);
+        };
+
+        return this.performSearch(query, predicate, 'Failed to search user');
+    }
+
+    private createUserSearchQuery(user: UserModel) {
+        return {
+            'query': {
+                'query': `email:*${user.email}* OR firstName:*${user.firstName}* OR lastName:*${user.lastName}*`
             },
-            "include": [
-                "path",
-                "allowableOperations",
-                "properties"
+            'include': [
+                'aspectNames',
+                'properties'
             ],
-            "paging": {
-                "maxItems": 20,
-                "skipCount": 0
+            'paging': {
+                'maxItems': 1,
+                'skipCount': 0
             },
-            "filterQueries": [
+            'filterQueries': [
                 {
-                    "query": "TYPE:'cm:folder' OR TYPE:'cm:content'"
+                    'query': `TYPE:'cm:authority'`
+                }
+            ]
+        };
+    }
+
+    private createSearchQuery(name: string) {
+        return {
+            'query': {
+                'query': `${name}*`
+            },
+            'include': [
+                'path',
+                'allowableOperations',
+                'properties'
+            ],
+            'paging': {
+                'maxItems': 20,
+                'skipCount': 0
+            },
+            'filterQueries': [
+                {
+                    'query': `TYPE:'cm:folder' OR TYPE:'cm:content'`
                 },
                 {
-                    "query": "NOT cm:creator:System"
+                    'query': 'NOT cm:creator:System'
                 }
             ],
-            "scope": {
-                "locations": [
-                    "nodes"
+            'scope': {
+                'locations': [
+                    'nodes'
                 ]
             }
-        }`;
+        };
     }
 }

@@ -23,6 +23,8 @@ import {
     BrowserActions,
     LoginPage,
     NotificationHistoryPage,
+    PermissionActions,
+    SearchService,
     StringUtil,
     UploadActions,
     UserModel,
@@ -34,6 +36,7 @@ import { FolderModel } from '../../models/ACS/folder.model';
 import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
+import { NotificationDemoPage } from '../../core/pages/notification.page';
 
 describe('Permissions Component', () => {
 
@@ -44,6 +47,9 @@ describe('Permissions Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const notificationPage = new NotificationDemoPage();
+    const searchService = new SearchService(apiService);
+    const permissionActions = new PermissionActions(apiService);
 
     const contentList = contentServicesPage.getDocumentList();
     const viewerPage = new ViewerPage();
@@ -72,6 +78,10 @@ describe('Permissions Component', () => {
         displayName: StringUtil.generateRandomString()
     };
 
+    const fileOwnerUser = new UserModel();
+    const filePermissionUser = new UserModel();
+
+    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.email + ' / role -> Contributor';
     const roleConsumerFolderModel = new FolderModel({ name: 'roleConsumer' + StringUtil.generateRandomString() });
     const roleCoordinatorFolderModel = new FolderModel({ name: 'roleCoordinator' + StringUtil.generateRandomString() });
     const roleCollaboratorFolderModel = new FolderModel({ name: 'roleCollaborator' + StringUtil.generateRandomString() });
@@ -79,84 +89,22 @@ describe('Permissions Component', () => {
     const roleEditorFolderModel = new FolderModel({ name: 'roleEditor' + StringUtil.generateRandomString() });
 
     let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder;
-    let folders;
-    const fileOwnerUser = new UserModel();
-    const filePermissionUser = new UserModel();
-
-    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.email + ' / role -> Contributor';
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(fileOwnerUser);
         await usersActions.createUser(filePermissionUser);
         await apiService.getInstance().core.groupsApi.createGroup(groupBody);
-        await apiService.login(fileOwnerUser.email, fileOwnerUser.password);
 
+        // to sync user in acs
+        await searchService.isUserSearchable(filePermissionUser);
+
+        await apiService.login(fileOwnerUser.email, fileOwnerUser.password);
         roleConsumerFolder = await uploadActions.createFolder(roleConsumerFolderModel.name, '-my-');
         roleCoordinatorFolder = await uploadActions.createFolder(roleCoordinatorFolderModel.name, '-my-');
         roleContributorFolder = await uploadActions.createFolder(roleContributorFolderModel.name, '-my-');
         roleCollaboratorFolder = await uploadActions.createFolder(roleCollaboratorFolderModel.name, '-my-');
         roleEditorFolder = await uploadActions.createFolder(roleEditorFolderModel.name, '-my-');
-
-        folders = [roleConsumerFolder, roleContributorFolder, roleCoordinatorFolder, roleCollaboratorFolder, roleEditorFolder];
-
-        await apiService.getInstance().core.nodesApi.updateNode(roleConsumerFolder.entry.id,
-
-            {
-                permissions: {
-                    locallySet: [{
-                        authorityId: filePermissionUser.email,
-                        name: 'Consumer',
-                        accessStatus: 'ALLOWED'
-                    }]
-                }
-            });
-
-        await apiService.getInstance().core.nodesApi.updateNode(roleCollaboratorFolder.entry.id,
-            {
-                permissions: {
-                    locallySet: [{
-                        authorityId: filePermissionUser.email,
-                        name: 'Collaborator',
-                        accessStatus: 'ALLOWED'
-                    }]
-                }
-            });
-
-        await apiService.getInstance().core.nodesApi.updateNode(roleCoordinatorFolder.entry.id,
-            {
-                permissions: {
-                    locallySet: [{
-                        authorityId: filePermissionUser.email,
-                        name: 'Coordinator',
-                        accessStatus: 'ALLOWED'
-                    }]
-                }
-            });
-
-        await apiService.getInstance().core.nodesApi.updateNode(roleContributorFolder.entry.id,
-
-            {
-                permissions: {
-                    locallySet: [{
-                        authorityId: filePermissionUser.email,
-                        name: 'Contributor',
-                        accessStatus: 'ALLOWED'
-                    }]
-                }
-            });
-
-        await apiService.getInstance().core.nodesApi.updateNode(roleEditorFolder.entry.id,
-
-            {
-                permissions: {
-                    locallySet: [{
-                        authorityId: filePermissionUser.email,
-                        name: 'Editor',
-                        accessStatus: 'ALLOWED'
-                    }]
-                }
-            });
 
         await uploadActions.uploadFile(fileModel.location, 'RoleConsumer' + fileModel.name, roleConsumerFolder.entry.id);
         await uploadActions.uploadFile(fileModel.location, 'RoleContributor' + fileModel.name, roleContributorFolder.entry.id);
@@ -164,14 +112,13 @@ describe('Permissions Component', () => {
         await uploadActions.uploadFile(fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
         await uploadActions.uploadFile(fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
 
-        await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
-    });
+        await permissionActions.addRoleForUser(filePermissionUser.email, 'Consumer', roleConsumerFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.email, 'Collaborator', roleCollaboratorFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.email, 'Coordinator', roleCoordinatorFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.email, 'Contributor', roleContributorFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.email, 'Editor', roleEditorFolder);
 
-    afterAll(async () => {
-        await apiService.loginWithProfile('admin');
-        for (const folder of folders) {
-            await uploadActions.deleteFileOrFolder(folder.entry.id);
-        }
+        await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
     });
 
     describe('Inherit and assigning permissions', () => {
@@ -198,19 +145,6 @@ describe('Permissions Component', () => {
             } catch (error) {
             }
             await navigationBarPage.clickLogoutButton();
-        });
-
-        it('[C268974] Inherit Permission', async () => {
-            await permissionsPage.addPermissionsDialog.checkPermissionInheritedButtonIsDisplayed();
-            await permissionsPage.addPermissionsDialog.getPermissionInheritedButtonText('Permission Inherited');
-            await permissionsPage.addPermissionsDialog.checkPermissionsDatatableIsDisplayed();
-            await permissionsPage.addPermissionsDialog.clickPermissionInheritedButton();
-
-            await permissionsPage.addPermissionsDialog.getPermissionInheritedButtonText('Inherit Permission');
-            await permissionsPage.addPermissionsDialog.checkNoPermissionsIsDisplayed();
-            await permissionsPage.addPermissionsDialog.clickPermissionInheritedButton();
-            await permissionsPage.addPermissionsDialog.getPermissionInheritedButtonText('Permission Inherited');
-            await permissionsPage.addPermissionsDialog.checkPermissionsDatatableIsDisplayed();
         });
 
         it('[C286272] Should be able to see results when searching for a user', async () => {
@@ -262,7 +196,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
-            await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.email);
+            await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.firstName);
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(filePermissionUser.firstName);
             await permissionsPage.addPermissionsDialog.checkUserIsAdded(filePermissionUser.email);
         });
@@ -284,19 +218,17 @@ describe('Permissions Component', () => {
             await expect(await BrowserActions.getText(roleDropdownOptions.get(3))).toBe('Editor');
             await expect(await BrowserActions.getText(roleDropdownOptions.get(4))).toBe('Consumer');
 
-            await permissionsPage.addPermissionsDialog.selectOption('Collaborator');
+            await BrowserActions.closeMenuAndDialogs();
+            await permissionsPage.changePermission(filePermissionUser.email, 'Collaborator');
             await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Collaborator');
 
-            await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(filePermissionUser.email);
-            await permissionsPage.addPermissionsDialog.selectOption('Coordinator');
+            await permissionsPage.changePermission(filePermissionUser.email, 'Coordinator');
             await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Coordinator');
 
-            await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(filePermissionUser.email);
-            await permissionsPage.addPermissionsDialog.selectOption('Editor');
+            await permissionsPage.changePermission(filePermissionUser.email, 'Editor');
             await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Editor');
 
-            await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(filePermissionUser.email);
-            await permissionsPage.addPermissionsDialog.selectOption('Consumer');
+            await permissionsPage.changePermission(filePermissionUser.email, 'Consumer');
             await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Consumer');
         });
 
@@ -305,9 +237,10 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
-            await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.email);
+            await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.firstName);
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(filePermissionUser.firstName);
 
+            await expect(await notificationPage.getSnackBarMessage()).toEqual(duplicateUserPermissionMessage);
             await notificationHistoryPage.checkNotifyContains(duplicateUserPermissionMessage);
         });
 
@@ -336,8 +269,11 @@ describe('Permissions Component', () => {
             await BrowserActions.closeMenuAndDialogs();
             await contentList.checkActionMenuIsNotDisplayed();
             await contentServicesPage.metadataContent('RoleConsumer' + fileModel.name);
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('You don\'t have access to do this.');
             await notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
+            await browser.sleep(3000);
             await contentServicesPage.uploadFile(fileLocation);
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('You don\'t have the create permission to upload the content');
             await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
@@ -443,8 +379,9 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkPermissionInheritedButtonIsDisplayed();
             await permissionsPage.checkAddPermissionButtonIsDisplayed();
             await permissionsPage.addPermissionsDialog.clickPermissionInheritedButton();
-            await notificationHistoryPage.checkNotifyContains('You are not allowed to change permissions');
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('You are not allowed to change permissions');
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('You are not allowed to change permissions');
             await notificationHistoryPage.checkNotifyContains('You are not allowed to change permissions');
         });
     });

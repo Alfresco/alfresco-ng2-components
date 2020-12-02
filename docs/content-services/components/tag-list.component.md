@@ -15,10 +15,10 @@ Shows tags for an item.
 
 ### Events
 
-| Name   | Type                                                              | Description                     |
-| ------ | ----------------------------------------------------------------- | ------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | result | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a tag is selected. |
 
 ## See Also
 
--   [Tag service](../services/tag.service.md)
+*   [Tag service](../services/tag.service.md)

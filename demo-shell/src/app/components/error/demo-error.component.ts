@@ -20,7 +20,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
     selector: 'app-demo-error',
-    styleUrls: ['./demo-error.component.scss'],
     templateUrl: './demo-error.component.html'
 })
 export class DemoErrorComponent implements OnInit {
@@ -32,16 +31,12 @@ export class DemoErrorComponent implements OnInit {
 
     ngOnInit() {
         if (this.route) {
-            this.route.params.forEach((params: Params) => {
+            this.route.params.subscribe((params: Params) => {
                 if (params['id']) {
                     this.errorCode = params['id'];
                 }
             });
         }
-    }
-
-    onReportIssue() {
-        this.router.navigate(['/report-issue']);
     }
 
     onReturnButton() {

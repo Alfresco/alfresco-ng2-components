@@ -95,7 +95,7 @@
       "JSON_CELL": "Json",
       "COMPLETED_BY": "Completed By",
       "PRIORITY_VALUES": {
-        "NOT_SET": "Not set",
+        "NONE": "None",
         "LOW": "Low",
         "NORMAL": "Normal",
         "HIGH": "High"

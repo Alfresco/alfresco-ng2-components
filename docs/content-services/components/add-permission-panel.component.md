@@ -25,8 +25,8 @@ Searches for people or groups to add to the current node permissions.
 
 ### Events
 
-| Name   | Type                                                              | Description                                      |
-| ------ | ----------------------------------------------------------------- | ------------------------------------------------ |
+| Name | Type | Description |
+| --- | --- | --- |
 | select | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a permission list item is selected. |
 
 ## Details
@@ -41,5 +41,5 @@ permissions to the node once the selection has been made.
 
 ## See also
 
--   [Add permission dialog component](add-permission-dialog.component.md)
--   [Add permission component](add-permission.component.md)
+*   [Add permission dialog component](add-permission-dialog.component.md)
+*   [Add permission component](add-permission.component.md)

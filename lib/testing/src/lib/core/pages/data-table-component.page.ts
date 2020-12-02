@@ -187,12 +187,12 @@ export class DataTableComponentPage {
             return 0;
         }
 
-        if (a.toLocaleLowerCase() === 'not set') {
+        if (a.toLocaleLowerCase() === 'none') {
             return -1;
         }
 
         if (a.toLocaleLowerCase() === 'low') {
-            if (b === 'not set') {
+            if (b === 'none') {
                 return 1;
             } else {
                 return -1;

@@ -32,14 +32,14 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 
 ### Properties
 
-| Name      | Type       | Default value | Description                                                                                                                                                       |
-| --------- | ---------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| providers | `string[]` |               | Tells the component which provider options are available. Possible valid values are "ECM" (Content), "BPM" (Process) , "ALL" (Content and Process), 'OAUTH2' SSO. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| providers | `string[]` |  | Tells the component which provider options are available. Possible valid values are "ECM" (Content), "BPM" (Process) , "ALL" (Content and Process), 'OAUTH2' SSO. |
 
 ### Events
 
-| Name    | Type                                                                  | Description                                        |
-| ------- | --------------------------------------------------------------------- | -------------------------------------------------- |
-| cancel  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the user cancels the changes.         |
-| error   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`  | Emitted when the URL is invalid.                   |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the changes are successfully applied. |
+| Name | Type | Description |
+| --- | --- | --- |
+| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the user cancels the changes. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the URL is invalid. |
+| success | `EventEmitter<boolean>` | Emitted when the changes are successfully applied. |

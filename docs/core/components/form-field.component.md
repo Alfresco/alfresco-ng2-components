@@ -25,9 +25,9 @@ based on the field type or the metadata information.
 
 ### Properties
 
-| Name  | Type                                                      | Default value | Description                                                                                                                                                                                                                                                                                                                            |
-| ----- | --------------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| field | [`FormFieldModel`](../../core/models/form-field.model.md) | null          | Contains all the necessary data needed to determine what UI [`Widget`](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) to use when rendering the field in the form. You would typically not create this data manually but instead create the form in APS and export it to get to all the `FormFieldModel` definitions. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| field | [`FormFieldModel`](../../core/models/form-field.model.md) | null | Contains all the necessary data needed to determine what UI [`Widget`](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) to use when rendering the field in the form. You would typically not create this data manually but instead create the form in APS and export it to get to all the `FormFieldModel` definitions. |
 
 ## Details
 
@@ -38,7 +38,7 @@ uses `<adf-form-field>` components to render the form fields.
 
 Forms defined in APS have the following default mappings for the form fields:
 
-| _APS [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Designer_ [`Widget`](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) | Field Type       | Component Type                                                                                                                            |
+| *APS [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Designer* [`Widget`](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) | Field Type       | Component Type                                                                                                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | Text                                                                                                                                                                     | text             | [`TextWidgetComponent`](../../../lib/core/form/components/widgets/text/text.widget.ts)                                                    |
 | Multi-line text                                                                                                                                                          | multi-line-text  | [`MultilineTextWidgetComponentComponent`](../../../lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts)              |

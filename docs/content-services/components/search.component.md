@@ -7,19 +7,19 @@ Last reviewed: 2019-01-16
 
 # [Search component](../../../lib/content-services/src/lib/search/components/search.component.ts "Defined in search.component.ts")
 
-Searches items for supplied search terms. 
+Searches items for supplied search terms.
 
 ## Contents
 
--   [Basic usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Customise Search Results](#customise-search-results)
-    -   [Attach an input field to the search](#attach-an-input-field-to-the-search)
-    -   [Custom search configuration](#custom-search-configuration)
--   [See Also](#see-also)
+*   [Basic usage](#basic-usage)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [Customise Search Results](#customise-search-results)
+    *   [Attach an input field to the search](#attach-an-input-field-to-the-search)
+    *   [Custom search configuration](#custom-search-configuration)
+*   [See Also](#see-also)
 
 ## Basic usage
 
@@ -34,19 +34,19 @@ Searches items for supplied search terms.
 
 ### Properties
 
-| Name        | Type               | Default value | Description                                                                                                     |
-| ----------- | ------------------ | ------------- | --------------------------------------------------------------------------------------------------------------- |
-| displayWith | `Function \| null` | null          | Function that maps an option's value to its display value in the trigger.                                       |
-| maxResults  | `number`           | 20            | Maximum number of results to show in the search.                                                                |
-| searchTerm  | `string`           | ""            | Search term to use when executing the search. Updating this value will run a new search and update the results. |
-| skipResults | `number`           | 0             | Number of results to skip from the results pagination.                                                          |
-| classList   | `void`             |               | CSS class for display.                                                                                          |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| displayWith | `Function \| null` | null | Function that maps an option's value to its display value in the trigger. |
+| maxResults | `number` | 20 | Maximum number of results to show in the search. |
+| searchTerm | `string` | "" | Search term to use when executing the search. Updating this value will run a new search and update the results. |
+| skipResults | `number` | 0 | Number of results to skip from the results pagination. |
+| classList | `void` |  | CSS class for display. |
 
 ### Events
 
-| Name         | Type                                                                                                                                                                                 | Description                                    |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------- |
-| error        | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                                    | Emitted when an error occurs.                  |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 | resultLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when search results have fully loaded. |
 
 ## Details
@@ -71,11 +71,11 @@ You can add a custom template to show the search results when once they are load
 
 <!-- {% endraw %} -->
 
-The results are provided via the [$implicit variable of angular2](https://angular.io/api/common/NgTemplateOutlet) and can be accessed via the sugar syntax 'let-yourChosenName'. The example above will give results like the following: 
+The results are provided via the [$implicit variable of angular2](https://angular.io/api/common/NgTemplateOutlet) and can be accessed via the sugar syntax 'let-yourChosenName'. The example above will give results like the following:
 
 ![adf-search-control](../../docassets/images/search-component-simple-template.png)
 
-However, you can use a more complex template if necessary: 
+However, you can use a more complex template if necessary:
 
 <!-- {% raw %} -->
 
@@ -160,5 +160,5 @@ customize your search.
 
 ## See Also
 
--   [Search configuration interface](../../core/interfaces/search-configuration.interface.md)
--   [Search configuration service](../../core/services/search-configuration.service.md)
+*   [Search configuration interface](../../core/interfaces/search-configuration.interface.md)
+*   [Search configuration service](../../core/services/search-configuration.service.md)

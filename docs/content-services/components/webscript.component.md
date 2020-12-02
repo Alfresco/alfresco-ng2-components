@@ -11,14 +11,14 @@ Provides access to Webscript features.
 
 ## Contents
 
--   [Basic usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Webscript View HTML example](#webscript-view-html-example)
-    -   [Webscript View DATATABLE example](#webscript-view-datatable-example)
-    -   [Webscript View JSON example](#webscript-view-json-example)
+*   [Basic usage](#basic-usage)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [Webscript View HTML example](#webscript-view-html-example)
+    *   [Webscript View DATATABLE example](#webscript-view-datatable-example)
+    *   [Webscript View JSON example](#webscript-view-json-example)
 
 ## Basic usage
 
@@ -62,19 +62,19 @@ export class AppComponent {
 
 ### Properties
 
-| Name        | Type      | Default value | Description                                                                                                    |
-| ----------- | --------- | ------------- | -------------------------------------------------------------------------------------------------------------- |
-| contentType | `string`  | "TEXT"        | Content type to interpret the data received from the webscript. Can be "JSON" , "HTML" , "DATATABLE" or "TEXT" |
-| contextRoot | `string`  | "alfresco"    | Path where the application is deployed                                                                         |
-| scriptArgs  | `any`     |               | Arguments to pass to the webscript.                                                                            |
-| scriptPath  | `string`  |               | (required) Path to the webscript (as defined by webscript).                                                    |
-| servicePath | `string`  | "service"     | Path that the webscript service is mapped to.                                                                  |
-| showData    | `boolean` | true          | Toggles whether to show or hide the data.                                                                      |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| contentType | `string` | "TEXT" | Content type to interpret the data received from the webscript. Can be "JSON" , "HTML" , "DATATABLE" or "TEXT" |
+| contextRoot | `string` | "alfresco" | Path where the application is deployed |
+| scriptArgs | `any` |  | Arguments to pass to the webscript. |
+| scriptPath | `string` |  | (required) Path to the webscript (as defined by webscript). |
+| servicePath | `string` | "service" | Path that the webscript service is mapped to. |
+| showData | `boolean` | true | Toggles whether to show or hide the data. |
 
 ### Events
 
-| Name    | Type                                                              | Description                                                                                                                                                            |
-| ------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the operation succeeds. You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application. |
 
 ## Details
@@ -96,7 +96,7 @@ This sample Web Scripts reside in your Alfresco Server. You can access the folde
 </adf-webscript-get>
 ```
 
-![Custom columns](../../docassets/images/HTML.png)                         
+![Custom columns](../../docassets/images/HTML.png)
 
 ### Webscript View DATATABLE example
 
@@ -114,7 +114,7 @@ This sample demonstrates how to implement a [Webscript component](webscript.comp
 </adf-webscript-get>
 ```
 
-If you want to show the result from a webscript inside a 
+If you want to show the result from a webscript inside a
 [datatable component](../../core/components/datatable.component.md)
 you have to return the data structure below (subdivided into data and
 schema) from the GET method of the webscript:
@@ -124,7 +124,7 @@ data: [],
 schema: []
 ```
 
-Here is an example: 
+Here is an example:
 
 ```ts
 data: [
@@ -144,7 +144,7 @@ schema: [{
 }]
 ```
 
-Alternatively, you can send just the array data and the component will create a schema for you: 
+Alternatively, you can send just the array data and the component will create a schema for you:
 
 ```ts
 data: [

@@ -13,12 +13,12 @@ Gets information about the current Process Services user.
 
 ### Methods
 
--   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmUserModel`](../../core/models/bpm-user.model.md)`>`<br/>
+*   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmUserModel`](../../core/models/bpm-user.model.md)`>`<br/>
     Gets information about the current user.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmUserModel`](../../core/models/bpm-user.model.md)`>` - User information object
--   **getCurrentUserProfileImage**(): `string`<br/>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmUserModel`](../../core/models/bpm-user.model.md)`>` - User information object
+*   **getCurrentUserProfileImage**(): `string`<br/>
     Gets the current user's profile image as a URL.
-    -   **Returns** `string` - URL string
+    *   **Returns** `string` - URL string
 
 ## Details
 
@@ -33,5 +33,5 @@ methods in the Alfresco JS API for more information about the REST calls used by
 
 ## See also
 
--   [Ecm user service](../services/ecm-user.service.md)
--   [Bpm user model](../models/bpm-user.model.md)
+*   [Ecm user service](../services/ecm-user.service.md)
+*   [Bpm user model](../models/bpm-user.model.md)

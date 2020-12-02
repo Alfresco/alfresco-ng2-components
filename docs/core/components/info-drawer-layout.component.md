@@ -18,9 +18,9 @@ Displays a sidebar-style information panel.
 There are three regions where you can add your own content using `<div>` elements
 with the following names:
 
--   info-drawer-title
--   info-drawer-buttons
--   info-drawer-content
+*   info-drawer-title
+*   info-drawer-buttons
+*   info-drawer-content
 
 ```html
 <adf-info-drawer-layout [showHeader]="true">
@@ -42,9 +42,9 @@ with the following names:
 
 ### Properties
 
-| Name       | Type      | Default value | Description                   |
-| ---------- | --------- | ------------- | ----------------------------- |
-| showHeader | `boolean` | true          | The visibility of the header. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| showHeader | `boolean` | true | The visibility of the header. |
 
 ## Details
 
@@ -54,5 +54,5 @@ See the [Info drawer tab component](info-drawer-tab.component.md) for an alterna
 
 ## See also
 
--   [Info drawer component](info-drawer.component.md)
--   [Info drawer tab component](info-drawer-tab.component.md)
+*   [Info drawer component](info-drawer.component.md)
+*   [Info drawer tab component](info-drawer-tab.component.md)

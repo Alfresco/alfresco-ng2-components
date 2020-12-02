@@ -13,10 +13,10 @@ Gets a list of Content Services nodes currently in the trash.
 
 ### Methods
 
--   **getDeletedNodes**(options?: `Object`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
+*   **getDeletedNodes**(options?: `Object`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets a list of nodes in the trash.
-    -   _options:_ `Object`  - (Optional) Options for JS-API call
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - List of nodes in the trash
+    *   *options:* `Object`  - (Optional) Options for JS-API call
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - List of nodes in the trash
 
 ## Details
 
@@ -27,5 +27,5 @@ page of the Alfresco JS API docs.
 
 ## See also
 
--   [Nodes api service](nodes-api.service.md)
--   [Node service](node.service.md)
+*   [Nodes api service](nodes-api.service.md)
+*   [Node service](node.service.md)

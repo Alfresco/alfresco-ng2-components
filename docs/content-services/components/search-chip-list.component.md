@@ -22,7 +22,7 @@ Displays search criteria as a set of "chips".
 
 ### Properties
 
-| Name         | Type                                                                                    | Default value | Description                                                    |
-| ------------ | --------------------------------------------------------------------------------------- | ------------- | -------------------------------------------------------------- |
-| clearAll     | `boolean`                                                                               | false         | Flag used to enable the display of a clear-all-filters button. |
-| searchFilter | [`SearchFilterComponent`](../../content-services/components/search-filter.component.md) |               | Search filter to supply the data for the chips.                |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| clearAll | `boolean` | false | Flag used to enable the display of a clear-all-filters button. |
+| searchFilter | [`SearchFilterComponent`](../../content-services/components/search-filter.component.md) |  | Search filter to supply the data for the chips. |

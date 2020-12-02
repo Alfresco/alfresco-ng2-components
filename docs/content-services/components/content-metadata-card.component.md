@@ -13,19 +13,19 @@ Displays and edits metadata related to a node.
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
--   [Details](#details)
-    -   [Application config presets](#application-config-presets)
-    -   [Layout oriented config](#layout-oriented-config)
-    -   [Displaying all properties](#displaying-all-properties)
-    -   [Making aspects and properties read only](#making-aspects-and-properties-read-only)
--   [What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect](#what-happens-when-there-is-a-whitelisted-aspect-in-the-config-but-the-given-node-doesnt-relate-to-that-aspect)
--   [Multi value card properties](#multi-value-card-properties)
-    -   [Use chips for multi value properties](#use-chips-for-multi-value-properties)
--   [Copy to Clipboard on click](#copy-to-clipboard-on-click)
--   [Search select options (ACS 7+)](#search-select-options-acs-7)
+*   [Basic Usage](#basic-usage)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+*   [Details](#details)
+    *   [Application config presets](#application-config-presets)
+    *   [Layout oriented config](#layout-oriented-config)
+    *   [Displaying all properties](#displaying-all-properties)
+    *   [Making aspects and properties read only](#making-aspects-and-properties-read-only)
+*   [What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect](#what-happens-when-there-is-a-whitelisted-aspect-in-the-config-but-the-given-node-doesnt-relate-to-that-aspect)
+*   [Multi value card properties](#multi-value-card-properties)
+    *   [Use chips for multi value properties](#use-chips-for-multi-value-properties)
+*   [Copy to Clipboard on click](#copy-to-clipboard-on-click)
+*   [Search select options (ACS 7+)](#search-select-options-acs-7)
 
 ## Basic Usage
 
@@ -42,15 +42,15 @@ Displays and edits metadata related to a node.
 
 ### Properties
 
-| Name                     | Type                                                                                                     | Default value | Description                                                                             |
-| ------------------------ | -------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------------------------------------------- |
-| displayAspect            | `string`                                                                                                 | null          | (optional) This flag displays desired aspect when open for the first time fields.       |
-| displayEmpty             | `boolean`                                                                                                | false         | (optional) This flag displays/hides empty metadata fields.                              |
-| multi                    | `boolean`                                                                                                | false         | (optional) This flag allows the component to display more than one accordion at a time. |
-| node                     | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |               | (required) The node entity to fetch metadata about                                      |
-| preset                   | `string`                                                                                                 |               | (required) Name of the metadata preset, which defines aspects and their properties.     |
-| readOnly                 | `boolean`                                                                                                | false         | (optional) This flag sets the metadata in read only mode preventing changes.            |
-| displayDefaultProperties | `boolean`                                                                                                |               | (optional) This flag displays/hides the metadata properties.                            |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| displayAspect | `string` | null | (optional) This flag displays desired aspect when open for the first time fields. |
+| displayEmpty | `boolean` | false | (optional) This flag displays/hides empty metadata fields. |
+| multi | `boolean` | false | (optional) This flag allows the component to display more than one accordion at a time. |
+| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |  | (required) The node entity to fetch metadata about |
+| preset | `string` |  | (required) Name of the metadata preset, which defines aspects and their properties. |
+| readOnly | `boolean` | false | (optional) This flag sets the metadata in read only mode preventing changes. |
+| displayDefaultProperties | `boolean` |  | (optional) This flag displays/hides the metadata properties. |
 
 ## Details
 
@@ -65,7 +65,7 @@ properties.
 
 You can define different presets for the metadata component or override the default presets in
 the `app.config.json` file. If nothing else is set, the **default** preset is "\*",
-which will use the "indifferent" config described below. 
+which will use the "indifferent" config described below.
 
 You can define as many extra presets as you need for your components.
 
@@ -151,7 +151,7 @@ can be "cherry picked" and grouped into an accordion drawer, along with a transl
 
 #### Basic elements
 
-The following config will produce one accordion group named "TRANSLATABLE_TITLE_FOR_GROUP_1",
+The following config will produce one accordion group named "TRANSLATABLE_TITLE_FOR_GROUP\_1",
 with all the properties from `custom:aspect` followed by the two properties (`exif:pixelXDimension`
 and `exif:pixelYDimension`) from the `exif:exif` aspect and then one property (`custom:myPropertyName`) from `custom:type`:
 
@@ -349,9 +349,9 @@ example below shows this with an aspect-oriented config:
 
 ### Making aspects and properties read only
 
-Whenever you have properties that you want to protect from users editing their values you can add them to your configuration to make them read only. `readOnlyAspects` will make the whole aspect and its properties non editable. 
+Whenever you have properties that you want to protect from users editing their values you can add them to your configuration to make them read only. `readOnlyAspects` will make the whole aspect and its properties non editable.
 
-If you want to disable the editing for specific properties you will need to add them to the `readOnlyProperties` property. 
+If you want to disable the editing for specific properties you will need to add them to the `readOnlyProperties` property.
 
 ```json
 "content-metadata": {
@@ -392,13 +392,13 @@ To customize the separator used by this card you can set it in your `app.config.
 
 ### Use chips for multi value properties
 
-If you want to display chips fo each value instead of a composed string you just need to enable it in the content-metadata config. 
+If you want to display chips fo each value instead of a composed string you just need to enable it in the content-metadata config.
 
 ![Chips for multi value properties](../../docassets/images/metadata-chips.png)
 
 ## Copy to Clipboard on click
 
-For easier interaction with metadata properties you can enable the Copy to Clipboard feature from your configuration in the `app.config.json` file. 
+For easier interaction with metadata properties you can enable the Copy to Clipboard feature from your configuration in the `app.config.json` file.
 
 Once you have enabled this feature you will be able to double click on your metadata properties and they will get copied to your clipboard for you to use.
 

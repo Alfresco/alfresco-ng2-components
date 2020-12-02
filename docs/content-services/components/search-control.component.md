@@ -40,22 +40,22 @@ You can show your own custom template when no results are found for the search:
 
 ### Properties
 
-| Name                 | Type      | Default value | Description                                                                                |
-| -------------------- | --------- | ------------- | ------------------------------------------------------------------------------------------ |
-| autocomplete         | `boolean` | false         | Toggles auto-completion of the search input field.                                         |
-| expandable           | `boolean` | true          | Toggles whether to use an expanding search control. If false then a regular input is used. |
-| highlight            | `boolean` | false         | Toggles highlighting of the search term in the results.                                    |
-| inputType            | `string`  | "text"        | Type of the input field to render, e.g. "search" or "text" (default).                      |
-| liveSearchEnabled    | `boolean` | true          | Toggles "find-as-you-type" suggestions for possible matches.                               |
-| liveSearchMaxResults | `number`  | 5             | Maximum number of results to show in the live search.                                      |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| autocomplete | `boolean` | false | Toggles auto-completion of the search input field. |
+| expandable | `boolean` | true | Toggles whether to use an expanding search control. If false then a regular input is used. |
+| highlight | `boolean` | false | Toggles highlighting of the search term in the results. |
+| inputType | `string` | "text" | Type of the input field to render, e.g. "search" or "text" (default). |
+| liveSearchEnabled | `boolean` | true | Toggles "find-as-you-type" suggestions for possible matches. |
+| liveSearchMaxResults | `number` | 5 | Maximum number of results to show in the live search. |
 
 ### Events
 
-| Name          | Type                                                                 | Description                                                                                                                                                                                                        |
-| ------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| optionClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`    | Emitted when a file item from the list of "find-as-you-type" results is selected.                                                                                                                                  |
-| searchChange  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then it is truncated to an empty string. |
-| submit        | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`    | Emitted when the search is submitted by pressing the ENTER key. The search term is provided as the value of the event.                                                                                             |
+| Name | Type | Description |
+| --- | --- | --- |
+| optionClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a file item from the list of "find-as-you-type" results is selected. |
+| searchChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then it is truncated to an empty string. |
+| submit | `EventEmitter<any>` | Emitted when the search is submitted by pressing the ENTER key. The search term is provided as the value of the event. |
 
 ## Details
 

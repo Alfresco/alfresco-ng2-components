@@ -7,14 +7,6 @@
   "C279932": "login problem APS not basic",
   "C279931": "login problem APS not basic",
   "C279930": "login problem APS not basic",
-  "C274691": "ADF-5283 Fix Permission Flaky test",
-  "C276980": "ADF-5283 Fix Permission Flaky test",
-  "C276993": "ADF-5283 Fix Permission Flaky test",
-  "C276996": "ADF-5283 Fix Permission Flaky test",
-  "C277000": "ADF-5283 Fix Permission Flaky test",
-  "C277003": "ADF-5283 Fix Permission Flaky test",
-  "C277004": "ADF-5283 Fix Permission Flaky test",
-  "C299187": "ADF-5285 Failing aspect test",
-  "C311290": "ADF-5293",
-  "C587084": "ACA-4202"
+  "C299187": "ADF-5285 Failing aspect test due multiple replica",
+  "C311290": "ADF-5293"
 }

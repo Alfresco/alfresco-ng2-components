@@ -41,6 +41,7 @@ export interface SelectedBucket {
 })
 export class SearchFilterComponent implements OnInit, OnDestroy {
 
+    /** Toggles whether to show or not the context facet filters. */
     @Input()
     showContextFacets: boolean = true;
 

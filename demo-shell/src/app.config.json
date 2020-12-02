@@ -1169,7 +1169,7 @@
     {
       "key": "0",
       "value": "0",
-      "label": "ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NOT_SET"
+      "label": "ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE"
     },
     {
       "key": "1",

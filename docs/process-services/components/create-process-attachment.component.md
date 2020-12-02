@@ -25,13 +25,13 @@ Displays an Upload Component (Drag and Click) to upload the attachment to a spec
 
 ### Properties
 
-| Name              | Type     | Default value | Description                                           |
-| ----------------- | -------- | ------------- | ----------------------------------------------------- |
-| processInstanceId | `string` |               | (required) The ID of the process instance to display. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| processInstanceId | `string` |  | (required) The ID of the process instance to display. |
 
 ### Events
 
-| Name    | Type                                                              | Description                                                                                                |
-| ------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| error   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while creating or uploading an attachment from the user within the component. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an attachment is successfully created or uploaded from within the component.                  |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while creating or uploading an attachment from the user within the component. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an attachment is successfully created or uploaded from within the component. |

@@ -15,19 +15,15 @@
  * limitations under the License.
  */
 
-import {
-    Component, Input, OnInit, OnChanges, OnDestroy, Optional,
-    EventEmitter, ViewChild, SimpleChanges, Output
-} from '@angular/core';
+import { Component, Input, OnInit, OnChanges, OnDestroy, Optional, EventEmitter, ViewChild, SimpleChanges, Output } from '@angular/core';
 import { Location } from '@angular/common';
-
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry, NodeEntry } from '@alfresco/js-api';
 import {
-    AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService, FolderCreatedEvent, LogService, NotificationService,
+    AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, ShowHeaderMode, InfinitePaginationComponent, HighlightDirective,
+    PaginationComponent, FormValues, DisplayMode, ShowHeaderMode, InfinitePaginationComponent,
     SharedLinksApiService,
     FormRenderingService,
     FileUploadEvent
@@ -204,9 +200,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild(InfinitePaginationComponent, { static: true })
     infinitePaginationComponent: InfinitePaginationComponent;
 
-    @ViewChild(HighlightDirective)
-    highlighter: HighlightDirective;
-
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
     stickyHeader: boolean;
@@ -226,7 +219,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private contentService: ContentService,
                 private dialog: MatDialog,
                 private location: Location,
-                private translateService: TranslationService,
                 private router: Router,
                 private logService: LogService,
                 private appConfig: AppConfigService,
@@ -402,17 +394,19 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     handlePermissionError(event: any) {
-        this.translateService.get('PERMISSION.LACKOF', {
+        this.notificationService.showError('PERMISSION.LACKOF', null, {
             permission: event.permission,
             action: event.action,
             type: event.type
-        }).subscribe((message) => {
-            this.openSnackMessage(message);
         });
     }
 
-    openSnackMessage(message: string) {
+    openSnackMessageError(message: string) {
         this.notificationService.showError(message);
+    }
+
+    openSnackMessageInfo(message: string) {
+        this.notificationService.showInfo(message);
     }
 
     emitReadyEvent(event: NodePaging) {
@@ -425,25 +419,24 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onContentActionError(errors: any) {
         const errorStatusCode = JSON.parse(errors.message).error.statusCode;
-        let translatedErrorMessage: any;
+        let message: string;
 
         switch (errorStatusCode) {
             case 403:
-                translatedErrorMessage = this.translateService.instant('OPERATION.ERROR.PERMISSION');
+                message = 'OPERATION.ERROR.PERMISSION';
                 break;
             case 409:
-                translatedErrorMessage = this.translateService.instant('OPERATION.ERROR.CONFLICT');
+                message = 'OPERATION.ERROR.CONFLICT';
                 break;
             default:
-                translatedErrorMessage = this.translateService.instant('OPERATION.ERROR.UNKNOWN');
+                message = 'OPERATION.ERROR.UNKNOWN';
         }
 
-        this.openSnackMessage(translatedErrorMessage);
+        this.openSnackMessageError(message);
     }
 
     onContentActionSuccess(message: string) {
-        const translatedMessage: any = this.translateService.instant(message);
-        this.openSnackMessage(translatedMessage);
+        this.openSnackMessageInfo(message);
         this.documentList.reload();
     }
 
@@ -451,7 +444,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.uploadService.fileDeleted.next(message);
         this.deleteElementSuccess.emit();
         this.documentList.reload();
-        this.openSnackMessage(message);
+        this.openSnackMessageInfo(message);
     }
 
     onPermissionRequested(node: any) {
@@ -465,31 +458,30 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: { contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload },
+                data: { contentEntry, showComments, allowDownload },
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'
             });
         } else {
-            const translatedErrorMessage: any = this.translateService.instant('OPERATION.ERROR.PERMISSION');
-            this.openSnackMessage(translatedErrorMessage);
+            this.openSnackMessageError('OPERATION.ERROR.PERMISSION');
         }
     }
 
     onManageMetadata(event: any) {
         const contentEntry = event.value.entry;
+        const displayEmptyMetadata = this.displayEmptyMetadata;
 
         if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
             this.dialog.open(MetadataDialogAdapterComponent, {
                 data: {
-                    contentEntry: contentEntry,
-                    displayEmptyMetadata: this.displayEmptyMetadata
+                    contentEntry,
+                    displayEmptyMetadata
                 },
                 panelClass: 'adf-metadata-manager-dialog',
                 width: '630px'
             });
         } else {
-            const translatedErrorMessage: any = this.translateService.instant('OPERATION.ERROR.PERMISSION');
-            this.openSnackMessage(translatedErrorMessage);
+            this.openSnackMessageError('OPERATION.ERROR.PERMISSION');
         }
     }
 
@@ -497,17 +489,17 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.currentFolderId = site.entry.guid;
     }
 
-    hasSelection(selection: Array<MinimalNodeEntity>): boolean {
+    hasSelection(selection: Array<any>): boolean {
         return selection && selection.length > 0;
     }
 
     hasOneFileSelected(): boolean {
-        const selection: Array<MinimalNodeEntity> = this.documentList.selection;
+        const selection = this.documentList.selection;
         return selection && selection.length === 1 && selection[0].entry.isFile;
     }
 
     userHasPermissionToManageVersions(): boolean {
-        const selection: Array<MinimalNodeEntity> = this.documentList.selection;
+        const selection = this.documentList.selection;
         return this.contentService.hasAllowableOperations(selection[0].entry, 'update');
     }
 
@@ -602,7 +594,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     canDownloadNode(node: MinimalNodeEntity): boolean {
         return node && node.entry && node.entry.name === 'custom';
-
     }
 
     onBeginUpload(event: UploadFilesEvent) {
@@ -652,8 +643,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 width: '630px'
             });
         } else {
-            const translatedErrorMessage: any = this.translateService.instant('OPERATION.ERROR.PERMISSION');
-            this.openSnackMessage(translatedErrorMessage);
+            this.openSnackMessageError('OPERATION.ERROR.PERMISSION');
         }
     }
 

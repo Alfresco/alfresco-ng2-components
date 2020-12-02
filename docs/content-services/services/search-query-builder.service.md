@@ -13,66 +13,91 @@ Stores information from all the custom search and faceted search widgets, compil
 
 ### Methods
 
--   **addFilterQuery**(query: `string`)<br/>
+*   **addFilterQuery**(query: `string`)<br/>
     Adds a filter query to the current query.
-    -   _query:_ `string`  - Query string to add
--   **addUserFacetBucket**(field: [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts), bucket: [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts))<br/>
+    *   *query:* `string`  - Query string to add
+
+*   **addUserFacetBucket**(field: [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts), bucket: [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts))<br/>
     Adds a facet bucket to a field.
-    -   _field:_ [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts)  - The target field
-    -   _bucket:_ [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts)  - Bucket to add
--   **buildQuery**(): `QueryBody`<br/>
+    *   *field:* [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts)  - The target field
+    *   *bucket:* [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts)  - Bucket to add
+
+*   **buildQuery**(): `QueryBody`<br/>
     Builds the current query.
-    -   **Returns** `QueryBody` - The finished query
--   **execute**(queryBody?: `QueryBody`)<br/>
+    *   **Returns** `QueryBody` - The finished query
+
+*   **execute**(queryBody?: `QueryBody`)<br/>
     Builds and executes the current query.
-    -   _queryBody:_ `QueryBody`  - (Optional) (Optional) 
--   **getFacetField**(label: `string`): [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts)<br/>
+    *   *queryBody:* `QueryBody`  - (Optional)
+
+*   **getFacetField**(label: `string`): [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts)<br/>
     Gets a facet field by label.
-    -   _label:_ `string`  - Label of the facet field
-    -   **Returns** [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts) - Facet field data
--   **getFacetQuery**(label: `string`): [`FacetQuery`](../../../lib/content-services/src/lib/search/facet-query.interface.ts)<br/>
+    *   *label:* `string`  - Label of the facet field
+    *   **Returns** [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts) - Facet field data
+
+*   **getFacetQuery**(label: `string`): [`FacetQuery`](../../../lib/content-services/src/lib/search/facet-query.interface.ts)<br/>
     Gets a facet query by label.
-    -   _label:_ `string`  - Label of the query
-    -   **Returns** [`FacetQuery`](../../../lib/content-services/src/lib/search/facet-query.interface.ts) - Facet query data
--   **getPrimarySorting**(): [`SearchSortingDefinition`](../../../lib/content-services/src/lib/search/search-sorting-definition.interface.ts)<br/>
+    *   *label:* `string`  - Label of the query
+    *   **Returns** [`FacetQuery`](../../../lib/content-services/src/lib/search/facet-query.interface.ts) - Facet query data
+
+*   **getPrimarySorting**(): [`SearchSortingDefinition`](../../../lib/content-services/src/lib/search/search-sorting-definition.interface.ts)<br/>
     Gets the primary sorting definition.
-    -   **Returns** [`SearchSortingDefinition`](../../../lib/content-services/src/lib/search/search-sorting-definition.interface.ts) - The primary sorting definition
--   **getQueryGroup**(query: `any`): `any`<br/>
+    *   **Returns** [`SearchSortingDefinition`](../../../lib/content-services/src/lib/search/search-sorting-definition.interface.ts) - The primary sorting definition
+
+*   **getQueryGroup**(query: `any`): `any`<br/>
     Gets the query group.
-    -   _query:_ `any`  - Target query
-    -   **Returns** `any` - Query group
--   **getSortingOptions**(): [`SearchSortingDefinition`](../../../lib/content-services/src/lib/search/search-sorting-definition.interface.ts)`[]`<br/>
+    *   *query:* `any`  - Target query
+    *   **Returns** `any` - Query group
+
+*   **getScope**(): [`RequestScope`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/search-rest-api/model/requestScope.ts)<br/>
+
+    *   **Returns** [`RequestScope`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/search-rest-api/model/requestScope.ts) -
+
+*   **getSortingOptions**(): [`SearchSortingDefinition`](../../../lib/content-services/src/lib/search/search-sorting-definition.interface.ts)`[]`<br/>
     Gets all pre-configured sorting options that users can choose from.
-    -   **Returns** [`SearchSortingDefinition`](../../../lib/content-services/src/lib/search/search-sorting-definition.interface.ts)`[]` - Pre-configured sorting options
--   **getSupportedLabel**(configLabel: `string`): `string`<br/>
+    *   **Returns** [`SearchSortingDefinition`](../../../lib/content-services/src/lib/search/search-sorting-definition.interface.ts)`[]` - Pre-configured sorting options
+
+*   **getSupportedLabel**(configLabel: `string`): `string`<br/>
     Encloses a label name with double quotes if it contains whitespace characters.
-    -   _configLabel:_ `string`  - Original label text
-    -   **Returns** `string` - Label, possibly with quotes if it contains spaces
--   **getUserFacetBuckets**(field: `string`): [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts)`[]`<br/>
+    *   *configLabel:* `string`  - Original label text
+    *   **Returns** `string` - Label, possibly with quotes if it contains spaces
+
+*   **getUserFacetBuckets**(field: `string`): [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts)`[]`<br/>
     Gets the buckets currently added to a field
-    -   _field:_ `string`  - The target fields
-    -   **Returns** [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts)`[]` - Bucket array
--   **isFilterServiceActive**(): `boolean`<br/>
+    *   *field:* `string`  - The target fields
+    *   **Returns** [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts)`[]` - Bucket array
 
-    -   **Returns** `boolean` - 
--   **loadConfiguration**(): [`SearchConfiguration`](../../../lib/content-services/src/lib/search/search-configuration.interface.ts)<br/>
+*   **isFilterServiceActive**(): `boolean`<br/>
 
-    -   **Returns** [`SearchConfiguration`](../../../lib/content-services/src/lib/search/search-configuration.interface.ts) - 
--   **removeFilterQuery**(query: `string`)<br/>
+    *   **Returns** `boolean` -
+
+*   **loadConfiguration**(): [`SearchConfiguration`](../../../lib/content-services/src/lib/search/search-configuration.interface.ts)<br/>
+
+    *   **Returns** [`SearchConfiguration`](../../../lib/content-services/src/lib/search/search-configuration.interface.ts) -
+
+*   **removeFilterQuery**(query: `string`)<br/>
     Removes an existing filter query.
-    -   _query:_ `string`  - The query to remove
--   **removeUserFacetBucket**(field: [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts), bucket: [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts))<br/>
-    Removes an existing bucket from a field.
-    -   _field:_ [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts)  - The target field
-    -   _bucket:_ [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts)  - Bucket to remove
--   **resetToDefaults**()<br/>
--   **search**(queryBody: `QueryBody`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>`<br/>
+    *   *query:* `string`  - The query to remove
 
-    -   _queryBody:_ `QueryBody`  - 
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>` - 
--   **update**(queryBody?: `QueryBody`)<br/>
+*   **removeUserFacetBucket**(field: [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts), bucket: [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts))<br/>
+    Removes an existing bucket from a field.
+    *   *field:* [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts)  - The target field
+    *   *bucket:* [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts)  - Bucket to remove
+
+*   **resetToDefaults**()<br/>
+
+*   **search**(queryBody: `QueryBody`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>`<br/>
+
+    *   *queryBody:* `QueryBody`  -
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>` -
+
+*   **setScope**(scope: [`RequestScope`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/search-rest-api/model/requestScope.ts))<br/>
+
+    *   *scope:* [`RequestScope`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/search-rest-api/model/requestScope.ts)  -
+
+*   **update**(queryBody?: `QueryBody`)<br/>
     Builds the current query and triggers the `updated` event.
-    -   _queryBody:_ `QueryBody`  - (Optional) (Optional)
+    *   *queryBody:* `QueryBody`  - (Optional)
 
 ## Details
 
@@ -84,13 +109,13 @@ You can reuse it with multiple component implementations.
 
 You can use custom widgets to populate and edit the following parts of the resulting query:
 
--   categories
--   query fragments that form a query expression
--   include fields
--   scope settings
--   filter queries
--   facet fields
--   range queries
+*   categories
+*   query fragments that form a query expression
+*   include fields
+*   scope settings
+*   filter queries
+*   facet fields
+*   range queries
 
 ```ts
 constructor(queryBuilder: SearchQueryBuilderService) {
@@ -110,5 +135,5 @@ constructor(queryBuilder: SearchQueryBuilderService) {
 
 ## See also
 
--   [Search filter component](../components/search-filter.component.md)
--   [Search Widget interface](../interfaces/search-widget.interface.md)
+*   [Search filter component](../components/search-filter.component.md)
+*   [Search Widget interface](../interfaces/search-widget.interface.md)

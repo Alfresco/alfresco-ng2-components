@@ -37,17 +37,17 @@ You can show custom content when there are no apps available by supplying an
 
 ### Properties
 
-| Name         | Type     | Default value | Description                                                                                      |
-| ------------ | -------- | ------------- | ------------------------------------------------------------------------------------------------ |
-| filtersAppId | `any[]`  |               | Provides a way to filter the apps to show.                                                       |
-| layoutType   | `string` |               | (**required**) Defines the layout of the apps. There are two possible values, "GRID" and "LIST". |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| filtersAppId | `any[]` |  | Provides a way to filter the apps to show. |
+| layoutType | `string` |  | (**required**) Defines the layout of the apps. There are two possible values, "GRID" and "LIST". |
 
 ### Events
 
-| Name     | Type                                                                                                                                                                         | Description                           |
-| -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`AppDefinitionRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when an app entry is clicked. |
-| error    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                            | Emitted when an error occurs.         |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |
 
 ## Details
 

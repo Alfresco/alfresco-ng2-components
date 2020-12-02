@@ -18,9 +18,9 @@ Displays a sidebar-style information panel with tabs.
 There are three regions where you can add your own content using `<div>` elements
 with the following names (as with the [Info drawer layout component](info-drawer-layout.component.md)):
 
--   info-drawer-title
--   info-drawer-buttons
--   info-drawer-content
+*   info-drawer-title
+*   info-drawer-buttons
+*   info-drawer-content
 
 The tabs are added using one or more `<adf-info-drawer-tab>` elements, which can
 have any content you like:
@@ -47,16 +47,16 @@ have any content you like:
 
 ### Properties
 
-| Name          | Type             | Default value | Description                                               |
-| ------------- | ---------------- | ------------- | --------------------------------------------------------- |
-| selectedIndex | `number`         | 0             | The selected index tab.                                   |
-| showHeader    | `boolean`        | true          | The visibility of the header.                             |
-| title         | `string \| null` | null          | The title of the info drawer (string or translation key). |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| selectedIndex | `number` | 0 | The selected index tab. |
+| showHeader | `boolean` | true | The visibility of the header. |
+| title | `string \| null` | null | The title of the info drawer (string or translation key). |
 
 ### Events
 
-| Name       | Type                                                                 | Description                                    |
-| ---------- | -------------------------------------------------------------------- | ---------------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | currentTab | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<number>` | Emitted when the currently active tab changes. |
 
 ## Details
@@ -65,5 +65,5 @@ This is a variant of the [Info Drawer Layout component](info-drawer-layout.compo
 
 ## See also
 
--   [Info drawer layout component](info-drawer-layout.component.md)
--   [Info drawer tab component](info-drawer-tab.component.md)
+*   [Info drawer layout component](info-drawer-layout.component.md)
+*   [Info drawer tab component](info-drawer-tab.component.md)

@@ -7,19 +7,19 @@ Last reviewed: 2018-04-06
 
 # [People Content service](../../../lib/core/services/people-content.service.ts "Defined in people-content.service.ts")
 
-Gets information about a Content Services user.  
+Gets information about a Content Services user.
 
 ## Class members
 
 ### Methods
 
--   **getCurrentPerson**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+*   **getCurrentPerson**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets information about the user who is currently logged in.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - User information
--   **getPerson**(personId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - User information
+*   **getPerson**(personId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets information about a user identified by their username.
-    -   _personId:_ `string`  - ID of the target user
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - User information
+    *   *personId:* `string`  - ID of the target user
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - User information
 
 ## Details
 
@@ -34,5 +34,5 @@ method in the Alfresco JS API for more information about the REST calls used by 
 
 ## See also
 
--   [People process service](people-process.service.md)
--   [Ecm user model](../models/ecm-user.model.md)
+*   [People process service](people-process.service.md)
+*   [Ecm user model](../models/ecm-user.model.md)

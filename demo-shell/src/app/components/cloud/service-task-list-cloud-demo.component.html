@@ -2,7 +2,8 @@
      fxFill>
     <adf-cloud-service-task-filters [appName]="appName"
                                     [filterParam]="{index: 0}"
-                                    (filterClick)="onTaskFilterSelected($event)">
+                                    (filterClicked)="onTaskFilterSelected($event)"
+                                    (filterSelected)="onTaskFilterSelected($event)">
 
     </adf-cloud-service-task-filters>
     <div fxLayout="column"

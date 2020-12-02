@@ -23,16 +23,16 @@ Shows the checklist task functionality.
 
 ### Properties
 
-| Name     | Type      | Default value | Description                                                                             |
-| -------- | --------- | ------------- | --------------------------------------------------------------------------------------- |
-| assignee | `string`  |               | (required) The assignee id that the subtasks are assigned to.                           |
-| readOnly | `boolean` | false         | Toggle readonly state of the form. All form widgets will render as readonly if enabled. |
-| taskId   | `string`  |               | (required) The id of the parent task to which subtasks are attached.                    |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| assignee | `string` |  | (required) The assignee id that the subtasks are assigned to. |
+| readOnly | `boolean` | false | Toggle readonly state of the form. All form widgets will render as readonly if enabled. |
+| taskId | `string` |  | (required) The id of the parent task to which subtasks are attached. |
 
 ### Events
 
-| Name                 | Type                                                                                                                                                               | Description                                   |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | checklistTaskCreated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` | Emitted when a new checklist task is created. |
-| checklistTaskDeleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                                                                                               | Emitted when a checklist task is deleted.     |
-| error                | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                  | Emitted when an error occurs.                 |
+| checklistTaskDeleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a checklist task is deleted. |
+| error | `EventEmitter<any>` | Emitted when an error occurs. |

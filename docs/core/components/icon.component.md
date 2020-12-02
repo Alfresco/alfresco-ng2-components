@@ -26,10 +26,10 @@ Provides a universal way of rendering registered and named icons.
 
 ### Properties
 
-| Name  | Type                                                                                                            | Default value | Description                                                                                          |
-| ----- | --------------------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------- |
-| color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |               | Theme color palette for the component.                                                               |
-| value | `string`                                                                                                        |               | Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |  | Theme color palette for the component. |
+| value | `string` |  | Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. |
 
 ## Details
 
@@ -80,4 +80,4 @@ using the `adf:` namespace.
 
 ## See also
 
--   [Thumbnail service](../services/thumbnail.service.md)
+*   [Thumbnail service](../services/thumbnail.service.md)

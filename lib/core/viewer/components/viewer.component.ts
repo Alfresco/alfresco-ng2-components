@@ -391,9 +391,13 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
         this.fileTitle = this.getDisplayName(versionData ? versionData.name : nodeData.name);
 
+        const currentFileVersion = this.nodeEntry?.entry?.properties && this.nodeEntry.entry.properties['cm:versionLabel'] ?
+            encodeURI(this.nodeEntry?.entry?.properties['cm:versionLabel']) : encodeURI('1.0');
+
         this.urlFileContent = versionData ? this.apiService.contentApi.getVersionContentUrl(this.nodeId, versionData.id) :
             this.apiService.contentApi.getContentUrl(this.nodeId);
-        this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + this.cacheBusterNumber : this.urlFileContent;
+        this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + currentFileVersion + '&' + this.cacheBusterNumber :
+            this.urlFileContent + '&' + currentFileVersion;
 
         this.extension = this.getFileExtension(versionData ? versionData.name : nodeData.name);
 
@@ -580,6 +584,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
      */
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
+        if (event && event.defaultPrevented) {
+            return;
+        }
+
         const key = event.keyCode;
 
         // Esc

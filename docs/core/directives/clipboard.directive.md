@@ -25,11 +25,11 @@ Copies text to the clipboard.
 
 ### Properties
 
-| Name        | Type                                                                                                                                                                                         | Default value | Description                                                |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------- |
-| message     | `string`                                                                                                                                                                                     |               | Translation key or message for snackbar notification.      |
-| placeholder | `string`                                                                                                                                                                                     |               | Translation key or message for the tooltip.                |
-| target      | [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement)`  \|  `[`HTMLTextAreaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement) |               | Reference to the HTML element containing the text to copy. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| message | `string` |  | Translation key or message for snackbar notification. |
+| placeholder | `string` |  | Translation key or message for the tooltip. |
+| target | [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement)`  \|  `[`HTMLTextAreaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement) |  | Reference to the HTML element containing the text to copy. |
 
 ## Details
 
@@ -42,4 +42,4 @@ the user hovers the mouse over the element. You can also provide a snackbar mess
 
 ## See also
 
--   [Clipboard service](../../core/services/clipboard.service.md)
+*   [Clipboard service](../../core/services/clipboard.service.md)

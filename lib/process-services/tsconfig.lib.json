@@ -3,7 +3,6 @@
   "compilerOptions": {
     "outDir": "../dist/process-services/",
     "baseUrl": "src",
-    "types": [],
     "paths": {
       "@alfresco/adf-extensions": ["../../dist/extensions"],
       "@alfresco/adf-extensions/*": ["../../dist/extensions/*"],

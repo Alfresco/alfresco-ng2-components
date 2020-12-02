@@ -20,8 +20,8 @@ Shows node permissions as a table.
 
 ### [Transclusions](../../user-guide/transclusion.md)
 
-When the list is empty, the contents will simply say "No permissions" by default, 
-but you can also supply your own content: 
+When the list is empty, the contents will simply say "No permissions" by default,
+but you can also supply your own content:
 
 ```html
 <adf-permission-list [nodeId]="nodeId">
@@ -35,15 +35,15 @@ but you can also supply your own content:
 
 ### Properties
 
-| Name   | Type     | Default value | Description                                        |
-| ------ | -------- | ------------- | -------------------------------------------------- |
-| nodeId | `string` | ""            | ID of the node whose permissions you want to show. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| nodeId | `string` | "" | ID of the node whose permissions you want to show. |
 
 ### Events
 
-| Name   | Type                                                                                                                                                                                               | Description                             |
-| ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| error  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                                                  | Emitted when an error occurs.           |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 | update | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)`>` | Emitted when the permission is updated. |
 
 ## Details

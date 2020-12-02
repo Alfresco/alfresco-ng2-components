@@ -76,14 +76,14 @@ You can use column templates with the [people list component](people-list.compon
 
 ### Properties
 
-| Name    | Type                                                              | Default value | Description                                                                   |
-| ------- | ----------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------- |
-| actions | `boolean`                                                         | false         | Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu. |
-| users   | [`UserProcessModel`](../../core/models/user-process.model.md)`[]` |               | The array of user data used to populate the people list.                      |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| actions | `boolean` | false | Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu. |
+| users | [`UserProcessModel`](../../core/models/user-process.model.md)`[]` |  | The array of user data used to populate the people list. |
 
 ### Events
 
-| Name        | Type                                                                                                                                                           | Description                                                                |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | clickAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserEventModel`](../../../lib/process-services/src/lib/task-list/models/user-event.model.ts)`>` | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
-| clickRow    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`>`                                  | Emitted when the user clicks a row in the people list.                     |
+| clickRow | `EventEmitter<UserProcessModel>` | Emitted when the user clicks a row in the people list. |

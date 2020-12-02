@@ -19,20 +19,20 @@ Shows all available filters.
 
 ### Properties
 
-| Name        | Type                                                                                          | Default value | Description                                                                                                                        |
-| ----------- | --------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| appName     | `string`                                                                                      | ""            | Display filters available to the current user for the application with the specified name.                                         |
-| filterParam | [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) |               | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
-| showIcons   | `boolean`                                                                                     | false         | Toggles display of the filter's icons.                                                                                             |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| appName | `string` | "" | Display filters available to the current user for the application with the specified name. |
+| filterParam | [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) |  | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
+| showIcons | `boolean` | false | Toggles display of the filter's icons. |
 
 ### Events
 
-| Name        | Type                                                                                                                                                                                 | Description                                   |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
-| error       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                                    | Emitted when an error occurs during loading.  |
-| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter is being selected based on the filterParam input. |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during loading. |
 | filterClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter is being clicked from the UI. |
-| success     | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                                    | Emitted when the list is loaded.              |
+| filterSelected | `EventEmitter<TaskFilterCloudModel>` | Emitted when a filter is being selected based on the filterParam input. |
+| success | `EventEmitter<any>` | Emitted when the list is loaded. |
 
 ## Details
 
@@ -58,6 +58,6 @@ as the value of `filterParam` as shown in the table below:
 
 ## See also
 
--   [Task filter Cloud Service](../services/task-filter-cloud.service.md)
--   [Local preference Cloud Service](../services/local-preference-cloud.service.md)
--   [User preference Cloud Service](../services/user-preference-cloud.service.md)
+*   [Task filter Cloud Service](../services/task-filter-cloud.service.md)
+*   [Local preference Cloud Service](../services/local-preference-cloud.service.md)
+*   [User preference Cloud Service](../services/user-preference-cloud.service.md)

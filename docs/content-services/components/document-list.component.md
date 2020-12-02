@@ -13,32 +13,32 @@ Displays the documents from a repository.
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [DOM Events](#dom-events)
-    -   [Conditional visibility](#conditional-visibility)
-    -   [Card view](#card-view)
-    -   [Pagination strategy](#pagination-strategy)
-    -   [Data Sources](#data-sources)
-    -   [Setting default folder](#setting-default-folder)
-    -   [Calling DocumentList api directly](#calling-documentlist-api-directly)
-    -   [Underlying node object](#underlying-node-object)
-    -   [Custom columns](#custom-columns)
-    -   [Column templates](#column-templates)
-    -   [Date Column](#date-column)
-    -   [Location Column](#location-column)
-    -   [Actions](#actions)
-    -   [Navigation mode](#navigation-mode)
-    -   [Header filters](#header-filters)
--   [Advanced usage and customization](#advanced-usage-and-customization)
-    -   [Image Resolver and Row Filter functions](#image-resolver-and-row-filter-functions)
-    -   [Custom 'empty folder' template](#custom-empty-folder-template)
-    -   [Custom 'permission denied' template](#custom-permission-denied-template)
-    -   [Custom 'loading' template](#custom-loading-template)
--   [See also](#see-also)
+*   [Basic Usage](#basic-usage)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [DOM Events](#dom-events)
+    *   [Conditional visibility](#conditional-visibility)
+    *   [Card view](#card-view)
+    *   [Pagination strategy](#pagination-strategy)
+    *   [Data Sources](#data-sources)
+    *   [Setting default folder](#setting-default-folder)
+    *   [Calling DocumentList api directly](#calling-documentlist-api-directly)
+    *   [Underlying node object](#underlying-node-object)
+    *   [Custom columns](#custom-columns)
+    *   [Column templates](#column-templates)
+    *   [Date Column](#date-column)
+    *   [Location Column](#location-column)
+    *   [Actions](#actions)
+    *   [Navigation mode](#navigation-mode)
+    *   [Header filters](#header-filters)
+*   [Advanced usage and customization](#advanced-usage-and-customization)
+    *   [Image Resolver and Row Filter functions](#image-resolver-and-row-filter-functions)
+    *   [Custom 'empty folder' template](#custom-empty-folder-template)
+    *   [Custom 'permission denied' template](#custom-permission-denied-template)
+    *   [Custom 'loading' template](#custom-loading-template)
+*   [See also](#see-also)
 
 ## Basic Usage
 
@@ -55,52 +55,52 @@ Displays the documents from a repository.
 
 ### Properties
 
-| Name                   | Type                                                                                                                    | Default value       | Description                                                                                                                                                                                                                                                                                                                                                                                                   |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| additionalSorting      | [`DataSorting`](../../../lib/core/datatable/data/data-sorting.model.ts)                                                 |                     | Defines default sorting. The format is an array of strings `[key direction, otherKey otherDirection]` i.e. `['name desc', 'nodeType asc']` or `['name asc']`. Set this value if you want a base rule to be added to the sorting apart from the one driven by the header.                                                                                                                                      |
-| allowDropFiles         | `boolean`                                                                                                               | false               | When true, this enables you to drop files directly into subfolders shown as items in the list or into another file to trigger updating it's version. When false, the dropped file will be added to the current folder (ie, the one containing all the items shown in the list). See the [Upload directive](../../core/directives/upload.directive.md) for further details about how the file drop is handled. |
-| contentActions         | `boolean`                                                                                                               | false               | Toggles content actions for each row                                                                                                                                                                                                                                                                                                                                                                          |
-| contentActionsPosition | `string`                                                                                                                | "right"             | Position of the content actions dropdown menu. Can be set to "left" or "right".                                                                                                                                                                                                                                                                                                                               |
-| contextMenuActions     | `boolean`                                                                                                               | false               | Toggles context menus for each row                                                                                                                                                                                                                                                                                                                                                                            |
-| currentFolderId        | `string`                                                                                                                | null                | The ID of the folder node to display or a reserved string alias for special sources                                                                                                                                                                                                                                                                                                                           |
-| display                | `string`                                                                                                                | DisplayMode.List    | Change the display mode of the table. Can be "list" or "gallery".                                                                                                                                                                                                                                                                                                                                             |
-| emptyFolderImageUrl    | `string`                                                                                                                |                     | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg'                                                                                                                                                                                                                                                                                                                             |
-| filterValue            | `any`                                                                                                                   |                     | Initial value for filter.                                                                                                                                                                                                                                                                                                                                                                                     |
-| headerFilters          | `boolean`                                                                                                               | false               | Toggles the header filters mode.                                                                                                                                                                                                                                                                                                                                                                              |
-| imageResolver          | `any \| null`                                                                                                           | null                | Custom function to choose image file paths to show. See the [Image Resolver Model](image-resolver.model.md) page for more information.                                                                                                                                                                                                                                                                        |
-| includeFields          | `string[]`                                                                                                              |                     | Include additional information about the node in the server request. For example: association, isLink, isLocked and others.                                                                                                                                                                                                                                                                                   |
-| loading                | `boolean`                                                                                                               | false               | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication.                                                                                                                                                                                                                                       |
-| locationFormat         | `string`                                                                                                                | "/"                 | The default route for all the location-based columns (if declared).                                                                                                                                                                                                                                                                                                                                           |
-| maxItems               | `number`                                                                                                                |                     | Default value is stored in the user preference settings. Use this only if you are not using pagination.                                                                                                                                                                                                                                                                                                       |
-| multiselect            | `boolean`                                                                                                               | false               | Toggles multiselect mode                                                                                                                                                                                                                                                                                                                                                                                      |
-| navigate               | `boolean`                                                                                                               | true                | Toggles navigation to folder content or file preview                                                                                                                                                                                                                                                                                                                                                          |
-| navigationMode         | `string`                                                                                                                |                     | [User](../../../lib/core/pipes/user-initial.pipe.ts) interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick"                                                                                                                                                                                                                                    |
-| node                   | [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)    | null                | The Document list will show all the nodes contained in the [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) entity                                                                                                                                                                                                                          |
-| permissionsStyle       | [`PermissionStyleModel`](../../../lib/content-services/src/lib/document-list/models/permissions-style.model.ts)`[]`     | \[]                 | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../../lib/content-services/src/lib/document-list/models/permissions-style.model.ts) page for further details and examples.                                                                                                                                                      |
-| preselectNodes         | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[]                 | Array of nodes to be pre-selected. All nodes in the array are pre-selected in multi selection mode, but only the first node is pre-selected in single selection mode.                                                                                                                                                                                                                                         |
-| rowStyle               | `string`                                                                                                                |                     | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples.                                                                                                                                                                                                                                                                                                     |
-| rowStyleClass          | `string`                                                                                                                |                     | The CSS class to apply to every row                                                                                                                                                                                                                                                                                                                                                                           |
-| selectionMode          | `string`                                                                                                                | "single"            | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.                                                                                                                                                                                                                                       |
-| showHeader             | `string`                                                                                                                | ShowHeaderMode.Data | Toggles the header                                                                                                                                                                                                                                                                                                                                                                                            |
-| sorting                | `string[] \| `[`DataSorting`](../../../lib/core/datatable/data/data-sorting.model.ts)                                   | ['name', 'asc']     | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns.                                                                                                                                                                     |
-| sortingMode            | `string`                                                                                                                | "server"            | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option _does not_ request the server to sort the data before delivering it.                                                                                                                     |
-| stickyHeader           | `boolean`                                                                                                               | false               | Toggles the sticky header mode.                                                                                                                                                                                                                                                                                                                                                                               |
-| thumbnails             | `boolean`                                                                                                               | false               | Show document thumbnails rather than icons                                                                                                                                                                                                                                                                                                                                                                    |
-| where                  | `string`                                                                                                                |                     | Filters the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information.                                                                                                                                                      |
-| rowFilter              | [`RowFilter`](../../../lib/content-services/src/lib/document-list/data/row-filter.model.ts)                             |                     | Custom function to choose whether to show or hide rows. See the [Row Filter Model](row-filter.model.md) page for more information.                                                                                                                                                                                                                                                                            |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| additionalSorting | [`DataSorting`](../../../lib/core/datatable/data/data-sorting.model.ts) |  | Defines default sorting. The format is an array of strings `[key direction, otherKey otherDirection]` i.e. `['name desc', 'nodeType asc']` or `['name asc']`. Set this value if you want a base rule to be added to the sorting apart from the one driven by the header. |
+| allowDropFiles | `boolean` | false | When true, this enables you to drop files directly into subfolders shown as items in the list or into another file to trigger updating it's version. When false, the dropped file will be added to the current folder (ie, the one containing all the items shown in the list). See the [Upload directive](../../core/directives/upload.directive.md) for further details about how the file drop is handled. |
+| contentActions | `boolean` | false | Toggles content actions for each row |
+| contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
+| contextMenuActions | `boolean` | false | Toggles context menus for each row |
+| currentFolderId | `string` | null | The ID of the folder node to display or a reserved string alias for special sources |
+| display | `string` | DisplayMode.List | Change the display mode of the table. Can be "list" or "gallery". |
+| emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
+| filterValue | `any` |  | Initial value for filter. |
+| headerFilters | `boolean` | false | Toggles the header filters mode. |
+| imageResolver | `any \| null` | null | Custom function to choose image file paths to show. See the [Image Resolver Model](image-resolver.model.md) page for more information. |
+| includeFields | `string[]` |  | Include additional information about the node in the server request. For example: association, isLink, isLocked and others. |
+| loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
+| locationFormat | `string` | "/" | The default route for all the location-based columns (if declared). |
+| maxItems | `number` |  | Default value is stored in the user preference settings. Use this only if you are not using pagination. |
+| multiselect | `boolean` | false | Toggles multiselect mode |
+| navigate | `boolean` | true | Toggles navigation to folder content or file preview |
+| navigationMode | `string` |  | [`User`](../../../lib/core/pipes/user-initial.pipe.ts) interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
+| node | [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) | null | The Document list will show all the nodes contained in the [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) entity |
+| permissionsStyle | [`PermissionStyleModel`](../../../lib/content-services/src/lib/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../../lib/content-services/src/lib/document-list/models/permissions-style.model.ts) page for further details and examples. |
+| preselectNodes | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[] | Array of nodes to be pre-selected. All nodes in the array are pre-selected in multi selection mode, but only the first node is pre-selected in single selection mode. |
+| rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
+| rowStyleClass | `string` |  | The CSS class to apply to every row |
+| selectionMode | `string` | "single" | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| showHeader | `string` | ShowHeaderMode.Data | Toggles the header |
+| sorting | ` string[] \|  `[`DataSorting`](../../../lib/core/datatable/data/data-sorting.model.ts) | \['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
+| sortingMode | `string` | "server" | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option *does not* request the server to sort the data before delivering it. |
+| stickyHeader | `boolean` | false | Toggles the sticky header mode. |
+| thumbnails | `boolean` | false | Show document thumbnails rather than icons |
+| where | `string` |  | Filters the Node list using the *where* condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
+| rowFilter | `RowFilter` |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](row-filter.model.md) page for more information. |
 
 ### Events
 
-| Name            | Type                                                                                                                                                                                  | Description                                                                                                                                                                                             |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| error           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                                     | Emitted when the API fails to get the Document List data                                                                                                                                                |
-| filterSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterSearch`](../../../lib/content-services/src/lib/search/filter-search.interface.ts)`[]>`                           | Emitted when a filter value is selected                                                                                                                                                                 |
-| folderChange    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>`                      | Emitted when the current display folder changes                                                                                                                                                         |
-| nodeClick       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>`                     | Emitted when the user clicks a list node                                                                                                                                                                |
-| nodeDblClick    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>`                     | Emitted when the user double-clicks a list node                                                                                                                                                         |
-| nodeSelected    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]>` | Emitted when the node selection change                                                                                                                                                                  |
-| preview         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>`                     | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../../core/components/viewer.component.md). |
-| ready           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`  | Emitted when the Document List has loaded all items and is ready for use                                                                                                                                |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the API fails to get the Document List data |
+| filterSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterSearch`](../../../lib/content-services/src/lib/search/filter-search.interface.ts)`[]>` | Emitted when a filter value is selected |
+| folderChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the current display folder changes |
+| nodeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user clicks a list node |
+| nodeDblClick | `EventEmitter<NodeEntityEvent>` | Emitted when the user double-clicks a list node |
+| nodeSelected | `EventEmitter<NodeEntry[]>` | Emitted when the node selection change |
+| preview | `EventEmitter<NodeEntityEvent>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the Viewer component. |
+| ready | `EventEmitter<NodePaging>` | Emitted when the Document List has loaded all items and is ready for use |
 
 ## Details
 
@@ -108,14 +108,14 @@ The properties `currentFolderId` and `node` set the initial folder shown by
 the Document List. They cannot be used together, so choose the one that suits your use case
 best.
 
-The Document list will automatically show special icons for : `Smart Folder`, `Link to a Folder` and `Folder with rules` as shown below : 
+The Document list will automatically show special icons for : `Smart Folder`, `Link to a Folder` and `Folder with rules` as shown below :
 
 ![Document List Folders](../../docassets/images/document-list-special-folder-icon.png)
 
 ### DOM Events
 
 Below are the DOM events the DocumentList component emits.
-All of them are _bubbling_, meaning you can handle them in any component up the parent hierarchy, even if the DocumentList is wrapped by one or more other components.
+All of them are *bubbling*, meaning you can handle them in any component up the parent hierarchy, even if the DocumentList is wrapped by one or more other components.
 
 | Name          | Description                              |
 | ------------- | ---------------------------------------- |
@@ -182,7 +182,7 @@ Set the `[display]` property to "gallery" to enable card view mode:
 
 ### Pagination strategy
 
-The Document List by default supports 2 types of pagination:  [Pagination component](../../core/components/pagination.component.md) and [Infinite pagination component](../../core/components/infinite-pagination.component.md) 
+The Document List by default supports 2 types of pagination:  [Pagination component](../../core/components/pagination.component.md) and [Infinite pagination component](../../core/components/infinite-pagination.component.md)
 
 #### Pagination component
 
@@ -217,20 +217,20 @@ The unique identifier of the [`Node`](https://github.com/Alfresco/alfresco-js-ap
 
 You can use one of the well-known reserved aliases:
 
--   `-root-`
--   `-shared-`
--   `-my-`
+*   `-root-`
+*   `-shared-`
+*   `-my-`
 
 #### Document List aliases
 
 The [Document List component](document-list.component.md) also provides support for the following reserved aliases:
 
--   `-trashcan-`,
--   `-sharedlinks-`
--   `-sites-`
--   `-mysites-`
--   `-favorites-`
--   `-recent-`
+*   `-trashcan-`,
+*   `-sharedlinks-`
+*   `-sites-`
+*   `-mysites-`
+*   `-favorites-`
+*   `-recent-`
 
 Note that due to the nature of the data, these sources do not support navigation.
 You may want to handle single and double clicks yourself to perform navigation to other sources.
@@ -245,11 +245,11 @@ You can set the default location format using the `locationFormat` property to a
 
 The default column layout for non-reserved views is:
 
--   Icon
--   Name
--   Size
--   Modified (date)
--   Modified by
+*   Icon
+*   Name
+*   Size
+*   Modified (date)
+*   Modified by
 
 **Trashcan**
 
@@ -262,12 +262,12 @@ The default column layout for non-reserved views is:
 
 Default layout:
 
--   Icon
--   Name
--   Location
--   Size
--   Deleted
--   Deleted by
+*   Icon
+*   Name
+*   Location
+*   Size
+*   Deleted
+*   Deleted by
 
 **Shared Links**
 
@@ -280,13 +280,13 @@ Default layout:
 
 Default layout:
 
--   Icon
--   Name
--   Location
--   Size
--   Modified
--   Modified by
--   Shared by
+*   Icon
+*   Name
+*   Location
+*   Size
+*   Modified
+*   Modified by
+*   Shared by
 
 **Sites**
 
@@ -298,9 +298,9 @@ Default layout:
 
 Default layout:
 
--   Icon
--   Title
--   Status
+*   Icon
+*   Title
+*   Status
 
 **My Sites**
 
@@ -312,9 +312,9 @@ Default layout:
 
 Default layout:
 
--   Icon
--   Title
--   Status
+*   Icon
+*   Title
+*   Status
 
 **Favorites**
 
@@ -327,12 +327,12 @@ Default layout:
 
 Default layout:
 
--   Icon
--   Name
--   Location
--   Size
--   Modified
--   Modified by
+*   Icon
+*   Name
+*   Location
+*   Size
+*   Modified
+*   Modified by
 
 **Recent Files**
 
@@ -345,13 +345,13 @@ Default layout:
 
 Default layout:
 
--   Icon
--   Name
--   Location
+*   Icon
+*   Name
+*   Location
 
 ### Setting default folder
 
-You can set the current folder path by assigning a value to the `currentFolderId` property. 
+You can set the current folder path by assigning a value to the `currentFolderId` property.
 It can be either one of the well-known locations (such as **-root-**, **-shared-** or **-my-**),
 or a node ID (guid).
 
@@ -400,12 +400,12 @@ export class FilesComponent implements OnInit {
 </adf-document-list>
 ```
 
-The `console.log(node)` for the `getNodeInfo` callback is just for study and debug purposes. 
+The `console.log(node)` for the `getNodeInfo` callback is just for study and debug purposes.
 It is useful for examining other information that you can access if necessary:
 
 ![documentLibrary](../../docassets/images/documentLibrary.png)
 
-**Important note**: for this particular scenario you must also trigger `changeDetector.detectChanges()` as in the example above. 
+**Important note**: for this particular scenario you must also trigger `changeDetector.detectChanges()` as in the example above.
 
 ### Calling DocumentList api directly
 
@@ -428,9 +428,9 @@ export class MyAppComponent {
 }
 ```
 
-However there may be scenarios where you need direct access to the Document List APIs. 
+However there may be scenarios where you need direct access to the Document List APIs.
 You can get a reference to the Document List instance using the Angular **Component Interaction** API.
-See the [Parent calls a ViewChild](https://angular.io/docs/ts/latest/cookbook/component-communication.html#!#parent-to-view-child) 
+See the [Parent calls a ViewChild](https://angular.io/docs/ts/latest/cookbook/component-communication.html#!#parent-to-view-child)
 section of the Angular docs for more information.
 
 Below is an example of getting a reference:
@@ -473,7 +473,7 @@ Now you can access Document List properties or call methods directly:
 console.log(documentList.currentFolderId);
 ```
 
-**Important note**:  
+**Important note**:\
 You must not access child components any earlier in the component lifecycle than
 the `AfterViewInit` state. Any UI click (buttons, links, etc.) event handlers are fine but
 an earlier event like `ngOnInit` is not.
@@ -483,7 +483,7 @@ documentation for a full explanation of the component lifecycle.
 
 ### Underlying node object
 
-The [Document List component](document-list.component.md) assigns an instance of 
+The [Document List component](document-list.component.md) assigns an instance of
 the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) class
 (defined in the [Alfresco JS API](https://github.com/Alfresco/alfresco-js-api)) as the data context
 for each row. You can make use of the properties of this object when defining custom columns:
@@ -589,7 +589,7 @@ For example:
 ```
 
 All the components above also participate in [Extensibility](../../user-guide/app-extensions.md)
-and can be used to compose DocumentList layouts from within the plugins. 
+and can be used to compose DocumentList layouts from within the plugins.
 
 ### Date Column
 
@@ -607,16 +607,16 @@ This column displays a clickable location link pointing to the parent path of th
 
 **Important note**:
 
-_For granular permissions, the Location Column may or may not render the link location_
+*For granular permissions, the Location Column may or may not render the link location*
 
 You would normally use this with custom navigation or when displaying content from sources like:
 
--   Sites
--   My Sites
--   Shared Links
--   Recent Files
--   Favorites
--   Trashcan
+*   Sites
+*   My Sites
+*   Shared Links
+*   Recent Files
+*   Favorites
+*   Trashcan
 
 ...or any other location where the user needs to be able to navigate to the node parent
 folder easily.
@@ -656,7 +656,7 @@ you can also define your own actions. See the
 [Content Action component](content-action.component.md)
 for more information and examples.
 
-You can also use the [Context Menu directive](../../core/directives/context-menu.directive.md) from the 
+You can also use the [Context Menu directive](../../core/directives/context-menu.directive.md) from the
 ADF Core library to show the
 actions you have defined in a context menu:
 
@@ -711,8 +711,8 @@ You can enable Header filters in your document list simply setting to true its `
 The Document List has two properties that let you modify behavior with custom
 functions:
 
--   `imageResolver` - Specifies a function to choose image file paths for icons and thumbnails.
--   `rowFilter` - Selects whether a row is shown or hidden according to its data content.
+*   `imageResolver` - Specifies a function to choose image file paths for icons and thumbnails.
+*   `rowFilter` - Selects whether a row is shown or hidden according to its data content.
 
 See the [Image Resolver Model](../models/image-resolver.model.md)
 and [Row Filter Model](../models/row-filter.model.md) pages for details of how to
@@ -782,18 +782,18 @@ This will give the following output:
 
 ## See also
 
--   [Datatable component](../../core/components/datatable.component.md)
--   [Data column component](../../core/components/data-column.component.md)
--   [Pagination component](../../core/components/pagination.component.md)
--   [Infinite pagination component](../../core/components/infinite-pagination.component.md)
--   [Sites dropdown component](sites-dropdown.component.md)
--   [Metadata indicators](../../user-guide/metadata-indicators.md)
--   [Nodes api service](../../core/services/nodes-api.service.md)
--   [Breadcrumb component](breadcrumb.component.md)
--   [Content action component](content-action.component.md)
--   [Content node selector component](content-node-selector.component.md)
--   [Document list service](../services/document-list.service.md)
--   [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
--   [Permissions style model](../models/permissions-style.model.md)
--   [Version manager component](version-manager.component.md)
--   [Viewer component](../../core/components/viewer.component.md)
+*   [Datatable component](../../core/components/datatable.component.md)
+*   [Data column component](../../core/components/data-column.component.md)
+*   [Pagination component](../../core/components/pagination.component.md)
+*   [Infinite pagination component](../../core/components/infinite-pagination.component.md)
+*   [Sites dropdown component](sites-dropdown.component.md)
+*   [Metadata indicators](../../user-guide/metadata-indicators.md)
+*   [Nodes api service](../../core/services/nodes-api.service.md)
+*   [Breadcrumb component](breadcrumb.component.md)
+*   [Content action component](content-action.component.md)
+*   [Content node selector component](content-node-selector.component.md)
+*   [Document list service](../services/document-list.service.md)
+*   [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
+*   [Permissions style model](../models/permissions-style.model.md)
+*   [Version manager component](version-manager.component.md)
+*   [Viewer component](../../core/components/viewer.component.md)

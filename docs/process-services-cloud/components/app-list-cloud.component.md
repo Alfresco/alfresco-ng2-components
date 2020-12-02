@@ -45,12 +45,12 @@ For example :
 
 ### Properties
 
-| Name       | Type     | Default value | Description                                                                                      |
-| ---------- | -------- | ------------- | ------------------------------------------------------------------------------------------------ |
-| layoutType | `string` |               | (**required**) Defines the layout of the apps. There are two possible values, "GRID" and "LIST". |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| layoutType | `string` |  | (**required**) Defines the layout of the apps. There are two possible values, "GRID" and "LIST". |
 
 ### Events
 
-| Name     | Type                                                                                                                                                                               | Description                           |
-| -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`>` | Emitted when an app entry is clicked. |

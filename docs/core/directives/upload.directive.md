@@ -21,14 +21,14 @@ Uploads content in response to file drag and drop.
 
 ### Properties
 
-| Name      | Type       | Default value | Description                                                                                                                      |
-| --------- | ---------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| accept    | `string`   |               | (Click mode only) MIME type filter for files to accept.                                                                          |
-| data      | `any`      |               | Data to upload.                                                                                                                  |
-| directory | `boolean`  |               | (Click mode only) Toggles uploading of directories.                                                                              |
-| enabled   | `boolean`  | true          | Enables/disables uploading.                                                                                                      |
-| mode      | `string[]` | ['drop']      | Upload mode. Can be "drop" (receives dropped files) or "click" (clicking opens a file dialog). Both modes can be active at once. |
-| multiple  | `boolean`  |               | Toggles multiple file uploads.                                                                                                   |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| accept | `string` |  | (Click mode only) MIME type filter for files to accept. |
+| data | `any` |  | Data to upload. |
+| directory | `boolean` |  | (Click mode only) Toggles uploading of directories. |
+| enabled | `boolean` | true | Enables/disables uploading. |
+| mode | `string[]` | \['drop'] | Upload mode. Can be "drop" (receives dropped files) or "click" (clicking opens a file dialog). Both modes can be active at once. |
+| multiple | `boolean` |  | Toggles multiple file uploads. |
 
 ## Details
 
@@ -65,8 +65,8 @@ value or expression:
 
 The [Upload directive](upload.directive.md) supports two modes:
 
--   **drop** mode, where the decorated element acts like a drop zone for files (enabled by default)
--   **click** mode, where the decorated element invokes a file dialog to select files or folders.
+*   **drop** mode, where the decorated element acts like a drop zone for files (enabled by default)
+*   **click** mode, where the decorated element invokes a file dialog to select files or folders.
 
 You can also use both modes together:
 
@@ -80,9 +80,9 @@ You can also use both modes together:
 
 In click mode you can provide extra attributes for the file dialog:
 
--   **directory**, enables directory selection
--   **multiple**, enables multiple file/folder selection
--   **accept**, filters the content accepted
+*   **directory**, enables directory selection
+*   **multiple**, enables multiple file/folder selection
+*   **accept**, filters the content accepted
 
 ```html
 <div style="width: 50px; height: 50px; background-color: brown"
@@ -140,7 +140,7 @@ onUploadFiles(e: CustomEvent) {
 }
 ```
 
-You can also attach arbitrary data to each event which you can then access from external event handlers. A typical scenario is with data tables where you may want to make use of the data row 
+You can also attach arbitrary data to each event which you can then access from external event handlers. A typical scenario is with data tables where you may want to make use of the data row
 or make underlying data accessible when files are dropped.
 
 You can use `adf-upload-data` to bind custom values or objects for every event raised:

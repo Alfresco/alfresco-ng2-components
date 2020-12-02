@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslationService, NotificationService, AllowableOperationsEnum, ContentService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
+
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { NodeEntryEvent } from '../document-list/components/node.event';
 
@@ -28,7 +29,7 @@ import { NodeEntryEvent } from '../document-list/components/node.event';
     styleUrls: ['./content-node-selector.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ContentNodeSelectorComponent {
+export class ContentNodeSelectorComponent implements OnInit {
     title: string;
     action: string;
     buttonActionName: string;
@@ -41,11 +42,27 @@ export class ContentNodeSelectorComponent {
     constructor(private translation: TranslationService,
                 private contentService: ContentService,
                 private notificationService: NotificationService,
+                private dialog: MatDialogRef<ContentNodeSelectorComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `NODE_SELECTOR.${this.action}`;
         this.title = data.title;
         this.currentDirectoryId = data.currentFolderId;
+    }
+
+    ngOnInit() {
+        this.dialog.keydownEvents().subscribe(event => {
+            // Esc
+            if (event.keyCode === 27) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                this.close();
+            }
+        });
+
+        this.dialog.backdropClick().subscribe(() => {
+           this.close();
+        });
     }
 
     close() {

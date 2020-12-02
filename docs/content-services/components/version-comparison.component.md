@@ -24,7 +24,7 @@ Displays the side by side comparison between the current target node (type, name
 
 ### Properties
 
-| Name           | Type                                                                                                     | Default value | Description                            |
-| -------------- | -------------------------------------------------------------------------------------------------------- | ------------- | -------------------------------------- |
-| newFileVersion | `File`                                                                                                   |               | New file for updating current version. |
-| node           | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |               | Target node.                           |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| newFileVersion | `File` |  | New file for updating current version. |
+| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |  | Target node. |

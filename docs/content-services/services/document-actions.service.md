@@ -13,19 +13,19 @@ Implements the document menu actions for the [Document List component](../compon
 
 ### Methods
 
--   **canExecuteAction**(nodeEntry: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)): `boolean`<br/>
+*   **canExecuteAction**(nodeEntry: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)): `boolean`<br/>
     Checks if actions can be executed for an item.
-    -   _nodeEntry:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)  - Item to receive an action
-    -   **Returns** `boolean` - True if the action can be executed on this item, false otherwise
--   **getHandler**(key: `string`): [`ContentActionHandler`](../../../lib/content-services/src/lib/document-list/models/content-action.model.ts)<br/>
+    *   *nodeEntry:* [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)  - Item to receive an action
+    *   **Returns** `boolean` - True if the action can be executed on this item, false otherwise
+*   **getHandler**(key: `string`): [`ContentActionHandler`](../../../lib/content-services/src/lib/document-list/models/content-action.model.ts)<br/>
     Gets the handler for an action.
-    -   _key:_ `string`  - Identifier of the action
-    -   **Returns** [`ContentActionHandler`](../../../lib/content-services/src/lib/document-list/models/content-action.model.ts) - The handler for the action
--   **setHandler**(key: `string`, handler: [`ContentActionHandler`](../../../lib/content-services/src/lib/document-list/models/content-action.model.ts)): `boolean`<br/>
+    *   *key:* `string`  - Identifier of the action
+    *   **Returns** [`ContentActionHandler`](../../../lib/content-services/src/lib/document-list/models/content-action.model.ts) - The handler for the action
+*   **setHandler**(key: `string`, handler: [`ContentActionHandler`](../../../lib/content-services/src/lib/document-list/models/content-action.model.ts)): `boolean`<br/>
     Sets a new handler for an action.
-    -   _key:_ `string`  - Identifier of the action
-    -   _handler:_ [`ContentActionHandler`](../../../lib/content-services/src/lib/document-list/models/content-action.model.ts)  - Handler for the action
-    -   **Returns** `boolean` - False if the key was an empty/null string, true otherwise
+    *   *key:* `string`  - Identifier of the action
+    *   *handler:* [`ContentActionHandler`](../../../lib/content-services/src/lib/document-list/models/content-action.model.ts)  - Handler for the action
+    *   **Returns** `boolean` - False if the key was an empty/null string, true otherwise
 
 ## Details
 
@@ -99,5 +99,5 @@ with a custom [application service](../../../lib/testing/src/lib/core/actions/AP
 
 ## See also
 
--   [Content action component](../components/content-action.component.md)
--   [Folder actions service](folder-actions.service.md)
+*   [Content action component](../components/content-action.component.md)
+*   [Folder actions service](folder-actions.service.md)

@@ -24,10 +24,10 @@ Shows all the information related to a process instance.
 
 ### Properties
 
-| Name              | Type     | Default value | Description                                |
-| ----------------- | -------- | ------------- | ------------------------------------------ |
-| appName           | `string` | ""            | (Required) The name of the application.    |
-| processInstanceId | `string` |               | (Required) The id of the process instance. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| appName | `string` | "" | (Required) The name of the application. |
+| processInstanceId | `string` |  | (Required) The id of the process instance. |
 
 ## Details
 
@@ -36,7 +36,7 @@ The component populates an internal array of
 
 By default all properties are displayed:
 
-**_id_**, **_name_**, **_status_**, **_initiator_**, **_startDate_**, **_lastModified_**, **_parentId_**, **_businessKey_**.
+***id***, ***name***, ***status***, ***initiator***, ***startDate***, ***lastModified***, ***parentId***, ***businessKey***.
 
 However, you can also choose which properties to show using a configuration in `app.config.json`:
 
@@ -52,4 +52,4 @@ With this configuration, only the four listed properties will be shown.
 
 ## See also
 
--   [Process header cloud service](../../process-services-cloud/services/process-header-cloud.service.md)
+*   [Process header cloud service](../../process-services-cloud/services/process-header-cloud.service.md)

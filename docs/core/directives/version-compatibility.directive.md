@@ -21,17 +21,17 @@ Enables/disables components based on ACS version in use.
 
 ### Properties
 
-| Name    | Type   | Default value | Description                                                |
-| ------- | ------ | ------------- | ---------------------------------------------------------- |
-| version | `void` |               | Minimum version required for component to work correctly . |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| version | `void` |  | Minimum version required for component to work correctly . |
 
 ## Details
 
 Add the directive to a component or HTML element to enable or disable it based on the version of ACS running in the app.
 
-The directive takes the version specified in the html and compares it to the version of Alfresco Content Services running in the app. 
+The directive takes the version specified in the html and compares it to the version of Alfresco Content Services running in the app.
 
-This will allow certain features to be only present under specific versions. 
+This will allow certain features to be only present under specific versions.
 
 #### Major version
 
@@ -57,7 +57,7 @@ This will allow certain features to be only present under specific versions.
 </button>
 ```
 
-It can be set to match major, minor and patches of ACS versions. Fox example, if the version `6` is specifed it will enable the component from `6.0.0` onwards. 
+It can be set to match major, minor and patches of ACS versions. Fox example, if the version `6` is specifed it will enable the component from `6.0.0` onwards.
 
 If the minimum version required is not matched the component will not be initialized and will disappear from the DOM tree.
 

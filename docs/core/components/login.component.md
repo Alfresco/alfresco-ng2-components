@@ -13,20 +13,20 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 ## Contents
 
--   [Basic usage](#basic-usage)
-    -   [Transclusions](#transclusions)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Handling events](#handling-events)
-    -   [Custom logo and background](#custom-logo-and-background)
-    -   [Customizing validation rules](#customizing-validation-rules)
-    -   [Call an external identity provider to fetch the auth token](#call-an-external-identity-provider-to-fetch-the-auth-token)
-    -   [Controlling form submit execution behaviour](#controlling-form-submit-execution-behaviour)
-    -   [Single Sign-On (SSO)](#single-sign-on-sso)
-    -   [Kerberos](#kerberos)
--   [See Also](#see-also)
+*   [Basic usage](#basic-usage)
+    *   [Transclusions](#transclusions)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [Handling events](#handling-events)
+    *   [Custom logo and background](#custom-logo-and-background)
+    *   [Customizing validation rules](#customizing-validation-rules)
+    *   [Call an external identity provider to fetch the auth token](#call-an-external-identity-provider-to-fetch-the-auth-token)
+    *   [Controlling form submit execution behaviour](#controlling-form-submit-execution-behaviour)
+    *   [Single Sign-On (SSO)](#single-sign-on-sso)
+    *   [Kerberos](#kerberos)
+*   [See Also](#see-also)
 
 ## Basic usage
 
@@ -75,25 +75,25 @@ with custom input fields handled by your application or parent component:
 
 ### Properties
 
-| Name               | Type      | Default value | Description                                                                                                                                                         |
-| ------------------ | --------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| backgroundImageUrl | `string`  |               | Path to a custom background image.                                                                                                                                  |
-| copyrightText      | `string`  |               | The copyright text below the login box.                                                                                                                             |
-| fieldsValidation   | `any`     |               | Custom validation rules for the login form.                                                                                                                         |
-| logoImageUrl       | `string`  |               | Path to a custom logo image.                                                                                                                                        |
-| needHelpLink       | `string`  | ""            | Sets the URL of the NEED HELP link in the footer.                                                                                                                   |
-| registerLink       | `string`  | ""            | Sets the URL of the REGISTER link in the footer.                                                                                                                    |
-| showLoginActions   | `boolean` | true          | Should the extra actions (`Need Help`, `Register`, etc) be shown?                                                                                                   |
-| showRememberMe     | `boolean` | true          | Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly. |
-| successRoute       | `string`  | null          | Route to redirect to on successful login.                                                                                                                           |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| backgroundImageUrl | `string` |  | Path to a custom background image. |
+| copyrightText | `string` |  | The copyright text below the login box. |
+| fieldsValidation | `any` |  | Custom validation rules for the login form. |
+| logoImageUrl | `string` |  | Path to a custom logo image. |
+| needHelpLink | `string` | "" | Sets the URL of the NEED HELP link in the footer. |
+| registerLink | `string` | "" | Sets the URL of the REGISTER link in the footer. |
+| showLoginActions | `boolean` | true | Should the extra actions (`Need Help`, `Register`, etc) be shown? |
+| showRememberMe | `boolean` | true | Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly. |
+| successRoute | `string` | null | Route to redirect to on successful login. |
 
 ### Events
 
-| Name          | Type                                                                                                                                         | Description                               |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| error         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginErrorEvent`](../../../lib/core/login/models/login-error.event.ts)`>`     | Emitted when the login fails.             |
-| executeSubmit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSubmitEvent`](../../../lib/core/login/models/login-submit.event.ts)`>`   | Emitted when the login form is submitted. |
-| success       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSuccessEvent`](../../../lib/core/login/models/login-success.event.ts)`>` | Emitted when the login is successful.     |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginErrorEvent`](../../../lib/core/login/models/login-error.event.ts)`>` | Emitted when the login fails. |
+| executeSubmit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSubmitEvent`](../../../lib/core/login/models/login-submit.event.ts)`>` | Emitted when the login form is submitted. |
+| success | `EventEmitter<LoginSuccessEvent>` | Emitted when the login is successful. |
 
 ## Details
 
@@ -264,8 +264,8 @@ export class MyCustomLogin {
 }
 ```
 
-Note that if you do not call `event.preventDefault()` then the default behaviour 
-will execute _after_ your custom code has completed.
+Note that if you do not call `event.preventDefault()` then the default behaviour
+will execute *after* your custom code has completed.
 
 ### Single Sign-On (SSO)
 
@@ -301,8 +301,8 @@ automatically to the authorization server when the user is not logged-in
 
 You can also enable automatic redirection to the OAuth provider using the following properties:
 
--   `silentLogin`
--   `redirectSilentIframeUri`
+*   `silentLogin`
+*   `redirectSilentIframeUri`
 
 ```json
 {
@@ -323,7 +323,7 @@ You can also enable automatic redirection to the OAuth provider using the follow
 
 Note that if you deploy the application to a virtual folder
 (for example `http://<ADDRESS>/my-app`) then `redirectSilentIframeUri`
-must contain the full URI value: 
+must contain the full URI value:
 
 ```json
 {
@@ -352,8 +352,8 @@ The configuration for Kerberos authentication will allow users to access Alfresc
 
 **You don't need to use the [login component](../../core/components/login.component.md) in order to enable Kerberos SSO in ADF**.
 
-See [Kerberos Configuration](../../../docs/user-guide/kerberos.md) for instructions on configuring Kerberos for an ADF app. 
+See [Kerberos Configuration](../../../docs/user-guide/kerberos.md) for instructions on configuring Kerberos for an ADF app.
 
 ## See Also
 
--   [Logout directive](../directives/logout.directive.md)
+*   [Logout directive](../directives/logout.directive.md)

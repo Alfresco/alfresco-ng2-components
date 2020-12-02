@@ -13,53 +13,53 @@ Accesses app-generated data objects via URLs and file downloads.
 
 ### Methods
 
--   **createTrustedUrl**(blob: [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)): `string`<br/>
+*   **createTrustedUrl**(blob: [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)): `string`<br/>
     Creates a trusted object URL from the [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob). WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
-    -   _blob:_ [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)  - Data to wrap into object URL
-    -   **Returns** `string` - URL string
--   **downloadBlob**(blob: [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob), fileName: `string`)<br/>
-    (**Deprecated:** in 3.2.0, use [DownloadService](../../../lib/core/services/download.service.ts) instead. Invokes content download for a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) with a file name.) 
-    -   _blob:_ [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)  - Content to download.
-    -   _fileName:_ `string`  - Name of the resulting file.
--   **downloadData**(data: `any`, fileName: `string`)<br/>
-    (**Deprecated:** in 3.2.0, use [DownloadService](../../../lib/core/services/download.service.ts) instead. Invokes content download for a data array with a file name.) 
-    -   _data:_ `any`  - Data to download.
-    -   _fileName:_ `string`  - Name of the resulting file.
--   **downloadJSON**(json: `any`, fileName: `string`)<br/>
-    (**Deprecated:** in 3.2.0, use [DownloadService](../../../lib/core/services/download.service.ts) instead. Invokes content download for a JSON object with a file name.) 
-    -   _json:_ `any`  - JSON object to download.
-    -   _fileName:_ `string`  - Name of the resulting file.
--   **getContentUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
+    *   *blob:* [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)  - Data to wrap into object URL
+    *   **Returns** `string` - URL string
+*   **downloadBlob**(blob: [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob), fileName: `string`)<br/>
+    (**Deprecated:** in 3.2.0, use [DownloadService](../../../lib/core/services/download.service.ts) instead. Invokes content download for a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) with a file name.)
+    *   *blob:* [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)  - Content to download.
+    *   *fileName:* `string`  - Name of the resulting file.
+*   **downloadData**(data: `any`, fileName: `string`)<br/>
+    (**Deprecated:** in 3.2.0, use [DownloadService](../../../lib/core/services/download.service.ts) instead. Invokes content download for a data array with a file name.)
+    *   *data:* `any`  - Data to download.
+    *   *fileName:* `string`  - Name of the resulting file.
+*   **downloadJSON**(json: `any`, fileName: `string`)<br/>
+    (**Deprecated:** in 3.2.0, use [DownloadService](../../../lib/core/services/download.service.ts) instead. Invokes content download for a JSON object with a file name.)
+    *   *json:* `any`  - JSON object to download.
+    *   *fileName:* `string`  - Name of the resulting file.
+*   **getContentUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
     Gets a content URL for the given node.
-    -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`  - Node or Node ID to get URL for.
-    -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
-    -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
-    -   **Returns** `string` - URL string or `null`
--   **getDocumentThumbnailUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
-    (**Deprecated:** in 3.2.0, use ThumbnailService instead. Gets a thumbnail URL for the given document node.) 
-    -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`  - Node or Node ID to get URL for.
-    -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
-    -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
-    -   **Returns** `string` - URL string
--   **getNode**(nodeId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
+    *   *node:* [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`  - Node or Node ID to get URL for.
+    *   *attachment:* `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
+    *   *ticket:* `string`  - (Optional) Custom ticket to use for authentication
+    *   **Returns** `string` - URL string or `null`
+*   **getDocumentThumbnailUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
+    (**Deprecated:** in 3.2.0, use ThumbnailService instead. Gets a thumbnail URL for the given document node.)
+    *   *node:* [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`  - Node or Node ID to get URL for.
+    *   *attachment:* `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
+    *   *ticket:* `string`  - (Optional) Custom ticket to use for authentication
+    *   **Returns** `string` - URL string
+*   **getNode**(nodeId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Gets a Node via its node ID.
-    -   _nodeId:_ `string`  - ID of the target node
-    -   _opts:_ `any`  - (Optional) Options supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
--   **getNodeContent**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    *   *nodeId:* `string`  - ID of the target node
+    *   *opts:* `any`  - (Optional) Options supported by JS-API
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
+*   **getNodeContent**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets content for the given node.
-    -   _nodeId:_ `string`  - ID of the target node
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Content data
--   **hasAllowableOperations**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md), allowableOperation: [`AllowableOperationsEnum`](../../../lib/core/models/allowable-operations.enum.ts)`|string`): `boolean`<br/>
+    *   *nodeId:* `string`  - ID of the target node
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Content data
+*   **hasAllowableOperations**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md), allowableOperation: [`AllowableOperationsEnum`](../../../lib/core/models/allowable-operations.enum.ts)`|string`): `boolean`<br/>
     Checks if the user has permissions on that node
-    -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) to check allowableOperations
-    -   _allowableOperation:_ [`AllowableOperationsEnum`](../../../lib/core/models/allowable-operations.enum.ts)`|string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
-    -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
--   **hasPermissions**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md), permission: [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
+    *   *node:* [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) to check allowableOperations
+    *   *allowableOperation:* [`AllowableOperationsEnum`](../../../lib/core/models/allowable-operations.enum.ts)`|string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
+    *   **Returns** `boolean` - True if the user has the required permissions, false otherwise
+*   **hasPermissions**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md), permission: [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
     Checks if the user has permission on that node
-    -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) to check permissions
-    -   _permission:_ [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`  - Required permission type
-    -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
+    *   *node:* [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) to check permissions
+    *   *permission:* [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`  - Required permission type
+    *   **Returns** `boolean` - True if the user has the required permissions, false otherwise
 
 ## Details
 
@@ -94,5 +94,5 @@ attacks.
 
 ## See also
 
--   [Cookie service](cookie.service.md)
--   [Storage service](storage.service.md)
+*   [Cookie service](cookie.service.md)
+*   [Storage service](storage.service.md)
