@@ -108,7 +108,7 @@ describe('Restore content directive', () => {
             await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
         });
 
-        fit('[C260227] Should validate when restoring Folders with same name', async () => {
+        it('[C260227] Should validate when restoring Folders with same name', async () => {
             await uploadActions.createFolder(folderName, '-my-');
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
