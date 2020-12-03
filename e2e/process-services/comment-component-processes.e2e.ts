@@ -38,20 +38,20 @@ describe('Comment component for Processes', () => {
     const processName = 'Comment APS';
 
     beforeAll(async () => {
-       await apiService.loginWithProfile('admin');
+        await apiService.loginWithProfile('admin');
 
-       user = await usersActions.createUser();
+        user = await usersActions.createUser();
 
-       await apiService.login(user.email, user.password);
+        await apiService.login(user.email, user.password);
 
-       const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
-       appId = importedApp.id;
+        const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
+        appId = importedApp.id;
 
-       const processWithComment = await new ProcessUtil(apiService).startProcessOfApp(importedApp.name, processName);
-       processInstanceId = processWithComment.id;
+        const processWithComment = await new ProcessUtil(apiService).startProcessOfApp(importedApp.name, processName);
+        processInstanceId = processWithComment.id;
 
-       await loginPage.login(user.email, user.password);
-   });
+        await loginPage.login(user.email, user.password);
+    });
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
@@ -71,7 +71,7 @@ describe('Comment component for Processes', () => {
 
         await commentsPage.checkUserIconIsDisplayed();
 
-        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + addedComment.total + ')');
+        await commentsPage.getTotalNumberOfComments('Comments (' + addedComment.total + ')');
         await expect(await commentsPage.getMessage(0)).toEqual(addedComment.data[0].message);
         await expect(await commentsPage.getUserName(0)).toEqual(addedComment.data[0].createdBy.firstName + ' ' + addedComment.data[0].createdBy.lastName);
         await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
@@ -109,7 +109,7 @@ describe('Comment component for Processes', () => {
 
         await commentsPage.checkUserIconIsDisplayed();
 
-        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + addedTaskComment.total + ')');
+        await commentsPage.getTotalNumberOfComments('Comments (' + addedTaskComment.total + ')');
         await expect(await commentsPage.getMessage(0)).toEqual(addedTaskComment.data[0].message);
         await expect(await commentsPage.getUserName(0)).toEqual(addedTaskComment.data[0].createdBy.firstName + ' ' + addedTaskComment.data[0].createdBy.lastName);
         await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);

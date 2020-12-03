@@ -105,7 +105,7 @@ describe('Comment component for Processes', () => {
         await commentsPage.checkUserIconIsDisplayed();
         await commentsPage.checkUserIconIsDisplayed();
 
-        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + totalCommentsLatest.total + ')');
+        await commentsPage.getTotalNumberOfComments('Comments (' + totalCommentsLatest.total + ')');
 
         await expect(await commentsPage.getMessage(0)).toEqual(totalCommentsLatest.data[0].message);
         await expect(await commentsPage.getMessage(1)).toEqual(totalCommentsLatest.data[1].message);
@@ -133,7 +133,7 @@ describe('Comment component for Processes', () => {
         await commentsPage.checkUserIconIsDisplayed();
         await commentsPage.checkUserIconIsDisplayed();
 
-        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + totalComments.total + ')');
+        await commentsPage.getTotalNumberOfComments('Comments (' + totalComments.total + ')');
 
         await expect(await commentsPage.getMessage(0)).toEqual(totalComments.data[0].message);
         await expect(await commentsPage.getMessage(1)).toEqual(totalComments.data[1].message);
