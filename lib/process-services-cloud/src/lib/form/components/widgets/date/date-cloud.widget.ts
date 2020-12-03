@@ -53,7 +53,10 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
 
     minDate: Moment;
     maxDate: Moment;
-    displayDate: Moment;
+
+    get displayDate(): Moment {
+        return moment(this.field.value, this.field.dateDisplayFormat);
+    }
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -81,7 +84,6 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
                 this.maxDate = moment(this.field.maxValue, this.DATE_FORMAT_CLOUD);
             }
         }
-        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);
     }
 
     ngOnDestroy() {

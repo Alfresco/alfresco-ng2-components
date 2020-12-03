@@ -196,4 +196,32 @@ describe('DateWidgetComponent', () => {
             expect(tooltip).toEqual(widget.field.tooltip);
         }));
     });
+
+    it('should display always the json value', () => {
+        widget.field = new FormFieldModel(new FormModel(), {
+            id: 'date-field-id',
+            name: 'date-name',
+            value:  '12-30-9999',
+            type: 'date',
+            readOnly: 'false'
+        });
+        widget.field.isVisible = true;
+        widget.field.dateDisplayFormat = 'MM-DD-YYYY';
+        widget.ngOnInit();
+        fixture.detectChanges();
+        fixture.whenStable()
+            .then(() => {
+                expect(element.querySelector('#date-field-id')).toBeDefined();
+                expect(element.querySelector('#date-field-id')).not.toBeNull();
+                const dateElement: any = element.querySelector('#date-field-id');
+                expect(dateElement.value).toContain('12-30-9999');
+
+                widget.field.value = '03-02-2020';
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        expect(dateElement.value).toContain('03-02-2020');
+                    });
+            });
+    });
 });

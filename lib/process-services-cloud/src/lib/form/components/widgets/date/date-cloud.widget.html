@@ -4,7 +4,7 @@
         <input matInput
                [id]="field.id"
                [matDatepicker]="datePicker"
-               [(ngModel)]="displayDate"
+               [value]="displayDate"
                [required]="isRequired()"
                [disabled]="field.readOnly"
                [min]="minDate"

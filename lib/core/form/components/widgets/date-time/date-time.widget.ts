@@ -47,7 +47,13 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
 
     minDate: Moment;
     maxDate: Moment;
-    displayDate: Moment;
+
+    get displayDate(): Moment {
+        return moment(this.field.value, this.field.dateDisplayFormat)
+            .add(
+                moment(this.field.value, this.field.dateDisplayFormat).utcOffset(),
+                'minutes');
+    }
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -75,10 +81,6 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
                 this.maxDate = moment(this.field.maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
             }
         }
-        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat)
-            .add(
-                moment(this.field.value, this.field.dateDisplayFormat).utcOffset(),
-                'minutes');
     }
 
     ngOnDestroy() {

@@ -184,5 +184,31 @@ describe('DateTimeWidgetComponent', () => {
 
             expect(tooltip).toEqual(widget.field.tooltip);
         }));
+
+        it('should display always the json value', () => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '12-30-9999 10:30 AM',
+                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
+                type: 'datetime',
+                readOnly: 'false'
+            });
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('#date-field-id')).toBeDefined();
+                    expect(element.querySelector('#date-field-id')).not.toBeNull();
+                    const dateElement: any = element.querySelector('#date-field-id');
+                    expect(dateElement.value).toContain('12-30-9999 10:30 AM');
+                    widget.field.value = '03-02-2020 12:00 AM';
+                    fixture.detectChanges();
+                    fixture.whenStable()
+                        .then(() => {
+                            expect(dateElement.value).toContain('03-02-2020 12:00 AM');
+                        });
+                });
+        });
     });
 });
