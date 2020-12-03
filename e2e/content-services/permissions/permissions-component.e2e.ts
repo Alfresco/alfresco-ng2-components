@@ -264,8 +264,6 @@ describe('Permissions Component', () => {
             await uploadActions.uploadFile(fileModel.location, 'RoleCoordinator' + fileModel.name, roleCoordinatorFolder.entry.id);
             await uploadActions.uploadFile(fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
             await uploadActions.uploadFile(fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
-
-            await searchService.isUserSearchable(filePermissionUser);
             await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
 
             await apiService.getInstance().core.nodesApi.updateNode(roleConsumerFolder.entry.id,
@@ -324,12 +322,7 @@ describe('Permissions Component', () => {
                         }]
                     }
                 });
-            await apiService.login(filePermissionUser.email, filePermissionUser.password);
-            await searchService.isSearchable('RoleConsumer' + fileModel.name);
-            await searchService.isSearchable('RoleContributor' + fileModel.name);
-            await searchService.isSearchable('RoleCoordinator' + fileModel.name);
-            await searchService.isSearchable('RoleCollaborator' + fileModel.name);
-            await searchService.isSearchable('RoleEditor' + fileModel.name);
+            await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
         });
 
         afterAll(async () => {
