@@ -100,7 +100,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /** Route to redirect to on successful login. */
     @Input()
-    successRoute: string = "/'";
+    successRoute: string = null;
 
     /** Emitted when the login is successful. */
     @Output()
