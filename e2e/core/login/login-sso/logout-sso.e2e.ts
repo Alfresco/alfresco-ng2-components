@@ -15,22 +15,23 @@
  * limitations under the License.
  */
 
-import { BrowserActions, LoginPage, SettingsPage } from '@alfresco/adf-testing';
+import { LoginPage, SettingsPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
+import { NavigationBarPage } from '../../pages/navigation-bar.page';
 
 describe('Logout component - SSO', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
 
     it('[C280665] Should be possible change the logout redirect URL', async () => {
         await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
             browser.params.testConfig.appConfig.oauth2.host,
-            browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId, '/login');
+            browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId, '#/login');
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
-        await BrowserActions.clickExecuteScript('.app-sidenav-link[adf-logout]');
 
-        await browser.sleep(2000);
+        await navigationBarPage.clickLogoutButton();
 
         const actualUrl = await browser.getCurrentUrl();
         await expect(actualUrl).toEqual(browser.baseUrl + '/login');

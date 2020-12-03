@@ -150,7 +150,7 @@ describe('Upload - User permission', () => {
 
             await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
-            await navigationBarPage.clickLoginButton();
+            await navigationBarPage.clickLogoutButton();
             await loginPage.login(acsUserTwo.email, acsUserTwo.password);
             await contentServicesPage.goToDocumentList();
 
@@ -160,7 +160,7 @@ describe('Upload - User permission', () => {
 
             await contentServicesPage.checkContentIsDisplayed(pngFile.name);
 
-            await navigationBarPage.clickLoginButton();
+            await navigationBarPage.clickLogoutButton();
             await loginPage.login(acsUser.email, acsUser.password);
             await contentServicesPage.goToDocumentList();
 

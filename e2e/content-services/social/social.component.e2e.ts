@@ -164,6 +164,7 @@ describe('Social component', () => {
             await likePage.removeHoverFromLikeButton();
             await expect(await likePage.getLikedIconColor()).toBe(blueLikeColor);
 
+            await navigationBarPage.clickLogoutButton();
             await loginPage.login(secondComponentVisitor.email, secondComponentVisitor.password);
             await navigationBarPage.clickSocialButton();
             await socialPage.writeCustomNodeId(emptyFile.entry.id);
@@ -186,6 +187,7 @@ describe('Social component', () => {
             await expect(await ratePage.isStarRated(4));
             await expect(await ratePage.getRatedStarColor(4)).toBe(yellowRatedStarColor);
 
+            await navigationBarPage.clickLogoutButton();
             await loginPage.login(secondComponentVisitor.email, secondComponentVisitor.password);
             await navigationBarPage.clickSocialButton();
             await socialPage.writeCustomNodeId(emptyFile.entry.id);

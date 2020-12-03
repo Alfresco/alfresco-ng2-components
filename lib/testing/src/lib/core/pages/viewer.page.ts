@@ -421,6 +421,7 @@ export class ViewerPage {
 
     async clickCloseButton(): Promise<void> {
         await BrowserActions.click(this.closeButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.viewer);
     }
 
     async clickPreviousPageButton(): Promise<void> {

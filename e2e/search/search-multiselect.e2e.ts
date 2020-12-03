@@ -99,8 +99,6 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280054] Should be able to select multiple items from a search facet filter', async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
-
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`${randomName}`);
@@ -235,8 +233,6 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280058] Should update filter facets items number when another filter facet item is selected', async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
-
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`*${randomName}*`);

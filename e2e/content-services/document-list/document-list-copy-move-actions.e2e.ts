@@ -269,6 +269,7 @@ describe('Document List Component', () => {
             await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             await contentServicesPage.checkDeleteIsDisabled(pdfFileModel.name);
 
+            await navigationBarPage.clickLogoutButton();
             await loginPage.login(acsUser.email, acsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${sourceFolder.entry.id}`);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();

@@ -279,6 +279,7 @@ describe('Metadata component', () => {
         await metadataViewPage.clickSaveMetadata();
         await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
 
+        await navigationBarPage.clickLogoutButton();
         await loginPage.login(acsUser.email, acsUser.password);
         await navigationBarPage.navigateToContentServices();
 

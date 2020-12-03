@@ -59,7 +59,11 @@ describe('Login component', () => {
 
         await usersActions.createUser(userA);
         await usersActions.createUser(userB);
-   });
+    });
+
+    afterEach(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
 
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
@@ -69,6 +73,7 @@ describe('Login component', () => {
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
         await expect(await userInfoPage.getContentEmail()).toEqual(userA.email);
 
+        await navigationBarPage.clickLogoutButton();
         await loginPage.login(userB.email, userB.password);
         await userInfoPage.clickUserProfile();
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
