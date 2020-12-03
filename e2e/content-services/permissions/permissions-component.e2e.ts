@@ -265,6 +265,9 @@ describe('Permissions Component', () => {
             await uploadActions.uploadFile(fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
             await uploadActions.uploadFile(fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
 
+            await searchService.isUserSearchable(filePermissionUser);
+            await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
+
             await apiService.getInstance().core.nodesApi.updateNode(roleConsumerFolder.entry.id,
                 {
                     permissions: {
