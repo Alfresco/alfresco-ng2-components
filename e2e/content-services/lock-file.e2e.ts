@@ -147,7 +147,7 @@ describe('Lock File', () => {
         });
     });
 
-    fdescribe('Locked file without owner permissions', () => {
+    describe('Locked file without owner permissions', () => {
 
         beforeEach(async () => {
             await apiService.login(adminUser.email, adminUser.password);
