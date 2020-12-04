@@ -1,0 +1,74 @@
+@import '~@angular/material/theming';
+
+@mixin adf-form-container-cloud-widget-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    .adf-hidden {
+        display: none;
+    }
+
+    .adf-container-widget__header-text {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.87);
+        padding-bottom: 10px;
+        cursor: default;
+        user-select: none;
+        -webkit-user-select: none;
+        /* Chrome/Safari/Opera */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* IE/Edge */
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        &.adf-collapsible {
+            cursor: pointer;
+        }
+    }
+
+    container-widget {
+        .adf-form-row {
+            display: flex;
+            flex-wrap: wrap;
+            min-height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .adf-form-column {
+            flex: 1;
+            padding: 10px;
+            min-height: 40px;
+        }
+
+        .mat-form-field {
+            width: 100%;
+        }
+
+        mat-form-field {
+            width: 100%;
+        }
+
+        .mat-input-placeholder {
+            top: 1.8em !important;
+        }
+
+        .mat-focused {
+            label {
+                transform: scaleX(1);
+                transition: transform 150ms linear,
+                    background-color $swift-ease-in-duration
+                        $swift-ease-in-timing-function;
+                color: mat-color($primary);
+            }
+
+            .mat-form-field-prefix {
+                color: mat-color($primary);
+            }
+        }
+
+        adf-form-field {
+            width: 100%;
+        }
+    }
+}

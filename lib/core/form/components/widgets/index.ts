@@ -56,6 +56,7 @@ export * from './core/index';
 // containers
 export * from './tabs/tabs.widget';
 export * from './container/container.widget';
+export * from './container/container.widget.model';
 
 // primitives
 export * from './unknown/unknown.widget';

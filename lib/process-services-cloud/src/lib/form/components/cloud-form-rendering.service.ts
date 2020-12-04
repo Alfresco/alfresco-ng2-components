@@ -22,6 +22,7 @@ import { DropdownCloudWidgetComponent } from './widgets/dropdown/dropdown-cloud.
 import { DateCloudWidgetComponent } from './widgets/date/date-cloud.widget';
 import { PeopleCloudWidgetComponent } from './widgets/people/people-cloud.widget';
 import { GroupCloudWidgetComponent } from './widgets/group/group-cloud.widget';
+import { ContainerCloudWidgetComponent } from './widgets/container/container-cloud.widget';
 
 @Injectable({
     providedIn: 'root'
@@ -35,7 +36,8 @@ export class CloudFormRenderingService extends FormRenderingService {
             'dropdown': () => DropdownCloudWidgetComponent,
             'date': () => DateCloudWidgetComponent,
             'people': () => PeopleCloudWidgetComponent,
-            'functional-group': () => GroupCloudWidgetComponent
+            'functional-group': () => GroupCloudWidgetComponent,
+            'container': () => ContainerCloudWidgetComponent
         }, true);
     }
 }

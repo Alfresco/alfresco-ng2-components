@@ -1,0 +1,16 @@
+<div [hidden]="!content?.isGroup()" class="adf-container-widget__header">
+    <h4 class="adf-container-widget__header-text" id="container-header"
+        [class.adf-collapsible]="content?.isCollapsible()">
+        <button *ngIf="content?.isCollapsible()" mat-icon-button class="mdl-button--icon" (click)="onExpanderClicked()">
+            <mat-icon>{{ content?.isExpanded ? 'expand_more' : 'expand_less' }}</mat-icon>
+        </button>
+        <span (click)="onExpanderClicked()" id="container-header-label">{{content.name | translate }}</span>
+    </h4>
+</div>
+
+
+<div class="adf-form-row">
+    <div class="adf-form-column" *ngFor="let column of content.columns; let i = index" [ngStyle]="{'flex': getColspan(i) + ' 1 0%'}">
+        <adf-form-field *ngFor="let field of getFields(i)" [field]="field"></adf-form-field>
+    </div>
+</div>

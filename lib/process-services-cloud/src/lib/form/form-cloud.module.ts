@@ -35,6 +35,7 @@ import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file
 import { UploadCloudWidgetComponent } from './components/widgets/attach-file/upload-cloud.widget';
 import { PeopleCloudModule } from '../people/people-cloud.module';
 import { GroupCloudModule } from '../group/group-cloud.module';
+import { ContainerCloudWidgetComponent } from './components/widgets/container/container-cloud.widget';
 
 @NgModule({
     imports: [
@@ -57,7 +58,8 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         AttachFileCloudWidgetComponent,
         DateCloudWidgetComponent,
         PeopleCloudWidgetComponent,
-        GroupCloudWidgetComponent
+        GroupCloudWidgetComponent,
+        ContainerCloudWidgetComponent
     ],
     exports: [
         FormCloudComponent,
@@ -68,7 +70,8 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         AttachFileCloudWidgetComponent,
         DateCloudWidgetComponent,
         PeopleCloudWidgetComponent,
-        GroupCloudWidgetComponent
+        GroupCloudWidgetComponent,
+        ContainerCloudWidgetComponent
     ]
 })
 export class FormCloudModule {
