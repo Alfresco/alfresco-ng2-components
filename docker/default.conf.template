@@ -5,8 +5,10 @@ server {
     #charset koi8-r;
     #access_log  /var/log/nginx/host.access.log  main;
 
-    root  /usr/share/nginx/html;
-    rewrite ^([^.]*[^/])$ $1/ permanent;
+    root /usr/share/nginx/html;
+
+    rewrite           ^([^.]*[^/])$ $1/ permanent;
+    absolute_redirect off;
 
     location ${BASE_PATH} {
         set $EVAL_BASE_PATH "${BASE_PATH}";
