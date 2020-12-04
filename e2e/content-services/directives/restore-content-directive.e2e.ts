@@ -24,7 +24,6 @@ import { TrashcanPage } from '../../core/pages/trashcan.page';
 import {
     ApiService,
     BreadcrumbPage,
-    BrowserActions,
     LoginPage,
     NotificationHistoryPage,
     StringUtil,
@@ -90,13 +89,8 @@ describe('Restore content directive', () => {
         await uploadActions.deleteFileOrFolder(folderWithFolder.entry.id);
     });
 
-    beforeEach(async () => {
-        await BrowserActions.closeMenuAndDialogs();
-        await navigationBarPage.navigateToContentServices();
-        await contentServicesPage.waitForTableBody();
-    });
-
     describe('Restore same name folders', () => {
+
         beforeAll(async () => {
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
@@ -120,8 +114,10 @@ describe('Restore content directive', () => {
             await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
 
             await trashcanPage.getDocumentList().dataTablePage().checkAllRows();
+
             await trashcanPage.clickRestore();
-            await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
+            await browser.sleep(1000);
+
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
             await contentServicesPage.checkContentIsDisplayed(folderName);

@@ -55,11 +55,10 @@ describe('Upload - User permission', () => {
 
         acsUser = await usersActions.createUser(acsUser);
         acsUserTwo = await usersActions.createUser(acsUserTwo);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     beforeEach(async () => {
-        await loginPage.login(acsUser.email, acsUser.password);
-
         consumerSite = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
