@@ -174,7 +174,7 @@ describe('Share file', () => {
         });
 
         afterEach(async () => {
-            await navigationBarPage.clickLogoutButton()
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C286565] Should open file when logged user access shared link', async () => {
