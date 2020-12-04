@@ -124,7 +124,7 @@ export class ContentNodeSelectorDialogPage {
         await this.dataTable.waitForTableBody();
         await this.dataTable.waitTillContentLoaded();
         await this.dataTable.checkRowContentIsDisplayed(folderName);
-        await this.doubleClickContentNodeSelectorResult(folderName);
+        await this.dataTable.doubleClickRowByContent(folderName);
 
         await this.dataTable.waitForTableBody();
         await this.dataTable.waitTillContentLoaded();
