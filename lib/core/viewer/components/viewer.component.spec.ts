@@ -376,6 +376,26 @@ describe('ViewerComponent', () => {
         expect(component.fileTitle).toBe('file2');
     }));
 
+    it('should append version of the file to the file content URL', fakeAsync(() => {
+        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValue(
+            Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {}, properties: { 'cm:versionLabel' : '10'} } }))
+        );
+        spyOn(alfrescoApiService.versionsApi, 'getVersion').and.returnValue(Promise.resolve(undefined));
+
+        component.nodeId = 'id1';
+        component.urlFile = null;
+        component.displayName = null;
+        component.blobFile = null;
+        component.showViewer = true;
+
+        component.versionId = null;
+        component.ngOnChanges();
+        tick();
+
+        expect(component.fileTitle).toBe('file1');
+        expect(component.urlFileContent).toContain('/public/alfresco/versions/1/nodes/id1/content?attachment=false&10');
+    }));
+
     it('should change display name every time node\`s version changes', fakeAsync(() => {
         spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValue(
             Promise.resolve(new NodeEntry({ entry: { name: 'node1', content: {} } }))
