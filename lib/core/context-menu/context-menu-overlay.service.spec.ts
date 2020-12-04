@@ -23,7 +23,7 @@ import { setupTestBed } from '../testing/setup-test-bed';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('ContextMenuService', () => {
+describe('ContextMenuOverlayService', () => {
     let contextMenuOverlayService: ContextMenuOverlayService;
     let overlay: Overlay;
     let injector: Injector;
