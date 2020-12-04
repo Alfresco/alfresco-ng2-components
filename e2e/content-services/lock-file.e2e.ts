@@ -168,7 +168,7 @@ describe('Lock File', () => {
                 await uploadActions.deleteFileOrFolder(nodeId);
             } catch (error) {
             }
-            await navigationBarPage.clickLogoutButton()
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C286610] Should not be able to delete a locked file', async () => {
