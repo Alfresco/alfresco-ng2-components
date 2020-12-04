@@ -97,7 +97,7 @@ describe('Share file', () => {
         });
 
         afterAll(async () => {
-            await navigationBarPage.clickLogoutButton()
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C286549] Should check automatically toggle button in Share dialog', async () => {
