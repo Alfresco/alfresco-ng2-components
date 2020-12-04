@@ -613,6 +613,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.filterChange.subscribe(() => {
                 expect(component.changedTaskFilter.dueDateFrom).toEqual(dateFilter.startDate);
                 expect(component.changedTaskFilter.dueDateTo).toEqual(dateFilter.endDate);
+                expect(component.changedTaskFilter.dueDateType).toEqual(DateCloudFilterType.RANGE);
                 done();
             });
             component.onFilterChange();
