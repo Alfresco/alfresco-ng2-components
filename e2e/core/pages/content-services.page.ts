@@ -641,6 +641,7 @@ export class ContentServicesPage {
     }
 
     async clickShareButton(): Promise<void> {
+        await browser.sleep(2000);
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(this.shareNodeButton);
     }

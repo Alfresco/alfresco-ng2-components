@@ -86,7 +86,7 @@ describe('AuthGuardService BPM', () => {
         expect(router.navigateByUrl).toHaveBeenCalledWith('/login?redirectUrl=some-url');
     }));
 
-    it('should redirect url if the alfresco js api is NOT logged in and isOAuthWithoutSilentLogin', async(() => {
+    it('should not redirect url if the alfresco js api is NOT logged in and isOAuthWithoutSilentLogin', async(() => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
@@ -94,10 +94,10 @@ describe('AuthGuardService BPM', () => {
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
         expect(authGuard.canActivate(null, route)).toBeFalsy();
-        expect(router.navigateByUrl).toHaveBeenCalled();
+        expect(router.navigateByUrl).not.toHaveBeenCalled();
     }));
 
-    it('should redirect url if NOT logged in and isOAuth but no silentLogin configured', async(() => {
+    it('should not redirect url if NOT logged in and isOAuth but no silentLogin configured', async(() => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
@@ -105,7 +105,7 @@ describe('AuthGuardService BPM', () => {
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
         expect(authGuard.canActivate(null, route)).toBeFalsy();
-        expect(router.navigateByUrl).toHaveBeenCalled();
+        expect(router.navigateByUrl).not.toHaveBeenCalled();
     }));
 
     it('should set redirect url', async(() => {

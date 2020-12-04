@@ -632,11 +632,11 @@ export class ViewerPage {
     }
 
     async checkOverlayViewerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-overlay-container"]')));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('div[class*="adf-viewer-overlay-container"]')));
     }
 
     async checkInlineViewerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-inline-container"]')));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('div[class*="adf-viewer-inline-container"]')));
     }
 
     async checkTabHasNoIcon(index: number): Promise<void> {

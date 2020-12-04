@@ -29,7 +29,7 @@ import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 
-describe('Viewer - properties', () => {
+describe('Viewer', () => {
 
     const acsUser = new UserModel();
     const viewerPage = new ViewerPage();
@@ -67,119 +67,129 @@ describe('Viewer - properties', () => {
         await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
-
-        await viewerPage.viewFile(pngFile.name);
-
-        await viewerPage.clickLeftSidebarButton();
-        await viewerPage.checkLeftSideBarIsDisplayed();
-   });
+    });
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(pngFile.getId());
         await navigationBarPage.clickLogoutButton();
-   });
-
-    it('[C260066] Should Show/Hide viewer toolbar when showToolbar is true/false', async () => {
-        await viewerPage.checkToolbarIsDisplayed();
-        await viewerPage.disableToolbar();
-        await viewerPage.checkToolbarIsNotDisplayed();
-        await viewerPage.enableToolbar();
     });
 
-    it('[C260076] Should Show/Hide back button when allowGoBack is true/false', async () => {
-        await viewerPage.checkGoBackIsDisplayed();
-        await viewerPage.disableGoBack();
-        await viewerPage.checkGoBackIsNotDisplayed();
-        await viewerPage.enableGoBack();
-    });
+    describe('properties', () => {
 
-    it('[C260077] Should Show toolbar options dropdown when adf-viewer-open-with directive is used', async () => {
-        await viewerPage.checkToolbarOptionsIsNotDisplayed();
-        await viewerPage.enableToolbarOptions();
-        await viewerPage.checkToolbarOptionsIsDisplayed();
-        await viewerPage.disableToolbarOptions();
-    });
+        beforeAll(async () => {
+            await viewerPage.viewFile(pngFile.name);
 
-    it('[C260079] Should Show/Hide download button when allowDownload is true/false', async () => {
-        await viewerPage.checkDownloadButtonIsDisplayed();
-        await viewerPage.disableDownload();
-        await viewerPage.checkDownloadButtonIsNotDisplayed();
-        await viewerPage.enableDownload();
-    });
+            await viewerPage.clickLeftSidebarButton();
+            await viewerPage.checkLeftSideBarIsDisplayed();
+        });
 
-    it('[C260082] Should Show/Hide print button when allowPrint is true/false', async () => {
-        await viewerPage.checkPrintButtonIsDisplayed();
-        await viewerPage.disablePrint();
-        await viewerPage.checkPrintButtonIsNotDisplayed();
-        await viewerPage.enablePrint();
-    });
+        afterAll(async () => {
+            await viewerPage.clickCloseButton();
+        });
 
-    it('[C260092] Should show adf-viewer-toolbar-actions directive buttons when adf-viewer-toolbar-actions is used', async () => {
-        await viewerPage.checkMoreActionsDisplayed();
+        it('[C260066] Should Show/Hide viewer toolbar when showToolbar is true/false', async () => {
+            await viewerPage.checkToolbarIsDisplayed();
+            await viewerPage.disableToolbar();
+            await viewerPage.checkToolbarIsNotDisplayed();
+            await viewerPage.enableToolbar();
+        });
 
-        await viewerPage.disableMoreActions();
+        it('[C260076] Should Show/Hide back button when allowGoBack is true/false', async () => {
+            await viewerPage.checkGoBackIsDisplayed();
+            await viewerPage.disableGoBack();
+            await viewerPage.checkGoBackIsNotDisplayed();
+            await viewerPage.enableGoBack();
+        });
 
-        await viewerPage.checkMoreActionsIsNotDisplayed();
+        it('[C260077] Should Show toolbar options dropdown when adf-viewer-open-with directive is used', async () => {
+            await viewerPage.checkToolbarOptionsIsNotDisplayed();
+            await viewerPage.enableToolbarOptions();
+            await viewerPage.checkToolbarOptionsIsDisplayed();
+            await viewerPage.disableToolbarOptions();
+        });
 
-        await viewerPage.enableMoreActions();
-    });
+        it('[C260079] Should Show/Hide download button when allowDownload is true/false', async () => {
+            await viewerPage.checkDownloadButtonIsDisplayed();
+            await viewerPage.disableDownload();
+            await viewerPage.checkDownloadButtonIsNotDisplayed();
+            await viewerPage.enableDownload();
+        });
 
-    it('[C260074] Should show a custom file name when displayName property is used', async () => {
-        await viewerPage.checkFileNameIsDisplayed(pngFile.name);
+        it('[C260082] Should Show/Hide print button when allowPrint is true/false', async () => {
+            await viewerPage.checkPrintButtonIsDisplayed();
+            await viewerPage.disablePrint();
+            await viewerPage.checkPrintButtonIsNotDisplayed();
+            await viewerPage.enablePrint();
+        });
 
-        await viewerPage.enableCustomName();
+        it('[C260092] Should show adf-viewer-toolbar-actions directive buttons when adf-viewer-toolbar-actions is used', async () => {
+            await viewerPage.checkMoreActionsDisplayed();
 
-        await viewerPage.enterCustomName('test custom title');
-        await viewerPage.checkFileNameIsDisplayed('test custom title');
+            await viewerPage.disableMoreActions();
 
-        await viewerPage.disableCustomName();
-    });
+            await viewerPage.checkMoreActionsIsNotDisplayed();
 
-    it('[C260090] Should showSidebar allow right info-drawer to be shown', async () => {
-        await viewerPage.clickToggleRightSidebar();
-        await viewerPage.checkInfoSideBarIsDisplayed();
+            await viewerPage.enableMoreActions();
+        });
 
-        await viewerPage.clickToggleRightSidebar();
-        await viewerPage.checkInfoSideBarIsNotDisplayed();
-    });
+        it('[C260074] Should show a custom file name when displayName property is used', async () => {
+            await viewerPage.checkFileNameIsDisplayed(pngFile.name);
 
-    it('[C286442] Should showLeftSidebar allow left info-drawer to be shown', async () => {
-        await viewerPage.clickToggleLeftSidebar();
-        await viewerPage.checkLeftSideBarIsNotDisplayed();
-        await viewerPage.clickLeftSidebarButton();
-        await viewerPage.checkLeftSideBarIsDisplayed();
-    });
+            await viewerPage.enableCustomName();
 
-    it('[C260089] Should Show/Hide info-drawer if allowSidebar true/false', async () => {
-        await viewerPage.clickInfoButton();
+            await viewerPage.enterCustomName('test custom title');
+            await viewerPage.checkFileNameIsDisplayed('test custom title');
 
-        await viewerPage.checkInfoSideBarIsDisplayed();
-        await viewerPage.checkInfoButtonIsDisplayed();
+            await viewerPage.disableCustomName();
+        });
 
-        await viewerPage.disableAllowSidebar();
+        it('[C260090] Should showSidebar allow right info-drawer to be shown', async () => {
+            await viewerPage.clickToggleRightSidebar();
+            await viewerPage.checkInfoSideBarIsDisplayed();
 
-        await viewerPage.checkInfoButtonIsNotDisplayed();
-        await viewerPage.checkInfoSideBarIsNotDisplayed();
-    });
+            await viewerPage.clickToggleRightSidebar();
+            await viewerPage.checkInfoSideBarIsNotDisplayed();
+        });
 
-    it('[C286596] Should Show/Hide left info-drawer if allowLeftSidebar true/false', async () => {
-        await viewerPage.checkLeftSideBarIsDisplayed();
-        await viewerPage.checkLeftSideBarButtonIsDisplayed();
+        it('[C286442] Should showLeftSidebar allow left info-drawer to be shown', async () => {
+            await viewerPage.clickToggleLeftSidebar();
+            await viewerPage.checkLeftSideBarIsNotDisplayed();
+            await viewerPage.clickLeftSidebarButton();
+            await viewerPage.checkLeftSideBarIsDisplayed();
+        });
 
-        await viewerPage.disableAllowLeftSidebar();
+        it('[C260089] Should Show/Hide info-drawer if allowSidebar true/false', async () => {
+            await viewerPage.clickInfoButton();
 
-        await viewerPage.checkLeftSideBarButtonIsNotDisplayed();
-        await viewerPage.checkLeftSideBarIsNotDisplayed();
+            await viewerPage.checkInfoSideBarIsDisplayed();
+            await viewerPage.checkInfoButtonIsDisplayed();
+
+            await viewerPage.disableAllowSidebar();
+
+            await viewerPage.checkInfoButtonIsNotDisplayed();
+            await viewerPage.checkInfoSideBarIsNotDisplayed();
+        });
+
+        it('[C286596] Should Show/Hide left info-drawer if allowLeftSidebar true/false', async () => {
+            await viewerPage.checkLeftSideBarIsDisplayed();
+            await viewerPage.checkLeftSideBarButtonIsDisplayed();
+
+            await viewerPage.disableAllowLeftSidebar();
+
+            await viewerPage.checkLeftSideBarButtonIsNotDisplayed();
+            await viewerPage.checkLeftSideBarIsNotDisplayed();
+        });
+
     });
 
     it('[C260100] Should be possible to disable Overlay viewer', async () => {
-        await viewerPage.clickCloseButton();
         await navigationBarPage.clickOverlayViewerButton();
-
         await dataTable.doubleClickRow('Name', fileForOverlay.name);
         await viewerPage.checkOverlayViewerIsDisplayed();
+
         await viewerPage.clickCloseButton();
         await dataTable.doubleClickRow('Name', pngFile.name);
+
         await viewerPage.checkOverlayViewerIsDisplayed();
         await viewerPage.clickCloseButton();
 
@@ -191,4 +201,5 @@ describe('Viewer - properties', () => {
         await viewerPage.checkImgContainerIsDisplayed();
         await viewerPage.checkInlineViewerIsDisplayed();
     });
-});
+})
+;

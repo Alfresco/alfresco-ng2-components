@@ -153,20 +153,22 @@ describe('Permissions Component', () => {
     });
 
     afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
-
         await apiService.loginWithProfile('admin');
         await apiService.getInstance().core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
         await apiService.getInstance().core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
     });
 
     describe('Role Site Dropdown', () => {
+
         beforeAll(async () => {
             await loginPage.login(folderOwnerUser.email, folderOwnerUser.password);
 
             await BrowserActions.getUrl(browser.baseUrl + '/files/' + publicSite.entry.guid);
             await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+        });
 
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C277002] Should display the Role Site dropdown', async () => {
@@ -205,6 +207,11 @@ describe('Permissions Component', () => {
     });
 
     describe('Roles: SiteConsumer, SiteCollaborator, SiteContributor, SiteManager', () => {
+
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
+        });
+
         it('[C276994] Role SiteConsumer', async () => {
             await loginPage.login(siteConsumerUser.email, siteConsumerUser.password);
 
@@ -342,6 +349,11 @@ describe('Permissions Component', () => {
     });
 
     describe('Roles: Private site and Manager User', () => {
+
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
+        });
+
         it('[C277196] should a user with Manager permissions be able to upload a new version for the created file', async () => {
             await loginPage.login(managerUser.email, managerUser.password);
 

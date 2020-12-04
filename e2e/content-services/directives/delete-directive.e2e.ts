@@ -30,19 +30,24 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Delete Directive', () => {
 
-    const apiService = new ApiService();
+    let baseFolderUploaded;
+
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
+    const navigationBarPage = new NavigationBarPage();
+
     const contentListPage = contentServicesPage.getDocumentList();
     const acsUser = new UserModel();
     const secondAcsUser = new UserModel();
+
+    const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
     const permissionActions = new PermissionActions(apiService);
-    let baseFolderUploaded;
     const usersActions = new UsersActions(apiService);
 
     const txtFileModel = new FileModel({
@@ -123,6 +128,10 @@ describe('Delete Directive', () => {
             await contentServicesPage.waitForTableBody();
         });
 
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
+        });
+
         it('[C260188] Delete multiple content', async () => {
             await contentListPage.selectRowWithKeyboard(txtFileModel.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', txtFileModel.name);
@@ -184,6 +193,8 @@ describe('Delete Directive', () => {
 
     describe('When selection on multiple pages', () => {
         beforeEach(async () => {
+            await apiService.login(acsUser.email, acsUser.password);
+
             await uploadActions.uploadFile( txtFileModel.location, txtFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, baseFolderUploaded.entry.id);
@@ -194,6 +205,10 @@ describe('Delete Directive', () => {
             await loginPage.login(acsUser.email, acsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
+        });
+
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C260191] Delete content selected from different pages', async () => {
@@ -216,6 +231,8 @@ describe('Delete Directive', () => {
         let fileTxt, filePdf, folderA, folderB;
 
         beforeAll(async () => {
+            await apiService.login(acsUser.email, acsUser.password);
+
             createdSite = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(20).toLowerCase(),
                 visibility: 'PRIVATE'
@@ -250,6 +267,7 @@ describe('Delete Directive', () => {
             try {
                 await apiService.getInstance().core.sitesApi.deleteSite(createdSite.entry.id, { permanent: true });
             } catch (error) {}
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C216426] Delete file without delete permissions', async () => {

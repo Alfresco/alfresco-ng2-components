@@ -58,6 +58,7 @@ describe('Error Component', () => {
 
     it('[C307029] Should display Unknown message when error is undefined', async () => {
         await BrowserActions.getUrl(browser.baseUrl + '/error/501');
+        await browser.sleep(2000);
         await expect(await errorPage.getErrorCode()).toBe('UNKNOWN');
         await expect(await errorPage.getErrorTitle()).toBe('We hit a problem.');
         await expect(await errorPage.getErrorDescription()).toBe('Looks like something went wrong.');

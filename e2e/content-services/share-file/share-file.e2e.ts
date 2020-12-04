@@ -96,6 +96,10 @@ describe('Share file', () => {
             await BrowserActions.closeMenuAndDialogs();
         });
 
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton()
+        });
+
         it('[C286549] Should check automatically toggle button in Share dialog', async () => {
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
@@ -167,6 +171,10 @@ describe('Share file', () => {
             await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
+        });
+
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton()
         });
 
         it('[C286565] Should open file when logged user access shared link', async () => {

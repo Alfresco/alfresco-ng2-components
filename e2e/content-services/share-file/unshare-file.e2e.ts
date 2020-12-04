@@ -68,11 +68,6 @@ describe('Unshare file', () => {
             id: siteName
         };
 
-        const memberBody = {
-            id: acsUser.email,
-            role: CONSTANTS.CS_USER_ROLES.CONSUMER
-        };
-
         nodeBody = {
             name: StringUtil.generateRandomString(5),
             nodeType: 'cm:content',
@@ -85,7 +80,10 @@ describe('Unshare file', () => {
 
         const docLibId = (await apiService.getInstance().core.sitesApi.getSiteContainers(siteName)).list.entries[0].entry.id;
         const testFile1Id = (await apiService.getInstance().core.nodesApi.addNode(docLibId, nodeBody)).entry.id;
-        await apiService.getInstance().core.sitesApi.addSiteMember(siteName, memberBody);
+        await apiService.getInstance().core.sitesApi.addSiteMember(siteName, {
+            id: acsUser.email,
+            role: CONSTANTS.CS_USER_ROLES.CONSUMER
+        });
 
         await apiService.getInstance().core.nodesApi.updateNode(testFile1Id, {
             permissions: {
@@ -114,10 +112,6 @@ describe('Unshare file', () => {
         await apiService.getInstance().core.sitesApi.deleteSite(testSite.entry.id, { permanent: true });
     });
 
-    afterEach(async () => {
-        await browser.refresh();
-    });
-
     describe('with permission', () => {
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
@@ -128,6 +122,7 @@ describe('Unshare file', () => {
             await contentListPage.selectRow(pngFileModel.name);
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
+            await browser.sleep(2000);
             await shareDialog.clickUnShareFile();
             await shareDialog.confirmationDialogIsDisplayed();
         });
@@ -156,17 +151,20 @@ describe('Unshare file', () => {
             await contentListPage.selectRow(pngFileModel.name);
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
+            await browser.sleep(2000);
+
             const sharedLink = await shareDialog.getShareLink();
             await shareDialog.clickUnShareFile();
             await shareDialog.confirmationDialogIsDisplayed();
             await shareDialog.clickConfirmationDialogRemoveButton();
             await shareDialog.dialogIsClosed();
-            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.appConfig.ecmHost, `${browser.baseUrl}/#`));
+            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.appConfig.ecmHost, `${browser.baseUrl}`));
             await errorPage.checkErrorCode();
         });
     });
 
     describe('without permission', () => {
+
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
             await apiService.getInstance().core.sitesApi.deleteSite(siteName, { permanent: true });
@@ -177,6 +175,7 @@ describe('Unshare file', () => {
             await contentServicesPage.openFolder('documentLibrary');
             await contentListPage.selectRow(nodeBody.name);
             await contentServicesPage.clickShareButton();
+
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.shareToggleButtonIsChecked();
             await shareDialog.clickUnShareFile();
@@ -184,6 +183,7 @@ describe('Unshare file', () => {
             await shareDialog.clickConfirmationDialogRemoveButton();
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.shareToggleButtonIsChecked();
+
             await notificationHistoryPage.checkNotifyContains(`You don't have permission to unshare this file`);
         });
     });

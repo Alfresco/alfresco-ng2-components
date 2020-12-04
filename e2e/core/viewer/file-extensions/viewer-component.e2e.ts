@@ -81,7 +81,6 @@ describe('Viewer', () => {
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
         await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
-        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C272813] Should be redirected to site when opening and closing a file in a site', async () => {
@@ -95,6 +94,7 @@ describe('Viewer', () => {
         await viewerPage.checkImgViewerIsDisplayed();
 
         await viewerPage.clickCloseButton();
+        await navigationBarPage.clickLogoutButton();
     });
 
     describe('Other Folder Uploaded', () => {
@@ -102,6 +102,7 @@ describe('Viewer', () => {
         let otherFolderUploaded;
 
         beforeAll(async () => {
+            await apiService.login(acsUser.email, acsUser.password);
             otherFolderUploaded = await uploadActions.createFolder(otherFolderInfo.name, '-my-');
 
             uploadedOthers = await uploadActions.uploadFolder(otherFolderInfo.location, otherFolderUploaded.entry.id);

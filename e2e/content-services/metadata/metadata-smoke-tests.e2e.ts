@@ -76,10 +76,6 @@ describe('Metadata component', () => {
         pngFileModel.update(pngUploadedFile.entry);
     });
 
-    afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
-    });
-
     describe('Viewer Metadata', () => {
         beforeAll(async () => {
             await loginPage.login(acsUser.email, acsUser.password);
@@ -92,6 +88,10 @@ describe('Metadata component', () => {
                     }
                 }
             }));
+        });
+
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         beforeEach(async () => {
@@ -226,6 +226,7 @@ describe('Metadata component', () => {
     });
 
     describe('Folder metadata', () => {
+
         beforeAll(async () => {
             await uploadActions.createFolder(folderName, '-my-');
 
@@ -234,11 +235,15 @@ describe('Metadata component', () => {
             await contentServicesPage.waitForTableBody();
         });
 
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
+        });
+
         it('[C261157] Should be possible use the metadata component When the node is a Folder', async () => {
             await contentServicesPage.metadataContent(folderName);
 
             await expect(await metadataViewPage.getPropertyText('name')).toEqual(folderName);
-            await expect(await metadataViewPage.getPropertyText('createdByUser.displayName')).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+            await expect(await metadataViewPage.getPropertyText('createdByUser.displayName')).toEqual(acsUser.username);
             await BrowserActions.closeMenuAndDialogs();
         });
 

@@ -83,7 +83,7 @@ describe('AuthGuardService', () => {
         appConfigService.config.oauth2.silentLogin = false;
 
         expect(await authGuard.canActivate(null, state)).toBeFalsy();
-        expect(router.navigateByUrl).toHaveBeenCalled();
+        expect(router.navigateByUrl).not.toHaveBeenCalled();
     }));
 
     it('should redirect url if the User is NOT logged in and isOAuth but no silentLogin configured', async(async () => {
@@ -93,7 +93,7 @@ describe('AuthGuardService', () => {
         appConfigService.config.oauth2.silentLogin = undefined;
 
         expect(await authGuard.canActivate(null, state)).toBeFalsy();
-        expect(router.navigateByUrl).toHaveBeenCalled();
+        expect(router.navigateByUrl).not.toHaveBeenCalled();
     }));
 
     it('should NOT redirect url if the User is NOT logged in and isOAuth but with silentLogin configured', async(async () => {

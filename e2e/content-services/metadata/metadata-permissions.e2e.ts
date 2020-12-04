@@ -95,8 +95,11 @@ describe('permissions', () => {
     });
 
     afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
         await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+    });
+
+    afterEach(async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C274692] Should not be possible edit metadata properties when the user is a consumer user', async () => {

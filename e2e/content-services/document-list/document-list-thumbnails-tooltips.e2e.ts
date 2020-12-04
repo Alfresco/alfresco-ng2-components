@@ -100,11 +100,15 @@ describe('Document List Component', () => {
             if (folderNode) {
                 await uploadActions.deleteFileOrFolder(folderNode.entry.id);
             }
-    });
+        });
 
         beforeEach(async () => {
             await loginPage.login(acsUser.email, acsUser.password);
             await contentServicesPage.goToDocumentList();
+        });
+
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C260108] Should display tooltip for file\'s name', async () => {
