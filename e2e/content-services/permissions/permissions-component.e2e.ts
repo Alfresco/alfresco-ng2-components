@@ -347,6 +347,7 @@ describe('Permissions Component', () => {
             await contentServicesPage.metadataContent('RoleConsumer' + fileModel.name);
             await expect(await notificationPage.getSnackBarMessage()).toEqual('You don\'t have access to do this.');
             await notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
+            await browser.sleep(3000);
             await contentServicesPage.uploadFile(fileLocation);
             await expect(await notificationPage.getSnackBarMessage()).toEqual('You don\'t have the create permission to upload the content');
             await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
