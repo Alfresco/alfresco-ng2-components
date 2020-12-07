@@ -72,8 +72,8 @@ describe('ContentNodeSelectorComponent', () => {
         const documentListService = TestBed.inject(DocumentListService);
         const sitesService: SitesService = TestBed.inject(SitesService);
 
-        spyOn(documentListService, 'getFolder').and.returnValue(of({ list: [] }));
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: {} }));
+        spyOn(documentListService, 'getFolder').and.callThrough();
+        spyOn(documentListService, 'getFolderNode').and.callThrough();
         spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
 
         fixture = TestBed.createComponent(ContentNodeSelectorComponent);
