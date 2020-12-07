@@ -21,9 +21,9 @@ Locks or unlocks a node.
 
 ### Properties
 
-| Name | Type                                                                                                     | Default value | Description                                                                                                            |
-| ---- | -------------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |               | [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) to lock/unlock. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |  | [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) to lock/unlock. |
 
 ## Details
 

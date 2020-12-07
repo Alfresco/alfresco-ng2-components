@@ -32,17 +32,17 @@ If the average is decimal number it will be rounded.
 
 ### Properties
 
-| Name   | Type     | Default value | Description                                    |
-| ------ | -------- | ------------- | ---------------------------------------------- |
-| nodeId | `string` |               | Identifier of the node to apply the rating to. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| nodeId | `string` |  | Identifier of the node to apply the rating to. |
 
 ### Events
 
-| Name       | Type                                                              | Description                           |
-| ---------- | ----------------------------------------------------------------- | ------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | changeVote | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the "vote" gets changed. |
 
 ## See also
 
--   [Like component](like.component.md)
--   [Rating service](../services/rating.service.md)
+*   [Like component](like.component.md)
+*   [Rating service](../services/rating.service.md)

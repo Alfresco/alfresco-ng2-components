@@ -11,15 +11,15 @@ Renders a list containing all the process instances matched by the parameters sp
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
-    -   [Transclusions](#transclusions)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
-    -   [Pagination strategy](#pagination-strategy)
--   [See also](#see-also)
+*   [Basic Usage](#basic-usage)
+    *   [Transclusions](#transclusions)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
+    *   [Pagination strategy](#pagination-strategy)
+*   [See also](#see-also)
 
 ## Basic Usage
 
@@ -48,45 +48,45 @@ when the process list is empty:
 
 ### Properties
 
-| Name                  | Type                                                                                                                                        | Default value | Description                                                                                                                                                             |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| actionsPosition       | `string`                                                                                                                                    | "right"       | Position of the actions dropdown menu. Can be "left" or "right".                                                                                                        |
-| appName               | `string`                                                                                                                                    | ""            | The name of the application.                                                                                                                                            |
-| appVersion            | `number | number[]`                                                                                                                                    |               | The release version of the application.                                                                                                                                 |
-| businessKey           | `string`                                                                                                                                    | ""            | Filter the processes to display only the ones with this businessKey value.                                                                                              |
-| completedDate         | `string`                                                                                                                                    | ""            | Filter the processes. Display only process with completedDate equal to the supplied date.                                                                               |
-| completedFrom         | `string`                                                                                                                                    | ""            | Filter the processes. Display only process with completedFrom equal to the supplied date.                                                                               |
-| completedTo           | `string`                                                                                                                                    | ""            | Filter the processes. Display only process with completedTo equal to the supplied date.                                                                                 |
-| id                    | `string`                                                                                                                                    | ""            | Filter the processes to display only the ones with this ID.                                                                                                             |
-| initiator             | `string`                                                                                                                                    | ""            | Name of the initiator of the process.                                                                                                                                   |
-| lastModifiedFrom      | `string`                                                                                                                                    | ""            | Filter the processes. Display only process with lastModifiedTo equal to the supplied date.                                                                              |
-| lastModifiedTo        | `string`                                                                                                                                    | ""            | Filter the processes. Display only process with lastModifiedTo equal to the supplied date.                                                                              |
-| multiselect           | `boolean`                                                                                                                                   | false         | Toggles multiple row selection and renders checkboxes at the beginning of each row                                                                                      |
-| name                  | `string`                                                                                                                                    | ""            | Filter the processes to display only the ones with this name.                                                                                                           |
-| presetColumn          | `string`                                                                                                                                    |               | Custom preset column schema in JSON format.                                                                                                                             |
-| processDefinitionId   | `string`                                                                                                                                    | ""            | Filter the processes to display only the ones with this process definition ID.                                                                                          |
-| processDefinitionKey  | `string`                                                                                                                                    | ""            | Filter the processes to display only the ones with this process definition key.                                                                                         |
-| processDefinitionName | `string`                                                                                                                                    | ""            | Filter the processes to display only the ones with this process definition name.                                                                                        |
-| selectionMode         | `string`                                                                                                                                    | "single"      | Row selection mode. Can be "none", "single" or "multiple". For multiple mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| showActions           | `boolean`                                                                                                                                   | false         | Toggles the data actions column.                                                                                                                                        |
-| showContextMenu       | `boolean`                                                                                                                                   | false         | Toggles custom context menu for the component.                                                                                                                          |
-| sorting               | [`ProcessListCloudSortingModel`](../../../lib/process-services-cloud/src/lib/process/process-list/models/process-list-sorting.model.ts)`[]` |               | Array of objects specifying the sort order and direction for the list. The sort parameters are for BE sorting.                                                          |
-| startFrom             | `string`                                                                                                                                    | ""            | Filter the processes. Display only process with startedDate greater then the supplied date.                                                                             |
-| startTo               | `string`                                                                                                                                    | ""            | Filter the processes. Display only process with startedDate less than the supplied date.                                                                                |
-| status                | `string`                                                                                                                                    | ""            | Filter the processes to display only the ones with this status.                                                                                                         |
-| stickyHeader          | `boolean`                                                                                                                                   | false         | Toggles the sticky header mode.                                                                                                                                         |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
+| appName | `string` | "" | The name of the application. |
+| appVersion | `number \| number[]` |  | The version of the application. |
+| businessKey | `string` | "" | Filter the processes to display only the ones with this businessKey value. |
+| completedDate | `string` | "" | Filter the processes. Display only process with completedDate equal to the supplied date. |
+| completedFrom | `string` | "" | Filter the processes. Display only process with completedFrom equal to the supplied date. |
+| completedTo | `string` | "" | Filter the processes. Display only process with completedTo equal to the supplied date. |
+| id | `string` | "" | Filter the processes to display only the ones with this ID. |
+| initiator | `string` | "" | Name of the initiator of the process. |
+| lastModifiedFrom | `string` | "" | Filter the processes. Display only process with lastModifiedTo equal to the supplied date. |
+| lastModifiedTo | `string` | "" | Filter the processes. Display only process with lastModifiedTo equal to the supplied date. |
+| multiselect | `boolean` | false | Toggles multiple row selection and renders checkboxes at the beginning of each row |
+| name | `string` | "" | Filter the processes to display only the ones with this name. |
+| presetColumn | `string` |  | Custom preset column schema in JSON format. |
+| processDefinitionId | `string` | "" | Filter the processes to display only the ones with this process definition ID. |
+| processDefinitionKey | `string` | "" | Filter the processes to display only the ones with this process definition key. |
+| processDefinitionName | `string` | "" | Filter the processes to display only the ones with this process definition name. |
+| selectionMode | `string` | "single" | Row selection mode. Can be "none", "single" or "multiple". For multiple mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| showActions | `boolean` | false | Toggles the data actions column. |
+| showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
+| sorting | [`ProcessListCloudSortingModel`](../../../lib/process-services-cloud/src/lib/process/process-list/models/process-list-sorting.model.ts)`[]` |  | Array of objects specifying the sort order and direction for the list. The sort parameters are for BE sorting. |
+| startFrom | `string` | "" | Filter the processes. Display only process with startedDate greater then the supplied date. |
+| startTo | `string` | "" | Filter the processes. Display only process with startedDate less than the supplied date. |
+| status | `string` | "" | Filter the processes to display only the ones with this status. |
+| stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
 ### Events
 
-| Name               | Type                                                                                                                                                    | Description                                                                               |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| error              | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                       | Emitted when an error occurs while loading the list of process instances from the server. |
-| executeRowAction   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action.                                              |
-| rowClick           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                                                                                    | Emitted when a row in the process list is clicked.                                        |
-| rowsSelected       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>`                                                                                     | Emitted when rows are selected/unselected.                                                |
-| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>`            | Emitted before the actions menu is displayed for a row.                                   |
-| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>`            | Emitted before the context menu is displayed for a row.                                   |
-| success            | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                       | Emitted when the list of process instances has been loaded successfully from the server.  |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
+| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
+| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
+| rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected. |
+| showRowActionsMenu | `EventEmitter<DataCellEvent>` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | `EventEmitter<DataCellEvent>` | Emitted before the context menu is displayed for a row. |
+| success | `EventEmitter<any>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details
 
@@ -161,7 +161,7 @@ information defined in `app.config.json` as in the example below:
 ```
 
 These are all the available columns that can be displayed in this component:
-**_appName_**, **_businessKey_**, **_description_**, **_id_**, **_initiator_**, **_lastModified_**, **_processName_**, **_parentId_**, **_processDefinitionId_**, **_processDefinitionKey_**, and **_status_**.
+***appName***, ***businessKey***, ***description***, ***id***, ***initiator***, ***lastModified***, ***processName***, ***parentId***, ***processDefinitionId***, ***processDefinitionKey***, and ***status***.
 
 ### Setting Sorting Order for the list
 
@@ -319,6 +319,6 @@ earlier), and perform the corresponding actions.
 
 ## See also
 
--   [Data column component](../../core/components/data-column.component.md)
--   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
--   [Pagination component](../../core/components/pagination.component.md)
+*   [Data column component](../../core/components/data-column.component.md)
+*   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
+*   [Pagination component](../../core/components/pagination.component.md)

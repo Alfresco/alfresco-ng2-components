@@ -13,14 +13,14 @@ Adds pagination to the component it is used with.
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Integrating with the Document List component](#integrating-with-the-document-list-component)
-    -   [Custom pagination](#custom-pagination)
--   [See also](#see-also)
+*   [Basic Usage](#basic-usage)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [Integrating with the Document List component](#integrating-with-the-document-list-component)
+    *   [Custom pagination](#custom-pagination)
+*   [See also](#see-also)
 
 ## Basic Usage
 
@@ -40,21 +40,21 @@ Adds pagination to the component it is used with.
 
 ### Properties
 
-| Name               | Type                                                                                  | Default value | Description                                        |
-| ------------------ | ------------------------------------------------------------------------------------- | ------------- | -------------------------------------------------- |
-| supportedPageSizes | `number[]`                                                                            |               | An array of page sizes.                            |
-| target             | [`PaginatedComponent`](../../../lib/core/pagination/paginated-component.interface.ts) |               | Component that provides custom pagination support. |
-| pagination         | [`PaginationModel`](../../../lib/core/models/pagination.model.ts)                     |               | Pagination object.                                 |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| supportedPageSizes | `number[]` |  | An array of page sizes. |
+| target | [`PaginatedComponent`](../../../lib/core/pagination/paginated-component.interface.ts) |  | Component that provides custom pagination support. |
+| pagination | [`PaginationModel`](../../../lib/core/models/pagination.model.ts) |  | Pagination object. |
 
 ### Events
 
-| Name             | Type                                                                                                                              | Description                                  |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| change           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when pagination changes in any way.  |
-| changePageNumber | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the page number changes.        |
-| changePageSize   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the page size changes.          |
-| nextPage         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the next page is requested.     |
-| prevPage         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the previous page is requested. |
+| Name | Type | Description |
+| --- | --- | --- |
+| change | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when pagination changes in any way. |
+| changePageNumber | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the page number changes. |
+| changePageSize | `EventEmitter<PaginationModel>` | Emitted when the page size changes. |
+| nextPage | `EventEmitter<PaginationModel>` | Emitted when the next page is requested. |
+| prevPage | `EventEmitter<PaginationModel>` | Emitted when the previous page is requested. |
 
 ## Details
 
@@ -67,7 +67,7 @@ can pass to a subsequent API call.
 
 Each event corresponds to a particular action from the user. For the `change` event, a
 PaginationQueryParams object is returned. This contains the query
-parameters supported by the REST API, `skipCount` and `maxItems`. 
+parameters supported by the REST API, `skipCount` and `maxItems`.
 
 For all events other than `change`, a new [`Pagination`](../../../lib/content-services/document-list/models/document-library.model.ts) object is returned as in the following example. The
 new object contains updated properties that you can use to fetch the next page of information.
@@ -102,4 +102,4 @@ and pass the updated parameters.
 
 ## See also
 
--   [Infinite Pagination component](infinite-pagination.component.md)
+*   [Infinite Pagination component](infinite-pagination.component.md)

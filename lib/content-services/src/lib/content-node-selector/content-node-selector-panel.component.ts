@@ -217,6 +217,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Output()
     currentFolder: EventEmitter<Node> = new EventEmitter<Node>();
 
+    /** Emitted when folder loaded. */
     @Output()
     folderLoaded: EventEmitter<any> = new EventEmitter<any>();
 

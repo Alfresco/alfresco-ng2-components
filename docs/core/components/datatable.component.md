@@ -15,21 +15,21 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
 
 ## Contents
 
--   [Basic usage](#basic-usage)
-    -   [Setting the rows and column schema](#setting-the-rows-and-column-schema)
-    -   [Transclusions](#transclusions)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Supplying data for the table](#supplying-data-for-the-table)
-    -   [Customizing columns](#customizing-columns)
-    -   [DataTable DOM Events](#datatable-dom-events)
-    -   [Card view](#card-view)
-    -   [Using events](#using-events)
-    -   [Customizing the component's styles](#customizing-the-components-styles)
--   [Resolver Function](#resolver-function)
--   [See also](#see-also)
+*   [Basic usage](#basic-usage)
+    *   [Setting the rows and column schema](#setting-the-rows-and-column-schema)
+    *   [Transclusions](#transclusions)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [Supplying data for the table](#supplying-data-for-the-table)
+    *   [Customizing columns](#customizing-columns)
+    *   [DataTable DOM Events](#datatable-dom-events)
+    *   [Card view](#card-view)
+    *   [Using events](#using-events)
+    *   [Customizing the component's styles](#customizing-the-components-styles)
+*   [Resolver Function](#resolver-function)
+*   [See also](#see-also)
 
 ## Basic usage
 
@@ -331,7 +331,7 @@ When adding your custom templates you can style them as you like. However, for a
 
 Notice above those two classes. Apply `adf-datatable-content-cell` for the container of the value that you are going to place in that column and `adf-datatable-cell-value` for the value itself.
 
-If you follow these structure you will be able to apply classes like `.adf-ellipsis-cell` and much more. 
+If you follow these structure you will be able to apply classes like `.adf-ellipsis-cell` and much more.
 
 Note that you can use both the `<adf-no-content-template>` and the `<adf-loading-content-template>`
 together in the same datatable.
@@ -342,38 +342,38 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 
 ### Properties
 
-| Name                | Type                                                                        | Default value       | Description                                                                                                                                                                |
-| ------------------- | --------------------------------------------------------------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| actions             | `boolean`                                                                   | false               | Toggles the data actions column.                                                                                                                                           |
-| actionsPosition     | `string`                                                                    | "right"             | Position of the actions dropdown menu. Can be "left" or "right".                                                                                                           |
-| allowFiltering      | `boolean`                                                                   | false               | Flag that indicate if the datatable allow the use facet [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) search for filtering.                     |
-| columns             | `any[]`                                                                     | \[]                 | The columns that the datatable will show.                                                                                                                                  |
-| contextMenu         | `boolean`                                                                   | false               | Toggles custom context menu for the component.                                                                                                                             |
-| data                | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |                     | Data source for the table                                                                                                                                                  |
-| display             | `string`                                                                    | DisplayMode.List    | Selects the display mode of the table. Can be "list" or "gallery".                                                                                                         |
-| fallbackThumbnail   | `string`                                                                    |                     | Fallback image for rows where the thumbnail is missing.                                                                                                                    |
-| loading             | `boolean`                                                                   | false               | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template).               |
-| multiselect         | `boolean`                                                                   | false               | Toggles multiple row selection, which renders checkboxes at the beginning of each row.                                                                                     |
-| noPermission        | `boolean`                                                                   | false               | Flag that indicates if the datatable should show the "no permission" template.                                                                                             |
-| resolverFn          | `Function`                                                                  | null                | Custom resolver function which is used to parse dynamic column objects see the docs to learn how to configure a resolverFn.                                                |
-| rowMenuCacheEnabled | `boolean`                                                                   | true                | Should the items for the row actions menu be cached for reuse after they are loaded the first time?                                                                        |
-| rowStyle            | `string`                                                                    |                     | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
-| rowStyleClass       | `string`                                                                    | ""                  | The CSS class to apply to every row.                                                                                                                                       |
-| rows                | `any[]`                                                                     | \[]                 | The rows that the datatable will show.                                                                                                                                     |
-| selectionMode       | `string`                                                                    | "single"            | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.    |
-| showHeader          | `string`                                                                    | ShowHeaderMode.Data | Toggles the header.                                                                                                                                                        |
-| sorting             | `any[]`                                                                     | \[]                 | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`]                                     |
-| stickyHeader        | `boolean`                                                                   | false               | Toggles the sticky header mode.                                                                                                                                            |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| actions | `boolean` | false | Toggles the data actions column. |
+| actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
+| allowFiltering | `boolean` | false | Flag that indicate if the datatable allow the use facet [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) search for filtering. |
+| columns | `any[]` | \[] | The columns that the datatable will show. |
+| contextMenu | `boolean` | false | Toggles custom context menu for the component. |
+| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source for the table |
+| display | `string` | DisplayMode.List | Selects the display mode of the table. Can be "list" or "gallery". |
+| fallbackThumbnail | `string` |  | Fallback image for rows where the thumbnail is missing. |
+| loading | `boolean` | false | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
+| multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row. |
+| noPermission | `boolean` | false | Flag that indicates if the datatable should show the "no permission" template. |
+| resolverFn | `Function` | null | Custom resolver function which is used to parse dynamic column objects see the docs to learn how to configure a resolverFn. |
+| rowMenuCacheEnabled | `boolean` | true | Should the items for the row actions menu be cached for reuse after they are loaded the first time? |
+| rowStyle | `string` |  | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
+| rowStyleClass | `string` | "" | The CSS class to apply to every row. |
+| rows | `any[]` | \[] | The rows that the datatable will show. |
+| selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| showHeader | `string` | ShowHeaderMode.Data | Toggles the header. |
+| sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : \[`created`, `desc`], \[`created`, `asc`], \[`due`, `desc`], \[`due`, `asc`] |
+| stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
 ### Events
 
-| Name               | Type                                                                                                                                                    | Description                                             |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| executeRowAction   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action.            |
-| rowClick           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>`              | Emitted when the user clicks a row.                     |
-| rowDblClick        | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>`              | Emitted when the user double-clicks a row.              |
-| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>`            | Emitted before the actions menu is displayed for a row. |
-| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>`            | Emitted before the context menu is displayed for a row. |
+| Name | Type | Description |
+| --- | --- | --- |
+| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
+| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user clicks a row. |
+| rowDblClick | `EventEmitter<DataRowEvent>` | Emitted when the user double-clicks a row. |
+| showRowActionsMenu | `EventEmitter<DataCellEvent>` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | `EventEmitter<DataCellEvent>` | Emitted before the context menu is displayed for a row. |
 
 ## Details
 
@@ -820,11 +820,11 @@ here is the sample resolver which merge the users property and status and it wil
     </adf-datatable>
 ```
 
- ![](../../docassets/images/custom-data-table-resolver.png)
+![](../../docassets/images/custom-data-table-resolver.png)
 
 ## See also
 
--   [Data column component](data-column.component.md)
--   [Pagination component](pagination.component.md)
--   [Data Table Adapter interface](../interfaces/datatable-adapter.interface.md)
--   [Document list component](../../content-services/components/document-list.component.md)
+*   [Data column component](data-column.component.md)
+*   [Pagination component](pagination.component.md)
+*   [Data Table Adapter interface](../interfaces/datatable-adapter.interface.md)
+*   [Document list component](../../content-services/components/document-list.component.md)

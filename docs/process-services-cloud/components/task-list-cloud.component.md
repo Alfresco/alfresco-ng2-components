@@ -11,18 +11,18 @@ Renders a list containing all the tasks matched by the parameters specified.
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
-    -   [Transclusions](#transclusions)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Setting the column schema](#setting-the-column-schema)
-    -   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
-    -   [Pagination strategy](#pagination-strategy)
-    -   [DataTableAdapter example](#datatableadapter-example)
-    -   [DataColumn Features](#datacolumn-features)
--   [See also](#see-also)
+*   [Basic Usage](#basic-usage)
+    *   [Transclusions](#transclusions)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [Setting the column schema](#setting-the-column-schema)
+    *   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
+    *   [Pagination strategy](#pagination-strategy)
+    *   [DataTableAdapter example](#datatableadapter-example)
+    *   [DataColumn Features](#datacolumn-features)
+*   [See also](#see-also)
 
 ## Basic Usage
 
@@ -49,50 +49,53 @@ when the task list is empty:
 
 ### Properties
 
-| Name                  | Type                                                                                                                            | Default value | Description                                                                                                                                                                                                                                                                  |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| actionsPosition       | `string`                                                                                                                        | "right"       | Position of the actions dropdown menu. Can be "left" or "right".                                                                                                                                                                                                             |
-| appName               | `string`                                                                                                                        | ""            | The name of the application.                                                                                                                                                                                                                                                 |
-| assignee              | `string`                                                                                                                        | ""            | The assignee of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
-| completedBy           | `number`                                                                                                                        |               | Filter the tasks. Display only tasks with createdBy equal to the supplied value.                                                                                                                                                                                             |
-| completedDate         | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with completedDate equal to the supplied date.                                                                                                                                                                                          |
-| completedFrom         | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with completedFrom equal to the supplied date.                                                                                                                                                                                          |
-| completedTo           | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with completedTo equal to the supplied date.                                                                                                                                                                                            |
-| createdDate           | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks created on the supplied date.                                                                                                                                                                                                           |
-| dueDate               | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with dueDate equal to the supplied date.                                                                                                                                                                                                |
-| dueDateFrom           | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with dueDate greater or equal than the supplied date.                                                                                                                                                                                   |
-| dueDateTo             | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with dueDate less or equal to the supplied date.                                                                                                                                                                                        |
-| id                    | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with id equal to the supplied value.                                                                                                                                                                                                    |
-| lastModifiedFrom      | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with lastModifiedFrom equal to the supplied date.                                                                                                                                                                                       |
-| lastModifiedTo        | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with lastModifiedTo equal to the supplied date.                                                                                                                                                                                         |
-| multiselect           | `boolean`                                                                                                                       | false         | Toggles multiple row selection, rendering a checkbox at the beginning of each row.                                                                                                                                                                                           |
-| name                  | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with the supplied name.                                                                                                                                                                                                                 |
-| owner                 | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with owner equal to the supplied value.                                                                                                                                                                                                 |
-| parentTaskId          | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with parentTaskId equal to the supplied value.                                                                                                                                                                                          |
-| presetColumn          | `string`                                                                                                                        |               | Custom preset column schema in JSON format.                                                                                                                                                                                                                                  |
-| priority              | `number`                                                                                                                        |               | Filter the tasks. Display only tasks with priority equal to the supplied value.                                                                                                                                                                                              |
-| processDefinitionId   | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with processDefinitionId equal to the supplied value.                                                                                                                                                                                   |
-| processDefinitionName | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with processDefinitionName equal to the supplied value.                                                                                                                                                                                 |
-| processInstanceId     | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with processInstanceId equal to the supplied value.                                                                                                                                                                                     |
-| selectionMode         | `string`                                                                                                                        | "single"      | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use the Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.                                                                                                  |
-| showActions           | `boolean`                                                                                                                       | false         | Toggles the data actions column.                                                                                                                                                                                                                                             |
-| showContextMenu       | `boolean`                                                                                                                       | false         | Toggles custom context menu for the component.                                                                                                                                                                                                                               |
-| sorting               | [`TaskListCloudSortingModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/task-list-sorting.model.ts)`[]` |               | Specifies how the table should be sorted. The parameters are for BE sorting.                                                                                                                                                                                                 |
-| standalone            | `boolean`                                                                                                                       | false         | Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true.                                                                                                                                |
-| status                | `string`                                                                                                                        | ""            | Filter the tasks. Display only tasks with status equal to the supplied value.                                                                                                                                                                                                |
-| stickyHeader          | `boolean`                                                                                                                       | false         | Toggles the sticky header mode.                                                                                                                                                                                                                                              |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
+| appName | `string` | "" | The name of the application. |
+| assignee | `string` | "" | The assignee of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
+| candidateGroupId | `string` | "" | Filter the tasks. Display only tasks with candidateGroups equal to the supplied value. |
+| completedBy | `number` |  | Filter the tasks. Display only tasks with createdBy equal to the supplied value. |
+| completedDate | `string` | "" | Filter the tasks. Display only tasks with completedDate equal to the supplied date. |
+| completedFrom | `string` | "" | Filter the tasks. Display only tasks with completedFrom equal to the supplied date. |
+| completedTo | `string` | "" | Filter the tasks. Display only tasks with completedTo equal to the supplied date. |
+| createdDate | `string` | "" | Filter the tasks. Display only tasks created on the supplied date. |
+| createdFrom | `string` | "" | Filter the tasks. Display only tasks with createdFrom equal to the supplied date. |
+| createdTo | `string` | "" | Filter the tasks. Display only tasks with createdTo equal to the supplied date. |
+| dueDate | `string` | "" | Filter the tasks. Display only tasks with dueDate equal to the supplied date. |
+| dueDateFrom | `string` | "" | Filter the tasks. Display only tasks with dueDate greater or equal than the supplied date. |
+| dueDateTo | `string` | "" | Filter the tasks. Display only tasks with dueDate less or equal to the supplied date. |
+| id | `string` | "" | Filter the tasks. Display only tasks with id equal to the supplied value. |
+| lastModifiedFrom | `string` | "" | Filter the tasks. Display only tasks with lastModifiedFrom equal to the supplied date. |
+| lastModifiedTo | `string` | "" | Filter the tasks. Display only tasks with lastModifiedTo equal to the supplied date. |
+| multiselect | `boolean` | false | Toggles multiple row selection, rendering a checkbox at the beginning of each row. |
+| name | `string` | "" | Filter the tasks. Display only tasks with the supplied name. |
+| owner | `string` | "" | Filter the tasks. Display only tasks with owner equal to the supplied value. |
+| parentTaskId | `string` | "" | Filter the tasks. Display only tasks with parentTaskId equal to the supplied value. |
+| presetColumn | `string` |  | Custom preset column schema in JSON format. |
+| priority | `number` |  | Filter the tasks. Display only tasks with priority equal to the supplied value. |
+| processDefinitionId | `string` | "" | Filter the tasks. Display only tasks with processDefinitionId equal to the supplied value. |
+| processDefinitionName | `string` | "" | Filter the tasks. Display only tasks with processDefinitionName equal to the supplied value. |
+| processInstanceId | `string` | "" | Filter the tasks. Display only tasks with processInstanceId equal to the supplied value. |
+| selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use the Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| showActions | `boolean` | false | Toggles the data actions column. |
+| showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
+| sorting | [`TaskListCloudSortingModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
+| standalone | `boolean` | false | Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. |
+| status | `string` | "" | Filter the tasks. Display only tasks with status equal to the supplied value. |
+| stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
 ### Events
 
-| Name               | Type                                                                                                                                                    | Description                                             |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| error              | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                       | Emitted when an error occurs.                           |
-| executeRowAction   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action.            |
-| rowClick           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                                                                                    | Emitted when a task in the list is clicked              |
-| rowsSelected       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>`                                                                                     | Emitted when rows are selected/unselected               |
-| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>`            | Emitted before the actions menu is displayed for a row. |
-| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>`            | Emitted before the context menu is displayed for a row. |
-| success            | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                       | Emitted when the task list is loaded                    |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
+| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a task in the list is clicked |
+| rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected |
+| showRowActionsMenu | `EventEmitter<DataCellEvent>` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | `EventEmitter<DataCellEvent>` | Emitted before the context menu is displayed for a row. |
+| success | `EventEmitter<any>` | Emitted when the task list is loaded |
 
 ## Details
 
@@ -341,6 +344,6 @@ earlier), and perform the corresponding actions.
 
 ## See also
 
--   [Data column component](../../core/components/data-column.component.md)
--   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
--   [Pagination component](../../core/components/pagination.component.md)
+*   [Data column component](../../core/components/data-column.component.md)
+*   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
+*   [Pagination component](../../core/components/pagination.component.md)

@@ -13,28 +13,28 @@ Provides access to various APIs related to file upload features.
 
 ### Methods
 
--   **addToQueue**(files: [`FileModel`](../../../lib/core/models/file.model.ts)`[]`): [`FileModel`](../../../lib/core/models/file.model.ts)`[]`<br/>
+*   **addToQueue**(files: [`FileModel`](../../../lib/core/models/file.model.ts)`[]`): [`FileModel`](../../../lib/core/models/file.model.ts)`[]`<br/>
     Adds files to the uploading queue to be uploaded
-    -   _files:_ [`FileModel`](../../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files to queue
-    -   **Returns** [`FileModel`](../../../lib/core/models/file.model.ts)`[]` - Array of files that were not blocked from upload by the ignore list
--   **cancelUpload**(files: [`FileModel`](../../../lib/core/models/file.model.ts)`[]`)<br/>
+    *   *files:* [`FileModel`](../../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files to queue
+    *   **Returns** [`FileModel`](../../../lib/core/models/file.model.ts)`[]` - Array of files that were not blocked from upload by the ignore list
+*   **cancelUpload**(files: [`FileModel`](../../../lib/core/models/file.model.ts)`[]`)<br/>
     Cancels uploading of files. If the file is smaller than 1 MB the file will be uploaded and then the node deleted to prevent having files that were aborted but still uploaded.
-    -   _files:_ [`FileModel`](../../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files specifying uploads to cancel
--   **clearQueue**()<br/>
+    *   *files:* [`FileModel`](../../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files specifying uploads to cancel
+*   **clearQueue**()<br/>
     Clears the upload queue
--   **getQueue**(): [`FileModel`](../../../lib/core/models/file.model.ts)`[]`<br/>
+*   **getQueue**(): [`FileModel`](../../../lib/core/models/file.model.ts)`[]`<br/>
     Gets the file Queue
-    -   **Returns** [`FileModel`](../../../lib/core/models/file.model.ts)`[]` - Array of files that form the queue
--   **getUploadPromise**(file: [`FileModel`](../../../lib/core/models/file.model.ts)): `any`<br/>
+    *   **Returns** [`FileModel`](../../../lib/core/models/file.model.ts)`[]` - Array of files that form the queue
+*   **getUploadPromise**(file: [`FileModel`](../../../lib/core/models/file.model.ts)): `any`<br/>
     Gets an upload promise for a file.
-    -   _file:_ [`FileModel`](../../../lib/core/models/file.model.ts)  - The target file
-    -   **Returns** `any` - [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises) that is resolved if the upload is successful or error otherwise
--   **isUploading**(): `boolean`<br/>
+    *   *file:* [`FileModel`](../../../lib/core/models/file.model.ts)  - The target file
+    *   **Returns** `any` - [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises) that is resolved if the upload is successful or error otherwise
+*   **isUploading**(): `boolean`<br/>
     Checks whether the service is uploading a file.
-    -   **Returns** `boolean` - True if a file is uploading, false otherwise
--   **uploadFilesInTheQueue**(emitter?: [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`)<br/>
+    *   **Returns** `boolean` - True if a file is uploading, false otherwise
+*   **uploadFilesInTheQueue**(emitter?: [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`)<br/>
     Finds all the files in the queue that are not yet uploaded and uploads them into the directory folder.
-    -   _emitter:_ [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`  - (Optional) Emitter to invoke on file status change
+    *   *emitter:* [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`  - (Optional) Emitter to invoke on file status change
 
 ## Events
 
@@ -108,5 +108,5 @@ From vesion 3.8.0 It's  possible filter also for the folder whilst uploading a w
 }
 ```
 
-In this way all the files present in the .git folder won't be uploaded. 
+In this way all the files present in the .git folder won't be uploaded.
 Please note that the filtering options available for the folders is the same as the one for the files.

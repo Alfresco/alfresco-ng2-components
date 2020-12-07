@@ -13,22 +13,22 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 
 ## Contents
 
--   [Basic usage](#basic-usage)
-    -   [Transclusions](#transclusions)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Keyboard shortcuts](#keyboard-shortcuts)
--   [Details](#details)
-    -   [Integrating with the Document List component](#integrating-with-the-document-list-component)
-    -   [Custom file parameters](#custom-file-parameters)
-    -   [Supported file formats](#supported-file-formats)
-    -   [Content Renditions](#content-renditions)
-    -   [Configuring PDF.js library](#configuring-pdfjs-library)
-    -   [Extending the Viewer](#extending-the-viewer)
-    -   [Custom layout](#custom-layout)
-    -   [Printing](#printing)
--   [See also](#see-also)
+*   [Basic usage](#basic-usage)
+    *   [Transclusions](#transclusions)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Keyboard shortcuts](#keyboard-shortcuts)
+*   [Details](#details)
+    *   [Integrating with the Document List component](#integrating-with-the-document-list-component)
+    *   [Custom file parameters](#custom-file-parameters)
+    *   [Supported file formats](#supported-file-formats)
+    *   [Content Renditions](#content-renditions)
+    *   [Configuring PDF.js library](#configuring-pdfjs-library)
+    *   [Extending the Viewer](#extending-the-viewer)
+    *   [Custom layout](#custom-layout)
+    *   [Printing](#printing)
+*   [See also](#see-also)
 
 ## Basic usage
 
@@ -74,48 +74,48 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 
 ### Properties
 
-| Name                 | Type                                                            | Default value | Description                                                                                                                    |
-| -------------------- | --------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| allowDownload        | `boolean`                                                       | true          | Toggles downloading.                                                                                                           |
-| allowFullScreen      | `boolean`                                                       | true          | Toggles the 'Full Screen' feature.                                                                                             |
-| allowGoBack          | `boolean`                                                       | true          | Allows `back` navigation                                                                                                       |
-| allowLeftSidebar     | `boolean`                                                       | false         | Allow the left the sidebar.                                                                                                    |
-| allowNavigate        | `boolean`                                                       | false         | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection.                 |
-| allowPrint           | `boolean`                                                       | false         | Toggles printing.                                                                                                              |
-| allowRightSidebar    | `boolean`                                                       | false         | Allow the right sidebar.                                                                                                       |
-| allowThumbnails      | `boolean`                                                       | true          | Toggles PDF thumbnails.                                                                                                        |
-| blobFile             | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |               | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File                                                     |
-| canNavigateBefore    | `boolean`                                                       | true          | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled.                                                  |
-| canNavigateNext      | `boolean`                                                       | true          | Toggles the next (">") button. Requires `allowNavigate` to be enabled.                                                         |
-| displayName          | `string`                                                        |               | Specifies the name of the file when it is not available from the URL.                                                          |
-| fileName             | `string`                                                        |               | Content filename.                                                                                                              |
-| maxRetries           | `number`                                                        | 30            | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts.    |
-| mimeType             | `string`                                                        |               | MIME type of the file content (when not determined by the filename extension).                                                 |
-| nodeId               | `string`                                                        | null          | [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) Id of the file to load. |
-| overlayMode          | `boolean`                                                       | false         | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div.                   |
-| sharedLinkId         | `string`                                                        | null          | Shared link id (to display shared file).                                                                                       |
-| showLeftSidebar      | `boolean`                                                       | false         | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`.                                              |
-| showRightSidebar     | `boolean`                                                       | false         | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`.                                            |
-| showToolbar          | `boolean`                                                       | true          | Hide or show the toolbar                                                                                                       |
-| showViewer           | `boolean`                                                       | true          | Hide or show the viewer                                                                                                        |
-| sidebarLeftTemplate  | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null          | The template for the left sidebar. The template context contains the loaded node data.                                         |
-| sidebarRightTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null          | The template for the right sidebar. The template context contains the loaded node data.                                        |
-| thumbnailsTemplate   | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null          | The template for the pdf thumbnails.                                                                                           |
-| urlFile              | `string`                                                        | ""            | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from.  |
-| urlFileViewer        | `string`                                                        | null          | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
-| versionId            | `string`                                                        | null          | Version Id of the file to load.                                                                                                |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| allowDownload | `boolean` | true | Toggles downloading. |
+| allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
+| allowGoBack | `boolean` | true | Allows `back` navigation |
+| allowLeftSidebar | `boolean` | false | Allow the left the sidebar. |
+| allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
+| allowPrint | `boolean` | false | Toggles printing. |
+| allowRightSidebar | `boolean` | false | Allow the right sidebar. |
+| allowThumbnails | `boolean` | true | Toggles PDF thumbnails. |
+| blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
+| canNavigateBefore | `boolean` | true | Toggles the "before" ("<") button. Requires `allowNavigate` to be enabled. |
+| canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
+| displayName | `string` |  | Specifies the name of the file when it is not available from the URL. |
+| fileName | `string` |  | Content filename. |
+| maxRetries | `number` | 30 | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
+| mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension). |
+| nodeId | `string` | null | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) Id of the file to load. |
+| overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
+| sharedLinkId | `string` | null | Shared link id (to display shared file). |
+| showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. |
+| showRightSidebar | `boolean` | false | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`. |
+| showToolbar | `boolean` | true | Hide or show the toolbar |
+| showViewer | `boolean` | true | Hide or show the viewer |
+| sidebarLeftTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded node data. |
+| sidebarRightTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the right sidebar. The template context contains the loaded node data. |
+| thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the pdf thumbnails. |
+| urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
+| urlFileViewer | `string` | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
+| versionId | `string` | null | Version Id of the file to load. |
 
 ### Events
 
-| Name              | Type                                                                                                                       | Description                                                 |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| extensionChange   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                                                       | Emitted when the filename extension changes.                |
-| goBack            | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button.                 |
-| invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                          | Emitted when the shared link used is not valid.             |
-| navigateBefore    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<MouseEvent \| KeyboardEvent>`                                  | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
-| navigateNext      | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<MouseEvent \| KeyboardEvent>`                                  | Emitted when user clicks 'Navigate Next' (">") button.      |
-| print             | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button.                |
-| showViewerChange  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>`                                                      | Emitted when the viewer is shown or hidden.                 |
+| Name | Type | Description |
+| --- | --- | --- |
+| extensionChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the filename extension changes. |
+| goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
+| invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the shared link used is not valid. |
+| navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<MouseEvent \| KeyboardEvent>` | Emitted when user clicks 'Navigate Before' ("<") button. |
+| navigateNext | `EventEmitter<MouseEvent \| KeyboardEvent>` | Emitted when user clicks 'Navigate Next' (">") button. |
+| print | `EventEmitter<BaseEvent<any>>` | Emitted when user clicks the 'Print' button. |
+| showViewerChange | `EventEmitter<boolean>` | Emitted when the viewer is shown or hidden. |
 
 ## Keyboard shortcuts
 
@@ -130,7 +130,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 
 ### Integrating with the Document List component
 
-Below is the most simple integration of the Viewer and 
+Below is the most simple integration of the Viewer and
 [Document List](../../content-services/components/document-list.component.md) components within your custom component:
 
 ```html
@@ -182,45 +182,45 @@ You can provide custom file parameters, for example a value for the `mimeType` o
 
 The [Viewer component](viewer.component.md) consists of separate Views that handle particular file types or type families based on either a file extension or a mime type:
 
--   PDF View
-    -   application/pdf
-    -   \*.pdf
--   Image View
-    -   image/png
-    -   image/jpeg
-    -   image/gif
-    -   image/bmp
-    -   image/svg+xml
-    -   \*.png
-    -   \*.jpg
-    -   \*.jpeg
-    -   \*.gif
-    -   \*.bpm
-    -   \*.svg
--   Text View
-    -   text/plain
-    -   text/csv
-    -   text/xml
-    -   text/html
-    -   application/x-javascript
-    -   \*.txt
-    -   \*.xml
-    -   \*.js
-    -   \*.html
-    -   \*.json
-    -   \*.ts
--   Media View
-    -   video/mp4
-    -   video/webm
-    -   video/ogg
-    -   audio/mpeg
-    -   audio/ogg
-    -   audio/wav
-    -   \*.wav
-    -   \*.mp4
-    -   \*.mp3
-    -   \*.webm
-    -   \*.ogg
+*   PDF View
+    *   application/pdf
+    *   \*.pdf
+*   Image View
+    *   image/png
+    *   image/jpeg
+    *   image/gif
+    *   image/bmp
+    *   image/svg+xml
+    *   \*.png
+    *   \*.jpg
+    *   \*.jpeg
+    *   \*.gif
+    *   \*.bpm
+    *   \*.svg
+*   Text View
+    *   text/plain
+    *   text/csv
+    *   text/xml
+    *   text/html
+    *   application/x-javascript
+    *   \*.txt
+    *   \*.xml
+    *   \*.js
+    *   \*.html
+    *   \*.json
+    *   \*.ts
+*   Media View
+    *   video/mp4
+    *   video/webm
+    *   video/ogg
+    *   audio/mpeg
+    *   audio/ogg
+    *   audio/wav
+    *   \*.wav
+    *   \*.mp4
+    *   \*.mp3
+    *   \*.webm
+    *   \*.ogg
 
 ### Content Renditions
 
@@ -474,14 +474,14 @@ You can set a default zoom scaling value for pdf viewer by adding the following 
 Note: For the pdf viewer the value has to be within the range of 25 - 1000.
 
 "adf-viewer": {
-      "pdf-viewer-scaling": 150
-    }
+"pdf-viewer-scaling": 150
+}
 
 In the same way you can set a default zoom scaling value for the image viewer by adding the following code in `app.config.json`.
 
 "adf-viewer": {
-      "image-viewer-scaling": 150
-    }
+"image-viewer-scaling": 150
+}
 
 By default the viewer's zoom scaling is set to 100%.
 
@@ -502,4 +502,4 @@ content.
 
 ## See also
 
--   [Document List component](../../content-services/components/document-list.component.md)
+*   [Document List component](../../content-services/components/document-list.component.md)

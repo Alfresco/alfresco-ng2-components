@@ -27,22 +27,22 @@ Displays the version history of a node with the ability to upload a new version.
 
 ### Properties
 
-| Name                  | Type                                                                                                     | Default value | Description                                                                                                                   |
-| --------------------- | -------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| allowDownload         | `boolean`                                                                                                | true          | Enable/disable downloading a version of the current node.                                                                     |
-| newFileVersion        | `File`                                                                                                   |               | New file for updating current version.                                                                                        |
-| node                  | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |               | Target node to manage version history.                                                                                        |
-| showComments          | `boolean`                                                                                                | true          | Toggles showing/hiding of comments.                                                                                           |
-| showVersionComparison | `boolean`                                                                                                | false         | Toggles showing/hiding the [version comparison component](../../content-services/components/version-comparison.component.md). |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| allowDownload | `boolean` | true | Enable/disable downloading a version of the current node. |
+| newFileVersion | `File` |  | New file for updating current version. |
+| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |  | Target node to manage version history. |
+| showComments | `boolean` | true | Toggles showing/hiding of comments. |
+| showVersionComparison | `boolean` | false | Toggles showing/hiding the [version comparison component](../../content-services/components/version-comparison.component.md). |
 
 ### Events
 
-| Name          | Type                                                                                                                                                                     | Description                                   |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
-| uploadCancel  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>`                                                                                                    | Emitted when an cancelling during upload.     |
-| uploadError   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`>` | Emitted when an error occurs during upload.   |
-| uploadSuccess | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`>` | Emitted when a file is uploaded successfully. |
-| viewVersion   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                                                                                                     | Emitted when viewing a version.               |
+| Name | Type | Description |
+| --- | --- | --- |
+| uploadCancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when an cancelling during upload. |
+| uploadError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`>` | Emitted when an error occurs during upload. |
+| uploadSuccess | `EventEmitter<Node>` | Emitted when a file is uploaded successfully. |
+| viewVersion | `EventEmitter<string>` | Emitted when viewing a version. |
 
 ## Details
 
@@ -56,5 +56,5 @@ Each version has a context menu on the right, with the following actions.
 
 ## See also
 
--   [Version list component](version-list.component.md)
--   [Document list component](document-list.component.md)
+*   [Version list component](version-list.component.md)
+*   [Document list component](document-list.component.md)

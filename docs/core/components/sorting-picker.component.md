@@ -26,18 +26,18 @@ Selects from a set of predefined sorting definitions and directions.
 
 ### Properties
 
-| Name      | Type              | Default value | Description                   |
-| --------- | ----------------- | ------------- | ----------------------------- |
-| ascending | `boolean`         | true          | Current sorting direction     |
-| options   | `Array<Function>` | \[]           | Available sorting options     |
-| selected  | `string`          |               | Currently selected option key |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| ascending | `boolean` | true | Current sorting direction |
+| options | `Array<Function>` | \[] | Available sorting options |
+| selected | `string` |  | Currently selected option key |
 
 ### Events
 
-| Name          | Type                                                                  | Description                                |
-| ------------- | --------------------------------------------------------------------- | ------------------------------------------ |
-| sortingChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Raised each time direction gets changed.   |
-| valueChange   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`  | Raised each time sorting key gets changed. |
+| Name | Type | Description |
+| --- | --- | --- |
+| sortingChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Raised each time direction gets changed. |
+| valueChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Raised each time sorting key gets changed. |
 
 ## Details
 

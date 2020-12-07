@@ -19,9 +19,9 @@ Implements text field input masks.
 
 ### Properties
 
-| Name      | Type       | Default value | Description                                 |
-| --------- | ---------- | ------------- | ------------------------------------------- |
-| inputMask | `Function` |               | Object defining mask and "reversed" status. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| inputMask | `Function` |  | Object defining mask and "reversed" status. |
 
 ## Details
 
@@ -45,11 +45,11 @@ text mask in ADF would be:
 The following characters have special meaning within a mask; all other characters
 are included in the text as they are:
 
--   **"0"**: Denotes a digit
--   **"9"**: Denotes a digit that can optionally be left out
--   **"A"**: Denotes a alphanumeric character (upper- or lower-case A-Z and digits 0-9)
--   **"S"**: Denotes a alphabetic character (upper- or lower-case A-Z)
--   **"#"**: Denotes a string of zero or more digits
+*   **"0"**: Denotes a digit
+*   **"9"**: Denotes a digit that can optionally be left out
+*   **"A"**: Denotes a alphanumeric character (upper- or lower-case A-Z and digits 0-9)
+*   **"S"**: Denotes a alphabetic character (upper- or lower-case A-Z)
+*   **"#"**: Denotes a string of zero or more digits
 
 The mask is passed to the directive in the `mask` field of the parameter object. The
 `reversed` field indicates that digits in the mask are "filled up" in

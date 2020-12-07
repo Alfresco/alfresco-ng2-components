@@ -13,17 +13,17 @@ Adds options to a Document List actions menu for a particular content type.
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Examples](#examples)
-    -   [Conditional visibility](#conditional-visibility)
-    -   [Conditional disabled state](#conditional-disabled-state)
-    -   [Customizing built-in actions](#customizing-built-in-actions)
-    -   [Error, Permission and Success callbacks](#error-permission-and-success-callbacks)
--   [See also](#see-also)
+*   [Basic Usage](#basic-usage)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [Examples](#examples)
+    *   [Conditional visibility](#conditional-visibility)
+    *   [Conditional disabled state](#conditional-disabled-state)
+    *   [Customizing built-in actions](#customizing-built-in-actions)
+    *   [Error, Permission and Success callbacks](#error-permission-and-success-callbacks)
+*   [See also](#see-also)
 
 ## Basic Usage
 
@@ -82,25 +82,25 @@ export class MyView {
 
 ### Properties
 
-| Name                    | Type                  | Default value | Description                                                                            |
-| ----------------------- | --------------------- | ------------- | -------------------------------------------------------------------------------------- |
-| disableWithNoPermission | `boolean`             |               | Should this action be disabled in the menu if the user doesn't have permission for it? |
-| disabled                | `boolean \| Function` | false         | Is the menu item disabled?                                                             |
-| handler                 | `string`              |               | System actions. Can be "delete", "download", "copy" or "move".                         |
-| icon                    | `string`              |               | The name of the icon to display next to the menu command (can be left blank).          |
-| permission              | `string`              |               | The permission type.                                                                   |
-| target                  | `string`              |               | Type of item that the action applies to. Can be "document" or "folder"                 |
-| title                   | `string`              | "Action"      | The title of the action as shown in the menu.                                          |
-| visible                 | `boolean \| Function` | true          | Visibility state (see examples).                                                       |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| disableWithNoPermission | `boolean` |  | Should this action be disabled in the menu if the user doesn't have permission for it? |
+| disabled | `boolean \| Function` | false | Is the menu item disabled? |
+| handler | `string` |  | System actions. Can be "delete", "download", "copy" or "move". |
+| icon | `string` |  | The name of the icon to display next to the menu command (can be left blank). |
+| permission | `string` |  | The permission type. |
+| target | `string` |  | Type of item that the action applies to. Can be "document" or "folder" |
+| title | `string` | "Action" | The title of the action as shown in the menu. |
+| visible | `boolean \| Function` | true | Visibility state (see examples). |
 
 ### Events
 
-| Name            | Type                                                              | Description                                                                                                 |
-| --------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| error           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during the action. Applies to copy and move actions.                           |
-| execute         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the user selects the action from the menu.                                                     |
-| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a permission error occurs                                                                      |
-| success         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the action succeeds with the success string message. Applies to copy, move and delete actions. |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during the action. Applies to copy and move actions. |
+| execute | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the user selects the action from the menu. |
+| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a permission error occurs |
+| success | `EventEmitter<any>` | Emitted when the action succeeds with the success string message. Applies to copy, move and delete actions. |
 
 ## Details
 
@@ -109,18 +109,18 @@ The document actions are rendered on a dropdown menu for each items of content. 
 
 A number of built-in actions are defined to handle common use cases:
 
--   **Download** (document)
--   **lock** (document)
--   **Copy** (document, folder)
--   **Move** (document, folder)
--   **Delete** (document, folder)
+*   **Download** (document)
+*   **lock** (document)
+*   **Copy** (document, folder)
+*   **Move** (document, folder)
+*   **Delete** (document, folder)
 
 You can use one of the built-in handlers by assigning its name to the `handler` property.
 (The names are case-insensitive, so `handler="download"` and `handler="DOWNLOAD"`
 will trigger the same action.) You can also add your own handler by implementing the
 `execute` event.
 
-Note that you can use _both_ a built-in handler and your own `execute`
+Note that you can use *both* a built-in handler and your own `execute`
 function in the same action. The `execute` function is passed a [`NodeMinimalEntry`](../../../lib/content-services/src/lib/document-list/models/document-library.model.ts) as its
 parameter. For
 example, with `handler="delete"` you could use `execute` to show a message with the name,
@@ -212,7 +212,7 @@ If you specify both a system handler and your own custom handler with
 `(execute)="myCustomActionAfterDelete($event)"`, your handler will run after the system handler
 completes successfully. A system operation is considered successful if there are no permission
 or network-related errors for the system request. You can avoid permission errors simply
-by disabling an item for users who don't have permission to use it (set `disableWithNoPermission="true"`). 
+by disabling an item for users who don't have permission to use it (set `disableWithNoPermission="true"`).
 
 ```html
 <adf-document-list ...>
@@ -322,8 +322,8 @@ allow the item being copied/moved to be the destination if it is itself a folder
 
 The `<content-action>` component allows you to control visibility with the help of the `visible` property and supports the following scenarios:
 
--   direct value of `boolean` type
--   binding to a property of the `Function` type that evaluates condition and returns `boolean` value
+*   direct value of `boolean` type
+*   binding to a property of the `Function` type that evaluates condition and returns `boolean` value
 
 #### Using direct boolean value
 
@@ -363,7 +363,7 @@ export class MyComponent {
 ```
 
 The code above checks the node name and evaluates to `true` only if the corresponding
-node is called "For Sale.docx". 
+node is called "For Sale.docx".
 
 Note that if you want to preserve `this` context within the evaluator function then
 you should declare it as a lambda function:
@@ -379,8 +379,8 @@ funcName = (parameters): boolean => {
 
 As with the `visible` property, you can control the `disabled` state with the following options:
 
--   direct value of `boolean` type
--   binding to a property of the `Function` type that evaluates a condition and returns a `boolean` value
+*   direct value of `boolean` type
+*   binding to a property of the `Function` type that evaluates a condition and returns a `boolean` value
 
 #### Using direct value of boolean type
 
@@ -418,7 +418,7 @@ export class MyComponent {
 }
 ```
 
-The code above checks the node name, and evaluates to `true` only if the corresponding node is called "custom". 
+The code above checks the node name, and evaluates to `true` only if the corresponding node is called "custom".
 
 Note that if you want to preserve the `this` context within the evaluator function,
 you should declare it as a lambda function:
@@ -442,14 +442,14 @@ for details and examples.
 
 You can define error, permission and success callbacks in much the same way as for the delete permission handling.
 
--   The error handler callback gets the error object that was raised
--   The success callback's only parameter is the translatable success message string (which could be shown in a snackbar, for example)
--   The `permissionEvent` callback is the same as described above for the delete action
+*   The error handler callback gets the error object that was raised
+*   The success callback's only parameter is the translatable success message string (which could be shown in a snackbar, for example)
+*   The `permissionEvent` callback is the same as described above for the delete action
 
 ![Copy/move document action](../../docassets/images/document-action-copymove.png)
 
 ## See also
 
--   [Document list component](document-list.component.md)
--   [Document actions service](../services/document-actions.service.md)
--   [Folder actions service](../services/folder-actions.service.md)
+*   [Document list component](document-list.component.md)
+*   [Document actions service](../services/document-actions.service.md)
+*   [Folder actions service](../services/folder-actions.service.md)

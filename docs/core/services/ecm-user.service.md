@@ -13,17 +13,17 @@ Gets information about a Content Services user.
 
 ### Methods
 
--   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
+*   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
     Gets information about the user who is currently logged-in.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - User information as for getUserInfo
--   **getUserInfo**(userName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - User information as for getUserInfo
+*   **getUserInfo**(userName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
     Gets information about a user identified by their username.
-    -   _userName:_ `string`  - Target username
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - User information
--   **getUserProfileImage**(avatarId: `string`): `string`<br/>
+    *   *userName:* `string`  - Target username
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - User information
+*   **getUserProfileImage**(avatarId: `string`): `string`<br/>
     Returns a profile image as a URL.
-    -   _avatarId:_ `string`  - Target avatar
-    -   **Returns** `string` - Image URL
+    *   *avatarId:* `string`  - Target avatar
+    *   **Returns** `string` - Image URL
 
 ## Details
 
@@ -38,5 +38,5 @@ method in the Alfresco JS API for more information about the REST calls used by 
 
 ## See also
 
--   [Bpm user service](../services/bpm-user.service.md)
--   [Ecm user model](../models/ecm-user.model.md)
+*   [Bpm user service](../services/bpm-user.service.md)
+*   [Ecm user model](../models/ecm-user.model.md)

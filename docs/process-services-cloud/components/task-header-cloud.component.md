@@ -24,19 +24,19 @@ Shows all the information related to a task.
 
 ### Properties
 
-| Name      | Type      | Default value | Description                             |
-| --------- | --------- | ------------- | --------------------------------------- |
-| appName   | `string`  | ""            | (Required) The name of the application. |
-| showTitle | `boolean` | true          | Show/Hide the task title                |
-| taskId    | `string`  |               | (Required) The id of the task.          |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| appName | `string` | "" | (Required) The name of the application. |
+| showTitle | `boolean` | true | Show/Hide the task title |
+| taskId | `string` |  | (Required) The id of the task. |
 
 ### Events
 
-| Name    | Type                                                              | Description                                        |
-| ------- | ----------------------------------------------------------------- | -------------------------------------------------- |
-| claim   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is claimed.                  |
-| error   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the given task has errors.            |
-| unclaim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is unclaimed (ie, requeued). |
+| Name | Type | Description |
+| --- | --- | --- |
+| claim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is claimed. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the given task has errors. |
+| unclaim | `EventEmitter<any>` | Emitted when the task is unclaimed (ie, requeued). |
 
 ## Details
 
@@ -45,7 +45,7 @@ The component populates an internal array of
 
 By default all properties are displayed:
 
-**_assignee_**, **_status_**, **_priority_**, **_dueDate_**, **_category_**, **_parentName_**, **_created_**, **_id_**, **_description_**, **_formName_**, **_candidateUsers_**, **_candidateGroups_**.
+***assignee***, ***status***, ***priority***, ***dueDate***, ***category***, ***parentName***, ***created***, ***id***, ***description***, ***formName***, ***candidateUsers***, ***candidateGroups***.
 
 However, you can also choose which properties to show using a configuration in `app.config.json`:
 

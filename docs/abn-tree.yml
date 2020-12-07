@@ -60,6 +60,7 @@
 - release-notes:
     title: 'Release notes'
     children:
+        - RelNote420.md: 'Release notes v4.2.0'
         - RelNote410.md: 'Release notes v4.1.0'
         - RelNote400.md: 'Release notes v4.0.0'
         - RelNote390.md: 'Release notes v3.9.0'
@@ -87,6 +88,7 @@
 - upgrade-guide:
     title: 'Upgrade Guide'
     children:
+        - upgrade40-41.md: 'From 4.1.0 to 4.2.0'
         - upgrade40-41.md: 'From 4.0.0 to 4.1.0'
         - upgrade39-40.md: 'From 3.9.0 to 4.0.0'
         - upgrade37-38.md: 'From 3.7.0 to 3.8.0'
@@ -97,6 +99,7 @@
 - vulnerability:
     title: 'Vulnerability'
     children:
+        - audit-info-4.1.0.md: 'Audit for 4.2.0'
         - audit-info-4.1.0.md: 'Audit for 4.1.0'
         - audit-info-4.0.0.md: 'Audit for 4.0.0'
         - audit-info-3.9.0.md: 'Audit for 3.9.0'
@@ -109,6 +112,7 @@
 - license-info:
     title: 'License info'
     children:
+        - license-info-4.1.0.md: 'License info for 4.2.0'
         - license-info-4.1.0.md: 'License info for 4.1.0'
         - license-info-4.0.0.md: 'License info for 4.0.0'
         - license-info-3.9.0.md: 'License info for 3.9.0'

@@ -13,24 +13,25 @@ Stores key-value data items as browser cookies.
 
 ### Methods
 
--   **clear**()<br/>
+*   **clear**()<br/>
     Placeholder for testing purposes - do not use.
--   **deleteCookie**(key: `string`)<br/>
+*   **deleteCookie**(key: `string`, path: `string|null` = `null`)<br/>
     Delete a cookie Key.
-    -   _key:_ `string`  - Key to identify the cookie
--   **getItem**(key: `string`): `string|null`<br/>
+    *   *key:* `string`  - Key to identify the cookie
+    *   *path:* `string|null`  - "Pathname" to store the cookie
+*   **getItem**(key: `string`): `string|null`<br/>
     Retrieves a cookie by its key.
-    -   _key:_ `string`  - Key to identify the cookie
-    -   **Returns** `string|null` - The cookie data or null if it is not found
--   **isEnabled**(): `boolean`<br/>
+    *   *key:* `string`  - Key to identify the cookie
+    *   **Returns** `string|null` - The cookie data or null if it is not found
+*   **isEnabled**(): `boolean`<br/>
     Checks if cookies are enabled.
-    -   **Returns** `boolean` - True if enabled, false otherwise
--   **setItem**(key: `string`, data: `string`, expiration: `Date|null` = `null`, path: `string|null` = `null`)<br/>
+    *   **Returns** `boolean` - True if enabled, false otherwise
+*   **setItem**(key: `string`, data: `string`, expiration: `Date|null` = `null`, path: `string|null` = `null`)<br/>
     Sets a cookie.
-    -   _key:_ `string`  - Key to identify the cookie
-    -   _data:_ `string`  - Data value to set for the cookie
-    -   _expiration:_ `Date|null`  - Expiration date of the data
-    -   _path:_ `string|null`  - "Pathname" to store the cookie
+    *   *key:* `string`  - Key to identify the cookie
+    *   *data:* `string`  - Data value to set for the cookie
+    *   *expiration:* `Date|null`  - Expiration date of the data
+    *   *path:* `string|null`  - "Pathname" to store the cookie
 
 ## Details
 
@@ -45,5 +46,5 @@ beyond this size.
 
 ## See also
 
--   [Content service](content.service.md)
--   [Storage service](storage.service.md)
+*   [Content service](content.service.md)
+*   [Storage service](storage.service.md)

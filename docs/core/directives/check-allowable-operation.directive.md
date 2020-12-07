@@ -11,14 +11,14 @@ Selectively disables an HTML element or Angular component.
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
--   [Details](#details)
-    -   [HTML element example](#html-element-example)
-    -   [Angular component example](#angular-component-example)
-    -   [Implementing the NodeAllowableOperationSubject interface](#implementing-the-nodeallowableoperationsubject-interface)
-    -   [Defining your component as an EXTENDIBLE_COMPONENT parent component](#defining-your-component-as-an-extendible_component-parent-component)
+*   [Basic Usage](#basic-usage)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+*   [Details](#details)
+    *   [HTML element example](#html-element-example)
+    *   [Angular component example](#angular-component-example)
+    *   [Implementing the NodeAllowableOperationSubject interface](#implementing-the-nodeallowableoperationsubject-interface)
+    *   [Defining your component as an EXTENDIBLE_COMPONENT parent component](#defining-your-component-as-an-extendible_component-parent-component)
 
 ## Basic Usage
 
@@ -40,10 +40,10 @@ Selectively disables an HTML element or Angular component.
 
 ### Properties
 
-| Name       | Type                                                                                                                    | Default value | Description                                                                                                                                                                                                            |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| nodes      | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[]           | Nodes to check permission for.                                                                                                                                                                                         |
-| permission | `string`                                                                                                                | null          | [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| nodes | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[] | Nodes to check permission for. |
+| permission | `string` | null | Node permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
 
 ## Details
 
@@ -52,8 +52,8 @@ by taking a collection of [`NodeEntry`](https://github.com/Alfresco/alfresco-js-
 
 The decorated element will be disabled if:
 
--   there are no nodes in the collection
--   at least one of the nodes does not have the required permission
+*   there are no nodes in the collection
+*   at least one of the nodes does not have the required permission
 
 ### HTML element example
 

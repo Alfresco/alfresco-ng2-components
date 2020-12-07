@@ -13,12 +13,12 @@ Provides fine control of parameters to a search.
 
 ### Methods
 
--   **generateQueryBody**(searchTerm: `string`, maxResults: `number`, skipCount: `number`): `QueryBody`<br/>
+*   **generateQueryBody**(searchTerm: `string`, maxResults: `number`, skipCount: `number`): `QueryBody`<br/>
     Generates a QueryBody object with custom search parameters.
-    -   _searchTerm:_ `string`  - Term text to search for
-    -   _maxResults:_ `number`  - Maximum number of search results to show in a page
-    -   _skipCount:_ `number`  - The offset of the start of the page within the results list
-    -   **Returns** `QueryBody` - Query body defined by the parameters
+    *   *searchTerm:* `string`  - Term text to search for
+    *   *maxResults:* `number`  - Maximum number of search results to show in a page
+    *   *skipCount:* `number`  - The offset of the start of the page within the results list
+    *   **Returns** `QueryBody` - Query body defined by the parameters
 
 ## Details
 
@@ -35,5 +35,5 @@ example code.
 
 ## See also
 
--   [Search component](../../content-services/components/search.component.md)
--   [Search configuration interface](../interfaces/search-configuration.interface.md)
+*   [Search component](../../content-services/components/search.component.md)
+*   [Search configuration interface](../interfaces/search-configuration.interface.md)

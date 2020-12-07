@@ -13,30 +13,30 @@ Gets information about Process Services users.
 
 ### Methods
 
--   **getUserImage**(user: [`UserProcessModel`](../../core/models/user-process.model.md)): `string`<br/>
+*   **getUserImage**(user: [`UserProcessModel`](../../core/models/user-process.model.md)): `string`<br/>
     Gets the profile picture URL for the specified user.
-    -   _user:_ [`UserProcessModel`](../../core/models/user-process.model.md)  - The target user
-    -   **Returns** `string` - Profile picture URL
--   **getWorkflowUsers**(taskId?: `string`, searchWord?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>`<br/>
+    *   *user:* [`UserProcessModel`](../../core/models/user-process.model.md)  - The target user
+    *   **Returns** `string` - Profile picture URL
+*   **getWorkflowUsers**(taskId?: `string`, searchWord?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>`<br/>
     Gets information about users across all tasks.
-    -   _taskId:_ `string`  - (Optional) ID of the task
-    -   _searchWord:_ `string`  - (Optional) Filter text to search for
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>` - Array of user information objects
--   **involveUserWithTask**(taskId: `string`, idToInvolve: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>`<br/>
+    *   *taskId:* `string`  - (Optional) ID of the task
+    *   *searchWord:* `string`  - (Optional) Filter text to search for
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>` - Array of user information objects
+*   **involveUserWithTask**(taskId: `string`, idToInvolve: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>`<br/>
     Sets a user to be involved with a task.
-    -   _taskId:_ `string`  - ID of the target task
-    -   _idToInvolve:_ `string`  - ID of the user to involve
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>` - Empty response when the update completes
--   **removeInvolvedUser**(taskId: `string`, idToRemove: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>`<br/>
+    *   *taskId:* `string`  - ID of the target task
+    *   *idToInvolve:* `string`  - ID of the user to involve
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>` - Empty response when the update completes
+*   **removeInvolvedUser**(taskId: `string`, idToRemove: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>`<br/>
     Removes a user who is currently involved with a task.
-    -   _taskId:_ `string`  - ID of the target task
-    -   _idToRemove:_ `string`  - ID of the user to remove
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>` - Empty response when the update completes
+    *   *taskId:* `string`  - ID of the target task
+    *   *idToRemove:* `string`  - ID of the user to remove
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>` - Empty response when the update completes
 
 ## Details
 
 Use `getWorkflowUsers` to find users across all tasks, optionally filtering by the `searchWord`
-in the task name. The `taskId` parameter, if used, specifies a task to be _excluded_ from the
+in the task name. The `taskId` parameter, if used, specifies a task to be *excluded* from the
 results. You would typically use this feature to find new users to assign to a task, in which
 case you would want to exclude users already assigned to that task.
 
@@ -53,6 +53,6 @@ You can find more information about the REST API methods used by this service in
 
 ## See also
 
--   [User process model](../models/user-process.model.md)
--   [Bpm user model](../models/bpm-user.model.md)
--   [People content service](people-content.service.md)
+*   [User process model](../models/user-process.model.md)
+*   [Bpm user model](../models/bpm-user.model.md)
+*   [People content service](people-content.service.md)

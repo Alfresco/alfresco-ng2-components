@@ -23,13 +23,13 @@ Shows tags for a node.
 
 ### Properties
 
-| Name       | Type      | Default value | Description               |
-| ---------- | --------- | ------------- | ------------------------- |
-| nodeId     | `string`  |               | The identifier of a node. |
-| showDelete | `boolean` | true          | Show delete button        |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| nodeId | `string` |  | The identifier of a node. |
+| showDelete | `boolean` | true | Show delete button |
 
 ### Events
 
-| Name    | Type                                                              | Description                     |
-| ------- | ----------------------------------------------------------------- | ------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | results | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a tag is selected. |

@@ -13,19 +13,19 @@ Retrieves an SVG thumbnail image to represent a document type.
 
 ### Methods
 
--   **getDefaultMimeTypeIcon**(): `string`<br/>
+*   **getDefaultMimeTypeIcon**(): `string`<br/>
     Gets a "miscellaneous" thumbnail URL for types with no other icon defined.
-    -   **Returns** `string` - URL string
--   **getDocumentThumbnailUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
+    *   **Returns** `string` - URL string
+*   **getDocumentThumbnailUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
     Gets a thumbnail URL for the given document node.
-    -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`  - Node or Node ID to get URL for.
-    -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
-    -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
-    -   **Returns** `string` - URL string
--   **getMimeTypeIcon**(mimeType: `string`): `string`<br/>
+    *   *node:* [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`  - Node or Node ID to get URL for.
+    *   *attachment:* `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
+    *   *ticket:* `string`  - (Optional) Custom ticket to use for authentication
+    *   **Returns** `string` - URL string
+*   **getMimeTypeIcon**(mimeType: `string`): `string`<br/>
     Gets a thumbnail URL for a MIME type.
-    -   _mimeType:_ `string`  - MIME type for the thumbnail
-    -   **Returns** `string` - URL string
+    *   *mimeType:* `string`  - MIME type for the thumbnail
+    *   **Returns** `string` - URL string
 
 ## Details
 
@@ -53,7 +53,7 @@ and icons is shown in the table below:
 ### Mat-icon
 
 All the ADF icons for MIME types are now registered into the [`MatIconRegistry`](https://material.angular.io/components/icon/api), so you can use all
-the icons via the &lt;mat-icon> tag:
+the icons via the \<mat-icon> tag:
 
 ```javascript
 import { ThumbnailService } from '@alfresco/adf-core';
@@ -71,4 +71,4 @@ GIF <mat-icon svgIcon="image/gif"></mat-icon>
 
 ## See also
 
--   [Mime type icon pipe](../pipes/mime-type-icon.pipe.md)
+*   [Mime type icon pipe](../pipes/mime-type-icon.pipe.md)

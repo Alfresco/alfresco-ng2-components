@@ -23,16 +23,16 @@ Sub-component of the process details component, which renders some general infor
 
 ### Properties
 
-| Name            | Type                                                                                                     | Default value | Description                                                                       |
-| --------------- | -------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------------------------------------- |
-| processInstance | [`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts) |               | (**required**) Full details of the process instance to display information about. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| processInstance | [`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts) |  | (**required**) Full details of the process instance to display information about. |
 
 ## Details
 
 ### Choosing which properties are displayed
 
 By default all the properties are displayed:
-**_status_**, **_ended_**, **_category_**, **_businessKey_**, **_createdBy_**, **_created_**,**_id_**, **_description_**. 
+***status***, ***ended***, ***category***, ***businessKey***, ***createdBy***, ***created***,***id***, ***description***.
 
 You can customize which properties are displayed using a setting in `app.config.json`.
 The configuration looks like the following sample:

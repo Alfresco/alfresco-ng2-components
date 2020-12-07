@@ -13,25 +13,25 @@ Maps a form field type string onto the corresponding form [widget component](../
 
 ### Methods
 
--   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<Function>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)<br/>
+*   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<Function>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)<br/>
     Gets the currently active [DynamicComponentResolveFunction](../../../lib/core/services/dynamic-component-mapper.service.ts) for a field type.
-    -   _type:_ `string`  - The type whose resolver you want
-    -   _defaultValue:_ `Type<Function>`  - Default type returned for types that are not yet mapped
-    -   **Returns** [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts) - Resolver function
--   **register**(components: `Function`, override: `boolean` = `false`)<br/>
+    *   *type:* `string`  - The type whose resolver you want
+    *   *defaultValue:* `Type<Function>`  - Default type returned for types that are not yet mapped
+    *   **Returns** [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts) - Resolver function
+*   **register**(components: `Function`, override: `boolean` = `false`)<br/>
     Register multiple components
-    -   _components:_ `Function`  - 
-    -   _override:_ `boolean`  - 
--   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<Function>` = `this.defaultValue`): `Type<Function>`<br/>
+    *   *components:* `Function`  -
+    *   *override:* `boolean`  -
+*   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<Function>` = `this.defaultValue`): `Type<Function>`<br/>
     Finds the component type that is needed to render a form field.
-    -   _model:_ [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) field model for the field to render
-    -   _defaultValue:_ `Type<Function>`  - Default type returned for field types that are not yet mapped.
-    -   **Returns** `Type<Function>` - Component type
--   **setComponentTypeResolver**(type: `string`, resolver: [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts), override: `boolean` = `true`)<br/>
+    *   *model:* [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) field model for the field to render
+    *   *defaultValue:* `Type<Function>`  - Default type returned for field types that are not yet mapped.
+    *   **Returns** `Type<Function>` - Component type
+*   **setComponentTypeResolver**(type: `string`, resolver: [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts), override: `boolean` = `true`)<br/>
     Sets or optionally replaces a [DynamicComponentResolveFunction](../../../lib/core/services/dynamic-component-mapper.service.ts) for a field type.
-    -   _type:_ `string`  - The type whose resolver you want to set
-    -   _resolver:_ [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - The new resolver function
-    -   _override:_ `boolean`  - The new resolver will only replace an existing one if this parameter is true
+    *   *type:* `string`  - The type whose resolver you want to set
+    *   *resolver:* [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - The new resolver function
+    *   *override:* `boolean`  - The new resolver will only replace an existing one if this parameter is true
 
 ## Details
 
@@ -106,6 +106,6 @@ of this technique.
 
 ## See also
 
--   [Extensibility](../../user-guide/extensibility.md)
--   [Form field model](../models/form-field.model.md)
--   [Form component](../components/form.component.md)
+*   [Extensibility](../../user-guide/extensibility.md)
+*   [Form field model](../models/form-field.model.md)
+*   [Form component](../components/form.component.md)

@@ -30,18 +30,18 @@ Creates folders.
 
 ### Properties
 
-| Name         | Type     | Default value | Description                                                        |
-| ------------ | -------- | ------------- | ------------------------------------------------------------------ |
-| nodeType     | `string` | "cm:folder"   | Type of node to create.                                            |
-| parentNodeId | `string` |               | Parent folder where the new folder will be located after creation. |
-| title        | `string` | null          | Title of folder creation dialog.                                   |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| nodeType | `string` | "cm:folder" | Type of node to create. |
+| parentNodeId | `string` |  | Parent folder where the new folder will be located after creation. |
+| title | `string` | null | Title of folder creation dialog. |
 
 ### Events
 
-| Name    | Type                                                                                                                                                                     | Description                                                                |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| error   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                        | Emitted when an error occurs (eg, a folder with same name already exists). |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`>` | Emitted when the folder is created successfully.                           |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs (eg, a folder with same name already exists). |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`>` | Emitted when the folder is created successfully. |
 
 ## Details
 
@@ -52,4 +52,4 @@ then the dialog will emit a `success` event when it closes.
 
 ## See also
 
--   [Folder Edit directive](folder-edit.directive.md)
+*   [Folder Edit directive](folder-edit.directive.md)

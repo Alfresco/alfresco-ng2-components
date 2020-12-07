@@ -47,10 +47,10 @@ export class MyComponent implements OnInit {
 
 ### Properties
 
-| Name    | Type      | Default value | Description          |
-| ------- | --------- | ------------- | -------------------- |
-| enabled | `boolean` | false         | Is the menu enabled? |
-| links   | `any[]`   |               | Items for the menu.  |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| enabled | `boolean` | false | Is the menu enabled? |
+| links | `any[]` |  | Items for the menu. |
 
 ## Details
 

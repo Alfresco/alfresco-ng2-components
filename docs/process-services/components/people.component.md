@@ -13,15 +13,15 @@ Displays users involved with a specified task
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
--   [Details](#details)
-    -   [How to customize the people component behavior](#how-to-customize-the-people-component-behavior)
-    -   [Involve People single click and close search](#involve-people-single-click-and-close-search)
-    -   [Involve People single click without close search](#involve-people-single-click-without-close-search)
-    -   [Involve People double click and close search](#involve-people-double-click-and-close-search)
-    -   [Involve People double double without close search](#involve-people-double-double-without-close-search)
+*   [Basic Usage](#basic-usage)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+*   [Details](#details)
+    *   [How to customize the people component behavior](#how-to-customize-the-people-component-behavior)
+    *   [Involve People single click and close search](#involve-people-single-click-and-close-search)
+    *   [Involve People single click without close search](#involve-people-single-click-without-close-search)
+    *   [Involve People double click and close search](#involve-people-double-click-and-close-search)
+    *   [Involve People double double without close search](#involve-people-double-double-without-close-search)
 
 ## Basic Usage
 
@@ -37,11 +37,11 @@ Displays users involved with a specified task
 
 ### Properties
 
-| Name     | Type                                                              | Default value | Description                                                                           |
-| -------- | ----------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------- |
-| people   | [`UserProcessModel`](../../core/models/user-process.model.md)`[]` | \[]           | The array of [User](../../../lib/core/pipes/user-initial.pipe.ts) objects to display. |
-| readOnly | `boolean`                                                         | false         | Should the data be read-only?                                                         |
-| taskId   | `string`                                                          | ""            | The numeric ID of the task.                                                           |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| people | [`UserProcessModel`](../../core/models/user-process.model.md)`[]` | \[] | The array of [`User`](../../../lib/core/pipes/user-initial.pipe.ts) objects to display. |
+| readOnly | `boolean` | false | Should the data be read-only? |
+| taskId | `string` | "" | The numeric ID of the task. |
 
 ## Details
 
@@ -49,8 +49,8 @@ Displays users involved with a specified task
 
 The [people component](people.component.md) provides two options to customize its behavior:
 
--   _involveUserAndCloseSearch_: The selected user gets added and then the search section is closed
--   _involveUserWithoutCloseSearch_: The selected user gets added without closing the search section
+*   *involveUserAndCloseSearch*: The selected user gets added and then the search section is closed
+*   *involveUserWithoutCloseSearch*: The selected user gets added without closing the search section
 
 This makes it easy to customize the [people component](people.component.md) to involve the user via a single or double click event:
 

@@ -11,14 +11,14 @@ Searches Groups.
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Selection Mode](#selection-mode)
-    -   [Pre-selection](#pre-selection)
-    -   [Read-only](#read-only)
+*   [Basic Usage](#basic-usage)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [Selection Mode](#selection-mode)
+    *   [Pre-selection](#pre-selection)
+    *   [Read-only](#read-only)
 
 ## Basic Usage
 
@@ -35,26 +35,26 @@ Searches Groups.
 
 ### Properties
 
-| Name                | Type                                                                             | Default value | Description                                                                                                                                                                                                                                                                                                       |
-| ------------------- | -------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| appName             | `string`                                                                         |               | Name of the application. If specified this shows the groups who have access to the app.                                                                                                                                                                                                                           |
-| groupChipsCtrl      | `FormControl`                                                                    |               | FormControl to list of group                                                                                                                                                                                                                                                                                      |
-| mode                | [`ComponentSelectionMode`](../../../lib/process-services-cloud/src/lib/types.ts) | "single"      | Group selection mode (single/multiple).                                                                                                                                                                                                                                                                           |
-| preSelectGroups     | [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]`     | \[]           | Array of groups to be pre-selected. This pre-selects all groups in multi selection mode and only the first group of the array in single selection mode.                                                                                                                                                           |
-| readOnly            | `boolean`                                                                        | false         | Show the info in readonly mode                                                                                                                                                                                                                                                                                    |
-| roles               | `string[]`                                                                       | \[]           | Role names of the groups to be listed.                                                                                                                                                                                                                                                                            |
-| searchGroupsControl | `FormControl`                                                                    |               | FormControl to search the group                                                                                                                                                                                                                                                                                   |
-| title               | `string`                                                                         |               | Title of the field                                                                                                                                                                                                                                                                                                |
-| validate            | `Boolean`                                                                        | false         | This flag enables the validation on the preSelectGroups passed as input. In case the flag is true the components call the [identity service](../../../lib/testing/src/lib/core/actions/identity/identity.service.ts) to verify the validity of the information passed as input. Otherwise, no check will be done. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| appName | `string` |  | Name of the application. If specified this shows the groups who have access to the app. |
+| groupChipsCtrl | `FormControl` |  | FormControl to list of group |
+| mode | [`ComponentSelectionMode`](../../../lib/process-services-cloud/src/lib/types.ts) | "single" | Group selection mode (single/multiple). |
+| preSelectGroups | [`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]` | \[] | Array of groups to be pre-selected. This pre-selects all groups in multi selection mode and only the first group of the array in single selection mode. |
+| readOnly | `boolean` | false | Show the info in readonly mode |
+| roles | `string[]` | \[] | Role names of the groups to be listed. |
+| searchGroupsControl | `FormControl` |  | FormControl to search the group |
+| title | `string` |  | Title of the field |
+| validate | `Boolean` | false | This flag enables the validation on the preSelectGroups passed as input. In case the flag is true the components call the identity service to verify the validity of the information passed as input. Otherwise, no check will be done. |
 
 ### Events
 
-| Name          | Type                                                                                                                                       | Description                            |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | changedGroups | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]>` | Emitted when a group selection change. |
-| removeGroup   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`>`   | Emitted when a group is removed.       |
-| selectGroup   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`>`   | Emitted when a group is selected.      |
-| warning       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                          | Emitted when an warning occurs.        |
+| removeGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`>` | Emitted when a group is removed. |
+| selectGroup | `EventEmitter<IdentityGroupModel>` | Emitted when a group is selected. |
+| warning | `EventEmitter<any>` | Emitted when an warning occurs. |
 
 ## Details
 

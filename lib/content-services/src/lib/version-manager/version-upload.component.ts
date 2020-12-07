@@ -32,30 +32,39 @@ export class VersionUploadComponent {
     comment: string;
     uploadVersion: boolean = false;
 
+    /** The target node. */
     @Input()
     node: Node;
 
+    /** New file for updating current version. */
     @Input()
     newFileVersion: File;
 
+    /** Toggles showing/hiding upload button. */
     @Input()
     showUploadButton: boolean = true;
 
+    /** Toggles showing/hiding of cancel button. */
     @Input()
     showCancelButton: boolean = true;
 
+    /** Emitted when the file is uploaded successfully. */
     @Output()
     success = new EventEmitter();
 
+    /** Emitted when an error occurs. */
     @Output()
     error = new EventEmitter();
 
+    /** Emitted when an cancelling during upload. */
     @Output()
     cancel = new EventEmitter();
 
+    /** Emitted when the version is changed. */
     @Output()
     versionChanged = new EventEmitter<boolean>();
 
+    /** Emitted when the comment is changed. */
     @Output()
     commentChanged = new EventEmitter<string>();
 
@@ -80,6 +89,14 @@ export class VersionUploadComponent {
 
     onCommentChange() {
         this.commentChanged.emit(this.comment);
+    }
+
+    onSuccess(event: any) {
+        this.success.emit(event);
+    }
+
+    onError(event: any) {
+        this.error.emit(event);
     }
 
 }

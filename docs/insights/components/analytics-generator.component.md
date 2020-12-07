@@ -21,14 +21,14 @@ Generates and shows charts
 
 ### Properties
 
-| Name             | Type                                                                                       | Default value | Description       |
-| ---------------- | ------------------------------------------------------------------------------------------ | ------------- | ----------------- |
-| reportId         | `number`                                                                                   |               | reportId.         |
-| reportParamQuery | [`ReportQuery`](../../../lib/insights/src/lib/diagram/models/report/report-query.model.ts) | undefined     | reportParamQuery. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| reportId | `number` |  | reportId. |
+| reportParamQuery | [`ReportQuery`](../../../lib/insights/src/lib/diagram/models/report/report-query.model.ts) | undefined | reportParamQuery. |
 
 ### Events
 
-| Name    | Type                                                              | Description |
-| ------- | ----------------------------------------------------------------- | ----------- |
-| error   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | error.      |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | success.    |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | error. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | success. |

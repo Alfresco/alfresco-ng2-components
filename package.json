@@ -107,7 +107,7 @@
   "devDependencies": {
     "@alfresco/adf-cli": "4.1.0",
     "@alfresco/adf-testing": "4.1.0",
-    "@angular-devkit/build-angular": "^0.1001.7",
+    "@angular-devkit/build-angular": "^0.1002.0",
     "@angular-devkit/build-ng-packagr": "~0.1002.0",
     "@angular/cli": "^10.2.0",
     "@angular/compiler-cli": "^10.0.12",
@@ -146,6 +146,7 @@
     "karma-mocha-reporter": "2.2.5",
     "license-checker": "^25.0.1",
     "lint-staged": "^10.5.3",
+    "lite-server": "^2.6.1",
     "lite-server": "^2.5.4",
     "markdownlint-cli": "^0.25.0",
     "mdast": "^3.0.0",

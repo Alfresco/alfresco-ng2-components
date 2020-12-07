@@ -11,14 +11,14 @@ Collection of criteria used to filter process instances, which may be customized
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [How filter the activiti process filters](#how-filter-the-activiti-process-filters)
-    -   [FilterParamsModel](#filterparamsmodel)
--   [See also](#see-also)
+*   [Basic Usage](#basic-usage)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [How filter the activiti process filters](#how-filter-the-activiti-process-filters)
+    *   [FilterParamsModel](#filterparamsmodel)
+*   [See also](#see-also)
 
 ## Basic Usage
 
@@ -32,21 +32,21 @@ Collection of criteria used to filter process instances, which may be customized
 
 ### Properties
 
-| Name        | Type                                                                                                                    | Default value | Description                                                                                                                         |
-| ----------- | ----------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| appId       | `number`                                                                                                                |               | Display filters available to the current user for the application with the specified ID.                                            |
-| appName     | `string`                                                                                                                |               | Display filters available to the current user for the application with the specified name.                                          |
-| filterParam | [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts) |               | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
-| showIcon    | `boolean`                                                                                                               | true          | Toggle to show or hide the filter's icon.                                                                                           |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
+| appName | `string` |  | Display filters available to the current user for the application with the specified name. |
+| filterParam | [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts) |  | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
+| showIcon | `boolean` | true | Toggle to show or hide the filter's icon. |
 
 ### Events
 
-| Name           | Type                                                                                                                                                                                                                                            | Description                                                                    |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| error          | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                                                                                               | Emitted when an error occurs.                                                  |
-| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/UserProcessInstanceFilterRepresentation.md)`>`         | Emitted when a filter is being selected based on the filterParam input.                                     |
-| filterClicked    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/UserProcessInstanceFilterRepresentation.md)`>` | Emitted when a filter is being clicked from the UI.                          |
-| success        | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md)`[]>`       | Emitted when the list of filters has been successfully loaded from the server. |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| filterClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/UserProcessInstanceFilterRepresentation.md)`>` | Emitted when a filter is being clicked from the UI. |
+| filterSelected | `EventEmitter<UserProcessInstanceFilterRepresentation>` | Emitted when a filter is being selected based on the filterParam input. |
+| success | `EventEmitter<ProcessInstanceFilterRepresentation[]>` | Emitted when the list of filters has been successfully loaded from the server. |
 
 ## Details
 
@@ -86,4 +86,4 @@ You can use inside the filterParam one of the properties defined by [`FilterPara
 
 ## See also
 
--   [Process Filter service](../services/process-filter.service.md)
+*   [Process Filter service](../services/process-filter.service.md)

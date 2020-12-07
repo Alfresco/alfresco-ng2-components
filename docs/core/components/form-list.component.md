@@ -21,6 +21,6 @@ Shows forms as a list.
 
 ### Properties
 
-| Name  | Type    | Default value | Description                                                      |
-| ----- | ------- | ------------- | ---------------------------------------------------------------- |
-| forms | `any[]` | \[]           | The array that contains the information to show inside the list. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| forms | `any[]` | \[] | The array that contains the information to show inside the list. |

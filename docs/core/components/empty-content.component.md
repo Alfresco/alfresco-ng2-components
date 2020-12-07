@@ -29,11 +29,11 @@ Provides a generic "Empty Content" placeholder for components.
 
 ### Properties
 
-| Name     | Type     | Default value | Description                              |
-| -------- | -------- | ------------- | ---------------------------------------- |
-| icon     | `string` | "cake"        | Material Icon to use.                    |
-| subtitle | `string` | ""            | String or Resource Key for the subtitle. |
-| title    | `string` | ""            | String or Resource Key for the title.    |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| icon | `string` | "cake" | Material Icon to use. |
+| subtitle | `string` | "" | String or Resource Key for the subtitle. |
+| title | `string` | "" | String or Resource Key for the title. |
 
 ## Details
 
@@ -72,4 +72,4 @@ You can also use multiple lines instead of the subtitle section:
 
 ## See also
 
--   [Error content component](error-content.component.md)
+*   [Error content component](error-content.component.md)
