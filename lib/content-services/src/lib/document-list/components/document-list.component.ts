@@ -501,7 +501,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.ngZone.run(() => {
             this.resetSelection();
             if (this.node) {
-                this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectNodesBasedOnSelectionMode());
+                if (this.data) {
+                    this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectNodesBasedOnSelectionMode());
+                }
                 this.onPreselectNodes();
                 this.syncPagination();
                 this.onDataReady(this.node);
@@ -698,7 +700,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
-            this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.getPreselectNodesBasedOnSelectionMode());
+            if (this.data) {
+                this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.getPreselectNodesBasedOnSelectionMode());
+            }
             this.onPreselectNodes();
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
