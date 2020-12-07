@@ -28,7 +28,7 @@ Stores information from all the custom search and faceted search widgets, compil
 
 *   **execute**(queryBody?: `QueryBody`)<br/>
     Builds and executes the current query.
-    *   *queryBody:* `QueryBody`  - (Optional) (Optional) (Optional) (Optional)
+    *   *queryBody:* `QueryBody`  - (Optional)
 
 *   **getFacetField**(label: `string`): [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts)<br/>
     Gets a facet field by label.
@@ -97,7 +97,7 @@ Stores information from all the custom search and faceted search widgets, compil
 
 *   **update**(queryBody?: `QueryBody`)<br/>
     Builds the current query and triggers the `updated` event.
-    *   *queryBody:* `QueryBody`  - (Optional) (Optional) (Optional) (Optional)
+    *   *queryBody:* `QueryBody`  - (Optional)
 
 ## Details
 

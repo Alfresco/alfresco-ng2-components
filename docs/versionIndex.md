@@ -38,17 +38,15 @@ backend services have been tested with each released version of ADF.
 
 <!--v420 start-->
 
+*   [Search datetime range component](content-services/components/search-datetime-range.component.md)
+
 <!--v420 end-->
 
 ## v4.1.0
 
 <!--v410 start-->
 
-<!--v410 start-->
-
 *   [Version upload component](content-services/components/version-upload.component.md)
-
-<!--v410 end-->
 
 <!--v410 end-->
 
