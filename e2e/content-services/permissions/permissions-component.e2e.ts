@@ -23,6 +23,7 @@ import {
     BrowserActions,
     LoginPage,
     NotificationHistoryPage,
+    PermissionActions,
     SearchService,
     StringUtil,
     UploadActions,
@@ -48,6 +49,7 @@ describe('Permissions Component', () => {
     const usersActions = new UsersActions(apiService);
     const notificationPage = new NotificationDemoPage();
     const searchService = new SearchService(apiService);
+    const permissionActions = new PermissionActions(apiService);
 
     const contentList = contentServicesPage.getDocumentList();
     const viewerPage = new ViewerPage();
@@ -88,16 +90,6 @@ describe('Permissions Component', () => {
 
     let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder;
 
-    async function checkPermission(nodeId, name) {
-        try {
-            const children =  (await apiService.getInstance().core.nodesApi.getNodeChildren(nodeId)).list.entries;
-            expect(children.length).toEqual(1);
-            expect(children[0].entry.name).toEqual(name);
-        } catch (e) {
-            console.error(`failed to get files`, e);
-        }
-    }
-
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(fileOwnerUser);
@@ -105,12 +97,7 @@ describe('Permissions Component', () => {
         await apiService.getInstance().core.groupsApi.createGroup(groupBody);
 
         // to sync user in acs
-        await loginPage.login(fileOwnerUser.email, fileOwnerUser.password);
-        await searchService.isUserSearchable(fileOwnerUser);
-        await navigationBarPage.clickLogoutButton();
-        await loginPage.login(filePermissionUser.email, filePermissionUser.password);
         await searchService.isUserSearchable(filePermissionUser);
-        await navigationBarPage.clickLogoutButton();
 
         await apiService.login(fileOwnerUser.email, fileOwnerUser.password);
         roleConsumerFolder = await uploadActions.createFolder(roleConsumerFolderModel.name, '-my-');
@@ -125,62 +112,12 @@ describe('Permissions Component', () => {
         await uploadActions.uploadFile(fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
         await uploadActions.uploadFile(fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
 
-        await apiService.getInstance().core.nodesApi.updateNode(roleConsumerFolder.entry.id, {
-            permissions: {
-                locallySet: [{
-                    authorityId: filePermissionUser.username,
-                    name: 'Consumer',
-                    accessStatus: 'ALLOWED'
-                }]
-            }
-        });
+        await permissionActions.addRoleForUser(filePermissionUser.email, 'Consumer', roleConsumerFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.email, 'Collaborator', roleCollaboratorFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.email, 'Coordinator', roleCoordinatorFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.email, 'Contributor', roleContributorFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.email, 'Editor', roleEditorFolder);
 
-        await apiService.getInstance().core.nodesApi.updateNode(roleCollaboratorFolder.entry.id, {
-            permissions: {
-                locallySet: [{
-                    authorityId: filePermissionUser.username,
-                    name: 'Collaborator',
-                    accessStatus: 'ALLOWED'
-                }]
-            }
-        });
-
-        await apiService.getInstance().core.nodesApi.updateNode(roleCoordinatorFolder.entry.id, {
-            permissions: {
-                locallySet: [{
-                    authorityId: filePermissionUser.username,
-                    name: 'Coordinator',
-                    accessStatus: 'ALLOWED'
-                }]
-            }
-        });
-
-        await apiService.getInstance().core.nodesApi.updateNode(roleContributorFolder.entry.id, {
-            permissions: {
-                locallySet: [{
-                    authorityId: filePermissionUser.username,
-                    name: 'Contributor',
-                    accessStatus: 'ALLOWED'
-                }]
-            }
-        });
-
-        await apiService.getInstance().core.nodesApi.updateNode(roleEditorFolder.entry.id, {
-            permissions: {
-                locallySet: [{
-                    authorityId: filePermissionUser.username,
-                    name: 'Editor',
-                    accessStatus: 'ALLOWED'
-                }]
-            }
-        });
-
-        await apiService.login(filePermissionUser.email, filePermissionUser.password);
-        await checkPermission(roleConsumerFolder.entry.id, 'RoleConsumer' + fileModel.name);
-        await checkPermission(roleCoordinatorFolder.entry.id, 'RoleCoordinator' + fileModel.name);
-        await checkPermission(roleContributorFolder.entry.id, 'RoleContributor' + fileModel.name);
-        await checkPermission(roleCollaboratorFolder.entry.id, 'RoleCollaborator' + fileModel.name);
-        await checkPermission(roleEditorFolder.entry.id, 'RoleEditor' + fileModel.name);
         await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
     });
 
@@ -208,19 +145,6 @@ describe('Permissions Component', () => {
             } catch (error) {
             }
             await navigationBarPage.clickLogoutButton();
-        });
-
-        it('[C268974] Inherit Permission', async () => {
-            await permissionsPage.addPermissionsDialog.checkPermissionInheritedButtonIsDisplayed();
-            await permissionsPage.addPermissionsDialog.getPermissionInheritedButtonText('Permission Inherited');
-            await permissionsPage.addPermissionsDialog.checkPermissionsDatatableIsDisplayed();
-            await permissionsPage.addPermissionsDialog.clickPermissionInheritedButton();
-
-            await permissionsPage.addPermissionsDialog.getPermissionInheritedButtonText('Inherit Permission');
-            await permissionsPage.addPermissionsDialog.checkNoPermissionsIsDisplayed();
-            await permissionsPage.addPermissionsDialog.clickPermissionInheritedButton();
-            await permissionsPage.addPermissionsDialog.getPermissionInheritedButtonText('Permission Inherited');
-            await permissionsPage.addPermissionsDialog.checkPermissionsDatatableIsDisplayed();
         });
 
         it('[C286272] Should be able to see results when searching for a user', async () => {
