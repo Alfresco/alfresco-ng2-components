@@ -21,7 +21,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { Node, NodeEntry } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
-import { setupTestBed, SitesService, ContentService } from '@alfresco/adf-core';
+import { SitesService, ContentService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
@@ -34,62 +34,65 @@ import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;
-
-    const dialogRef = {
-        keydownEvents: () => of(null),
-        backdropClick: () => of(null),
-        close: jasmine.createSpy('close')
-    };
-
-    const data: any = {
-        title: 'Choose along citizen...',
-        actionName: 'choose',
-        select: new EventEmitter<Node>(),
-        rowFilter: (shareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
-        imageResolver: () => 'piccolo',
-        currentFolderId: 'cat-girl-nuku-nuku',
-        selectionMode: 'multiple',
-        showLocalUploadButton: true
-    };
-
-    const fakeFolderNodeWithPermission = new NodeEntry({
-        entry: {
-            allowableOperations: [
-                'create',
-                'update'
-            ],
-            isFolder: true,
-            name: 'Folder Fake Name',
-            nodeType: 'cm:folder'
-        }
-    });
-
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule,
-            MatDialogModule,
-            UploadModule
-        ],
-        providers: [
-            { provide: MAT_DIALOG_DATA, useValue: data },
-            { provide: MatDialogRef, useValue: dialogRef }
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
+    let data: any;
 
     beforeEach(() => {
-        const documentListService: DocumentListService = TestBed.inject(DocumentListService);
+        data = {
+            title: 'Choose along citizen...',
+            actionName: 'choose',
+            select: new EventEmitter<Node>(),
+            rowFilter: (shareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
+            imageResolver: () => 'piccolo',
+            currentFolderId: 'cat-girl-nuku-nuku',
+            selectionMode: 'multiple',
+            showLocalUploadButton: true
+        };
+
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule,
+                MatDialogModule,
+                UploadModule
+            ],
+            providers: [
+                { provide: MAT_DIALOG_DATA, useValue: data },
+                {
+                    provide: MatDialogRef,
+                    useValue: {
+                        keydownEvents: () => of(null),
+                        backdropClick: () => of(null),
+                        close: jasmine.createSpy('close')
+                    }
+                }
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
+
+        const documentListService = TestBed.inject(DocumentListService);
         const sitesService: SitesService = TestBed.inject(SitesService);
 
-        spyOn(documentListService, 'getFolder').and.returnValue(of({ list: [] }));
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: {} }));
+        spyOn(documentListService, 'getFolder').and.callThrough();
+        spyOn(documentListService, 'getFolderNode').and.callThrough();
         spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
 
         fixture = TestBed.createComponent(ContentNodeSelectorComponent);
         component = fixture.componentInstance;
         const contentService = TestBed.inject(ContentService);
         spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
+
+        const fakeFolderNodeWithPermission = new NodeEntry({
+            entry: {
+                allowableOperations: [
+                    'create',
+                    'update'
+                ],
+                isFolder: true,
+                name: 'Folder Fake Name',
+                nodeType: 'cm:folder'
+            }
+        });
+
         spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
 
         component.data.showLocalUploadButton = true;
@@ -100,7 +103,6 @@ describe('ContentNodeSelectorComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     describe('Data injecting with the "Material dialog way"', () => {
