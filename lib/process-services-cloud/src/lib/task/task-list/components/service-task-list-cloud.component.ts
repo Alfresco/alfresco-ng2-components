@@ -22,6 +22,7 @@ import {
 import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
+import { TaskCloudService } from '../../services/task-cloud.service';
 
 @Component({
     selector: 'adf-cloud-service-task-list',
@@ -38,8 +39,9 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
 
     constructor(private serviceTaskListCloudService: ServiceTaskListCloudService,
                 appConfigService: AppConfigService,
+                taskCloudService: TaskCloudService,
                 userPreferences: UserPreferencesService) {
-        super(appConfigService, userPreferences, ServiceTaskListCloudComponent.PRESET_KEY);
+        super(appConfigService, taskCloudService, userPreferences, ServiceTaskListCloudComponent.PRESET_KEY);
     }
 
     load(requestNode: ServiceTaskQueryCloudRequestModel) {
@@ -62,21 +64,21 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
             maxItems: this.size,
             skipCount: this.skipCount,
             sorting: this.sorting,
-            id: this.queryParams.serviceTaskId,
-            activityName: this.queryParams.activityName,
-            activityType: this.queryParams.activityType,
-            completedDate: this.queryParams.completedDate,
-            elementId: this.queryParams.elementId,
-            executionId: this.queryParams.executionId,
-            processDefinitionId: this.queryParams.processDefinitionId,
-            processDefinitionKey: this.queryParams.processDefinitionKey,
-            processDefinitionVersion: this.queryParams.processDefinitionVersion,
-            processInstanceId: this.queryParams.processInstanceId,
-            serviceFullName: this.queryParams.serviceFullName,
-            serviceName: this.queryParams.serviceName,
-            serviceVersion: this.queryParams.serviceVersion,
-            startedDate: this.queryParams.startedDate,
-            status: this.queryParams.status
+            id: this.queryParams?.serviceTaskId,
+            activityName: this.queryParams?.activityName,
+            activityType: this.queryParams?.activityType,
+            completedDate: this.queryParams?.completedDate,
+            elementId: this.queryParams?.elementId,
+            executionId: this.queryParams?.executionId,
+            processDefinitionId: this.queryParams?.processDefinitionId,
+            processDefinitionKey: this.queryParams?.processDefinitionKey,
+            processDefinitionVersion: this.queryParams?.processDefinitionVersion,
+            processInstanceId: this.queryParams?.processInstanceId,
+            serviceFullName: this.queryParams?.serviceFullName,
+            serviceName: this.queryParams?.serviceName,
+            serviceVersion: this.queryParams?.serviceVersion,
+            startedDate: this.queryParams?.startedDate,
+            status: this.queryParams?.status
         } as ServiceTaskQueryCloudRequestModel;
         return requestNode;
     }

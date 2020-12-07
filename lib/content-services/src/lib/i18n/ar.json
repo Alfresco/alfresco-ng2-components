@@ -89,7 +89,9 @@
     "NO_RESULTS": "لم يتم العثور على نتائج",
     "SEARCH": "بحث",
     "SEARCH_RESULTS": "نتائج البحث",
-    "SELECT_LOCATION": "تحديد المكان"
+    "SELECT_LOCATION": "تحديد المكان",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "لا يمكنك تحميل ملف أثناء تشغيل بحث",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "لا يملك المستخدم إذنًا لتحميل المحتوى إلى المجلد"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -250,7 +252,9 @@
         "NO-DAYS": "لم يتم تحديد أيام.",
         "INVALID-FORMAT": "تنسيق غير صالح",
         "INVALID-DATE": "تاريخ غير صالح. يجب أن يكون التاريخ بالتنسيق '{{ requiredFormat }}'",
-        "BEYOND-MAX-DATE": "يتجاوز التاريخ الحد الأقصى للتاريخ."
+        "BEYOND-MAX-DATE": "يتجاوز التاريخ الحد الأقصى للتاريخ.",
+        "INVALID-DATETIME": "التاريخ والوقت غير صالحين. يجب أن يكون التاريخ والوقت بالتنسيق '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "التاريخ والوقت يتجاوزان الحد الأقصى للتاريخ والوقت."
       }
     },
     "ICONS": {

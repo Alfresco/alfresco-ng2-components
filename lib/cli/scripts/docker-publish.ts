@@ -78,6 +78,7 @@ function main(args) {
         .option('--loginCheck [type]', 'perform login')
         .option('--dockerRepo [type]', 'docker repo')
         .option('--dockerTags [type]', ' tags')
+        .option('--buildArgs [type]', ' buildArgs')
         .option('--pathProject [type]', 'path ptojrct')
         .parse(process.argv);
 

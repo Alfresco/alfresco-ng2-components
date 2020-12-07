@@ -14,6 +14,7 @@
       "COMPLETED_BY": "Slutförd av",
       "ID": "ID",
       "INITIATOR": "Initerare",
+      "STARTED_BY": "Startad av",
       "APP_NAME": "Programnamn",
       "BUSINESS_KEY": "Affärsnyckel",
       "DESCRIPTION": "Beskrivning",
@@ -72,7 +73,8 @@
           "CANDIDATE_GROUP": "Kandidatgrupp",
           "FORM": "Formulär",
           "DATE": "Välj datum",
-          "NONE": "Ingen"
+          "NONE": "Ingen",
+          "PRIORITY": "Prioritet"
         },
         "ACTION": {
           "START": "Starta",
@@ -91,7 +93,13 @@
       "DUE_DATE": "Förfallodatum",
       "CREATED": "Skapad",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "Slutförd av"
+      "COMPLETED_BY": "Slutförd av",
+      "PRIORITY_VALUES": {
+        "NOT_SET": "Inte inställd",
+        "LOW": "Låg",
+        "NORMAL": "Medium",
+        "HIGH": "Hög"
+      }
     },
     "LIST": {
       "MESSAGES": {
@@ -101,9 +109,24 @@
       }
     }
   },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "Aktivitetsnamn",
+      "ACTIVITY_TYPE": "Status",
+      "ID": "ID",
+      "COMPLETED_DATE": "Datum slutförd",
+      "STARTED_DATE": "Datum påbörjad",
+      "STATUS": "Status"
+    }
+  },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Mina uppgifter",
     "QUEUED_TASKS": "Köade uppgifter",
+    "COMPLETED_TASKS": "Slutförda uppgifter"
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "Alla serviceuppgifter",
+    "ERRORED_TASKS": "Uppgifter med fel",
     "COMPLETED_TASKS": "Slutförda uppgifter"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -145,12 +168,33 @@
       "DUE_DATE": "Förfallodatum",
       "SORT": "Sortera",
       "START_DATE": "Startdatum",
-      "COMPLETED_BY": "Slutförd av"
+      "COMPLETED_BY": "Slutförd av",
+      "COMPLETED_DATE": "Slutförandedatum",
+      "CREATED_DATE": "Skapandedatum",
+      "CANDIDATE_GROUPS": "Kandidatgrupper"
     },
     "DIALOG": {
       "TITLE": "Spara filter som",
       "SAVE": "Spara",
       "CANCEL": "Avbryt"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "Programnamn",
+      "SERVICE_TASK_ID": "ServiceuppgiftId",
+      "SERVICE_NAME": "Servicenamn",
+      "ELEMENT_ID": "ElementId",
+      "PROCESS_DEF_NAME": "Processdefinitionsnamn",
+      "PROCESS_DEF_ID": "Processdefinitions-ID",
+      "PROCESS_INSTANCE_ID": "Processinstans-ID",
+      "STATUS": "Status",
+      "DIRECTION": "Riktning",
+      "ACTIVITY_NAME": "Aktivitetsnamn",
+      "ACTIVITY_TYPE": "Aktivitetstyp",
+      "SORT": "Sortera",
+      "STARTED_DATE": "Startdatum",
+      "COMPLETED_DATE": "Slutförandedatum"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -170,8 +214,9 @@
       "LAST_MODIFIED_DATE_FORM": "Senast ändrad från",
       "LAST_MODIFIED_TO": "Senast ändrad till",
       "PROCESS_NAME": "Processnamn",
-      "APP_VERSION": "Slutversion av program",
+      "APP_VERSION": "Version av program",
       "STARTED_DATE": "Datum påbörjad",
+      "STARTED_BY": "Startad av",
       "COMPLETED_DATE": "Datum slutförd",
       "DATE_RANGE": {
         "NO_DATE": "Inget datum",
@@ -298,5 +343,12 @@
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Fyll i fälten i formuläret med metadata för denna fil"
+  },
+  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
+    "ASSIGNED_TO_ME": "Tilldelad till mig",
+    "UNASSIGNED": "Otilldelad",
+    "LIST_OF_CANDIDATE_USERS": "Lista över kandidatanvändare",
+    "ASSIGNEE": "Tilldelad användare",
+    "ASSIGNMENT_TYPE": "Uppgiftstyp"
   }
 }

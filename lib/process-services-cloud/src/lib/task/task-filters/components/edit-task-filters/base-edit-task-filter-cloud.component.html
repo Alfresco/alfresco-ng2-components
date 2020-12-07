@@ -95,7 +95,8 @@
                             </mat-checkbox>
                         </div>
 
-                        <adf-cloud-date-range-filter *ngIf="taskFilterProperty.type === 'date-range'"
+                        <adf-cloud-date-range-filter #dateRange
+                                                    *ngIf="taskFilterProperty.type === 'date-range'"
                                                      [processFilterProperty]="taskFilterProperty"
                                                      [options]="taskFilterProperty.dateFilterOptions"
                                                      (dateTypeChange)="onDateTypeChange($event, taskFilterProperty)"

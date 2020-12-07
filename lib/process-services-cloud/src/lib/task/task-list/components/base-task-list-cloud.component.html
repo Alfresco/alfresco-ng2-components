@@ -11,6 +11,7 @@
             [actions]="showActions"
             [actionsPosition]="actionsPosition"
             [contextMenu]="showContextMenu"
+            [resolverFn]="boundReplacePriorityValues"
             (showRowActionsMenu)="onShowRowActionsMenu($event)"
             (showRowContextMenu)="onShowRowContextMenu($event)"
             (executeRowAction)="onExecuteRowAction($event)"

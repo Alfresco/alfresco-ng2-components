@@ -21,6 +21,7 @@ export * from './start-task/public-api';
 export * from './task-header/public-api';
 export * from './task-form/public-api';
 export * from './directives/public-api';
+export * from './models/public-api';
 
 export * from './services/task-cloud.service';
 export * from './services/start-task-cloud.service';

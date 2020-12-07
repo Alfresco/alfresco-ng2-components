@@ -429,6 +429,16 @@
         "TEXT": "Volver al inicio"
       }
     },
+    "503": {
+      "TITLE": "Se ha producido un error.",
+      "DESCRIPTION": "Servicio no disponible temporalmente [503].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Volver al inicio"
+      }
+    },
     "504": {
       "TITLE": "Se ha producido un error.",
       "DESCRIPTION": "Se ha agotado el tiempo de espera del servidor; vuelva a intentarlo o póngase en contacto con el equipo de TI [504].",

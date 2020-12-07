@@ -39,9 +39,8 @@ describe('Edit task filters and task list properties', () => {
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
-    let createdTask, notDisplayedTask, priorityTask, subTask,
+    let createdTask, notDisplayedTask, noPriorityTask, lowPriorityTask, normalPriorityTask, hightPriorityTask, subTask,
         otherOwnerTask, testUser, groupInfo;
-    const priority = 1;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
@@ -59,8 +58,14 @@ describe('Edit task filters and task list properties', () => {
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         await tasksService.claimTask(createdTask.entry.id, simpleApp);
 
-        priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: priority });
-        await tasksService.claimTask(priorityTask.entry.id, simpleApp);
+        noPriorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 0 });
+        lowPriorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 1 });
+        normalPriorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 2 });
+        hightPriorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: 3 });
+        await tasksService.claimTask(noPriorityTask.entry.id, simpleApp);
+        await tasksService.claimTask(lowPriorityTask.entry.id, simpleApp);
+        await tasksService.claimTask(normalPriorityTask.entry.id, simpleApp);
+        await tasksService.claimTask(hightPriorityTask.entry.id, simpleApp);
 
         notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
         await tasksService.claimTask(notDisplayedTask.entry.id, candidateBaseApp);
@@ -193,15 +198,14 @@ describe('Edit task filters and task list properties', () => {
         });
 
         it('[C290087] Should display tasks ordered by priority when Priority is selected from sort dropdown', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Priority');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('ASC');
 
-            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Priority', 'NUMBER')).toBe(true);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Priority', 'PRIORITY')).toBe(true);
 
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Priority', 'NUMBER')).toBe(true);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Priority', 'PRIORITY')).toBe(true);
         });
 
         it('[C307115] Should display tasks sorted by owner when owner is selected from sort dropdown', async () => {

@@ -105,7 +105,8 @@
     "PEOPLE_CLOUD": "メンバーのクラウドコンポーネント",
     "GROUPS_CLOUD": "グループのクラウドコンポーネント",
     "CONFIRM-DIALOG": "確認ダイアログ",
-    "COMMUNITY": "Community"
+    "COMMUNITY": "Community",
+    "SERVICE_TASK_LIST": "サービスタスクリスト"
   },
   "TRASHCAN": {
     "ACTIONS": {

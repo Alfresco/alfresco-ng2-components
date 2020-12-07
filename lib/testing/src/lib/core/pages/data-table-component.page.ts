@@ -171,6 +171,8 @@ export class DataTableComponentPage {
             sortedList = sortedList.sort();
         } else if (listType.toLocaleLowerCase() === 'number') {
             sortedList = sortedList.sort((a, b) => a - b);
+        } else if (listType.toLocaleLowerCase() === 'priority') {
+            sortedList = sortedList.sort(this.sortPriority);
         }
 
         if (sortOrder.toLocaleLowerCase() === 'desc') {
@@ -178,6 +180,34 @@ export class DataTableComponentPage {
         }
 
         return initialList.toString() === sortedList.toString();
+    }
+
+    sortPriority(a: string, b: string) {
+        if (a === b) {
+            return 0;
+        }
+
+        if (a.toLocaleLowerCase() === 'none') {
+            return -1;
+        }
+
+        if (a.toLocaleLowerCase() === 'low') {
+            if (b === 'none') {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+
+        if (a.toLocaleLowerCase() === 'normal') {
+            if (b.toLocaleLowerCase() === 'high') {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+
+        return 1;
     }
 
     async rightClickOnRow(columnName: string, columnValue: string): Promise<void> {
@@ -198,7 +228,7 @@ export class DataTableComponentPage {
     async rightClickOnItem(columnName: string, columnValue: string): Promise<void> {
         const row = this.getRow(columnName, columnValue);
         await BrowserActions.rightClick(row);
-   }
+    }
 
     getFileHyperlink(filename: string): ElementFinder {
         return element(by.cssContainingText('adf-name-column[class*="adf-datatable-link"] span', filename));

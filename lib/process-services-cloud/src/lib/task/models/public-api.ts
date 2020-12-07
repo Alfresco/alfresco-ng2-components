@@ -15,12 +15,4 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-
-@Component({
-    templateUrl: './report-issue.component.html',
-    styleUrls: [`./report-issue.component.scss`]
-})
-export class ReportIssueComponent {
-
-}
+ export * from './task.model';

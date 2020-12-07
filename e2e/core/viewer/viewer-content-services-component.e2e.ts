@@ -423,7 +423,7 @@ describe('Content Services Viewer', () => {
     });
 
     describe('Viewer - version update with unsupported file', () => {
-        it('[C587084] Should display the preview for an unsupported file', async () => {
+        it('[C587084] Should display unknown format the preview for an unsupported file', async () => {
             await changeFileNameInViewer(unsupportedFile.name, 'generic-unsupported-file-1st.3DS');
             await uploadNewVersion(jpgFile.name, unsupportedFileByLocation.location);
             await previewUnsupportedFile(unsupportedFileByLocation.name);

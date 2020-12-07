@@ -48,6 +48,7 @@ In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 |artifact-to-s3    |Get artifact to S3 |
 |docker-publish    |publish docker image|
 |init-aae-env      |Init env|
+|init-aps-env      |Init aps|
 |kubectl-delete    |delete kubectl |
 |kubectl-image     |This command allows you to update a specific service on the rancher env with a specific tag |
 |npm-publish    | publish on npm |
@@ -55,6 +56,7 @@ In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 |update-version     |This command allows you to update the adf dependencies and js-api with different versions Update adf libs and js-api with latest alpha|
 |licenses   |Create a 3th party license file |
 |audit     |Check the security risk dependency in your package.json |
+|scan-env   |Scan the environment to show its status    |
 
 ## Examples
 

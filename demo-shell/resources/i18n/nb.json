@@ -105,7 +105,8 @@
     "PEOPLE_CLOUD": "Personsky-komponent",
     "GROUPS_CLOUD": "Gruppesky-kompontent",
     "CONFIRM-DIALOG": "Bekreftelsesdialog",
-    "COMMUNITY": "Community"
+    "COMMUNITY": "Community",
+    "SERVICE_TASK_LIST": "Serviceoppgaveliste"
   },
   "TRASHCAN": {
     "ACTIONS": {

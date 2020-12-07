@@ -279,6 +279,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         this.editTaskFilterForm.get(property.attributes?.to).setValue(
             dateRange.endDate ? dateRange.endDate : null
         );
+        this.editTaskFilterForm.get(property.attributes.dateType).setValue(DateCloudFilterType.RANGE);
     }
 
     onChangedUser(users: IdentityUserModel[], userProperty: TaskFilterProperties) {

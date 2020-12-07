@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Annoit tuntemattoman käyttäjänimen tai salasanan",
       "LOGIN-ERROR-PROVIDERS": "Palveluiden määritystä ei voi poistaa",
       "LOGIN-ERROR-CORS": "Ilmeni CORS-poikkeus, tarkista palvelinmääritykset",
-      "LOGIN-ERROR-CSRF": "Ilmeni CSRF-poikkeus, määritä asetuksen \"disableCSRF\": true kohteessa app.config.json",
+      "LOGIN-ERROR-CSRF": "Ilmeni CSRF-poikkeus, määritä asetuken \"disableCSRF\": arvoksi true kohteessa app.config.json",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services -säilö on Vain luku -tilassa",
       "SSO-WRONG-CONFIGURATION": "Kertakirjautumisen todennuspalvelimeen ei saada yhteyttä"
     },
@@ -422,6 +422,16 @@
     "502": {
       "TITLE": "Tapahtui virhe.",
       "DESCRIPTION": "Virheellinen yhdyskäytävä, yritä uudelleen tai ota yhteyttä IT-tukeen [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Takaisin aloitussivulle"
+      }
+    },
+    "503": {
+      "TITLE": "Tapahtui virhe.",
+      "DESCRIPTION": "Palvelu ei ole tilapäisesti saatavilla [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },

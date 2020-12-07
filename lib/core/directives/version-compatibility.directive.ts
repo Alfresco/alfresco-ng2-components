@@ -17,6 +17,7 @@
 
 import { Directive, Input, ViewContainerRef, TemplateRef } from '@angular/core';
 import { VersionCompatibilityService } from '../services/version-compatibility.service';
+import { take } from 'rxjs/operators';
 
 @Directive({
     selector: '[adf-acs-version]'
@@ -37,11 +38,10 @@ export class VersionCompatibilityDirective {
     }
 
     private validateAcsVersion(requiredVersion: string) {
-        this.versionCompatibilityService.acsVersionInitialized$.subscribe(() => {
+        this.versionCompatibilityService.acsVersionInitialized$.pipe(take(1)).subscribe(() => {
+            this.viewContainer.clear();
             if (requiredVersion && this.versionCompatibilityService.isVersionSupported(requiredVersion)) {
                 this.viewContainer.createEmbeddedView(this.templateRef);
-            } else {
-                this.viewContainer.clear();
             }
         });
     }

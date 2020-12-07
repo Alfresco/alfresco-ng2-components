@@ -68,7 +68,7 @@ describe('Task Header cloud component', () => {
     let groupInfo: any;
     let testUser: any;
     let unclaimedTask: any;
-    const priority = 0; // Not set
+    const priority = 0;
     const description = 'descriptionTask';
     const formatDate = 'MMM D, YYYY';
     const dateTimeFormat = 'MMM D, Y, H:mm';
@@ -146,7 +146,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(isValueInvalid(basicCreatedTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : basicCreatedTask.entry.description);
         await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-        await expect(await taskHeaderCloudPage.getPriority()).toEqual('Not set');
+        await expect(await taskHeaderCloudPage.getPriority()).toEqual('None');
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!basicCreatedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : basicCreatedTask.entry.category);
         await expect(await taskHeaderCloudPage.getDueDate()).toEqual(isValueInvalid(basicCreatedTask.entry.dueDate) ?
@@ -170,7 +170,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(isValueInvalid(completedTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : completedTask.entry.description);
         await expect(await taskHeaderCloudPage.getStatus()).toEqual('COMPLETED');
-        await expect(await taskHeaderCloudPage.getReadonlyPriority()).toEqual('Not set');
+        await expect(await taskHeaderCloudPage.getReadonlyPriority()).toEqual('None');
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!completedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : completedTask.entry.category);
         await expect(await taskHeaderCloudPage.getDueDate()).toEqual(isValueInvalid(completedTask.entry.dueDate) ?
@@ -194,7 +194,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(isValueInvalid(subTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : subTask.entry.description);
         await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-        await expect(await taskHeaderCloudPage.getPriority()).toEqual('Not set');
+        await expect(await taskHeaderCloudPage.getPriority()).toEqual('None');
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!subTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : subTask.entry.category);
         await expect(await taskHeaderCloudPage.getDueDate()).toEqual(isValueInvalid(subTask.entry.dueDate) ? CONSTANTS.TASK_DETAILS.NO_DATE : subTaskCreatedDate);

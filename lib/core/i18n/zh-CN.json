@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "您已输入未知用户名或密码",
       "LOGIN-ERROR-PROVIDERS": "提供商未定义",
       "LOGIN-ERROR-CORS": "CORS 异常，检查您的服务器配置",
-      "LOGIN-ERROR-CSRF": "CSRF 异常，设置 \"disableCSRF\": true in app.config.json",
+      "LOGIN-ERROR-CSRF": "CSRF 异常，在 app.config.json 中设置 \"disableCSRF\": true",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services 存储库为只读模式",
       "SSO-WRONG-CONFIGURATION": "SSO 身份验证服务器无法连接"
     },
@@ -422,6 +422,16 @@
     "502": {
       "TITLE": "出现错误。",
       "DESCRIPTION": "错误分支，请重试或联系 IT 支持 [502]。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "返回到主页"
+      }
+    },
+    "503": {
+      "TITLE": "出现错误。",
+      "DESCRIPTION": "服务暂时不可用 [503]。",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },

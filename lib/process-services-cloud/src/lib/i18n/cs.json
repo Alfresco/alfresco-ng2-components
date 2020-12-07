@@ -14,6 +14,7 @@
       "COMPLETED_BY": "Dokončil(a)",
       "ID": "ID",
       "INITIATOR": "Iniciátor",
+      "STARTED_BY": "Zahájil(a)",
       "APP_NAME": "Název aplikace",
       "BUSINESS_KEY": "Obchodní klíč",
       "DESCRIPTION": "Popis",
@@ -72,7 +73,8 @@
           "CANDIDATE_GROUP": "Skupina kandidáta",
           "FORM": "Formulář",
           "DATE": "Zvolit datum",
-          "NONE": "Žádné"
+          "NONE": "Žádné",
+          "PRIORITY": "Priorita"
         },
         "ACTION": {
           "START": "Spustit",
@@ -91,7 +93,13 @@
       "DUE_DATE": "Termín",
       "CREATED": "Vytvořeno",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "Dokončil(a)"
+      "COMPLETED_BY": "Dokončil(a)",
+      "PRIORITY_VALUES": {
+        "NOT_SET": "Není nastaven",
+        "LOW": "Nízká",
+        "NORMAL": "Střední",
+        "HIGH": "Vysoká"
+      }
     },
     "LIST": {
       "MESSAGES": {
@@ -101,9 +109,24 @@
       }
     }
   },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "Název aktivity",
+      "ACTIVITY_TYPE": "Stav",
+      "ID": "ID",
+      "COMPLETED_DATE": "Datum dokončení",
+      "STARTED_DATE": "Datum zahájení",
+      "STATUS": "Stav"
+    }
+  },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Moje úkoly",
     "QUEUED_TASKS": "Úkoly ve frontě",
+    "COMPLETED_TASKS": "Dokončené úkoly"
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "Všechny úlohy služby",
+    "ERRORED_TASKS": "Úlohy s chybou",
     "COMPLETED_TASKS": "Dokončené úkoly"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -145,12 +168,33 @@
       "DUE_DATE": "Termín",
       "SORT": "Třídění",
       "START_DATE": "Datum zahájení",
-      "COMPLETED_BY": "Dokončil(a)"
+      "COMPLETED_BY": "Dokončil(a)",
+      "COMPLETED_DATE": "Datum dokončení",
+      "CREATED_DATE": "Datum vytvoření",
+      "CANDIDATE_GROUPS": "Skupiny kandidátů"
     },
     "DIALOG": {
       "TITLE": "Uložit filtr jako",
       "SAVE": "Uložit",
       "CANCEL": "Zrušit"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "Název aplikace",
+      "SERVICE_TASK_ID": "ID úlohy služby",
+      "SERVICE_NAME": "Název služby",
+      "ELEMENT_ID": "ID prvku",
+      "PROCESS_DEF_NAME": "Název definice procesu",
+      "PROCESS_DEF_ID": "ID definice procesu",
+      "PROCESS_INSTANCE_ID": "ID instance procesu",
+      "STATUS": "Stav",
+      "DIRECTION": "Směr",
+      "ACTIVITY_NAME": "Název aktivity",
+      "ACTIVITY_TYPE": "Typ aktivity",
+      "SORT": "Třídění",
+      "STARTED_DATE": "Datum zahájení",
+      "COMPLETED_DATE": "Datum dokončení"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -170,8 +214,9 @@
       "LAST_MODIFIED_DATE_FORM": "Poslední úprava od",
       "LAST_MODIFIED_TO": "Poslední úprava do",
       "PROCESS_NAME": "Název procesu",
-      "APP_VERSION": "Verze vydání aplikace",
+      "APP_VERSION": "Verze aplikace",
       "STARTED_DATE": "Datum zahájení",
+      "STARTED_BY": "Zahájil(a)",
       "COMPLETED_DATE": "Datum dokončení",
       "DATE_RANGE": {
         "NO_DATE": "Žádné datum",
@@ -298,5 +343,12 @@
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Vyplnit pole formuláře metadaty tohoto souboru"
+  },
+  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
+    "ASSIGNED_TO_ME": "Přiděleno mně",
+    "UNASSIGNED": "Nepřiděleno",
+    "LIST_OF_CANDIDATE_USERS": "Seznam uživatelů-kandidátů",
+    "ASSIGNEE": "Pověřená osoba",
+    "ASSIGNMENT_TYPE": "Typ přidělení"
   }
 }

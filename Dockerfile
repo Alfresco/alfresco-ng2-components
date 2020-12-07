@@ -1,12 +1,29 @@
-FROM nginx:stable-alpine
-LABEL version="3.0.0"
+# 1. Generate licenses
 
-ARG PROJECT_NAME=demo-shell
+FROM node:12.16.2-alpine3.9 AS builder
+WORKDIR /usr/src/alfresco
+COPY package.json package.json
 
-COPY ./docker/nginx.conf /etc/nginx/nginx.conf
-COPY ./docker/entrypoint.sh /
+RUN mkdir -p ./licenses && \
+  yarn licenses list > ./licenses/licenses.txt && \
+  yarn licenses generate-disclaimer > ./licenses/disclaimer.txt
 
-WORKDIR /usr/share/nginx/html
-COPY dist/$PROJECT_NAME .
+# 2. Generate image
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+FROM nginxinc/nginx-unprivileged:1.19.3-alpine
+
+ARG PROJECT_NAME
+
+COPY docker/default.conf.template /etc/nginx/templates/
+COPY docker/docker-entrypoint.d/* /docker-entrypoint.d/
+
+COPY dist/$PROJECT_NAME /usr/share/nginx/html/
+COPY dist/$PROJECT_NAME/app.config.json /etc/nginx/templates/app.config.json.template
+COPY --from=builder /usr/src/alfresco/licenses /usr/share/nginx/html/
+
+USER root
+RUN chmod a+w -R /etc/nginx/conf.d
+USER 101
+
+ENV BASE_PATH=/
+ENV NGINX_ENVSUBST_OUTPUT_DIR=/etc/nginx/conf.d

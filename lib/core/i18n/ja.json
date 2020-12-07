@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "入力したユーザー名またはパスワードが間違っています",
       "LOGIN-ERROR-PROVIDERS": "プロバイダは必ず定義する必要があります",
       "LOGIN-ERROR-CORS": "CORS の例外が発生しました。サーバーの設定を確認してください",
-      "LOGIN-ERROR-CSRF": "CSRF の例外が発生しました。app.config.json の \"disableCSRF\": true に設定してください",
+      "LOGIN-ERROR-CSRF": "CSRF の例外が発生しました。app.config.json で \"disableCSRF\": true を設定してください。",
       "LOGIN-ECM-LICENSE": "Alfresco Content Services のリポジトリが読み取り専用モードです",
       "SSO-WRONG-CONFIGURATION": "SSO 認証サーバーにアクセスできません"
     },
@@ -422,6 +422,16 @@
     "502": {
       "TITLE": "エラーが発生しました。",
       "DESCRIPTION": "不正なゲートウェイです。もう一度操作をやり直すか、IT 担当者に連絡してください [502]。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "ホームへ戻る"
+      }
+    },
+    "503": {
+      "TITLE": "エラーが発生しました。",
+      "DESCRIPTION": "サービスは一時的に中断しています [503]。",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },

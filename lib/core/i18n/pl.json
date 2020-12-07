@@ -255,7 +255,7 @@
       "LOGIN-ERROR-CREDENTIALS": "Wprowadzono nieznaną nazwę użytkownika lub hasło.",
       "LOGIN-ERROR-PROVIDERS": "Nie można zidentyfikować dostawców.",
       "LOGIN-ERROR-CORS": "Wystąpił wyjątek CORS. Sprawdź konfigurację serwera.",
-      "LOGIN-ERROR-CSRF": "Wystąpił wyjątek CSRF. Ustaw w app.config.json wartość \"disableCSRF\": true .",
+      "LOGIN-ERROR-CSRF": "Wyjątek CSRF, ustaw „disableCSRF”: true w pliku app.config.json",
       "LOGIN-ECM-LICENSE": "Repozytorium usług Alfresco Content Services jest w trybie tylko do odczytu.",
       "SSO-WRONG-CONFIGURATION": "Serwer uwierzytelniania SSO jest nieosiągalny"
     },
@@ -422,6 +422,16 @@
     "502": {
       "TITLE": "Wystąpił błąd.",
       "DESCRIPTION": "Nieodpowiednia brama, spróbuj ponownie lub skontaktuj się z działem IT [502].",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Powrót do strony głównej"
+      }
+    },
+    "503": {
+      "TITLE": "Wystąpił błąd.",
+      "DESCRIPTION": "Usługa niedostępna tymczasowo [503].",
       "SECONDARY_BUTTON": {
         "TEXT": ""
       },

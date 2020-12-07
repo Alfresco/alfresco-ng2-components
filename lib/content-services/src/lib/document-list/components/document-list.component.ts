@@ -201,7 +201,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * before delivering it.
      */
     @Input()
-    sortingMode = 'server';
+    sortingMode: 'server' | 'client' = 'server';
 
     /** The inline style to apply to every row. See
      * the Angular NgStyle
@@ -501,7 +501,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.ngZone.run(() => {
             this.resetSelection();
             if (this.node) {
-                this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectNodesBasedOnSelectionMode());
+                if (this.data) {
+                    this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectNodesBasedOnSelectionMode());
+                }
                 this.onPreselectNodes();
                 this.syncPagination();
                 this.onDataReady(this.node);
@@ -698,7 +700,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
-            this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.getPreselectNodesBasedOnSelectionMode());
+            if (this.data) {
+                this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.getPreselectNodesBasedOnSelectionMode());
+            }
             this.onPreselectNodes();
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
@@ -707,8 +711,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onSortingChanged(event: CustomEvent) {
         this.orderBy = this.buildOrderByArray(event.detail.sortingKey, event.detail.direction);
-        this.reload();
         this.sortingSubject.next([this.additionalSorting, event.detail]);
+
+        if (this.sortingMode === 'server') {
+            this.reload();
+        }
     }
 
     private buildOrderByArray(currentKey: string, currentDirection: string): string[] {

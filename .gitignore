@@ -3,6 +3,7 @@ node_modules
 bundles
 workspace.xml
 .idea/
+*.iml
 .env.*
 .env
 dist/

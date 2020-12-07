@@ -14,6 +14,7 @@
       "COMPLETED_BY": "Terminé le",
       "ID": "ID",
       "INITIATOR": "Initiateur",
+      "STARTED_BY": "Démarré par",
       "APP_NAME": "Nom de l'application",
       "BUSINESS_KEY": "Clé de processus métier",
       "DESCRIPTION": "Description",
@@ -72,7 +73,8 @@
           "CANDIDATE_GROUP": "Groupe de candidats",
           "FORM": "Formulaire",
           "DATE": "Choisir la date",
-          "NONE": "Aucun"
+          "NONE": "Aucun",
+          "PRIORITY": "Priorité"
         },
         "ACTION": {
           "START": "Démarrer",
@@ -91,7 +93,13 @@
       "DUE_DATE": "Date d'échéance",
       "CREATED": "Créé",
       "JSON_CELL": "Json",
-      "COMPLETED_BY": "Terminé le"
+      "COMPLETED_BY": "Terminé le",
+      "PRIORITY_VALUES": {
+        "NOT_SET": "Non défini",
+        "LOW": "Basse",
+        "NORMAL": "Normale",
+        "HIGH": "Élevée"
+      }
     },
     "LIST": {
       "MESSAGES": {
@@ -101,9 +109,24 @@
       }
     }
   },
+  "ADF_CLOUD_SERVICE_TASK_LIST": {
+    "PROPERTIES": {
+      "ACTIVITY_NAME": "Nom de l'activité",
+      "ACTIVITY_TYPE": "Statut",
+      "ID": "ID",
+      "COMPLETED_DATE": "Date de fin",
+      "STARTED_DATE": "Date de début",
+      "STATUS": "Statut"
+    }
+  },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Mes tâches",
     "QUEUED_TASKS": "Tâches dans la file d'attente",
+    "COMPLETED_TASKS": "Tâches terminées"
+  },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "Toutes les tâches de service",
+    "ERRORED_TASKS": "Tâches avec une erreur",
     "COMPLETED_TASKS": "Tâches terminées"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
@@ -145,12 +168,33 @@
       "DUE_DATE": "Date d'échéance",
       "SORT": "Trier",
       "START_DATE": "Date de début",
-      "COMPLETED_BY": "Terminé le"
+      "COMPLETED_BY": "Terminé le",
+      "COMPLETED_DATE": "Date de fin",
+      "CREATED_DATE": "Date de création",
+      "CANDIDATE_GROUPS": "Groupes candidats"
     },
     "DIALOG": {
       "TITLE": "Enregistrer le filtre sous",
       "SAVE": "Enregistrer",
       "CANCEL": "Annuler"
+    }
+  },
+  "ADF_CLOUD_EDIT_SERVICE_TASK_FILTER": {
+    "LABEL": {
+      "APP_NAME": "Nom de l'application",
+      "SERVICE_TASK_ID": "ID de la tâche de service",
+      "SERVICE_NAME": "Nom du service",
+      "ELEMENT_ID": "ID de l'élément",
+      "PROCESS_DEF_NAME": "Nom de la définition de processus",
+      "PROCESS_DEF_ID": "ID de la définition du processus",
+      "PROCESS_INSTANCE_ID": "ID de l'instance de processus",
+      "STATUS": "Statut",
+      "DIRECTION": "Direction",
+      "ACTIVITY_NAME": "Nom de l'activité",
+      "ACTIVITY_TYPE": "Type d'activité",
+      "SORT": "Trier",
+      "STARTED_DATE": "Date de début",
+      "COMPLETED_DATE": "Date de fin"
     }
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
@@ -172,6 +216,7 @@
       "PROCESS_NAME": "Nom du processus",
       "APP_VERSION": "Version de l'application",
       "STARTED_DATE": "Date de début",
+      "STARTED_BY": "Démarré par",
       "COMPLETED_DATE": "Date de fin",
       "DATE_RANGE": {
         "NO_DATE": "Aucune date",
@@ -298,5 +343,12 @@
   },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Remplir les champs du formulaire avec les métadonnées de ce fichier"
+  },
+  "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
+    "ASSIGNED_TO_ME": "Qui m'est assigné",
+    "UNASSIGNED": "Non assigné",
+    "LIST_OF_CANDIDATE_USERS": "Liste des utilisateurs candidats",
+    "ASSIGNEE": "Personne assignée",
+    "ASSIGNMENT_TYPE": "Type d'affectation"
   }
 }
