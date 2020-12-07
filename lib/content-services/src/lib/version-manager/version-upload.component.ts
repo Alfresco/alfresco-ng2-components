@@ -92,7 +92,7 @@ export class VersionUploadComponent {
     }
 
     onSuccess(event: any) {
-        this.success.emit(event)
+        this.success.emit(event);
     }
 
     onError(event: any) {
