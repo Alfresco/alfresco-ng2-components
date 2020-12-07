@@ -13,14 +13,14 @@ Simple container for headers, titles, actions and breadcrumbs.
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
-    -   [Transclusions](#transclusions)
--   [Class members](#class-members)
-    -   [Properties](#properties)
--   [Details](#details)
-    -   [Dropdown menu](#dropdown-menu)
-    -   [Custom color](#custom-color)
--   [See also](#see-also)
+*   [Basic Usage](#basic-usage)
+    *   [Transclusions](#transclusions)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+*   [Details](#details)
+    *   [Dropdown menu](#dropdown-menu)
+    *   [Custom color](#custom-color)
+*   [See also](#see-also)
 
 ## Basic Usage
 
@@ -72,10 +72,10 @@ pushed to the right by a spacer:
 
 ### Properties
 
-| Name  | Type                                                                                                            | Default value | Description                                                                            |
-| ----- | --------------------------------------------------------------------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------- |
-| color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |               | Toolbar color. Can be changed to empty value (default), `primary`, `accent` or `warn`. |
-| title | `string`                                                                                                        | ""            | Toolbar title.                                                                         |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |  | Toolbar color. Can be changed to empty value (default), `primary`, `accent` or `warn`. |
+| title | `string` | "" | Toolbar title. |
 
 ## Details
 
@@ -133,5 +133,5 @@ For example:
 
 ## See also
 
--   [Toolbar Divider component](toolbar-divider.component.md)
--   [Toolbar Title component](toolbar-title.component.md)
+*   [Toolbar Divider component](toolbar-divider.component.md)
+*   [Toolbar Title component](toolbar-title.component.md)

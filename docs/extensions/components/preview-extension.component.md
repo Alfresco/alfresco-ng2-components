@@ -16,12 +16,12 @@ an example of a real working viewer extension project.
 
 ### Properties
 
-| Name      | Type                                                                                                     | Default value | Description                                                                                                                               |
-| --------- | -------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| extension | `string`                                                                                                 |               | File extension (.jpg, .png, etc) for the viewer.                                                                                          |
-| id        | `string`                                                                                                 |               | ID string of the component to preview.                                                                                                    |
-| node      | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |               | [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) containing the content to display. |
-| url       | `string`                                                                                                 |               | URL of the content in the repository.                                                                                                     |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| extension | `string` |  | File extension (.jpg, .png, etc) for the viewer. |
+| id | `string` |  | ID string of the component to preview. |
+| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |  | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) containing the content to display. |
+| url | `string` |  | URL of the content in the repository. |
 
 ## Details
 
@@ -101,5 +101,5 @@ further details of how to develop extensions.
 
 ## See also
 
--   [Extension service](../services/extension.service.md)
--   [App extensions](../../user-guide/app-extensions.md)
+*   [Extension service](../services/extension.service.md)
+*   [App extensions](../../user-guide/app-extensions.md)

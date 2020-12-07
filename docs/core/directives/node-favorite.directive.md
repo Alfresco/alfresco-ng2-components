@@ -41,15 +41,15 @@ export class MyComponent {
 
 ### Properties
 
-| Name      | Type                                                                                                                    | Default value | Description                            |
-| --------- | ----------------------------------------------------------------------------------------------------------------------- | ------------- | -------------------------------------- |
-| selection | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[]           | Array of nodes to toggle as favorites. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| selection | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[] | Array of nodes to toggle as favorites. |
 
 ### Events
 
-| Name   | Type                                                              | Description                                    |
-| ------ | ----------------------------------------------------------------- | ---------------------------------------------- |
-| error  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the favorite setting fails.       |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the favorite setting fails. |
 | toggle | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the favorite setting is complete. |
 
 ## Details
@@ -75,9 +75,9 @@ which also lets you add extra styling to the element:
 
 The directive behaves as follows:
 
--   If there are no favorite nodes in the selection, then all are marked as favorites
--   If there are one or more favorite nodes in the selection, then only those that are not
+*   If there are no favorite nodes in the selection, then all are marked as favorites
+*   If there are one or more favorite nodes in the selection, then only those that are not
     favorites are marked
--   If all nodes in the selection are favorites, then they all have their favorite status removed
+*   If all nodes in the selection are favorites, then they all have their favorite status removed
 
 See the **Demo Shell** for examples of usage.

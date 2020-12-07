@@ -13,15 +13,15 @@ Gets version and license information for Process Services and Content Services.
 
 ### Methods
 
--   **getBPMSystemProperties**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SystemPropertiesRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/SystemPropertiesRepresentation.md)`>`<br/>
+*   **getBPMSystemProperties**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SystemPropertiesRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/SystemPropertiesRepresentation.md)`>`<br/>
 
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SystemPropertiesRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/SystemPropertiesRepresentation.md)`>` - 
--   **getBpmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>`<br/>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SystemPropertiesRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/SystemPropertiesRepresentation.md)`>` -
+*   **getBpmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>`<br/>
     Gets product information for Process Services.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>` - ProductVersionModel containing product details
--   **getEcmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>`<br/>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>` - ProductVersionModel containing product details
+*   **getEcmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>`<br/>
     Gets product information for Content Services.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>` - ProductVersionModel containing product details
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>` - ProductVersionModel containing product details
 
 ## Details
 
@@ -33,4 +33,4 @@ to learn more about the REST API used by this service.
 
 ## See also
 
--   [Product version model](../models/product-version.model.md)
+*   [Product version model](../models/product-version.model.md)

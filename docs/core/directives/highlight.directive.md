@@ -25,11 +25,11 @@ Adds highlighting to selected sections of an HTML element's content.
 
 ### Properties
 
-| Name         | Type     | Default value   | Description                                |
-| ------------ | -------- | --------------- | ------------------------------------------ |
-| classToApply | `string` | "adf-highlight" | CSS class used to apply highlighting.      |
-| search       | `string` | ""              | Text to highlight.                         |
-| selector     | `string` | ""              | Class selector for highlightable elements. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| classToApply | `string` | "adf-highlight" | CSS class used to apply highlighting. |
+| search | `string` | "" | Text to highlight. |
+| selector | `string` | "" | Class selector for highlightable elements. |
 
 ## Details
 
@@ -52,8 +52,8 @@ If the search string contain spaces then each section between the spaces will
 be treated as a separate item to highlight. For example, you could use this to
 highlight all occurrences of words in a list.
 
-The highlighting works by adding an HTML &lt;span> element around the
-selected text. The &lt;span> includes a CSS class; this defaults to
+The highlighting works by adding an HTML \<span> element around the
+selected text. The \<span> includes a CSS class; this defaults to
 "adf-highlight" but you can supply your own class using the `adf-highlight-class`
 property:
 
@@ -70,5 +70,5 @@ property:
 
 ## See also
 
--   [Text highlight pipe](../pipes/text-highlight.pipe.md)
--   [Highlight transform service](../services/highlight-transform.service.md)
+*   [Text highlight pipe](../pipes/text-highlight.pipe.md)
+*   [Highlight transform service](../services/highlight-transform.service.md)

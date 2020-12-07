@@ -36,16 +36,16 @@ Adds "infinite" pagination to the component it is used with.
 
 ### Properties
 
-| Name      | Type                                                                                  | Default value | Description                                                 |
-| --------- | ------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------- |
-| isLoading | `boolean`                                                                             | false         | Is a new page loading?                                      |
-| pageSize  | `number`                                                                              |               | Number of items that are added with each "load more" event. |
-| target    | [`PaginatedComponent`](../../../lib/core/pagination/paginated-component.interface.ts) |               | Component that provides custom pagination support.          |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| isLoading | `boolean` | false | Is a new page loading? |
+| pageSize | `number` |  | Number of items that are added with each "load more" event. |
+| target | [`PaginatedComponent`](../../../lib/core/pagination/paginated-component.interface.ts) |  | Component that provides custom pagination support. |
 
 ### Events
 
-| Name     | Type                                                                                                                                             | Description                                     |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | loadMore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`RequestPaginationModel`](../../../lib/core/models/request-pagination.model.ts)`>` | Emitted when the "Load More" button is clicked. |
 
 ## Details
@@ -65,5 +65,5 @@ See the [Pagination component](pagination.component.md) for more information abo
 
 ## See also
 
--   [Document list component](../../content-services/components/document-list.component.md)
--   [Pagination component](pagination.component.md)
+*   [Document list component](../../content-services/components/document-list.component.md)
+*   [Pagination component](pagination.component.md)

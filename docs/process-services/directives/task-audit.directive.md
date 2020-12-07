@@ -27,16 +27,16 @@ Fetches the Task Audit information in PDF or JSON format.
 
 ### Properties
 
-| Name     | Type      | Default value | Description                                                             |
-| -------- | --------- | ------------- | ----------------------------------------------------------------------- |
-| download | `boolean` | true          | Enables downloading of the audit when the decorated element is clicked. |
-| fileName | `string`  | "Audit"       | Name of the downloaded file (for PDF downloads).                        |
-| format   | `string`  | "pdf"         | Format of the audit information. Can be "pdf" or "json".                |
-| taskId   | `string`  |               | (**required**) The id of the task.                                      |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| download | `boolean` | true | Enables downloading of the audit when the decorated element is clicked. |
+| fileName | `string` | "Audit" | Name of the downloaded file (for PDF downloads). |
+| format | `string` | "pdf" | Format of the audit information. Can be "pdf" or "json". |
+| taskId | `string` |  | (**required**) The id of the task. |
 
 ### Events
 
-| Name    | Type                                                              | Description                                    |
-| ------- | ----------------------------------------------------------------- | ---------------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | clicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the decorated element is clicked. |
-| error   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs.                  |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |

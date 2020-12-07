@@ -13,23 +13,23 @@ Stores items in the form of key-value pairs.
 
 ### Methods
 
--   **clear**()<br/>
+*   **clear**()<br/>
     Removes all currently stored items.
--   **getItem**(key: `string`): `string|null`<br/>
+*   **getItem**(key: `string`): `string|null`<br/>
     Gets an item.
-    -   _key:_ `string`  - Key to identify the item
-    -   **Returns** `string|null` - The item (if any) retrieved by the key
--   **hasItem**(key: `string`): `boolean`<br/>
+    *   *key:* `string`  - Key to identify the item
+    *   **Returns** `string|null` - The item (if any) retrieved by the key
+*   **hasItem**(key: `string`): `boolean`<br/>
     Is any item currently stored under `key`?
-    -   _key:_ `string`  - Key identifying item to check
-    -   **Returns** `boolean` - True if key retrieves an item, false otherwise
--   **removeItem**(key: `string`)<br/>
+    *   *key:* `string`  - Key identifying item to check
+    *   **Returns** `boolean` - True if key retrieves an item, false otherwise
+*   **removeItem**(key: `string`)<br/>
     Removes a single item.
-    -   _key:_ `string`  - Key to identify the item
--   **setItem**(key: `string`, data: `string`)<br/>
+    *   *key:* `string`  - Key to identify the item
+*   **setItem**(key: `string`, data: `string`)<br/>
     Stores an item
-    -   _key:_ `string`  - Key to identify the item
-    -   _data:_ `string`  - Data to store
+    *   *key:* `string`  - Key to identify the item
+    *   *data:* `string`  - Data to store
 
 ## Details
 
@@ -59,15 +59,15 @@ In order to achieve this, you will only need to set your app identifier under th
 ```
 
 **Important note**
-This identifier must be unique to the app to guarantee that it has its own storage. 
+This identifier must be unique to the app to guarantee that it has its own storage.
 
 ### SSO storagePrefix related scenario
 
 The storagePrefix can allow you to login with multiple user in the same browser only if:
-    \- Or You don't use the implicit flow
-    \- Or You use implicit flow you use different AIMS instances for any app
+\- Or You don't use the implicit flow
+\- Or You use implicit flow you use different AIMS instances for any app
 
 ## See also
 
--   [Cookie service](cookie.service.md)
--   [Content service](content.service.md)
+*   [Cookie service](cookie.service.md)
+*   [Content service](content.service.md)

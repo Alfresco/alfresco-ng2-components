@@ -13,18 +13,18 @@ Copies text to the clipboard.
 
 ### Methods
 
--   **copyContentToClipboard**(content: `string`, message: `string`)<br/>
+*   **copyContentToClipboard**(content: `string`, message: `string`)<br/>
     Copies a text string to the clipboard.
-    -   _content:_ `string`  - Text to copy
-    -   _message:_ `string`  - Snackbar message to alert when copying happens
--   **copyToClipboard**(target: [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement)`|`[`HTMLTextAreaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement), message?: `string`)<br/>
+    *   *content:* `string`  - Text to copy
+    *   *message:* `string`  - Snackbar message to alert when copying happens
+*   **copyToClipboard**(target: [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement)`|`[`HTMLTextAreaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement), message?: `string`)<br/>
     Copies text from an HTML element to the clipboard.
-    -   _target:_ [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement)`|`[`HTMLTextAreaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement)  - HTML element to be copied
-    -   _message:_ `string`  - (Optional) Snackbar message to alert when copying happens
--   **isTargetValid**(target: [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement)`|`[`HTMLTextAreaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement)): `boolean`<br/>
+    *   *target:* [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement)`|`[`HTMLTextAreaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement)  - HTML element to be copied
+    *   *message:* `string`  - (Optional) Snackbar message to alert when copying happens
+*   **isTargetValid**(target: [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement)`|`[`HTMLTextAreaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement)): `boolean`<br/>
     Checks if the target element can have its text copied.
-    -   _target:_ [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement)`|`[`HTMLTextAreaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement)  - Target HTML element
-    -   **Returns** `boolean` - True if the text can be copied, false otherwise
+    *   *target:* [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement)`|`[`HTMLTextAreaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement)  - Target HTML element
+    *   **Returns** `boolean` - True if the text can be copied, false otherwise
 
 ## Details
 
@@ -35,4 +35,4 @@ copying operation takes place.
 
 ## See also
 
--   [Clipboard directive](../../core/directives/clipboard.directive.md)
+*   [Clipboard directive](../../core/directives/clipboard.directive.md)

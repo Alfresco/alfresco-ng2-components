@@ -11,17 +11,18 @@ Represents a main container component for custom search and faceted search setti
 
 ## Contents
 
--   [Basic usage](#basic-usage)
--   [Details](#details)
-    -   [Configuration](#configuration)
-    -   [Extra fields and filter queries](#extra-fields-and-filter-queries)
-    -   [Sorting](#sorting)
-    -   [Categories and widgets](#categories-and-widgets)
-    -   [Facet Fields](#facet-fields)
-    -   [Facet Queries](#facet-queries)
-    -   [Facet Intervals](#facet-intervals)
-    -   [Highlight](#highlight)
--   [See also](#see-also)
+*   [Basic usage](#basic-usage)
+    *   [Properties](#properties)
+*   [Details](#details)
+    *   [Configuration](#configuration)
+    *   [Extra fields and filter queries](#extra-fields-and-filter-queries)
+    *   [Sorting](#sorting)
+    *   [Categories and widgets](#categories-and-widgets)
+    *   [Facet Fields](#facet-fields)
+    *   [Facet Queries](#facet-queries)
+    *   [Facet Intervals](#facet-intervals)
+    *   [Highlight](#highlight)
+*   [See also](#see-also)
 
 ## Basic usage
 
@@ -44,9 +45,9 @@ to build and execute the query.
 You may find it useful to check out the following resources for background information
 before customizing the search UI:
 
--   [Search API](https://docs.alfresco.com/5.2/concepts/search-api.html)
--   [Alfresco Full Text Search Reference](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-intro.html)
--   [ACS API Explorer](https://api-explorer.alfresco.com/api-explorer/#!/search/search)
+*   [Search API](https://docs.alfresco.com/5.2/concepts/search-api.html)
+*   [Alfresco Full Text Search Reference](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-intro.html)
+*   [ACS API Explorer](https://api-explorer.alfresco.com/api-explorer/#!/search/search)
 
 ### Configuration
 
@@ -166,14 +167,14 @@ settings:
 }
 ```
 
-Note that the entries of the `filterQueries` array are joined using the `AND` operator. 
+Note that the entries of the `filterQueries` array are joined using the `AND` operator.
 
 ### Sorting
 
 The Sorting configuration section consists of two blocks:
 
--   `options`: a list of items that users can select from
--   `defaults`: predefined sorting to use by default
+*   `options`: a list of items that users can select from
+*   `defaults`: predefined sorting to use by default
 
 ```json
 {
@@ -258,7 +259,7 @@ page for full details of how to do this.
 Each type of [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) has its own settings.
 For example Number editors may parse minimum and maximum values, while Text editors can support value formats or length constraints.
 
-You can use `component.settings` to pass any information to a [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) using the 
+You can use `component.settings` to pass any information to a [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) using the
 [`SearchWidgetSettings`](../../../lib/content-services/src/lib/search/search-widget-settings.interface.ts) interface:
 
 ```ts
@@ -287,9 +288,9 @@ export interface SearchWidgetSettings {
 }
 ```
 
-Every field declared within the `facetFields` group is presented by a separate collapsible category at runtime. 
+Every field declared within the `facetFields` group is presented by a separate collapsible category at runtime.
 
-By default, users see only the top 5 entries. 
+By default, users see only the top 5 entries.
 If there are more than 5 entries, a button to show more items is displayed to let the user move to
 the next block of results.
 
@@ -488,13 +489,13 @@ then be added in each node entry response. An example partial response is shown 
 
 ## See also
 
--   [Search Query Builder service](../services/search-query-builder.service.md)
--   [Search Chip List Component](search-chip-list.component.md)
--   [Search Sorting Picker Component](search-sorting-picker.component.md)
--   [Search Widget Interface](../interfaces/search-widget.interface.md)
--   [Search check list component](search-check-list.component.md)
--   [Search date range component](search-date-range.component.md)
--   [Search number range component](search-number-range.component.md)
--   [Search radio component](search-radio.component.md)
--   [Search slider component](search-slider.component.md)
--   [Search text component](search-text.component.md)
+*   [Search Query Builder service](../services/search-query-builder.service.md)
+*   [Search Chip List Component](search-chip-list.component.md)
+*   [Search Sorting Picker Component](search-sorting-picker.component.md)
+*   [Search Widget Interface](../interfaces/search-widget.interface.md)
+*   [Search check list component](search-check-list.component.md)
+*   [Search date range component](search-date-range.component.md)
+*   [Search number range component](search-number-range.component.md)
+*   [Search radio component](search-radio.component.md)
+*   [Search slider component](search-slider.component.md)
+*   [Search text component](search-text.component.md)

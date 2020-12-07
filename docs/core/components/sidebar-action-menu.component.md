@@ -19,9 +19,9 @@ Displays a sidebar-action menu information panel.
 There are three regions where you can add your own content in `<div>` elements with
 the following names:
 
--   adf-sidebar-menu-title-icon
--   adf-sidebar-menu-options
--   adf-sidebar-menu-expand-icon
+*   adf-sidebar-menu-title-icon
+*   adf-sidebar-menu-options
+*   adf-sidebar-menu-expand-icon
 
 ```html
 <adf-sidebar-action-menu>
@@ -42,12 +42,12 @@ the following names:
 
 ### Properties
 
-| Name     | Type      | Default value | Description                                      |
-| -------- | --------- | ------------- | ------------------------------------------------ |
-| expanded | `boolean` |               | Toggle the sidebar action menu on expand.        |
-| title    | `string`  |               | The title of the sidebar action.                 |
-| width    | `number`  | 272           | Width in pixels for sidebar action menu options. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| expanded | `boolean` |  | Toggle the sidebar action menu on expand. |
+| title | `string` |  | The title of the sidebar action. |
+| width | `number` | 272 | Width in pixels for sidebar action menu options. |
 
 ## Details
 
-As the name suggests, this is basically just a layout with CSS styling. 
+As the name suggests, this is basically just a layout with CSS styling.

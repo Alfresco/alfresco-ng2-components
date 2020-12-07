@@ -13,27 +13,27 @@ Supports app configuration settings, stored server side.
 
 ### Methods
 
--   **get**(key: `string`, defaultValue?: \`\`)<br/>
+*   **get**(key: `string`, defaultValue?: \`\`)<br/>
     Gets the value of a named property.
-    -   _key:_ `string`  - Name of the property
-    -   _defaultValue:_ \`\`  - (Optional) Value to return if the key is not found
--   **getLocationHostname**(): `string`<br/>
+    *   *key:* `string`  - Name of the property
+    *   *defaultValue:* \`\`  - (Optional) Value to return if the key is not found
+*   **getLocationHostname**(): `string`<br/>
     Gets the location.hostname property.
-    -   **Returns** `string` - Value of the property
--   **getLocationPort**(prefix: `string` = `""`): `string`<br/>
+    *   **Returns** `string` - Value of the property
+*   **getLocationPort**(prefix: `string` = `""`): `string`<br/>
     Gets the location.port property.
-    -   _prefix:_ `string`  - Text added before port value
-    -   **Returns** `string` - Port with prefix
--   **getLocationProtocol**(): `string`<br/>
+    *   *prefix:* `string`  - Text added before port value
+    *   **Returns** `string` - Port with prefix
+*   **getLocationProtocol**(): `string`<br/>
     Gets the location.protocol value.
-    -   **Returns** `string` - The location.protocol string
--   **load**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>`<br/>
+    *   **Returns** `string` - The location.protocol string
+*   **load**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>`<br/>
     Loads the config file.
-    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>` - Notification when loading is complete
--   **select**(property: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    *   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>` - Notification when loading is complete
+*   **select**(property: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Requests notification of a property value when it is loaded.
-    -   _property:_ `string`  - The desired property value
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Property value, when loaded
+    *   *property:* `string`  - The desired property value
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Property value, when loaded
 
 ## Details
 
@@ -64,9 +64,9 @@ Example of the default settings file content:
 ```
 
 Note that the settings in the example above are the default ones supplied with the server.
-You can override the values in your custom `app.config.json` file if necessary. 
+You can override the values in your custom `app.config.json` file if necessary.
 
-Below is a simple example of using the [`AppConfigService`](../../core/services/app-config.service.md) in practice. 
+Below is a simple example of using the [`AppConfigService`](../../core/services/app-config.service.md) in practice.
 
 **app.component.ts**
 

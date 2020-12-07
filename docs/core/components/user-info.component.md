@@ -19,14 +19,14 @@ Shows user information.
 
 ### Properties
 
-| Name               | Type                                                                                                     | Default value | Description                                                                                                       |
-| ------------------ | -------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------- |
-| bpmBackgroundImage | `string`                                                                                                 |               | Custom path for the background banner image for APS users.                                                        |
-| ecmBackgroundImage | `string`                                                                                                 |               | Custom path for the background banner image for ACS users.                                                        |
-| menuPositionX      | [`MenuPositionX`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "after"       | Custom choice for opening the menu at the bottom. Can be `before` or `after`.                                     |
-| menuPositionY      | [`MenuPositionY`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "below"       | Custom choice for opening the menu at the bottom. Can be `above` or `below`.                                      |
-| namePosition       | `string`                                                                                                 | "right"       | When the username is shown, this defines its position relative to the user info button. Can be `right` or `left`. |
-| showName           | `boolean`                                                                                                | true          | Shows/hides the username next to the user info button.                                                            |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| bpmBackgroundImage | `string` |  | Custom path for the background banner image for APS users. |
+| ecmBackgroundImage | `string` |  | Custom path for the background banner image for ACS users. |
+| menuPositionX | [`MenuPositionX`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "after" | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |
+| menuPositionY | [`MenuPositionY`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "below" | Custom choice for opening the menu at the bottom. Can be `above` or `below`. |
+| namePosition | `string` | "right" | When the username is shown, this defines its position relative to the user info button. Can be `right` or `left`. |
+| showName | `boolean` | true | Shows/hides the username next to the user info button. |
 
 ## Details
 

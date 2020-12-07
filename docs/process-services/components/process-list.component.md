@@ -11,15 +11,15 @@ Renders a list containing all the process instances matched by the parameters sp
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
-    -   [Transclusions](#transclusions)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
-    -   [Pagination strategy](#pagination-strategy)
--   [See also](#see-also)
+*   [Basic Usage](#basic-usage)
+    *   [Transclusions](#transclusions)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
+    *   [Pagination strategy](#pagination-strategy)
+*   [See also](#see-also)
 
 ## Basic Usage
 
@@ -49,32 +49,32 @@ when the process list is empty:
 
 ### Properties
 
-| Name                | Type                                                                        | Default value | Description                                                                                                                                                             |
-| ------------------- | --------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| appId               | `number`                                                                    |               | The id of the app.                                                                                                                                                      |
-| data                | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |               | Data source to define the datatable.                                                                                                                                    |
-| multiselect         | `boolean`                                                                   | false         | Toggles multiple row selection, which renders checkboxes at the beginning of each row                                                                                   |
-| page                | `number`                                                                    | 0             | The page number of the processes to fetch.                                                                                                                              |
-| presetColumn        | `string`                                                                    |               | Custom preset column schema in JSON format.                                                                                                                             |
-| processDefinitionId | `string`                                                                    |               | The [Definition](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts) Id of the process.                                        |
-| processInstanceId   | `number \| string`                                                          |               | The id of the process instance.                                                                                                                                         |
-| resolverFn          | `Function`                                                                  | null          | Resolver function is used to show dynamic complex column objects see the docs to learn how to configure a resolverFn.                                                   |
-| selectFirstRow      | `boolean`                                                                   | true          | Toggles default selection of the first row                                                                                                                              |
-| selectionMode       | `string`                                                                    | "single"      | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| showContextMenu     | `boolean`                                                                   | false         | Toggles custom context menu for the component.                                                                                                                          |
-| size                | `number`                                                                    |               | The number of processes to fetch in each page.                                                                                                                          |
-| sort                | `string`                                                                    |               | Defines the sort ordering of the list. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc`.                                                    |
-| state               | `string`                                                                    |               | Defines the state of the processes. Possible values are `running`, `completed` and `all`                                                                                |
-| stickyHeader        | `boolean`                                                                   | false         | Toggles the sticky header mode.                                                                                                                                         |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| appId | `number` |  | The id of the app. |
+| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source to define the datatable. |
+| multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row |
+| page | `number` | 0 | The page number of the processes to fetch. |
+| presetColumn | `string` |  | Custom preset column schema in JSON format. |
+| processDefinitionId | `string` |  | The [`Definition`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts) Id of the process. |
+| processInstanceId | `number \| string` |  | The id of the process instance. |
+| resolverFn | `Function` | null | Resolver function is used to show dynamic complex column objects see the docs to learn how to configure a resolverFn. |
+| selectFirstRow | `boolean` | true | Toggles default selection of the first row |
+| selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
+| size | `number` |  | The number of processes to fetch in each page. |
+| sort | `string` |  | Defines the sort ordering of the list. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc`. |
+| state | `string` |  | Defines the state of the processes. Possible values are `running`, `completed` and `all` |
+| stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
 ### Events
 
-| Name               | Type                                                                                                                                                                  | Description                                                                               |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| error              | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                     | Emitted when an error occurs while loading the list of process instances from the server. |
-| rowClick           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                                                                                                  | Emitted when a row in the process list is clicked.                                        |
-| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>`                          | Emitted before the context menu is displayed for a row.                                   |
-| success            | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessListModel`](../../../lib/process-services/src/lib/process-list/models/process-list.model.ts)`>` | Emitted when the list of process instances has been loaded successfully from the server.  |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
+| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
+| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
+| success | `EventEmitter<ProcessListModel>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details
 
@@ -234,6 +234,6 @@ documentation for more details on the format and behavior of context actions.
 
 ## See also
 
--   [Data column component](../../core/components/data-column.component.md)
--   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
--   [Pagination component](../../core/components/pagination.component.md)
+*   [Data column component](../../core/components/data-column.component.md)
+*   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
+*   [Pagination component](../../core/components/pagination.component.md)

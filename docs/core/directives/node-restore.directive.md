@@ -48,14 +48,14 @@ Restores deleted nodes to their original location.
 
 ### Properties
 
-| Name      | Type                                                                                                                                 | Default value | Description                        |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------- | ---------------------------------- |
-| selection | [`DeletedNodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/DeletedNodeEntry.md)`[]` |               | Array of deleted nodes to restore. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| selection | [`DeletedNodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/DeletedNodeEntry.md)`[]` |  | Array of deleted nodes to restore. |
 
 ### Events
 
-| Name    | Type                                                                                                                                            | Description                           |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | restore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`RestoreMessageModel`](../../../lib/core/directives/node-restore.directive.ts)`>` | Emitted when restoration is complete. |
 
 ## Details
@@ -69,4 +69,4 @@ been restored. The property specifies the route path where the list of nodes are
 
 ## See Also
 
--   [Node delete directive](node-delete.directive.md)
+*   [Node delete directive](node-delete.directive.md)

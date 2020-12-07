@@ -19,21 +19,21 @@ Shows all available filters.
 
 ### Properties
 
-| Name        | Type                                                                                          | Default value | Description                                                                                                               |
-| ----------- | --------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| appId       | `number`                                                                                      |               | Display filters available to the current user for the application with the specified ID.                                  |
-| appName     | `string`                                                                                      |               | Display filters available to the current user for the application with the specified name.                                |
-| filterParam | [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) |               | Parameters to use for the task filter. If there is no match then the default filter (the first one the list) is selected. |
-| showIcon    | `boolean`                                                                                     |               | Toggles display of the filter's icon.                                                                                     |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
+| appName | `string` |  | Display filters available to the current user for the application with the specified name. |
+| filterParam | [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) |  | Parameters to use for the task filter. If there is no match then the default filter (the first one the list) is selected. |
+| showIcon | `boolean` |  | Toggles display of the filter's icon. |
 
 ### Events
 
-| Name        | Type                                                                                                                                                                  | Description                                   |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| error       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                     | Emitted when an error occurs during loading.  |
-| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when a filter is being selected based on the filterParam input. |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during loading. |
 | filterClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when a filter is being clicked from the UI. |
-| success     | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                     | Emitted when the list is loaded.              |
+| filterSelected | `EventEmitter<FilterRepresentationModel>` | Emitted when a filter is being selected based on the filterParam input. |
+| success | `EventEmitter<any>` | Emitted when the list is loaded. |
 
 ## Details
 

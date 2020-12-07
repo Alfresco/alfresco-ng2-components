@@ -25,16 +25,16 @@ Searches for people or groups to add to the current node permissions.
 
 ### Properties
 
-| Name   | Type     | Default value | Description            |
-| ------ | -------- | ------------- | ---------------------- |
-| nodeId | `string` |               | ID of the target node. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| nodeId | `string` |  | ID of the target node. |
 
 ### Events
 
-| Name    | Type                                                                                                                                                                     | Description                                     |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
-| error   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                                                        | Emitted when an error occurs during the update. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`>` | Emitted when the node is updated successfully.  |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during the update. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`>` | Emitted when the node is updated successfully. |
 
 ## Details
 
@@ -44,5 +44,5 @@ use the [Add permission dialog component](add-permission-dialog.component.md) to
 
 ## See also
 
--   [Add permission panel component](add-permission-panel.component.md)
--   [Add permission dialog component](add-permission-dialog.component.md)
+*   [Add permission panel component](add-permission-panel.component.md)
+*   [Add permission dialog component](add-permission-dialog.component.md)

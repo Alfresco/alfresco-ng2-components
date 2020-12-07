@@ -13,10 +13,10 @@ Displays dynamically-loaded extension components.
 
 ### Properties
 
-| Name | Type     | Default value | Description                                         |
-| ---- | -------- | ------------- | --------------------------------------------------- |
-| data | `any`    |               | Data for the dynamically-loaded component instance. |
-| id   | `string` |               | Unique ID string for the component to show.         |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| data | `any` |  | Data for the dynamically-loaded component instance. |
+| id | `string` |  | Unique ID string for the component to show. |
 
 ## Details
 
@@ -54,4 +54,4 @@ simply by registering that class with `setComponents` before use.
 
 ## See also
 
--   [Extension service](../services/extension.service.md)
+*   [Extension service](../services/extension.service.md)

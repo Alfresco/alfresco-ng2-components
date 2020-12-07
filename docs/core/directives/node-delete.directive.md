@@ -28,15 +28,15 @@ Deletes multiple files and folders.
 
 ### Properties
 
-| Name      | Type                                                                                                                                           | Default value | Description                                                                       |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------------------------------------- |
-| permanent | `boolean`                                                                                                                                      | false         | If true then the nodes are deleted immediately rather than being put in the trash |
-| selection | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[] \| DeletedNodeEntity[]` |               | Array of nodes to delete.                                                         |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| permanent | `boolean` | false | If true then the nodes are deleted immediately rather than being put in the trash |
+| selection | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[] \| DeletedNodeEntity[]` |  | Array of nodes to delete. |
 
 ### Events
 
-| Name   | Type                                                              | Description                               |
-| ------ | ----------------------------------------------------------------- | ----------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | delete | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the nodes have been deleted. |
 
 ## Details
@@ -46,4 +46,4 @@ this action will delete the file permanently.
 
 ## See also
 
--   [Node Restore directive](node-restore.directive.md)
+*   [Node Restore directive](node-restore.directive.md)

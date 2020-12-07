@@ -30,19 +30,19 @@ The below component shows the diagram of a running process instance with the act
 
 ### Properties
 
-| Name                | Type     | Default value | Description          |
-| ------------------- | -------- | ------------- | -------------------- |
-| height              | `number` | 500           | height.              |
-| metricColor         | `any`    |               | metricColor.         |
-| metricPercentages   | `any`    |               | metricPercentages.   |
-| metricType          | `string` | ""            | metricType.          |
-| processDefinitionId | `any`    |               | processDefinitionId. |
-| processInstanceId   | `any`    |               | processInstanceId.   |
-| width               | `number` | 1000          | width.               |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| height | `number` | 500 | height. |
+| metricColor | `any` |  | metricColor. |
+| metricPercentages | `any` |  | metricPercentages. |
+| metricType | `string` | "" | metricType. |
+| processDefinitionId | `any` |  | processDefinitionId. |
+| processInstanceId | `any` |  | processInstanceId. |
+| width | `number` | 1000 | width. |
 
 ### Events
 
-| Name    | Type                                                              | Description |
-| ------- | ----------------------------------------------------------------- | ----------- |
-| error   | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | error.      |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | success.    |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | error. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | success. |

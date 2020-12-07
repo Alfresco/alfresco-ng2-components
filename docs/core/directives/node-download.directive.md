@@ -29,7 +29,7 @@ Allows folders and/or files to be downloaded, with multiple nodes packed as a '.
 
 ### Properties
 
-| Name    | Type                                                                                                                                                                                                                                               | Default value | Description                                                                                                                   |
-| ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| nodes   | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`  \|  `[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` |               | Nodes to download.                                                                                                            |
-| version | [`VersionEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/VersionEntry.md)                                                                                                                           |               | [Node's](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) version to download. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| nodes | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`  \|  `[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` |  | Nodes to download. |
+| version | `VersionEntry` |  | Node's version to download. |

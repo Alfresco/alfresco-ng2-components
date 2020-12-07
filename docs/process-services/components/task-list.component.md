@@ -11,18 +11,18 @@ Renders a list containing all the tasks matched by the parameters specified.
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
-    -   [Transclusions](#transclusions)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Setting the column schema](#setting-the-column-schema)
-    -   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
-    -   [Pagination strategy](#pagination-strategy)
-    -   [DataTableAdapter example](#datatableadapter-example)
-    -   [DataColumn Features](#datacolumn-features)
--   [See also](#see-also)
+*   [Basic Usage](#basic-usage)
+    *   [Transclusions](#transclusions)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [Setting the column schema](#setting-the-column-schema)
+    *   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
+    *   [Pagination strategy](#pagination-strategy)
+    *   [DataTableAdapter example](#datatableadapter-example)
+    *   [DataColumn Features](#datacolumn-features)
+*   [See also](#see-also)
 
 ## Basic Usage
 
@@ -51,40 +51,40 @@ when the task list is empty:
 
 ### Properties
 
-| Name                   | Type                                                                        | Default value | Description                                                                                                                                                                                                                                                                   |
-| ---------------------- | --------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| appId                  | `number`                                                                    |               | The id of the app.                                                                                                                                                                                                                                                            |
-| assignment             | `string`                                                                    |               | The assignment of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate, "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
-| data                   | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |               | Data source object that represents the number and the type of the columns that you want to show.                                                                                                                                                                              |
-| dueAfter               | `string`                                                                    |               | Filter the tasks. Display only tasks with `created_date` after `dueAfter`.                                                                                                                                                                                                    |
-| dueBefore              | `string`                                                                    |               | Filter the tasks. Display only tasks with `created_date` before `dueBefore`.                                                                                                                                                                                                  |
-| includeProcessInstance | `boolean`                                                                   |               | Toggles inclusion of Process Instances                                                                                                                                                                                                                                        |
-| landingTaskId          | `string`                                                                    |               | Define which task id should be selected after reloading. If the task id doesn't exist or nothing is passed then the first task will be selected.                                                                                                                              |
-| multiselect            | `boolean`                                                                   | false         | Toggles multiple row selection, renders checkboxes at the beginning of each row                                                                                                                                                                                               |
-| name                   | `string`                                                                    |               | Name of the tasklist.                                                                                                                                                                                                                                                         |
-| page                   | `number`                                                                    | 0             | The page number of the tasks to fetch.                                                                                                                                                                                                                                        |
-| presetColumn           | `string`                                                                    |               | Custom preset column schema in JSON format.                                                                                                                                                                                                                                   |
-| processDefinitionId    | `string`                                                                    |               | The [Definition](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts) Id of the process.                                                                                                                                              |
-| processInstanceId      | `string`                                                                    |               | The Instance Id of the process.                                                                                                                                                                                                                                               |
-| selectFirstRow         | `boolean`                                                                   | true          | Toggles default selection of the first row                                                                                                                                                                                                                                    |
-| selectionMode          | `string`                                                                    | "single"      | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.                                                                                                       |
-| showContextMenu        | `boolean`                                                                   | false         | Toggles custom context menu for the component.                                                                                                                                                                                                                                |
-| size                   | `number`                                                                    |               | The number of tasks to fetch. Default value: 25.                                                                                                                                                                                                                              |
-| sort                   | `string`                                                                    |               | Define the sort order of the tasks. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc`                                                                                                                                                                |
-| start                  | `number`                                                                    |               | Starting point of the list within the full set of tasks.                                                                                                                                                                                                                      |
-| state                  | `string`                                                                    |               | Current state of the process. Possible values are: `completed`, `active`.                                                                                                                                                                                                     |
-| stickyHeader           | `boolean`                                                                   | false         | Toggles the sticky header mode.                                                                                                                                                                                                                                               |
-| taskId                 | `string`                                                                    |               | The id of a task                                                                                                                                                                                                                                                              |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| appId | `number` |  | The id of the app. |
+| assignment | `string` |  | The assignment of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate, "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
+| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source object that represents the number and the type of the columns that you want to show. |
+| dueAfter | `string` |  | Filter the tasks. Display only tasks with `created_date` after `dueAfter`. |
+| dueBefore | `string` |  | Filter the tasks. Display only tasks with `created_date` before `dueBefore`. |
+| includeProcessInstance | `boolean` |  | Toggles inclusion of Process Instances |
+| landingTaskId | `string` |  | Define which task id should be selected after reloading. If the task id doesn't exist or nothing is passed then the first task will be selected. |
+| multiselect | `boolean` | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
+| name | `string` |  | Name of the tasklist. |
+| page | `number` | 0 | The page number of the tasks to fetch. |
+| presetColumn | `string` |  | Custom preset column schema in JSON format. |
+| processDefinitionId | `string` |  | The [`Definition`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts) Id of the process. |
+| processInstanceId | `string` |  | The Instance Id of the process. |
+| selectFirstRow | `boolean` | true | Toggles default selection of the first row |
+| selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
+| size | `number` |  | The number of tasks to fetch. Default value: 25. |
+| sort | `string` |  | Define the sort order of the tasks. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc` |
+| start | `number` |  | Starting point of the list within the full set of tasks. |
+| state | `string` |  | Current state of the process. Possible values are: `completed`, `active`. |
+| stickyHeader | `boolean` | false | Toggles the sticky header mode. |
+| taskId | `string` |  | The id of a task |
 
 ### Events
 
-| Name               | Type                                                                                                                                         | Description                                             |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| error              | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                            | Emitted when an error occurs.                           |
-| rowClick           | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                                                                         | Emitted when a task in the list is clicked              |
-| rowsSelected       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>`                                                                          | Emitted when rows are selected/unselected               |
+| Name | Type | Description |
+| --- | --- | --- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a task in the list is clicked |
+| rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected |
 | showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
-| success            | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`                                                                            | Emitted when the task list is loaded                    |
+| success | `EventEmitter<any>` | Emitted when the task list is loaded |
 
 ## Details
 
@@ -277,6 +277,6 @@ documentation for more details on the format and behavior of context actions.
 
 ## See also
 
--   [Data column component](../../core/components/data-column.component.md)
--   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
--   [Pagination component](../../core/components/pagination.component.md)
+*   [Data column component](../../core/components/data-column.component.md)
+*   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
+*   [Pagination component](../../core/components/pagination.component.md)

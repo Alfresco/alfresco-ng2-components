@@ -11,7 +11,7 @@ Displays info about a specific error.
 
 ## Basic Usage
 
-Once you have caught the error in your server you will need to redirect to `/error/errorCode` to display information about that error. 
+Once you have caught the error in your server you will need to redirect to `/error/errorCode` to display information about that error.
 
 ```ts
 this.router.navigate(['/error', errorCode]);
@@ -21,9 +21,9 @@ this.router.navigate(['/error', errorCode]);
 
 ### Properties
 
-| Name      | Type     | Default value | Description                            |
-| --------- | -------- | ------------- | -------------------------------------- |
-| errorCode | `string` |               | Error code associated with this error. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| errorCode | `string` |  | Error code associated with this error. |
 
 ## Details
 
@@ -49,7 +49,7 @@ You can customize your error messages by adding them to the translate files insi
 
 ## How to customise the action button.
 
-The errorContentComponent allows you to customise the actions section using the selector `adf-error-content-actions`. 
+The errorContentComponent allows you to customise the actions section using the selector `adf-error-content-actions`.
 
 For example you can have a custom action button with the following code
 
@@ -63,4 +63,4 @@ For example you can have a custom action button with the following code
 
 ## See also
 
--   [Empty Content component](empty-content.component.md)
+*   [Empty Content component](empty-content.component.md)

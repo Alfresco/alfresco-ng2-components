@@ -106,31 +106,31 @@ Defining properties from Typescript:
 
 ### Properties
 
-| Name                          | Type                                                                                     | Default value     | Description                                                        |
-| ----------------------------- | ---------------------------------------------------------------------------------------- | ----------------- | ------------------------------------------------------------------ |
-| copyToClipboardAction         | `boolean`                                                                                | true              | Toggles whether or not to enable copy to clipboard action.         |
-| displayClearAction            | `boolean`                                                                                | true              | Toggles whether or not to display clear action.                    |
-| displayEmpty                  | `boolean`                                                                                | true              | Toggles whether or not to show empty items in non-editable mode.   |
-| displayNoneOption             | `boolean`                                                                                | true              | Toggles whether or not to display none option.                     |
-| editable                      | `boolean`                                                                                |                   | Toggles whether or not the items can be edited.                    |
-| multiValueSeparator           | `string`                                                                                 | DEFAULT_SEPARATOR | String separator between multi-value property items.               |
-| properties                    | [`CardViewItem`](../../../lib/core/card-view/interfaces/card-view-item.interface.ts)`[]` |                   | (**required**) Items to show in the card view.                     |
-| useChipsForMultiValueProperty | `boolean`                                                                                | true              | Toggles whether or not to enable chips for multivalued properties. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| copyToClipboardAction | `boolean` | true | Toggles whether or not to enable copy to clipboard action. |
+| displayClearAction | `boolean` | true | Toggles whether or not to display clear action. |
+| displayEmpty | `boolean` | true | Toggles whether or not to show empty items in non-editable mode. |
+| displayNoneOption | `boolean` | true | Toggles whether or not to display none option. |
+| editable | `boolean` |  | Toggles whether or not the items can be edited. |
+| multiValueSeparator | `string` | DEFAULT_SEPARATOR | String separator between multi-value property items. |
+| properties | [`CardViewItem`](../../../lib/core/card-view/interfaces/card-view-item.interface.ts)`[]` |  | (**required**) Items to show in the card view. |
+| useChipsForMultiValueProperty | `boolean` | true | Toggles whether or not to enable chips for multivalued properties. |
 
 ## Details
 
 You define the property list, the [`CardViewComponent`](../../core/components/card-view.component.md) does the rest. Each property represents a card view item (a row) in the [card view component](card-view.component.md). The following item types are available by default:
 
--   [**CardViewTextItemModel**](#card-text-item) - _for text items_
--   [**CardViewMapItemModel**](#card-map-item) - _for map items_
--   [**CardViewDateItemModel**](#card-date-item) - _for date items_
--   [**CardViewDatetimeItemModel**](#card-datetime-item) - _for datetime items_
--   [**CardViewBoolItemModel**](#card-bool-item) - _for bool items (checkbox)_
--   [**CardViewIntItemModel**](#card-int-item) - _for integer items_
--   [**CardViewFloatItemModel**](#card-float-item) - _for float items_
--   [**CardViewKeyValuePairsItemModel**](#card-key-value-pairs-item) - _for key-value-pairs items_
--   [**CardViewSelectItemModel**](#card-select-item) - _for select items_
--   [**CardViewArrayItemModel**](#card-array-item) - _for array items_
+*   [**CardViewTextItemModel**](#card-text-item) - *for text items*
+*   [**CardViewMapItemModel**](#card-map-item) - *for map items*
+*   [**CardViewDateItemModel**](#card-date-item) - *for date items*
+*   [**CardViewDatetimeItemModel**](#card-datetime-item) - *for datetime items*
+*   [**CardViewBoolItemModel**](#card-bool-item) - *for bool items (checkbox)*
+*   [**CardViewIntItemModel**](#card-int-item) - *for integer items*
+*   [**CardViewFloatItemModel**](#card-float-item) - *for float items*
+*   [**CardViewKeyValuePairsItemModel**](#card-key-value-pairs-item) - *for key-value-pairs items*
+*   [**CardViewSelectItemModel**](#card-select-item) - *for select items*
+*   [**CardViewArrayItemModel**](#card-array-item) - *for array items*
 
 Each of these types implements the [Card View Item interface](../interfaces/card-view-item.interface.md):
 
@@ -156,8 +156,8 @@ this.
 You can optionally set up the card view so that its properties can be edited. You can control
 the editing of properties at two levels:
 
--   **Global level** - _via the editable parameter of the card-view.component_
--   **[`Property`](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) level** -  _in each property via the editable attribute_
+*   **Global level** - *via the editable parameter of the card-view.component*
+*   **[`Property`](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) level** -  *in each property via the editable attribute*
 
 If you set the global editable parameter to false, no properties can be edited regardless of their
 individual `editable` settings.
@@ -353,7 +353,7 @@ const selectItemProperty = new CardViewSelectItemModel(options);
 | key\*      | string                                                                                                                                                                                     |         | Identifying key (important when editing the item) |
 | editable   | boolean                                                                                                                                                                                    | false   | Toggles whether the item is editable              |
 | value      | string                                                                                                                                                                                     |         | The original data value for the item              |
-| options$\* | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;[`CardViewSelectItemOption`](../../../lib/core/card-view/interfaces/card-view-selectitem-properties.interface.ts)\[]> |         | The original data value for the item              |
+| options$\* | [`Observable`](http://reactivex.io/documentation/observable.html)<[`CardViewSelectItemOption`](../../../lib/core/card-view/interfaces/card-view-selectitem-properties.interface.ts)\[]> |         | The original data value for the item              |
 
 #### Card Array Item
 
@@ -368,9 +368,9 @@ const arrayItemProperty = new CardViewArrayItemModel(items);
 | label\*  | string                                                                                                                                                          |         | Item label                                        |
 | key\*    | string                                                                                                                                                          |         | Identifying key (important when editing the item) |
 | editable | boolean                                                                                                                                                         | false   | Toggles whether the item is editable              |
-| value    | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;[`CardViewArrayItem`](../../../lib/core/card-view/models/card-view-arrayitem.model.ts)\[]> |         | The original data value for the item              |
+| value    | [`Observable`](http://reactivex.io/documentation/observable.html)<[`CardViewArrayItem`](../../../lib/core/card-view/models/card-view-arrayitem.model.ts)\[]> |         | The original data value for the item              |
 
 ## See also
 
--   [Card View Update service](../services/card-view-update.service.md)
--   [Card View Item interface](../interfaces/card-view-item.interface.md)
+*   [Card View Update service](../services/card-view-update.service.md)
+*   [Card View Item interface](../interfaces/card-view-item.interface.md)

@@ -13,22 +13,22 @@ Displays the standard three-region ADF application layout.
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
-    -   [Transclusions](#transclusions)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Template context](#template-context)
-    -   [menuOpenState$](#menuopenstate)
-    -   [Preserving the menu state](#preserving-the-menu-state)
+*   [Basic Usage](#basic-usage)
+    *   [Transclusions](#transclusions)
+*   [Class members](#class-members)
+    *   [Properties](#properties)
+    *   [Events](#events)
+*   [Details](#details)
+    *   [Template context](#template-context)
+    *   [menuOpenState$](#menuopenstate)
+    *   [Preserving the menu state](#preserving-the-menu-state)
 
 ## Basic Usage
 
 ### [Transclusions](../../user-guide/transclusion.md)
 
 The content for the header, navigation area, and main content are transcluded using three special
-sub-components (note the use of `<ng-template>` in the sub-components' body sections): 
+sub-components (note the use of `<ng-template>` in the sub-components' body sections):
 
 ```html
 <adf-sidenav-layout
@@ -67,19 +67,19 @@ sub-components (note the use of `<ng-template>` in the sub-components' body sect
 
 ### Properties
 
-| Name            | Type      | Default value | Description                                                                            |
-| --------------- | --------- | ------------- | -------------------------------------------------------------------------------------- |
-| expandedSidenav | `boolean` | true          | Should the navigation region be expanded initially?                                    |
-| hideSidenav     | `boolean` | false         | Toggles showing/hiding the navigation region.                                          |
-| position        | `string`  | "start"       | The side that the drawer is attached to. Possible values are 'start' and 'end'.        |
-| sidenavMax      | `number`  |               | Maximum size of the navigation region.                                                 |
-| sidenavMin      | `number`  |               | Minimum size of the navigation region.                                                 |
-| stepOver        | `number`  |               | Screen size at which display switches from small screen to large screen configuration. |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| expandedSidenav | `boolean` | true | Should the navigation region be expanded initially? |
+| hideSidenav | `boolean` | false | Toggles showing/hiding the navigation region. |
+| position | `string` | "start" | The side that the drawer is attached to. Possible values are 'start' and 'end'. |
+| sidenavMax | `number` |  | Maximum size of the navigation region. |
+| sidenavMin | `number` |  | Minimum size of the navigation region. |
+| stepOver | `number` |  | Screen size at which display switches from small screen to large screen configuration. |
 
 ### Events
 
-| Name     | Type                                                                  | Description                                                                           |
-| -------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | expanded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the menu toggle and the collapsed/expanded state of the sideNav changes. |
 
 ## Details
@@ -114,10 +114,10 @@ Mobile layout (screen width less than the `stepOver` value):
 
 Each template is given a context containing the following methods:
 
--   `toggleMenu(): void`
+*   `toggleMenu(): void`
     Triggers menu toggling.
 
--   `isMenuMinimized(): boolean`
+*   `isMenuMinimized(): boolean`
     The expanded/compact (minimized) state of the navigation. This one only makes sense in case of desktop size, when the screen size is above the value of stepOver.
 
 ### menuOpenState$
@@ -126,12 +126,12 @@ Beside the template context's **isMenuMinimized** variable, another way to liste
 
 | Name           | Type                                                                          | Default | Description                                     |
 | -------------- | ----------------------------------------------------------------------------- | ------- | ----------------------------------------------- |
-| menuOpenState$ | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;boolean> | true    | Another way to listen to menu open/closed state |
+| menuOpenState$ | [`Observable`](http://reactivex.io/documentation/observable.html)\<boolean> | true    | Another way to listen to menu open/closed state |
 
 Every time the menu state is changed, the following values are emitted:
 
--   true, if the menu changed to the opened state
--   false, if the menu changed to the closed state
+*   true, if the menu changed to the opened state
+*   false, if the menu changed to the closed state
 
 ### Preserving the menu state
 
@@ -147,7 +147,7 @@ set a property in the `app.config.json` file:
 When this property is set, the collapsed/expanded state will be stored in the local storage
 and restored when the page is reloaded or when the user next uses the app.
 
-You can also set the default state in the `app.config.json` file: 
+You can also set the default state in the `app.config.json` file:
 
 ```json
 "sideNav" : {
