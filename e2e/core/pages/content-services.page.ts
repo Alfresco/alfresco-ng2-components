@@ -132,15 +132,14 @@ export class ContentServicesPage {
 
     async checkDeleteIsDisabled(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
-        await this.waitForContentOptions();
         const disabledDelete = element(by.css(`button[data-automation-id*='DELETE'][disabled='true']`));
         await BrowserVisibility.waitUntilElementIsVisible(disabledDelete);
     }
 
     async deleteContent(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
-        await this.waitForContentOptions();
         await BrowserActions.click(this.deleteContentElement);
+        await this.checkContentIsNotDisplayed(content);
     }
 
     async clickDeleteOnToolbar(): Promise<void> {
@@ -153,13 +152,11 @@ export class ContentServicesPage {
 
     async metadataContent(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
-        await this.waitForContentOptions();
         await BrowserActions.click(this.metadataAction);
     }
 
     async versionManagerContent(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
-        await this.waitForContentOptions();
         await BrowserActions.click(this.versionManagerAction);
     }
 
@@ -176,13 +173,6 @@ export class ContentServicesPage {
     async lockContent(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.lockContentElement);
-    }
-
-    async waitForContentOptions(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.copyContentElement);
-        await BrowserVisibility.waitUntilElementIsVisible(this.moveContentElement);
-        await BrowserVisibility.waitUntilElementIsVisible(this.deleteContentElement);
-        await BrowserVisibility.waitUntilElementIsVisible(this.downloadContent);
     }
 
     async clickFileHyperlink(fileName): Promise<void> {

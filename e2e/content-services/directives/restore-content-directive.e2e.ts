@@ -78,9 +78,7 @@ describe('Restore content directive', () => {
         testFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
         folderWithFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), folderWithFolder.entry.id);
-        restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
-
-        await loginPage.login(acsUser.email, acsUser.password);
+        restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-')
     });
 
     afterAll(async () => {
@@ -92,6 +90,7 @@ describe('Restore content directive', () => {
     describe('Restore same name folders', () => {
 
         beforeAll(async () => {
+            await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
             await contentServicesPage.checkContentIsDisplayed(folderName);
@@ -100,6 +99,10 @@ describe('Restore content directive', () => {
             await navigationBarPage.clickTrashcanButton();
             await trashcanPage.waitForTableBody();
             await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderName);
+        });
+
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C260227] Should validate when restoring Folders with same name', async () => {
@@ -126,114 +129,129 @@ describe('Restore content directive', () => {
         });
     });
 
-    it('[C260238] Should restore a file', async () => {
-        await contentServicesPage.checkContentIsDisplayed(testFile.entry.name);
-        await contentServicesPage.deleteContent(testFile.entry.name);
-        await contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
-        await navigationBarPage.clickTrashcanButton();
-        await trashcanPage.waitForTableBody();
-        await trashcanPage.getDocumentList().dataTablePage().clickRowByContent(testFile.entry.name);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(testFile.entry.name);
-        await trashcanPage.clickRestore();
-        await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsNotDisplayed(testFile.entry.name);
+    describe('Validate', () => {
 
-        await notificationHistoryPage.checkNotifyContains(testFile.entry.name + ' item restored');
+        beforeAll(async () => {
+            await loginPage.login(acsUser.email, acsUser.password);
+        });
 
-        await navigationBarPage.navigateToContentServices();
-        await contentServicesPage.waitForTableBody();
-        await contentServicesPage.checkContentIsDisplayed(testFile.entry.name);
-        await contentServicesPage.deleteContent(testFile.entry.name);
-        await contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
-        await navigationBarPage.clickTrashcanButton();
-        await trashcanPage.waitForTableBody();
-        await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(testFile.entry.name);
-    });
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
+        });
 
-    it('[C260239] Should restore folder with content', async () => {
-        await contentServicesPage.checkContentIsDisplayed(folderWithContent.entry.name);
-        await contentServicesPage.deleteContent(folderWithContent.entry.name);
-        await contentServicesPage.checkContentIsNotDisplayed(folderWithContent.entry.name);
-        await navigationBarPage.clickTrashcanButton();
-        await trashcanPage.waitForTableBody();
-        await trashcanPage.getDocumentList().dataTablePage().clickRowByContent(folderWithContent.entry.name);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderWithContent.entry.name);
-        await trashcanPage.clickRestore();
-        await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsNotDisplayed(folderWithContent.entry.name);
+        beforeEach(async () => {
+            await navigationBarPage.navigateToContentServices();
+            await contentServicesPage.waitForTableBody();
+        });
 
-        await navigationBarPage.navigateToContentServices();
-        await contentServicesPage.waitForTableBody();
-        await contentServicesPage.checkContentIsDisplayed(folderWithContent.entry.name);
-        await contentServicesPage.getDocumentList().dataTablePage().doubleClickRow('Display name', folderWithContent.entry.name);
-        await contentServicesPage.checkContentIsDisplayed(subFile.entry.name);
-        await notificationHistoryPage.checkNotifyContains(folderWithContent.entry.name + ' item restored');
-    });
+        it('[C260238] Should restore a file', async () => {
+            await contentServicesPage.checkContentIsDisplayed(testFile.entry.name);
+            await contentServicesPage.deleteContent(testFile.entry.name);
+            await contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
+            await navigationBarPage.clickTrashcanButton();
+            await trashcanPage.waitForTableBody();
+            await trashcanPage.getDocumentList().dataTablePage().clickRowByContent(testFile.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(testFile.entry.name);
+            await trashcanPage.clickRestore();
+            await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsNotDisplayed(testFile.entry.name);
 
-    it('[C260240] Should validate restore when the original location no longer exists', async () => {
-        await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
-        await contentServicesPage.openFolder(folderWithFolder.entry.name);
-        await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
-        await contentServicesPage.deleteContent(subFolder.entry.name);
-        await contentServicesPage.checkContentIsNotDisplayed(subFolder.entry.name);
-        await breadCrumbPage.chooseBreadCrumb(acsUser.email);
-        await contentServicesPage.waitForTableBody();
-        await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
-        await contentServicesPage.deleteContent(folderWithFolder.entry.name);
-        await contentServicesPage.checkContentIsNotDisplayed(folderWithFolder.entry.name);
+            await notificationHistoryPage.checkNotifyContains(testFile.entry.name + ' item restored');
 
-        await navigationBarPage.clickTrashcanButton();
-        await trashcanPage.waitForTableBody();
-        await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(subFolder.entry.name);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderWithFolder.entry.name);
-        await trashcanPage.getDocumentList().dataTablePage().clickRowByContent(subFolder.entry.name);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(subFolder.entry.name);
-        await trashcanPage.clickRestore();
-        await notificationHistoryPage.checkNotifyContains(`Can't restore ${subFolder.entry.name} item, the original location no longer exists`);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(subFolder.entry.name);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderWithFolder.entry.name);
-        await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(subFolder.entry.name);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(subFolder.entry.name);
-        await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(folderWithFolder.entry.name);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderWithFolder.entry.name);
-        await trashcanPage.clickRestore();
-        await notificationHistoryPage.checkNotifyContains('Restore successful');
-        await navigationBarPage.navigateToContentServices();
-        await contentServicesPage.waitForTableBody();
-        await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
-        await contentServicesPage.openFolder(folderWithFolder.entry.name);
-        await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
-    });
+            await navigationBarPage.navigateToContentServices();
+            await contentServicesPage.waitForTableBody();
+            await contentServicesPage.checkContentIsDisplayed(testFile.entry.name);
+            await contentServicesPage.deleteContent(testFile.entry.name);
+            await contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
+            await navigationBarPage.clickTrashcanButton();
+            await trashcanPage.waitForTableBody();
+            await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(testFile.entry.name);
+        });
 
-    it('[C260241] Should display restore icon both for file and folder', async () => {
-        await contentServicesPage.checkContentIsDisplayed(folderName);
-        await contentServicesPage.checkContentIsDisplayed(restoreFile.entry.name);
-        await contentServicesPage.deleteContent(folderName);
-        await contentServicesPage.deleteContent(restoreFile.entry.name);
-        await contentServicesPage.checkContentIsNotDisplayed(folderName);
-        await contentServicesPage.checkContentIsNotDisplayed(restoreFile.entry.name);
+        it('[C260239] Should restore folder with content', async () => {
+            await contentServicesPage.checkContentIsDisplayed(folderWithContent.entry.name);
+            await contentServicesPage.deleteContent(folderWithContent.entry.name);
+            await contentServicesPage.checkContentIsNotDisplayed(folderWithContent.entry.name);
+            await navigationBarPage.clickTrashcanButton();
+            await trashcanPage.waitForTableBody();
+            await trashcanPage.getDocumentList().dataTablePage().clickRowByContent(folderWithContent.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderWithContent.entry.name);
+            await trashcanPage.clickRestore();
+            await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsNotDisplayed(folderWithContent.entry.name);
 
-        await navigationBarPage.clickTrashcanButton();
-        await trashcanPage.waitForTableBody();
-        await trashcanPage.checkRestoreButtonIsNotDisplayed();
-        await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(folderName);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderName);
-        await trashcanPage.checkRestoreButtonIsDisplayed();
-        await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(folderName);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsNotSelected(folderName);
+            await navigationBarPage.navigateToContentServices();
+            await contentServicesPage.waitForTableBody();
+            await contentServicesPage.checkContentIsDisplayed(folderWithContent.entry.name);
+            await contentServicesPage.getDocumentList().dataTablePage().doubleClickRow('Display name', folderWithContent.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(subFile.entry.name);
+            await notificationHistoryPage.checkNotifyContains(folderWithContent.entry.name + ' item restored');
+        });
 
-        await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(restoreFile.entry.name);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(restoreFile.entry.name);
-        await trashcanPage.checkRestoreButtonIsDisplayed();
+        it('[C260240] Should validate restore when the original location no longer exists', async () => {
+            await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
+            await contentServicesPage.openFolder(folderWithFolder.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
+            await contentServicesPage.deleteContent(subFolder.entry.name);
+            await contentServicesPage.checkContentIsNotDisplayed(subFolder.entry.name);
+            await breadCrumbPage.chooseBreadCrumb(acsUser.username);
+            await contentServicesPage.waitForTableBody();
+            await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
+            await contentServicesPage.deleteContent(folderWithFolder.entry.name);
+            await contentServicesPage.checkContentIsNotDisplayed(folderWithFolder.entry.name);
 
-        await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(folderName);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderName);
-        await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(restoreFile.entry.name);
-        await trashcanPage.checkRestoreButtonIsDisplayed();
+            await navigationBarPage.clickTrashcanButton();
+            await trashcanPage.waitForTableBody();
+            await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(subFolder.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderWithFolder.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().clickRowByContent(subFolder.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(subFolder.entry.name);
+            await trashcanPage.clickRestore();
+            await notificationHistoryPage.checkNotifyContains(`Can't restore ${subFolder.entry.name} item, the original location no longer exists`);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(subFolder.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(folderWithFolder.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(subFolder.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(subFolder.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(folderWithFolder.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderWithFolder.entry.name);
+            await trashcanPage.clickRestore();
+            await notificationHistoryPage.checkNotifyContains('Restore successful');
+            await navigationBarPage.navigateToContentServices();
+            await contentServicesPage.waitForTableBody();
+            await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
+            await contentServicesPage.openFolder(folderWithFolder.entry.name);
+            await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
+        });
+
+        it('[C260241] Should display restore icon both for file and folder', async () => {
+            await contentServicesPage.checkContentIsDisplayed(folderName);
+            await contentServicesPage.checkContentIsDisplayed(restoreFile.entry.name);
+            await contentServicesPage.deleteContent(folderName);
+            await contentServicesPage.deleteContent(restoreFile.entry.name);
+
+            await navigationBarPage.clickTrashcanButton();
+            await trashcanPage.waitForTableBody();
+            await trashcanPage.checkRestoreButtonIsNotDisplayed();
+            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(folderName);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderName);
+            await trashcanPage.checkRestoreButtonIsDisplayed();
+            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(folderName);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsNotSelected(folderName);
+
+            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(restoreFile.entry.name);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(restoreFile.entry.name);
+            await trashcanPage.checkRestoreButtonIsDisplayed();
+
+            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(folderName);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(folderName);
+            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(restoreFile.entry.name);
+            await trashcanPage.checkRestoreButtonIsDisplayed();
+        });
     });
 
     describe('Restore deleted library', () => {
+
         beforeAll(async () => {
             await apiService.login(acsUser.email, acsUser.password);
-            const publicSiteName = `00${StringUtil.generateRandomString(5)}`;
+            const publicSiteName = `public-${StringUtil.generateRandomString(5)}`;
             const publicSiteBody = { visibility: 'PUBLIC', title: publicSiteName };
             publicSite = await apiService.getInstance().core.sitesApi.createSite(publicSiteBody);
             siteFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), publicSite.entry.guid);
@@ -241,8 +259,19 @@ describe('Restore content directive', () => {
             await apiService.getInstance().core.sitesApi.deleteSite(publicSite.entry.id);
         });
 
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
+        });
+
+        beforeEach(async () => {
+            await loginPage.login(acsUser.email, acsUser.password);
+            await navigationBarPage.navigateToContentServices();
+            await contentServicesPage.waitForTableBody();
+        });
+
         afterAll(async () => {
             try {
+                await apiService.loginWithProfile('admin');
                 await apiService.getInstance().core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
             } catch (error) {
             }
@@ -256,8 +285,11 @@ describe('Restore content directive', () => {
             await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(publicSite.entry.id);
             await trashcanPage.clickRestore();
 
+            await browser.sleep(browser.params.testConfig.timeouts.index_search);
+
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
+
             await contentServicesPage.selectSite(publicSite.entry.title);
             await contentServicesPage.waitForTableBody();
             await contentServicesPage.checkContentIsDisplayed(siteFolder.entry.name);
@@ -281,7 +313,15 @@ describe('Restore content directive', () => {
             mainFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
 
             await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
-            await contentServicesPage.goToDocumentList();
+        });
+
+        beforeEach(async () => {
+            await navigationBarPage.navigateToContentServices();
+            await contentServicesPage.waitForTableBody();
+        });
+
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         afterAll(async () => {

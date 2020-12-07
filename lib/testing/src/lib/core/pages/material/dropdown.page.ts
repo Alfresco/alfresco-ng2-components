@@ -18,6 +18,7 @@
 import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
+import { Logger } from '@alfresco/adf-testing';
 
 export class DropdownPage {
 
@@ -33,6 +34,7 @@ export class DropdownPage {
     }
 
     async selectOption(option: string): Promise<void> {
+        Logger.log(`Select dropdown option ${option}`);
         await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
         const optionElement = element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first();
         await BrowserActions.click(optionElement);

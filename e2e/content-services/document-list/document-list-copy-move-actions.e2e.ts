@@ -101,8 +101,6 @@ describe('Document List Component', () => {
     });
 
     afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
-
         await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
         await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
@@ -112,6 +110,7 @@ describe('Document List Component', () => {
     });
 
     describe('Document List Component - Actions Move and Copy', () => {
+
         beforeAll(async () => {
             await loginPage.login(acsUser.email, acsUser.password);
         });
@@ -120,6 +119,10 @@ describe('Document List Component', () => {
             await BrowserActions.closeMenuAndDialogs();
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+        });
+
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C260128] Move - Same name file', async () => {
@@ -206,11 +209,16 @@ describe('Document List Component', () => {
         });
     });
 
-    describe('Document List actionns - Move, Copy on no permission folder', () => {
+    describe('Document List actions - Move, Copy on no permission folder', () => {
+
         beforeAll(async () => {
             await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${sourceFolder.entry.id}`);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
+        });
+
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C260133] Move - no permission folder', async () => {

@@ -31,6 +31,7 @@ import {
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { InfinitePaginationPage } from '../../core/pages/infinite-pagination.page';
 import { FolderModel } from '../../models/ACS/folder.model';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Document List Component - Actions', () => {
 
@@ -41,6 +42,8 @@ describe('Document List Component - Actions', () => {
     const paginationPage = new PaginationPage();
     const breadCrumbDropdownPage = new BreadcrumbDropdownPage();
     const breadCrumbPage = new BreadcrumbPage();
+    const navigationBarPage = new NavigationBarPage();
+
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
 
@@ -79,6 +82,10 @@ describe('Document List Component - Actions', () => {
             await paginationPage.selectItemsPerPage('5');
             await contentServicesPage.checkAcsContainer();
             await contentListPage.waitForTableBody();
+        });
+
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         afterAll(async () => {
@@ -134,11 +141,11 @@ describe('Document List Component - Actions', () => {
             await contentNodeSelector.checkDialogIsDisplayed();
             await breadCrumbDropdownPage.clickParentFolder();
             await breadCrumbDropdownPage.checkBreadCrumbDropdownIsDisplayed();
-            await breadCrumbDropdownPage.choosePath(contentServicesUser.email);
+            await breadCrumbDropdownPage.choosePath(contentServicesUser.username);
             await contentNodeSelector.clickMoveCopyButton();
             await contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
 
-            await breadCrumbPage.chooseBreadCrumb(contentServicesUser.email);
+            await breadCrumbPage.chooseBreadCrumb(contentServicesUser.username);
             await contentServicesPage.waitForTableBody();
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
         });
@@ -177,7 +184,7 @@ describe('Document List Component - Actions', () => {
             await contentNodeSelector.clickMoveCopyButton();
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
             await paginationPage.clickOnNextPage();
-            await contentServicesPage.getDocumentList().waitForTableBody();
+            await contentServicesPage.getDocumentList().dataTable.waitTillContentLoaded();
             await contentServicesPage.openFolder('F' + folderModel6.name);
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
         });

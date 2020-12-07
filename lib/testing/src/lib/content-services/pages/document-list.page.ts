@@ -19,6 +19,7 @@ import { Locator, by, element, ElementFinder, browser } from 'protractor';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { Logger } from '../../../..';
 
 export class DocumentListPage {
 
@@ -66,6 +67,7 @@ export class DocumentListPage {
     }
 
     async clickOnActionMenu(content: string): Promise<void> {
+        Logger.log(`Click action menu ${content}`);
         await BrowserActions.closeMenuAndDialogs();
         const row = this.dataTable.getRow('Display name', content);
         await BrowserActions.click(row.element(this.optionButton));

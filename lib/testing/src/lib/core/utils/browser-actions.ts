@@ -193,7 +193,7 @@ export class BrowserActions {
     }
 
     static async closeMenuAndDialogs(): Promise<void> {
-        Logger.info(`close Menu And Dialogs`);
+        Logger.info(`Close Menu And Dialogs`);
 
         const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
         await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
