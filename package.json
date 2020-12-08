@@ -118,7 +118,7 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/minimatch": "^3.0.3",
     "@types/node": "^14.14.8",
-    "@types/pdfjs-dist": "^2.1.5",
+    "@types/pdfjs-dist": "^2.1.7",
     "@types/request": "^2.48.5",
     "@types/selenium-webdriver": "^4.0.10",
     "ajv-cli": "^3.0.0",
