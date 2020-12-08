@@ -21,7 +21,7 @@ import {
     BrowserVisibility,
     BrowserActions
 } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { browser, by, element } from 'protractor';
 
 export class PermissionsPage {
 
@@ -41,6 +41,13 @@ export class PermissionsPage {
 
     async clickCloseButton(): Promise<void> {
         await BrowserActions.click(this.closeButton);
+    }
+
+    async changePermission(name: string, role: string): Promise<void> {
+        await this.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(name);
+        await this.addPermissionsDialog.selectOption(role);
+        await browser.sleep(500);
+        await this.dataTableComponentPage.checkRowIsNotSelected('Authority ID', name);
     }
 
     async checkAddPermissionButtonIsDisplayed(): Promise<void> {
