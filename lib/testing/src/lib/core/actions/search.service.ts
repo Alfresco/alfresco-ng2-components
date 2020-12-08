@@ -16,16 +16,18 @@
  */
 
 import { ApiService } from './api.service';
-import { ResultSetPaging } from '@alfresco/js-api';
+import { ResultSetPaging, SearchApi } from '@alfresco/js-api';
 import { Logger } from '../utils/logger';
 import { ApiUtil } from './api.util';
 import { UserModel } from '../models/user.model';
 
 export class SearchService {
     apiService: ApiService;
+    searchApi: SearchApi;
 
     constructor(apiService: ApiService) {
         this.apiService = apiService;
+        this.searchApi = new SearchApi(this.apiService.getInstance());
     }
 
     async isSearchable(name: string): Promise<any> {
@@ -41,15 +43,10 @@ export class SearchService {
     async performSearch(query, predicate, errorMessage): Promise<any> {
         const apiCall = async () => {
             try {
-                const path = '/alfresco/api/-default-/public/search/versions/1/search';
-                const method = 'POST';
-
-                const queryParams = {},
-                    postBody = JSON.parse(query);
-
-                return this.apiService.performECMOperation(path, method, queryParams, postBody);
+                return this.searchApi.search(query);
             } catch (error) {
                 Logger.error(errorMessage);
+                return null;
             }
         };
 
@@ -67,53 +64,53 @@ export class SearchService {
     }
 
     private createUserSearchQuery(user: UserModel) {
-        return `{
-            "query": {
-                "query": "email:*${user.email}* OR firstName:*${user.firstName}* OR lastName:*${user.lastName}*"
+        return {
+            'query': {
+                'query': `email:*${user.email}* OR firstName:*${user.firstName}* OR lastName:*${user.lastName}*`
             },
-            "include": [
-                "aspectNames",
-                "properties"
+            'include': [
+                'aspectNames',
+                'properties'
             ],
-            "paging": {
-                "maxItems": 1,
-                "skipCount": 0
+            'paging': {
+                'maxItems': 1,
+                'skipCount': 0
             },
-            "filterQueries": [
+            'filterQueries': [
                 {
-                    "query": "TYPE:'cm:authority'"
+                    'query': `TYPE:'cm:authority'`
                 }
             ]
-        }`;
+        };
     }
 
     private createSearchQuery(name: string) {
-        return `{
-            "query": {
-                "query": "${name}*"
+        return {
+            'query': {
+                'query': `${name}*`
             },
-            "include": [
-                "path",
-                "allowableOperations",
-                "properties"
+            'include': [
+                'path',
+                'allowableOperations',
+                'properties'
             ],
-            "paging": {
-                "maxItems": 20,
-                "skipCount": 0
+            'paging': {
+                'maxItems': 20,
+                'skipCount': 0
             },
-            "filterQueries": [
+            'filterQueries': [
                 {
-                    "query": "TYPE:'cm:folder' OR TYPE:'cm:content'"
+                    'query': `TYPE:'cm:folder' OR TYPE:'cm:content'`
                 },
                 {
-                    "query": "NOT cm:creator:System"
+                    'query': 'NOT cm:creator:System'
                 }
             ],
-            "scope": {
-                "locations": [
-                    "nodes"
+            'scope': {
+                'locations': [
+                    'nodes'
                 ]
             }
-        }`;
+        };
     }
 }

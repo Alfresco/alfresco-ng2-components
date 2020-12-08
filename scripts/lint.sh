@@ -8,14 +8,7 @@ if grep "envalfresco" . -R --exclude-dir={node_modules,.history,.idea,scripts,di
     exit 1
 fi
 
-npm run ng -- lint extensions && \
-npm run ng -- lint core && \
-npm run ng -- lint content-services && \
-npm run ng -- lint process-services && \
-npm run ng -- lint process-services-cloud && \
-npm run ng -- lint insights && \
-npm run ng -- lint testing && \
-npm run ng -- lint demoshell && \
+nx affected:lint --parallel --all --maxParallel=9 && \
 npm run lint-e2e && \
 npm run stylelint && \
 npm run spellcheck && \

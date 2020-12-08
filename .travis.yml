@@ -59,14 +59,17 @@ jobs:
           name:  Build
           script:
             - ./scripts/travis/build/build.sh
-            - ./scripts/lint.sh
             - ./scripts/travis/release/release-npm.sh
             - ./scripts/travis/release/release-docker.sh
 
           after_success:
-            - ./scripts/travis/release/release-docker.sh
             - ./scripts/ci/utils/artifact-to-s3.sh -a ./dist/demo-shell -o "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2"
             - ./scripts/ci/utils/artifact-to-s3.sh -a ./lib/dist -o "$S3_DBP_FOLDER/alfresco-libs.tar.bz2"
+
+        - stage: Lint & Build Dist & Release
+          name:  Lint
+          script:
+             - ./scripts/lint.sh
 
         - stage: Unit test
           name: Unit test content
