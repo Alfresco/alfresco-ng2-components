@@ -1,8 +1,8 @@
 ---
-Title: License info, alfresco-ng2-components 4.1.0
+Title: License info, alfresco-ng2-components 4.2.0
 ---
 
-# License information for alfresco-ng2-components 4.1.0
+# License information for alfresco-ng2-components 4.2.0
 
 This page lists all third party libraries the project depends on.
 
@@ -10,7 +10,7 @@ This page lists all third party libraries the project depends on.
 
 | Name | Version | License |
 | --- | --- | --- |
-| [@alfresco/js-api](https://github.com/Alfresco/alfresco-js-api) | 4.1.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/js-api](https://github.com/Alfresco/alfresco-js-api) | 4.2.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [@angular/animations](https://github.com/angular/angular) | 10.0.12 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [@angular/cdk](https://github.com/angular/components) | 10.1.3 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [@angular/common](https://github.com/angular/angular) | 10.0.12 | [MIT](http://www.opensource.org/licenses/MIT) |
@@ -66,11 +66,11 @@ This page lists all third party libraries the project depends on.
 | [adf-tslint-rules](https://github.com/Alfresco/alfresco-ng2-components) | 0.0.7 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [agent-base](https://github.com/TooTallNate/node-agent-base) | 4.2.1 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [agent-base](https://github.com/TooTallNate/node-agent-base) | 4.3.0 | [MIT](http://www.opensource.org/licenses/MIT) |
-| [alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components) | 4.1.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components) | 4.2.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [ansi-align](https://github.com/nexdrew/ansi-align) | 3.0.0 | [ISC](https://www.isc.org/downloads/software-support-policy/isc-license/) |
 | [ansi-escapes](https://github.com/sindresorhus/ansi-escapes) | 3.2.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [ansi-escapes](https://github.com/sindresorhus/ansi-escapes) | 4.3.1 | [MIT](http://www.opensource.org/licenses/MIT) |
-| [ansi-regex](https://github.com/chalk/ansi-regex) | 4.1.0 | [MIT](http://www.opensource.org/licenses/MIT) |
+| [ansi-regex](https://github.com/chalk/ansi-regex) | 4.2.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [ansi-regex](https://github.com/chalk/ansi-regex) | 5.0.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [ansi-styles](https://github.com/chalk/ansi-styles) | 3.2.1 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [ansi-styles](https://github.com/chalk/ansi-styles) | 4.2.1 | [MIT](http://www.opensource.org/licenses/MIT) |
@@ -106,7 +106,7 @@ This page lists all third party libraries the project depends on.
 | [camelcase](https://github.com/sindresorhus/camelcase) | 5.3.1 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [chalk](https://github.com/chalk/chalk) | 2.4.2 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [chalk](https://github.com/chalk/chalk) | 3.0.0 | [MIT](http://www.opensource.org/licenses/MIT) |
-| [chalk](https://github.com/chalk/chalk) | 4.1.0 | [MIT](http://www.opensource.org/licenses/MIT) |
+| [chalk](https://github.com/chalk/chalk) | 4.2.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [chardet](https://github.com/runk/node-chardet) | 0.7.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [chart.js](https://github.com/chartjs/Chart.js) | 2.9.4 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [chartjs-color-string](https://github.com/chartjs/chartjs-color-string) | 0.6.0 | [MIT](http://www.opensource.org/licenses/MIT) |
@@ -200,7 +200,7 @@ This page lists all third party libraries the project depends on.
 | [fs-constants](https://github.com/mafintosh/fs-constants) | 1.0.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [fs.realpath](https://github.com/isaacs/fs.realpath) | 1.0.0 | [ISC](https://www.isc.org/downloads/software-support-policy/isc-license/) |
 | [ftp](https://github.com/mscdex/node-ftp) | 0.3.10 | [MIT](http://www.opensource.org/licenses/MIT) |
-| [get-stream](https://github.com/sindresorhus/get-stream) | 4.1.0 | [MIT](http://www.opensource.org/licenses/MIT) |
+| [get-stream](https://github.com/sindresorhus/get-stream) | 4.2.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [get-stream](https://github.com/sindresorhus/get-stream) | 5.2.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [get-uri](https://github.com/TooTallNate/node-get-uri) | 2.0.4 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [glob](https://github.com/isaacs/node-glob) | 7.1.6 | [ISC](https://www.isc.org/downloads/software-support-policy/isc-license/) |
@@ -216,7 +216,7 @@ This page lists all third party libraries the project depends on.
 | [hosted-git-info](https://github.com/npm/hosted-git-info) | 2.8.8 | [ISC](https://www.isc.org/downloads/software-support-policy/isc-license/) |
 | [hosted-git-info](https://github.com/npm/hosted-git-info) | 3.0.5 | [ISC](https://www.isc.org/downloads/software-support-policy/isc-license/) |
 | [hosted-git-info](https://github.com/npm/hosted-git-info) | 3.0.7 | [ISC](https://www.isc.org/downloads/software-support-policy/isc-license/) |
-| [http-cache-semantics](https://github.com/kornelski/http-cache-semantics) | 4.1.0 | [BSD-2-Clause](http://www.opensource.org/licenses/BSD-2-Clause) |
+| [http-cache-semantics](https://github.com/kornelski/http-cache-semantics) | 4.2.0 | [BSD-2-Clause](http://www.opensource.org/licenses/BSD-2-Clause) |
 | [http-errors](https://github.com/jshttp/http-errors) | 1.7.3 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [http-proxy-agent](https://github.com/TooTallNate/node-http-proxy-agent) | 2.1.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [http2-wrapper](https://github.com/szmarczak/http2-wrapper) | 1.0.0-beta.5.2 | [MIT](http://www.opensource.org/licenses/MIT) |
@@ -384,7 +384,7 @@ This page lists all third party libraries the project depends on.
 | [shebang-command](https://github.com/kevva/shebang-command) | 1.2.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [shebang-regex](https://github.com/sindresorhus/shebang-regex) | 1.0.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [signal-exit](https://github.com/tapjs/signal-exit) | 3.0.3 | [ISC](https://www.isc.org/downloads/software-support-policy/isc-license/) |
-| [smart-buffer](https://github.com/JoshGlazebrook/smart-buffer) | 4.1.0 | [MIT](http://www.opensource.org/licenses/MIT) |
+| [smart-buffer](https://github.com/JoshGlazebrook/smart-buffer) | 4.2.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [snyk-config](https://github.com/snyk/config) | 4.0.0-rc.2 | ([Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) AND [MIT](http://www.opensource.org/licenses/MIT)) |
 | [snyk-cpp-plugin](https://github.com/snyk/snyk-cpp-plugin) | 2.2.1 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [snyk-docker-plugin](https://github.com/snyk/snyk-docker-plugin) | 4.12.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
