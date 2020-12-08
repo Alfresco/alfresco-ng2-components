@@ -13,5 +13,6 @@
   "C276996": "ADF-5283 Fix Permission Flaky test",
   "C277000": "ADF-5283 Fix Permission Flaky test",
   "C277003": "ADF-5283 Fix Permission Flaky test",
-  "C277004": "ADF-5283 Fix Permission Flaky test"
+  "C277004": "ADF-5283 Fix Permission Flaky test",
+  "C299187": "ADF-5285 Failing aspect test due multiple replica"
 }
