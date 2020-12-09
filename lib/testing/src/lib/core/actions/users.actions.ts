@@ -49,7 +49,7 @@ export class UsersActions {
             if (this.api.apiService.isEcmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
                 Logger.log(`Create user ECM ${user.email}`);
                 await this.api.apiService.core.peopleApi.addPerson({
-                    id: user.email,
+                    id: user.username,
                     email: user.email,
                     firstName: user.firstName,
                     lastName: user.lastName,
