@@ -94,7 +94,7 @@ describe('DateRangeFilterComponent', () => {
     it('should return correct date when any type is selected', () => {
         const expectedDate = {
             startDate: moment().endOf('day').toISOString(true),
-            endDate: moment().add(1, 'days').startOf('day').toISOString(true)
+            endDate: moment().add(1, 'days').endOf('day').toISOString(true)
         };
         expect(service.getDateRange(DateCloudFilterType.TOMORROW)).toEqual(expectedDate);
     });
