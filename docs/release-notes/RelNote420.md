@@ -16,7 +16,6 @@ You can contact Francesco Corti (francesco.corti at alfresco.com) for details of
 
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
-    -   [TODO](#todo)
 -   [Localisation](#localisation)
 -   [References](#references)
 -   [PR merged](#pr-merged)
@@ -38,10 +37,6 @@ This is a minor release of the Alfresco Application Development Framework, devel
 The highlights of this release is mainly about bugfixes and enhancements related to the Alfresco Process Application (APA) use cases.
 
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
-
-### TODO
-
-TODO
 
 ## Localisation
 
