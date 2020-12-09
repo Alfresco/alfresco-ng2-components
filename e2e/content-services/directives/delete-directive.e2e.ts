@@ -259,12 +259,6 @@ describe('Delete Directive', () => {
             await permissionActions.disableInheritedPermissionsForNode(filePdf.entry.id);
 
             await loginPage.login(secondAcsUser.email, secondAcsUser.password);
-
-            console.log('site', createdSite.entry);
-            console.log(`${browser.baseUrl}/files/${createdSite.entry.guid}`);
-            console.log(`${browser.baseUrl}/files/${createdSite.entry.is}`);
-
-            await browser.sleep(20000000);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${createdSite.entry.guid}`);
             await contentServicesPage.waitForTableBody();
         });
@@ -276,7 +270,7 @@ describe('Delete Directive', () => {
             await navigationBarPage.clickLogoutButton();
         });
 
-        fit('[C216426] Delete file without delete permissions', async () => {
+        it('[C216426] Delete file without delete permissions', async () => {
             await contentListPage.selectRowWithKeyboard(filePdf.entry.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', filePdf.entry.name);
             await contentServicesPage.checkToolbarDeleteIsDisabled();

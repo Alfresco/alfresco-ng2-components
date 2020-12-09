@@ -78,7 +78,7 @@ describe('Restore content directive', () => {
         testFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
         folderWithFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), folderWithFolder.entry.id);
-        restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-')
+        restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
     });
 
     afterAll(async () => {
