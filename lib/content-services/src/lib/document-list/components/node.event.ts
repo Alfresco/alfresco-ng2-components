@@ -19,11 +19,6 @@ import { BaseEvent } from '@alfresco/adf-core';
 import { NodeEntry, Node } from '@alfresco/js-api';
 
 export class NodeEntityEvent extends BaseEvent<NodeEntry> {
-
-    value: NodeEntry;
-
-    defaultPrevented: boolean;
-
     constructor(nodeEntry: NodeEntry) {
         super();
         this.value = nodeEntry;
@@ -31,11 +26,6 @@ export class NodeEntityEvent extends BaseEvent<NodeEntry> {
 }
 
 export class NodeEntryEvent extends BaseEvent<Node> {
-
-    value: Node;
-
-    defaultPrevented: boolean;
-
     constructor(node: Node) {
         super();
         this.value = node;
