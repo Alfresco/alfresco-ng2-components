@@ -4,6 +4,7 @@ const program = require('commander');
 const MAX_ATTEMPTS = 10;
 const TIMEOUT = 60000;
 const MAX_PEOPLE_PER_PAGE = 100;
+const USERS_HOME_RELATIVE_PATH = 'User Homes';
 
 let jsApiConnection;
 let loginAttempts: number = 0;
@@ -76,7 +77,7 @@ async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
 async function getHomeFoldersCount(): Promise<number> {
     try {
         const nodesApi = new NodesApi(jsApiConnection);
-        const homesFolderApiResult = await nodesApi.listNodeChildren('-root-', { relativePath: 'User Homes' });
+        const homesFolderApiResult = await nodesApi.listNodeChildren('-root-', { relativePath: USERS_HOME_RELATIVE_PATH });
         return homesFolderApiResult.list.pagination.totalItems;
     } catch (error) {
         console.log(error);
