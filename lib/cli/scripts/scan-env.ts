@@ -76,9 +76,7 @@ async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
 async function getHomeFoldersCount(): Promise<number> {
     try {
         const nodesApi = new NodesApi(jsApiConnection);
-        const rootApiResult = await nodesApi.listNodeChildren('-root-');
-        const userHomesFolderId = rootApiResult.list.entries.find(associationEntry => associationEntry.entry.name === 'User Homes').entry.id;
-        const homesFolderApiResult = await nodesApi.listNodeChildren(userHomesFolderId);
+        const homesFolderApiResult = await nodesApi.listNodeChildren('-root-', { relativePath: 'User Homes' });
         return homesFolderApiResult.list.pagination.totalItems;
     } catch (error) {
         console.log(error);
