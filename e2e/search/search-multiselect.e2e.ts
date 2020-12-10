@@ -155,7 +155,7 @@ describe('Search Component - Multi-Select Facet', () => {
             });
 
             await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-                id: userUploadingImg.email,
+                id: userUploadingImg.username,
                 role: CONSTANTS.CS_USER_ROLES.MANAGER
             });
 

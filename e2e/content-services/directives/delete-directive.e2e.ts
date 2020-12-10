@@ -239,7 +239,7 @@ describe('Delete Directive', () => {
             });
 
             await apiService.getInstance().core.sitesApi.addSiteMember(createdSite.entry.id, {
-                id: secondAcsUser.email,
+                id: secondAcsUser.username,
                 role: 'SiteCollaborator'
             });
 

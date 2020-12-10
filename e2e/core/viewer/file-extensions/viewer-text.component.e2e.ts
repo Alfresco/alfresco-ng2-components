@@ -56,7 +56,7 @@ describe('Viewer', () => {
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: acsUser.email,
+            id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 

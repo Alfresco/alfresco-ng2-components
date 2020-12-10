@@ -85,27 +85,27 @@ describe('Version component permissions', () => {
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: consumerUser.email,
+            id: consumerUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: collaboratorUser.email,
+            id: collaboratorUser.username,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: contributorUser.email,
+            id: contributorUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: managerUser.email,
+            id: managerUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: fileCreatorUser.email,
+            id: fileCreatorUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 

@@ -66,7 +66,7 @@ describe('Lock File', () => {
         documentLibrary = resultNode.list.entries[0].entry.id;
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: managerUser.email,
+            id: managerUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
     });

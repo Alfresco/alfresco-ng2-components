@@ -57,7 +57,7 @@ describe('Viewer', () => {
             visibility: 'PUBLIC'
         });
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: acsUser.email,
+            id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
         await apiService.login(acsUser.email, acsUser.password);

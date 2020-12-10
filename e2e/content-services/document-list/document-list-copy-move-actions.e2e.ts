@@ -71,7 +71,7 @@ describe('Document List Component', () => {
             visibility: 'PUBLIC'
         });
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: anotherAcsUser.email,
+            id: anotherAcsUser.username,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
         await apiService.login(acsUser.email, acsUser.password);

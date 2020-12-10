@@ -70,12 +70,12 @@ describe('Upload - User permission', () => {
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(consumerSite.entry.id, {
-            id: acsUser.email,
+            id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(managerSite.entry.id, {
-            id: acsUser.email,
+            id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
     });

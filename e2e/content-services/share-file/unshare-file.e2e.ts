@@ -81,7 +81,7 @@ describe('Unshare file', () => {
         const docLibId = (await apiService.getInstance().core.sitesApi.getSiteContainers(siteName)).list.entries[0].entry.id;
         const testFile1Id = (await apiService.getInstance().core.nodesApi.addNode(docLibId, nodeBody)).entry.id;
         await apiService.getInstance().core.sitesApi.addSiteMember(siteName, {
-            id: acsUser.email,
+            id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 

@@ -111,27 +111,27 @@ describe('Permissions Component', () => {
         privateSite = await apiService.getInstance().core.sitesApi.createSite(privateSiteBody);
 
         await apiService.getInstance().core.sitesApi.addSiteMember(publicSite.entry.id, {
-            id: siteConsumerUser.email,
+            id: siteConsumerUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(publicSite.entry.id, {
-            id: collaboratorUser.email,
+            id: collaboratorUser.username,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(publicSite.entry.id, {
-            id: contributorUser.email,
+            id: contributorUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(publicSite.entry.id, {
-            id: managerUser.email,
+            id: managerUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(privateSite.entry.id, {
-            id: managerUser.email,
+            id: managerUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
