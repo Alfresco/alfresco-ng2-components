@@ -86,7 +86,7 @@ describe('AuthGuardService ECM', () => {
         expect(router.navigateByUrl).toHaveBeenCalledWith('/login?redirectUrl=some-url');
     }));
 
-    it('should not redirect url if the alfresco js api is NOT logged in and isOAuthWithoutSilentLogin', async(() => {
+    it('should redirect url if the alfresco js api is NOT logged in and isOAuthWithoutSilentLogin', async(() => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
@@ -94,10 +94,10 @@ describe('AuthGuardService ECM', () => {
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
         expect(authGuard.canActivate(null, route)).toBeFalsy();
-        expect(router.navigateByUrl).not.toHaveBeenCalled();
+        expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
-    it('should not redirect url if the alfresco js api is NOT logged in and isOAuth with silentLogin', async(() => {
+    it('should redirect url if the alfresco js api is NOT logged in and isOAuth with silentLogin', async(() => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
@@ -116,7 +116,7 @@ describe('AuthGuardService ECM', () => {
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'abc'};
 
         expect(authGuard.canActivate(null, route)).toBeTruthy();
-        expect(router.navigateByUrl).toHaveBeenCalledTimes(0);
+        expect(router.navigateByUrl).toHaveBeenCalledTimes(1);
         expect(authService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
     }));
 
@@ -128,7 +128,7 @@ describe('AuthGuardService ECM', () => {
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
         expect(authGuard.canActivate(null, route)).toBeFalsy();
-        expect(router.navigateByUrl).not.toHaveBeenCalled();
+        expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
     it('should set redirect navigation commands', async(() => {

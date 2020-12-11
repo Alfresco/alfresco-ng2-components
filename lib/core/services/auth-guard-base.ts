@@ -89,11 +89,10 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     protected redirectToUrl(provider: string, url: string) {
         const pathToLogin = `/${this.getLoginRoute()}`;
         let urlToRedirect;
-
         if (!this.authenticationService.isOauth()) {
             this.authenticationService.setRedirect({ provider, url });
 
-            urlToRedirect = `/${pathToLogin}?redirectUrl=${url}`;
+            urlToRedirect = `${pathToLogin}?redirectUrl=${url}`;
         } else {
             urlToRedirect = pathToLogin;
         }
