@@ -1,9 +1,10 @@
-const { AlfrescoApiCompatibility, PeopleApi } = require('@alfresco/js-api');
+const { AlfrescoApiCompatibility, PeopleApi, NodesApi } = require('@alfresco/js-api');
 const program = require('commander');
 
 const MAX_ATTEMPTS = 10;
 const TIMEOUT = 60000;
 const MAX_PEOPLE_PER_PAGE = 100;
+const USERS_HOME_RELATIVE_PATH = 'User Homes';
 
 let jsApiConnection;
 let loginAttempts: number = 0;
@@ -20,8 +21,12 @@ export default async function main(_args: string[]) {
     await attemptLogin();
 
     const peopleCount = await getPeopleCount();
-    console.log('Active Users      :', peopleCount.enabled);
-    console.log('Deactivated Users :', peopleCount.disabled);
+    console.log('Active Users        :', peopleCount.enabled);
+    console.log('Deactivated Users   :', peopleCount.disabled);
+
+    const homeFoldersCount = await getHomeFoldersCount();
+    console.log("User's Home Folders :", homeFoldersCount);
+
 }
 
 async function attemptLogin() {
@@ -64,6 +69,16 @@ async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
             result.disabled += more.disabled;
         }
         return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function getHomeFoldersCount(): Promise<number> {
+    try {
+        const nodesApi = new NodesApi(jsApiConnection);
+        const homesFolderApiResult = await nodesApi.listNodeChildren('-root-', { relativePath: USERS_HOME_RELATIVE_PATH });
+        return homesFolderApiResult.list.pagination.totalItems;
     } catch (error) {
         console.log(error);
     }
