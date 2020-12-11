@@ -126,7 +126,7 @@ Beside the template context's **isMenuMinimized** variable, another way to liste
 
 | Name           | Type                                                                          | Default | Description                                     |
 | -------------- | ----------------------------------------------------------------------------- | ------- | ----------------------------------------------- |
-| menuOpenState$ | [`Observable`](http://reactivex.io/documentation/observable.html)\<boolean> | true    | Another way to listen to menu open/closed state |
+| menuOpenState$ | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;boolean> | true    | Another way to listen to menu open/closed state |
 
 Every time the menu state is changed, the following values are emitted:
 

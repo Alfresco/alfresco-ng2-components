@@ -52,8 +52,8 @@ If the search string contain spaces then each section between the spaces will
 be treated as a separate item to highlight. For example, you could use this to
 highlight all occurrences of words in a list.
 
-The highlighting works by adding an HTML \<span> element around the
-selected text. The \<span> includes a CSS class; this defaults to
+The highlighting works by adding an HTML &lt;span> element around the
+selected text. The &lt;span> includes a CSS class; this defaults to
 "adf-highlight" but you can supply your own class using the `adf-highlight-class`
 property:
 

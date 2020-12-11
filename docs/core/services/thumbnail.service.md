@@ -53,7 +53,7 @@ and icons is shown in the table below:
 ### Mat-icon
 
 All the ADF icons for MIME types are now registered into the [`MatIconRegistry`](https://material.angular.io/components/icon/api), so you can use all
-the icons via the \<mat-icon> tag:
+the icons via the &lt;mat-icon> tag:
 
 ```javascript
 import { ThumbnailService } from '@alfresco/adf-core';

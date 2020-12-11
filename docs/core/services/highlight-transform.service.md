@@ -26,10 +26,10 @@ A typical use case for this service is to display the results from a search engi
 An excerpt of a retrieved document can be shown with the matching search terms
 highlighted to indicate where they were found.
 
-The service works by adding HTML \<span> elements around all sections of text
+The service works by adding HTML &lt;span> elements around all sections of text
 that match the `search` string. You can specify multiple search strings at once by
 separating them with spaces, so passing "Apple Banana Cherry" in `search` will
-highlight any of those words individually. The \<span> element includes a
+highlight any of those words individually. The &lt;span> element includes a
 `class` attribute which defaults to "highlight" but you can pass any class name
 you like using the `wrapperClass` parameter.
 

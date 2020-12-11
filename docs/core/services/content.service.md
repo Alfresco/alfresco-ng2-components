@@ -73,7 +73,7 @@ some cases by viewing it directly in the browser via a special URL that referenc
 the [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob). For example, you could use the [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) interface to construct an image in the
 [PNG format](https://en.wikipedia.org/wiki/Portable_Network_Graphics). Since
 PNG is a format the browser can display, you could use the [Blob's](https://developer.mozilla.org/en-US/docs/Web/API/Blob) URL in an
-\<img> element to view the image within the page. Alternatively, you could let
+&lt;img> element to view the image within the page. Alternatively, you could let
 the user download it as a PNG file.
 
 The `downloadBlob` method starts a download of the [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) data to the `filename`
@@ -85,7 +85,7 @@ for details of how a [Blob's](https://developer.mozilla.org/en-US/docs/Web/API/B
 Use `createdTrustedUrl` to generate a URL string for a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob). The URL refers to
 the [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) as though it were a file but it is actually an object stored in memory,
 so it does not persist across browser sessions. This URL can be used much like any
-other, so you could use it for the `src` attribute of an \<img> element or the
+other, so you could use it for the `src` attribute of an &lt;img> element or the
 `href` of a download link. Note that while the URL is 'trusted', the data it contains
 is not necessarily trustworthy unless you can vouch for it yourself; be careful that
 the data doesn't expose your app to
