@@ -15,32 +15,12 @@
  * limitations under the License.
  */
 
-import { ApiService, BrowserActions, ErrorPage, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { BrowserActions, ErrorPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
-import { ContentServicesPage } from './pages/content-services.page';
 
 describe('Error Component', () => {
 
-    const acsUser = new UserModel();
-    const loginPage = new LoginPage();
     const errorPage = new ErrorPage();
-    const navigationBarPage = new NavigationBarPage();
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const contentServicesPage = new ContentServicesPage();
-
-    beforeAll(async () => {
-        await apiService.loginWithProfile('admin');
-        await usersActions.createUser(acsUser);
-        await loginPage.login(acsUser.email, acsUser.password);
-        await contentServicesPage.goToDocumentList();
-    });
-
-    afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
-    });
 
     it('[C277302] Should display the error 403 when access to unauthorized page - My Change', async () => {
         await BrowserActions.getUrl(browser.baseUrl + '/error/403');
@@ -58,7 +38,6 @@ describe('Error Component', () => {
 
     it('[C307029] Should display Unknown message when error is undefined', async () => {
         await BrowserActions.getUrl(browser.baseUrl + '/error/501');
-        await browser.sleep(2000);
         await expect(await errorPage.getErrorCode()).toBe('UNKNOWN');
         await expect(await errorPage.getErrorTitle()).toBe('We hit a problem.');
         await expect(await errorPage.getErrorDescription()).toBe('Looks like something went wrong.');

@@ -22,9 +22,8 @@ import {
     ViewEncapsulation,
     OnInit
 } from '@angular/core';
-import { Params, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslationService } from '../../services/translation.service';
-
 @Component({
     selector: 'adf-error-content',
     templateUrl: './error-content.component.html',
@@ -41,15 +40,20 @@ export class ErrorContentComponent implements OnInit {
     @Input()
     errorCode: string = ErrorContentComponent.UNKNOWN_ERROR;
 
+    errorCodeTranslated: string;
+
     constructor(private route: ActivatedRoute,
                 private translateService: TranslationService) {
     }
 
     ngOnInit() {
         if (this.route) {
-            this.route.params.forEach((params: Params) => {
-                if (params['id']) {
-                    this.errorCode = this.checkErrorExists(params['id']) ? params['id'] : ErrorContentComponent.UNKNOWN_ERROR;
+            this.route.params.subscribe(params => {
+                const isPresent = this.checkErrorExists(params['id']);
+                if (isPresent) {
+                    this.errorCodeTranslated = params['id'];
+                } else {
+                    this.errorCodeTranslated = ErrorContentComponent.UNKNOWN_ERROR;
                 }
             });
         }
