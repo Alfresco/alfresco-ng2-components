@@ -78,7 +78,7 @@ A default template will be used if you don't supply a custom one to override it:
 You can wrap the attachment list with an
 [Upload Drag Area component](../../content-services/components/upload-drag-area.component.md)
 to let the user upload attachments to empty lists. When you do this, you can also supply
-a custom *no content template* (using \<adf-empty-list>) to invite the user to add their attachments:
+a custom *no content template* (using &lt;adf-empty-list>) to invite the user to add their attachments:
 
 <!-- {% raw %} -->
 

@@ -23,13 +23,13 @@ Accesses and manipulates sites from a Content Services repository.
     Create a site membership for group
     *   *siteId:* `string`  - The identifier of a site.
     *   *siteMembershipBodyCreate:* [`SiteMembershipBodyCreate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMembershipBodyCreate.md)  - The Group to add and its role
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteGroupEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteGroupEntry.md)`>` - Observable\<SiteGroupEntry>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteGroupEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteGroupEntry.md)`>` - Observable&lt;SiteGroupEntry>
 *   **createSiteMembership**(siteId: `string`, siteMembershipBodyCreate: [`SiteMembershipBodyCreate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMembershipBodyCreate.md), opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMemberEntry.md)`>`<br/>
     Creates a site membership for person **personId** on site **siteId**.
     *   *siteId:* `string`  - The identifier of a site
     *   *siteMembershipBodyCreate:* [`SiteMembershipBodyCreate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMembershipBodyCreate.md)  - The person to add and their role
     *   *opts:* `any`  - (Optional) Optional parameters
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMemberEntry.md)`>` - Observable\<SiteMemberEntry>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMemberEntry.md)`>` - Observable&lt;SiteMemberEntry>
 *   **deleteSite**(siteId: `string`, permanentFlag: `boolean` = `true`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Deletes a site.
     *   *siteId:* `string`  - Site to delete
@@ -39,7 +39,7 @@ Accesses and manipulates sites from a Content Services repository.
     Delete a group membership for site
     *   *siteId:* `string`  - The identifier of a site.
     *   *groupId:* `string`  - The authorityId of a group.
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<void>` - Observable\<void>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<void>` - Observable&lt;void>
 *   **deleteSiteMembership**(siteId: `string`, personId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>
     Delete a site membership
     *   *siteId:* `string`  - The identifier of a site.
@@ -61,7 +61,7 @@ Accesses and manipulates sites from a Content Services repository.
     Get information about site membership of group
     *   *siteId:* `string`  - The identifier of a site.
     *   *groupId:* `string`  - The authorityId of a group.
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteGroupEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteGroupEntry.md)`>` - Observable\<SiteGroupEntry>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteGroupEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteGroupEntry.md)`>` - Observable&lt;SiteGroupEntry>
 *   **getSiteMembers**(siteId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`|Function>`<br/>
     Gets a list of all a site's members.
     *   *siteId:* `string`  - ID of the target site
@@ -82,12 +82,12 @@ Accesses and manipulates sites from a Content Services repository.
     List group membership for site
     *   *siteId:* `string`  - The identifier of a site.
     *   *opts:* `any`  - (Optional) Options supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteGroupPaging`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/siteGroupPaging.ts)`>` - Observable\<SiteGroupPaging>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteGroupPaging`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/siteGroupPaging.ts)`>` - Observable&lt;SiteGroupPaging>
 *   **listSiteMemberships**(siteId: `string`, opts: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMemberPaging.md)`>`<br/>
     Gets a list of all a site's members.
     *   *siteId:* `string`  - ID of the target site
     *   *opts:* `any`  - Optional parameters supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMemberPaging.md)`>` - Observable\<SiteMemberPaging>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMemberPaging.md)`>` - Observable&lt;SiteMemberPaging>
 *   **rejectSiteMembershipRequest**(siteId: `string`, inviteeId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMembershipRequestWithPersonPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMembershipRequestWithPersonPaging.md)`>`<br/>
     Reject site membership requests.
     *   *siteId:* `string`  - The identifier of a site.
@@ -99,14 +99,14 @@ Accesses and manipulates sites from a Content Services repository.
     *   *siteId:* `string`  - The identifier of a site.
     *   *groupId:* `string`  - The authorityId of a group.
     *   *siteMembershipBodyUpdate:* [`SiteMembershipBodyUpdate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMembershipBodyUpdate.md)  - The group new role
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteGroupEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteGroupEntry.md)`>` - Observable\<SiteGroupEntry>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteGroupEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteGroupEntry.md)`>` - Observable&lt;SiteGroupEntry>
 *   **updateSiteMembership**(siteId: `string`, personId: `string`, siteMembershipBodyUpdate: [`SiteMembershipBodyUpdate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMembershipBodyUpdate.md), opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMemberEntry.md)`>`<br/>
     Update a site membership
     *   *siteId:* `string`  - The identifier of a site.
     *   *personId:* `string`  - The identifier of a person.
     *   *siteMembershipBodyUpdate:* [`SiteMembershipBodyUpdate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMembershipBodyUpdate.md)  - The persons new role
     *   *opts:* `any`  - (Optional) Optional parameters
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMemberEntry.md)`>` - Observable\<SiteMemberEntry>
+    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMemberEntry.md)`>` - Observable&lt;SiteMemberEntry>
 
 ## Details
 
