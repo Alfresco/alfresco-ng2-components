@@ -19,7 +19,7 @@ import { Locator, by, element, ElementFinder, browser } from 'protractor';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { Logger } from '../../../..';
+import { Logger } from '../../core/utils/logger';
 
 export class DocumentListPage {
 

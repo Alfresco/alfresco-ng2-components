@@ -18,7 +18,7 @@
 import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
-import { Logger } from '@alfresco/adf-testing';
+import { Logger } from '../../utils/logger';
 
 export class DropdownPage {
 
