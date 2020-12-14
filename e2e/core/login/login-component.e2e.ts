@@ -70,14 +70,12 @@ describe('Login component', () => {
 
         await loginPage.login(userA.email, userA.password);
         await userInfoPage.clickUserProfile();
-        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
-        await expect(await userInfoPage.getContentEmail()).toEqual(userA.email);
+        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userA.username);
 
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(userB.email, userB.password);
         await userInfoPage.clickUserProfile();
-        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
-        await expect(await userInfoPage.getContentEmail()).toEqual(userB.email);
+        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userB.username);
     });
 
     it('[C299206] Should redirect the user without the right access role on a forbidden page', async () => {

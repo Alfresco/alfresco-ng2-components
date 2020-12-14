@@ -8,7 +8,7 @@ cd $DIR/../../../
 
 export CONTEXT_ENV="search"
 export PROVIDER='ECM'
-export AUTH_TYPE='BASIC'
+export AUTH_TYPE='OAUTH'
 
 if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ];then
     echo "Calculate affected e2e $BASE_HASH $HEAD_HASH"
