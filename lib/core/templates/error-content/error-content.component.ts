@@ -49,12 +49,9 @@ export class ErrorContentComponent implements OnInit {
     ngOnInit() {
         if (this.route) {
             this.route.params.subscribe(params => {
-                const isPresent = this.checkErrorExists(params['id']);
-                if (isPresent) {
-                    this.errorCodeTranslated = params['id'];
-                } else {
-                    this.errorCodeTranslated = ErrorContentComponent.UNKNOWN_ERROR;
-                }
+                const code = params['id'] || this.errorCode;
+                const errorHasTranslation = this.checkErrorExists(code);
+                this.errorCodeTranslated =  errorHasTranslation ? code : ErrorContentComponent.UNKNOWN_ERROR;
             });
         }
     }
