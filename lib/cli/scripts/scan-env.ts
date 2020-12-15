@@ -139,5 +139,3 @@ async function wait(ms: number) {
         setTimeout(resolve, ms);
     });
 }
-
-main([]);
