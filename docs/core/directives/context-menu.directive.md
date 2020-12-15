@@ -1,7 +1,7 @@
 ---
 Title: Context Menu directive
 Added: v2.0.0
-Status: Active
+Status: Deprecated
 Last reviewed: 2018-11-20
 ---
 
