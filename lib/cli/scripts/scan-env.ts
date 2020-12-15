@@ -1,4 +1,4 @@
-const { AlfrescoApiCompatibility, PeopleApi, NodesApi } = require('@alfresco/js-api');
+const { AlfrescoApiCompatibility, PeopleApi, NodesApi, GroupsApi, SitesApi, SearchApi } = require('@alfresco/js-api');
 const program = require('commander');
 
 const MAX_ATTEMPTS = 10;
@@ -26,6 +26,15 @@ export default async function main(_args: string[]) {
 
     const homeFoldersCount = await getHomeFoldersCount();
     console.log("User's Home Folders :", homeFoldersCount);
+
+    const groupsCount = await getGroupsCount();
+    console.log('Groups              :', groupsCount);
+
+    const sitesCount = await getSitesCount();
+    console.log('Sites               :', sitesCount);
+
+    const filesCount = await getFilesCount();
+    console.log('Files               :', filesCount);
 
 }
 
@@ -77,8 +86,49 @@ async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
 async function getHomeFoldersCount(): Promise<number> {
     try {
         const nodesApi = new NodesApi(jsApiConnection);
-        const homesFolderApiResult = await nodesApi.listNodeChildren('-root-', { relativePath: USERS_HOME_RELATIVE_PATH });
+        const homesFolderApiResult = await nodesApi.listNodeChildren('-root-', {
+            maxItems: 1,
+            relativePath: USERS_HOME_RELATIVE_PATH
+        });
         return homesFolderApiResult.list.pagination.totalItems;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function getGroupsCount(): Promise<number> {
+    try {
+        const groupsApi = new GroupsApi(jsApiConnection);
+        const groupsApiResult = await groupsApi.listGroups({ maxItems: 1 });
+        return groupsApiResult.list.pagination.totalItems;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function getSitesCount(): Promise<number> {
+    try {
+        const sitesApi = new SitesApi(jsApiConnection);
+        const sitesApiResult = await sitesApi.listSites({ maxItems: 1 });
+        return sitesApiResult.list.pagination.totalItems;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function getFilesCount(): Promise<number> {
+    try {
+        const searchApi = new SearchApi(jsApiConnection);
+        const searchApiResult = await searchApi.search({
+            query: {
+                query: "select * from cmis:document",
+                language: 'cmis'
+            },
+            paging: {
+                maxItems: 1
+            }
+        });
+        return searchApiResult.list.pagination.totalItems;
     } catch (error) {
         console.log(error);
     }
@@ -89,3 +139,5 @@ async function wait(ms: number) {
         setTimeout(resolve, ms);
     });
 }
+
+main([]);
