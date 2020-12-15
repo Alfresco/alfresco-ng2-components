@@ -194,6 +194,7 @@ describe('Viewer', () => {
         await viewerPage.clickCloseButton();
 
         await viewerPage.disableOverlay();
+
         await dataTable.doubleClickRow('Name', fileForOverlay.name);
         await viewerPage.checkImgContainerIsDisplayed();
         await viewerPage.checkInlineViewerIsDisplayed();

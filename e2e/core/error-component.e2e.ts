@@ -15,12 +15,24 @@
  * limitations under the License.
  */
 
-import { BrowserActions, ErrorPage } from '@alfresco/adf-testing';
+import { ApiService, BrowserActions, ErrorPage, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Error Component', () => {
 
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    const acsUser = new UserModel();
+
     const errorPage = new ErrorPage();
+    const loginPage = new LoginPage();
+
+    beforeAll(async () => {
+        await apiService.loginWithProfile('admin');
+        await usersActions.createUser(acsUser);
+        await loginPage.login(acsUser.username, acsUser.password);
+    });
 
     it('[C277302] Should display the error 403 when access to unauthorized page - My Change', async () => {
         await BrowserActions.getUrl(browser.baseUrl + '/error/403');
