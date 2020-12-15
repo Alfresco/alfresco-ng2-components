@@ -61,14 +61,14 @@ describe('Document List Component', () => {
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');
             acsUser = await usersActions.createUser();
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
             fileTestNode = await uploadActions.uploadFile(testFile.location, testFile.name, '-my-');
             fileDocxNode = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
             folderNode = await uploadActions.createFolder(folderName, '-my-');
             filePDFSubNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, folderNode.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
         });
 
         afterAll(async () => {

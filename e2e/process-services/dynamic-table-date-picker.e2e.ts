@@ -68,15 +68,15 @@ describe('Dynamic Table', () => {
         const rowPosition = 0;
 
         beforeAll(async () => {
-            await apiService.login(user.email, user.password);
+            await apiService.login(user.username, user.password);
             const applicationsService = new ApplicationsUtil(apiService);
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             appId = importedApp.id;
-            await loginPage.login(user.email, user.password);
+            await loginPage.login(user.username, user.password);
         });
 
         afterAll(async () => {
-            await apiService.login(user.email, user.password);
+            await apiService.login(user.username, user.password);
             await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
             await navigationBarPage.clickLogoutButton();
         });
@@ -130,16 +130,16 @@ describe('Dynamic Table', () => {
         const dropdown = widget.dropdown();
 
         beforeAll(async () => {
-            await apiService.login(user.email, user.password);
+            await apiService.login(user.username, user.password);
             const applicationsService = new ApplicationsUtil(apiService);
 
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             appId = importedApp.id;
-            await loginPage.login(user.email, user.password);
+            await loginPage.login(user.username, user.password);
         });
 
         afterAll(async () => {
-            await apiService.login(user.email, user.password);
+            await apiService.login(user.username, user.password);
             await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
         });
 

@@ -39,8 +39,8 @@ describe('Applications list', () => {
         await apiService.loginWithProfile('identityAdmin');
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_DEVOPS]);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
-        await apiService.login(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.username, testUser.password);
+        await apiService.login(testUser.username, testUser.password);
 
         applications = await applicationsService.getApplicationsByStatus('RUNNING');
 

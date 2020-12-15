@@ -64,7 +64,7 @@ describe('CardView Component - properties', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         const pdfUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
@@ -72,7 +72,7 @@ describe('CardView Component - properties', () => {
 
         pngFileModel.update(pdfUploadedFile.entry);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await navigationBarPage.navigateToContentServices();
         await contentServicesPage.waitForTableBody();

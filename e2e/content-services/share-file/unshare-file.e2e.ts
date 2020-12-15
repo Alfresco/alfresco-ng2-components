@@ -90,19 +90,19 @@ describe('Unshare file', () => {
                 isInheritanceEnabled: false,
                 locallySet: [
                     {
-                        authorityId: acsUser.email,
+                        authorityId: acsUser.username,
                         name: CONSTANTS.CS_USER_ROLES.CONSUMER
                     }
                 ]
             }
         });
         await apiService.getInstance().core.sharedlinksApi.addSharedLink({ nodeId: testFile1Id });
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         nodeId = pngUploadedFile.entry.id;
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
         await navBar.navigateToContentServices();
         await contentServicesPage.waitForTableBody();
     });

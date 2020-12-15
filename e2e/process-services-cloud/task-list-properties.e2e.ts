@@ -62,7 +62,7 @@ describe('Edit task filters and task list properties', () => {
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await apiService.login(testUser.email, testUser.password);
+        await apiService.login(testUser.username, testUser.password);
 
         otherOwnerTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         await tasksService.claimTask(otherOwnerTask.entry.id, simpleApp);
@@ -88,7 +88,7 @@ describe('Edit task filters and task list properties', () => {
 
         const jsonFile = new TaskListCloudConfiguration().getConfiguration();
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.username, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify(taskFilterConfiguration));
     }, 5 * 60 * 1000);

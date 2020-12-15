@@ -63,11 +63,11 @@ describe('Attach Folder', () => {
             name: 'adf dev',
             host: browser.params.testConfig.appConfig.ecmHost
         });
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
         await new UploadActions(apiService).createFolder(folderName, '-my-');
         await searchService.isSearchable(folderName);
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
     });
 
     afterAll(async () => {

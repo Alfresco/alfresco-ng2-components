@@ -54,7 +54,7 @@ describe('Lock File', () => {
         await usersActions.createUser(adminUser);
         await usersActions.createUser(managerUser);
 
-        await apiService.login(adminUser.email, adminUser.password);
+        await apiService.login(adminUser.username, adminUser.password);
 
         site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
@@ -85,20 +85,20 @@ describe('Lock File', () => {
         beforeEach(async () => {
             const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
             nodeId = pngUploadedFile.entry.id;
-            await loginPage.login(adminUser.email, adminUser.password);
+            await loginPage.login(adminUser.username, adminUser.password);
             await navigationBarPage.openContentServicesFolder(documentLibrary);
 
             await contentServices.waitForTableBody();
         });
 
         afterEach(async () => {
-            await apiService.login(adminUser.email, adminUser.password);
+            await apiService.login(adminUser.username, adminUser.password);
             await uploadActions.deleteFileOrFolder(nodeId);
             await navigationBarPage.clickLogoutButton();
         });
 
         afterAll(async () => {
-            await apiService.login(adminUser.email, adminUser.password);
+            await apiService.login(adminUser.username, adminUser.password);
             await apiService.getInstance().core.nodesApi.unlockNode(lockedFileNodeId);
             await uploadActions.deleteFileOrFolder(lockedFileNodeId);
         });
@@ -150,18 +150,18 @@ describe('Lock File', () => {
     describe('Locked file without owner permissions', () => {
 
         beforeEach(async () => {
-            await apiService.login(adminUser.email, adminUser.password);
+            await apiService.login(adminUser.username, adminUser.password);
             const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
 
             nodeId = pngUploadedFile.entry.id;
 
-            await loginPage.login(managerUser.email, managerUser.password);
+            await loginPage.login(managerUser.username, managerUser.password);
 
             await navigationBarPage.openContentServicesFolder(documentLibrary);
         });
 
         afterEach(async () => {
-            await apiService.login(adminUser.email, adminUser.password);
+            await apiService.login(adminUser.username, adminUser.password);
 
             try {
                 await apiService.getInstance().core.nodesApi.unlockNode(nodeId);
@@ -242,12 +242,12 @@ describe('Lock File', () => {
         beforeEach(async () => {
             const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
             nodeId = pngUploadedFile.entry.id;
-            await loginPage.login(adminUser.email, adminUser.password);
+            await loginPage.login(adminUser.username, adminUser.password);
             await navigationBarPage.openContentServicesFolder(documentLibrary);
         });
 
         afterEach(async () => {
-            await apiService.login(adminUser.email, adminUser.password);
+            await apiService.login(adminUser.username, adminUser.password);
             await uploadActions.deleteFileOrFolder(nodeId);
             await navigationBarPage.clickLogoutButton();
         });

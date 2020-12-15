@@ -65,12 +65,12 @@ describe('Attachment list action menu for tasks', () => {
         const user = await usersActions.createUser();
         tenantId = user.tenantId;
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
         const applicationsService = new ApplicationsUtil(apiService);
         const { id } = await applicationsService.importPublishDeployApp(app.file_path);
         appId = id;
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
     });
 
     afterAll(async () => {

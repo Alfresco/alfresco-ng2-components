@@ -71,7 +71,7 @@ describe('Comment', () => {
     describe('component', () => {
 
         beforeEach(async () => {
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
 
             const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
@@ -79,7 +79,7 @@ describe('Comment', () => {
 
             userFullName = pngUploadedFile.entry.createdByUser.displayName;
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
 
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
@@ -182,7 +182,7 @@ describe('Comment', () => {
 
             pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
 
             await navigationBarPage.navigateToContentServices();
         });

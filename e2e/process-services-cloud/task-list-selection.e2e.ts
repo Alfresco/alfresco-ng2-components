@@ -55,7 +55,7 @@ describe('Task list cloud - selection', () => {
 
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-            await apiService.login(testUser.email, testUser.password);
+            await apiService.login(testUser.username, testUser.password);
 
             for (let i = 0; i < noOfTasks; i++) {
                 response = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
@@ -63,7 +63,7 @@ describe('Task list cloud - selection', () => {
                 tasks.push(response.entry.name);
             }
 
-            await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.username, testUser.password);
         });
 
         afterAll(async () => {

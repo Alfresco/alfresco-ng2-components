@@ -60,7 +60,7 @@ describe('Task List Pagination - Sorting', () => {
 
         processUserModel = await usersActions.createUser();
 
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
 
         await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -68,7 +68,7 @@ describe('Task List Pagination - Sorting', () => {
             await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskNames[i] }));
         }
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
    });
 
     it('[C260308] Should be possible to sort tasks by name', async () => {

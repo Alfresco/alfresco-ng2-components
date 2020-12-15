@@ -66,7 +66,7 @@ describe('Document List Component - Actions', () => {
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');
             await usersActions.createUser(contentServicesUser);
-            await apiService.login(contentServicesUser.email, contentServicesUser.password);
+            await apiService.login(contentServicesUser.username, contentServicesUser.password);
             folder1 = await uploadActions.createFolder('A' + folderModel1.name, '-my-');
             folder2 = await uploadActions.createFolder('B' + folderModel2.name, '-my-');
             folder3 = await uploadActions.createFolder('C' + folderModel3.name, '-my-');
@@ -77,7 +77,7 @@ describe('Document List Component - Actions', () => {
         });
 
         beforeEach(async () => {
-            await loginPage.login(contentServicesUser.email, contentServicesUser.password);
+            await loginPage.login(contentServicesUser.username, contentServicesUser.password);
             await contentServicesPage.goToDocumentList();
             await paginationPage.selectItemsPerPage('5');
             await contentServicesPage.checkAcsContainer();

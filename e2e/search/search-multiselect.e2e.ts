@@ -56,7 +56,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await usersActions.createUser(acsUser);
 
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
 
             site = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
@@ -73,7 +73,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
 
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
@@ -147,7 +147,7 @@ describe('Search Component - Multi-Select Facet', () => {
             await usersActions.createUser(userUploadingTxt);
             await usersActions.createUser(userUploadingImg);
 
-            await apiService.login(userUploadingTxt.email, userUploadingTxt.password);
+            await apiService.login(userUploadingTxt.username, userUploadingTxt.password);
 
             site = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
@@ -161,13 +161,13 @@ describe('Search Component - Multi-Select Facet', () => {
 
             txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
-            await apiService.login(userUploadingImg.email, userUploadingImg.password);
+            await apiService.login(userUploadingImg.username, userUploadingImg.password);
 
             jpgFile = await uploadActions.uploadFile(jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
 
             await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
-            await loginPage.login(userUploadingImg.email, userUploadingImg.password);
+            await loginPage.login(userUploadingImg.username, userUploadingImg.password);
 
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
@@ -207,7 +207,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await usersActions.createUser(acsUser);
 
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
 
             site = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
@@ -217,7 +217,7 @@ describe('Search Component - Multi-Select Facet', () => {
             txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
             await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
 
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();

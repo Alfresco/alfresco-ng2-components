@@ -70,7 +70,7 @@ describe('Restore content directive', () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(anotherAcsUser);
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         await uploadActions.createFolder(folderName, '-my-');
         folderWithContent = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -90,7 +90,7 @@ describe('Restore content directive', () => {
     describe('Restore same name folders', () => {
 
         beforeAll(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
             await contentServicesPage.checkContentIsDisplayed(folderName);
@@ -132,7 +132,7 @@ describe('Restore content directive', () => {
     describe('Validate', () => {
 
         beforeAll(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
         });
 
         afterAll(async () => {
@@ -250,7 +250,7 @@ describe('Restore content directive', () => {
     describe('Restore deleted library', () => {
 
         beforeAll(async () => {
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
             const publicSiteName = `public-${StringUtil.generateRandomString(5)}`;
             const publicSiteBody = { visibility: 'PUBLIC', title: publicSiteName };
             publicSite = await apiService.getInstance().core.sitesApi.createSite(publicSiteBody);
@@ -264,7 +264,7 @@ describe('Restore content directive', () => {
         });
 
         beforeEach(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
         });
@@ -303,7 +303,7 @@ describe('Restore content directive', () => {
         let parentFolder, folderWithin, pdfFile, pngFile, mainFile, mainFolder;
 
         beforeAll(async () => {
-            await apiService.login(anotherAcsUser.email, anotherAcsUser.password);
+            await apiService.login(anotherAcsUser.username, anotherAcsUser.password);
             await uploadActions.createFolder(folderName, '-my-');
             parentFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
             folderWithin = await uploadActions.createFolder(StringUtil.generateRandomString(5), parentFolder.entry.id);
@@ -312,7 +312,7 @@ describe('Restore content directive', () => {
             mainFile = await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
             mainFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
 
-            await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
+            await loginPage.login(anotherAcsUser.username, anotherAcsUser.password);
         });
 
         beforeEach(async () => {

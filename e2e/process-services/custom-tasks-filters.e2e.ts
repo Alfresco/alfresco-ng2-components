@@ -85,7 +85,7 @@ describe('Start Task - Custom App', () => {
 
         processUserModel = await usersActions.createUser();
 
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -117,7 +117,7 @@ describe('Start Task - Custom App', () => {
             'dueDate': currentDateStandardFormat
         }));
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
     });
 
     describe('', () => {

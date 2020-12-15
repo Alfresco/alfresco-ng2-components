@@ -56,7 +56,7 @@ describe('Form Field Component - Dropdown Widget', () => {
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-        await apiService.login(testUser.email, testUser.password);
+        await apiService.login(testUser.username, testUser.password);
 
         const processDefinition = await processDefinitionService
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
@@ -69,7 +69,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         task = await tasklist.list.entries[0];
         await tasksService.claimTask(task.entry.id, simpleApp);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.username, testUser.password);
     });
 
     afterAll(async () => {

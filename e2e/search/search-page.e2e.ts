@@ -73,7 +73,7 @@ describe('Search component - Search Page', () => {
         await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         await uploadActions.createFolder(emptyFolderModel.name, '-my-');
         const newFolderModelUploaded = await uploadActions.createFolder(newFolderModel.name, '-my-');
@@ -88,7 +88,7 @@ describe('Search component - Search Page', () => {
 
         await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
    });
 
     afterAll(async () => {

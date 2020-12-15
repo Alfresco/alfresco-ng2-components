@@ -63,11 +63,11 @@ describe('Start Task - Group Cloud Component', () => {
         await identityService.addUserToGroup(testUser.idIdentityService, hrGroup.id);
         await identityService.addUserToGroup(apsUser.idIdentityService, testGroup.id);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.username, testUser.password);
     });
 
     afterAll(async () => {
-        await apiService.login(testUser.email, testUser.password);
+        await apiService.login(testUser.username, testUser.password);
         const tasksService = new TasksService(apiService);
 
         const bothGroupsTaskId = await tasksService.getTaskId(bothGroupsTaskName, simpleApp);

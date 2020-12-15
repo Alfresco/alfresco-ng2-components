@@ -31,8 +31,8 @@ describe('About Process Services', () => {
     beforeAll(async() => {
         await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
-        await apiService.login(user.email, user.password);
-        await loginPage.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
+        await loginPage.login(user.username, user.password);
         await navigationBarPage.clickAboutButton();
     });
 

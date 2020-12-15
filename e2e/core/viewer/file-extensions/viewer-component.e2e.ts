@@ -73,7 +73,7 @@ describe('Viewer', () => {
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, site.entry.guid);
     });
@@ -84,7 +84,7 @@ describe('Viewer', () => {
     });
 
     it('[C272813] Should be redirected to site when opening and closing a file in a site', async () => {
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await navigationBarPage.goToSite(site);
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
@@ -102,12 +102,12 @@ describe('Viewer', () => {
         let otherFolderUploaded;
 
         beforeAll(async () => {
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
             otherFolderUploaded = await uploadActions.createFolder(otherFolderInfo.name, '-my-');
 
             uploadedOthers = await uploadActions.uploadFolder(otherFolderInfo.location, otherFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

@@ -74,7 +74,7 @@ describe('Document List Component', () => {
             id: anotherAcsUser.username,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         destinationFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         sourceFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -90,7 +90,7 @@ describe('Document List Component', () => {
             {
                 permissions: {
                     locallySet: [{
-                        authorityId: anotherAcsUser.email,
+                        authorityId: anotherAcsUser.username,
                         name: 'Consumer',
                         accessStatus: 'ALLOWED'
                     }]
@@ -112,7 +112,7 @@ describe('Document List Component', () => {
     describe('Document List Component - Actions Move and Copy', () => {
 
         beforeAll(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
         });
 
         beforeEach(async () => {
@@ -212,7 +212,7 @@ describe('Document List Component', () => {
     describe('Document List actions - Move, Copy on no permission folder', () => {
 
         beforeAll(async () => {
-            await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
+            await loginPage.login(anotherAcsUser.username, anotherAcsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${sourceFolder.entry.id}`);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });
@@ -278,7 +278,7 @@ describe('Document List Component', () => {
             await contentServicesPage.checkDeleteIsDisabled(pdfFileModel.name);
 
             await navigationBarPage.clickLogoutButton();
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${sourceFolder.entry.id}`);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
 

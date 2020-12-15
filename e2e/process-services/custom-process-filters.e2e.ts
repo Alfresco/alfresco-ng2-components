@@ -52,9 +52,9 @@ describe('New Process Filters', () => {
 
         tenantId = user.tenantId;
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
     });
 
     afterAll(async () => {

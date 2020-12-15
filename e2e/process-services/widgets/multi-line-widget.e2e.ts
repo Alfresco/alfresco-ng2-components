@@ -48,7 +48,7 @@ describe('Multi-line Widget', () => {
 
        processUserModel = await usersActions.createUser();
 
-       await apiService.login(processUserModel.email, processUserModel.password);
+       await apiService.login(processUserModel.username, processUserModel.password);
        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
@@ -56,7 +56,7 @@ describe('Multi-line Widget', () => {
             return currentApp.modelId === appModel.id;
         });
        process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
-       await loginPage.login(processUserModel.email, processUserModel.password);
+       await loginPage.login(processUserModel.username, processUserModel.password);
    });
 
     beforeEach(async () => {

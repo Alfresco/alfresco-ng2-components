@@ -69,7 +69,7 @@ describe('Attachment list action menu for processes', () => {
 
         tenantId = user.tenantId;
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
         const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
@@ -81,7 +81,7 @@ describe('Attachment list action menu for processes', () => {
         await processUtil.startProcessOfApp(importedApp.name, processName.emptyList);
         await processUtil.startProcessOfApp(importedApp.name, processName.dragDrop);
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
     });
 
     afterAll(async () => {

@@ -93,7 +93,7 @@ describe('Permissions Component', () => {
         await usersActions.createUser(contributorUser);
         await usersActions.createUser(collaboratorUser);
         await usersActions.createUser(managerUser);
-        await apiService.login(folderOwnerUser.email, folderOwnerUser.password);
+        await apiService.login(folderOwnerUser.username, folderOwnerUser.password);
 
         await browser.sleep(15000);
 
@@ -142,7 +142,7 @@ describe('Permissions Component', () => {
             {
                 permissions: {
                     locallySet: [{
-                        authorityId: managerUser.email,
+                        authorityId: managerUser.username,
                         name: 'SiteConsumer',
                         accessStatus: 'ALLOWED'
                     }]
@@ -161,7 +161,7 @@ describe('Permissions Component', () => {
     describe('Role Site Dropdown', () => {
 
         beforeAll(async () => {
-            await loginPage.login(folderOwnerUser.email, folderOwnerUser.password);
+            await loginPage.login(folderOwnerUser.username, folderOwnerUser.password);
 
             await BrowserActions.getUrl(browser.baseUrl + '/files/' + publicSite.entry.guid);
             await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
@@ -213,7 +213,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C276994] Role SiteConsumer', async () => {
-            await loginPage.login(siteConsumerUser.email, siteConsumerUser.password);
+            await loginPage.login(siteConsumerUser.username, siteConsumerUser.password);
 
             await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
@@ -241,7 +241,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C276997] Role SiteContributor', async () => {
-            await loginPage.login(contributorUser.email, contributorUser.password);
+            await loginPage.login(contributorUser.username, contributorUser.password);
 
             await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
@@ -272,7 +272,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C277005] Role SiteCollaborator', async () => {
-            await loginPage.login(collaboratorUser.email, collaboratorUser.password);
+            await loginPage.login(collaboratorUser.username, collaboratorUser.password);
 
             await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
@@ -311,7 +311,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C277006] Role SiteManager', async () => {
-            await loginPage.login(managerUser.email, managerUser.password);
+            await loginPage.login(managerUser.username, managerUser.password);
 
             await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
@@ -355,7 +355,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C277196] should a user with Manager permissions be able to upload a new version for the created file', async () => {
-            await loginPage.login(managerUser.email, managerUser.password);
+            await loginPage.login(managerUser.username, managerUser.password);
 
             await navigationBarPage.openContentServicesFolder(privateSite.entry.guid);
 

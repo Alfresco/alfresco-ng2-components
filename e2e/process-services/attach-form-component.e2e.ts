@@ -56,13 +56,13 @@ describe('Attach Form Component', () => {
 
         tenantId = user.tenantId;
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
         appModel = await applicationService.importPublishDeployApp(app.file_path);
 
         await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: testNames.taskName }));
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
    });
 
     afterAll(async () => {

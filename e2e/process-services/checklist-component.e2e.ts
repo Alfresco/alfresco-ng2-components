@@ -54,7 +54,7 @@ describe('Checklist component', () => {
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
 
         await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
 
@@ -62,7 +62,7 @@ describe('Checklist component', () => {
             await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[i] }));
         }
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
    });
 
     beforeEach(async () => {

@@ -57,11 +57,11 @@ describe('Start Task - Custom App', () => {
         assigneeUserModel = await usersActions.createUser();
         processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
 
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
    });
 
     it('[C263942] Should be possible to modify a task', async () => {

@@ -55,7 +55,7 @@ describe('Process List - Pagination when adding processes', () => {
 
         processUserModel = await usersActions.createUser();
 
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
 
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -63,7 +63,7 @@ describe('Process List - Pagination when adding processes', () => {
             await processUtil.startProcessOfApp(resultApp.name);
         }
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
 
         await (await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
     });

@@ -68,7 +68,7 @@ describe('Document List Component - Actions', () => {
             folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
             await apiService.loginWithProfile('admin');
             acsUser = await usersActions.createUser();
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
             pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
             await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
             uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
@@ -77,7 +77,7 @@ describe('Document List Component - Actions', () => {
             fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
             await uploadActions.createEmptyFiles(fileNames, uploadedFolder.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
 
             await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
         });

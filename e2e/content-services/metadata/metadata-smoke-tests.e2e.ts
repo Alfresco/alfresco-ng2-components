@@ -70,7 +70,7 @@ describe('Metadata component', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         Object.assign(pngFileModel, pngUploadedFile.entry);
         pngFileModel.update(pngUploadedFile.entry);
@@ -78,7 +78,7 @@ describe('Metadata component', () => {
 
     describe('Viewer Metadata', () => {
         beforeAll(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
             await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
@@ -230,7 +230,7 @@ describe('Metadata component', () => {
         beforeAll(async () => {
             await uploadActions.createFolder(folderName, '-my-');
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
         });
@@ -243,7 +243,7 @@ describe('Metadata component', () => {
             await contentServicesPage.metadataContent(folderName);
 
             await expect(await metadataViewPage.getPropertyText('name')).toEqual(folderName);
-            await expect(await metadataViewPage.getPropertyText('createdByUser.displayName')).toEqual(acsUser.username);
+            await expect(await metadataViewPage.getPropertyText('createdByUser.displayName')).toEqual(`${acsUser.firstName} ${acsUser.lastName}`);
             await BrowserActions.closeMenuAndDialogs();
         });
 
@@ -285,7 +285,7 @@ describe('Metadata component', () => {
         await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
 
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
         await navigationBarPage.navigateToContentServices();
 
         await viewerPage.viewFile(pngFileModel.name);

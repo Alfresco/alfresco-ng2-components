@@ -43,7 +43,7 @@ describe('Document List Component', () => {
 
             privateSite = await apiService.getInstance().core.sitesApi.createSite(privateSiteBody);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
         });
 
         afterAll(async () => {

@@ -56,12 +56,12 @@ describe('Sorting for process filters', () => {
         user = await usersActions.createUser();
         tenantId = user.tenantId;
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
         importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
    });
 
     afterEach(async () => {

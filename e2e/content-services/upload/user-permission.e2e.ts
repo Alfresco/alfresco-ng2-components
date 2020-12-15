@@ -55,7 +55,7 @@ describe('Upload - User permission', () => {
 
         acsUser = await usersActions.createUser(acsUser);
         acsUserTwo = await usersActions.createUser(acsUserTwo);
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     beforeEach(async () => {
@@ -150,7 +150,7 @@ describe('Upload - User permission', () => {
             await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
             await navigationBarPage.clickLogoutButton();
-            await loginPage.login(acsUserTwo.email, acsUserTwo.password);
+            await loginPage.login(acsUserTwo.username, acsUserTwo.password);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
@@ -160,7 +160,7 @@ describe('Upload - User permission', () => {
             await contentServicesPage.checkContentIsDisplayed(pngFile.name);
 
             await navigationBarPage.clickLogoutButton();
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);

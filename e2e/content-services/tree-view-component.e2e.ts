@@ -46,7 +46,7 @@ describe('Tree View Component', () => {
 
         acsUser = await usersActions.createUser();
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         treeFolder = await apiService.getInstance().nodes.addNode(nodeNames.parentFolder, {
             name: nodeNames.folder,
@@ -65,7 +65,7 @@ describe('Tree View Component', () => {
             nodeType: 'cm:content'
         });
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await navigationBarPage.clickTreeViewButton();
     });

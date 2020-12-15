@@ -77,7 +77,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         const folderUploadedModel = await uploadActions.createFolder(folderModel.name, '-my-');
 
@@ -93,7 +93,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, lastFolderResponse.entry.id);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
     });

@@ -80,7 +80,7 @@ describe('People Groups Cloud Component', () => {
                 `${testUser.idIdentityService}`, `${devopsUser.idIdentityService}`];
             groups = [`${groupUser.id}`, `${groupAdmin.id}`, `${groupNoRole.id}`];
 
-            await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.username, testUser.password);
         });
 
         afterAll(async () => {

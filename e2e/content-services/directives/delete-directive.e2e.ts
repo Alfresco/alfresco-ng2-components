@@ -99,7 +99,7 @@ describe('Delete Directive', () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(secondAcsUser);
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
     });
 
     beforeEach(async () => {
@@ -123,7 +123,7 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, textFolderUploaded.entry.id);
             await uploadActions.createFolder(folderSecond.name, baseFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
@@ -193,7 +193,7 @@ describe('Delete Directive', () => {
 
     describe('When selection on multiple pages', () => {
         beforeEach(async () => {
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
 
             await uploadActions.uploadFile( txtFileModel.location, txtFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, baseFolderUploaded.entry.id);
@@ -202,7 +202,7 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(secondPngFileModel.location, secondPngFileModel.name, baseFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
@@ -231,7 +231,7 @@ describe('Delete Directive', () => {
         let fileTxt, filePdf, folderA, folderB;
 
         beforeAll(async () => {
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
 
             createdSite = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(20).toLowerCase(),
@@ -248,17 +248,17 @@ describe('Delete Directive', () => {
             folderA = await uploadActions.createFolder(StringUtil.generateRandomString(5), createdSite.entry.guid);
             folderB = await uploadActions.createFolder(StringUtil.generateRandomString(5), createdSite.entry.guid);
 
-            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteManager', folderA);
-            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteManager', fileTxt);
-            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteConsumer', folderB);
-            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteConsumer', filePdf);
+            await permissionActions.addRoleForUser(secondAcsUser.username, 'SiteManager', folderA);
+            await permissionActions.addRoleForUser(secondAcsUser.username, 'SiteManager', fileTxt);
+            await permissionActions.addRoleForUser(secondAcsUser.username, 'SiteConsumer', folderB);
+            await permissionActions.addRoleForUser(secondAcsUser.username, 'SiteConsumer', filePdf);
 
             await permissionActions.disableInheritedPermissionsForNode(folderA.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(folderB.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(fileTxt.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(filePdf.entry.id);
 
-            await loginPage.login(secondAcsUser.email, secondAcsUser.password);
+            await loginPage.login(secondAcsUser.username, secondAcsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${createdSite.entry.guid}`);
             await contentServicesPage.waitForTableBody();
         });

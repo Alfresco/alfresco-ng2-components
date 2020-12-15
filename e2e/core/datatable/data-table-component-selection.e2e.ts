@@ -35,7 +35,7 @@ describe('Datatable component - selection', () => {
 
         await usersActions.createUser(acsUser);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await navigationBarPage.navigateToDatatable();
    });

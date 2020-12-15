@@ -53,7 +53,7 @@ describe('Edit process filters cloud', () => {
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.username, testUser.password);
     });
 
     afterAll(async () => {

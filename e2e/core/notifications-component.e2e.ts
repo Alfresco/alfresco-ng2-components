@@ -35,9 +35,9 @@ describe('Notifications Component', () => {
 
         acsUser = await usersActions.createUser();
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await notificationPage.goToNotificationsPage();
     });

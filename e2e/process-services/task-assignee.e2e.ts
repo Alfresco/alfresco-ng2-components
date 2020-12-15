@@ -73,10 +73,10 @@ describe('Task Assignee', () => {
             } catch (e) {
             }
 
-            await apiService.login(user.email, user.password);
+            await apiService.login(user.username, user.password);
             await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
 
-            await loginPage.login(user.email, user.password);
+            await loginPage.login(user.username, user.password);
         });
 
         afterAll(async () => {
@@ -157,7 +157,7 @@ describe('Task Assignee', () => {
             } catch (e) {
             }
 
-            await apiService.login(user.email, user.password);
+            await apiService.login(user.username, user.password);
             const appModel = await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
 
             await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processNames[1]);
@@ -169,7 +169,7 @@ describe('Task Assignee', () => {
         });
 
         it('[C216430] Start Task - Claim and Requeue a task', async () => {
-            await loginPage.login(candidate1.email, candidate1.password);
+            await loginPage.login(candidate1.username, candidate1.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp('Task App');
@@ -216,7 +216,7 @@ describe('Task Assignee', () => {
             await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
 
             await navigationBarPage.clickLogoutButton();
-            await loginPage.login(candidate2.email, candidate2.password);
+            await loginPage.login(candidate2.username, candidate2.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp('Task App');
@@ -228,7 +228,7 @@ describe('Task Assignee', () => {
             await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
 
             await navigationBarPage.clickLogoutButton();
-            await loginPage.login(candidate1.email, candidate1.password);
+            await loginPage.login(candidate1.username, candidate1.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp('Task App');
@@ -257,7 +257,7 @@ describe('Task Assignee', () => {
             await taskPage.taskDetails().checkClaimEnabled();
 
             await navigationBarPage.clickLogoutButton();
-            await loginPage.login(candidate2.email, candidate2.password);
+            await loginPage.login(candidate2.username, candidate2.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp('Task App');

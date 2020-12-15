@@ -103,7 +103,7 @@ describe('permissions', () => {
     });
 
     it('[C274692] Should not be possible edit metadata properties when the user is a consumer user', async () => {
-        await loginPage.login(consumerUser.email, consumerUser.password);
+        await loginPage.login(consumerUser.username, consumerUser.password);
 
         await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -115,7 +115,7 @@ describe('permissions', () => {
     });
 
     it('[C279971] Should be possible edit metadata properties when the user is a collaborator user', async () => {
-        await loginPage.login(collaboratorUser.email, collaboratorUser.password);
+        await loginPage.login(collaboratorUser.username, collaboratorUser.password);
 
         await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -135,7 +135,7 @@ describe('permissions', () => {
     });
 
     it('[C279972] Should be possible edit metadata properties when the user is a contributor user', async () => {
-        await loginPage.login(collaboratorUser.email, collaboratorUser.password);
+        await loginPage.login(collaboratorUser.username, collaboratorUser.password);
 
         await navigationBarPage.openContentServicesFolder(site.entry.guid);
 

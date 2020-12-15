@@ -56,7 +56,7 @@ describe('Favorite directive', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         testFolder1 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         testFolder2 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -66,7 +66,7 @@ describe('Favorite directive', () => {
 
         await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
         await contentServicesPage.goToDocumentList();
     });
 

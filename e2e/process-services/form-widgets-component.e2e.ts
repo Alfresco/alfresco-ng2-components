@@ -55,11 +55,11 @@ describe('Form widgets', () => {
 
             processUserModel = await usersActions.createUser();
 
-            await apiService.login(processUserModel.email, processUserModel.password);
+            await apiService.login(processUserModel.username, processUserModel.password);
 
             appModelWidget = await applicationsService.importPublishDeployApp(appWidget.file_path);
 
-            await loginPage.login(processUserModel.email, processUserModel.password);
+            await loginPage.login(processUserModel.username, processUserModel.password);
 
             await (await new NavigationBarPage().navigateToProcessServicesPage()).goToApp(appModelWidget.name);
 
@@ -203,12 +203,12 @@ describe('Form widgets', () => {
 
             processUserModel = await usersActions.createUser();
 
-            await apiService.login(processUserModel.email, processUserModel.password);
+            await apiService.login(processUserModel.username, processUserModel.password);
             appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
             const processUtil = new ProcessUtil(apiService);
             process = await processUtil.startProcessOfApp(appModel.name);
-            await loginPage.login(processUserModel.email, processUserModel.password);
+            await loginPage.login(processUserModel.username, processUserModel.password);
         });
 
         beforeEach(async () => {

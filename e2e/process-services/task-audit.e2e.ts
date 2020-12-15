@@ -44,12 +44,12 @@ describe('Task Audit', () => {
         await apiService.loginWithProfile('admin');
         processUserModel = await usersActions.createUser();
 
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
         await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskTaskApp }));
         const applicationsService = new ApplicationsUtil(apiService);
         await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
     });
 
     afterAll( async () => {

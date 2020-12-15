@@ -62,7 +62,7 @@ describe('Viewer', () => {
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
     });
 
     afterAll(async () => {
@@ -79,7 +79,7 @@ describe('Viewer', () => {
 
             uploadedPpt = await uploadActions.uploadFolder(pptFolderInfo.location, pptFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

@@ -58,7 +58,7 @@ describe('Process list cloud', () => {
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-            await apiService.login(testUser.email, testUser.password);
+            await apiService.login(testUser.username, testUser.password);
             const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
@@ -71,7 +71,7 @@ describe('Process list cloud', () => {
                 'businessKey': StringUtil.generateRandomString()
             });
 
-            await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.username, testUser.password);
 
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();

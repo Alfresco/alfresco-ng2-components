@@ -77,7 +77,7 @@ describe('Document List Component', () => {
 
             acsUser = await usersActions.createUser();
 
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
             fileTestNode = await uploadActions.uploadFile(testFile.location, testFile.name, '-my-');
             fileDocxNode = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
@@ -103,7 +103,7 @@ describe('Document List Component', () => {
         });
 
         beforeEach(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

@@ -42,7 +42,7 @@ describe('Comment component for Processes', () => {
 
         user = await usersActions.createUser();
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
         const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
@@ -50,7 +50,7 @@ describe('Comment component for Processes', () => {
         const processWithComment = await new ProcessUtil(apiService).startProcessOfApp(importedApp.name, processName);
         processInstanceId = processWithComment.id;
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
     });
 
     afterAll(async () => {

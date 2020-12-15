@@ -48,12 +48,12 @@ describe('Empty Process List Test', () => {
 
         user = await usersActions.createUser();
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
         await applicationsService.importPublishDeployApp(appWithProcess.file_path);
         await applicationsService.importPublishDeployApp(simpleAppWithUserForm.file_path);
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
    });
 
     it('[C260494] Should add process to list when a process is created', async () => {

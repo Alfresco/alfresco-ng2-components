@@ -52,7 +52,7 @@ describe('People component', () => {
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
 
         await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
 
@@ -64,7 +64,7 @@ describe('People component', () => {
     });
 
     beforeEach(async () => {
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await (await processServices.goToTaskApp()).clickTasksButton();
@@ -159,7 +159,7 @@ describe('People component', () => {
             .toEqual(assigneeUserModel.email);
 
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(assigneeUserModel.email, assigneeUserModel.password);
+        await loginPage.login(assigneeUserModel.username, assigneeUserModel.password);
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
@@ -218,7 +218,7 @@ describe('People component', () => {
             .toEqual(assigneeUserModel.email);
 
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(assigneeUserModel.email, assigneeUserModel.password);
+        await loginPage.login(assigneeUserModel.username, assigneeUserModel.password);
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);

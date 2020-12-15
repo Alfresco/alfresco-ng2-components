@@ -77,7 +77,7 @@ describe('Document List - Pagination', () => {
 
         await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         const folderThreeUploadedModel = await uploadActions.createFolder(folderThreeModel.name, '-my-');
         const newFolderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
@@ -85,7 +85,7 @@ describe('Document List - Pagination', () => {
         await uploadActions.createEmptyFiles(fileNames, newFolderUploadedModel.entry.id);
         await uploadActions.createEmptyFiles(secondSetOfFiles, folderThreeUploadedModel.entry.id);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     afterAll(async () => {
@@ -121,13 +121,13 @@ describe('Document List - Pagination', () => {
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('20');
 
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     it('[C260069] Should be able to set Items per page to 5', async () => {
@@ -175,7 +175,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     it('[C260067] Should be able to set Items per page to 10', async () => {
@@ -203,7 +203,7 @@ describe('Document List - Pagination', () => {
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('10');
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
         currentPage = 1;
     });
 
@@ -374,7 +374,7 @@ describe('Document List - Pagination', () => {
         await expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
         await contentServicesPage.createNewFolder(folderTwoModel.name);
         const nodeIdSubFolderTwo = await contentServicesPage.getAttributeValueForElement(folderTwoModel.name, 'Node id');
         await contentServicesPage.openFolder(folderTwoModel.name);
@@ -415,7 +415,7 @@ describe('Document List - Pagination', () => {
         const nodeIdSubFolderTwo = await contentServicesPage.getAttributeValueForElement(folderTwoModel.name, 'Node id');
         await contentServicesPage.openFolder(folderTwoModel.name);
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
         for (let i = 0; i < numberOfSubFolders; i++) {
             await uploadActions.createFolder('subfolder' + (i + 1), nodeIdSubFolderTwo);
         }

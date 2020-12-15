@@ -94,7 +94,7 @@ describe('Task form cloud component', () => {
         const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await apiServiceHrUser.login(testUser.email, testUser.password);
+        await apiServiceHrUser.login(testUser.username, testUser.password);
         const tasksService = new TasksService(apiServiceHrUser);
 
         assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
@@ -139,7 +139,7 @@ describe('Task form cloud component', () => {
         processInstancesService = new ProcessInstancesService(apiServiceHrUser);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.username, testUser.password);
 
     }, 5 * 60 * 1000);
 

@@ -79,7 +79,7 @@ describe('Process filters cloud', () => {
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await identityService.addUserToGroup(anotherUser.idIdentityService, groupInfo.id);
 
-        await apiService.login(anotherUser.email, anotherUser.password);
+        await apiService.login(anotherUser.username, anotherUser.password);
         simpleAppProcessDefinition = await processDefinitionService
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
@@ -88,7 +88,7 @@ describe('Process filters cloud', () => {
             'businessKey': StringUtil.generateRandomString()
         });
 
-        await apiService.login(testUser.email, testUser.password);
+        await apiService.login(testUser.username, testUser.password);
         processDefinition = await processDefinitionService
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
 
@@ -120,7 +120,7 @@ describe('Process filters cloud', () => {
         const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
         await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.username, testUser.password);
         await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
    });
@@ -130,7 +130,7 @@ describe('Process filters cloud', () => {
         await processInstancesService.deleteProcessInstance(anotherProcessInstance.entry.id, candidateBaseApp);
         await processInstancesService.deleteProcessInstance(suspendProcessInstance.entry.id, candidateBaseApp);
 
-        await apiService.login(anotherUser.email, anotherUser.password);
+        await apiService.login(anotherUser.username, anotherUser.password);
         await processInstancesService.deleteProcessInstance(differentAppUserProcessInstance.entry.id, simpleApp);
 
         await apiService.loginWithProfile('identityAdmin');

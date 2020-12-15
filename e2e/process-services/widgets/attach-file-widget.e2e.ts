@@ -58,10 +58,10 @@ describe('Attach widget - File', () => {
         await apiService.loginWithProfile('admin');
 
         processUserModel = await usersActions.createUser();
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
 
         await applicationsService.importPublishDeployApp(app.file_path);
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
     });
 
     beforeEach(async () => {

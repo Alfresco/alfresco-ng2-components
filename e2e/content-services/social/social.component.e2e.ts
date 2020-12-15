@@ -63,7 +63,7 @@ describe('Social component', () => {
         await usersActions.createUser(componentVisitor);
         await usersActions.createUser(secondComponentVisitor);
 
-        await apiService.login(componentOwner.email, componentOwner.password);
+        await apiService.login(componentOwner.username, componentOwner.password);
 
         emptyFile = await uploadActions.uploadFile(emptyFileModel.location, emptyFileModel.name, '-my-');
 
@@ -72,11 +72,11 @@ describe('Social component', () => {
             {
                 permissions: {
                     locallySet: [{
-                        authorityId: componentVisitor.email,
+                        authorityId: componentVisitor.username,
                         name: 'Consumer',
                         accessStatus: 'ALLOWED'
                     }, {
-                        authorityId: secondComponentVisitor.email,
+                        authorityId: secondComponentVisitor.username,
                         name: 'Consumer',
                         accessStatus: 'ALLOWED'
                     }]
@@ -91,7 +91,7 @@ describe('Social component', () => {
 
     describe('User interaction on their own components', () => {
         beforeEach(async () => {
-            await loginPage.login(componentOwner.email, componentOwner.password);
+            await loginPage.login(componentOwner.username, componentOwner.password);
             await navigationBarPage.clickSocialButton();
         });
 
@@ -120,7 +120,7 @@ describe('Social component', () => {
     describe('User interaction on components that belong to other users', () => {
 
         beforeEach(async () => {
-            await loginPage.login(componentVisitor.email, componentVisitor.password);
+            await loginPage.login(componentVisitor.username, componentVisitor.password);
             await navigationBarPage.clickSocialButton();
         });
 
@@ -161,7 +161,7 @@ describe('Social component', () => {
     describe('Multiple Users interaction', () => {
 
         beforeEach(async () => {
-            await loginPage.login(componentVisitor.email, componentVisitor.password);
+            await loginPage.login(componentVisitor.username, componentVisitor.password);
             await navigationBarPage.clickSocialButton();
         });
 
@@ -179,7 +179,7 @@ describe('Social component', () => {
             await expect(await likePage.getLikedIconColor()).toBe(blueLikeColor);
 
             await navigationBarPage.clickLogoutButton();
-            await loginPage.login(secondComponentVisitor.email, secondComponentVisitor.password);
+            await loginPage.login(secondComponentVisitor.username, secondComponentVisitor.password);
             await navigationBarPage.clickSocialButton();
             await socialPage.writeCustomNodeId(emptyFile.entry.id);
             await expect(await likePage.getUnLikedIconColor()).toBe(greyLikeColor);
@@ -202,7 +202,7 @@ describe('Social component', () => {
             await expect(await ratePage.getRatedStarColor(4)).toBe(yellowRatedStarColor);
 
             await navigationBarPage.clickLogoutButton();
-            await loginPage.login(secondComponentVisitor.email, secondComponentVisitor.password);
+            await loginPage.login(secondComponentVisitor.username, secondComponentVisitor.password);
             await navigationBarPage.clickSocialButton();
             await socialPage.writeCustomNodeId(emptyFile.entry.id);
             await expect(await socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);

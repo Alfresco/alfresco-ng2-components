@@ -88,7 +88,7 @@ describe('Search component - Search Bar', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         const firstFileUploaded = await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');
         Object.assign(firstFileModel, firstFileUploaded.entry);
@@ -110,7 +110,7 @@ describe('Search component - Search Bar', () => {
 
         await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     afterAll(async () => {

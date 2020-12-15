@@ -117,7 +117,7 @@ describe('Version component permissions', () => {
                 lifetime: 'PERSISTENT'
             });
 
-        await apiService.login(fileCreatorUser.email, fileCreatorUser.password);
+        await apiService.login(fileCreatorUser.username, fileCreatorUser.password);
 
         await uploadActions.uploadFile(differentCreatorFile.location, differentCreatorFile.name, site.entry.guid);
     });
@@ -134,12 +134,12 @@ describe('Version component permissions', () => {
         });
 
         beforeAll(async () => {
-            await apiService.login(managerUser.email, managerUser.password);
+            await apiService.login(managerUser.username, managerUser.password);
 
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
-            await loginPage.login(managerUser.email, managerUser.password);
+            await loginPage.login(managerUser.username, managerUser.password);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
         });
@@ -178,7 +178,7 @@ describe('Version component permissions', () => {
 
     describe('Consumer', () => {
         beforeAll(async () => {
-            await loginPage.login(consumerUser.email, consumerUser.password);
+            await loginPage.login(consumerUser.username, consumerUser.password);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
         });
@@ -206,12 +206,12 @@ describe('Version component permissions', () => {
         });
 
         beforeAll(async () => {
-            await apiService.login(contributorUser.email, contributorUser.password);
+            await apiService.login(contributorUser.username, contributorUser.password);
 
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
-            await loginPage.login(contributorUser.email, contributorUser.password);
+            await loginPage.login(contributorUser.username, contributorUser.password);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
         });
@@ -261,12 +261,12 @@ describe('Version component permissions', () => {
         });
 
         beforeAll(async () => {
-            await apiService.login(collaboratorUser.email, collaboratorUser.password);
+            await apiService.login(collaboratorUser.username, collaboratorUser.password);
 
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
-            await loginPage.login(collaboratorUser.email, collaboratorUser.password);
+            await loginPage.login(collaboratorUser.username, collaboratorUser.password);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
         });

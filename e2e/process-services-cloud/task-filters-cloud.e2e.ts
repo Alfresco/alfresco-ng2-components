@@ -57,9 +57,9 @@ describe('Task filters cloud', () => {
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-            await apiService.login(testUser.email, testUser.password);
+            await apiService.login(testUser.username, testUser.password);
 
-            await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.username, testUser.password);
         });
 
         afterAll(async () => {

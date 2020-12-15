@@ -56,7 +56,7 @@ describe('Viewer', () => {
 
         await usersActions.createUser(acsUser);
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         let pngFileUploaded = await uploadActions.uploadFile(pngFile.location, pngFile.name, '-my-');
         Object.assign(pngFile, pngFileUploaded.entry);
@@ -64,7 +64,7 @@ describe('Viewer', () => {
         pngFileUploaded = await uploadActions.uploadFile(fileForOverlay.location, fileForOverlay.name, '-my-');
         Object.assign(fileForOverlay, pngFileUploaded.entry);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
     });

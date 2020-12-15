@@ -50,12 +50,12 @@ describe('Comment component for Processes', () => {
         user = await usersActions.createUser();
         secondUser = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
         const importedApp = await new ApplicationsUtil(apiService).importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
     });
 
     afterAll(async () => {
@@ -117,7 +117,7 @@ describe('Comment component for Processes', () => {
         await expect(await commentsPage.getTime(1)).toMatch(/(ago|few)/);
 
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(secondUser.email, secondUser.password);
+        await loginPage.login(secondUser.username, secondUser.password);
 
         await apiService.getInstance().activiti.taskApi.addTaskComment(thirdTaskComment, newTaskId);
 
