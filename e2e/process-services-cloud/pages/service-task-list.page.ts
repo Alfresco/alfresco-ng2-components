@@ -25,7 +25,7 @@ export class ServiceTaskListPage {
 
     allServiceTaskButton = element(by.css('button[data-automation-id="my-service-tasks_filter"]'));
     completedServiceTaskButton = element(by.css('button[data-automation-id="completed-tasks_filter"]'));
-    erroredServiceTaskButton = element(by.css('button[data-automation-id="errored-service-tasks_filter"]'));
+    errorServiceTaskButton = element(by.css('button[data-automation-id="errored-service-tasks_filter"]'));
     searchHeader = element(by.css('adf-cloud-edit-service-task-filter mat-expansion-panel-header'));
     serviceTaskList = element(by.css('adf-cloud-service-task-list'));
     activityNameField = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-activityName"]'));
@@ -35,7 +35,7 @@ export class ServiceTaskListPage {
     async checkServiceTaskFiltersDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.allServiceTaskButton);
         await BrowserVisibility.waitUntilElementIsVisible(this.completedServiceTaskButton);
-        await BrowserVisibility.waitUntilElementIsVisible(this.erroredServiceTaskButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.errorServiceTaskButton);
     }
 
     async checkSearchServiceTaskFiltersDisplayed(): Promise<void> {

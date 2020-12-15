@@ -46,6 +46,7 @@ describe('Service task list cloud', () => {
         const groupIdentityService = new GroupIdentityService(apiService);
 
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+        /* cspell:disable-next-line */
         const activityNameSimpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.multiinstanceservicetask;
 
         const processName = StringUtil.generateRandomString(5);
