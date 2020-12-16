@@ -66,11 +66,11 @@ describe('Version component actions', () => {
         uploadActions = new UploadActions(apiService);
         await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
         const txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
         Object.assign(txtFileModel, txtUploadedFile.entry);
         txtFileModel.update(txtUploadedFile.entry);
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
         await navigationBarPage.navigateToContentServices();
         await contentServicesPage.waitForTableBody();
    });

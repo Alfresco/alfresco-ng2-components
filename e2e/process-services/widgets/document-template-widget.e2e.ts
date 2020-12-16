@@ -49,7 +49,7 @@ describe('Document Template widget', () => {
 
        processUserModel = await usersActions.createUser();
 
-       await apiService.login(processUserModel.email, processUserModel.password);
+       await apiService.login(processUserModel.username, processUserModel.password);
        appModel = await applicationsService.importPublishDeployApp( app.file_path);
 
        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
@@ -57,7 +57,7 @@ describe('Document Template widget', () => {
             return currentApp.modelId === appModel.id;
         });
        process = await new ProcessUtil(apiService).startProcessOfApp(appModel.name);
-       await loginPage.login(processUserModel.email, processUserModel.password);
+       await loginPage.login(processUserModel.username, processUserModel.password);
    });
 
     beforeEach(async () => {

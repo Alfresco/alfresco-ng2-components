@@ -40,11 +40,11 @@ describe('Task Details - No form', () => {
         await apiService.loginWithProfile('admin');
         processUserModel = await usersActions.createUser();
 
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
         const applicationsService = new ApplicationsUtil(apiService);
         importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         await new ProcessUtil(apiService).startProcessOfApp(importedApp.name);
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
    });
 
     afterAll( async () => {

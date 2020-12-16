@@ -54,9 +54,9 @@ describe('Start Task - Task App', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
    });
 
     afterAll(async () => {

@@ -64,7 +64,7 @@ describe('Trashcan - Pagination', () => {
         await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
         const folderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
         const emptyFiles: any = await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
 
@@ -74,7 +74,7 @@ describe('Trashcan - Pagination', () => {
             });
         }
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
         await navigationBarPage.clickTrashcanButton();
         await trashcanPage.getDocumentList().dataTablePage().waitTillContentLoaded();
     });

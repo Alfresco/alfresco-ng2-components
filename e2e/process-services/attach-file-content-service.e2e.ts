@@ -93,7 +93,7 @@ describe('Attach File - Content service', () => {
             host: browser.params.testConfig.adf_external_acs.host
         });
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, '-my-');
         await applicationService.importPublishDeployApp(app.file_path);
 
@@ -107,7 +107,7 @@ describe('Attach File - Content service', () => {
     });
 
     beforeEach(async () => {
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
@@ -153,7 +153,7 @@ describe('Attach File - Content service', () => {
 
         await externalNodeSelector.waitForLogInDialog();
         await expect(await externalNodeSelector.getTitle()).toEqual(`Sign into '${browser.params.testConfig.adf_external_acs.host}'`);
-        await externalNodeSelector.login(user.email, user.password);
+        await externalNodeSelector.login(user.username, user.password);
 
         await externalNodeSelector.checkDialogIsDisplayed();
         await searchService.isSearchable(externalFile);
@@ -185,7 +185,7 @@ describe('Attach File - Content service', () => {
         await widget.attachFileWidget().selectUploadSource(csIntegrations[1]);
 
         await externalNodeSelector.waitForLogInDialog();
-        await externalNodeSelector.login(user.email, user.password);
+        await externalNodeSelector.login(user.username, user.password);
 
         await searchService.isSearchable(externalFile);
         await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);

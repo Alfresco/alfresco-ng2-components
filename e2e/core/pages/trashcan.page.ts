@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
-import { Locator, element, by } from 'protractor';
+import { Locator, element, by, browser } from 'protractor';
 
 export class TrashcanPage {
 
@@ -49,6 +49,7 @@ export class TrashcanPage {
 
     async clickRestore(): Promise<void> {
         await BrowserActions.click(this.restoreButton);
+        await browser.sleep(2000);
     }
 
     async checkRestoreButtonIsNotDisplayed(): Promise<void> {

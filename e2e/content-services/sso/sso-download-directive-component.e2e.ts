@@ -64,7 +64,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             acsUser = await usersActions.createUser();
 
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
 
             folder = await uploadActions.createFolder(folderName, '-my-');
 
@@ -75,7 +75,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
                 browser.params.testConfig.appConfig.oauth2.host,
                 browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
 
-            await loginSsoPage.loginSSOIdentityService(acsUser.email, acsUser.password);
+            await loginSsoPage.loginSSOIdentityService(acsUser.username, acsUser.password);
 
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.checkAcsContainer();

@@ -112,7 +112,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit() {
         this.cardViewUpdateService.itemUpdated$
             .pipe(
-                debounceTime(500),
+                debounceTime(200),
                 takeUntil(this.onDestroy$))
             .subscribe(
                 (updatedNode) => {

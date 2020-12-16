@@ -48,7 +48,7 @@ describe('Process list cloud', () => {
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await apiService.login(testUser.email, testUser.password);
+        await apiService.login(testUser.username, testUser.password);
         const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
@@ -60,7 +60,7 @@ describe('Process list cloud', () => {
         await tasksService.claimTask(editTask.list.entries[0].entry.id, simpleApp);
         await tasksService.claimTask(deleteTask.list.entries[0].entry.id, simpleApp);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.username, testUser.password);
         });
 
         afterAll(async() => {

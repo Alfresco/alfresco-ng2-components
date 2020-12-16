@@ -17,29 +17,21 @@
 
 import { ApiService, BrowserActions, ErrorPage, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
-import { ContentServicesPage } from './pages/content-services.page';
 
 describe('Error Component', () => {
 
-    const acsUser = new UserModel();
-    const loginPage = new LoginPage();
-    const errorPage = new ErrorPage();
-    const navigationBarPage = new NavigationBarPage();
-
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-    const contentServicesPage = new ContentServicesPage();
+
+    const acsUser = new UserModel();
+
+    const errorPage = new ErrorPage();
+    const loginPage = new LoginPage();
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
-        await loginPage.login(acsUser.email, acsUser.password);
-        await contentServicesPage.goToDocumentList();
-    });
-
-    afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     it('[C277302] Should display the error 403 when access to unauthorized page - My Change', async () => {

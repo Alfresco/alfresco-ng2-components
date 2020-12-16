@@ -66,7 +66,7 @@ describe('Search Radio Component', () => {
         await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         createdFolder = await apiService.getInstance().nodes.addNode('-my-', {
             name: nodeNames.folder,
@@ -79,7 +79,7 @@ describe('Search Radio Component', () => {
 
         await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await BrowserActions.getUrl(browser.baseUrl + '/search;q=' + randomName);
    });
@@ -274,7 +274,7 @@ describe('Search Radio Component', () => {
 
         beforeAll(async () => {
             await navigationBarPage.clickLogoutButton();
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
         });
 
         it('[C277033] Should be able to add a new option', async () => {

@@ -32,8 +32,7 @@ export class NotificationHistoryPage {
     }
 
     async checkNotificationIsPresent(text: string): Promise<void> {
-        const notificationLisText = await BrowserActions.getText(this.notificationList);
-        await expect(notificationLisText).toContain(text);
+        await BrowserVisibility.waitUntilElementHasText(this.notificationList, text);
     }
 
     async checkNotificationIsNotPresent(text: string): Promise<void> {

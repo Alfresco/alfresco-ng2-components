@@ -66,7 +66,7 @@ describe('Share file', () => {
         };
 
         const apiCall = async () => {
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
             return apiService.getInstance().core.sharedlinksApi.findSharedLinks();
         };
 
@@ -76,7 +76,7 @@ describe('Share file', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
@@ -90,10 +90,14 @@ describe('Share file', () => {
 
     describe('Shared link dialog', () => {
         beforeAll(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await navigationBarPage.navigateToContentServices();
             await contentListPage.selectRow(pngFileModel.name);
             await BrowserActions.closeMenuAndDialogs();
+        });
+
+        afterAll(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C286549] Should check automatically toggle button in Share dialog', async () => {
@@ -164,9 +168,13 @@ describe('Share file', () => {
     describe('Shared link preview', () => {
 
         beforeEach(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
+        });
+
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C286565] Should open file when logged user access shared link', async () => {

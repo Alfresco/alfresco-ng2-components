@@ -47,7 +47,7 @@ describe('Header Component', () => {
         await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     beforeEach(async () => {

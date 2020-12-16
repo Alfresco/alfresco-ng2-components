@@ -71,15 +71,15 @@ describe('Viewer', () => {
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: acsUser.email,
+            id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, site.entry.guid);
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         wordFileUploaded = await uploadActions.uploadFile(wordFileInfo.location, wordFileInfo.name, '-my-');
 
@@ -88,12 +88,12 @@ describe('Viewer', () => {
 
     afterAll(async () => {
         await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
         await uploadActions.deleteFileOrFolder(wordFileUploaded.entry.id);
     });
 
     beforeEach(async () => {
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     it('[C260105] Should be able to open an image file shared via API', async () => {

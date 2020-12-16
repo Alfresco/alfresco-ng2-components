@@ -29,8 +29,8 @@ export class CommentsPage {
     commentInput = element(by.id('comment-input'));
     addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
 
-    async getTotalNumberOfComments(): Promise<string> {
-        return BrowserActions.getText(this.numberOfComments);
+    async getTotalNumberOfComments(text: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementHasText(this.numberOfComments, text);
     }
 
     async checkUserIconIsDisplayed(): Promise<void> {

@@ -54,12 +54,12 @@ describe('Edit task filters cloud', () => {
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await apiService.login(testUser.email, testUser.password);
+        await apiService.login(testUser.username, testUser.password);
         const assignedTask = await tasksService.createStandaloneTask(assignedTaskName, simpleApp);
         await tasksService.claimTask(assignedTask.entry.id, simpleApp);
         await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.username, testUser.password);
     });
 
     afterAll(async () => {

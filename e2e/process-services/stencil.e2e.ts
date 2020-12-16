@@ -56,10 +56,10 @@ describe('Stencil', () => {
         await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
         const applicationsService = new ApplicationsUtil(apiService);
         await applicationsService.importPublishDeployApp(app.file_path);
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
     });
 
     afterAll(async () => {

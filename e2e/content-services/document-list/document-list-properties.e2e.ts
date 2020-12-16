@@ -43,12 +43,12 @@ describe('Document List Component - Properties', () => {
             await apiService.loginWithProfile('admin');
 
             acsUser = await usersActions.createUser();
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
 
             parentFolder = await uploadActions.createFolder('parentFolder', '-my-');
             subFolder = await uploadActions.createFolder('subFolder', parentFolder.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
         });
 
         afterEach(async () => {

@@ -60,12 +60,12 @@ describe('Search Slider Filter', () => {
 
         await usersActions.createUser(acsUser);
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         file2Bytes = await uploadActions.uploadFile(file2BytesModel.location, file2BytesModel.name, '-my-');
         await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
@@ -76,7 +76,7 @@ describe('Search Slider Filter', () => {
 
     afterAll(async () => {
         try {
-            await apiService.login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.username, acsUser.password);
             await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
         } catch (error) {
         }

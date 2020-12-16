@@ -50,12 +50,12 @@ describe('Comment component for Processes', () => {
         user = await usersActions.createUser();
         secondUser = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
         const importedApp = await new ApplicationsUtil(apiService).importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
     });
 
     afterAll(async () => {
@@ -105,7 +105,7 @@ describe('Comment component for Processes', () => {
         await commentsPage.checkUserIconIsDisplayed();
         await commentsPage.checkUserIconIsDisplayed();
 
-        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + totalCommentsLatest.total + ')');
+        await commentsPage.getTotalNumberOfComments('Comments (' + totalCommentsLatest.total + ')');
 
         await expect(await commentsPage.getMessage(0)).toEqual(totalCommentsLatest.data[0].message);
         await expect(await commentsPage.getMessage(1)).toEqual(totalCommentsLatest.data[1].message);
@@ -117,7 +117,7 @@ describe('Comment component for Processes', () => {
         await expect(await commentsPage.getTime(1)).toMatch(/(ago|few)/);
 
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(secondUser.email, secondUser.password);
+        await loginPage.login(secondUser.username, secondUser.password);
 
         await apiService.getInstance().activiti.taskApi.addTaskComment(thirdTaskComment, newTaskId);
 
@@ -133,7 +133,7 @@ describe('Comment component for Processes', () => {
         await commentsPage.checkUserIconIsDisplayed();
         await commentsPage.checkUserIconIsDisplayed();
 
-        await expect(await commentsPage.getTotalNumberOfComments()).toEqual('Comments (' + totalComments.total + ')');
+        await commentsPage.getTotalNumberOfComments('Comments (' + totalComments.total + ')');
 
         await expect(await commentsPage.getMessage(0)).toEqual(totalComments.data[0].message);
         await expect(await commentsPage.getMessage(1)).toEqual(totalComments.data[1].message);

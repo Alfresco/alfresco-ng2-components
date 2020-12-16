@@ -67,9 +67,9 @@ describe('Start Task', () => {
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await identityService.addUserToGroup(apsUser.idIdentityService, groupInfo.id);
-        await apiService.login(testUser.email, testUser.password);
+        await apiService.login(testUser.username, testUser.password);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.username, testUser.password);
     });
 
     afterAll(async () => {
@@ -80,7 +80,7 @@ describe('Start Task', () => {
         taskId = await tasksService.getTaskId(unassignedTaskName, simpleApp);
         await tasksService.deleteTask(taskId, simpleApp);
 
-        await apiService.login(apsUser.email, apsUser.password);
+        await apiService.login(apsUser.username, apsUser.password);
         taskId = await tasksService.getTaskId(reassignTaskName, simpleApp);
         await tasksService.deleteTask(taskId, simpleApp);
 

@@ -102,7 +102,7 @@ describe('Task Header cloud component', () => {
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-        await apiService.login(testUser.email, testUser.password);
+        await apiService.login(testUser.username, testUser.password);
 
         unclaimedTask = await tasksService.createStandaloneTask(unclaimedTaskName, simpleApp);
 
@@ -119,7 +119,7 @@ describe('Task Header cloud component', () => {
         subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);
 
         await browser.sleep(3000);
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.username, testUser.password);
     });
 
     afterAll(async () => {

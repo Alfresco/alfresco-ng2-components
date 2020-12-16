@@ -59,24 +59,27 @@ describe('Login component', () => {
 
         await usersActions.createUser(userA);
         await usersActions.createUser(userB);
-   });
+    });
+
+    afterEach(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
 
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
 
-        await loginPage.login(userA.email, userA.password);
+        await loginPage.login(userA.username, userA.password);
         await userInfoPage.clickUserProfile();
-        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
-        await expect(await userInfoPage.getContentEmail()).toEqual(userA.email);
+        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(`${userA.firstName} ${userA.lastName}`);
 
-        await loginPage.login(userB.email, userB.password);
+        await navigationBarPage.clickLogoutButton();
+        await loginPage.login(userB.username, userB.password);
         await userInfoPage.clickUserProfile();
-        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
-        await expect(await userInfoPage.getContentEmail()).toEqual(userB.email);
+        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(`${userB.firstName} ${userB.lastName}`);
     });
 
     it('[C299206] Should redirect the user without the right access role on a forbidden page', async () => {
-        await loginPage.login(userA.email, userA.password);
+        await loginPage.login(userA.username, userA.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await expect(await errorPage.getErrorCode()).toBe('403');
         await expect(await errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');

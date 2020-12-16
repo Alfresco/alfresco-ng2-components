@@ -71,7 +71,7 @@ describe('Version component actions', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         await uploadActions.uploadFile( txtFileModel.location, txtFileModel.name, '-my-');
         await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
@@ -82,7 +82,7 @@ describe('Version component actions', () => {
 
         await uploadActions.createFolder(folderSecond.name, '-my-');
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await navigationBarPage.navigateToContentServices();
         await contentServicesPage.waitForTableBody();

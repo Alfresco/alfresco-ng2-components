@@ -60,7 +60,7 @@ describe('Version Properties', () => {
 
         acsUser = await usersActions.createUser();
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         const txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
 
@@ -68,7 +68,7 @@ describe('Version Properties', () => {
 
         txtFileModel.update(txtUploadedFile.entry);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await navigationBarPage.navigateToContentServices();
         await contentServicesPage.waitForTableBody();

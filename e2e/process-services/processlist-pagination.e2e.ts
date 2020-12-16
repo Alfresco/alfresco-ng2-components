@@ -67,16 +67,16 @@ describe('Process List - Pagination', () => {
 
         processUserModel = await usersActions.createUser();
 
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
 
         deployedTestApp = await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
     });
 
     describe('With processes Pagination', () => {
         beforeAll(async () => {
-            await apiService.login(processUserModel.email, processUserModel.password);
+            await apiService.login(processUserModel.username, processUserModel.password);
 
             for (let i = 0; i < nrOfProcesses; i++) {
                 await new ProcessUtil(apiService).startProcessOfApp(deployedTestApp.name);

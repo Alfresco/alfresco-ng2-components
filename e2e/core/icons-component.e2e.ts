@@ -32,7 +32,7 @@ describe('Universal Icon component', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
    });
 
     afterAll(async () => {

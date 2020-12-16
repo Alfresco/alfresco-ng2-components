@@ -45,12 +45,12 @@ describe('Modify applications', () => {
 
         const user = await usersActions.createUser();
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
         firstApp = await applicationService.importPublishDeployApp(app.file_path);
         appVersionToBeDeleted = await applicationService.importPublishDeployApp(appToBeDeleted.file_path);
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
     });
 
     beforeEach(async () => {

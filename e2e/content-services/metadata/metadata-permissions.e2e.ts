@@ -77,17 +77,17 @@ describe('permissions', () => {
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: consumerUser.email,
+            id: consumerUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: collaboratorUser.email,
+            id: collaboratorUser.username,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: contributorUser.email,
+            id: contributorUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
 
@@ -95,12 +95,15 @@ describe('permissions', () => {
     });
 
     afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
         await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
+    afterEach(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     it('[C274692] Should not be possible edit metadata properties when the user is a consumer user', async () => {
-        await loginPage.login(consumerUser.email, consumerUser.password);
+        await loginPage.login(consumerUser.username, consumerUser.password);
 
         await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -112,7 +115,7 @@ describe('permissions', () => {
     });
 
     it('[C279971] Should be possible edit metadata properties when the user is a collaborator user', async () => {
-        await loginPage.login(collaboratorUser.email, collaboratorUser.password);
+        await loginPage.login(collaboratorUser.username, collaboratorUser.password);
 
         await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -132,7 +135,7 @@ describe('permissions', () => {
     });
 
     it('[C279972] Should be possible edit metadata properties when the user is a contributor user', async () => {
-        await loginPage.login(collaboratorUser.email, collaboratorUser.password);
+        await loginPage.login(collaboratorUser.username, collaboratorUser.password);
 
         await navigationBarPage.openContentServicesFolder(site.entry.guid);
 

@@ -40,7 +40,7 @@ describe('Analytics Smoke Test', () => {
 
         procUserModel = await usersActions.createUser();
 
-        await loginPage.login(procUserModel.email, procUserModel.password);
+        await loginPage.login(procUserModel.username, procUserModel.password);
     });
 
     afterAll(async () => {

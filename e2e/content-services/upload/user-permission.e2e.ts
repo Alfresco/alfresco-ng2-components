@@ -55,11 +55,10 @@ describe('Upload - User permission', () => {
 
         acsUser = await usersActions.createUser(acsUser);
         acsUserTwo = await usersActions.createUser(acsUserTwo);
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     beforeEach(async () => {
-        await loginPage.login(acsUser.email, acsUser.password);
-
         consumerSite = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
@@ -71,12 +70,12 @@ describe('Upload - User permission', () => {
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(consumerSite.entry.id, {
-            id: acsUser.email,
+            id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(managerSite.entry.id, {
-            id: acsUser.email,
+            id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
     });
@@ -150,8 +149,8 @@ describe('Upload - User permission', () => {
 
             await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
-            await navigationBarPage.clickLoginButton();
-            await loginPage.login(acsUserTwo.email, acsUserTwo.password);
+            await navigationBarPage.clickLogoutButton();
+            await loginPage.login(acsUserTwo.username, acsUserTwo.password);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
@@ -160,8 +159,8 @@ describe('Upload - User permission', () => {
 
             await contentServicesPage.checkContentIsDisplayed(pngFile.name);
 
-            await navigationBarPage.clickLoginButton();
-            await loginPage.login(acsUser.email, acsUser.password);
+            await navigationBarPage.clickLogoutButton();
+            await loginPage.login(acsUser.username, acsUser.password);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);

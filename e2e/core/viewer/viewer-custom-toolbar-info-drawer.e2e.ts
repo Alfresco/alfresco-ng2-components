@@ -51,11 +51,11 @@ describe('Viewer', () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         txtFileUploaded = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
    });
 
     afterAll(async () => {

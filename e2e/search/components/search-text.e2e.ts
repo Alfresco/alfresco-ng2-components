@@ -54,7 +54,7 @@ describe('Search component - Text widget', () => {
 
         await usersActions.createUser(acsUser);
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         await apiService.getInstance().nodes.addNode('-my-', {
             'name': newFolderModel.name,
@@ -67,7 +67,7 @@ describe('Search component - Text widget', () => {
 
         await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     afterAll(async () => {

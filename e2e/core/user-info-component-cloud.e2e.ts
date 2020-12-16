@@ -38,7 +38,7 @@ describe('User Info - SSO', () => {
             browser.params.testConfig.appConfig.oauth2.host,
             browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
 
-        await loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
+        await loginSSOPage.loginSSOIdentityService(identityUser.username, identityUser.password);
     });
 
     it('[C290066] Should display UserInfo when login using SSO', async () => {

@@ -47,12 +47,12 @@ describe('Process Instance Details', () => {
 
         user = await usersActions.createUser();
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
         const processModel = await new ProcessUtil(apiService).startProcessOfApp(appModel.name);
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();

@@ -123,7 +123,7 @@ describe('ErrorContentComponent', () => {
             spyOn(translateService, 'instant').and.returnValue(of('404'));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                expect(errorContentComponent.errorCode).toBe('404');
+                expect(errorContentComponent.errorCodeTranslated).toBe('404');
             });
         }));
     });

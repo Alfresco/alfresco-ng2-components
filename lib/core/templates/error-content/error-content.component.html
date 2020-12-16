@@ -1,13 +1,13 @@
 <div class="adf-error-content">
     <p class="adf-error-content-code">
-        {{ errorCode }}
+        {{ errorCodeTranslated }}
     </p>
     <div class="adf-error-content-shadow"></div>
     <p class="adf-error-content-title">
-        {{ 'ERROR_CONTENT.' + errorCode + '.TITLE' | translate }}
+        {{ 'ERROR_CONTENT.' + errorCodeTranslated + '.TITLE' | translate }}
     </p>
     <p class="adf-error-content-description">
-        {{ 'ERROR_CONTENT.' + errorCode + '.DESCRIPTION' | translate }}
+        {{ 'ERROR_CONTENT.' + errorCodeTranslated + '.DESCRIPTION' | translate }}
     </p>
     <ng-content select="[adf-error-content-actions]"></ng-content>
 </div>

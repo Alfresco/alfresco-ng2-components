@@ -62,7 +62,7 @@ describe('Process List Test', () => {
 
         user = await usersActions.createUser();
 
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
         appDateModel = await applicationsUtil.importPublishDeployApp(appWithDateField.file_path);
 
@@ -84,7 +84,7 @@ describe('Process List Test', () => {
         await apiService.getInstance().activiti.taskApi.completeTaskForm(procWithDateTaskId.id, { values: { label: null } });
         await apiService.getInstance().activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.id, { values: { label: null } });
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
    });
 
     afterAll(async () => {

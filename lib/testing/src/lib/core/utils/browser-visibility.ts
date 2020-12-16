@@ -20,8 +20,8 @@ import { Logger } from './logger';
 
 export class BrowserVisibility {
 
-    static NOT_VISIBLE_DEFAULT_TIMEOUT = BrowserVisibility.getNoVisibleTimeout() ? browser.params.testConfig.timeouts.no_visible_timeout : 20000;
-    static DEFAULT_TIMEOUT = BrowserVisibility.getVisibleTimeout() ? browser.params.testConfig.timeouts.visible_timeout : 20000;
+    static NOT_VISIBLE_DEFAULT_TIMEOUT = BrowserVisibility.getNoVisibleTimeout() ? browser.params.testConfig.timeouts.no_visible_timeout : 10000;
+    static DEFAULT_TIMEOUT = BrowserVisibility.getVisibleTimeout() ? browser.params.testConfig.timeouts.visible_timeout : 10000;
 
     static getVisibleTimeout() {
         if (browser && browser.params && browser.params.testConfig && browser.params.testConfig.timeouts) {

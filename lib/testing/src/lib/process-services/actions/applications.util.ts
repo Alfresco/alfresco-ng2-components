@@ -63,7 +63,7 @@ export class ApplicationsUtil {
             await this.api.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
             return appCreated;
         } catch (error) {
-            Logger.error('Import Publish Deploy Application - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Import Publish Deploy Application - Service error, Response: ', JSON.stringify(error));
         }
     }
 

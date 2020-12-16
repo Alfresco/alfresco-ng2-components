@@ -41,11 +41,11 @@ describe('People and Group widget', () => {
 
         user = await usersActions.createUser();
         await createGroupAndUsers(user.tenantId);
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
         await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
     });
 
     beforeEach(async () => {

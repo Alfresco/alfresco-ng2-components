@@ -82,10 +82,10 @@ describe('Info Drawer', () => {
         processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
         processUserModelFullName = processUserModel.firstName + ' ' + processUserModel.lastName;
 
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
         appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
     });
 
     afterAll(async () => {

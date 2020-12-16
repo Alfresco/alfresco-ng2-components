@@ -54,7 +54,7 @@ describe('Tag component', () => {
 
         acsUser = await usersActions.createUser();
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         pdfUploadedFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
 
@@ -68,7 +68,7 @@ describe('Tag component', () => {
 
         await apiService.getInstance().core.tagsApi.addTag(nodeId, tags);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
         await navigationBarPage.clickTagButton();
     });
 

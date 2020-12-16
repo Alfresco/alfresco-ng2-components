@@ -66,13 +66,13 @@ describe('Search Sorting Picker', () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         pngA = await uploadActions.uploadFile(pngAModel.location, pngAModel.name, '-my-');
         pngD = await uploadActions.uploadFile(pngDModel.location, pngDModel.name, '-my-');
         await browser.sleep(12000);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     afterAll(async () => {

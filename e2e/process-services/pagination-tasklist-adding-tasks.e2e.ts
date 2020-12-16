@@ -57,7 +57,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
 
         processUserModel = await usersActions.createUser();
 
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
 
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -66,7 +66,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
             await processUtil.startProcessOfApp(resultApp.name);
         }
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
    });
 
     it('[C260306] Items per page set to 15 and adding of tasks', async () => {

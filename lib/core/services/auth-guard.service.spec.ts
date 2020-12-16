@@ -103,7 +103,7 @@ describe('AuthGuardService', () => {
         appConfigService.config.oauth2.silentLogin = true;
 
         expect(await authGuard.canActivate(null, state)).toBeFalsy();
-        expect(router.navigateByUrl).not.toHaveBeenCalled();
+        expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
     it('should set redirect url', async(async () => {

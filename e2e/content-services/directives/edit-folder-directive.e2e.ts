@@ -56,7 +56,7 @@ describe('Edit folder directive', () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(anotherAcsUser);
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         editFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         anotherFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -68,14 +68,14 @@ describe('Edit folder directive', () => {
             {
                 permissions: {
                     locallySet: [{
-                        authorityId: anotherAcsUser.email,
+                        authorityId: anotherAcsUser.username,
                         name: 'Consumer',
                         accessStatus: 'ALLOWED'
                     }]
                 }
             });
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
    });
 
     afterAll(async () => {
@@ -235,7 +235,7 @@ describe('Edit folder directive', () => {
     describe('Edit Folder - no permission', () => {
         beforeEach(async () => {
             await navigationBarPage.clickLogoutButton();
-            await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
+            await loginPage.login(anotherAcsUser.username, anotherAcsUser.password);
             await BrowserActions.getUrl(browser.baseUrl + '/files/' + editFolder.entry.id);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });

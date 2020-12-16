@@ -50,7 +50,7 @@ describe('Datatable component', () => {
 
         await usersActions.createUser(acsUser);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     afterAll(async () => {

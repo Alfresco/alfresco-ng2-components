@@ -31,9 +31,9 @@ export class RatePage {
         await BrowserActions.click(ratedStar);
     }
 
-    async getRatingCounter(): Promise<string> {
+    async checkRatingCounter(rating: number): Promise<void> {
         const ratingsCounter = element(by.css(`div[id="adf-rating-counter"]`));
-        return BrowserActions.getText(ratingsCounter);
+        await BrowserVisibility.waitUntilElementHasText(ratingsCounter, rating);
     }
 
     async isStarRated(rateValue: number): Promise<void> {

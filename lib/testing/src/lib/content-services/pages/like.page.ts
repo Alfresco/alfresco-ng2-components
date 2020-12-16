@@ -17,6 +17,7 @@
 
 import { browser, by, element } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class LikePage {
 
@@ -24,8 +25,8 @@ export class LikePage {
     likeButton = element(by.css(`.adf-like-grey`));
     unlikeButton = element(by.css(`.adf-like-select`));
 
-    async getLikeCounter(): Promise<string> {
-        return BrowserActions.getText(this.likeCounter);
+    async checkLikeCounter(counter: number): Promise<void> {
+        await BrowserVisibility.waitUntilElementHasText(this.likeCounter, counter);
     }
 
     async clickLike(): Promise<void> {

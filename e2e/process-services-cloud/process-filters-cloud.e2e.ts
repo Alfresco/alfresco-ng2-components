@@ -63,7 +63,7 @@ describe('Process filters cloud', () => {
 
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-            await apiService.login(testUser.email, testUser.password);
+            await apiService.login(testUser.username, testUser.password);
 
             const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
@@ -82,7 +82,7 @@ describe('Process filters cloud', () => {
             const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
             await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
 
-            await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.username, testUser.password);
 
         }, 5 * 60 * 1000);
 

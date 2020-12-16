@@ -65,13 +65,13 @@ describe('Start Task - Task App', () => {
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
-        await apiService.login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.username, processUserModel.password);
 
         await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
 
         await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: showHeaderTask }));
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.login(processUserModel.username, processUserModel.password);
     });
 
     beforeEach(async () => {

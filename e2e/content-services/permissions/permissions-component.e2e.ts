@@ -81,7 +81,7 @@ describe('Permissions Component', () => {
     const fileOwnerUser = new UserModel();
     const filePermissionUser = new UserModel();
 
-    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.email + ' / role -> Contributor';
+    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.username + ' / role -> Contributor';
     const roleConsumerFolderModel = new FolderModel({ name: 'roleConsumer' + StringUtil.generateRandomString() });
     const roleCoordinatorFolderModel = new FolderModel({ name: 'roleCoordinator' + StringUtil.generateRandomString() });
     const roleCollaboratorFolderModel = new FolderModel({ name: 'roleCollaborator' + StringUtil.generateRandomString() });
@@ -99,7 +99,7 @@ describe('Permissions Component', () => {
         // to sync user in acs
         await searchService.isUserSearchable(filePermissionUser);
 
-        await apiService.login(fileOwnerUser.email, fileOwnerUser.password);
+        await apiService.login(fileOwnerUser.username, fileOwnerUser.password);
         roleConsumerFolder = await uploadActions.createFolder(roleConsumerFolderModel.name, '-my-');
         roleCoordinatorFolder = await uploadActions.createFolder(roleCoordinatorFolderModel.name, '-my-');
         roleContributorFolder = await uploadActions.createFolder(roleContributorFolderModel.name, '-my-');
@@ -112,11 +112,11 @@ describe('Permissions Component', () => {
         await uploadActions.uploadFile(fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
         await uploadActions.uploadFile(fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
 
-        await permissionActions.addRoleForUser(filePermissionUser.email, 'Consumer', roleConsumerFolder);
-        await permissionActions.addRoleForUser(filePermissionUser.email, 'Collaborator', roleCollaboratorFolder);
-        await permissionActions.addRoleForUser(filePermissionUser.email, 'Coordinator', roleCoordinatorFolder);
-        await permissionActions.addRoleForUser(filePermissionUser.email, 'Contributor', roleContributorFolder);
-        await permissionActions.addRoleForUser(filePermissionUser.email, 'Editor', roleEditorFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.username, 'Consumer', roleConsumerFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.username, 'Collaborator', roleCollaboratorFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.username, 'Coordinator', roleCoordinatorFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.username, 'Contributor', roleContributorFolder);
+        await permissionActions.addRoleForUser(filePermissionUser.username, 'Editor', roleEditorFolder);
 
         await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
     });
@@ -124,10 +124,10 @@ describe('Permissions Component', () => {
     describe('Inherit and assigning permissions', () => {
 
         beforeEach(async () => {
-            await apiService.login(fileOwnerUser.email, fileOwnerUser.password);
+            await apiService.login(fileOwnerUser.username, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
 
-            await loginPage.login(fileOwnerUser.email, fileOwnerUser.password);
+            await loginPage.login(fileOwnerUser.username, fileOwnerUser.password);
 
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
@@ -172,7 +172,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
-            await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.email);
+            await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.username);
             await permissionsPage.addPermissionsDialog.checkResultListIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkUserOrGroupIsDisplayed('EVERYONE');
             await permissionsPage.addPermissionsDialog.searchUserOrGroup('somerandomtext');
@@ -184,9 +184,9 @@ describe('Permissions Component', () => {
     describe('Changing and duplicate Permissions', () => {
 
         beforeEach(async () => {
-            await apiService.login(fileOwnerUser.email, fileOwnerUser.password);
+            await apiService.login(fileOwnerUser.username, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
-            await loginPage.login(fileOwnerUser.email, fileOwnerUser.password);
+            await loginPage.login(fileOwnerUser.username, fileOwnerUser.password);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkContentIsDisplayed(fileModel.name);
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
@@ -198,7 +198,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
             await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.firstName);
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(filePermissionUser.firstName);
-            await permissionsPage.addPermissionsDialog.checkUserIsAdded(filePermissionUser.email);
+            await permissionsPage.addPermissionsDialog.checkUserIsAdded(filePermissionUser.username);
         });
 
         afterEach(async () => {
@@ -207,8 +207,8 @@ describe('Permissions Component', () => {
         });
 
         it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', async () => {
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Contributor');
-            await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(filePermissionUser.email);
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
+            await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(filePermissionUser.username);
             const roleDropdownOptions = permissionsPage.addPermissionsDialog.getRoleDropdownOptions();
             await expect(await roleDropdownOptions.count()).toBe(5);
 
@@ -219,21 +219,21 @@ describe('Permissions Component', () => {
             await expect(await BrowserActions.getText(roleDropdownOptions.get(4))).toBe('Consumer');
 
             await BrowserActions.closeMenuAndDialogs();
-            await permissionsPage.changePermission(filePermissionUser.email, 'Collaborator');
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Collaborator');
+            await permissionsPage.changePermission(filePermissionUser.username, 'Collaborator');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Collaborator');
 
-            await permissionsPage.changePermission(filePermissionUser.email, 'Coordinator');
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Coordinator');
+            await permissionsPage.changePermission(filePermissionUser.username, 'Coordinator');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Coordinator');
 
-            await permissionsPage.changePermission(filePermissionUser.email, 'Editor');
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Editor');
+            await permissionsPage.changePermission(filePermissionUser.username, 'Editor');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Editor');
 
-            await permissionsPage.changePermission(filePermissionUser.email, 'Consumer');
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Consumer');
+            await permissionsPage.changePermission(filePermissionUser.username, 'Consumer');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Consumer');
         });
 
         it('[C276980] Should not be able to duplicate User or Group to the locally set permissions', async () => {
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Contributor');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
@@ -245,9 +245,9 @@ describe('Permissions Component', () => {
         });
 
         it('[C276982] Should be able to remove User or Group from the locally set permissions', async () => {
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Contributor');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
             await permissionsPage.addPermissionsDialog.clickDeletePermissionButton();
-            await permissionsPage.addPermissionsDialog.checkUserIsDeleted(filePermissionUser.email);
+            await permissionsPage.addPermissionsDialog.checkUserIsDeleted(filePermissionUser.username);
         });
     });
 
@@ -258,7 +258,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C276993] Role Consumer', async () => {
-            await loginPage.login(filePermissionUser.email, filePermissionUser.password);
+            await loginPage.login(filePermissionUser.username, filePermissionUser.password);
             await navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
             await contentList.doubleClickRow('RoleConsumer' + fileModel.name);
@@ -278,7 +278,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C276996] Role Contributor', async () => {
-            await loginPage.login(filePermissionUser.email, filePermissionUser.password);
+            await loginPage.login(filePermissionUser.username, filePermissionUser.password);
             await navigationBarPage.openContentServicesFolder(roleContributorFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleContributor' + fileModel.name);
             await contentList.doubleClickRow('RoleContributor' + fileModel.name);
@@ -298,7 +298,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C277000] Role Editor', async () => {
-            await loginPage.login(filePermissionUser.email, filePermissionUser.password);
+            await loginPage.login(filePermissionUser.username, filePermissionUser.password);
             await navigationBarPage.openContentServicesFolder(roleEditorFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleEditor' + fileModel.name);
             await contentList.doubleClickRow('RoleEditor' + fileModel.name);
@@ -320,7 +320,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C277003] Role Collaborator', async () => {
-            await loginPage.login(filePermissionUser.email, filePermissionUser.password);
+            await loginPage.login(filePermissionUser.username, filePermissionUser.password);
             await navigationBarPage.openContentServicesFolder(roleCollaboratorFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleCollaborator' + fileModel.name);
             await contentList.doubleClickRow('RoleCollaborator' + fileModel.name);
@@ -345,7 +345,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C277004] Role Coordinator', async () => {
-            await loginPage.login(filePermissionUser.email, filePermissionUser.password);
+            await loginPage.login(filePermissionUser.username, filePermissionUser.password);
             await navigationBarPage.openContentServicesFolder(roleCoordinatorFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleCoordinator' + fileModel.name);
             await contentList.doubleClickRow('RoleCoordinator' + fileModel.name);
@@ -370,7 +370,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C279881] No Permission User', async () => {
-            await loginPage.login(filePermissionUser.email, filePermissionUser.password);
+            await loginPage.login(filePermissionUser.username, filePermissionUser.password);
             await navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');

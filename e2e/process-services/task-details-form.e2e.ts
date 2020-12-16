@@ -73,7 +73,7 @@ describe('Task Details - Form', () => {
 
         await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
-        await apiService.login(user.email, user.password);
+        await apiService.login(user.username, user.password);
 
         attachedForm = await apiService.getInstance().activiti.modelsApi.createModel(attachedFormModel);
         newForm = await apiService.getInstance().activiti.modelsApi.createModel(newFormModel);
@@ -84,7 +84,7 @@ describe('Task Details - Form', () => {
         await apiService.getInstance().activiti.taskApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
         otherTask = await apiService.getInstance().activiti.taskApi.getTask(otherEmptyTask.id);
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.username, user.password);
     });
 
     afterAll(async () => {

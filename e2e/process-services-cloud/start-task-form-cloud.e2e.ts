@@ -101,7 +101,7 @@ describe('Start Task Form', () => {
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await apiService.login(testUser.email, testUser.password);
+        await apiService.login(testUser.username, testUser.password);
         processDefinitionService = new ProcessDefinitionsService(apiService);
         processInstancesService = new ProcessInstancesService(apiService);
         processDefinition = await processDefinitionService
@@ -141,18 +141,18 @@ describe('Start Task Form', () => {
             'businessKey': StringUtil.generateRandomString()
         });
 
-        await apiService.login(testUser.email, testUser.password);
+        await apiService.login(testUser.username, testUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(testFileModel.location, testFileModel.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.username, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-start-process', JSON.stringify(startProcessCloudConfig));
     });
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
-        await apiService.login(testUser.email, testUser.password);
+        await apiService.login(testUser.username, testUser.password);
         const standaloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
         await tasksService.deleteTask(standaloneTaskId, candidateBaseApp);
 

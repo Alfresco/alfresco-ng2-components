@@ -89,7 +89,7 @@ describe('Start Process Component', () => {
             procUserModel = await usersActions.createUser();
             secondProcUserModel = await usersActions.createUser(new UserModel({ tenantId: procUserModel.tenantId }));
 
-            await apiServiceUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);
+            await apiServiceUserTwo.login(secondProcUserModel.username, secondProcUserModel.password);
 
             const applicationsService = new ApplicationsUtil(apiServiceUserTwo);
             appCreated = await applicationsService.importPublishDeployApp(app.file_path);
@@ -106,7 +106,7 @@ describe('Start Process Component', () => {
 
         describe(' Once logged with user without apps', () => {
             beforeEach(async () => {
-                await loginPage.login(procUserModel.email, procUserModel.password);
+                await loginPage.login(procUserModel.username, procUserModel.password);
                 await navigationBarPage.navigateToProcessServicesPage();
                 await processServicesPage.checkApsContainer();
             });
@@ -127,7 +127,7 @@ describe('Start Process Component', () => {
         describe(' Once logged with user with app', () => {
 
             beforeEach(async () => {
-                await loginPage.login(secondProcUserModel.email, secondProcUserModel.password);
+                await loginPage.login(secondProcUserModel.username, secondProcUserModel.password);
                 await navigationBarPage.navigateToProcessServicesPage();
                 await processServicesPage.checkApsContainer();
             });
@@ -493,7 +493,7 @@ describe('Start Process Component', () => {
 
             const alfrescoJsBPMAdminUser = new ApiService({ hostBpm: browser.params.testConfig.appConfig.bpmHost });
 
-            await alfrescoJsBPMAdminUser.login(processUserModel.email, processUserModel.password);
+            await alfrescoJsBPMAdminUser.login(processUserModel.username, processUserModel.password);
 
             const applicationsService = new ApplicationsUtil(alfrescoJsBPMAdminUser);
 
@@ -505,7 +505,7 @@ describe('Start Process Component', () => {
 
             await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
-            await loginPage.login(processUserModel.email, processUserModel.password);
+            await loginPage.login(processUserModel.username, processUserModel.password);
 
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.uploadFile(imageUploaded.location);

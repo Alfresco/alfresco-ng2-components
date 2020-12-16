@@ -30,19 +30,24 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Delete Directive', () => {
 
-    const apiService = new ApiService();
+    let baseFolderUploaded;
+
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
+    const navigationBarPage = new NavigationBarPage();
+
     const contentListPage = contentServicesPage.getDocumentList();
     const acsUser = new UserModel();
     const secondAcsUser = new UserModel();
+
+    const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
     const permissionActions = new PermissionActions(apiService);
-    let baseFolderUploaded;
     const usersActions = new UsersActions(apiService);
 
     const txtFileModel = new FileModel({
@@ -94,10 +99,10 @@ describe('Delete Directive', () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(secondAcsUser);
-        await apiService.login(acsUser.email, acsUser.password);
     });
 
     beforeEach(async () => {
+        await apiService.login(acsUser.username, acsUser.password);
         baseFolderUploaded = await uploadActions.createFolder(
             baseFolder.name,
             '-my-'
@@ -105,6 +110,7 @@ describe('Delete Directive', () => {
     });
 
     afterEach(async () => {
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(baseFolderUploaded.entry.id);
     });
 
@@ -118,9 +124,13 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, textFolderUploaded.entry.id);
             await uploadActions.createFolder(folderSecond.name, baseFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
+        });
+
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C260188] Delete multiple content', async () => {
@@ -184,6 +194,8 @@ describe('Delete Directive', () => {
 
     describe('When selection on multiple pages', () => {
         beforeEach(async () => {
+            await apiService.login(acsUser.username, acsUser.password);
+
             await uploadActions.uploadFile( txtFileModel.location, txtFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, baseFolderUploaded.entry.id);
@@ -191,9 +203,13 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(secondPngFileModel.location, secondPngFileModel.name, baseFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.username, acsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
+        });
+
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C260191] Delete content selected from different pages', async () => {
@@ -216,13 +232,15 @@ describe('Delete Directive', () => {
         let fileTxt, filePdf, folderA, folderB;
 
         beforeAll(async () => {
+            await apiService.login(acsUser.username, acsUser.password);
+
             createdSite = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(20).toLowerCase(),
                 visibility: 'PRIVATE'
             });
 
             await apiService.getInstance().core.sitesApi.addSiteMember(createdSite.entry.id, {
-                id: secondAcsUser.email,
+                id: secondAcsUser.username,
                 role: 'SiteCollaborator'
             });
 
@@ -231,17 +249,17 @@ describe('Delete Directive', () => {
             folderA = await uploadActions.createFolder(StringUtil.generateRandomString(5), createdSite.entry.guid);
             folderB = await uploadActions.createFolder(StringUtil.generateRandomString(5), createdSite.entry.guid);
 
-            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteManager', folderA);
-            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteManager', fileTxt);
-            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteConsumer', folderB);
-            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteConsumer', filePdf);
+            await permissionActions.addRoleForUser(secondAcsUser.username, 'SiteManager', folderA);
+            await permissionActions.addRoleForUser(secondAcsUser.username, 'SiteManager', fileTxt);
+            await permissionActions.addRoleForUser(secondAcsUser.username, 'SiteConsumer', folderB);
+            await permissionActions.addRoleForUser(secondAcsUser.username, 'SiteConsumer', filePdf);
 
             await permissionActions.disableInheritedPermissionsForNode(folderA.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(folderB.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(fileTxt.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(filePdf.entry.id);
 
-            await loginPage.login(secondAcsUser.email, secondAcsUser.password);
+            await loginPage.login(secondAcsUser.username, secondAcsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${createdSite.entry.guid}`);
             await contentServicesPage.waitForTableBody();
         });
@@ -250,6 +268,7 @@ describe('Delete Directive', () => {
             try {
                 await apiService.getInstance().core.sitesApi.deleteSite(createdSite.entry.id, { permanent: true });
             } catch (error) {}
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C216426] Delete file without delete permissions', async () => {

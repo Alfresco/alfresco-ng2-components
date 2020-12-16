@@ -50,12 +50,12 @@ describe('Task', () => {
             await apiService.loginWithProfile('admin');
             user = await usersActions.createUser();
 
-            await apiService.login(user.email, user.password);
+            await apiService.login(user.username, user.password);
             const applicationsService = new ApplicationsUtil(apiService);
             const { id } = await applicationsService.importPublishDeployApp(app.file_path);
             appId = id;
 
-            await loginPage.login(user.email, user.password);
+            await loginPage.login(user.username, user.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp(app.title);
@@ -189,13 +189,13 @@ describe('Task', () => {
             await apiService.loginWithProfile('admin');
             user = await usersActions.createUser();
 
-            await apiService.login(user.email, user.password);
+            await apiService.login(user.username, user.password);
             const applicationsService = new ApplicationsUtil(apiService);
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
             appId = appDefinitions.data.find((currentApp) => currentApp.modelId === importedApp.id).id;
 
-            await loginPage.login(user.email, user.password);
+            await loginPage.login(user.username, user.password);
         });
 
         afterAll(async () => {

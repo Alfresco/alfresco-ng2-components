@@ -50,7 +50,7 @@ describe('Create library directive', () => {
             visibility: 'PUBLIC'
         });
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
     });
 
     afterAll(async () => {

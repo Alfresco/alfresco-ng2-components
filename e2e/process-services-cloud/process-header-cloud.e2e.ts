@@ -60,7 +60,7 @@ describe('Process Header cloud component', () => {
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-            await apiService.login(testUser.email, testUser.password);
+            await apiService.login(testUser.username, testUser.password);
 
             const dropdownRestProcess = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
@@ -81,7 +81,7 @@ describe('Process Header cloud component', () => {
 
             completedCreatedDate = moment(childCompleteProcess.entry.startDate).format(formatDate);
 
-            await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.username, testUser.password);
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         });
 

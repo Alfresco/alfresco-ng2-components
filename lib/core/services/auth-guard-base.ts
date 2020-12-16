@@ -65,10 +65,6 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
             if (redirectFragment) {
                 this.storageService.removeItem('loginFragment');
-                const routeRedirectTo = route.routeConfig.children.filter( (routeTo) => routeTo.path === '' );
-                if (routeRedirectTo?.length > 0) {
-                    routeRedirectTo[0].redirectTo = redirectFragment;
-                }
                 return this.router.createUrlTree([redirectFragment]);
             }
             return true;
@@ -91,16 +87,18 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected redirectToUrl(provider: string, url: string) {
-        if (!this.isSilentLogin()) {
+        const pathToLogin = `/${this.getLoginRoute()}`;
+        let urlToRedirect;
+        if (!this.authenticationService.isOauth()) {
             this.authenticationService.setRedirect({ provider, url });
 
-            const pathToLogin = this.getLoginRoute();
-            const urlToRedirect = `/${pathToLogin}?redirectUrl=${url}`;
-
-            this.dialog.closeAll();
-
-            this.router.navigateByUrl(urlToRedirect);
+            urlToRedirect = `${pathToLogin}?redirectUrl=${url}`;
+        } else {
+            urlToRedirect = pathToLogin;
         }
+
+        this.dialog.closeAll();
+        this.router.navigateByUrl(urlToRedirect);
     }
 
     protected getLoginRoute(): string {
@@ -131,4 +129,5 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
         return this.authenticationService.isOauth() && oauth && oauth.silentLogin;
     }
+
 }

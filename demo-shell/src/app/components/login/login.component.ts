@@ -26,7 +26,7 @@ import { LogService } from '@alfresco/adf-core';
 })
 export class LoginComponent {
 
-    customSuccessRouteURI = '';
+    customSuccessRouteURI = '/home';
     customLogoImageURL = './assets/images/alfresco-logo.svg';
 
     disableCsrf = false;

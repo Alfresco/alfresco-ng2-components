@@ -46,7 +46,7 @@ describe('Create folder directive', () => {
 
         acsUser = await usersActions.createUser();
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
     });

@@ -54,7 +54,7 @@ describe('Lock File', () => {
         await usersActions.createUser(adminUser);
         await usersActions.createUser(managerUser);
 
-        await apiService.login(adminUser.email, adminUser.password);
+        await apiService.login(adminUser.username, adminUser.password);
 
         site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
@@ -66,7 +66,7 @@ describe('Lock File', () => {
         documentLibrary = resultNode.list.entries[0].entry.id;
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: managerUser.email,
+            id: managerUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
     });
@@ -83,38 +83,25 @@ describe('Lock File', () => {
         });
 
         beforeEach(async () => {
-            try {
-                const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
-                nodeId = pngUploadedFile.entry.id;
-                await loginPage.login(adminUser.email, adminUser.password);
-                await navigationBarPage.openContentServicesFolder(documentLibrary);
+            const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
+            nodeId = pngUploadedFile.entry.id;
+            await loginPage.login(adminUser.username, adminUser.password);
+            await navigationBarPage.openContentServicesFolder(documentLibrary);
 
-                await contentServices.waitForTableBody();
-            } catch (error) {
-        }
-    });
+            await contentServices.waitForTableBody();
+        });
 
         afterEach(async () => {
-            try {
-                await apiService.login(adminUser.email, adminUser.password);
-
-                await uploadActions.deleteFileOrFolder(nodeId);
-
-            } catch (error) {
-        }
-    });
+            await apiService.login(adminUser.username, adminUser.password);
+            await uploadActions.deleteFileOrFolder(nodeId);
+            await navigationBarPage.clickLogoutButton();
+        });
 
         afterAll(async () => {
-            try {
-                await apiService.login(adminUser.email, adminUser.password);
-
-                await apiService.getInstance().core.nodesApi.unlockNode(lockedFileNodeId);
-
-                await uploadActions.deleteFileOrFolder(lockedFileNodeId);
-
-            } catch (error) {
-        }
-    });
+            await apiService.login(adminUser.username, adminUser.password);
+            await apiService.getInstance().core.nodesApi.unlockNode(lockedFileNodeId);
+            await uploadActions.deleteFileOrFolder(lockedFileNodeId);
+        });
 
         it('[C286604] Should be able to open Lock file option by clicking the lock image', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -158,28 +145,31 @@ describe('Lock File', () => {
 
             await contentServices.checkUnlockedIcon(pngFileModel.name);
         });
-   });
+    });
 
     describe('Locked file without owner permissions', () => {
+
         beforeEach(async () => {
+            await apiService.login(adminUser.username, adminUser.password);
             const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
 
             nodeId = pngUploadedFile.entry.id;
 
-            await loginPage.login(managerUser.email, managerUser.password);
+            await loginPage.login(managerUser.username, managerUser.password);
 
             await navigationBarPage.openContentServicesFolder(documentLibrary);
         });
 
         afterEach(async () => {
-            await apiService.login(adminUser.email, adminUser.password);
+            await apiService.login(adminUser.username, adminUser.password);
 
             try {
                 await apiService.getInstance().core.nodesApi.unlockNode(nodeId);
                 await uploadActions.deleteFileOrFolder(nodeId);
             } catch (error) {
             }
-    });
+            await navigationBarPage.clickLogoutButton();
+        });
 
         it('[C286610] Should not be able to delete a locked file', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -193,7 +183,7 @@ describe('Lock File', () => {
             } catch (error) {
                 await expect(error.status).toEqual(409);
             }
-    });
+        });
 
         it('[C286611] Should not be able to rename a locked file', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -208,7 +198,7 @@ describe('Lock File', () => {
             } catch (error) {
                 await expect(error.status).toEqual(409);
             }
-    });
+        });
 
         it('[C286612] Should not be able to move a locked file', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -239,37 +229,28 @@ describe('Lock File', () => {
                 await expect(error.status).toEqual(409);
             }
         });
-   });
+    });
 
     describe('Locked file with owner permissions', () => {
         let pngFileToBeLocked;
 
         beforeAll(async () => {
-            try {
-                pngFileToBeLocked = await uploadActions.uploadFile(pngFileToLock.location, pngFileToLock.name, documentLibrary);
-                lockedFileNodeId = pngFileToBeLocked.entry.id;
-            } catch (error) {
-            }
-    });
+            pngFileToBeLocked = await uploadActions.uploadFile(pngFileToLock.location, pngFileToLock.name, documentLibrary);
+            lockedFileNodeId = pngFileToBeLocked.entry.id;
+        });
 
         beforeEach(async () => {
-            try {
-                const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
-                nodeId = pngUploadedFile.entry.id;
-                await loginPage.login(adminUser.email, adminUser.password);
-                await navigationBarPage.openContentServicesFolder(documentLibrary);
-            } catch (error) {
-            }
-    });
+            const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
+            nodeId = pngUploadedFile.entry.id;
+            await loginPage.login(adminUser.username, adminUser.password);
+            await navigationBarPage.openContentServicesFolder(documentLibrary);
+        });
 
         afterEach(async () => {
-            await apiService.login(adminUser.email, adminUser.password);
-
-            try {
-                await uploadActions.deleteFileOrFolder(nodeId);
-            } catch (error) {
-            }
-    });
+            await apiService.login(adminUser.username, adminUser.password);
+            await uploadActions.deleteFileOrFolder(nodeId);
+            await navigationBarPage.clickLogoutButton();
+        });
 
         it('[C286614] Owner of the locked file should be able to rename if Allow owner to modify is checked', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -284,7 +265,7 @@ describe('Lock File', () => {
                 await expect(response.entry.name).toEqual('My new name');
             } catch (error) {
             }
-    });
+        });
 
         it('[C286615] Owner of the locked file should be able to update a new version if Allow owner to modify is checked', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -299,7 +280,7 @@ describe('Lock File', () => {
                 await expect(response.entry.modifiedAt.getTime()).toBeGreaterThan(response.entry.createdAt.getTime());
             } catch (error) {
             }
-    });
+        });
 
         it('[C286616] Owner of the locked file should be able to move if Allow owner to modify is checked', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -317,7 +298,7 @@ describe('Lock File', () => {
                 await expect(movedFile.entry.parentId).not.toEqual(documentLibrary);
             } catch (error) {
             }
-    });
+        });
 
         it('[C286617] Owner of the locked file should be able to delete if Allow owner to modify is checked', async () => {
             await contentServices.lockContent(pngFileToLock.name);
@@ -330,5 +311,5 @@ describe('Lock File', () => {
             await contentServices.deleteContent(pngFileToBeLocked.entry.name);
             await contentServices.checkContentIsNotDisplayed(pngFileToBeLocked.entry.name);
         });
-   });
+    });
 });

@@ -28,7 +28,7 @@ const USERNAME_ADF = process.env.USERNAME_ADF || "defaultuser";
 const PASSWORD_ADF = process.env.PASSWORD_ADF || "defaultuserpassword";
 
 const REDIRECT_URI = process.env.REDIRECT_URI || "/";
-const REDIRECT_URI_LOGOUT = process.env.REDIRECT_URI_LOGOUT || "/logout";
+const REDIRECT_URI_LOGOUT = process.env.REDIRECT_URI_LOGOUT || "#/logout";
 
 const EXTERNAL_ACS_HOST = process.env.EXTERNAL_ACS_HOST;
 const LOG_LEVEL = process.env.LOG_LEVEL || 'ERROR';
@@ -114,9 +114,9 @@ module.exports = {
     },
 
     timeouts: {
-        visible_timeout: 20000,
-        no_visible_timeout: 20000,
-        index_search: 25000
+        visible_timeout: 10000,
+        no_visible_timeout: 10000,
+        index_search: 20000
     }
 
 };

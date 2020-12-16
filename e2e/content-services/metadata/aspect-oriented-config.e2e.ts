@@ -68,11 +68,11 @@ describe('Aspect oriented config', () => {
 
         acsUser = await usersActions.createUser();
 
-        await apiService.login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.username, acsUser.password);
 
         const uploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.username, acsUser.password);
 
         const aspects = await apiService.getInstance().core.nodesApi.getNode(uploadedFile.entry.id);
 
