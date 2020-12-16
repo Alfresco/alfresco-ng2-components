@@ -74,6 +74,7 @@ describe('Service task list cloud', () => {
             await startProcessPage.clickStartProcessButton();
 
             await navigationBarPage.clickLogoutButton();
+            /* cspell:disable-next-line */
             await loginSSOPage.login(browser.params.testConfig.users.superadmin.username, browser.params.testConfig.users.superadmin.password);
         });
 
