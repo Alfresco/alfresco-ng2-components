@@ -81,7 +81,7 @@ describe('Permissions Component', () => {
     const fileOwnerUser = new UserModel();
     const filePermissionUser = new UserModel();
 
-    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.email + ' / role -> Contributor';
+    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.username + ' / role -> Contributor';
     const roleConsumerFolderModel = new FolderModel({ name: 'roleConsumer' + StringUtil.generateRandomString() });
     const roleCoordinatorFolderModel = new FolderModel({ name: 'roleCoordinator' + StringUtil.generateRandomString() });
     const roleCollaboratorFolderModel = new FolderModel({ name: 'roleCollaborator' + StringUtil.generateRandomString() });
@@ -172,7 +172,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
-            await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.email);
+            await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.username);
             await permissionsPage.addPermissionsDialog.checkResultListIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkUserOrGroupIsDisplayed('EVERYONE');
             await permissionsPage.addPermissionsDialog.searchUserOrGroup('somerandomtext');
@@ -198,7 +198,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
             await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.firstName);
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(filePermissionUser.firstName);
-            await permissionsPage.addPermissionsDialog.checkUserIsAdded(filePermissionUser.email);
+            await permissionsPage.addPermissionsDialog.checkUserIsAdded(filePermissionUser.username);
         });
 
         afterEach(async () => {
@@ -207,8 +207,8 @@ describe('Permissions Component', () => {
         });
 
         it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', async () => {
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Contributor');
-            await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(filePermissionUser.email);
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
+            await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(filePermissionUser.username);
             const roleDropdownOptions = permissionsPage.addPermissionsDialog.getRoleDropdownOptions();
             await expect(await roleDropdownOptions.count()).toBe(5);
 
@@ -220,20 +220,20 @@ describe('Permissions Component', () => {
 
             await BrowserActions.closeMenuAndDialogs();
             await permissionsPage.changePermission(filePermissionUser.username, 'Collaborator');
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Collaborator');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Collaborator');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Coordinator');
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Coordinator');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Coordinator');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Editor');
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Editor');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Editor');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Consumer');
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Consumer');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Consumer');
         });
 
         it('[C276980] Should not be able to duplicate User or Group to the locally set permissions', async () => {
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Contributor');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
@@ -245,9 +245,9 @@ describe('Permissions Component', () => {
         });
 
         it('[C276982] Should be able to remove User or Group from the locally set permissions', async () => {
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.email)).toEqual('Contributor');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
             await permissionsPage.addPermissionsDialog.clickDeletePermissionButton();
-            await permissionsPage.addPermissionsDialog.checkUserIsDeleted(filePermissionUser.email);
+            await permissionsPage.addPermissionsDialog.checkUserIsDeleted(filePermissionUser.username);
         });
     });
 

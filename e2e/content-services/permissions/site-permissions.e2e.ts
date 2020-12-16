@@ -187,14 +187,14 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
 
-            await permissionsPage.addPermissionsDialog.searchUserOrGroup(consumerUser.email);
+            await permissionsPage.addPermissionsDialog.searchUserOrGroup(consumerUser.username);
 
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(consumerUser.firstName);
-            await permissionsPage.addPermissionsDialog.checkUserIsAdded(consumerUser.email);
+            await permissionsPage.addPermissionsDialog.checkUserIsAdded(consumerUser.username);
 
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.email)).toEqual('SiteCollaborator');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.username)).toEqual('SiteCollaborator');
 
-            await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(consumerUser.email);
+            await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(consumerUser.username);
 
             const roleDropdownOptions = permissionsPage.addPermissionsDialog.getRoleDropdownOptions();
 

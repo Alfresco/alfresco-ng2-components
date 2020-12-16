@@ -99,10 +99,10 @@ describe('Delete Directive', () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(secondAcsUser);
-        await apiService.login(acsUser.username, acsUser.password);
     });
 
     beforeEach(async () => {
+        await apiService.login(acsUser.username, acsUser.password);
         baseFolderUploaded = await uploadActions.createFolder(
             baseFolder.name,
             '-my-'
@@ -110,6 +110,7 @@ describe('Delete Directive', () => {
     });
 
     afterEach(async () => {
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(baseFolderUploaded.entry.id);
     });
 
