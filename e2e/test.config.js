@@ -27,6 +27,9 @@ const HR_USER_PASSWORD = process.env.HR_USER_PASSWORD || "defaulthruserpassword"
 const USERNAME_ADF = process.env.USERNAME_ADF || "defaultuser";
 const PASSWORD_ADF = process.env.PASSWORD_ADF || "defaultuserpassword";
 
+const USERNAME_SUPER_ADMIN_ADF = process.env.USERNAME_SUPER_ADMIN_ADF || "defaultuser";
+const PASSWORD_SUPER_ADMIN_ADF = process.env.PASSWORD_SUPER_ADMIN_ADF || "defaultuserpassword";
+
 const REDIRECT_URI = process.env.REDIRECT_URI || "/";
 const REDIRECT_URI_LOGOUT = process.env.REDIRECT_URI_LOGOUT || "#/logout";
 
@@ -84,6 +87,11 @@ module.exports = {
         admin: {
             username: USERNAME_ADF,
             password: PASSWORD_ADF
+        },
+
+        superadmin: {
+            username: USERNAME_SUPER_ADMIN_ADF,
+            password: PASSWORD_SUPER_ADMIN_ADF
         },
 
         identityAdmin: {
