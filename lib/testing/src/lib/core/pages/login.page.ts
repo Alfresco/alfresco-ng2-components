@@ -79,7 +79,7 @@ export class LoginPage {
     async loginSSOIdentityService(username: string, password: string, applicationUrl?: string) {
         browser.ignoreSynchronization = true;
 
-        const loginURL: string = applicationUrl? applicationUrl: browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
+        const loginURL: string = applicationUrl ? applicationUrl : browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
 
         const oauth2 = await LocalStorageUtil.getConfigField('oauth2');
         await BrowserActions.getUrl(loginURL);
