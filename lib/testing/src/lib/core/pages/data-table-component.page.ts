@@ -48,7 +48,7 @@ export class DataTableComponentPage {
         this.allSelectedRows = this.rootElement.all(by.css(`adf-datatable-row[class*='is-selected']`));
         this.selectAll = this.rootElement.element(by.css(`div[class*='adf-datatable-header'] mat-checkbox`));
         this.copyColumnTooltip = this.rootElement.element(by.css(`adf-copy-content-tooltip span`));
-        this.emptyList = this.rootElement.element(by.css(`div.adf-no-content-container`));
+        this.emptyList = this.rootElement.element(by.css(`adf-empty-content`));
         this.emptyListTitle = this.rootElement.element(by.css(`.adf-empty-content__title`));
         this.emptyListSubtitle = this.rootElement.element(by.css(`.adf-empty-content__subtitle`));
     }
