@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
+import { browser
+} from 'protractor';
 import {
     LoginPage,
     ApiService,
@@ -41,7 +42,12 @@ describe('Service task list cloud', () => {
         const startProcessPage = new StartProcessCloudPage();
         const serviceTaskListPage = new ServiceTaskListPage();
 
-        const apiService = new ApiService();
+        const apiService = new ApiService(
+            browser.params.testConfig.appConfig.oauth2.clientId,
+            browser.params.testConfig.appConfig.bpmHost,
+            browser.params.testConfig.appConfig.oauth2.host,
+            browser.params.testConfig.appConfig.providers
+        );
         const identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);
 
@@ -85,7 +91,6 @@ describe('Service task list cloud', () => {
 
         it('[C587515] Should be able to select a filter service task and see only the service task related to the selected app', async () => {
             await navigationBarPage.navigateToServiceTaskListCloudPage();
-
             await serviceTaskListPage.checkServiceTaskFiltersDisplayed();
             await serviceTaskListPage.checkSearchServiceTaskFiltersDisplayed();
             await serviceTaskListPage.checkServiceTaskListDisplayed();
@@ -93,6 +98,8 @@ describe('Service task list cloud', () => {
             await serviceTaskListPage.clickCompletedServiceTask();
             await serviceTaskListPage.clickSearchHeaderServiceTask();
             await serviceTaskListPage.searchByActivityName(activityNameSimpleApp);
+
+            await serviceTaskListPage.checkServiceTaskListResultsIsLoaded();
 
             await expect(await serviceTaskListPage.getActivityNameText()).toBe(activityNameSimpleApp);
             await expect(await serviceTaskListPage.getStatusText()).toBe(CONSTANTS.SERVICE_TASK_STATUS.COMPLETED);

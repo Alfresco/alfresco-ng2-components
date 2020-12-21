@@ -18,11 +18,12 @@
 import { element, by } from 'protractor';
 import {
     BrowserVisibility,
-    BrowserActions
+    BrowserActions,
+    DataTableComponentPage
 } from '@alfresco/adf-testing';
 
 export class ServiceTaskListPage {
-
+    dataTableComponentPage = new DataTableComponentPage();
     allServiceTaskButton = element(by.css('button[data-automation-id="my-service-tasks_filter"]'));
     completedServiceTaskButton = element(by.css('button[data-automation-id="completed-tasks_filter"]'));
     errorServiceTaskButton = element(by.css('button[data-automation-id="errored-service-tasks_filter"]'));
@@ -31,6 +32,7 @@ export class ServiceTaskListPage {
     activityNameField = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-activityName"]'));
     activityStatus = element(by.css('[data-automation-id="datatable-row-0"] div[aria-label="Status"]'));
     activityName = element(by.css('[data-automation-id="datatable-row-0"] div[aria-label="Activity name"]'));
+    resultList = element(by.css('div[role="rowgroup"].adf-datatable-body'));
 
     async checkServiceTaskFiltersDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.allServiceTaskButton);
@@ -66,4 +68,7 @@ export class ServiceTaskListPage {
         return BrowserActions.getText(this.activityStatus);
     }
 
+    async checkServiceTaskListResultsIsLoaded(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.resultList);
+    }
 }
