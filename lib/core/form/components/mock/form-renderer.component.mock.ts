@@ -1470,3 +1470,116 @@ export const customWidgetFormWithVisibility = {
         }
     }
 };
+
+export const formDateVisibility = {
+    formRepresentation: {
+      id: 'form-f0d926e0-0cb9-46fc-a10e-705547fb0318',
+      name: 'form',
+      description: '',
+      version: 0,
+      standAlone: true,
+      formDefinition: {
+        tabs: [],
+        fields: [
+          {
+            id: 'be820e5c-ee59-40df-bca2-03a5a1e1e29c',
+            name: 'Label',
+            type: 'container',
+            tab: null,
+            numberOfColumns: 2,
+            fields: {
+              '1': [
+                {
+                  id: 'Date0hwq20',
+                  name: 'Date',
+                  type: 'date',
+                  readOnly: false,
+                  required: false,
+                  colspan: 1,
+                  rowspan: 1,
+                  placeholder: null,
+                  minValue: null,
+                  maxValue: null,
+                  visibilityCondition: null,
+                  params: {
+                    existingColspan: 1,
+                    maxColspan: 2
+                  },
+                  dateDisplayFormat: 'YYYY-MM-DD'
+                }
+              ],
+              '2': [
+                {
+                  id: 'Text0pqd1u',
+                  name: 'Text',
+                  type: 'text',
+                  readOnly: false,
+                  required: false,
+                  colspan: 1,
+                  rowspan: 1,
+                  placeholder: null,
+                  minLength: 0,
+                  maxLength: 0,
+                  regexPattern: null,
+                  visibilityCondition: {
+                    leftType: 'field',
+                    leftValue: 'Date0hwq20',
+                    operator: '==',
+                    rightValue: '2019-11-19',
+                    rightType: 'value',
+                    nextConditionOperator: '',
+                    nextCondition: null
+                  },
+                  params: {
+                    existingColspan: 1,
+                    maxColspan: 2
+                  }
+                }
+              ]
+            }
+          },
+          {
+            id: 'ff5ebab0-99a0-42ca-b2e7-416af9fe713a',
+            name: 'Label',
+            type: 'container',
+            tab: null,
+            numberOfColumns: 2,
+            fields: {
+              '1': [
+                {
+                  id: 'Text0uyqd3',
+                  name: 'Text',
+                  type: 'text',
+                  readOnly: false,
+                  required: false,
+                  colspan: 1,
+                  rowspan: 1,
+                  placeholder: null,
+                  minLength: 0,
+                  maxLength: 0,
+                  regexPattern: null,
+                  visibilityCondition: {
+                    leftType: 'field',
+                    leftValue: 'Date0hwq20',
+                    operator: '!=',
+                    rightValue: '2019-11-19',
+                    rightType: 'value',
+                    nextConditionOperator: '',
+                    nextCondition: null
+                  },
+                  params: {
+                    existingColspan: 1,
+                    maxColspan: 2
+                  }
+                }
+              ],
+              '2': []
+            }
+          }
+        ],
+        outcomes: [],
+        metadata: {},
+        variables: []
+      }
+    }
+  };
