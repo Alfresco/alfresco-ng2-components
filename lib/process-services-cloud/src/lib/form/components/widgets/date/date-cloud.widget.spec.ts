@@ -21,6 +21,7 @@ import { setupTestBed, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import moment from 'moment-es6';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { SimpleChanges } from '@angular/core';
 
 describe('DateWidgetComponent', () => {
 
@@ -198,15 +199,16 @@ describe('DateWidgetComponent', () => {
     });
 
     it('should display always the json value', () => {
-        widget.field = new FormFieldModel(new FormModel(), {
+        const field = new FormFieldModel(new FormModel(), {
             id: 'date-field-id',
             name: 'date-name',
-            value:  '12-30-9999',
+            value: '12-30-9999',
             type: 'date',
             readOnly: 'false'
         });
-        widget.field.isVisible = true;
-        widget.field.dateDisplayFormat = 'MM-DD-YYYY';
+        field.isVisible = true;
+        field.dateDisplayFormat = 'MM-DD-YYYY';
+        widget.field = field;
         widget.ngOnInit();
         fixture.detectChanges();
         fixture.whenStable()
@@ -216,7 +218,17 @@ describe('DateWidgetComponent', () => {
                 const dateElement: any = element.querySelector('#date-field-id');
                 expect(dateElement.value).toContain('12-30-9999');
 
-                widget.field.value = '03-02-2020';
+                const newField = { ...field, value: '03-02-2020' };
+
+                const changes: SimpleChanges = {
+                    'field': {
+                        previousValue: field,
+                        currentValue: newField,
+                        firstChange: false,
+                        isFirstChange(): boolean { return this.firstChange; }
+                    }
+                };
+                widget.ngOnChanges(changes);
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
@@ -224,5 +236,4 @@ describe('DateWidgetComponent', () => {
                     });
             });
     });
-
 });

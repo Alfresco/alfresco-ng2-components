@@ -24,6 +24,21 @@ import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Component } from '@angular/core';
+
+@Component({
+    template: `<date-time-widget [field]="field"></date-time-widget>`
+})
+export class TestWrapperComponent {
+    field: FormFieldModel = new FormFieldModel(new FormModel(), {
+        id: 'date-field-id',
+        name: 'date-name',
+        value: '12-30-9999 10:30 AM',
+        dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
+        type: 'datetime',
+        readOnly: 'false'
+    });
+}
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -31,12 +46,17 @@ describe('DateTimeWidgetComponent', () => {
     let fixture: ComponentFixture<DateTimeWidgetComponent>;
     let element: HTMLElement;
 
+    let wrapperComponent: TestWrapperComponent;
+    let wrapperFixture: ComponentFixture<TestWrapperComponent>;
+    let wrapperElement: HTMLElement;
+
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
             CoreTestingModule,
             MatTooltipModule
-        ]
+        ],
+        declarations: [TestWrapperComponent]
     });
 
     beforeEach(() => {
@@ -44,6 +64,10 @@ describe('DateTimeWidgetComponent', () => {
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
+
+        wrapperFixture = TestBed.createComponent(TestWrapperComponent);
+        wrapperComponent = wrapperFixture.componentInstance;
+        wrapperElement = wrapperFixture.nativeElement;
     });
 
     afterEach(() => {
@@ -186,28 +210,16 @@ describe('DateTimeWidgetComponent', () => {
         }));
 
         it('should display always the json value', () => {
-            widget.field = new FormFieldModel(new FormModel(), {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '12-30-9999 10:30 AM',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime',
-                readOnly: 'false'
-            });
-            fixture.detectChanges();
-            fixture.whenStable()
+            wrapperFixture.detectChanges();
+            expect(wrapperElement.querySelector('#date-field-id')).toBeDefined();
+            expect(wrapperElement.querySelector('#date-field-id')).not.toBeNull();
+            const dateElement: any = wrapperElement.querySelector('#date-field-id');
+            expect(dateElement.value).toContain('12-30-9999 10:30 AM');
+            wrapperComponent.field.value = '03-02-2020 12:00 AM';
+            wrapperFixture.detectChanges();
+            wrapperFixture.whenStable()
                 .then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#date-field-id')).toBeDefined();
-                    expect(element.querySelector('#date-field-id')).not.toBeNull();
-                    const dateElement: any = element.querySelector('#date-field-id');
-                    expect(dateElement.value).toContain('12-30-9999 10:30 AM');
-                    widget.field.value = '03-02-2020 12:00 AM';
-                    fixture.detectChanges();
-                    fixture.whenStable()
-                        .then(() => {
-                            expect(dateElement.value).toContain('03-02-2020 12:00 AM');
-                        });
+                    expect(dateElement.value).toContain('03-02-2020 12:00 AM');
                 });
         });
     });
