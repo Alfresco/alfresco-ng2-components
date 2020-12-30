@@ -1,8 +1,7 @@
-import { PlugInInterface } from './plugins-targets';
-import { logger } from './../logger';
+import { PlugInInterface } from './plugins-model';
+import { logger } from '../logger';
 
 export class ProcessServicePlugin {
-    processServicePluginName = 'processService';
     alfrescoJsApi: any;
     plugInInfo: PlugInInterface;
 
