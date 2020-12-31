@@ -1,4 +1,4 @@
-import { PlugInInterface } from './plugins-model';
+import { PlugInInterface } from './plugin-model';
 import { logger } from '../logger';
 import { PluginConfiguration } from './plugin-config';
 

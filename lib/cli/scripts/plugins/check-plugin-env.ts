@@ -1,5 +1,5 @@
 import { ProcessServicePlugin } from './aps-plugin';
-import { PluginTarget } from './plugins-model';
+import { PluginTarget } from './plugin-model';
 import { CheckEnv } from './check-env';
 import program = require('commander');
 import { ProcessAutomationPlugin } from './aae-plugin';

@@ -1,13 +1,10 @@
-import { PlugInInterface } from './plugins-model';
+import { PlugInInterface } from './plugin-model';
 import { logger } from '../logger';
 
 export class PluginConfiguration {
-    alfrescoJsApi: any;
-    plugInInfo: PlugInInterface;
-
     constructor(
-        plugInInfo: PlugInInterface,
-        alfrescoJsApi: any,
+        private plugInInfo: PlugInInterface,
+        private alfrescoJsApi: any,
         private isProcessAutomation: boolean
     ) {
         this.plugInInfo = plugInInfo;
@@ -45,11 +42,14 @@ export class PluginConfiguration {
 
     async getAppConfig() {
         let url = `${this.plugInInfo.host}/app.config.json`;
+
         if (this.isProcessAutomation) {
-            url = `${this.plugInInfo.host}/${
-                this.plugInInfo.appName
-            }/ui/content/app.config.json`;
+            url = `${this.plugInInfo.host}/${this.plugInInfo.appName}/ui/content/app.config.json`;
         }
+        return this.callCustomApi(url);
+    }
+
+    async callCustomApi(url: string) {
         const pathParams = {},
             headerParams = {},
             formParams = {},
@@ -58,7 +58,7 @@ export class PluginConfiguration {
             contentTypes = ['application/json'],
             accepts = ['application/json'];
         try {
-            const appConfig = await this.alfrescoJsApi.oauth2Auth.callCustomApi(
+            const response = await this.alfrescoJsApi.oauth2Auth.callCustomApi(
                 url,
                 'GET',
                 pathParams,
@@ -69,12 +69,14 @@ export class PluginConfiguration {
                 contentTypes,
                 accepts
             );
-            return appConfig;
+
+            return response;
         } catch (error) {
             logger.error(
                 `${this.plugInInfo.host} is not reachable error: `,
                 error
             );
+            return {};
         }
     }
 }

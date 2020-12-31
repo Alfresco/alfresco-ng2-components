@@ -1,4 +1,4 @@
-import { PlugInInterface } from './plugins-model';
+import { PlugInInterface } from './plugin-model';
 import { logger } from '../logger';
 import { PluginConfiguration } from './plugin-config';
 
@@ -49,26 +49,8 @@ export class ProcessAutomationPlugin {
     async checkBackendHealth() {
         const url = `${this.plugInInfo.host}/${this.plugInInfo.appName}/rb/actuator/health`;
         let isBackendActive = true;
-        const pathParams = {},
-            headerParams = {},
-            formParams = {},
-            bodyParam = {},
-            queryParams = {},
-            contentTypes = ['application/json'],
-            accepts = ['application/json'];
-
         try {
-            const response = await this.alfrescoJsApi.oauth2Auth.callCustomApi(
-                url,
-                'GET',
-                pathParams,
-                queryParams,
-                headerParams,
-                formParams,
-                bodyParam,
-                contentTypes,
-                accepts
-            );
+            const response = await this.config.callCustomApi(url);
             if (response.status === 'UP') {
                 logger.info(`${this.plugInInfo.host} is UP!`);
             } else {
