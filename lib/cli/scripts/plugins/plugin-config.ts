@@ -1,9 +1,9 @@
-import { PlugInInterface } from './plugin-model';
+import { PluginInterface } from './plugin-model';
 import { logger } from '../logger';
 
 export class PluginConfiguration {
     constructor(
-        private plugInInfo: PlugInInterface,
+        private plugInInfo: PluginInterface,
         private alfrescoJsApi: any,
         private isProcessAutomation: boolean
     ) {
@@ -41,11 +41,7 @@ export class PluginConfiguration {
     }
 
     async getAppConfig() {
-        let url = `${this.plugInInfo.host}/app.config.json`;
-
-        if (this.isProcessAutomation) {
-            url = `${this.plugInInfo.host}/${this.plugInInfo.appName}/ui/content/app.config.json`;
-        }
+        const url = this.isProcessAutomation ? `${this.plugInInfo.host}/${this.plugInInfo.appName}/ui/${this.plugInInfo.uiName}/app.config.json` : `${this.plugInInfo.host}/app.config.json`;
         return this.callCustomApi(url);
     }
 

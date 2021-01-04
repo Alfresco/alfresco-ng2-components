@@ -4,8 +4,9 @@ export enum PluginTarget {
     governance = 'governance'
 }
 
-export interface PlugInInterface {
+export interface PluginInterface {
     name: string;
     host: string;
     appName: string;
+    uiName: string;
 }

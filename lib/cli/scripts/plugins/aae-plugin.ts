@@ -1,4 +1,4 @@
-import { PlugInInterface } from './plugin-model';
+import { PluginInterface } from './plugin-model';
 import { logger } from '../logger';
 import { PluginConfiguration } from './plugin-config';
 
@@ -6,7 +6,7 @@ export class ProcessAutomationPlugin {
     config: PluginConfiguration;
 
     constructor(
-        private plugInInfo: PlugInInterface,
+        private plugInInfo: PluginInterface,
         private alfrescoJsApi: any
     ) {
         this.config = new PluginConfiguration(
@@ -21,27 +21,18 @@ export class ProcessAutomationPlugin {
             const isPluginEnabled = await this.config.isPluginEnabledFromAppConfiguration();
             const isBackendActive = await this.checkBackendHealth();
 
-            if (!isPluginEnabled || !isBackendActive) {
-                logger.error(
-                    `The plugin ${
-                        this.plugInInfo.name
-                    } has not been correctly configured`
-                );
-                process.exit(1);
-            } else {
+            if (isPluginEnabled && isBackendActive) {
                 logger.info(
                     `The plugin ${
                         this.plugInInfo.name
                     } has been correctly configured`
                 );
+            } else {
+                this.logConfigurationError();
+                process.exit(1);
             }
         } catch (e) {
-            logger.error(
-                `The plugin ${
-                    this.plugInInfo.name
-                } has not been correctly configured`,
-                e
-            );
+            this.logConfigurationError(e);
             process.exit(1);
         }
     }
@@ -65,5 +56,14 @@ export class ProcessAutomationPlugin {
             );
             return false;
         }
+    }
+
+    private logConfigurationError(error?: any) {
+        logger.error(
+            `The plugin ${
+                this.plugInInfo.name
+            } has not been correctly configured`,
+            error
+        );
     }
 }

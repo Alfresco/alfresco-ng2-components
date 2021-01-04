@@ -14,6 +14,7 @@ async function main() {
         .option('--appName [type]', 'appName ')
         .option('-p, --password [type]', 'password ')
         .option('-u, --username [type]', 'username ')
+        .option('--ui, --uiName [type]', 'uiName')
         .parse(process.argv);
 
     pluginEnv = new CheckEnv(program.host, program.username, program.password);
@@ -33,7 +34,8 @@ async function checkProcessServicesPlugin() {
         {
             host: program.host,
             name: PluginTarget.processService,
-            appName: null
+            appName: null,
+            uiName: null
         },
         pluginEnv.alfrescoJsApi
     );
@@ -45,7 +47,8 @@ async function checkProcessAutomationPlugin() {
         {
             host: program.host,
             name: PluginTarget.processAutomation,
-            appName: program.appName
+            appName: program.appName,
+            uiName: program.uiName
         },
         pluginEnv.alfrescoJsApi
     );
