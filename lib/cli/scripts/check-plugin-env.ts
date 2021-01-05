@@ -1,12 +1,12 @@
-import { PluginTarget } from './plugin-model';
-import { CheckEnv } from './check-env';
+import { PluginTarget } from './plugins/plugin-model';
+import { CheckEnv } from './plugins/check-env';
 import program = require('commander');
-import { ProcessServiceCheckPlugin } from './process-service-check-plugin';
-import { ProcessAutomationCheckPlugin } from './process-automation-check-plugin';
+import { ProcessServiceCheckPlugin } from './plugins/process-service-check-plugin';
+import { ProcessAutomationCheckPlugin } from './plugins/process-automation-check-plugin';
 
 let pluginEnv;
 
-async function main() {
+export default async function main(_args: string[]) {
     program
         .version('0.1.0')
         .option('--host [type]', 'Remote environment host')
@@ -21,11 +21,11 @@ async function main() {
     await pluginEnv.checkEnv();
 
     if (program.pluginName === PluginTarget.processService) {
-        checkProcessServicesPlugin();
+        await checkProcessServicesPlugin();
     }
 
     if (program.pluginName === PluginTarget.processAutomation) {
-        checkProcessAutomationPlugin();
+        await checkProcessAutomationPlugin();
     }
 }
 
@@ -54,5 +54,3 @@ async function checkProcessAutomationPlugin() {
     );
     await processAutomationCheckPlugin.checkProcessAutomationPlugin();
 }
-
-main();

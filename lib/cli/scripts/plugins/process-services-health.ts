@@ -17,25 +17,18 @@ export class ProcessServiceHealth {
             let isEnabled = true;
             if (appConfig && appConfig.plugins[this.plugInInfo.name]) {
                 logger.info(
-                    `${
+                    `The plugin ${
                         this.plugInInfo.name
-                    } plugin is configured in app.config.json`
+                    } has been correctly configured in app.config.json`
                 );
             } else {
-                logger.error(
-                    `${
-                        this.plugInInfo.name
-                    } plugin is not configured in app.config.json`
-                );
+                this.logConfigurationError();
                 return (isEnabled = false);
             }
 
             return isEnabled;
         } catch (error) {
-            logger.error(
-                `${this.plugInInfo.host} is not reachable error: `,
-                error
-            );
+            this.logConfigurationError(error);
             return false;
         }
     }
@@ -58,5 +51,14 @@ export class ProcessServiceHealth {
             );
             return false;
         }
+    }
+
+    private logConfigurationError(error?: any) {
+        logger.error(
+            `The plugin ${
+                this.plugInInfo.name
+            } has not been correctly configured in app.config.json`,
+            error
+        );
     }
 }
