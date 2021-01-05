@@ -4,44 +4,10 @@ import { logger } from '../logger';
 export class PluginConfiguration {
     constructor(
         private plugInInfo: PluginInterface,
-        private alfrescoJsApi: any,
-        private isProcessAutomation: boolean
-    ) {
-        this.plugInInfo = plugInInfo;
-        this.alfrescoJsApi = alfrescoJsApi;
-    }
+        private alfrescoJsApi: any
+    ) {}
 
-    async isPluginEnabledFromAppConfiguration() {
-        try {
-            const appConfig = await this.getAppConfig();
-            let isEnabled = true;
-            if (appConfig && appConfig.plugins[this.plugInInfo.name]) {
-                logger.info(
-                    `${
-                        this.plugInInfo.name
-                    } plugin is configured in app.config.json`
-                );
-            } else {
-                logger.error(
-                    `${
-                        this.plugInInfo.name
-                    } plugin is not configured in app.config.json`
-                );
-                return (isEnabled = false);
-            }
-
-            return isEnabled;
-        } catch (error) {
-            logger.error(
-                `${this.plugInInfo.host} is not reachable error: `,
-                error
-            );
-            return false;
-        }
-    }
-
-    async getAppConfig() {
-        const url = this.isProcessAutomation ? `${this.plugInInfo.host}/${this.plugInInfo.appName}/ui/${this.plugInInfo.uiName}/app.config.json` : `${this.plugInInfo.host}/app.config.json`;
+    async getAppConfig(url: string) {
         return this.callCustomApi(url);
     }
 

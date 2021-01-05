@@ -2,31 +2,41 @@ import { PluginInterface } from './plugin-model';
 import { logger } from '../logger';
 import { PluginConfiguration } from './plugin-config';
 
-export class ProcessServicePlugin {
+export class ProcessServiceHealth {
+
     config: PluginConfiguration;
 
     constructor(private plugInInfo: PluginInterface, private alfrescoJsApi: any) {
-        this.config = new PluginConfiguration(this.plugInInfo, this.alfrescoJsApi, false);
+        this.config = new PluginConfiguration(this.plugInInfo, this.alfrescoJsApi);
     }
 
-    async checkProcessServicesPlugin() {
+    async isPluginEnabledFromAppConfiguration() {
         try {
-            const isPluginEnabled = await this.config.isPluginEnabledFromAppConfiguration();
-            const isBackendActive = await this.checkBackendHealth();
-
-            if (isPluginEnabled && isBackendActive) {
+            const url = `${this.plugInInfo.host}/app.config.json`;
+            const appConfig = await this.config.getAppConfig(url);
+            let isEnabled = true;
+            if (appConfig && appConfig.plugins[this.plugInInfo.name]) {
                 logger.info(
-                    `The plugin ${
+                    `${
                         this.plugInInfo.name
-                    } has been correctly configured`
+                    } plugin is configured in app.config.json`
                 );
             } else {
-                this.logConfigurationError();
-                process.exit(1);
+                logger.error(
+                    `${
+                        this.plugInInfo.name
+                    } plugin is not configured in app.config.json`
+                );
+                return (isEnabled = false);
             }
-        } catch (e) {
-            this.logConfigurationError(e);
-            process.exit(1);
+
+            return isEnabled;
+        } catch (error) {
+            logger.error(
+                `${this.plugInInfo.host} is not reachable error: `,
+                error
+            );
+            return false;
         }
     }
 
@@ -48,14 +58,5 @@ export class ProcessServicePlugin {
             );
             return false;
         }
-    }
-
-    private logConfigurationError(error?: any) {
-        logger.error(
-            `The plugin ${
-                this.plugInInfo.name
-            } has not been correctly configured`,
-            error
-        );
     }
 }

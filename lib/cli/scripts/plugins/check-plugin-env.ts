@@ -1,8 +1,8 @@
-import { ProcessServicePlugin } from './aps-plugin';
 import { PluginTarget } from './plugin-model';
 import { CheckEnv } from './check-env';
 import program = require('commander');
-import { ProcessAutomationPlugin } from './aae-plugin';
+import { ProcessServiceCheckPlugin } from './process-service-check-plugin';
+import { ProcessAutomationCheckPlugin } from './process-automation-check-plugin';
 
 let pluginEnv;
 
@@ -30,7 +30,7 @@ async function main() {
 }
 
 async function checkProcessServicesPlugin() {
-    const processServicePlugin = new ProcessServicePlugin(
+    const processServiceCheckPlugin = new ProcessServiceCheckPlugin(
         {
             host: program.host,
             name: PluginTarget.processService,
@@ -39,11 +39,11 @@ async function checkProcessServicesPlugin() {
         },
         pluginEnv.alfrescoJsApi
     );
-    await processServicePlugin.checkProcessServicesPlugin();
+    await processServiceCheckPlugin.checkProcessServicesPlugin();
 }
 
 async function checkProcessAutomationPlugin() {
-    const processServicePlugin = new ProcessAutomationPlugin(
+    const processAutomationCheckPlugin = new ProcessAutomationCheckPlugin(
         {
             host: program.host,
             name: PluginTarget.processAutomation,
@@ -52,7 +52,7 @@ async function checkProcessAutomationPlugin() {
         },
         pluginEnv.alfrescoJsApi
     );
-    await processServicePlugin.checkProcessServicesPlugin();
+    await processAutomationCheckPlugin.checkProcessAutomationPlugin();
 }
 
 main();
