@@ -58,6 +58,7 @@ describe('Service task list cloud', () => {
 
             await apiService.login(testUser.email, testUser.password);
             const processDefinition = await processDefinitionService
+              /* cspell:disable-next-line */
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.multiinstanceservicetask, simpleApp);
             await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
