@@ -16,6 +16,7 @@ export class ProcessServiceCheckPlugin {
     }
 
     async checkProcessServicesPlugin() {
+        let pluginStatus;
         try {
             const isPluginEnabled = await this.processServiceHealth.isPluginEnabledFromAppConfiguration();
             const isBackendActive = await this.processServiceHealth.checkBackendHealth();
@@ -26,12 +27,18 @@ export class ProcessServiceCheckPlugin {
                         this.plugInInfo.name
                     } has been correctly configured`
                 );
+                pluginStatus = [{ PluginName: this.plugInInfo.name, Status: `${'Active'}`, BE: 'Enabled', FE: 'Enabled' }];
+                console.table(pluginStatus);
             } else {
                 this.logConfigurationError();
+                pluginStatus = [{ PluginName: this.plugInInfo.name, Status: 'Inactive', BE: isBackendActive ? 'Enabled' : 'Disabled', FE: isPluginEnabled ? 'Enabled' : 'Disabled' }];
+                console.table(pluginStatus);
                 process.exit(1);
             }
         } catch (e) {
             this.logConfigurationError(e);
+            pluginStatus = [{ PluginName: this.plugInInfo.name, Status: 'Inactive', BE: 'Disabled', FE: 'Disabled' }];
+            console.table(pluginStatus);
             process.exit(1);
         }
     }

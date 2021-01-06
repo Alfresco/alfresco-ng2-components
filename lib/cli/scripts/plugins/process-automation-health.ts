@@ -20,7 +20,7 @@ export class ProcessAutomationHealth {
             const url = `${this.plugInInfo.host}/${this.plugInInfo.appName}/ui/${this.plugInInfo.uiName}/app.config.json`;
             const appConfig = await this.config.getAppConfig(url);
             let isEnabled = true;
-            if (appConfig && appConfig.plugins[this.plugInInfo.name]) {
+            if (appConfig && appConfig.plugins && appConfig.plugins[this.plugInInfo.name]) {
                 logger.info(
                     `The plugin ${
                         this.plugInInfo.name
