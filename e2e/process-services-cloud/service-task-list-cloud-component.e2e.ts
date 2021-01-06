@@ -20,14 +20,12 @@ import { browser
 import {
     LoginPage,
     ApiService,
-    AppListCloudPage,
-    StringUtil,
     IdentityService,
     GroupIdentityService,
-    StartProcessCloudPage
+    ProcessDefinitionsService,
+    ProcessInstancesService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
-import { ProcessCloudDemoPage } from './pages/process-cloud-demo.page';
 import { ServiceTaskListPage } from './pages/service-task-list.page';
 import CONSTANTS = require('../util/constants');
 
@@ -37,25 +35,18 @@ describe('Service task list cloud', () => {
 
         const loginSSOPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
-        const appListCloudComponent = new AppListCloudPage();
-        const processCloudDemoPage = new ProcessCloudDemoPage();
-        const startProcessPage = new StartProcessCloudPage();
         const serviceTaskListPage = new ServiceTaskListPage();
 
-        const apiService = new ApiService(
-            browser.params.testConfig.appConfig.oauth2.clientId,
-            browser.params.testConfig.appConfig.bpmHost,
-            browser.params.testConfig.appConfig.oauth2.host,
-            browser.params.testConfig.appConfig.providers
-        );
+        const apiService = new ApiService();
         const identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);
+        const processDefinitionService = new ProcessDefinitionsService(apiService);
+        const processInstancesService = new ProcessInstancesService(apiService);
 
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
         /* cspell:disable-next-line */
         const activityNameSimpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.multiinstanceservicetask;
 
-        const processName = StringUtil.generateRandomString(5);
         let testUser, groupInfo;
 
         beforeAll(async () => {
@@ -66,20 +57,10 @@ describe('Service task list cloud', () => {
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.email, testUser.password);
-            await loginSSOPage.login(testUser.email, testUser.password);
+            const processDefinition = await processDefinitionService
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.multiinstanceservicetask, simpleApp);
+            await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
-            await navigationBarPage.navigateToProcessServicesCloudPage();
-            await appListCloudComponent.checkApsContainer();
-            await appListCloudComponent.goToApp(simpleApp);
-
-            await processCloudDemoPage.openNewProcessForm();
-            await startProcessPage.clearField(startProcessPage.processNameInput);
-            await startProcessPage.selectFromProcessDropdown(activityNameSimpleApp);
-            await startProcessPage.enterProcessName(processName);
-            await startProcessPage.checkStartProcessButtonIsEnabled();
-            await startProcessPage.clickStartProcessButton();
-
-            await navigationBarPage.clickLogoutButton();
             /* cspell:disable-next-line */
             await loginSSOPage.login(browser.params.testConfig.users.superadmin.username, browser.params.testConfig.users.superadmin.password);
         });
@@ -98,12 +79,9 @@ describe('Service task list cloud', () => {
             await serviceTaskListPage.clickCompletedServiceTask();
             await serviceTaskListPage.clickSearchHeaderServiceTask();
             await serviceTaskListPage.searchByActivityName(activityNameSimpleApp);
-
             await serviceTaskListPage.checkServiceTaskListResultsIsLoaded();
 
-            await expect(await serviceTaskListPage.getActivityNameText()).toBe(activityNameSimpleApp);
             await expect(await serviceTaskListPage.getStatusText()).toBe(CONSTANTS.SERVICE_TASK_STATUS.COMPLETED);
-
         });
     });
 });
