@@ -115,7 +115,11 @@
       "attachSingleMultiple": "attach-single-multiple",
       "attachMultipleSingle": "attach-multiple-single",
       "attachMultipleMultiple": "attach-multiple-multiple",
-      "intermediateDateProcessVarTimer": "interm-date-provar-timer"
+      "intermediateDateProcessVarTimer": "interm-date-provar-timer",
+      "callActivityExpressionSimple":"call-activity-exp-simple", 
+      "callActivityExpressionFromPool":"call-activity-expression-2",
+      "calledSimple":"called-simple",
+      "calledInPool":"called-in-pool"
     },
     "forms": {
       "tabVisibilityFields": {
@@ -214,6 +218,12 @@
       },
       "dateTimerForm": {
         "name": "date-timer-form"
+      },
+      "callActivityUserTaskForm": {
+        "name": "call-activ-user-task-form"
+      },
+      "calledForm": {
+        "name": "called-form"
       },
       "dropdownWithOptions": {
         "name": "dropdown-options",
