@@ -53,7 +53,7 @@ function tagImagePerform(args: PublishArgs, tagImage: string, newTag: string) {
 
 function pushImagePerform(args: PublishArgs) {
     logger.info(`Perform docker push... ${args.dockerRepo} --all-tags`);
-    const response = exec('docker', ['push', `${args.dockerRepo} --all-tags`], {});
+    const response = exec('docker', ['push', `${args.dockerRepo}`, `--all-tags`], {});
     logger.info(response);
 }
 
