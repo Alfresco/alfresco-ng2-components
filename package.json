@@ -101,7 +101,7 @@
     "raphael": "2.3.0",
     "rxjs": "^6.6.3",
     "snyk": "^1.437.2",
-    "tslib": "^2.0.3",
+    "tslib": "^2.1.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
