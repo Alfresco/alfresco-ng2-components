@@ -51,9 +51,9 @@ function tagImagePerform(args: PublishArgs, tagImage: string, newTag: string) {
     logger.info(response);
 }
 
-function pushImagePerform(args: PublishArgs) {
-    logger.info(`Perform docker push... ${args.dockerRepo} --all-tags`);
-    const response = exec('docker', ['push', `${args.dockerRepo}`, `--all-tags`], {});
+function pushImagePerform(args: PublishArgs, tag: string) {
+    logger.info(`Perform docker push... ${args.dockerRepo}:${tag}`);
+    const response = exec('docker', ['push', `${args.dockerRepo}:${tag}`], {});
     logger.info(response);
 }
 
@@ -102,10 +102,9 @@ function main(args) {
                     buildImagePerform(args, mainTag);
                 }
                 tagImagePerform(args, mainTag, tag);
-                logger.info(`tag:${tag} done`);
+                pushImagePerform(args, tag);
             }
         });
-        pushImagePerform(args);
         logger.info(`Clean the image with tag:${mainTag} ...`);
         cleanImagePerform(args, mainTag);
     } else {
