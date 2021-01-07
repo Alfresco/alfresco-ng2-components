@@ -44,8 +44,7 @@ import {
     RequestPaginationModel,
     AlfrescoApiService,
     UserPreferenceValues,
-    LockService,
-    DataRow
+    LockService
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
@@ -634,13 +633,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      */
     executeContentAction(node: NodeEntry, action: ContentActionModel) {
         if (node && node.entry && action) {
-            let handlerSub;
-
-            if (typeof action.handler === 'function') {
-                handlerSub = action.handler(node, this, action.permission);
-            } else {
-                handlerSub = of(true);
-            }
+            const handlerSub = (typeof action.handler === 'function') ? action.handler(node, this, action.permission) : of(true);
 
             if (typeof action.execute === 'function' && handlerSub) {
                 handlerSub
@@ -879,12 +872,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     private loadLayoutPresets(): void {
         const externalSettings = this.appConfig.get('document-list.presets', null);
-
-        if (externalSettings) {
-            this.layoutPresets = Object.assign({}, presetsDefaultModel, externalSettings);
-        } else {
-            this.layoutPresets = presetsDefaultModel;
-        }
+        this.layoutPresets = externalSettings ? Object.assign({}, presetsDefaultModel, externalSettings) : presetsDefaultModel;
     }
 
     private onDataReady(nodePaging: NodePaging) {
@@ -932,29 +920,17 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     getPreselectNodesBasedOnSelectionMode(): NodeEntry[] {
-        let selectedNodes: NodeEntry[] = [];
-
-        if (this.hasPreselectNodes()) {
-            if (this.isSingleSelectionMode()) {
-                selectedNodes = [this.preselectNodes[0]];
-            } else {
-                selectedNodes = this.preselectNodes;
-            }
-        }
-
-        return selectedNodes;
+        return this.hasPreselectNodes() ? (this.isSingleSelectionMode() ? [this.preselectNodes[0]] : this.preselectNodes) : [];
     }
 
     private onPreselectNodes() {
         if (this.hasPreselectNodes()) {
-            let selectedNodes: DataRow[] = [];
+            const preselectedNodes = [...this.isSingleSelectionMode() ? [this.data.getPreselectRows()[0]] : this.data.getPreselectRows()];
+            const selectedNodes = [...this.selection, ...preselectedNodes];
 
-            if (this.isSingleSelectionMode()) {
-                selectedNodes = [this.data.getPreselectRows()[0]];
-            } else {
-                selectedNodes = this.data.getPreselectRows();
-            }
-
+            preselectedNodes.forEach(node => {
+                this.dataTable.selectRow(node, true);
+            });
             this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> selectedNodes });
         }
     }
