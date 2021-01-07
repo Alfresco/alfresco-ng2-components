@@ -75,7 +75,6 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
                 this.maxDate = moment(this.field.maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
             }
         }
-
         this.displayDate = moment(this.field.value, this.field.dateDisplayFormat)
             .add(
                 moment(this.field.value, this.field.dateDisplayFormat).utcOffset(),
@@ -85,9 +84,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes && changes.field  && !changes.field.firstChange && changes.field.currentValue.value !== changes.field.previousValue.value) {
             this.displayDate = moment(changes.field.currentValue.value, this.field.dateDisplayFormat)
-                .add(
-                    moment(changes.field.currentValue.value, this.field.dateDisplayFormat).utcOffset(),
-                    'minutes');
+                .add(moment(changes.field.currentValue.value, this.field.dateDisplayFormat).utcOffset(), 'minutes');
         }
     }
 

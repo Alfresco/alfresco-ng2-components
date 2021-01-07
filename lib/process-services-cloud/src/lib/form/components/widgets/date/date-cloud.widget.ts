@@ -81,7 +81,6 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
                 this.maxDate = moment(this.field.maxValue, this.DATE_FORMAT_CLOUD);
             }
         }
-
         this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);
     }
 

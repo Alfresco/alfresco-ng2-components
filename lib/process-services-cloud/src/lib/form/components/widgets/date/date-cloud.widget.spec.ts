@@ -282,7 +282,7 @@ describe('DateWidgetComponent', () => {
                                     'field': {
                                         previousValue: field,
                                         currentValue: field,
-                                        firstChange: true,
+                                        firstChange: false,
                                         isFirstChange(): boolean { return this.firstChange; }
                                     }
                                 };

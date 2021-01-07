@@ -185,60 +185,61 @@ describe('DateTimeWidgetComponent', () => {
 
             expect(tooltip).toEqual(widget.field.tooltip);
         }));
+    });
 
-        it('should display always the json value', () => {
-            const field = new FormFieldModel(new FormModel(), {
-                id: 'date-field-id',
-                name: 'datetime-field-name',
-                value: '12-30-9999 10:30 AM',
-                type: 'datetime',
-                readOnly: 'false',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                isVisible: true
-            });
-            widget.field = field;
-            widget.ngOnInit();
-            fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    expect(element.querySelector('#date-field-id')).toBeDefined();
-                    expect(element.querySelector('#date-field-id')).not.toBeNull();
-                    const dateElement: any = element.querySelector('#date-field-id');
-                    expect(dateElement.value).toContain('12-30-9999 10:30 AM');
-
-                    const newField = { ...field, value: '03-02-2020 12:00 AM' };
-
-                    const changes: SimpleChanges = {
-                        'field': {
-                            previousValue: field,
-                            currentValue: newField,
-                            firstChange: false,
-                            isFirstChange(): boolean { return this.firstChange; }
-                        }
-                    };
-                    widget.ngOnChanges(changes);
-                    fixture.detectChanges();
-                    fixture.whenStable()
-                        .then(() => {
-                            expect(dateElement.value).toContain('03-02-2020 12:00 AM');
-                        });
-                });
+    it('should display always the json value', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            id: 'date-field-id',
+            name: 'datetime-field-name',
+            value: '12-30-9999 10:30 AM',
+            type: 'datetime',
+            readOnly: 'false'
         });
+        field.isVisible = true;
+        field.dateDisplayFormat = 'MM-DD-YYYY HH:mm A';
+        widget.field = field;
+        widget.ngOnInit();
+        fixture.detectChanges();
+        fixture.whenStable()
+            .then(() => {
+                expect(element.querySelector('#date-field-id')).toBeDefined();
+                expect(element.querySelector('#date-field-id')).not.toBeNull();
+                const dateElement: any = element.querySelector('#date-field-id');
+                expect(dateElement.value).toContain('12-30-9999 10:30 AM');
 
-        it('should not call on change when is first change or field is not set or the field value does not change', () => {
-            const field = new FormFieldModel(new FormModel(), {
-                id: 'datetime-field-id',
-                name: 'datetime-field-name',
-                value: '12-30-9999 10:30 AM',
-                type: 'datetime',
-                readOnly: 'false',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                isVisible: true
+                const newField = { ...field, value: '03-02-2020 12:00 AM' };
+
+                const changes: SimpleChanges = {
+                    'field': {
+                        previousValue: field,
+                        currentValue: newField,
+                        firstChange: false,
+                        isFirstChange(): boolean { return this.firstChange; }
+                    }
+                };
+                widget.ngOnChanges(changes);
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        expect(dateElement.value).toContain('03-02-2020 12:00 AM');
+                    });
             });
-            widget.field = field;
-            widget.ngOnInit();
-            fixture.detectChanges();
-            fixture.whenStable()
+    });
+
+    it('should not call on change when is first change or field is not set or the field value does not change', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            id: 'datetime-field-id',
+            name: 'datetime-field-name',
+            value: '12-30-9999 10:30 AM',
+            type: 'datetime',
+            readOnly: 'false'
+        });
+        field.isVisible = true;
+        field.dateDisplayFormat = 'MM-DD-YYYY HH:mm A',
+        widget.field = field;
+        widget.ngOnInit();
+        fixture.detectChanges();
+        fixture.whenStable()
             .then(() => {
                 expect(element.querySelector('#datetime-field-id')).toBeDefined();
                 expect(element.querySelector('#datetime-field-id')).not.toBeNull();
@@ -259,7 +260,7 @@ describe('DateTimeWidgetComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        expect(dateTimeElement.value).toContain('12-30-9999');
+                        expect(dateTimeElement.value).toContain('12-30-9999 10:30 AM');
                         changes = {};
                         widget.ngOnChanges(changes);
                         fixture.detectChanges();
@@ -270,7 +271,7 @@ describe('DateTimeWidgetComponent', () => {
                                     'field': {
                                         previousValue: field,
                                         currentValue: field,
-                                        firstChange: true,
+                                        firstChange: false,
                                         isFirstChange(): boolean { return this.firstChange; }
                                     }
                                 };
@@ -290,6 +291,5 @@ describe('DateTimeWidgetComponent', () => {
                             });
                     });
             });
-        });
     });
 });
