@@ -145,3 +145,11 @@ exports.CS_USER_ROLES = {
     CONTRIBUTOR: 'SiteContributor',
     MANAGER: 'SiteManager'
 };
+
+exports.SERVICE_TASK_STATUS = {
+    ALL:'ALL',
+    STARTED:'STARTED',
+    COMPLETED: 'COMPLETED',
+    CANCELLED: 'CANCELLED',
+    ERROR:'ERROR'
+};

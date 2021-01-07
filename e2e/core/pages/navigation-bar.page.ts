@@ -34,6 +34,7 @@ export class NavigationBarPage {
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Form"]'));
     peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="People/Group Cloud"]'));
+    serviceTaskListButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Service Task List"]'));
     logoutSection: ElementFinder = element(by.css('div[data-automation-id="adf-logout-section"]'));
     personalFiles: ElementFinder = element(by.css('div [title="Personal Files"]'));
 
@@ -87,6 +88,12 @@ export class NavigationBarPage {
     async navigateToPeopleGroupCloudPage(): Promise<void> {
         await this.clickProcessCloudButton();
         await BrowserActions.click(this.peopleGroupCloudButton);
+        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
+    }
+
+    async navigateToServiceTaskListCloudPage(): Promise<void> {
+        await this.clickProcessCloudButton();
+        await BrowserActions.click(this.serviceTaskListButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
