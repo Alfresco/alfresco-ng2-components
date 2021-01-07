@@ -45,15 +45,15 @@ function buildImagePerform(args: PublishArgs, tag: string) {
     logger.info(response);
 }
 
-function tagImagePerform(args: PublishArgs, tag: string) {
-    logger.info(`Perform docker tag... ${args.dockerRepo}:${tag} on ${args.dockerRepo}:${tag}`);
-    const response = exec('docker', ['tag', `${args.dockerRepo}:${tag}`, `${args.dockerRepo}:${tag}`], {});
+function tagImagePerform(args: PublishArgs, tagImage: string, newTag: string) {
+    logger.info(`Perform docker tag... ${args.dockerRepo}:${tagImage} on ${args.dockerRepo}:${newTag}`);
+    const response = exec('docker', ['tag', `${args.dockerRepo}:${tagImage}`, `${args.dockerRepo}:${newTag}`], {});
     logger.info(response);
 }
 
 function pushImagePerform(args: PublishArgs) {
-    logger.info(`Perform docker push... ${args.dockerRepo}`);
-    const response = exec('docker', ['push', `${args.dockerRepo}`], {});
+    logger.info(`Perform docker push... ${args.dockerRepo} --all-tags`);
+    const response = exec('docker', ['push', `${args.dockerRepo} --all-tags`], {});
     logger.info(response);
 }
 
@@ -76,10 +76,10 @@ function main(args) {
         .option('--loginPassword [type]', ' password')
         .option('--loginUsername [type]', ' username')
         .option('--loginCheck [type]', 'perform login')
-        .option('--dockerRepo [type]', 'docker repo')
-        .option('--dockerTags [type]', ' tags')
-        .option('--buildArgs [type]', ' buildArgs')
-        .option('--pathProject [type]', 'path ptojrct')
+        .requiredOption('--dockerRepo [type]', 'docker repo')
+        .requiredOption('--dockerTags [type]', ' tags')
+        .requiredOption('--buildArgs [type]', ' buildArgs')
+        .requiredOption('--pathProject [type]', 'path ptojrct')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
@@ -91,14 +91,24 @@ function main(args) {
         loginPerform(args);
     }
 
-    if (args.dockerTags !== undefined) {
-        args.dockerTags.split(',').forEach( (tag) => {
-            logger.info(`Analyzing tag:${tag} ...`);
-            buildImagePerform(args, tag);
-            tagImagePerform(args, tag);
-            pushImagePerform(args);
-            cleanImagePerform(args, tag);
-            logger.info(`tag:${tag} done`);
+    let mainTag;
+    if (args.dockerTags !== '') {
+        args.dockerTags.split(',').forEach( (tag, index) => {
+            if (tag) {
+                logger.info(`Analyzing tag:${tag} ...`);
+                if (index === 0) {
+                    logger.info(`Build only once`);
+                    mainTag = tag;
+                    buildImagePerform(args, mainTag);
+                }
+                tagImagePerform(args, mainTag, tag);
+                logger.info(`tag:${tag} done`);
+            }
         });
+        pushImagePerform(args);
+        logger.info(`Clean the image with tag:${mainTag} ...`);
+        cleanImagePerform(args, mainTag);
+    } else {
+        logger.error(`dockerTags cannot be empty ...`);
     }
 }
