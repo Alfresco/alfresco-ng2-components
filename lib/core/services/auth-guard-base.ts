@@ -98,6 +98,7 @@ ls;
             urlToRedirect = `${pathToLogin}?redirectUrl=${url}`;
         } else if (this.getOauthConfig().silentLogin) {
             this.alfrescoApiService.getInstance().oauth2Auth.implicitLogin();
+            return;
         } else {
             urlToRedirect = pathToLogin;
         }
