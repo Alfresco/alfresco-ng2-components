@@ -30,12 +30,7 @@ import { TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
 import { TaskCloudService } from '../../../services/task-cloud.service';
-import { BaseEditTaskFilterCloudComponent } from './base-edit-task-filter-cloud.component';
-
-export interface DropdownOption {
-    value: string;
-    label: string;
-}
+import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-task-filter-cloud.component';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
@@ -145,19 +140,19 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         ];
     }
 
-    private getDefaultProperties(): DropdownOption[] {
+    private getStatusOptions(): DropdownOption[] {
         return [
-            { value: '', label: this.translateService.instant('ADF_CLOUD_EDIT_TASK_FILTER.STATUS.ALL') },
-            { value: 'CREATED', label: this.translateService.instant('ADF_CLOUD_EDIT_TASK_FILTER.STATUS.CREATED') },
-            { value: 'ASSIGNED', label: this.translateService.instant('ADF_CLOUD_EDIT_TASK_FILTER.STATUS.ASSIGNED') },
-            { value: 'SUSPENDED', label: this.translateService.instant('ADF_CLOUD_EDIT_TASK_FILTER.STATUS.SUSPENDED') },
-            { value: 'CANCELLED', label: this.translateService.instant('ADF_CLOUD_EDIT_TASK_FILTER.STATUS.CANCELLED') },
-            { value: 'COMPLETED', label: this.translateService.instant('ADF_CLOUD_EDIT_TASK_FILTER.STATUS.COMPLETED') }
+            { value: '', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL' },
+            { value: 'CREATED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.CREATED' },
+            { value: 'ASSIGNED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ASSIGNED' },
+            { value: 'SUSPENDED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.SUSPENDED' },
+            { value: 'CANCELLED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.CANCELLED' },
+            { value: 'COMPLETED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.COMPLETED' }
         ];
     }
 
     createTaskFilterProperties(): TaskFilterProperties[] {
-        const defaultProperties = this.getDefaultProperties();
+        const statusOptions = this.getStatusOptions();
         const sortProperties = this.createSortProperties;
 
         return [
@@ -178,8 +173,8 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
-                value: this.taskFilter.status || defaultProperties[0].value,
-                options: defaultProperties
+                value: this.taskFilter.status || statusOptions[0].value,
+                options: statusOptions
             },
             {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
@@ -248,8 +243,8 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
-                value: this.taskFilter.order || EditTaskFilterCloudComponent.DIRECTIONS[0].value,
-                options: EditTaskFilterCloudComponent.DIRECTIONS
+                value: this.taskFilter.order || this.sortDirections[0].value,
+                options: [...this.sortDirections]
             },
             {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STAND_ALONE',
