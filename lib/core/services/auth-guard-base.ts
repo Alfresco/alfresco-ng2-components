@@ -36,11 +36,6 @@ import { AlfrescoApiService } from './alfresco-api.service';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
-    abstract checkLogin(
-        activeRoute: ActivatedRouteSnapshot,
-        redirectUrl: string
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;
-
     protected get withCredentials(): boolean {
         return this.appConfigService.get<boolean>(
             'auth.withCredentials',
@@ -57,6 +52,12 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         private alfrescoApiService: AlfrescoApiService
     ) {
     }
+ls;
+
+    abstract checkLogin(
+        activeRoute: ActivatedRouteSnapshot,
+        redirectUrl: string
+    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;
 
     canActivate(
         route: ActivatedRouteSnapshot,
@@ -87,7 +88,6 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this.canActivate(route, state);
     }
-
     protected redirectToUrl(provider: string, url: string) {
         const pathToLogin = `/${this.getLoginRoute()}`;
         let urlToRedirect;
