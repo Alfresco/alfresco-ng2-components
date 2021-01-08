@@ -32,6 +32,7 @@ import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
+import { AlfrescoApiService } from './alfresco-api.service';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
@@ -52,7 +53,8 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         protected router: Router,
         protected appConfigService: AppConfigService,
         protected dialog: MatDialog,
-        private storageService: StorageService
+        private storageService: StorageService,
+        private alfrescoApiService: AlfrescoApiService
     ) {
     }
 
@@ -89,16 +91,29 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     protected redirectToUrl(provider: string, url: string) {
         const pathToLogin = `/${this.getLoginRoute()}`;
         let urlToRedirect;
+
         if (!this.authenticationService.isOauth()) {
             this.authenticationService.setRedirect({ provider, url });
 
             urlToRedirect = `${pathToLogin}?redirectUrl=${url}`;
+        } else if (this.getOauthConfig().silentLogin) {
+            this.alfrescoApiService.getInstance().oauth2Auth.implicitLogin();
         } else {
             urlToRedirect = pathToLogin;
         }
 
         this.dialog.closeAll();
         this.router.navigateByUrl(urlToRedirect);
+    }
+
+    protected getOauthConfig(): OauthConfigModel {
+        return (
+            this.appConfigService &&
+            this.appConfigService.get<OauthConfigModel>(
+                AppConfigValues.OAUTHCONFIG,
+                null
+            )
+        );
     }
 
     protected getLoginRoute(): string {
