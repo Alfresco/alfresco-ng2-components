@@ -923,14 +923,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return this.hasPreselectNodes() ? (this.isSingleSelectionMode() ? [this.preselectNodes[0]] : this.preselectNodes) : [];
     }
 
-    private onPreselectNodes() {
+    onPreselectNodes() {
         if (this.hasPreselectNodes()) {
             const preselectedNodes = [...this.isSingleSelectionMode() ? [this.data.getPreselectRows()[0]] : this.data.getPreselectRows()];
             const selectedNodes = [...this.selection, ...preselectedNodes];
 
-            preselectedNodes.forEach(node => {
+            for (const node of preselectedNodes) {
                 this.dataTable.selectRow(node, true);
-            });
+            }
             this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> selectedNodes });
         }
     }

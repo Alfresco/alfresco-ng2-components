@@ -27,7 +27,8 @@ import {
     DataTableModule,
     ObjectDataTableAdapter,
     ShowHeaderMode,
-    ThumbnailService
+    ThumbnailService,
+    ContentService
 } from '@alfresco/adf-core';
 import { Subject, of, throwError } from 'rxjs';
 import {
@@ -52,6 +53,7 @@ import { NodeEntry } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { DocumentListModule } from '../document-list.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ShareDataRow } from '../data/share-data-row.model';
 
 describe('DocumentList', () => {
 
@@ -60,6 +62,7 @@ describe('DocumentList', () => {
     let apiService: AlfrescoApiService;
     let customResourcesService: CustomResourcesService;
     let thumbnailService: ThumbnailService;
+    let contentService: ContentService;
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
@@ -91,6 +94,7 @@ describe('DocumentList', () => {
         apiService = TestBed.inject(AlfrescoApiService);
         customResourcesService = TestBed.inject(CustomResourcesService);
         thumbnailService = TestBed.inject(ThumbnailService);
+        contentService = TestBed.inject(ContentService);
 
         spyFolder = spyOn(documentListService, 'getFolder').and.callFake(() => {
             return Promise.resolve({ list: {} });
@@ -1544,7 +1548,7 @@ describe('DocumentList', () => {
             expect(nodeSelectedSpy).toHaveBeenCalled();
         });
 
-        it('should able to select first node from the preselectNodes when selectionMode set to single', async () => {
+        it('should be able to select first node from the preselectNodes when selectionMode set to single', async () => {
             documentList.selectionMode = 'single';
             fixture.detectChanges();
 
@@ -1559,7 +1563,7 @@ describe('DocumentList', () => {
             expect(documentList.getPreselectNodesBasedOnSelectionMode().length).toBe(1);
         });
 
-        it('should able to select all preselectNodes when selectionMode set to multiple', async () => {
+        it('should be able to select all preselectNodes when selectionMode set to multiple', async () => {
             documentList.selectionMode = 'multiple';
             fixture.detectChanges();
 
@@ -1574,7 +1578,22 @@ describe('DocumentList', () => {
             expect(documentList.getPreselectNodesBasedOnSelectionMode().length).toBe(2);
         });
 
-        it('should not emit nodeSelected event when preselectNodes undefined/empty', async () => {
+        it('should call the datatable select row method for each preselected node', async () => {
+            const datatableSelectRowSpy = spyOn(documentList.dataTable, 'selectRow');
+            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            spyOn(documentList.data, 'getPreselectRows').and.returnValue(fakeDatatableRows);
+
+            documentList.selectionMode = 'multiple';
+            documentList.preselectNodes = mockPreselectedNodes;
+            documentList.onPreselectNodes();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(datatableSelectRowSpy.calls.count()).toEqual(fakeDatatableRows.length);
+        });
+
+        it('should not emit nodeSelected event when preselectNodes is undefined/empty', async () => {
             const nodeSelectedSpy = spyOn(documentList.nodeSelected, 'emit');
 
             fixture.detectChanges();
