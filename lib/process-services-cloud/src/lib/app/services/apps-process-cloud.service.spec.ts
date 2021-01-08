@@ -21,7 +21,6 @@ import { setupTestBed, AppConfigService, AlfrescoApiService, CoreTestingModule }
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppsProcessCloudService } from './apps-process-cloud.service';
 import { fakeApplicationInstance } from '../mock/app-model.mock';
-import { ApplicationInstanceModel } from '../models/application-instance.model';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -56,7 +55,7 @@ describe('AppsProcessCloudService', () => {
         spyOn(appConfigService, 'get').and.returnValue([]);
         service.loadApps();
         service.getDeployedApplicationsByStatus('fake').subscribe(
-            (res: ApplicationInstanceModel[]) => {
+            (res) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
                 expect(res[0].name).toEqual('application-new-1');
@@ -70,7 +69,7 @@ describe('AppsProcessCloudService', () => {
         spyOn(appConfigService, 'get').and.returnValue([fakeApplicationInstance[0]]);
         service.loadApps();
         service.getDeployedApplicationsByStatus('fake').subscribe(
-            (res: ApplicationInstanceModel[]) => {
+            (res) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(1);
                 expect(res[0]).toEqual(fakeApplicationInstance[0]);

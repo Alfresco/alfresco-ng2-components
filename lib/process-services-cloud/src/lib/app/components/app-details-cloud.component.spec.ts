@@ -22,7 +22,7 @@ import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppDetailsCloudComponent } from './app-details-cloud.component';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { AppListCloudModule } from '../app-list-cloud.module';
-import { ApplicationInstanceModel } from '../models/application-instance.model';
+import { DEFAULT_APP_INSTANCE_THEME } from '../models/application-instance.model';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppDetailsCloudComponent', () => {
@@ -65,7 +65,7 @@ describe('AppDetailsCloudComponent', () => {
         const theme = fixture.nativeElement.querySelector('.adf-app-listgrid-item-card').getAttribute('ng-reflect-ng-class');
         const icon = fixture.nativeElement.querySelector('.adf-app-listgrid-item-card-logo-icon');
 
-        expect(theme).toEqual(ApplicationInstanceModel.DEFAULT_THEME);
+        expect(theme).toEqual(DEFAULT_APP_INSTANCE_THEME);
         expect(icon).toBeTruthy();
     });
 

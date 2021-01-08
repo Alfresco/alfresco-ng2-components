@@ -15,28 +15,42 @@
  * limitations under the License.
  */
 
-export class ApplicationInstanceModel {
+export const DEFAULT_APP_INSTANCE_THEME = 'theme-2';
+export const DEFAULT_APP_INSTANCE_ICON = 'favorite_border';
 
-    public static DEFAULT_THEME: string = 'theme-2';
-    public static DEFAULT_ICON: string = 'favorite_border';
-
-    name: string;
-    createdAt: any;
-    status: string;
+export interface ApplicationInstanceModel {
+    name?: string;
+    createdAt?: any;
+    status?: string;
     theme?: string;
     icon?: string;
     description?: string;
     connectors?: any;
+    descriptor?: Descriptor;
+}
 
-    constructor(obj?: any) {
-        if (obj) {
-            this.name = obj.name ? obj.name : null;
-            this.status = obj.status ? obj.status : null;
-            this.createdAt = obj.createdAt ? obj.createdAt : null;
-            this.theme = obj.theme;
-            this.icon = obj.icon;
-            this.description = obj.description ? obj.description : null;
-            this.connectors = obj.connectors ? obj.connectors : null;
-        }
-    }
+export interface Descriptor {
+    name?: string;
+    projectId?: string;
+    releaseId?: string;
+    releaseVersion?: number;
+    security?: DescriptorSecurity[];
+    infrastructure?: DescriptorInfrastructure;
+    variables?: DescriptorVariables;
+    version?: string;
+}
+
+export interface DescriptorSecurity {
+    role: string;
+    groups: string[];
+    users: string[];
+}
+
+export interface DescriptorVariables {
+    [key: string]: any;
+    connectors?: { [key: string]: any; };
+}
+
+export interface DescriptorInfrastructure {
+    [key: string]: any;
 }

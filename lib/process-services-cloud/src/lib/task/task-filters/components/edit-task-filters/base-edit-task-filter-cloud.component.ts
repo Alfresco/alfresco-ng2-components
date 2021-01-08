@@ -19,7 +19,6 @@ import { OnChanges, SimpleChanges, OnInit, OnDestroy, Directive, Input, Output, 
 import { FilterOptions, TaskFilterAction, TaskFilterProperties } from '../../models/filter-cloud.model';
 import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
-import { ApplicationInstanceModel } from './../../../../app/models/application-instance.model';
 import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
 import moment, { Moment } from 'moment';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
@@ -219,7 +218,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     getRunningApplications() {
         this.appsProcessCloudService
             .getDeployedApplicationsByStatus(BaseEditTaskFilterCloudComponent.APP_RUNNING_STATUS, this.role)
-            .subscribe((applications: ApplicationInstanceModel[]) => {
+            .subscribe((applications) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
                         this.applicationNames.push({ label: application.name, value: application.name });

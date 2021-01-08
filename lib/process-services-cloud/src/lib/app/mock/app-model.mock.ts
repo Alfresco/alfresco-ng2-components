@@ -14,13 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ApplicationInstanceModel } from '../models/application-instance.model';
-export let fakeApplicationInstance = [
-    new ApplicationInstanceModel(
-        { name: 'application-new-1', createdAt: '2018-09-21T12:31:39.000Z', status: 'Running', theme: 'theme-2', icon: 'favorite_border' }),
-    new ApplicationInstanceModel(
-        { name: 'application-new-2', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending', theme: 'theme-2', icon: 'favorite_border' }),
-    new ApplicationInstanceModel(
-        { name: 'application-new-3', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending' })
 
+import { ApplicationInstanceModel } from '../models/application-instance.model';
+
+export const fakeApplicationInstance: ApplicationInstanceModel[] = [
+    { name: 'application-new-1', createdAt: '2018-09-21T12:31:39.000Z', status: 'Running', theme: 'theme-2', icon: 'favorite_border' },
+    { name: 'application-new-2', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending', theme: 'theme-2', icon: 'favorite_border' },
+    { name: 'application-new-3', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending' }
 ];
