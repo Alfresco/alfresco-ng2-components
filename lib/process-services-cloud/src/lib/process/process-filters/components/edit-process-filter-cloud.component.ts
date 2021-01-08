@@ -131,20 +131,20 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     ngOnInit() {
         this.status = [
-            { value: '', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL') },
-            { value: 'RUNNING', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.STATUS.RUNNING') },
-            { value: 'SUSPENDED', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.STATUS.SUSPENDED') },
-            { value: 'CANCELLED', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.STATUS.CANCELLED') },
-            { value: 'COMPLETED', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.STATUS.COMPLETED') }
+            { value: '', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL' },
+            { value: 'RUNNING', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.RUNNING' },
+            { value: 'SUSPENDED', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.SUSPENDED' },
+            { value: 'CANCELLED', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.CANCELLED' },
+            { value: 'COMPLETED', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.COMPLETED' }
         ];
 
         this.directions = [
-            { value: 'ASC', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.DIRECTION.ASCENDING') },
-            { value: 'DESC', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.DIRECTION.DESCENDING') }
+            { value: 'ASC', label: 'ADF_CLOUD_PROCESS_FILTERS.DIRECTION.ASCENDING' },
+            { value: 'DESC', label: 'ADF_CLOUD_PROCESS_FILTERS.DIRECTION.DESCENDING' }
         ];
 
         this.allProcessDefinitionNamesOption = {
-            label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL'),
+            label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL',
             value: ''
         };
 
