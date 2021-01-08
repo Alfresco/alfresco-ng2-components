@@ -22,7 +22,6 @@ import { AuthenticationService } from './authentication.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from './storage.service';
-import { AlfrescoApiService } from './alfresco-api.service';
 
 @Injectable({
     providedIn: 'root'
@@ -33,9 +32,8 @@ export class AuthGuardBpm extends AuthGuardBase {
                 router: Router,
                 appConfigService: AppConfigService,
                 dialog: MatDialog,
-                storageService: StorageService,
-                alfrescoApiService: AlfrescoApiService) {
-        super(authenticationService, router, appConfigService, dialog, storageService, alfrescoApiService);
+                storageService: StorageService) {
+        super(authenticationService, router, appConfigService, dialog, storageService);
     }
 
     checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): boolean {

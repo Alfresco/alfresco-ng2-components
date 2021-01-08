@@ -24,7 +24,6 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from './storage.service';
-import { AlfrescoApiService } from './alfresco-api.service';
 
 @Injectable({
     providedIn: 'root'
@@ -35,17 +34,17 @@ export class AuthGuardEcm extends AuthGuardBase {
                 router: Router,
                 appConfigService: AppConfigService,
                 dialog: MatDialog,
-                storageService: StorageService,
-                alfrescoApiService: AlfrescoApiService) {
-        super(authenticationService, router, appConfigService, dialog, storageService, alfrescoApiService);
+                storageService: StorageService) {
+        super(authenticationService, router, appConfigService, dialog, storageService);
     }
 
     checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): boolean {
-        this.redirectToUrl('ECM', redirectUrl);
-        if (!this.authenticationService.isEcmLoggedIn() && this.isSilentLogin() && !this.authenticationService.isPublicUrl()) {
-            this.authenticationService.ssoImplicitLogin();
+        if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
             return true;
         }
+
+        this.redirectToUrl('ECM', redirectUrl);
+
         return false;
     }
 }

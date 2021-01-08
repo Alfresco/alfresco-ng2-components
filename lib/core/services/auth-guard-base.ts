@@ -32,7 +32,6 @@ import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
@@ -48,8 +47,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         protected router: Router,
         protected appConfigService: AppConfigService,
         protected dialog: MatDialog,
-        private storageService: StorageService,
-        private alfrescoApiService: AlfrescoApiService
+        private storageService: StorageService
     ) {
     }
 ls;
@@ -65,7 +63,7 @@ ls;
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
         const redirectFragment = this.storageService.getItem('loginFragment');
-        if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
+        if (this.authenticationService.isLoggedIn() || this.withCredentials) {
             if (redirectFragment) {
                 this.storageService.removeItem('loginFragment');
                 return this.router.createUrlTree([redirectFragment]);
@@ -92,19 +90,20 @@ ls;
         const pathToLogin = `/${this.getLoginRoute()}`;
         let urlToRedirect;
 
+        this.dialog.closeAll();
+
         if (!this.authenticationService.isOauth()) {
             this.authenticationService.setRedirect({ provider, url });
 
             urlToRedirect = `${pathToLogin}?redirectUrl=${url}`;
-        } else if (this.getOauthConfig().silentLogin) {
-            this.alfrescoApiService.getInstance().oauth2Auth.implicitLogin();
-            return;
+            this.router.navigateByUrl(urlToRedirect);
+        } else if (this.getOauthConfig().silentLogin && !this.authenticationService.isPublicUrl()) {
+            this.authenticationService.ssoImplicitLogin();
         } else {
             urlToRedirect = pathToLogin;
+            this.router.navigateByUrl(urlToRedirect);
         }
 
-        this.dialog.closeAll();
-        this.router.navigateByUrl(urlToRedirect);
     }
 
     protected getOauthConfig(): OauthConfigModel {
