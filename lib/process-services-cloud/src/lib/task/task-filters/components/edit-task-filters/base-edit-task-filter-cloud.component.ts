@@ -100,7 +100,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     taskFilterProperties: TaskFilterProperties[] = [];
     taskFilterActions: TaskFilterAction[] = [];
     toggleFilterActions: boolean = false;
-    allProcessDefinitionNamesOption = { label: 'All', value: '' };
+    allProcessDefinitionNamesOption: { label: string; value: string; };
 
     taskFilter: T;
     changedTaskFilter: T;
@@ -123,6 +123,11 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     }
 
     ngOnInit() {
+        this.allProcessDefinitionNamesOption = {
+            value: '',
+            label: this.translateService.instant('ADF_CLOUD_EDIT_TASK_FILTER.STATUS.ALL')
+        };
+
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
@@ -314,7 +319,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         this.checkMandatorySortProperties();
 
         return this.sortProperties.map((property: string) => {
-            return { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
+            return { label: property, value: property };
         });
     }
 

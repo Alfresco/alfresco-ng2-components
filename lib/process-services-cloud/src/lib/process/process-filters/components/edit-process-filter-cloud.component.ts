@@ -32,6 +32,11 @@ import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 import { ApplicationVersionModel } from '../../../models/application-version.model';
 
+export interface DropdownOption {
+    value: string;
+    label: string;
+}
+
 @Component({
     selector: 'adf-cloud-edit-process-filter',
     templateUrl: './edit-process-filter-cloud.component.html',
@@ -94,21 +99,14 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     processFilter: ProcessFilterCloudModel;
     changedProcessFilter: ProcessFilterCloudModel;
 
-    status = [
-        { label: 'ALL', value: '' },
-        { label: 'RUNNING', value: 'RUNNING' },
-        { label: 'SUSPENDED', value: 'SUSPENDED' },
-        { label: 'CANCELLED', value: 'CANCELLED' },
-        { label: 'COMPLETED', value: 'COMPLETED' }
-    ];
-
-    directions = [{ label: 'ASC', value: 'ASC' }, { label: 'DESC', value: 'DESC' }];
+    status: Array<DropdownOption> = [];
+    directions: Array<DropdownOption> = [];
     actionDisabledForDefault = [
         EditProcessFilterCloudComponent.ACTION_SAVE,
         EditProcessFilterCloudComponent.ACTION_DELETE
     ];
     applicationNames: any[] = [];
-    allProcessDefinitionNamesOption = { label: 'All', value: '' };
+    allProcessDefinitionNamesOption: DropdownOption;
     processDefinitionNames: any[] = [];
     formHasBeenChanged = false;
     editProcessFilterForm: FormGroup;
@@ -132,6 +130,24 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     ngOnInit() {
+        this.status = [
+            { value: '', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL') },
+            { value: 'RUNNING', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.STATUS.RUNNING') },
+            { value: 'SUSPENDED', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.STATUS.SUSPENDED') },
+            { value: 'CANCELLED', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.STATUS.CANCELLED') },
+            { value: 'COMPLETED', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.STATUS.COMPLETED') }
+        ];
+
+        this.directions = [
+            { value: 'ASC', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.DIRECTION.ASCENDING') },
+            { value: 'DESC', label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.DIRECTION.DESCENDING') }
+        ];
+
+        this.allProcessDefinitionNamesOption = {
+            label: this.translateService.instant('ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL'),
+            value: ''
+        };
+
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))

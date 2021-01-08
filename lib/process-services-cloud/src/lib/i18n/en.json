@@ -132,7 +132,18 @@
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "All",
     "RUNNING_PROCESSES": "Running",
-    "COMPLETED_PROCESSES": "Completed"
+    "COMPLETED_PROCESSES": "Completed",
+    "STATUS": {
+      "ALL": "All",
+      "RUNNING": "Running",
+      "SUSPENDED": "Suspended",
+      "CANCELLED": "Cancelled",
+      "COMPLETED": "Completed"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Ascending",
+      "DESCENDING": "Descending"
+    }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {
@@ -144,6 +155,14 @@
   },
   "ADF_CLOUD_EDIT_TASK_FILTER": {
     "TITLE": "Customize your filter",
+    "STATUS": {
+      "ALL": "All",
+      "CREATED": "Created",
+      "ASSIGNED": "Assigned",
+      "SUSPENDED": "Suspended",
+      "CANCELLED": "Cancelled",
+      "COMPLETED": "Completed"
+    },
     "TOOL_TIP": {
       "SAVE": "Save filter",
       "SAVE_AS": "Save filter as",
