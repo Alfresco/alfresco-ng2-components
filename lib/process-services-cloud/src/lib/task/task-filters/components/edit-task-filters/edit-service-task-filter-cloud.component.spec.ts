@@ -381,14 +381,13 @@ describe('EditServiceTaskFilterCloudComponent', () => {
                 const sortElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"]');
                 const orderElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-order"]');
                 expect(assigneeElement).toBeDefined();
-                expect(stateElement.textContent.trim()).toBe('COMPLETED');
-                expect(sortElement.textContent.trim()).toBe('Id');
-                expect(orderElement.textContent.trim()).toBe('ASC');
+                expect(stateElement.textContent.trim()).toBe('ADF_CLOUD_SERVICE_TASK_FILTERS.STATUS.COMPLETED');
+                expect(sortElement.textContent.trim()).toBe('id');
+                expect(orderElement.textContent.trim()).toBe('ADF_CLOUD_TASK_FILTERS.DIRECTION.ASCENDING');
             });
         }));
 
         it('should display all the statuses that are defined in the task filter', async(() => {
-
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
@@ -399,11 +398,11 @@ describe('EditServiceTaskFilterCloudComponent', () => {
 
             const statusOptions = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-edit-task-property-options-status"]'));
 
-            expect(statusOptions[0].nativeElement.textContent.trim()).toBe('ALL');
-            expect(statusOptions[1].nativeElement.textContent.trim()).toBe('STARTED');
-            expect(statusOptions[2].nativeElement.textContent.trim()).toBe('COMPLETED');
-            expect(statusOptions[3].nativeElement.textContent.trim()).toBe('CANCELLED');
-            expect(statusOptions[4].nativeElement.textContent.trim()).toBe('ERROR');
+            expect(statusOptions[0].nativeElement.textContent.trim()).toBe('ADF_CLOUD_SERVICE_TASK_FILTERS.STATUS.ALL');
+            expect(statusOptions[1].nativeElement.textContent.trim()).toBe('ADF_CLOUD_SERVICE_TASK_FILTERS.STATUS.STARTED');
+            expect(statusOptions[2].nativeElement.textContent.trim()).toBe('ADF_CLOUD_SERVICE_TASK_FILTERS.STATUS.COMPLETED');
+            expect(statusOptions[3].nativeElement.textContent.trim()).toBe('ADF_CLOUD_SERVICE_TASK_FILTERS.STATUS.CANCELLED');
+            expect(statusOptions[4].nativeElement.textContent.trim()).toBe('ADF_CLOUD_SERVICE_TASK_FILTERS.STATUS.ERROR');
         }));
 
         it('should display sort drop down', async(() => {
