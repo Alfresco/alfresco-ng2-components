@@ -23,7 +23,7 @@ See the [Introduction page](INTRODUCTION.md) to get started with the Alfresco Ap
 
 ## Prerequisites
 
-Before you start using this development framework, make sure you have installed all required software and done all the necessary configuration. see the prerequisites section in [creating your first ADF Application](./creating-your-first-adf-application.md) for full details.
+Before you start using this development framework, make sure you have installed all required software and done all the necessary configuration. see the prerequisites section in [creating your first ADF Application](./docs/tutorials/creating-your-first-adf-application.md) for full details.
 
 ## Components
 
