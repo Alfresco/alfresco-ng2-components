@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ApplicationInstanceModel } from '../models/application-instance.model';
+import { ApplicationInstanceModel, DEFAULT_APP_INSTANCE_ICON, DEFAULT_APP_INSTANCE_THEME } from '../models/application-instance.model';
 
 @Component({
   selector: 'adf-cloud-app-details',
@@ -30,29 +30,21 @@ export class AppDetailsCloudComponent {
   applicationInstance: ApplicationInstanceModel;
 
   @Output()
-  selectedApp: EventEmitter<ApplicationInstanceModel> = new EventEmitter<ApplicationInstanceModel>();
-
-  constructor() {}
+  selectedApp = new EventEmitter<ApplicationInstanceModel>();
 
   /**
    * Pass the selected app as next
    * @param app
    */
-  public onSelectApp(app: ApplicationInstanceModel): void {
+  onSelectApp(app: ApplicationInstanceModel): void {
     this.selectedApp.emit(app);
   }
 
-  public getTheme() {
-    if ( !this.applicationInstance.theme ) {
-      return ApplicationInstanceModel.DEFAULT_THEME;
-    }
-    return this.applicationInstance.theme;
+  getTheme(): string {
+    return this.applicationInstance.theme || DEFAULT_APP_INSTANCE_THEME;
   }
 
-  public getIcon() {
-    if ( !this.applicationInstance.icon ) {
-      return ApplicationInstanceModel.DEFAULT_ICON;
-    }
-    return this.applicationInstance.icon;
+  getIcon(): string {
+    return this.applicationInstance.icon || DEFAULT_APP_INSTANCE_ICON;
   }
 }

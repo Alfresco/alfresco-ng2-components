@@ -44,7 +44,7 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
 
     /** Emitted when an app entry is clicked. */
     @Output()
-    appClick: EventEmitter<ApplicationInstanceModel> = new EventEmitter<ApplicationInstanceModel>();
+    appClick = new EventEmitter<ApplicationInstanceModel>();
 
     apps$: Observable<any>;
     loadingError$ = new Subject<boolean>();
@@ -104,7 +104,6 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
      * Return true if the layout type is GRID
      */
     isGrid(): boolean {
-
         return this.layoutType === AppListCloudComponent.LAYOUT_GRID;
     }
 }

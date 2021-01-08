@@ -71,9 +71,7 @@ export class AppsProcessCloudService {
             contentTypes, accepts))
             .pipe(
                 map((applications: any) => {
-                    return applications.list.entries.map((application) => {
-                        return new ApplicationInstanceModel(application.entry);
-                    });
+                    return applications.list.entries.map((application) => application.entry);
                 }),
                 catchError((err) => this.handleError(err))
             );
