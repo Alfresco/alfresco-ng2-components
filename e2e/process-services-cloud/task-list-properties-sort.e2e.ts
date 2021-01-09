@@ -30,7 +30,9 @@ describe('Edit task filters and task list properties', () => {
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
 
     const apiService = new ApiService();
     const identityService = new IdentityService(apiService);
@@ -126,97 +128,97 @@ describe('Edit task filters and task list properties', () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
+            await editTaskFilter.openFilter();
             await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed('my-tasks');
         });
 
         it('[C306901] Should display tasks sorted by task name when taskName is selected from sort dropdown', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Name');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('ASC');
+            await editTaskFilter.setStatusFilterDropDown('ASSIGNED');
+            await editTaskFilter.setSortFilterDropDown('Name');
+            await editTaskFilter.setOrderFilterDropDown('ASC');
 
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Name')).toBe(true);
 
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+            await editTaskFilter.setOrderFilterDropDown('DESC');
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Name')).toBe(true);
         });
 
         it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Id');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('ASC');
+            await editTaskFilter.setStatusFilterDropDown('ASSIGNED');
+            await editTaskFilter.setSortFilterDropDown('Id');
+            await editTaskFilter.setOrderFilterDropDown('ASC');
 
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Id')).toBe(true);
 
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+            await editTaskFilter.setOrderFilterDropDown('DESC');
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Id')).toBe(true);
         });
 
         it('[C306903] Should display tasks sorted by processDefinitionId when processDefinitionId is selected from sort dropdown', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('ProcessDefinitionId');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('ASC');
+            await editTaskFilter.setStatusFilterDropDown('ASSIGNED');
+            await editTaskFilter.setSortFilterDropDown('ProcessDefinitionId');
+            await editTaskFilter.setOrderFilterDropDown('ASC');
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'ProcessDefinitionId')).toBe(true);
 
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+            await editTaskFilter.setOrderFilterDropDown('DESC');
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'ProcessDefinitionId')).toBe(true);
         });
 
         it('[C306905] Should display tasks sorted by processInstanceId when processInstanceId is selected from sort dropdown', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ASSIGNED');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('ProcessInstanceId');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('ASC');
+            await editTaskFilter.setStatusFilterDropDown('ASSIGNED');
+            await editTaskFilter.setSortFilterDropDown('ProcessInstanceId');
+            await editTaskFilter.setOrderFilterDropDown('ASC');
 
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'ProcessInstanceId')).toBe(true);
 
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+            await editTaskFilter.setOrderFilterDropDown('DESC');
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'ProcessInstanceId')).toBe(true);
         });
 
         it('[C306907] Should display tasks sorted by assignee when assignee is selected from sort dropdown', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Assignee');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('ASC');
+            await editTaskFilter.clearAssignee();
+            await editTaskFilter.setStatusFilterDropDown('ALL');
+            await editTaskFilter.setSortFilterDropDown('Assignee');
+            await editTaskFilter.setOrderFilterDropDown('ASC');
 
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Assignee')).toBe(true);
 
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+            await editTaskFilter.setOrderFilterDropDown('DESC');
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Assignee')).toBe(true);
         });
 
         it('[C306911] Should display tasks sorted by parentTaskId when parentTaskId is selected from sort dropdown', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('ParentTaskId');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('ASC');
+            await editTaskFilter.clearAssignee();
+            await editTaskFilter.setStatusFilterDropDown('ALL');
+            await editTaskFilter.setSortFilterDropDown('ParentTaskId');
+            await editTaskFilter.setOrderFilterDropDown('ASC');
 
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'ParentTaskId')).toBe(true);
 
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+            await editTaskFilter.setOrderFilterDropDown('DESC');
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'ParentTaskId')).toBe(true);
         });
 
         it('[C290087] Should display tasks ordered by priority when Priority is selected from sort dropdown', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Priority');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('ASC');
+            await editTaskFilter.setStatusFilterDropDown('ALL');
+            await editTaskFilter.setSortFilterDropDown('Priority');
+            await editTaskFilter.setOrderFilterDropDown('ASC');
 
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Priority', 'PRIORITY')).toBe(true);
 
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+            await editTaskFilter.setOrderFilterDropDown('DESC');
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Priority', 'PRIORITY')).toBe(true);
         });
 
         it('[C307115] Should display tasks sorted by owner when owner is selected from sort dropdown', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Owner');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('ASC');
+            await editTaskFilter.clearAssignee();
+            await editTaskFilter.setStatusFilterDropDown('ALL');
+            await editTaskFilter.setSortFilterDropDown('Owner');
+            await editTaskFilter.setOrderFilterDropDown('ASC');
 
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Owner')).toBe(true);
 
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
+            await editTaskFilter.setOrderFilterDropDown('DESC');
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Owner')).toBe(true);
         });
     });

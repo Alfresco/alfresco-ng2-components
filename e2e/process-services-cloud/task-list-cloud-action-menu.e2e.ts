@@ -29,7 +29,9 @@ describe('Process list cloud', () => {
         const loginSSOPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
+
         const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
 
         const apiService = new ApiService();
         const identityService = new IdentityService(apiService);
@@ -86,7 +88,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.addInvisibleAction('invisibleaction');
             await tasksCloudDemoPage.actionAdded('invisibleaction');
             await tasksCloudDemoPage.clickAppButton();
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
+            await editTaskFilter.openFilter();
             await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed('my-tasks');
         });
 

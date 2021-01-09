@@ -83,10 +83,6 @@ export class TasksCloudDemoPage {
         return new TaskListCloudComponentPage();
     }
 
-    editTaskFilterCloudComponent(): EditTaskFilterCloudComponentPage {
-        return this.editTaskFilterCloud;
-    }
-
     async openNewTaskForm(): Promise<void> {
         await BrowserActions.click(this.createButton);
         await BrowserActions.clickExecuteScript('button[data-automation-id="btn-start-task"]');

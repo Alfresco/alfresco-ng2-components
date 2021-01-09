@@ -43,7 +43,10 @@ describe('Task form cloud component', () => {
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
+
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const widget = new ProcessCloudWidgetPage();
@@ -146,9 +149,9 @@ describe('Task form cloud component', () => {
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
         await expect(tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
+        await editTaskFilter.openFilter();
+        await editTaskFilter.clearAssignee();
+        await editTaskFilter.setStatusFilterDropDown('CREATED');
 
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(formTaskId);
         await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(formTaskId);
@@ -294,12 +297,12 @@ describe('Task form cloud component', () => {
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
+            await editTaskFilter.openFilter();
 
             await browser.driver.sleep(1000);
 
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
+            await editTaskFilter.clearAssignee();
+            await editTaskFilter.setStatusFilterDropDown('CREATED');
 
             await selectTaskByName(createdTask.entry.name);
             await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();

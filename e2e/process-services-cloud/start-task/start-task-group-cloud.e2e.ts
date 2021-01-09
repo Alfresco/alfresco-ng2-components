@@ -38,7 +38,10 @@ describe('Start Task - Group Cloud Component', () => {
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
+
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
     const groupCloud = new GroupCloudComponentPage();
@@ -111,8 +114,8 @@ describe('Start Task - Group Cloud Component', () => {
         await startTask.clickStartButton();
 
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+        await editTaskFilter.openFilter();
+        await editTaskFilter.clearAssignee();
 
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(oneGroupTaskName);
@@ -135,8 +138,8 @@ describe('Start Task - Group Cloud Component', () => {
         await startTask.clickStartButton();
 
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+        await editTaskFilter.openFilter();
+        await editTaskFilter.clearAssignee();
 
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(bothGroupsTaskName);

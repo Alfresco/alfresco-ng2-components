@@ -40,7 +40,10 @@ describe('Task claim/release', () => {
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
+
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
 
@@ -195,11 +198,11 @@ describe('Task claim/release', () => {
     }
 
     async function setTaskFilter(status, processInstanceId) {
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown(status);
+        await editTaskFilter.openFilter();
+        await editTaskFilter.clearAssignee();
+        await editTaskFilter.setStatusFilterDropDown(status);
 
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().setProcessInstanceId(processInstanceId);
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
+        await editTaskFilter.setProcessInstanceId(processInstanceId);
+        await editTaskFilter.openFilter();
     }
 });

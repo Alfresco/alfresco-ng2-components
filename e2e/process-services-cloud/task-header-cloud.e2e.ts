@@ -44,7 +44,10 @@ describe('Task Header cloud component', () => {
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
+
     const peopleCloudComponentPage = new PeopleCloudComponentPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
 
@@ -207,9 +210,9 @@ describe('Task Header cloud component', () => {
     });
 
     it('[C309698] Should validate the Priority field', async () => {
-        await tasksCloudDemoPage.editTaskFilterCloud.openFilter();
-        await tasksCloudDemoPage.editTaskFilterCloud.setStatusFilterDropDown('ALL');
-        await tasksCloudDemoPage.editTaskFilterCloud.clearAssignee();
+        await editTaskFilter.openFilter();
+        await editTaskFilter.setStatusFilterDropDown('ALL');
+        await editTaskFilter.clearAssignee();
 
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unclaimedTask.entry.name);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(unclaimedTask.entry.name);

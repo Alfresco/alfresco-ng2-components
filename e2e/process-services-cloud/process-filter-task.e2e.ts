@@ -45,7 +45,10 @@ describe('Process filters cloud', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
+
     const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
@@ -99,7 +102,7 @@ describe('Process filters cloud', () => {
         await browser.navigate().back();
 
         await tasksCloudDemoPage.taskFilterCloudComponent.clickOnTaskFilters();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
+        await editTaskFilter.openFilter();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskAssigned[0].entry.name);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskAssigned[0].entry.name);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();

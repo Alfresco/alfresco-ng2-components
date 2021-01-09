@@ -39,7 +39,10 @@ describe('Start Task', () => {
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
+
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
 
@@ -104,10 +107,10 @@ describe('Start Task', () => {
         await peopleCloudComponent.clearAssigneeFromChip(testUser.username);
         await startTask.addName(unassignedTaskName);
         await startTask.clickStartButton();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
+
+        await editTaskFilter.openFilter();
+        await editTaskFilter.clearAssignee();
+        await editTaskFilter.setStatusFilterDropDown('CREATED');
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
         const taskId = await tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
@@ -124,10 +127,10 @@ describe('Start Task', () => {
         await startTask.addName(unassignedTaskName);
         await startTask.checkStartButtonIsEnabled();
         await startTask.clickStartButton();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
+
+        await editTaskFilter.openFilter();
+        await editTaskFilter.setStatusFilterDropDown('CREATED');
+        await editTaskFilter.clearAssignee();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
     });
 
@@ -207,9 +210,9 @@ describe('Start Task', () => {
         await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
         await startTask.clickStartButton();
 
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
+        await editTaskFilter.openFilter();
+        await editTaskFilter.clearAssignee();
+        await editTaskFilter.setStatusFilterDropDown('ALL');
 
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(reassignTaskName);
 
