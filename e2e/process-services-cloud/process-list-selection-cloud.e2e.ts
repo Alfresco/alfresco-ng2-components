@@ -33,7 +33,12 @@ describe('Process list cloud', () => {
         const loginSSOPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
+
         const processCloudDemoPage = new ProcessCloudDemoPage();
+        const editProcessFilter = processCloudDemoPage.editProcessFilterCloudComponent();
+        const processList = processCloudDemoPage.processListCloudComponent();
+        const processFilter = processCloudDemoPage.processFilterCloudComponent;
+
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
 
@@ -81,9 +86,9 @@ describe('Process list cloud', () => {
             await expect(processInstances.length).toEqual(noOfProcesses, 'Wrong preconditions');
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
-            await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
-            await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.RUNNING);
+            await processFilter.clickOnProcessFilters();
+            await processFilter.clickRunningProcessesFilter();
+            await expect(await processFilter.getActiveFilterName()).toBe(PROCESSES.RUNNING);
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.disableDisplayProcessDetails();
             await tasksCloudDemoPage.clickAppButton();
@@ -93,87 +98,87 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.selectSelectionMode('None');
             await tasksCloudDemoPage.clickAppButton();
-            await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setInitiator(`${testUser.firstName} ${testUser.lastName}`);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().checkNoRowIsSelected();
+            await processFilter.isProcessFiltersListVisible();
+            await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
+            await editProcessFilter.openFilter();
+            await editProcessFilter.setInitiator(`${testUser.firstName} ${testUser.lastName}`);
+            await processList.getDataTable().waitTillContentLoaded();
+            await processList.selectRowById(processInstances[0]);
+            await processList.getDataTable().checkNoRowIsSelected();
         });
 
         it('[C297468] Should be able to select only one process when settings are set to Single', async () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.selectSelectionMode('Single');
             await tasksCloudDemoPage.clickAppButton();
-            await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
+            await processFilter.isProcessFiltersListVisible();
+            await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsSelectedById(processInstances[0]);
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
-            await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[1]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsSelectedById(processInstances[1]);
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
+            await editProcessFilter.setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
+            await processList.getDataTable().waitTillContentLoaded();
+            await processList.selectRowById(processInstances[0]);
+            await processList.checkRowIsSelectedById(processInstances[0]);
+            await expect(await processList.getDataTable().getNumberOfSelectedRows()).toEqual(1);
+            await processList.selectRowById(processInstances[1]);
+            await processList.checkRowIsSelectedById(processInstances[1]);
+            await expect(await processList.getDataTable().getNumberOfSelectedRows()).toEqual(1);
         });
 
         it('[C297470] Should be able to select multiple processes using keyboard', async () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.selectSelectionMode('Multiple');
             await tasksCloudDemoPage.clickAppButton();
-            await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsSelectedById(processInstances[0]);
-            await processCloudDemoPage.processListCloudComponent().selectRowWithKeyboard(processInstances[1]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsSelectedById(processInstances[0]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsSelectedById(processInstances[1]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsNotSelectedById(processInstances[2]);
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(2);
+            await processFilter.isProcessFiltersListVisible();
+            await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
+            await editProcessFilter.setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
+            await processList.getDataTable().waitTillContentLoaded();
+            await processList.selectRowById(processInstances[0]);
+            await processList.checkRowIsSelectedById(processInstances[0]);
+            await processList.selectRowWithKeyboard(processInstances[1]);
+            await processList.checkRowIsSelectedById(processInstances[0]);
+            await processList.checkRowIsSelectedById(processInstances[1]);
+            await processList.checkRowIsNotSelectedById(processInstances[2]);
+            await expect(await processList.getDataTable().getNumberOfSelectedRows()).toEqual(2);
         });
 
         it('[C297465] Should be able to select multiple processes using checkboxes', async () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.clickAppButton();
-            await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);
-            await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[1]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[1]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsNotCheckedById(processInstances[2]);
-            await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[1]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsNotCheckedById(processInstances[1]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);
+            await processFilter.isProcessFiltersListVisible();
+            await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
+            await editProcessFilter.setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
+            await processList.getDataTable().waitTillContentLoaded();
+            await processList.checkCheckboxById(processInstances[0]);
+            await processList.checkRowIsCheckedById(processInstances[0]);
+            await processList.checkCheckboxById(processInstances[1]);
+            await processList.checkRowIsCheckedById(processInstances[1]);
+            await processList.checkRowIsNotCheckedById(processInstances[2]);
+            await processList.checkCheckboxById(processInstances[1]);
+            await processList.checkRowIsNotCheckedById(processInstances[1]);
+            await processList.checkRowIsCheckedById(processInstances[0]);
         });
 
         it('[C299125] Should be possible to select all the rows when multiselect is true', async () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.clickAppButton();
-            await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
+            await processFilter.isProcessFiltersListVisible();
+            await editProcessFilter.setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
+            await processList.getDataTable().waitTillContentLoaded();
+            await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await browser.sleep(1000);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed();
-            await processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRows();
-            await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[1]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[2]);
+            await processList.getDataTable().checkAllRowsButtonIsDisplayed();
+            await processList.getDataTable().checkAllRows();
+            await processList.checkRowIsCheckedById(processInstances[0]);
+            await processList.checkRowIsCheckedById(processInstances[1]);
+            await processList.checkRowIsCheckedById(processInstances[2]);
 
-            await processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed();
-            await processCloudDemoPage.processListCloudComponent().getDataTable().uncheckAllRows();
-            await processCloudDemoPage.processListCloudComponent().checkRowIsNotCheckedById(processInstances[0]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsNotCheckedById(processInstances[1]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsNotCheckedById(processInstances[2]);
+            await processList.getDataTable().checkAllRowsButtonIsDisplayed();
+            await processList.getDataTable().uncheckAllRows();
+            await processList.checkRowIsNotCheckedById(processInstances[0]);
+            await processList.checkRowIsNotCheckedById(processInstances[1]);
+            await processList.checkRowIsNotCheckedById(processInstances[2]);
         });
 
         it('[C297467] Should be able to see selected processes', async () => {
@@ -181,16 +186,16 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.enableTestingMode();
             await tasksCloudDemoPage.clickAppButton();
-            await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);
+            await processFilter.isProcessFiltersListVisible();
+            await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
+            await editProcessFilter.setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
+            await processList.getDataTable().waitTillContentLoaded();
+            await processList.checkCheckboxById(processInstances[0]);
+            await processList.checkRowIsCheckedById(processInstances[0]);
             await processDetailsCloudDemoPage.checkListedSelectedProcessInstance(processInstances[0]);
 
-            await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[1]);
-            await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[1]);
+            await processList.checkCheckboxById(processInstances[1]);
+            await processList.checkRowIsCheckedById(processInstances[1]);
             await processDetailsCloudDemoPage.checkListedSelectedProcessInstance(processInstances[1]);
         });
     });

@@ -38,11 +38,18 @@ describe('Task cloud visibility', async () => {
 
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const taskList = tasksCloudDemoPage.taskListCloudComponent();
+
     const startTask = new StartTasksCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const startProcessPage = new StartProcessCloudPage();
+
     const processCloudDemoPage = new ProcessCloudDemoPage();
+    const editProcessFilter = processCloudDemoPage.editProcessFilterCloudComponent();
+    const processList = processCloudDemoPage.processListCloudComponent();
+
     const loginSSOPage = new LoginPage();
     const widget = new ProcessCloudWidgetPage();
 
@@ -83,8 +90,8 @@ describe('Task cloud visibility', async () => {
         await startTask.selectFormDefinition(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.requirednumbervisibility.name);
 
         await startTask.clickStartButton();
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
+        await taskList.getDataTable().waitTillContentLoaded();
+        await taskList.selectRow(standaloneTaskName);
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number1');
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
@@ -108,11 +115,11 @@ describe('Task cloud visibility', async () => {
         await startProcessPage.checkStartProcessButtonIsEnabled();
         await startProcessPage.clickStartProcessButton();
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName });
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await processCloudDemoPage.processListCloudComponent().selectRow(processName);
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow('number_visibility_task');
+        await editProcessFilter.setFilter({ processName });
+        await processList.getDataTable().waitTillContentLoaded();
+        await processList.selectRow(processName);
+        await taskList.getDataTable().waitTillContentLoaded();
+        await taskList.selectRow('number_visibility_task');
         await taskFormCloudComponent.clickClaimButton();
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number1');
@@ -140,11 +147,11 @@ describe('Task cloud visibility', async () => {
         await browser.sleep(400);
         await startProcessPage.clickStartProcessButton();
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName });
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await processCloudDemoPage.processListCloudComponent().selectRow(processName);
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow('boolean_visibility_task');
+        await editProcessFilter.setFilter({ processName });
+        await processList.getDataTable().waitTillContentLoaded();
+        await processList.selectRow(processName);
+        await taskList.getDataTable().waitTillContentLoaded();
+        await taskList.selectRow('boolean_visibility_task');
         await taskFormCloudComponent.clickClaimButton();
 
         await browser.sleep(400);
@@ -169,8 +176,8 @@ describe('Task cloud visibility', async () => {
         await startTask.selectFormDefinition(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.booleanvisibility.name);
 
         await startTask.clickStartButton();
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
+        await taskList.getDataTable().waitTillContentLoaded();
+        await taskList.selectRow(standaloneTaskName);
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Checkbox2');
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Checkbox3');

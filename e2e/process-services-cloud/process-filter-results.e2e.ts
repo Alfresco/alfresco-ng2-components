@@ -43,7 +43,11 @@ describe('Process filters cloud', () => {
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
+
     const processCloudDemoPage = new ProcessCloudDemoPage();
+    const editProcessFilter = processCloudDemoPage.editProcessFilterCloudComponent();
+    const processList = processCloudDemoPage.processListCloudComponent();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const processListPage = new ProcessListPage();
 
@@ -148,193 +152,193 @@ describe('Process filters cloud', () => {
     });
 
     it('[C306887] Should be able to filter by appName', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setInitiator(`${testUser.firstName} ${testUser.lastName}`);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setAppNameDropDown(candidateBaseApp);
+        await editProcessFilter.setInitiator(`${testUser.firstName} ${testUser.lastName}`);
 
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(differentAppUserProcessInstance.entry.name);
+        await processList.getDataTable().waitTillContentLoaded();
+        await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(differentAppUserProcessInstance.entry.name);
     });
 
     it('[C306889] Should be able to see "No process found" when using an app with no processes in the appName field', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown('subprocessapp');
-        await processCloudDemoPage.editProcessFilterCloudComponent().setInitiator(`${testUser.firstName} ${testUser.lastName}`);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setAppNameDropDown('subprocessapp');
+        await editProcessFilter.setInitiator(`${testUser.firstName} ${testUser.lastName}`);
 
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
 
     it('[C306890] Should be able to filter by initiator', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setInitiator(`${testUser.firstName} ${testUser.lastName}`);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setInitiator(`${testUser.firstName} ${testUser.lastName}`);
 
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(differentAppUserProcessInstance.entry.name);
+        await processList.getDataTable().waitTillContentLoaded();
+        await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(differentAppUserProcessInstance.entry.name);
     });
 
     it('[C311315] Should be able to filter by process definition id', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processDefinitionId', processDefinition.entry.id);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProperty('processDefinitionId', processDefinition.entry.id);
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(anotherProcessInstance.entry.name);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processDefinitionId', anotherProcessDefinition.entry.id);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.setProcessName(anotherProcessInstance.entry.name);
+        await editProcessFilter.setProperty('processDefinitionId', anotherProcessDefinition.entry.id);
+        await processList.checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311316] Should be able to filter by process definition key', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processDefinitionKey', processDefinition.entry.key);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProperty('processDefinitionKey', processDefinition.entry.key);
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(anotherProcessInstance.entry.name);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processDefinitionKey', anotherProcessDefinition.entry.key);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.setProcessName(anotherProcessInstance.entry.name);
+        await editProcessFilter.setProperty('processDefinitionKey', anotherProcessDefinition.entry.key);
+        await processList.checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311317] Should be able to filter by process instance id', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', runningProcessInstance.entry.id);
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProperty('processInstanceId', runningProcessInstance.entry.id);
+        await processList.getDataTable().waitTillContentLoaded();
+        await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
-        await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfRows()).toBe(1);
+        await expect(await processList.getDataTable().getNumberOfRows()).toBe(1);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', anotherProcessInstance.entry.id);
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
-        await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfRows()).toBe(1);
+        await editProcessFilter.setProperty('processInstanceId', anotherProcessInstance.entry.id);
+        await processList.getDataTable().waitTillContentLoaded();
+        await processList.checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
+        await expect(await processList.getDataTable().getNumberOfRows()).toBe(1);
     });
 
     it('[C311321] Should be able to filter by process name', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.getDataTable().waitTillContentLoaded();
+        await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(anotherProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.setProcessName(anotherProcessInstance.entry.name);
+        await processList.getDataTable().waitTillContentLoaded();
+        await processList.checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C306892] Should be able to filter by process status - Running', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING');
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setStatusFilterDropDown('RUNNING');
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(suspendProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(suspendProcessInstance.entry.name);
+        await editProcessFilter.setProcessName(suspendProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(suspendProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(anotherProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
+        await editProcessFilter.setProcessName(anotherProcessInstance.entry.name);
+        await processList.checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(completedProcess.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(completedProcess.entry.name);
+        await editProcessFilter.setProcessName(completedProcess.entry.name);
+        await processList.checkContentIsNotDisplayedByName(completedProcess.entry.name);
     });
 
     it('[C306892] Should be able to filter by process status - Completed', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('COMPLETED');
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(completedProcess.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(completedProcess.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setStatusFilterDropDown('COMPLETED');
+        await editProcessFilter.setProcessName(completedProcess.entry.name);
+        await processList.checkContentIsDisplayedByName(completedProcess.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(suspendProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(suspendProcessInstance.entry.name);
+        await editProcessFilter.setProcessName(suspendProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(suspendProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(anotherProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(anotherProcessInstance.entry.name);
+        await editProcessFilter.setProcessName(anotherProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(anotherProcessInstance.entry.name);
     });
 
     it('[C306892] Should be able to filter by process status - Suspended', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('SUSPENDED');
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(suspendProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(suspendProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setStatusFilterDropDown('SUSPENDED');
+        await editProcessFilter.setProcessName(suspendProcessInstance.entry.name);
+        await processList.checkContentIsDisplayedByName(suspendProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(anotherProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(anotherProcessInstance.entry.name);
+        await editProcessFilter.setProcessName(anotherProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(anotherProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(completedProcess.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(completedProcess.entry.name);
+        await editProcessFilter.setProcessName(completedProcess.entry.name);
+        await processList.checkContentIsNotDisplayedByName(completedProcess.entry.name);
     });
 
     it('[C306892] Should be able to filter by process status - All', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('ALL');
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setStatusFilterDropDown('ALL');
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(anotherProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
+        await editProcessFilter.setProcessName(anotherProcessInstance.entry.name);
+        await processList.checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(suspendProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(suspendProcessInstance.entry.name);
+        await editProcessFilter.setProcessName(suspendProcessInstance.entry.name);
+        await processList.checkContentIsDisplayedByName(suspendProcessInstance.entry.name);
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(completedProcess.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(completedProcess.entry.name);
+        await editProcessFilter.setProcessName(completedProcess.entry.name);
+        await processList.checkContentIsDisplayedByName(completedProcess.entry.name);
     });
 
     it('[C311318] Should be able to filter by lastModifiedFrom - displays record when date = currentDate', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedFrom', currentDate);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProperty('lastModifiedFrom', currentDate);
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311318] Should be able to filter by lastModifiedFrom - displays record when date = beforeDate', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedFrom', beforeDate);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProperty('lastModifiedFrom', beforeDate);
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311318] Should be able to filter by lastModifiedFrom - does not display record when date = afterDate', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedFrom', afterDate);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await editProcessFilter.setProperty('lastModifiedFrom', afterDate);
+        await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311319] Should be able to filter by lastModifiedTo - displays record when date = currentDate', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', currentDate);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProperty('lastModifiedTo', currentDate);
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311319] Should be able to filter by lastModifiedTo - does not display record when date = beforeDate', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', beforeDate);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProperty('lastModifiedTo', beforeDate);
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311319] Should be able to filter by lastModifiedTo - displays record when date = afterDate', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', afterDate);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcessInstance.entry.name);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProperty('lastModifiedTo', afterDate);
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311319] Should not display any processes when the lastModifiedFrom and lastModifiedTo are set to a future date', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedFrom', afterDate);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', afterDate);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProperty('lastModifiedFrom', afterDate);
+        await editProcessFilter.setProperty('lastModifiedTo', afterDate);
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
 });
