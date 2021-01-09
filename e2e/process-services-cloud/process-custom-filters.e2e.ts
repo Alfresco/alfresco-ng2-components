@@ -42,7 +42,9 @@ describe('Process list cloud', () => {
     // en-US values for the process status
     const PROCESS_STATUS = {
         ALL: 'All',
-        RUNNING: 'Running'
+        RUNNING: 'Running',
+        SUSPENDED: 'Suspended',
+        COMPLETED: 'Completed'
     };
 
     // en-US values for the sort direction

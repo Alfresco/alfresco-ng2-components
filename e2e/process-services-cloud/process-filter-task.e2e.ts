@@ -40,6 +40,13 @@ import {
 } from '@alfresco/adf-process-services-cloud';
 
 describe('Process filters cloud', () => {
+    // en-US values for the process status
+    const PROCESS_STATUS = {
+        ALL: 'All',
+        RUNNING: 'Running',
+        SUSPENDED: 'Suspended',
+        COMPLETED: 'Completed'
+    };
 
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -96,7 +103,7 @@ describe('Process filters cloud', () => {
     it('[C290040] Should be able to open the Task Details page by clicking on the process name', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setAppNameDropDown(simpleApp);
-        await editProcessFilter.setStatusFilterDropDown('Running');
+        await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.RUNNING);
         await editProcessFilter.setProperty('processInstanceId', processInstance.id);
 
         await processList.getDataTable().selectRow('Id', processInstance.id);

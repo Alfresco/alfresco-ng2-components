@@ -40,6 +40,14 @@ import moment = require('moment');
 
 describe('Process filters cloud', () => {
 
+    // en-US values for the process status
+    const PROCESS_STATUS = {
+        ALL: 'All',
+        RUNNING: 'Running',
+        SUSPENDED: 'Suspended',
+        COMPLETED: 'Completed'
+    };
+
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -231,7 +239,7 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - Running', async () => {
         await editProcessFilter.openFilter();
-        await editProcessFilter.setStatusFilterDropDown('Running');
+        await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.RUNNING);
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
@@ -247,7 +255,7 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - Completed', async () => {
         await editProcessFilter.openFilter();
-        await editProcessFilter.setStatusFilterDropDown('Completed');
+        await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.COMPLETED);
         await editProcessFilter.setProcessName(completedProcess.entry.name);
         await processList.checkContentIsDisplayedByName(completedProcess.entry.name);
 
@@ -263,7 +271,7 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - Suspended', async () => {
         await editProcessFilter.openFilter();
-        await editProcessFilter.setStatusFilterDropDown('Suspended');
+        await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.SUSPENDED);
         await editProcessFilter.setProcessName(suspendProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(suspendProcessInstance.entry.name);
 
@@ -279,7 +287,7 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - All', async () => {
         await editProcessFilter.openFilter();
-        await editProcessFilter.setStatusFilterDropDown('All');
+        await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.ALL);
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 

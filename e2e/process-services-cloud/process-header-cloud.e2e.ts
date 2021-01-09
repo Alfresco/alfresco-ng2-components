@@ -36,8 +36,15 @@ describe('Process Header cloud component', () => {
         const loginSSOPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
+
         const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const taskList = tasksCloudDemoPage.taskListCloudComponent();
+
         const processCloudDemoPage = new ProcessCloudDemoPage();
+        const editProcessFilter = processCloudDemoPage.editProcessFilterCloudComponent();
+        const processFilter = processCloudDemoPage.processFilterCloudComponent;
+        const processList = processCloudDemoPage.processListCloudComponent();
+
         const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
 
@@ -97,17 +104,17 @@ describe('Process Header cloud component', () => {
 
         it('[C305010] Should display process details for running process', async () => {
             await appListCloudComponent.goToApp(simpleApp);
-            await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-            await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
-            await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
+            await taskList.checkTaskListIsLoaded();
+            await processFilter.clickOnProcessFilters();
+            await processFilter.clickRunningProcessesFilter();
 
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.RUNNING);
+            await expect(await processFilter.getActiveFilterName()).toBe(PROCESSES.RUNNING);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: runningProcess.entry.name });
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcess.entry.name);
+            await editProcessFilter.setFilter({ processName: runningProcess.entry.name });
+            await processList.getDataTable().waitTillContentLoaded();
+            await processList.checkContentIsDisplayedByName(runningProcess.entry.name);
 
-            await processCloudDemoPage.processListCloudComponent().selectRow(runningProcess.entry.name);
+            await processList.selectRow(runningProcess.entry.name);
             await expect(await processHeaderCloudPage.getId()).toEqual(runningProcess.entry.id);
             await expect(await processHeaderCloudPage.getName()).toEqual(runningProcess.entry.name);
             await expect(await processHeaderCloudPage.getStatus()).toEqual('RUNNING');
@@ -120,18 +127,18 @@ describe('Process Header cloud component', () => {
 
         it('[C305008] Should display process details for completed process', async () => {
             await appListCloudComponent.goToApp(subProcessApp);
-            await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-            await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
+            await taskList.checkTaskListIsLoaded();
+            await processFilter.clickOnProcessFilters();
 
-            await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.COMPLETED);
+            await processFilter.clickCompletedProcessesFilter();
+            await expect(await processFilter.getActiveFilterName()).toBe(PROCESSES.COMPLETED);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ initiator: `${testUser.firstName} ${testUser.lastName}` });
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(childCompleteProcess.entry.name);
+            await editProcessFilter.setFilter({ initiator: `${testUser.firstName} ${testUser.lastName}` });
+            await processList.getDataTable().waitTillContentLoaded();
+            await processList.checkContentIsDisplayedByName(childCompleteProcess.entry.name);
 
-            await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
-            await processCloudDemoPage.processListCloudComponent().selectRowById(childCompleteProcess.entry.id);
+            await processList.checkProcessListIsLoaded();
+            await processList.selectRowById(childCompleteProcess.entry.id);
 
             await expect(await processHeaderCloudPage.getId()).toEqual(childCompleteProcess.entry.id);
             await expect(await processHeaderCloudPage.getName()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_NAME);
