@@ -15,7 +15,21 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, BrowserActions, GroupIdentityService, IdentityService, LocalStorageUtil, LoginPage, ProcessDefinitionsService, ProcessInstancesService, QueryService, StringUtil, TasksService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    AppListCloudPage,
+    BrowserActions,
+    FilterProps,
+    GroupIdentityService,
+    IdentityService,
+    LocalStorageUtil,
+    LoginPage,
+    ProcessDefinitionsService,
+    ProcessInstancesService,
+    QueryService,
+    StringUtil,
+    TasksService
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from './pages/process-cloud-demo.page';
 import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
@@ -24,6 +38,18 @@ import { EditProcessFilterConfiguration } from './config/edit-process-filter.con
 import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
 
 describe('Process list cloud', () => {
+
+    // en-US values for the process status
+    const PROCESS_STATUS = {
+        ALL: 'All',
+        RUNNING: 'Running'
+    };
+
+    // en-US values for the sort direction
+    const SORT_DIRECTION = {
+        ASC: 'Ascending',
+        DESC: 'Descending'
+    };
 
     describe('Process List', () => {
 
@@ -111,92 +137,100 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
         });
 
+        function setFilter(props: FilterProps): Promise<void> {
+            return processCloudDemoPage.editProcessFilterCloudComponent().setFilter(props);
+        }
+
+        async function waitTillContentLoaded() {
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+        }
+
         it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'RUNNING', sort: 'Name', order: 'ASC' });
+            await setFilter({ status: PROCESS_STATUS.RUNNING, sort: 'name', order: SORT_DIRECTION.ASC });
+            await waitTillContentLoaded();
+
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Name')).toBe(true);
+
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: SORT_DIRECTION.DESC});
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
 
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Name')).toBe(true);
-
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: 'DESC'});
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Name')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Name')).toBe(true);
         });
 
         it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'RUNNING', sort: 'Id', order: 'ASC' });
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.RUNNING, sort: 'id', order: SORT_DIRECTION.ASC });
+            await waitTillContentLoaded();
 
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Id')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Id')).toBe(true);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: 'DESC'});
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: SORT_DIRECTION.DESC});
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Id')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Id')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by status when Status is selected from sort dropdown', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'ALL', sort: 'Status', order: 'ASC' });
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'status', order: SORT_DIRECTION.ASC });
+            await waitTillContentLoaded();
 
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Status')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Status')).toBe(true);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: 'DESC'});
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: SORT_DIRECTION.DESC});
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Status')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Status')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by started by when Started By is selected from sort dropdown', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'ALL', sort: 'Started by', order: 'ASC' });
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'Started by', order: SORT_DIRECTION.ASC });
+            await waitTillContentLoaded();
 
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Started by')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Started by')).toBe(true);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: 'DESC'});
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: SORT_DIRECTION.DESC});
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Started by')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Started by')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by processdefinitionid date when ProcessDefinitionId is selected from sort dropdown', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'ALL', sort: 'ProcessDefinitionId', order: 'ASC' });
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'processDefinitionId', order: SORT_DIRECTION.ASC });
+            await waitTillContentLoaded();
 
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Process Definition Id')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Process Definition Id')).toBe(true);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: 'DESC'});
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: SORT_DIRECTION.DESC});
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Process Definition Id')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Process Definition Id')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by processdefinitionkey date when ProcessDefinitionKey is selected from sort dropdown', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'ALL', sort: 'ProcessDefinitionKey', order: 'ASC' });
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'processDefinitionKey', order: SORT_DIRECTION.ASC });
+            await waitTillContentLoaded();
 
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Process Definition Key')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Process Definition Key')).toBe(true);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: 'DESC'});
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Process Definition Key')).toBe(true);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: SORT_DIRECTION.DESC});
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Process Definition Key')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by last modified date when Last Modified is selected from sort dropdown', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'ALL', sort: 'Last Modified', order: 'ASC' });
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'Last Modified', order: SORT_DIRECTION.ASC });
+            await waitTillContentLoaded();
 
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Last Modified')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Last Modified')).toBe(true);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: 'DESC'});
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: SORT_DIRECTION.DESC });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Last Modified')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Last Modified')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by business key date when BusinessKey is selected from sort dropdown', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'ALL', sort: 'Business Key', order: 'ASC' });
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'Business Key', order: SORT_DIRECTION.ASC });
+            await waitTillContentLoaded();
 
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Business Key')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Business Key')).toBe(true);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: 'DESC'});
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ order: SORT_DIRECTION.DESC});
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Business Key')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Business Key')).toBe(true);
         });
 
         it('[C297697] The value of the filter should be preserved when saving it', async () => {
@@ -224,7 +258,7 @@ describe('Process list cloud', () => {
 
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
             await BrowserActions.closeMenuAndDialogs();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING');
+            await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown(PROCESS_STATUS.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessInstanceId(runningProcessInstance.entry.id);
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
@@ -242,7 +276,7 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING');
+            await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown(PROCESS_STATUS.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(candidateBaseApp);
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessInstanceId(switchProcessInstance.entry.id);
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
