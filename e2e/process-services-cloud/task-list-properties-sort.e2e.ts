@@ -184,7 +184,7 @@ describe('Edit task filters and task list properties', () => {
         it('[C306907] Should display tasks sorted by assignee when assignee is selected from sort dropdown', async () => {
             await editTaskFilter.clearAssignee();
             await editTaskFilter.setStatusFilterDropDown('All');
-            await editTaskFilter.setSortFilterDropDown('Assignee');
+            await editTaskFilter.setSortFilterDropDown('assignee');
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.ASC);
 
             await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Assignee')).toBe(true);

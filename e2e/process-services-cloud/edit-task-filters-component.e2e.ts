@@ -236,7 +236,7 @@ describe('Edit task filters cloud', () => {
         await expect(await taskFilter.getActiveFilterName()).toBe('New');
         await openFilter();
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
-        await editTaskFilter.setSortFilterDropDown('Name');
+        await editTaskFilter.setSortFilterDropDown('name');
         await editTaskFilter.clickSaveButton();
         await openFilter();
 
