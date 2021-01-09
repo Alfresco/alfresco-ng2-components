@@ -99,9 +99,9 @@ describe('Edit task filters cloud', () => {
         await waitTillContentLoaded();
 
         await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
-        await expect(await editTaskFilter.getStatusFilterDropDownValue()).toEqual('Assigned');
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate');
-        await expect(await editTaskFilter.getOrderFilterDropDownValue()).toEqual('DESC');
+        await expect(await editTaskFilter.getStatusFilterDropDownValue()).toEqual('Assigned', `Status is no 'Assigned'`);
+        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate', `Sort filter is not 'createdDate'`);
+        await expect(await editTaskFilter.getOrderFilterDropDownValue()).toEqual('Descending', `Order is not 'Descending'`);
 
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
@@ -110,9 +110,9 @@ describe('Edit task filters cloud', () => {
         await waitTillContentLoaded();
 
         await expect(await taskFilter.getActiveFilterName()).toBe('Completed Tasks');
-        await expect(await editTaskFilter.getStatusFilterDropDownValue()).toEqual('COMPLETED');
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('CreatedDate');
-        await expect(await editTaskFilter.getOrderFilterDropDownValue()).toEqual('DESC');
+        await expect(await editTaskFilter.getStatusFilterDropDownValue()).toEqual('Completed', `Status is not 'Completed'`);
+        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate', `Sort filter is not 'createdDate'`);
+        await expect(await editTaskFilter.getOrderFilterDropDownValue()).toEqual('Descending', `Order is not 'Descending'`);
 
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
@@ -200,29 +200,29 @@ describe('Edit task filters cloud', () => {
         await openFilter();
 
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
-        await editTaskFilter.setSortFilterDropDown('Priority');
+        await editTaskFilter.setSortFilterDropDown('priority');
         await editTaskFilter.clickSaveAsButton();
         await editTaskFilter.editTaskFilterDialog().setFilterName('New');
         await editTaskFilter.editTaskFilterDialog().clickOnSaveButton();
 
         await expect(await taskFilter.getActiveFilterName()).toBe('New');
         await openFilter();
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('Priority');
+        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('priority');
         await editTaskFilter.clickDeleteButton();
         await clickTaskFilter('custom-new');
         await waitTillContentLoaded();
 
         await openFilter();
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('Id');
+        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.clickDeleteButton();
     });
 
-    it('[C291797] A filter is overrided when clicking on save button', async () => {
+    it('[C291797] A filter is overridden when clicking on save button', async () => {
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
         await editTaskFilter.openFilter();
-        await editTaskFilter.setSortFilterDropDown('Id');
+        await editTaskFilter.setSortFilterDropDown('id');
 
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
@@ -235,7 +235,7 @@ describe('Edit task filters cloud', () => {
 
         await expect(await taskFilter.getActiveFilterName()).toBe('New');
         await openFilter();
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('Id');
+        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.setSortFilterDropDown('Name');
         await editTaskFilter.clickSaveButton();
         await openFilter();
@@ -250,7 +250,7 @@ describe('Edit task filters cloud', () => {
         await waitTillContentLoaded();
 
         await editTaskFilter.openFilter();
-        await editTaskFilter.setSortFilterDropDown('Id');
+        await editTaskFilter.setSortFilterDropDown('id');
 
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
@@ -263,7 +263,7 @@ describe('Edit task filters cloud', () => {
 
         await expect(await taskFilter.getActiveFilterName()).toBe('New');
         await openFilter();
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('Id');
+        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.clickDeleteButton();
 
         await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
@@ -297,7 +297,7 @@ describe('Edit task filters cloud', () => {
         await openFilter();
 
         await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('CreatedDate');
+        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate');
 
         await openFilter();
     });
