@@ -32,6 +32,8 @@ describe('Process list cloud', () => {
 
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
+        const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
+        const taskList = tasksCloudDemoPage.taskListCloudComponent();
 
         const apiService = new ApiService();
         const identityService = new IdentityService(apiService);
@@ -89,22 +91,22 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.actionAdded('invisibleaction');
             await tasksCloudDemoPage.clickAppButton();
             await editTaskFilter.openFilter();
-            await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed('my-tasks');
+            await taskFilter.checkTaskFilterIsDisplayed('my-tasks');
         });
 
         it('[C315723] Should be able to see and execute custom action menu', async () => {
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(editTask.list.entries[0].entry.id);
-            await tasksCloudDemoPage.taskListCloudComponent().clickOptionsButton(editTask.list.entries[0].entry.id);
-            await expect(await tasksCloudDemoPage.taskListCloudComponent().isCustomActionEnabled('disabledaction')).toBe(false);
-            await expect(await tasksCloudDemoPage.taskListCloudComponent().getNumberOfOptions()).toBe(3);
-            await tasksCloudDemoPage.taskListCloudComponent().clickOnCustomActionMenu('edit');
+            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            await taskList.checkTaskListIsLoaded();
+            await taskList.checkContentIsDisplayedById(editTask.list.entries[0].entry.id);
+            await taskList.clickOptionsButton(editTask.list.entries[0].entry.id);
+            await expect(await taskList.isCustomActionEnabled('disabledaction')).toBe(false);
+            await expect(await taskList.getNumberOfOptions()).toBe(3);
+            await taskList.clickOnCustomActionMenu('edit');
             await tasksCloudDemoPage.checkActionExecuted(editTask.list.entries[0].entry.id, 'edit');
-            await tasksCloudDemoPage.taskListCloudComponent().rightClickOnRow(deleteTask.list.entries[0].entry.id);
-            await expect(await tasksCloudDemoPage.taskListCloudComponent().isCustomActionEnabled('disabledaction')).toBe(false);
-            await expect(await tasksCloudDemoPage.taskListCloudComponent().getNumberOfOptions()).toBe(3);
-            await tasksCloudDemoPage.taskListCloudComponent().clickContextMenuActionNamed('delete');
+            await taskList.rightClickOnRow(deleteTask.list.entries[0].entry.id);
+            await expect(await taskList.isCustomActionEnabled('disabledaction')).toBe(false);
+            await expect(await taskList.getNumberOfOptions()).toBe(3);
+            await taskList.clickContextMenuActionNamed('delete');
             await tasksCloudDemoPage.checkActionExecuted(deleteTask.list.entries[0].entry.id, 'delete');
         });
    });

@@ -44,7 +44,10 @@ describe('Process Task - Attach content file', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
+
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const processCloudWidget = new ProcessCloudWidgetPage();
     const contentNodeSelectorDialog = new ContentNodeSelectorDialogPage();
@@ -141,10 +144,10 @@ describe('Process Task - Attach content file', () => {
         await viewAttachedFile(contentUploadFileWidget, pdfFileTwo.name);
         await taskFormCloudComponent.clickCompleteButton();
 
-        await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+        await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(taskName);
 
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+        await taskFilter.clickTaskFilter('completed-tasks');
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskName);
 

@@ -52,7 +52,6 @@ export class TasksCloudDemoPage {
     togglePage = new TogglePage();
 
     editTaskFilterCloud = new EditTaskFilterCloudComponentPage();
-
     taskFilterCloudComponent = new TaskFiltersCloudComponentPage();
 
     async disableDisplayTaskDetails(): Promise<void> {

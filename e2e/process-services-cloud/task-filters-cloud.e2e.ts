@@ -39,6 +39,8 @@ describe('Task filters cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
+        const taskList = tasksCloudDemoPage.taskListCloudComponent();
 
         const apiService = new ApiService();
         const queryService = new QueryService(apiService);
@@ -77,18 +79,18 @@ describe('Task filters cloud', () => {
             const task = await tasksService.createStandaloneTask(newTask, simpleApp);
             await tasksService.claimTask(task.entry.id, simpleApp);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter('completed-tasks');
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('Completed Tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(newTask);
+            await expect(await taskFilter.getActiveFilterName()).toBe('Completed Tasks');
+            await taskList.checkContentIsNotDisplayedByName(newTask);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter('my-tasks');
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(newTask);
+            await taskList.checkContentIsDisplayedByName(newTask);
         });
 
         it('[C289955] Should display task in Complete Tasks List when task is completed', async () => {
@@ -97,18 +99,18 @@ describe('Task filters cloud', () => {
             await tasksService.completeTask(toBeCompletedTask.entry.id, simpleApp);
 
             await queryService.getTaskByStatus(toBeCompletedTask.entry.name, simpleApp, 'COMPLETED');
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter('my-tasks');
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTask);
+            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            await taskList.checkContentIsNotDisplayedByName(completedTask);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter('completed-tasks');
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('Completed Tasks');
+            await expect(await taskFilter.getActiveFilterName()).toBe('Completed Tasks');
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask);
+            await taskList.checkContentIsDisplayedByName(completedTask);
         });
     });
 });

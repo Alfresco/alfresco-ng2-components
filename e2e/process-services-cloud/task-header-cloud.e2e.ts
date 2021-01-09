@@ -47,6 +47,8 @@ describe('Task Header cloud component', () => {
 
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
+    const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
+    const taskList = tasksCloudDemoPage.taskListCloudComponent();
 
     const peopleCloudComponentPage = new PeopleCloudComponentPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
@@ -137,11 +139,11 @@ describe('Task Header cloud component', () => {
     });
 
     it('[C291943] Should display task details for assigned task', async () => {
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        await taskFilter.clickTaskFilter('my-tasks');
+        await taskList.getDataTable().waitTillContentLoaded();
 
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
+        await taskList.checkContentIsDisplayedByName(basicCreatedTaskName);
+        await taskList.selectRow(basicCreatedTaskName);
         await tasksCloudDemoPage.waitTillContentLoaded();
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
@@ -161,11 +163,11 @@ describe('Task Header cloud component', () => {
     });
 
     it('[C291944] Should display task details for completed task', async () => {
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        await taskFilter.clickTaskFilter('completed-tasks');
+        await taskList.getDataTable().waitTillContentLoaded();
 
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
+        await taskList.checkContentIsDisplayedByName(completedTaskName);
+        await taskList.selectRow(completedTaskName);
         await tasksCloudDemoPage.waitTillContentLoaded();
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
@@ -185,11 +187,11 @@ describe('Task Header cloud component', () => {
     });
 
     it('[C291945] Should Parent Name and Parent Id not be empty in task details for sub task', async () => {
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        await taskFilter.clickTaskFilter('my-tasks');
+        await taskList.getDataTable().waitTillContentLoaded();
 
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(subTask.entry.name);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(subTask.entry.name);
+        await taskList.checkContentIsDisplayedByName(subTask.entry.name);
+        await taskList.selectRow(subTask.entry.name);
         await tasksCloudDemoPage.waitTillContentLoaded();
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
@@ -214,8 +216,8 @@ describe('Task Header cloud component', () => {
         await editTaskFilter.setStatusFilterDropDown('ALL');
         await editTaskFilter.clearAssignee();
 
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unclaimedTask.entry.name);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(unclaimedTask.entry.name);
+        await taskList.checkContentIsDisplayedByName(unclaimedTask.entry.name);
+        await taskList.selectRow(unclaimedTask.entry.name);
         await tasksCloudDemoPage.waitTillContentLoaded();
 
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
@@ -254,11 +256,11 @@ describe('Task Header cloud component', () => {
         });
 
         it('[C311280] Should pick up the default date format from the app configuration', async () => {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter('completed-tasks');
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
+            await taskList.checkContentIsDisplayedByName(completedTaskName);
+            await taskList.selectRow(completedTaskName);
             await tasksCloudDemoPage.waitTillContentLoaded();
 
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();

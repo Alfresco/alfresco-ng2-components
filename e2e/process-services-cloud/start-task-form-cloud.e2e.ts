@@ -53,6 +53,7 @@ describe('Start Task Form', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
     const startTask = new StartTasksCloudPage();
     const contentNodeSelectorDialogPage = new ContentNodeSelectorDialogPage();
     const breadCrumbDropdownPage = new BreadcrumbDropdownPage();
@@ -193,7 +194,7 @@ describe('Start Task Form', () => {
             await appListCloudComponent.goToApp(candidateBaseApp);
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
             await taskFormCloudComponent.formFields().checkFormIsDisplayed();
@@ -270,10 +271,10 @@ describe('Start Task Form', () => {
             const taskId = await taskHeaderCloudPage.getId();
             await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
             await taskFormCloudComponent.clickCompleteButton();
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await taskFilter.clickTaskFilter('completed-tasks');
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
@@ -452,10 +453,10 @@ describe('Start Task Form', () => {
             const taskId = await taskHeaderCloudPage.getId();
             await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
             await taskFormCloudComponent.clickCompleteButton();
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await taskFilter.clickTaskFilter('completed-tasks');
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
@@ -489,10 +490,10 @@ describe('Start Task Form', () => {
 
             const taskId = await taskHeaderCloudPage.getId();
             await taskFormCloudComponent.clickCompleteButton();
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await taskFilter.clickTaskFilter('completed-tasks');
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);

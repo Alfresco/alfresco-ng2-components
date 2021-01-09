@@ -37,6 +37,8 @@ describe('Task form cloud component', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
+    const taskList = tasksCloudDemoPage.taskListCloudComponent();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const widget = new ProcessCloudWidgetPage();
@@ -174,8 +176,8 @@ describe('Task form cloud component', () => {
 
             await taskFormCloudComponent.clickCompleteButton();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe(myTasksFilterTitle);
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[0].entry.name);
+            await expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
+            await taskList.checkContentIsNotDisplayedByName(visibilityConditionTasks[0].entry.name);
 
             await chooseFilterAndSelectTaskByName(completedTasksFilter, visibilityConditionTasks[0].entry.name);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
@@ -205,8 +207,8 @@ describe('Task form cloud component', () => {
 
             await taskFormCloudComponent.clickCompleteButton();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe(myTasksFilterTitle);
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[1].entry.name);
+            await expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
+            await taskList.checkContentIsNotDisplayedByName(visibilityConditionTasks[1].entry.name);
 
             await chooseFilterAndSelectTaskByName(completedTasksFilter, visibilityConditionTasks[1].entry.name);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
@@ -233,9 +235,9 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldVar);
             await taskFormCloudComponent.clickCompleteButton();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe(myTasksFilterTitle);
+            await expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[2].entry.name);
+            await taskList.checkContentIsNotDisplayedByName(visibilityConditionTasks[2].entry.name);
 
             await chooseFilterAndSelectTaskByName(completedTasksFilter, visibilityConditionTasks[2].entry.name);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
@@ -253,8 +255,8 @@ describe('Task form cloud component', () => {
 
             await taskFormCloudComponent.clickCompleteButton();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe(myTasksFilterTitle);
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[4].entry.name);
+            await expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
+            await taskList.checkContentIsNotDisplayedByName(visibilityConditionTasks[4].entry.name);
 
             await chooseFilterAndSelectTaskByName(completedTasksFilter, visibilityConditionTasks[4].entry.name);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
@@ -292,8 +294,8 @@ describe('Task form cloud component', () => {
 
             await taskFormCloudComponent.clickCompleteButton();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe(myTasksFilterTitle);
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[6].entry.name);
+            await expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
+            await taskList.checkContentIsNotDisplayedByName(visibilityConditionTasks[6].entry.name);
 
             await chooseFilterAndSelectTaskByName(completedTasksFilter, visibilityConditionTasks[6].entry.name);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
@@ -317,8 +319,8 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabMultipleConditions);
             await taskFormCloudComponent.clickCompleteButton();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe(myTasksFilterTitle);
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[3].entry.name);
+            await expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
+            await taskList.checkContentIsNotDisplayedByName(visibilityConditionTasks[3].entry.name);
 
             await chooseFilterAndSelectTaskByName(completedTasksFilter, visibilityConditionTasks[3].entry.name);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
@@ -326,22 +328,22 @@ describe('Task form cloud component', () => {
         });
 
         async function chooseFilterAndSelectTaskByName(filterName: string, taskName: string): Promise<void> {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(filterName);
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskName);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskName);
+            await taskFilter.clickTaskFilter(filterName);
+            await taskList.getDataTable().waitTillContentLoaded();
+            await taskList.checkContentIsDisplayedByName(taskName);
+            await taskList.selectRow(taskName);
         }
 
         async function selectTaskByName(taskName: string): Promise<void> {
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskName);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskName);
+            await taskList.checkContentIsDisplayedByName(taskName);
+            await taskList.selectRow(taskName);
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
         }
 
         async function chooseFilter(filterName: string, filterTitle: string): Promise<void> {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(filterName);
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe(filterTitle);
+            await taskFilter.clickTaskFilter(filterName);
+            await taskList.getDataTable().waitTillContentLoaded();
+            await expect(await taskFilter.getActiveFilterName()).toBe(filterTitle);
         }
    });
 });

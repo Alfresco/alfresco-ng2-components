@@ -33,6 +33,7 @@ describe('Edit task filters and task list properties', () => {
 
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
+    const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
 
     const apiService = new ApiService();
     const identityService = new IdentityService(apiService);
@@ -129,7 +130,7 @@ describe('Edit task filters and task list properties', () => {
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
             await editTaskFilter.openFilter();
-            await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed('my-tasks');
+            await taskFilter.checkTaskFilterIsDisplayed('my-tasks');
         });
 
         it('[C306901] Should display tasks sorted by task name when taskName is selected from sort dropdown', async () => {
