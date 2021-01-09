@@ -186,7 +186,7 @@ describe('Task form cloud component', () => {
         await openTaskByIdFromFilters(myTasksFilter, assigneeTaskId);
 
         await expect(await taskHeaderCloudPage.getAssignee()).toEqual(assigneeReleaseTask.list.entries[0].entry.assignee);
-        await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
+        await expect(await taskHeaderCloudPage.getStatus()).toEqual('Assigned');
         await taskFormCloudComponent.checkReleaseButtonIsNotDisplayed();
     });
 

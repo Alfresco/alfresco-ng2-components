@@ -24,7 +24,7 @@ import {
     LocalStorageUtil,
     LoginPage,
     ProcessDefinitionsService,
-    ProcessInstancesService,
+    ProcessInstancesService, StatusType,
     TaskFormCloudComponent,
     TaskHeaderCloudPage
 } from '@alfresco/adf-testing';
@@ -187,7 +187,7 @@ describe('Task claim/release', () => {
 
     });
 
-    async function navigateToApp(user) {
+    async function navigateToApp(user: { username: string; password: string }) {
         await loginSSOPage.login(user.username, user.password);
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify(taskFilterConfiguration));
         await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -198,7 +198,7 @@ describe('Task claim/release', () => {
         await taskList.getDataTable().waitForTableBody();
     }
 
-    async function setTaskFilter(status, processInstanceId) {
+    async function setTaskFilter(status: StatusType, processInstanceId: string) {
         await editTaskFilter.openFilter();
         await editTaskFilter.clearAssignee();
         await editTaskFilter.setStatusFilterDropDown(status);

@@ -23,6 +23,8 @@ import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { PeopleCloudComponentPage } from './people-cloud-component.page';
 
+export type StatusType = 'All' | 'Created' | 'Assigned' | 'Cancelled' | 'Suspended' | 'Completed';
+
 export class EditTaskFilterCloudComponentPage {
 
     customiseFilter = element(by.id('adf-edit-task-filter-sub-title-id'));
@@ -72,7 +74,7 @@ export class EditTaskFilterCloudComponentPage {
         await browser.driver.sleep(1000);
     }
 
-    async setStatusFilterDropDown(option: string): Promise<void> {
+    async setStatusFilterDropDown(option: StatusType): Promise<void> {
         await this.statusDropdown.selectDropdownOption(option);
         await this.dataTable.waitTillContentLoaded();
     }
