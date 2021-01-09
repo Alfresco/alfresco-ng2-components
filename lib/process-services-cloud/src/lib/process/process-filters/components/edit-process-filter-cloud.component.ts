@@ -99,14 +99,26 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     processFilter: ProcessFilterCloudModel;
     changedProcessFilter: ProcessFilterCloudModel;
 
-    status: Array<DropdownOption> = [];
-    directions: Array<DropdownOption> = [];
+    status: Array<DropdownOption> = [
+        { value: '', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL' },
+        { value: 'RUNNING', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.RUNNING' },
+        { value: 'SUSPENDED', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.SUSPENDED' },
+        { value: 'CANCELLED', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.CANCELLED' },
+        { value: 'COMPLETED', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.COMPLETED' }
+    ];
+    directions: Array<DropdownOption> = [
+        { value: 'ASC', label: 'ADF_CLOUD_PROCESS_FILTERS.DIRECTION.ASCENDING' },
+        { value: 'DESC', label: 'ADF_CLOUD_PROCESS_FILTERS.DIRECTION.DESCENDING' }
+    ];
     actionDisabledForDefault = [
         EditProcessFilterCloudComponent.ACTION_SAVE,
         EditProcessFilterCloudComponent.ACTION_DELETE
     ];
     applicationNames: any[] = [];
-    allProcessDefinitionNamesOption: DropdownOption;
+    allProcessDefinitionNamesOption: DropdownOption = {
+        label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL',
+        value: ''
+    };
     processDefinitionNames: any[] = [];
     formHasBeenChanged = false;
     editProcessFilterForm: FormGroup;
@@ -130,24 +142,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     ngOnInit() {
-        this.status = [
-            { value: '', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL' },
-            { value: 'RUNNING', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.RUNNING' },
-            { value: 'SUSPENDED', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.SUSPENDED' },
-            { value: 'CANCELLED', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.CANCELLED' },
-            { value: 'COMPLETED', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.COMPLETED' }
-        ];
-
-        this.directions = [
-            { value: 'ASC', label: 'ADF_CLOUD_PROCESS_FILTERS.DIRECTION.ASCENDING' },
-            { value: 'DESC', label: 'ADF_CLOUD_PROCESS_FILTERS.DIRECTION.DESCENDING' }
-        ];
-
-        this.allProcessDefinitionNamesOption = {
-            label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL',
-            value: ''
-        };
-
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
