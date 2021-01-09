@@ -117,7 +117,7 @@ describe('Process Header cloud component', () => {
             await processList.selectRow(runningProcess.entry.name);
             await expect(await processHeaderCloudPage.getId()).toEqual(runningProcess.entry.id);
             await expect(await processHeaderCloudPage.getName()).toEqual(runningProcess.entry.name);
-            await expect(await processHeaderCloudPage.getStatus()).toEqual('Running');
+            await expect(await processHeaderCloudPage.getStatus()).toEqual('RUNNING');
             await expect(await processHeaderCloudPage.getInitiator()).toEqual(runningProcess.entry.initiator);
             await expect(await processHeaderCloudPage.getStartDate()).toEqual(runningCreatedDate);
             await expect(await processHeaderCloudPage.getParentId()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_PARENT);
@@ -142,7 +142,7 @@ describe('Process Header cloud component', () => {
 
             await expect(await processHeaderCloudPage.getId()).toEqual(childCompleteProcess.entry.id);
             await expect(await processHeaderCloudPage.getName()).toEqual(CONSTANTS.PROCESS_DETAILS.NO_NAME);
-            await expect(await processHeaderCloudPage.getStatus()).toEqual('Completed');
+            await expect(await processHeaderCloudPage.getStatus()).toEqual('COMPLETED');
             await expect(await processHeaderCloudPage.getInitiator()).toEqual(childCompleteProcess.entry.initiator);
             await expect(await processHeaderCloudPage.getStartDate()).toEqual(completedCreatedDate);
             await expect(await processHeaderCloudPage.getParentId()).toEqual(childCompleteProcess.entry.parentId);

@@ -152,7 +152,7 @@ describe('Process list cloud', () => {
         }
 
         it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.RUNNING, sort: 'name', order: SORT_DIRECTION.ASC });
+            await setFilter({ status: PROCESS_STATUS.RUNNING, sort: 'Name', order: SORT_DIRECTION.ASC });
             await waitTillContentLoaded();
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Name')).toBe(true);
@@ -164,7 +164,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.RUNNING, sort: 'id', order: SORT_DIRECTION.ASC });
+            await setFilter({ status: PROCESS_STATUS.RUNNING, sort: 'Id', order: SORT_DIRECTION.ASC });
             await waitTillContentLoaded();
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Id')).toBe(true);
@@ -175,7 +175,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C305054] Should display processes ordered by status when Status is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'status', order: SORT_DIRECTION.ASC });
+            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'Status', order: SORT_DIRECTION.ASC });
             await waitTillContentLoaded();
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Status')).toBe(true);
@@ -197,7 +197,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C305054] Should display processes ordered by processdefinitionid date when ProcessDefinitionId is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'processDefinitionId', order: SORT_DIRECTION.ASC });
+            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'ProcessDefinitionId', order: SORT_DIRECTION.ASC });
             await waitTillContentLoaded();
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Process Definition Id')).toBe(true);
@@ -208,7 +208,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C305054] Should display processes ordered by processdefinitionkey date when ProcessDefinitionKey is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'processDefinitionKey', order: SORT_DIRECTION.ASC });
+            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'ProcessDefinitionKey', order: SORT_DIRECTION.ASC });
             await waitTillContentLoaded();
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Process Definition Key')).toBe(true);
