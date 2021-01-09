@@ -231,7 +231,7 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - Running', async () => {
         await editProcessFilter.openFilter();
-        await editProcessFilter.setStatusFilterDropDown('RUNNING');
+        await editProcessFilter.setStatusFilterDropDown('Running');
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
@@ -247,7 +247,7 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - Completed', async () => {
         await editProcessFilter.openFilter();
-        await editProcessFilter.setStatusFilterDropDown('COMPLETED');
+        await editProcessFilter.setStatusFilterDropDown('Completed');
         await editProcessFilter.setProcessName(completedProcess.entry.name);
         await processList.checkContentIsDisplayedByName(completedProcess.entry.name);
 
@@ -263,7 +263,7 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - Suspended', async () => {
         await editProcessFilter.openFilter();
-        await editProcessFilter.setStatusFilterDropDown('SUSPENDED');
+        await editProcessFilter.setStatusFilterDropDown('Suspended');
         await editProcessFilter.setProcessName(suspendProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(suspendProcessInstance.entry.name);
 
@@ -279,7 +279,7 @@ describe('Process filters cloud', () => {
 
     it('[C306892] Should be able to filter by process status - All', async () => {
         await editProcessFilter.openFilter();
-        await editProcessFilter.setStatusFilterDropDown('ALL');
+        await editProcessFilter.setStatusFilterDropDown('All');
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
