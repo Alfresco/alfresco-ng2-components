@@ -115,7 +115,7 @@ describe('AuthGuardService ECM', () => {
 
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'abc'};
 
-        expect(authGuard.canActivate(null, route)).toBeTruthy();
+        expect(authGuard.canActivate(null, route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalledTimes(1);
         expect(authService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
     }));

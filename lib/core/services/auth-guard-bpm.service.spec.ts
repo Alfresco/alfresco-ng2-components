@@ -51,6 +51,29 @@ describe('AuthGuardService BPM', () => {
         appConfigService.config.oauth2 = {};
     });
 
+    it('should redirect url if the alfresco js api is NOT logged in and isOAuth with silentLogin', async(() => {
+        spyOn(router, 'navigateByUrl').and.stub();
+        spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
+        spyOn(authService, 'isOauth').and.returnValue(true);
+        spyOn(authService, 'isPublicUrl').and.returnValue(false);
+        spyOn(authService, 'ssoImplicitLogin').and.stub();
+
+        appConfigService.config.oauth2 = {
+            silentLogin: true,
+            host: 'http://localhost:6543',
+            redirectUri: '/',
+            clientId: 'activiti',
+            publicUrl: 'settings',
+            scope: 'openid'
+        };
+
+        const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'abc'};
+
+        expect(authGuard.canActivate(null, route)).toBeFalsy();
+        expect(router.navigateByUrl).toHaveBeenCalledTimes(1);
+        expect(authService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
+    }));
+
     it('if the alfresco js api is logged in should canActivate be true', async(() => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
