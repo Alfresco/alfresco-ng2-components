@@ -153,7 +153,7 @@ describe('Task form cloud component', () => {
         await expect(taskFilter.getActiveFilterName()).toBe('My Tasks');
         await editTaskFilter.openFilter();
         await editTaskFilter.clearAssignee();
-        await editTaskFilter.setStatusFilterDropDown('CREATED');
+        await editTaskFilter.setStatusFilterDropDown('Created');
 
         await taskList.checkContentIsDisplayedById(formTaskId);
         await taskList.selectRowByTaskId(formTaskId);
@@ -304,7 +304,7 @@ describe('Task form cloud component', () => {
             await browser.driver.sleep(1000);
 
             await editTaskFilter.clearAssignee();
-            await editTaskFilter.setStatusFilterDropDown('CREATED');
+            await editTaskFilter.setStatusFilterDropDown('Created');
 
             await selectTaskByName(createdTask.entry.name);
             await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();

@@ -112,7 +112,7 @@ describe('Start Task', () => {
 
         await editTaskFilter.openFilter();
         await editTaskFilter.clearAssignee();
-        await editTaskFilter.setStatusFilterDropDown('CREATED');
+        await editTaskFilter.setStatusFilterDropDown('Created');
         await taskList.getDataTable().waitForTableBody();
         await taskList.checkContentIsDisplayedByName(unassignedTaskName);
         const taskId = await taskList.getIdCellValue(unassignedTaskName);
@@ -131,7 +131,7 @@ describe('Start Task', () => {
         await startTask.clickStartButton();
 
         await editTaskFilter.openFilter();
-        await editTaskFilter.setStatusFilterDropDown('CREATED');
+        await editTaskFilter.setStatusFilterDropDown('Created');
         await editTaskFilter.clearAssignee();
         await taskList.checkContentIsDisplayedByName(unassignedTaskName);
     });
@@ -214,7 +214,7 @@ describe('Start Task', () => {
 
         await editTaskFilter.openFilter();
         await editTaskFilter.clearAssignee();
-        await editTaskFilter.setStatusFilterDropDown('ALL');
+        await editTaskFilter.setStatusFilterDropDown('All');
 
         await taskList.checkContentIsDisplayedByName(reassignTaskName);
 

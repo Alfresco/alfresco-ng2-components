@@ -113,7 +113,7 @@ describe('Task filters cloud', () => {
 
         it('[C290045] Should display only tasks with Assigned status when Assigned is selected from status dropdown', async () => {
             await editTaskFilter.openFilter();
-            await editTaskFilter.setStatusFilterDropDown('ASSIGNED');
+            await editTaskFilter.setStatusFilterDropDown('Assigned');
 
             await taskList.checkContentIsDisplayedByName(assignedTaskName);
             await taskList.checkContentIsNotDisplayedByName(createdTaskName);
@@ -123,7 +123,7 @@ describe('Task filters cloud', () => {
 
         it('[C290061] Should display only tasks with Completed status when Completed is selected from status dropdown', async () => {
             await editTaskFilter.openFilter();
-            await editTaskFilter.setStatusFilterDropDown('COMPLETED');
+            await editTaskFilter.setStatusFilterDropDown('Completed');
 
             await taskList.checkContentIsDisplayedByName(completedTaskName);
             await taskList.checkContentIsNotDisplayedByName(assignedTaskName);
@@ -134,7 +134,7 @@ describe('Task filters cloud', () => {
         it('[C290139] Should display only tasks with all statuses when All is selected from status dropdown', async () => {
             await editTaskFilter.openFilter();
             await editTaskFilter.clearAssignee();
-            await editTaskFilter.setStatusFilterDropDown('ALL');
+            await editTaskFilter.setStatusFilterDropDown('All');
 
             await taskList.checkContentIsDisplayedByName(deletedTaskName);
             await taskList.checkContentIsDisplayedByName(assignedTaskName);
@@ -145,7 +145,7 @@ describe('Task filters cloud', () => {
         it('[C290060] Should display only tasks with Created status when Created is selected from status dropdown', async () => {
             await editTaskFilter.openFilter();
             await editTaskFilter.clearAssignee();
-            await editTaskFilter.setStatusFilterDropDown('CREATED');
+            await editTaskFilter.setStatusFilterDropDown('Created');
 
             await taskList.checkContentIsDisplayedByName(createdTaskName);
             await taskList.checkContentIsNotDisplayedByName(assignedTaskName);
@@ -156,7 +156,7 @@ describe('Task filters cloud', () => {
         it('[C290155] Should display only tasks with Cancelled status when Cancelled is selected from status dropdown', async () => {
             await editTaskFilter.openFilter();
             await editTaskFilter.clearAssignee();
-            await editTaskFilter.setStatusFilterDropDown('CANCELLED');
+            await editTaskFilter.setStatusFilterDropDown('Cancelled');
 
             await taskList.checkContentIsDisplayedByName(deletedTaskName);
             await taskList.checkContentIsNotDisplayedByName(assignedTaskName);
@@ -179,7 +179,7 @@ describe('Task filters cloud', () => {
             it('[C317658] Should display only tasks with Suspended status when SUSPENDED is selected from status dropdown', async () => {
                 await editTaskFilter.openFilter();
                 await editTaskFilter.clearAssignee();
-                await editTaskFilter.setStatusFilterDropDown('SUSPENDED');
+                await editTaskFilter.setStatusFilterDropDown('Suspended');
                 await taskList.checkContentIsDisplayedByName(taskAssigned.list.entries[0].entry.name);
             });
         });
