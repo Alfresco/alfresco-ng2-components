@@ -87,7 +87,7 @@ describe('Task claim/release', () => {
 
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
 
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('Assigned');
+            await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.users.hrUser.username);
 
             await taskFormCloudComponent.clickReleaseButton();
@@ -95,7 +95,7 @@ describe('Task claim/release', () => {
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('Created');
+            await expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
         });
 
@@ -137,7 +137,7 @@ describe('Task claim/release', () => {
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('Created');
+            await expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
 
             await taskFormCloudComponent.clickClaimButton();
@@ -145,7 +145,7 @@ describe('Task claim/release', () => {
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('Assigned');
+            await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.users.hrUser.username);
 
             await taskFormCloudComponent.clickReleaseButton();
@@ -153,7 +153,7 @@ describe('Task claim/release', () => {
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('Created');
+            await expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
 
             await navigationBarPage.clickLogoutButton();
@@ -165,7 +165,7 @@ describe('Task claim/release', () => {
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('Created');
+            await expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
 
             await taskFormCloudComponent.clickClaimButton();
@@ -173,7 +173,7 @@ describe('Task claim/release', () => {
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('Assigned');
+            await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual(candidate.username);
 
             await taskFormCloudComponent.clickReleaseButton();
@@ -181,7 +181,7 @@ describe('Task claim/release', () => {
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('Created');
+            await expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
         });
 
