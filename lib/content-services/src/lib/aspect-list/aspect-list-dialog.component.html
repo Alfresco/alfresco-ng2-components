@@ -1,0 +1,34 @@
+<header mat-dialog-title data-automation-id="aspect-list-dialog-title" class="adf-aspect-list-dialog">
+    <h4 class="adf-aspect-list-dialog-title">{{title | translate}}</h4>
+    <div class="adf-aspect-list-dialog-description">{{description | translate}}</div>
+</header>
+
+<div class="adf-aspect-list-dialog-information">
+    <p>{{overTableMessage | translate}}</p>
+    <p>{{currentAspectSelection ? currentAspectSelection.length : 0}} {{'ADF-ASPECT-LIST.DIALOG.SELECTED' | translate}}</p>
+</div>
+<mat-dialog-content class="adf-aspect-dialog-content">
+    <adf-aspect-list #aspectList (valueChanged)="onValueChanged($event)" [nodeId]="currentNodeId">
+    </adf-aspect-list>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div>
+        <button mat-button (click)="onReset()" data-automation-id="aspect-list-dialog-actions-reset">{{
+            'ADF-ASPECT-LIST.DIALOG.RESET' | translate }}
+        </button>
+
+        <button mat-button (click)="onClear()" data-automation-id="aspect-list-dialog-actions-clear">{{
+            'ADF-ASPECT-LIST.DIALOG.CLEAR' | translate }}
+        </button>
+    </div>
+    <div>
+        <button mat-button (click)="onCancel()" data-automation-id="aspect-list-dialog-actions-cancel">{{
+            'ADF-ASPECT-LIST.DIALOG.CANCEL' | translate }}
+        </button>
+
+        <button mat-button (click)="onApply()" data-automation-id="aspect-list-dialog-actions-apply">{{
+            'ADF-ASPECT-LIST.DIALOG.APPLY' | translate }}
+        </button>
+    </div>
+</mat-dialog-actions>

@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and configure using the service",
     "HEADER_DATA": "Header Data",
     "TREE_VIEW": "Tree View",
+    "EXPAND_LIST": "Expandable item list",
     "ICONS": "Icons",
     "PEOPLE_GROUPS_CLOUD": "People/Group Cloud",
     "TASK_HEADER_CLOUD": {

@@ -86,6 +86,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         /* cspell:disable-next-line */
         { href: '/overlay-viewer', icon: 'pageview', title: 'APP_LAYOUT.OVERLAY_VIEWER' },
         { href: '/treeview', icon: 'nature', title: 'APP_LAYOUT.TREE_VIEW' },
+        { href: '/expandable-list', icon: 'hot_tub', title: 'APP_LAYOUT.EXPAND_LIST' },
         { href: '/icons', icon: 'tag_faces', title: 'APP_LAYOUT.ICONS' },
         { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }
     ];

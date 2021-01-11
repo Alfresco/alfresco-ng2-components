@@ -1,0 +1,34 @@
+<div id="aspect-list-container" class="adf-aspect-list-container">
+    <mat-accordion class="adf-accordion-aspect-list">
+        <mat-expansion-panel *ngFor="let aspect of (aspects$ | async); let colIndex = index">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-checkbox [checked]="nodeAspects?.includes(aspect?.entry?.prefixedname)" (change)="onChange($event, aspect?.entry?.prefixedname)">
+                        {{aspect?.entry?.name}}
+                    </mat-checkbox>
+                </mat-panel-title>
+                <mat-panel-description [matTooltip]="aspect?.entry?.title">
+                    {{aspect?.entry?.title}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p class="adf-property-paragraph"> {{aspect?.entry?.description}}</p>
+
+            <table mat-table [dataSource]="aspect?.entry?.properties" *ngIf="aspect?.entry?.properties?.length > 0" class="adf-aspect-property-table">
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> {{'ADF-ASPECT-LIST.PROPERTY_NAME' | translate}} </th>
+                  <td mat-cell *matCellDef="let property"> {{property.title}} </td>
+                </ng-container>
+                <ng-container matColumnDef="title">
+                  <th mat-header-cell *matHeaderCellDef> {{'ADF-ASPECT-LIST.DESCRIPTION' | translate}} </th>
+                  <td mat-cell *matCellDef="let property"> {{property.title}} </td>
+                </ng-container>
+                <ng-container matColumnDef="dataType">
+                  <th mat-header-cell *matHeaderCellDef> {{'ADF-ASPECT-LIST.DATA_TYPE' | translate}} </th>
+                  <td mat-cell *matCellDef="let property"> {{property.dataType}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="propertyColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: propertyColumns;"></tr>
+              </table>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

@@ -1,0 +1,55 @@
+@mixin adf-aspect-list-dialog-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+
+    .adf {
+
+        &-aspect-list-dialog-title {
+            font-size: large;
+            font-weight: 200;
+            margin-top: 0;
+        }
+
+        &-aspect-list-dialog-description {
+            font-size: small;
+            line-height: normal;
+        }
+
+        &-aspect-list-dialog-information {
+            display: flex;
+            justify-content: space-between;
+            padding-left: 5px;
+            padding-right: 5px;
+            font-size: small;
+        }
+
+        &-aspect-list-dialog {
+            .mat-dialog-actions {
+                justify-content: space-between;
+            }
+        }
+
+        &-aspect-dialog-content {
+            padding-top: 3px;
+
+            .adf-aspect-property-table {
+
+                .mat-cell {
+                    font-size: smaller;
+                }
+
+                .mat-column-name {
+                    width: 30%;
+                }
+            }
+        }
+
+
+    }
+
+
+}

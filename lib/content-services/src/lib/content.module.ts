@@ -40,6 +40,7 @@ import { ContentMetadataModule } from './content-metadata/content-metadata.modul
 import { PermissionManagerModule } from './permission-manager/permission-manager.module';
 import { TreeViewModule } from './tree-view/tree-view.module';
 import { ContentTypeModule } from './content-type/content-type.module';
+import { AspectListModule } from './aspect-list/aspect-list.module';
 
 @NgModule({
     imports: [
@@ -65,7 +66,8 @@ import { ContentTypeModule } from './content-type/content-type.module';
         PermissionManagerModule,
         VersionManagerModule,
         TreeViewModule,
-        ContentTypeModule
+        ContentTypeModule,
+        AspectListModule
     ],
     providers: [
         {
@@ -95,6 +97,7 @@ import { ContentTypeModule } from './content-type/content-type.module';
         PermissionManagerModule,
         VersionManagerModule,
         TreeViewModule,
+        AspectListModule
         ContentTypeModule
     ]
 })
