@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+npx @alfresco/adf-cli scan-env --host "$API_HOST" -u "$ADMIN_EMAIL" -p "$ADMIN_PASSWORD"
+
 # Download built application artifact from S3
 ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2" -o "./dist/demo-shell"
 ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-libs.tar.bz2" -o "./lib/dist"
