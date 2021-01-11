@@ -119,7 +119,9 @@
       "callActivityExpressionSimple":"call-activity-exp-simple", 
       "callActivityExpressionFromPool":"call-activity-expression-2",
       "calledSimple":"called-simple",
-      "calledInPool":"called-in-pool"
+      "calledInPool":"called-in-pool",
+      "paralleltasks": "paralleltasks",
+      "candidateusersgroup": "candidateusersgroup"
     },
     "forms": {
       "tabVisibilityFields": {
