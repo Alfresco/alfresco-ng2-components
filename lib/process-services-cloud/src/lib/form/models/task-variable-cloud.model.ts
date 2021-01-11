@@ -27,7 +27,7 @@ export class TaskVariableCloud {
         this.type = obj.type || null;
     }
 
-    private hasValue(obj: TaskVariableCloud): boolean {
+    hasValue(obj: TaskVariableCloud): boolean {
         return typeof obj.value !== undefined && obj.value !== null;
     }
 }

@@ -205,6 +205,28 @@ describe('StartProcessCloudComponent', () => {
 
         beforeEach(() => {
             component.name = 'My new process with form';
+            component.values = [{
+                'id': '1',
+                'type': 'string',
+                'name': 'firstName',
+                'value': 'FakeName',
+                get 'hasValue'() {
+                    return this['value'];
+                },
+                set 'hasValue'(value) {
+                    this['value'] = value;
+                }
+            }, {
+                'id': '1', 'type': 'string',
+                'name': 'lastName',
+                'value': 'FakeLastName',
+                get 'hasValue'() {
+                    return this['value'];
+                },
+                set 'hasValue'(value) {
+                    this['value'] = value;
+                }
+            }];
         });
 
         it('should be able to start a process with a valid form', fakeAsync(() => {
@@ -264,11 +286,6 @@ describe('StartProcessCloudComponent', () => {
         it('should be able to start a process with a prefilled valid form', fakeAsync(() => {
             component.processDefinitionName = 'processwithform';
             getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
-            component.values = [{'id': '1', 'type': 'string', 'name': 'firstName', 'value': 'FakeName' }, {
-                'id': '1', 'type': 'string',
-                'name': 'lastName',
-                'value': 'FakeLastName'
-            }];
             fixture.detectChanges();
             formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
 
@@ -299,11 +316,6 @@ describe('StartProcessCloudComponent', () => {
         it('should NOT be able to start a process with a prefilled NOT valid form', fakeAsync(() => {
             component.processDefinitionName = 'processwithform';
             getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
-            component.values = [{ 'id': '1', 'type': 'string', 'name': 'firstName', 'value': 'FakeName' }, {
-                'id': '1', 'type': 'string',
-                'name': 'lastName',
-                'value': 'FakeLastName'
-            }];
             fixture.detectChanges();
             formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartFormNotValid));
 
@@ -333,11 +345,6 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should create a process instance if the selection is valid', fakeAsync(() => {
-            component.values = [{ 'id': '1', 'type': 'string', 'name': 'firstName', 'value': 'FakeName' }, {
-                'id': '1', 'type': 'string',
-                'name': 'lastName',
-                'value': 'FakeLastName'
-            }];
             component.name = 'testFormWithProcess';
             component.processDefinitionName = 'processwithoutform2';
             getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
@@ -365,11 +372,6 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should have start button enabled when default values are set', fakeAsync(() => {
-            component.values = [{ 'id': '1', 'type': 'string', 'name': 'firstName', 'value': 'FakeName' }, {
-                'id': '1', 'type': 'string',
-                'name': 'lastName',
-                'value': 'FakeLastName'
-            }];
             component.name = 'testFormWithProcess';
             component.processDefinitionName = 'processwithoutform2';
             getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
