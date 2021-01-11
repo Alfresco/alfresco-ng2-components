@@ -1,0 +1,57 @@
+@mixin adf-aspect-list-theme($theme) {
+
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+    .adf {
+
+        &-aspect-list-container {
+
+            padding-top: 3px;
+
+            .adf-accordion-aspect-list {
+
+                .mat-expansion-panel-spacing {
+                    margin: 0;
+                }
+
+                .mat-expansion-panel-header {
+                    font-size: smaller;
+                }
+
+                .mat-expansion-panel-header-title {
+                    flex: 1 1 0;
+                }
+
+                .mat-expansion-panel-header-description {
+                    justify-content: flex-start;
+                    align-items: center;
+                    flex: 1 1 0;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+
+        &-aspect-property-table {
+            width: 100%;
+
+            .mat-column-name {
+                width: 15%;
+            }
+
+            .mat-column-description {
+                width: 65%;
+            }
+
+            .mat-column-type {
+                width: 20%;
+                padding-left: 10px;
+            }
+        }
+    }
+}

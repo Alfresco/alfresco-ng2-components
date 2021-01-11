@@ -93,6 +93,7 @@ import {
     CustomEditorComponent,
     CustomWidgetComponent
 } from './components/cloud/custom-form-components/custom-editor.component';
+import { AspectListSampleComponent } from './components/aspect-list-sample/aspect-list-sample.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -180,6 +181,7 @@ registerLocaleData(localeSv);
         DemoErrorComponent,
         FormLoadingComponent,
         TreeViewSampleComponent,
+        AspectListSampleComponent,
         CloudLayoutComponent,
         AppsCloudDemoComponent,
         TasksCloudDemoComponent,
