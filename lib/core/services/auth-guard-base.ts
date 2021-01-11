@@ -35,11 +35,6 @@ import { Observable } from 'rxjs';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
-    abstract checkLogin(
-        activeRoute: ActivatedRouteSnapshot,
-        redirectUrl: string
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;
-
     protected get withCredentials(): boolean {
         return this.appConfigService.get<boolean>(
             'auth.withCredentials',
@@ -55,6 +50,12 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         private storageService: StorageService
     ) {
     }
+ls;
+
+    abstract checkLogin(
+        activeRoute: ActivatedRouteSnapshot,
+        redirectUrl: string
+    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;
 
     canActivate(
         route: ActivatedRouteSnapshot,
@@ -62,7 +63,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
         const redirectFragment = this.storageService.getItem('loginFragment');
-        if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
+        if (this.authenticationService.isLoggedIn() || this.withCredentials) {
             if (redirectFragment) {
                 this.storageService.removeItem('loginFragment');
                 return this.router.createUrlTree([redirectFragment]);
@@ -85,20 +86,34 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this.canActivate(route, state);
     }
-
     protected redirectToUrl(provider: string, url: string) {
         const pathToLogin = `/${this.getLoginRoute()}`;
         let urlToRedirect;
+
+        this.dialog.closeAll();
+
         if (!this.authenticationService.isOauth()) {
             this.authenticationService.setRedirect({ provider, url });
 
             urlToRedirect = `${pathToLogin}?redirectUrl=${url}`;
+            this.router.navigateByUrl(urlToRedirect);
+        } else if (this.getOauthConfig().silentLogin && !this.authenticationService.isPublicUrl()) {
+            this.authenticationService.ssoImplicitLogin();
         } else {
             urlToRedirect = pathToLogin;
+            this.router.navigateByUrl(urlToRedirect);
         }
 
-        this.dialog.closeAll();
-        this.router.navigateByUrl(urlToRedirect);
+    }
+
+    protected getOauthConfig(): OauthConfigModel {
+        return (
+            this.appConfigService &&
+            this.appConfigService.get<OauthConfigModel>(
+                AppConfigValues.OAUTHCONFIG,
+                null
+            )
+        );
     }
 
     protected getLoginRoute(): string {
