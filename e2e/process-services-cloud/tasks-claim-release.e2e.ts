@@ -24,7 +24,7 @@ import {
     LocalStorageUtil,
     LoginPage,
     ProcessDefinitionsService,
-    ProcessInstancesService,
+    ProcessInstancesService, StatusType,
     TaskFormCloudComponent,
     TaskHeaderCloudPage
 } from '@alfresco/adf-testing';
@@ -40,7 +40,11 @@ describe('Task claim/release', () => {
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
+    const taskList = tasksCloudDemoPage.taskListCloudComponent();
+
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
 
@@ -67,10 +71,10 @@ describe('Task claim/release', () => {
         });
 
         it('[C306874] Should be able to Claim/Release a process task which has a candidate user', async () => {
-            await setTaskFilter('CREATED', processInstance.id);
+            await setTaskFilter('Created', processInstance.id);
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(candidateApp.tasks.candidateUserTask);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(candidateApp.tasks.candidateUserTask);
+            await taskList.checkContentIsDisplayedByName(candidateApp.tasks.candidateUserTask);
+            await taskList.selectRow(candidateApp.tasks.candidateUserTask);
 
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
@@ -126,10 +130,10 @@ describe('Task claim/release', () => {
 
         it('[C306875] should be able to Claim/Release a process task which has a candidate group', async () => {
             await navigateToApp(browser.params.testConfig.users.hrUser);
-            await setTaskFilter('CREATED', processInstance.id);
+            await setTaskFilter('Created', processInstance.id);
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(candidateApp.tasks.uploadFileTask);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(candidateApp.tasks.uploadFileTask);
+            await taskList.checkContentIsDisplayedByName(candidateApp.tasks.uploadFileTask);
+            await taskList.selectRow(candidateApp.tasks.uploadFileTask);
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
@@ -154,10 +158,10 @@ describe('Task claim/release', () => {
 
             await navigationBarPage.clickLogoutButton();
             await navigateToApp(candidate);
-            await setTaskFilter('CREATED', processInstance.id);
+            await setTaskFilter('Created', processInstance.id);
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(candidateApp.tasks.uploadFileTask);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(candidateApp.tasks.uploadFileTask);
+            await taskList.checkContentIsDisplayedByName(candidateApp.tasks.uploadFileTask);
+            await taskList.selectRow(candidateApp.tasks.uploadFileTask);
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
@@ -183,7 +187,7 @@ describe('Task claim/release', () => {
 
     });
 
-    async function navigateToApp(user) {
+    async function navigateToApp(user: { username: string; password: string }) {
         await loginSSOPage.login(user.username, user.password);
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify(taskFilterConfiguration));
         await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -191,15 +195,15 @@ describe('Task claim/release', () => {
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.goToApp(candidateApp.name);
 
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        await taskList.getDataTable().waitForTableBody();
     }
 
-    async function setTaskFilter(status, processInstanceId) {
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown(status);
+    async function setTaskFilter(status: StatusType, processInstanceId: string) {
+        await editTaskFilter.openFilter();
+        await editTaskFilter.clearAssignee();
+        await editTaskFilter.setStatusFilterDropDown(status);
 
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().setProcessInstanceId(processInstanceId);
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
+        await editTaskFilter.setProcessInstanceId(processInstanceId);
+        await editTaskFilter.openFilter();
     }
 });

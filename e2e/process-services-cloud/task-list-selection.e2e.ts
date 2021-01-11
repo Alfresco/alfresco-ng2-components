@@ -38,6 +38,7 @@ describe('Task list cloud - selection', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
 
         const apiService = new ApiService();
         const identityService = new IdentityService(apiService);
@@ -75,7 +76,7 @@ describe('Task list cloud - selection', () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
-            await tasksCloudDemoPage.taskFilterCloudComponent.checkTaskFilterIsDisplayed('my-tasks');
+            await taskFilter.checkTaskFilterIsDisplayed('my-tasks');
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.disableDisplayTaskDetails();
             await tasksCloudDemoPage.clickAppButton();

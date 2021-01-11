@@ -43,7 +43,12 @@ describe('Task form cloud component', () => {
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
+    const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
+    const taskList = tasksCloudDemoPage.taskListCloudComponent();
+
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const widget = new ProcessCloudWidgetPage();
@@ -142,16 +147,16 @@ describe('Task form cloud component', () => {
 
     it('[C310366] Should refresh buttons and form after an action is complete', async () => {
         await appListCloudComponent.goToApp(simpleApp);
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(myTasksFilter);
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        await taskFilter.clickTaskFilter(myTasksFilter);
+        await taskList.getDataTable().waitTillContentLoaded();
 
-        await expect(tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
+        await expect(taskFilter.getActiveFilterName()).toBe('My Tasks');
+        await editTaskFilter.openFilter();
+        await editTaskFilter.clearAssignee();
+        await editTaskFilter.setStatusFilterDropDown('Created');
 
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(formTaskId);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(formTaskId);
+        await taskList.checkContentIsDisplayedById(formTaskId);
+        await taskList.selectRowByTaskId(formTaskId);
 
         await taskFormCloudComponent.checkFormIsReadOnly();
         await taskFormCloudComponent.checkClaimButtonIsDisplayed();
@@ -230,11 +235,11 @@ describe('Task form cloud component', () => {
         });
 
         it('[C310142] Empty content is displayed when having a task without form', async () => {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(myTasksFilter);
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter(myTasksFilter);
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(assigneeTask.entry.name);
+            await taskList.checkContentIsDisplayedByName(assigneeTask.entry.name);
+            await taskList.selectRow(assigneeTask.entry.name);
             await taskFormCloudComponent.checkFormIsNotDisplayed();
             await expect(await taskFormCloudComponent.getFormTitle()).toBe(assigneeTask.entry.name);
             await taskFormCloudComponent.checkFormContentIsEmpty();
@@ -243,8 +248,8 @@ describe('Task form cloud component', () => {
         });
 
         it('[C310199] Should not be able to complete a task when required field is empty or invalid data is added to a field', async () => {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(myTasksFilter);
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter(myTasksFilter);
+            await taskList.getDataTable().waitTillContentLoaded();
 
             await selectTaskByName(formValidationsTask.entry.name);
             await taskFormCloudComponent.formFields().checkFormIsDisplayed();
@@ -279,86 +284,86 @@ describe('Task form cloud component', () => {
         });
 
         it('[C307093] Complete button is not displayed when the task is already completed', async () => {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(completedTasksFilter);
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter(completedTasksFilter);
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('Completed Tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
+            await expect(await taskFilter.getActiveFilterName()).toBe('Completed Tasks');
+            await taskList.checkContentIsDisplayedByName(completedTaskName);
+            await taskList.selectRow(completedTaskName);
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
             await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
 
         it('[C307095] Task can not be completed by owner user', async () => {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(myTasksFilter);
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter(myTasksFilter);
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
+            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            await editTaskFilter.openFilter();
 
             await browser.driver.sleep(1000);
 
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('CREATED');
+            await editTaskFilter.clearAssignee();
+            await editTaskFilter.setStatusFilterDropDown('Created');
 
             await selectTaskByName(createdTask.entry.name);
             await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
 
         it('[C307110] Task list is displayed after clicking on Cancel button', async () => {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(myTasksFilter);
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter(myTasksFilter);
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
 
             await selectTaskByName(assigneeTask.entry.name);
             await taskFormCloudComponent.clickCancelButton();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assigneeTask.entry.name);
+            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            await taskList.checkContentIsDisplayedByName(assigneeTask.entry.name);
         });
 
         it('[C307094] Standalone Task can be completed by a user that is owner and assignee', async () => {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(myTasksFilter);
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter(myTasksFilter);
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
 
             await selectTaskByName(toBeCompletedTask.entry.name);
             await completeTask();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(toBeCompletedTask.entry.name);
+            await taskList.checkContentIsNotDisplayedByName(toBeCompletedTask.entry.name);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(completedTasksFilter);
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter(completedTasksFilter);
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(toBeCompletedTask.entry.name);
+            await taskList.checkContentIsDisplayedByName(toBeCompletedTask.entry.name);
             await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
 
         it('[C307111] Task of a process can be completed by a user that is owner and assignee', async () => {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(myTasksFilter);
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter(myTasksFilter);
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
 
             await selectTaskByName(completedTask.entry.name);
             await completeTask();
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTask.entry.name);
+            await taskList.checkContentIsNotDisplayedByName(completedTask.entry.name);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(completedTasksFilter);
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+            await taskFilter.clickTaskFilter(completedTasksFilter);
+            await taskList.getDataTable().waitTillContentLoaded();
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask.entry.name);
+            await taskList.checkContentIsDisplayedByName(completedTask.entry.name);
             await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
         });
     });
 
     async function openTaskByIdFromFilters(filterName: string, taskId: string): Promise<void> {
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(filterName);
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        await taskFilter.clickTaskFilter(filterName);
+        await taskList.getDataTable().waitTillContentLoaded();
 
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(taskId);
+        await taskList.checkContentIsDisplayedById(taskId);
+        await taskList.selectRowByTaskId(taskId);
     }
 
     async function verifyDateInput(widgetId: string, input: string): Promise<void> {
@@ -367,8 +372,8 @@ describe('Task form cloud component', () => {
     }
 
     async function selectTaskByName(taskName: string): Promise<void> {
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskName);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskName);
+        await taskList.checkContentIsDisplayedByName(taskName);
+        await taskList.selectRow(taskName);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
     }
 
@@ -381,11 +386,11 @@ describe('Task form cloud component', () => {
 
     async function goToAppOpenDropdownTaskByNameFromFilters(filterName: string, taskName: string): Promise<void> {
         await appListCloudComponent.goToApp(simpleApp);
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(filterName);
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+        await taskFilter.clickTaskFilter(filterName);
+        await taskList.getDataTable().waitTillContentLoaded();
 
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskName);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskName);
+        await taskList.checkContentIsDisplayedByName(taskName);
+        await taskList.selectRow(taskName);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
         await widget.dropdown().isWidgetVisible(dropdownFieldId);
     }

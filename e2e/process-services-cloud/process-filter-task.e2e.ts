@@ -40,12 +40,26 @@ import {
 } from '@alfresco/adf-process-services-cloud';
 
 describe('Process filters cloud', () => {
+    // en-US values for the process status
+    const PROCESS_STATUS = {
+        ALL: 'All',
+        RUNNING: 'Running',
+        SUSPENDED: 'Suspended',
+        COMPLETED: 'Completed'
+    };
 
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
+    const editProcessFilter = processCloudDemoPage.editProcessFilterCloudComponent();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
+    const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
+    const taskList = tasksCloudDemoPage.taskListCloudComponent();
+    const processList = processCloudDemoPage.processListCloudComponent();
+
     const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
@@ -82,26 +96,26 @@ describe('Process filters cloud', () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.goToApp(simpleApp);
-        await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
+        await taskList.checkTaskListIsLoaded();
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
     });
 
     it('[C290040] Should be able to open the Task Details page by clicking on the process name', async () => {
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown(simpleApp);
-        await processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING');
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', processInstance.id);
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setAppNameDropDown(simpleApp);
+        await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.RUNNING);
+        await editProcessFilter.setProperty('processInstanceId', processInstance.id);
 
-        await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Id', processInstance.id);
+        await processList.getDataTable().selectRow('Id', processInstance.id);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
 
         await processDetailsCloudDemoPage.checkTaskIsDisplayed(taskName);
         await browser.navigate().back();
 
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickOnTaskFilters();
-        await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskAssigned[0].entry.name);
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskAssigned[0].entry.name);
+        await taskFilter.clickOnTaskFilters();
+        await editTaskFilter.openFilter();
+        await taskList.checkContentIsDisplayedByName(taskAssigned[0].entry.name);
+        await taskList.selectRow(taskAssigned[0].entry.name);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
         await expect(await taskFormCloudComponent.getFormTitle()).toContain(taskName);
         await taskFormCloudComponent.clickCompleteButton();

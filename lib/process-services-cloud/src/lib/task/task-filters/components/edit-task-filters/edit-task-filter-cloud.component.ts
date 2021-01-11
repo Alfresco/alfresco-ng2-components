@@ -30,7 +30,7 @@ import { TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
 import { TaskCloudService } from '../../../services/task-cloud.service';
-import { BaseEditTaskFilterCloudComponent } from './base-edit-task-filter-cloud.component';
+import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-task-filter-cloud.component';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
@@ -140,18 +140,21 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         ];
     }
 
-    private getDefaultProperties() {
+    private getStatusOptions(): DropdownOption[] {
         return [
-            { label: 'ALL', value: '' },
-            { label: 'CREATED', value: 'CREATED' },
-            { label: 'ASSIGNED', value: 'ASSIGNED' },
-            { label: 'SUSPENDED', value: 'SUSPENDED' },
-            { label: 'CANCELLED', value: 'CANCELLED' },
-            { label: 'COMPLETED', value: 'COMPLETED' }
+            { value: '', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL' },
+            { value: 'CREATED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.CREATED' },
+            { value: 'ASSIGNED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ASSIGNED' },
+            { value: 'SUSPENDED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.SUSPENDED' },
+            { value: 'CANCELLED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.CANCELLED' },
+            { value: 'COMPLETED', label: 'ADF_CLOUD_TASK_FILTERS.STATUS.COMPLETED' }
         ];
     }
 
     createTaskFilterProperties(): TaskFilterProperties[] {
+        const statusOptions = this.getStatusOptions();
+        const sortProperties = this.createSortProperties;
+
         return [
             {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.APP_NAME',
@@ -170,8 +173,8 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
-                value: this.taskFilter.status || this.getDefaultProperties()[0].value,
-                options: this.getDefaultProperties()
+                value: this.taskFilter.status || statusOptions[0].value,
+                options: statusOptions
             },
             {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
@@ -233,15 +236,15 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.SORT',
                 type: 'select',
                 key: 'sort',
-                value: this.taskFilter.sort || this.createSortProperties[0].value,
-                options: this.createSortProperties
+                value: this.taskFilter.sort || sortProperties[0].value,
+                options: sortProperties
             },
             {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
-                value: this.taskFilter.order || EditTaskFilterCloudComponent.DIRECTIONS[0].value,
-                options: EditTaskFilterCloudComponent.DIRECTIONS
+                value: this.taskFilter.order || this.sortDirections[0].value,
+                options: [...this.sortDirections]
             },
             {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STAND_ALONE',

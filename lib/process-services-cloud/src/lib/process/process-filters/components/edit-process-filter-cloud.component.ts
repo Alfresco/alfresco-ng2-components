@@ -32,6 +32,11 @@ import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 import { ApplicationVersionModel } from '../../../models/application-version.model';
 
+export interface DropdownOption {
+    value: string;
+    label: string;
+}
+
 @Component({
     selector: 'adf-cloud-edit-process-filter',
     templateUrl: './edit-process-filter-cloud.component.html',
@@ -94,21 +99,26 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     processFilter: ProcessFilterCloudModel;
     changedProcessFilter: ProcessFilterCloudModel;
 
-    status = [
-        { label: 'ALL', value: '' },
-        { label: 'RUNNING', value: 'RUNNING' },
-        { label: 'SUSPENDED', value: 'SUSPENDED' },
-        { label: 'CANCELLED', value: 'CANCELLED' },
-        { label: 'COMPLETED', value: 'COMPLETED' }
+    status: Array<DropdownOption> = [
+        { value: '', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL' },
+        { value: 'RUNNING', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.RUNNING' },
+        { value: 'SUSPENDED', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.SUSPENDED' },
+        { value: 'CANCELLED', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.CANCELLED' },
+        { value: 'COMPLETED', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.COMPLETED' }
     ];
-
-    directions = [{ label: 'ASC', value: 'ASC' }, { label: 'DESC', value: 'DESC' }];
+    directions: Array<DropdownOption> = [
+        { value: 'ASC', label: 'ADF_CLOUD_PROCESS_FILTERS.DIRECTION.ASCENDING' },
+        { value: 'DESC', label: 'ADF_CLOUD_PROCESS_FILTERS.DIRECTION.DESCENDING' }
+    ];
     actionDisabledForDefault = [
         EditProcessFilterCloudComponent.ACTION_SAVE,
         EditProcessFilterCloudComponent.ACTION_DELETE
     ];
     applicationNames: any[] = [];
-    allProcessDefinitionNamesOption = { label: 'All', value: '' };
+    allProcessDefinitionNamesOption: DropdownOption = {
+        label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL',
+        value: ''
+    };
     processDefinitionNames: any[] = [];
     formHasBeenChanged = false;
     editProcessFilterForm: FormGroup;

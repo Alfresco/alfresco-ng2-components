@@ -122,17 +122,47 @@
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "My Tasks",
     "QUEUED_TASKS": "Queued Tasks",
-    "COMPLETED_TASKS": "Completed Tasks"
+    "COMPLETED_TASKS": "Completed Tasks",
+    "STATUS": {
+      "ALL": "All",
+      "CREATED": "Created",
+      "ASSIGNED": "Assigned",
+      "SUSPENDED": "Suspended",
+      "CANCELLED": "Cancelled",
+      "COMPLETED": "Completed"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Ascending",
+      "DESCENDING": "Descending"
+    }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
     "ALL_SERVICE_TASKS": "All Service Tasks",
     "ERRORED_TASKS": "Errored Tasks",
-    "COMPLETED_TASKS": "Completed Tasks"
+    "COMPLETED_TASKS": "Completed Tasks",
+    "STATUS": {
+      "ALL": "All",
+      "STARTED": "Started",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled",
+      "ERROR": "Error"
+    }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "All",
     "RUNNING_PROCESSES": "Running",
-    "COMPLETED_PROCESSES": "Completed"
+    "COMPLETED_PROCESSES": "Completed",
+    "STATUS": {
+      "ALL": "All",
+      "RUNNING": "Running",
+      "SUSPENDED": "Suspended",
+      "CANCELLED": "Cancelled",
+      "COMPLETED": "Completed"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Ascending",
+      "DESCENDING": "Descending"
+    }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

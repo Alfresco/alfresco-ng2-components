@@ -21,6 +21,15 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { PeopleCloudComponentPage } from './people-cloud-component.page';
 
+export interface FilterProps {
+    name?: string;
+    status?: string;
+    sort?: string;
+    order?: string;
+    initiator?: string;
+    processName?: string;
+}
+
 export class EditProcessFilterCloudComponentPage {
 
     customiseFilter = element(by.id('adf-edit-process-filter-sub-title-id'));
@@ -205,14 +214,14 @@ export class EditProcessFilterCloudComponentPage {
         await BrowserActions.click(this.saveButton);
     }
 
-    async setFilter({ name = '', status = '', sort = '', order = '', initiator = '', processName = '' }): Promise<void> {
+    async setFilter(props: FilterProps): Promise<void> {
         await this.openFilter();
-        if (name)   { await this.setProcessName(name);            }
-        if (status) { await this.setStatusFilterDropDown(status); }
-        if (sort)   { await this.setSortFilterDropDown(sort);     }
-        if (order)  { await this.setOrderFilterDropDown(order);   }
-        if (initiator)  { await this.setInitiator(initiator);   }
-        if (processName)  { await this.setProcessName(processName);   }
+        if (props.name) { await this.setProcessName(props.name); }
+        if (props.status) { await this.setStatusFilterDropDown(props.status); }
+        if (props.sort) { await this.setSortFilterDropDown(props.sort);     }
+        if (props.order) { await this.setOrderFilterDropDown(props.order);   }
+        if (props.initiator) { await this.setInitiator(props.initiator);   }
+        if (props.processName) { await this.setProcessName(props.processName);   }
         await this.openFilter();
     }
 }

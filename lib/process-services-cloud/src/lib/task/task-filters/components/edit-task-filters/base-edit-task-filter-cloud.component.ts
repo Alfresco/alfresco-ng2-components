@@ -29,6 +29,11 @@ import { IdentityGroupModel, IdentityUserModel, TranslationService, UserPreferen
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
 import { MatDialog } from '@angular/material/dialog';
 
+export interface DropdownOption {
+    value: string;
+    label: string;
+}
+
 @Directive()
 // tslint:disable-next-line: directive-class-suffix
 export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnChanges, OnDestroy {
@@ -44,10 +49,6 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     public static ORDER: string = 'order';
     public static DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
     public static FORMAT_DATE: string = 'DD/MM/YYYY';
-    public static DIRECTIONS = [
-        { label: 'ASC', value: 'ASC' },
-        { label: 'DESC', value: 'DESC' }
-    ];
     public static ACTIONS_DISABLED_BY_DEFAULT = [
         BaseEditTaskFilterCloudComponent.ACTION_SAVE,
         BaseEditTaskFilterCloudComponent.ACTION_DELETE
@@ -93,14 +94,22 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     @Output()
     action = new EventEmitter<TaskFilterAction>();
 
-    protected applicationNames: any[] = [];
-    protected processDefinitionNames: any[] = [];
+    protected applicationNames: DropdownOption[] = [];
+    protected processDefinitionNames: DropdownOption[] = [];
     protected formHasBeenChanged = false;
+
     editTaskFilterForm: FormGroup;
     taskFilterProperties: TaskFilterProperties[] = [];
     taskFilterActions: TaskFilterAction[] = [];
     toggleFilterActions: boolean = false;
-    allProcessDefinitionNamesOption = { label: 'All', value: '' };
+    sortDirections: DropdownOption[] = [
+        { value: 'ASC', label: 'ADF_CLOUD_TASK_FILTERS.DIRECTION.ASCENDING' },
+        { value: 'DESC', label: 'ADF_CLOUD_TASK_FILTERS.DIRECTION.DESCENDING' }
+    ];
+    allProcessDefinitionNamesOption: DropdownOption = {
+        value: '',
+        label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL'
+    };
 
     taskFilter: T;
     changedTaskFilter: T;
@@ -314,7 +323,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         this.checkMandatorySortProperties();
 
         return this.sortProperties.map((property: string) => {
-            return { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
+            return { label: property, value: property };
         });
     }
 

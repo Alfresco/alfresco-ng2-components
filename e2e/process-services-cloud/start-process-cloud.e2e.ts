@@ -26,7 +26,12 @@ describe('Start Process', () => {
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
+
     const processCloudDemoPage = new ProcessCloudDemoPage();
+    const editProcessFilter = processCloudDemoPage.editProcessFilterCloudComponent();
+    const processFilter = processCloudDemoPage.processFilterCloudComponent;
+    const processList = processCloudDemoPage.processListCloudComponent();
+
     const startProcessPage = new StartProcessCloudPage();
 
     const apiService = new ApiService();
@@ -103,12 +108,12 @@ describe('Start Process', () => {
         await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
         await browser.sleep(400);
         await startProcessPage.clickStartProcessButton();
-        await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
+        await processFilter.clickOnProcessFilters();
 
-        await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(processName);
-        await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
+        await processFilter.clickRunningProcessesFilter();
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProcessName(processName);
+        await expect(await processFilter.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
+        await processList.checkContentIsDisplayedByName(processName);
    });
 });

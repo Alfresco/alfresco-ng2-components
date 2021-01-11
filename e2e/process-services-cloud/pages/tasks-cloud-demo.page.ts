@@ -52,7 +52,6 @@ export class TasksCloudDemoPage {
     togglePage = new TogglePage();
 
     editTaskFilterCloud = new EditTaskFilterCloudComponentPage();
-
     taskFilterCloudComponent = new TaskFiltersCloudComponentPage();
 
     async disableDisplayTaskDetails(): Promise<void> {
@@ -81,10 +80,6 @@ export class TasksCloudDemoPage {
 
     taskListCloudComponent(): TaskListCloudComponentPage {
         return new TaskListCloudComponentPage();
-    }
-
-    editTaskFilterCloudComponent(): EditTaskFilterCloudComponentPage {
-        return this.editTaskFilterCloud;
     }
 
     async openNewTaskForm(): Promise<void> {

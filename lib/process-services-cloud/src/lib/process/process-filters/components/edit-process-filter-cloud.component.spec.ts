@@ -390,9 +390,9 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(stateElement).toBeDefined();
                 expect(sortElement).toBeDefined();
                 expect(orderElement).toBeDefined();
-                expect(stateElement.innerText.trim()).toEqual('RUNNING');
+                expect(stateElement.innerText.trim()).toEqual('ADF_CLOUD_PROCESS_FILTERS.STATUS.RUNNING');
                 expect(sortElement.innerText.trim()).toEqual('ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.ID');
-                expect(orderElement.innerText.trim()).toEqual('ASC');
+                expect(orderElement.innerText.trim()).toEqual('ADF_CLOUD_PROCESS_FILTERS.DIRECTION.ASCENDING');
             });
         }));
 

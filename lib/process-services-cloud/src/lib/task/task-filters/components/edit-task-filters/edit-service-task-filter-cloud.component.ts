@@ -28,7 +28,7 @@ import { TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
-import { BaseEditTaskFilterCloudComponent } from './base-edit-task-filter-cloud.component';
+import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-task-filter-cloud.component';
 
 @Component({
     selector: 'adf-cloud-edit-service-task-filter',
@@ -91,17 +91,19 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
         return this.serviceTaskFilterCloudService.getTaskListFilters(this.appName);
     }
 
-    private getDefaultProperties() {
+    private getStatusOptions(): DropdownOption[] {
         return [
-            { label: 'ALL', value: '' },
-            { label: 'STARTED', value: 'STARTED' },
-            { label: 'COMPLETED', value: 'COMPLETED' },
-            { label: 'CANCELLED', value: 'CANCELLED' },
-            { label: 'ERROR', value: 'ERROR' }
+            { value: '', label: 'ADF_CLOUD_SERVICE_TASK_FILTERS.STATUS.ALL' },
+            { value: 'STARTED', label: 'ADF_CLOUD_SERVICE_TASK_FILTERS.STATUS.STARTED' },
+            { value: 'COMPLETED', label: 'ADF_CLOUD_SERVICE_TASK_FILTERS.STATUS.COMPLETED' },
+            { value: 'CANCELLED', label: 'ADF_CLOUD_SERVICE_TASK_FILTERS.STATUS.CANCELLED' },
+            { value: 'ERROR', label: 'ADF_CLOUD_SERVICE_TASK_FILTERS.STATUS.ERROR' }
         ];
     }
 
     createTaskFilterProperties(): TaskFilterProperties[] {
+        const statusOptions = this.getStatusOptions();
+
         return [
             {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.APP_NAME',
@@ -145,15 +147,15 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
-                value: this.taskFilter.order || EditServiceTaskFilterCloudComponent.DIRECTIONS[0].value,
-                options: EditServiceTaskFilterCloudComponent.DIRECTIONS
+                value: this.taskFilter.order || this.sortDirections[0].value,
+                options: [...this.sortDirections]
             },
             {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
-                value: this.taskFilter.status || this.getDefaultProperties()[0].value,
-                options: this.getDefaultProperties()
+                value: this.taskFilter.status || statusOptions[0].value,
+                options: statusOptions
             },
             {
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.STARTED_DATE',

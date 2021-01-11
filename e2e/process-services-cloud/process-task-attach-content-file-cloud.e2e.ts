@@ -43,8 +43,15 @@ describe('Process Task - Attach content file', () => {
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
+
     const processCloudDemoPage = new ProcessCloudDemoPage();
+    const editProcessFilter = processCloudDemoPage.editProcessFilterCloudComponent();
+    const processList = processCloudDemoPage.processListCloudComponent();
+
     const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
+    const taskList = tasksCloudDemoPage.taskListCloudComponent();
+
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const processCloudWidget = new ProcessCloudWidgetPage();
     const contentNodeSelectorDialog = new ContentNodeSelectorDialogPage();
@@ -115,16 +122,16 @@ describe('Process Task - Attach content file', () => {
 
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
         await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName('upload process');
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProcessName('upload process');
+        await editProcessFilter.openFilter();
         await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
 
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processInstance.entry.id);
-        await processCloudDemoPage.processListCloudComponent().selectRowById(processInstance.entry.id);
+        await processList.checkContentIsDisplayedById(processInstance.entry.id);
+        await processList.selectRowById(processInstance.entry.id);
 
-        await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskName);
+        await taskList.checkTaskListIsLoaded();
+        await taskList.selectRow(taskName);
 
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
         await taskFormCloudComponent.formFields().checkWidgetIsVisible(uploadWidgetId);
@@ -141,22 +148,22 @@ describe('Process Task - Attach content file', () => {
         await viewAttachedFile(contentUploadFileWidget, pdfFileTwo.name);
         await taskFormCloudComponent.clickCompleteButton();
 
-        await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(taskName);
+        await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+        await taskList.checkContentIsNotDisplayedByName(taskName);
 
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
-        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskName);
+        await taskFilter.clickTaskFilter('completed-tasks');
+        await taskList.getDataTable().waitTillContentLoaded();
+        await taskList.checkContentIsDisplayedByName(taskName);
 
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
         await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
 
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName('upload process');
-        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProcessName('upload process');
+        await editProcessFilter.openFilter();
 
         await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.COMPLETED);
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processInstance.entry.id);
+        await processList.checkContentIsDisplayedById(processInstance.entry.id);
     });
 
     async function viewAttachedFile(contentUploadWidget, fileName: string): Promise<void> {

@@ -175,7 +175,7 @@ export class DataTableComponentPage {
             sortedList = sortedList.sort(this.sortPriority);
         }
 
-        if (sortOrder.toLocaleLowerCase() === 'desc') {
+        if (['desc', 'descending'].includes(sortOrder.toLocaleLowerCase())) {
             sortedList = sortedList.reverse();
         }
 

@@ -40,7 +40,11 @@ describe('Process list cloud', () => {
         const loginSSOPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
+
         const processCloudDemoPage = new ProcessCloudDemoPage();
+        const editProcessFilter = processCloudDemoPage.editProcessFilterCloudComponent();
+        const processList = processCloudDemoPage.processListCloudComponent();
+
         const tasksCloudDemoPage = new TasksCloudDemoPage();
 
         const apiService = new ApiService();
@@ -100,23 +104,23 @@ describe('Process list cloud', () => {
         });
 
         it('[C315236] Should be able to see and execute custom action menu', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(editProcess.entry.name);
+            await editProcessFilter.openFilter();
+            await editProcessFilter.setProcessName(editProcess.entry.name);
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
-            await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(editProcess.entry.id);
-            await processCloudDemoPage.processListCloudComponent().clickOptionsButton(editProcess.entry.id);
-            await expect(await processCloudDemoPage.processListCloudComponent().isCustomActionEnabled('disabledaction')).toBe(false);
-            await expect(await processCloudDemoPage.processListCloudComponent().getNumberOfOptions()).toBe(3);
-            await processCloudDemoPage.processListCloudComponent().clickOnCustomActionMenu('edit');
+            await processList.checkProcessListIsLoaded();
+            await processList.checkContentIsDisplayedById(editProcess.entry.id);
+            await processList.clickOptionsButton(editProcess.entry.id);
+            await expect(await processList.isCustomActionEnabled('disabledaction')).toBe(false);
+            await expect(await processList.getNumberOfOptions()).toBe(3);
+            await processList.clickOnCustomActionMenu('edit');
             await processCloudDemoPage.checkActionExecuted(editProcess.entry.id, 'edit');
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(deleteProcess.entry.name);
+            await editProcessFilter.setProcessName(deleteProcess.entry.name);
             await browser.sleep(1000);
-            await processCloudDemoPage.processListCloudComponent().rightClickOnRow(deleteProcess.entry.id);
-            await expect(await processCloudDemoPage.processListCloudComponent().isCustomActionEnabled('disabledaction')).toBe(false);
-            await expect(await processCloudDemoPage.processListCloudComponent().getNumberOfOptions()).toBe(3);
-            await processCloudDemoPage.processListCloudComponent().clickContextMenuActionNamed('delete');
+            await processList.rightClickOnRow(deleteProcess.entry.id);
+            await expect(await processList.isCustomActionEnabled('disabledaction')).toBe(false);
+            await expect(await processList.getNumberOfOptions()).toBe(3);
+            await processList.clickContextMenuActionNamed('delete');
             await processCloudDemoPage.checkActionExecuted(deleteProcess.entry.id, 'delete');
         });
     });
