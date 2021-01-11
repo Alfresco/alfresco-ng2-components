@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
@@ -46,7 +46,7 @@ import { MOMENT_DATE_FORMATS, MomentDateAdapter, WidgetComponent,
     },
     encapsulation: ViewEncapsulation.None
 })
-export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy, OnChanges {
 
     typeId = 'DateCloudWidgetComponent';
     DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
@@ -82,6 +82,12 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
             }
         }
         this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes && changes.field  && !changes.field.firstChange && changes.field.currentValue.value !== changes.field.previousValue.value) {
+            this.displayDate = moment(changes.field.currentValue.value, this.field.dateDisplayFormat);
+        }
     }
 
     ngOnDestroy() {
