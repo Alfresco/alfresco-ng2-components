@@ -234,7 +234,7 @@ export class FormModel {
         for (const field of this.getFormFields()) {
             const variableId = `variables.${field.name}`;
 
-            if (formValues[variableId] || formValues[field.id]) {
+            if (formValues[variableId] !== undefined || formValues[field.id] !== undefined) {
                 field.json.value = formValues[variableId] || formValues[field.id];
                 field.value = field.parseValue(field.json);
             }
