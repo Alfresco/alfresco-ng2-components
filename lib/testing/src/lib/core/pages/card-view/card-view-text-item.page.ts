@@ -30,7 +30,7 @@ export class CardTextItemPage {
     readOnlyField: Locator = by.css('.adf-property-read-only');
 
     constructor(label: string = 'assignee') {
-        this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-textitem`));
+        this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "card-textitem-label-${label}")]//ancestor::adf-card-view-textitem`));
     }
 
     async getFieldValue(): Promise<string> {
