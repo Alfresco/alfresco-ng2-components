@@ -148,7 +148,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C286272] Should be able to see results when searching for a user', async () => {
-            await permissionsPage.checkAddPermissionButtonIsDisplayed();
+            await permissionsPage.addPermissionButton.waitVisible();
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
@@ -157,7 +157,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C276979] Should be able to give permissions to a group of people', async () => {
-            await permissionsPage.checkAddPermissionButtonIsDisplayed();
+            await permissionsPage.addPermissionButton.waitVisible();
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
@@ -168,7 +168,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C277100] Should display EVERYONE group in the search result set', async () => {
-            await permissionsPage.checkAddPermissionButtonIsDisplayed();
+            await permissionsPage.addPermissionButton.waitVisible();
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
@@ -192,7 +192,7 @@ describe('Permissions Component', () => {
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             await contentList.rightClickOnRow(fileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Permission');
-            await permissionsPage.checkAddPermissionButtonIsDisplayed();
+            await permissionsPage.addPermissionButton.waitVisible();
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
@@ -377,7 +377,7 @@ describe('Permissions Component', () => {
             await contentList.rightClickOnRow('RoleConsumer' + fileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Permission');
             await permissionsPage.addPermissionsDialog.checkPermissionInheritedButtonIsDisplayed();
-            await permissionsPage.checkAddPermissionButtonIsDisplayed();
+            await permissionsPage.addPermissionButton.waitVisible();
             await permissionsPage.addPermissionsDialog.clickPermissionInheritedButton();
             await expect(await notificationPage.getSnackBarMessage()).toEqual('You are not allowed to change permissions');
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();

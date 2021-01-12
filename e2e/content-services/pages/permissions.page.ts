@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    DataTableComponentPage,
-    AddPermissionsDialogPage,
-    BrowserVisibility,
-    BrowserActions
-} from '@alfresco/adf-testing';
+import { DataTableComponentPage, AddPermissionsDialogPage, TestElement } from '@alfresco/adf-testing';
 import { browser, by, element } from 'protractor';
 
 export class PermissionsPage {
@@ -28,7 +23,7 @@ export class PermissionsPage {
     dataTableComponentPage = new DataTableComponentPage();
     addPermissionsDialog = new AddPermissionsDialogPage();
 
-    addPermissionButton = element(by.css("button[data-automation-id='adf-add-permission-button']"));
+    addPermissionButton = TestElement.byCss("button[data-automation-id='adf-add-permission-button']");
     addPermissionDialog = element(by.css('adf-add-permission-dialog'));
     searchUserInput = element(by.id('searchInput'));
     searchResults = element(by.css('#adf-add-permission-authority-results #adf-search-results-content'));
@@ -37,20 +32,12 @@ export class PermissionsPage {
     noPermissions = element(by.id('adf-no-permissions-template'));
     deletePermissionButton = element(by.css(`button[data-automation-id='adf-delete-permission-button']`));
     permissionDisplayContainer = element(by.id('adf-permission-display-container'));
-    closeButton = element(by.id('add-permission-dialog-close-button'));
-
-    async clickCloseButton(): Promise<void> {
-        await BrowserActions.click(this.closeButton);
-    }
+    closeButton = TestElement.byCss('#add-permission-dialog-close-button');
 
     async changePermission(name: string, role: string): Promise<void> {
         await this.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(name);
         await this.addPermissionsDialog.selectOption(role);
         await browser.sleep(500);
         await this.dataTableComponentPage.checkRowIsNotSelected('Authority ID', name);
-    }
-
-    async checkAddPermissionButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.addPermissionButton);
     }
 }

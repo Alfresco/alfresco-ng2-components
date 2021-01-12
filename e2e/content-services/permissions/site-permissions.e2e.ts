@@ -179,7 +179,7 @@ describe('Permissions Component', () => {
             await contentServicesPage.pressContextMenuActionNamed('Permission');
 
             await permissionsPage.addPermissionsDialog.checkPermissionInheritedButtonIsDisplayed();
-            await permissionsPage.checkAddPermissionButtonIsDisplayed();
+            await permissionsPage.addPermissionButton.waitVisible();
 
             await browser.sleep(5000);
 

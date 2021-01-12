@@ -381,7 +381,7 @@ export class ContentServicesPage {
 
     async openCreateLibraryDialog(): Promise<void> {
         await BrowserActions.click(this.createLibraryButton);
-        await this.createLibraryDialog.waitForDialogToOpen();
+        await this.createLibraryDialog.libraryDialog.waitVisible();
     }
 
     async createNewFolder(folderName: string): Promise<void> {
