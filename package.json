@@ -105,8 +105,6 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@alfresco/adf-cli": "4.3.0-dd09c3ac0289714d821f9c0bca3b70389496974d",
-    "@alfresco/adf-testing": "4.3.0-dd09c3ac0289714d821f9c0bca3b70389496974d",
     "@angular-devkit/build-angular": "^0.1001.7",
     "@angular-devkit/build-ng-packagr": "~0.1002.0",
     "@angular/cli": "^10.2.0",
