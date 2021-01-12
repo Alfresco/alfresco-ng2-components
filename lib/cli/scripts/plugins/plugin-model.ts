@@ -7,6 +7,6 @@ export enum PluginTarget {
 export interface PluginInterface {
     name: string;
     host: string;
-    appName: string;
-    uiName: string;
+    appName?: string;
+    uiName?: string;
 }

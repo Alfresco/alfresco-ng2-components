@@ -3,6 +3,7 @@ import { CheckEnv } from './plugins/check-env';
 import program = require('commander');
 import { ProcessServiceCheckPlugin } from './plugins/process-service-check-plugin';
 import { ProcessAutomationCheckPlugin } from './plugins/process-automation-check-plugin';
+import { GovernanceCheckPlugin } from './plugins/governance-check-plugin';
 
 let pluginEnv;
 
@@ -27,15 +28,17 @@ export default async function main(_args: string[]) {
     if (program.pluginName === PluginTarget.processAutomation) {
         await checkProcessAutomationPlugin();
     }
+
+    if (program.pluginName === PluginTarget.governance) {
+        await checkGovernancePlugin();
+    }
 }
 
 async function checkProcessServicesPlugin() {
     const processServiceCheckPlugin = new ProcessServiceCheckPlugin(
         {
             host: program.host,
-            name: PluginTarget.processService,
-            appName: null,
-            uiName: null
+            name: PluginTarget.processService
         },
         pluginEnv.alfrescoJsApi
     );
@@ -53,4 +56,16 @@ async function checkProcessAutomationPlugin() {
         pluginEnv.alfrescoJsApi
     );
     await processAutomationCheckPlugin.checkProcessAutomationPlugin();
+}
+
+async function checkGovernancePlugin() {
+    const governancePluginCheck = new GovernanceCheckPlugin(
+        {
+            host: program.host,
+            name: PluginTarget.governance
+        },
+        pluginEnv.alfrescoJsApi
+    );
+
+    await governancePluginCheck.checkRecordManagement();
 }

@@ -28,17 +28,17 @@ export class ProcessAutomationCheckPlugin {
                     } has been correctly configured`
                 );
 
-                pluginStatus = [{ PluginName: this.plugInInfo.name, Status: 'Active', BE: 'Enabled', FE: 'Enabled' }];
+                pluginStatus = [{ PluginName: this.plugInInfo.name, Status: 'Active', BE: 'UP', FE: 'Enabled' }];
                 console.table(pluginStatus);
             } else {
                 this.logConfigurationError();
-                pluginStatus = [{ PluginName: this.plugInInfo.name, Status: 'Inactive', BE: isBackendActive ? 'Enabled' : 'Disabled', FE: isPluginEnabled ? 'Enabled' : 'Disabled' }];
+                pluginStatus = [{ PluginName: this.plugInInfo.name, Status: 'Inactive', BE: isBackendActive ? 'UP' : 'DOWN', FE: isPluginEnabled ? 'Enabled' : 'Disabled' }];
                 console.table(pluginStatus);
                 process.exit(1);
             }
         } catch (e) {
             this.logConfigurationError(e);
-            pluginStatus = [{ PluginName: this.plugInInfo.name, Status: 'Inactive', BE: 'Disabled', FE: 'Disabled' }];
+            pluginStatus = [{ PluginName: this.plugInInfo.name, Status: 'Inactive', BE: 'DOWN', FE: 'Disabled' }];
             console.table(pluginStatus);
             process.exit(1);
         }
