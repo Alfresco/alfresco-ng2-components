@@ -88,7 +88,7 @@ export class Project {
     }
   }
 
-  async deleteRelease(releaseId: string) {
+  async deleteRelease(releaseId: string): Promise<void> {
     Logger.info(`[Project] Delete project release ${releaseId}`);
     try {
         await this.requestApiHelper.delete(`modeling-service/v1/releases/${releaseId}`);
