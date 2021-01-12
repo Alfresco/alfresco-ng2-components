@@ -234,11 +234,15 @@ export class FormModel {
         for (const field of this.getFormFields()) {
             const variableId = `variables.${field.name}`;
 
-            if (formValues[variableId] !== undefined || formValues[field.id] !== undefined) {
+            if (this.isDefined(formValues[variableId]) || this.isDefined(formValues[field.id])) {
                 field.json.value = formValues[variableId] || formValues[field.id];
                 field.value = field.parseValue(field.json);
             }
         }
+    }
+
+    private isDefined(value: string): boolean {
+        return value !== undefined && value !== null;
     }
 
     /**
