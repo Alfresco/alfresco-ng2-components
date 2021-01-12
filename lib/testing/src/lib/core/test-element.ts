@@ -22,6 +22,10 @@ import { BrowserVisibility } from './utils/browser-visibility';
 export class TestElement {
     constructor(public elementFinder: ElementFinder) {}
 
+    static byId(id: string): TestElement {
+        return new TestElement(element(by.id(id)));
+    }
+
     static byCss(selector: string): TestElement {
         return new TestElement(element(by.css(selector)));
     }
@@ -38,6 +42,10 @@ export class TestElement {
         return BrowserVisibility.waitUntilElementIsVisible(this.elementFinder, waitTimeout);
     }
 
+    async waitNotVisible(waitTimeout?: number) {
+        return BrowserVisibility.waitUntilElementIsNotVisible(this.elementFinder, waitTimeout);
+    }
+
     async waitNotPresent(waitTimeout?: number) {
         return BrowserVisibility.waitUntilElementIsNotPresent(this.elementFinder, waitTimeout);
     }
@@ -52,6 +60,11 @@ export class TestElement {
 
     async isDisplayed(): Promise<boolean> {
         return this.elementFinder.isDisplayed();
+    }
+
+    async getAttribute(name: string): Promise<string> {
+        await this.waitVisible();
+        return this.elementFinder.getAttribute(name);
     }
 
     async getText(): Promise<string> {

@@ -80,14 +80,14 @@ describe('Tag component', () => {
 
     it('[C260374] Should NOT be possible to add a new tag without Node ID', async () => {
         await expect(await tagPage.getNodeId()).toEqual('');
-        await expect(await tagPage.getNewTagPlaceholder()).toEqual('New Tag');
+        await expect(await tagPage.newTagInput.getAttribute('data-placeholder')).toEqual('New Tag');
         await expect(await tagPage.addTagButtonIsEnabled()).toEqual(false);
-        await tagPage.checkTagListIsEmpty();
-        await tagPage.checkTagListByNodeIdIsEmpty();
-        await tagPage.addNewTagInput('a');
+        await tagPage.tagListRow.waitNotVisible();
+        await tagPage.tagListByNodeIdRow.waitNotVisible();
+        await tagPage.newTagInput.typeText('a');
 
         await expect(await tagPage.addTagButtonIsEnabled()).toEqual(false);
-        await expect(await tagPage.getNewTagInput()).toEqual('a');
+        await expect(await tagPage.newTagInput.getAttribute('value')).toEqual('a');
     });
 
     it('[C268151] Should be possible to add a new tag to a Node', async () => {
@@ -103,7 +103,7 @@ describe('Tag component', () => {
         await tagPage.addTag(sameTag);
         await tagPage.checkTagIsDisplayedInTagList(sameTag);
         await tagPage.addTag(sameTag);
-        await expect(await tagPage.getErrorMessage()).toEqual('Tag already exists');
+        await expect(await tagPage.errorMessage.getText()).toEqual('Tag already exists');
     });
 
     it('[C260375] Should be possible to delete a tag', async () => {
@@ -141,7 +141,7 @@ describe('Tag component', () => {
         await tagPage.checkTagIsDisplayedInTagListByNodeId(tagList[3]);
         await tagPage.checkDeleteTagFromTagListByNodeIdIsDisplayed(tagList[3]);
 
-        await tagPage.clickShowDeleteButtonSwitch();
+        await tagPage.showDeleteButton.click();
 
         await tagPage.checkDeleteTagFromTagListByNodeIdIsNotDisplayed(tagList[3]);
     });
@@ -149,16 +149,16 @@ describe('Tag component', () => {
     it('[C286472] Should be able to click Show more/less button on List Tags Content Services', async () => {
         await tagPage.insertNodeId(pdfFileModel.id);
 
-        await tagPage.checkShowMoreButtonIsDisplayed();
-        await tagPage.checkShowLessButtonIsNotDisplayed();
+        await tagPage.showMoreButton.waitVisible();
+        await tagPage.showLessButton.waitNotVisible();
 
-        await expect(await tagPage.checkTagsOnList()).toEqual(10);
+        await expect(await tagPage.tagsOnPage.count()).toEqual(10);
 
-        await tagPage.clickShowMoreButton();
-        await tagPage.checkShowLessButtonIsDisplayed();
+        await tagPage.showMoreButton.click();
+        await tagPage.showLessButton.waitVisible();
 
-        await tagPage.clickShowLessButton();
-        await tagPage.checkShowLessButtonIsNotDisplayed();
+        await tagPage.showLessButton.click();
+        await tagPage.showLessButton.waitNotVisible();
     });
 
 });
