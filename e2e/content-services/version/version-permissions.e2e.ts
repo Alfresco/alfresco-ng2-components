@@ -18,7 +18,6 @@
 import { browser, by, element } from 'protractor';
 import {
     ApiService,
-    BrowserActions,
     LoginPage,
     NotificationHistoryPage,
     StringUtil,
@@ -152,8 +151,7 @@ describe('Version component permissions', () => {
         it('[C277200] should a user with Manager permission be able to upload a new version for a file with different creator', async () => {
             await contentServices.versionManagerContent(differentCreatorFile.name);
 
-            await BrowserActions.click(versionManagePage.showNewVersionButton);
-
+            await versionManagePage.showNewVersionButton.click();
             await versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
             await versionManagePage.checkFileVersionExist('1.1');
@@ -224,8 +222,7 @@ describe('Version component permissions', () => {
         it('[C277177] Should a user with Contributor permission be able to upload a new version for the created file', async () => {
             await contentServices.versionManagerContent(sameCreatorFile.name);
 
-            await BrowserActions.click(versionManagePage.showNewVersionButton);
-
+            await versionManagePage.showNewVersionButton.click();
             await versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
             await versionManagePage.checkFileVersionExist('1.1');
@@ -279,8 +276,7 @@ describe('Version component permissions', () => {
         it('[C277195] Should a user with Collaborator permission be able to upload a new version for the created file', async () => {
             await contentServices.versionManagerContent(sameCreatorFile.name);
 
-            await BrowserActions.click(versionManagePage.showNewVersionButton);
-
+            await versionManagePage.showNewVersionButton.click();
             await versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
             await versionManagePage.checkFileVersionExist('1.1');
@@ -300,8 +296,7 @@ describe('Version component permissions', () => {
         it('[C277199] should a user with Collaborator permission be able to upload a new version for a file with different creator', async () => {
             await contentServices.versionManagerContent(differentCreatorFile.name);
 
-            await BrowserActions.click(versionManagePage.showNewVersionButton);
-
+            await versionManagePage.showNewVersionButton.click();
             await versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
             await versionManagePage.checkFileVersionExist('1.1');

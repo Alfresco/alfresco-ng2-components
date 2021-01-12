@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, BrowserActions, FileBrowserUtil, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
+import { ApiService, FileBrowserUtil, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -94,7 +94,7 @@ describe('Viewer', () => {
 
     it('[C362242] Should the Viewer be able to view a previous version of a file', async () => {
         await contentServicesPage.versionManagerContent(txtFileInfo.name);
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
         await versionManagePage.closeVersionDialog();
         await contentServicesPage.doubleClickRow(txtFileUploaded.entry.name);

@@ -90,7 +90,7 @@ describe('Version component', () => {
    });
 
     it('[C272768] Should be visible the first file version when you upload a file', async () => {
-        await versionManagePage.checkUploadNewVersionsButtonIsDisplayed();
+        await versionManagePage.showNewVersionButton.waitVisible();
 
         await versionManagePage.checkFileVersionExist('1.0');
         await expect(await versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
@@ -98,7 +98,7 @@ describe('Version component', () => {
     });
 
     it('[C279995] Should show/hide the new upload file options when click on add New version/cancel button', async () => {
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
 
         await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.cancelButton);
         await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.majorRadio);
@@ -116,11 +116,11 @@ describe('Version component', () => {
         await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.commentText);
         await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
 
-        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.waitVisible();
     });
 
     it('[C260244] Should show the version history when select a file with multiple version', async () => {
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
         await versionManagePage.checkFileVersionExist('1.0');
@@ -133,7 +133,7 @@ describe('Version component', () => {
     });
 
     it('[C269084] Should be possible add a comment when add a new version', async () => {
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
         await versionManagePage.enterCommentText('Example comment text');
         await versionManagePage.uploadNewVersionFile(fileModelVersionThree.location);
 
@@ -144,7 +144,7 @@ describe('Version component', () => {
     });
 
     it('[C275719] Should be possible preview the file when you add a new version', async () => {
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
         await versionManagePage.clickMajorChange();
 
         await versionManagePage.uploadNewVersionFile(fileModelVersionFor.location);
@@ -152,7 +152,7 @@ describe('Version component', () => {
         await versionManagePage.checkFileVersionExist('2.0');
         await expect(await versionManagePage.getFileVersionName('2.0')).toEqual(fileModelVersionFor.name);
 
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
         await versionManagePage.clickMinorChange();
 
         await versionManagePage.uploadNewVersionFile(fileModelVersionFive.location);

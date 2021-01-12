@@ -98,7 +98,7 @@ describe('Version component actions', () => {
     });
 
     it('[C280005] Should be showed all the default action when you have more then one version', async () => {
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
 
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
@@ -129,7 +129,7 @@ describe('Version component actions', () => {
     });
 
     it('[C280006] Should be possible prevent a version to be deleted when click on No on the confirm dialog', async () => {
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
 
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
@@ -169,7 +169,7 @@ describe('Version component actions', () => {
         await browser.refresh();
         await contentServicesPage.versionManagerContent(txtFileModel.name);
 
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
 
         await browser.executeScript(' setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 1000)');
         await versionManagePage.uploadNewVersionFile(bigFileToCancel.location);

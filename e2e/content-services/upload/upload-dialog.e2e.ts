@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
-    BrowserActions,
-    LoginPage,
-    UploadActions,
-    UserModel,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { ApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../core/pages/dialog/upload-toggles.page';
@@ -44,25 +37,27 @@ describe('Upload component', () => {
 
     let acsUser: UserModel;
 
+    const FILES = browser.params.resources.Files;
+
     const firstPdfFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        'name': FILES.ADF_DOCUMENTS.PDF_B.file_name,
+        'location': FILES.ADF_DOCUMENTS.PDF_B.file_location
     });
     const docxFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        'name': FILES.ADF_DOCUMENTS.DOCX.file_name,
+        'location': FILES.ADF_DOCUMENTS.DOCX.file_location
     });
     const pdfFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
+        'name': FILES.ADF_DOCUMENTS.PDF.file_name,
+        'location': FILES.ADF_DOCUMENTS.PDF.file_location
     });
     const pngFileModelTwo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
+        'name': FILES.ADF_DOCUMENTS.PNG_B.file_name,
+        'location': FILES.ADF_DOCUMENTS.PNG_B.file_location
     });
     const pngFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': FILES.ADF_DOCUMENTS.PNG.file_name,
+        'location': FILES.ADF_DOCUMENTS.PNG.file_location
     });
     const filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
     const filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
@@ -90,8 +85,7 @@ describe('Upload component', () => {
     });
 
     it('[C260143] Should be possible to maximize/minimize the upload dialog', async () => {
-        await contentServicesPage
-            .uploadFile(docxFileModel.location);
+        await contentServicesPage.uploadFile(docxFileModel.location);
         await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
         await uploadDialog.fileIsUploaded(docxFileModel.name);
@@ -113,8 +107,7 @@ describe('Upload component', () => {
     });
 
     it('[C291902] Should be shown upload counter display in dialog box', async () => {
-        await contentServicesPage
-            .uploadFile(docxFileModel.location);
+        await contentServicesPage.uploadFile(docxFileModel.location);
         await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
         await uploadDialog.fileIsUploaded(docxFileModel.name);
@@ -174,7 +167,7 @@ describe('Upload component', () => {
         await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
         await contentServicesPage.versionManagerContent(docxFileModel.name);
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
         await versionManagePage.uploadNewVersionFile(pngFileModel.location);
         await versionManagePage.closeVersionDialog();
 
@@ -183,5 +176,4 @@ describe('Upload component', () => {
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
     });
-
 });

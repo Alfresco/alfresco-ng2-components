@@ -16,14 +16,14 @@
  */
 
 import * as path from 'path';
-import { BrowserActions, BrowserVisibility, TogglePage } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, TestElement, TogglePage } from '@alfresco/adf-testing';
 import { browser, by, element, ElementFinder } from 'protractor';
 
 export class VersionManagePage {
 
     togglePage = new TogglePage();
 
-    showNewVersionButton = element(by.id('adf-show-version-upload-button'));
+    showNewVersionButton = TestElement.byId('adf-show-version-upload-button');
     uploadNewVersionInput = element(by.css('adf-upload-version-button input[data-automation-id="upload-single-file"]'));
     uploadNewVersionButton = element(by.css('adf-upload-version-button'));
     uploadNewVersionContainer = element(by.id('adf-new-version-uploader-container'));
@@ -35,10 +35,6 @@ export class VersionManagePage {
     downloadSwitch = element(by.id('adf-version-manager-switch-download'));
     commentsSwitch = element(by.id('adf-version-manager-switch-comments'));
 
-    async checkUploadNewVersionsButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
-    }
-
     async checkCancelButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
     }
@@ -46,7 +42,7 @@ export class VersionManagePage {
     async uploadNewVersionFile(fileLocation: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadNewVersionInput);
         await this.uploadNewVersionInput.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
-        await BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
+        await this.showNewVersionButton.waitVisible();
     }
 
     async getFileVersionName(version: string): Promise<string> {

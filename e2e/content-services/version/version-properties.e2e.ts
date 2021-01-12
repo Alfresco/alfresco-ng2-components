@@ -18,7 +18,6 @@
 import { browser, by, element } from 'protractor';
 import {
     ApiService,
-    BrowserActions,
     BrowserVisibility,
     LoginPage,
     UploadActions,
@@ -87,9 +86,9 @@ describe('Version Properties', () => {
 
     it('[C279994] Should show/hide upload new version button when readOnly is true/false', async () => {
         await versionManagePage.disableReadOnly();
-        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.waitVisible();
         await versionManagePage.enableReadOnly();
-        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.waitNotVisible();
         await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
     });
 
@@ -109,7 +108,7 @@ describe('Version Properties', () => {
 
     it('[C269085] Should show/hide comments when showComments true/false', async () => {
         await versionManagePage.enableComments();
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
         await versionManagePage.enterCommentText('Example comment text');
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
         await versionManagePage.checkFileVersionExist('1.1');
