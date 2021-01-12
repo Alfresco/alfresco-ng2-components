@@ -88,6 +88,16 @@ export class Project {
     }
   }
 
+  async deleteRelease(releaseId: string) {
+    Logger.info(`[Project] Delete project release ${releaseId}`);
+    try {
+        await this.requestApiHelper.delete(`modeling-service/v1/releases/${releaseId}`);
+        Logger.info(`[Project] Release ${releaseId} was deleted successfully`);
+    } catch (error) {
+        throw new Error(`Delete project release ${releaseId} failed: ${JSON.stringify(error)}`);
+    }
+  }
+
   async import(projectFilePath: string): Promise<NodeEntry> {
     const fileContent = await fs.createReadStream(projectFilePath);
     const requestOptions: E2eRequestApiHelperOptions = {
