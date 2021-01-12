@@ -15,42 +15,13 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { TestElement } from '@alfresco/adf-testing';
 
 export class LockFilePage {
 
-    cancelButton = element(by.css('button[data-automation-id="lock-dialog-btn-cancel"]'));
-    saveButton = element(by.cssContainingText('button span', 'Save'));
-    lockFileCheckboxText = element(by.cssContainingText('mat-checkbox label span', ' Lock file '));
-    lockFileCheckbox = element(by.css('mat-checkbox[data-automation-id="adf-lock-node-checkbox"]'));
-    allowOwnerCheckbox = element(by.cssContainingText('mat-checkbox[class*="adf-lock-file-name"] span', ' Allow the owner to modify this file '));
-
-    async checkLockFileCheckboxIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.lockFileCheckboxText);
-    }
-
-    async checkCancelButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
-    }
-
-    async checkSaveButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
-    }
-
-    async clickCancelButton(): Promise<void> {
-        await BrowserActions.click(this.cancelButton);
-    }
-
-    async clickLockFileCheckbox(): Promise<void> {
-        await BrowserActions.click(this.lockFileCheckbox);
-    }
-
-    async clickSaveButton(): Promise<void> {
-        await BrowserActions.click(this.saveButton);
-    }
-
-    async clickAllowOwnerCheckbox(): Promise<void> {
-        await BrowserActions.click(this.allowOwnerCheckbox);
-    }
+    cancelButton = TestElement.byCss('button[data-automation-id="lock-dialog-btn-cancel"]');
+    saveButton = TestElement.byText('button span', 'Save');
+    lockFileCheckboxText = TestElement.byText('mat-checkbox label span', ' Lock file ');
+    lockFileCheckbox = TestElement.byCss('mat-checkbox[data-automation-id="adf-lock-node-checkbox"]');
+    allowOwnerCheckbox = TestElement.byText('mat-checkbox[class*="adf-lock-file-name"] span', ' Allow the owner to modify this file ');
 }
