@@ -48,7 +48,11 @@ describe('Task Assignee', () => {
     const processDetailsPage = new ProcessDetailsPage();
     const taskPage = new TasksPage();
 
-    const apiService = new ApiService();
+    const apiService = new ApiService({
+        provider: 'ALL',
+        hostEcm: browser.params.testConfig.appConfig.ecmHost,
+        hostBpm: browser.params.testConfig.appConfig.bpmHost
+    });
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
 

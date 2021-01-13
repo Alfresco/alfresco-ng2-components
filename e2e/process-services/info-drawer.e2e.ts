@@ -45,7 +45,11 @@ describe('Info Drawer', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processFiltersPage = new ProcessFiltersPage();
 
-    const apiService = new ApiService();
+    const apiService = new ApiService({
+        provider: 'ALL',
+        hostEcm: browser.params.testConfig.appConfig.ecmHost,
+        hostBpm: browser.params.testConfig.appConfig.bpmHost
+    });
     const applicationsService = new ApplicationsUtil(apiService);
 
     const firstComment = 'comm1';
@@ -311,8 +315,10 @@ describe('Info Drawer', () => {
         });
 
         await taskPage.taskDetails().updateDescription('');
+        await taskPage.taskDetails().checkTaskDetailsDisplayed();
         await expect(await taskPage.taskDetails().getDescriptionPlaceholder()).toEqual('No description');
         await taskPage.taskDetails().updateDescription('Good Bye');
+        await taskPage.taskDetails().checkTaskDetailsDisplayed();
         await expect(await taskPage.taskDetails().getDescription()).toEqual('Good Bye');
 
         await taskPage.taskDetails().clickCompleteFormTask();
