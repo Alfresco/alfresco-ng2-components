@@ -131,12 +131,14 @@ describe('AspectListDialogComponent', () => {
                         }
                     }
                 ]
-            });
+            }).compileComponents();
+        });
+
+        beforeEach(() => {
             aspectListService = TestBed.inject(AspectListService);
             spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
             fixture = TestBed.createComponent(AspectListDialogComponent);
             fixture.detectChanges();
-            await fixture.whenStable();
         });
 
         afterEach(() => {
@@ -241,7 +243,7 @@ describe('AspectListDialogComponent', () => {
 
     describe('Passing the node id', () => {
 
-        beforeEach( () => {
+        beforeEach(async () => {
             data = <AspectListDialogComponentData> {
                 title: 'Title',
                 description: 'Description that can be longer or shorter',
@@ -267,21 +269,24 @@ describe('AspectListDialogComponent', () => {
                         }
                     }
                 ]
-            });
+            }).compileComponents();
+        });
+
+        beforeEach(() => {
             aspectListService = TestBed.inject(AspectListService);
             nodeService = TestBed.inject(NodesApiService);
             spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
             spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] }));
             fixture = TestBed.createComponent(AspectListDialogComponent);
-            fixture.detectChanges();
-            // await fixture.whenStable();
         });
 
         afterEach(() => {
             fixture.destroy();
         });
 
-        it('should show checked the current aspects of the node', () => {
+        it('should show checked the current aspects of the node', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
             const firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
             expect(firstAspectCheckbox).toBeDefined();
             expect(firstAspectCheckbox).not.toBeNull();
@@ -293,6 +298,7 @@ describe('AspectListDialogComponent', () => {
                 expect(aspects).not.toBeNull();
                 done();
             });
+            fixture.detectChanges();
             const applyButton: HTMLButtonElement = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-apply');
             expect(applyButton).toBeDefined();
             applyButton.click();
