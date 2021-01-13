@@ -122,7 +122,7 @@ describe('Version component actions', () => {
     it('[C272819] Should be possible delete a version when click on delete version action', async () => {
         await versionManagePage.deleteFileVersion('1.1');
 
-        await versionManagePage.clickAcceptConfirm();
+        await versionManagePage.confirmAccept.click();
 
         await versionManagePage.checkFileVersionNotExist('1.1');
         await versionManagePage.checkFileVersionExist('1.0');
@@ -132,12 +132,9 @@ describe('Version component actions', () => {
         await versionManagePage.showNewVersionButton.click();
 
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
-
         await versionManagePage.checkFileVersionExist('1.1');
-
         await versionManagePage.deleteFileVersion('1.1');
-
-        await versionManagePage.clickCancelConfirm();
+        await versionManagePage.confirmCancel.click();
 
         await versionManagePage.checkFileVersionExist('1.1');
         await versionManagePage.checkFileVersionExist('1.0');

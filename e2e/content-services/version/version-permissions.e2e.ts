@@ -159,7 +159,7 @@ describe('Version component permissions', () => {
             await expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
 
             await versionManagePage.deleteFileVersion('1.1');
-            await versionManagePage.clickAcceptConfirm();
+            await versionManagePage.confirmAccept.click();
 
             await versionManagePage.checkFileVersionNotExist('1.1');
 
@@ -230,7 +230,7 @@ describe('Version component permissions', () => {
             await expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
 
             await versionManagePage.deleteFileVersion('1.1');
-            await versionManagePage.clickAcceptConfirm();
+            await versionManagePage.confirmAccept.click();
 
             await versionManagePage.checkFileVersionNotExist('1.1');
 
@@ -284,7 +284,7 @@ describe('Version component permissions', () => {
             await expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
 
             await versionManagePage.deleteFileVersion('1.1');
-            await versionManagePage.clickAcceptConfirm();
+            await versionManagePage.confirmAccept.click();
 
             await versionManagePage.checkFileVersionNotExist('1.1');
 

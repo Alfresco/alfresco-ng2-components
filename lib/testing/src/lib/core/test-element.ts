@@ -46,6 +46,10 @@ export class TestElement {
         return BrowserVisibility.waitUntilElementIsNotVisible(this.elementFinder, waitTimeout);
     }
 
+    async waitPresent(waitTimeout?: number) {
+        return BrowserVisibility.waitUntilElementIsPresent(this.elementFinder, waitTimeout);
+    }
+
     async waitNotPresent(waitTimeout?: number) {
         return BrowserVisibility.waitUntilElementIsNotPresent(this.elementFinder, waitTimeout);
     }

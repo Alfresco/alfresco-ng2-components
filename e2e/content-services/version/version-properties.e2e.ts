@@ -89,7 +89,7 @@ describe('Version Properties', () => {
         await versionManagePage.showNewVersionButton.waitVisible();
         await versionManagePage.enableReadOnly();
         await versionManagePage.showNewVersionButton.waitNotVisible();
-        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
+        await versionManagePage.uploadNewVersionButton.waitNotVisible();
     });
 
     it('[C272817] Should NOT be present the download action when allowDownload property is false', async () => {
@@ -109,7 +109,7 @@ describe('Version Properties', () => {
     it('[C269085] Should show/hide comments when showComments true/false', async () => {
         await versionManagePage.enableComments();
         await versionManagePage.showNewVersionButton.click();
-        await versionManagePage.enterCommentText('Example comment text');
+        await versionManagePage.commentText.typeText('Example comment text');
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
         await versionManagePage.checkFileVersionExist('1.1');
         await expect(await versionManagePage.getFileVersionComment('1.1')).toEqual('Example comment text');
