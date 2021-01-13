@@ -5532,11 +5532,11 @@ export class AspectListService {
             nodeId
         };
 
-        this.openContentNodeDialog(data, 'adf-aspect-list-dialog', '750px');
+        this.openDialog(data, 'adf-aspect-list-dialog', '750px');
         return select;
     }
 
-    private openContentNodeDialog(data: AspectListDialogComponentData, panelClass: string, width: string) {
+    private openDialog(data: AspectListDialogComponentData, panelClass: string, width: string) {
         this.dialog.open(AspectListDialogComponent, {
             data,
             panelClass,

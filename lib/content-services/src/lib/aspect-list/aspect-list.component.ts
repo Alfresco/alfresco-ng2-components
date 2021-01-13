@@ -58,7 +58,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
             this.aspects$ = this.nodeApiService.getNode(this.nodeId).pipe(
                 tap((node) => {
                     this.nodeAspects = node.aspectNames;
-                    this.nodeAspectStatus = node.aspectNames;
+                    this.nodeAspectStatus = Array.from(node.aspectNames);
                     this.valueChanged.emit(node.aspectNames);
                 }),
                 concatMap(() => this.aspectListService.getAspects().pipe(map((result) => result.list?.entries))),

@@ -1,0 +1,315 @@
+/*!
+ * @license
+ * Copyright 2019 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AspectListDialogComponent } from './aspect-list-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { ContentTestingModule } from '../testing/content.testing.module';
+import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
+import { NodesApiService } from 'core';
+import { AspectListService } from './aspect-list.service';
+import { AspectListModel } from './apect.model';
+import { EventEmitter } from '@angular/core';
+
+const aspectListMock: AspectListModel = {
+    list: {
+        pagination: {
+            count: 2,
+            hasMoreItems: 'false',
+            totalItems: 2,
+            skipCount: 0,
+            maxItems: 100
+        },
+        entries: [{
+            entry: {
+                parentname: 'frs:aspectZero',
+                name: 'FirstAspect',
+                prefixedname: 'frs:AspectOne',
+                description: 'First Aspect with random description',
+                title: 'First aspect show',
+                properties: [
+                    {
+                        name: 'channelPassword',
+                        prefixedname: 'pub:channelPassword',
+                        title: 'The authenticated channel password',
+                        dataType: 'd:encrypted',
+                        facetable: 'UNSET',
+                        indexTokenisationMode: 'TRUE',
+                        multiValued: false,
+                        mandatoryEnforced: false,
+                        mandatory: false,
+                        indexed: true
+                    },
+                    {
+                        name: 'channelUsername',
+                        prefixedname: 'pub:channelUsername',
+                        title: 'The authenticated channel username',
+                        dataType: 'd:encrypted',
+                        facetable: 'UNSET',
+                        indexTokenisationMode: 'TRUE',
+                        multiValued: false,
+                        mandatoryEnforced: false,
+                        mandatory: false,
+                        indexed: true
+                    }
+                ]
+            }
+        },
+        {
+            entry: {
+                parentname: 'frs:AspectZer',
+                name: 'SecondAspect',
+                prefixedname: 'frs:SecondAspect',
+                description: 'Second Aspect description',
+                title: 'Aspect number 2',
+                properties: [
+                    {
+                        name: 'assetId',
+                        prefixedname: 'pub:assetId',
+                        title: 'Published Asset Id',
+                        dataType: 'd:text',
+                        facetable: 'UNSET',
+                        indexTokenisationMode: 'TRUE',
+                        multiValued: false,
+                        mandatoryEnforced: false,
+                        mandatory: false,
+                        indexed: true
+                    },
+                    {
+                        name: 'assetUrl',
+                        prefixedname: 'pub:assetUrl',
+                        title: 'Published Asset URL',
+                        dataType: 'd:text',
+                        facetable: 'UNSET',
+                        indexTokenisationMode: 'TRUE',
+                        multiValued: false,
+                        mandatoryEnforced: false,
+                        mandatory: false,
+                        indexed: true
+                    }
+                ]
+            }
+        }]
+    }
+};
+
+describe('AspectListDialogComponent', () => {
+    let fixture: ComponentFixture<AspectListDialogComponent>;
+    let aspectListService: AspectListService;
+    let nodeService: NodesApiService;
+    let data: any;
+
+    describe('Without passing node id', () => {
+
+        beforeEach(async () => {
+            data = <AspectListDialogComponentData> {
+                title: 'Title',
+                description: 'Description that can be longer or shorter',
+                overTableMessage: 'Over here',
+                select: new EventEmitter<string[]>()
+            };
+
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    ContentTestingModule,
+                    MatDialogModule
+                ],
+                providers: [
+                    { provide: MAT_DIALOG_DATA, useValue: data },
+                    {
+                        provide: MatDialogRef,
+                        useValue: {
+                            keydownEvents: () => of(null),
+                            backdropClick: () => of(null),
+                            close: jasmine.createSpy('close')
+                        }
+                    }
+                ]
+            });
+            await TestBed.compileComponents();
+            aspectListService = TestBed.inject(AspectListService);
+            spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
+            fixture = TestBed.createComponent(AspectListDialogComponent);
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should show 4 actions : CLEAR, RESET, CANCEL and APPLY', () => {
+            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-reset')).not.toBeNull();
+            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-reset')).toBeDefined();
+            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-clear')).not.toBeNull();
+            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-clear')).toBeDefined();
+            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-cancel')).not.toBeNull();
+            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-cancel')).toBeDefined();
+            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-apply')).not.toBeNull();
+            expect(fixture.nativeElement.querySelector('#aspect-list-dialog-actions-apply')).toBeDefined();
+        });
+
+        it('should show basic information for the dialog', () => {
+            const dialogTitle = fixture.nativeElement.querySelector('[data-automation-id="aspect-list-dialog-title"] .adf-aspect-list-dialog-title');
+            expect(dialogTitle).not.toBeNull();
+            expect(dialogTitle.innerText).toBe(data.title);
+
+            const dialogDescription = fixture.nativeElement.querySelector('[data-automation-id="aspect-list-dialog-title"] .adf-aspect-list-dialog-description');
+            expect(dialogDescription).not.toBeNull();
+            expect(dialogDescription.innerText).toBe(data.description);
+
+            const overTableMessage = fixture.nativeElement.querySelector('#aspect-list-dialog-over-table-message');
+            expect(overTableMessage).not.toBeNull();
+            expect(overTableMessage.innerText).toBe(data.overTableMessage);
+
+            const selectionCounter = fixture.nativeElement.querySelector('#aspect-list-dialog-counter');
+            expect(selectionCounter).not.toBeNull();
+            expect(selectionCounter.innerText).toBe('0 ADF-ASPECT-LIST.DIALOG.SELECTED');
+        });
+
+        it('should update the counter when an option is selcted and unselected', async () => {
+            const firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            expect(firstAspectCheckbox).toBeDefined();
+            expect(firstAspectCheckbox).not.toBeNull();
+            let selectionCounter = fixture.nativeElement.querySelector('#aspect-list-dialog-counter');
+            expect(selectionCounter).not.toBeNull();
+            expect(selectionCounter.innerText).toBe('0 ADF-ASPECT-LIST.DIALOG.SELECTED');
+            firstAspectCheckbox.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            selectionCounter = fixture.nativeElement.querySelector('#aspect-list-dialog-counter');
+            expect(selectionCounter).not.toBeNull();
+            expect(selectionCounter.innerText).toBe('1 ADF-ASPECT-LIST.DIALOG.SELECTED');
+
+            firstAspectCheckbox.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            selectionCounter = fixture.nativeElement.querySelector('#aspect-list-dialog-counter');
+            expect(selectionCounter).not.toBeNull();
+            expect(selectionCounter.innerText).toBe('0 ADF-ASPECT-LIST.DIALOG.SELECTED');
+        });
+
+        it('should clear all the value when Reset button is clicked', async () => {
+            let firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            expect(firstAspectCheckbox).toBeDefined();
+            expect(firstAspectCheckbox).not.toBeNull();
+            firstAspectCheckbox.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const resetButton: HTMLButtonElement = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-reset');
+            expect(resetButton).toBeDefined();
+            expect(firstAspectCheckbox.checked).toBeTruthy();
+            resetButton.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            firstAspectCheckbox = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            expect(firstAspectCheckbox.checked).toBeFalsy();
+        });
+
+        it('should clear all the value when Clear button is clicked', async () => {
+            let firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            expect(firstAspectCheckbox).toBeDefined();
+            expect(firstAspectCheckbox).not.toBeNull();
+            firstAspectCheckbox.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const clearButton: HTMLButtonElement = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-clear');
+            expect(clearButton).toBeDefined();
+            expect(firstAspectCheckbox.checked).toBeTruthy();
+            clearButton.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            firstAspectCheckbox = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            expect(firstAspectCheckbox.checked).toBeFalsy();
+        });
+
+        it('should complete the select stream Cancel button is clicked', (done) => {
+            data.select.subscribe(() => { }, () => { }, () => done());
+            const cancelButton: HTMLButtonElement = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-cancel');
+            expect(cancelButton).toBeDefined();
+            cancelButton.click();
+            fixture.detectChanges();
+        });
+    });
+
+    describe('Passing the node id', () => {
+
+        beforeEach(async () => {
+            data = <AspectListDialogComponentData> {
+                title: 'Title',
+                description: 'Description that can be longer or shorter',
+                overTableMessage: 'Over here',
+                select: new EventEmitter<string[]>(),
+                nodeId: 'fake-node-id'
+            };
+
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    ContentTestingModule,
+                    MatDialogModule
+                ],
+                providers: [
+                    { provide: MAT_DIALOG_DATA, useValue: data },
+                    {
+                        provide: MatDialogRef,
+                        useValue: {
+                            keydownEvents: () => of(null),
+                            backdropClick: () => of(null),
+                            close: jasmine.createSpy('close')
+                        }
+                    }
+                ]
+            });
+            await TestBed.compileComponents();
+            aspectListService = TestBed.inject(AspectListService);
+            nodeService = TestBed.inject(NodesApiService);
+            spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
+            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] }));
+            fixture = TestBed.createComponent(AspectListDialogComponent);
+            fixture.detectChanges();
+            await fixture.whenStable();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should show checked the current aspects of the node', () => {
+            const firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            expect(firstAspectCheckbox).toBeDefined();
+            expect(firstAspectCheckbox).not.toBeNull();
+            expect(firstAspectCheckbox.checked).toBeTruthy();
+        });
+
+        it('should set the current value when apply',  (done) => {
+            data.select.subscribe((aspects) => {
+                expect(aspects).not.toBeNull();
+                done();
+            });
+            const applyButton: HTMLButtonElement = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-apply');
+            expect(applyButton).toBeDefined();
+            applyButton.click();
+            fixture.detectChanges();
+        });
+    });
+
+});
