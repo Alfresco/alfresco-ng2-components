@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { NodesApiService } from '@alfresco/adf-core';
 import { Observable, Subject } from 'rxjs';
-import { concatMap, map, takeUntil, tap } from 'rxjs/operators';
+import { concatMap, takeUntil, tap } from 'rxjs/operators';
 import { AspectListService } from './aspect-list.service';
 import { AspectEntryModel } from './apect.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -61,12 +61,11 @@ export class AspectListComponent implements OnInit, OnDestroy {
                     this.nodeAspectStatus = Array.from(node.aspectNames);
                     this.valueChanged.emit(node.aspectNames);
                 }),
-                concatMap(() => this.aspectListService.getAspects().pipe(map((result) => result.list?.entries))),
+                concatMap(() => this.aspectListService.getAspects()),
                 takeUntil(this.onDestroy$));
         } else {
             this.aspects$ = this.aspectListService.getAspects()
-                .pipe(map((result) => result.list?.entries),
-                    takeUntil(this.onDestroy$));
+                .pipe(takeUntil(this.onDestroy$));
         }
     }
 
@@ -74,7 +73,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
         if (change.checked) {
             this.nodeAspects.push(prefixedName);
         } else {
-            this.nodeAspects.splice(this.nodeAspects.indexOf(prefixedName));
+            this.nodeAspects.splice(this.nodeAspects.indexOf(prefixedName), 1);
         }
         this.valueChanged.emit(this.nodeAspects);
     }

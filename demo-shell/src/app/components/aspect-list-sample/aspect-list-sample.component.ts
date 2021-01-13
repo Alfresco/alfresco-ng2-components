@@ -37,7 +37,11 @@ export class AspectListSampleComponent {
     }
 
     openAspectDialog() {
-        this.aspectListtService.openAspectListDialog(this.currentNodeId).subscribe((result) => this.currentResult = result);
+        this.aspectListtService.openAspectListDialog(this.currentNodeId).subscribe((result) => this.currentResult = Array.from(result));
+    }
+
+    onValueChanged(aspects) {
+        this.currentResult = Array.from(aspects);
     }
 
 }

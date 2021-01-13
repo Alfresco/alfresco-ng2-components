@@ -1,4 +1,7 @@
 <div class="example-button-container">
+    <p> ASPECT CHOSEN :</p>
+    <p>{{currentResult}}</p>
+    <br>
     <mat-form-field class="example-almost-full-width">
         <mat-label>Node Id For Aspects</mat-label>
         <input matInput placeholder="Node Id" [(ngModel)]="currentNodeId">
@@ -6,12 +9,10 @@
     <button mat-raised-button color="primary" aria-label="Click to show the list" (click)="showAspectForNode()">
         Show/Hide List
     </button>
-    <adf-aspect-list [nodeId]="currentNodeId" *ngIf="isShowed"></adf-aspect-list>
+    <adf-aspect-list [nodeId]="currentNodeId" *ngIf="isShowed" (valueChanged)="onValueChanged($event)"></adf-aspect-list>
 </div>
 <div>
     <button mat-fab color="primary" aria-label="Open dialog" (click)="openAspectDialog()">
         Dialog
     </button>
-    <p> ASPECT CHOSEN :</p>
-    <p>{{currentResult}}</p>
 </div>

@@ -21,90 +21,79 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AspectListComponent } from './aspect-list.component';
 import { AspectListService } from './aspect-list.service';
-import { AspectListModel } from './apect.model';
+import { AspectEntryModel } from './apect.model';
 import { of } from 'rxjs';
 
-const aspectListMock: AspectListModel = {
-    list: {
-        pagination: {
-            count: 2,
-            hasMoreItems: 'false',
-            totalItems: 2,
-            skipCount: 0,
-            maxItems: 100
-        },
-        entries: [{
-            entry: {
-                parentname: 'frs:aspectZero',
-                name: 'FirstAspect',
-                prefixedname: 'frs:AspectOne',
-                description: 'First Aspect with random description',
-                title: 'First aspect show',
-                properties: [
-                    {
-                        name: 'channelPassword',
-                        prefixedname: 'pub:channelPassword',
-                        title: 'The authenticated channel password',
-                        dataType: 'd:propA',
-                        facetable: 'UNSET',
-                        indexTokenisationMode: 'TRUE',
-                        multiValued: false,
-                        mandatoryEnforced: false,
-                        mandatory: false,
-                        indexed: true
-                    },
-                    {
-                        name: 'channelUsername',
-                        prefixedname: 'pub:channelUsername',
-                        title: 'The authenticated channel username',
-                        dataType: 'd:propB',
-                        facetable: 'UNSET',
-                        indexTokenisationMode: 'TRUE',
-                        multiValued: false,
-                        mandatoryEnforced: false,
-                        mandatory: false,
-                        indexed: true
-                    }
-                ]
+const aspectListMock: AspectEntryModel[] = [{
+    entry: {
+        parentname: 'frs:aspectZero',
+        name: 'FirstAspect',
+        prefixedname: 'frs:AspectOne',
+        description: 'First Aspect with random description',
+        title: 'First aspect show',
+        properties: [
+            {
+                name: 'channelPassword',
+                prefixedname: 'pub:channelPassword',
+                title: 'The authenticated channel password',
+                dataType: 'd:propA',
+                facetable: 'UNSET',
+                indexTokenisationMode: 'TRUE',
+                multiValued: false,
+                mandatoryEnforced: false,
+                mandatory: false,
+                indexed: true
+            },
+            {
+                name: 'channelUsername',
+                prefixedname: 'pub:channelUsername',
+                title: 'The authenticated channel username',
+                dataType: 'd:propB',
+                facetable: 'UNSET',
+                indexTokenisationMode: 'TRUE',
+                multiValued: false,
+                mandatoryEnforced: false,
+                mandatory: false,
+                indexed: true
             }
-        },
-        {
-            entry: {
-                parentname: 'frs:AspectZer',
-                name: 'SecondAspect',
-                prefixedname: 'frs:SecondAspect',
-                description: 'Second Aspect description',
-                title: 'Aspect number 2',
-                properties: [
-                    {
-                        name: 'assetId',
-                        prefixedname: 'pub:assetId',
-                        title: 'Published Asset Id',
-                        dataType: 'd:text',
-                        facetable: 'UNSET',
-                        indexTokenisationMode: 'TRUE',
-                        multiValued: false,
-                        mandatoryEnforced: false,
-                        mandatory: false,
-                        indexed: true
-                    },
-                    {
-                        name: 'assetUrl',
-                        prefixedname: 'pub:assetUrl',
-                        title: 'Published Asset URL',
-                        dataType: 'd:text',
-                        facetable: 'UNSET',
-                        indexTokenisationMode: 'TRUE',
-                        multiValued: false,
-                        mandatoryEnforced: false,
-                        mandatory: false,
-                        indexed: true
-                    }
-                ]
-            }
-        }]
+        ]
     }
-};
+},
+{
+    entry: {
+        parentname: 'frs:AspectZer',
+        name: 'SecondAspect',
+        prefixedname: 'frs:SecondAspect',
+        description: 'Second Aspect description',
+        title: 'Aspect number 2',
+        properties: [
+            {
+                name: 'assetId',
+                prefixedname: 'pub:assetId',
+                title: 'Published Asset Id',
+                dataType: 'd:text',
+                facetable: 'UNSET',
+                indexTokenisationMode: 'TRUE',
+                multiValued: false,
+                mandatoryEnforced: false,
+                mandatory: false,
+                indexed: true
+            },
+            {
+                name: 'assetUrl',
+                prefixedname: 'pub:assetUrl',
+                title: 'Published Asset URL',
+                dataType: 'd:text',
+                facetable: 'UNSET',
+                indexTokenisationMode: 'TRUE',
+                multiValued: false,
+                mandatoryEnforced: false,
+                mandatory: false,
+                indexed: true
+            }
+        ]
+    }
+}];
 
 describe('AspectListComponent', () => {
 

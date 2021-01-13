@@ -24,90 +24,79 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
 import { NodesApiService } from 'core';
 import { AspectListService } from './aspect-list.service';
-import { AspectListModel } from './apect.model';
 import { EventEmitter } from '@angular/core';
+import { AspectEntryModel } from './apect.model';
 
-const aspectListMock: AspectListModel = {
-    list: {
-        pagination: {
-            count: 2,
-            hasMoreItems: 'false',
-            totalItems: 2,
-            skipCount: 0,
-            maxItems: 100
-        },
-        entries: [{
-            entry: {
-                parentname: 'frs:aspectZero',
-                name: 'FirstAspect',
-                prefixedname: 'frs:AspectOne',
-                description: 'First Aspect with random description',
-                title: 'First aspect show',
-                properties: [
-                    {
-                        name: 'channelPassword',
-                        prefixedname: 'pub:channelPassword',
-                        title: 'The authenticated channel password',
-                        dataType: 'd:encrypted',
-                        facetable: 'UNSET',
-                        indexTokenisationMode: 'TRUE',
-                        multiValued: false,
-                        mandatoryEnforced: false,
-                        mandatory: false,
-                        indexed: true
-                    },
-                    {
-                        name: 'channelUsername',
-                        prefixedname: 'pub:channelUsername',
-                        title: 'The authenticated channel username',
-                        dataType: 'd:encrypted',
-                        facetable: 'UNSET',
-                        indexTokenisationMode: 'TRUE',
-                        multiValued: false,
-                        mandatoryEnforced: false,
-                        mandatory: false,
-                        indexed: true
-                    }
-                ]
+const aspectListMock: AspectEntryModel[] = [{
+    entry: {
+        parentname: 'frs:aspectZero',
+        name: 'FirstAspect',
+        prefixedname: 'frs:AspectOne',
+        description: 'First Aspect with random description',
+        title: 'First aspect show',
+        properties: [
+            {
+                name: 'channelPassword',
+                prefixedname: 'pub:channelPassword',
+                title: 'The authenticated channel password',
+                dataType: 'd:encrypted',
+                facetable: 'UNSET',
+                indexTokenisationMode: 'TRUE',
+                multiValued: false,
+                mandatoryEnforced: false,
+                mandatory: false,
+                indexed: true
+            },
+            {
+                name: 'channelUsername',
+                prefixedname: 'pub:channelUsername',
+                title: 'The authenticated channel username',
+                dataType: 'd:encrypted',
+                facetable: 'UNSET',
+                indexTokenisationMode: 'TRUE',
+                multiValued: false,
+                mandatoryEnforced: false,
+                mandatory: false,
+                indexed: true
             }
-        },
-        {
-            entry: {
-                parentname: 'frs:AspectZer',
-                name: 'SecondAspect',
-                prefixedname: 'frs:SecondAspect',
-                description: 'Second Aspect description',
-                title: 'Aspect number 2',
-                properties: [
-                    {
-                        name: 'assetId',
-                        prefixedname: 'pub:assetId',
-                        title: 'Published Asset Id',
-                        dataType: 'd:text',
-                        facetable: 'UNSET',
-                        indexTokenisationMode: 'TRUE',
-                        multiValued: false,
-                        mandatoryEnforced: false,
-                        mandatory: false,
-                        indexed: true
-                    },
-                    {
-                        name: 'assetUrl',
-                        prefixedname: 'pub:assetUrl',
-                        title: 'Published Asset URL',
-                        dataType: 'd:text',
-                        facetable: 'UNSET',
-                        indexTokenisationMode: 'TRUE',
-                        multiValued: false,
-                        mandatoryEnforced: false,
-                        mandatory: false,
-                        indexed: true
-                    }
-                ]
-            }
-        }]
+        ]
     }
-};
+},
+{
+    entry: {
+        parentname: 'frs:AspectZer',
+        name: 'SecondAspect',
+        prefixedname: 'frs:SecondAspect',
+        description: 'Second Aspect description',
+        title: 'Aspect number 2',
+        properties: [
+            {
+                name: 'assetId',
+                prefixedname: 'pub:assetId',
+                title: 'Published Asset Id',
+                dataType: 'd:text',
+                facetable: 'UNSET',
+                indexTokenisationMode: 'TRUE',
+                multiValued: false,
+                mandatoryEnforced: false,
+                mandatory: false,
+                indexed: true
+            },
+            {
+                name: 'assetUrl',
+                prefixedname: 'pub:assetUrl',
+                title: 'Published Asset URL',
+                dataType: 'd:text',
+                facetable: 'UNSET',
+                indexTokenisationMode: 'TRUE',
+                multiValued: false,
+                mandatoryEnforced: false,
+                mandatory: false,
+                indexed: true
+            }
+        ]
+    }
+}];
 
 describe('AspectListDialogComponent', () => {
     let fixture: ComponentFixture<AspectListDialogComponent>;
@@ -143,11 +132,11 @@ describe('AspectListDialogComponent', () => {
                     }
                 ]
             });
-            await TestBed.compileComponents();
             aspectListService = TestBed.inject(AspectListService);
             spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
             fixture = TestBed.createComponent(AspectListDialogComponent);
             fixture.detectChanges();
+            await fixture.whenStable();
         });
 
         afterEach(() => {
@@ -252,7 +241,7 @@ describe('AspectListDialogComponent', () => {
 
     describe('Passing the node id', () => {
 
-        beforeEach(async () => {
+        beforeEach( () => {
             data = <AspectListDialogComponentData> {
                 title: 'Title',
                 description: 'Description that can be longer or shorter',
@@ -279,14 +268,13 @@ describe('AspectListDialogComponent', () => {
                     }
                 ]
             });
-            await TestBed.compileComponents();
             aspectListService = TestBed.inject(AspectListService);
             nodeService = TestBed.inject(NodesApiService);
             spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
             spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] }));
             fixture = TestBed.createComponent(AspectListDialogComponent);
             fixture.detectChanges();
-            await fixture.whenStable();
+            // await fixture.whenStable();
         });
 
         afterEach(() => {
@@ -300,7 +288,7 @@ describe('AspectListDialogComponent', () => {
             expect(firstAspectCheckbox.checked).toBeTruthy();
         });
 
-        it('should set the current value when apply',  (done) => {
+        it('should set the current value when apply', (done) => {
             data.select.subscribe((aspects) => {
                 expect(aspects).not.toBeNull();
                 done();
