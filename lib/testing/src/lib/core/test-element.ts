@@ -34,6 +34,10 @@ export class TestElement {
         return new TestElement(element(by.cssContainingText(selector, text)));
     }
 
+    static byTag(selector: string): TestElement {
+        return new TestElement(element(by.tagName(selector)));
+    }
+
     async click() {
         return BrowserActions.click(this.elementFinder);
     }

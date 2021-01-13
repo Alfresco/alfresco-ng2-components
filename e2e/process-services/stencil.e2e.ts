@@ -83,7 +83,7 @@ describe('Stencil', () => {
         await processListDemoPage.checkProcessIsDisplayed(name);
         await processFiltersPage.selectFromProcessList(name);
 
-        await processDetailsPage.clickOnActiveTask();
+        await processDetailsPage.activeTask.click();
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.taskDetails().clickCompleteTask();
 
