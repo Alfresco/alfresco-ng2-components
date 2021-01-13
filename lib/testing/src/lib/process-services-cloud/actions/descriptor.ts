@@ -44,13 +44,26 @@ export class Descriptor {
     }
 
     async delete(name: string): Promise<void> {
-        try {
-            await this.retryUntilDescriptorIsInStatus(name, `DescriptorCreated`);
-            await this.requestApiHelper.delete(`${this.endPoint}${name}`);
-            Logger.info(`[Descriptor] Descriptor '${name}' was deleted successfully.`);
-        } catch (error) {
-            Logger.error(`[Descriptor] Delete descriptor ${name} failed with message: ${error.message}`);
-        }
+        const isDescriptorDeleted = (response: any) => {
+            if (JSON.stringify(response) === '{}') {
+                Logger.info(`[Descriptor] Descriptor was deleted successfully`);
+                return true;
+            } else {
+                Logger.warn(`[Descriptor] Descriptor was not deleted`);
+                return false;
+            }
+        };
+
+        const apiCall = async () => {
+            try {
+                await this.retryUntilDescriptorIsInStatus(name, `DescriptorCreated`);
+                Logger.info(`[Descriptor] Deleting descriptor ${name} ...`);
+                return this.requestApiHelper.delete(`${this.endPoint}${name}`);
+            } catch (error) {
+                Logger.error(`[Descriptor] Delete descriptor ${name} failed with error: ${error.message}`);
+            }
+        };
+        return ApiUtil.waitForApi(apiCall, isDescriptorDeleted, 10, 3000);
     }
 
     async get(name: string): Promise<any> {
@@ -64,8 +77,10 @@ export class Descriptor {
 
     async retryUntilDescriptorIsInStatus(name: string, expectedStatus: string): Promise<any> {
         const predicate = (result: { status: string }) => {
+            Logger.info(`[Descriptor] Descriptor ${name} status is: ${result.status}`);
             return result.status === expectedStatus;
         };
+
         const apiCall = async () => this.get(name);
 
         return ApiUtil.waitForApi(apiCall, predicate);
