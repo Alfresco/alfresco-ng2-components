@@ -1197,5 +1197,13 @@
     {
       "name": "subprocessapp"
     }
-  ]
+  ],
+  "aspect-visible": {
+    "default" : ["cm:generalclassifiable", "cm:complianceable",
+                 "cm:dublincore", "cm:effectivity", "cm:summarizable",
+                 "cm:versionable", "cm:templatable","cm:emailed", "emailserver:aliasable",
+                 "cm:taggable", "app:inlineeditable", "cm:geographic", "exif:exif",
+                 "audio:audio", "cm:indexControl", "dp:restrictable", "smf:customConfigSmartFolder", "smf:systemConfigSmartFolder"],
+    "ai": ["ai:products", "ai:dates", "ai:places", "ai:events", "ai:organizations", "ai:people", "ai:things", "ai:quantities", "ai:creativeWorks", "ai:labels", "ai:textLines"]
+  }
 }

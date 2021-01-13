@@ -17,20 +17,23 @@
 
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AppConfigService } from '@alfresco/adf-core';
 import { Observable, of, Subject } from 'rxjs';
-import { AspectListModel } from './apect.model';
+import { AspectEntryModel } from './apect.model';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AspectListService {
 
-    constructor(private dialog: MatDialog) {
+    constructor(private appConfigService: AppConfigService, private dialog: MatDialog) {
     }
 
-    getAspects(): Observable<AspectListModel> {
+    getAspects(): Observable<AspectEntryModel[]> {
+        const visibleAspectList = this.getVisibleAspects();
         return of({
             list: {
                 pagination: {
@@ -5515,7 +5518,30 @@ export class AspectListService {
                     }
                 ]
             }
-        });
+        }).pipe(
+            map((result) => this.filterAspectByConfig(visibleAspectList, result?.list?.entries))
+        );
+    }
+
+    private filterAspectByConfig(visibleAspectList: string[], aspectEntries: any[]): AspectEntryModel[] {
+        let result = aspectEntries ? aspectEntries : [];
+        if (visibleAspectList?.length > 0 && aspectEntries) {
+            result = aspectEntries.filter((value) => {
+                return visibleAspectList.includes(value?.entry?.prefixedname);
+            });
+        }
+        return result;
+    }
+
+    private getVisibleAspects(): string[] {
+        let visibleAspectList: string[] = [];
+        const aspectVisibleConfg = this.appConfigService.get('aspect-visible');
+        if (aspectVisibleConfg) {
+            for (const aspectGroup of Object.keys(aspectVisibleConfg)) {
+                visibleAspectList = visibleAspectList.concat(aspectVisibleConfg[aspectGroup]);
+            }
+        }
+        return visibleAspectList;
     }
 
     openAspectListDialog(nodeId?: string): Observable<string[]> {
