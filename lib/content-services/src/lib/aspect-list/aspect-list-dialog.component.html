@@ -4,8 +4,9 @@
 </header>
 
 <div class="adf-aspect-list-dialog-information">
-    <p>{{overTableMessage | translate}}</p>
-    <p>{{currentAspectSelection ? currentAspectSelection.length : 0}} {{'ADF-ASPECT-LIST.DIALOG.SELECTED' | translate}}</p>
+    <p id="aspect-list-dialog-over-table-message">{{overTableMessage | translate}}</p>
+    <p id="aspect-list-dialog-counter">{{currentAspectSelection ? currentAspectSelection.length : 0}}
+        {{'ADF-ASPECT-LIST.DIALOG.SELECTED' | translate}}</p>
 </div>
 <mat-dialog-content class="adf-aspect-dialog-content">
     <adf-aspect-list #aspectList (valueChanged)="onValueChanged($event)" [nodeId]="currentNodeId">
@@ -14,20 +15,24 @@
 
 <mat-dialog-actions>
     <div>
-        <button mat-button (click)="onReset()" data-automation-id="aspect-list-dialog-actions-reset">{{
+        <button mat-button (click)="onReset()" id="aspect-list-dialog-actions-reset"
+            data-automation-id="aspect-list-dialog-actions-reset">{{
             'ADF-ASPECT-LIST.DIALOG.RESET' | translate }}
         </button>
 
-        <button mat-button (click)="onClear()" data-automation-id="aspect-list-dialog-actions-clear">{{
+        <button mat-button (click)="onClear()" id="aspect-list-dialog-actions-clear"
+            data-automation-id="aspect-list-dialog-actions-clear">{{
             'ADF-ASPECT-LIST.DIALOG.CLEAR' | translate }}
         </button>
     </div>
     <div>
-        <button mat-button (click)="onCancel()" data-automation-id="aspect-list-dialog-actions-cancel">{{
+        <button mat-button (click)="onCancel()" id="aspect-list-dialog-actions-cancel"
+            data-automation-id="aspect-list-dialog-actions-cancel">{{
             'ADF-ASPECT-LIST.DIALOG.CANCEL' | translate }}
         </button>
 
-        <button mat-button (click)="onApply()" data-automation-id="aspect-list-dialog-actions-apply">{{
+        <button mat-button (click)="onApply()" id="aspect-list-dialog-actions-apply"
+            data-automation-id="aspect-list-dialog-actions-apply">{{
             'ADF-ASPECT-LIST.DIALOG.APPLY' | translate }}
         </button>
     </div>

@@ -49,7 +49,7 @@ export class AspectListDialogComponent implements OnInit {
     ngOnInit() {
         this.dialog.keydownEvents().subscribe(event => {
             // Esc
-            if (event.keyCode === 27) {
+            if (event && event.keyCode === 27) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
                 this.close();
