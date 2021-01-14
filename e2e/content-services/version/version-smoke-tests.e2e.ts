@@ -104,7 +104,7 @@ describe('Version component', () => {
         await versionManagePage.majorRadio.waitNotVisible();
         await versionManagePage.minorRadio.waitNotVisible();
         await versionManagePage.commentText.waitNotVisible();
-        await versionManagePage.uploadNewVersionButton.waitVisible();
+        await versionManagePage.uploadNewVersionButton.waitNotVisible();
 
         await versionManagePage.showNewVersionButton.waitVisible();
     });
