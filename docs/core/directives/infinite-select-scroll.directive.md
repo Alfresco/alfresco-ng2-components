@@ -14,7 +14,7 @@ Load more options to select component if API returns more items
 ```html
 <mat-select
     adf-infinite-select-scroll
-    (scroll)="load()">
+    (scrollEnd)="load()">
     <mat-option *ngFor="let option of options">
         {{ option }}
     </mat-option>
@@ -27,4 +27,4 @@ Load more options to select component if API returns more items
 
 | Name | Type | Description |
 | --- | --- | --- |
-| scroll | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event)`>` | Emitted when scroll reaches the last item. |
+| scrollEnd | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event)`>` | Emitted when scroll reaches the last item. |

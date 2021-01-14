@@ -26,7 +26,7 @@ import { takeUntil } from 'rxjs/operators';
 export class InfiniteSelectScrollDirective implements AfterViewInit, OnDestroy {
     static readonly MAX_ITEMS = 5;
 
-    @Output() scroll = new EventEmitter<Event>();
+    @Output() scrollEnd = new EventEmitter<Event>();
 
     private onDestroy$ = new Subject<boolean>();
     private itemHeightToWaitBeforeLoadNext = 0;
@@ -51,7 +51,7 @@ export class InfiniteSelectScrollDirective implements AfterViewInit, OnDestroy {
 
     private handleScrollEvent(event: Event) {
         if (this.isScrollInNextFetchArea(event)) {
-            this.scroll.emit(event);
+            this.scrollEnd.emit(event);
         }
     }
 

@@ -2,7 +2,7 @@
     <mat-form-field>
         <mat-select
             adf-infinite-select-scroll
-            (scroll)="loadAllOnScroll()"
+            (scrollEnd)="loadAllOnScroll()"
             #siteSelect
             data-automation-id="site-my-files-option"
             class="adf-site-dropdown-list-element"
