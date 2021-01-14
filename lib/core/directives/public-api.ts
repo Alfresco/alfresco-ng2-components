@@ -25,5 +25,6 @@ export * from './node-download.directive';
 export * from './upload.directive';
 export * from './version-compatibility.directive';
 export * from './tooltip-card/tooltip-card.directive';
+export * from './infinite-select-scroll.directive';
 
 export * from './directive.module';

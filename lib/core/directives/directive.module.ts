@@ -31,6 +31,7 @@ import { VersionCompatibilityDirective } from './version-compatibility.directive
 import { TooltipCardDirective } from './tooltip-card/tooltip-card.directive';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
+import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
 
 @NgModule({
     imports: [
@@ -49,7 +50,8 @@ import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
         UploadDirective,
         VersionCompatibilityDirective,
         TooltipCardDirective,
-        TooltipCardComponent
+        TooltipCardComponent,
+        InfiniteSelectScrollDirective
     ],
     exports: [
         HighlightDirective,
@@ -61,7 +63,8 @@ import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
         NodeDownloadDirective,
         UploadDirective,
         VersionCompatibilityDirective,
-        TooltipCardDirective
+        TooltipCardDirective,
+        InfiniteSelectScrollDirective
     ]
 })
 export class DirectiveModule {}
