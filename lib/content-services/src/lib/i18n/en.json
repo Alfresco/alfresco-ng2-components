@@ -30,9 +30,6 @@
       "ARROW_ICON": "Arrow right icon"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "Loading..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Confirm",
     "ACTION": "Do you want to proceed?",
