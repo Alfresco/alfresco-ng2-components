@@ -24,8 +24,8 @@ export class VersionManagePage {
     togglePage = new TogglePage();
 
     showNewVersionButton = TestElement.byId('adf-show-version-upload-button');
-    uploadNewVersionInput = TestElement.byCss('adf-upload-version-button input[data-automation-id="upload-single-file"]');
-    uploadNewVersionButton = TestElement.byCss('adf-upload-version-button');
+    uploadNewVersionInput = TestElement.byCss('.adf-upload-version-button input[data-automation-id="upload-single-file"]');
+    uploadNewVersionButton = TestElement.byCss('.adf-upload-version-button');
     uploadNewVersionContainer = TestElement.byId('adf-new-version-uploader-container');
     cancelButton = TestElement.byId('adf-new-version-cancel');
     majorRadio = TestElement.byId('adf-new-version-major');
