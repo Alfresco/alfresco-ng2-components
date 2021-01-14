@@ -19,6 +19,7 @@ import { E2eRequestApiHelper } from '../../core/actions/e2e-request-api.helper';
 import { Logger } from '../../core/utils/logger';
 import { ResultSetPaging } from '@alfresco/js-api';
 import { ApiService } from '../../core/actions/api.service';
+import { ApiUtil } from '../../core/actions/api.util';
 
 export class Application {
 
@@ -40,8 +41,25 @@ export class Application {
     }
 
     async undeploy(applicationName: string): Promise<any> {
-        await this.requestApiHelper.delete(`${this.endPoint}${applicationName}`);
-        Logger.info(`[Application] Application ${applicationName} was undeployed successfully.`);
+        const isApplicationUndeployed = (response: any) => {
+            if (JSON.stringify(response) === '{}') {
+                Logger.info(`[Application] Application was undeployed successfully`);
+                return true;
+            } else {
+                Logger.warn(`[Application] Application was not undeployed`);
+                return false;
+            }
+        };
+
+        const apiCall = async () => {
+            try {
+                Logger.info(`[Application] Undeploy application ${applicationName} ...`);
+                return this.requestApiHelper.delete(`${this.endPoint}${applicationName}`);
+            } catch (error) {
+                Logger.error(`[Application] Undeploy application ${applicationName} failed with error: ${error.message}`);
+            }
+        };
+        return ApiUtil.waitForApi(apiCall, isApplicationUndeployed, 10, 3000);
     }
 
     async deleteDescriptor(name: string): Promise<void> {
