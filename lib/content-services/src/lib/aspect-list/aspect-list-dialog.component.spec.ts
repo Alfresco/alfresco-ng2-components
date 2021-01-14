@@ -19,13 +19,13 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
 import { NodesApiService } from 'core';
 import { AspectListService } from './aspect-list.service';
-import { EventEmitter } from '@angular/core';
 import { AspectEntryModel } from './apect.model';
+import { delay } from 'rxjs/operators';
 
 const aspectListMock: AspectEntryModel[] = [{
     entry: {
@@ -102,7 +102,7 @@ describe('AspectListDialogComponent', () => {
     let fixture: ComponentFixture<AspectListDialogComponent>;
     let aspectListService: AspectListService;
     let nodeService: NodesApiService;
-    let data: any;
+    let data: AspectListDialogComponentData;
 
     describe('Without passing node id', () => {
 
@@ -111,7 +111,7 @@ describe('AspectListDialogComponent', () => {
                 title: 'Title',
                 description: 'Description that can be longer or shorter',
                 overTableMessage: 'Over here',
-                select: new EventEmitter<string[]>()
+                select: new Subject<string[]>()
             };
 
             TestBed.configureTestingModule({
@@ -248,7 +248,7 @@ describe('AspectListDialogComponent', () => {
                 title: 'Title',
                 description: 'Description that can be longer or shorter',
                 overTableMessage: 'Over here',
-                select: new EventEmitter<string[]>(),
+                select: new Subject<string[]>(),
                 nodeId: 'fake-node-id'
             };
 
@@ -263,21 +263,25 @@ describe('AspectListDialogComponent', () => {
                     {
                         provide: MatDialogRef,
                         useValue: {
+                            close: jasmine.createSpy('close'),
                             keydownEvents: () => of(null),
-                            backdropClick: () => of(null),
-                            close: jasmine.createSpy('close')
+                            backdropClick: () => of(null)
                         }
                     }
                 ]
-            }).compileComponents();
+            });
+            await TestBed.compileComponents();
         });
 
-        beforeEach(() => {
+        beforeEach(async () => {
             aspectListService = TestBed.inject(AspectListService);
             nodeService = TestBed.inject(NodesApiService);
             spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
-            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] }));
+            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] }).pipe(delay(0)));
             fixture = TestBed.createComponent(AspectListDialogComponent);
+            fixture.componentInstance.data.select = new Subject<string[]>();
+            fixture.detectChanges();
+            await fixture.whenStable();
         });
 
         afterEach(() => {
@@ -286,23 +290,11 @@ describe('AspectListDialogComponent', () => {
 
         it('should show checked the current aspects of the node', async () => {
             fixture.detectChanges();
-            await fixture.whenStable();
+            await fixture.whenRenderingDone();
             const firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
             expect(firstAspectCheckbox).toBeDefined();
             expect(firstAspectCheckbox).not.toBeNull();
             expect(firstAspectCheckbox.checked).toBeTruthy();
-        });
-
-        it('should set the current value when apply', (done) => {
-            data.select.subscribe((aspects) => {
-                expect(aspects).not.toBeNull();
-                done();
-            });
-            fixture.detectChanges();
-            const applyButton: HTMLButtonElement = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-apply');
-            expect(applyButton).toBeDefined();
-            applyButton.click();
-            fixture.detectChanges();
         });
     });
 
