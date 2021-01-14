@@ -11,11 +11,11 @@ export default async function main(_args: string[]) {
     program
         .version('0.1.0')
         .option('--host [type]', 'Remote environment host')
-        .option('--pluginName [type]', 'pluginName ')
-        .option('--appName [type]', 'appName ')
+        .option('--pluginName [type]', 'pluginName')
+        .option('--appName [type]', 'appName ', 'Deployed appName on activiti-cloud')
         .option('-p, --password [type]', 'password ')
         .option('-u, --username [type]', 'username ')
-        .option('--ui, --uiName [type]', 'uiName')
+        .option('--ui, --uiName [type]', 'uiName', 'Deployed app UI type on activiti-cloud')
         .parse(process.argv);
 
     pluginEnv = new CheckEnv(program.host, program.username, program.password);

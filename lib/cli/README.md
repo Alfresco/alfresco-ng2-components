@@ -44,6 +44,7 @@ In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 |--- |--- |
 |check-cs-env |Check cs env is up |
 |check-ps-env |Check ps env is up |
+|check-plugin-env |Check plugin status |
 |artifact-from-s3  |Get artifact from S3 |
 |artifact-to-s3    |Get artifact to S3 |
 |docker-publish    |publish docker image|
@@ -182,4 +183,13 @@ TEST_APP: {
             {'role': 'APS_USER', 'groups': ['myusergroup'], 'users': ['myuser']
         }]
     },
+```
+
+### Checks plugin status
+
+The following command is in charge of checking plugin status by given plugin name:
+
+```bash
+adf-cli check-plugin-env --host "gateway_env" --pluginName "Name of the plugin" --appName "appName" -u "username" -p "password" 
+--ui "uiName"
 ```
