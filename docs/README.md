@@ -138,6 +138,7 @@ The main purpose of the Notification history component is list all the notificat
 | [Node Restore directive](core/directives/node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../lib/core/directives/node-restore.directive.ts) |
 | [Upload Directive](core/directives/upload.directive.md) | Uploads content in response to file drag and drop. | [Source](../lib/core/directives/upload.directive.ts) |
 | [Version Compatibility Directive](core/directives/version-compatibility.directive.md) | Enables/disables components based on ACS version in use. | [Source](../lib/core/directives/version-compatibility.directive.ts) |
+| [Infinite Select Scroll](core/directives/infinite-select-scroll.directive.md) | Load more options to select component if API returns more items. | [Source](../lib/core/directives/infinite-select-scroll.directive.ts) |
 
 ### Dialogs
 
