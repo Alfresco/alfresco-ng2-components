@@ -1,6 +1,8 @@
 <div id="site-dropdown-container" class="adf-site-dropdown-container">
     <mat-form-field>
         <mat-select
+            adf-infinite-select-scroll
+            (scroll)="loadAllOnScroll()"
             #siteSelect
             data-automation-id="site-my-files-option"
             class="adf-site-dropdown-list-element"
