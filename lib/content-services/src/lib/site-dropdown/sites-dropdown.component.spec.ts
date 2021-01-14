@@ -16,7 +16,7 @@
  */
 
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
 import { SitesService, setupTestBed } from '@alfresco/adf-core';
@@ -68,7 +68,7 @@ describe('DropdownSitesComponent', () => {
 
         describe('Infinite Loading', () => {
 
-            beforeEach(waitForAsync(() => {
+            beforeEach(async(() => {
                 siteService = TestBed.inject(SitesService);
                 fixture = TestBed.createComponent(DropdownSitesComponent);
                 debug = fixture.debugElement;
@@ -77,7 +77,7 @@ describe('DropdownSitesComponent', () => {
                 spyOn(siteService, 'getSites').and.returnValue(of(getFakeSitePaging()));
             }));
 
-            it('Should show loading item if there are more itemes', waitForAsync(() => {
+            it('Should show loading item if there are more itemes', async(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -85,7 +85,7 @@ describe('DropdownSitesComponent', () => {
                 });
             }));
 
-            it('Should not show loading item if there are more itemes', waitForAsync(() => {
+            it('Should not show loading item if there are more itemes', async(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -97,7 +97,7 @@ describe('DropdownSitesComponent', () => {
 
         describe('Sites', () => {
 
-            beforeEach(waitForAsync(() => {
+            beforeEach(async(() => {
                 siteService = TestBed.inject(SitesService);
                 spyOn(siteService, 'getSites').and.returnValue(of(getFakeSitePagingNoMoreItems()));
 
@@ -112,7 +112,7 @@ describe('DropdownSitesComponent', () => {
                 selectBox.triggerEventHandler('click', null);
             }
 
-            it('Dropdown sites should be rendered', waitForAsync(() => {
+            it('Dropdown sites should be rendered', async(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -123,7 +123,7 @@ describe('DropdownSitesComponent', () => {
                 });
             }));
 
-            it('should show the "My files" option by default', waitForAsync(() => {
+            it('should show the "My files" option by default', async(() => {
                 component.hideMyFiles = false;
                 fixture.detectChanges();
 
@@ -136,7 +136,7 @@ describe('DropdownSitesComponent', () => {
                 });
             }));
 
-            it('should hide the "My files" option if the developer desires that way', waitForAsync(() => {
+            it('should hide the "My files" option if the developer desires that way', async(() => {
                 component.hideMyFiles = true;
                 fixture.detectChanges();
 
@@ -149,7 +149,7 @@ describe('DropdownSitesComponent', () => {
                 });
             }));
 
-            it('should show the default placeholder label by default', waitForAsync(() => {
+            it('should show the default placeholder label by default', async(() => {
                 fixture.detectChanges();
 
                 openSelectBox();
@@ -160,7 +160,7 @@ describe('DropdownSitesComponent', () => {
                 });
             }));
 
-            it('should show custom placeholder label when the \'placeholder\' input property is given a value', waitForAsync(() => {
+            it('should show custom placeholder label when the \'placeholder\' input property is given a value', async(() => {
                 fixture.detectChanges();
 
                 component.placeholder = 'NODE_SELECTOR.SELECT_LOCATION';
@@ -174,7 +174,7 @@ describe('DropdownSitesComponent', () => {
                 });
             }));
 
-            it('should load custom sites when the \'siteList\' input property is given a value', waitForAsync(() => {
+            it('should load custom sites when the \'siteList\' input property is given a value', async(() => {
                 component.siteList = customSiteList;
 
                 fixture.detectChanges();
@@ -195,7 +195,7 @@ describe('DropdownSitesComponent', () => {
                 });
             }));
 
-            it('should load sites by default', waitForAsync(() => {
+            it('should load sites by default', async(() => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -239,7 +239,7 @@ describe('DropdownSitesComponent', () => {
 
         describe('Default value', () => {
 
-            beforeEach(waitForAsync(() => {
+            beforeEach(async(() => {
                 siteService = TestBed.inject(SitesService);
                 spyOn(siteService, 'getSites').and.returnValues(of(getFakeSitePagingFirstPage()), of(getFakeSitePagingLastPage()));
 
@@ -271,7 +271,7 @@ describe('DropdownSitesComponent', () => {
 
         describe('Sites with members', () => {
 
-            beforeEach(waitForAsync(() => {
+            beforeEach(async(() => {
                 siteService = TestBed.inject(SitesService);
                 spyOn(siteService, 'getSites').and.returnValue(of(getFakeSitePagingWithMembers()));
 
@@ -281,14 +281,14 @@ describe('DropdownSitesComponent', () => {
                 component = fixture.componentInstance;
             }));
 
-            afterEach(waitForAsync(() => {
+            afterEach(async(() => {
                 fixture.destroy();
                 TestBed.resetTestingModule();
             }));
 
             describe('No relations', () => {
 
-                beforeEach(waitForAsync(() => {
+                beforeEach(async(() => {
                     component.relations = Relations.Members;
                 }));
 
@@ -312,7 +312,7 @@ describe('DropdownSitesComponent', () => {
             });
 
             describe('No relations', () => {
-                beforeEach(waitForAsync(() => {
+                beforeEach(async(() => {
                     component.relations = [];
                 }));
 
