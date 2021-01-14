@@ -167,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Manage versions",
+      "ASPECTS": "Update Aspects",
       "LOCK": "Lock",
       "METADATA": "Info",
       "DOWNLOAD": "Download",
