@@ -24,7 +24,7 @@ import { takeUntil } from 'rxjs/operators';
     selector: '[adf-infinite-select-scroll]'
 })
 export class InfiniteSelectScrollDirective implements AfterViewInit, OnDestroy {
-    static readonly MAX_ITEMS = 5;
+    static readonly MAX_ITEMS = 50;
 
     @Output() scrollEnd = new EventEmitter<Event>();
 
