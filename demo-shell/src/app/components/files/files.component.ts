@@ -26,7 +26,8 @@ import {
     PaginationComponent, FormValues, DisplayMode, ShowHeaderMode, InfinitePaginationComponent,
     SharedLinksApiService,
     FormRenderingService,
-    FileUploadEvent
+    FileUploadEvent,
+    NodesApiService
 } from '@alfresco/adf-core';
 
 import {
@@ -36,7 +37,8 @@ import {
     ConfirmDialogComponent,
     LibraryDialogComponent,
     ContentMetadataService,
-    FilterSearch
+    FilterSearch,
+    AspectListService
 } from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent, ProcessFormRenderingService } from '@alfresco/adf-process-services';
@@ -228,7 +230,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 public authenticationService: AuthenticationService,
                 public alfrescoApiService: AlfrescoApiService,
                 private contentMetadataService: ContentMetadataService,
-                private sharedLinksApiService: SharedLinksApiService) {
+                private sharedLinksApiService: SharedLinksApiService,
+                private aspectListService: AspectListService,
+                private nodeService: NodesApiService) {
     }
 
     showFile(event) {
@@ -465,6 +469,14 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.openSnackMessageError('OPERATION.ERROR.PERMISSION');
         }
+    }
+
+    onAspectUpdate(event: any) {
+        this.aspectListService.openAspectListDialog(event.value.entry.id).subscribe((aspectList) => {
+            this.nodeService.updateNode(event.value.entry.id, {aspectNames : [...aspectList]}).subscribe(() => {
+                this.openSnackMessageInfo('Node Aspects Updated');
+            });
+        });
     }
 
     onManageMetadata(event: any) {
