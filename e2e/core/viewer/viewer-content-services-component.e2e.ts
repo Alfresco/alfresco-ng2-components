@@ -442,8 +442,7 @@ describe('Content Services Viewer', () => {
         await viewerPage.viewFile(originalFileName);
         await viewerPage.clickCloseButton();
         await contentServicesPage.versionManagerContent(originalFileName);
-        await versionManagePage.checkUploadNewVersionsButtonIsDisplayed();
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
         await versionManagePage.uploadNewVersionFile(newVersionLocation);
         await versionManagePage.closeActionsMenu();
         await versionManagePage.closeVersionDialog();

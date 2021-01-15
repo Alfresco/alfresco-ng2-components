@@ -71,7 +71,7 @@ describe('Empty Process List Test', () => {
 
         await expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
 
-        await processDetailsPage.checkProcessDetailsCard();
+        await processDetailsPage.propertiesList.waitVisible();
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await (await processServicesPage.goToApp(simpleAppWithUserForm.title)).clickProcessButton();
@@ -86,6 +86,6 @@ describe('Empty Process List Test', () => {
 
         await expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
 
-        await processDetailsPage.checkProcessDetailsCard();
+        await processDetailsPage.propertiesList.waitVisible();
     });
 });

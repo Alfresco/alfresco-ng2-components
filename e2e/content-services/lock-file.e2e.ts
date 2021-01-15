@@ -106,16 +106,16 @@ describe('Lock File', () => {
         it('[C286604] Should be able to open Lock file option by clicking the lock image', async () => {
             await contentServices.lockContent(pngFileModel.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.checkCancelButtonIsDisplayed();
-            await lockFilePage.checkSaveButtonIsDisplayed();
+            await lockFilePage.lockFileCheckboxText.waitVisible();
+            await lockFilePage.cancelButton.waitVisible();
+            await lockFilePage.saveButton.waitVisible();
         });
 
         it('[C286625] Should be able to click Cancel to cancel lock file operation', async () => {
             await contentServices.lockContent(pngFileModel.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.clickCancelButton();
+            await lockFilePage.lockFileCheckboxText.waitVisible();
+            await lockFilePage.cancelButton.click();
 
             await contentServices.checkUnlockedIcon(pngFileModel.name);
         });
@@ -123,9 +123,9 @@ describe('Lock File', () => {
         it('[C286603] Should be able to click on Lock file checkbox and lock a file', async () => {
             await contentServices.lockContent(pngFileToLock.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.clickLockFileCheckbox();
-            await lockFilePage.clickSaveButton();
+            await lockFilePage.lockFileCheckboxText.waitVisible();
+            await lockFilePage.lockFileCheckbox.click();
+            await lockFilePage.saveButton.click();
 
             await contentServices.checkLockedIcon(pngFileToLock.name);
         });
@@ -133,15 +133,15 @@ describe('Lock File', () => {
         it('[C286618] Should be able to uncheck Lock file checkbox and unlock a file', async () => {
             await contentServices.lockContent(pngFileModel.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.clickLockFileCheckbox();
-            await lockFilePage.clickSaveButton();
+            await lockFilePage.lockFileCheckboxText.waitVisible();
+            await lockFilePage.lockFileCheckbox.click();
+            await lockFilePage.saveButton.click();
 
             await contentServices.checkLockedIcon(pngFileModel.name);
             await contentServices.lockContent(pngFileModel.name);
 
-            await lockFilePage.clickLockFileCheckbox();
-            await lockFilePage.clickSaveButton();
+            await lockFilePage.lockFileCheckbox.click();
+            await lockFilePage.saveButton.click();
 
             await contentServices.checkUnlockedIcon(pngFileModel.name);
         });
@@ -174,9 +174,9 @@ describe('Lock File', () => {
         it('[C286610] Should not be able to delete a locked file', async () => {
             await contentServices.lockContent(pngFileModel.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.clickLockFileCheckbox();
-            await lockFilePage.clickSaveButton();
+            await lockFilePage.lockFileCheckboxText.waitVisible();
+            await lockFilePage.lockFileCheckbox.click();
+            await lockFilePage.saveButton.click();
 
             try {
                 await apiService.getInstance().core.nodesApi.deleteNode(nodeId);
@@ -188,9 +188,9 @@ describe('Lock File', () => {
         it('[C286611] Should not be able to rename a locked file', async () => {
             await contentServices.lockContent(pngFileModel.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.clickLockFileCheckbox();
-            await lockFilePage.clickSaveButton();
+            await lockFilePage.lockFileCheckboxText.waitVisible();
+            await lockFilePage.lockFileCheckbox.click();
+            await lockFilePage.saveButton.click();
 
             try {
                 await apiService.getInstance().core.nodesApi.updateNode(nodeId, { name: 'My new name' });
@@ -203,9 +203,9 @@ describe('Lock File', () => {
         it('[C286612] Should not be able to move a locked file', async () => {
             await contentServices.lockContent(pngFileModel.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.clickLockFileCheckbox();
-            await lockFilePage.clickSaveButton();
+            await lockFilePage.lockFileCheckboxText.waitVisible();
+            await lockFilePage.lockFileCheckbox.click();
+            await lockFilePage.saveButton.click();
 
             try {
                 await apiService.getInstance().core.nodesApi.moveNode(nodeId, { targetParentId: '-my-' });
@@ -218,9 +218,9 @@ describe('Lock File', () => {
         it('[C286613] Should not be able to update a new version on a locked file', async () => {
             await contentServices.lockContent(pngFileModel.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.clickLockFileCheckbox();
-            await lockFilePage.clickSaveButton();
+            await lockFilePage.lockFileCheckboxText.waitVisible();
+            await lockFilePage.lockFileCheckbox.click();
+            await lockFilePage.saveButton.click();
 
             try {
                 await apiService.getInstance().core.nodesApi.updateNodeContent(nodeId, 'NEW FILE CONTENT');
@@ -255,10 +255,10 @@ describe('Lock File', () => {
         it('[C286614] Owner of the locked file should be able to rename if Allow owner to modify is checked', async () => {
             await contentServices.lockContent(pngFileModel.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.clickLockFileCheckbox();
-            await lockFilePage.clickAllowOwnerCheckbox();
-            await lockFilePage.clickSaveButton();
+            await lockFilePage.lockFileCheckboxText.waitVisible();
+            await lockFilePage.lockFileCheckbox.click();
+            await lockFilePage.allowOwnerCheckbox.click();
+            await lockFilePage.saveButton.click();
 
             try {
                 const response = await apiService.getInstance().core.nodesApi.updateNode(nodeId, { name: 'My new name' });
@@ -270,10 +270,10 @@ describe('Lock File', () => {
         it('[C286615] Owner of the locked file should be able to update a new version if Allow owner to modify is checked', async () => {
             await contentServices.lockContent(pngFileModel.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.clickLockFileCheckbox();
-            await lockFilePage.clickAllowOwnerCheckbox();
-            await lockFilePage.clickSaveButton();
+            await lockFilePage.lockFileCheckboxText.waitVisible();
+            await lockFilePage.lockFileCheckbox.click();
+            await lockFilePage.allowOwnerCheckbox.click();
+            await lockFilePage.saveButton.click();
 
             try {
                 const response = await apiService.getInstance().core.nodesApi.updateNodeContent(nodeId, 'NEW FILE CONTENT');
@@ -285,10 +285,10 @@ describe('Lock File', () => {
         it('[C286616] Owner of the locked file should be able to move if Allow owner to modify is checked', async () => {
             await contentServices.lockContent(pngFileModel.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.clickLockFileCheckbox();
-            await lockFilePage.clickAllowOwnerCheckbox();
-            await lockFilePage.clickSaveButton();
+            await lockFilePage.lockFileCheckboxText.waitVisible();
+            await lockFilePage.lockFileCheckbox.click();
+            await lockFilePage.allowOwnerCheckbox.click();
+            await lockFilePage.saveButton.click();
 
             try {
                 await apiService.getInstance().core.nodesApi.moveNode(nodeId, { targetParentId: '-my-' });
@@ -303,10 +303,10 @@ describe('Lock File', () => {
         it('[C286617] Owner of the locked file should be able to delete if Allow owner to modify is checked', async () => {
             await contentServices.lockContent(pngFileToLock.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.clickLockFileCheckbox();
-            await lockFilePage.clickAllowOwnerCheckbox();
-            await lockFilePage.clickSaveButton();
+            await lockFilePage.lockFileCheckboxText.waitVisible();
+            await lockFilePage.lockFileCheckbox.click();
+            await lockFilePage.allowOwnerCheckbox.click();
+            await lockFilePage.saveButton.click();
 
             await contentServices.deleteContent(pngFileToBeLocked.entry.name);
             await contentServices.checkContentIsNotDisplayed(pngFileToBeLocked.entry.name);

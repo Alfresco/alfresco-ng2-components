@@ -323,7 +323,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.clickFormStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('Audit Log');
-                await processDetailsPage.clickAuditLogButton();
+                await processDetailsPage.auditLogButton.click();
 
                 await FileBrowserUtil.isFileDownloaded(auditLogFile);
             });
@@ -375,8 +375,8 @@ describe('Start Process Component', () => {
                 await startProcessPage.clickFormStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('Active Task');
-                await processDetailsPage.clickOnActiveTask();
-                await processDetailsPage.checkActiveTaskTitleIsDisplayed();
+                await processDetailsPage.activeTask.click();
+                await processDetailsPage.taskTitle.waitVisible();
             });
 
             it('[C260457] Should display process in Completed when cancelled', async () => {
@@ -391,10 +391,10 @@ describe('Start Process Component', () => {
                 await startProcessPage.clickFormStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('Cancel Process');
-                await processDetailsPage.clickCancelProcessButton();
+                await processDetailsPage.cancelProcessButton.click();
                 await processFiltersPage.clickCompletedFilterButton();
                 await processFiltersPage.selectFromProcessList('Cancel Process');
-                await processDetailsPage.checkShowDiagramIsDisabled();
+                await processDetailsPage.showDiagramButtonDisabled.waitVisible();
             });
 
             it('[C260461] Should be possible to add a comment on a completed/canceled process', async () => {
@@ -407,7 +407,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.clickFormStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('Comment Process 2');
-                await processDetailsPage.clickCancelProcessButton();
+                await processDetailsPage.cancelProcessButton.click();
                 await processFiltersPage.clickCompletedFilterButton();
                 await processFiltersPage.selectFromProcessList('Comment Process 2');
                 await processDetailsPage.addComment('goodbye');
@@ -424,7 +424,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.clickFormStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('File');
-                await processDetailsPage.clickCancelProcessButton();
+                await processDetailsPage.cancelProcessButton.click();
                 await processFiltersPage.clickCompletedFilterButton();
                 await processFiltersPage.selectFromProcessList('File');
                 await attachmentListPage.checkAttachFileButtonIsNotDisplayed();
@@ -531,7 +531,7 @@ describe('Start Process Component', () => {
             await processServiceTabBarPage.clickProcessButton();
             await processFiltersPage.clickCompletedFilterButton();
             await processFiltersPage.selectFromProcessList('Test Process');
-            await expect(await processDetailsPage.getEmptyMessage()).toBe('This list is empty');
+            await expect(await processDetailsPage.auditLogEmptyListMessage.getText()).toBe('This list is empty');
         });
     });
 

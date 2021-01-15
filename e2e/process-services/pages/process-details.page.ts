@@ -15,32 +15,32 @@
  * limitations under the License.
  */
 
-import { by, element, protractor } from 'protractor';
-import { BrowserVisibility, BrowserActions, ProcessInstanceHeaderPage } from '@alfresco/adf-testing';
+import { protractor } from 'protractor';
+import { ProcessInstanceHeaderPage, TestElement } from '@alfresco/adf-testing';
 
 export class ProcessDetailsPage {
     processInstanceHeaderPage = new ProcessInstanceHeaderPage();
-    processTitle = element(by.css('.mat-card-title'));
-    processDetailsMessage = element(by.css('adf-process-instance-details div'));
-    showDiagramButtonDisabled = element(by.css('button[id="show-diagram-button"][disabled]'));
-    propertiesList = element(by.css('.adf-property-list'));
-    showDiagramButton = element(by.id('show-diagram-button'));
-    diagramCanvas = element(by.css('svg[xmlns="http://www.w3.org/2000/svg"]'));
-    backButton = element(by.css('app-show-diagram button.mat-mini-fab.mat-accent'));
-    commentInput = element(by.id('comment-input'));
-    auditLogButton = element(by.css('button[adf-process-audit]'));
-    auditLogEmptyListMessage = element(by.css('.app-empty-list-header'));
-    cancelProcessButton = element(by.css('div[data-automation-id="header-status"] > button'));
-    activeTask = element(by.css('div[data-automation-id="active-tasks"]'));
-    completedTask = element(by.css('div[data-automation-id="completed-tasks"]'));
-    taskTitle = element(by.css('.adf-activiti-task-details__header'));
+    processTitle = TestElement.byCss('.mat-card-title');
+    processDetailsMessage = TestElement.byCss('adf-process-instance-details div');
+    showDiagramButtonDisabled = TestElement.byCss('button[id="show-diagram-button"][disabled]');
+    propertiesList = TestElement.byCss('.adf-property-list');
+    showDiagramButton = TestElement.byId('show-diagram-button');
+    diagramCanvas = TestElement.byCss('svg[xmlns="http://www.w3.org/2000/svg"]');
+    backButton = TestElement.byCss('app-show-diagram button.mat-mini-fab.mat-accent');
+    commentInput = TestElement.byId('comment-input');
+    auditLogButton = TestElement.byCss('button[adf-process-audit]');
+    auditLogEmptyListMessage = TestElement.byCss('.app-empty-list-header');
+    cancelProcessButton = TestElement.byCss('div[data-automation-id="header-status"] > button');
+    activeTask = TestElement.byCss('div[data-automation-id="active-tasks"]');
+    completedTask = TestElement.byCss('div[data-automation-id="completed-tasks"]');
+    taskTitle = TestElement.byCss('.adf-activiti-task-details__header');
 
     checkProcessTitleIsDisplayed(): Promise<string> {
-        return BrowserActions.getText(this.processTitle);
+        return this.processTitle.getText();
     }
 
     checkProcessDetailsMessage(): Promise<string> {
-        return BrowserActions.getText(this.processDetailsMessage);
+        return this.processDetailsMessage.getText();
     }
 
     async checkProcessHeaderDetailsAreVisible(): Promise<void> {
@@ -80,52 +80,18 @@ export class ProcessDetailsPage {
     }
 
     async clickShowDiagram(): Promise<void> {
-        await BrowserActions.click(this.showDiagramButton);
-        await BrowserVisibility.waitUntilElementIsVisible(this.diagramCanvas);
-        await BrowserActions.click(this.backButton);
-
-    }
-
-    async checkShowDiagramIsDisabled(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.showDiagramButtonDisabled);
+        await this.showDiagramButton.click();
+        await this.diagramCanvas.waitVisible();
+        await this.backButton.click();
     }
 
     async addComment(comment: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
-        await this.commentInput.sendKeys(comment);
-        await this.commentInput.sendKeys(protractor.Key.ENTER);
+        await this.commentInput.waitVisible();
+        await this.commentInput.elementFinder.sendKeys(comment);
+        await this.commentInput.elementFinder.sendKeys(protractor.Key.ENTER);
     }
 
-    async checkCommentIsDisplayed(comment: string): Promise<void> {
-        const commentInserted = element(by.cssContainingText('div[id="comment-message"]', comment));
-        await BrowserVisibility.waitUntilElementIsVisible(commentInserted);
-    }
-
-    async clickAuditLogButton(): Promise<void> {
-        await BrowserActions.click(this.auditLogButton);
-    }
-
-    getEmptyMessage(): Promise<string> {
-        return BrowserActions.getText(this.auditLogEmptyListMessage);
-    }
-
-    async clickCancelProcessButton(): Promise<void> {
-        await BrowserActions.click(this.cancelProcessButton);
-    }
-
-    async clickOnActiveTask(): Promise<void> {
-        await BrowserActions.click(this.activeTask);
-    }
-
-    async clickOnCompletedTask(): Promise<void> {
-        await BrowserActions.click(this.completedTask);
-    }
-
-    async checkActiveTaskTitleIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.taskTitle);
-    }
-
-    async checkProcessDetailsCard(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.propertiesList);
+    checkCommentIsDisplayed(comment: string): Promise<void> {
+        return TestElement.byText('div[id="comment-message"]', comment).waitVisible();
     }
 }

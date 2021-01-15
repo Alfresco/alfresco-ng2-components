@@ -137,7 +137,7 @@ describe('Attachment list action menu for processes', () => {
         await attachmentListPage.clickAttachFileButton(pngFile.location);
         await attachmentListPage.checkFileIsAttached(pngFile.name);
 
-        await processDetailsPage.clickCancelProcessButton();
+        await processDetailsPage.cancelProcessButton.click();
         await processFiltersPage.clickCompletedFilterButton();
 
         await processDetailsPage.checkProcessTitleIsDisplayed();

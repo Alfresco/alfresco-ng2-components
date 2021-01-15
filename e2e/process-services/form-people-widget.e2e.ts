@@ -80,7 +80,7 @@ describe('Form widgets - People ', () => {
 
     it('[C286577] Should be able to start a process with people widget', async () => {
         await startProcess.clickFormStartProcessButton();
-        await processDetailsPage.clickOnActiveTask();
+        await processDetailsPage.activeTask.click();
 
         const taskId = await taskDetails.getId();
         const taskForm: any = await apiService.getInstance().activiti.taskApi.getTaskForm(taskId);
@@ -92,7 +92,7 @@ describe('Form widgets - People ', () => {
         await startProcess.enterProcessName(app.processName);
         await startProcess.clickFormStartProcessButton();
 
-        await processDetailsPage.clickOnActiveTask();
+        await processDetailsPage.activeTask.click();
         await taskDetails.checkCompleteFormButtonIsDisplayed();
         await taskDetails.clickCompleteFormTask();
 
@@ -100,7 +100,7 @@ describe('Form widgets - People ', () => {
         await processFiltersPage.clickCompletedFilterButton();
         await processFiltersPage.selectFromProcessList(app.processName);
 
-        await processDetailsPage.clickOnCompletedTask();
+        await processDetailsPage.completedTask.click();
 
         const taskId = await taskDetails.getId();
         const taskForm: any = await apiService.getInstance().activiti.taskApi.getTaskForm(taskId);

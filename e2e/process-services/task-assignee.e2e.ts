@@ -99,7 +99,7 @@ describe('Task Assignee', () => {
             await processFiltersPage.clickNewProcessDropdown();
             await startProcessPage.startProcess(name, app.processNames[0]);
             await processFiltersPage.selectFromProcessList(name);
-            await processDetailsPage.clickOnActiveTask();
+            await processDetailsPage.activeTask.click();
 
             await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.simple.one);
             await taskPage.tasksListPage().selectRow(app.userTasks.simple.one);

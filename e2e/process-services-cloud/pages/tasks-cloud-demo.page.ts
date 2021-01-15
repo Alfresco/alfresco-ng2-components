@@ -20,15 +20,14 @@ import {
     TogglePage,
     TaskFiltersCloudComponentPage,
     EditTaskFilterCloudComponentPage,
-    BrowserVisibility,
     TaskListCloudComponentPage,
-    BrowserActions, DropdownPage, Logger
+    BrowserActions, DropdownPage, Logger, TestElement
 } from '@alfresco/adf-testing';
 
 export class TasksCloudDemoPage {
 
-    createButton = element(by.css('button[data-automation-id="create-button"'));
-    newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
+    createButton = TestElement.byCss('button[data-automation-id="create-button"');
+    newTaskButton = TestElement.byCss('button[data-automation-id="btn-start-task"]');
     settingsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
     appButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'App')).first();
     displayTaskDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
@@ -40,13 +39,13 @@ export class TasksCloudDemoPage {
     selectedRows = element(by.xpath("//div[text()=' Selected Rows: ']"));
     noOfSelectedRows = element.all(by.xpath("//div[text()=' Selected Rows: ']//li"));
     addActionTitle = element(by.cssContainingText('.mat-card-title', 'Add Action'));
-    keyInputField = element(by.css('input[data-placeholder="Key"]'));
-    titleInputField = element(by.css('input[data-placeholder="Title"]'));
-    iconInputField = element(by.css('input[data-placeholder="Icon"]'));
-    addActionButton = element(by.cssContainingText('button span', 'Add'));
-    disableCheckbox = element(by.css(`mat-checkbox[formcontrolname='disabled']`));
-    visibleCheckbox = element(by.css(`mat-checkbox[formcontrolname='visible']`));
-
+    keyInputField = TestElement.byCss('input[data-placeholder="Key"]');
+    titleInputField = TestElement.byCss('input[data-placeholder="Title"]');
+    iconInputField = TestElement.byCss('input[data-placeholder="Icon"]');
+    addActionButton = TestElement.byText('button span', 'Add');
+    disableCheckbox = TestElement.byCss(`mat-checkbox[formcontrolname='disabled']`);
+    visibleCheckbox = TestElement.byCss(`mat-checkbox[formcontrolname='visible']`);
+    spinner = TestElement.byTag('mat-progress-spinner');
     modeDropdown = new DropdownPage(element(by.css('mat-form-field[data-automation-id="selectionMode"]')));
 
     togglePage = new TogglePage();
@@ -83,14 +82,14 @@ export class TasksCloudDemoPage {
     }
 
     async openNewTaskForm(): Promise<void> {
-        await BrowserActions.click(this.createButton);
+        await this.createButton.click();
         await BrowserActions.clickExecuteScript('button[data-automation-id="btn-start-task"]');
     }
 
     async clickSettingsButton(): Promise<void> {
         await BrowserActions.click(this.settingsButton);
         await browser.sleep(400);
-        await BrowserVisibility.waitUntilElementIsVisible(this.multiSelectionToggle);
+        await new TestElement(this.multiSelectionToggle).waitVisible();
         await this.modeDropdown.checkDropdownIsClickable();
     }
 
@@ -103,8 +102,8 @@ export class TasksCloudDemoPage {
         await this.modeDropdown.selectOption(mode);
     }
 
-    async checkSelectedRowsIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.selectedRows);
+    checkSelectedRowsIsDisplayed(): Promise<void> {
+        return new TestElement(this.selectedRows).waitVisible();
     }
 
     async getNoOfSelectedRows(): Promise<number> {
@@ -118,72 +117,66 @@ export class TasksCloudDemoPage {
         return BrowserActions.getText(row);
     }
 
-    async addActionIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.addActionTitle);
+    addActionIsDisplayed(): Promise<void> {
+        return new TestElement(this.addActionTitle).waitVisible();
     }
 
     async addAction(text: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.keyInputField, text);
-        await BrowserActions.clearSendKeys(this.titleInputField, text);
-        await BrowserActions.clearSendKeys(this.iconInputField, text);
-        await BrowserActions.click(this.addActionButton);
+        await this.keyInputField.typeText(text);
+        await this.titleInputField.typeText(text);
+        await this.iconInputField.typeText(text);
+        await this.addActionButton.click();
     }
 
     async addDisabledAction(text: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.keyInputField, text);
-        await BrowserActions.clearSendKeys(this.titleInputField, text);
-        await BrowserActions.clearSendKeys(this.iconInputField, text);
-        await BrowserActions.click(this.disableCheckbox);
-        await BrowserActions.click(this.addActionButton);
+        await this.keyInputField.typeText(text);
+        await this.titleInputField.typeText(text);
+        await this.iconInputField.typeText(text);
+        await this.disableCheckbox.click();
+        await this.addActionButton.click();
     }
 
     async addInvisibleAction(text: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.keyInputField, text);
-        await BrowserActions.clearSendKeys(this.titleInputField, text);
-        await BrowserActions.clearSendKeys(this.iconInputField, text);
-        await BrowserActions.click(this.visibleCheckbox);
-        await BrowserActions.click(this.addActionButton);
+        await this.keyInputField.typeText(text);
+        await this.titleInputField.typeText(text);
+        await this.iconInputField.typeText(text);
+        await this.visibleCheckbox.click();
+        await this.addActionButton.click();
     }
 
-    async actionAdded(action: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`mat-chip`, action)));
+    actionAdded(action: string): Promise<void> {
+        return TestElement.byText(`mat-chip`, action).waitVisible();
     }
 
     async checkActionExecuted(taskId: string, action: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Action Menu:')));
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Context Menu:')));
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Task ID: ' + taskId)));
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Action Type: ' + action)));
+        await TestElement.byText(`span`, 'Action Menu:').waitVisible();
+        await TestElement.byText(`span`, 'Context Menu:').waitVisible();
+        await TestElement.byText(`span`, 'Task ID: ' + taskId).waitVisible();
+        await TestElement.byText(`span`, 'Action Type: ' + action).waitVisible();
     }
 
     async clickStartNewTaskButton() {
-        await BrowserActions.click(this.createButton);
-        await BrowserActions.click(this.newTaskButton);
+        await this.createButton.click();
+        await this.newTaskButton.click();
     }
 
     async waitTillContentLoaded(): Promise<void> {
-        if (this.isSpinnerPresent()) {
+        if (await this.isSpinnerPresent()) {
             Logger.log('wait loading spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-progress-spinner')));
+            await this.spinner.waitNotPresent();
         }  else {
             try {
                 Logger.log('wait loading spinner is present');
-                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-progress-spinner')));
-            } catch (error) {
-            }
+                await this.spinner.waitPresent();
+            } catch {}
         }
     }
 
     private async isSpinnerPresent(): Promise<boolean> {
-        let isSpinnerPresent;
-
         try {
-            isSpinnerPresent = await element(by.tagName('mat-progress-spinner')).isDisplayed();
-        } catch (error) {
-            isSpinnerPresent = false;
+            return await this.spinner.isDisplayed();
+        } catch {
+            return false;
         }
-
-        return isSpinnerPresent;
     }
-
 }

@@ -27,7 +27,8 @@ import { UploadButtonComponent } from './upload-button.component';
     viewProviders: [
         { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadVersionButtonComponent) }
     ],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-upload-version-button' }
 })
 export class UploadVersionButtonComponent extends UploadButtonComponent implements OnChanges, OnInit {
 

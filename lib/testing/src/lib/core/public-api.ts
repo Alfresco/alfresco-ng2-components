@@ -20,3 +20,4 @@ export * from './pages/public-api';
 export * from './models/public-api';
 export * from './dialog/public-api';
 export * from './utils/public-api';
+export * from './test-element';

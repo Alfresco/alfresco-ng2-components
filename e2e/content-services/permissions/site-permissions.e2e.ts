@@ -179,7 +179,7 @@ describe('Permissions Component', () => {
             await contentServicesPage.pressContextMenuActionNamed('Permission');
 
             await permissionsPage.addPermissionsDialog.checkPermissionInheritedButtonIsDisplayed();
-            await permissionsPage.checkAddPermissionButtonIsDisplayed();
+            await permissionsPage.addPermissionButton.waitVisible();
 
             await browser.sleep(5000);
 
@@ -360,7 +360,7 @@ describe('Permissions Component', () => {
             await navigationBarPage.openContentServicesFolder(privateSite.entry.guid);
 
             await contentServicesPage.versionManagerContent('privateSite' + fileModel.name);
-            await BrowserActions.click(versionManagePage.showNewVersionButton);
+            await versionManagePage.showNewVersionButton.click();
             await versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
             await versionManagePage.checkFileVersionExist('1.1');

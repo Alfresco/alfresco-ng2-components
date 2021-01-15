@@ -93,7 +93,7 @@ describe('Process Filters Test', () => {
         await startProcessPage.enterProcessName(processTitle.completed);
         await startProcessPage.clickFormStartProcessButton();
 
-        await processDetailsPage.clickCancelProcessButton();
+        await processDetailsPage.cancelProcessButton.click();
         await navigationBarPage.navigateToProcessServicesPage();
 
         await processServicesPage.goToApp(app.title);
@@ -109,7 +109,7 @@ describe('Process Filters Test', () => {
         await processFiltersPage.checkFilterIsHighlighted(processFilter.running);
         await processFiltersPage.selectFromProcessList(processTitle.running);
 
-        await processDetailsPage.checkProcessDetailsCard();
+        await processDetailsPage.propertiesList.waitVisible();
     });
 
     it('[C280063] Should both the new created process and a completed one to be displayed when clicking on All filter', async () => {
@@ -121,7 +121,7 @@ describe('Process Filters Test', () => {
         await processFiltersPage.checkFilterIsHighlighted(processFilter.all);
         await processFiltersPage.selectFromProcessList(processTitle.running);
         await processFiltersPage.selectFromProcessList(processTitle.completed);
-        await processDetailsPage.checkProcessDetailsCard();
+        await processDetailsPage.propertiesList.waitVisible();
     });
 
     it('[C280064] Should the completed process be displayed when clicking on Completed filter', async () => {
@@ -132,7 +132,7 @@ describe('Process Filters Test', () => {
         await processFiltersPage.clickCompletedFilterButton();
         await processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
         await processFiltersPage.selectFromProcessList(processTitle.completed);
-        await processDetailsPage.checkProcessDetailsCard();
+        await processDetailsPage.propertiesList.waitVisible();
     });
 
     it('[C280407] Should be able to access the filters with URL', async () => {
@@ -170,14 +170,14 @@ describe('Process Filters Test', () => {
         await startProcessPage.clickFormStartProcessButton();
         await processListDemoPage.checkProcessIsDisplayed(processTitle.canceled);
 
-        await processDetailsPage.clickCancelProcessButton();
+        await processDetailsPage.cancelProcessButton.click();
         await processListDemoPage.checkProcessIsNotDisplayed(processTitle.canceled);
 
         await processFiltersPage.clickCompletedFilterButton();
         await processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
         await processListDemoPage.checkProcessIsDisplayed(processTitle.canceled);
         await processFiltersPage.selectFromProcessList(processTitle.canceled);
-        await processDetailsPage.checkProcessDetailsCard();
+        await processDetailsPage.propertiesList.waitVisible();
     });
 
     it('[C213262] Default process filters', async () => {
@@ -193,7 +193,7 @@ describe('Process Filters Test', () => {
 
         await processListDemoPage.checkProcessIsDisplayed(processTitle.one);
         await processFiltersPage.checkFilterIsHighlighted(processFilter.running);
-        await processDetailsPage.checkProcessDetailsCard();
+        await processDetailsPage.propertiesList.waitVisible();
         await checkProcessInfoDrawer({  name: processTitle.one });
 
         await processFiltersPage.clickCreateProcessButton();
@@ -205,7 +205,7 @@ describe('Process Filters Test', () => {
         await processListDemoPage.checkProcessIsDisplayed(processTitle.one);
         await processListDemoPage.checkProcessIsDisplayed(processTitle.two);
 
-        await processDetailsPage.clickCancelProcessButton();
+        await processDetailsPage.cancelProcessButton.click();
         await processListDemoPage.checkProcessIsNotDisplayed(processTitle.canceled);
 
         await processFiltersPage.clickCompletedFilterButton();

@@ -98,7 +98,7 @@ describe('Version component actions', () => {
     });
 
     it('[C280005] Should be showed all the default action when you have more then one version', async () => {
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
 
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
@@ -122,22 +122,19 @@ describe('Version component actions', () => {
     it('[C272819] Should be possible delete a version when click on delete version action', async () => {
         await versionManagePage.deleteFileVersion('1.1');
 
-        await versionManagePage.clickAcceptConfirm();
+        await versionManagePage.confirmAccept.click();
 
         await versionManagePage.checkFileVersionNotExist('1.1');
         await versionManagePage.checkFileVersionExist('1.0');
     });
 
     it('[C280006] Should be possible prevent a version to be deleted when click on No on the confirm dialog', async () => {
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
 
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
-
         await versionManagePage.checkFileVersionExist('1.1');
-
         await versionManagePage.deleteFileVersion('1.1');
-
-        await versionManagePage.clickCancelConfirm();
+        await versionManagePage.confirmCancel.click();
 
         await versionManagePage.checkFileVersionExist('1.1');
         await versionManagePage.checkFileVersionExist('1.0');
@@ -169,7 +166,7 @@ describe('Version component actions', () => {
         await browser.refresh();
         await contentServicesPage.versionManagerContent(txtFileModel.name);
 
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.click();
 
         await browser.executeScript(' setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 1000)');
         await versionManagePage.uploadNewVersionFile(bigFileToCancel.location);

@@ -18,7 +18,6 @@
 import { browser, by, element } from 'protractor';
 import {
     ApiService,
-    BrowserActions,
     BrowserVisibility,
     LoginPage,
     UploadActions,
@@ -87,10 +86,10 @@ describe('Version Properties', () => {
 
     it('[C279994] Should show/hide upload new version button when readOnly is true/false', async () => {
         await versionManagePage.disableReadOnly();
-        await BrowserVisibility.waitUntilElementIsVisible(versionManagePage.showNewVersionButton);
+        await versionManagePage.showNewVersionButton.waitVisible();
         await versionManagePage.enableReadOnly();
-        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.showNewVersionButton);
-        await BrowserVisibility.waitUntilElementIsNotVisible(versionManagePage.uploadNewVersionButton);
+        await versionManagePage.showNewVersionButton.waitNotVisible();
+        await versionManagePage.uploadNewVersionButton.waitNotVisible();
     });
 
     it('[C272817] Should NOT be present the download action when allowDownload property is false', async () => {
@@ -109,8 +108,8 @@ describe('Version Properties', () => {
 
     it('[C269085] Should show/hide comments when showComments true/false', async () => {
         await versionManagePage.enableComments();
-        await BrowserActions.click(versionManagePage.showNewVersionButton);
-        await versionManagePage.enterCommentText('Example comment text');
+        await versionManagePage.showNewVersionButton.click();
+        await versionManagePage.commentText.typeText('Example comment text');
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
         await versionManagePage.checkFileVersionExist('1.1');
         await expect(await versionManagePage.getFileVersionComment('1.1')).toEqual('Example comment text');
