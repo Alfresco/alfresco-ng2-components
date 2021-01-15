@@ -198,3 +198,50 @@ export const ACTIVITI_CLOUD_APPS: any = {
         ]
     }
 };
+
+export const ACTIVITI_APPS: any = {
+    apps : [
+        {
+            name: 'e2e-Application'
+        }
+    ],
+    files : [
+        {
+            name: 'share_profile_pic.png',
+            destination: '-my-',
+            action: 'UPLOAD'
+        },
+        {
+            name: 'share_profile_pic.jpg',
+            destination: '-my-',
+            action: 'UPLOAD'
+        },
+        {
+            name: 'lock.png',
+            destination: '-my-',
+            action: 'LOCK'
+        },
+        {
+            name: 'second_lock.png',
+            destination: '-my-',
+            action: 'LOCK'
+        },
+        {
+            name: 'share_file.jpg',
+            destination: '-my-',
+            action: 'SHARE'
+        },
+        {
+            name: 'favorite_file.jpg',
+            destination: '-my-',
+            action: 'FAVORITE'
+        }
+    ]
+};
+
+export const ACTIVITI_FILES: any = {
+    E2E_DEFAULT_APP: {
+        name: 'e2e-Application',
+        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti/e2e-Application.zip?raw=true'
+    }
+};
