@@ -5,14 +5,13 @@ let fs = require ('fs');
 const path = require('path');
 import { logger } from './logger';
 const { throwError } = require('rxjs');
-const { AppDefinitionsApi, RuntimeAppDefinitionsApi, SharedlinksApi, FavoritesApi } = require('@alfresco/js-api');
+const { AppDefinitionsApi, RuntimeAppDefinitionsApi } = require('@alfresco/js-api');
 let MAX_RETRY = 10;
 let counter = 0;
 let TIMEOUT = 6000;
 const TENANT_DEFAULT_ID = 1;
 const TENANT_DEFAULT_NAME = 'default';
 const CONTENT_DEFAULT_NAME = 'adw-content';
-// const APS_DEFAULT_APP_NAME = 'e2e-Application';
 const ACTIVITI_APPS = require('./resources').ACTIVITI_APPS;
 /* tslint:enable */
 
