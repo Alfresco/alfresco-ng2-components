@@ -206,10 +206,3 @@ export const ACTIVITI_APPS: any = {
         }
     ]
 };
-
-export const ACTIVITI_FILES: any = {
-    E2E_DEFAULT_APP: {
-        name: 'e2e-Application',
-        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti/e2e-Application.zip?raw=true'
-    }
-};
