@@ -529,5 +529,8 @@
     "BUTTON": {
       "ARIA_LABEL": "Clear"
     }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Loading..."
   }
 }

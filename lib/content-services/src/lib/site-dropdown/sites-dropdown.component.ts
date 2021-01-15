@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { SitesService, LogService } from '@alfresco/adf-core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { SitesService, LogService, InfiniteSelectScrollDirective } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry } from '@alfresco/js-api';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { MatSelectChange } from '@angular/material/select';
 
 export enum Relations {
     Members = 'members',
@@ -34,7 +32,7 @@ export enum Relations {
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-sites-dropdown' }
 })
-export class DropdownSitesComponent implements OnInit, OnDestroy {
+export class DropdownSitesComponent implements OnInit {
 
     /** Hide the "My Files" option. */
     @Input()
@@ -71,15 +69,8 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
     @Output()
     change: EventEmitter<SiteEntry> = new EventEmitter();
 
-    @ViewChild('siteSelect', { static: true })
-    siteSelect: MatSelect;
-
     private loading = true;
     private skipCount = 0;
-    private readonly MAX_ITEMS = 50;
-    private readonly ITEM_HEIGHT = 45;
-    private readonly ITEM_HEIGHT_TO_WAIT_BEFORE_LOAD_NEXT = (this.ITEM_HEIGHT * (this.MAX_ITEMS / 2));
-    private onDestroy$ = new Subject<boolean>();
 
     selected: SiteEntry = null;
     MY_FILES_VALUE = '-my-';
@@ -89,33 +80,16 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.siteSelect.openedChange
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => {
-                if (this.siteSelect.panelOpen) {
-                    this.siteSelect.panel.nativeElement.addEventListener('scroll', (event) => this.loadAllOnScroll(event));
-                }
-            });
-
         if (!this.siteList) {
             this.loadSiteList();
         }
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
-    loadAllOnScroll(event) {
-        if (this.isInfiniteScrollingEnabled() && this.isScrollInNextFetchArea(event)) {
+    loadAllOnScroll() {
+        if (this.isInfiniteScrollingEnabled()) {
             this.loading = true;
             this.loadSiteList();
         }
-    }
-
-    isScrollInNextFetchArea(event) {
-        return event.target.scrollTop >= (event.target.scrollHeight - event.target.offsetHeight - this.ITEM_HEIGHT_TO_WAIT_BEFORE_LOAD_NEXT);
     }
 
     selectedSite(event: MatSelectChange) {
@@ -125,10 +99,10 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
     private loadSiteList() {
         const extendedOptions: any = {
             skipCount: this.skipCount,
-            maxItems: this.MAX_ITEMS
+            maxItems: InfiniteSelectScrollDirective.MAX_ITEMS
         };
 
-        this.skipCount += this.MAX_ITEMS;
+        this.skipCount += InfiniteSelectScrollDirective.MAX_ITEMS;
 
         if (this.relations) {
             extendedOptions.relations = [this.relations];

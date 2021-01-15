@@ -16,7 +16,7 @@
  */
 
 import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
 import { SitesService, setupTestBed } from '@alfresco/adf-core';
@@ -89,7 +89,7 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('[data-automation-id="lsite-loading"]')).toBeNull();
+                    expect(element.querySelector('[data-automation-id="site-loading"]')).toBeNull();
                 });
             }));
 
