@@ -48,7 +48,7 @@ function generateTable(rowsToPrint: Array<RowToPrint>) {
     const headerText = 'ENVIRONM'.padStart(Math.floor((columnWidths.labelColumn + columnWidths.valueColumn + 3) / 2), ' ')
         + 'ENT SCAN'.padEnd(Math.ceil((columnWidths.labelColumn + columnWidths.valueColumn + 3) / 2), ' ');
 
-    const reset = '\x1b[0m', grey = '\x1b[90m', cyan = '\x1b[36m', yellow = '\x1b[93m', bright = '\x1b[1m';
+    const reset = '\x1b[0m', grey = '\x1b[90m', cyan = '\x1b[36m', yellow = '\x1b[33m', bright = '\x1b[1m';
 
     let tableString = `${grey}╒${horizontalLine}╕${reset}
 ${grey}│ ${bright}${cyan}${headerText} ${grey}│${reset}
@@ -69,16 +69,29 @@ async function attemptLogin() {
         });
         await jsApiConnection.login(program.username, program.password);
     } catch (err) {
-        console.log('Login error environment down or inaccessible');
-        loginAttempts++;
-        if (MAX_ATTEMPTS === loginAttempts) {
-            console.log('Give up');
-            process.exit(1);
-        } else {
-            console.log(`Retry in 1 minute attempt N ${loginAttempts}`);
-            await wait(TIMEOUT);
-            await attemptLogin();
+        await handleLoginError(err);
+    }
+}
+
+async function handleLoginError(loginError) {
+    const reset = '\x1b[0m', bright = '\x1b[1m', red = '\x1b[31m';
+    if (loginAttempts === 0) {
+        console.log(`${red}${bright}ENVIRONMENT SCAN${reset}${red} - Login error: environment down or inaccessible${reset}`);
+    }
+    loginAttempts++;
+    if (MAX_ATTEMPTS === loginAttempts) {
+        if (loginError.response && loginError.response.text) {
+            const parsedJson = JSON.parse(loginError.response.text);
+            if (typeof parsedJson === 'object' && parsedJson.error) {
+                console.log(parsedJson.error);
+            }
         }
+        console.log('Give up');
+        process.exit(1);
+    } else {
+        console.log(`Retry in 1 minute attempt N ${loginAttempts}`);
+        await wait(TIMEOUT);
+        await attemptLogin();
     }
 }
 
