@@ -1,20 +1,20 @@
-
-import * as program from 'commander';
-import * as fs from 'fs';
-import * as path from 'path';
+/* tslint:disable */
+let alfrescoApi = require('@alfresco/js-api');
+let program = require('commander');
+let fs = require ('fs');
+const path = require('path');
 import { logger } from './logger';
-import { throwError } from 'rxjs';
-import { AlfrescoApi, AppDefinitionsApi, RuntimeAppDefinitionsApi, SharedlinksApi, FavoritesApi } from '@alfresco/js-api';
-const MAX_RETRY = 10;
+const { throwError } = require('rxjs');
+const { AppDefinitionsApi, RuntimeAppDefinitionsApi, SharedlinksApi, FavoritesApi } = require('@alfresco/js-api');
+let MAX_RETRY = 10;
 let counter = 0;
-const TIMEOUT = 6000;
+let TIMEOUT = 6000;
 const TENANT_DEFAULT_ID = 1;
 const TENANT_DEFAULT_NAME = 'default';
 const CONTENT_DEFAULT_NAME = 'adw-content';
-/* tslint:disable */
+// const APS_DEFAULT_APP_NAME = 'e2e-Application';
 const ACTIVITI_APPS = require('./resources').ACTIVITI_APPS;
 /* tslint:enable */
-import { spawnSync } from 'child_process';
 
 let alfrescoJsApi;
 let alfrescoJsApiRepo;
@@ -141,7 +141,7 @@ async function initializeDefaultFiles() {
 async function checkEnv() {
     try {
 
-        alfrescoJsApi = new AlfrescoApi({
+        alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
             provider: 'ALL',
             hostBpm: program.host,
             hostEcm: program.host,
@@ -149,10 +149,7 @@ async function checkEnv() {
             oauth2: {
                 host: `${program.host}/auth/realms/alfresco`,
                 clientId: 'alfresco',
-                scope: 'openid',
-                implicitFlow: false,
-                silentLogin: false,
-                redirectUri: '/'
+                scope: 'openid'
             }
         });
         alfrescoJsApiRepo = alfrescoJsApi;
@@ -223,7 +220,7 @@ async function createUsers(tenandId, user) {
         logger.info(`APS: User ${userInfo.email} created with id: ${userInfo.id}`);
         return user;
     } catch (error) {
-        logger.log(`APS: not able to create the default user: ${error.message}` );
+        logger.info(`APS: not able to create the default user: ${error.message}` );
     }
 }
 
@@ -507,9 +504,12 @@ async function authorizeUserToContentWithBasic(username, contentId) {
     }
 }
 
+/* tslint:disable */
 async function downloadLicenseFile(apsLicensePath) {
+
     try {
-        spawnSync(` aws s3 cp ${apsLicensePath} ./ `, {
+        const child_process = require("child_process");
+        child_process.execSync(` aws s3 cp ${apsLicensePath} ./ `, {
             cwd: path.resolve(__dirname, `./`)
         });
         logger.info(`Aps license file download from S3 bucket`);
@@ -519,6 +519,7 @@ async function downloadLicenseFile(apsLicensePath) {
         return false;
     }
 }
+/* tslint:enable */
 
 function sleep(delay) {
     const start = new Date().getTime();
