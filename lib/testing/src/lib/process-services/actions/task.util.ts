@@ -35,14 +35,6 @@ export class TaskUtil {
         }
     }
 
-    async completeTask(taskInstance: string): Promise<any> {
-        try {
-            return this.api.apiService.activiti.taskActionsApi.completeTask(taskInstance);
-        } catch (error) {
-            Logger.error('Complete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
-        }
-    }
-
     async completeTaskForm(taskInstance: string): Promise<any> {
         try {
             return this.api.getInstance().activiti.taskApi.completeTaskForm(taskInstance, { values: { label: null } });
