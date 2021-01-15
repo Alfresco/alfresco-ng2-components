@@ -81,8 +81,6 @@ async function main() {
                     if (users[i].username.includes(defaultUser)) {
                         logger.info(`***** Step initialize APS apps for user ${defaultUser} *****`);
                         initializeDefaultApps();
-                        logger.info(`***** Step initialize ACS files for user ${defaultUser} *****`);
-                        initializeDefaultFiles();
                     }
 
                 }
@@ -111,33 +109,6 @@ async function initializeDefaultApps() {
         }
     }
 }
-
-async function initializeDefaultFiles() {
-    for (let j = 0; j < ACTIVITI_APPS.files.length; j++) {
-        const fileInfo = ACTIVITI_APPS.files[j];
-        switch (fileInfo.action) {
-            case 'UPLOAD':
-                await uploadFile(fileInfo.name, fileInfo.destination);
-                break;
-            case 'LOCK':
-                const fileToLock = await uploadFile(fileInfo.name, fileInfo.destination);
-                await lockFile(fileToLock.entry.id);
-                break;
-            case 'SHARE':
-                const fileToShare = await uploadFile(fileInfo.name, fileInfo.destination);
-                await shareFile(fileToShare.entry.id);
-                break;
-            case 'FAVORITE':
-                const fileToFav = await uploadFile(fileInfo.name, fileInfo.destination);
-                await favoriteFile(fileToFav.entry.id);
-                break;
-            default:
-                logger.error('No action found for file ', fileInfo.name);
-                break;
-        }
-    }
-}
-
 async function checkEnv() {
     try {
 
@@ -256,71 +227,6 @@ async function isDefaultAppDeployed(appName: string) {
         return defaultApp && defaultApp.length > 0;
     } catch (error) {
         logger.error(`Aps app failed to import/Publish!`);
-    }
-}
-
-async function uploadFile(fileName, fileDestination) {
-    const filePath = `../resources/content/${fileName}`;
-    const file = fs.createReadStream(path.join(__dirname, filePath));
-    let uploadedFile: any;
-    try {
-        uploadedFile = await alfrescoJsApi.upload.uploadFile(
-            file,
-            '',
-            fileDestination,
-            null,
-            {
-                name: fileName,
-                nodeType: 'cm:content',
-                renditions: 'doclib',
-                overwrite: true
-            }
-        );
-        logger.info(`File ${fileName} was uploaded`);
-    } catch (err) {
-        logger.error(`Failed to upload file with error: `, err.stack);
-    }
-    return uploadedFile;
-}
-
-async function lockFile(nodeId) {
-    const data = {
-        type: 'ALLOW_OWNER_CHANGES'
-    };
-    try {
-        await alfrescoJsApi.nodes.lockNode(nodeId, data);
-        logger.info('File was locked');
-     } catch (error) {
-        logger.error('Failed to lock file with error: ', error.stack);
-    }
-}
-
-async function shareFile(nodeId) {
-    const data = {
-        nodeId: nodeId
-    };
-    try {
-        await new SharedlinksApi(alfrescoJsApi).createSharedLink(data);
-        logger.info('File was shared');
-     } catch (error) {
-        logger.error('Failed to share file with error: ', error.stack);
-    }
-}
-
-async function favoriteFile(nodeId) {
-
-    const data = {
-        target: {
-          ['file']: {
-            guid: nodeId
-          }
-        }
-    };
-    try {
-        await new FavoritesApi(alfrescoJsApi).createFavorite('-me-', data);
-        logger.info('File was add to favorites');
-    } catch (error) {
-        logger.error('Failed to add the file to favorites with error: ', error.stack);
     }
 }
 

@@ -204,38 +204,6 @@ export const ACTIVITI_APPS: any = {
         {
             name: 'e2e-Application'
         }
-    ],
-    files : [
-        {
-            name: 'share_profile_pic.png',
-            destination: '-my-',
-            action: 'UPLOAD'
-        },
-        {
-            name: 'share_profile_pic.jpg',
-            destination: '-my-',
-            action: 'UPLOAD'
-        },
-        {
-            name: 'lock.png',
-            destination: '-my-',
-            action: 'LOCK'
-        },
-        {
-            name: 'second_lock.png',
-            destination: '-my-',
-            action: 'LOCK'
-        },
-        {
-            name: 'share_file.jpg',
-            destination: '-my-',
-            action: 'SHARE'
-        },
-        {
-            name: 'favorite_file.jpg',
-            destination: '-my-',
-            action: 'FAVORITE'
-        }
     ]
 };
 
