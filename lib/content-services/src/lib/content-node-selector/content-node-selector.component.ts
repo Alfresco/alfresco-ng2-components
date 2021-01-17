@@ -38,6 +38,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     showingSearch = false;
     hasAllowableOperations = false;
     isLoading = true;
+    selectedTabIndex: number = 0;
 
     constructor(private translation: TranslationService,
                 private contentService: ContentService,
@@ -123,5 +124,17 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     onFolderLoaded() {
         this.isLoading = false;
+    }
+
+    onTabSelectionChange(tabIndex: number) {
+        this.selectedTabIndex = tabIndex;
+    }
+
+    isFileServerTabSelected (): boolean {
+        return this.selectedTabIndex === 0;
+    }
+
+    isLocalUploadTabSelected (): boolean {
+        return this.selectedTabIndex === 1;
     }
 }

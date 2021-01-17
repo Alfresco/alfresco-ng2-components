@@ -105,6 +105,20 @@ describe('ContentNodeSelectorComponent', () => {
         fixture.destroy();
     });
 
+    function enableLocalUpload() {
+        component.data.showLocalUploadButton = true;
+        component.hasAllowableOperations = true;
+        component.showingSearch = false;
+        component.isLoading = false;
+    }
+
+    function selectTabByIndex(tabIndex: number) {
+        const uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[tabIndex];
+        const attributes = uploadFromLocalTab.nativeNode.attributes as NamedNodeMap;
+        const tabPositionInSet = Number(attributes.getNamedItem('aria-posinset').value) - 1;
+        component.onTabSelectionChange(tabPositionInSet);
+    }
+
     describe('Data injecting with the "Material dialog way"', () => {
 
         it('should show the INJECTED title', () => {
@@ -228,7 +242,11 @@ describe('ContentNodeSelectorComponent', () => {
 
     describe('Upload button', () => {
 
-        it('should be able to show upload button if showLocalUploadButton set to true', () => {
+        it('should be able to show upload button if showLocalUploadButton set to true', async () => {
+            enableLocalUpload();
+            selectTabByIndex(1);
+
+            fixture.detectChanges();
             const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button'));
 
             expect(adfUploadButton).not.toBeNull();
@@ -236,6 +254,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should be able to disable UploadButton if showingSearch set to true', () => {
+            selectTabByIndex(1);
             component.showingSearch = true;
             component.hasAllowableOperations = true;
 
@@ -247,6 +266,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should be able to enable UploadButton if showingSearch set to false', () => {
+            selectTabByIndex(1);
             component.showingSearch = false;
             component.hasAllowableOperations = true;
 
@@ -261,12 +281,13 @@ describe('ContentNodeSelectorComponent', () => {
             component.data.showLocalUploadButton = true;
             component.showingSearch = true;
             component.hasAllowableOperations = false;
+            selectTabByIndex(1);
 
             fixture.detectChanges();
-            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
+            const warningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
 
-            expect(warnningMessage).not.toBeNull();
-            expect(warnningMessage.nativeElement.innerText).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE');
+            expect(warningMessage).not.toBeNull();
+            expect(warningMessage.nativeElement.innerText).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE');
         });
 
         it('should not be able to show warning message if it is not in search mode', () => {
@@ -274,13 +295,14 @@ describe('ContentNodeSelectorComponent', () => {
             component.showingSearch = false;
 
             fixture.detectChanges();
-            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
+            const warningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
 
-            expect(warnningMessage).toBeNull();
+            expect(warningMessage).toBeNull();
         });
 
         it('should be able to disable UploadButton if user does not have allowable operations', () => {
             component.hasAllowableOperations = false;
+            selectTabByIndex(1);
 
             fixture.detectChanges();
             const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
@@ -290,6 +312,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should be able to enable UploadButton if user has allowable operations', () => {
+            selectTabByIndex(1);
             component.hasAllowableOperations = true;
 
             fixture.detectChanges();
@@ -300,14 +323,12 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should not be able to show warning message if user has allowable operations', () => {
-            component.data.showLocalUploadButton = true;
-            component.hasAllowableOperations = true;
-            component.showingSearch = false;
-
+            enableLocalUpload();
+            selectTabByIndex(1);
             fixture.detectChanges();
-            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
+            const warningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
 
-            expect(warnningMessage).toBeNull();
+            expect(warningMessage).toBeNull();
         });
 
         it('should be able to show warning message if user does not have allowable operations', () => {
@@ -315,12 +336,13 @@ describe('ContentNodeSelectorComponent', () => {
             component.hasAllowableOperations = false;
             component.showingSearch = false;
             component.isLoading = false;
+            selectTabByIndex(1);
 
             fixture.detectChanges();
-            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
+            const warningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
 
-            expect(warnningMessage).not.toBeNull();
-            expect(warnningMessage.nativeElement.innerText).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE');
+            expect(warningMessage).not.toBeNull();
+            expect(warningMessage.nativeElement.innerText).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE');
         });
 
         it('should not be able to show warning message while loading documents', () => {
@@ -330,9 +352,24 @@ describe('ContentNodeSelectorComponent', () => {
             component.isLoading = true;
 
             fixture.detectChanges();
-            const warnningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
+            const warningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
 
-            expect(warnningMessage).toBeNull();
+            expect(warningMessage).toBeNull();
+        });
+    });
+
+    describe('Tabs', () => {
+        it('should isFileServerTabSelected return true when tabIndex 0 is selected', () => {
+            selectTabByIndex(0);
+
+            expect(component.isFileServerTabSelected()).toEqual(true);
+        });
+
+        it('should isLocalUploadTabSelected return true when tabIndex 1 is selected', () => {
+            enableLocalUpload();
+            selectTabByIndex(1);
+
+            expect(component.isLocalUploadTabSelected()).toEqual(true);
         });
     });
 });
