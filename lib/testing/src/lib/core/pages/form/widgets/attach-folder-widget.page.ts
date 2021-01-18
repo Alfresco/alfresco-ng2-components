@@ -25,7 +25,7 @@ export class AttachFolderWidgetPage {
     foldersListLocator: Locator = by.css('.adf-attach-folder-result');
 
     async clickWidget(fieldId: string): Promise<void> {
-        const widget = await this.formFields.getWidget(fieldId).element(by.css(`button[id="folder-${fieldId}-button"]`));
+        const widget = await (await this.formFields.getWidget(fieldId)).element(by.css(`button[id="folder-${fieldId}-button"]`));
         await BrowserActions.click(widget);
     }
 
