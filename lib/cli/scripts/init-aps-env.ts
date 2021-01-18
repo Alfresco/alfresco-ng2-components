@@ -79,7 +79,7 @@ async function main() {
                     const defaultUser = 'hruser';
                     if (users[i].username.includes(defaultUser)) {
                         logger.info(`***** Step initialize APS apps for user ${defaultUser} *****`);
-                        initializeDefaultApps();
+                        await initializeDefaultApps();
                     }
 
                 }
