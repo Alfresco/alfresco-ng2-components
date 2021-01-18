@@ -24,7 +24,8 @@ export class ProcessListCloudComponentPage {
 
     columns = {
         id: 'Id',
-        name: 'Name'
+        name: 'Name',
+        processDefinitionName: 'Process Definition Name'
     };
 
     processList = element(by.css('adf-cloud-process-list'));
@@ -72,6 +73,10 @@ export class ProcessListCloudComponentPage {
 
     checkContentIsNotDisplayedByName(processName: string): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed(this.columns.name, processName);
+    }
+
+    checkContentIsDisplayedByProcessDefinitionName(processDefinition: string): Promise<void> {
+        return this.dataTable.checkContentIsDisplayed(this.columns.processDefinitionName, processDefinition);
     }
 
     checkContentIsDisplayedById(processId: string): Promise<void> {
