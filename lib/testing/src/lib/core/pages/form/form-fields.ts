@@ -55,11 +55,11 @@ export class FormFields {
     }
 
     async checkWidgetIsHidden(fieldId: string): Promise<void> {
-        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
-        await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement, 6000);
+        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
+        await BrowserVisibility.waitUntilElementIsVisible(hiddenElement);
     }
 
-    getWidget(fieldId: string): ElementFinder {
+    async getWidget(fieldId: string): Promise<ElementFinder> {
         return element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
     }
 
@@ -76,8 +76,7 @@ export class FormFields {
     }
 
     async getFieldErrorMessage(fieldId: string): Promise<string> {
-        const error = await this.getWidget(fieldId);
-        error.element(this.errorMessage);
+        const error = await (await this.getWidget(fieldId)).element(this.errorMessage);
         return BrowserActions.getText(error);
     }
 
