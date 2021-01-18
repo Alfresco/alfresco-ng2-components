@@ -198,3 +198,11 @@ export const ACTIVITI_CLOUD_APPS: any = {
         ]
     }
 };
+
+export const ACTIVITI_APPS: any = {
+    apps : [
+        {
+            name: 'e2e-Application'
+        }
+    ]
+};
