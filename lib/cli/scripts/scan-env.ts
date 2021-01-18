@@ -1,19 +1,20 @@
-const { AlfrescoApiCompatibility, PeopleApi, NodesApi, GroupsApi, SitesApi, SearchApi } = require('@alfresco/js-api');
-const program = require('commander');
+import { AlfrescoApi, PeopleApi, NodesApi, GroupsApi, SitesApi, SearchApi } from '@alfresco/js-api';
+import * as program from 'commander';
+import { logger } from './logger';
 
-interface PeopleTally { enabled: number, disabled: number }
-interface RowToPrint { label: string, value: number }
+interface PeopleTally { enabled: number; disabled: number; }
+interface RowToPrint { label: string; value: number; }
 
 const MAX_ATTEMPTS = 10;
 const TIMEOUT = 60000;
 const MAX_PEOPLE_PER_PAGE = 100;
 const USERS_HOME_RELATIVE_PATH = 'User Homes';
 
-let jsApiConnection;
+let jsApiConnection: any;
 let loginAttempts: number = 0;
 
 export default async function main(_args: string[]) {
-    
+
     program
         .version('0.1.0')
         .option('--host <type>', 'Remote environment host')
@@ -32,7 +33,7 @@ export default async function main(_args: string[]) {
     rowsToPrint.push({ label: 'Sites', value: await getSitesCount() });
     rowsToPrint.push({ label: 'Files', value: await getFilesCount() });
 
-    console.log(generateTable(rowsToPrint));
+    logger.info(generateTable(rowsToPrint));
 
 }
 
@@ -43,7 +44,7 @@ function generateTable(rowsToPrint: Array<RowToPrint>) {
             valueColumn: Math.max(maxWidths.valueColumn, row.value.toString().length)
         };
     }, { labelColumn: 12, valueColumn: 1 });
-    
+
     const horizontalLine = ''.padEnd(columnWidths.labelColumn + columnWidths.valueColumn + 5, '═');
     const headerText = 'ENVIRONM'.padStart(Math.floor((columnWidths.labelColumn + columnWidths.valueColumn + 3) / 2), ' ')
         + 'ENT SCAN'.padEnd(Math.ceil((columnWidths.labelColumn + columnWidths.valueColumn + 3) / 2), ' ');
@@ -63,7 +64,7 @@ ${grey}╞${horizontalLine}╡${reset}`;
 
 async function attemptLogin() {
     try {
-        jsApiConnection = new AlfrescoApiCompatibility({
+        jsApiConnection = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: program.host
         });
@@ -76,20 +77,20 @@ async function attemptLogin() {
 async function handleLoginError(loginError) {
     const reset = '\x1b[0m', bright = '\x1b[1m', red = '\x1b[31m';
     if (loginAttempts === 0) {
-        console.log(`${red}${bright}ENVIRONMENT SCAN${reset}${red} - Login error: environment down or inaccessible${reset}`);
+        logger.error(`${red}${bright}ENVIRONMENT SCAN${reset}${red} - Login error: environment down or inaccessible${reset}`);
     }
     loginAttempts++;
     if (MAX_ATTEMPTS === loginAttempts) {
         if (loginError.response && loginError.response.text) {
             const parsedJson = JSON.parse(loginError.response.text);
             if (typeof parsedJson === 'object' && parsedJson.error) {
-                console.log(parsedJson.error);
+                logger.error(parsedJson.error);
             }
         }
-        console.log('Give up');
+        logger.error('Give up');
         process.exit(1);
     } else {
-        console.log(`Retry in 1 minute attempt N ${loginAttempts}`);
+        logger.error(`Retry in 1 minute attempt N ${loginAttempts}`);
         await wait(TIMEOUT);
         await attemptLogin();
     }
@@ -114,7 +115,7 @@ async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
         }
         return result;
     } catch (error) {
-        console.log(error);
+        logger.error(error);
     }
 }
 
@@ -127,7 +128,7 @@ async function getHomeFoldersCount(): Promise<number> {
         });
         return homesFolderApiResult.list.pagination.totalItems;
     } catch (error) {
-        console.log(error);
+        logger.error(error);
     }
 }
 
@@ -137,7 +138,7 @@ async function getGroupsCount(): Promise<number> {
         const groupsApiResult = await groupsApi.listGroups({ maxItems: 1 });
         return groupsApiResult.list.pagination.totalItems;
     } catch (error) {
-        console.log(error);
+        logger.error(error);
     }
 }
 
@@ -147,7 +148,7 @@ async function getSitesCount(): Promise<number> {
         const sitesApiResult = await sitesApi.listSites({ maxItems: 1 });
         return sitesApiResult.list.pagination.totalItems;
     } catch (error) {
-        console.log(error);
+        logger.error(error);
     }
 }
 
@@ -156,7 +157,7 @@ async function getFilesCount(): Promise<number> {
         const searchApi = new SearchApi(jsApiConnection);
         const searchApiResult = await searchApi.search({
             query: {
-                query: "select * from cmis:document",
+                query: 'select * from cmis:document',
                 language: 'cmis'
             },
             paging: {
@@ -165,7 +166,7 @@ async function getFilesCount(): Promise<number> {
         });
         return searchApiResult.list.pagination.totalItems;
     } catch (error) {
-        console.log(error);
+        logger.error(error);
     }
 }
 
