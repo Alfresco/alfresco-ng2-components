@@ -18,6 +18,8 @@
 export * from './aspect-list.component';
 export * from './aspect-list-dialog.component';
 export * from './aspect-list.service';
+export * from './node-aspect.service';
+
 export * from './apect.model';
 export * from './aspect-list-dialog-data.interface';
 

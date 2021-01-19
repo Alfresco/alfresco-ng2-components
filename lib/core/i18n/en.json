@@ -206,12 +206,14 @@
         "CANCEL": "Cancel",
         "CLEAR": "Clear",
         "TOGGLE": "Toggle value",
-        "COPY_TO_CLIPBOARD": "Double click to copy value"
+        "COPY_TO_CLIPBOARD": "Double click to copy value",
+        "EDIT_ASPECTS": "Aspect Edit"
       },
       "ACCESSIBILITY": {
         "EDIT": "Edit button",
         "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down move to the next or previous week but on the same day. Left and right move to the next or previous day. Press Enter or Return to select a date.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Value copied to clipboard"
+        "COPY_TO_CLIPBOARD_MESSAGE": "Value copied to clipboard",
+        "EDIT_ASPECTS": "Aspect Edit"
       }
     },
     "SEARCH": {

@@ -11,6 +11,19 @@
         &-aspect-list-container {
 
             padding-top: 3px;
+            max-height: 400px;
+            overflow: auto;
+
+            .adf-aspect-list-check-button {
+                margin-right: 5px;
+                align-items: center;
+                display: flex;
+            }
+
+            .adf-aspect-list-element-title {
+                display: flex;
+                align-items: center;
+            }
 
             .adf-accordion-aspect-list {
 
@@ -20,6 +33,8 @@
 
                 .mat-expansion-panel-header {
                     font-size: smaller;
+                    border-right-style: inset;
+                    border-left-style: outset;
                 }
 
                 .mat-expansion-panel-header-title {

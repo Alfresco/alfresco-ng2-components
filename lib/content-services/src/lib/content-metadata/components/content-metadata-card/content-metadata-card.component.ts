@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
-
+import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
+import { NodeAspectService } from '../../../aspect-list/node-aspect.service';
 @Component({
     selector: 'adf-content-metadata-card',
     templateUrl: './content-metadata-card.component.html',
@@ -27,6 +28,10 @@ import { ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
     host: { 'class': 'adf-content-metadata-card' }
 })
 export class ContentMetadataCardComponent implements OnChanges {
+
+    @ViewChild('contentmetadata')
+    contentMetadataComponent: ContentMetadataComponent;
+
     /** (required) The node entity to fetch metadata about */
     @Input()
     node: Node;
@@ -78,9 +83,11 @@ export class ContentMetadataCardComponent implements OnChanges {
 
     editable: boolean = false;
 
+    aspectDialog: boolean = false;
+
     expanded: boolean;
 
-    constructor(private contentService: ContentService) {
+    constructor(private contentService: ContentService, private nodeAspectService: NodeAspectService) {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -103,5 +110,9 @@ export class ContentMetadataCardComponent implements OnChanges {
 
     hasAllowableOperations() {
         return this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE);
+    }
+
+    openAspectDialog() {
+        this.nodeAspectService.updateNodeAspects(this.node.id);
     }
 }

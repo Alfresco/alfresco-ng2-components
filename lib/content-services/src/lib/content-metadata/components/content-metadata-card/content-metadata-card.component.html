@@ -1,6 +1,7 @@
 <mat-card *ngIf="node">
     <mat-card-content>
         <adf-content-metadata
+            #contentmetadata
             [displayDefaultProperties]="displayDefaultProperties"
             [expanded]="expanded"
             [node]="node"
@@ -13,6 +14,14 @@
     </mat-card-content>
     <mat-card-footer class="adf-content-metadata-card-footer" fxLayout="row" fxLayoutAlign="space-between stretch">
         <div>
+            <button *ngIf="!readOnly && hasAllowableOperations()"
+                mat-icon-button
+                (click)="openAspectDialog()"
+                [attr.title]="'CORE.METADATA.ACTIONS.EDIT_ASPECTS' | translate"
+                [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT_ASPECTS' | translate"
+                data-automation-id="meta-data-card-edit-aspect">
+                <mat-icon>menu</mat-icon>
+            </button>
             <button *ngIf="!readOnly && hasAllowableOperations()"
                 mat-icon-button
                 (click)="toggleEdit()"

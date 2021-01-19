@@ -2827,7 +2827,7 @@ export class AspectListService {
                     {
                         entry: {
                             name: 'exif',
-                            prefixedname: 'exif: exif',
+                            prefixedname: 'exif:exif',
                             description: ' Subset of the standard EXIF metadata',
                             title: 'EXIf',
                             properties: [
@@ -5533,7 +5533,7 @@ export class AspectListService {
         return result;
     }
 
-    private getVisibleAspects(): string[] {
+    getVisibleAspects(): string[] {
         let visibleAspectList: string[] = [];
         const aspectVisibleConfg = this.appConfigService.get('aspect-visible');
         if (aspectVisibleConfg) {

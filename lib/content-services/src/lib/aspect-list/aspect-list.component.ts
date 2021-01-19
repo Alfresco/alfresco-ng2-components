@@ -57,9 +57,9 @@ export class AspectListComponent implements OnInit, OnDestroy {
         if (this.nodeId) {
             this.aspects$ = this.nodeApiService.getNode(this.nodeId).pipe(
                 tap((node) => {
-                    this.nodeAspects = node.aspectNames;
+                    this.nodeAspects = node.aspectNames.filter((aspect) => this.aspectListService.getVisibleAspects().includes(aspect));
                     this.nodeAspectStatus = Array.from(node.aspectNames);
-                    this.valueChanged.emit(node.aspectNames);
+                    this.valueChanged.emit(this.nodeAspects);
                 }),
                 concatMap(() => this.aspectListService.getAspects()),
                 takeUntil(this.onDestroy$));
@@ -67,6 +67,10 @@ export class AspectListComponent implements OnInit, OnDestroy {
             this.aspects$ = this.aspectListService.getAspects()
                 .pipe(takeUntil(this.onDestroy$));
         }
+    }
+
+    onCheckBoxClick(event: Event) {
+        event.stopImmediatePropagation();
     }
 
     onChange(change: MatCheckboxChange, prefixedName: string) {

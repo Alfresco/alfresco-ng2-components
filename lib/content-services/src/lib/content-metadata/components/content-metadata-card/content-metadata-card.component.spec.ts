@@ -24,6 +24,7 @@ import { setupTestBed, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { NodeAspectService } from 'content-services/src/lib/aspect-list';
 
 describe('ContentMetadataCardComponent', () => {
 
@@ -31,6 +32,7 @@ describe('ContentMetadataCardComponent', () => {
     let fixture: ComponentFixture<ContentMetadataCardComponent>;
     let node: Node;
     const preset = 'custom-preset';
+    let nodeAspectService: NodeAspectService = null;
 
     setupTestBed({
         imports: [
@@ -53,6 +55,7 @@ describe('ContentMetadataCardComponent', () => {
 
         component.node = node;
         component.preset = preset;
+        nodeAspectService = TestBed.inject(NodeAspectService);
         fixture.detectChanges();
     });
 
@@ -205,5 +208,19 @@ describe('ContentMetadataCardComponent', () => {
         displayAspect = new SimpleChange('EXIF' , null, false);
         component.ngOnChanges({ displayAspect });
         expect(component.expanded).toBeTruthy();
+    });
+
+    it('should call the aspect dialog when edit aspect is clicked', () => {
+        component.editable = true;
+        component.node.id = 'fake-node-id';
+        component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
+        spyOn(nodeAspectService, 'updateNodeAspects').and.stub();
+        fixture.detectChanges();
+
+        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-edit-aspect"]'));
+        button.triggerEventHandler('click', {});
+        fixture.detectChanges();
+
+        expect(nodeAspectService.updateNodeAspects).toHaveBeenCalledWith('fake-node-id');
     });
 });
