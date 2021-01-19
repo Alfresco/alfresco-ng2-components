@@ -65,8 +65,17 @@ ${grey}╞${horizontalLine}╡${reset}`;
 async function attemptLogin() {
     try {
         jsApiConnection = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: program.host
+            provider: 'ALL',
+            hostBpm: program.host,
+            hostEcm: program.host,
+            authType: 'OAUTH',
+            oauth2: {
+                host: `${program.host}/auth/realms/alfresco`,
+                clientId: 'alfresco',
+                scope: 'openid',
+                redirectUri: '/',
+                implicitFlow: false
+            }
         });
         await jsApiConnection.login(program.username, program.password);
     } catch (err) {
