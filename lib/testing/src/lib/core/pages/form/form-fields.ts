@@ -33,8 +33,6 @@ export class FormFields {
     completedStandaloneTaskNoFormMessage = element(by.css('adf-task-standalone #adf-completed-form-message'));
     attachFormButton = element(by.id('adf-attach-form-attach-button'));
     completeButton = element(by.id('adf-form-complete'));
-    claimButton = element(by.id('adf-task-form-claim-button'));
-    releaseButton = element(by.id('adf-task-form-unclaim-button'));
     completeNoFormButton = element(by.id('adf-no-form-complete-button'));
     cancelButton = element(by.id('adf-no-form-cancel-button'));
     errorMessage: Locator = by.css('.adf-error-text-container .adf-error-text');
@@ -193,14 +191,6 @@ export class FormFields {
         await BrowserActions.click(this.completeNoFormButton);
     }
 
-    async clickOnClaimButton(): Promise<void> {
-        await BrowserActions.click(this.claimButton);
-    }
-
-    async clickOnReleaseButton(): Promise<void> {
-        await BrowserActions.click(this.releaseButton);
-    }
-
     async clickCancelButton(): Promise<void> {
         await BrowserActions.click(this.cancelButton);
     }
@@ -236,15 +226,6 @@ export class FormFields {
         return this.completeNoFormButton.isEnabled();
     }
 
-    async isSaveButtonDisplayed(): Promise<boolean> {
-        try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
     async isCancelButtonDisplayed(): Promise<boolean> {
         try {
             await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
@@ -254,38 +235,8 @@ export class FormFields {
         }
     }
 
-    async isClaimButtonDisplayed(): Promise<boolean> {
-        try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.claimButton);
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async isReleaseButtonDisplayed(): Promise<boolean> {
-        try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.releaseButton);
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
     async isCancelButtonEnabled(): Promise<boolean> {
         return this.cancelButton.isEnabled();
-    }
-
-    async isSaveButtonEnabled(): Promise<boolean> {
-        return this.saveButton.isEnabled();
-    }
-
-    async isClaimButtonEnabled(): Promise<boolean> {
-        return this.claimButton.isEnabled();
-    }
-
-    async isReleaseButtonEnabled(): Promise<boolean> {
-        return this.releaseButton.isEnabled();
     }
 
 }
