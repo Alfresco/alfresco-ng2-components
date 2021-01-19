@@ -77,6 +77,14 @@ describe('FormModel', () => {
         expect(form.readOnly).toBeTruthy();
     });
 
+    it('should set form values when variable value is 0', () => {
+        const variables = {
+            pfx_property_one: 0
+        };
+        const form = new FormModel(fakeMetadataForm, variables, true);
+        expect(form.getFormFields()[0].fields[1][0].value).toEqual(0);
+    });
+
     it('should check tabs', () => {
         const form = new FormModel();
 
