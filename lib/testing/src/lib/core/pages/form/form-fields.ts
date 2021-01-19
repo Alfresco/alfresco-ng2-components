@@ -179,8 +179,7 @@ export class FormFields {
     }
 
     async isFormFieldEnabled(formFieldId: string): Promise<boolean> {
-        const formField = element(by.css(`input[id=${formFieldId}]`));
-        return formField.isEnabled();
+        return element(by.id(`${formFieldId}`)).isEnabled();
     }
 
     async completeForm(): Promise<void> {
