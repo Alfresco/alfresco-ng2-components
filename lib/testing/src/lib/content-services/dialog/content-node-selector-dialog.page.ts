@@ -22,6 +22,7 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { BreadcrumbDropdownPage } from '../pages/breadcrumb/breadcrumb-dropdown.page';
 import { Logger } from '../../core/utils/logger';
+import { TabPage } from '../../core/pages/form/widgets/tab.page';
 
 export class ContentNodeSelectorDialogPage {
     dialog = element(by.css(`adf-content-node-selector`));
@@ -36,6 +37,10 @@ export class ContentNodeSelectorDialogPage {
     dataTable = this.contentList.dataTablePage();
     siteListDropdown = new DropdownPage(this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
     breadcrumbDropdownPage = new BreadcrumbDropdownPage();
+    tabPage: TabPage = new TabPage();
+
+    uploadFromLocalTabName = 'Upload from your device';
+    fileServerTabName = 'File server';
 
     async checkDialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
@@ -140,9 +145,13 @@ export class ContentNodeSelectorDialogPage {
         await this.dataTable.waitForTableBody();
         await this.breadcrumbDropdownPage.checkCurrentFolderIsDisplayed();
 
+        await this.tabPage.clickTabByLabel(this.uploadFromLocalTabName);
+
         const uploadButton = element(by.css('adf-upload-button input'));
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
         await uploadButton.sendKeys(fileLocation);
+
+        await this.tabPage.clickTabByLabel(this.fileServerTabName);
 
         await this.dataTable.waitForTableBody();
         await this.dataTable.waitTillContentLoaded();
