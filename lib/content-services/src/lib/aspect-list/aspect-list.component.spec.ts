@@ -117,6 +117,7 @@ describe('AspectListComponent', () => {
             component = fixture.componentInstance;
             aspectListService = TestBed.inject(AspectListService);
             spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
+            spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
             nodeService = TestBed.inject(NodesApiService);
             spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] }));
             component.nodeId = 'fake-node-id';

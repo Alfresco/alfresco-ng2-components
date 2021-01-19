@@ -45,7 +45,8 @@ describe('NodeAspectService', () => {
     });
 
     it('should open the aspect list dialog', () => {
-        spyOn(aspectListService, 'openAspectListDialog').and.stub();
+        spyOn(aspectListService, 'openAspectListDialog').and.returnValue(of([]));
+        spyOn(nodeApiService, 'updateNode').and.returnValue(of({}));
         nodeAspectService.updateNodeAspects('fake-node-id');
         expect(aspectListService.openAspectListDialog).toHaveBeenCalledWith('fake-node-id');
     });
@@ -53,7 +54,7 @@ describe('NodeAspectService', () => {
     it('should update the node when the aspect dialog apply the changes', () => {
         const expectedParameters = { aspectNames: ['a', 'b', 'c'] };
         spyOn(aspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
-        spyOn(nodeApiService, 'updateNode').and.stub();
+        spyOn(nodeApiService, 'updateNode').and.returnValue(of({}));
         nodeAspectService.updateNodeAspects('fake-node-id');
         expect(nodeApiService.updateNode).toHaveBeenCalledWith('fake-node-id', expectedParameters);
     });
@@ -61,7 +62,7 @@ describe('NodeAspectService', () => {
     it('should send and update node event once the node has been updated', (done) => {
         alfrescoApiService.nodeUpdated.subscribe((nodeUpdated) => {
             expect(nodeUpdated.id).toBe('fake-node-id');
-            expect(nodeUpdated.aspectNames).toBe(['a', 'b', 'c']);
+            expect(nodeUpdated.aspectNames).toEqual(['a', 'b', 'c']);
             done();
         });
         const fakeNode = { id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] };

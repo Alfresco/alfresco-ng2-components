@@ -277,6 +277,7 @@ describe('AspectListDialogComponent', () => {
             aspectListService = TestBed.inject(AspectListService);
             nodeService = TestBed.inject(NodesApiService);
             spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
+            spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
             spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] }).pipe(delay(0)));
             fixture = TestBed.createComponent(AspectListDialogComponent);
             fixture.componentInstance.data.select = new Subject<string[]>();
