@@ -4,6 +4,10 @@
     $background: map-get($theme, background);
 
     .adf-content-node-selector-dialog {
+        &-content {
+            padding-left: 24px;
+            padding-right: 24px;
+        }
 
         .mat-dialog-title {
             margin-left: 24px;

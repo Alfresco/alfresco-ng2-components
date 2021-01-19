@@ -4,33 +4,39 @@
     <h2>{{title}}</h2>
 </header>
 
-<mat-dialog-content>
-    <adf-content-node-selector-panel
-        [currentFolderId]="data?.currentFolderId"
-        [restrictRootToCurrentFolderId]="data?.restrictRootToCurrentFolderId"
-        [dropdownHideMyFiles]="data?.dropdownHideMyFiles"
-        [dropdownSiteList]="data?.dropdownSiteList"
-        [rowFilter]="data?.rowFilter"
-        [imageResolver]="data?.imageResolver"
-        [isSelectionValid]="data?.isSelectionValid"
-        [breadcrumbTransform]="data?.breadcrumbTransform"
-        [excludeSiteContent]="data?.excludeSiteContent"
-        [selectionMode]="data?.selectionMode"
-        [where]="data?.where"
-        [showSearch]="data?.showSearch"
-        [showDropdownSiteList]="data?.showDropdownSiteList"
-        [showFilesInResult]="data?.showFilesInResult"
-        (currentFolder)="onCurrentFolder($event)"
-        (folderLoaded)="onFolderLoaded()"
-        (select)="onSelect($event)"
-        (showingSearch)="onShowingSearch($event)"
-        (siteChange)="onSiteChange($event)"
-        (navigationChange)="onNavigationChange($event)">
-    </adf-content-node-selector-panel>
-</mat-dialog-content>
+<mat-tab-group class="adf-content-node-selector-dialog-content" (selectedIndexChange)="onTabSelectionChange($event)" mat-align-tabs="start">
+    <mat-tab label="{{ 'NODE_SELECTOR.FILE_SERVER' | translate }}">
+            <adf-content-node-selector-panel
+                [currentFolderId]="data?.currentFolderId"
+                [restrictRootToCurrentFolderId]="data?.restrictRootToCurrentFolderId"
+                [dropdownHideMyFiles]="data?.dropdownHideMyFiles"
+                [dropdownSiteList]="data?.dropdownSiteList"
+                [rowFilter]="data?.rowFilter"
+                [imageResolver]="data?.imageResolver"
+                [isSelectionValid]="data?.isSelectionValid"
+                [breadcrumbTransform]="data?.breadcrumbTransform"
+                [excludeSiteContent]="data?.excludeSiteContent"
+                [selectionMode]="data?.selectionMode"
+                [where]="data?.where"
+                [showSearch]="data?.showSearch"
+                [showDropdownSiteList]="data?.showDropdownSiteList"
+                [showFilesInResult]="data?.showFilesInResult"
+                (currentFolder)="onCurrentFolder($event)"
+                (folderLoaded)="onFolderLoaded()"
+                (select)="onSelect($event)"
+                (showingSearch)="onShowingSearch($event)"
+                (siteChange)="onSiteChange($event)"
+                (navigationChange)="onNavigationChange($event)">
+            </adf-content-node-selector-panel>
+    </mat-tab>
+    <mat-tab *ngIf="data?.showLocalUploadButton"
+             label="{{ 'NODE_SELECTOR.UPLOAD_FROM_DEVICE' | translate }}"
+             [disabled]="isNotAllowedToUpload()">
+    </mat-tab>
+</mat-tab-group>
 
 <mat-dialog-actions>
-    <div>
+    <div *ngIf="isLocalUploadTabSelected()">
         <ng-container *ngIf="data?.showLocalUploadButton">
             <adf-upload-button
                 [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
