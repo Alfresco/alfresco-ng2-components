@@ -3,11 +3,12 @@
         <mat-expansion-panel *ngFor="let aspect of (aspects$ | async); let colIndex = index" [id]="'aspect-list-'+aspect?.entry?.name">
             <mat-expansion-panel-header [id]="'aspect-list-'+aspect?.entry?.name+'header'">
                 <mat-panel-title>
-                    <mat-checkbox [id]="'aspect-list-'+aspect?.entry?.name+'check'"
+                    <mat-checkbox class="adf-aspect-list-check-button" [id]="'aspect-list-'+aspect?.entry?.name+'check'"
                                   [checked]="nodeAspects?.includes(aspect?.entry?.prefixedname)"
+                                  (click)="onCheckBoxClick($event)"
                                   (change)="onChange($event, aspect?.entry?.prefixedname)">
-                        {{aspect?.entry?.name}}
                     </mat-checkbox>
+                    <p class="adf-aspect-list-element-title">{{aspect?.entry?.name}}</p>
                 </mat-panel-title>
                 <mat-panel-description [id]="'aspect-list-'+aspect?.entry?.name+'title'"
                                         [matTooltip]="aspect?.entry?.title">
