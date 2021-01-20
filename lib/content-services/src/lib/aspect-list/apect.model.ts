@@ -42,17 +42,17 @@ export class AspectEntryModel {
 }
 
 export class AspectDetailModel {
-    parentname?: string;
+    parentName?: string;
     name?: string;
-    prefixedname?: string;
+    prefixedName?: string;
     description?: string;
     title?: string;
     properties?: AspectPropertyModel[];
 
     constructor(obj: any) {
-        this.parentname = obj.parentname;
+        this.parentName = obj.parentName;
         this.name = obj.name;
-        this.prefixedname = obj.prefixedname;
+        this.prefixedName = obj.prefixedName;
         this.description = obj.description;
         this.title = obj.title;
         this.properties = obj.properties;
@@ -61,7 +61,7 @@ export class AspectDetailModel {
 
 export class AspectPropertyModel {
     name?: string;
-    prefixedname?: string;
+    prefixedName?: string;
     title?: string;
     dataType?: string;
     facetable?: any;
@@ -74,7 +74,7 @@ export class AspectPropertyModel {
 
     constructor(obj: any) {
         this.name = obj.name;
-        this.prefixedname = obj.prefixedname;
+        this.prefixedName = obj.prefixedName;
         this.title = obj.title;
         this.dataType = obj.dataType;
         this.facetable = obj.facetable;

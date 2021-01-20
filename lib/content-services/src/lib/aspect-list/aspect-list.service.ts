@@ -5535,10 +5535,10 @@ export class AspectListService {
 
     getVisibleAspects(): string[] {
         let visibleAspectList: string[] = [];
-        const aspectVisibleConfg = this.appConfigService.get('aspect-visible');
-        if (aspectVisibleConfg) {
-            for (const aspectGroup of Object.keys(aspectVisibleConfg)) {
-                visibleAspectList = visibleAspectList.concat(aspectVisibleConfg[aspectGroup]);
+        const aspectVisibleConfig = this.appConfigService.get('aspect-visible');
+        if (aspectVisibleConfig) {
+            for (const aspectGroup of Object.keys(aspectVisibleConfig)) {
+                visibleAspectList = visibleAspectList.concat(aspectVisibleConfig[aspectGroup]);
             }
         }
         return visibleAspectList;
