@@ -31,9 +31,11 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 
 export class AspectListComponent implements OnInit, OnDestroy {
 
+    /** Node Id of the node that we want to update */
     @Input()
     nodeId: string = '';
 
+    /** Emitted every time the user select a new aspect */
     @Output()
     valueChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 

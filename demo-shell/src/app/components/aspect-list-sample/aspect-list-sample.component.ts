@@ -30,14 +30,14 @@ export class AspectListSampleComponent {
 
     currentResult: string[] = [];
 
-    constructor(private aspectListtService: AspectListService) { }
+    constructor(private aspectListService: AspectListService) { }
 
     showAspectForNode() {
         this.isShowed = !this.isShowed;
     }
 
     openAspectDialog() {
-        this.aspectListtService.openAspectListDialog(this.currentNodeId).subscribe((result) => this.currentResult = Array.from(result));
+        this.aspectListService.openAspectListDialog(this.currentNodeId).subscribe((result) => this.currentResult = Array.from(result));
     }
 
     onValueChanged(aspects) {
