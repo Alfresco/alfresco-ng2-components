@@ -20,15 +20,15 @@
     "dist": "rm -rf ./dist/ && npm run build && cp -R ./bin ./dist/ && cp -R ./resources ./dist && cp -R ./templates ./dist && cp ./package.json ./dist/"
   },
   "dependencies": {
-    "@alfresco/js-api": "4.2.0",
+    "@alfresco/js-api": "4.3.0-61350fee919fbeb2b6c949621161b6b076d44133",
     "commander": "^4.0.0",
+    "ejs": "^2.6.1",
     "license-checker": "^25.0.1",
     "npm-registry-fetch": "^4.0.5",
     "request": "2.88.2",
     "rxjs": "^6.5.5",
     "shelljs": "^0.8.3",
-    "spdx-license-list": "^5.0.0",
-    "ejs": "^2.6.1"
+    "spdx-license-list": "^5.0.0"
   },
   "keywords": [
     "alfresco-component"
