@@ -1,6 +1,8 @@
+
+import * as program from 'commander';
+
 /* tslint:disable */
 let alfrescoApi = require('@alfresco/js-api');
-let program = require('commander');
 let fs = require ('fs');
 const path = require('path');
 import { logger } from './logger';
@@ -17,21 +19,19 @@ const ACTIVITI_APPS = require('./resources').ACTIVITI_APPS;
 
 let alfrescoJsApi;
 let alfrescoJsApiRepo;
+let options;
 
-export default async function () {
-    await main();
-}
-
-async function main() {
+export default async function main(_args: string[]) {
 
     program
-        .version('0.1.0')
+        .version('0.2.0')
         .option('--host [type]', 'Remote environment host')
         .option('-p, --password [type]', 'password ')
         .option('-u, --username [type]', 'username ')
         .option('--license [type]', 'APS license S3 path ')
         .parse(process.argv);
 
+    options = program.opts();
     await checkEnv();
 
     logger.info(`***** Step 1 - Check License *****`);
@@ -40,7 +40,7 @@ async function main() {
     const hasValidLicense = await hasLicense() ;
     if (!hasValidLicense) {
         logger.info(`Aps License missing`);
-        const isLicenseFileDownloaded = await downloadLicenseFile(program.license);
+        const isLicenseFileDownloaded = await downloadLicenseFile(options.license);
         if (isLicenseFileDownloaded) {
             licenceUploaded = await updateLicense();
         }
@@ -113,17 +113,17 @@ async function checkEnv() {
 
         alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
             provider: 'ALL',
-            hostBpm: program.host,
-            hostEcm: program.host,
+            hostBpm: options.host,
+            hostEcm: options.host,
             authType: 'OAUTH',
             oauth2: {
-                host: `${program.host}/auth/realms/alfresco`,
+                host: `${options.host}/auth/realms/alfresco`,
                 clientId: 'alfresco',
                 scope: 'openid'
             }
         });
         alfrescoJsApiRepo = alfrescoJsApi;
-        await alfrescoJsApi.login(program.username, program.password);
+        await alfrescoJsApi.login(options.username, options.password);
     } catch (e) {
         logger.info('Login error environment down or inaccessible');
         counter++;
@@ -199,7 +199,7 @@ async function updateLicense() {
 
     try {
         await alfrescoJsApi.oauth2Auth.callCustomApi(
-            `${program.host}/activiti-app/app/rest/license`,
+            `${options.host}/activiti-app/app/rest/license`,
             'POST',
             {},
             {},
@@ -263,7 +263,7 @@ async function deployApp(appDefinitioId) {
 async function hasLicense() {
     try {
         const license = await alfrescoJsApi.oauth2Auth.callCustomApi(
-            `${program.host}/activiti-app/app/rest/license`,
+            `${options.host}/activiti-app/app/rest/license`,
             'GET',
             {},
             {},
@@ -288,7 +288,7 @@ async function getUserFromRealm() {
 
     try {
         const users = await alfrescoJsApi.oauth2Auth.callCustomApi(
-            `${program.host}/auth/admin/realms/alfresco/users`,
+            `${options.host}/auth/admin/realms/alfresco/users`,
             'GET',
             {},
             {},
@@ -299,7 +299,7 @@ async function getUserFromRealm() {
             ['application/json']
         );
         const usersExample = users.filter(user => user.email.includes('@example.com'));
-        const usersWithoutAdmin = usersExample.filter(user => (user.username !== program.username && user.username !== 'client'));
+        const usersWithoutAdmin = usersExample.filter(user => (user.username !== options.username && user.username !== 'client'));
         logger.info(`Keycloak found ${usersWithoutAdmin.length} users`);
         return usersWithoutAdmin;
     } catch (error) {
@@ -311,7 +311,7 @@ async function isContenRepoPresent(tenantId, contentName) {
 
     try {
         const contentRepos = await alfrescoJsApi.oauth2Auth.callCustomApi(
-            `${program.host}/activiti-app/app/rest/integration/alfresco?tenantId=${tenantId}`,
+            `${options.host}/activiti-app/app/rest/integration/alfresco?tenantId=${tenantId}`,
             'GET',
             {},
             {},
@@ -333,8 +333,8 @@ async function addContentRepoWithBasic(tenantId, name) {
         alfrescoTenantId: '',
         authenticationType: 'basic',
         name: name,
-        repositoryUrl: `${program.host}/alfresco`,
-        shareUrl: `${program.host}/share`,
+        repositoryUrl: `${options.host}/alfresco`,
+        shareUrl: `${options.host}/share`,
         // sitesFolder: '', not working on activiti 1.11.1.1
         tenantId: tenantId,
         version: '6.1.1'
@@ -342,7 +342,7 @@ async function addContentRepoWithBasic(tenantId, name) {
 
     try {
         const content = await alfrescoJsApi.oauth2Auth.callCustomApi(
-            `${program.host}/activiti-app/app/rest/integration/alfresco`,
+            `${options.host}/activiti-app/app/rest/integration/alfresco`,
             'POST',
             {},
             {},
@@ -363,7 +363,7 @@ async function authorizeUserToContentRepo(user) {
     logger.info(`Authorize user ${user.email}`);
     try {
         const content = await alfrescoJsApiRepo.oauth2Auth.callCustomApi(
-            `${program.host}/activiti-app/app/rest/integration/alfresco`,
+            `${options.host}/activiti-app/app/rest/integration/alfresco`,
             'GET',
             {},
             {},
@@ -392,7 +392,7 @@ async function authorizeUserToContentWithBasic(username, contentId) {
     try {
         const body = {username, password: 'password'};
         const content = await alfrescoJsApiRepo.oauth2Auth.callCustomApi(
-            `${program.host}/activiti-app/app/rest/integration/alfresco/${contentId}/account`,
+            `${options.host}/activiti-app/app/rest/integration/alfresco/${contentId}/account`,
             'POST',
             {},
             {},

@@ -9,18 +9,20 @@ const MAX_ATTEMPTS = 10;
 const TIMEOUT = 60000;
 const MAX_PEOPLE_PER_PAGE = 100;
 const USERS_HOME_RELATIVE_PATH = 'User Homes';
-
+let options;
 let jsApiConnection: any;
 let loginAttempts: number = 0;
 
 export default async function main(_args: string[]) {
 
     program
-        .version('0.1.0')
-        .option('--host <type>', 'Remote environment host')
-        .option('-p, --password <type>', 'password ')
-        .option('-u, --username <type>', 'username ')
+        .version('0.2.0')
+        .requiredOption('--host <type>', 'Remote environment host')
+        .requiredOption('-p, --password <type>', 'password ')
+        .requiredOption('-u, --username <type>', 'username ')
         .parse(process.argv);
+
+    options = program.opts();
 
     await attemptLogin();
 
@@ -66,18 +68,18 @@ async function attemptLogin() {
     try {
         jsApiConnection = new AlfrescoApi({
             provider: 'ALL',
-            hostBpm: program.host,
-            hostEcm: program.host,
+            hostBpm: options.host,
+            hostEcm: options.host,
             authType: 'OAUTH',
             oauth2: {
-                host: `${program.host}/auth/realms/alfresco`,
+                host: `${options.host}/auth/realms/alfresco`,
                 clientId: 'alfresco',
                 scope: 'openid',
                 redirectUri: '/',
                 implicitFlow: false
             }
         });
-        await jsApiConnection.login(program.username, program.password);
+        await jsApiConnection.login(options.username, options.password);
     } catch (err) {
         await handleLoginError(err);
     }

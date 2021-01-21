@@ -77,6 +77,8 @@ function getPackageFile(packagePath: string): PackageInfo {
     }
 }
 
+let options;
+
 export default function main(_args: string[], workingDir: string) {
     program
         .description('Generate a licences report')
@@ -85,15 +87,12 @@ export default function main(_args: string[], workingDir: string) {
         .option('-d, --outDir <dir>', 'Ouput directory (default: working directory)')
         .parse(process.argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
-        program.outputHelp();
-        return;
-    }
+    options = program.opts();
 
     let packagePath = path.resolve(workingDir, 'package.json');
 
-    if (program.package) {
-        packagePath = path.resolve(program.package);
+    if (options.package) {
+        packagePath = path.resolve(options.package);
     }
 
     if (!fs.existsSync(packagePath)) {
@@ -156,7 +155,7 @@ export default function main(_args: string[], workingDir: string) {
                         console.error(ejsError);
                         reject(ejsError);
                     } else {
-                        const outputPath = path.resolve(program.outDir || workingDir);
+                        const outputPath = path.resolve(options.outDir || workingDir);
                         const outputFile = path.join(outputPath, `license-info-${packageJson.version}.md`);
 
                         fs.writeFileSync(outputFile, mdText);

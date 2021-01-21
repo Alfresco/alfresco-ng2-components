@@ -21,70 +21,57 @@ import { exec } from './exec';
 import * as program from 'commander';
 import { logger } from './logger';
 
-export interface KubeArgs {
-    username?: string;
-    token?: string;
-    clusterEnv?: string;
-    clusterUrl?: string;
-    label?: string;
-}
-
-function setCluster(args: KubeArgs) {
+function setCluster() {
     logger.info('Perform set-cluster...');
-    const response = exec('kubectl', [`config`, `set-cluster`, `${args.clusterEnv}`, `--server=${args.clusterUrl}`], {});
+    const response = exec('kubectl', [`config`, `set-cluster`, `${options.clusterEnv}`, `--server=${options.clusterUrl}`], {});
     logger.info(response);
 }
 
-function setCredentials(args: KubeArgs) {
+function setCredentials() {
     logger.info('Perform set-credentials...');
-    const response = exec('kubectl', [`config`, `set-credentials`, `${args.username}`, `--token=${args.token}`], {});
+    const response = exec('kubectl', [`config`, `set-credentials`, `${options.username}`, `--token=${options.token}`], {});
     logger.info(response);
 }
 
-function setContext(args: KubeArgs) {
+function setContext() {
     logger.info('Perform set-context...');
-    const response = exec('kubectl', [`config`, `set-context`, `${args.clusterEnv}`, `--cluster=${args.clusterEnv}`, `--user=${args.username}`], {});
+    const response = exec('kubectl', [`config`, `set-context`, `${options.clusterEnv}`, `--cluster=${options.clusterEnv}`, `--user=${options.username}`], {});
     logger.info(response);
 }
 
-function useContext(args: KubeArgs) {
+function useContext() {
     logger.info('Perform use-context...');
-    const response = exec('kubectl', [`config`, `use-context`, `${args.clusterEnv}`], {});
+    const response = exec('kubectl', [`config`, `use-context`, `${options.clusterEnv}`], {});
     logger.info(response);
 }
 
-function deletePod(args: KubeArgs) {
+function deletePod() {
     logger.info('Perform delete pods...');
-    const response = exec('kubectl', [`delete`, `pods`, `--all-namespaces`, `-l`, `app=${args.label}`], {});
+    const response = exec('kubectl', [`delete`, `pods`, `--all-namespaces`, `-l`, `app=${options.label}`], {});
     logger.info(response);
 }
 
-export default function (args: KubeArgs) {
-    main(args);
-}
+let options;
 
-function main(args) {
+export default async function main(_args: string[]) {
 
     program
-        .version('0.1.0')
-        .option('--username [type]', 'username')
-        .option('--password [type]', 'password')
-        .option('--token [type]', 'access token')
-        .option('--clusterEnv [type]', 'cluster Env')
-        .option('--clusterUrl [type]', 'cluster Url')
+        .version('0.2.0')
+        .requiredOption('--username [type]', 'username')
+        .requiredOption('--password [type]', 'password')
+        .requiredOption('--token [type]', 'access token')
+        .requiredOption('--clusterEnv [type]', 'cluster Env')
+        .requiredOption('--clusterUrl [type]', 'cluster Url')
         .option('--label [type]', 'label cluster')
         .parse(process.argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
-        program.outputHelp();
-        return;
-    }
+    options = program.opts();
 
-    if (args.label !== undefined) {
-        setCluster(args);
-        setCredentials(args);
-        setContext(args);
-        useContext(args);
-        deletePod(args);
+    if (options.label !== undefined) {
+        setCluster();
+        setCredentials();
+        setContext();
+        useContext();
+        deletePod();
     }
 }

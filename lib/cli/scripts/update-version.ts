@@ -86,20 +86,23 @@ function updateLibs(pkg: PackageInfo, tag: string, workingDir: string) {
     }
 }
 
-function parseTag(args: UpdateArgs): string {
-    if (args.alpha) {
+function parseTag(): string {
+    if (options.alpha) {
        return 'alpha';
     }
 
-    if (args.beta) {
+    if (options.beta) {
         return 'beta';
     }
 
-    return args.version || 'latest';
+    return options.version || 'latest';
 }
 
-export default function main(args: UpdateArgs, workingDir: string) {
+let options;
+
+export default function main(_args: string[], workingDir: string) {
     program
+        .version('0.2.0')
         .description('This command allows you to update the adf dependencies and js-api with different versions\n\n' +
         'Update adf libs and js-api with latest alpha\n\n' +
         'adf-cli update-version --alpha')
@@ -110,15 +113,11 @@ export default function main(args: UpdateArgs, workingDir: string) {
         .option('--vjs [tag]', 'Upgrade only JS-API to a specific version')
         .parse(process.argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
-        program.outputHelp();
-        return;
-    }
+    options = program.opts();
+    workingDir = options.pathPackage || workingDir;
 
-    workingDir = args.pathPackage || workingDir;
-
-    const tag = args.vjs || parseTag(args);
-    const pkg = args.vjs
+    const tag = options.vjs || parseTag();
+    const pkg = options.vjs
         ? { dependencies: ['@alfresco/js-api'] }
         : parseAlfrescoLibs(workingDir);
 

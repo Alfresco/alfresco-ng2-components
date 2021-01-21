@@ -21,55 +21,40 @@ import { exec } from './exec';
 import * as program from 'commander';
 import { logger } from './logger';
 
-export interface PublishArgs {
-    tag?: string;
-    loginCheck?: boolean;
-    loginUsername?: string;
-    loginPassword?: string;
-    loginRepo?: string;
-    dockerRepo?: string;
-    buildArgs?: string;
-    dockerTags?: string;
-    pathProject: string;
-}
-
-function loginPerform(args: PublishArgs) {
-    logger.info(`Perform docker login...${args.loginRepo}`);
-    const loginDockerRes = exec('docker', ['login', `-u=${args.loginUsername}`, `-p=${args.loginPassword}`, `${args.loginRepo}`], {});
+function loginPerform() {
+    logger.info(`Perform docker login...${options.loginRepo}`);
+    const loginDockerRes = exec('docker', ['login', `-u=${options.loginUsername}`, `-p=${options.loginPassword}`, `${options.loginRepo}`], {});
     logger.info(loginDockerRes);
 }
 
-function buildImagePerform(args: PublishArgs, tag: string) {
-    logger.info(`Perform docker build...${args.dockerRepo}:${tag}`);
-    const response = exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, `--build-arg=${args.buildArgs}`, args.pathProject], {});
+function buildImagePerform(tag: string) {
+    logger.info(`Perform docker build...${options.dockerRepo}:${tag}`);
+    const response = exec('docker', ['build', `-t=${options.dockerRepo}:${tag}`, `--build-arg=${options.buildArgs}`, options.pathProject], {});
     logger.info(response);
 }
 
-function tagImagePerform(args: PublishArgs, tagImage: string, newTag: string) {
-    logger.info(`Perform docker tag... ${args.dockerRepo}:${tagImage} on ${args.dockerRepo}:${newTag}`);
-    const response = exec('docker', ['tag', `${args.dockerRepo}:${tagImage}`, `${args.dockerRepo}:${newTag}`], {});
+function tagImagePerform(tagImage: string, newTag: string) {
+    logger.info(`Perform docker tag... ${options.dockerRepo}:${tagImage} on ${options.dockerRepo}:${newTag}`);
+    const response = exec('docker', ['tag', `${options.dockerRepo}:${tagImage}`, `${options.dockerRepo}:${newTag}`], {});
     logger.info(response);
 }
 
-function pushImagePerform(args: PublishArgs, tag: string) {
-    logger.info(`Perform docker push... ${args.dockerRepo}:${tag}`);
-    const response = exec('docker', ['push', `${args.dockerRepo}:${tag}`], {});
+function pushImagePerform(tag: string) {
+    logger.info(`Perform docker push... ${options.dockerRepo}:${tag}`);
+    const response = exec('docker', ['push', `${options.dockerRepo}:${tag}`], {});
     logger.info(response);
 }
 
-function cleanImagePerform(args: PublishArgs, tag: string) {
+function cleanImagePerform(tag: string) {
     logger.info('Perform docker clean...');
-    const response = exec('docker', ['rmi', `-f`, `${args.dockerRepo}:${tag}`], {});
+    const response = exec('docker', ['rmi', `-f`, `${options.dockerRepo}:${tag}`], {});
     logger.info(response);
 }
 
-export default function (args: PublishArgs)  {
-    main(args);
-}
-
-function main(args) {
+let options;
+export default async function main(_args: string[]) {
     program
-        .version('0.1.0')
+        .version('0.2.0')
         .description('Move in the folder where you have your Dockerfile and run the command:\n\n' +
             'adf-cli docker-publish --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}" --pathProject "$(pwd)"')
         .option('--loginRepo [type]', 'URL registry')
@@ -82,31 +67,28 @@ function main(args) {
         .requiredOption('--pathProject [type]', 'path ptojrct')
         .parse(process.argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
-        program.outputHelp();
-        return;
-    }
+    options = program.opts();
 
-    if (args.loginCheck === true) {
-        loginPerform(args);
+    if (options.loginCheck === true) {
+        loginPerform();
     }
 
     let mainTag;
-    if (args.dockerTags !== '') {
-        args.dockerTags.split(',').forEach( (tag, index) => {
+    if (options.dockerTags !== '') {
+        options.dockerTags.split(',').forEach( (tag, index) => {
             if (tag) {
                 logger.info(`Analyzing tag:${tag} ...`);
                 if (index === 0) {
                     logger.info(`Build only once`);
                     mainTag = tag;
-                    buildImagePerform(args, mainTag);
+                    buildImagePerform(mainTag);
                 }
-                tagImagePerform(args, mainTag, tag);
-                pushImagePerform(args, tag);
+                tagImagePerform(mainTag, tag);
+                pushImagePerform(tag);
             }
         });
         logger.info(`Clean the image with tag:${mainTag} ...`);
-        cleanImagePerform(args, mainTag);
+        cleanImagePerform(mainTag);
     } else {
         logger.error(`dockerTags cannot be empty ...`);
     }

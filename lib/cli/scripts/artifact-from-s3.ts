@@ -34,7 +34,7 @@ function awsCp(artifact: string) {
 
 function zipArtifact(output: string) {
     logger.info(`Perform zip artifact ${output}`);
-    const response = exec('tar', ['-xvf', `./s3-artifact.tmp`, '-C ' + program.output], {});
+    const response = exec('tar', ['-xvf', `./s3-artifact.tmp`, '-C ' + options.output], {});
     logger.info(response);
 }
 
@@ -42,27 +42,25 @@ export default function () {
     main();
 }
 
+let options;
 function main() {
 
     program
-        .version('0.1.0')
+        .version('0.2.0')
         .requiredOption('-a, --artifact [type]', ' path to the s3 artifact (tar.bz2) to download and extract')
         .requiredOption('-o, --output [type]', 'directory to extract the archive to')
         .parse(process.argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
-        program.outputHelp();
-        return;
-    }
+    options = program.opts();
 
-    if (!program.artifact || program.artifact === '' || !program.output || program.output === '') {
+    if (!options.artifact || options.artifact === '' || !options.output || options.output === '') {
         process.exit(1);
-    } else if (program.artifact !== '' || program.output !== '') {
-        zipArtifact(program.artifact);
-        awsCp(program.output);
+    } else if (options.artifact !== '' || options.output !== '') {
+        zipArtifact(options.artifact);
+        awsCp(options.output);
     }
 
-    test(program.output);
-    awsCp(program.artifact);
-    zipArtifact(program.output);
+    test(options.output);
+    awsCp(options.artifact);
+    zipArtifact(options.output);
 }

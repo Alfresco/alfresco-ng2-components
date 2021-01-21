@@ -21,55 +21,43 @@ import { exec } from './exec';
 import * as program from 'commander';
 import { logger } from './logger';
 
-export interface CommitArgs {
-    pointer: string;
-    pathPackage: string;
-    skipGnu: boolean;
-}
-
-function getSha(args: CommitArgs): string {
+function getSha(): string {
     logger.info('Check commit sha...');
 
-    const gitPointer = args.pointer ? args.pointer : 'HEAD';
+    const gitPointer = options.pointer ? options.pointer : 'HEAD';
 
     return exec('git', [`rev-parse`, `${gitPointer}`], {}).trim();
 }
 
-function replacePerform(args: CommitArgs, sha: string) {
+function replacePerform(sha: string) {
     logger.info(`Replace commit ${sha} in package...`);
 
     const sedRule = `s/\"commit\": \".*\"/\"commit\": \"${sha}\"/g`;
 
-    if (args.skipGnu) {
-        exec('sed', [`-i`, '', `${sedRule}`, `${args.pathPackage}/package.json`], {});
+    if (options.skipGnu) {
+        exec('sed', [`-i`, '', `${sedRule}`, `${options.pathPackage}/package.json`], {});
     } else {
-        exec('sed', [`-i`, `${sedRule}`, `${args.pathPackage}/package.json`], {});
+        exec('sed', [`-i`, `${sedRule}`, `${options.pathPackage}/package.json`], {});
     }
 }
 
-export default function (args: CommitArgs) {
-    main(args);
-}
+let options;
 
-function main(args) {
+export default async function main(_args: string[]) {
 
     program
-        .version('0.1.0')
+        .version('0.2.0')
         .description('This command allows you to update the commit sha as part of the package.json.\n' +
             'Your package.json must to have an existing property called "commit.\n\n' +
             'adf-cli update-commit-sha --pointer "HEAD~1" --pathProject "$(pwd)"\n\n' +
             'adf-cli update-commit-sha --pathProject "$(pwd)" --skipGnu')
-        .option('--pointer [type]', 'pointer')
-        .option('--pathPackage [type]', 'pathPackage')
+        .requiredOption('--pointer [type]', 'pointer')
+        .requiredOption('--pathPackage [type]', 'pathPackage')
         .option('--skipGnu [type]', 'skipGnu')
         .parse(process.argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
-        program.outputHelp();
-        return;
-    }
+    options = program.opts();
+    const sha = getSha();
 
-    const sha = getSha(args);
-
-    replacePerform(args, sha);
+    replacePerform(sha);
 }

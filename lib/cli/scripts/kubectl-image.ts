@@ -21,39 +21,27 @@ import { exec } from './exec';
 import * as program from 'commander';
 import { logger } from './logger';
 
-export interface KubeArgs {
-    tag?: string;
-    installCheck?: boolean;
-    username?: string;
-    token?: string;
-    clusterEnv?: string;
-    clusterUrl?: string;
-    dockerRepo?: string;
-    label?: string;
-    namespaces?: string;
-}
-
-function setCluster(args: KubeArgs) {
+function setCluster() {
     logger.info('Perform set-cluster...');
-    const response = exec('kubectl', [`config`, `set-cluster`, `${args.clusterEnv}`, `--server=${args.clusterUrl}`], {});
+    const response = exec('kubectl', [`config`, `set-cluster`, `${options.clusterEnv}`, `--server=${options.clusterUrl}`], {});
     logger.info(response);
 }
 
-function setCredentials(args: KubeArgs) {
+function setCredentials() {
     logger.info('Perform set-credentials...');
-    const response = exec('kubectl', [`config`, `set-credentials`, `${args.username}`, `--token=${args.token}`], {});
+    const response = exec('kubectl', [`config`, `set-credentials`, `${options.username}`, `--token=${options.token}`], {});
     logger.info(response);
 }
 
-function setContext(args: KubeArgs) {
+function setContext() {
     logger.info('Perform set-context...');
-    const response = exec('kubectl', [`config`, `set-context`, `${args.clusterEnv}`, `--cluster=${args.clusterEnv}`, `--user=${args.username}`], {});
+    const response = exec('kubectl', [`config`, `set-context`, `${options.clusterEnv}`, `--cluster=${options.clusterEnv}`, `--user=${options.username}`], {});
     logger.info(response);
 }
 
-function useContext(args: KubeArgs) {
+function useContext() {
     logger.info('Perform use-context...');
-    const response = exec('kubectl', [`config`, `use-context`, `${args.clusterEnv}`], {});
+    const response = exec('kubectl', [`config`, `use-context`, `${options.clusterEnv}`], {});
     logger.info(response);
 }
 
@@ -65,16 +53,16 @@ function getNamespaces(): string [] {
     return namespaces;
 }
 
-function getDeploymentName(args: KubeArgs, namespace: string): string {
+function getDeploymentName(namespace: string): string {
     logger.info('Perform get deployment name...');
-    const result =  exec('kubectl', [`get`, `deployments`, `--namespace=${namespace}`, `-l`, `app=${args.label}`, `-o`, `name`], {});
+    const result =  exec('kubectl', [`get`, `deployments`, `--namespace=${namespace}`, `-l`, `app=${options.label}`, `-o`, `name`], {});
     logger.info(`deployment name: ${result}`);
     return result;
 }
 
-function setImage(args: KubeArgs, deploymentName: string, serviceName: string, namespace: string) {
+function setImage(deploymentName: string, serviceName: string, namespace: string) {
     logger.info('Perform set image...');
-    const response = exec('kubectl', [`set`, `image`, `--namespace=${namespace}`, `${deploymentName}`, `${serviceName}=${args.dockerRepo}:${args.tag}`], {});
+    const response = exec('kubectl', [`set`, `image`, `--namespace=${namespace}`, `${deploymentName}`, `${serviceName}=${options.dockerRepo}:${options.tag}`], {});
     logger.info(response);
 }
 
@@ -85,14 +73,12 @@ function installPerform() {
     exec('curl', [`LO`, `${k8sRelease}`], {});
 }
 
-export default function (args: KubeArgs) {
-    main(args);
-}
+let options;
 
-function main(args) {
+export default async function main(_args: string[]) {
 
     program
-        .version('0.1.0')
+        .version('0.2.0')
         .description('his command allows you to update a specific service on the rancher env with a specific tag \n\n' +
             'adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --username ${username} --token ${token} --label ${label} --namespaces ${namespaces} --dockerRepo ${dockerRepo} --tag ${tag}')
         .option('--tag [type]', 'tag')
@@ -105,35 +91,32 @@ function main(args) {
         .option('--namespaces [type]', 'list of namespaces')
         .parse(process.argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
-        program.outputHelp();
-        return;
-    }
+    options = program.opts();
 
-    if (args.installCheck === true) {
+    if (options.installCheck === true) {
         installPerform();
     }
 
-    if (args.tag !== undefined) {
-        setCluster(args);
-        setCredentials(args);
-        setContext(args);
-        useContext(args);
+    if (options.tag !== undefined) {
+        setCluster();
+        setCredentials();
+        setContext();
+        useContext();
         let namespaces: string [];
-        if (args.namespaces === null || args.namespaces === 'default') {
+        if (options.namespaces === null || options.namespaces === 'default') {
             logger.info(`No namespaces provided. Fetch all of them`);
             namespaces = getNamespaces();
         } else {
-            namespaces = args.namespaces.split(',');
+            namespaces = options.namespaces.split(',');
         }
         namespaces.forEach( (namespace) => {
-            logger.info(`Find deployment name based on label ${args.label} and namespace ${namespace}`);
-            const deploymentName = getDeploymentName(args, namespace);
+            logger.info(`Find deployment name based on label ${options.label} and namespace ${namespace}`);
+            const deploymentName = getDeploymentName(namespace);
             if (deploymentName) {
                 logger.info(`Found ${deploymentName}`);
-                setImage(args, deploymentName.trim(), '*', namespace);
+                setImage(deploymentName.trim(), '*', namespace);
             } else {
-                logger.info(`No container with the label app=${args.label} found`);
+                logger.info(`No container with the label app=${options.label} found`);
             }
 
         });

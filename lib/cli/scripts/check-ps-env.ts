@@ -1,21 +1,24 @@
+/* tslint:disable */
 const alfrescoApi = require('@alfresco/js-api');
-const program = require('commander');
-
+/* tslint:enable */
+import program = require('commander');
+import { logger } from './logger';
 const MAX_RETRY = 10;
 const TIMEOUT = 60000;
 let counter = 0;
-
+let options;
 export default async function main(_args: string[]) {
 
     program
-        .version('0.1.0')
+        .version('0.2.0')
         .description('Check Process service is up ')
         .usage('check-ps-env [options]')
-        .option('--host [type]', 'Remote environment host adf.lab.com ')
-        .option('-p, --password [type]', 'password ')
-        .option('-u, --username [type]', 'username ')
+        .requiredOption('--host [type]', 'Remote environment host adf.lab.com ')
+        .requiredOption('-p, --password [type]', 'password ')
+        .requiredOption('-u, --username [type]', 'username ')
         .parse(process.argv);
 
+    options = program.opts();
 
     await checkEnv();
 }
@@ -24,27 +27,26 @@ async function checkEnv() {
     try {
         const alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
             provider: 'BPM',
-            hostBpm:  program.host
+            hostBpm:  options.host
         });
 
-        await alfrescoJsApi.login(program.username, program.password);
+        await alfrescoJsApi.login(options.username, options.password);
     } catch (e) {
-        console.log('Login error environment down or inaccessible');
+        logger.error('Login error environment down or inaccessible');
         counter++;
         if (MAX_RETRY === counter) {
-            console.log('Give up');
+            logger.error('Give up');
             process.exit(1);
         } else {
-            console.log(`Retry in 1 minute attempt N ${counter}`);
+            logger.error(`Retry in 1 minute attempt N ${counter}`);
             sleep(TIMEOUT);
             checkEnv();
         }
     }
-    console.log('ok');
+    logger.info('ok');
 }
 
-
 function sleep(delay) {
-    var start = new Date().getTime();
-    while (new Date().getTime() < start + delay) ;
+    const start = new Date().getTime();
+    while (new Date().getTime() < start + delay) {  }
 }

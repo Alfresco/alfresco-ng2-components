@@ -23,23 +23,23 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as program from 'commander';
 
+let options;
+
 export default function main(_args: string[], workingDir: string) {
     program
+        .version('0.2.0')
         .description('Generate an audit report')
         .usage('audit [options]')
-        .option('-p, --package <path>', 'Path to package file (default: package.json in working directory)')
-        .option('-d, --outDir <dir>', 'Ouput directory (default: working directory)')
+        .requiredOption('-p, --package <path>', 'Path to package file (default: package.json in working directory)')
+        .requiredOption('-d, --outDir <dir>', 'Ouput directory (default: working directory)')
         .parse(process.argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
-        program.outputHelp();
-        return;
-    }
+    options = program.opts();
 
     let packagePath = path.resolve(workingDir, 'package.json');
 
-    if (program.package) {
-        packagePath = path.resolve(program.package);
+    if (options.package) {
+        packagePath = path.resolve(options.package);
     }
 
     if (!fs.existsSync(packagePath)) {
@@ -70,7 +70,7 @@ export default function main(_args: string[], workingDir: string) {
                 console.error(err);
                 reject(1);
             } else {
-                const outputPath = path.resolve(program.outDir || workingDir);
+                const outputPath = path.resolve(options.outDir || workingDir);
                 const outputFile = path.join(outputPath, `audit-info-${packageJson.version}.md`);
 
                 fs.writeFileSync(outputFile, mdText);

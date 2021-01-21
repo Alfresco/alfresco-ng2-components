@@ -23,13 +23,6 @@ import { exec } from './exec';
 import * as program from 'commander';
 import { logger } from './logger';
 
-export interface PublishArgs {
-    tag?: string;
-    npmRegistry?: string;
-    tokenRegistry?: string;
-    pathProject: string;
-}
-
 const projects = [
     'cli',
     'core',
@@ -41,26 +34,26 @@ const projects = [
     'extensions'
 ];
 
-async function npmPublish(args: PublishArgs, project: string) {
-    if (args.npmRegistry) {
-        changeRegistry(args, project);
+async function npmPublish(project: string) {
+    if (options.npmRegistry) {
+        changeRegistry(project);
     }
 
-    const version = require(`${args.pathProject}/lib/dist/${project}/package.json`).version;
+    const version = require(`${options.pathProject}/lib/dist/${project}/package.json`).version;
 
     const exist = npmCheckExist(project, version);
 
     if (!exist) {
         logger.info(`Publishing lib ${project} to npm`);
-        const options = ['publish'];
-        if (args.tag) {
+        const optionsCommand = ['publish'];
+        if (options.tag) {
             options.push('-tag');
-            options.push(`${args.tag}`);
+            options.push(`${options.tag}`);
         }
-        const response = exec('npm', options, { cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`) });
+        const response = exec('npm', optionsCommand, { cwd: path.resolve(`${options.pathProject}/lib/dist/${project}`) });
         logger.info(response);
-        if (args.npmRegistry) {
-            removeNpmConfig(args, project);
+        if (options.npmRegistry) {
+            removeNpmConfig(project);
         }
 
         await sleep(30000);
@@ -78,13 +71,13 @@ function npmCheckExist(project: string, version: string) {
     return exist !== '';
 }
 
-function changeRegistry(args: PublishArgs, project: string) {
+function changeRegistry(project: string) {
     logger.info(`Change registry... `);
-    const folder = `${args.pathProject}/lib/dist/${project}`;
+    const folder = `${options.pathProject}/lib/dist/${project}`;
     const content =
         `strict-ssl=false
-registry=http://${args.npmRegistry}
-//${args.npmRegistry}/:_authToken="${args.tokenRegistry}"`;
+registry=http://${options.npmRegistry}
+//${options.npmRegistry}/:_authToken="${options.tokenRegistry}"`;
 
     try {
         fs.mkdirSync(folder, { recursive: true });
@@ -94,39 +87,34 @@ registry=http://${args.npmRegistry}
     }
 }
 
-function removeNpmConfig(args: PublishArgs, project: string) {
+function removeNpmConfig(project: string) {
     logger.info(`Removing file from ${project}`);
     try {
-        const response = exec('rm', ['.npmrc'], { cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`) });
+        const response = exec('rm', ['.npmrc'], { cwd: path.resolve(`${options.pathProject}/lib/dist/${project}`) });
         logger.info(response);
     } catch (e) {
         logger.error('Error removing file', e);
     }
 }
 
-export default async function (args: PublishArgs) {
-    await main(args);
-}
+let options;
 
-async function main(args) {
+export default async function main(_args: string[]) {
 
     program
-        .version('0.1.0')
+        .version('0.2.0')
         .description('Move in the folder where you have your Dockerfile and run the command \n\n adf-cli docker-publish --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}" --pathProject "$(pwd)')
-        .option('--tag [type]', 'tag')
-        .option('--npmRegistry [type]', 'npm Registry')
-        .option('--tokenRegistry [type]', 'token Registry')
-        .option('--pathProject [type]', 'pathProject')
+        .requiredOption('--tag [type]', 'tag')
+        .requiredOption('--npmRegistry [type]', 'npm Registry')
+        .requiredOption('--tokenRegistry [type]', 'token Registry')
+        .requiredOption('--pathProject [type]', 'pathProject')
         .parse(process.argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
-        program.outputHelp();
-        return;
-    }
+    options = program.opts();
 
     for (const project of projects) {
         logger.info(`======== Publishing project: ${project} ========`);
-        await npmPublish(args, project);
+        await npmPublish(project);
     }
 }
 

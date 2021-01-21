@@ -1,25 +1,31 @@
+
+import * as program from 'commander';
+import { logger } from './logger';
+/* tslint:disable */
 const alfrescoApi = require('@alfresco/js-api');
-const program = require('commander');
 const path = require('path');
 const fs = require('fs');
+/* tslint:enable */
 
 const MAX_RETRY = 3;
 const TIMEOUT = 20000;
 let counter = 0;
+let options;
 
 export default async function main(_args: string[]) {
 
     program
-        .version('0.1.0')
+        .version('0.2.0')
         .description('Check Content service is up ')
         .usage('check-cs-env [options]')
-        .option('--host [type]', 'Remote environment host adf.lab.com ')
-        .option('-p, --password [type]', 'password ')
-        .option('-u, --username [type]', 'username ')
+        .requiredOption('--host [type]', 'Remote environment host adf.lab.com ')
+        .requiredOption('-p, --password [type]', 'password ')
+        .requiredOption('-u, --username [type]', 'username ')
         .option('-t, --time [type]', 'time ')
         .option('-r, --retry [type]', 'retry ')
         .parse(process.argv);
 
+    options = program.opts();
 
     await checkEnv();
     await checkDiskSpaceFullEnv();
@@ -29,20 +35,20 @@ async function checkEnv() {
     try {
         const alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
             provider: 'ECM',
-            hostEcm: program.host
+            hostEcm: options.host
         });
 
-        await alfrescoJsApi.login(program.username, program.password);
+        await alfrescoJsApi.login(options.username, options.password);
     } catch (error) {
-        console.log('Login error environment down or inaccessible');
+        logger.error('Login error environment down or inaccessible');
         counter++;
-        const retry = program.retry || MAX_RETRY;
-        const time = program.time || TIMEOUT;
+        const retry = options.retry || MAX_RETRY;
+        const time = options.time || TIMEOUT;
         if (retry === counter) {
-            console.log('Give up');
+            logger.error('Give up');
             process.exit(1);
         } else {
-            console.log(`Retry in 1 minute attempt N ${counter}`, error);
+            logger.error(`Retry in 1 minute attempt N ${counter}`, error);
             sleep(time);
             checkEnv();
         }
@@ -50,16 +56,16 @@ async function checkEnv() {
 }
 
 async function checkDiskSpaceFullEnv() {
-    console.log(`Start Check disk full space`);
+    logger.info(`Start Check disk full space`);
 
     try {
 
         const alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
             provider: 'ECM',
-            hostEcm: program.host
+            hostEcm: options.host
         });
 
-        await alfrescoJsApi.login(program.username, program.password);
+        await alfrescoJsApi.login(options.username, options.password);
 
         let folder;
 
@@ -80,11 +86,11 @@ async function checkDiskSpaceFullEnv() {
                 'overwrite': true
             });
         }
-        let pathFile = path.join(__dirname, '../', 'README.md');
+        const pathFile = path.join(__dirname, '../', 'README.md');
 
-        let file = fs.createReadStream(pathFile);
+        const file = fs.createReadStream(pathFile);
 
-        let uploadedFile = await alfrescoJsApi.upload.uploadFile(
+        const uploadedFile = await alfrescoJsApi.upload.uploadFile(
             file,
             '',
             folder.entry.id,
@@ -100,16 +106,16 @@ async function checkDiskSpaceFullEnv() {
     } catch (error) {
         counter++;
 
-        const retry = program.retry || MAX_RETRY;
-        const time = program.time || TIMEOUT;
+        const retry = options.retry || MAX_RETRY;
+        const time = options.time || TIMEOUT;
         if (retry === counter) {
-            console.log('=============================================================');
-            console.log('================ Not able to upload a file ==================');
-            console.log('================ Possible cause CS is full ==================');
-            console.log('=============================================================');
+            logger.error('=============================================================');
+            logger.error('================ Not able to upload a file ==================');
+            logger.error('================ Possible cause CS is full ==================');
+            logger.error('=============================================================');
             process.exit(1);
         } else {
-            console.log(`Retry N ${counter} ${error?.error?.status}`);
+            logger.error(`Retry N ${counter} ${error?.error?.status}`);
             sleep(time);
             checkDiskSpaceFullEnv();
         }
@@ -119,7 +125,6 @@ async function checkDiskSpaceFullEnv() {
 }
 
 function sleep(delay) {
-    console.log(`Sleep ${delay}`);
-    var start = new Date().getTime();
-    while (new Date().getTime() < start + delay) ;
+    const start = new Date().getTime();
+    while (new Date().getTime() < start + delay) {  }
 }

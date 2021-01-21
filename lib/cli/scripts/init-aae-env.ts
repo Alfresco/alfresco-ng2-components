@@ -29,19 +29,7 @@ const ACTIVITI_CLOUD_APPS = require('./resources').ACTIVITI_CLOUD_APPS;
 
 let alfrescoJsApiModeler: any;
 let alfrescoJsApiDevops: any;
-let args: ConfigArgs;
 let isValid = true;
-
-export interface ConfigArgs {
-    modelerUsername: string;
-    modelerPassword: string;
-    devopsUsername: string;
-    devopsPassword: string;
-    clientId: string;
-    host: string;
-    oauth: string;
-    identityHost: boolean;
-}
 
 export const AAE_MICROSERVICES = [
     'deployment-service',
@@ -50,7 +38,7 @@ export const AAE_MICROSERVICES = [
 ];
 
 async function healthCheck(nameService: string) {
-    const url = `${args.host}/${nameService}/actuator/health`;
+    const url = `${options.host}/${nameService}/actuator/health`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -71,16 +59,16 @@ async function healthCheck(nameService: string) {
 }
 
 async function getApplicationByStatus(status: string) {
-    const url = `${args.host}/deployment-service/v1/applications/`;
+    const url = `${options.host}/deployment-service/v1/applications/`;
 
     const pathParams = {}, queryParams = { status: status },
         headerParams = {}, formParams = {}, bodyParam = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
     try {
-        await alfrescoJsApiDevops.login(args.devopsUsername, args.devopsPassword);
+        await alfrescoJsApiDevops.login(options.devopsUsername, options.devopsPassword);
 
         return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts).on('error',(error)=>{
+            contentTypes, accepts).on('error', (error) => {
             logger.error(`Get application by status ${error} `);
         });
 
@@ -91,7 +79,7 @@ async function getApplicationByStatus(status: string) {
 }
 
 function getDescriptors() {
-    const url = `${args.host}/deployment-service/v1/descriptors`;
+    const url = `${options.host}/deployment-service/v1/descriptors`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -107,7 +95,7 @@ function getDescriptors() {
 }
 
 function getProjects() {
-    const url = `${args.host}/modeling-service/v1/projects`;
+    const url = `${options.host}/modeling-service/v1/projects`;
 
     const pathParams = {}, queryParams = { maxItems: 1000 },
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -123,7 +111,7 @@ function getProjects() {
 }
 
 function getProjectRelease(projectId: string) {
-    const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
+    const url = `${options.host}/modeling-service/v1/projects/${projectId}/releases`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -139,7 +127,7 @@ function getProjectRelease(projectId: string) {
 }
 
 function releaseProject(projectId: string) {
-    const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
+    const url = `${options.host}/modeling-service/v1/projects/${projectId}/releases`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -155,13 +143,13 @@ function releaseProject(projectId: string) {
 }
 
 async function importAndReleaseProject(absoluteFilePath: string) {
-    const fileContent = await fs.createReadStream(absoluteFilePath);
+    const fileContent = fs.createReadStream(absoluteFilePath);
 
     try {
-        const project = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/modeling-service/v1/projects/import`, 'POST', {}, {}, {}, { file: fileContent }, {}, ['multipart/form-data'], ['application/json']);
+        const project = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${options.host}/modeling-service/v1/projects/import`, 'POST', {}, {}, {}, { file: fileContent }, {}, ['multipart/form-data'], ['application/json']);
         logger.info(`Project imported`);
         logger.info(`Create release`);
-        const release = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/modeling-service/v1/projects/${project.entry.id}/releases`, 'POST', {}, {}, {}, {}, {},
+        const release = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${options.host}/modeling-service/v1/projects/${project.entry.id}/releases`, 'POST', {}, {}, {}, {}, {},
             ['application/json'], ['application/json']);
         return release;
 
@@ -173,7 +161,7 @@ async function importAndReleaseProject(absoluteFilePath: string) {
 }
 
 function deleteDescriptor(name: string) {
-    const url = `${args.host}/deployment-service/v1/descriptors/${name}`;
+    const url = `${options.host}/deployment-service/v1/descriptors/${name}`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -189,7 +177,7 @@ function deleteDescriptor(name: string) {
 }
 
 function deploy(model: any) {
-    const url = `${args.host}/deployment-service/v1/applications/`;
+    const url = `${options.host}/deployment-service/v1/applications/`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = model,
@@ -204,15 +192,15 @@ function deploy(model: any) {
     }
 }
 
-function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
+function getAlfrescoJsApiInstance() {
     const config = {
         provider: 'BPM',
-        hostEcm: `${configArgs.host}`,
-        hostBpm: `${configArgs.host}`,
+        hostEcm: `${options.host}`,
+        hostBpm: `${options.host}`,
         authType: 'OAUTH',
         oauth2: {
-            host: `${configArgs.oauth}/auth/realms/alfresco`,
-            clientId: `${configArgs.clientId}`,
+            host: `${options.oauth}/auth/realms/alfresco`,
+            clientId: `${options.clientId}`,
             scope: 'openid',
             secret: '',
             implicitFlow: false,
@@ -372,16 +360,12 @@ async function sleep(time: number) {
     return;
 }
 
-export default async function (configArgs: ConfigArgs) {
-    await main(configArgs);
-}
+let options;
 
-async function main(configArgs: ConfigArgs) {
-
-    args = configArgs;
+export default async function main(_args: string[]) {
 
     program
-        .version('0.1.0')
+        .version('0.2.0')
         .description('The following command is in charge of Initializing the activiti cloud env with the default apps' +
             'adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devevopsusername" --devopsPassword "devopspassword"')
         .option('-h, --host [type]', 'Host gateway')
@@ -394,31 +378,28 @@ async function main(configArgs: ConfigArgs) {
         .option('--devopsPassword [type]', 'devops password')
         .parse(process.argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
-        program.outputHelp();
-        return;
-    }
+    options = program.opts();
 
-    alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
+    alfrescoJsApiModeler = getAlfrescoJsApiInstance();
 
     AAE_MICROSERVICES.map(async (serviceName) => {
         await healthCheck(serviceName);
     });
 
-    await alfrescoJsApiModeler.login(args.modelerUsername, args.modelerPassword).then(() => {
+    await alfrescoJsApiModeler.login(options.modelerUsername, options.modelerPassword).then(() => {
         logger.info('login SSO ok');
     }, (error) => {
-        logger.info(`login SSO error ${JSON.stringify(error)} ${args.modelerUsername}`);
+        logger.info(`login SSO error ${JSON.stringify(error)} ${options.modelerUsername}`);
         process.exit(1);
     });
 
     if (isValid) {
         logger.error('The environment is up and running');
-        alfrescoJsApiDevops = getAlfrescoJsApiInstance(args);
-        await alfrescoJsApiDevops.login(args.devopsUsername, args.devopsPassword).then(() => {
+        alfrescoJsApiDevops = getAlfrescoJsApiInstance();
+        await alfrescoJsApiDevops.login(options.devopsUsername, options.devopsPassword).then(() => {
             logger.info('login SSO ok devopsUsername');
         }, (error) => {
-            logger.info(`login SSO error ${JSON.stringify(error)} ${args.devopsUsername}`);
+            logger.info(`login SSO error ${JSON.stringify(error)} ${options.devopsUsername}`);
             process.exit(1);
         });
 

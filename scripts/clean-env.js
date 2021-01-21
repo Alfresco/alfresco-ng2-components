@@ -1,22 +1,23 @@
 let alfrescoApi = require('@alfresco/js-api');
 let program = require('commander');
-
+let options;
 async function main() {
 
     program
-        .version('0.1.0')
+        .version('0.2.0')
         .option('--host [type]', 'Remote environment host adf.lab.com ')
         .option('-p, --password [type]', 'password RANCHER')
         .option('-u, --username [type]', 'username RANCHER')
         .parse(process.argv);
 
+    options = program.opts();
     const alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
         provider: 'ECM',
-        hostEcm: program.host
+        hostEcm: options.host
     });
 
     try {
-        await alfrescoJsApi.login(program.username, program.password);
+        await alfrescoJsApi.login(options.username, options.password);
     } catch (error) {
         console.log(JSON.stringify(error));
     }

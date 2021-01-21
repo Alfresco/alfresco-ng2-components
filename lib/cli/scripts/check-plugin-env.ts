@@ -6,26 +6,29 @@ import { ProcessAutomationCheckPlugin } from './plugins/process-automation-check
 import { GovernanceCheckPlugin } from './plugins/governance-check-plugin';
 
 let pluginEnv;
+let options;
 
 export default async function main(_args: string[]) {
     program
-        .version('0.1.0')
-        .option('--host [type]', 'Remote environment host')
-        .option('--pluginName [type]', 'pluginName')
-        .option('--appName [type]', 'appName ', 'Deployed appName on activiti-cloud')
-        .option('-p, --password [type]', 'password ')
-        .option('-u, --username [type]', 'username ')
-        .option('--ui, --uiName [type]', 'uiName', 'Deployed app UI type on activiti-cloud')
+        .version('0.2.0')
+        .requiredOption('--host [type]', 'Remote environment host')
+        .requiredOption('--pluginName [type]', 'pluginName ')
+        .requiredOption('-p, --password [type]', 'password ')
+        .requiredOption('-u, --username [type]', 'username ')
+        .option('--appName [type]', 'appName ')
+        .option('--ui, --uiName [type]', 'uiName')
         .parse(process.argv);
 
-    pluginEnv = new CheckEnv(program.host, program.username, program.password);
+    options = program.opts();
+
+    pluginEnv = new CheckEnv(options.host, options.username, options.password);
     await pluginEnv.checkEnv();
 
-    if (program.pluginName === PluginTarget.processService) {
+    if (options.pluginName === PluginTarget.processService) {
         await checkProcessServicesPlugin();
     }
 
-    if (program.pluginName === PluginTarget.processAutomation) {
+    if (options.pluginName === PluginTarget.processAutomation) {
         await checkProcessAutomationPlugin();
     }
 
@@ -37,8 +40,15 @@ export default async function main(_args: string[]) {
 async function checkProcessServicesPlugin() {
     const processServiceCheckPlugin = new ProcessServiceCheckPlugin(
         {
+<<<<<<< HEAD
             host: program.host,
             name: PluginTarget.processService
+=======
+            host: options.host,
+            name: PluginTarget.processService,
+            appName: null,
+            uiName: null
+>>>>>>> Use commander.js 7.0.0 fix tslint
         },
         pluginEnv.alfrescoJsApi
     );
@@ -48,10 +58,10 @@ async function checkProcessServicesPlugin() {
 async function checkProcessAutomationPlugin() {
     const processAutomationCheckPlugin = new ProcessAutomationCheckPlugin(
         {
-            host: program.host,
+            host: options.host,
             name: PluginTarget.processAutomation,
-            appName: program.appName,
-            uiName: program.uiName
+            appName: options.appName,
+            uiName: options.uiName
         },
         pluginEnv.alfrescoJsApi
     );

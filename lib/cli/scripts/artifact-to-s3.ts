@@ -24,7 +24,7 @@ import * as program from 'commander';
 function zipArtifact(artifact: string) {
     logger.info(`Perform zip artifact ${artifact}`);
 
-    const response = exec(`tar cvfj ./s3-artifact.tmp -C ${program.artifact} ls ${program.artifact}`, [] , {});
+    const response = exec(`tar cvfj ./s3-artifact.tmp -C ${options.artifact} ls ${options.artifact}`, [] , {});
     logger.info(response);
 }
 
@@ -34,6 +34,8 @@ function awsCp(output: string) {
     logger.info(response);
 }
 
+let options;
+
 export default function () {
     main();
 }
@@ -41,20 +43,17 @@ export default function () {
 function main() {
 
     program
-        .version('0.1.0')
-        .option('-a, --artifact [type]', '  path to the artifact to archieve (tar.bz2) and upload (like ./dist)')
-        .option('-o, --output [type]', ' the S3 object to copy it to, like: s3://bucket-name/folder/whatever.tar.bz2')
+        .version('0.2.0')
+        .requiredOption('-a, --artifact [type]', '  path to the artifact to archieve (tar.bz2) and upload (like ./dist)')
+        .requiredOption('-o, --output [type]', ' the S3 object to copy it to, like: s3://bucket-name/folder/whatever.tar.bz2')
         .parse(process.argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
-        program.outputHelp();
-        return;
-    }
+    options = program.opts();
 
-    if (!program.artifact || program.artifact === '' || !program.output || program.output === '') {
+    if (!options.artifact || options.artifact === '' || !options.output || options.output === '') {
         process.exit(1);
-    } else if (program.artifact !== '' || program.output !== '') {
-        zipArtifact(program.artifact);
-        awsCp(program.output);
+    } else if (options.artifact !== '' || options.output !== '') {
+        zipArtifact(options.artifact);
+        awsCp(options.output);
     }
 }
