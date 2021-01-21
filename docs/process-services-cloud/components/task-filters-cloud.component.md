@@ -56,6 +56,12 @@ as the value of `filterParam` as shown in the table below:
 | key   | string | The key of the task filter                          |
 | index | string | The zero-based position of the filter in the array. |
 
+### Showing Filter Counters
+
+By default, filter counters are hidden. If you want to display filter counters you will need to add the `showCounter` property set to `true` in your TaskFilterCloudModel. 
+
+![](../../docassets/images/task-filter-counter.png)
+
 ## See also
 
 *   [Task filter Cloud Service](../services/task-filter-cloud.service.md)

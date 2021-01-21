@@ -51,6 +51,7 @@ export class TaskFilterCloudModel  {
     assignmentType: AssignmentType;
     completedDate: Date;
     completedBy: IdentityUserModel;
+    showCounter: boolean;
 
     private _completedFrom: string;
     private _completedTo: string;
@@ -97,6 +98,7 @@ export class TaskFilterCloudModel  {
             this.createdFrom = obj._createdFrom || null;
             this.createdTo = obj._createdTo || null;
             this.candidateGroups = obj.candidateGroups || null;
+            this.showCounter = obj.showCounter || false;
         }
     }
 
