@@ -10,7 +10,7 @@ const { throwError } = require('rxjs');
 const { AppDefinitionsApi, RuntimeAppDefinitionsApi } = require('@alfresco/js-api');
 let MAX_RETRY = 10;
 let counter = 0;
-let TIMEOUT = 6000;
+let TIMEOUT = 10000;
 const TENANT_DEFAULT_ID = 1;
 const TENANT_DEFAULT_NAME = 'default';
 const CONTENT_DEFAULT_NAME = 'adw-content';
@@ -125,13 +125,13 @@ async function checkEnv() {
         alfrescoJsApiRepo = alfrescoJsApi;
         await alfrescoJsApi.login(options.username, options.password);
     } catch (e) {
-        logger.info('Login error environment down or inaccessible');
+        logger.error(`Login error: ${e} `);
         counter++;
         if (MAX_RETRY === counter) {
             logger.info('Give up');
             process.exit(1);
         } else {
-            logger.info(`Retry in 1 minute attempt N ${counter}`);
+            logger.info(`Retry in ${TIMEOUT / 1000} sec attempt N ${counter}`);
             sleep(TIMEOUT);
             checkEnv();
         }

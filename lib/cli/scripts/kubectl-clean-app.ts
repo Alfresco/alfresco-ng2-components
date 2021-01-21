@@ -49,7 +49,7 @@ async function login(username: string, password: string, alfrescoJsApi: any) {
     try {
     await alfrescoJsApi.login(username, password);
     } catch (error) {
-        logger.error(`Not able to login. Credentials ${username}:${password} are not valid`);
+        logger.error(`Login error: ${error} `);
         process.exit(1);
     }
     logger.info(`Perform done...`);

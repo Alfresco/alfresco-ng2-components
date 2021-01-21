@@ -3,7 +3,7 @@ import alfrescoApi = require('@alfresco/js-api');
 
 export class CheckEnv {
     _alfrescoJsApi: any;
-    TIMEOUT = 6000;
+    TIMEOUT = 10000;
     MAX_RETRY = 10;
     counter = 0;
 
@@ -28,14 +28,14 @@ export class CheckEnv {
             });
             await this.alfrescoJsApi.login(this.username, this.password);
         } catch (e) {
-            logger.error('Login error environment down or inaccessible');
+            logger.error(`Login error: ${e} `);
             this.counter++;
             if (this.MAX_RETRY === this.counter) {
                 logger.error('Give up');
                 process.exit(1);
             } else {
                 logger.error(
-                    `Retry in 1 minute at main();tempt N ${this.counter}`
+                    `Retry in ${this.TIMEOUT / 1000} sec at main();tempt N ${this.counter}`
                 );
                 this.sleep(this.TIMEOUT);
                 this.checkEnv();

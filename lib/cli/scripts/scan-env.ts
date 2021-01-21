@@ -5,8 +5,8 @@ import { logger } from './logger';
 interface PeopleTally { enabled: number; disabled: number; }
 interface RowToPrint { label: string; value: number; }
 
-const MAX_ATTEMPTS = 10;
-const TIMEOUT = 60000;
+const MAX_ATTEMPTS = 3;
+const TIMEOUT = 10000;
 const MAX_PEOPLE_PER_PAGE = 100;
 const USERS_HOME_RELATIVE_PATH = 'User Homes';
 let options;
@@ -88,7 +88,7 @@ async function attemptLogin() {
 async function handleLoginError(loginError) {
     const reset = '\x1b[0m', bright = '\x1b[1m', red = '\x1b[31m';
     if (loginAttempts === 0) {
-        logger.error(`${red}${bright}ENVIRONMENT SCAN${reset}${red} - Login error: environment down or inaccessible${reset}`);
+        logger.error(`${red}${bright}ENVIRONMENT SCAN${reset}${red} - Login error: ${loginError} ${reset}`);
     }
     loginAttempts++;
     if (MAX_ATTEMPTS === loginAttempts) {
@@ -101,7 +101,7 @@ async function handleLoginError(loginError) {
         logger.error('Give up');
         process.exit(1);
     } else {
-        logger.error(`Retry in 1 minute attempt N ${loginAttempts}`);
+        logger.error(`Retry in ${TIMEOUT / 1000} sec attempt N ${loginAttempts}`);
         await wait(TIMEOUT);
         await attemptLogin();
     }

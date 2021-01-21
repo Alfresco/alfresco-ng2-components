@@ -8,7 +8,7 @@ const fs = require('fs');
 /* tslint:enable */
 
 const MAX_RETRY = 3;
-const TIMEOUT = 20000;
+const TIMEOUT = 10000;
 let counter = 0;
 let options;
 
@@ -37,10 +37,9 @@ async function checkEnv() {
             provider: 'ECM',
             hostEcm: options.host
         });
-
         await alfrescoJsApi.login(options.username, options.password);
     } catch (error) {
-        logger.error('Login error environment down or inaccessible');
+        logger.error(`Login error: ${error} `);
         counter++;
         const retry = options.retry || MAX_RETRY;
         const time = options.time || TIMEOUT;
@@ -48,7 +47,7 @@ async function checkEnv() {
             logger.error('Give up');
             process.exit(1);
         } else {
-            logger.error(`Retry in 1 minute attempt N ${counter}`, error);
+            logger.error(`Retry in ${time / 1000} sec attempt N ${counter}`, error);
             sleep(time);
             checkEnv();
         }

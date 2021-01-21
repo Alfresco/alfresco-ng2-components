@@ -4,7 +4,7 @@ const alfrescoApi = require('@alfresco/js-api');
 import program = require('commander');
 import { logger } from './logger';
 const MAX_RETRY = 10;
-const TIMEOUT = 60000;
+const TIMEOUT = 10000;
 let counter = 0;
 let options;
 export default async function main(_args: string[]) {
@@ -32,13 +32,13 @@ async function checkEnv() {
 
         await alfrescoJsApi.login(options.username, options.password);
     } catch (e) {
-        logger.error('Login error environment down or inaccessible');
+        logger.error(`Login error: ${e} `);
         counter++;
         if (MAX_RETRY === counter) {
             logger.error('Give up');
             process.exit(1);
         } else {
-            logger.error(`Retry in 1 minute attempt N ${counter}`);
+            logger.error(`Retry in ${TIMEOUT / 1000} sec attempt N ${counter}`);
             sleep(TIMEOUT);
             checkEnv();
         }
