@@ -23,7 +23,7 @@
     "codelyzer": ">=4.5.0"
   },
   "dependencies": {
-    "@alfresco/js-api": "^4.3.0-b039cf7d9a62988af88f74d6d57f21ac4ea91945",
+    "@alfresco/js-api": "^4.3.0-031ee1ac8ced771ea50945c713977fedd2eac3e0",
     "app-root-path": "2.0.1",
     "css-selector-tokenizer": "0.7.0",
     "cssauron": "1.4.0",

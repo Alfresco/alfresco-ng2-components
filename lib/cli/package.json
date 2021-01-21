@@ -20,7 +20,7 @@
     "dist": "rm -rf ./dist/ && npm run build && cp -R ./bin ./dist/ && cp -R ./resources ./dist && cp -R ./templates ./dist && cp ./package.json ./dist/"
   },
   "dependencies": {
-    "@alfresco/js-api": "^4.3.0-b039cf7d9a62988af88f74d6d57f21ac4ea91945",
+    "@alfresco/js-api": "^4.3.0-031ee1ac8ced771ea50945c713977fedd2eac3e0",
     "commander": "^4.0.0",
     "ejs": "^2.6.1",
     "license-checker": "^25.0.1",
