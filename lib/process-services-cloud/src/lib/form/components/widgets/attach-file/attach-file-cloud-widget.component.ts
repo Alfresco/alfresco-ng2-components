@@ -125,8 +125,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     async openSelectDialog() {
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
         let destinationFolderPath = <DestinationFolderPathModel> { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: '' };
-        if (this.isAlfrescoAndLocal()) {
-            destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath);
+        if (this.isAlfrescoAndLocal() &&  Object.entries(this.field.params.fileSource.destinationFolderPath).length) {
+            destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath.value);
             destinationFolderPath.path = this.replaceAppNameAliasWithValue(destinationFolderPath.path);
         }
         const nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
