@@ -172,10 +172,9 @@ export class FormFields {
     }
 
     async checkWidgetIsReadOnlyMode(fieldId: string): Promise<ElementFinder> {
-        const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
-        const widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(widgetReadOnly);
-        return widgetReadOnly;
+        const widget = element(by.css(`adf-form-field #field-${fieldId}-container .adf-readonly`));
+        await BrowserVisibility.waitUntilElementIsVisible(widget);
+        return widget;
     }
 
     async isFormFieldEnabled(formFieldId: string): Promise<boolean> {

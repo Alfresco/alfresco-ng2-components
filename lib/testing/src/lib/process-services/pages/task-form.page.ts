@@ -20,9 +20,9 @@ import { BrowserActions, BrowserVisibility } from '../../core/utils/public-api';
 
 export class TaskFormPage {
 
-    saveButton = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
-    claimButton = element(by.id('adf-task-form-claim-button'));
-    releaseButton = element(by.id('adf-task-form-unclaim-button'));
+    saveButton = element(by.id('adf-form-save'));
+    claimButton = element(by.css('button[data-automation-id="adf-task-form-claim-button"]'));
+    releaseButton = element(by.css('button[data-automation-id="adf-task-form-unclaim-button"]'));
 
     async clickOnClaimButton(): Promise<void> {
         await BrowserActions.click(this.claimButton);
@@ -32,27 +32,27 @@ export class TaskFormPage {
         await BrowserActions.click(this.releaseButton);
     }
 
-    async isSaveButtonDisplayed(): Promise<boolean> {
+    async isSaveButtonDisplayed(timeout?: number): Promise<boolean> {
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
+            await BrowserVisibility.waitUntilElementIsVisible(this.saveButton, timeout);
             return true;
         } catch (error) {
             return false;
         }
     }
 
-    async isClaimButtonDisplayed(): Promise<boolean> {
+    async isClaimButtonDisplayed(timeout?: number): Promise<boolean> {
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.claimButton);
+            await BrowserVisibility.waitUntilElementIsVisible(this.claimButton, timeout);
             return true;
         } catch (error) {
             return false;
         }
     }
 
-    async isReleaseButtonDisplayed(): Promise<boolean> {
+    async isReleaseButtonDisplayed(timeout?: number): Promise<boolean> {
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.releaseButton);
+            await BrowserVisibility.waitUntilElementIsVisible(this.releaseButton, timeout);
             return true;
         } catch (error) {
             return false;
