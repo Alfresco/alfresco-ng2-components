@@ -41,9 +41,27 @@ export class TaskFormPage {
         }
     }
 
+    async isSaveButtonNotDisplayed(timeout?: number): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsNotVisible(this.saveButton, timeout);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async isClaimButtonDisplayed(timeout?: number): Promise<boolean> {
         try {
             await BrowserVisibility.waitUntilElementIsVisible(this.claimButton, timeout);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async isClaimButtonNotDisplayed(timeout?: number): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsNotVisible(this.claimButton, timeout);
             return true;
         } catch (error) {
             return false;
@@ -58,6 +76,16 @@ export class TaskFormPage {
             return false;
         }
     }
+
+    async isReleaseButtonNotDisplayed(timeout?: number): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsNotVisible(this.releaseButton, timeout);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async isSaveButtonEnabled(): Promise<boolean> {
         return this.saveButton.isEnabled();
     }
