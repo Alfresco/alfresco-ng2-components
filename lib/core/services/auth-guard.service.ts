@@ -45,23 +45,23 @@ export class AuthGuard extends AuthGuardBase {
 
     ticketChange(event: StorageEvent) {
         if (event.key.includes('ticket-ECM') && event.newValue !== event.oldValue) {
-            this.ticketChangeRedirect(event, 'ECM');
+            this.ticketChangeRedirect(event);
         }
 
         if (event.key.includes('ticket-BPM') && event.newValue !== event.oldValue) {
-            this.ticketChangeRedirect(event, 'BPM');
+            this.ticketChangeRedirect(event);
         }
 
         if (event.key.endsWith(JwtHelperService.USER_ACCESS_TOKEN) &&
             this.jwtHelperService.getValueFromToken(event.newValue, JwtHelperService.USER_PREFERRED_USERNAME) !==
             this.jwtHelperService.getValueFromToken(event.oldValue, JwtHelperService.USER_PREFERRED_USERNAME)) {
-            this.ticketChangeRedirect(event, 'ALL');
+            this.ticketChangeRedirect(event);
         }
     }
 
-    private ticketChangeRedirect(event: StorageEvent, provider: string) {
+    private ticketChangeRedirect(event: StorageEvent) {
         if (!event.newValue) {
-            this.redirectToUrl(provider, this.router.url);
+            this.redirectToUrl(this.router.url);
         } else {
             window.location.reload();
         }
@@ -71,7 +71,7 @@ export class AuthGuard extends AuthGuardBase {
         if (this.authenticationService.isLoggedIn() || this.withCredentials) {
             return true;
         }
-        this.redirectToUrl('ALL', redirectUrl);
+        this.redirectToUrl( redirectUrl);
         return false;
     }
 }

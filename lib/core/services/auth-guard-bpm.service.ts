@@ -40,7 +40,7 @@ export class AuthGuardBpm extends AuthGuardBase {
         if (this.authenticationService.isBpmLoggedIn() || this.withCredentials) {
             return true;
         }
-        this.redirectToUrl('BPM', redirectUrl);
+        this.redirectToUrl(redirectUrl);
         return false;
     }
 }

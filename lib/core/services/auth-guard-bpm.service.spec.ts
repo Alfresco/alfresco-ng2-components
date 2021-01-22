@@ -64,7 +64,8 @@ describe('AuthGuardService BPM', () => {
             redirectUri: '/',
             clientId: 'activiti',
             publicUrl: 'settings',
-            scope: 'openid'
+            scope: 'openid',
+            provider: 'BPM'
         };
 
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'abc'};

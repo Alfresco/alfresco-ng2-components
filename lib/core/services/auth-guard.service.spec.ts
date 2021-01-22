@@ -23,12 +23,14 @@ import { AuthenticationService } from './authentication.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { StorageService } from './storage.service';
 
 describe('AuthGuardService', () => {
     let state;
     let authService: AuthenticationService;
     let router: Router;
     let authGuard: AuthGuard;
+    let storageService: StorageService;
     let appConfigService: AppConfigService;
 
     setupTestBed({
@@ -48,6 +50,7 @@ describe('AuthGuardService', () => {
 
         appConfigService.config.auth = {};
         appConfigService.config.oauth2 = {};
+        storageService = TestBed.inject(StorageService);
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async(async () => {
@@ -74,6 +77,18 @@ describe('AuthGuardService', () => {
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
         expect(await authGuard.canActivate(null, route)).toBeTruthy();
+    }));
+
+    it('should not redirect to login', async(async () => {
+        storageService.setItem('loginFragment', 'login');
+
+        spyOn(router, 'navigateByUrl').and.stub();
+        spyOn(authService, 'isLoggedIn').and.returnValue(true);
+        spyOn(authService, 'isOauth').and.returnValue(true);
+        appConfigService.config.oauth2.silentLogin = false;
+
+        expect(await authGuard.canActivate(null, state)).toBeTruthy();
+        expect(router.navigateByUrl).not.toHaveBeenCalled();
     }));
 
     it('should redirect url if the User is NOT logged in and isOAuthWithoutSilentLogin', async(async () => {
@@ -124,6 +139,7 @@ describe('AuthGuardService', () => {
     it('should set redirect url with query params', async(async () => {
         state.url = 'some-url;q=query';
         appConfigService.config.loginRoute = 'login';
+        appConfigService.config.provider = 'ALL';
 
         spyOn(router, 'navigateByUrl');
         spyOn(authService, 'setRedirect');
