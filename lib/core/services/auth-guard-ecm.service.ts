@@ -43,7 +43,7 @@ export class AuthGuardEcm extends AuthGuardBase {
             return true;
         }
 
-        this.redirectToUrl('ECM', redirectUrl);
+        this.redirectToUrl(redirectUrl);
 
         return false;
     }
