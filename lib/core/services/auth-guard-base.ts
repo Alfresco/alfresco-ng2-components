@@ -62,11 +62,14 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
         const redirectFragment = this.storageService.getItem('loginFragment');
+
         if (this.authenticationService.isLoggedIn() || this.withCredentials) {
-            if (redirectFragment) {
+
+            if (redirectFragment && this.getLoginRoute() !== redirectFragment) {
                 this.storageService.removeItem('loginFragment');
                 this.redirectToUrl(redirectFragment);
             }
+
             return true;
         }
 
@@ -96,7 +99,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
             if (!this.authenticationService.isOauth()) {
                 this.authenticationService.setRedirect({
-                    provider: this.appConfigService.get(AppConfigValues.PROVIDERS),
+                    provider: this.getProvider(),
                     url
                 });
 
@@ -129,6 +132,16 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
             this.appConfigService.get<string>(
                 AppConfigValues.LOGIN_ROUTE,
                 'login'
+            )
+        );
+    }
+
+    protected getProvider(): string {
+        return (
+            this.appConfigService &&
+            this.appConfigService.get<string>(
+                AppConfigValues.PROVIDERS,
+                'ALL'
             )
         );
     }

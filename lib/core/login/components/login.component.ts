@@ -150,20 +150,21 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.initFormFieldsDefault();
         this.initFormFieldsMessages();
 
-        if (this.authService.isOauth()) {
-            const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
-            if (oauth && oauth.implicitFlow) {
-                this.implicitFlow = true;
-            }
-
-            if (oauth && oauth.silentLogin && !this.authService.isLoggedIn()) {
-                this.alfrescoApiService.getInstance().oauth2Auth.implicitLogin();
-            }
-        }
-
         if (this.authService.isLoggedIn()) {
             this.router.navigate([this.successRoute]);
         } else {
+
+            if (this.authService.isOauth()) {
+                const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+                if (oauth && oauth.implicitFlow) {
+                    this.implicitFlow = true;
+                }
+
+                if (oauth && oauth.silentLogin) {
+                    this.alfrescoApiService.getInstance().oauth2Auth.implicitLogin();
+                }
+            }
+
             this.route.queryParams.subscribe((params: Params) => {
                 const url = params['redirectUrl'];
                 const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
