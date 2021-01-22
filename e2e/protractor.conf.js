@@ -155,6 +155,14 @@ exports.config = {
         resources: RESOURCES
     },
 
+    suites: {
+      smokeTest : [
+          'e2e/core/infinite-scrolling.e2e.ts',
+          'e2e/core/viewer/**/*.spec.ts',
+          'e2e/core/login/login-component.e2e.ts'
+      ]
+    },
+
     framework: 'jasmine',
 
     getPageTimeout: 90000,
@@ -233,6 +241,11 @@ exports.config = {
                 }
             })
         );
+
+        process.on('unhandledRejection', (reason, p) => {
+            console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+            // application specific logging, throwing an error, or other logic here
+        });
 
         // @ts-ignore
         await browser.driver.executeScript(disableCSSAnimation);
