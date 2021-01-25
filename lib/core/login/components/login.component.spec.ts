@@ -609,14 +609,13 @@ describe('LoginComponent', () => {
         describe('implicitFlow ', () => {
 
             beforeEach(() => {
-                appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true };
+                appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true, silentLogin: false };
                 appConfigService.load();
                 alfrescoApiService.reset();
             });
 
             it('should not show login username and password if SSO implicit flow is active', async(() => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
-
                 component.ngOnInit();
                 fixture.detectChanges();
 
@@ -626,6 +625,34 @@ describe('LoginComponent', () => {
                     expect(element.querySelector('#username')).toBeNull();
                     expect(element.querySelector('#password')).toBeNull();
                 });
+            }));
+
+            it('should not render the implicitFlow button in case silentLogin is enabled', async(() => {
+                spyOn(authService, 'isOauth').and.returnValue(true);
+                appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true, silentLogin: true };
+
+                spyOn(component, 'redirectToImplicitLogin').and.returnValue(Promise.resolve({}));
+
+                component.ngOnInit();
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(component.implicitFlow).toBe(false);
+                    expect(component.redirectToImplicitLogin).toHaveBeenCalled();
+                });
+
+            }));
+
+            it('should render the implicitFlow button in case silentLogin is disabled', async(() => {
+                spyOn(authService, 'isOauth').and.returnValue(true);
+
+                component.ngOnInit();
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(component.implicitFlow).toBe(true);
+                });
+
             }));
 
             it('should not show the login base auth button', async(() => {
