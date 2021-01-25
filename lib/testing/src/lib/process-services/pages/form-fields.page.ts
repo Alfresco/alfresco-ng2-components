@@ -32,6 +32,9 @@ export class FormFieldsPage {
     completedTaskNoFormMessage = element(by.css('div[id*="completed-form-message"] p'));
     attachFormButton = element(by.id('adf-attach-form-attach-button'));
     completeButton = element(by.id('adf-form-complete'));
+    claimButton = element(by.id('adf-task-form-claim-button'));
+    releaseButton = element(by.id('adf-task-form-unclaim-button'));
+    cancelButton = element(by.id('adf-no-form-cancel-button'));
     errorMessage: Locator = by.css('.adf-error-text-container .adf-error-text');
 
     selectFormDropdown = new DropdownPage(element.all(by.css('.adf-attach-form .mat-select-arrow')).first());
@@ -121,6 +124,14 @@ export class FormFieldsPage {
         await BrowserActions.click(this.attachFormButton);
     }
 
+    async clickOnClaimButton(): Promise<void> {
+        await BrowserActions.click(this.claimButton);
+    }
+
+    async clickOnReleaseButton(): Promise<void> {
+        await BrowserActions.click(this.releaseButton);
+    }
+
     async selectForm(formName: string): Promise<void> {
         await this.selectFormDropdown.clickDropdown();
         await this.selectFormDropdown.checkOptionsPanelIsDisplayed();
@@ -136,6 +147,11 @@ export class FormFieldsPage {
         const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
         const widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
         await BrowserVisibility.waitUntilElementIsVisible(widgetReadOnly);
+    }
+
+    async isFormFieldEnabled(formFieldId: string): Promise<boolean> {
+        const formField = element(by.css(`input[id=${formFieldId}]`));
+        return formField.isEnabled();
     }
 
     async completeForm(): Promise<void> {
@@ -157,7 +173,60 @@ export class FormFieldsPage {
         }
     }
 
+    async isSaveButtonDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async isCancelButtonDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async isClaimButtonDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.claimButton);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async isReleaseButtonDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.releaseButton);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async isCompleteFormButtonEnabled(): Promise<boolean> {
         return this.completeButton.isEnabled();
     }
+
+    async isCancelButtonEnabled(): Promise<boolean> {
+        return this.cancelButton.isEnabled();
+    }
+
+    async isSaveButtonEnabled(): Promise<boolean> {
+        return this.saveButton.isEnabled();
+    }
+
+    async isClaimButtonEnabled(): Promise<boolean> {
+        return this.claimButton.isEnabled();
+    }
+
+    async isReleaseButtonEnabled(): Promise<boolean> {
+        return this.releaseButton.isEnabled();
+    }
+
 }

@@ -17,9 +17,8 @@
 
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../core/actions/api.service';
-import { TaskRepresentation } from '@alfresco/js-api';
 
-export class TaskUtil {
+export class TaskActionsUtil {
 
     api: ApiService;
 
@@ -27,27 +26,27 @@ export class TaskUtil {
         this.api = api;
     }
 
-    async createStandaloneTask(taskName: string): Promise<any> {
+    async claimTask(taskInstance: string): Promise<any> {
         try {
-            return this.api.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskName }));
+            return this.api.apiService.activiti.taskActionsApi.claimTask(taskInstance);
         } catch (error) {
-            Logger.error('Create Standalone Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            Logger.error('Claim a Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 
-    async completeTaskForm(taskInstance: string): Promise<any> {
+    async unclaimTask(taskInstance: string): Promise<any> {
         try {
-            return this.api.getInstance().activiti.taskApi.completeTaskForm(taskInstance, { values: { label: null } });
+            return this.api.apiService.activiti.taskActionsApi.unclaimTask(taskInstance);
         } catch (error) {
-            Logger.error('Complete Task Form - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            Logger.error('Unclaim a Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 
-    async deleteTask(taskInstance: string): Promise<any> {
+    async completeTask(taskInstance: string): Promise<any> {
         try {
-            return this.api.apiService.activiti.taskApi.deleteTask(taskInstance);
+            return this.api.apiService.activiti.taskActionsApi.completeTask(taskInstance);
         } catch (error) {
-            Logger.error('Delete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            Logger.error('Complete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 }

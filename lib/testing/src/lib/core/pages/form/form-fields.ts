@@ -34,7 +34,7 @@ export class FormFields {
     attachFormButton = element(by.id('adf-attach-form-attach-button'));
     completeButton = element(by.id('adf-form-complete'));
     completeNoFormButton = element(by.id('adf-no-form-complete-button'));
-    cancelButton = element(by.css('#adf-no-form-cancel-button'));
+    cancelButton = element(by.id('adf-no-form-cancel-button'));
     errorMessage: Locator = by.css('.adf-error-text-container .adf-error-text');
 
     selectFormDropdown = new DropdownPage(element.all(by.css('.adf-attach-form .mat-select-arrow')).first());
@@ -172,10 +172,13 @@ export class FormFields {
     }
 
     async checkWidgetIsReadOnlyMode(fieldId: string): Promise<ElementFinder> {
-        const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
-        const widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(widgetReadOnly);
-        return widgetReadOnly;
+        const widget = element(by.css(`adf-form-field #field-${fieldId}-container .adf-readonly`));
+        await BrowserVisibility.waitUntilElementIsVisible(widget);
+        return widget;
+    }
+
+    async isFormFieldEnabled(formFieldId: string): Promise<boolean> {
+        return element(by.id(`${formFieldId}`)).isEnabled();
     }
 
     async completeForm(): Promise<void> {
@@ -184,6 +187,10 @@ export class FormFields {
 
     async completeNoFormTask(): Promise<void> {
         await BrowserActions.click(this.completeNoFormButton);
+    }
+
+    async clickCancelButton(): Promise<void> {
+        await BrowserActions.click(this.cancelButton);
     }
 
     async setValueInInputById(fieldId: string, value: string): Promise<void> {
@@ -230,7 +237,4 @@ export class FormFields {
         return this.cancelButton.isEnabled();
     }
 
-    async clickCancelButton(): Promise<void> {
-        await BrowserActions.click(this.cancelButton);
-    }
 }
