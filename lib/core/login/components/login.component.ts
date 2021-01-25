@@ -156,12 +156,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
             if (this.authService.isOauth()) {
                 const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
-                if (oauth && oauth.implicitFlow) {
-                    this.implicitFlow = true;
-                }
-
                 if (oauth && oauth.silentLogin) {
-                    this.alfrescoApiService.getInstance().oauth2Auth.implicitLogin();
+                    this.redirectToImplicitLogin();
+                } else if (oauth && oauth.implicitFlow) {
+                    this.implicitFlow = true;
                 }
             }
 
@@ -189,6 +187,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     submit() {
         this.onSubmit(this.form.value);
+    }
+
+    redirectToImplicitLogin() {
+        this.alfrescoApiService.getInstance().oauth2Auth.implicitLogin();
     }
 
     /**
