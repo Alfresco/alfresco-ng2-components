@@ -1581,6 +1581,7 @@ describe('DocumentList', () => {
         it('should call the datatable select row method for each preselected node', async () => {
             const datatableSelectRowSpy = spyOn(documentList.dataTable, 'selectRow');
             const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            spyOn(documentList.data, 'hasPreselectedRows').and.returnValue(true);
             spyOn(documentList.data, 'getPreselectedRows').and.returnValue(fakeDatatableRows);
 
             documentList.selectionMode = 'multiple';
