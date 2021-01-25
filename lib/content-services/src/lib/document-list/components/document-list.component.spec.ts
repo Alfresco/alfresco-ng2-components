@@ -1532,60 +1532,60 @@ describe('DocumentList', () => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_created.svg`);
         });
 
-        it('should able to emit nodeSelected event with preselectNodes on the reload', async () => {
+        it('should able to emit nodeSelected event with preselectedNodes on the reload', async () => {
             const nodeSelectedSpy = spyOn(documentList.nodeSelected, 'emit');
 
             fixture.detectChanges();
 
             documentList.node = mockNodePagingWithPreselectedNodes;
-            documentList.preselectNodes = mockPreselectedNodes;
+            documentList.preselectedNodes = mockPreselectedNodes;
             documentList.reload();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(documentList.preselectNodes.length).toBe(2);
+            expect(documentList.preselectedNodes.length).toBe(2);
             expect(nodeSelectedSpy).toHaveBeenCalled();
         });
 
-        it('should be able to select first node from the preselectNodes when selectionMode set to single', async () => {
+        it('should be able to select first node from the preselectedNodes when selectionMode set to single', async () => {
             documentList.selectionMode = 'single';
             fixture.detectChanges();
 
             documentList.node = mockNodePagingWithPreselectedNodes;
-            documentList.preselectNodes = mockPreselectedNodes;
+            documentList.preselectedNodes = mockPreselectedNodes;
             documentList.reload();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(documentList.preselectNodes.length).toBe(2);
-            expect(documentList.getPreselectNodesBasedOnSelectionMode().length).toBe(1);
+            expect(documentList.preselectedNodes.length).toBe(2);
+            expect(documentList.getPreselectedNodesBasedOnSelectionMode().length).toBe(1);
         });
 
-        it('should be able to select all preselectNodes when selectionMode set to multiple', async () => {
+        it('should be able to select all preselectedNodes when selectionMode set to multiple', async () => {
             documentList.selectionMode = 'multiple';
             fixture.detectChanges();
 
             documentList.node = mockNodePagingWithPreselectedNodes;
-            documentList.preselectNodes = mockPreselectedNodes;
+            documentList.preselectedNodes = mockPreselectedNodes;
             documentList.reload();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(documentList.preselectNodes.length).toBe(2);
-            expect(documentList.getPreselectNodesBasedOnSelectionMode().length).toBe(2);
+            expect(documentList.preselectedNodes.length).toBe(2);
+            expect(documentList.getPreselectedNodesBasedOnSelectionMode().length).toBe(2);
         });
 
         it('should call the datatable select row method for each preselected node', async () => {
             const datatableSelectRowSpy = spyOn(documentList.dataTable, 'selectRow');
             const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
-            spyOn(documentList.data, 'getPreselectRows').and.returnValue(fakeDatatableRows);
+            spyOn(documentList.data, 'getPreselectedRows').and.returnValue(fakeDatatableRows);
 
             documentList.selectionMode = 'multiple';
-            documentList.preselectNodes = mockPreselectedNodes;
-            documentList.onPreselectNodes();
+            documentList.preselectedNodes = mockPreselectedNodes;
+            documentList.preselectNodes();
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -1593,13 +1593,13 @@ describe('DocumentList', () => {
             expect(datatableSelectRowSpy.calls.count()).toEqual(fakeDatatableRows.length);
         });
 
-        it('should not emit nodeSelected event when preselectNodes is undefined/empty', async () => {
+        it('should not emit nodeSelected event when preselectedNodes is undefined/empty', async () => {
             const nodeSelectedSpy = spyOn(documentList.nodeSelected, 'emit');
 
             fixture.detectChanges();
 
             documentList.node = mockNodePagingWithPreselectedNodes;
-            documentList.preselectNodes = [];
+            documentList.preselectedNodes = [];
             documentList.reload();
 
             fixture.detectChanges();

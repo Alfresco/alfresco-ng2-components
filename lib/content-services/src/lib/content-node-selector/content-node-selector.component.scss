@@ -9,6 +9,13 @@
                 display: none;
             }
         }
+
+        .adf-upload-dialog {
+            height: 100%;
+            width: 100%;
+            position: unset;
+            bottom: unset;
+        }
     }
 
     .adf-content-node-selector-dialog {

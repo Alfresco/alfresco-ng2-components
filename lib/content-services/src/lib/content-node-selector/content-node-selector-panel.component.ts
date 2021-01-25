@@ -34,7 +34,9 @@ import {
     NodesApiService,
     SitesService,
     UploadService,
-    FileUploadCompleteEvent
+    FileUploadCompleteEvent,
+    FileUploadDeleteEvent,
+    FileModel
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, QueryBody, RequestScope } from '@alfresco/js-api';
@@ -247,7 +249,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     searchInput: FormControl = new FormControl();
 
     target: PaginatedComponent;
-    preselectNodes: NodeEntry[] = [];
+    preselectedNodes: NodeEntry[] = [];
 
     searchPanelExpanded: boolean = false;
 
@@ -320,6 +322,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
         this.onFileUploadEvent();
+        this.onFileUploadDeletedEvent();
         this.resetPagination();
         this.setSearchScopeToNodes();
 
@@ -351,9 +354,26 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             takeUntil(this.onDestroy$)
         )
         .subscribe((uploadedFiles: FileUploadCompleteEvent[]) => {
-            this.preselectNodes = this.getPreselectNodesBasedOnSelectionMode(uploadedFiles);
+            this.preselectedNodes = this.getPreselectNodesBasedOnSelectionMode(uploadedFiles);
             this.documentList.reload();
         });
+    }
+
+    private onFileUploadDeletedEvent() {
+        this.uploadService.fileUploadDeleted
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((deletedFileEvent: FileUploadDeleteEvent) => {
+                this.removeFromChosenNodes(deletedFileEvent.file);
+                this.documentList.reload();
+            });
+    }
+
+    private removeFromChosenNodes(file: FileModel) {
+        const fileIndex = this.chosenNode.findIndex((chosenNode: Node) => chosenNode.id === file.data.entry.id);
+        if (fileIndex !== -1) {
+            this._chosenNode.splice(fileIndex, 1);
+            this.select.next(this._chosenNode);
+        }
     }
 
     private getStartSite() {
@@ -511,7 +531,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.showingSearchResults = false;
         this.infiniteScroll = false;
         this.breadcrumbFolderTitle = null;
-        this.preselectNodes = [];
+        this.preselectedNodes = [];
         this.clearSearch();
         this.navigationChange.emit($event);
     }
@@ -573,7 +593,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      */
     onCurrentSelection(nodesEntries: NodeEntry[]): void {
         const validNodesEntity = nodesEntries.filter((node) => this.isSelectionValid(node.entry));
-        this.chosenNode = validNodesEntity.map((node) => node.entry );
+        this.chosenNode = validNodesEntity.map((node) => node.entry);
     }
 
     setTitleIfCustomSite(site: SiteEntry) {
@@ -589,7 +609,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     hasPreselectNodes(): boolean {
-        return this.preselectNodes && this.preselectNodes.length > 0;
+        return this.preselectedNodes && this.preselectedNodes.length > 0;
     }
 
     isSingleSelectionMode(): boolean {

@@ -8,7 +8,7 @@
                mat-align-tabs="start"
                (selectedIndexChange)="onTabSelectionChange($event)"
                [class.adf-content-node-selector-headless-tabs]="!canPerformLocalUpload()">
-    <mat-tab label="{{ 'NODE_SELECTOR.FILE_SERVER' | translate }}">
+    <mat-tab label="{{ 'NODE_SELECTOR.REPOSITORY' | translate }}">
             <adf-content-node-selector-panel
                 [currentFolderId]="data?.currentFolderId"
                 [restrictRootToCurrentFolderId]="data?.restrictRootToCurrentFolderId"
@@ -35,6 +35,11 @@
     <mat-tab *ngIf="canPerformLocalUpload()"
              label="{{ 'NODE_SELECTOR.UPLOAD_FROM_DEVICE' | translate }}"
              [disabled]="isNotAllowedToUpload()">
+        <adf-upload-drag-area [rootFolderId]="currentDirectoryId">
+            <div>
+                <adf-file-uploading-dialog [alwaysVisible]="true"></adf-file-uploading-dialog>
+            </div>
+        </adf-upload-drag-area>
     </mat-tab>
 </mat-tab-group>
 

@@ -1,4 +1,4 @@
-<div *ngIf="isDialogActive"
+<div *ngIf="canShowDialog()"
      role="dialog"
      [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG'| translate"
      tabindex="0"
@@ -89,14 +89,14 @@
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CANCEL_ALL' | translate"
             color="primary"
             mat-button
-            *ngIf="!uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()"
+            *ngIf="canShowCancelAll()"
             (click)="toggleConfirmation()"
         >{{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_ALL' | translate }}</button>
 
         <button
             id="adf-upload-dialog-close"
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_CLOSE' | translate"
-            *ngIf="uploadList.isUploadCompleted() || uploadList.isUploadCancelled()"
+            *ngIf="canCloseDialog()"
             mat-button
             color="primary"
             (click)="close()"

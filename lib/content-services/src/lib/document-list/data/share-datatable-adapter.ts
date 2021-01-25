@@ -45,7 +45,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
     allowDropFiles: boolean;
-    preselectRows: DataRow[] = [];
+    preselectedRows: DataRow[] = [];
 
     set sortingMode(value: string) {
         let newValue = (value || 'client').toLowerCase();
@@ -82,8 +82,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.sort();
     }
 
-    getPreselectRows(): Array<DataRow> {
-        return this.preselectRows;
+    getPreselectedRows(): Array<DataRow> {
+        return this.preselectedRows;
     }
 
     getColumns(): Array<DataColumn> {
@@ -208,7 +208,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     private getNodeAspectNames(node: any): any[] {
-        return node.entry && node.entry.aspectNames ? node.entry.aspectNames : node.aspectNames ? node.aspectNames : [];
+        return node.entry?.aspectNames ? node.entry.aspectNames : (node.aspectNames ? node.aspectNames : []);
     }
 
     private sortRows(rows: DataRow[], sorting: DataSorting) {
@@ -218,7 +218,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
         const options: Intl.CollatorOptions = {};
 
-        if (sorting && sorting.key && rows && rows.length > 0) {
+        if (sorting?.key && rows?.length > 0) {
 
             if (sorting.key.includes('sizeInBytes') || sorting.key === 'name') {
                 options.numeric = true;
@@ -255,9 +255,9 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (allowDropFiles !== undefined) {
             this.allowDropFiles = allowDropFiles;
         }
-        if (nodePaging && nodePaging.list) {
+        if (nodePaging?.list) {
             const nodeEntries: NodeEntry[] = nodePaging.list.entries;
-            if (nodeEntries && nodeEntries.length > 0) {
+            if (nodeEntries?.length > 0) {
                 shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle,
                     this.thumbnailService, this.allowDropFiles));
 
@@ -267,7 +267,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
                 if (this.sortingMode !== 'server') {
                     // Sort by first sortable or just first column
-                    if (this.columns && this.columns.length > 0) {
+                    if (this.columns?.length > 0) {
                         const sorting = this.getSorting();
                         if (sorting) {
                             this.sortRows(shareDataRows, sorting);
@@ -302,7 +302,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     selectRowsBasedOnGivenNodes(preselectNodes: NodeEntry[]) {
-        if (preselectNodes && preselectNodes.length > 0) {
+        if (preselectNodes?.length > 0) {
             this.rows = this.rows.map((row) => {
                 preselectNodes.map((preselectedNode) => {
                     if (row.obj.entry.id === preselectedNode.entry.id) {
@@ -313,7 +313,11 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             });
         }
 
-        this.preselectRows = [...this.rows.filter((res) => res.isSelected)];
+        this.preselectedRows = [...this.rows.filter((res) => res.isSelected)];
+    }
+
+    hasPreselectedRows(): boolean {
+        return this.preselectedRows?.length > 0;
     }
 
 }
