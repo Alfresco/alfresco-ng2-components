@@ -609,7 +609,7 @@ describe('LoginComponent', () => {
         describe('implicitFlow ', () => {
 
             beforeEach(() => {
-                appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true, silentLogin: true };
+                appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true, silentLogin: false };
                 appConfigService.load();
                 alfrescoApiService.reset();
             });
@@ -629,6 +629,8 @@ describe('LoginComponent', () => {
 
             it('should not render the implicitFlow button in case silentLogin is enabled', async(() => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
+                appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true, silentLogin: true };
+
                 spyOn(component, 'redirectToImplicitLogin').and.returnValue(Promise.resolve({}));
 
                 component.ngOnInit();
@@ -642,7 +644,6 @@ describe('LoginComponent', () => {
             }));
 
             it('should render the implicitFlow button in case silentLogin is disabled', async(() => {
-                appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true, silentLogin: false };
                 spyOn(authService, 'isOauth').and.returnValue(true);
 
                 component.ngOnInit();
