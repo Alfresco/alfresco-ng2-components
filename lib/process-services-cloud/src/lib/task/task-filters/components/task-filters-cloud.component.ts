@@ -40,10 +40,11 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     filters$: Observable<TaskFilterCloudModel[]>;
     filters: TaskFilterCloudModel[] = [];
     currentFilter: TaskFilterCloudModel;
+    counters = {};
 
     constructor(private taskFilterCloudService: TaskFilterCloudService,
                 private translationService: TranslationService) {
-            super();
+        super();
     }
 
     ngOnInit() {
@@ -71,12 +72,21 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
                 this.resetFilter();
                 this.filters = Object.assign([], res);
                 this.selectFilterAndEmit(this.filterParam);
+                this.initFilterCounters();
                 this.success.emit(res);
             },
             (err: any) => {
                 this.error.emit(err);
             }
         );
+    }
+
+    initFilterCounters() {
+        this.filters.forEach((filter) => {
+            if (filter.showCounter) {
+                this.counters$[filter.key] = this.taskFilterCloudService.getTaskFilterCounter(filter);
+            }
+        });
     }
 
     public selectFilter(paramFilter: FilterParamsModel) {

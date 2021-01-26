@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
@@ -68,6 +68,7 @@ describe('TaskFiltersCloudComponent', () => {
         component = fixture.componentInstance;
 
         taskFilterService = TestBed.inject(TaskFilterCloudService);
+        spyOn(taskFilterService, 'getTaskFilterCounter').and.returnValue(of(11));
     });
 
     it('should attach specific icon for each filter if hasIcon is true', async(() => {
@@ -111,7 +112,7 @@ describe('TaskFiltersCloudComponent', () => {
         component.showIcons = true;
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            const filters = fixture.debugElement.queryAll(By.css('.adf-filters__entry'));
+            const filters = fixture.debugElement.queryAll(By.css('.adf-task-filters__entry'));
             expect(component.filters.length).toBe(3);
             expect(filters.length).toBe(3);
             expect(filters[0].nativeElement.innerText).toContain('FakeInvolvedTasks');
@@ -363,4 +364,19 @@ describe('TaskFiltersCloudComponent', () => {
         component.selectFilter(filter);
         expect(component.currentFilter).toBe(fakeGlobalFilter[0]);
     });
+
+    it('should display filter counter if property set to true', async(() => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        const change = new SimpleChange(undefined, 'my-app-1', true);
+        component.ngOnChanges({'appName': change});
+        fixture.detectChanges();
+        component.showIcons = true;
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const filterCounters = fixture.debugElement.queryAll(By.css('.adf-filter-action-button__counter'));
+            expect(component.filters.length).toBe(3);
+            expect(filterCounters.length).toBe(1);
+            expect(filterCounters[0].nativeElement.innerText).toContain('11');
+        });
+    }));
 });

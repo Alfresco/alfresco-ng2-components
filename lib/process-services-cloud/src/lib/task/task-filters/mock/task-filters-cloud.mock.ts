@@ -24,7 +24,8 @@ export const fakeGlobalFilter = [
         icon: 'adjust',
         id: '10',
         status: 'open',
-        assignee: 'fake-involved'
+        assignee: 'fake-involved',
+        showCounter: true
     }),
     new TaskFilterCloudModel({
         name: 'FakeMyTasks1',
@@ -32,7 +33,8 @@ export const fakeGlobalFilter = [
         icon: 'done',
         id: '11',
         status: 'open',
-        assignee: 'fake-assignee'
+        assignee: 'fake-assignee',
+        showCounter: false
     }),
     new TaskFilterCloudModel({
         name: 'FakeMyTasks2',
