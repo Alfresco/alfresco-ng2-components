@@ -3,6 +3,14 @@
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
 
+    adf-content-node-selector {
+        .adf-content-node-selector-headless-tabs {
+            .mat-tab-header {
+                display: none;
+            }
+        }
+    }
+
     .adf-content-node-selector-dialog {
         &-content {
             padding-left: 24px;
