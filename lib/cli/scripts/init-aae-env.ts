@@ -80,7 +80,7 @@ async function getApplicationByStatus(status: string) {
         await alfrescoJsApiDevops.login(args.devopsUsername, args.devopsPassword);
 
         return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts).on('error',(error)=>{
+            contentTypes, accepts).on('error', (error) => {
             logger.error(`Get application by status ${error} `);
         });
 
@@ -138,7 +138,7 @@ function getProjectRelease(projectId: string) {
     }
 }
 
-function releaseProject(projectId: string) {
+async function releaseProject(projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
 
     const pathParams = {}, queryParams = {},
@@ -149,7 +149,24 @@ function releaseProject(projectId: string) {
             contentTypes, accepts);
 
     } catch (error) {
+        await deleteProject(projectId);
         logger.error('Post Projects Release' + error.status);
+        isValid = false;
+    }
+}
+
+function deleteProject(projectId: string) {
+    const url = `${args.host}/modeling-service/v1/projects/${projectId}`;
+
+    const pathParams = {}, queryParams = {},
+        headerParams = {}, formParams = {}, bodyParam = {},
+        contentTypes = ['application/json'], accepts = ['application/json'];
+    try {
+        return alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam,
+            contentTypes, accepts);
+
+    } catch (error) {
+        logger.error('Delete project error' + error.status);
         isValid = false;
     }
 }
