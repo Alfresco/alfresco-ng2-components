@@ -24,6 +24,8 @@ import { Logger } from '../utils/logger';
 
 export class ViewerPage {
 
+    MAX_LOADING_TIME = 120000;
+
     tabsPage = new TabsPage();
     togglePage = new TogglePage();
 
@@ -117,13 +119,14 @@ export class ViewerPage {
     async waitTillContentLoaded(): Promise<void> {
         await browser.sleep(500);
 
-        if (this.isSpinnerPresent()) {
+        if (await this.isSpinnerPresent()) {
             Logger.log('wait spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-progress-spinner')));
+            await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-spinner')), this.MAX_LOADING_TIME);
         } else {
             try {
                 Logger.log('wait spinner is present');
-                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-progress-spinner')));
+                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-progress-spinner')));
+                await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-spinner')), this.MAX_LOADING_TIME);
             } catch (error) {
             }
         }
