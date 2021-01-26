@@ -369,10 +369,12 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     private removeFromChosenNodes(file: FileModel) {
-        const fileIndex = this.chosenNode.findIndex((chosenNode: Node) => chosenNode.id === file.data.entry.id);
-        if (fileIndex !== -1) {
-            this._chosenNode.splice(fileIndex, 1);
-            this.select.next(this._chosenNode);
+        if (this.chosenNode) {
+            const fileIndex = this.chosenNode.findIndex((chosenNode: Node) => chosenNode.id === file.data.entry.id);
+            if (fileIndex !== -1) {
+                this._chosenNode.splice(fileIndex, 1);
+                this.select.next(this._chosenNode);
+            }
         }
     }
 

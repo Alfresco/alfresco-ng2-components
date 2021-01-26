@@ -40,7 +40,7 @@ export class ContentNodeSelectorDialogPage {
     tabPage: TabPage = new TabPage();
 
     uploadFromLocalTabName = 'Upload from your device';
-    fileServerTabName = 'File server';
+    repositoryTabName = 'Repository';
 
     async checkDialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
@@ -151,7 +151,7 @@ export class ContentNodeSelectorDialogPage {
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
         await uploadButton.sendKeys(fileLocation);
 
-        await this.tabPage.clickTabByLabel(this.fileServerTabName);
+        await this.tabPage.clickTabByLabel(this.repositoryTabName);
 
         await this.dataTable.waitForTableBody();
         await this.dataTable.waitTillContentLoaded();

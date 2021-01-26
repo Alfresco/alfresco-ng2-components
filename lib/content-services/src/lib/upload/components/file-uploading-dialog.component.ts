@@ -211,10 +211,14 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     }
 
     canShowCancelAll(): boolean {
-        return this.filesUploadingList?.length && !this.uploadList?.isUploadCompleted() && !this.uploadList?.isUploadCancelled();
+        return this.filesUploadingList?.length && this.hasUploadInProgress();
     }
 
     canCloseDialog(): boolean {
-        return (((this.uploadList?.isUploadCompleted() || this.uploadList?.isUploadCancelled()) || false)) && !this.alwaysVisible;
+        return !this.hasUploadInProgress() && !this.alwaysVisible;
+    }
+
+    hasUploadInProgress(): boolean {
+        return (!this.uploadList?.isUploadCompleted() && !this.uploadList?.isUploadCancelled()) || false;
     }
 }
