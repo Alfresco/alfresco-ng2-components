@@ -111,7 +111,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         component.showIcons = true;
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            const filters = fixture.debugElement.queryAll(By.css('.adf-filters__entry'));
+            const filters = fixture.debugElement.queryAll(By.css('.adf-task-filters__entry'));
             expect(component.filters.length).toBe(3);
             expect(filters.length).toBe(3);
             expect(filters[0].nativeElement.innerText).toContain('FakeServiceTasks');
