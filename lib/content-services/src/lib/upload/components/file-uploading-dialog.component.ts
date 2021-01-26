@@ -219,6 +219,6 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     }
 
     hasUploadInProgress(): boolean {
-        return (!this.uploadList?.isUploadCompleted() && !this.uploadList?.isUploadCancelled()) || false;
+        return (!this.uploadList?.isUploadCompleted() && !this.uploadList?.isUploadCancelled());
     }
 }
