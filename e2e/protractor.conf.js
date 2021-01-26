@@ -191,7 +191,9 @@ exports.config = {
     }],
 
     onCleanUp(results) {
-        retry.onCleanUp(results);
+        if (process.env.CI) {
+            retry.onCleanUp(results);
+        }
     },
 
     async onPrepare() {

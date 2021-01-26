@@ -27,6 +27,7 @@ import {
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Checkbox Widget', () => {
 
@@ -35,6 +36,7 @@ describe('Checkbox Widget', () => {
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
+    const navigationBarPage = new NavigationBarPage();
 
     let processUserModel;
     let appModel;
@@ -61,6 +63,7 @@ describe('Checkbox Widget', () => {
    });
 
     beforeEach(async () => {
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);

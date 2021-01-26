@@ -87,9 +87,11 @@ describe('Text widget', () => {
         await widget.textWidget().setValue(app.FIELD.textMinMax, 'A');
         await expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter at least 4 characters');
         await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
-        await widget.textWidget().setValue(app.FIELD.textMinMax, 'AAAAAAAAAAA');
+        await widget.textWidget().setValue(app.FIELD.textMinMax, '01234567890');
         await expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter no more than 10 characters');
         await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        await widget.textWidget().setValue(app.FIELD.textMinMax, '123456789');
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C268171] Input mask reversed checkbox properties', async () => {

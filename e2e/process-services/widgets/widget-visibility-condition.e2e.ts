@@ -27,6 +27,7 @@ import {
 import { browser } from 'protractor';
 import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 const widgets = {
     textOneId: 'text1',
@@ -57,6 +58,7 @@ describe('Process-Services - Visibility conditions', () => {
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
+    const navigationBarPage = new NavigationBarPage();
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
@@ -83,6 +85,7 @@ describe('Process-Services - Visibility conditions', () => {
     });
 
     beforeEach(async () => {
+        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -113,17 +116,6 @@ describe('Process-Services - Visibility conditions', () => {
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
     });
 
-    it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a field and a form variable', async () => {
-        await widget.textWidget().isWidgetVisible(widgets.textOneId);
-        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
-
-        await widget.textWidget().setValue(widgets.textOneId, value.displayFieldVariableCheckbox);
-        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldVariable);
-
-        await widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
-        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
-    });
-
     it('[C311425] Should be able to see Checkbox widget when visibility condition refers to a field and another field', async () => {
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
         await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField);
@@ -133,6 +125,17 @@ describe('Process-Services - Visibility conditions', () => {
 
         await widget.textWidget().setValue(widgets.textTwoId, value.displayCheckbox);
         await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField);
+    });
+
+    it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a field and a form variable', async () => {
+        await widget.textWidget().isWidgetVisible(widgets.textOneId);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
+
+        await widget.textWidget().setValue(widgets.textOneId, value.displayFieldVariableCheckbox);
+        await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldVariable);
+
+        await widget.textWidget().setValue(widgets.textOneId, value.notDisplayCheckbox);
+        await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
     });
 
     it('[C311424] Should be able to see Checkbox widget when visibility condition refers to a variable with specific value', async () => {
