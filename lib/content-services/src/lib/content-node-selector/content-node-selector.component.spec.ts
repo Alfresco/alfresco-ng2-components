@@ -371,5 +371,21 @@ describe('ContentNodeSelectorComponent', () => {
 
             expect(component.isLocalUploadTabSelected()).toEqual(true);
         });
+
+        it('should tabs be headless when local upload is not enabled', () => {
+           component.data.showLocalUploadButton = false;
+           fixture.detectChanges();
+           const tabGroup = fixture.debugElement.queryAll(By.css('.adf-content-node-selector-headless-tabs'))[0];
+
+           expect(tabGroup).not.toBe(undefined);
+        });
+
+        it('should tabs show headers when local upload is enabled', () => {
+            component.data.showLocalUploadButton = true;
+            fixture.detectChanges();
+            const tabGroup = fixture.debugElement.queryAll(By.css('.adf-content-node-selector-headless-tabs'))[0];
+
+            expect(tabGroup).toBe(undefined);
+        });
     });
 });

@@ -137,4 +137,13 @@ export class ContentNodeSelectorComponent implements OnInit {
     isLocalUploadTabSelected (): boolean {
         return this.selectedTabIndex === 1;
     }
+
+    isUploadEnabled(): boolean {
+        return this.canPerformLocalUpload() && this.isLocalUploadTabSelected();
+    }
+
+    canPerformLocalUpload(): boolean {
+        return this.data?.showLocalUploadButton;
+    }
+
 }

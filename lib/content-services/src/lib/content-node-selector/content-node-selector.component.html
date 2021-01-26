@@ -4,7 +4,10 @@
     <h2>{{title}}</h2>
 </header>
 
-<mat-tab-group class="adf-content-node-selector-dialog-content" (selectedIndexChange)="onTabSelectionChange($event)" mat-align-tabs="start">
+<mat-tab-group class="adf-content-node-selector-dialog-content"
+               mat-align-tabs="start"
+               (selectedIndexChange)="onTabSelectionChange($event)"
+               [class.adf-content-node-selector-headless-tabs]="!canPerformLocalUpload()">
     <mat-tab label="{{ 'NODE_SELECTOR.FILE_SERVER' | translate }}">
             <adf-content-node-selector-panel
                 [currentFolderId]="data?.currentFolderId"
@@ -29,15 +32,15 @@
                 (navigationChange)="onNavigationChange($event)">
             </adf-content-node-selector-panel>
     </mat-tab>
-    <mat-tab *ngIf="data?.showLocalUploadButton"
+    <mat-tab *ngIf="canPerformLocalUpload()"
              label="{{ 'NODE_SELECTOR.UPLOAD_FROM_DEVICE' | translate }}"
              [disabled]="isNotAllowedToUpload()">
     </mat-tab>
 </mat-tab-group>
 
 <mat-dialog-actions>
-    <div *ngIf="isLocalUploadTabSelected()">
-        <ng-container *ngIf="data?.showLocalUploadButton">
+    <div>
+        <ng-container *ngIf="isUploadEnabled()">
             <adf-upload-button
                 [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
                 [multipleFiles]="isMultipleSelection()"
