@@ -36,7 +36,7 @@
              label="{{ 'NODE_SELECTOR.UPLOAD_FROM_DEVICE' | translate }}"
              [disabled]="isNotAllowedToUpload()">
         <adf-upload-drag-area [rootFolderId]="currentDirectoryId">
-            <div>
+            <div class="adf-upload-dialog-container">
                 <adf-file-uploading-dialog [alwaysVisible]="true"></adf-file-uploading-dialog>
             </div>
         </adf-upload-drag-area>

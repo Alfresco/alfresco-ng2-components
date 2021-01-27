@@ -800,7 +800,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     onNodeSelect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
-        this.selection = event.selection.map((entry) => entry.node);
+        this.selection = event.selection.filter(entry => entry.node).map((entry) => entry.node);
         const domEvent = new CustomEvent('node-select', {
             detail: {
                 node: event.row ? event.row.node : null,
