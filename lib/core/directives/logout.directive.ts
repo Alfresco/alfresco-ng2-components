@@ -17,6 +17,7 @@
 
 import { Input, Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Directive({
@@ -26,7 +27,7 @@ export class LogoutDirective implements OnInit {
 
     /** URI to redirect to after logging out. */
     @Input()
-    redirectUri: string = '/login';
+    redirectUri: string;
 
     /** Enable redirecting after logout */
     @Input()
@@ -35,16 +36,29 @@ export class LogoutDirective implements OnInit {
     constructor(private elementRef: ElementRef,
                 private renderer: Renderer2,
                 private router: Router,
+                private appConfig: AppConfigService,
                 private auth: AuthenticationService) {
     }
 
     ngOnInit() {
+
         if (this.elementRef.nativeElement) {
             this.renderer.listen(this.elementRef.nativeElement, 'click', (evt) => {
                 evt.preventDefault();
                 this.logout();
             });
         }
+    }
+
+    getRedirectUri () {
+        if (this.redirectUri === undefined ) {
+            if (this.auth.isOauth()) {
+                return this.appConfig.get<string>('oauth2.redirectUriLogout');
+            } else {
+                return this.appConfig.get<string>('loginRoute', '/login');
+            }
+        }
+        return this.redirectUri;
     }
 
     logout() {
@@ -55,8 +69,9 @@ export class LogoutDirective implements OnInit {
     }
 
     redirectToUri() {
+        const redirectRoute = this.getRedirectUri();
         if (this.enableRedirect) {
-            this.router.navigate([this.redirectUri]);
+            this.router.navigate([redirectRoute]);
         }
     }
 }
