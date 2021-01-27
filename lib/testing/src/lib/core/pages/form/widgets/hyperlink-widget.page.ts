@@ -29,7 +29,7 @@ export class HyperlinkWidgetPage {
     }
 
     async getFieldHref(fieldId: string): Promise<string> {
-        return (await this.formFields.getWidget(fieldId)).element(this.fieldLocator).getAttribute('href');
+        return this.formFields.getWidget(fieldId).element(this.fieldLocator).getAttribute('href');
     }
 
     async getFieldLabel(fieldId: string): Promise<string> {
