@@ -257,7 +257,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
         if (nodePaging?.list) {
             const nodeEntries: NodeEntry[] = nodePaging.list.entries;
-            if (nodeEntries?.length > 0) {
+            if (nodeEntries?.length) {
                 shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle,
                     this.thumbnailService, this.allowDropFiles));
 
@@ -267,7 +267,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
                 if (this.sortingMode !== 'server') {
                     // Sort by first sortable or just first column
-                    if (this.columns?.length > 0) {
+                    if (this.columns?.length) {
                         const sorting = this.getSorting();
                         if (sorting) {
                             this.sortRows(shareDataRows, sorting);
@@ -302,7 +302,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     selectRowsBasedOnGivenNodes(preselectNodes: NodeEntry[]) {
-        if (preselectNodes?.length > 0) {
+        if (preselectNodes?.length) {
             this.rows = this.rows.map((row) => {
                 preselectNodes.map((preselectedNode) => {
                     if (row.obj.entry.id === preselectedNode.entry.id) {
