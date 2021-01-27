@@ -1538,13 +1538,13 @@ describe('DocumentList', () => {
             fixture.detectChanges();
 
             documentList.node = mockNodePagingWithPreselectedNodes;
-            documentList.preselectedNodes = mockPreselectedNodes;
+            documentList.preselectNodes = mockPreselectedNodes;
             documentList.reload();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(documentList.preselectedNodes.length).toBe(2);
+            expect(documentList.preselectNodes.length).toBe(2);
             expect(nodeSelectedSpy).toHaveBeenCalled();
         });
 
@@ -1553,13 +1553,13 @@ describe('DocumentList', () => {
             fixture.detectChanges();
 
             documentList.node = mockNodePagingWithPreselectedNodes;
-            documentList.preselectedNodes = mockPreselectedNodes;
+            documentList.preselectNodes = mockPreselectedNodes;
             documentList.reload();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(documentList.preselectedNodes.length).toBe(2);
+            expect(documentList.preselectNodes.length).toBe(2);
             expect(documentList.getPreselectedNodesBasedOnSelectionMode().length).toBe(1);
         });
 
@@ -1568,13 +1568,13 @@ describe('DocumentList', () => {
             fixture.detectChanges();
 
             documentList.node = mockNodePagingWithPreselectedNodes;
-            documentList.preselectedNodes = mockPreselectedNodes;
+            documentList.preselectNodes = mockPreselectedNodes;
             documentList.reload();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(documentList.preselectedNodes.length).toBe(2);
+            expect(documentList.preselectNodes.length).toBe(2);
             expect(documentList.getPreselectedNodesBasedOnSelectionMode().length).toBe(2);
         });
 
@@ -1585,8 +1585,8 @@ describe('DocumentList', () => {
             spyOn(documentList.data, 'getPreselectedRows').and.returnValue(fakeDatatableRows);
 
             documentList.selectionMode = 'multiple';
-            documentList.preselectedNodes = mockPreselectedNodes;
-            documentList.preselectNodes();
+            documentList.preselectNodes = mockPreselectedNodes;
+            documentList.onPreselectNodes();
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -1600,7 +1600,7 @@ describe('DocumentList', () => {
             fixture.detectChanges();
 
             documentList.node = mockNodePagingWithPreselectedNodes;
-            documentList.preselectedNodes = [];
+            documentList.preselectNodes = [];
             documentList.reload();
 
             fixture.detectChanges();

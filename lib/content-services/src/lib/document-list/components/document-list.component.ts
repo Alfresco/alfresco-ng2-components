@@ -273,7 +273,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * is pre-selected in single selection mode.
      */
     @Input()
-    preselectedNodes: NodeEntry[] = [];
+    preselectNodes: NodeEntry[] = [];
 
     /** The Document list will show all the nodes contained in the NodePaging entity */
     @Input()
@@ -488,7 +488,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (changes.node && changes.node.currentValue) {
                 const merge = this._pagination ? this._pagination.merge : false;
                 this.data.loadPage(changes.node.currentValue, merge, null, this.getPreselectedNodesBasedOnSelectionMode());
-                this.preselectNodes();
+                this.onPreselectNodes();
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
@@ -503,7 +503,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 if (this.data) {
                     this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectedNodesBasedOnSelectionMode());
                 }
-                this.preselectNodes();
+                this.onPreselectNodes();
                 this.syncPagination();
                 this.onDataReady(this.node);
             } else {
@@ -696,7 +696,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (this.data) {
                 this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.getPreselectedNodesBasedOnSelectionMode());
             }
-            this.preselectNodes();
+            this.onPreselectNodes();
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
         }
@@ -920,10 +920,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     getPreselectedNodesBasedOnSelectionMode(): NodeEntry[] {
-        return this.hasPreselectedNodes() ? (this.isSingleSelectionMode() ? [this.preselectedNodes[0]] : this.preselectedNodes) : [];
+        return this.hasPreselectedNodes() ? (this.isSingleSelectionMode() ? [this.preselectNodes[0]] : this.preselectNodes) : [];
     }
 
-    preselectNodes() {
+    onPreselectNodes() {
         if (this.data.hasPreselectedRows()) {
             const preselectedNodes = [...this.isSingleSelectionMode() ? [this.data.getPreselectedRows()[0]] : this.data.getPreselectedRows()];
             const selectedNodes = [...this.selection, ...preselectedNodes];
@@ -940,6 +940,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     hasPreselectedNodes(): boolean {
-        return this.preselectedNodes?.length > 0;
+        return this.preselectNodes?.length > 0;
     }
 }
