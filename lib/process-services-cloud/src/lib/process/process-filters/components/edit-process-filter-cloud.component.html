@@ -5,7 +5,7 @@
                 <mat-panel-title *ngIf="showProcessFilterName" fxLayoutAlign="space-between center" id="adf-edit-process-filter-title-id">{{processFilter.name | translate}}</mat-panel-title>
                 <mat-panel-description fxLayoutAlign="space-between center" id="adf-edit-process-filter-sub-title-id">
                     <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
-                    <div *ngIf="showActions()" class="adf-cloud-edit-process-filter-actions">
+                    <div *ngIf="showFilterActions" class="adf-cloud-edit-process-filter-actions">
                         <ng-container *ngIf="toggleFilterActions">
                             <button *ngFor="let filterAction of processFilterActions" mat-icon-button matTooltip="{{ filterAction.tooltip | translate}}" [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType" [disabled]="isDisabledAction(filterAction)" (click)="executeFilterActions(filterAction)">
                                 <adf-icon [value]="filterAction.icon"></adf-icon>

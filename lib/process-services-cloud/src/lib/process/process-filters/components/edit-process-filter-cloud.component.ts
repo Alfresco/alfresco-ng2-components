@@ -103,9 +103,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     @Input()
     set processFilter(value: ProcessFilterCloudModel) {
-        // tslint:disable-next-line:no-console
-        console.log(value);
-
         this._filter = value;
 
         if (value?.appName) {
@@ -118,6 +115,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
         this.processFilterProperties = this.createAndFilterProperties();
         this.processFilterActions = this.createAndFilterActions();
+
         this.buildForm(this.processFilterProperties);
         this.onFilterChange();
     }
@@ -145,7 +143,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         value: ''
     };
     processDefinitionNames: any[] = [];
-    formHasBeenChanged = false;
     editProcessFilterForm: FormGroup;
     processFilterProperties: ProcessFilterProperties[] = [];
     processFilterActions: ProcessFilterAction[] = [];
@@ -186,7 +183,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     buildForm(processFilterProperties: ProcessFilterProperties[]) {
-        this.formHasBeenChanged = false;
         this.editProcessFilterForm = this.formBuilder.group(this.getFormControlsConfig(processFilterProperties));
     }
 
@@ -236,9 +232,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .subscribe((formValues: ProcessFilterCloudModel) => {
                 this.setLastModifiedToFilter(formValues);
                 this.changedProcessFilter = new ProcessFilterCloudModel(formValues);
-                this.formHasBeenChanged = !this.compareFilters(this.changedProcessFilter, this.processFilter);
 
-                if (this.formHasBeenChanged) {
+                const changed = !this.compareFilters(this.changedProcessFilter, this.processFilter);
+
+                if (changed) {
                     this.filterChange.emit(this.changedProcessFilter);
                 }
             });
@@ -413,7 +410,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .subscribe(() => {
                 saveAction.filter = this.changedProcessFilter;
                 this.action.emit(saveAction);
-                this.formHasBeenChanged = this.compareFilters(this.changedProcessFilter, this.processFilter);
             });
     }
 
@@ -487,10 +483,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return this.processFilterCloudService.getProcessFilters(this.appName);
     }
 
-    showActions(): boolean {
-        return this.showFilterActions;
-    }
-
     onExpand() {
         this.toggleFilterActions = true;
     }
@@ -500,28 +492,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     isDisabledAction(action: ProcessFilterAction): boolean {
-        return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
-    }
-
-    isDisabledForDefaultFilters(action: ProcessFilterAction): boolean {
         return (
             this.processFilterCloudService.isDefaultFilter(this.processFilter.name) &&
             this.actionDisabledForDefault.includes(action.actionType)
         );
-    }
-
-    hasFormChanged(action: ProcessFilterAction): boolean {
-        if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE) {
-            return !this.formHasBeenChanged;
-        }
-        if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE_AS) {
-            return !this.formHasBeenChanged;
-        }
-        if (action.actionType === EditProcessFilterCloudComponent.ACTION_DELETE) {
-            return false;
-        }
-
-        return false;
     }
 
     private setLastModifiedToFilter(formValues: ProcessFilterCloudModel) {

@@ -32,7 +32,6 @@ import { ProcessFilterCloudService } from '../services/process-filter-cloud.serv
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { fakeApplicationInstance } from './../../../app/mock/app-model.mock';
 import moment from 'moment-es6';
-import { AbstractControl } from '@angular/forms';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -211,112 +210,19 @@ describe('EditProcessFilterCloudComponent', () => {
         }));
 
         describe('Save & Delete buttons', () => {
-
-            it('should disable save and delete button for default process filters', async(() => {
-                getProcessFilterByIdSpy.and.returnValue(of({
-                    id: 'filter-id',
-                    name: 'ADF_CLOUD_PROCESS_FILTERS.RUNNING_PROCESSES',
-                    sort: 'my-custom-sort',
-                    processDefinitionId: 'process-definition-id',
-                    priority: '12'
-                }));
-
-                const processFilterIdChange = new SimpleChange(null, 'filter-id', false);
-                component.ngOnChanges({ 'id': processFilterIdChange });
-                fixture.detectChanges();
-
-                component.toggleFilterActions = true;
-                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-                expansionPanel.click();
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-                    expect(saveButton.disabled).toEqual(true);
-                    const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
-                    expect(deleteButton.disabled).toEqual(true);
-                });
-            }));
-
             it('should enable delete button for custom process filters', async(() => {
-                const disableCheckSpy = spyOn(component, 'isDisabledAction').and.callThrough();
                 component.toggleFilterActions = true;
                 const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
                 expansionPanel.click();
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    expect(disableCheckSpy).toHaveBeenCalled();
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-                    expect(saveButton.disabled).toEqual(true);
                     const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
                     expect(deleteButton.disabled).toEqual(false);
-                });
-            }));
-
-            it('should enable save button if the filter is changed for custom filters', async(() => {
-                component.toggleFilterActions = true;
-                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-                expansionPanel.click();
-                const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
-                stateElement.click();
-                fixture.detectChanges();
-
-                const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                options[2].nativeElement.click();
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-                    expect(saveButton.disabled).toEqual(false);
-                });
-            }));
-
-            it('should disable save button if the filter is not changed for custom filter', async(() => {
-                component.toggleFilterActions = true;
-                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-                expansionPanel.click();
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-                    expect(saveButton.disabled).toBe(true);
                 });
             }));
         });
 
         describe('SaveAs Button', () => {
-
-            it('should disable saveAs button if the process filter is not changed for default filter', async(() => {
-                getProcessFilterByIdSpy.and.returnValue(of({
-                    id: 'filter-id',
-                    name: 'ADF_CLOUD_PROCESS_FILTERS.RUNNING_PROCESSES',
-                    sort: 'my-custom-sort',
-                    processDefinitionId: 'process-definition-id',
-                    priority: '12'
-                }));
-
-                const processFilterIdChange = new SimpleChange(null, 'filter-id', true);
-                component.ngOnChanges({ 'id': processFilterIdChange });
-                fixture.detectChanges();
-
-                component.toggleFilterActions = true;
-                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-                expansionPanel.click();
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                    expect(saveButton.disabled).toEqual(true);
-                });
-            }));
-
-            it('should disable saveAs button if the process filter is not changed for custom filter', async(() => {
-                component.toggleFilterActions = true;
-                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-                expansionPanel.click();
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                    expect(saveButton.disabled).toEqual(true);
-                });
-            }));
-
             it('should enable saveAs button if the filter values are changed for default filter', (done) => {
                 getProcessFilterByIdSpy.and.returnValue(of({
                     id: 'filter-id',
@@ -705,7 +611,7 @@ describe('EditProcessFilterCloudComponent', () => {
         it('should emit delete event and delete the filter on click of delete button', (done) => {
             component.toggleFilterActions = true;
             const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of({}));
-            const deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
+            const deleteSpy = spyOn(component.action, 'emit');
             fixture.detectChanges();
 
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
@@ -769,9 +675,6 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(saveButton).toBeDefined();
                 expect(saveAsButton).toBeDefined();
                 expect(deleteButton).toBeDefined();
-                expect(saveButton.disabled).toBeTruthy();
-                expect(saveAsButton.disabled).toBeTruthy(false);
-                expect(deleteButton.disabled).toEqual(false);
             });
         }));
 
@@ -795,8 +698,10 @@ describe('EditProcessFilterCloudComponent', () => {
             component.actions = [];
             component.id = 'mock-process-filter-id';
             fixture.detectChanges();
+
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const saveAsButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
@@ -807,9 +712,6 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(saveButton).toBeDefined();
                 expect(saveAsButton).toBeDefined();
                 expect(deleteButton).toBeDefined();
-                expect(saveButton.disabled).toBeTruthy();
-                expect(saveAsButton.disabled).toBeTruthy(false);
-                expect(deleteButton.disabled).toEqual(false);
             });
         }));
 
@@ -820,7 +722,7 @@ describe('EditProcessFilterCloudComponent', () => {
             component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
 
-            const lastModifiedToControl: AbstractControl = component.editProcessFilterForm.get('lastModifiedTo');
+            const lastModifiedToControl = component.editProcessFilterForm.get('lastModifiedTo');
             lastModifiedToControl.setValue(new Date().toISOString());
             const lastModifiedToFilter = moment(lastModifiedToControl.value);
             lastModifiedToFilter.set({
@@ -876,7 +778,7 @@ describe('EditProcessFilterCloudComponent', () => {
             component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
 
-            const startedDateTypeControl: AbstractControl = component.editProcessFilterForm.get('completedDateType');
+            const startedDateTypeControl = component.editProcessFilterForm.get('completedDateType');
             startedDateTypeControl.setValue(DateCloudFilterType.TODAY);
             const dateFilter = {
                 startFrom: moment().startOf('day').toISOString(true),
@@ -903,7 +805,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 endDate: moment().endOf('day').toISOString(true)
             };
 
-            const startedDateTypeControl: AbstractControl = component.editProcessFilterForm.get('completedDateType');
+            const startedDateTypeControl = component.editProcessFilterForm.get('completedDateType');
             startedDateTypeControl.setValue(DateCloudFilterType.RANGE);
 
             component.onDateRangeFilterChanged(dateFilter, {
