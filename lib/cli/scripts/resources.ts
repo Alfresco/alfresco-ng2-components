@@ -17,6 +17,18 @@
 
 /* cSpell:disable */
 export const ACTIVITI_CLOUD_APPS: any = {
+    SUB_PROCESS_APP: {
+        name: 'subprocessapp',
+        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/subprocessapp.zip?raw=true',
+        processes: {
+            processchild: 'processchild',
+            processparent: 'processparent'
+        },
+        security: [
+            { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser'] },
+            { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] }
+        ]
+    },
     CANDIDATE_BASE_APP: {
         name: 'candidatebaseapp',
         file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/candidatebaseapp.zip?raw=true',
@@ -184,18 +196,6 @@ export const ACTIVITI_CLOUD_APPS: any = {
             { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'sales', 'testgroup'], 'users': ['hruser'] }
         ],
         infrastructure: {connectors: {restconnector: {}}, bridges: {}}
-    },
-    SUB_PROCESS_APP: {
-        name: 'subprocessapp',
-        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/subprocessapp.zip?raw=true',
-        processes: {
-            processchild: 'processchild',
-            processparent: 'processparent'
-        },
-        security: [
-            { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser'] },
-            { 'role': 'ACTIVITI_USER', 'groups': ['hr', 'testgroup'], 'users': ['hruser'] }
-        ]
     }
 };
 
