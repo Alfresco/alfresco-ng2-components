@@ -229,6 +229,7 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "Customize your filter",
+    "FILTER_NAME": "Filter name",
     "LABEL": {
       "APP_NAME": "ApplicationName",
       "PROCESS_INS_ID": "ProcessInstanceId",
