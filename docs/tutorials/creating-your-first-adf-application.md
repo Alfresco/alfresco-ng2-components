@@ -3,120 +3,102 @@ Title: Creating your first ADF app
 Level: Basic
 ---
 
-# Creating your first ADF application
+In this tutorial you are going to learn how to create a very basic (and almost “empty”) ADF-based application that you can start enriching with features, behaviors and customizations. The creation of this basic ADF-based application is possible through a scaffolding tool called [Yeoman](https://yeoman.io/ "https://yeoman.io/"), which makes this task very straightforward.
 
-This tutorial shows you how to set up your development environment and create an ADF application.
+# Prerequisites and the requirements
 
-To get up and running with ADF development, you will need to install a few prerequisites: `node.js`, `Yeoman`, and a code editor.
-Once you have the prerequisites installed, you need to create the application using the ADF Yeoman generator, then configure your ADF application to point to your Alfresco Content Services repository.
+The first thing to do is to check the prerequisites and the requirements to run the front-end application directly into a development environment.
 
-## Prerequisites
+More in particular check that you have:
+-   Alfresco Content Services (alias ACS) Enterprise edition up and running (identify the URL that will be required as configuration).
+-   The latest lts version of [NodeJs](https://nodejs.org/en/ "https://nodejs.org/en/").
+-   A recent (and supported) version of a browser (see [here](https://github.com/Alfresco/alfresco-ng2-components#browser-support "https://github.com/Alfresco/alfresco-ng2-components#browser-support") for further details).
 
-### Install node.js
+All the Angular development is done using the [Typescript](https://www.typescriptlang.org/ "https://www.typescriptlang.org/") language. With this in mind, it is highly suggested to adopt a good text editor to help you in this task. We recommend [Visual Studio Code](http://code.visualstudio.com/ "http://code.visualstudio.com/") a free, lightweight, and _very_ powerful tool from Microsoft that works well with Angular development and has a [big ecosystem of plugins](https://marketplace.visualstudio.com/VSCode "https://marketplace.visualstudio.com/VSCode") to make the developer experience even better.
 
-You need the latest `node.js` release, which you can download from [https://nodejs.org/en/](https://nodejs.org/en/). Choose the installer for your OS and follow the install instructions. Once completed, open a terminal and verify the installation with the following command:
+# Installing the ADF Yeoman Generator
 
-	node -v
-	
-*Note: Both version `14.x` and `12.x` should work just fine.*
+**Note:** If you're on Linux or MacOS, you might need to run the following commands using sudo.
 
-**TIP**: If you are planning to do extensive development with ADF, `node.js`, and `Angular`, you might consider installing a version manager for `node.js` such as [n](https://github.com/tj/n) or [nvm](https://github.com/creationix/nvm/). This tool will allow you to have multiple `node.js` versions installed simultaneously and quickly switch between versions.
+You need to ensure you have [Yeoman](https://yeoman.io/ "https://yeoman.io/") installed by running `yo --version`. If this is not already installed, run the following command.
 
-### Install ADF Yeoman generator
+    npm install -g yo
 
-![yeoman_creation](../docassets/images/yeoman-alfresco-adf-app.jpg)
+Now install the latest version of the [generator-alfresco-adf-app](https://github.com/Alfresco/generator-alfresco-adf-app "https://github.com/Alfresco/generator-alfresco-adf-app").
 
-**Note:** If you're on Linux or macOS, you might need to run these commands with `sudo`.
+    npm install -g generator-alfresco-adf-app@latest
 
-You need to ensure you have `Yeoman` installed by running `yo --version`. If this is not in your system, you should run:
+Feel free to check the [generator-alfresco-adf-app](https://github.com/Alfresco/generator-alfresco-adf-app "https://github.com/Alfresco/generator-alfresco-adf-app") repository for further details. The project is Open Source and free.
 
-	npm install -g yo
-	
-Now install the latest version of the `generator-alfresco-adf-app`:
+# Installing the Angular CLI
 
-	npm install -g generator-alfresco-adf-app@latest
-
-### Install Angular CLI
-
-To take full advantage of Angular, we suggest you install the latest version of [Angular CLI](https://cli.angular.io)
+To take full advantage of Angular, we suggest you install the latest version of [Angular CLI](https://cli.angular.io/ "https://cli.angular.io/").
 
     npm install -g @angular/cli
 
-This will make it easy to create components, libraries, and much more. 
+This will make it easy to create components, libraries, and much more.
 
-### Installing a code editor
+To test the installed version [Angular CLI](https://cli.angular.io/ "https://cli.angular.io/"), launch the ng v command directly in the terminal.
 
-All Angular development is using [Typescript](https://www.typescriptlang.org). With this in mind, it a great thing to have tools that make development a little easier, but any text editor will do just fine.
+# Create your first ADF application
 
-We recommend [Visual Studio Code](http://code.visualstudio.com) - it's a free, lightweight, and *very* powerful tool from Microsoft that works well with Angular development and has a [big ecosystem of plugins](https://marketplace.visualstudio.com/VSCode) to make the developer experience even better.
+Now that the system is properly configured, it's time to generate the application running the following command.
 
-Other recommendations include IntelliJ IDEA or WebStorm from [JetBrains](https://www.jetbrains.com) *but note that the community edition does not support [Typescript](https://www.typescriptlang.org).*
+    yo alfresco-adf-app
 
-## Create your first ADF application
+Enter a name and choose Content Services as the application blueprint, then enter `Y` to install the dependencies (the following questions are optional and easy to understand).
 
-Now that we have all the prerequisites in order, it's time to generate an application:
+The Yeoman generator will create a new project and install all dependencies required for your application.
 
-	yo alfresco-adf-app
-	
-Enter a name and choose `Content Services` as the application blueprint, then enter `Y` to install the dependencies.
+**Note:** The Yeoman generator creates a new directory for your project. Make sure you change into this new directory.
 
-The `Yeoman` generator will create a new project and install all dependencies required for your application. 
+# Configure the application to work with Alfresco Content Services
 
-*Note: The `Yeoman` generator creates a new directory for your project. Make sure you change into this new directory.*
+The next step is to open up the newly-created project in your code editor and open the file `proxy.conf.js`. Change the target property in this file, so it points to your Alfresco Content Services URL and port. Please refer to your installation guide to find this URL, or if you're running an online trial, you will find the information in the email.
 
-## Configure ADF to work with Alfresco Content Services
+Modify `"target": "http://localhost:8080"`, so that it matches your URL and save the file.
 
-The next step is to open up the newly-created project in your code editor, and open the file `proxy.conf.js`. Change the `target` property in this file, so it points to your Alfresco Content Services URL and port. Please refer to your installation guide to find this URL, or if you're running an online trial, you will find the information in the email.
+Please note that you do not need `/alfresco` at the end of the target URL. Let's say you've launched Alfresco Content Services 6.1 using Docker Compose. Your Alfresco Content Services repository might be available at `http://localhost:8080/alfresco`. In this case, you will want the `proxy.conf.json` file to look like this:
 
-Modify `"target": "http://localhost:8080",` so that it matches your URL and save the file.
+    module.exports = {
+        "/alfresco": {
+            "target": "http://localhost:8080",
+            "secure": false,
+            "changeOrigin": true
+        }
+    };
 
-Please note that you do not need `/alfresco` at the end of the target URL. Let's say you've launched Alfresco Content Services 6.1 using [Docker Compose](https://docs.alfresco.com/6.0/tasks/deploy-docker-compose.html). Your Alfresco Content Services repository might be available at `http://localhost:8080/alfresco`. In this case, you will want the `proxy.conf.json` file to look like this:
+If you're running an online trial, consult your emails for the correct URL. The `proxy.conf.json` should look like this:
 
-```json
+    module.exports = {
+        "/alfresco": {
+            "target": "https://xyz.trials.alfresco.com",
+            "secure": false, "changeOrigin": true
+        }
+    };
 
-module.exports = {
-    "/alfresco": {
-        "target": "http://localhost:8080",
-        "secure": false,
-        "changeOrigin": true
-    }
-};
-```
+# Start the application
 
-If you're running an [online trial](https://www.alfresco.com/platform/content-services-ecm/trial/online), consult your emails for the correct URL. The `proxy.conf.json` should look like this:
+To run the project, open a terminal and run:
 
-```json
+    npm start
 
-module.exports = {
-    "/alfresco": {
-        "target": "https://xyz.trials.alfresco.com",
-        "secure": false,
-        "changeOrigin": true
-    }
-};
-```
-
-## Start the application
-
-To run the project, open a terminal and run 
-
-	npm start
-	
-A browser will automatically open up at `http://localhost:4200`. 
+A browser will automatically open up at http://localhost:4200.
 
 ![yeoman_creation](../docassets/images/app-started.jpg)
 
 Click the key icon in the side navigation, and you can now log in!
 
-*Note:* If you're running an online trial, you can find your login credentials in the welcome email.
+**Note:** If you're running an online trial, you can find your login credentials in the welcome email.
 
 Take a few minutes to explore your application. You have the essential features: Browsing the repository, uploading, and previewing documents.
 
+# Troubleshooting and support
 
-# Next step
+If you have any issue, don’t worry! There is an entire community available to help you.
 
-Congratulations! You're now ready to start developing your first ADF application! 
+In case of problems raise a question into the [Alfresco Forum](https://hub.alfresco.com/ "https://hub.alfresco.com/") (Application Development Framework section) or connect with the developers into the [Alfresco Gitter channel](https://alfresco.atlassian.net/wiki/spaces/PM/overview "https://alfresco.atlassian.net/wiki/spaces/PM/overview"). Being an Alfresco customer or partner you can also raise a request for support into the Alfresco Support Portal.
 
-In the next tutorial, you will explore how you can extend, use, and configure ADF Components by customizing the login screen.
+# Other types of ADF based applications
 
-* [Extend, use and configure ADF Components](using-components.md)
+In this tutorial you learned how to create an ADF based application from scratch, running against an existing instance of Alfresco Content Services. Using the [ADF Yeoman Generator](https://github.com/Alfresco/generator-alfresco-adf-app "https://github.com/Alfresco/generator-alfresco-adf-app"), more in particular during the creation of the ADF based application, you can decide to use a different application blueprint (content only, content and process and process only). The tasks described above don’t really change except for the fact that you have to update the URLs of the backend services accordingly.

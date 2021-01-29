@@ -13,7 +13,24 @@
         - working-with-nodes-api-service.md: 'Working with the Nodes API Service'
         - working-with-nodes-js-api.md: 'Working with nodes using the JS-API'
         - content-metadata-component.md: 'Content metadata component'
-- user-guide: 'User guide'
+- user-guide: 
+    title: 'User guide'
+    children:
+        - adf-introduction.md: 'Introduction to ADF'
+        - angular-material-design.md: 'Angular Material Design'
+        - theming.md: 'Theming'
+        - typography.md: 'Typography'
+        - internationalization.md: 'Internationalization'
+        - localization.md: 'Localization'
+        - transclusion.md: 'Transclusion'
+        - rtl-support.md: 'Right-to-left languages'
+        - debug-test-build-and-promote.md: 'Debug, test, build and promote'
+        - app-extensions.md: 'App extensions'
+        - apa-extensions.md: 'Form Extensibility for APA Form Widget'
+        - aps-extensions.md: 'Form Extensibility for APS Stencil'
+        - extensibility.md: 'Form Extensibility and Customization'
+        - metadata-indicators.md: 'Adding indicators'
+        - kerberos.md: 'Kerberos'
 - core:
     title: 'Core API'
     children:
