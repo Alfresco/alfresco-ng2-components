@@ -228,9 +228,10 @@ describe('Metadata component', () => {
     describe('Folder metadata', () => {
 
         beforeAll(async () => {
-            await uploadActions.createFolder(folderName, '-my-');
-
+            await apiService.login(acsUser.username, acsUser.password);
             await loginPage.login(acsUser.username, acsUser.password);
+
+            await uploadActions.createFolder(folderName, '-my-');
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
         });
