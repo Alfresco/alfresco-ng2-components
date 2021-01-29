@@ -23,7 +23,7 @@ import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces'
 import { MatSelectChange } from '@angular/material/select';
 import { BaseCardView } from '../base-card-view';
 import { AppConfigService } from '../../../app-config/app-config.service';
-import { takeUntil, map } from 'rxjs/operators';
+import { takeUntil, map, take } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-card-view-selectitem',
@@ -49,6 +49,8 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     private onDestroy$ = new Subject<void>();
 
+    list$: Observable<CardViewSelectItemOption<string>[]>;
+
     constructor(cardViewUpdateService: CardViewUpdateService, private appConfig: AppConfigService) {
         super(cardViewUpdateService);
     }
@@ -63,6 +65,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
             .subscribe((options: CardViewSelectItemOption<string>[]) => {
                 this.showInputFilter = options.length > this.optionsLimit;
             });
+        this.list$ = this.getList();
     }
 
     onFilterInputChange(value: string) {
@@ -80,6 +83,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     getList(): Observable<CardViewSelectItemOption<string>[]> {
         return this.getOptions()
             .pipe(
+                take(1),
                 map((items: CardViewSelectItemOption<string>[]) => items.filter(
                     (item: CardViewSelectItemOption<string>) =>
                         item.label.toLowerCase().includes(this.filter.toLowerCase()))),

@@ -334,7 +334,23 @@
       "CREATOR": "Creator",
       "CREATED_DATE": "Created Date",
       "MODIFIER": "Modifier",
-      "MODIFIED_DATE": "Modified Date"
+      "MODIFIED_DATE": "Modified Date",
+      "CONTENT_TYPE": "Content Type"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG" :{
+        "TITLE" : "Change content type",
+        "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
+        "CONFIRM": "Are you sure you want to change the content type?",
+        "CANCEL": "CANCEL",
+        "APPLY": "SAVE CHANGES",
+        "VIEW_DETAILS": "View details",
+        "PROPERTY" :{
+          "NAME" : "Name",
+          "DESCRIPTION": "Description",
+          "DATA_TYPE": "Data type"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Error updating property",

@@ -18,7 +18,6 @@
 import { Injectable } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { CardViewDateItemModel, CardViewTextItemModel, FileSizePipe } from '@alfresco/adf-core';
-
 @Injectable({
     providedIn: 'root'
 })
