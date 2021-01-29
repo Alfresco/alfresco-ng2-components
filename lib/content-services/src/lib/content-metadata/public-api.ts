@@ -22,6 +22,7 @@ export * from './services/content-metadata.service';
 export * from './services/property-descriptors.service';
 export * from './services/property-groups-translator.service';
 export * from './services/config/content-metadata-config.factory';
+export * from './services/content-type-property.service';
 
 export * from './services/config/indifferent-config.service';
 export * from './services/config/layout-oriented-config.service';
