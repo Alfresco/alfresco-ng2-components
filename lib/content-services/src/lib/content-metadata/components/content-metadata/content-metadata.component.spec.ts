@@ -75,6 +75,7 @@ describe('ContentMetadataComponent', () => {
 
         component.node = node;
         component.preset = preset;
+        spyOn(contentMetadataService, 'getNodeType').and.returnValue(of([]));
         fixture.detectChanges();
     });
 
@@ -172,7 +173,7 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Reseting', () => {
-        it('should reset changedProperties on reset click', async(async () => {
+        it('should reset changedProperties on reset click', async () => {
             component.changedProperties = { properties: { 'property-key': 'updated-value' } };
             component.hasMetadataChanged = true;
             component.editable = true;
@@ -189,7 +190,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             expect(component.changedProperties).toEqual({});
             expect(nodesApiService.updateNode).not.toHaveBeenCalled();
-        }));
+        });
     });
 
     describe('Properties loading', () => {
@@ -221,7 +222,7 @@ describe('ContentMetadataComponent', () => {
             component.basicProperties$.subscribe(() => {
                 fixture.detectChanges();
                 const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
-                expect(basicPropertiesComponent.properties).toBe(expectedProperties);
+                expect(basicPropertiesComponent.properties.length).toBe(expectedProperties.length);
             });
         }));
 
