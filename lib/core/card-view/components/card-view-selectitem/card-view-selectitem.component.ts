@@ -49,8 +49,6 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     private onDestroy$ = new Subject<void>();
 
-    list$: Observable<CardViewSelectItemOption<string>[]>;
-
     constructor(cardViewUpdateService: CardViewUpdateService, private appConfig: AppConfigService) {
         super(cardViewUpdateService);
     }
@@ -65,7 +63,6 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
             .subscribe((options: CardViewSelectItemOption<string>[]) => {
                 this.showInputFilter = options.length > this.optionsLimit;
             });
-        this.list$ = this.getList();
     }
 
     onFilterInputChange(value: string) {
