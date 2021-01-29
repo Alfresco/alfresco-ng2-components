@@ -25,7 +25,7 @@ import { CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-met
 import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { map, switchMap } from 'rxjs/operators';
-import { ContentTypePropertiesService } from './contentType-property.service';
+import { ContentTypePropertiesService } from './content-type-property.service';
 @Injectable({
     providedIn: 'root'
 })
