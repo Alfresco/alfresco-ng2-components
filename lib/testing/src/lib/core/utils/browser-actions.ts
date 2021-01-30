@@ -43,7 +43,7 @@ export class BrowserActions {
             }
         };
 
-        return ApiUtil.waitForApi(apiCall, predicate, 5, 2000);
+        return ApiUtil.waitForApi(apiCall, predicate, 10, 2000);
     }
 
     static async click(elementToClick: ElementFinder): Promise<void> {
