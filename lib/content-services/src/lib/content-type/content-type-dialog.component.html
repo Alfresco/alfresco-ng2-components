@@ -1,39 +1,45 @@
 <div class="adf-content-type-dialog">
-    <h2 mat-dialog-title class="adf-content-type-dialog-title" data-automation-id="adf-content-type-dialog-title">{{title | translate}}</h2>
-    <mat-dialog-content class="mat-typography" class="adf-content-type-dialog-content" data-automation-id="adf-content-type-dialog-content">
-      <h4>{{description | translate}}</h4>
-      <p>{{confirmMessage | translate}}</p>
-      <mat-accordion >
-        <mat-expansion-panel class="adf-content-type-accordion">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{'CORE.METADATA.CONTENT_TYPE.DIALOG.VIEW_DETAILS' | translate}}
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <table mat-table [dataSource]="currentContentType?.entry?.properties"
-                    *ngIf="currentContentType?.entry?.properties?.length > 0" class="adf-content-type-table" >
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> {{'CORE.METADATA.CONTENT_TYPE.DIALOG.PROPERTY.NAME' | translate}} </th>
-              <td mat-cell *matCellDef="let property"> {{property.id}} </td>
-            </ng-container>
-            <ng-container matColumnDef="title">
-              <th mat-header-cell *matHeaderCellDef> {{'CORE.METADATA.CONTENT_TYPE.DIALOG.PROPERTY.DESCRIPTION' | translate}} </th>
-              <td mat-cell *matCellDef="let property"> {{property.title}} </td>
-            </ng-container>
-            <ng-container matColumnDef="dataType">
-              <th mat-header-cell *matHeaderCellDef> {{'CORE.METADATA.CONTENT_TYPE.DIALOG.PROPERTY.DATA_TYPE' | translate}} </th>
-              <td mat-cell *matCellDef="let property"> {{property.dataType}} </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="propertyColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: propertyColumns;"></tr>
-          </table>
-        </mat-expansion-panel>
-    </mat-accordion>
+    <h2 mat-dialog-title class="adf-content-type-dialog-title" data-automation-id="content-type-dialog-title">{{title |
+        translate}}</h2>
+    <mat-dialog-content class="mat-typography" class="adf-content-type-dialog-content"
+        data-automation-id="content-type-dialog-content">
+        <h4 data-automation-id="content-type-dialog-description">{{description | translate}}</h4>
+        <p data-automation-id="content-type-dialog-confirm-message">{{confirmMessage | translate}}</p>
+        <mat-accordion>
+            <mat-expansion-panel class="adf-content-type-accordion">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{'CORE.METADATA.CONTENT_TYPE.DIALOG.VIEW_DETAILS' | translate}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table mat-table [dataSource]="currentContentType?.entry?.properties"
+                    *ngIf="currentContentType?.entry?.properties?.length > 0" class="adf-content-type-table">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> {{'CORE.METADATA.CONTENT_TYPE.DIALOG.PROPERTY.NAME' |
+                            translate}} </th>
+                        <td mat-cell *matCellDef="let property"> {{property.id}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="title">
+                        <th mat-header-cell *matHeaderCellDef>
+                            {{'CORE.METADATA.CONTENT_TYPE.DIALOG.PROPERTY.DESCRIPTION' | translate}} </th>
+                        <td mat-cell *matCellDef="let property"> {{property.title}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="dataType">
+                        <th mat-header-cell *matHeaderCellDef> {{'CORE.METADATA.CONTENT_TYPE.DIALOG.PROPERTY.DATA_TYPE'
+                            | translate}} </th>
+                        <td mat-cell *matCellDef="let property"> {{property.dataType}} </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="propertyColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: propertyColumns;"></tr>
+                </table>
+            </mat-expansion-panel>
+        </mat-accordion>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button mat-dialog-close>{{'CORE.METADATA.CONTENT_TYPE.DIALOG.CANCEL' | translate  }}</button>
-      <button mat-button class="adf-content-type-dialog-apply-button"
-              [mat-dialog-close]="true" cdkFocusInitial (click)="onApply()">{{'CORE.METADATA.CONTENT_TYPE.DIALOG.APPLY' | translate}}</button>
+        <button mat-button mat-dialog-close
+            id="conten-type-dialog-actions-cancel">{{'CORE.METADATA.CONTENT_TYPE.DIALOG.CANCEL' | translate }}</button>
+        <button mat-button class="adf-content-type-dialog-apply-button" id="content-type-dialog-apply-button"
+            [mat-dialog-close]="true" cdkFocusInitial (click)="onApply()">{{'CORE.METADATA.CONTENT_TYPE.DIALOG.APPLY' |
+            translate}}</button>
     </mat-dialog-actions>
 </div>
-

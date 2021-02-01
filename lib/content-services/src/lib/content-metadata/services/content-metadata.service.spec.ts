@@ -23,12 +23,14 @@ import { ContentMetadataService } from './content-metadata.service';
 import { of } from 'rxjs';
 import { PropertyGroup } from '../interfaces/property-group.interface';
 import { TranslateModule } from '@ngx-translate/core';
+import { ContentTypePropertiesService } from './content-type-property.service';
 
 describe('ContentMetaDataService', () => {
 
     let service: ContentMetadataService;
     let classesApi: ClassesApi;
     let appConfig: AppConfigService;
+    let contentPropertyService: ContentTypePropertiesService;
 
     const exifResponse: PropertyGroup = {
         name: 'exif:exif',
@@ -64,6 +66,7 @@ describe('ContentMetaDataService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(ContentMetadataService);
+        contentPropertyService = TestBed.inject(ContentTypePropertiesService);
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         classesApi = alfrescoApiService.classesApi;
         appConfig = TestBed.inject(AppConfigService);
@@ -85,6 +88,28 @@ describe('ContentMetaDataService', () => {
                 expect(res[0].value).toEqual('Node');
                 expect(res[1].value).toBeFalsy();
                 expect(res[2].value).toBe('test-user');
+            }
+        );
+    });
+
+    it('should return the content type property', () => {
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type'}));
+
+        service.getNodeType('fn:fakenode').subscribe(
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res).not.toBeNull();
+                expect(res.label).toBe('hello i am a weird content type');
+            }
+        );
+    });
+
+    it('should trigger the opening of the content type dialog', () => {
+        spyOn(contentPropertyService, 'openContentTypeDialogConfirm').and.returnValue(of());
+
+        service.openConfirmDialog('fn:fakenode').subscribe(
+            () => {
+                expect(contentPropertyService.openContentTypeDialogConfirm).toHaveBeenCalledWith('fn:fakenode');
             }
         );
     });

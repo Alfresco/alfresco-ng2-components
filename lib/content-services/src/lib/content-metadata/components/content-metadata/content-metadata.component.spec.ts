@@ -58,7 +58,7 @@ describe('ContentMetadataComponent', () => {
         node = <Node> {
             id: 'node-id',
             aspectNames: [],
-            nodeType: '',
+            nodeType: 'cm:node',
             content: {},
             properties: {},
             createdByUser: {},
@@ -170,6 +170,29 @@ describe('ContentMetadataComponent', () => {
             saveButton.nativeElement.click();
             fixture.detectChanges();
         }));
+
+        it('should open the confirm dialgo when content type is changed', fakeAsync(async () => {
+            component.editable = true;
+            const property = <CardViewBaseItemModel> { key: 'nodeType', value: 'ft:sbiruli' };
+            const expectedNode = Object.assign({}, node, { nodeType: 'ft:sbiruli' });
+            spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
+            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
+                return of(expectedNode);
+            });
+
+            updateService.update(property, 'ft:poppoli');
+            tick(600);
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
+            saveButton.nativeElement.click();
+
+            await fixture.whenStable();
+            expect(component.node).toEqual(expectedNode);
+            expect(contentMetadataService.openConfirmDialog).toHaveBeenCalledWith({nodeType: 'ft:poppoli'});
+            expect(nodesApiService.updateNode).toHaveBeenCalled();
+        }));
     });
 
     describe('Reseting', () => {
@@ -206,6 +229,7 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
+            expect(contentMetadataService.getNodeType).toHaveBeenCalledWith(node.nodeType);
             expect(contentMetadataService.getBasicProperties).toHaveBeenCalledWith(expectedNode);
         });
 

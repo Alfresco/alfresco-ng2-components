@@ -32,10 +32,10 @@ export class ContentTypePropertiesService {
     private contentTypesOptions$: Observable<CardViewSelectItemOption<string>[]>;
 
     constructor(private contentTypeService: ContentTypeService, private dialog: MatDialog) {
-        this.contentTypesOptions$ = this.getContentTypesAsSelectOption();
     }
 
     getContentTypeCardItem(nodeType: string): Observable<CardViewItem[]> {
+        this.contentTypesOptions$ = this.getContentTypesAsSelectOption(nodeType);
         return this.contentTypeService.getContentTypeByPrefix(nodeType).
             pipe(
                 map((contentType) => {
@@ -49,8 +49,8 @@ export class ContentTypePropertiesService {
                 }));
     }
 
-    private getContentTypesAsSelectOption(): Observable<CardViewSelectItemOption<string>[]> {
-        return this.contentTypeService.getContentTypes().pipe(
+    private getContentTypesAsSelectOption(nodeType: string): Observable<CardViewSelectItemOption<string>[]> {
+        return this.contentTypeService.getContentTypeChildren(nodeType).pipe(
             map((contentTypesEntries) => {
                 return contentTypesEntries.map((contentType) => <CardViewSelectItemOption<string>> { key: contentType.entry.id, label: contentType.entry.title });
             }));
