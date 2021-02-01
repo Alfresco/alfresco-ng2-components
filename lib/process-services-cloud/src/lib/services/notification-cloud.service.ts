@@ -22,9 +22,8 @@ import { DocumentNode, split } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { Injectable } from '@angular/core';
-import { StorageService, AppConfigService, AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { StorageService, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { BaseCloudService } from './base-cloud.service';
-import { throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -35,10 +34,9 @@ export class NotificationCloudService extends BaseCloudService {
 
     constructor(apiService: AlfrescoApiService,
                 appConfigService: AppConfigService,
-                private apollo: Apollo,
+                public apollo: Apollo,
                 private http: HttpLink,
-                private storageService: StorageService,
-                private logService: LogService) {
+                private storageService: StorageService) {
         super(apiService, appConfigService);
     }
 
@@ -78,9 +76,6 @@ export class NotificationCloudService extends BaseCloudService {
                 link,
                 cache: new InMemoryCache({})
             });
-        } else if (!appName) {
-            this.logService.error('AppName is mandatory');
-            throwError('AppName not configured');
         }
     }
 
