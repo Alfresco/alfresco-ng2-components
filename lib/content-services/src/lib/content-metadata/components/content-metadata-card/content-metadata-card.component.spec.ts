@@ -24,11 +24,14 @@ import { setupTestBed, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { ContentMetadataService } from '../../services/content-metadata.service';
+import { of } from 'rxjs';
 
 describe('ContentMetadataCardComponent', () => {
 
     let component: ContentMetadataCardComponent;
     let fixture: ComponentFixture<ContentMetadataCardComponent>;
+    let contentMetadataService: ContentMetadataService;
     let node: Node;
     const preset = 'custom-preset';
 
@@ -41,6 +44,7 @@ describe('ContentMetadataCardComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentMetadataCardComponent);
+        contentMetadataService = TestBed.inject(ContentMetadataService);
         component = fixture.componentInstance;
         node = <Node> {
             aspectNames: [],
@@ -53,6 +57,7 @@ describe('ContentMetadataCardComponent', () => {
 
         component.node = node;
         component.preset = preset;
+        spyOn(contentMetadataService, 'getNodeType').and.returnValue(of([]));
         fixture.detectChanges();
     });
 
