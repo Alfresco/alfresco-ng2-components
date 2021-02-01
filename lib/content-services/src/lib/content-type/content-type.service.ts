@@ -16,27 +16,154 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from 'core';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { ContentTypeModelEntry } from './content-type.model';
+
+const elementContent: ContentTypeModelEntry = {
+    entry: {
+        id: 'cm:content',
+        title: 'Content',
+        description: 'Binary Content',
+        parent: 'cm:object',
+        archive: 'true',
+        properties: [
+            {
+                dataType: 'd:content',
+                defaultValue: '',
+                id: 'd:content',
+                isMandatory: false,
+                isMandatoryEnforced: false,
+                isMultiValued: false,
+                isProtected: false,
+                title: 'Content'
+            },
+            {
+                dataType: 'd:text',
+                defaultValue: '',
+                id: 'cm:name',
+                isMandatory: false,
+                isMandatoryEnforced: false,
+                isMultiValued: false,
+                isProtected: false,
+                title: 'PropertyA'
+            }
+        ]
+    }
+};
+
+const elementFolder: ContentTypeModelEntry = {
+    entry: {
+        id: 'cm:folder',
+        title: 'Folder',
+        description: 'Basic Folder',
+        parent: 'cm:object',
+        archive: 'true',
+        properties: [
+            {
+                dataType: 'd:text',
+                defaultValue: '',
+                id: 'cm:name',
+                isMandatory: false,
+                isMandatoryEnforced: false,
+                isMultiValued: false,
+                isProtected: false,
+                title: 'PropertyA'
+            },
+            {
+                dataType: 'd:text',
+                defaultValue: '',
+                id: 'cm:name2',
+                isMandatory: false,
+                isMandatoryEnforced: false,
+                isMultiValued: false,
+                isProtected: false,
+                title: 'PropertyB'
+            },
+            {
+                dataType: 'd:text',
+                defaultValue: '',
+                id: 'cm:name3',
+                isMandatory: false,
+                isMandatoryEnforced: false,
+                isMultiValued: false,
+                isProtected: false,
+                title: 'PropertyC'
+            }
+        ]
+    }
+};
+
+const elementCustom: ContentTypeModelEntry = {
+    entry: {
+        id: 'ck:pippobaudo',
+        title: 'PIPPO-BAUDO',
+        description: 'Doloro reaepgfihawpefih peahfa powfj p[qwofhjaq[ fq[owfj[qowjf[qowfgh[qowh f[qowhfj [qwohf',
+        parent: 'cm:content',
+        properties: [
+            {
+                dataType: 'ck:propA',
+                defaultValue: 'HERE I AM',
+                description: 'A property',
+                facetable: 'FALSE',
+                indexTokenisationMode: 'TRUE',
+                indexed: true,
+                isMandatory: false,
+                isMandatoryEnforced: false,
+                isMultiValued: false,
+                title: 'PropertyA'
+            },
+            {
+                dataType: 'ck:propB',
+                defaultValue: 'HERE I AM',
+                description: 'A property',
+                facetable: 'FALSE',
+                indexTokenisationMode: 'TRUE',
+                indexed: true,
+                isMandatory: false,
+                isMandatoryEnforced: false,
+                isMultiValued: false,
+                title: 'PropertyB'
+            },
+            {
+                dataType: 'ck:propC',
+                defaultValue: 'HERE I AM',
+                description: 'A property',
+                facetable: 'FALSE',
+                indexTokenisationMode: 'TRUE',
+                indexed: true,
+                isMandatory: false,
+                isMandatoryEnforced: false,
+                isMultiValued: false,
+                title: 'PropertyC'
+            }
+        ]
+    }
+};
+
+const customTypes: Map<string, ContentTypeModelEntry> = new Map([['cm:content', elementContent], ['cm:folder', elementFolder], ['ck:pippobaudo', elementCustom]]);
 
 @Injectable({
     providedIn: 'root'
 })
 export class ContentTypeService {
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor() {
     }
 
     getContentTypeByPrefix(prefixedType: string): Observable<ContentTypeModelEntry> {
-        return from(this.apiService.customModelApi.getCustomType(prefixedType));
+        if (prefixedType) {
+            return of(customTypes.get(prefixedType));
+        } else {
+            return of(null);
+        }
     }
 
     getContentTypeChildren(nodeType: string): Observable<ContentTypeModelEntry[]> {
-        return from(this.apiService.customModelApi.getAllCustomType(nodeType))
-            .pipe(map((result) => {
-                return result.list.entries;
-            }));
+        if (nodeType) {
+            return of([elementContent, elementFolder, elementCustom]);
+        } else {
+            return of([]);
+        }
+
     }
 }

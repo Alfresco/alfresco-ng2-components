@@ -18,12 +18,12 @@
 import { AlfrescoApiService, AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { ClassesApi, Node } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { ContentMetadataService } from './content-metadata.service';
 import { of } from 'rxjs';
 import { PropertyGroup } from '../interfaces/property-group.interface';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTypePropertiesService } from './content-type-property.service';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('ContentMetaDataService', () => {
 

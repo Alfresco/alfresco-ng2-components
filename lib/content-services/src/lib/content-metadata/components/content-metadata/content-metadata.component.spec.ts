@@ -171,7 +171,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
         }));
 
-        it('should open the confirm dialgo when content type is changed', fakeAsync(async () => {
+        it('should open the confirm dialog when content type is changed', fakeAsync(() => {
             component.editable = true;
             const property = <CardViewBaseItemModel> { key: 'nodeType', value: 'ft:sbiruli' };
             const expectedNode = Object.assign({}, node, { nodeType: 'ft:sbiruli' });
@@ -184,11 +184,11 @@ describe('ContentMetadataComponent', () => {
             tick(600);
 
             fixture.detectChanges();
-            await fixture.whenStable();
+            tick(100);
             const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
             saveButton.nativeElement.click();
 
-            await fixture.whenStable();
+            tick(100);
             expect(component.node).toEqual(expectedNode);
             expect(contentMetadataService.openConfirmDialog).toHaveBeenCalledWith({nodeType: 'ft:poppoli'});
             expect(nodesApiService.updateNode).toHaveBeenCalled();
