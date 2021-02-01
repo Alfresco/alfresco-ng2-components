@@ -31,7 +31,7 @@ import { throwError } from 'rxjs';
 })
 export class NotificationCloudService extends BaseCloudService {
 
-    currentWebSocketAppName: string = '';
+    appsListening = [];
 
     constructor(apiService: AlfrescoApiService,
                 appConfigService: AppConfigService,
@@ -42,19 +42,19 @@ export class NotificationCloudService extends BaseCloudService {
         super(apiService, appConfigService);
     }
 
-    private get urlDomain() {
-        return this.getBasePath(this.currentWebSocketAppName).split('://')[1];
+    private getUrlDomain(appName: string) {
+        return this.getBasePath(appName).split('://')[1];
     }
 
-    initNotificationsForAppName(appName: string) {
-        if (appName && appName !== this.currentWebSocketAppName) {
-            this.currentWebSocketAppName = appName;
+    initNotificationsForApp(appName: string) {
+        if (!this.appsListening.includes(appName)) {
+            this.appsListening.push(appName);
             const httpLink = this.http.create({
                 uri: `${this.getBasePath(appName)}/notifications/graphql`
             });
 
             const webSocketLink = new WebSocketLink({
-                uri: `wss://${this.urlDomain}/notifications/ws/graphql`,
+                uri: `wss://${this.getUrlDomain(appName)}/notifications/ws/graphql`,
                 options: {
                     reconnect: true,
                     lazy: true,
@@ -85,7 +85,7 @@ export class NotificationCloudService extends BaseCloudService {
     }
 
     makeGraphQLQuery(appName: string, query: DocumentNode) {
-        this.initNotificationsForAppName(appName);
+        this.initNotificationsForApp(appName);
         return this.apollo.subscribe({ query });
     }
 }
