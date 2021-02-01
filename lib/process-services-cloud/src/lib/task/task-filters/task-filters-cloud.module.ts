@@ -33,12 +33,14 @@ import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog/
 import { ServiceTaskFiltersCloudComponent } from './components/service-task-filters-cloud.component';
 import { TaskAssignmentFilterCloudComponent } from './components/task-assignment-filter/task-assignment-filter.component';
 import { GroupCloudModule } from '../../group/group-cloud.module';
+import { HttpLinkModule } from 'apollo-angular-link-http';
 
 @NgModule({
     imports: [
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        HttpLinkModule,
         CommonModule,
         FlexLayoutModule,
         MaterialModule,

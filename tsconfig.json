@@ -25,6 +25,7 @@
     "lib": [
       "es2018",
       "esnext.array",
+      "esnext.asynciterable",
       "dom"
     ],
     "paths": {

@@ -29,3 +29,4 @@ export * from './lib/pipes/process-services-cloud-pipe.module';
 export * from './lib/models/process-definition-cloud.model';
 export * from './lib/models/date-cloud-filter.model';
 export * from './lib/models/application-version.model';
+export * from './lib/models/engine-event-cloud.model';

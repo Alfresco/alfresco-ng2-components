@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { assignedTaskDetailsCloudMock } from '../../task-header/mocks/task-details-cloud.mock';
 import { TaskFilterCloudModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
 
 export const fakeGlobalFilter = [
@@ -23,8 +24,8 @@ export const fakeGlobalFilter = [
         key: 'fake-involved-tasks',
         icon: 'adjust',
         id: '10',
-        status: 'open',
-        assignee: 'fake-involved',
+        status: 'ASSIGNED',
+        assignee: 'AssignedTaskUser',
         showCounter: true
     }),
     new TaskFilterCloudModel({
@@ -273,3 +274,16 @@ export const fakeTaskCloudFilters = [
         order: 'DESC'
     }
 ];
+
+export const taskNotifications = [
+    {
+        eventType: 'TASK_ASSIGNED',
+        entity: assignedTaskDetailsCloudMock
+    }
+];
+
+export const taskCloudEngineEventsMock = {
+    data: {
+        engineEvents: taskNotifications
+    }
+};

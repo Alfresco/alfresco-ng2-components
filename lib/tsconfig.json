@@ -29,7 +29,7 @@
       "@alfresco/adf-core": ["./core/"],
       "@alfresco/adf-insights": ["./analytics"]
     },
-    "lib": ["es2018", "esnext.array", "dom"],
+    "lib": ["es2018", "esnext.array", "esnext.asynciterable", "dom"],
     "suppressImplicitAnyIndexErrors": true
   },
   "exclude": [

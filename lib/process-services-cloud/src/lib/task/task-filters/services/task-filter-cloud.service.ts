@@ -24,6 +24,25 @@ import { BaseCloudService } from '../../../services/base-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { TaskCloudNodePaging } from '../../task-list/models/task-cloud.model';
+import { NotificationCloudService } from '../../../services/notification-cloud.service';
+import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
+import { gql } from 'apollo-angular';
+
+const TASK_EVENT_SUBSCRIPTION_QUERY = gql`
+    subscription {
+        engineEvents(eventType: [
+            TASK_COMPLETED
+            TASK_ASSIGNED
+            TASK_ACTIVATED
+            TASK_SUSPENDED
+            TASK_CANCELLED
+            TASK_UPDATED
+        ]) {
+            eventType
+            entity
+        }
+    }
+`;
 
 @Injectable({
     providedIn: 'root'
@@ -37,7 +56,8 @@ export class TaskFilterCloudService extends BaseCloudService {
         @Inject(TASK_FILTERS_SERVICE_TOKEN)
         public preferenceService: PreferenceCloudServiceInterface,
         apiService: AlfrescoApiService,
-        appConfigService: AppConfigService) {
+        appConfigService: AppConfigService,
+        private notificationCloudService: NotificationCloudService) {
         super(apiService, appConfigService);
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
@@ -314,5 +334,10 @@ export class TaskFilterCloudService extends BaseCloudService {
                 order: 'DESC'
             })
         ];
+    }
+
+    getTaskNotificationSubscription(appName: string): Observable<TaskCloudEngineEvent[]> {
+        return this.notificationCloudService.makeGraphQLQuery(appName, TASK_EVENT_SUBSCRIPTION_QUERY)
+            .pipe(map((events: any) => events.data.engineEvents));
     }
 }
