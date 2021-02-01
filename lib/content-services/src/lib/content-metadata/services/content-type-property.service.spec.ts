@@ -20,21 +20,11 @@ import { TestBed } from '@angular/core/testing';
 import { ContentMetadataService } from './content-metadata.service';
 import { of } from 'rxjs';
 import { ContentTypePropertiesService } from './content-type-property.service';
-import { setupTestBed } from 'core';
-import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContentMetaDataService', () => {
 
     let service: ContentMetadataService;
     let contentPropertyService: ContentTypePropertiesService;
-
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
 
     beforeEach(() => {
         service = TestBed.inject(ContentMetadataService);
