@@ -218,7 +218,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
         const options: Intl.CollatorOptions = {};
 
-        if (sorting?.key && rows?.length > 0) {
+        if (sorting?.key && rows?.length) {
 
             if (sorting.key.includes('sizeInBytes') || sorting.key === 'name') {
                 options.numeric = true;

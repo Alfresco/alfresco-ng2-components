@@ -611,7 +611,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     hasPreselectNodes(): boolean {
-        return this.preselectedNodes && this.preselectedNodes.length > 0;
+        return this.preselectedNodes?.length > 0;
     }
 
     isSingleSelectionMode(): boolean {
