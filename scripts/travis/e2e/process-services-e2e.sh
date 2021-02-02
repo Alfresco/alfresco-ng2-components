@@ -8,9 +8,6 @@ export CONTEXT_ENV="process-services"
 export PROVIDER='BPM'
 export AUTH_TYPE="OAUTH"
 
-echo "====== TODO: install to be removed once travis cache is working again ====="
-npm ci
-
 echo "Start process services e2e"
 
 if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then

@@ -10,9 +10,6 @@ export CONTEXT_ENV="search"
 export PROVIDER='ECM'
 export AUTH_TYPE='BASIC'
 
-echo "====== TODO: install to be removed once travis cache is working again ====="
-npm ci
-
 if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ];then
     echo "Calculate affected e2e $BASE_HASH $HEAD_HASH"
     ./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
