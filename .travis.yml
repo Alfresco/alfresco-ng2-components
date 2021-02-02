@@ -241,3 +241,4 @@ cache:
   npm: true
   directories:
   - tmp
+  - lib/dist
