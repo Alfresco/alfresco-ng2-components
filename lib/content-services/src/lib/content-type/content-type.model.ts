@@ -51,7 +51,6 @@ export class ContentTypeProperty {
     dataType?: string;
     defaultValue?: string;
     description?: string;
-    facetable?: string;
     indexTokenisationMode?: string;
     indexed?: boolean;
     isMandatory?: boolean;
@@ -64,7 +63,6 @@ export class ContentTypeProperty {
         this.dataType = obj.dataType;
         this.defaultValue = obj.defaultValue;
         this.description = obj.description;
-        this.facetable = obj.facetable;
         this.indexTokenisationMode = obj.indexTokenisationMode;
         this.indexed = obj.indexed;
         this.isMandatory = obj.isMandatory;
