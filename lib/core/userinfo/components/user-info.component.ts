@@ -83,6 +83,11 @@ export class UserInfoComponent implements OnInit {
         if (this.authService.isOauth()) {
             this.loadIdentityUserInfo();
             this.mode = 'SSO';
+
+            if (this.authService.isEcmLoggedIn()) {
+                this.loadEcmUserInfo();
+            }
+
         } else if (this.authService.isEcmLoggedIn() && this.authService.isBpmLoggedIn()) {
             this.loadEcmUserInfo();
             this.loadBpmUserInfo();

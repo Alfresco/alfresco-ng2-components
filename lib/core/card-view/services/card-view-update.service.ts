@@ -20,12 +20,12 @@ import { Subject } from 'rxjs';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 
 export interface UpdateNotification {
-    target: any;
+    target: CardViewBaseItemModel;
     changed: any;
 }
 
 export interface ClickNotification {
-    target: any;
+    target: CardViewBaseItemModel;
 }
 
 export function transformKeyToObject(key: string, value): Object {

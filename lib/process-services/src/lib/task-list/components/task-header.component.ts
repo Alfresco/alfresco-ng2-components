@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
     BpmUserService,
     CardViewDateItemModel,
@@ -24,7 +24,9 @@ import {
     CardViewTextItemModel,
     CardViewBaseItemModel,
     TranslationService,
-    AppConfigService
+    AppConfigService,
+    CardViewIntItemModel,
+    CardViewItemLengthValidator
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskDescriptionValidator } from '../validators/task-description.validator';
@@ -34,7 +36,7 @@ import { TaskDescriptionValidator } from '../validators/task-description.validat
     templateUrl: './task-header.component.html',
     styleUrls: ['./task-header.component.scss']
 })
-export class TaskHeaderComponent implements OnChanges, OnInit {
+export class TaskHeaderComponent implements OnInit {
 
     /** The name of the form. */
     @Input()
@@ -73,9 +75,6 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     ngOnInit() {
         this.loadCurrentBpmUserId();
-    }
-
-    ngOnChanges() {
         this.refreshData();
     }
 
@@ -98,12 +97,13 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                     key: 'status'
                 }
             ),
-            new CardViewTextItemModel(
+            new CardViewIntItemModel(
                 {
                     label: 'ADF_TASK_LIST.PROPERTIES.PRIORITY',
                     value: this.taskDetails.priority,
                     key: 'priority',
-                    editable: true
+                    editable: true,
+                    validators: [new CardViewItemLengthValidator(1, 10)]
                 }
             ),
             new CardViewDateItemModel(
@@ -205,7 +205,9 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
             const parentInfoMap = this.getParentInfo();
             const defaultProperties = this.initDefaultProperties(parentInfoMap);
             const filteredProperties: string[] = this.appConfig.get('adf-task-header.presets.properties');
-            this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
+            this.properties = defaultProperties.filter((cardItem) => () => {
+                return this.isValidSelection(filteredProperties, cardItem);
+            });
         }
     }
 
@@ -236,7 +238,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
      * Does the task have an assignee
      */
     public hasAssignee(): boolean {
-        return !!this.taskDetails.assignee ? true : false;
+        return !!this.taskDetails.assignee;
     }
 
     /**

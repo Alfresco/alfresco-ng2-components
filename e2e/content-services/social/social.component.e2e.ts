@@ -128,21 +128,6 @@ describe('Social component', () => {
             await navigationBarPage.clickLogoutButton();
         });
 
-        it('[C260324] Should be able to like and unlike a component', async () => {
-            await socialPage.writeCustomNodeId(emptyFile.entry.id);
-            await expect(await socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);
-            await likePage.checkLikeCounter(0);
-            await expect(await likePage.getUnLikedIconColor()).toBe(greyLikeColor);
-            await likePage.clickLike();
-            await likePage.checkLikeCounter(1);
-            await likePage.removeHoverFromLikeButton();
-            await expect(await likePage.getLikedIconColor()).toBe(blueLikeColor);
-            await likePage.clickUnlike();
-            await likePage.checkLikeCounter(0);
-            await likePage.removeHoverFromLikeButton();
-            await expect(await likePage.getUnLikedIconColor()).toBe(greyLikeColor);
-        });
-
         it('[C310198] Should be able to rate and unRate a component', async () => {
             await socialPage.writeCustomNodeId(emptyFile.entry.id);
             await expect(await socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);

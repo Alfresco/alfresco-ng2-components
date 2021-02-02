@@ -19,7 +19,15 @@
             data-automation-id="adf-user-profile">
         <div class="adf-userinfo-button-profile" id="user-profile">
             <div *ngIf="identityUser$ | async as identityUser; else showBpmAndEcmUserImage" id="identity-user-image">
-                <div [outerHTML]="identityUser | usernameInitials:'adf-userinfo-pic'"></div>
+                <div *ngIf="ecmUser$ | async as ecmUser">
+                    <div *ngIf="ecmUser.avatarId; else initialTemplate" class="adf-userinfo-profile-container">
+                        <img id="logged-user-img" [src]="getEcmAvatar(ecmUser.avatarId)" alt="user-info-profile-button"
+                             class="adf-userinfo-profile-image"/>
+                    </div>
+                </div>
+                <ng-template #initialTemplate>
+                    <div [outerHTML]="identityUser | usernameInitials:'adf-userinfo-pic'"></div>
+                </ng-template>
             </div>
             <ng-template #showBpmAndEcmUserImage>
                 <div *ngIf="ecmUser$ | async as ecmUser; else showBpmUserImage" id="ecm-user-image">
@@ -50,7 +58,7 @@
         <mat-tab-group id="tab-group-env" (click)="stopClosing($event)" selectedIndex="0"
                        class="adf-userinfo-tab" [class.adf-hide-tab]="!(bpmUser$ | async) || !(ecmUser$ | async)">
             <mat-tab id="ecm-panel" label="{{ 'USER_PROFILE.TAB.CS' | translate }}"
-                *ngIf="mode==='CONTENT' || mode==='ALL'">
+                     *ngIf="mode==='CONTENT' || mode==='ALL'">
                 <mat-card class="adf-userinfo-card" *ngIf="ecmUser$ | async as ecmUser">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + ecmBackgroundImage + ')'">
@@ -76,7 +84,8 @@
                             <div class="adf-userinfo-detail">
                                     <span class="adf-userinfo__secondary-info" id="ecm-job-title-label">
                                         {{ 'USER_PROFILE.LABELS.ECM.JOB_TITLE' | translate }}
-                                        <span id="ecm-job-title" class="adf-userinfo__detail-profile"> {{ ecmUser.jobTitle ? ecmUser.jobTitle : 'N/A' }} </span>
+                                        <span id="ecm-job-title"
+                                              class="adf-userinfo__detail-profile"> {{ ecmUser.jobTitle ? ecmUser.jobTitle : 'N/A' }} </span>
                                     </span>
                             </div>
                         </div>
@@ -107,7 +116,8 @@
                             <div class="adf-userinfo-detail">
                                 <span id="bpm-tenant" class="adf-userinfo__secondary-info">
                                     {{ 'USER_PROFILE.LABELS.BPM.TENANT' | translate }}
-                                    <span class="adf-userinfo__detail-profile">{{ bpmUser.tenantName ? bpmUser.tenantName : '' }}</span>
+                                    <span
+                                        class="adf-userinfo__detail-profile">{{ bpmUser.tenantName ? bpmUser.tenantName : '' }}</span>
                                 </span>
                             </div>
                         </div>
@@ -118,15 +128,24 @@
                 <mat-card class="adf-userinfo-card" *ngIf="identityUser$ | async as identityUser">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + bpmBackgroundImage + ')'">
-                        <div
-                            [outerHTML]="identityUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'">
+                        <div *ngIf="ecmUser$ | async as ecmUser">
+                            <div *ngIf="ecmUser.avatarId; else initialTemplate"
+                                 class="adf-userinfo-profile-container adf-hide-small">
+                                <img class="adf-userinfo-profile-picture" id="ecm-user-detail-image"
+                                     alt="ecm-profile-image" [src]="getEcmAvatar(ecmUser.avatarId)"/>
+                            </div>
                         </div>
+                        <ng-template #initialTemplate>
+                            <div
+                                [outerHTML]="identityUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'"></div>
+                        </ng-template>
                         <div class="adf-userinfo-title" id="identity-username">{{identityUser | fullName}}</div>
                     </mat-card-header>
                     <mat-card-content>
                         <div class="adf-userinfo-supporting-text">
                             <div class="adf-userinfo-detail">
-                                <span id="identity-full-name" class="adf-userinfo__detail-title">{{identityUser | fullName}}</span>
+                                <span id="identity-full-name"
+                                      class="adf-userinfo__detail-title">{{identityUser | fullName}}</span>
                                 <span class="adf-userinfo__detail-profile"
                                       id="identity-email"> {{identityUser.email}} </span>
                             </div>

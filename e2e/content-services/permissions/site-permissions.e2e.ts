@@ -95,7 +95,7 @@ describe('Permissions Component', () => {
         await usersActions.createUser(managerUser);
         await apiService.login(folderOwnerUser.username, folderOwnerUser.password);
 
-        await browser.sleep(15000);
+        await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
         const publicSiteName = `PUBLIC_TEST_SITE_${StringUtil.generateRandomString(5)}`;
 

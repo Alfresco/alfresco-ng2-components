@@ -42,8 +42,8 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
 
         this.updated.pipe(
             filter((query: QueryBody) => !!query)).subscribe(() => {
-                this.execute();
-            });
+            this.execute();
+        });
     }
 
     public isFilterServiceActive(): boolean {
@@ -99,8 +99,15 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         dataSorting.forEach((columnSorting: DataSorting) => {
             const fieldValue = this.getSortingFieldFromColumnName(columnSorting.key);
             if (fieldValue) {
-                const optionAscending = columnSorting.direction.toLocaleLowerCase() === 'asc' ? true : false;
-                const currentSort: SearchSortingDefinition = { key: columnSorting.key, label: 'current', type: 'FIELD', field: fieldValue, ascending: optionAscending };
+                const optionAscending = columnSorting.direction.toLocaleLowerCase() === 'asc';
+                const type = fieldValue === 'score' ? 'SCORE' : 'FIELD';
+                const currentSort: SearchSortingDefinition = {
+                    key: columnSorting.key,
+                    label: 'current',
+                    type: type,
+                    field: fieldValue,
+                    ascending: optionAscending
+                };
                 this.sorting.push(currentSort);
             }
         });
