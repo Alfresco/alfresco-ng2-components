@@ -71,7 +71,7 @@
     "process services-cloud"
   ],
   "dependencies": {
-    "@alfresco/js-api": "^4.3.0-367c03bf7de7ba15652c2d211137600a8fd3063d",
+    "@alfresco/js-api": "^4.3.0-df59900a5a631287172c098d508a4aca31a74a1f",
     "@angular/animations": "^10.0.4",
     "@angular/cdk": "10.1.3",
     "@angular/common": "^10.0.4",
