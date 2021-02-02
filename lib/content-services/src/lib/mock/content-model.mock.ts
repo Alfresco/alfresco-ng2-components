@@ -28,7 +28,6 @@ export const mockContentModelTextProperty = {
     defaultValue: '',
     mandatoryEnforced: false,
     indexed: false,
-    facetable: 'FALSE',
     indexTokenisationMode: '',
     constraints: []
 };
@@ -44,7 +43,6 @@ export const mockContentModelDateProperty = {
     defaultValue: '',
     mandatoryEnforced: false,
     indexed: false,
-    facetable: 'FALSE',
     indexTokenisationMode: '',
     constraints: []
 };
