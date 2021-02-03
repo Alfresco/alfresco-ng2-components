@@ -125,7 +125,8 @@ export const ACTIVITI_CLOUD_APPS: any = {
             poolInterruptingBoundarySubprocessThrow: 'pool-int-bound-subpr-throw',
             poolInterruptingBoundarySubprocessCatch: 'pool-int-bound-subpr-catch',
             poolInterruptingBoundaryThrow: 'pool-int-boundary-throw',
-            poolInterruptingBoundaryCatch: 'pool-int-boundary-catch'
+            poolInterruptingBoundaryCatch: 'pool-int-boundary-catch',
+            outputVariablesMappin: 'output-variables-mapping'
         },
         forms: {
             tabVisibilityFields: {
@@ -184,8 +185,10 @@ export const ACTIVITI_CLOUD_APPS: any = {
             },
             poolForm: {
                 name: 'pool-usertaskform'
+            },
+            formWithSingleInput: {
+                name: 'form-with-single-input'
             }
-
         },
         tasks: {
             processstring: 'inputtask',
