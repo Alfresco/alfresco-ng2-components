@@ -81,10 +81,6 @@ describe('Edit process filters cloud', () => {
         await editProcessFilter.checkSaveButtonIsDisplayed();
         await editProcessFilter.checkSaveAsButtonIsDisplayed();
         await editProcessFilter.checkDeleteButtonIsDisplayed();
-        await expect(await editProcessFilter.checkSaveButtonIsEnabled()).toEqual(false);
-        await expect(await editProcessFilter.checkSaveAsButtonIsEnabled()).toEqual(false);
-        await expect(await editProcessFilter.checkDeleteButtonIsEnabled()).toEqual(false);
-        await editProcessFilter.openFilter();
     });
 
     it('[C586757] Delete Save and Save as actions should be displayed and enabled when clicking on custom filter header', async () => {
@@ -110,10 +106,7 @@ describe('Edit process filters cloud', () => {
 
         await expect(await processFilter.getActiveFilterName()).toBe('New');
         await editProcessFilter.openFilter();
-        await expect(await editProcessFilter.checkSaveButtonIsEnabled()).toEqual(false);
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
-        await expect(await editProcessFilter.checkSaveAsButtonIsEnabled()).toEqual(false);
-        await expect(await editProcessFilter.checkDeleteButtonIsEnabled()).toEqual(true);
         await processFilter.clickAllProcessesFilter();
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
         await processFilter.clickProcessFilter('custom-new');
