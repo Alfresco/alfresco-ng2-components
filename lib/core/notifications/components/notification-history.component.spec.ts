@@ -148,6 +148,25 @@ describe('Notification History Component', () => {
             });
         });
 
+        it('should be able to change the maximum number of notifications displayed', (done) => {
+            component.maxNotifications = 10;
+            fixture.detectChanges();
+            notificationService.showInfo('Example Message 1');
+            notificationService.showInfo('Example Message 2');
+            notificationService.showInfo('Example Message 3');
+            notificationService.showInfo('Example Message 4');
+            notificationService.showInfo('Example Message 5');
+            notificationService.showInfo('Example Message 6');
+            openNotification();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const loadMoreButton = <HTMLButtonElement> overlayContainerElement.querySelector('.adf-notification-history-load-more');
+                expect(component.paginatedNotifications.length).toBe(6);
+                expect(loadMoreButton).toBeDefined();
+                done();
+            });
+        });
+
         it('should read notifications from local storage', (done) => {
             storage.setItem('notifications', JSON.stringify([{
                 messages: ['My new message'],

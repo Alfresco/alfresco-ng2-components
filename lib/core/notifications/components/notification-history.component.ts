@@ -44,6 +44,10 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     @Input()
     menuPositionY: string = 'below';
 
+    /** Maximum number of notifications to display. The rest will remain hidden until load more is clicked */
+    @Input()
+    maxNotifications: number = 5;
+
     onDestroy$ = new Subject<boolean>();
     notifications: NotificationModel[] = [];
     paginatedNotifications = [];
@@ -108,12 +112,11 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     markAsRead() {
         this.notifications = [];
         this.paginatedNotifications = [];
-        this.resetPagination();
         this.storageService.removeItem('notifications');
     }
 
     initPagination() {
-        this.resetPagination();
+        this.fetchMaxNotification(this.maxNotifications);
         this.pagination.totalItems = this.notifications.length;
         this.pagination.skipCount = this.pagination.maxItems;
         this.pagination.hasMoreItems = this.notifications.length > this.pagination.skipCount;
@@ -137,10 +140,10 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         }
     }
 
-    private resetPagination() {
+    private fetchMaxNotification(maxNotifications: number) {
         this.pagination = {
             skipCount: 0,
-            maxItems: 5,
+            maxItems: maxNotifications,
             totalItems: 0,
             hasMoreItems: false
         };
