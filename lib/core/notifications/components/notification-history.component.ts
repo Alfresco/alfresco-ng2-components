@@ -86,7 +86,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         }
 
         this.saveNotifications();
-        this.initPagination();
+        this.createPagination();
     }
 
     saveNotifications() {
@@ -96,7 +96,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     onMenuOpened() {
-        this.initPagination();
+        this.createPagination();
     }
 
     onKeyPress(event: KeyboardEvent) {
@@ -113,13 +113,16 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         this.notifications = [];
         this.paginatedNotifications = [];
         this.storageService.removeItem('notifications');
+        this.createPagination();
     }
 
-    initPagination() {
-        this.fetchMaxNotification(this.maxNotifications);
-        this.pagination.totalItems = this.notifications.length;
-        this.pagination.skipCount = this.pagination.maxItems;
-        this.pagination.hasMoreItems = this.notifications.length > this.pagination.skipCount;
+    createPagination() {
+        this.pagination = {
+            skipCount: this.maxNotifications,
+            maxItems: this.maxNotifications,
+            totalItems: this.notifications.length,
+            hasMoreItems: this.notifications.length > this.maxNotifications
+        };
         this.paginatedNotifications = this.notifications.slice(0, this.pagination.skipCount);
     }
 
@@ -130,7 +133,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     hasMoreNotifications(): boolean {
-        return this.pagination && this.pagination.hasMoreItems;
+        return this.pagination?.hasMoreItems;
     }
 
     onNotificationClick(notification: NotificationModel) {
@@ -138,14 +141,5 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
             notification.clickCallBack(notification.args);
             this.trigger.closeMenu();
         }
-    }
-
-    private fetchMaxNotification(maxNotifications: number) {
-        this.pagination = {
-            skipCount: 0,
-            maxItems: maxNotifications,
-            totalItems: 0,
-            hasMoreItems: false
-        };
     }
 }
