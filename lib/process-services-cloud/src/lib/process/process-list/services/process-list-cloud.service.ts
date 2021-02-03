@@ -20,6 +20,7 @@ import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-req
 import { Observable, throwError } from 'rxjs';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ProcessListCloudService extends BaseCloudService {
@@ -33,29 +34,40 @@ export class ProcessListCloudService extends BaseCloudService {
     /**
      * Finds a process using an object with optional query properties.
      * @param requestNode Query object
+     * @param queryUrl Query url
      * @returns Process information
      */
-    getProcessByRequest(requestNode: ProcessQueryCloudRequestModel): Observable<any> {
+    getProcessByRequest(requestNode: ProcessQueryCloudRequestModel, queryUrl?: string): Observable<any> {
         if (requestNode.appName || requestNode.appName === '') {
-            const queryUrl = `${this.getBasePath(requestNode.appName)}/query/v1/process-instances`;
+            queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/process-instances`;
             const queryParams = this.buildQueryParams(requestNode);
             const sortingParams = this.buildSortingParam(requestNode.sorting);
             if (sortingParams) {
                 queryParams['sort'] = sortingParams;
             }
 
-            return this.get(queryUrl, queryParams);
+            return this.get(queryUrl, queryParams).pipe(
+                map((response: any) => {
+                    const entries = response.list && response.list.entries;
+                    if (entries) {
+                        response.list.entries = entries.map((entryData) => {
+                            return entryData.entry;
+                        });
+                    }
+                    return response;
+                })
+            );
         } else {
             this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');
         }
     }
 
-    private isPropertyValueValid(requestNode: any, property: string) {
+    protected isPropertyValueValid(requestNode: any, property: string) {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 
-    private buildQueryParams(requestNode: ProcessQueryCloudRequestModel): Object {
+    protected buildQueryParams(requestNode: ProcessQueryCloudRequestModel): Object {
         const queryParam = {};
 
         for (const property in requestNode) {
@@ -73,15 +85,15 @@ export class ProcessListCloudService extends BaseCloudService {
         return queryParam;
     }
 
-    private buildFilterForAllStatus(): string[] {
+    protected buildFilterForAllStatus(): string[] {
         return ['RUNNING', 'SUSPENDED', 'CANCELLED', 'COMPLETED'];
     }
 
-    private isExcludedField(property: string): boolean {
+    protected isExcludedField(property: string): boolean {
         return property === 'appName' || property === 'sorting';
     }
 
-    private buildSortingParam(models: ProcessListCloudSortingModel[]): string {
+    protected buildSortingParam(models: ProcessListCloudSortingModel[]): string {
         let finalSorting: string = '';
         if (models) {
             for (const sort of models) {

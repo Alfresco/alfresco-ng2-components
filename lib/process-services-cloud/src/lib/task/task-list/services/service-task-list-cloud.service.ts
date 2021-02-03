@@ -21,6 +21,7 @@ import { ServiceTaskQueryCloudRequestModel, ServiceTaskIntegrationContextCloudMo
 import { Observable, throwError } from 'rxjs';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ServiceTaskListCloudService extends BaseCloudService {
@@ -60,14 +61,16 @@ export class ServiceTaskListCloudService extends BaseCloudService {
     getServiceTaskStatus(appName: string, serviceTaskId: string): Observable<ServiceTaskIntegrationContextCloudModel> {
         if (appName) {
             const queryUrl = `${this.getBasePath(appName)}/query/admin/v1/service-tasks/${serviceTaskId}/integration-context`;
-            return this.get(queryUrl);
+            return this.get(queryUrl).pipe(
+                map((response: any) => response.entry)
+            );
         } else {
             this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');
         }
     }
 
-    private buildQueryParams(requestNode: ServiceTaskQueryCloudRequestModel): Object {
+    protected buildQueryParams(requestNode: ServiceTaskQueryCloudRequestModel): Object {
         const queryParam: Object = {};
         for (const property in requestNode) {
             if (requestNode.hasOwnProperty(property) &&
@@ -79,15 +82,15 @@ export class ServiceTaskListCloudService extends BaseCloudService {
         return queryParam;
     }
 
-    private isExcludedField(property: string): boolean {
+    protected isExcludedField(property: string): boolean {
         return property === 'appName' || property === 'sorting';
     }
 
-    private isPropertyValueValid(requestNode: any, property: string): boolean {
+    protected isPropertyValueValid(requestNode: any, property: string): boolean {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 
-    private buildSortingParam(models: TaskListCloudSortingModel[]): string {
+    protected buildSortingParam(models: TaskListCloudSortingModel[]): string {
         let finalSorting: string = '';
         if (models) {
             for (const sort of models) {
