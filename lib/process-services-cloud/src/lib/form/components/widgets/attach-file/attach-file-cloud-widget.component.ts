@@ -219,7 +219,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     private hasDestinationFolder(): boolean {
-        return this.field.params && this.field.params.fileSource && !!this.field.params.fileSource.destinationFolderPath && !!this.field.params.fileSource.destinationFolderPath.value;
+        return !!this.field?.params?.fileSource?.destinationFolderPath?.value;
     }
 
     ngOnDestroy() {
