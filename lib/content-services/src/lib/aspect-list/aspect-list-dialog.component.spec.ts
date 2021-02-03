@@ -24,75 +24,45 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
 import { NodesApiService } from 'core';
 import { AspectListService } from './aspect-list.service';
-import { AspectEntryModel } from './apect.model';
 import { delay } from 'rxjs/operators';
+import { AspectEntry } from '@alfresco/js-api';
 
-const aspectListMock: AspectEntryModel[] = [{
+const aspectListMock: AspectEntry[] = [{
     entry: {
-        parentname: 'frs:aspectZero',
-        name: 'FirstAspect',
-        prefixedname: 'frs:AspectOne',
+        parentId: 'frs:aspectZero',
+        id: 'frs:AspectOne',
         description: 'First Aspect with random description',
-        title: 'First aspect show',
+        title: 'FirstAspect',
         properties: [
             {
-                name: 'channelPassword',
-                prefixedname: 'pub:channelPassword',
+                id: 'channelPassword',
                 title: 'The authenticated channel password',
-                dataType: 'd:encrypted',
-                facetable: 'UNSET',
-                indexTokenisationMode: 'TRUE',
-                multiValued: false,
-                mandatoryEnforced: false,
-                mandatory: false,
-                indexed: true
+                dataType: 'd:encrypted'
             },
             {
-                name: 'channelUsername',
-                prefixedname: 'pub:channelUsername',
+                id: 'channelUsername',
                 title: 'The authenticated channel username',
-                dataType: 'd:encrypted',
-                facetable: 'UNSET',
-                indexTokenisationMode: 'TRUE',
-                multiValued: false,
-                mandatoryEnforced: false,
-                mandatory: false,
-                indexed: true
+                dataType: 'd:encrypted'
             }
         ]
     }
 },
 {
     entry: {
-        parentname: 'frs:AspectZer',
-        name: 'SecondAspect',
-        prefixedname: 'frs:SecondAspect',
+        parentId: 'frs:AspectZer',
+        id: 'frs:SecondAspect',
         description: 'Second Aspect description',
-        title: 'Aspect number 2',
+        title: 'SecondAspect',
         properties: [
             {
-                name: 'assetId',
-                prefixedname: 'pub:assetId',
+                id: 'assetId',
                 title: 'Published Asset Id',
-                dataType: 'd:text',
-                facetable: 'UNSET',
-                indexTokenisationMode: 'TRUE',
-                multiValued: false,
-                mandatoryEnforced: false,
-                mandatory: false,
-                indexed: true
+                dataType: 'd:text'
             },
             {
-                name: 'assetUrl',
-                prefixedname: 'pub:assetUrl',
+                id: 'assetUrl',
                 title: 'Published Asset URL',
-                dataType: 'd:text',
-                facetable: 'UNSET',
-                indexTokenisationMode: 'TRUE',
-                multiValued: false,
-                mandatoryEnforced: false,
-                mandatory: false,
-                indexed: true
+                dataType: 'd:text'
             }
         ]
     }
@@ -175,7 +145,7 @@ describe('AspectListDialogComponent', () => {
         });
 
         it('should update the counter when an option is selcted and unselected', async () => {
-            const firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            const firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
             expect(firstAspectCheckbox).toBeDefined();
             expect(firstAspectCheckbox).not.toBeNull();
             let selectionCounter = fixture.nativeElement.querySelector('#aspect-list-dialog-counter');
@@ -199,7 +169,7 @@ describe('AspectListDialogComponent', () => {
         });
 
         it('should clear all the value when Reset button is clicked', async () => {
-            let firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            let firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
             expect(firstAspectCheckbox).toBeDefined();
             expect(firstAspectCheckbox).not.toBeNull();
             firstAspectCheckbox.click();
@@ -211,12 +181,12 @@ describe('AspectListDialogComponent', () => {
             resetButton.click();
             fixture.detectChanges();
             await fixture.whenStable();
-            firstAspectCheckbox = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            firstAspectCheckbox = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
             expect(firstAspectCheckbox.checked).toBeFalsy();
         });
 
         it('should clear all the value when Clear button is clicked', async () => {
-            let firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            let firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
             expect(firstAspectCheckbox).toBeDefined();
             expect(firstAspectCheckbox).not.toBeNull();
             firstAspectCheckbox.click();
@@ -228,7 +198,7 @@ describe('AspectListDialogComponent', () => {
             clearButton.click();
             fixture.detectChanges();
             await fixture.whenStable();
-            firstAspectCheckbox = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            firstAspectCheckbox = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
             expect(firstAspectCheckbox.checked).toBeFalsy();
         });
 
@@ -292,7 +262,7 @@ describe('AspectListDialogComponent', () => {
         it('should show checked the current aspects of the node', async () => {
             fixture.detectChanges();
             await fixture.whenRenderingDone();
-            const firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            const firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
             expect(firstAspectCheckbox).toBeDefined();
             expect(firstAspectCheckbox).not.toBeNull();
             expect(firstAspectCheckbox.checked).toBeTruthy();

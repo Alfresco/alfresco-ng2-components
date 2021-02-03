@@ -21,75 +21,45 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AspectListComponent } from './aspect-list.component';
 import { AspectListService } from './aspect-list.service';
-import { AspectEntryModel } from './apect.model';
 import { of } from 'rxjs';
+import { AspectEntry } from '@alfresco/js-api';
 
-const aspectListMock: AspectEntryModel[] = [{
+const aspectListMock: AspectEntry[] = [{
     entry: {
-        parentname: 'frs:aspectZero',
-        name: 'FirstAspect',
-        prefixedname: 'frs:AspectOne',
+        parentId: 'frs:aspectZero',
+        id: 'frs:AspectOne',
         description: 'First Aspect with random description',
-        title: 'First aspect show',
+        title: 'FirstAspect',
         properties: [
             {
-                name: 'channelPassword',
-                prefixedname: 'pub:channelPassword',
+                id: 'channelPassword',
                 title: 'The authenticated channel password',
-                dataType: 'd:propA',
-                facetable: 'UNSET',
-                indexTokenisationMode: 'TRUE',
-                multiValued: false,
-                mandatoryEnforced: false,
-                mandatory: false,
-                indexed: true
+                dataType: 'd:propA'
             },
             {
-                name: 'channelUsername',
-                prefixedname: 'pub:channelUsername',
+                id: 'channelUsername',
                 title: 'The authenticated channel username',
-                dataType: 'd:propB',
-                facetable: 'UNSET',
-                indexTokenisationMode: 'TRUE',
-                multiValued: false,
-                mandatoryEnforced: false,
-                mandatory: false,
-                indexed: true
+                dataType: 'd:propB'
             }
         ]
     }
 },
 {
     entry: {
-        parentname: 'frs:AspectZer',
-        name: 'SecondAspect',
-        prefixedname: 'frs:SecondAspect',
+        parentId: 'frs:AspectZer',
+        id: 'frs:SecondAspect',
         description: 'Second Aspect description',
-        title: 'Aspect number 2',
+        title: 'SecondAspect',
         properties: [
             {
-                name: 'assetId',
-                prefixedname: 'pub:assetId',
+                id: 'assetId',
                 title: 'Published Asset Id',
-                dataType: 'd:text',
-                facetable: 'UNSET',
-                indexTokenisationMode: 'TRUE',
-                multiValued: false,
-                mandatoryEnforced: false,
-                mandatory: false,
-                indexed: true
+                dataType: 'd:text'
             },
             {
-                name: 'assetUrl',
-                prefixedname: 'pub:assetUrl',
+                id: 'assetUrl',
                 title: 'Published Asset URL',
-                dataType: 'd:text',
-                facetable: 'UNSET',
-                indexTokenisationMode: 'TRUE',
-                multiValued: false,
-                mandatoryEnforced: false,
-                mandatory: false,
-                indexed: true
+                dataType: 'd:text'
             }
         ]
     }
@@ -142,14 +112,14 @@ describe('AspectListComponent', () => {
             const firstElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspect');
             firstElement.click();
             fixture.detectChanges();
-            const firstElementDesc = fixture.nativeElement.querySelector('#aspect-list-FirstAspectdescription');
+            const firstElementDesc = fixture.nativeElement.querySelector('#aspect-list-0-description');
             expect(firstElementDesc).not.toBeNull();
             expect(firstElementDesc).toBeDefined();
 
-            const firstElementPropertyTable = fixture.nativeElement.querySelector('#aspect-list-FirstAspectproperties-table');
+            const firstElementPropertyTable = fixture.nativeElement.querySelector('#aspect-list-0-properties-table');
             expect(firstElementPropertyTable).not.toBeNull();
             expect(firstElementPropertyTable).toBeDefined();
-            const nameProperties = fixture.nativeElement.querySelectorAll('#aspect-list-FirstAspectproperties-table tbody .mat-column-name');
+            const nameProperties = fixture.nativeElement.querySelectorAll('#aspect-list-0-properties-table tbody .mat-column-name');
             expect(nameProperties[0]).not.toBeNull();
             expect(nameProperties[0]).toBeDefined();
             expect(nameProperties[0].innerText).toBe('channelPassword');
@@ -157,7 +127,7 @@ describe('AspectListComponent', () => {
             expect(nameProperties[1]).toBeDefined();
             expect(nameProperties[1].innerText).toBe('channelUsername');
 
-            const titleProperties = fixture.nativeElement.querySelectorAll('#aspect-list-FirstAspectproperties-table tbody .mat-column-title');
+            const titleProperties = fixture.nativeElement.querySelectorAll('#aspect-list-0-properties-table tbody .mat-column-title');
             expect(titleProperties[0]).not.toBeNull();
             expect(titleProperties[0]).toBeDefined();
             expect(titleProperties[0].innerText).toBe('The authenticated channel password');
@@ -165,7 +135,7 @@ describe('AspectListComponent', () => {
             expect(titleProperties[1]).toBeDefined();
             expect(titleProperties[1].innerText).toBe('The authenticated channel username');
 
-            const dataTypeProperties = fixture.nativeElement.querySelectorAll('#aspect-list-FirstAspectproperties-table tbody .mat-column-dataType');
+            const dataTypeProperties = fixture.nativeElement.querySelectorAll('#aspect-list-0-properties-table tbody .mat-column-dataType');
             expect(dataTypeProperties[0]).not.toBeNull();
             expect(dataTypeProperties[0]).toBeDefined();
             expect(dataTypeProperties[0].innerText).toBe('d:propA');
@@ -175,14 +145,14 @@ describe('AspectListComponent', () => {
         });
 
         it('should show as checked the node properties', () => {
-            const firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspectcheck-input');
+            const firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
             expect(firstAspectCheckbox).toBeDefined();
             expect(firstAspectCheckbox).not.toBeNull();
             expect(firstAspectCheckbox.checked).toBeTruthy();
         });
 
         it('should remove aspects unchecked', (done) => {
-            const secondElement = fixture.nativeElement.querySelector('#aspect-list-SecondAspectcheck-input');
+            const secondElement = fixture.nativeElement.querySelector('#aspect-list-1-check-input');
             expect(secondElement).toBeDefined();
             expect(secondElement).not.toBeNull();
             expect(secondElement.checked).toBeFalsy();
@@ -200,7 +170,7 @@ describe('AspectListComponent', () => {
         });
 
         it('should reset the properties on reset', (done) => {
-            const secondElement = fixture.nativeElement.querySelector('#aspect-list-SecondAspectcheck-input');
+            const secondElement = fixture.nativeElement.querySelector('#aspect-list-1-check-input');
             expect(secondElement).toBeDefined();
             expect(secondElement).not.toBeNull();
             expect(secondElement.checked).toBeFalsy();

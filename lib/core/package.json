@@ -23,7 +23,7 @@
     "@angular/router": ">=10.0.2",
     "@mat-datetimepicker/core": ">=4.1.0",
     "@mat-datetimepicker/moment": ">=4.1.0",
-    "@alfresco/js-api": "4.2.0",
+    "@alfresco/js-api": "4.3.0-367c03bf7de7ba15652c2d211137600a8fd3063d",
     "@alfresco/adf-extensions": "4.2.0",
     "@ngx-translate/core": ">=13.0.0",
     "minimatch-browser": ">=1.0.0",

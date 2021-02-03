@@ -20,8 +20,8 @@ import { NodesApiService } from '@alfresco/adf-core';
 import { Observable, Subject } from 'rxjs';
 import { concatMap, takeUntil, tap } from 'rxjs/operators';
 import { AspectListService } from './aspect-list.service';
-import { AspectEntryModel } from './apect.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { AspectEntry } from '@alfresco/js-api';
 @Component({
     selector: 'adf-aspect-list',
     templateUrl: './aspect-list.component.html',
@@ -40,7 +40,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
     valueChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
     propertyColumns: string[] = ['name', 'title', 'dataType'];
-    aspects$: Observable<AspectEntryModel[]> = null;
+    aspects$: Observable<AspectEntry[]> = null;
     nodeAspects: string[] = [];
     nodeAspectStatus: string[] = null;
 
