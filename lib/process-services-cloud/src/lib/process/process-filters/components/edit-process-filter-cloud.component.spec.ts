@@ -722,6 +722,11 @@ describe('EditProcessFilterCloudComponent', () => {
             component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
 
+            component.filterChange.subscribe(() => {
+                expect(component.processFilter.lastModifiedTo.toISOString()).toEqual(lastModifiedToFilter.toISOString());
+                done();
+            });
+
             const lastModifiedToControl = component.editProcessFilterForm.get('lastModifiedTo');
             lastModifiedToControl.setValue(new Date().toISOString());
             const lastModifiedToFilter = moment(lastModifiedToControl.value);
@@ -730,12 +735,6 @@ describe('EditProcessFilterCloudComponent', () => {
                 minute: 59,
                 second: 59
             });
-
-            component.filterChange.subscribe(() => {
-                expect(component.changedProcessFilter.lastModifiedTo.toISOString()).toEqual(lastModifiedToFilter.toISOString());
-                done();
-            });
-            component.onFilterChange();
         });
 
         it('should set date range filter type when range is selected', (done) => {
@@ -778,19 +777,18 @@ describe('EditProcessFilterCloudComponent', () => {
             component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
 
-            const startedDateTypeControl = component.editProcessFilterForm.get('completedDateType');
-            startedDateTypeControl.setValue(DateCloudFilterType.TODAY);
-            const dateFilter = {
-                startFrom: moment().startOf('day').toISOString(true),
-                startTo: moment().endOf('day').toISOString(true)
-            };
-
             component.filterChange.subscribe(() => {
+                const dateFilter = {
+                    startFrom: moment().startOf('day').toISOString(true),
+                    startTo: moment().endOf('day').toISOString(true)
+                };
                 expect(component.changedProcessFilter.completedFrom).toEqual(dateFilter.startFrom);
                 expect(component.changedProcessFilter.completedTo).toEqual(dateFilter.startTo);
                 done();
             });
-            component.onFilterChange();
+
+            const startedDateTypeControl = component.editProcessFilterForm.get('completedDateType');
+            startedDateTypeControl.setValue(DateCloudFilterType.TODAY);
         });
 
         it('should update form on date range value is updated', (done) => {
@@ -804,6 +802,12 @@ describe('EditProcessFilterCloudComponent', () => {
                 startDate: moment().startOf('day').toISOString(true),
                 endDate: moment().endOf('day').toISOString(true)
             };
+
+            component.filterChange.subscribe(() => {
+                expect(component.changedProcessFilter.completedFrom).toEqual(dateFilter.startDate);
+                expect(component.changedProcessFilter.completedTo).toEqual(dateFilter.endDate);
+                done();
+            });
 
             const startedDateTypeControl = component.editProcessFilterForm.get('completedDateType');
             startedDateTypeControl.setValue(DateCloudFilterType.RANGE);
@@ -819,14 +823,6 @@ describe('EditProcessFilterCloudComponent', () => {
                     to: '_completedTo'
                 }
             });
-
-            fixture.detectChanges();
-            component.filterChange.subscribe(() => {
-                expect(component.changedProcessFilter.completedFrom).toEqual(dateFilter.startDate);
-                expect(component.changedProcessFilter.completedTo).toEqual(dateFilter.endDate);
-                done();
-            });
-            component.onFilterChange();
         });
 
         it('should call restore default filters service on deletion of last filter', (done) => {

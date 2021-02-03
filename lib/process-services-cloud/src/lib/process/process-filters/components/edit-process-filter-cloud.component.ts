@@ -20,7 +20,7 @@ import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, filter, takeUntil, finalize, switchMap } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
@@ -117,7 +117,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.processFilterActions = this.createAndFilterActions();
 
         this.buildForm(this.processFilterProperties);
-        this.onFilterChange();
+
+        this.filterChange.emit(value);
     }
 
     changedProcessFilter: ProcessFilterCloudModel;
@@ -151,6 +152,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     private onDestroy$ = new Subject<boolean>();
     isLoading: boolean = false;
+    private filterChangeSub: Subscription;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -184,6 +186,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     buildForm(processFilterProperties: ProcessFilterProperties[]) {
         this.editProcessFilterForm = this.formBuilder.group(this.getFormControlsConfig(processFilterProperties));
+        this.onFilterChange();
     }
 
     getFormControlsConfig(processFilterProperties: ProcessFilterProperties[]): any {
@@ -223,7 +226,12 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
      * Check process instance filter changes
      */
     onFilterChange() {
-        this.editProcessFilterForm.valueChanges
+        if (this.filterChangeSub) {
+            this.filterChangeSub.unsubscribe();
+            this.filterChangeSub = null;
+        }
+
+        this.filterChangeSub = this.editProcessFilterForm.valueChanges
             .pipe(
                 debounceTime(200),
                 filter(() => this.isFormValid()),
@@ -236,7 +244,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 const changed = !this.compareFilters(this.changedProcessFilter, this.processFilter);
 
                 if (changed) {
-                    this.filterChange.emit(this.changedProcessFilter);
+                    this._filter = new ProcessFilterCloudModel(formValues);
+                    this.filterChange.emit(this._filter);
                 }
             });
     }
