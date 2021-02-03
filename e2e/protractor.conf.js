@@ -1,7 +1,7 @@
 const {LocalStorageUtil, Logger} = require('@alfresco/adf-testing');
 const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
-const retry = require('protractor-retry').retry;
+const retry = require('protractor-retry-angular-cli').retry;
 const tsConfig = require('./tsconfig.e2e.json');
 const testConfig = require('./test.config');
 const RESOURCES = require('./util/resources');
