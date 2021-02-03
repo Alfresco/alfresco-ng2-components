@@ -102,7 +102,7 @@ describe('Notification History Component', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(overlayContainerElement.querySelector('#adf-notification-history-component-no-message')).toBeNull();
-                expect(overlayContainerElement.querySelector('#adf-notification-history-list').innerHTML).toContain('Example Message');
+                expect(overlayContainerElement.querySelector('.adf-notification-history-list').innerHTML).toContain('Example Message');
                 done();
             });
         });

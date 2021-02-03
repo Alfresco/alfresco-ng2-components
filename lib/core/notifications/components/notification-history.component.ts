@@ -82,8 +82,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         }
 
         this.saveNotifications();
-        this.resetPagination();
-        this.updatePagination();
+        this.initPagination();
     }
 
     saveNotifications() {
@@ -93,8 +92,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     onMenuOpened() {
-        this.resetPagination();
-        this.updatePagination();
+        this.initPagination();
     }
 
     onKeyPress(event: KeyboardEvent) {
@@ -114,8 +112,15 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         this.storageService.removeItem('notifications');
     }
 
-    updatePagination() {
+    initPagination() {
+        this.resetPagination();
         this.pagination.totalItems = this.notifications.length;
+        this.pagination.skipCount = this.pagination.maxItems;
+        this.pagination.hasMoreItems = this.notifications.length > this.pagination.skipCount;
+        this.paginatedNotifications = this.notifications.slice(0, this.pagination.skipCount);
+    }
+
+    loadMore() {
         this.pagination.skipCount = this.pagination.maxItems + this.pagination.skipCount;
         this.pagination.hasMoreItems = this.notifications.length > this.pagination.skipCount;
         this.paginatedNotifications = this.notifications.slice(0, this.pagination.skipCount);

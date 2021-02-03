@@ -15,8 +15,7 @@
               id="adf-notification-history-menu"
               class="adf-notification-history-menu">
 
-        <div id="adf-notification-history-list"
-             class="adf-notification-history-list"
+        <div class="adf-notification-history-list"
              (click)="$event.stopPropagation()">
             <div mat-subheader>
                 <span>{{ 'NOTIFICATIONS.TITLE' | translate }}</span>
@@ -41,7 +40,9 @@
                              [outerHTML]="notification.initiator | usernameInitials:'adf-notification-initiator-pic'">
                         </div>
                         <ng-template #no_avatar>
-                            <mat-icon mat-list-icon class="adf-notification-history-menu-initiator">{{ notification | notificationIcon }}</mat-icon>
+                            <mat-icon mat-list-icon
+                                      class="adf-notification-history-menu-initiator">{{ notification | notificationIcon
+                                }}</mat-icon>
                         </ng-template>
                         <p class="adf-notification-history-menu-message"
                            *ngFor="let message of notification.messages"
@@ -52,7 +53,7 @@
                 </ng-container>
                 <ng-template #empty_list_template>
                     <mat-list-item id="adf-notification-history-component-no-message"
-                    class="adf-notification-history-menu-no-message">
+                                   class="adf-notification-history-menu-no-message">
                         <h4 mat-line>{{ 'NOTIFICATIONS.NO_MESSAGE' | translate }}</h4>
                     </mat-list-item>
                 </ng-template>
@@ -63,7 +64,7 @@
             <div class="adf-notification-history-load-more"
                  *ngIf="hasMoreNotifications()">
                 <button mat-button
-                        (click)="updatePagination()">
+                        (click)="loadMore()">
                     {{ 'NOTIFICATIONS.LOAD_MORE' | translate }}
                 </button>
             </div>
