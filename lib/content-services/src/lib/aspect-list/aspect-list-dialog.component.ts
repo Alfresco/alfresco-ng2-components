@@ -18,7 +18,6 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
-import { AspectListService } from './aspect-list.service';
 @Component({
     selector: 'adf-aspect-list-dialog',
     templateUrl: './aspect-list-dialog.component.html',
@@ -35,8 +34,7 @@ export class AspectListDialogComponent implements OnInit {
     currentAspectSelection: string[] = [];
 
     constructor(private dialog: MatDialogRef<AspectListDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) public data: AspectListDialogComponentData,
-                private aspectListService: AspectListService) {
+                @Inject(MAT_DIALOG_DATA) public data: AspectListDialogComponentData) {
         this.title = data.title;
         this.description = data.description;
         this.overTableMessage = data.overTableMessage;
@@ -55,14 +53,6 @@ export class AspectListDialogComponent implements OnInit {
 
     close() {
         this.data.select.complete();
-    }
-
-    onReset() {
-        this.aspectListService.resetAspects();
-    }
-
-    onClear() {
-        this.aspectListService.clearAspects();
     }
 
     onCancel() {

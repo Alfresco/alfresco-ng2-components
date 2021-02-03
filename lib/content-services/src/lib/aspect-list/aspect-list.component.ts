@@ -47,11 +47,6 @@ export class AspectListComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private aspectListService: AspectListService, private nodeApiService: NodesApiService) {
-        aspectListService.getResetEvent().pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => this.reset());
-
-        aspectListService.getClearEvent().pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => this.clear());
     }
 
     ngOnDestroy(): void {
