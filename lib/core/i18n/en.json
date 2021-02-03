@@ -6,10 +6,11 @@
   "UNCLAIM": "RELEASE",
   "START PROCESS": "START PROCESS",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "No messages",
+    "NO_MESSAGE": "You have no notifications at this time.",
     "TITLE": "Notifications",
     "MARK_AS_READ": "Mark all as read",
-    "SYSTEM": "System"
+    "SYSTEM": "System",
+    "LOAD_MORE": "Load more"
   },
   "FORM": {
     "START_FORM": {

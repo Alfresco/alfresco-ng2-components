@@ -38,6 +38,7 @@
 @import '../../core/search-text/search-text-input.component';
 @import './snackbar';
 @import '../directives/tooltip-card/tooltip-card.component';
+@import '../notifications/components/notification-history.component';
 
 @mixin adf-core-theme($theme) {
     @include adf-colors-theme($theme);
@@ -81,4 +82,5 @@
     @include mat-datetimepicker-theme--fix($theme);
     @include adf-search-text-input-theme($theme);
     @include adf-tooltip-card-directive($theme);
+    @include adf-notification-history-theme($theme);
 }

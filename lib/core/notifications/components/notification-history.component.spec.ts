@@ -23,10 +23,12 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { NotificationService } from '../services/notification.service';
 import { StorageService } from '../../services/storage.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
 
 describe('Notification History Component', () => {
 
     let fixture: ComponentFixture<NotificationHistoryComponent>;
+    let component: NotificationHistoryComponent;
     let element: HTMLElement;
     let notificationService: NotificationService;
     let overlayContainerElement: HTMLElement;
@@ -48,10 +50,12 @@ describe('Notification History Component', () => {
 
     beforeEach(async(() => {
         fixture = TestBed.createComponent(NotificationHistoryComponent);
+        component = fixture.componentInstance;
         element = fixture.nativeElement;
 
         storage = TestBed.inject(StorageService);
         notificationService = TestBed.inject(NotificationService);
+        component.notifications = [];
     }));
 
     beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {
@@ -73,27 +77,92 @@ describe('Notification History Component', () => {
             });
         });
 
-        it('should  message be present and empty message not be present when there are notifications in the history', (done) => {
+        it('should remove notification when mark all as read is clicked', (done) => {
+            fixture.detectChanges();
+            notificationService.showInfo('Example Message Removed');
+            openNotification();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(component.notifications.length).toBe(1);
+                const markAllAsRead = <HTMLButtonElement> overlayContainerElement.querySelector('#adf-notification-history-mark-as-read');
+                markAllAsRead.click();
+                fixture.detectChanges();
+                expect(storage.getItem('notifications')).toBeNull();
+                expect(component.notifications.length).toBe(0);
+                done();
+            });
+        });
+
+        it('should message be present and empty message not be present when there are notifications in the history', (done) => {
+            fixture.detectChanges();
             notificationService.showInfo('Example Message');
             openNotification();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
+                fixture.detectChanges();
                 expect(overlayContainerElement.querySelector('#adf-notification-history-component-no-message')).toBeNull();
                 expect(overlayContainerElement.querySelector('#adf-notification-history-list').innerHTML).toContain('Example Message');
                 done();
             });
         });
 
-        it('should remove notification from storage when mark all as read', (done) => {
+        it('should show message when pushed directly to Notification History', (done) => {
+            const callBackSpy = jasmine.createSpy('callBack');
+            fixture.detectChanges();
+            notificationService.pushToNotificationHistory(
+                {
+                    clickCallBack: callBackSpy,
+                    messages: ['My new message'],
+                    datetime: new Date(),
+                    type: NOTIFICATION_TYPE.RECURSIVE
+
+                } as NotificationModel
+            );
             openNotification();
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const markAllAsRead = <HTMLButtonElement> overlayContainerElement.querySelector('#adf-notification-history-mark-as-read button');
-                markAllAsRead.click();
                 fixture.detectChanges();
-                expect(storage.getItem('notifications')).toBeNull();
+                const notification = <HTMLButtonElement> overlayContainerElement.querySelector('.adf-notification-history-menu-item');
+                notification.click();
+                expect(callBackSpy).toHaveBeenCalled();
                 done();
             });
+        });
 
+        it('should show load more button when there are more notifications', (done) => {
+            fixture.detectChanges();
+            notificationService.showInfo('Example Message 1');
+            notificationService.showInfo('Example Message 2');
+            notificationService.showInfo('Example Message 3');
+            notificationService.showInfo('Example Message 4');
+            notificationService.showInfo('Example Message 5');
+            notificationService.showInfo('Example Message 6');
+            openNotification();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const loadMoreButton = <HTMLButtonElement> overlayContainerElement.querySelector('.adf-notification-history-load-more');
+                expect(component.paginatedNotifications.length).toBe(5);
+                expect(loadMoreButton).toBeDefined();
+                done();
+            });
+        });
+
+        it('should read notifications from local storage', (done) => {
+            storage.setItem('notifications', JSON.stringify([{
+                messages: ['My new message'],
+                datetime: new Date(),
+                type: NOTIFICATION_TYPE.RECURSIVE
+
+            } as NotificationModel]));
+            fixture.detectChanges();
+            openNotification();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const notification = <HTMLButtonElement> overlayContainerElement.querySelector('.adf-notification-history-menu-item');
+                expect(notification).toBeDefined();
+                done();
+            });
         });
     });
 });

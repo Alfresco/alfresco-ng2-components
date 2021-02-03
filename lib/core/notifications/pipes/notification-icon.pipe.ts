@@ -19,18 +19,22 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
 
 @Pipe({
-    name: 'noticicationIcon'
+    name: 'notificationIcon'
 })
 export class NotificationIconPipe implements PipeTransform {
 
     transform(notification: NotificationModel): string {
-        switch (notification.type) {
-            case NOTIFICATION_TYPE.ERROR:
-                return 'error';
-            case NOTIFICATION_TYPE.WARN:
-                return 'warning';
-            default:
-                return 'info';
+        if (notification.icon) {
+            return notification.icon;
+        } else {
+            switch (notification.type) {
+                case NOTIFICATION_TYPE.ERROR:
+                    return 'error';
+                case NOTIFICATION_TYPE.WARN:
+                    return 'warning';
+                default:
+                    return 'info';
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ import {
 
 export const rootInitiator: NotificationInitiator  = {
     key: '*',
-    displayName: 'NOTIFICATIONS.SYSTEM'
+    displayName: 'SYSTEM'
 };
 
 export function info(messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel {

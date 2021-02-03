@@ -102,6 +102,14 @@ export class NotificationService {
         return this.snackBar.dismiss();
     }
 
+    /**
+     * Push new notification to Notification History
+     * @param notification - Notification model to be pushed.
+     */
+    pushToNotificationHistory(notification: NotificationModel) {
+        this.notifications$.next(notification);
+    }
+
     private dispatchNotification(message: string, action?: string, config?: number | MatSnackBarConfig, interpolateArgs?: any):  MatSnackBarRef<any> {
             const translatedMessage: string = this.translationService.instant(message, interpolateArgs);
             const translatedAction: string = this.translationService.instant(action, interpolateArgs);
