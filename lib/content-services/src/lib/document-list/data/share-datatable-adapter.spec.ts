@@ -16,7 +16,7 @@
  */
 
 import { DataColumn, DataRow, DataSorting, ContentService, ThumbnailService, setupTestBed } from '@alfresco/adf-core';
-import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode, mockPreselectedNodes, mockNodePagingWithPreselectedNodes, mockNode2, fakeNodePaging } from './../../mock';
+import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode, mockPreselectedNodes, mockNodePagingWithPreselectedNodes, mockNode2, fakeNodePaging, mockNode1 } from './../../mock';
 import { ShareDataRow } from './share-data-row.model';
 import { ShareDataTableAdapter } from './share-datatable-adapter';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -506,6 +506,16 @@ describe('ShareDataTableAdapter', () => {
             adapter.loadPage(fakeNodePaging, null, null, preselectedNode);
 
             expect(adapter.getPreselectedRows().length).toBe(0);
+        });
+
+        it('should preselected rows contain only the valid rows that exist in the datatable', () => {
+            const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
+            const nonExistingEntry = {...mockNode1};
+            nonExistingEntry.id = 'non-existing-entry-id';
+            const preselectedNodes = [{ entry: nonExistingEntry }, { entry: mockNode1 }, { entry: mockNode2 }];
+            adapter.loadPage(mockNodePagingWithPreselectedNodes, null, null, preselectedNodes);
+
+            expect(adapter.getPreselectedRows().length).toBe(2);
         });
    });
 });
