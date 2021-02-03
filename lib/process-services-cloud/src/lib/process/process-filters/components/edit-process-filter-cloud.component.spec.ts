@@ -782,8 +782,8 @@ describe('EditProcessFilterCloudComponent', () => {
                     startFrom: moment().startOf('day').toISOString(true),
                     startTo: moment().endOf('day').toISOString(true)
                 };
-                expect(component.changedProcessFilter.completedFrom).toEqual(dateFilter.startFrom);
-                expect(component.changedProcessFilter.completedTo).toEqual(dateFilter.startTo);
+                expect(component.processFilter.completedFrom).toEqual(dateFilter.startFrom);
+                expect(component.processFilter.completedTo).toEqual(dateFilter.startTo);
                 done();
             });
 
@@ -804,8 +804,8 @@ describe('EditProcessFilterCloudComponent', () => {
             };
 
             component.filterChange.subscribe(() => {
-                expect(component.changedProcessFilter.completedFrom).toEqual(dateFilter.startDate);
-                expect(component.changedProcessFilter.completedTo).toEqual(dateFilter.endDate);
+                expect(component.processFilter.completedFrom).toEqual(dateFilter.startDate);
+                expect(component.processFilter.completedTo).toEqual(dateFilter.endDate);
                 done();
             });
 

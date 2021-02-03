@@ -121,8 +121,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.filterChange.emit(value);
     }
 
-    changedProcessFilter: ProcessFilterCloudModel;
-
     status: Array<DropdownOption> = [
         { value: '', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL' },
         { value: 'RUNNING', label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.RUNNING' },
@@ -239,13 +237,13 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             )
             .subscribe((formValues: ProcessFilterCloudModel) => {
                 this.setLastModifiedToFilter(formValues);
-                this.changedProcessFilter = new ProcessFilterCloudModel(formValues);
 
-                const changed = !this.compareFilters(this.changedProcessFilter, this.processFilter);
+                const newValue = new ProcessFilterCloudModel(formValues);
+                const changed = !this.compareFilters(newValue, this.processFilter);
 
                 if (changed) {
-                    this._filter = new ProcessFilterCloudModel(formValues);
-                    this.filterChange.emit(this._filter);
+                    this._filter = newValue;
+                    this.filterChange.emit(newValue);
                 }
             });
     }
@@ -415,9 +413,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     save(saveAction: ProcessFilterAction) {
         this.processFilterCloudService
-            .updateFilter(this.changedProcessFilter)
+            .updateFilter(this.processFilter)
             .subscribe(() => {
-                saveAction.filter = this.changedProcessFilter;
+                saveAction.filter = this.processFilter;
                 this.action.emit(saveAction);
             });
     }
@@ -459,7 +457,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     id: filterId,
                     key: 'custom-' + filterKey
                 };
-                const resultFilter: ProcessFilterCloudModel = Object.assign({}, this.changedProcessFilter, newFilter);
+                const resultFilter: ProcessFilterCloudModel = Object.assign({}, this.processFilter, newFilter);
                 this.processFilterCloudService
                     .addFilter(resultFilter)
                     .subscribe(() => {
