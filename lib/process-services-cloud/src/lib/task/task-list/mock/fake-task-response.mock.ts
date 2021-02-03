@@ -17,68 +17,6 @@
 
 import { ObjectDataColumn } from '@alfresco/adf-core';
 
-export const fakeTaskCloudList = {
-    list: {
-        entries: [
-            {
-                entry: {
-                    appName: 'save-the-cheerleader',
-                    appVersion: '',
-                    id: '890b0e1c-c252-11e8-b5c5-0a58646004c7',
-                    assignee: null,
-                    name: 'SimpleStandaloneTask',
-                    description: 'Task description',
-                    createdDate: 1538052037711,
-                    dueDate: null,
-                    claimedDate: null,
-                    priority: 0,
-                    category: null,
-                    processDefinitionId: null,
-                    processInstanceId: null,
-                    status: 'CREATED',
-                    owner: 'superadminuser',
-                    parentTaskId: null,
-                    lastModified: 1538052037711,
-                    lastModifiedTo: null,
-                    lastModifiedFrom: null,
-                    standalone: true
-                }
-            },
-            {
-                entry: {
-                    appName: 'save-the-cheerleader',
-                    appVersion: '',
-                    id: '8962cb0e-c252-11e8-b5c5-0a58646004c7',
-                    assignee: null,
-                    name: 'SimpleStandaloneTask',
-                    description: 'Task description',
-                    createdDate: 1538052038286,
-                    dueDate: null,
-                    claimedDate: null,
-                    priority: 0,
-                    category: null,
-                    processDefinitionId: null,
-                    processInstanceId: null,
-                    status: 'CREATED',
-                    owner: 'superadminuser',
-                    parentTaskId: null,
-                    lastModified: 1538052038286,
-                    lastModifiedTo: null,
-                    lastModifiedFrom: null,
-                    standalone: true
-                }
-            }
-        ],
-        pagination: {
-            skipCount: 0,
-            maxItems: 100,
-            count: 2,
-            hasMoreItems: false,
-            totalItems: 2
-        }
-    }
-};
-
 export const fakeGlobalTask = {
     list: {
         entries: [
