@@ -168,7 +168,7 @@ describe('AspectListDialogComponent', () => {
             expect(selectionCounter.innerText).toBe('0 ADF-ASPECT-LIST.DIALOG.SELECTED');
         });
 
-        it('should clear all the value when Reset button is clicked', async () => {
+        it('should reset to the node values when Reset button is clicked', async () => {
             let firstAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-0-check-input');
             expect(firstAspectCheckbox).toBeDefined();
             expect(firstAspectCheckbox).not.toBeNull();

@@ -29,6 +29,9 @@ import { AspectEntry, AspectPaging } from '@alfresco/js-api';
 })
 export class AspectListService {
 
+    private clear$ = new Subject();
+    private reset$ = new Subject();
+
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private appConfigService: AppConfigService, private dialog: MatDialog) {
     }
@@ -91,5 +94,21 @@ export class AspectListService {
 
     close() {
         this.dialog.closeAll();
+    }
+
+    getResetEvent(): Observable<any> {
+        return this.reset$.asObservable();
+    }
+
+    getClearEvent(): Observable<any> {
+        return this.clear$.asObservable();
+    }
+
+    resetAspects() {
+        this.reset$.next(true);
+    }
+
+    clearAspects() {
+        this.clear$.next(true);
     }
 }

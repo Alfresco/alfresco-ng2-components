@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
-import { AspectListComponent } from './aspect-list.component';
-
+import { AspectListService } from './aspect-list.service';
 @Component({
     selector: 'adf-aspect-list-dialog',
     templateUrl: './aspect-list-dialog.component.html',
@@ -27,9 +26,6 @@ import { AspectListComponent } from './aspect-list.component';
     encapsulation: ViewEncapsulation.None
 })
 export class AspectListDialogComponent implements OnInit {
-
-    @ViewChild('aspectList')
-    aspectListComponent: AspectListComponent;
 
     title: string;
     description: string;
@@ -39,7 +35,8 @@ export class AspectListDialogComponent implements OnInit {
     currentAspectSelection: string[] = [];
 
     constructor(private dialog: MatDialogRef<AspectListDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) public data: AspectListDialogComponentData) {
+                @Inject(MAT_DIALOG_DATA) public data: AspectListDialogComponentData,
+                private aspectListService: AspectListService) {
         this.title = data.title;
         this.description = data.description;
         this.overTableMessage = data.overTableMessage;
@@ -61,11 +58,11 @@ export class AspectListDialogComponent implements OnInit {
     }
 
     onReset() {
-      this.aspectListComponent.reset();
+        this.aspectListService.resetAspects();
     }
 
     onClear() {
-        this.aspectListComponent.clear();
+        this.aspectListService.clearAspects();
     }
 
     onCancel() {
