@@ -116,17 +116,21 @@
       "attachMultipleSingle": "attach-multiple-single",
       "attachMultipleMultiple": "attach-multiple-multiple",
       "intermediateDateProcessVarTimer": "interm-date-provar-timer",
-      "callActivityExpressionSimple":"call-activity-exp-simple", 
+      "callActivityExpressionSimple":"call-activity-exp-simple",
       "callActivityExpressionFromPool":"call-activity-expression-2",
       "calledSimple":"called-simple",
       "calledInPool":"called-in-pool",
       "paralleltasks": "paralleltasks",
       "candidateusersgroup": "candidateusersgroup",
-      "candidateUserProcess": "candidateuserprocess"
+      "candidateUserProcess": "candidateuserprocess",
+      "outputVariablesMapping": "output-variables-mapping"
     },
     "forms": {
       "tabVisibilityFields": {
         "name": "tabvisibilitywithfields"
+      },
+      "formWithSingleInput": {
+        "name": "form-with-single-input"
       },
       "tabVisibilityVars": {
         "name": "tabvisibilitywithvars"
