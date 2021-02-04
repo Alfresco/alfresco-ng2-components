@@ -326,6 +326,6 @@ export class ViewUtilService {
         const renditionPaging: RenditionPaging = await this.apiService.renditionsApi.getRenditions(nodeId);
         const rendition: RenditionEntry = renditionPaging.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
 
-        return rendition && rendition.entry.status.toString() !== 'NOT_CREATED';
+        return rendition?.entry?.status?.toString() === 'CREATED' || false;
     }
 }
