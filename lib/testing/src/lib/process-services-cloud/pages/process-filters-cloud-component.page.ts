@@ -19,9 +19,14 @@ import { Locator, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
+const FILTERS = {
+    ALL: 'all-processes',
+    COMPLETED: 'completed-processes',
+    RUNNING: 'running-processes'
+};
+
 export class ProcessFiltersCloudComponentPage {
 
-    filter: ElementFinder;
     filterIcon: Locator = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
 
     processFilters = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
@@ -30,48 +35,48 @@ export class ProcessFiltersCloudComponentPage {
     processFiltersList = element(by.css('adf-cloud-process-filters'));
 
     async checkProcessFilterIsDisplayed(filterName: string): Promise<void> {
-        this.filter = this.getProcessFilterLocatorByFilterName(filterName);
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const filter = this.getProcessFilterLocatorByFilterName(filterName);
+        await BrowserVisibility.waitUntilElementIsVisible(filter);
     }
 
     async clickProcessFilter(filterName: string): Promise<void> {
-        this.filter = this.getProcessFilterLocatorByFilterName(filterName);
-        await BrowserActions.click(this.filter);
+        const filter = this.getProcessFilterLocatorByFilterName(filterName);
+        await BrowserActions.click(filter);
     }
 
     async clickAllProcessesFilter(): Promise<void> {
-        this.filter = this.getProcessFilterLocatorByFilterName('all-processes');
-        await BrowserActions.click(this.filter);
+        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.ALL);
+        await BrowserActions.click(filter);
     }
 
     async clickCompletedProcessesFilter(): Promise<void> {
-        this.filter = this.getProcessFilterLocatorByFilterName('completed-processes');
-        await BrowserActions.click(this.filter);
+        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.COMPLETED);
+        await BrowserActions.click(filter);
     }
 
     async clickRunningProcessesFilter(): Promise<void> {
-        this.filter = this.getProcessFilterLocatorByFilterName('running-processes');
-        await BrowserActions.click(this.filter);
+        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.RUNNING);
+        await BrowserActions.click(filter);
     }
 
     async checkAllProcessesFilterIsDisplayed(): Promise<void> {
-        this.filter = this.getProcessFilterLocatorByFilterName('all-processes');
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.ALL);
+        await BrowserVisibility.waitUntilElementIsVisible(filter);
     }
 
     async checkCompletedProcessesFilterIsDisplayed(): Promise<void> {
-        this.filter = this.getProcessFilterLocatorByFilterName('completed-processes');
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.COMPLETED);
+        await BrowserVisibility.waitUntilElementIsVisible(filter);
     }
 
     async checkRunningProcessesFilterIsDisplayed(): Promise<void> {
-        this.filter = this.getProcessFilterLocatorByFilterName('running-processes');
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const filter = this.getProcessFilterLocatorByFilterName(FILTERS.RUNNING);
+        await BrowserVisibility.waitUntilElementIsVisible(filter);
     }
 
     async checkProcessFilterNotDisplayed(filterName: string): Promise<void> {
-        this.filter = this.getProcessFilterLocatorByFilterName(filterName);
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
+        const filter = this.getProcessFilterLocatorByFilterName(filterName);
+        await BrowserVisibility.waitUntilElementIsNotVisible(filter);
     }
 
     async clickOnProcessFilters(): Promise<void> {
