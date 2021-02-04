@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, browser } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -149,6 +149,7 @@ export class ContentNodeSelectorDialogPage {
 
         const uploadButton = element(by.css('adf-upload-button input'));
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
+        await browser.sleep(500);
         await uploadButton.sendKeys(fileLocation);
 
         await this.tabPage.clickTabByLabel(this.fileServerTabName);
