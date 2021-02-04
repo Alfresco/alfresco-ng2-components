@@ -121,6 +121,7 @@ describe('Content Services Viewer', () => {
     });
 
     afterAll(async () => {
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(pdfFile.getId());
         await uploadActions.deleteFileOrFolder(protectedFile.getId());
         await uploadActions.deleteFileOrFolder(docxFile.getId());

@@ -30,6 +30,8 @@ import { browser } from 'protractor';
 import { FormDemoPage } from '.././pages/form-demo.page';
 import { customDateFormAPS1 } from '../../resources/forms/custom-date-form';
 import CONSTANTS = require('../../util/constants');
+import { ProcessServicesPage } from '../pages/process-services.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Date widget', () => {
 
@@ -38,6 +40,7 @@ describe('Date widget', () => {
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
+    const navigationBarPage = new NavigationBarPage();
 
     const dateWidget = widget.dateWidget();
     let appModel;
@@ -72,8 +75,9 @@ describe('Date widget', () => {
 
     describe('Simple App', () => {
         beforeEach(async () => {
-            const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
-            await BrowserActions.getUrl(urlToNavigateTo);
+            await navigationBarPage.clickHomeButton();
+            await (new ProcessServicesPage()).goToAppByAppId(deployedApp.id);
+
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.formFields().checkFormIsDisplayed();
         });

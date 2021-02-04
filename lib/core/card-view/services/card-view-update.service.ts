@@ -25,7 +25,7 @@ export interface UpdateNotification {
 }
 
 export interface ClickNotification {
-    target: CardViewBaseItemModel;
+    target: any;
 }
 
 export function transformKeyToObject(key: string, value): Object {
@@ -60,7 +60,7 @@ export class CardViewUpdateService {
 
     /**
      * Updates the cardview items property
-     * @param CardViewBaseItemModel
+     * @param notification
      */
     updateElement(notification: CardViewBaseItemModel) {
         this.updateItem$.next(notification);

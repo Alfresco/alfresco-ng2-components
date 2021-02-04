@@ -259,6 +259,7 @@ export abstract class BaseQueryBuilderService {
         }
 
         if (query) {
+
             const result: QueryBody = <QueryBody> {
                 query: {
                     query: query,

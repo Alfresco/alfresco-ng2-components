@@ -62,14 +62,15 @@ describe('Sorting for process filters', () => {
         appId = importedApp.id;
 
         await loginPage.login(user.username, user.password);
-   });
+    });
 
     afterEach(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
-
-        await apiService.loginWithProfile('admin');
-
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        try {
+            await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+            await apiService.loginWithProfile('admin');
+            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        } catch (e) {
+        }
 
         await navigationBarPage.clickLogoutButton();
     });
@@ -80,9 +81,9 @@ describe('Sorting for process filters', () => {
             'filter': { 'sort': 'created-asc', 'name': '', 'state': 'running' }
         });
         const processUtil = new ProcessUtil(apiService);
-        const firstProc =  await processUtil.startProcessOfApp(importedApp.name);
-        const secondProc =  await processUtil.startProcessOfApp(importedApp.name);
-        const thirdProc =  await processUtil.startProcessOfApp(importedApp.name);
+        const firstProc = await processUtil.startProcessOfApp(importedApp.name);
+        const secondProc = await processUtil.startProcessOfApp(importedApp.name);
+        const thirdProc = await processUtil.startProcessOfApp(importedApp.name);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
@@ -103,9 +104,9 @@ describe('Sorting for process filters', () => {
         });
 
         const processUtil = new ProcessUtil(apiService);
-        const firstProc =  await processUtil.startProcessOfApp(importedApp.name);
-        const secondProc =  await processUtil.startProcessOfApp(importedApp.name);
-        const thirdProc =  await processUtil.startProcessOfApp(importedApp.name);
+        const firstProc = await processUtil.startProcessOfApp(importedApp.name);
+        const secondProc = await processUtil.startProcessOfApp(importedApp.name);
+        const thirdProc = await processUtil.startProcessOfApp(importedApp.name);
 
         await apiService.getInstance().activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
         await apiService.getInstance().activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
@@ -132,9 +133,9 @@ describe('Sorting for process filters', () => {
         });
 
         const processUtil = new ProcessUtil(apiService);
-        const firstProc =  await processUtil.startProcessOfApp(importedApp.name);
-        const secondProc =  await processUtil.startProcessOfApp(importedApp.name);
-        const thirdProc =  await processUtil.startProcessOfApp(importedApp.name);
+        const firstProc = await processUtil.startProcessOfApp(importedApp.name);
+        const secondProc = await processUtil.startProcessOfApp(importedApp.name);
+        const thirdProc = await processUtil.startProcessOfApp(importedApp.name);
 
         const deleteFirstProc = await processUtil.startProcessOfApp(importedApp.name);
         const deleteSecondProc = await processUtil.startProcessOfApp(importedApp.name);

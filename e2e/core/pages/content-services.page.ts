@@ -640,10 +640,6 @@ export class ContentServicesPage {
         await this.siteListDropdown.checkOptionIsSelected(siteName);
     }
 
-    async selectSite(siteName: string): Promise<void> {
-        await this.siteListDropdown.selectDropdownOption(siteName);
-    }
-
     async clickDownloadButton(): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(this.downloadButton);

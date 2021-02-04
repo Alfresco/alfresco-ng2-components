@@ -54,8 +54,9 @@ describe('Create library directive', () => {
     });
 
     afterAll(async () => {
-        await navigationBarPage.clickLogoutButton();
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().core.sitesApi.deleteSite(createSite.entry.id, { permanent: true });
+        await navigationBarPage.clickLogoutButton();
     });
 
     beforeEach(async () => {

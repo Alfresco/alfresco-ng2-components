@@ -109,6 +109,7 @@ describe('Start Task - Task App', () => {
 
         await taskPage.formFields().checkFormIsDisplayed();
         await taskPage.taskDetails().checkCompleteFormButtonIsDisplayed();
+
         await taskPage.taskDetails().waitFormNameEqual(app.formName);
     });
 

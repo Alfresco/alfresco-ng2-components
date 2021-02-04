@@ -18,7 +18,6 @@
 import {
     ApiService,
     ApplicationsUtil,
-    BrowserActions,
     LoginPage,
     ProcessUtil,
     UsersActions,
@@ -28,6 +27,7 @@ import { browser } from 'protractor';
 import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { ProcessServicesPage } from '../pages/process-services.page';
 
 const widgets = {
     textOneId: 'text1',
@@ -85,9 +85,8 @@ describe('Process-Services - Visibility conditions', () => {
     });
 
     beforeEach(async () => {
-        await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
-        const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
-        await BrowserActions.getUrl(urlToNavigateTo);
+        await navigationBarPage.clickHomeButton();
+        await (new ProcessServicesPage()).goToAppByAppId(deployedApp.id);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
     });

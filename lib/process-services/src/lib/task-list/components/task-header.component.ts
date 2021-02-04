@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import {
     BpmUserService,
     CardViewDateItemModel,
-    CardViewItem,
     CardViewMapItemModel,
     CardViewTextItemModel,
     CardViewBaseItemModel,
@@ -36,7 +35,7 @@ import { TaskDescriptionValidator } from '../validators/task-description.validat
     templateUrl: './task-header.component.html',
     styleUrls: ['./task-header.component.scss']
 })
-export class TaskHeaderComponent implements OnInit {
+export class TaskHeaderComponent implements OnChanges, OnInit {
 
     /** The name of the form. */
     @Input()
@@ -54,13 +53,13 @@ export class TaskHeaderComponent implements OnInit {
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when the task is unclaimed (ie, requeued). */
+    /** Emitted when the task is unclaimed (ie, requeue). */
     @Output()
     unclaim: EventEmitter<any> = new EventEmitter<any>();
 
     private currentUserId: number;
 
-    properties: CardViewItem [];
+    properties: any [] = [];
     inEdit: boolean = false;
     displayDateClearAction = false;
     dateFormat: string;
@@ -75,10 +74,19 @@ export class TaskHeaderComponent implements OnInit {
 
     ngOnInit() {
         this.loadCurrentBpmUserId();
-        this.refreshData();
+        this.initData();
     }
 
-    private initDefaultProperties(parentInfoMap) {
+    ngOnChanges(changes: SimpleChanges) {
+        const taskDetailsChange = changes['taskDetails'];
+        if (taskDetailsChange?.currentValue?.id !== taskDetailsChange?.previousValue?.id) {
+            this.initData();
+        } else {
+            this.refreshData();
+        }
+    }
+
+    private initDefaultProperties(parentInfoMap): any[] {
         return [
             new CardViewTextItemModel(
                 {
@@ -200,15 +208,33 @@ export class TaskHeaderComponent implements OnInit {
     /**
      * Refresh the card data
      */
-    refreshData() {
+    initData() {
         if (this.taskDetails) {
             const parentInfoMap = this.getParentInfo();
             const defaultProperties = this.initDefaultProperties(parentInfoMap);
             const filteredProperties: string[] = this.appConfig.get('adf-task-header.presets.properties');
-            this.properties = defaultProperties.filter((cardItem) => () => {
-                return this.isValidSelection(filteredProperties, cardItem);
-            });
+            this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
         }
+    }
+
+    /**
+     * Refresh the card data
+     */
+    refreshData() {
+        this.properties = this.properties.map((cardItem) => {
+            if (cardItem.key === 'formName' && cardItem.value !== this.formName) {
+                return new CardViewTextItemModel({
+                    label: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
+                    value: this.formName,
+                    key: 'formName',
+                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT'),
+                    clickable: this.isFormClickable(),
+                    icon: 'create'
+                });
+            } else {
+                return cardItem;
+            }
+        });
     }
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {

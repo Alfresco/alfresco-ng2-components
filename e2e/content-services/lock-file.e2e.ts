@@ -82,8 +82,12 @@ describe('Lock File', () => {
     });
 
     afterAll(async () => {
-        await loginPage.login(adminUser.username, adminUser.password);
-        await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+        await apiService.loginWithProfile('admin');
+        try {
+
+            await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+        } catch (e) {
+        }
     });
 
     describe('Lock file interaction with the UI', () => {
@@ -112,7 +116,7 @@ describe('Lock File', () => {
         });
 
         afterAll(async () => {
-            await apiService.login(adminUser.username, adminUser.password);
+            await apiService.loginWithProfile('admin');
             try {
                 await apiService.getInstance().core.nodesApi.unlockNode(pngLockedUploadedFile.entry.id);
             } catch (e) {
@@ -257,9 +261,6 @@ describe('Lock File', () => {
     describe('Locked file with owner permissions', () => {
         let pngFileToBeLocked: NodeEntry;
         let pngUploadedFile: NodeEntry;
-
-        beforeAll(async () => {
-        });
 
         beforeEach(async () => {
             await apiService.login(adminUser.username, adminUser.password);

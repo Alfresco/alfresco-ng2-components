@@ -267,7 +267,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
      */
     private loadDetails(taskId: string) {
         this.taskPeople = [];
-        this.taskFormName = null;
 
         if (taskId) {
             this.taskListService.getTaskDetails(taskId).subscribe(
@@ -339,6 +338,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onCompleteAttachForm() {
+        this.taskFormName = null;
         this.showAttachForm = false;
         this.taskFormComponent.loadTask(this.taskId);
         this.loadDetails(this.taskId);

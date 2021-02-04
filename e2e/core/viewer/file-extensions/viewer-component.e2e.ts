@@ -112,6 +112,7 @@ describe('Viewer', () => {
         });
 
         afterAll(async () => {
+            await apiService.loginWithProfile('admin');
             await uploadActions.deleteFileOrFolder(otherFolderUploaded.entry.id);
         });
 

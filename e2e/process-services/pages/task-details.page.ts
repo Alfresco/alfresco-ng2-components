@@ -220,7 +220,7 @@ export class TaskDetailsPage {
     async updatePriority(priority?: string): Promise<void> {
         await BrowserActions.click(this.priority);
         await BrowserActions.clearWithBackSpace(this.priority);
-        await BrowserActions.clearSendKeys(element(by.css('input[data-automation-id="card-textitem-value-priority"]')), priority ? priority : ' ', 500);
+        await BrowserActions.clearSendKeys(element(by.css('input[data-automation-id="card-textitem-value-priority"]')), priority, 500);
         await this.priority.sendKeys(Key.TAB);
         await browser.sleep(1000);
     }

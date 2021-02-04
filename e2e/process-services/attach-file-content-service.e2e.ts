@@ -144,25 +144,7 @@ describe('Attach File - Content service', () => {
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
     });
 
-    it('[C299040] Should display the login screen right, when user has access to 2 alfresco repositiories', async () => {
-        const name = 'Attach file';
-        await taskPage.createTask({ name, formName: app.UPLOAD_FILE_FORM_CS.formName });
-
-        await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
-        await widget.attachFileWidget().selectUploadSource(csIntegrations[1]);
-
-        await externalNodeSelector.waitForLogInDialog();
-        await expect(await externalNodeSelector.getTitle()).toEqual(`Sign into '${browser.params.testConfig.adf_external_acs.host}'`);
-        await externalNodeSelector.login(user.username, user.password);
-
-        await externalNodeSelector.checkDialogIsDisplayed();
-        await searchService.isSearchable(externalFile);
-        await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);
-        await externalNodeSelector.clickMoveCopyButton();
-        await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, externalFile);
-    });
-
-    it('[C286516] Able to upload a file when user has more than two alfresco repositories', async () => {
+    it('[C286516][C299040] Able to upload a file when user has more than two alfresco repositories', async () => {
         const name = 'Attach file - multiple repo';
         await taskPage.createTask({ name, formName: app.UPLOAD_FILE_FORM_CS.formName });
 
