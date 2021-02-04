@@ -20,7 +20,8 @@
 import { FormFieldSelectedFolder } from './form-field-selected-folder';
 
 export interface DestinationFolderPath {
-    name: string;
+    id?: string;
+    name?: string;
     type: string;
     value: string;
 }
