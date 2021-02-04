@@ -124,8 +124,8 @@ export class AlfrescoApiService {
     protected initAlfrescoApi() {
         const oauth: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
         if (oauth) {
-            oauth.redirectUri = window.location.origin + (oauth.redirectUri || '/');
-            oauth.redirectUriLogout = window.location.origin + (oauth.redirectUriLogout || '/');
+            oauth.redirectUri = window.location.origin + window.location.pathname + (oauth.redirectUri || '/');
+            oauth.redirectUriLogout = window.location.origin + window.location.pathname + (oauth.redirectUriLogout || '/');
         }
 
         const config = new AlfrescoApiConfig({
