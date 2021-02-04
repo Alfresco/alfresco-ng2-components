@@ -40,7 +40,7 @@ export class ContentNodeSelectorDialogPage {
     siteListDropdown = new DropdownPage(this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
     breadcrumbDropdown = new BreadcrumbDropdownPage();
     tabPage: TabPage = new TabPage();
-    uploadButtonComponent= new UploadButtonPage();
+    uploadButtonComponent = new UploadButtonPage();
 
     uploadFromLocalTabName = 'Upload from your device';
     repositoryTabName = 'Repository';
