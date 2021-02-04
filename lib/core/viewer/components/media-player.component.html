@@ -1,3 +1,4 @@
 <video controls>
     <source [src]="urlFile" [type]="mimeType" (error)="onMediaPlayerError()"/>
+    <track *ngFor="let track of tracks" [kind]="track.kind" [label]="track.label" [srclang]="track.srclang" [src]="track.src"/>
 </video>

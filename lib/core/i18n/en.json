@@ -376,7 +376,8 @@
       "CLOSE": "Close",
       "PLACEHOLDER": "Password",
       "ERROR": "Password is wrong"
-    }
+    },
+    "SUBTITLES": "Subtitles"
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {

@@ -36,3 +36,5 @@ export * from './components/viewer.component';
 export * from './directives/viewer-extension.directive';
 
 export * from './viewer.module';
+
+export * from './models/viewer.model';

@@ -350,7 +350,7 @@ describe('ViewerComponent', () => {
                 done();
             });
         }, 25000);
-   });
+    });
 
     it('should change display name every time node changes', fakeAsync(() => {
         spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
@@ -378,7 +378,7 @@ describe('ViewerComponent', () => {
 
     it('should append version of the file to the file content URL', fakeAsync(() => {
         spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValue(
-            Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {}, properties: { 'cm:versionLabel' : '10'} } }))
+            Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {}, properties: { 'cm:versionLabel': '10' } } }))
         );
         spyOn(alfrescoApiService.versionsApi, 'getVersion').and.returnValue(Promise.resolve(undefined));
 
@@ -456,6 +456,78 @@ describe('ViewerComponent', () => {
         fixture.detectChanges();
         expect(component.fileTitle).toBe('file3');
         expect(component.nodeId).toBe('id1');
+    }));
+
+    it('should generate tracks for media file when webvtt rendition exists', fakeAsync(() => {
+        const fakeRenditionUrl = 'http://fake.rendition.url';
+        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
+            Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } }))
+        );
+        spyOn(alfrescoApiService.renditionsApi, 'getRenditions').and.returnValues(
+            { list: { entries: [{ entry: { id: 'webvtt', status: 'CREATED' }}] } }
+        );
+        spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValues('http://iam-fake.url');
+        spyOn(alfrescoApiService.contentApi, 'getRenditionUrl').and.returnValue(fakeRenditionUrl);
+        spyOn(component, 'getViewerTypeByExtension').and.returnValue('media');
+
+        component.urlFile = null;
+        component.displayName = null;
+        component.blobFile = null;
+        component.showViewer = true;
+
+        component.nodeId = 'id1';
+        component.ngOnChanges();
+        tick();
+        fixture.detectChanges();
+        expect(component.mediaTracks).toEqual([{src: fakeRenditionUrl, kind: 'subtitles', label: 'ADF_VIEWER.SUBTITLES'}]);
+    }));
+
+    it('should not generate tracks for media file when webvtt rendition is not created', fakeAsync(() => {
+        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
+            Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } }))
+        );
+
+        spyOn(alfrescoApiService.renditionsApi, 'getRenditions').and.returnValues(
+            { list: { entries: [{ entry: { id: 'webvtt', status: 'NOT_CREATED' }}] } }
+        );
+
+        spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValues('http://iam-fake.url');
+        spyOn(component, 'getViewerTypeByExtension').and.returnValue('media');
+
+        component.urlFile = null;
+        component.displayName = null;
+        component.blobFile = null;
+        component.showViewer = true;
+
+        component.nodeId = 'id1';
+        component.ngOnChanges();
+        tick();
+        fixture.detectChanges();
+        expect(component.mediaTracks.length).toBe(0);
+    }));
+
+    it('should not generate tracks for media file when webvtt rendition does not exist', fakeAsync(() => {
+        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
+            Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } }))
+        );
+
+        spyOn(alfrescoApiService.renditionsApi, 'getRenditions').and.returnValues(
+            { list: { entries: [] } }
+        );
+
+        spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValues('http://iam-fake.url');
+        spyOn(component, 'getViewerTypeByExtension').and.returnValue('media');
+
+        component.urlFile = null;
+        component.displayName = null;
+        component.blobFile = null;
+        component.showViewer = true;
+
+        component.nodeId = 'id1';
+        component.ngOnChanges();
+        tick();
+        fixture.detectChanges();
+        expect(component.mediaTracks.length).toBe(0);
     }));
 
     describe('Viewer Example Component Rendering', () => {
@@ -1014,7 +1086,7 @@ describe('ViewerComponent', () => {
                 });
             });
         });
-   });
+    });
 
     describe('Viewer component - Full Screen Mode - Mocking fixture element', () => {
 
