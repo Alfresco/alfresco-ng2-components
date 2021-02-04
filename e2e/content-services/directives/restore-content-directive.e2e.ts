@@ -290,12 +290,9 @@ describe('Restore content directive', () => {
 
             await waitActions.nodeIsPresent(publicSite.entry.guid);
 
-            await navigationBarPage.navigateToContentServices();
-            await contentServicesPage.waitForTableBody();
-
             await navigationBarPage.goToSite(publicSite);
 
-            await contentServicesPage.waitForTableBody();
+          await contentServicesPage.waitForTableBody();
             await contentServicesPage.checkContentIsDisplayed(siteFolder.entry.name);
             await contentServicesPage.openFolder(siteFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(siteFile.entry.name);

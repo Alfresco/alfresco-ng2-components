@@ -284,10 +284,13 @@ describe('ContentNodeSelectorComponent', () => {
             selectTabByIndex(1);
 
             fixture.detectChanges();
-            const warningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
+            const infoMatIcon = fixture.debugElement.query(By.css('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]'));
+            const iconTooltipMessage = infoMatIcon.attributes['ng-reflect-message'];
 
-            expect(warningMessage).not.toBeNull();
-            expect(warningMessage.nativeElement.innerText).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE');
+            const expectedMessage = 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE';
+
+            expect(component.getWarningMessage()).toEqual(expectedMessage);
+            expect(iconTooltipMessage).toEqual(expectedMessage.substring(0, 30));
         });
 
         it('should not be able to show warning message if it is not in search mode', () => {
@@ -339,10 +342,12 @@ describe('ContentNodeSelectorComponent', () => {
             selectTabByIndex(1);
 
             fixture.detectChanges();
-            const warningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
+            const infoMatIcon = fixture.debugElement.query(By.css('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]'));
+            const iconTooltipMessage = infoMatIcon.attributes['ng-reflect-message'];
+            const expectedMessage = 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE';
 
-            expect(warningMessage).not.toBeNull();
-            expect(warningMessage.nativeElement.innerText).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE');
+            expect(component.getWarningMessage()).toEqual(expectedMessage);
+            expect(iconTooltipMessage).toEqual(expectedMessage.substring(0, 30));
         });
 
         it('should not be able to show warning message while loading documents', () => {
