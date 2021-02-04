@@ -155,6 +155,21 @@ describe('AttachFileCloudWidgetComponent', () => {
         }
     };
 
+    const allSourceWithoutDestinationFolderPath = {
+        fileSource: {
+            name: 'all file sources',
+            serviceId: 'all-file-sources'
+        }
+    };
+
+    const allSourceWithoutValueProperty = {
+        fileSource: {
+            name: 'all file sources',
+            serviceId: 'all-file-sources',
+            destinationFolderPath: '-mockAlias-'
+        }
+    };
+
     const fakeMinimalNode: Node = <Node> {
         id: 'fake',
         name: 'fake-name',
@@ -466,6 +481,54 @@ describe('AttachFileCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
+            expect(widget.rootNodeId).toEqual('-my-');
+            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'multiple', true, true);
+        });
+
+        it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath does not defined', async () => {
+            const getAliasAndPathSpy = spyOn(widget, 'getAliasAndRelativePathFromDestinationFolderPath').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: []
+            });
+            widget.field.id = 'attach-file-alfresco';
+            widget.field.params = <FormFieldMetadata> allSourceWithoutDestinationFolderPath;
+            widget.field.params.multiple = true;
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
+
+            expect(attachButton).not.toBeNull();
+
+            attachButton.click();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            expect(getAliasAndPathSpy).not.toHaveBeenCalled();
+            expect(widget.rootNodeId).toEqual('-my-');
+            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'multiple', true, true);
+        });
+
+        it('Should set default user alias (-my-) as rootNodeId if value property missing from destinationFolderPath', async () => {
+            const getAliasAndPathSpy = spyOn(widget, 'getAliasAndRelativePathFromDestinationFolderPath').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: []
+            });
+            widget.field.id = 'attach-file-alfresco';
+            widget.field.params = <any> allSourceWithoutValueProperty;
+            widget.field.params.multiple = true;
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
+
+            expect(attachButton).not.toBeNull();
+
+            attachButton.click();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            expect(getAliasAndPathSpy).not.toHaveBeenCalled();
             expect(widget.rootNodeId).toEqual('-my-');
             expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'multiple', true, true);
         });
