@@ -257,10 +257,10 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
 
     replacePriorityValues(row: DataRow, column: DataColumn) {
         return column.key.split('.').reduce((source, key) => {
-            if (key === 'priority' && typeof(source[key]) === 'number') {
+            if (key === 'priority' && source && typeof(source[key]) === 'number') {
                 return source[key] = this.taskCloudService.getPriorityLabel(source[key]);
             }
-            return source ? source[key] : '';
+            return source && typeof(source) === 'object' ? source[key] : undefined;
         }, row.obj);
     }
 
