@@ -66,8 +66,8 @@ class EmptyTemplateComponent {
     template: `
     <adf-cloud-task-list>
         <data-columns>
-            <data-column [copyContent]="true" key="entry.id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID"></data-column>
-            <data-column key="entry.name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"></data-column>
+            <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID"></data-column>
+            <data-column key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"></data-column>
         </data-columns>
     </adf-cloud-task-list>`
 })
@@ -199,26 +199,26 @@ describe('TaskListCloudComponent', () => {
             expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.rows.length).toEqual(1);
-            expect(component.rows[0].entry['appName']).toBe('test-ciprian2');
-            expect(component.rows[0].entry['appVersion']).toBe('');
-            expect(component.rows[0].entry['id']).toBe('11fe013d-c263-11e8-b75b-0a5864600540');
-            expect(component.rows[0].entry['assignee']).toBeNull();
-            expect(component.rows[0].entry['name']).toEqual('standalone-subtask');
-            expect(component.rows[0].entry['description']).toBeNull();
-            expect(component.rows[0].entry['createdDate']).toBe(1538059139420);
-            expect(component.rows[0].entry['dueDate']).toBeNull();
-            expect(component.rows[0].entry['claimedDate']).toBeNull();
-            expect(component.rows[0].entry['priority']).toBe(0);
-            expect(component.rows[0].entry['category']).toBeNull();
-            expect(component.rows[0].entry['processDefinitionId']).toBeNull();
-            expect(component.rows[0].entry['processInstanceId']).toBeNull();
-            expect(component.rows[0].entry['status']).toBe('CREATED');
-            expect(component.rows[0].entry['owner']).toBe('devopsuser');
-            expect(component.rows[0].entry['parentTaskId']).toBe('71fda20b-c25b-11e8-b75b-0a5864600540');
-            expect(component.rows[0].entry['lastModified']).toBe(1538059139420);
-            expect(component.rows[0].entry['lastModifiedTo']).toBeNull();
-            expect(component.rows[0].entry['lastModifiedFrom']).toBeNull();
-            expect(component.rows[0].entry['standalone']).toBeTruthy();
+            expect(component.rows[0]['appName']).toBe('test-ciprian2');
+            expect(component.rows[0]['appVersion']).toBe('');
+            expect(component.rows[0]['id']).toBe('11fe013d-c263-11e8-b75b-0a5864600540');
+            expect(component.rows[0]['assignee']).toBeNull();
+            expect(component.rows[0]['name']).toEqual('standalone-subtask');
+            expect(component.rows[0]['description']).toBeNull();
+            expect(component.rows[0]['createdDate']).toBe(1538059139420);
+            expect(component.rows[0]['dueDate']).toBeNull();
+            expect(component.rows[0]['claimedDate']).toBeNull();
+            expect(component.rows[0]['priority']).toBe(0);
+            expect(component.rows[0]['category']).toBeNull();
+            expect(component.rows[0]['processDefinitionId']).toBeNull();
+            expect(component.rows[0]['processInstanceId']).toBeNull();
+            expect(component.rows[0]['status']).toBe('CREATED');
+            expect(component.rows[0]['owner']).toBe('devopsuser');
+            expect(component.rows[0]['parentTaskId']).toBe('71fda20b-c25b-11e8-b75b-0a5864600540');
+            expect(component.rows[0]['lastModified']).toBe(1538059139420);
+            expect(component.rows[0]['lastModifiedTo']).toBeNull();
+            expect(component.rows[0]['lastModifiedFrom']).toBeNull();
+            expect(component.rows[0]['standalone']).toBeTruthy();
             done();
         });
         component.appName = appName.currentValue;
@@ -240,11 +240,7 @@ describe('TaskListCloudComponent', () => {
     });
 
     it('should emit row click event', (done) => {
-        const row = new ObjectDataRow({
-            entry: {
-                id: '999'
-            }
-        });
+        const row = new ObjectDataRow({ id: '999' });
         const rowEvent = new DataRowEvent(row, null);
         component.rowClick.subscribe((taskId) => {
             expect(taskId).toEqual('999');
@@ -307,7 +303,7 @@ describe('TaskListCloudComponent', () => {
             });
             fixture.detectChanges();
             expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
-            expect(component.formattedSorting).toEqual([TaskListCloudComponent.ENTRY_PREFIX + 'startDate', 'desc']);
+            expect(component.formattedSorting).toEqual(['startDate', 'desc']);
         });
 
         it('should reload task list when sorting on a column changes', () => {
@@ -326,7 +322,7 @@ describe('TaskListCloudComponent', () => {
                     direction: 'ASC'
                 })
             ]);
-            expect(component.formattedSorting).toEqual(['entry.fakeName', 'asc']);
+            expect(component.formattedSorting).toEqual(['fakeName', 'asc']);
             expect(component.isListEmpty()).toBeFalsy();
             expect(getTaskByRequestSpy).toHaveBeenCalled();
         });
@@ -506,14 +502,14 @@ describe('TaskListCloudComponent', () => {
                     'presets': {
                         'fakeCustomSchema': [
                             {
-                                'key': 'entry.id',
+                                'key': 'id',
                                 'type': 'text',
                                 'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
                                 'sortable': true,
                                 'copyContent': true
                             },
                             {
-                                'key': 'entry.name',
+                                'key': 'name',
                                 'type': 'text',
                                 'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
                                 'sortable': true
@@ -538,7 +534,7 @@ describe('TaskListCloudComponent', () => {
             fixture.destroy();
         });
 
-        it('shoud show tooltip if config copyContent flag is true', async(() => {
+        it('should show tooltip if config copyContent flag is true', async(() => {
             taskSpy.and.returnValue(of(fakeGlobalTask));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
@@ -552,24 +548,6 @@ describe('TaskListCloudComponent', () => {
                 });
             });
 
-            component.presetColumn = 'fakeCustomSchema';
-            component.appName = appName.currentValue;
-            component.ngOnChanges({ 'appName': appName });
-            component.ngAfterContentInit();
-        }));
-
-        it('shoud not show tooltip if config copyContent flag is true', async(() => {
-            taskSpy.and.returnValue(of(fakeGlobalTask));
-            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-            component.success.subscribe(() => {
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="standalone-subtask"]');
-                    spanHTMLElement.dispatchEvent(new Event('mouseenter'));
-                    fixture.detectChanges();
-                    expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
-                });
-            });
             component.presetColumn = 'fakeCustomSchema';
             component.appName = appName.currentValue;
             component.ngOnChanges({ 'appName': appName });
@@ -610,7 +588,7 @@ describe('TaskListCloudComponent', () => {
                 getValue: () => undefined
             }, {
                 type: 'text',
-                key: 'entry.priority'
+                key: 'priority'
             })).toEqual(undefined);
         });
 
@@ -624,16 +602,14 @@ describe('TaskListCloudComponent', () => {
 
             expect(component.replacePriorityValues({
                 obj: {
-                    entry: {
-                        priority: 1
-                    }
+                    priority: 1
                 },
                 isSelected: false,
                 hasValue: () => false,
                 getValue: () => undefined
             }, {
                 type: 'text',
-                key: 'entry.priority'
+                key: 'priority'
             })).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
         });
     });

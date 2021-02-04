@@ -61,8 +61,8 @@ class EmptyTemplateComponent {
     template: `
     <adf-cloud-service-task-list>
         <data-columns>
-            <data-column [copyContent]="true" key="entry.id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID"></data-column>
-            <data-column key="entry.activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"></data-column>
+            <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID"></data-column>
+            <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"></data-column>
         </data-columns>
     </adf-cloud-service-task-list>`
 })
@@ -194,19 +194,19 @@ describe('ServiceTaskListCloudComponent', () => {
             expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.rows.length).toEqual(1);
-            expect(component.rows[0].entry['appName']).toBe('simpleapp');
-            expect(component.rows[0].entry['activityType']).toBe('serviceTask');
-            expect(component.rows[0].entry['id']).toBe('04fdf69f-4ddd-48ab-9563-da776c9b163c');
-            expect(component.rows[0].entry['elementId']).toBe('ServiceTask_0lszm0x');
-            expect(component.rows[0].entry['executionId']).toBe('2023b099-fced-11ea-b116-62141048995a');
-            expect(component.rows[0].entry['startedDate']).toBe('2020-09-22T16:03:37.444+0000');
-            expect(component.rows[0].entry['completedDate']).toBe('2020-09-22T16:03:37.482+0000');
-            expect(component.rows[0].entry['processDefinitionVersion']).toBe(1);
-            expect(component.rows[0].entry['processDefinitionId']).toBe('Process_24rkVVSR:1:0db78dcd-fc14-11ea-bce0-62141048995a');
-            expect(component.rows[0].entry['processInstanceId']).toBe('2023b097-fced-11ea-b116-62141048995a');
-            expect(component.rows[0].entry['status']).toBe('COMPLETED');
-            expect(component.rows[0].entry['serviceFullName']).toBe('simpleapp-rb');
-            expect(component.rows[0].entry['serviceName']).toBe('simpleapp-rb');
+            expect(component.rows[0]['appName']).toBe('simpleapp');
+            expect(component.rows[0]['activityType']).toBe('serviceTask');
+            expect(component.rows[0]['id']).toBe('04fdf69f-4ddd-48ab-9563-da776c9b163c');
+            expect(component.rows[0]['elementId']).toBe('ServiceTask_0lszm0x');
+            expect(component.rows[0]['executionId']).toBe('2023b099-fced-11ea-b116-62141048995a');
+            expect(component.rows[0]['startedDate']).toBe('2020-09-22T16:03:37.444+0000');
+            expect(component.rows[0]['completedDate']).toBe('2020-09-22T16:03:37.482+0000');
+            expect(component.rows[0]['processDefinitionVersion']).toBe(1);
+            expect(component.rows[0]['processDefinitionId']).toBe('Process_24rkVVSR:1:0db78dcd-fc14-11ea-bce0-62141048995a');
+            expect(component.rows[0]['processInstanceId']).toBe('2023b097-fced-11ea-b116-62141048995a');
+            expect(component.rows[0]['status']).toBe('COMPLETED');
+            expect(component.rows[0]['serviceFullName']).toBe('simpleapp-rb');
+            expect(component.rows[0]['serviceName']).toBe('simpleapp-rb');
             done();
         });
         component.appName = appName.currentValue;
@@ -228,11 +228,7 @@ describe('ServiceTaskListCloudComponent', () => {
     });
 
     it('should emit row click event', (done) => {
-        const row = new ObjectDataRow({
-            entry: {
-                id: '999'
-            }
-        });
+        const row = new ObjectDataRow({ id: '999' });
         const rowEvent = new DataRowEvent(row, null);
         component.rowClick.subscribe((taskId) => {
             expect(taskId).toEqual('999');
@@ -286,7 +282,7 @@ describe('ServiceTaskListCloudComponent', () => {
             });
             fixture.detectChanges();
             expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
-            expect(component.formattedSorting).toEqual([ServiceTaskListCloudComponent.ENTRY_PREFIX + 'startDate', 'desc']);
+            expect(component.formattedSorting).toEqual(['startDate', 'desc']);
         });
 
         it('should reload task list when sorting on a column changes', () => {
@@ -305,7 +301,7 @@ describe('ServiceTaskListCloudComponent', () => {
                     direction: 'ASC'
                 })
             ]);
-            expect(component.formattedSorting).toEqual(['entry.fakeName', 'asc']);
+            expect(component.formattedSorting).toEqual(['fakeName', 'asc']);
             expect(component.isListEmpty()).toBeFalsy();
             expect(getServiceTaskByRequestSpy).toHaveBeenCalled();
         });
@@ -457,14 +453,14 @@ describe('ServiceTaskListCloudComponent', () => {
                     'presets': {
                         'fakeCustomSchema': [
                             {
-                                'key': 'entry.id',
+                                'key': 'id',
                                 'type': 'text',
                                 'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
                                 'sortable': true,
                                 'copyContent': true
                             },
                             {
-                                'key': 'entry.activityName',
+                                'key': 'activityName',
                                 'type': 'text',
                                 'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
                                 'sortable': true
