@@ -21,7 +21,7 @@ import { ContentMetadataService } from './content-metadata.service';
 import { of } from 'rxjs';
 import { ContentTypePropertiesService } from './content-type-property.service';
 
-describe('ContentMetaDataService', () => {
+describe('ContentTypePropertyService', () => {
 
     let service: ContentMetadataService;
     let contentPropertyService: ContentTypePropertiesService;
