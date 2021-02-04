@@ -42,8 +42,9 @@ export class ViewUtilService {
     };
 
     /**
-     * The name of the rendition with the media subtitles in webvtt format
+     * The name of the rendition with the media subtitles in the supported format
      */
+    /* tslint:disable-next-line */
     static SUBTITLES_RENDITION_NAME = 'webvtt';
 
     /**
