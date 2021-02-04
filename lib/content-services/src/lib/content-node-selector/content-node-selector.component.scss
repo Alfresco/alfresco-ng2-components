@@ -9,6 +9,22 @@
                 display: none;
             }
         }
+
+        .adf-upload-dialog {
+
+            &__content {
+                max-height: 64%;
+            }
+
+            height: 100%;
+            width: 100%;
+            position: unset;
+            bottom: unset;
+        }
+
+        .adf-upload-dialog-container {
+            height: 456px;
+        }
     }
 
     .adf-content-node-selector-dialog {

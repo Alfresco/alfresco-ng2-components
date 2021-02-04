@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FileModel, FileUploadStatus, UploadService, UserPreferencesService } from '@alfresco/adf-core';
+import { FileModel, FileUploadStatus, UploadService, UserPreferencesService, FileUploadDeleteEvent, FileUploadCompleteEvent } from '@alfresco/adf-core';
 import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, OnInit, ViewChild, HostBinding, ElementRef } from '@angular/core';
 import { Subscription, merge, Subject } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
@@ -38,6 +38,10 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     /** Dialog position. Can be 'left' or 'right'. */
     @Input()
     position: string = 'right';
+
+    /** Makes the dialog always visible even when there are no uploads. */
+    @Input()
+    alwaysVisible: boolean = false;
 
     /** Emitted when a file in the list has an error. */
     @Output()
@@ -107,7 +111,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             this.uploadService.fileUploadDeleted
         )
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(event => {
+            .subscribe((event: FileUploadCompleteEvent | FileUploadDeleteEvent) => {
                 this.totalCompleted = event.totalComplete;
                 this.changeDetector.detectChanges();
             });
@@ -200,5 +204,21 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
         this.errorSubscription.unsubscribe();
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
+    }
+
+    canShowDialog(): boolean {
+        return this.isDialogActive || this.alwaysVisible;
+    }
+
+    canShowCancelAll(): boolean {
+        return this.filesUploadingList?.length && this.hasUploadInProgress();
+    }
+
+    canCloseDialog(): boolean {
+        return !this.hasUploadInProgress() && !this.alwaysVisible;
+    }
+
+    hasUploadInProgress(): boolean {
+        return (!this.uploadList?.isUploadCompleted() && !this.uploadList?.isUploadCancelled());
     }
 }

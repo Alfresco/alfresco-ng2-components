@@ -487,7 +487,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 const merge = this._pagination ? this._pagination.merge : false;
-                this.data.loadPage(changes.node.currentValue, merge, null, this.getPreselectNodesBasedOnSelectionMode());
+                this.data.loadPage(changes.node.currentValue, merge, null, this.getPreselectedNodesBasedOnSelectionMode());
                 this.onPreselectNodes();
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.imageResolver) {
@@ -501,7 +501,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.resetSelection();
             if (this.node) {
                 if (this.data) {
-                    this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectNodesBasedOnSelectionMode());
+                    this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectedNodesBasedOnSelectionMode());
                 }
                 this.onPreselectNodes();
                 this.syncPagination();
@@ -694,7 +694,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
             if (this.data) {
-                this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.getPreselectNodesBasedOnSelectionMode());
+                this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.getPreselectedNodesBasedOnSelectionMode());
             }
             this.onPreselectNodes();
             this.setLoadingState(false);
@@ -800,7 +800,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     onNodeSelect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
-        this.selection = event.selection.map((entry) => entry.node);
+        this.selection = event.selection.filter(entry => entry.node).map((entry) => entry.node);
         const domEvent = new CustomEvent('node-select', {
             detail: {
                 node: event.row ? event.row.node : null,
@@ -919,13 +919,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.error.emit(err);
     }
 
-    getPreselectNodesBasedOnSelectionMode(): NodeEntry[] {
-        return this.hasPreselectNodes() ? (this.isSingleSelectionMode() ? [this.preselectNodes[0]] : this.preselectNodes) : [];
+    getPreselectedNodesBasedOnSelectionMode(): NodeEntry[] {
+        return this.hasPreselectedNodes() ? (this.isSingleSelectionMode() ? [this.preselectNodes[0]] : this.preselectNodes) : [];
     }
 
     onPreselectNodes() {
-        if (this.hasPreselectNodes()) {
-            const preselectedNodes = [...this.isSingleSelectionMode() ? [this.data.getPreselectRows()[0]] : this.data.getPreselectRows()];
+        if (this.data.hasPreselectedRows()) {
+            const preselectedNodes = [...this.isSingleSelectionMode() ? [this.data.getPreselectedRows()[0]] : this.data.getPreselectedRows()];
             const selectedNodes = [...this.selection, ...preselectedNodes];
 
             for (const node of preselectedNodes) {
@@ -939,7 +939,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return this.selectionMode === 'single';
     }
 
-    hasPreselectNodes(): boolean {
-        return this.preselectNodes && this.preselectNodes.length > 0;
+    hasPreselectedNodes(): boolean {
+        return this.preselectNodes?.length > 0;
     }
 }
