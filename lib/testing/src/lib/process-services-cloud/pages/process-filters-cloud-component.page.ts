@@ -34,20 +34,6 @@ export class ProcessFiltersCloudComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
-    async getProcessFilterIcon(filterName: string): Promise<string> {
-        this.filter = this.getProcessFilterLocatorByFilterName(filterName);
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const icon = this.filter.element(this.filterIcon);
-        await BrowserVisibility.waitUntilElementIsVisible(icon);
-        return BrowserActions.getText(icon);
-    }
-
-    async checkProcessFilterHasNoIcon(filterName: string): Promise<void> {
-        this.filter = this.getProcessFilterLocatorByFilterName(filterName);
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.filterIcon));
-    }
-
     async clickProcessFilter(filterName: string): Promise<void> {
         this.filter = this.getProcessFilterLocatorByFilterName(filterName);
         await BrowserActions.click(this.filter);
