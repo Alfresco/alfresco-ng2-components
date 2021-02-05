@@ -70,6 +70,7 @@ describe('Viewer', () => {
     });
 
     afterAll(async () => {
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(pngFile.getId());
         await navigationBarPage.clickLogoutButton();
     });

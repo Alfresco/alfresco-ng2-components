@@ -20,7 +20,7 @@ import { Subject } from 'rxjs';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 
 export interface UpdateNotification {
-    target: any;
+    target: CardViewBaseItemModel;
     changed: any;
 }
 
@@ -60,7 +60,7 @@ export class CardViewUpdateService {
 
     /**
      * Updates the cardview items property
-     * @param CardViewBaseItemModel
+     * @param notification
      */
     updateElement(notification: CardViewBaseItemModel) {
         this.updateItem$.next(notification);

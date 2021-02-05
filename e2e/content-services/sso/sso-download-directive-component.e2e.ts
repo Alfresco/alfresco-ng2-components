@@ -58,42 +58,43 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     let pdfUploadedFile, pngUploadedFile, folder, acsUser;
     const folderName = StringUtil.generateRandomString(5);
 
+    beforeAll(async () => {
+        await apiService.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
+
+        acsUser = await usersActions.createUser();
+
+        await apiService.login(acsUser.username, acsUser.password);
+
+        folder = await uploadActions.createFolder(folderName, '-my-');
+
+        pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, folder.entry.id);
+        pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, folder.entry.id);
+
+        await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
+            browser.params.testConfig.appConfig.oauth2.host,
+            browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
+
+        await loginSsoPage.loginSSOIdentityService(acsUser.username, acsUser.password);
+
+        await navigationBarPage.navigateToContentServices();
+        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.openFolder(folderName);
+        await contentListPage.waitForTableBody();
+    });
+
+    afterAll(async () => {
+        try {
+            await apiService.loginWithProfile('admin');
+            await uploadActions.deleteFileOrFolder(folder.entry.id);
+            await identityService.deleteIdentityUser(acsUser.email);
+        } catch (error) {
+        }
+        await apiService.getInstance().logout();
+        await browser.executeScript('window.sessionStorage.clear();');
+        await browser.executeScript('window.localStorage.clear();');
+    });
+
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
-        beforeAll(async () => {
-            await apiService.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
-
-            acsUser = await usersActions.createUser();
-
-            await apiService.login(acsUser.username, acsUser.password);
-
-            folder = await uploadActions.createFolder(folderName, '-my-');
-
-            pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, folder.entry.id);
-            pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, folder.entry.id);
-
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
-                browser.params.testConfig.appConfig.oauth2.host,
-                browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
-
-            await loginSsoPage.loginSSOIdentityService(acsUser.username, acsUser.password);
-
-            await navigationBarPage.navigateToContentServices();
-            await contentServicesPage.checkAcsContainer();
-            await contentServicesPage.openFolder(folderName);
-            await contentListPage.waitForTableBody();
-        });
-
-        afterAll(async () => {
-            try {
-                await apiService.loginWithProfile('admin');
-                await uploadActions.deleteFileOrFolder(folder.entry.id);
-                await identityService.deleteIdentityUser(acsUser.email);
-            } catch (error) {
-            }
-            await apiService.getInstance().logout();
-            await browser.executeScript('window.sessionStorage.clear();');
-            await browser.executeScript('window.localStorage.clear();');
-        });
 
         afterEach(async () => {
             await browser.refresh();

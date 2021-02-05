@@ -87,6 +87,7 @@ describe('Viewer', () => {
     });
 
     afterAll(async () => {
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
         await apiService.login(acsUser.username, acsUser.password);
         await uploadActions.deleteFileOrFolder(wordFileUploaded.entry.id);

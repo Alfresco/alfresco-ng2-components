@@ -98,6 +98,7 @@ describe('Start Process Component', () => {
         });
 
         afterAll(async () => {
+            await apiService.loginWithProfile('admin');
             await apiServiceUserTwo.getInstance().activiti.modelsApi.deleteModel(appCreated.id);
             await apiServiceUserTwo.getInstance().activiti.modelsApi.deleteModel(simpleAppCreated.id);
             await apiServiceUserTwo.getInstance().activiti.modelsApi.deleteModel(dateFormAppCreated.id);

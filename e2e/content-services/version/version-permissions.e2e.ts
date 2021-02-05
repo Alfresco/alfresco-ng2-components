@@ -144,6 +144,7 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async () => {
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().nodes.deleteNode(sameCreatorFile.id);
             await navigationBarPage.clickLogoutButton();
         });
@@ -215,6 +216,7 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async () => {
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().nodes.deleteNode(sameCreatorFile.id);
             await navigationBarPage.clickLogoutButton();
         });
@@ -269,6 +271,7 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async () => {
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().nodes.deleteNode(sameCreatorFile.id);
             await navigationBarPage.clickLogoutButton();
         });

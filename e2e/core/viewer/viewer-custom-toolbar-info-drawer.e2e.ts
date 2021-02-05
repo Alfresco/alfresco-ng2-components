@@ -59,6 +59,7 @@ describe('Viewer', () => {
    });
 
     afterAll(async () => {
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(txtFileUploaded.entry.id);
         await navigationBarPage.clickLogoutButton();
    });

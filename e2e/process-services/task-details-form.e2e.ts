@@ -36,6 +36,7 @@ import { TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../util/constants');
 
 describe('Task Details - Form', () => {
+
     const loginPage = new LoginPage();
     const tasksListPage = new TasksListPage();
     const taskDetailsPage = new TaskDetailsPage();
@@ -187,6 +188,7 @@ describe('Task Details - Form', () => {
             const form = await formActions.getFormByName(app.visibilityProcess.formName);
             await apiService.getInstance().activiti.taskApi.attachForm(newTask.id, { 'formId': form.id });
 
+            await browser.refresh();
             await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
             await tasksListPage.checkTaskListIsLoaded();
             await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);

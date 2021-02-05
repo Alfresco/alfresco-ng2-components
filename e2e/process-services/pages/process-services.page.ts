@@ -17,8 +17,9 @@
 
 import { ProcessServiceTabBarPage } from './process-service-tab-bar.page';
 
-import { Locator, element, by } from 'protractor';
+import { Locator, element, by, browser } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { TasksPage } from './tasks.page';
 
 export class ProcessServicesPage {
 
@@ -34,12 +35,21 @@ export class ProcessServicesPage {
     async goToApp(applicationName: string): Promise<ProcessServiceTabBarPage> {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         await BrowserActions.click(app);
+        const taskPage = new TasksPage();
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
         return new ProcessServiceTabBarPage();
     }
 
     async goToTaskApp(): Promise<ProcessServiceTabBarPage> {
         await BrowserActions.click(this.taskApp);
         return new ProcessServiceTabBarPage();
+    }
+
+    async goToAppByAppId(appId: string): Promise<void> {
+        const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${appId}/tasks/`;
+        await BrowserActions.getUrl(urlToNavigateTo);
+        const taskPage = new TasksPage();
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
     }
 
     async getAppIconType(applicationName: string): Promise<string> {

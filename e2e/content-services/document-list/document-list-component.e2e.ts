@@ -338,6 +338,7 @@ describe('Document List Component', () => {
         });
 
         afterAll(async () => {
+            await apiService.loginWithProfile('admin');
             for (let i = 0; i < folderCreated.length; i++) {
                 await uploadActions.deleteFileOrFolder(folderCreated[i].entry.id);
             }

@@ -27,6 +27,7 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
+import { NodeEntry } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { ShareDialogPage } from '../../core/pages/dialog/share-dialog.page';
@@ -35,23 +36,23 @@ import { browser } from 'protractor';
 
 describe('Unshare file', () => {
 
-    const apiService = new ApiService();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const contentListPage = contentServicesPage.getDocumentList();
     const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const navigationBarPage = new NavigationBarPage();
     const shareDialog = new ShareDialogPage();
 
+    const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
     let acsUser: UserModel;
 
-    let nodeBody, nodeId, testSite;
+    let nodeBody, shareFilesSite;
+    let pngUploadedFile: NodeEntry;
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -76,7 +77,7 @@ describe('Unshare file', () => {
             }
         };
 
-        testSite = await apiService.getInstance().core.sitesApi.createSite(site);
+        shareFilesSite = await apiService.getInstance().core.sitesApi.createSite(site);
 
         const docLibId = (await apiService.getInstance().core.sitesApi.getSiteContainers(siteName)).list.entries[0].entry.id;
         const testFile1Id = (await apiService.getInstance().core.nodesApi.addNode(docLibId, nodeBody)).entry.id;
@@ -97,38 +98,33 @@ describe('Unshare file', () => {
             }
         });
         await apiService.getInstance().core.sharedlinksApi.addSharedLink({ nodeId: testFile1Id });
-        await apiService.login(acsUser.username, acsUser.password);
-
-        const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
-        nodeId = pngUploadedFile.entry.id;
-
-        await loginPage.login(acsUser.username, acsUser.password);
-        await navBar.navigateToContentServices();
-        await contentServicesPage.waitForTableBody();
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await apiService.getInstance().core.sitesApi.deleteSite(testSite.entry.id, { permanent: true });
+        await apiService.getInstance().core.sitesApi.deleteSite(shareFilesSite.entry.id, { permanent: true });
     });
 
     describe('with permission', () => {
-        afterAll(async () => {
+
+        afterEach(async () => {
             await apiService.loginWithProfile('admin');
-            await uploadActions.deleteFileOrFolder(nodeId);
+            await navigationBarPage.clickLogoutButton();
+            await uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
         });
 
-        it('[C286550] Should display unshare confirmation dialog', async () => {
-            await contentListPage.selectRow(pngFileModel.name);
-            await contentServicesPage.clickShareButton();
-            await shareDialog.checkDialogIsDisplayed();
-            await browser.sleep(2000);
-            await shareDialog.clickUnShareFile();
-            await shareDialog.confirmationDialogIsDisplayed();
+        beforeEach(async () => {
+            await apiService.login(acsUser.username, acsUser.password);
+
+            pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
+
+            await loginPage.login(acsUser.username, acsUser.password);
+            await navBar.navigateToContentServices();
+            await contentServicesPage.waitForTableBody();
         });
 
         it('[C286551] Should be able to cancel unshare action', async () => {
-            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.getDocumentList().selectRow(pngFileModel.name);
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.clickUnShareFile();
@@ -137,8 +133,17 @@ describe('Unshare file', () => {
             await shareDialog.shareToggleButtonIsChecked();
         });
 
+        it('[C286550] Should display unshare confirmation dialog', async () => {
+            await contentServicesPage.getDocumentList().selectRow(pngFileModel.name);
+            await contentServicesPage.clickShareButton();
+            await shareDialog.checkDialogIsDisplayed();
+            await browser.sleep(2000);
+            await shareDialog.clickUnShareFile();
+            await shareDialog.confirmationDialogIsDisplayed();
+        });
+
         it('[C286552] Should be able to confirm unshare action', async () => {
-            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.getDocumentList().selectRow(pngFileModel.name);
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.clickUnShareFile();
@@ -148,7 +153,7 @@ describe('Unshare file', () => {
         });
 
         it('[C280556] Should redirect to 404 when trying to access an unshared file', async () => {
-            await contentListPage.selectRow(pngFileModel.name);
+            await contentServicesPage.getDocumentList().selectRow(pngFileModel.name);
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
             await browser.sleep(2000);
@@ -165,15 +170,14 @@ describe('Unshare file', () => {
 
     describe('without permission', () => {
 
-        afterAll(async () => {
-            await apiService.loginWithProfile('admin');
-            await apiService.getInstance().core.sitesApi.deleteSite(siteName, { permanent: true });
+        beforeEach(async () => {
+            await loginPage.login(acsUser.username, acsUser.password);
         });
 
         it('[C286555] Should NOT be able to unshare file without permission', async () => {
-            await navBar.goToSite(testSite);
+            await navBar.goToSite(shareFilesSite);
             await contentServicesPage.openFolder('documentLibrary');
-            await contentListPage.selectRow(nodeBody.name);
+            await contentServicesPage.getDocumentList().selectRow(nodeBody.name);
             await contentServicesPage.clickShareButton();
 
             await shareDialog.checkDialogIsDisplayed();

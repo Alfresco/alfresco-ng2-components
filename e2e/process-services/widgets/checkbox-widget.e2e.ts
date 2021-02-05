@@ -18,7 +18,6 @@
 import {
     ApiService,
     ApplicationsUtil,
-    BrowserActions,
     LoginPage,
     ProcessUtil,
     UsersActions,
@@ -27,6 +26,7 @@ import {
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
+import { ProcessServicesPage } from '../pages/process-services.page';
 
 describe('Checkbox Widget', () => {
 
@@ -61,8 +61,7 @@ describe('Checkbox Widget', () => {
    });
 
     beforeEach(async () => {
-        const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
-        await BrowserActions.getUrl(urlToNavigateTo);
+        await (new ProcessServicesPage()).goToAppByAppId(deployedApp.id);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
     });

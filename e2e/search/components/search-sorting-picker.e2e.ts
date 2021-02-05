@@ -70,7 +70,7 @@ describe('Search Sorting Picker', () => {
 
         pngA = await uploadActions.uploadFile(pngAModel.location, pngAModel.name, '-my-');
         pngD = await uploadActions.uploadFile(pngDModel.location, pngDModel.name, '-my-');
-        await browser.sleep(12000);
+        await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
         await loginPage.login(acsUser.username, acsUser.password);
     });

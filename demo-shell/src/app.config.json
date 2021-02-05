@@ -155,7 +155,7 @@
         {
           "key": "score",
           "label": "Relevance",
-          "type": "FIELD",
+          "type": "SCORE",
           "field": "score",
           "ascending": false
         }
