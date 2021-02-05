@@ -29,4 +29,6 @@ export * from './services/config/indifferent-config.service';
 export * from './services/config/layout-oriented-config.service';
 export * from './services/config/aspect-oriented-config.service';
 
+export * from './models/mime-type-property.model';
+
 export * from './content-metadata.module';

@@ -220,7 +220,7 @@
         },
         {
           "query": "content.mimetype:text/html",
-          "label": "SEARCH.FACET_QUERIES.mimetype",
+          "label": "SEARCH.FACET_QUERIES.MIMETYPE",
           "group": "Type facet queries"
         },
         {

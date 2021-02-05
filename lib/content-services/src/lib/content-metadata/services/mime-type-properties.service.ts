@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService, CardViewSelectItemOption } from 'core';
+import { AppConfigService, CardViewSelectItemOption } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MimeTypeProperty } from '../models/mime-type-property.model';
