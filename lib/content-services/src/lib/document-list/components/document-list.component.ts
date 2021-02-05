@@ -924,7 +924,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     onPreselectNodes() {
-        if (this.data.hasPreselectedRows()) {
+        if (this.data?.hasPreselectedRows()) {
             const preselectedNodes = [...this.isSingleSelectionMode() ? [this.data.getPreselectedRows()[0]] : this.data.getPreselectedRows()];
             const selectedNodes = [...this.selection, ...preselectedNodes];
 
