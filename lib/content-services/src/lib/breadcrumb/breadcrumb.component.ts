@@ -182,7 +182,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         return position;
     }
 
-    breadcrumbItemIsAnchor(lastItem) {
+    breadcrumbItemIsAnchor(lastItem): boolean {
         return !this.readOnly && !lastItem;
     }
 
