@@ -112,6 +112,7 @@
       "attachFileVisible": "attach-file-visible",
       "attachFileInvisible": "attach-file-invisible",
       "attachLocalFile": "attach-local-file",
+      "attachLocalFileOnTask": "attach-local-file-on-task",
       "attachSingleMultiple": "attach-single-multiple",
       "attachMultipleSingle": "attach-multiple-single",
       "attachMultipleMultiple": "attach-multiple-multiple",
@@ -202,7 +203,10 @@
       "attachLocalFile": {
           "name": "attach-local-file",
           "attachFileWidget1": "Attachfile0ku0bu",
-          "attachFileWidget2": "Attachfile04mfeb"
+          "attachFileWidget2": "Attachfile04mfeb",
+          "attachFileLocalChildFolder": "Attachfilelocalchildfolder",
+          "attachFileContentServices": "Attachfilecontentservices",
+          "attachFileLocalMultiple": "Attachfilelocalmultiple"
       },
       "attachSingleMultiple": {
         "name": "attach-single-multiple",
@@ -256,7 +260,8 @@
       "candidateusersandgrouptask": "candidate users and group",
       "candidateUserTask": "candidateUserTask",
       "salesUserTask": "salesuser task",
-      "hrUserTask": "hruser task"
+      "hrUserTask": "hruser task",
+      "attachLocalFile": "attach local file"
     },
     "security": [
       {
