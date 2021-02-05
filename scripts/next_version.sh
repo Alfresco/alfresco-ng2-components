@@ -78,8 +78,7 @@ fi
 
 if [[ "${EXEC_ALPHA}" == true ]]
 then
-    ISH_KEY=$(git rev-parse HEAD)
-    NEXT_VERSION=${NEXT_VERSION}-${ISH_KEY}
+    NEXT_VERSION=${NEXT_VERSION}-${TRAVIS_BUILD_NUMBER}
 fi
 
 if [[ "${EXEC_BETA}" == true ]]
