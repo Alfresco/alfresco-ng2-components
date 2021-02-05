@@ -25,7 +25,8 @@
                 (click)="onRoutePathClick(node, $event)"
                 (onSelectionChange)="onRoutePathClick(node, $event)"
                 class="adf-dropdown-breadcrumb-path-option"
-                data-automation-class="dropdown-breadcrumb-path-option">
+                data-automation-class="dropdown-breadcrumb-path-option"
+                [disabled]="readOnly">
                 {{ node.name | translate }}
             </mat-option>
         </mat-select>

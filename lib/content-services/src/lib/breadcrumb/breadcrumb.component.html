@@ -33,6 +33,7 @@
             (click)="onRoutePathClick(node, $event)"
             (onSelectionChange)="onRoutePathClick(node, $event)"
             class="adf-breadcrumb-path-option"
+            [disabled]="readOnly"
         >
             {{ node.name | translate }}
         </mat-option>
@@ -41,7 +42,7 @@
     <div
         *ngFor="let item of lastNodes; let last = last"
         [class.adf-active]="last"
-        [ngSwitch]="last"
+        [ngSwitch]="last || readOnly"
         title="{{ item.name | translate }}"
         class="adf-breadcrumb-item">
         <a
