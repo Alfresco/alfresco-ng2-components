@@ -32,7 +32,6 @@ import { Subscription } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { filter } from 'rxjs/operators';
-import { Track } from '../models/viewer.model';
 
 @Component({
     selector: 'adf-viewer',
@@ -222,8 +221,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     sidebarLeftTemplateContext: { node: Node } = { node: null };
     fileTitle: string;
     viewerExtensions: Array<ViewerExtensionRef> = [];
-
-    mediaTracks: Track[] = [];
 
     private cacheBusterNumber;
 
@@ -417,10 +414,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             } else {
                 setupNode = this.viewUtils.displayNodeRendition(nodeData.id);
             }
-        }
-
-        if (this.viewerType === 'media') {
-            this.mediaTracks = await this.viewUtils.generateMediaTracks(nodeData.id);
         }
 
         this.extensionChange.emit(this.extension);
