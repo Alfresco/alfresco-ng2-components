@@ -42,11 +42,11 @@
     <div
         *ngFor="let item of lastNodes; let last = last"
         [class.adf-active]="last"
-        [ngSwitch]="last || readOnly"
+        [ngSwitch]="breadcrumbItemIsAnchor(last)"
         title="{{ item.name | translate }}"
         class="adf-breadcrumb-item">
         <a
-            *ngSwitchDefault
+            *ngSwitchCase="true"
             href="#"
             [attr.data-automation-id]="'breadcrumb_' + item.name"
             class="adf-breadcrumb-item-anchor"
@@ -55,7 +55,7 @@
             {{ item.name | translate }}
         </a>
 
-        <div *ngSwitchCase="true" class="adf-breadcrumb-item-current" role="heading" aria-level="2"
+        <div *ngSwitchDefault class="adf-breadcrumb-item-current" role="heading" aria-level="2"
             aria-current="location">
             {{ item.name | translate }}
         </div>

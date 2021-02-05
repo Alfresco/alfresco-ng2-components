@@ -182,6 +182,10 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         return position;
     }
 
+    breadcrumbItemIsAnchor(lastItem) {
+        return !this.readOnly && !lastItem;
+    }
+
     onRoutePathClick(route: PathElementEntity, event?: Event): void {
         if (event && event.type === 'click') {
             event.preventDefault();
