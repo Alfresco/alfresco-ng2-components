@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, browser } from 'protractor';
+import { by, element } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';

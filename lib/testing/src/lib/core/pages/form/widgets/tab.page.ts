@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
-import { by, element, browser } from 'protractor';
+import { by, element } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class TabPage {
 
+    changeTabAnimation = element(by.css('div[class="mat-ripple-element"]'));
+
     async clickTabByLabel(tabLabel): Promise<void> {
         const user = element(by.cssContainingText('.mat-tab-label-content', tabLabel));
         await BrowserActions.click(user);
-        await browser.sleep(300);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.changeTabAnimation);
     }
 
     async checkTabIsDisplayedByLabel(tabLabel): Promise<void> {

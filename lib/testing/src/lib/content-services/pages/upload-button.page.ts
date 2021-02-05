@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { FileModel } from '../../core/models/file.model';
 
@@ -25,7 +25,6 @@ export class UploadButtonPage {
 
     async attachFiles(files: FileModel[]): Promise<void> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadButton);
-        await browser.sleep(1000);
         for ( const file of files) {
             await this.uploadButton.sendKeys(file.getLocation());
         }
