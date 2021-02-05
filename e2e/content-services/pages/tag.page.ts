@@ -82,7 +82,7 @@ export class TagPage {
 
     async checkTagIsNotDisplayedInTagList(tagName: string): Promise<boolean> {
         try {
-            return TestElement.byText('div[id*="tag_name"]', tagName).waitNotVisible();
+            await TestElement.byText('div[id*="tag_name"]', tagName).waitNotVisible();
             return true;
         } catch (error) {
             return false;
