@@ -26,9 +26,7 @@ projectslength=${#projects[@]}
 show_help() {
     echo "Usage: update-version.sh"
     echo ""
-    echo "-sj or -sjsapi  don't update js-api version"
     echo "-vj or -versionjsapi  to use a different version of js-api"
-    echo "-components execute the change version only in the components "
     echo "-v or -version  version to update"
     echo "-major increase the major number and reset minor and patch"
     echo "-minor increase the minor number and reset the patch number"
@@ -40,22 +38,12 @@ show_help() {
     echo "-gnu for gnu"
 }
 
-skip_js() {
-    echo "====== Skip JS-API change version $1 ====="
-    JS_API=false
-}
-
 last_alpha_mode() {
     length=`expr $projectslength - 1`
     echo "====== Auto find last ALPHA version of ${projects[${length}]} ====="
     VERSION=$(npm view @alfresco/adf-${projects[${length}]}@alpha version)
 
     echo "====== version lib ${VERSION} ====="
-
-    DIFFERENT_JS_API=true
-    VERSION_JS_API=$(npm view @alfresco/js-api@alpha version)
-
-    echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
 
 next_alpha_mode() {
@@ -63,11 +51,7 @@ next_alpha_mode() {
     VERSION=$(./next_version.sh -${SEMANTIC} -alpha)
 
     echo "====== version lib ${VERSION} ====="
-
-    DIFFERENT_JS_API=true
-    VERSION_JS_API=$(npm view @alfresco/js-api@alpha version)
-
-    echo "====== version js-api ${DIFFERENT_JS_API} ====="
+    JS_API=false
 }
 
 next_beta_mode() {
@@ -75,11 +59,7 @@ next_beta_mode() {
     VERSION=$(./next_version.sh -${SEMANTIC} -beta)
 
     echo "====== version lib ${VERSION} ====="
-
-    DIFFERENT_JS_API=true
-    VERSION_JS_API=$(npm view @alfresco/js-api@alpha version)
-
-    echo "====== version js-api ${DIFFERENT_JS_API} ====="
+    JS_API=false
 }
 
 last_beta_mode() {
@@ -114,12 +94,6 @@ version_js_change() {
     VERSION_JS_API=$1
     DIFFERENT_JS_API=true
 }
-
-only_components() {
-    echo "====== UPDATE Only the components ====="
-    TOTAL_BUILD=false
-}
-
 
 update_component_version() {
    echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
@@ -201,7 +175,6 @@ while [[ $1  == -* ]]; do
       -nextalpha) next_alpha_mode; shift;;
       -beta) last_beta_mode; shift;;
       -nextbeta) next_beta_mode; shift;;
-      -components) only_components; shift;;
       -*) shift;;
     esac
 done
@@ -240,11 +213,7 @@ do
    fi
 done
 
-if $TOTAL_BUILD; then
-    echo "====== UPDATE TOTAL BUILD======"
-
-    update_total_build_dependency_version
-fi
+update_total_build_dependency_version
 
 if $JS_API == true; then
     if $DIFFERENT_JS_API == true; then

@@ -59,7 +59,7 @@ This script is recommended for development environment and not suited for headle
 
 ```sh
 npm run build
-npm run start:dist
+npm run start:prod
 ```
 
 This command builds project in `production` mode.
@@ -68,8 +68,8 @@ You should need no additional files outside the `dist` folder.
 
 ## Development branch build
 
-If you want to run the demo shell with the latest changes from the development branch, use the following command from the /script folder:
+If you want to run the demo shell with the latest changes from the development branch, use the following command :
 
 ```sh
-npm run start:dev
+npm run start
 ```

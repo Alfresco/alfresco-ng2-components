@@ -1,8 +1,6 @@
 ## Running a demo project
 
-
-- [Quick examples](#quick-examples)
-- [start.sh Demo shell script](#start.sh)
+- [start demo shell](#Start-Demo-Shell)
 
 The Alfresco application development framework comes with a demo project that you can run to get a
 feel of what's available.
@@ -12,110 +10,6 @@ feel of what's available.
 ```ssh
  cd alfresco-ng2-components
  cd scripts
-```
-
-# Quick examples developed with ADF
-
-* Start the demo shell using the JS-API from the development branch and the local component in the lib folder
-
-```sh
-./start.sh -dev -gitjsapi development
-```
-
-# start.sh
-
-***start.sh*** script provide an easy way to deal with the npm command and the correct sequence to run the task on demo-shell during development phases.
-
-## Options
-
-The default behaviour of the ***start.sh*** script always runs the install and the start of the demo shell on the port 3000, but with some of the options below this behaviour can be changed.
-All the commands before can be used in combination
-
-| Option | Description |
-| --- | --- |
-| -h or --help    | show the help  |
-| -u or --update  | run the update of the node_modules packages on the demo shell  |
-| -c or --clean   | clean the demo shell folder before starting it  |
-| -t or --test    | run the tests on the demo-shell  |
-| --e2e   | execute e2e test   |
-| -r or --registry    |  Start the demo using an alternative npm registry  |
-| -v or --version    | Use the version defined in the pacakge.json . Download from npm and Install a different version of the lib (this option is not compatible with -dev)  |
-| -si or --skipinstall    | skip the install of the node_modules  |
-| -ss or --skipstart    | skip the start of the demo shell and only build it providing a dist folder in the relative demo-shell folder  |
-| -dev or --develop    | Start the demo in development mode building the relative folder lib with all the components and pointing to those components instead of the lib present in the node_modules folder |
-| -dist     | Start the demo shell using a light server and the files built in the dist folder, particular useful to test the final result of the project |
-| -gitjsapi   | Start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API |
-| -vjsapi   | Use the version defined in the pacakge.json. Download from npm and install a different version of JS-API  |
-
-
-## Examples
-
-* Start the demo and install all the dependencies 
-
-```sh
-./start.sh 
-```
-
-* Start the demo, install all the dependencies, and remove the previous version of the npm packages (*Note. do this only after big changes*):
-
-```sh
-./start.sh -c 
-```
-
-* Start the demo using an alternative npm registry 
-
-```sh
-./start.sh -registry 'http://npm.local.me:8080/'
-```
-
-* Start the demo and update the dependencies:
-
-```sh
-./start.sh -update or -u
-```
-
-* Use instead the version defined in the pacakge.json. Download from npm and install a different version of the lib (this option is not compatible with -dev)  |
-
-```sh
-./start.sh -version or -v COMPONENTS_VERSION
-
-./start.sh -v 1.4.0
-```
-
-* Start the demo in development mode building the relative folder lib with all the components and pointing to this component instead of the node_modules one
-
-```sh
-./start.sh -develop or -dev
-```
-
-* Start the demo shell using a light server using the files built in the dist folder
-
-```sh
-./start.sh -dist
-```
-
-* Start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API
-
-```sh
-./start.sh -gitjsapi commit-ish
-
-./start.sh -gitjsapi development
- 
-./start.sh -gitjsapi de92be966e2ce7eca642ca9e9d7647ba4f849356
-```
-
-* Start the alfresco-js-api against a commit-ish version of the JS-API
-
-```sh
-./start.sh -vjsapi 1.4.0
-
-```
-
-* Run the Demo shell tests
-
-```sh
-./start.sh -t
-
 ```
 
 ***npm-check-bundles.sh*** check the bundles in the package npm are present
