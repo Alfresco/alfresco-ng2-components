@@ -126,7 +126,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
             poolInterruptingBoundarySubprocessCatch: 'pool-int-bound-subpr-catch',
             poolInterruptingBoundaryThrow: 'pool-int-boundary-throw',
             poolInterruptingBoundaryCatch: 'pool-int-boundary-catch',
-            outputVariablesMappin: 'output-variables-mapping'
+            outputVariablesMapping: 'output-variables-mapping'
         },
         forms: {
             tabVisibilityFields: {
