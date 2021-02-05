@@ -19,10 +19,17 @@
 
 import { FormFieldSelectedFolder } from './form-field-selected-folder';
 
+export interface DestinationFolderPath {
+    id?: string;
+    name?: string;
+    type: string;
+    value: string;
+}
+
 export interface FormFieldFileSource {
     metadataAllowed: boolean;
     name: string;
     selectedFolder: FormFieldSelectedFolder;
     serviceId: string;
-    destinationFolderPath: string;
+    destinationFolderPath: DestinationFolderPath;
 }

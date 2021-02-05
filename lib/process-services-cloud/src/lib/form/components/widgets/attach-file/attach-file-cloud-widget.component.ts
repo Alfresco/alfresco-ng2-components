@@ -125,8 +125,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     async openSelectDialog() {
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
         let destinationFolderPath = <DestinationFolderPathModel> { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: '' };
-        if (this.isAlfrescoAndLocal()) {
-            destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath);
+        if (this.isAlfrescoAndLocal() && this.hasDestinationFolder()) {
+            destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath.value);
             destinationFolderPath.path = this.replaceAppNameAliasWithValue(destinationFolderPath.path);
         }
         const nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
@@ -216,6 +216,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     isValidAlias(alias: string): boolean {
         return alias && AttachFileCloudWidgetComponent.VALID_ALIAS.includes(alias);
+    }
+
+    private hasDestinationFolder(): boolean {
+        return !!this.field?.params?.fileSource?.destinationFolderPath?.value;
     }
 
     ngOnDestroy() {

@@ -111,7 +111,11 @@ describe('AttachFileCloudWidgetComponent', () => {
         fileSource: {
             name: 'all file sources',
             serviceId: 'all-file-sources',
-            destinationFolderPath: '-root-/myfiles'
+            destinationFolderPath: {
+                name: 'staticValue',
+                value: '-root-/myfiles',
+                type: 'value'
+            }
         }
     };
 
@@ -119,7 +123,11 @@ describe('AttachFileCloudWidgetComponent', () => {
         fileSource: {
             name: 'all file sources',
             serviceId: 'all-file-sources',
-            destinationFolderPath: '-root-'
+            destinationFolderPath: {
+                name: 'staticValue',
+                value: '-root-',
+                type: 'value'
+            }
         }
     };
 
@@ -127,7 +135,11 @@ describe('AttachFileCloudWidgetComponent', () => {
         fileSource: {
             name: 'all file sources',
             serviceId: 'all-file-sources',
-            destinationFolderPath: '-wrongAlias-'
+            destinationFolderPath: {
+                name: 'staticValue',
+                value: '-wrongAlias-',
+                type: 'value'
+            }
         }
     };
 
@@ -135,7 +147,26 @@ describe('AttachFileCloudWidgetComponent', () => {
         fileSource: {
             name: 'all file sources',
             serviceId: 'all-file-sources',
-            destinationFolderPath: '/noalias/createdFolder'
+            destinationFolderPath: {
+                name: 'staticValue',
+                value: '/noalias/createdFolder',
+                type: 'value'
+            }
+        }
+    };
+
+    const allSourceWithoutDestinationFolderPath = {
+        fileSource: {
+            name: 'all file sources',
+            serviceId: 'all-file-sources'
+        }
+    };
+
+    const allSourceWithoutValueProperty = {
+        fileSource: {
+            name: 'all file sources',
+            serviceId: 'all-file-sources',
+            destinationFolderPath: '-mockAlias-'
         }
     };
 
@@ -363,7 +394,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             const alias = '-root-';
             const opt = { relativePath: '/myfiles' };
             expect(fetchNodeIdFromRelativePathSpy).toHaveBeenCalledWith(alias, opt);
-            expect(widget.field.params.fileSource.destinationFolderPath).toBe('-root-/myfiles');
+            expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('-root-/myfiles');
             expect(widget.rootNodeId).toEqual('mock-node-id');
         });
 
@@ -452,6 +483,46 @@ describe('AttachFileCloudWidgetComponent', () => {
 
             expect(widget.rootNodeId).toEqual('-my-');
             expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'multiple', true, true);
+        });
+
+        it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath is not defined', async () => {
+            const getAliasAndPathSpy = spyOn(widget, 'getAliasAndRelativePathFromDestinationFolderPath').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: [],
+                id: 'attach-file-alfresco',
+                params: <any> allSourceWithoutDestinationFolderPath
+            });
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
+
+            attachButton.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(getAliasAndPathSpy).not.toHaveBeenCalled();
+            expect(widget.rootNodeId).toEqual('-my-');
+        });
+
+        it('Should set default user alias (-my-) as rootNodeId if value property missing from destinationFolderPath', async () => {
+            const getAliasAndPathSpy = spyOn(widget, 'getAliasAndRelativePathFromDestinationFolderPath').and.callThrough();
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: [],
+                id: 'attach-file-alfresco',
+                params: <any> allSourceWithoutValueProperty
+            });
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
+
+            attachButton.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(getAliasAndPathSpy).not.toHaveBeenCalled();
+            expect(widget.rootNodeId).toEqual('-my-');
         });
 
         it('should return the application name in case -appname- placeholder is present', async() => {
