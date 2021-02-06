@@ -243,14 +243,15 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     };
 
     constructor(private apiService: AlfrescoApiService,
-                private viewUtils: ViewUtilService,
+                private viewUtilService: ViewUtilService,
                 private logService: LogService,
                 private extensionService: AppExtensionService,
                 private el: ElementRef) {
+        viewUtilService.maxRetries = this.maxRetries;
     }
 
     isSourceDefined(): boolean {
-        return (this.urlFile || this.blobFile || this.nodeId || this.sharedLinkId) ? true : false;
+        return !!(this.urlFile || this.blobFile || this.nodeId || this.sharedLinkId);
     }
 
     ngOnInit() {
@@ -261,12 +262,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         );
 
         this.subscriptions.push(
-            this.viewUtils.viewerTypeChange.subscribe((type: string) => {
+            this.viewUtilService.viewerTypeChange.subscribe((type: string) => {
                 this.viewerType = type;
             })
         );
         this.subscriptions.push(
-            this.viewUtils.urlFileContentChange.subscribe((content: string) => {
+            this.viewUtilService.urlFileContentChange.subscribe((content: string) => {
                 this.urlFileContent = content;
             })
         );
@@ -410,9 +411,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
         if (this.viewerType === 'unknown') {
             if (versionData) {
-                setupNode = this.viewUtils.displayNodeRendition(nodeData.id, versionData.id);
+                setupNode = this.viewUtilService.displayNodeRendition(nodeData.id, versionData.id);
             } else {
-                setupNode = this.viewUtils.displayNodeRendition(nodeData.id);
+                setupNode = this.viewUtilService.displayNodeRendition(nodeData.id);
             }
         }
 
@@ -620,7 +621,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.print.next(args);
 
             if (!args.defaultPrevented) {
-                this.viewUtils.printFileGeneric(this.nodeId, this.mimeType);
+                this.viewUtilService.printFileGeneric(this.nodeId, this.mimeType);
             }
         }
     }
