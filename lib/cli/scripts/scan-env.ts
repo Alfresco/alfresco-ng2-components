@@ -10,6 +10,9 @@ const TIMEOUT = 60000;
 const MAX_PEOPLE_PER_PAGE = 100;
 const USERS_HOME_RELATIVE_PATH = 'User Homes';
 
+const reset = '\x1b[0m', grey = '\x1b[90m', cyan = '\x1b[36m', yellow = '\x1b[33m',
+    bright = '\x1b[1m', red = '\x1b[31m', green = '\x1b[32m';
+
 let jsApiConnection: any;
 let loginAttempts: number = 0;
 
@@ -22,6 +25,7 @@ export default async function main(_args: string[]) {
         .option('-u, --username <type>', 'username ')
         .parse(process.argv);
 
+    logger.info(`${cyan}${bright}Initiating environment scan...${reset}`);
     await attemptLogin();
 
     const rowsToPrint: Array<RowToPrint> = [];
@@ -49,8 +53,6 @@ function generateTable(rowsToPrint: Array<RowToPrint>) {
     const headerText = 'ENVIRONM'.padStart(Math.floor((columnWidths.labelColumn + columnWidths.valueColumn + 3) / 2), ' ')
         + 'ENT SCAN'.padEnd(Math.ceil((columnWidths.labelColumn + columnWidths.valueColumn + 3) / 2), ' ');
 
-    const reset = '\x1b[0m', grey = '\x1b[90m', cyan = '\x1b[36m', yellow = '\x1b[33m', bright = '\x1b[1m';
-
     let tableString = `${grey}╒${horizontalLine}╕${reset}
 ${grey}│ ${bright}${cyan}${headerText} ${grey}│${reset}
 ${grey}╞${horizontalLine}╡${reset}`;
@@ -63,6 +65,7 @@ ${grey}╞${horizontalLine}╡${reset}`;
 }
 
 async function attemptLogin() {
+    logger.info(`    Logging into ${yellow}${program.host}${reset} with user ${yellow}${program.username}${reset}`);
     try {
         jsApiConnection = new AlfrescoApi({
             provider: 'ALL',
@@ -78,34 +81,38 @@ async function attemptLogin() {
             }
         });
         await jsApiConnection.login(program.username, program.password);
+        logger.info(`    ${green}Login SSO successful${reset}`);
     } catch (err) {
         await handleLoginError(err);
     }
 }
 
 async function handleLoginError(loginError) {
-    const reset = '\x1b[0m', bright = '\x1b[1m', red = '\x1b[31m';
     if (loginAttempts === 0) {
-        logger.error(`${red}${bright}ENVIRONMENT SCAN${reset}${red} - Login error: environment down or inaccessible${reset}`);
+        logger.error(`    ${red}Login SSO error${reset}`);
     }
     loginAttempts++;
     if (MAX_ATTEMPTS === loginAttempts) {
-        if (loginError.response && loginError.response.text) {
+        if (loginError && loginError.response && loginError.response.text) {
             const parsedJson = JSON.parse(loginError.response.text);
             if (typeof parsedJson === 'object' && parsedJson.error) {
-                logger.error(parsedJson.error);
+                const { stackTrace, ...errorWithoutDeprecatedProperty } = parsedJson.error;
+                logger.error(errorWithoutDeprecatedProperty);
             }
         }
-        logger.error('Give up');
-        process.exit(1);
+        logger.error(`    ${red}Give up${reset}`);
+        failScript();
     } else {
-        logger.error(`Retry in 1 minute attempt N ${loginAttempts}`);
+        logger.error(`    Retry in 1 minute attempt N ${loginAttempts}`);
         await wait(TIMEOUT);
         await attemptLogin();
     }
 }
 
 async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
+    if (skipCount === 0) {
+        logger.info(`    Fetching number of users`);
+    }
     try {
         const peopleApi = new PeopleApi(jsApiConnection);
         const apiResult = await peopleApi.listPeople({
@@ -124,11 +131,12 @@ async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
         }
         return result;
     } catch (error) {
-        logger.error(error);
+        handleError(error);
     }
 }
 
 async function getHomeFoldersCount(): Promise<number> {
+    logger.info(`    Fetching number of home folders`);
     try {
         const nodesApi = new NodesApi(jsApiConnection);
         const homesFolderApiResult = await nodesApi.listNodeChildren('-root-', {
@@ -137,31 +145,34 @@ async function getHomeFoldersCount(): Promise<number> {
         });
         return homesFolderApiResult.list.pagination.totalItems;
     } catch (error) {
-        logger.error(error);
+        handleError(error);
     }
 }
 
 async function getGroupsCount(): Promise<number> {
+    logger.info(`    Fetching number of groups`);
     try {
         const groupsApi = new GroupsApi(jsApiConnection);
         const groupsApiResult = await groupsApi.listGroups({ maxItems: 1 });
         return groupsApiResult.list.pagination.totalItems;
     } catch (error) {
-        logger.error(error);
+        handleError(error);
     }
 }
 
 async function getSitesCount(): Promise<number> {
+    logger.info(`    Fetching number of sites`);
     try {
         const sitesApi = new SitesApi(jsApiConnection);
         const sitesApiResult = await sitesApi.listSites({ maxItems: 1 });
         return sitesApiResult.list.pagination.totalItems;
     } catch (error) {
-        logger.error(error);
+        handleError(error);
     }
 }
 
 async function getFilesCount(): Promise<number> {
+    logger.info(`    Fetching number of files`);
     try {
         const searchApi = new SearchApi(jsApiConnection);
         const searchApiResult = await searchApi.search({
@@ -175,8 +186,25 @@ async function getFilesCount(): Promise<number> {
         });
         return searchApiResult.list.pagination.totalItems;
     } catch (error) {
-        logger.error(error);
+        handleError(error);
     }
+}
+
+function handleError(error) {
+    logger.error(`    ${red}Error encountered${reset}`);
+    if (error && error.response && error.response.text) {
+        const parsedJson = JSON.parse(error.response.text);
+        if (typeof parsedJson === 'object' && parsedJson.error) {
+            const { stackTrace, ...errorWithoutDeprecatedProperty } = parsedJson.error;
+            logger.error(errorWithoutDeprecatedProperty);
+        }
+    }
+    failScript();
+}
+
+function failScript() {
+    logger.error(`${red}${bright}Environment scan failed. Exiting with non-zero code${reset}`);
+    process.exit(1);
 }
 
 async function wait(ms: number) {

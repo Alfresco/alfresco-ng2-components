@@ -94,7 +94,7 @@ export class LoginPage {
         await this.enterPassword(password);
         await this.clickLoginButton();
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        await BrowserVisibility.waitUntilElementIsVisible(this.header);
+        await BrowserVisibility.waitUntilElementIsVisible(this.header, BrowserVisibility.DEFAULT_TIMEOUT * 2);
     }
 
     async loginBasicAuth(username: string, password: string): Promise<void> {

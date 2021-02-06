@@ -37,7 +37,7 @@ describe('Comment component for Processes', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
 
-    let user, appId, secondUser, newTaskId;
+    let user, appId, secondUser;
 
     const taskName = {
         completed_task: 'Test Completed',
@@ -82,15 +82,13 @@ describe('Comment component for Processes', () => {
     it('[C212864] Should be able to add multiple comments on a single task using different users', async () => {
         const newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskName.multiple_users }));
 
-        newTaskId = newTask.id;
-
-        await apiService.getInstance().activiti.taskApi.involveUser(newTaskId, { email: secondUser.email });
+        await apiService.getInstance().activiti.taskApi.involveUser(newTask.id, { email: secondUser.email });
 
         const taskComment = { message: 'Task Comment' };
         const secondTaskComment = { message: 'Second Task Comment' };
 
-        await apiService.getInstance().activiti.taskApi.addTaskComment(taskComment, newTaskId);
-        await apiService.getInstance().activiti.taskApi.addTaskComment(secondTaskComment, newTaskId);
+        await apiService.getInstance().activiti.taskApi.addTaskComment(taskComment, newTask.id);
+        await apiService.getInstance().activiti.taskApi.addTaskComment(secondTaskComment, newTask.id);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
@@ -98,7 +96,7 @@ describe('Comment component for Processes', () => {
         await taskPage.tasksListPage().selectRow(taskName.multiple_users);
         await taskPage.taskDetails().selectActivityTab();
 
-        const totalCommentsLatest = await apiService.getInstance().activiti.taskApi.getTaskComments(newTaskId, { 'latestFirst': true });
+        const totalCommentsLatest = await apiService.getInstance().activiti.taskApi.getTaskComments(newTask.id, { 'latestFirst': true });
 
         const thirdTaskComment = { message: 'Third Task Comment' };
 
@@ -119,7 +117,7 @@ describe('Comment component for Processes', () => {
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(secondUser.username, secondUser.password);
 
-        await apiService.getInstance().activiti.taskApi.addTaskComment(thirdTaskComment, newTaskId);
+        await apiService.getInstance().activiti.taskApi.addTaskComment(thirdTaskComment, newTask.id);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
@@ -127,7 +125,7 @@ describe('Comment component for Processes', () => {
         await taskPage.tasksListPage().selectRow(taskName.multiple_users);
         await taskPage.taskDetails().selectActivityTab();
 
-        const totalComments = await apiService.getInstance().activiti.taskApi.getTaskComments(newTaskId, { 'latestFirst': true });
+        const totalComments = await apiService.getInstance().activiti.taskApi.getTaskComments(newTask.id, { 'latestFirst': true });
 
         await commentsPage.checkUserIconIsDisplayed();
         await commentsPage.checkUserIconIsDisplayed();

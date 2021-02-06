@@ -18,7 +18,6 @@
 import {
     ApiService,
     ApplicationsUtil,
-    BrowserActions,
     LoginPage,
     ProcessUtil,
     UsersActions,
@@ -28,6 +27,7 @@ import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
+import { ProcessServicesPage } from '../pages/process-services.page';
 
 describe('Dynamic Table widget ', () => {
 
@@ -62,8 +62,9 @@ describe('Dynamic Table widget ', () => {
         });
 
         beforeEach(async () => {
-            const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
-            await BrowserActions.getUrl(urlToNavigateTo);
+            await navigationBarPage.clickHomeButton();
+            await (new ProcessServicesPage()).goToAppByAppId(deployedApp.id);
+
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.formFields().checkFormIsDisplayed();
         });
@@ -118,8 +119,9 @@ describe('Dynamic Table widget ', () => {
         });
 
         beforeEach(async () => {
-            const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
-            await BrowserActions.getUrl(urlToNavigateTo);
+            await navigationBarPage.clickHomeButton();
+            await (new ProcessServicesPage()).goToAppByAppId(deployedApp.id);
+
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.tasksListPage().checkTaskListIsLoaded();
             await taskPage.formFields().checkFormIsDisplayed();
@@ -172,8 +174,10 @@ describe('Dynamic Table widget ', () => {
 
         beforeEach(async () => {
             await loginPage.login(processUserModel.username, processUserModel.password);
-            const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks`;
-            await BrowserActions.getUrl(urlToNavigateTo);
+
+            await navigationBarPage.clickHomeButton();
+            await (new ProcessServicesPage()).goToAppByAppId(deployedApp.id);
+
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.tasksListPage().checkTaskListIsLoaded();
             await taskPage.formFields().checkFormIsDisplayed();

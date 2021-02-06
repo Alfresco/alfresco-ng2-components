@@ -79,7 +79,7 @@ function main(args) {
         .requiredOption('--dockerRepo [type]', 'docker repo')
         .requiredOption('--dockerTags [type]', ' tags')
         .requiredOption('--buildArgs [type]', ' buildArgs')
-        .requiredOption('--pathProject [type]', 'path ptojrct')
+        .requiredOption('--pathProject [type]', 'path project')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {

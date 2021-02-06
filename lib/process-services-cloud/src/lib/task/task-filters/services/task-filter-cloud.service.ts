@@ -15,26 +15,30 @@
  * limitations under the License.
  */
 
-import { IdentityUserService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { switchMap, map } from 'rxjs/operators';
+import { BaseCloudService } from '../../../services/base-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { TaskCloudNodePaging } from '../../task-list/models/task-cloud.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskFilterCloudService {
+export class TaskFilterCloudService extends BaseCloudService {
     private filtersSubject: BehaviorSubject<TaskFilterCloudModel[]>;
     filters$: Observable<TaskFilterCloudModel[]>;
 
     constructor(
         private identityUserService: IdentityUserService,
         @Inject(TASK_FILTERS_SERVICE_TOKEN)
-        public preferenceService: PreferenceCloudServiceInterface
-    ) {
+        public preferenceService: PreferenceCloudServiceInterface,
+        apiService: AlfrescoApiService,
+        appConfigService: AppConfigService) {
+        super(apiService, appConfigService);
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
     }
@@ -220,6 +224,27 @@ export class TaskFilterCloudService {
     }
 
     /**
+     * Finds a task using an object with optional query properties.
+     * @param requestNode Query object
+     * @returns Task information
+     */
+    getTaskFilterCounter(taskFilter: TaskFilterCloudModel): Observable<any> {
+        if (taskFilter.appName || taskFilter.appName === '') {
+            const queryUrl = `${this.getBasePath(taskFilter.appName)}/query/v1/tasks`;
+            const queryParams = {
+                assignee: taskFilter.assignee,
+                status: taskFilter.status,
+                appName: taskFilter.appName
+            };
+            return this.get<TaskCloudNodePaging>(queryUrl, queryParams).pipe(
+                map((tasks) => tasks.list.pagination.totalItems)
+            );
+        } else {
+            return throwError('Appname not configured');
+        }
+    }
+
+    /**
      * Calls update preference api to update task filter
      * @param appName Name of the target app
      * @param key Key of the task filters
@@ -264,7 +289,8 @@ export class TaskFilterCloudService {
                 status: 'ASSIGNED',
                 assignee: this.identityUserService.getCurrentUserInfo().username,
                 sort: 'createdDate',
-                order: 'DESC'
+                order: 'DESC',
+                showCounter: true
             }),
             new TaskFilterCloudModel({
                 name: 'ADF_CLOUD_TASK_FILTERS.QUEUED_TASKS',
@@ -274,7 +300,8 @@ export class TaskFilterCloudService {
                 status: 'CREATED',
                 assignee: '',
                 sort: 'createdDate',
-                order: 'DESC'
+                order: 'DESC',
+                showCounter: true
             }),
             new TaskFilterCloudModel({
                 name: 'ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS',

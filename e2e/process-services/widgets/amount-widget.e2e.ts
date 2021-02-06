@@ -56,6 +56,8 @@ describe('Amount Widget', () => {
     beforeEach(async() => {
         const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
+        await taskPage.tasksListPage().checkTaskListIsLoaded();
+
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
     });

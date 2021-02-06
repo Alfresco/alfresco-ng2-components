@@ -327,7 +327,7 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         if (this.isCheckboxField(json)) {
-            value = json.value === 'true' || json.value === true ? true : false;
+            value = json.value === 'true' || json.value === true;
         }
 
         return value;

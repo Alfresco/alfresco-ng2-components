@@ -44,6 +44,7 @@ describe('Analytics Smoke Test', () => {
     });
 
     afterAll(async () => {
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(procUserModel.tenantId);
     });
 

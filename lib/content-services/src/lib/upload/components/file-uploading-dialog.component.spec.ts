@@ -60,6 +60,50 @@ describe('FileUploadingDialogComponent', () => {
         fixture.detectChanges();
     });
 
+    describe('Dialog and actions visibility', () => {
+        it('should canShowDialog return true when alwaysVisible is true even when there are no uploads', () => {
+            component.isDialogActive = false;
+            component.alwaysVisible = true;
+
+            expect(component.canShowDialog()).toBe(true);
+        });
+
+        it('should not be able to close the dialog when alwaysVisible is set to true', () => {
+            component.alwaysVisible = true;
+            spyOn(component, 'hasUploadInProgress').and.returnValue(false);
+
+            expect(component.canCloseDialog()).toBe(false);
+        });
+
+        it('should not be able to close the dialog when has uploads are in progress', () => {
+            component.alwaysVisible = false;
+            spyOn(component, 'hasUploadInProgress').and.returnValue(true);
+
+            expect(component.canCloseDialog()).toBe(false);
+        });
+
+        it('should be able to close the dialog when no uploads are in progress', () => {
+            component.alwaysVisible = false;
+            spyOn(component, 'hasUploadInProgress').and.returnValue(false);
+
+            expect(component.canCloseDialog()).toBe(true);
+        });
+
+        it('should show cancel all when there are uploads in progress', () => {
+            component.filesUploadingList = fileList;
+            spyOn(component, 'hasUploadInProgress').and.returnValue(true);
+
+            expect(component.canShowCancelAll()).toBe(true);
+        });
+
+        it('should not show cancel all when there are no uploads in progress', () => {
+            component.filesUploadingList = fileList;
+            spyOn(component, 'hasUploadInProgress').and.returnValue(false);
+
+            expect(component.canShowCancelAll()).toBe(false);
+        });
+    });
+
     describe('upload service subscribers', () => {
         it('should not render dialog when uploading list is empty', () => {
             uploadService.addToQueue();
@@ -322,9 +366,9 @@ describe('FileUploadingDialogComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const confirmDecription = fixture.nativeElement.querySelector('#confirmationDescription');
-            expect(confirmDecription).not.toBeNull();
-            expect(confirmDecription).toBeDefined();
+            const confirmDescription = fixture.nativeElement.querySelector('#confirmationDescription');
+            expect(confirmDescription).not.toBeNull();
+            expect(confirmDescription).toBeDefined();
 
             const confirmTitle = fixture.nativeElement.querySelector('#confirmationTitle');
             expect(confirmTitle).toBeDefined();

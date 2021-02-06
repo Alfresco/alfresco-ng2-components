@@ -125,14 +125,13 @@ describe('Upload - User permission', () => {
 
     describe('full permissions', () => {
         beforeEach(async () => {
+            await apiService.loginWithProfile('admin');
             await navigationBarPage.openContentServicesFolder(managerSite.entry.guid);
-
             await contentServicesPage.goToDocumentList();
         });
 
         it('[C279917] Should be allowed to upload a file in a folder with manager permissions', async () => {
             await contentServicesPage.uploadFile(emptyFile.location);
-
             await uploadDialog.fileIsUploaded(emptyFile.name);
         });
     });

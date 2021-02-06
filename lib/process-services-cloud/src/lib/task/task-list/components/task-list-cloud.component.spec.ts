@@ -517,6 +517,12 @@ describe('TaskListCloudComponent', () => {
                                 'type': 'text',
                                 'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
                                 'sortable': true
+                            },
+                            {
+                                'key': 'entry.priority',
+                                'type': 'text',
+                                'title': 'ADF_TASK_LIST.PROPERTIES.PRIORITY',
+                                'sortable': true
                             }
                         ]
                     }
@@ -569,5 +575,66 @@ describe('TaskListCloudComponent', () => {
             component.ngOnChanges({ 'appName': appName });
             component.ngAfterContentInit();
         }));
+
+        it('should replace priority values', (done) => {
+            taskSpy.and.returnValue(of(fakeGlobalTask));
+            component.presetColumn = 'fakeCustomSchema';
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
+
+            component.success.subscribe(() => {
+                const cell = fixture.nativeElement.querySelector('[data-automation-id="text_ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE"]');
+                expect(cell.textContent).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE');
+                done();
+            });
+
+            fixture.detectChanges();
+            component.reload();
+        });
+
+        it('replacePriorityValues should return undefined when no rows defined', () => {
+            const emptyList = { list: { entries: [] } };
+            taskSpy.and.returnValue(of(emptyList));
+            fixture.detectChanges();
+
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
+
+            const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
+            expect(emptyContent.nativeElement).toBeDefined();
+            expect(component.replacePriorityValues({
+                obj: {},
+                isSelected: false,
+                hasValue: () => false,
+                getValue: () => undefined
+            }, {
+                type: 'text',
+                key: 'entry.priority'
+            })).toEqual(undefined);
+        });
+
+        it('replacePriorityValues should return replaced value when rows are defined', () => {
+            taskSpy.and.returnValue(of(fakeGlobalTask));
+            fixture.detectChanges();
+
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
+
+            expect(component.replacePriorityValues({
+                obj: {
+                    entry: {
+                        priority: 1
+                    }
+                },
+                isSelected: false,
+                hasValue: () => false,
+                getValue: () => undefined
+            }, {
+                type: 'text',
+                key: 'entry.priority'
+            })).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
+        });
     });
 });

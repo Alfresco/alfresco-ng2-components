@@ -1,14 +1,18 @@
 <ng-container *ngIf="filters$ | async as filterList; else loading">
-    <div *ngFor="let filter of filterList" class="adf-filters__entry" [class.adf-active]="currentFilter === filter">
+    <div *ngFor="let filter of filterList" class="adf-task-filters__entry">
         <button (click)="onFilterClick(filter)"
           [attr.aria-label]="filter.name | translate"
           [id]="filter.id"
           [attr.data-automation-id]="filter.key + '_filter'"
           mat-button
+          [class.adf-active]="currentFilter === filter"
           class="adf-filter-action-button adf-full-width" fxLayout="row" fxLayoutAlign="space-between center">
           <adf-icon data-automation-id="adf-filter-icon" *ngIf="showIcons" [value]="filter.icon"></adf-icon>
           <span data-automation-id="adf-filter-label" class="adf-filter-action-button__label">{{ filter.name | translate }}</span>
         </button>
+        <span *ngIf="counters$[filter.key]" class="adf-filter-action-button__counter">
+            {{ counters$[filter.key] | async }}
+        </span>
     </div>
 </ng-container>
 <ng-template #loading>

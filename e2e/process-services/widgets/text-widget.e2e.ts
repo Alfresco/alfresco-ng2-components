@@ -18,7 +18,6 @@
 import {
     ApiService,
     ApplicationsUtil,
-    BrowserActions,
     LoginPage,
     ProcessUtil,
     UsersActions,
@@ -27,6 +26,8 @@ import {
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
+import { ProcessServicesPage } from '../pages/process-services.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Text widget', () => {
 
@@ -35,6 +36,7 @@ describe('Text widget', () => {
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
+    const navigationBarPage = new NavigationBarPage();
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
@@ -61,8 +63,9 @@ describe('Text widget', () => {
    });
 
     beforeEach(async () => {
-        const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
-        await BrowserActions.getUrl(urlToNavigateTo);
+        await navigationBarPage.clickHomeButton();
+        await (new ProcessServicesPage()).goToAppByAppId(deployedApp.id);
+
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
     });
@@ -84,12 +87,15 @@ describe('Text widget', () => {
     });
 
     it('[C268170] Min-max length properties', async () => {
+        await widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
         await widget.textWidget().setValue(app.FIELD.textMinMax, 'A');
         await expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter at least 4 characters');
         await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
-        await widget.textWidget().setValue(app.FIELD.textMinMax, 'AAAAAAAAAAA');
+        await widget.textWidget().setValue(app.FIELD.textMinMax, '01234567890');
         await expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter no more than 10 characters');
         await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        await widget.textWidget().setValue(app.FIELD.textMinMax, '123456789');
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C268171] Input mask reversed checkbox properties', async () => {

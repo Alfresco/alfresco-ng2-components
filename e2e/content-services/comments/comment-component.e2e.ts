@@ -188,6 +188,7 @@ describe('Comment', () => {
         });
 
         afterAll(async () => {
+            await apiService.loginWithProfile('admin');
             await uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
             await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
         });

@@ -112,21 +112,26 @@
       "attachFileVisible": "attach-file-visible",
       "attachFileInvisible": "attach-file-invisible",
       "attachLocalFile": "attach-local-file",
+      "attachLocalFileOnTask": "attach-local-file-on-task",
       "attachSingleMultiple": "attach-single-multiple",
       "attachMultipleSingle": "attach-multiple-single",
       "attachMultipleMultiple": "attach-multiple-multiple",
       "intermediateDateProcessVarTimer": "interm-date-provar-timer",
-      "callActivityExpressionSimple":"call-activity-exp-simple", 
+      "callActivityExpressionSimple":"call-activity-exp-simple",
       "callActivityExpressionFromPool":"call-activity-expression-2",
       "calledSimple":"called-simple",
       "calledInPool":"called-in-pool",
       "paralleltasks": "paralleltasks",
       "candidateusersgroup": "candidateusersgroup",
-      "candidateUserProcess": "candidateuserprocess"
+      "candidateUserProcess": "candidateuserprocess",
+      "outputVariablesMapping": "output-variables-mapping"
     },
     "forms": {
       "tabVisibilityFields": {
         "name": "tabvisibilitywithfields"
+      },
+      "formWithSingleInput": {
+        "name": "form-with-single-input"
       },
       "tabVisibilityVars": {
         "name": "tabvisibilitywithvars"
@@ -202,7 +207,10 @@
       "attachLocalFile": {
           "name": "attach-local-file",
           "attachFileWidget1": "Attachfile0ku0bu",
-          "attachFileWidget2": "Attachfile04mfeb"
+          "attachFileWidget2": "Attachfile04mfeb",
+          "attachFileLocalChildFolder": "Attachfilelocalchildfolder",
+          "attachFileContentServices": "Attachfilecontentservices",
+          "attachFileLocalMultiple": "Attachfilelocalmultiple"
       },
       "attachSingleMultiple": {
         "name": "attach-single-multiple",
@@ -256,7 +264,8 @@
       "candidateusersandgrouptask": "candidate users and group",
       "candidateUserTask": "candidateUserTask",
       "salesUserTask": "salesuser task",
-      "hrUserTask": "hruser task"
+      "hrUserTask": "hruser task",
+      "attachLocalFile": "attach local file"
     },
     "security": [
       {

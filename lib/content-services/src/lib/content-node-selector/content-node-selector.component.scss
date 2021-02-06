@@ -3,6 +3,30 @@
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
 
+    adf-content-node-selector {
+        .adf-content-node-selector-headless-tabs {
+            .mat-tab-header {
+                display: none;
+            }
+        }
+
+        .adf-upload-dialog {
+
+            &__content {
+                max-height: 64%;
+            }
+
+            height: 100%;
+            width: 100%;
+            position: unset;
+            bottom: unset;
+        }
+
+        .adf-upload-dialog-container {
+            height: 456px;
+        }
+    }
+
     .adf-content-node-selector-dialog {
         &-content {
             padding-left: 24px;
@@ -60,15 +84,6 @@
                     color: mat-color($primary);
                 }
             }
-        }
-    }
-
-    .adf-content-node-upload-button-warning-message {
-        margin-left: 20px;
-        display: flex;
-        font-size: 12px;
-        mat-icon {
-            font-size: 16px;
         }
     }
 }

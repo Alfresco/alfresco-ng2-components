@@ -16,10 +16,10 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { tick, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NodeEntry, Node, SiteEntry, SitePaging, NodePaging, ResultSetPaging, RequestScope } from '@alfresco/js-api';
-import { SitesService, setupTestBed, NodesApiService } from '@alfresco/adf-core';
+import { Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging } from '@alfresco/js-api';
+import { FileModel, FileUploadStatus, NodesApiService, setupTestBed, SitesService, UploadService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
@@ -65,6 +65,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
     const nodeEntryEvent = new NodeEntryEvent(fakeNodeEntry);
     let searchQueryBuilderService: SearchQueryBuilderService;
     let contentNodeSelectorPanelService: ContentNodeSelectorPanelService;
+    let uploadService: UploadService;
 
     function typeToSearchBox(searchTerm = 'string-to-search') {
         const searchInput = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-input"]'));
@@ -95,6 +96,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             nodeService = TestBed.inject(NodesApiService);
             sitesService = TestBed.inject(SitesService);
             contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
+            uploadService = TestBed.inject(UploadService);
             searchQueryBuilderService = component.queryBuilderService;
             component.queryBuilderService.resetToDefaults();
 
@@ -1168,6 +1170,31 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                     component.resetChosenNode();
                     fixture.detectChanges();
+                });
+            });
+
+            describe('interaction with upload functionality', () => {
+                let documentListService: DocumentListService;
+
+                beforeEach(() => {
+                    documentListService = TestBed.inject(DocumentListService);
+
+                    spyOn(documentListService, 'getFolderNode');
+                    spyOn(documentListService, 'getFolder');
+                });
+
+                it('should remove the node from the chosenNodes when an upload gets deleted', () => {
+                    fixture.detectChanges();
+                    const selectSpy = spyOn(component.select, 'next');
+                    const fakeFileModel = new FileModel(<File> { name: 'fake-name', size: 10000000 });
+                    const fakeNodes = [<Node> { id: 'fakeNodeId' }, <Node> { id: 'fakeNodeId2' }];
+                    fakeFileModel.data = { entry: fakeNodes[0] };
+                    fakeFileModel.status = FileUploadStatus.Deleted;
+                    component._chosenNode = [...fakeNodes];
+                    uploadService.cancelUpload(fakeFileModel);
+
+                    expect(selectSpy).toHaveBeenCalledWith([fakeNodes[1]]);
+                    expect(component._chosenNode).toEqual([fakeNodes[1]]);
                 });
             });
 

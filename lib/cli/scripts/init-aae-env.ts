@@ -31,7 +31,8 @@ let alfrescoJsApiModeler: any;
 let alfrescoJsApiDevops: any;
 let args: ConfigArgs;
 let isValid = true;
-
+const absentApps: any [] = [];
+const failingApps: any [] = [];
 export interface ConfigArgs {
     modelerUsername: string;
     modelerPassword: string;
@@ -62,7 +63,8 @@ async function healthCheck(nameService: string) {
             logger.error(`${nameService} is DOWN `);
             isValid = false;
         } else {
-            logger.info(`${nameService} is UP!`);
+            const reset = '\x1b[0m', green = '\x1b[32m';
+            logger.info(`${green}${nameService} is UP!${reset}`);
         }
     } catch (error) {
         logger.error(`${nameService} is not reachable error: `, error);
@@ -80,7 +82,7 @@ async function getApplicationByStatus(status: string) {
         await alfrescoJsApiDevops.login(args.devopsUsername, args.devopsPassword);
 
         return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts).on('error',(error)=>{
+            contentTypes, accepts).on('error', (error) => {
             logger.error(`Get application by status ${error} `);
         });
 
@@ -138,7 +140,7 @@ function getProjectRelease(projectId: string) {
     }
 }
 
-function releaseProject(projectId: string) {
+async function releaseProject(projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
 
     const pathParams = {}, queryParams = {},
@@ -149,7 +151,24 @@ function releaseProject(projectId: string) {
             contentTypes, accepts);
 
     } catch (error) {
+        await deleteProject(projectId);
         logger.error('Post Projects Release' + error.status);
+        isValid = false;
+    }
+}
+
+function deleteProject(projectId: string) {
+    const url = `${args.host}/modeling-service/v1/projects/${projectId}`;
+
+    const pathParams = {}, queryParams = {},
+        headerParams = {}, formParams = {}, bodyParam = {},
+        contentTypes = ['application/json'], accepts = ['application/json'];
+    try {
+        return alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam,
+            contentTypes, accepts);
+
+    } catch (error) {
+        logger.error('Delete project error' + error.status);
         isValid = false;
     }
 }
@@ -225,24 +244,32 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
 
 async function deployMissingApps() {
     const deployedApps = await getApplicationByStatus('');
-    const absentApps = findMissingApps(deployedApps.list.entries);
+    findMissingApps(deployedApps.list.entries);
+    findFailingApps(deployedApps.list.entries);
 
-    if (absentApps.length > 0) {
+    if (failingApps.length > 0) {
+        failingApps.forEach( app => {
+            const reset = '\x1b[0m', bright = '\x1b[1m', red = '\x1b[31m';
+            logger.error(`${red}${bright}ERROR: App ${app.entry.name} down or inaccessible ${reset}${red} with status ${app.entry.status}${reset}`);
+        });
+        process.exit(1);
+    } else if (absentApps.length > 0) {
         logger.warn(`Missing apps: ${JSON.stringify(absentApps)}`);
         await checkIfAppIsReleased(absentApps);
     } else {
-        logger.warn(`All the apps are correctly deployed`);
+        const reset = '\x1b[0m', green = '\x1b[32m';
+        logger.info(`${green}All the apps are correctly deployed${reset}`);
     }
 }
 
-async function checkIfAppIsReleased(absentApps: any []) {
+async function checkIfAppIsReleased(missingApps: any []) {
     const projectList = await getProjects();
     let TIME = 5000;
     let noError = true;
 
-    for (let i = 0; i < absentApps.length; i++) {
+    for (let i = 0; i < missingApps.length; i++) {
         noError = true;
-        const currentAbsentApp = absentApps[i];
+        const currentAbsentApp = missingApps[i];
         const project = projectList.list.entries.find((currentApp: any) => {
             return currentAbsentApp.name === currentApp.entry.name;
         });
@@ -332,7 +359,7 @@ async function importProjectAndRelease(app: any) {
 }
 
 function findMissingApps(deployedApps: any []) {
-    const absentApps: any [] = [];
+
     Object.keys(ACTIVITI_CLOUD_APPS).forEach((key) => {
         const isPresent = deployedApps.find((currentApp: any) => {
             return ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name;
@@ -342,7 +369,19 @@ function findMissingApps(deployedApps: any []) {
             absentApps.push(ACTIVITI_CLOUD_APPS[key]);
         }
     });
-    return absentApps;
+}
+
+function findFailingApps(deployedApps: any []) {
+
+    Object.keys(ACTIVITI_CLOUD_APPS).forEach((key) => {
+        const failingApp = deployedApps.filter((currentApp: any) => {
+            return ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name && 'Running' !== currentApp.entry.status;
+        });
+
+        if (failingApp?.length > 0) {
+            failingApps.push(...failingApp);
+        }
+    });
 }
 
 async function getFileFromRemote(url: string, name: string) {
@@ -406,25 +445,27 @@ async function main(configArgs: ConfigArgs) {
     });
 
     await alfrescoJsApiModeler.login(args.modelerUsername, args.modelerPassword).then(() => {
-        logger.info('login SSO ok');
+        const reset = '\x1b[0m', green = '\x1b[32m';
+        logger.info(`${green}login SSO ok${reset}`);
     }, (error) => {
-        logger.info(`login SSO error ${JSON.stringify(error)} ${args.modelerUsername}`);
+        logger.error(`login SSO error ${JSON.stringify(error)} ${args.modelerUsername}`);
         process.exit(1);
     });
 
     if (isValid) {
-        logger.error('The environment is up and running');
+        const reset = '\x1b[0m', green = '\x1b[32m';
+        logger.info(`${green}The environment is up and running ${reset}`);
         alfrescoJsApiDevops = getAlfrescoJsApiInstance(args);
         await alfrescoJsApiDevops.login(args.devopsUsername, args.devopsPassword).then(() => {
             logger.info('login SSO ok devopsUsername');
         }, (error) => {
-            logger.info(`login SSO error ${JSON.stringify(error)} ${args.devopsUsername}`);
+            logger.error(`login SSO error ${JSON.stringify(error)} ${args.devopsUsername}`);
             process.exit(1);
         });
 
         await deployMissingApps();
     } else {
-        logger.info('The environment is not up');
+        logger.error('The environment is not up');
         process.exit(1);
     }
 

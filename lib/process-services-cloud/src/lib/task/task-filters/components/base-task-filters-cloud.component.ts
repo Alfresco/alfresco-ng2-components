@@ -16,7 +16,7 @@
  */
 
 import { EventEmitter, Input, Output, OnDestroy, Directive } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { FilterParamsModel } from '../models/filter-cloud.model';
 
 @Directive()
@@ -44,6 +44,8 @@ export abstract class BaseTaskFiltersCloudComponent implements OnDestroy {
     /** Emitted when an error occurs during loading. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
+
+    counters$: {[key: string]: Observable<number>} = {};
 
     protected onDestroy$ = new Subject<boolean>();
 

@@ -137,4 +137,26 @@ export class ContentNodeSelectorComponent implements OnInit {
     isLocalUploadTabSelected (): boolean {
         return this.selectedTabIndex === 1;
     }
+
+    isUploadEnabled(): boolean {
+        return this.canPerformLocalUpload() && this.isLocalUploadTabSelected();
+    }
+
+    canPerformLocalUpload(): boolean {
+        return this.data?.showLocalUploadButton;
+    }
+
+    getWarningMessage(): string {
+        return this.showingSearch ? 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE' :
+            (this.hasNoPermissionToUpload() ? 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE' : '');
+    }
+
+    hasNoPermissionToUpload(): boolean {
+        return (!this.hasAllowableOperations && !this.showingSearch) && !this.isLoading;
+    }
+
+    hasUploadError(): boolean {
+        return this.showingSearch || this.hasNoPermissionToUpload();
+    }
+
 }

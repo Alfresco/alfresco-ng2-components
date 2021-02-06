@@ -28,6 +28,7 @@ export abstract class CardViewBaseItemModel {
     icon?: string;
     validators?: CardViewItemValidator[];
     data?: any;
+    type?: string;
 
     constructor(cardViewItemProperties: CardViewItemProperties) {
         this.label = cardViewItemProperties.label || '';

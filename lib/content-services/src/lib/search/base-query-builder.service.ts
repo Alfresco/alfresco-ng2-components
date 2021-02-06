@@ -259,6 +259,7 @@ export abstract class BaseQueryBuilderService {
         }
 
         if (query) {
+
             const result: QueryBody = <QueryBody> {
                 query: {
                     query: query,
@@ -336,13 +337,11 @@ export abstract class BaseQueryBuilderService {
      * @returns True if defined, false otherwise
      */
     get hasFacetIntervals(): boolean {
-        if (this.config
+        return this.config
             && this.config.facetIntervals
             && this.config.facetIntervals.intervals
-            && this.config.facetIntervals.intervals.length > 0) {
-            return true;
-        }
-        return false;
+            && this.config.facetIntervals.intervals.length > 0;
+
     }
 
     get hasFacetHighlight(): boolean {

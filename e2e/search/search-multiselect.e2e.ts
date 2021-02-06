@@ -87,6 +87,8 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         afterAll(async () => {
+            await apiService.loginWithProfile('admin');
+
             await Promise.all([
                 uploadActions.deleteFileOrFolder(jpgFile.entry.id),
                 uploadActions.deleteFileOrFolder(jpgFileSite.entry.id),
@@ -228,6 +230,7 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         afterAll(async () => {
+            await apiService.loginWithProfile('admin');
             await uploadActions.deleteFileOrFolder(txtFile.entry.id);
             await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
         });

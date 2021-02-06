@@ -174,6 +174,7 @@ describe('Share file', () => {
         });
 
         afterEach(async () => {
+            await BrowserActions.getUrl('/');
             await navigationBarPage.clickLogoutButton();
         });
 

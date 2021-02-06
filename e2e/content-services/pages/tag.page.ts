@@ -65,12 +65,28 @@ export class TagPage {
         return this.addTagButton.isEnabled();
     }
 
-    checkTagIsDisplayedInTagList(tagName: string): Promise<void> {
-        return TestElement.byText('div[id*="tag_name"]', tagName).waitVisible();
+    async checkTagIsDisplayedInTagList(tagName: string): Promise<boolean> {
+        try {
+            await TestElement.byText('div[id*="tag_name"]', tagName).waitVisible();
+            return true;
+        } catch (error) {
+            if (await this.showMoreButton.isDisplayed()) {
+                await this.showMoreButton.click();
+                await this.checkTagIsDisplayedInTagList(tagName);
+                return true;
+            } else {
+                throw new Error('Error');
+            }
+        }
     }
 
-    checkTagIsNotDisplayedInTagList(tagName: string): Promise<void> {
-        return TestElement.byText('div[id*="tag_name"]', tagName).waitNotVisible();
+    async checkTagIsNotDisplayedInTagList(tagName: string): Promise<boolean> {
+        try {
+            await TestElement.byText('div[id*="tag_name"]', tagName).waitNotVisible();
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 
     checkTagIsNotDisplayedInTagListByNodeId(tagName: string): Promise<void> {

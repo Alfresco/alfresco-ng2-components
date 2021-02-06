@@ -47,6 +47,7 @@ describe('Document List Component', () => {
         });
 
         afterAll(async () => {
+            await apiService.loginWithProfile('admin');
             await navigationBarPage.clickLogoutButton();
             await apiService.getInstance().core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
         });
