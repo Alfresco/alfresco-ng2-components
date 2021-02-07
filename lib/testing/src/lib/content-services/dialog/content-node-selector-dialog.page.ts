@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, browser } from 'protractor';
+import { by, element } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -23,6 +23,8 @@ import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { BreadcrumbDropdownPage } from '../pages/breadcrumb/breadcrumb-dropdown.page';
 import { Logger } from '../../core/utils/logger';
 import { TabPage } from '../../core/pages/form/widgets/tab.page';
+import { UploadButtonPage } from '../pages/upload-button.page';
+import { FileModel } from '../../core/models/file.model';
 
 export class ContentNodeSelectorDialogPage {
     dialog = element(by.css(`adf-content-node-selector`));
@@ -36,11 +38,20 @@ export class ContentNodeSelectorDialogPage {
     contentList = new DocumentListPage(this.dialog);
     dataTable = this.contentList.dataTablePage();
     siteListDropdown = new DropdownPage(this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
-    breadcrumbDropdownPage = new BreadcrumbDropdownPage();
+    breadcrumbDropdown = new BreadcrumbDropdownPage();
     tabPage: TabPage = new TabPage();
+    uploadButtonComponent = new UploadButtonPage();
 
     uploadFromLocalTabName = 'Upload from your device';
     repositoryTabName = 'Repository';
+
+    breadcrumbDropdownPage(): BreadcrumbDropdownPage {
+        return this.breadcrumbDropdown;
+    }
+
+    uploadButtonPage(): UploadButtonPage {
+        return this.uploadButtonComponent;
+    }
 
     async checkDialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
@@ -140,25 +151,27 @@ export class ContentNodeSelectorDialogPage {
         await this.clickMoveCopyButton();
     }
 
-    async attachFileFromLocal(fileName: string, fileLocation: string): Promise<void> {
+    async checkFileServerTabIsLoaded(): Promise<void>  {
         await this.checkDialogIsDisplayed();
         await this.dataTable.waitForTableBody();
-        await this.breadcrumbDropdownPage.checkCurrentFolderIsDisplayed();
+        await this.breadcrumbDropdown.checkCurrentFolderIsDisplayed();
+    }
+
+    async attachFilesFromLocal(files: FileModel[]): Promise<void> {
+        await this.checkFileServerTabIsLoaded();
 
         await this.tabPage.clickTabByLabel(this.uploadFromLocalTabName);
 
-        const uploadButton = element(by.css('adf-upload-button input'));
-        await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
-        await browser.sleep(500);
-        await uploadButton.sendKeys(fileLocation);
+        await this.uploadButtonComponent.attachFiles(files);
 
         await this.tabPage.clickTabByLabel(this.repositoryTabName);
 
         await this.dataTable.waitForTableBody();
         await this.dataTable.waitTillContentLoaded();
-        await this.dataTable.checkRowContentIsDisplayed(fileName);
+        for ( const file of files) {
+            await this.dataTable.checkRowContentIsDisplayed(file.getName());
+        }
 
-        await this.clickContentNodeSelectorResult(fileName);
         await this.checkCopyMoveButtonIsEnabled();
         await this.clickMoveCopyButton();
     }

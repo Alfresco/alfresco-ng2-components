@@ -32,14 +32,6 @@ export class AttachFileWidgetCloudPage {
         this.widget =  element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
     }
 
-    async attachLocalFile(fileLocation: string): Promise<void> {
-        const uploadButton = element(by.css('adf-upload-button input'));
-        await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
-        await uploadButton.sendKeys(fileLocation);
-        await BrowserActions.click(uploadButton);
-        await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
-    }
-
     async clickAttachContentFile(fileId: string): Promise<void> {
         const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
         await BrowserActions.click(uploadButton);
@@ -58,6 +50,12 @@ export class AttachFileWidgetCloudPage {
     async checkFileIsAttached(name): Promise<void> {
         const fileAttached = this.widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
+    }
+
+    async checkFilesAreAttached(filesName: string[]): Promise<void> {
+        for (const fileName of filesName) {
+            await this.checkFileIsAttached(fileName);
+        }
     }
 
     async checkFileIsNotAttached(name): Promise<void> {
