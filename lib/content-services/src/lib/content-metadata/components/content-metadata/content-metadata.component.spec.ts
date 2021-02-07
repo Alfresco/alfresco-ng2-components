@@ -29,6 +29,7 @@ import { throwError, of } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { mockGroupProperties } from './mock-data';
 import { TranslateModule } from '@ngx-translate/core';
+import { MimeTypePropertiesService } from '../../services/mime-type-properties.service';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -38,6 +39,7 @@ describe('ContentMetadataComponent', () => {
     let nodesApiService: NodesApiService;
     let node: Node;
     let folderNode: Node;
+    let mimeTypeService: MimeTypePropertiesService;
     const preset = 'custom-preset';
 
     setupTestBed({
@@ -54,6 +56,7 @@ describe('ContentMetadataComponent', () => {
         contentMetadataService = TestBed.inject(ContentMetadataService);
         updateService = TestBed.inject(CardViewUpdateService);
         nodesApiService = TestBed.inject(NodesApiService);
+        mimeTypeService = TestBed.inject(MimeTypePropertiesService);
 
         node = <Node> {
             id: 'node-id',
@@ -75,6 +78,7 @@ describe('ContentMetadataComponent', () => {
 
         component.node = node;
         component.preset = preset;
+        spyOn(mimeTypeService, 'getMimeTypeCardOptions').and.returnValue(of([{key: node.nodeType, label: node.nodeType}]));
         fixture.detectChanges();
     });
 

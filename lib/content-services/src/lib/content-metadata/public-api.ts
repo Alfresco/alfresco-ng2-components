@@ -23,6 +23,9 @@ export * from './services/property-descriptors.service';
 export * from './services/property-groups-translator.service';
 export * from './services/config/content-metadata-config.factory';
 
+export * from './models/mime-type-property.model';
+export * from './services/mime-type-properties.service';
+
 export * from './services/config/indifferent-config.service';
 export * from './services/config/layout-oriented-config.service';
 export * from './services/config/aspect-oriented-config.service';

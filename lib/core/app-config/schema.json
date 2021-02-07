@@ -16,6 +16,18 @@
         }
       }
     },
+    "mime-type": {
+      "description": "Mime Type definition",
+      "type": "object",
+      "properties": {
+        "mimetype": {
+          "type": "string"
+        },
+        "display": {
+          "type": "string"
+        }
+    }
+    },
     "document-list-thumbnail": {
       "description": "Document list's thumbnail image column definition",
       "type": "object",
@@ -1524,6 +1536,13 @@
         "image-viewer-scaling": {
           "type": "number"
         }
+      }
+    },
+    "adf-mime-types": {
+      "description": "Supported Mime Types",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/mime-type"
       }
     }
   }

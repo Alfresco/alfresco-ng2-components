@@ -17,14 +17,20 @@
 
 import { Injectable } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { CardViewDateItemModel, CardViewTextItemModel, FileSizePipe } from '@alfresco/adf-core';
+import { CardViewDateItemModel, CardViewSelectItemModel, CardViewSelectItemOption, CardViewTextItemModel, FileSizePipe } from '@alfresco/adf-core';
+import { MimeTypePropertiesService } from './mime-type-properties.service';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BasicPropertiesService {
 
-    constructor(private fileSizePipe: FileSizePipe) {
+    private mimeTypesOptions$: Observable<CardViewSelectItemOption<string>[]>;
+
+    constructor(private fileSizePipe: FileSizePipe, private mimeTypePropertiesService: MimeTypePropertiesService) {
+        this.mimeTypesOptions$ = this.mimeTypePropertiesService.getMimeTypeCardOptions().pipe(take(1));
     }
 
     getProperties(node: Node) {
@@ -81,11 +87,12 @@ export class BasicPropertiesService {
                 editable: false,
                 format: 'mediumDate'
             }),
-            new CardViewTextItemModel({
+            new CardViewSelectItemModel({
                 label: 'CORE.METADATA.BASIC.MIMETYPE',
                 value: mimeTypeName,
                 key: 'content.mimeTypeName',
-                editable: false
+                editable: true,
+                options$: this.mimeTypesOptions$
             }),
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.AUTHOR',
