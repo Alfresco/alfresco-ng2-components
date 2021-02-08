@@ -18,16 +18,19 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
-
+import { PipeModule } from './../pipes/pipe.module';
 import { NotificationHistoryComponent } from './components/notification-history.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationIconPipe } from './pipes/notification-icon.pipe';
+import { PaginationModule } from './../pagination/pagination.module';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule,
+        PipeModule,
+        PaginationModule
     ],
     declarations: [
         NotificationHistoryComponent,

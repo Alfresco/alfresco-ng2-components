@@ -15,26 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, OnDestroy } from '@angular/core';
+import { Component, Input, ViewChild, OnDestroy, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
-import { NotificationModel } from '../models/notification.model';
+import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { StorageService } from '../../services/storage.service';
+import { Pagination } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-notification-history',
     styleUrls: ['notification-history.component.scss'],
     templateUrl: 'notification-history.component.html'
 })
-export class NotificationHistoryComponent implements OnDestroy {
+export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterViewInit {
 
-    onDestroy$ = new Subject<boolean>();
-
-    notifications: NotificationModel[] = [];
-
-    MAX_NOTIFICATION_STACK_LENGTH = 100;
+    public static MAX_NOTIFICATION_STACK_LENGTH = 100;
 
     @ViewChild(MatMenuTrigger, { static: true })
     trigger: MatMenuTrigger;
@@ -47,33 +44,33 @@ export class NotificationHistoryComponent implements OnDestroy {
     @Input()
     menuPositionY: string = 'below';
 
+    /** Maximum number of notifications to display. The rest will remain hidden until load more is clicked */
+    @Input()
+    maxNotifications: number = 5;
+
+    onDestroy$ = new Subject<boolean>();
+    notifications: NotificationModel[] = [];
+    paginatedNotifications = [];
+    pagination: Pagination;
+
     constructor(
-        private notificationService: NotificationService, public storageService: StorageService) {
-        this.notifications = JSON.parse(storageService.getItem('notifications')) || [];
+        private notificationService: NotificationService,
+        public storageService: StorageService,
+        public cd: ChangeDetectorRef) {
+
+    }
+
+    ngOnInit() {
+        this.notifications = JSON.parse(this.storageService.getItem('notifications')) || [];
+    }
+
+    ngAfterViewInit(): void {
         this.notificationService.notifications$
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((message) => {
-                this.notifications.push(message);
-
-                if (this.notifications.length > this.MAX_NOTIFICATION_STACK_LENGTH) {
-                    this.notifications.shift();
-                }
-
-                storageService.setItem('notifications', JSON.stringify(this.notifications));
-            });
-    }
-
-    isEmptyNotification(): boolean {
-        return (!this.notifications || this.notifications.length === 0);
-    }
-
-    onKeyPress(event: KeyboardEvent) {
-        this.closeUserModal(event);
-    }
-
-    markAsRead() {
-        this.storageService.removeItem('notifications');
-        this.notifications = [];
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe((notification: NotificationModel) => {
+            this.addNewNotification(notification);
+            this.cd.detectChanges();
+        });
     }
 
     ngOnDestroy() {
@@ -81,8 +78,68 @@ export class NotificationHistoryComponent implements OnDestroy {
         this.onDestroy$.complete();
     }
 
+    addNewNotification(notification: NotificationModel) {
+        this.notifications.unshift(notification);
+
+        if (this.notifications.length > NotificationHistoryComponent.MAX_NOTIFICATION_STACK_LENGTH) {
+            this.notifications.shift();
+        }
+
+        this.saveNotifications();
+        this.createPagination();
+    }
+
+    saveNotifications() {
+        this.storageService.setItem('notifications', JSON.stringify(this.notifications.filter((notification) =>
+            notification.type !== NOTIFICATION_TYPE.RECURSIVE
+        )));
+    }
+
+    onMenuOpened() {
+        this.createPagination();
+    }
+
+    onKeyPress(event: KeyboardEvent) {
+        this.closeUserModal(event);
+    }
+
     private closeUserModal($event: KeyboardEvent) {
         if ($event.keyCode === 27) {
+            this.trigger.closeMenu();
+        }
+    }
+
+    markAsRead() {
+        this.notifications = [];
+        this.paginatedNotifications = [];
+        this.storageService.removeItem('notifications');
+        this.createPagination();
+        this.trigger.closeMenu();
+    }
+
+    createPagination() {
+        this.pagination = {
+            skipCount: this.maxNotifications,
+            maxItems: this.maxNotifications,
+            totalItems: this.notifications.length,
+            hasMoreItems: this.notifications.length > this.maxNotifications
+        };
+        this.paginatedNotifications = this.notifications.slice(0, this.pagination.skipCount);
+    }
+
+    loadMore() {
+        this.pagination.skipCount = this.pagination.maxItems + this.pagination.skipCount;
+        this.pagination.hasMoreItems = this.notifications.length > this.pagination.skipCount;
+        this.paginatedNotifications = this.notifications.slice(0, this.pagination.skipCount);
+    }
+
+    hasMoreNotifications(): boolean {
+        return this.pagination?.hasMoreItems;
+    }
+
+    onNotificationClick(notification: NotificationModel) {
+        if (notification.clickCallBack) {
+            notification.clickCallBack(notification.args);
             this.trigger.closeMenu();
         }
     }

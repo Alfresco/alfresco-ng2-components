@@ -120,3 +120,12 @@ You can also change the default 5000 ms adding the following configuration in th
 ```json
     "notificationDefaultDuration" : "7000"
 ```
+
+#### Notification types
+
+| Name  | Description |
+| --- | --- |
+| info | To notify messages. It will be displayed with an info icon next to it. |
+| warn | To notify warning messages. It will be displayed with a warning icon next to it. |
+| error | To notify errors. It will be displayed with an error icon next to it. |
+| recursive | To notify recursive messages. If a message is prompt to duplicate an existing notification and you don't want to overload the notification history component with the same message use the recursive type. I.e. notifications coming from an API call that are triggered every time a component is initialized. It will be displayed with an info icon next to it. |

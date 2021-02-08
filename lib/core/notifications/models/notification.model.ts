@@ -18,12 +18,15 @@
 export enum NOTIFICATION_TYPE {
     INFO = 'info',
     WARN = 'warning',
-    ERROR = 'error'
+    ERROR = 'error',
+    RECURSIVE = 'recursive'
 }
 
 export interface NotificationInitiator {
     key: string | Symbol;
     displayName: string;
+    firstName?: string;
+    lastName?: string;
     extra?: any;
 }
 
@@ -32,4 +35,7 @@ export interface NotificationModel {
     initiator: NotificationInitiator;
     datetime: Date;
     messages: string[];
+    icon?: string;
+    clickCallBack?: any;
+    args?: any;
 }

@@ -43,6 +43,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
     imports: [
@@ -51,7 +52,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
         MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
         MatMenuModule, MatProgressBarModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule,
-        MatTooltipModule, MatDatetimepickerModule, MatNativeDatetimeModule, MatExpansionModule
+        MatTooltipModule, MatDatetimepickerModule, MatNativeDatetimeModule, MatExpansionModule, MatBadgeModule
     ],
     exports: [
         MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
@@ -59,7 +60,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
         MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
         MatMenuModule, MatProgressBarModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule,
-        MatTooltipModule, MatDatetimepickerModule, MatNativeDatetimeModule, MatExpansionModule
+        MatTooltipModule, MatDatetimepickerModule, MatNativeDatetimeModule, MatExpansionModule, MatBadgeModule
     ]
 })
 export class MaterialModule {}

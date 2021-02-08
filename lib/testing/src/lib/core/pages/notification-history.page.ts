@@ -21,14 +21,14 @@ import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class NotificationHistoryPage {
 
-    notificationList = element(by.css('#adf-notification-history-list'));
+    notificationList = element(by.css('.adf-notification-history-list'));
 
     async clickNotificationButton(): Promise<void> {
         await BrowserActions.clickExecuteScript('#adf-notification-history-open-button');
     }
 
     async clickMarkAsRead(): Promise<void> {
-        await BrowserActions.click(element(by.css('#adf-notification-history-mark-as-read')));
+        await BrowserActions.click(element(by.id('adf-notification-history-mark-as-read')));
     }
 
     async checkNotificationIsPresent(text: string): Promise<void> {
