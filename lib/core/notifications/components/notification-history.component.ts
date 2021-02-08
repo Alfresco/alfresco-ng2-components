@@ -114,6 +114,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         this.paginatedNotifications = [];
         this.storageService.removeItem('notifications');
         this.createPagination();
+        this.trigger.closeMenu();
     }
 
     createPagination() {

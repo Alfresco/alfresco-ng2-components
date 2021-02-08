@@ -28,7 +28,7 @@ export class NotificationHistoryPage {
     }
 
     async clickMarkAsRead(): Promise<void> {
-        await BrowserActions.click(element(by.css('#adf-notification-history-mark-as-read')));
+        await BrowserActions.click(element(by.id('adf-notification-history-mark-as-read')));
     }
 
     async checkNotificationIsPresent(text: string): Promise<void> {
