@@ -20,6 +20,8 @@ import { RenditionEntry, RenditionPaging } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Subject } from 'rxjs';
+import { Track } from '../models/viewer.model';
+import { TranslationService } from '../../services/translation.service';
 
 @Injectable({
     providedIn: 'root'
@@ -31,13 +33,19 @@ export class ViewUtilService {
      * Content groups based on categorization of files that can be viewed in the web browser. This
      * implementation or grouping is tied to the definition the ng component: ViewerComponent
      */
-        // tslint:disable-next-line:variable-name
+    // tslint:disable-next-line:variable-name
     static ContentGroup = {
         IMAGE: 'image',
         MEDIA: 'media',
         PDF: 'pdf',
         TEXT: 'text'
     };
+
+    /**
+     * The name of the rendition with the media subtitles in the supported format
+     */
+    /* tslint:disable-next-line */
+    static SUBTITLES_RENDITION_NAME = 'webvtt';
 
     /**
      * Based on ViewerComponent Implementation, this value is used to determine how many times we try
@@ -67,7 +75,8 @@ export class ViewUtilService {
     urlFileContentChange: Subject<string> = new Subject<string>();
 
     constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
+                private logService: LogService,
+                private translateService: TranslationService) {
     }
 
     /**
@@ -294,4 +303,30 @@ export class ViewUtilService {
         this.urlFileContentChange.next(urlFileContent);
     }
 
+    async generateMediaTracks(nodeId: string): Promise<Track[]> {
+        return this.isRenditionAvailable(nodeId, ViewUtilService.SUBTITLES_RENDITION_NAME)
+            .then((value) => {
+                const tracks = [];
+                if (value) {
+                    tracks.push({
+                        kind: 'subtitles',
+                        src: this.apiService.contentApi.getRenditionUrl(nodeId, ViewUtilService.SUBTITLES_RENDITION_NAME),
+                        label: this.translateService.instant('ADF_VIEWER.SUBTITLES')
+                    });
+                }
+                return tracks;
+            })
+            .catch((err) => {
+                this.logService.error('Error while retrieving ' + ViewUtilService.SUBTITLES_RENDITION_NAME + ' rendition');
+                this.logService.error(err);
+                return [];
+            });
+    }
+
+    private async isRenditionAvailable(nodeId: string, renditionId: string): Promise<boolean> {
+        const renditionPaging: RenditionPaging = await this.apiService.renditionsApi.getRenditions(nodeId);
+        const rendition: RenditionEntry = renditionPaging.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
+
+        return rendition?.entry?.status?.toString() === 'CREATED' || false;
+    }
 }
