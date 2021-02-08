@@ -15,7 +15,22 @@
  * limitations under the License.
  */
 
-export * from './user.model';
-export * from './application-model';
-export * from './file.model';
-export * from './tenant';
+import { StringUtil } from '../utils/string.util';
+
+export class FileModel {
+
+    name = StringUtil.generateRandomString();
+    location = StringUtil.generateRandomString();
+
+    constructor(details?: any) {
+        Object.assign(this, details);
+    }
+
+    getName() {
+        return this.name;
+    }
+
+    getLocation() {
+        return this.location;
+    }
+}

@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-export * from './user.model';
-export * from './application-model';
-export * from './file.model';
-export * from './tenant';
+export interface Track {
+    src: string;
+    label?: string;
+    kind?: string;
+    srclang?: string;
+}

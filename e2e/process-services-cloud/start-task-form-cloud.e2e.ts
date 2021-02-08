@@ -316,7 +316,7 @@ describe('Start Task Form', () => {
 
             const localFileWidget = await widget.attachFileWidgetCloud('Attachlocalfile');
             await localFileWidget.clickAttachContentFile('Attachlocalfile');
-            await contentNodeSelectorDialogPage.attachFileFromLocal(pdfFile.name, pdfFile.location);
+            await contentNodeSelectorDialogPage.attachFilesFromLocal([pdfFile]);
             await localFileWidget.checkFileIsAttached(pdfFile.name);
             await localFileWidget.removeFile(pdfFile.name);
             await localFileWidget.checkFileIsNotAttached(pdfFile.name);
