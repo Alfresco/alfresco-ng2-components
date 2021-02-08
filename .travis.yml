@@ -137,7 +137,7 @@ jobs:
         - stage: Check bundle
           script:
           - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
-          - ./scripts/npm-check-bundles.sh -v ${ADF_VERSION}
+          - ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
 
 
         - stage: Trigger ADF child build

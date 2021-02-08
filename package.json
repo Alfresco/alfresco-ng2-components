@@ -2,7 +2,7 @@
   "name": "alfresco-ng2-components",
   "commit": "b644b39d17396330d2a67509f58c5b9e890b9b13",
   "description": "Alfresco Angular components",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
@@ -144,7 +144,7 @@
     "karma-mocha-reporter": "2.2.5",
     "license-checker": "^25.0.1",
     "lint-staged": "^10.5.1",
-    "lite-server": "^2.5.4",
+    "lite-server": "^2.6.1",
     "markdownlint-cli": "^0.26.0",
     "mdast": "^3.0.0",
     "mdast-util-compact": "^3.0.0",

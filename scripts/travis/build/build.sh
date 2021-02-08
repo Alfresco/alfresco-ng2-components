@@ -25,11 +25,6 @@ then
     node ./scripts/pre-publish.js
 
     npm install
-else
-    echo "====== Update the package.json with latest JS-API/CLI deps ====="
-    npx @alfresco/adf-cli@alpha update-version --alpha --pathPackage "$(pwd)"
-    npm install;
-#    nx affected --target=build --base=$BASE_HASH --head=$HEAD_HASH --exclude="cli,demoshell" --prod --with-deps  || exit 1;  TODO comment out when affected is fixe
 fi;
 
 ./scripts/build/build-all-lib.sh
