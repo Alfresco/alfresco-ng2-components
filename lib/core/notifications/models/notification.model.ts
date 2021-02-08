@@ -25,6 +25,8 @@ export enum NOTIFICATION_TYPE {
 export interface NotificationInitiator {
     key: string | Symbol;
     displayName: string;
+    firstName: string;
+    lastName: string;
     extra?: any;
 }
 
