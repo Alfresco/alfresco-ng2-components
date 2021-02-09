@@ -143,7 +143,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-mocha-reporter": "2.2.5",
     "license-checker": "^25.0.1",
-    "lint-staged": "^10.5.1",
+    "lint-staged": "^10.5.4",
     "lite-server": "^2.6.1",
     "markdownlint-cli": "^0.26.0",
     "mdast": "^3.0.0",
