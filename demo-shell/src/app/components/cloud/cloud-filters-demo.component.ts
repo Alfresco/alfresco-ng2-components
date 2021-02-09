@@ -19,6 +19,8 @@ import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CloudLayoutService } from './services/cloud-layout.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CloudProcessFiltersService } from './services/cloud-process-filters.service';
+import { ProcessFilterCloudModel } from '@alfresco/adf-process-services-cloud';
 @Component({
     selector: 'app-cloud-filters-demo',
     templateUrl: './cloud-filters-demo.component.html',
@@ -42,7 +44,8 @@ export class CloudFiltersDemoComponent implements OnInit {
     constructor(
         private cloudLayoutService: CloudLayoutService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private cloudProcessFiltersService: CloudProcessFiltersService
     ) {}
 
     ngOnInit() {
@@ -66,8 +69,13 @@ export class CloudFiltersDemoComponent implements OnInit {
         this.router.navigate([`/cloud/${this.appName}/tasks/`], { queryParams: filter });
     }
 
-    onProcessFilterSelected(filter) {
-        this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: filter });
+    onProcessFilterSelected(filter: ProcessFilterCloudModel) {
+        const { appName } = this;
+        const queryParams = {
+            ...this.cloudProcessFiltersService.writeQueryParams(filter),
+            appName
+        };
+        this.router.navigate([`/cloud/${appName}/processes/`], { queryParams });
     }
 
     onTaskFilterOpen(): boolean {

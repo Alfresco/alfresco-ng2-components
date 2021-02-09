@@ -24,11 +24,12 @@ import {
 } from '@alfresco/adf-process-services-cloud';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserPreferencesService, AppConfigService, DataCellEvent } from '@alfresco/adf-core';
+import { UserPreferencesService, DataCellEvent } from '@alfresco/adf-core';
 import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pagination } from '@alfresco/js-api';
+import { CloudProcessFiltersService } from './services/cloud-process-filters.service';
 
 @Component({
     templateUrl: './processes-cloud-demo.component.html',
@@ -38,7 +39,6 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
 
     public static ACTION_SAVE_AS = 'saveAs';
     public static ACTION_DELETE = 'delete';
-    static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
 
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;
@@ -47,7 +47,7 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     processFiltersCloud: ProcessFiltersCloudComponent;
 
     appName: string = '';
-    isFilterLoaded: boolean;
+    isFilterLoaded = false;
 
     filterId: string = '';
     sortArray: any = [];
@@ -61,7 +61,11 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     actions: any[] = [];
     selectedAction: { id: number, name: string, actionType: string};
     selectedContextAction: { id: number, name: string, actionType: string};
-    processFilterProperties: any  = { filterProperties: [], sortProperties: [], actions: [] };
+
+    filterProperties: string[];
+    filterSortProperties: string[];
+    filterActions: string[];
+
     processDetailsRedirection: boolean;
 
     editedFilter: ProcessFilterCloudModel;
@@ -73,16 +77,15 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private cloudLayoutService: CloudLayoutService,
-        private userPreference: UserPreferencesService,
-        private appConfig: AppConfigService) {
-        const properties = this.appConfig.get<Array<any>>(ProcessesCloudDemoComponent.PROCESS_FILTER_PROPERTY_KEYS);
-        if (properties) {
-            this.processFilterProperties = properties;
-        }
+        private cloudProcessFiltersService: CloudProcessFiltersService,
+        private userPreference: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.isFilterLoaded = false;
+        this.filterProperties = this.cloudProcessFiltersService.filterProperties;
+        this.filterSortProperties = this.cloudProcessFiltersService.sortProperties;
+        this.filterActions = this.cloudProcessFiltersService.actions;
+
         this.route.parent.params.subscribe((params) => {
             this.appName = params.appName;
         });
