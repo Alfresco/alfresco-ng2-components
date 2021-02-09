@@ -21,8 +21,11 @@
         "@alfresco/js-api": "4.2.0",
         "@alfresco/adf-core": "4.2.0",
         "@alfresco/adf-content-services": "4.2.0",
+        "@apollo/client": "^3.3.7",
         "@ngx-translate/core": ">=13.0.0",
-        "moment": ">=2.22.2"
+        "apollo-angular": "^2.2.0",
+        "moment": ">=2.22.2",
+        "subscriptions-transport-ws": "^0.9.18"
     },
     "keywords": [
         "process-services-cloud",

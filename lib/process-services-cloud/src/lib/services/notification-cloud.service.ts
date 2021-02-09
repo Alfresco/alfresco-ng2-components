@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
 import { Apollo } from 'apollo-angular';
-import { DocumentNode, split } from 'apollo-link';
-import { WebSocketLink } from 'apollo-link-ws';
-import { getMainDefinition } from 'apollo-utilities';
+import { HttpLink } from 'apollo-angular/http';
+import { split, DocumentNode, InMemoryCache } from '@apollo/client/core';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 import { Injectable } from '@angular/core';
 import { StorageService, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { BaseCloudService } from './base-cloud.service';
