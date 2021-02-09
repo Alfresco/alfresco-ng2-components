@@ -57,8 +57,12 @@ export class CloudProcessFiltersService {
         return model;
     }
 
-    writeQueryParams(value: Object): Object {
-        const result = {};
+    writeQueryParams(value: Object, appName?: string, id?: string): Object {
+        value = value || {};
+        const result = {
+            appName: appName || value['appName'],
+            id: id || value['id']
+        };
 
         for (const prop of this.filterProperties) {
             if (prop === 'appVersionMultiple') {

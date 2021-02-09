@@ -16,13 +16,7 @@
  */
 
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import {
-    ProcessListCloudComponent,
-    ProcessFilterCloudModel,
-    ProcessListCloudSortingModel,
-    ProcessFiltersCloudComponent
-} from '@alfresco/adf-process-services-cloud';
-
+import { ProcessListCloudComponent, ProcessFilterCloudModel, ProcessFiltersCloudComponent } from '@alfresco/adf-process-services-cloud';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserPreferencesService, DataCellEvent } from '@alfresco/adf-core';
 import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
@@ -50,7 +44,6 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     isFilterLoaded = false;
 
     filterId: string = '';
-    sortArray: any = [];
     selectedRow: any;
     multiselect: boolean;
     selectionMode: string;
@@ -86,14 +79,14 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         this.filterSortProperties = this.cloudProcessFiltersService.sortProperties;
         this.filterActions = this.cloudProcessFiltersService.actions;
 
-        this.route.parent.params.subscribe((params) => {
-            this.appName = params.appName;
-        });
-
         this.route.queryParams.subscribe((params) => {
             this.isFilterLoaded = true;
-            this.onFilterChange(params);
+
+            this.appName = params.appName;
             this.filterId = params.id;
+
+            this.editedFilter = this.cloudProcessFiltersService.readQueryParams(params);
+            // this.onFilterChange(params);
         });
 
         this.cloudLayoutService.settings$
@@ -137,14 +130,9 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         }
     }
 
-    onFilterChange(query: any) {
-        this.editedFilter = Object.assign({}, query);
-        this.sortArray = [
-            new ProcessListCloudSortingModel({
-                orderBy: this.editedFilter.sort,
-                direction: this.editedFilter.order
-            })
-        ];
+    onFilterChange(filter: any) {
+        const queryParams = this.cloudProcessFiltersService.writeQueryParams(filter, this.appName, this.filterId);
+        this.router.navigate([`/cloud/${this.appName}/processes/`], {queryParams});
     }
 
     onProcessFilterAction(filterAction: any) {

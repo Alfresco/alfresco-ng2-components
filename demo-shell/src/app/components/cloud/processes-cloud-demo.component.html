@@ -5,6 +5,7 @@
         [filterProperties]="filterProperties"
         [sortProperties]="filterSortProperties"
         [actions]="filterActions"
+        [processFilter]="editedFilter"
         (filterChange)="onFilterChange($event)"
         (action)="onProcessFilterAction($event)">
     </adf-cloud-edit-process-filter>
@@ -24,7 +25,7 @@
             [businessKey]="editedFilter['businessKey']"
             [lastModifiedFrom]="editedFilter.lastModifiedFrom"
             [lastModifiedTo]="editedFilter.lastModifiedTo"
-            [sorting]="sortArray"
+            [sorting]="[{orderBy: editedFilter.sort,  direction: editedFilter.order}]"
             [selectionMode]="selectionMode"
             [stickyHeader]="true"
             [showActions]="actionMenu"

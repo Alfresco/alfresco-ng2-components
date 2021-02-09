@@ -66,16 +66,19 @@ export class CloudFiltersDemoComponent implements OnInit {
     }
 
     onTaskFilterSelected(filter) {
-        this.router.navigate([`/cloud/${this.appName}/tasks/`], { queryParams: filter });
+        if (filter) {
+            this.router.navigate([`/cloud/${this.appName}/tasks/`], {queryParams: filter});
+        }
     }
 
     onProcessFilterSelected(filter: ProcessFilterCloudModel) {
-        const { appName } = this;
-        const queryParams = {
-            ...this.cloudProcessFiltersService.writeQueryParams(filter),
-            appName
-        };
-        this.router.navigate([`/cloud/${appName}/processes/`], { queryParams });
+        if (filter) {
+            const {appName} = this;
+            const {id} = filter;
+
+            const queryParams = this.cloudProcessFiltersService.writeQueryParams(filter, appName, id);
+            this.router.navigate([`/cloud/${appName}/processes/`], {queryParams});
+        }
     }
 
     onTaskFilterOpen(): boolean {
