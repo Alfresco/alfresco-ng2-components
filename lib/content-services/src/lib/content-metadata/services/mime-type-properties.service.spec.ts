@@ -15,44 +15,77 @@
  * limitations under the License.
  */
 
-import { AppConfigService, CardViewSelectItemOption } from 'core';
+import { TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
+import { AppConfigService, CardViewSelectItemOption, setupTestBed } from 'core';
+import { of, Subject } from 'rxjs';
+import { MimeTypeService } from '../../mime-type/mime-type.service';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 import { MimeTypeProperty } from '../models/mime-type-property.model';
 import { MimeTypePropertiesService } from './mime-type-properties.service';
 
 describe('MimrTypePropertiesService', () => {
 
-    let mimeTypeService: MimeTypePropertiesService;
-    const appConfigService = new AppConfigService(null);
+    let mimeTypePropertiesService: MimeTypePropertiesService;
 
-    const fakeMimeTypeProperty: MimeTypeProperty = {'mimetype': 'banana' , 'display': 'Bananas in Pajamas'};
+    describe('Card View Item Options', () => {
 
-    beforeEach(() => {
-        spyOn(appConfigService, 'get').and.returnValue([fakeMimeTypeProperty]);
-        mimeTypeService = new MimeTypePropertiesService(appConfigService);
-    });
+        const mimeTypeService = new MimeTypeService(new AppConfigService(null));
+        const fakeMimeTypeProperty: MimeTypeProperty = { 'mimetype': 'banana', 'display': 'Bananas in Pajamas' };
+        const dialog: MatDialog = jasmine.createSpyObj(['open']);
 
-    it('should load the properties at startup', () => {
-        expect(mimeTypeService.currentMimeTypes.length).toBe(1);
-        expect(mimeTypeService.currentMimeTypes[0].mimetype).toBe('banana');
-        expect(mimeTypeService.currentMimeTypes[0].display).toBe('Bananas in Pajamas');
-    });
+        beforeEach(() => {
+            spyOn(mimeTypeService, 'getMimeTypeOptions').and.returnValue(of([fakeMimeTypeProperty]));
+            mimeTypePropertiesService = new MimeTypePropertiesService(mimeTypeService, dialog);
+        });
 
-    it('should return the list of mimetypes as observable', (done) => {
-        mimeTypeService.getMimeTypeOptions().subscribe((result: MimeTypeProperty[]) => {
-            expect(result.length).toBe(1);
-            expect(result[0].mimetype).toBe('banana');
-            expect(result[0].display).toBe('Bananas in Pajamas');
-            done();
+        it('should return the list of properties as compatible card items options', (done) => {
+            mimeTypePropertiesService.getMimeTypeCardOptions().subscribe((result: CardViewSelectItemOption<string>[]) => {
+                expect(result.length).toBe(1);
+                expect(result[0].key).toBe('banana');
+                expect(result[0].label).toBe('Bananas in Pajamas');
+                done();
+            });
         });
     });
 
-    it('should return the list of properties as compatible card items options', (done) => {
-        mimeTypeService.getMimeTypeCardOptions().subscribe((result: CardViewSelectItemOption<string>[]) => {
-            expect(result.length).toBe(1);
-            expect(result[0].key).toBe('banana');
-            expect(result[0].label).toBe('Bananas in Pajamas');
-            done();
+    describe('Confirm Dialog', () => {
+        let materialDialog: MatDialog;
+        let spyOnDialogOpen: jasmine.Spy;
+        let afterOpenObservable: Subject<any>;
+
+        setupTestBed({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
         });
+
+        beforeEach(() => {
+            mimeTypePropertiesService = TestBed.inject(MimeTypePropertiesService);
+            materialDialog = TestBed.inject(MatDialog);
+            afterOpenObservable = new Subject<any>();
+            spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
+                afterOpen: () => afterOpenObservable,
+                afterClosed: () => of({}),
+                componentInstance: {
+                    error: new Subject<any>()
+                }
+            });
+        });
+
+        it('should open the confirm mime type change dialog', () => {
+            mimeTypePropertiesService.openMimeTypeDialogConfirm();
+            expect(spyOnDialogOpen).toHaveBeenCalled();
+        });
+
+        it('should close the dialog', () => {
+            spyOn(materialDialog, 'closeAll');
+            mimeTypePropertiesService.close();
+            expect(materialDialog.closeAll).toHaveBeenCalled();
+        });
+
     });
 
 });

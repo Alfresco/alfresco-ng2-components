@@ -443,5 +443,14 @@
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Open {{ name }}"
     }
+  },
+  "MIME_TYPE": {
+    "DIALOG" : {
+      "TITLE": "Change File Type",
+      "DESCRIPTION": "File type should only be altered when the file type displayed is incorrect. Changing the file type property will not reformat the file itself and can lead to previewing issues and inaccurate file properties being displayed",
+      "MESSAGE": "Are you sure you want to change the file type?",
+      "CANCEL": "CANCEL",
+      "SAVE_CHANGES": "SAVE CHANGES"
+    }
   }
 }

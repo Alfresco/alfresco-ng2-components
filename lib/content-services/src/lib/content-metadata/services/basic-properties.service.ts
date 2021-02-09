@@ -17,29 +17,26 @@
 
 import { Injectable } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { CardViewDateItemModel, CardViewSelectItemModel, CardViewSelectItemOption, CardViewTextItemModel, FileSizePipe } from '@alfresco/adf-core';
+import { CardViewDateItemModel, CardViewSelectItemModel, CardViewTextItemModel, FileSizePipe } from '@alfresco/adf-core';
 import { MimeTypePropertiesService } from './mime-type-properties.service';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BasicPropertiesService {
 
-    private mimeTypesOptions$: Observable<CardViewSelectItemOption<string>[]>;
-
     constructor(private fileSizePipe: FileSizePipe, private mimeTypePropertiesService: MimeTypePropertiesService) {
-        this.mimeTypesOptions$ = this.mimeTypePropertiesService.getMimeTypeCardOptions().pipe(take(1));
     }
 
     getProperties(node: Node) {
 
         const sizeInBytes = node.content ? node.content.sizeInBytes : '',
-            mimeTypeName = node.content ? node.content.mimeTypeName : '',
+            mimeType = node.content ? node.content.mimeType : '',
             author = node.properties ? node.properties['cm:author'] : '',
             description = node.properties ? node.properties['cm:description'] : '',
             title = node.properties ? node.properties['cm:title'] : '';
+
+        const mimeTypesOptions$ = this.mimeTypePropertiesService.getMimeTypeCardOptions();
 
         return [
             new CardViewTextItemModel({
@@ -89,10 +86,10 @@ export class BasicPropertiesService {
             }),
             new CardViewSelectItemModel({
                 label: 'CORE.METADATA.BASIC.MIMETYPE',
-                value: mimeTypeName,
-                key: 'content.mimeTypeName',
+                value: mimeType,
+                key: 'content.mimeType',
                 editable: true,
-                options$: this.mimeTypesOptions$
+                options$: mimeTypesOptions$
             }),
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.AUTHOR',

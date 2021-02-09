@@ -39,6 +39,7 @@ import { FolderDirectiveModule } from './folder-directive/folder-directive.modul
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
 import { PermissionManagerModule } from './permission-manager/permission-manager.module';
 import { TreeViewModule } from './tree-view/tree-view.module';
+import { MimeTypeModule } from './mime-type/mime-type.module';
 
 @NgModule({
     imports: [
@@ -63,7 +64,8 @@ import { TreeViewModule } from './tree-view/tree-view.module';
         ContentDirectiveModule,
         PermissionManagerModule,
         VersionManagerModule,
-        TreeViewModule
+        TreeViewModule,
+        MimeTypeModule
     ],
     providers: [
         {
@@ -92,7 +94,8 @@ import { TreeViewModule } from './tree-view/tree-view.module';
         ContentDirectiveModule,
         PermissionManagerModule,
         VersionManagerModule,
-        TreeViewModule
+        TreeViewModule,
+        MimeTypeModule
     ]
 })
 export class ContentModule {

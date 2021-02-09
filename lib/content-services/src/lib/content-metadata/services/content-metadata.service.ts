@@ -25,6 +25,7 @@ import { CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-met
 import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { map, switchMap } from 'rxjs/operators';
+import { MimeTypePropertiesService } from './mime-type-properties.service';
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +37,8 @@ export class ContentMetadataService {
     constructor(private basicPropertiesService: BasicPropertiesService,
                 private contentMetadataConfigFactory: ContentMetadataConfigFactory,
                 private propertyGroupTranslatorService: PropertyGroupTranslatorService,
-                private propertyDescriptorsService: PropertyDescriptorsService) {
+                private propertyDescriptorsService: PropertyDescriptorsService,
+                private mimeTypePropertyService: MimeTypePropertiesService) {
     }
 
     getBasicProperties(node: Node): Observable<CardViewItem[]> {
@@ -80,5 +82,9 @@ export class ContentMetadataService {
 
     filterEmptyPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[]  {
         return propertyGroups.filter((props) => props.properties.length);
+    }
+
+    openConfirmDialog(): Observable<any> {
+        return this.mimeTypePropertyService.openMimeTypeDialogConfirm();
     }
 }

@@ -174,6 +174,16 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     saveChanges() {
+        if (this.hasMimeTypeChanged(this.changedProperties)) {
+            this.contentMetadataService.openConfirmDialog().subscribe(() => {
+                this.updateNode();
+            });
+        } else {
+            this.updateNode();
+        }
+    }
+
+    private updateNode() {
         this.nodesApiService.updateNode(this.node.id, this.changedProperties).pipe(
             catchError((err) => {
                 this.cardViewUpdateService.updateElement(this.targetProperty);
@@ -187,6 +197,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     this.alfrescoApiService.nodeUpdated.next(this.node);
                 }
             });
+    }
+
+    private hasMimeTypeChanged(changedProperties): boolean {
+        return !!changedProperties?.content?.mimeType;
     }
 
     revertChanges() {

@@ -16,34 +16,60 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService, CardViewSelectItemOption } from '@alfresco/adf-core';
-import { Observable, of } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { CardViewSelectItemOption } from '@alfresco/adf-core';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MimeTypeProperty } from '../models/mime-type-property.model';
+import { MimeTypeService } from '../../mime-type/mime-type.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MimeTypeDialogComponent, MimeTypeDialogComponentData } from '../../mime-type';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MimeTypePropertiesService {
 
-    currentMimeTypes: MimeTypeProperty[] = [];
+    constructor(private mimeTypeService: MimeTypeService, private dialog: MatDialog) {
 
-    constructor(private appConfigService: AppConfigService) {
-        this.currentMimeTypes = this.appConfigService.get('adf-mime-types');
-    }
-
-    public getMimeTypeOptions(): Observable<MimeTypeProperty[]> {
-        return of(this.currentMimeTypes);
     }
 
     public getMimeTypeCardOptions(): Observable<CardViewSelectItemOption<string>[]> {
-        return of(this.currentMimeTypes).pipe(
-            take(1),
+        return this.mimeTypeService.getMimeTypeOptions().pipe(
             map((mimeTypeProperties: MimeTypeProperty[]) => {
                 const mappedProperties = mimeTypeProperties.map((mimeTypeProperty) =>
                     <CardViewSelectItemOption<string>> { key: mimeTypeProperty.mimetype, label: mimeTypeProperty.display });
                 return mappedProperties;
             }));
+    }
+
+    openMimeTypeDialogConfirm(): Observable<boolean> {
+        const select = new Subject<boolean>();
+        select.subscribe({
+            complete: this.close.bind(this)
+        });
+
+        const data: MimeTypeDialogComponentData = {
+            title: 'MIME_TYPE.DIALOG.TITLE',
+            description: 'MIME_TYPE.DIALOG.DESCRIPTION',
+            confirmMessage: 'MIME_TYPE.DIALOG.MESSAGE',
+            select: select
+        };
+
+        this.openDialog(data, 'adf-mime-type-dialog', '600px');
+        return select;
+    }
+
+    close() {
+        this.dialog.closeAll();
+    }
+
+    private openDialog(data: MimeTypeDialogComponentData, panelClass: string, width: string) {
+        this.dialog.open(MimeTypeDialogComponent, {
+            data,
+            panelClass,
+            width,
+            disableClose: true
+        });
     }
 
 }
