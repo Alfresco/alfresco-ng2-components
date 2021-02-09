@@ -55,7 +55,7 @@ export class MimeTypePropertiesService {
             select: select
         };
 
-        this.openDialog(data, 'adf-mime-type-dialog', '600px');
+        this.openDialog(data, 'adf-mime-type-dialog', '500px');
         return select;
     }
 

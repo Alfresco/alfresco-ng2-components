@@ -88,7 +88,7 @@ export class BasicPropertiesService {
                 label: 'CORE.METADATA.BASIC.MIMETYPE',
                 value: mimeType,
                 key: 'content.mimeType',
-                editable: true,
+                editable: false,
                 options$: mimeTypesOptions$
             }),
             new CardViewTextItemModel({
