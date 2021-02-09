@@ -34,13 +34,13 @@ stages:
     if: tag IS blank
   - name: Check bundle
     if: type = push AND tag IS blank
-  - name: Trigger ADF child build
-    if: (branch = develop AND type = push) OR type = api
   - name: Unit test
     if: (branch != master AND type != cron AND tag IS blank) OR type = api
   - name: e2e Test
     if: (branch != master AND type != cron AND tag IS blank) OR type = api
-  - name: Update Children Projects
+  - name: Trigger Alpha ADF child build
+    if: (branch = develop AND type = push) OR type = api
+  - name: Trigger Beta ADF child build
     if: tag =~ .*beta.*
   - name: Release tag
     if: type = cron OR branch = master
@@ -84,9 +84,13 @@ jobs:
           name: Unit test process-cloud
           script: ./scripts/travis/unit-test/process-cloud.sh
 
+        - stage: Trigger Alpha ADF child build
+          name: Trigger Alpha ADF child build
+          script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha
 
-        - stage: Update Children Projects
-          script: ./scripts/travis/update/update-children.sh
+        - stage: Trigger Beta ADF child build
+          name: Trigger Beta ADF child build
+          script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v beta
 
         - stage: Release tag
           script: ./scripts/travis/release/git-tag.sh
@@ -138,11 +142,6 @@ jobs:
           script:
           - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
           - ./scripts/npm-check-bundles.sh -v ${ADF_VERSION}
-
-
-        - stage: Trigger ADF child build
-          name: Trigger ADF child build
-          script: ./scripts/travis/update/trigger-travis-children.sh --branch $TRAVIS_BRANCH Alfresco $TRAVIS_ACCESS_TOKEN
 
 notifications:
   slack:
