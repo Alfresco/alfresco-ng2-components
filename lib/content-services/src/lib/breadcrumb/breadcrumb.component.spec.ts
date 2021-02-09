@@ -160,6 +160,19 @@ describe('Breadcrumb', () => {
 
             expect(documentListComponent.navigateTo).toHaveBeenCalledWith('folder1');
         });
+
+        it('should not navigate if component is read-only', () => {
+            spyOn(documentListComponent, 'navigateTo').and.stub();
+
+            component.target = documentListComponent;
+            component.readOnly = true;
+            component.ngOnInit();
+
+            documentListComponent.$folderNode.next(folderNode);
+            component.onRoutePathClick(component.route[0]);
+
+            expect(documentListComponent.navigateTo).not.toHaveBeenCalled();
+        });
     });
 
     it('should not parse the route when node not provided', () => {

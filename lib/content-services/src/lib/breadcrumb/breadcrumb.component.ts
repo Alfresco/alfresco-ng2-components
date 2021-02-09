@@ -92,6 +92,10 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         return !!this.root;
     }
 
+    /** If true, prevents the user from navigating away from the active node. */
+    @Input()
+    readOnly: boolean = false;
+
     /** Emitted when the user clicks on a breadcrumb. */
     @Output()
     navigate = new EventEmitter<PathElementEntity>();
@@ -178,12 +182,16 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         return position;
     }
 
+    breadcrumbItemIsAnchor(lastItem): boolean {
+        return !this.readOnly && !lastItem;
+    }
+
     onRoutePathClick(route: PathElementEntity, event?: Event): void {
         if (event && event.type === 'click') {
             event.preventDefault();
         }
 
-        if (route) {
+        if (route && !this.readOnly) {
             this.navigate.emit(route);
 
             if (this.target) {

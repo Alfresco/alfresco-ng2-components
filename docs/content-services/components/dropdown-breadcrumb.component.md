@@ -32,6 +32,7 @@ Indicates the current position within a navigation hierarchy using a dropdown me
 | rootId | `string` | null | (optional) The id of the root element. You can use this property to set a custom element the breadcrumb should start with. |
 | target | [`DocumentListComponent`](../../content-services/components/document-list.component.md) |  | (optional) [Document List component](../../content-services/components/document-list.component.md) to operate with. The list will update when the breadcrumb is clicked. |
 | transform | `Function` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
+| readOnly | `boolean` | false | Prevents changing the active node |
 
 ### Events
 
