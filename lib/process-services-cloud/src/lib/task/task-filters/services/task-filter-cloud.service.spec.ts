@@ -40,7 +40,6 @@ import { UserPreferenceCloudService } from '../../../services/user-preference-cl
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
-import { HttpLinkModule } from 'apollo-angular-link-http';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { TaskCloudEngineEvent } from './../../../models/engine-event-cloud.model';
 
@@ -58,8 +57,7 @@ describe('TaskFilterCloudService', () => {
 
     setupTestBed({
         imports: [
-          HttpClientTestingModule,
-          HttpLinkModule
+          HttpClientTestingModule
         ],
         providers: [
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
@@ -260,7 +258,6 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     setupTestBed({
         imports: [
             HttpClientTestingModule,
-            HttpLinkModule
         ],
         providers: [
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
