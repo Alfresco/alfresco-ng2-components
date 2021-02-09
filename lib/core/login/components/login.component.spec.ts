@@ -173,6 +173,7 @@ describe('LoginComponent', () => {
     });
 
     it('should redirect to previous route state on successful login', () => {
+        appConfigService.config = {};
         appConfigService.config.providers = 'ECM';
 
         spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
