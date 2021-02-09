@@ -36,7 +36,7 @@ update_dependency() {
     for i in $(find . ! -path "*/node_modules/*" -name "package-lock.json" | xargs grep -l $PKG); do
         directory=$(dirname $i)
         echo "Update $PKG in  $directory"
-        ( cd $directory ; npm i --ignore-scripts $PKG@$PKG_VERSION)
+        ( cd $directory ; npm i --ignore-scripts $PKG@$PKG_VERSION --save-exact)
     done
 
     git add .
@@ -51,7 +51,7 @@ update_js_dependency() {
     for i in $(find . ! -path "*/node_modules/*" -name "package-lock.json" | xargs grep -l $PKG); do
         directory=$(dirname $i)
         echo "Update $PKG in  $directory"
-        ( cd $directory ; npm i --ignore-scripts $PKG@$PKG_VERSION)
+        ( cd $directory ; npm i --ignore-scripts $PKG@$PKG_VERSION --save-exact)
     done
 
     git add .
