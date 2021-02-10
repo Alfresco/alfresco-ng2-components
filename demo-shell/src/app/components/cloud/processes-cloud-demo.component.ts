@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProcessFilterCloudModel  } from '@alfresco/adf-process-services-cloud';
+import { ProcessFilterAction, ProcessFilterCloudModel } from '@alfresco/adf-process-services-cloud';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserPreferencesService, DataCellEvent } from '@alfresco/adf-core';
 import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
@@ -79,7 +79,6 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
             this.filterId = params.id;
 
             this.editedFilter = this.cloudProcessFiltersService.readQueryParams(params);
-            // this.onFilterChange(params);
         });
 
         this.cloudLayoutService.settings$
@@ -123,12 +122,12 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         }
     }
 
-    onFilterChange(filter: any) {
+    onFilterChange(filter: ProcessFilterCloudModel) {
         const queryParams = this.cloudProcessFiltersService.writeQueryParams(filter, this.appName, this.filterId);
         this.router.navigate([`/cloud/${this.appName}/processes/`], {queryParams});
     }
 
-    onProcessFilterAction(filterAction: any) {
+    onProcessFilterAction(filterAction: ProcessFilterAction) {
         if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_DELETE) {
             this.cloudLayoutService.setCurrentProcessFilterParam({ index: 0 });
         } else {
@@ -136,7 +135,7 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         }
 
         if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
-            this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: filterAction.filter });
+            this.onFilterChange(filterAction.filter);
         }
     }
 
