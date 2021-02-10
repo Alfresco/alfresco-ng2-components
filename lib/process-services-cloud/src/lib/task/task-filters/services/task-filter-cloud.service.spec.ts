@@ -57,7 +57,7 @@ describe('TaskFilterCloudService', () => {
 
     setupTestBed({
         imports: [
-          HttpClientTestingModule
+            HttpClientTestingModule
         ],
         providers: [
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
@@ -256,9 +256,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
 
     setupTestBed({
-        imports: [
-            HttpClientTestingModule,
-        ],
+        imports: [ HttpClientTestingModule ],
         providers: [
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]
