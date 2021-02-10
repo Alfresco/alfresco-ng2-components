@@ -106,11 +106,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this._filter = value;
 
         if (value?.appName) {
-            this.appName = value?.appName;
+            this.appName = value.appName;
         }
 
         if (value?.id) {
-            this.id = value?.id;
+            this.id = value.id;
         }
 
         this.processFilterProperties = this.createAndFilterProperties();
@@ -238,7 +238,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .subscribe((formValues: ProcessFilterCloudModel) => {
                 this.setLastModifiedToFilter(formValues);
 
-                const newValue = new ProcessFilterCloudModel(formValues);
+                const newValue = new ProcessFilterCloudModel(Object.assign({}, this.processFilter, formValues));
                 const changed = !this.compareFilters(newValue, this.processFilter);
 
                 if (changed) {

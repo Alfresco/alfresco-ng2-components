@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProcessFilterAction, ProcessFilterCloudModel } from '@alfresco/adf-process-services-cloud';
+import { EditProcessFilterCloudComponent, ProcessFilterAction, ProcessFilterCloudModel, ProcessFilterCloudService } from '@alfresco/adf-process-services-cloud';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserPreferencesService, DataCellEvent } from '@alfresco/adf-core';
 import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
@@ -29,10 +29,6 @@ import { CloudProcessFiltersService } from './services/cloud-process-filters.ser
     templateUrl: './processes-cloud-demo.component.html'
 })
 export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
-
-    public static ACTION_SAVE_AS = 'saveAs';
-    public static ACTION_DELETE = 'delete';
-
     appName: string = '';
     isFilterLoaded = false;
 
@@ -64,6 +60,7 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         private router: Router,
         private cloudLayoutService: CloudLayoutService,
         private cloudProcessFiltersService: CloudProcessFiltersService,
+        private processFilterCloudService: ProcessFilterCloudService,
         private userPreference: UserPreferencesService) {
     }
 
@@ -78,7 +75,8 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
             this.appName = params.appName;
             this.filterId = params.id;
 
-            this.editedFilter = this.cloudProcessFiltersService.readQueryParams(params);
+            const model = this.cloudProcessFiltersService.readQueryParams(params);
+            this.loadFilter(model);
         });
 
         this.cloudLayoutService.settings$
@@ -128,13 +126,13 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     onProcessFilterAction(filterAction: ProcessFilterAction) {
-        if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_DELETE) {
+        if (filterAction.actionType === EditProcessFilterCloudComponent.ACTION_DELETE) {
             this.cloudLayoutService.setCurrentProcessFilterParam({ index: 0 });
         } else {
             this.cloudLayoutService.setCurrentProcessFilterParam({ id: filterAction.filter.id });
         }
 
-        if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
+        if ([EditProcessFilterCloudComponent.ACTION_SAVE, EditProcessFilterCloudComponent.ACTION_SAVE_AS].includes(filterAction.actionType)) {
             this.onFilterChange(filterAction.filter);
         }
     }
@@ -179,5 +177,13 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         const value = contextAction.data.entry;
         const action = contextAction.model;
         this.selectedContextAction = {id: value.id, name: value.name, actionType: action.title};
+    }
+
+    private loadFilter(model: ProcessFilterCloudModel) {
+        if (model && model.appName && model.id) {
+            this.processFilterCloudService.getFilterById(model.appName, model.id).subscribe(filter => {
+                this.editedFilter = Object.assign({}, filter, model);
+            });
+        }
     }
 }

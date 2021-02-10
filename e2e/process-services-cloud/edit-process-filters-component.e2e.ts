@@ -150,7 +150,7 @@ describe('Edit process filters cloud', () => {
         await editProcessFilter.clickDeleteButton();
     });
 
-    it('[C291807] A process filter is overrided when clicking on save button', async () => {
+    it('[C291807] A process filter is updated when clicking on save button', async () => {
         await editProcessFilter.setSortFilterDropDown('Id');
         await processFilter.clickAllProcessesFilter();
         await editProcessFilter.clickSaveAsButton();
