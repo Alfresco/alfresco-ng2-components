@@ -61,7 +61,7 @@ export class AuthGuard extends AuthGuardBase {
 
     private ticketChangeRedirect(event: StorageEvent) {
         if (!event.newValue) {
-            this.redirectToUrl(this.router.url);
+            this.navigate(this.router.url);
         } else {
             window.location.reload();
         }
@@ -69,9 +69,9 @@ export class AuthGuard extends AuthGuardBase {
 
     async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean> {
         if (this.authenticationService.isLoggedIn() || this.withCredentials) {
+
             return true;
         }
-        this.redirectToUrl( redirectUrl);
-        return false;
+        return this.redirectToUrl( redirectUrl);
     }
 }

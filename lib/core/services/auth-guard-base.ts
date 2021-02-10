@@ -61,25 +61,11 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-        const redirectFragment = this.storageService.getItem('loginFragment');
-
-        if (this.authenticationService.isLoggedIn() || this.withCredentials) {
-
-            if (redirectFragment && this.getLoginRoute() !== redirectFragment) {
-                this.storageService.removeItem('loginFragment');
-                this.redirectToUrl(redirectFragment);
-            }
-
-            return true;
+        if (this.authenticationService.isLoggedIn() && this.authenticationService.isOauth() && this.isLoginFragmentPresent()) {
+            return this.redirectSSOSuccessURL();
         }
 
-        const checkLogin = this.checkLogin(route, state.url);
-
-        if (!checkLogin) {
-            this.dialog.closeAll();
-        }
-
-        return checkLogin;
+        return this.checkLogin(route, state.url);
     }
 
     canActivateChild(
@@ -89,31 +75,42 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         return this.canActivate(route, state);
     }
 
-    protected redirectToUrl(url: string) {
-        let urlToRedirect;
+    protected async redirectSSOSuccessURL(): Promise<boolean> {
+        const redirectFragment = this.storageService.getItem('loginFragment');
 
-        this.dialog.closeAll();
-
-        if (!this.authenticationService.isLoggedIn()) {
-            const pathToLogin = `/${this.getLoginRoute()}`;
-
-            if (!this.authenticationService.isOauth()) {
-                this.authenticationService.setRedirect({
-                    provider: this.getProvider(),
-                    url
-                });
-
-                urlToRedirect = `${pathToLogin}?redirectUrl=${url}`;
-                this.router.navigateByUrl(urlToRedirect);
-            } else if (this.getOauthConfig().silentLogin && !this.authenticationService.isPublicUrl()) {
-                this.authenticationService.ssoImplicitLogin();
-            } else {
-                urlToRedirect = pathToLogin;
-                this.router.navigateByUrl(urlToRedirect);
-            }
-        } else {
-            this.router.navigateByUrl(url);
+        if (redirectFragment && this.getLoginRoute() !== redirectFragment) {
+            this.storageService.removeItem('loginFragment');
+            return this.navigate(redirectFragment);
         }
+
+        return true;
+    }
+
+    protected async isLoginFragmentPresent(): Promise<boolean> {
+        return !!this.storageService.getItem('loginFragment');
+    }
+
+    protected async redirectToUrl(url: string): Promise<boolean> {
+        let urlToRedirect = `/${this.getLoginRoute()}`;
+
+        if (!this.authenticationService.isOauth()) {
+            this.authenticationService.setRedirect({
+                provider: this.getProvider(),
+                url
+            });
+
+            urlToRedirect = `${urlToRedirect}?redirectUrl=${url}`;
+            return this.navigate(urlToRedirect);
+        } else if (this.getOauthConfig().silentLogin && !this.authenticationService.isPublicUrl()) {
+            this.authenticationService.ssoImplicitLogin();
+        }
+
+        return false;
+    }
+
+    protected navigate(url: string): Promise<boolean> {
+        this.dialog.closeAll();
+        return this.router.navigateByUrl(url);
     }
 
     protected getOauthConfig(): OauthConfigModel {
