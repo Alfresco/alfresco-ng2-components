@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CardViewItem, CardViewSelectItemModel, CardViewSelectItemOption } from '@alfresco/adf-core';
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { delay, map, take } from 'rxjs/operators';
 import { ContentTypeDialogComponent } from '../../content-type/content-type-dialog.component';
 import { ContentTypeDialogComponentData } from '../../content-type/content-type-metadata.interface';
 import { ContentTypeService } from '../../content-type/content-type.service';
@@ -29,17 +29,19 @@ import { ContentTypeService } from '../../content-type/content-type.service';
 })
 export class ContentTypePropertiesService {
 
+    contentTypesOptions$: Observable<CardViewSelectItemOption<string>[]> = null;
+
     constructor(private contentTypeService: ContentTypeService, private dialog: MatDialog) {
     }
 
     getContentTypeCardItem(nodeType: string): Observable<CardViewItem[]> {
-        const contentTypesOptions$ = this.getContentTypesAsSelectOption(nodeType);
+        this.contentTypesOptions$ = this.getContentTypesAsSelectOption(nodeType).pipe(take(1), delay(0));
         const contentTypeCard = new CardViewSelectItemModel({
             label: 'CORE.METADATA.BASIC.CONTENT_TYPE',
             value: null,
             key: 'nodeType',
             editable: true,
-            options$: contentTypesOptions$
+            options$: this.contentTypesOptions$
         });
         return this.contentTypeService.getContentTypeByPrefix(nodeType).
             pipe(

@@ -44,7 +44,7 @@ export class ContentMetadataService {
         return of(this.basicPropertiesService.getProperties(node));
     }
 
-    getNodeType(nodeType: string): Observable<CardViewItem[]> {
+    getContentTypeProperty(nodeType: string): Observable<CardViewItem[]> {
         return this.contentTypePropertyService.getContentTypeCardItem(nodeType);
     }
 
