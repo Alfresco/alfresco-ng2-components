@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+import { TypeEntry } from '@alfresco/js-api';
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ContentTypeDialogComponentData } from './content-type-metadata.interface';
-import { ContentTypeModelEntry } from './content-type.model';
 import { ContentTypeService } from './content-type.service';
 
 @Component({
@@ -34,7 +34,7 @@ export class ContentTypeDialogComponent implements OnInit {
     nodeType: string;
     confirmMessage: string;
 
-    currentContentType: ContentTypeModelEntry;
+    currentContentType: TypeEntry;
 
     propertyColumns: string[] = ['name', 'title', 'dataType'];
 

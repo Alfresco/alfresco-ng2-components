@@ -15,20 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces';
 import { MatSelectChange } from '@angular/material/select';
 import { BaseCardView } from '../base-card-view';
 import { AppConfigService } from '../../../app-config/app-config.service';
-import { takeUntil, map, take } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-card-view-selectitem',
     templateUrl: './card-view-selectitem.component.html',
-    styleUrls: ['./card-view-selectitem.component.scss']
+    styleUrls: ['./card-view-selectitem.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnChanges, OnDestroy {
     static HIDE_FILTER_LIMIT = 5;
@@ -44,10 +45,12 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     displayEmpty: boolean = true;
 
     value: string | number;
-    filter: string = '';
+    filter$: BehaviorSubject<string> = new BehaviorSubject('');
     showInputFilter: boolean = false;
 
     private onDestroy$ = new Subject<void>();
+
+    list$: Observable<CardViewSelectItemOption<string | number>[]> = null;
 
     constructor(cardViewUpdateService: CardViewUpdateService, private appConfig: AppConfigService) {
         super(cardViewUpdateService);
@@ -63,10 +66,12 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
             .subscribe((options: CardViewSelectItemOption<string>[]) => {
                 this.showInputFilter = options.length > this.optionsLimit;
             });
+
+        this.list$ = this.getList();
     }
 
     onFilterInputChange(value: string) {
-        this.filter = value.toString();
+        this.filter$.next(value.toString());
     }
 
     isEditable(): boolean {
@@ -77,13 +82,12 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
         return this.options$ || this.property.options$;
     }
 
-    getList(): Observable<CardViewSelectItemOption<string>[]> {
-        return this.getOptions()
+    getList(): Observable<CardViewSelectItemOption<string | number>[]> {
+        return combineLatest([this.getOptions(), this.filter$])
             .pipe(
-                take(1),
-                map((items: CardViewSelectItemOption<string>[]) => items.filter(
-                    (item: CardViewSelectItemOption<string>) =>
-                        item.label.toLowerCase().includes(this.filter.toLowerCase()))),
+                map(([items, filter]) => items.filter((item: CardViewSelectItemOption<string>) =>
+                    filter ? item.label.toLowerCase().includes(filter.toLowerCase())
+                        : true)),
                 takeUntil(this.onDestroy$)
             );
     }

@@ -16,7 +16,7 @@
  */
 
 export * from './content-type.service';
-export * from './content-type.model';
+// export * from './content-type.model';
 export * from './content-type-metadata.interface';
 export * from './content-type-dialog.component';
 

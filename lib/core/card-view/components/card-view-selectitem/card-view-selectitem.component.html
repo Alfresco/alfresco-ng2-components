@@ -15,7 +15,7 @@
                     <adf-select-filter-input *ngIf="showInputFilter" (change)="onFilterInputChange($event)"></adf-select-filter-input>
 
                     <mat-option *ngIf="showNoneOption()">{{ 'CORE.CARDVIEW.NONE' | translate }}</mat-option>
-                    <mat-option *ngFor="let option of getList() | async"
+                    <mat-option *ngFor="let option of list$ | async"
                                 [value]="option.key">
                         {{ option.label | translate }}
                     </mat-option>

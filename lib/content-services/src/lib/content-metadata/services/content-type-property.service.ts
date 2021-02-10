@@ -29,30 +29,30 @@ import { ContentTypeService } from '../../content-type/content-type.service';
 })
 export class ContentTypePropertiesService {
 
-    private contentTypesOptions$: Observable<CardViewSelectItemOption<string>[]>;
-
     constructor(private contentTypeService: ContentTypeService, private dialog: MatDialog) {
     }
 
     getContentTypeCardItem(nodeType: string): Observable<CardViewItem[]> {
-        this.contentTypesOptions$ = this.getContentTypesAsSelectOption(nodeType);
+        const contentTypesOptions$ = this.getContentTypesAsSelectOption(nodeType);
+        const contentTypeCard = new CardViewSelectItemModel({
+            label: 'CORE.METADATA.BASIC.CONTENT_TYPE',
+            value: null,
+            key: 'nodeType',
+            editable: true,
+            options$: contentTypesOptions$
+        });
         return this.contentTypeService.getContentTypeByPrefix(nodeType).
             pipe(
                 map((contentType) => {
-                    return [new CardViewSelectItemModel({
-                        label: 'CORE.METADATA.BASIC.CONTENT_TYPE',
-                        value: contentType.entry.id,
-                        key: 'nodeType',
-                        editable: true,
-                        options$: this.contentTypesOptions$
-                    })];
+                    contentTypeCard.value = contentType.entry.id;
+                    return [contentTypeCard];
                 }));
     }
 
     private getContentTypesAsSelectOption(nodeType: string): Observable<CardViewSelectItemOption<string>[]> {
         return this.contentTypeService.getContentTypeChildren(nodeType).pipe(
             map((contentTypesEntries) => {
-                return contentTypesEntries.map((contentType) => <CardViewSelectItemOption<string>> { key: contentType.entry.id, label: contentType.entry.title });
+                return contentTypesEntries.map((contentType) => <CardViewSelectItemOption<string>> { key: contentType.entry.id, label: contentType.entry.description });
             }));
     }
 
