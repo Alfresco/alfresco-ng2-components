@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './form-fields.page';
 export * from './filters.page';
 export * from './process-filters.page';
 export * from './process-list.page';

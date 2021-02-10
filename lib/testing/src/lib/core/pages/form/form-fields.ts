@@ -76,8 +76,7 @@ export class FormFields {
     }
 
     async getFieldErrorMessage(fieldId: string): Promise<string> {
-        const error = await this.getWidget(fieldId);
-        error.element(this.errorMessage);
+        const error = await this.getWidget(fieldId).element(this.errorMessage);
         return BrowserActions.getText(error);
     }
 
