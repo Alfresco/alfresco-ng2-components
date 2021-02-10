@@ -38,13 +38,11 @@ export class AuthGuardEcm extends AuthGuardBase {
         super(authenticationService, router, appConfigService, dialog, storageService);
     }
 
-    checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): boolean {
+    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string):  Promise<boolean> {
         if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
             return true;
         }
 
-        this.redirectToUrl(redirectUrl);
-
-        return false;
+        return this.redirectToUrl(redirectUrl);
     }
 }

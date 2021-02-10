@@ -107,6 +107,11 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
             {
+                path: '',
+                redirectTo: `/home`,
+                pathMatch: 'full'
+            },
+            {
                 path: 'breadcrumb',
                 canActivate: [AuthGuardEcm],
                 loadChildren: () => import('./components/breadcrumb-demo/breadcrumb-demo.module').then(m => m.AppBreadcrumbModule)
