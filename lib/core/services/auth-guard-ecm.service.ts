@@ -44,6 +44,5 @@ export class AuthGuardEcm extends AuthGuardBase {
         }
 
         return this.redirectToUrl(redirectUrl);
-
     }
 }
