@@ -198,6 +198,14 @@ export class EditProcessFilterCloudComponentPage {
         return this.deleteButton.isEnabled();
     }
 
+    async saveAs(name: string): Promise<void> {
+        await this.clickSaveAsButton();
+        await this.editProcessFilterDialog().setFilterName(name);
+        await this.editProcessFilterDialog().clickOnSaveButton();
+
+        await browser.driver.sleep(1000);
+    }
+
     async clickSaveAsButton(): Promise<void> {
         await BrowserActions.click(this.saveAsButton);
         await browser.driver.sleep(1000);

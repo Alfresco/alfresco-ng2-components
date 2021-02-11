@@ -116,11 +116,7 @@ describe('Edit process filters cloud', () => {
 
     it('[C291806] Two process filters with same name can be created when clicking the Save As button', async () => {
         await editProcessFilter.setSortFilterDropDown('Id');
-        await editProcessFilter.clickSaveAsButton();
-        await editProcessFilter.editProcessFilterDialog().setFilterName('New');
-        await editProcessFilter.editProcessFilterDialog().clickOnSaveButton();
-
-        await browser.driver.sleep(1000);
+        await editProcessFilter.saveAs('New');
 
         await editProcessFilter.openFilter();
         await editProcessFilter.checkCustomiseFilterHeaderIsExpanded();
@@ -128,10 +124,8 @@ describe('Edit process filters cloud', () => {
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
         await editProcessFilter.setSortFilterDropDown('Process Name');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Process Name');
-        await editProcessFilter.clickSaveAsButton();
 
-        await editProcessFilter.editProcessFilterDialog().setFilterName('New');
-        await editProcessFilter.editProcessFilterDialog().clickOnSaveButton();
+        await editProcessFilter.saveAs('New');
         await editProcessFilter.openFilter();
         await editProcessFilter.checkCustomiseFilterHeaderIsExpanded();
 
@@ -153,11 +147,7 @@ describe('Edit process filters cloud', () => {
     it('[C291807] A process filter is updated when clicking on save button', async () => {
         await editProcessFilter.setSortFilterDropDown('Id');
         await processFilter.clickAllProcessesFilter();
-        await editProcessFilter.clickSaveAsButton();
-        await editProcessFilter.editProcessFilterDialog().setFilterName('New');
-        await editProcessFilter.editProcessFilterDialog().clickOnSaveButton();
-
-        await browser.driver.sleep(1000);
+        await editProcessFilter.saveAs('New');
 
         await expect(await processFilter.getActiveFilterName()).toBe('New');
         await editProcessFilter.openFilter();
@@ -179,12 +169,8 @@ describe('Edit process filters cloud', () => {
     it('[C291808] A process filter is deleted when clicking on delete button', async () => {
         await editProcessFilter.setSortFilterDropDown('Id');
         await processFilter.clickAllProcessesFilter();
-        await editProcessFilter.clickSaveAsButton();
-        await editProcessFilter.editProcessFilterDialog().setFilterName('New');
+        await editProcessFilter.saveAs('New');
 
-        await browser.driver.sleep(1000);
-
-        await editProcessFilter.editProcessFilterDialog().clickOnSaveButton();
         await editProcessFilter.openFilter();
         await expect(await processFilter.getActiveFilterName()).toBe('New');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
@@ -251,9 +237,6 @@ describe('Edit process filters cloud', () => {
     async function createNewProcessCustomFilter(name: string): Promise<void> {
         await editProcessFilter.setSortFilterDropDown('Id');
         await processFilter.clickAllProcessesFilter();
-
-        await editProcessFilter.clickSaveAsButton();
-        await editProcessFilter.editProcessFilterDialog().setFilterName(name);
-        await editProcessFilter.editProcessFilterDialog().clickOnSaveButton();
+        await editProcessFilter.saveAs(name);
     }
 });

@@ -244,9 +244,7 @@ describe('Process list cloud', () => {
             await editProcessFilter.openFilter();
             await editProcessFilter.setProcessInstanceId(completedProcess.entry.id);
 
-            await editProcessFilter.clickSaveAsButton();
-            await editProcessFilter.editProcessFilterDialog().setFilterName('New');
-            await editProcessFilter.editProcessFilterDialog().clickOnSaveButton();
+            await editProcessFilter.saveAs('New');
 
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('New');
 
@@ -274,9 +272,7 @@ describe('Process list cloud', () => {
             await expect(await editProcessFilter.checkAppNamesAreUnique()).toBe(true);
             await BrowserActions.closeMenuAndDialogs();
 
-            await editProcessFilter.clickSaveAsButton();
-            await editProcessFilter.editProcessFilterDialog().setFilterName('SavedFilter');
-            await editProcessFilter.editProcessFilterDialog().clickOnSaveButton();
+            await editProcessFilter.saveAs('SavedFilter');
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('SavedFilter');
 
             await editProcessFilter.openFilter();
@@ -288,9 +284,7 @@ describe('Process list cloud', () => {
             await waitTillContentLoaded();
 
             await processList.checkContentIsDisplayedById(switchProcessInstance.entry.id);
-            await editProcessFilter.clickSaveAsButton();
-            await editProcessFilter.editProcessFilterDialog().setFilterName('SwitchFilter');
-            await editProcessFilter.editProcessFilterDialog().clickOnSaveButton();
+            await editProcessFilter.saveAs('SwitchFilter');
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('SwitchFilter');
 
             await editProcessFilter.openFilter();
