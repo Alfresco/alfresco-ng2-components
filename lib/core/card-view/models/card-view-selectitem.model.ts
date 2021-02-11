@@ -19,14 +19,13 @@ import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewSelectItemProperties, CardViewSelectItemOption } from '../interfaces/card-view.interfaces';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'select';
     options$: Observable<CardViewSelectItemOption<T>[]>;
 
-    displayName$: BehaviorSubject<string> = new BehaviorSubject('');
     valueFetch$: Observable<string> = null;
 
     constructor(cardViewSelectItemProperties: CardViewSelectItemProperties<T>) {
