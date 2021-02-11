@@ -114,36 +114,6 @@ describe('Edit process filters cloud', () => {
         await editProcessFilter.clickDeleteButton();
     });
 
-    it('[C291806] Two process filters with same name can be created when clicking the Save As button', async () => {
-        await editProcessFilter.setSortFilterDropDown('Id');
-        await editProcessFilter.saveAs('New');
-
-        await editProcessFilter.openFilter();
-        await editProcessFilter.checkCustomiseFilterHeaderIsExpanded();
-        await expect(await processFilter.getActiveFilterName()).toBe('New');
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
-        await editProcessFilter.setSortFilterDropDown('Process Name');
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Process Name');
-
-        await editProcessFilter.saveAs('New');
-        await editProcessFilter.openFilter();
-        await editProcessFilter.checkCustomiseFilterHeaderIsExpanded();
-
-        await browser.driver.sleep(1000);
-
-        await expect(await processFilter.getActiveFilterName()).toBe('New');
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Process Name');
-        await editProcessFilter.clickDeleteButton();
-
-        await browser.driver.sleep(1000);
-
-        await processFilter.clickProcessFilter('custom-new');
-        await editProcessFilter.openFilter();
-        await editProcessFilter.checkCustomiseFilterHeaderIsExpanded();
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
-        await editProcessFilter.clickDeleteButton();
-    });
-
     it('[C291807] A process filter is updated when clicking on save button', async () => {
         await editProcessFilter.setSortFilterDropDown('Id');
         await processFilter.clickAllProcessesFilter();

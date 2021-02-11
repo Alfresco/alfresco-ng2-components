@@ -102,14 +102,20 @@ export class ProcessFilterCloudService {
      * @returns Observable of process instance filters with newly added filter
      */
     addFilter(newFilter: ProcessFilterCloudModel): Observable<ProcessFilterCloudModel[]> {
-        const key: string = this.prepareKey(newFilter.appName);
-        return this.getProcessFiltersByKey(newFilter.appName, key).pipe(
+        const { appName, name } = newFilter;
+        const key: string = this.prepareKey(appName);
+
+        return this.getProcessFiltersByKey(appName, key).pipe(
             switchMap((filters: ProcessFilterCloudModel[]) => {
                 if (filters && filters.length === 0) {
-                    return this.createProcessFilters(newFilter.appName, key, [newFilter]);
+                    return this.createProcessFilters(appName, key, [newFilter]);
                 } else {
+                    const existing = filters.find(filter => filter.name === name);
+                    if (existing) {
+                        filters.splice(filters.indexOf(existing), 1);
+                    }
                     filters.push(newFilter);
-                    return this.preferenceService.updatePreference(newFilter.appName, key, filters);
+                    return this.preferenceService.updatePreference(appName, key, filters);
                 }
             }),
             map((filters: ProcessFilterCloudModel[]) => {
