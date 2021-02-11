@@ -26,6 +26,7 @@ import { FormFieldTypes } from './form-field-types';
 import { NumberFieldValidator } from './form-field-validator';
 import { FormWidgetModel } from './form-widget.model';
 import { FormModel } from './form.model';
+import { FileSourceTypes } from './form-field-file-source';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -204,6 +205,10 @@ export class FormFieldModel extends FormWidgetModel {
             if (FormFieldTypes.isContainerType(this.type)) {
                 this.containerFactory(json, form);
             }
+
+            if (FormFieldTypes.isUploadType(this.type)) {
+                this.fetchDestinationFolderPathFromMappingVariable();
+            }
         }
 
         if (this.hasEmptyValue && this.options && this.options.length > 0) {
@@ -331,6 +336,30 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         return value;
+    }
+
+    fetchDestinationFolderPathFromMappingVariable() {
+        if (this.params?.fileSource?.serviceId === FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID) {
+            this.prepareUploadWidgetDestinationFolderPathFromStringVariable();
+            this.prepareUploadWidgetDestinationFolderPathFromFolderVariable();
+        }
+    }
+
+    private prepareUploadWidgetDestinationFolderPathFromStringVariable() {
+        if (this.params?.fileSource?.destinationFolderPath.type === 'string') {
+            this.params.fileSource.destinationFolderPath['value'] = this.getDestinationFolderPathValue();
+        }
+    }
+
+    private prepareUploadWidgetDestinationFolderPathFromFolderVariable() {
+        if (this.params?.fileSource?.destinationFolderPath.type === 'folder') {
+            const value = this.getDestinationFolderPathValue();
+            this.params.fileSource.destinationFolderPath['value'] = value[0].id;
+        }
+    }
+
+    private getDestinationFolderPathValue () {
+        return this.form.getProcessVariableValue(this.params.fileSource?.destinationFolderPath?.name);
     }
 
     updateForm() {

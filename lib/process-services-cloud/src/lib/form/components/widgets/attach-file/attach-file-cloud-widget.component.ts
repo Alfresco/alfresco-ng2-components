@@ -98,6 +98,18 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         );
     }
 
+    isStaticPathType(): boolean {
+        return this.field.params?.fileSource?.destinationFolderPath?.type === 'static';
+    }
+
+    isStringPathType(): boolean {
+        return this.field.params?.fileSource?.destinationFolderPath?.type === 'string';
+    }
+
+    isFolderPathType(): boolean {
+        return this.field.params?.fileSource?.destinationFolderPath?.type === 'folder';
+    }
+
     isUploadButtonVisible(): boolean {
         return (!this.hasFile || this.multipleOption) && !this.field.readOnly;
     }
@@ -124,14 +136,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     async openSelectDialog() {
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
-        let destinationFolderPath = <DestinationFolderPathModel> { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: '' };
-        if (this.isAlfrescoAndLocal() && this.hasDestinationFolder()) {
-            destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath.value);
-            destinationFolderPath.path = this.replaceAppNameAliasWithValue(destinationFolderPath.path);
-        }
-        const nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
-        this.rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
-
+        const nodeId = await this.getDestinationFolderId();
+        this.rootNodeId = nodeId ? nodeId : AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
         this.contentNodeSelectorPanelService.customModels = this.field.params.customModels;
 
         this.contentNodeSelectorService
@@ -144,6 +150,28 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                     this.contentModelFormFileHandler(selections && selections.length > 0 ? selections[0] : null);
                 }
             });
+    }
+
+    private async getDestinationFolderId() {
+        let rootNodeId: string;
+        let destinationFolderPath = <DestinationFolderPathModel> { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: '' };
+        if (this.isAlfrescoAndLocal() && this.hasDestinationFolder()) {
+            if (this.isStringPathType() || this.isStaticPathType()) {
+                destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath.value);
+                destinationFolderPath.path = this.replaceAppNameAliasWithValue(destinationFolderPath.path);
+            }
+
+            if (this.isFolderPathType()) {
+                rootNodeId = this.field.params.fileSource.destinationFolderPath.value;
+            }
+        }
+
+        if (!rootNodeId) {
+            const nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
+            rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
+        }
+
+        return rootNodeId;
     }
 
     getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath: string): DestinationFolderPathModel {

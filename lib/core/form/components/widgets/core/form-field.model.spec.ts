@@ -18,6 +18,7 @@
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
+import { FileSourceTypes } from './form-field-file-source';
 
 describe('FormFieldModel', () => {
 
@@ -679,6 +680,184 @@ describe('FormFieldModel', () => {
             });
 
             expect(field.value).toBe('default hello');
+        });
+    });
+
+    describe('Upload widget destination folder path', () => {
+        let form: FormModel;
+
+        const mockContentFileSource = {
+            label: 'File Source',
+            fileSource: {
+                serviceId: FileSourceTypes.ALFRESCO_CONTENT_SOURCES_SERVICE_ID,
+                name: 'Alfresco Content'
+            },
+            key: 'fileSource',
+            editable: true
+        };
+
+        const mockAllFileSourceWithStaticPathType = {
+            label: 'File Source',
+            fileSource: {
+                serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+                name: 'Alfresco Content and Local',
+                destinationFolderPath: {
+                    type: 'static',
+                    value: '-myfiles-'
+                }
+            },
+            key: 'fileSource',
+            editable: true
+        };
+
+        const mockAllFileSourceWithStringVariablePathType = {
+            label: 'File Source',
+            fileSource: {
+                serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+                name: 'Alfresco Content and Local',
+                destinationFolderPath: {
+                    type: 'string',
+                    name: 'name1',
+                    id: 'var1',
+                    value: ''
+                }
+            },
+            key: 'fileSource',
+            editable: true
+        };
+
+        const mockAllFileSourceWithFolderVariablePathType = {
+            label: 'File Source',
+            fileSource: {
+                serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+                name: 'Alfresco Content and Local',
+                destinationFolderPath: {
+                    type: 'folder',
+                    name: 'name2',
+                    id: 'var2',
+                    value: ''
+                }
+            },
+            key: 'fileSource',
+            editable: true
+        };
+
+        beforeEach(() => {
+            const variables = [
+                {
+                    'id': 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+                    'name': 'name1',
+                    'type': 'string',
+                    'value': 'hello'
+                },
+                {
+                    'id': '3ed9f28a-dbae-463f-b991-47ef06658bb6',
+                    'name': 'name2',
+                    'type': 'folder'
+                },
+                {
+                    'id': 'booleanVar',
+                    'name': 'bool',
+                    'type': 'boolean',
+                    'value': 'true'
+                }
+            ];
+
+            const processVariables = [
+                {
+                    'serviceName': 'mock-variable-mapping-rb',
+                    'serviceFullName': 'mock-variable-mapping-rb',
+                    'serviceVersion': '',
+                    'appName': 'mock-variable-mapping',
+                    'appVersion': '',
+                    'serviceType': null,
+                    'id': 3,
+                    'type': 'string',
+                    'name': 'variables.name1',
+                    'createTime': 1566989626284,
+                    'lastUpdatedTime': 1566989626284,
+                    'executionId': null,
+                    'value': 'string-path',
+                    'markedAsDeleted': false,
+                    'processInstanceId': '1be4785f-c982-11e9-bdd8-96d6903e4e44',
+                    'taskId': '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
+                    'taskVariable': true
+                },
+                {
+                    'serviceName': 'mock-variable-mapping-rb',
+                    'serviceFullName': 'mock-variable-mapping-rb',
+                    'serviceVersion': '',
+                    'appName': 'mock-variable-mapping',
+                    'appVersion': '',
+                    'serviceType': null,
+                    'id': 1,
+                    'type': 'folder',
+                    'name': 'variables.name2',
+                    'createTime': 1566989626283,
+                    'lastUpdatedTime': 1566989626283,
+                    'executionId': null,
+                    'value': [{ id: 'mock-node-id'}],
+                    'markedAsDeleted': false,
+                    'processInstanceId': '1be4785f-c982-11e9-bdd8-96d6903e4e44',
+                    'taskId': '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
+                    'taskVariable': true
+                }
+            ];
+
+            form = new FormModel({
+                variables,
+                processVariables
+            });
+        });
+
+        it('it should get a destination folder path value from a string variable', () => {
+            const field = new FormFieldModel(form, {
+                type: FormFieldTypes.UPLOAD,
+                params: mockAllFileSourceWithStringVariablePathType
+            });
+
+            expect(field.params.fileSource.destinationFolderPath.type).toBe('string');
+            expect(field.params.fileSource.destinationFolderPath.value).toBe('string-path');
+        });
+
+        it('it should get a destination folder path value from a folder variable', () => {
+            const field = new FormFieldModel(form, {
+                type: FormFieldTypes.UPLOAD,
+                params: mockAllFileSourceWithFolderVariablePathType
+            });
+
+            expect(field.params.fileSource.destinationFolderPath.type).toBe('folder');
+            expect(field.params.fileSource.destinationFolderPath.value).toBe('mock-node-id');
+        });
+
+        it('it should not have destination folder path property if the file source set to content source', () => {
+            const field = new FormFieldModel(form, {
+                type: FormFieldTypes.UPLOAD,
+                params: mockContentFileSource
+            });
+
+            expect(field.params.fileSource['destinationFolderPath']).toBeUndefined();
+        });
+
+        it('it should not call getProcessVariableValue if the file source set to content source', () => {
+            const field = new FormFieldModel(form, {
+                type: FormFieldTypes.UPLOAD,
+                params: mockContentFileSource
+            });
+            const getProcessVariableValueSpy = spyOn(field.form, 'getProcessVariableValue');
+
+            expect(getProcessVariableValueSpy).not.toHaveBeenCalled();
+        });
+
+        it('it should not call getProcessVariableValue if the destination folder path type set to static', () => {
+            const field = new FormFieldModel(form, {
+                type: FormFieldTypes.UPLOAD,
+                params: mockAllFileSourceWithStaticPathType
+            });
+            const getProcessVariableValueSpy = spyOn(field.form, 'getProcessVariableValue');
+
+            expect(field.params.fileSource.destinationFolderPath.type).toBe('static');
+            expect(getProcessVariableValueSpy).not.toHaveBeenCalled();
         });
     });
 });

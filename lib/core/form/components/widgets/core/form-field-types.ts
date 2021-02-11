@@ -55,4 +55,8 @@ export class FormFieldTypes {
     static isContainerType(type: string) {
         return type === FormFieldTypes.CONTAINER || type === FormFieldTypes.GROUP;
     }
+
+    static isUploadType(type: string) {
+        return type === FormFieldTypes.UPLOAD;
+    }
 }
