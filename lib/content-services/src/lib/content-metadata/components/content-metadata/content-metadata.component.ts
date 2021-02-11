@@ -17,7 +17,7 @@
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, zip } from 'rxjs';
 import {
     CardViewItem,
     NodesApiService,
@@ -30,7 +30,7 @@ import {
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
-import { takeUntil, debounceTime, catchError, map, concatMap } from 'rxjs/operators';
+import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -161,17 +161,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private getProperties(node: Node) {
-        return this.contentMetadataService.getContentTypeProperty(node.nodeType).pipe(
-            concatMap((contentTypeProperty) => this.getBasicProperties(node, contentTypeProperty)),
-            takeUntil(this.onDestroy$)
-        );
-    }
-
-    private getBasicProperties(node: Node, contentTypeProperty: CardViewItem[]): Observable<CardViewItem[]> {
         const properties$ = this.contentMetadataService.getBasicProperties(node);
-        return properties$.pipe(
-            map((currentProperties) => currentProperties.concat(contentTypeProperty))
-        );
+        const contentTypeProperty$ = this.contentMetadataService.getContentTypeProperty(node.nodeType);
+        return zip(properties$, contentTypeProperty$)
+            .pipe(map(([properties, contentTypeProperty]) => [...properties, ...contentTypeProperty]));
     }
 
     updateChanges(updatedNodeChanges) {

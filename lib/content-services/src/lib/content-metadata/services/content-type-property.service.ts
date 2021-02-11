@@ -18,44 +18,59 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CardViewItem, CardViewSelectItemModel, CardViewSelectItemOption } from '@alfresco/adf-core';
-import { Observable, Subject } from 'rxjs';
-import { delay, map, take } from 'rxjs/operators';
+import { Observable, of, Subject, zip } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { ContentTypeDialogComponent } from '../../content-type/content-type-dialog.component';
 import { ContentTypeDialogComponentData } from '../../content-type/content-type-metadata.interface';
 import { ContentTypeService } from '../../content-type/content-type.service';
+import { TypeEntry } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ContentTypePropertiesService {
 
-    contentTypesOptions$: Observable<CardViewSelectItemOption<string>[]> = null;
-
     constructor(private contentTypeService: ContentTypeService, private dialog: MatDialog) {
     }
 
     getContentTypeCardItem(nodeType: string): Observable<CardViewItem[]> {
-        this.contentTypesOptions$ = this.getContentTypesAsSelectOption(nodeType).pipe(take(1), delay(0));
-        const contentTypeCard = new CardViewSelectItemModel({
-            label: 'CORE.METADATA.BASIC.CONTENT_TYPE',
-            value: null,
-            key: 'nodeType',
-            editable: true,
-            options$: this.contentTypesOptions$
-        });
         return this.contentTypeService.getContentTypeByPrefix(nodeType).
             pipe(
                 map((contentType) => {
-                    contentTypeCard.value = contentType.entry.id;
+                    const contentTypesOptions$ = this.getContentTypesAsSelectOption(contentType);
+                    const contentTypeCard =  this.buildContentTypeSelectCardModel(contentType.entry.id, contentTypesOptions$);
                     return [contentTypeCard];
                 }));
     }
 
-    private getContentTypesAsSelectOption(nodeType: string): Observable<CardViewSelectItemOption<string>[]> {
-        return this.contentTypeService.getContentTypeChildren(nodeType).pipe(
-            map((contentTypesEntries) => {
-                return contentTypesEntries.map((contentType) => <CardViewSelectItemOption<string>> { key: contentType.entry.id, label: contentType.entry.description });
+    private buildContentTypeSelectCardModel(currentValue: string, options$: Observable<CardViewSelectItemOption<string>[]>): CardViewSelectItemModel<string> {
+        const contentTypeCard = new CardViewSelectItemModel({
+            label: 'CORE.METADATA.BASIC.CONTENT_TYPE',
+            value: currentValue,
+            key: 'nodeType',
+            editable: true,
+            options$: options$
+        });
+
+        return contentTypeCard;
+    }
+
+    private getContentTypesAsSelectOption(currentType: TypeEntry): Observable<CardViewSelectItemOption<string>[]> {
+        const childrenTypes$ = this.contentTypeService.getContentTypeChildren(currentType.entry.id);
+        return zip(childrenTypes$, of(currentType)).pipe(
+            distinctUntilChanged(),
+            map(([contentTypesEntries, currentContentType]) => {
+                const updatedTypes = this.appendCurrentType(currentContentType, contentTypesEntries);
+                return updatedTypes.map((contentType) => <CardViewSelectItemOption<string>> { key: contentType.entry.id, label: contentType.entry.title ?? contentType.entry.id});
             }));
+    }
+
+    private appendCurrentType(currentType: TypeEntry, contentTypesEntries: TypeEntry[]): TypeEntry[] {
+        const resultTypes = contentTypesEntries;
+        if (contentTypesEntries.indexOf(currentType) === -1) {
+            resultTypes.push(currentType);
+        }
+        return resultTypes;
     }
 
     openContentTypeDialogConfirm(nodeType): Observable<boolean> {

@@ -33,7 +33,7 @@ export class ContentTypeService {
     }
 
     getContentTypeChildren(nodeType: string): Observable<TypeEntry[]> {
-        const opts = {where : `(parentIds in ('${nodeType}'))`};
+        const opts = {where : `(parentIds in ('${nodeType}') and not namespaceUri matches('http://www.alfresco.org/model.*'))`};
         return from(this.alfrescoApiService.typesApi.listTypes(opts)).pipe(
             map((result: TypePaging) => result.list.entries)
         );
