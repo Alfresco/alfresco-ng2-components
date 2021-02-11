@@ -57,7 +57,7 @@ describe('ContentMetadataCardComponent', () => {
 
         component.node = node;
         component.preset = preset;
-        spyOn(contentMetadataService, 'getNodeType').and.returnValue(of([]));
+        spyOn(contentMetadataService, 'getContentTypeProperty').and.returnValue(of([]));
         fixture.detectChanges();
     });
 

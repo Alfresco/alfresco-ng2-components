@@ -75,7 +75,7 @@ describe('ContentMetadataComponent', () => {
 
         component.node = node;
         component.preset = preset;
-        spyOn(contentMetadataService, 'getNodeType').and.returnValue(of([]));
+        spyOn(contentMetadataService, 'getContentTypeProperty').and.returnValue(of([]));
         fixture.detectChanges();
     });
 
@@ -229,7 +229,7 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
-            expect(contentMetadataService.getNodeType).toHaveBeenCalledWith(node.nodeType);
+            expect(contentMetadataService.getContentTypeProperty).toHaveBeenCalledWith(node.nodeType);
             expect(contentMetadataService.getBasicProperties).toHaveBeenCalledWith(expectedNode);
         });
 

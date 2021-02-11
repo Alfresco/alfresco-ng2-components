@@ -64,7 +64,7 @@ describe('ContentMetaDataService', () => {
     it('should return the content type property', () => {
         spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type'}));
 
-        service.getNodeType('fn:fakenode').subscribe(
+        service.getContentTypeProperty('fn:fakenode').subscribe(
             (res: any) => {
                 expect(res).toBeDefined();
                 expect(res).not.toBeNull();

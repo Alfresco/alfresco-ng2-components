@@ -23,22 +23,20 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentTypeDialogComponent } from './content-type-dialog.component';
 import { ContentTypeService } from './content-type.service';
 import { ContentTypeDialogComponentData } from './content-type-metadata.interface';
-import { ContentTypeModelEntry } from './content-type.model';
+import { TypeEntry } from 'cli/node_modules/@alfresco/js-api';
 
-const elementCustom: ContentTypeModelEntry = {
+const elementCustom: TypeEntry = {
     entry: {
         id: 'ck:pippobaudo',
         title: 'PIPPO-BAUDO',
         description: 'Doloro reaepgfihawpefih peahfa powfj p[qwofhjaq[ fq[owfj[qowjf[qowfgh[qowh f[qowhfj [qwohf',
-        parent: 'cm:content',
+        parentId: 'cm:content',
         properties: [
             {
                 id: 'ck:PropA',
                 dataType: 'ck:propA',
                 defaultValue: 'HERE I AM',
                 description: 'A property',
-                indexTokenisationMode: 'TRUE',
-                indexed: true,
                 isMandatory: false,
                 isMandatoryEnforced: false,
                 isMultiValued: false,
@@ -49,8 +47,7 @@ const elementCustom: ContentTypeModelEntry = {
                 dataType: 'ck:propB',
                 defaultValue: 'HERE I AM',
                 description: 'A property',
-                indexTokenisationMode: 'TRUE',
-                indexed: true,
+
                 isMandatory: false,
                 isMandatoryEnforced: false,
                 isMultiValued: false,
@@ -61,8 +58,6 @@ const elementCustom: ContentTypeModelEntry = {
                 dataType: 'ck:propC',
                 defaultValue: 'HERE I AM',
                 description: 'A property',
-                indexTokenisationMode: 'TRUE',
-                indexed: true,
                 isMandatory: false,
                 isMandatoryEnforced: false,
                 isMultiValued: false,
