@@ -131,8 +131,7 @@
     "processstring",
     "typeahed",
     "minmax",
-    "jsons",
-    "facetable"
+    "jsons"
   ],
   "dictionaries": [
     "html",
