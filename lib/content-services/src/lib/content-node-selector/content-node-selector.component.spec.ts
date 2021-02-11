@@ -19,14 +19,14 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { Node, NodeEntry } from '@alfresco/js-api';
+import { Node, NodeEntry, SiteEntry } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { SitesService, ContentService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
-import { ShareDataRow } from '../document-list';
+import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
@@ -392,5 +392,33 @@ describe('ContentNodeSelectorComponent', () => {
 
             expect(tabGroup).toBe(undefined);
         });
+    });
+
+    describe('Breadcrumb', () => {
+        let contentNodePanel;
+
+        beforeEach(() => {
+            contentNodePanel = fixture.debugElement.query(By.directive(ContentNodeSelectorPanelComponent));
+            spyOn(component, 'onBreadcrumbFolderTitleEvent');
+        });
+
+        it('should emit a breadcrumbFolderTitleEvent when the folder is changed', () => {
+            const fakeNodeEntry = new Node({ id: 'fakeId' });
+            const nodeEntryEvent = new NodeEntryEvent(fakeNodeEntry);
+
+            contentNodePanel.componentInstance.onFolderChange(nodeEntryEvent);
+            fixture.detectChanges();
+
+            expect(component.onBreadcrumbFolderTitleEvent).toHaveBeenCalled();
+        });
+
+        it('should emit a breadcrumbFolderTitleEvent when a site is chosen', () => {
+            const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
+
+            contentNodePanel.componentInstance.siteChanged(fakeSite);
+            fixture.detectChanges();
+
+            expect(component.onBreadcrumbFolderTitleEvent).toHaveBeenCalled();
+       });
     });
 });

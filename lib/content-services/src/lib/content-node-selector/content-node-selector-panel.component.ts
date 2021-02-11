@@ -223,6 +223,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Output()
     folderLoaded: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when the breadcrumb folder title has changed */
+    @Output()
+    breadcrumbFolderTitleEvent = new EventEmitter<string>();
+
     @ViewChild('documentList', { static: true })
     documentList: DocumentListComponent;
 
@@ -239,9 +243,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     _chosenNode: Node [] = null;
     folderIdToShow: string | null = null;
     startSiteGuid: string | null = null;
-
-    @Output()
-    breadcrumbFolderTitleEvent = new EventEmitter<string | null>();
     breadcrumbFolderTitle: string | null = null;
 
     @ViewChild(InfinitePaginationComponent, { static: true })
