@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TypeEntry } from 'cli/node_modules/@alfresco/js-api';
+import { TypeEntry } from '@alfresco/js-api';
 import { AlfrescoApiService } from 'core';
 import { of } from 'rxjs';
 import { ContentTypeService } from './content-type.service';
