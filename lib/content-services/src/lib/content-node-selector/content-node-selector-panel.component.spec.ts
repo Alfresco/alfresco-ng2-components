@@ -225,6 +225,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
                 spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
+                spyOn(component.breadcrumbFolderTitleEvent, 'emit');
 
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
@@ -324,6 +325,22 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     done();
                 });
             });
+
+            it('should emit a breadcrumbFolderTitleEvent when the folder is changed', () => {
+                component.onFolderChange(nodeEntryEvent);
+                fixture.detectChanges();
+
+                expect(component.breadcrumbFolderTitleEvent.emit).toHaveBeenCalledWith(null);
+            });
+
+            it('should emit a breadcrumbFolderTitleEvent when a site is chosen', () => {
+                const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
+
+                component.siteChanged(fakeSite);
+                fixture.detectChanges();
+
+                expect(component.breadcrumbFolderTitleEvent.emit).toHaveBeenCalledWith(null);
+           });
         });
 
         describe('Site selection', () => {
