@@ -124,7 +124,8 @@
       "paralleltasks": "paralleltasks",
       "candidateusersgroup": "candidateusersgroup",
       "candidateUserProcess": "candidateuserprocess",
-      "outputVariablesMapping": "output-variables-mapping"
+      "outputVariablesMapping": "output-variables-mapping",
+      "outcomeVisibilityProcess": "outcome-visib-process"
     },
     "forms": {
       "tabVisibilityFields": {
@@ -235,6 +236,13 @@
       },
       "calledForm": {
         "name": "called-form"
+      },
+      "outcomeVisibilityForm": {
+        "name": "outcome-visibility",
+        "textWidget": "TextForOutcome",
+        "validAnswerOutcome": "Valid answer",
+        "invalidAnswerOutcome": "Invalid answer",
+        "answerTheQuestion": "You should answer the question"
       },
       "dropdownWithOptions": {
         "name": "dropdown-options",
