@@ -23,7 +23,7 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentTypeDialogComponent } from './content-type-dialog.component';
 import { ContentTypeService } from './content-type.service';
 import { ContentTypeDialogComponentData } from './content-type-metadata.interface';
-import { TypeEntry } from 'cli/node_modules/@alfresco/js-api';
+import { TypeEntry } from '@alfresco/js-api';
 
 const elementCustom: TypeEntry = {
     entry: {
