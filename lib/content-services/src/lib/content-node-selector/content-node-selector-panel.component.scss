@@ -14,6 +14,16 @@
         color: mat-color($foreground, base, 0.87);
     }
 
+    .adf-toolbar .mat-toolbar {
+        max-height: 48px;
+        border-bottom-width: 0;
+        font-size: 14px;
+
+        &.mat-toolbar-single-row {
+            height: auto;
+        }
+    }
+
     .adf-content-node-selector {
 
         &-search-panel-container {
@@ -60,16 +70,6 @@
                     font-size: 14px;
                 }
 
-            }
-
-            .adf-toolbar .mat-toolbar {
-                max-height: 48px;
-                border-bottom-width: 0;
-                font-size: 14px;
-
-                &.mat-toolbar-single-row {
-                    height: auto;
-                }
             }
 
             &-breadcrumb {

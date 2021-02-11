@@ -238,8 +238,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     inDialog: boolean = false;
     _chosenNode: Node [] = null;
     folderIdToShow: string | null = null;
-    breadcrumbFolderTitle: string | null = null;
     startSiteGuid: string | null = null;
+
+    @Output()
+    breadcrumbFolderTitleEvent = new EventEmitter<string | null>();
+    breadcrumbFolderTitle: string | null = null;
 
     @ViewChild(InfinitePaginationComponent, { static: true })
     infinitePaginationComponent: InfinitePaginationComponent;
@@ -533,6 +536,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.showingSearchResults = false;
         this.infiniteScroll = false;
         this.breadcrumbFolderTitle = null;
+        this.breadcrumbFolderTitleEvent.emit(this.breadcrumbFolderTitle);
         this.preselectedNodes = [];
         this.clearSearch();
         this.navigationChange.emit($event);
@@ -608,6 +612,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         } else {
             this.breadcrumbFolderTitle = null;
         }
+        this.breadcrumbFolderTitleEvent.emit(this.breadcrumbFolderTitle);
     }
 
     hasPreselectNodes(): boolean {
