@@ -173,7 +173,7 @@ describe('Attach File - Content service', () => {
         await widget.attachFileWidget().selectUploadSource(csIntegrations[1]);
 
         await externalNodeSelector.waitForLogInDialog();
-        Logger.log(`Step 3 - login with user:${user.username} `);
+        Logger.log(`Step 3 - login with user:${user.username}`);
         await externalNodeSelector.login(user.username, user.password);
 
         await searchService.isSearchable(externalFile);
