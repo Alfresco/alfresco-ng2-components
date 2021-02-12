@@ -93,7 +93,13 @@ export class ApiService {
     async loginWithProfile(profileName: string): Promise<void> {
         const profile = browser.params.testConfig.users[profileName];
         if (profile) {
-            await this.apiService.login(profile.username, profile.password);
+            Logger.log(`try to login with ${profile.username} on HOST: ${this.apiService.config.hostEcm} AUTHTYPE: ${this.apiService.config.authType} PROVIDER: ${this.apiService.config.provider}`);
+            try {
+                await this.apiService.login(profile.username, profile.password);
+            } catch (error) {
+                Logger.error(`Failed to login with ${profile.username}`, error.message);
+                throw new Error(`Login failed with ${profile.username}`);
+            }
         } else {
             throw new Error(`Login profile "${profileName}" not found on "browser.params.testConfig".`);
         }

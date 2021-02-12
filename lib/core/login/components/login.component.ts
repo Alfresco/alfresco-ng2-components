@@ -150,6 +150,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.initFormFieldsDefault();
         this.initFormFieldsMessages();
 
+        this.successRoute = this.appConfig.get<string>('successRoute', this.successRoute);
+
         if (this.authService.isLoggedIn()) {
             this.router.navigate([this.successRoute]);
         } else {

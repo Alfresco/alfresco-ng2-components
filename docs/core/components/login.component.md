@@ -225,6 +225,18 @@ export class MyCustomLogin {
 }
 ```
 
+### Override the successRoute from app.config.json with Basic Auth
+
+When the user is logged in the login componet redirect him to the successRoute. This route can be overriden from the app.config.json. The successRoute must to be a valid app route.
+
+**app.config.json**
+
+```json
+{
+    "successRoute" : "/my-landing-page"
+}
+```
+
 ### Controlling form submit execution behaviour
 
 The standard form submission system is suitable for most tasks but you can

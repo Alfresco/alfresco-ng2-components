@@ -124,7 +124,44 @@ describe('LoginComponent', () => {
         expect(router.navigate).toHaveBeenCalledWith([redirect]);
     });
 
+    it('should use the input successRoute as redirect if defined', () => {
+        spyOn(authService, 'isLoggedIn').and.returnValue(true);
+        spyOn(router, 'navigate');
+
+        component.successRoute = 'input-route';
+        appConfigService.config = {};
+
+        component.ngOnInit();
+
+        expect(router.navigate).toHaveBeenCalledWith(['input-route']);
+    });
+
+    it('should use the successRoute route from app.config if the input successRoute is NOT defined', () => {
+        spyOn(authService, 'isLoggedIn').and.returnValue(true);
+        spyOn(router, 'navigate');
+
+        component.successRoute = undefined;
+        appConfigService.config.successRoute = 'route-app-config';
+
+        component.ngOnInit();
+
+        expect(router.navigate).toHaveBeenCalledWith(['route-app-config']);
+    });
+
+    it('should use the successRoute route from app.config if both successRoute are defined', () => {
+        spyOn(authService, 'isLoggedIn').and.returnValue(true);
+        spyOn(router, 'navigate');
+
+        component.successRoute = 'input-route';
+        appConfigService.config.successRoute = 'route-app-config';
+
+        component.ngOnInit();
+
+        expect(router.navigate).toHaveBeenCalledWith(['route-app-config']);
+    });
+
     it('should redirect to previous route state on successful login', () => {
+        appConfigService.config = {};
         appConfigService.config.providers = 'ECM';
 
         spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
