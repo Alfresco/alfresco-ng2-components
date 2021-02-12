@@ -86,7 +86,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         return true;
     }
 
-    protected async isLoginFragmentPresent(): Promise<boolean> {
+    protected isLoginFragmentPresent(): boolean {
         return !!this.storageService.getItem('loginFragment');
     }
 
