@@ -722,15 +722,16 @@ describe('EditProcessFilterCloudComponent', () => {
             component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
 
+            const date = moment();
+
             component.filterChange.subscribe(() => {
-                expect(component.processFilter.lastModifiedTo.toISOString()).toEqual(lastModifiedToFilter.toISOString());
+                expect(component.processFilter.lastModifiedTo.toISOString()).toEqual(date.toISOString());
                 done();
             });
 
             const lastModifiedToControl = component.editProcessFilterForm.get('lastModifiedTo');
-            lastModifiedToControl.setValue(new Date().toISOString());
-            const lastModifiedToFilter = moment(lastModifiedToControl.value);
-            lastModifiedToFilter.set({
+            lastModifiedToControl.setValue(date);
+            date.set({
                 hour: 23,
                 minute: 59,
                 second: 59
