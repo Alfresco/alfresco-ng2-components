@@ -58,7 +58,7 @@ describe('ContentMetadataComponent', () => {
         node = <Node> {
             id: 'node-id',
             aspectNames: [],
-            nodeType: '',
+            nodeType: 'cm:node',
             content: {},
             properties: {},
             createdByUser: {},
@@ -75,6 +75,7 @@ describe('ContentMetadataComponent', () => {
 
         component.node = node;
         component.preset = preset;
+        spyOn(contentMetadataService, 'getContentTypeProperty').and.returnValue(of([]));
         fixture.detectChanges();
     });
 
@@ -169,10 +170,33 @@ describe('ContentMetadataComponent', () => {
             saveButton.nativeElement.click();
             fixture.detectChanges();
         }));
+
+        it('should open the confirm dialog when content type is changed', fakeAsync(() => {
+            component.editable = true;
+            const property = <CardViewBaseItemModel> { key: 'nodeType', value: 'ft:sbiruli' };
+            const expectedNode = Object.assign({}, node, { nodeType: 'ft:sbiruli' });
+            spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
+            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
+                return of(expectedNode);
+            });
+
+            updateService.update(property, 'ft:poppoli');
+            tick(600);
+
+            fixture.detectChanges();
+            tick(100);
+            const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
+            saveButton.nativeElement.click();
+
+            tick(100);
+            expect(component.node).toEqual(expectedNode);
+            expect(contentMetadataService.openConfirmDialog).toHaveBeenCalledWith({nodeType: 'ft:poppoli'});
+            expect(nodesApiService.updateNode).toHaveBeenCalled();
+        }));
     });
 
     describe('Reseting', () => {
-        it('should reset changedProperties on reset click', async(async () => {
+        it('should reset changedProperties on reset click', async () => {
             component.changedProperties = { properties: { 'property-key': 'updated-value' } };
             component.hasMetadataChanged = true;
             component.editable = true;
@@ -189,7 +213,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             expect(component.changedProperties).toEqual({});
             expect(nodesApiService.updateNode).not.toHaveBeenCalled();
-        }));
+        });
     });
 
     describe('Properties loading', () => {
@@ -205,6 +229,7 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
+            expect(contentMetadataService.getContentTypeProperty).toHaveBeenCalledWith(node.nodeType);
             expect(contentMetadataService.getBasicProperties).toHaveBeenCalledWith(expectedNode);
         });
 
@@ -221,7 +246,7 @@ describe('ContentMetadataComponent', () => {
             component.basicProperties$.subscribe(() => {
                 fixture.detectChanges();
                 const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
-                expect(basicPropertiesComponent.properties).toBe(expectedProperties);
+                expect(basicPropertiesComponent.properties.length).toBe(expectedProperties.length);
             });
         }));
 

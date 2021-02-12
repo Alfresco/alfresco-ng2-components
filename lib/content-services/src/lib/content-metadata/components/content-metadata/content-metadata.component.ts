@@ -17,7 +17,7 @@
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, zip } from 'rxjs';
 import {
     CardViewItem,
     NodesApiService,
@@ -30,7 +30,7 @@ import {
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
-import { takeUntil, debounceTime, catchError } from 'rxjs/operators';
+import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -155,9 +155,16 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     private loadProperties(node: Node) {
         if (node) {
-            this.basicProperties$ = this.contentMetadataService.getBasicProperties(node);
+            this.basicProperties$ = this.getProperties(node);
             this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
         }
+    }
+
+    private getProperties(node: Node) {
+        const properties$ = this.contentMetadataService.getBasicProperties(node);
+        const contentTypeProperty$ = this.contentMetadataService.getContentTypeProperty(node.nodeType);
+        return zip(properties$, contentTypeProperty$)
+            .pipe(map(([properties, contentTypeProperty]) => [...properties, ...contentTypeProperty]));
     }
 
     updateChanges(updatedNodeChanges) {
@@ -174,6 +181,16 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     saveChanges() {
+        if (this.hasContentTypeChanged(this.changedProperties)) {
+            this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
+                this.updateNode();
+            });
+        } else {
+            this.updateNode();
+        }
+    }
+
+    private updateNode() {
         this.nodesApiService.updateNode(this.node.id, this.changedProperties).pipe(
             catchError((err) => {
                 this.cardViewUpdateService.updateElement(this.targetProperty);
@@ -187,6 +204,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     this.alfrescoApiService.nodeUpdated.next(this.node);
                 }
             });
+    }
+
+    private hasContentTypeChanged(changedProperties): boolean {
+        return !!changedProperties?.nodeType;
     }
 
     revertChanges() {

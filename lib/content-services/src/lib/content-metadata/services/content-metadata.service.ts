@@ -25,7 +25,7 @@ import { CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-met
 import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { map, switchMap } from 'rxjs/operators';
-
+import { ContentTypePropertiesService } from './content-type-property.service';
 @Injectable({
     providedIn: 'root'
 })
@@ -36,11 +36,20 @@ export class ContentMetadataService {
     constructor(private basicPropertiesService: BasicPropertiesService,
                 private contentMetadataConfigFactory: ContentMetadataConfigFactory,
                 private propertyGroupTranslatorService: PropertyGroupTranslatorService,
-                private propertyDescriptorsService: PropertyDescriptorsService) {
+                private propertyDescriptorsService: PropertyDescriptorsService,
+                private contentTypePropertyService: ContentTypePropertiesService) {
     }
 
     getBasicProperties(node: Node): Observable<CardViewItem[]> {
         return of(this.basicPropertiesService.getProperties(node));
+    }
+
+    getContentTypeProperty(nodeType: string): Observable<CardViewItem[]> {
+        return this.contentTypePropertyService.getContentTypeCardItem(nodeType);
+    }
+
+    openConfirmDialog(changedProperties): Observable<any> {
+        return this.contentTypePropertyService.openContentTypeDialogConfirm(changedProperties.nodeType);
     }
 
     getGroupedProperties(node: Node, presetName: string = 'default'): Observable<CardViewGroup[]> {

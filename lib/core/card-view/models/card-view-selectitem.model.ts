@@ -26,18 +26,25 @@ export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements
     type: string = 'select';
     options$: Observable<CardViewSelectItemOption<T>[]>;
 
+    valueFetch$: Observable<string> = null;
+
     constructor(cardViewSelectItemProperties: CardViewSelectItemProperties<T>) {
         super(cardViewSelectItemProperties);
 
         this.options$ = cardViewSelectItemProperties.options$;
-    }
 
-    get displayValue() {
-        return this.options$.pipe(
+        this.valueFetch$ = this.options$.pipe(
             switchMap((options) => {
                 const option = options.find((o) => o.key === this.value?.toString());
                 return of(option ? option.label : '');
-            })
-        );
+        }));
+    }
+
+    get displayValue() {
+        return this.valueFetch$;
+    }
+
+    setValue(value: any) {
+        this.value = value;
     }
 }

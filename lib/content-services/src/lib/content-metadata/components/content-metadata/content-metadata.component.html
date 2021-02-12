@@ -9,7 +9,6 @@
                     {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-
             <adf-card-view
                 (keydown)="keyDown($event)"
                 [properties]="basicProperties$ | async"

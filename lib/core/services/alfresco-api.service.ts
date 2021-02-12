@@ -23,7 +23,7 @@ import {
     SearchApi,
     Node,
     GroupsApi,
-    AlfrescoApiCompatibility, AlfrescoApiConfig
+    AlfrescoApiCompatibility, AlfrescoApiConfig, TypesApi
 } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
@@ -100,6 +100,10 @@ export class AlfrescoApiService {
 
     get groupsApi(): GroupsApi {
         return new GroupsApi(this.getInstance());
+    }
+
+    get typesApi(): TypesApi {
+        return new TypesApi(this.getInstance());
     }
 
     constructor(
