@@ -157,6 +157,7 @@ describe('Process filters cloud', () => {
         await appListCloudComponent.goToApp(candidateBaseApp);
         await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
+        await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
     });
 
     it('[C306887] Should be able to filter by appName', async () => {
@@ -286,18 +287,14 @@ describe('Process filters cloud', () => {
     });
 
     it('[C306892] Should be able to filter by process status - All', async () => {
+        await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
+
         await editProcessFilter.openFilter();
         await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.ALL);
-        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
-
-        await editProcessFilter.setProcessName(anotherProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
-
-        await editProcessFilter.setProcessName(suspendProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(suspendProcessInstance.entry.name);
-
-        await editProcessFilter.setProcessName(completedProcess.entry.name);
         await processList.checkContentIsDisplayedByName(completedProcess.entry.name);
     });
 
