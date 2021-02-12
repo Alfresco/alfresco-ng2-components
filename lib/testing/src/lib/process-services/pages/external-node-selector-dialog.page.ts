@@ -20,7 +20,7 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { ContentNodeSelectorDialogPage } from '../../content-services/dialog/content-node-selector-dialog.page';
 import { DocumentListPage } from '../../content-services/pages/document-list.page';
-
+import { Logger } from '../../core/utils/logger';
 export class ExternalNodeSelectorDialogPage extends ContentNodeSelectorDialogPage {
     txtUsername = element(by.css('input[id="username"]'));
     txtPassword = element(by.css('input[id="password"]'));
@@ -63,6 +63,7 @@ export class ExternalNodeSelectorDialogPage extends ContentNodeSelectorDialogPag
     }
 
     async login(username, password): Promise<void> {
+        Logger.log('Login external With ' + username);
         await this.waitForLogInDialog();
         await this.enterUsername(username);
         await this.enterPassword(password);

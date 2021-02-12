@@ -27,7 +27,8 @@ import {
     UserModel,
     UsersActions,
     Widget,
-    SearchService
+    SearchService,
+    Logger
 } from '@alfresco/adf-testing';
 import { TasksPage } from './pages/tasks.page';
 import { browser } from 'protractor';
@@ -99,7 +100,7 @@ describe('Attach File - Content service', () => {
 
                 await searchService.isSearchable(pdfFileTwo.name);
                 await searchService.isSearchable(externalFile);
-        } catch (errror) {
+        } catch (error) {
             console.error('Preconditions failed check if the external env is up and running');
         }
         done();
@@ -150,6 +151,7 @@ describe('Attach File - Content service', () => {
 
     it('[C286516][C299040] Able to upload a file when user has more than two alfresco repositories', async () => {
         const name = 'Attach file - multiple repo';
+        Logger.log('Step 1 - create task ' + name);
         await taskPage.createTask({ name, formName: app.UPLOAD_FILE_FORM_CS.formName });
 
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
@@ -166,20 +168,24 @@ describe('Attach File - Content service', () => {
         await expect(await widget.attachFileWidget().viewFileEnabled()).toBe(false);
         await expect(await widget.attachFileWidget().downloadFileEnabled()).toBe(true);
         await expect(await widget.attachFileWidget().removeFileEnabled()).toBe(true);
-
+        Logger.log('Step 2 - upload file  ' + pdfFileTwo.name);
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
         await widget.attachFileWidget().selectUploadSource(csIntegrations[1]);
 
         await externalNodeSelector.waitForLogInDialog();
+        Logger.log(`Step 3 - login with user:${user.username} `);
         await externalNodeSelector.login(user.username, user.password);
 
         await searchService.isSearchable(externalFile);
+        Logger.log('Step 4 - search and click external file ' + externalFile);
         await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);
         await externalNodeSelector.clickMoveCopyButton();
+
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, externalFile);
 
         await widget.attachFileWidget().toggleAttachedFileMenu(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileTwo.name);
         await expect(await widget.attachFileWidget().viewFileEnabled()).toBe(false);
+        Logger.log('Step 5 - download ');
         await expect(await widget.attachFileWidget().downloadFileEnabled()).toBe(true);
         await expect(await widget.attachFileWidget().removeFileEnabled()).toBe(true);
 
@@ -187,10 +193,11 @@ describe('Attach File - Content service', () => {
         await expect(await widget.attachFileWidget().viewFileEnabled()).toBe(false);
         await expect(await widget.attachFileWidget().downloadFileEnabled()).toBe(false);
         await expect(await widget.attachFileWidget().removeFileEnabled()).toBe(true);
-
+        Logger.log('Step 6 - download ');
         await taskPage.taskDetails().clickCompleteFormTask();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        Logger.log('Step 7 - go filter completed ');
         await taskPage.tasksListPage().selectRow(name);
 
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileTwo.name);

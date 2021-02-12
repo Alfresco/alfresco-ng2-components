@@ -124,18 +124,6 @@ describe('LoginComponent', () => {
         expect(router.navigate).toHaveBeenCalledWith([redirect]);
     });
 
-    it('should redirect to the default route / if none of successRoute are defined', () => {
-        spyOn(authService, 'isLoggedIn').and.returnValue(true);
-        spyOn(router, 'navigate');
-
-        component.successRoute = undefined;
-        appConfigService.config = {};
-
-        component.ngOnInit();
-
-        expect(router.navigate).toHaveBeenCalledWith(['/']);
-    });
-
     it('should use the input successRoute as redirect if defined', () => {
         spyOn(authService, 'isLoggedIn').and.returnValue(true);
         spyOn(router, 'navigate');
