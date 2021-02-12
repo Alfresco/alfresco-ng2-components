@@ -39,6 +39,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     hasAllowableOperations = false;
     isLoading = true;
     selectedTabIndex: number = 0;
+    breadcrumbFolderNode: Node;
 
     constructor(private translation: TranslationService,
                 private contentService: ContentService,
@@ -116,6 +117,7 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     onCurrentFolder(currentFolder: Node) {
         this.hasAllowableOperations = this.contentService.hasAllowableOperations(currentFolder, AllowableOperationsEnum.CREATE);
+        this.breadcrumbFolderNode = currentFolder;
     }
 
     isNotAllowedToUpload() {

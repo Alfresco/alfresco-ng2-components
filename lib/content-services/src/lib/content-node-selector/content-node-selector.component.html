@@ -34,6 +34,17 @@
     </mat-tab>
     <mat-tab *ngIf="canPerformLocalUpload()"
              [disabled]="isNotAllowedToUpload()">
+        <adf-toolbar>
+            <adf-toolbar-title>
+                <adf-dropdown-breadcrumb
+                    class="adf-content-node-selector-content-breadcrumb"
+                    [folderNode]="breadcrumbFolderNode"
+                    [rootId]="data?.currentFolderId"
+                    [readOnly]="true"
+                    data-automation-id="content-node-selector-upload-breadcrumb"
+                ></adf-dropdown-breadcrumb>
+            </adf-toolbar-title>
+        </adf-toolbar>
         <ng-template mat-tab-label>
             {{ 'NODE_SELECTOR.UPLOAD_FROM_DEVICE' | translate }}
             <mat-icon *ngIf="hasUploadError()"
