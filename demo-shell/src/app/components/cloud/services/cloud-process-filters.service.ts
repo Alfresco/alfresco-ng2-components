@@ -54,6 +54,14 @@ export class CloudProcessFiltersService {
             }
         }
 
+        if (obj.hasOwnProperty('lastModifiedFrom')) {
+            model.lastModifiedFrom = new Date(parseInt(obj['lastModifiedFrom'], 10));
+        }
+
+        if (obj.hasOwnProperty('lastModifiedTo')) {
+            model.lastModifiedTo = new Date(parseInt(obj['lastModifiedTo'], 10));
+        }
+
         return model;
     }
 
@@ -71,6 +79,15 @@ export class CloudProcessFiltersService {
                 if (Array.isArray(versions) && versions.length > 0) {
                     result['appVersion'] = versions.join(',');
                 }
+            } else if (prop === 'lastModified') {
+                if (value['lastModifiedFrom']) {
+                    result['lastModifiedFrom'] = value['lastModifiedFrom'].valueOf();
+                }
+
+                if (value['lastModifiedTo']) {
+                    result['lastModifiedTo'] = value['lastModifiedTo'].valueOf();
+                }
+
             } else if (value.hasOwnProperty(prop)) {
                 result[prop] = value[prop];
             }

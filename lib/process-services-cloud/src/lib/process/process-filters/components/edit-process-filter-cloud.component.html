@@ -63,6 +63,7 @@
                             <mat-label>{{processFilterProperty.label | translate}}</mat-label>
                             <input
                                 matInput
+                                [formControlName]="processFilterProperty.key"
                                 (keyup)="onDateChanged($event.srcElement.value, processFilterProperty)"
                                 (dateChange)="onDateChanged($event.value, processFilterProperty)"
                                 [matDatepicker]="dateController"

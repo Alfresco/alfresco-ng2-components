@@ -271,7 +271,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         }
 
         if (this.filterProperties.includes('lastModified')) {
-            filteredProperties = [...filteredProperties, ...this.createLastModifiedProperty()];
+            filteredProperties = [
+                ...filteredProperties,
+                ...this.createLastModifiedProperty(this.processFilter)
+            ];
         }
 
         return filteredProperties;
@@ -333,13 +336,12 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return this.editProcessFilterForm.get(property.key);
     }
 
-    onDateChanged(newDateValue: any, dateProperty: ProcessFilterProperties) {
+    onDateChanged(newDateValue: Moment, dateProperty: ProcessFilterProperties) {
         if (newDateValue) {
-            const momentDate = moment(newDateValue, this.DATE_FORMAT, true);
             const controller = this.getPropertyController(dateProperty);
 
-            if (momentDate.isValid()) {
-                controller.setValue(momentDate.toDate());
+            if (newDateValue.isValid()) {
+                controller.setValue(newDateValue);
                 controller.setErrors(null);
             } else {
                 controller.setErrors({ invalid: true });
@@ -537,19 +539,30 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         ];
     }
 
-    private createLastModifiedProperty(): ProcessFilterProperties[] {
+    private createLastModifiedProperty(filterModel: ProcessFilterCloudModel): ProcessFilterProperties[] {
+        let lastModifiedFrom;
+        let lastModifiedTo;
+
+        if (filterModel.lastModifiedFrom) {
+            lastModifiedFrom = moment(filterModel.lastModifiedFrom);
+        }
+
+        if (filterModel.lastModifiedTo) {
+            lastModifiedTo = moment(filterModel.lastModifiedTo);
+        }
+
         return [
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.LAST_MODIFIED_DATE_FORM',
                 type: 'date',
                 key: 'lastModifiedFrom',
-                value: ''
+                value: lastModifiedFrom
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.LAST_MODIFIED_TO',
                 type: 'date',
                 key: 'lastModifiedTo',
-                value: ''
+                value: lastModifiedTo
             }
         ];
     }
