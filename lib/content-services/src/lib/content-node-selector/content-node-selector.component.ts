@@ -40,7 +40,6 @@ export class ContentNodeSelectorComponent implements OnInit {
     isLoading = true;
     selectedTabIndex: number = 0;
     breadcrumbFolderNode: Node;
-    breadcrumbFolderTitle: string | null;
 
     constructor(private translation: TranslationService,
                 private contentService: ContentService,
@@ -131,10 +130,6 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     onTabSelectionChange(tabIndex: number) {
         this.selectedTabIndex = tabIndex;
-    }
-
-    onBreadcrumbFolderTitleEvent(title: string | null) {
-        this.breadcrumbFolderTitle = title;
     }
 
     isFileServerTabSelected (): boolean {

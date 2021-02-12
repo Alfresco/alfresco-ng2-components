@@ -29,8 +29,7 @@
                 (select)="onSelect($event)"
                 (showingSearch)="onShowingSearch($event)"
                 (siteChange)="onSiteChange($event)"
-                (navigationChange)="onNavigationChange($event)"
-                (breadcrumbFolderTitleEvent)="onBreadcrumbFolderTitleEvent($event)">
+                (navigationChange)="onNavigationChange($event)">
             </adf-content-node-selector-panel>
     </mat-tab>
     <mat-tab *ngIf="canPerformLocalUpload()"
@@ -41,7 +40,6 @@
                     class="adf-content-node-selector-content-breadcrumb"
                     [folderNode]="breadcrumbFolderNode"
                     [rootId]="data?.currentFolderId"
-                    [root]="breadcrumbFolderTitle"
                     [readOnly]="true"
                     data-automation-id="content-node-selector-upload-breadcrumb"
                 ></adf-dropdown-breadcrumb>
