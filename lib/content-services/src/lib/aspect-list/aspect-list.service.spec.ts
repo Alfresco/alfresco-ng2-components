@@ -19,7 +19,7 @@ import { AspectEntry, AspectPaging } from '@alfresco/js-api';
 import { async, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { AppConfigService, setupTestBed } from 'core';
+import { AlfrescoApiService, AppConfigService, setupTestBed } from 'core';
 import { of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { AspectListService } from './aspect-list.service';
@@ -65,9 +65,36 @@ const aspectListMock: AspectEntry[] = [{
     }
 }];
 
+const customAspectListMock: AspectEntry[] = [{
+    entry: {
+        parentId: 'frs:aspectZero',
+        id: 'frs:AspectCustom',
+        description: 'First Aspect with random description',
+        title: 'FirstAspect',
+        properties: [
+            {
+                id: 'channelPassword',
+                title: 'The authenticated channel password',
+                dataType: 'd:propA'
+            },
+            {
+                id: 'channelUsername',
+                title: 'The authenticated channel username',
+                dataType: 'd:propB'
+            }
+        ]
+    }
+}];
+
 const listAspectResp: AspectPaging = {
     list : {
         entries: aspectListMock
+    }
+};
+
+const customListAspectResp: AspectPaging = {
+    list : {
+        entries: customAspectListMock
     }
 };
 
@@ -115,23 +142,23 @@ describe('AspectListService', () => {
     describe('should fetch the list of the aspects', () => {
 
         let service: AspectListService;
-        let apiService: any;
-        let appConfigService: AppConfigService;
-        const aspectApi = jasmine.createSpyObj('aspectsApi', {
-            'listAspects': Promise.resolve(listAspectResp)
-        });
+        const appConfigService: AppConfigService = new AppConfigService(null);
+
+        const aspectTypesApi = jasmine.createSpyObj('AspectsApi', ['listAspects']);
+        const apiService: AlfrescoApiService = new AlfrescoApiService(null, null);
 
         beforeEach(() => {
-            apiService = { aspectsApi: aspectApi};
-            appConfigService = new AppConfigService(null);
             spyOn(appConfigService, 'get').and.returnValue({ 'default': ['frs:AspectOne'] });
+            spyOnProperty(apiService, 'aspectsApi').and.returnValue(aspectTypesApi);
             service = new AspectListService(apiService, appConfigService, null);
         });
 
         it('should get the list of only available aspects', async(() => {
+            aspectTypesApi.listAspects.and.returnValues(of(listAspectResp), of(customListAspectResp));
             service.getAspects().subscribe((list) => {
-                expect(list.length).toBe(1);
+                expect(list.length).toBe(2);
                 expect(list[0].entry.id).toBe('frs:AspectOne');
+                expect(list[1].entry.id).toBe('frs:AspectCustom');
             });
         }));
     });
