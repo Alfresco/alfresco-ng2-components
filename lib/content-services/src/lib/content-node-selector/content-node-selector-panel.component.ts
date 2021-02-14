@@ -36,7 +36,9 @@ import {
     UploadService,
     FileUploadCompleteEvent,
     FileUploadDeleteEvent,
-    FileModel
+    FileModel,
+    AppConfigService,
+    DataSorting
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, QueryBody, RequestScope } from '@alfresco/js-api';
@@ -250,6 +252,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     target: PaginatedComponent;
     preselectedNodes: NodeEntry[] = [];
+    sorting: string[] | DataSorting;
 
     searchPanelExpanded: boolean = false;
 
@@ -261,6 +264,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 private nodesApiService: NodesApiService,
                 private uploadService: UploadService,
                 private sitesService: SitesService,
+                private appConfigService: AppConfigService,
                 private contentNodeSelectorPanelService: ContentNodeSelectorPanelService) {
     }
 
@@ -331,6 +335,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         .subscribe((currentNode: Node) => {
             this.currentFolder.emit(currentNode);
     });
+
+        this.sorting = this.appConfigService.get('adf-content-node-selector.sorting', ['createdAt', 'desc']);
     }
 
     ngOnDestroy() {
