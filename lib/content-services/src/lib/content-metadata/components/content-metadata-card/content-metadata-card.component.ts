@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
-import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
 import { NodeAspectService } from '../../../aspect-list/node-aspect.service';
 @Component({
     selector: 'adf-content-metadata-card',
@@ -28,9 +27,6 @@ import { NodeAspectService } from '../../../aspect-list/node-aspect.service';
     host: { 'class': 'adf-content-metadata-card' }
 })
 export class ContentMetadataCardComponent implements OnChanges {
-
-    @ViewChild('contentmetadata')
-    contentMetadataComponent: ContentMetadataComponent;
 
     /** (required) The node entity to fetch metadata about */
     @Input()
@@ -82,8 +78,6 @@ export class ContentMetadataCardComponent implements OnChanges {
     }
 
     editable: boolean = false;
-
-    aspectDialog: boolean = false;
 
     expanded: boolean;
 
