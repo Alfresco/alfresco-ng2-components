@@ -97,7 +97,7 @@ import { AspectListModule } from './aspect-list/aspect-list.module';
         PermissionManagerModule,
         VersionManagerModule,
         TreeViewModule,
-        AspectListModule
+        AspectListModule,
         ContentTypeModule
     ]
 })
