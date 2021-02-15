@@ -27,7 +27,9 @@ import {
     ContentLinkModel,
     AppConfigService,
     AlfrescoApiService,
-    UploadWidgetContentLinkModel
+    UploadWidgetContentLinkModel,
+    FileSourceTypes,
+    DestinationFolderPathType
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
@@ -91,23 +93,15 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     isAlfrescoAndLocal(): boolean {
-        return (
-            this.field.params &&
-            this.field.params.fileSource &&
-            this.field.params.fileSource.serviceId === 'all-file-sources'
-        );
+        return this.field?.params?.fileSource?.serviceId === FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID;
     }
 
     isStaticPathType(): boolean {
-        return this.field.params?.fileSource?.destinationFolderPath?.type === 'static';
+        return this.field.params?.fileSource?.destinationFolderPath?.type === DestinationFolderPathType.STATIC_TYPE;
     }
 
-    isStringPathType(): boolean {
-        return this.field.params?.fileSource?.destinationFolderPath?.type === 'string';
-    }
-
-    isFolderPathType(): boolean {
-        return this.field.params?.fileSource?.destinationFolderPath?.type === 'folder';
+    isDestinationPathVariableType(type: string): boolean {
+        return this.field.params?.fileSource?.destinationFolderPath?.type === type;
     }
 
     isUploadButtonVisible(): boolean {
@@ -156,12 +150,12 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         let rootNodeId: string;
         let destinationFolderPath = <DestinationFolderPathModel> { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: '' };
         if (this.isAlfrescoAndLocal() && this.hasDestinationFolder()) {
-            if (this.isStringPathType() || this.isStaticPathType()) {
+            if (this.isDestinationPathVariableType(DestinationFolderPathType.STRING_TYPE) || this.isStaticPathType()) {
                 destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath.value);
                 destinationFolderPath.path = this.replaceAppNameAliasWithValue(destinationFolderPath.path);
             }
 
-            if (this.isFolderPathType()) {
+            if (this.isDestinationPathVariableType(DestinationFolderPathType.FOLDER_TYPE)) {
                 rootNodeId = this.field.params.fileSource.destinationFolderPath.value;
             }
         }

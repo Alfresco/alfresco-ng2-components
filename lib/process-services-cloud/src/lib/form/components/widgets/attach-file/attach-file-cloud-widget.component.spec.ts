@@ -32,12 +32,33 @@ import {
     AlfrescoApiService,
     UploadWidgetContentLinkModel
 } from '@alfresco/adf-core';
+import {
+    allSourceParams,
+    contentSourceParam,
+    fakeMinimalNode,
+    mockNodeId,
+    fakePngAnswer,
+    onlyLocalParams,
+    allSourceWithRootParams,
+    allSourceWithWrongAliasParams,
+    allSourceWithNoAliasParams,
+    allSourceWithoutDestinationFolderPath,
+    allSourceWithoutValueProperty,
+    fakeNodeWithProperties,
+    menuTestSourceParam,
+    expectedValues,
+    fakeLocalPngAnswer,
+    allSourceWithFolderTypeDestinationPath,
+    allSourceWithStringTypeDestinationPath,
+    allSourceWithStringTypeEmptyValue,
+    allSourceWithFolderTypeEmptyValue,
+    mockNodeIdBasedOnStringVariableValue
+} from '../../../mocks/attach-file-cloud-widget.mock';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ContentModule, ContentNodeSelectorPanelService } from '@alfresco/adf-content-services';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { Node } from '@alfresco/js-api';
 import { FormCloudModule } from '../../../form-cloud.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -56,165 +77,6 @@ describe('AttachFileCloudWidgetComponent', () => {
     let contentModelFormFileHandlerSpy: jasmine.Spy;
     let updateFormSpy: jasmine.Spy;
     let contentClickedSpy: jasmine.Spy;
-
-    const fakePngAnswer = {
-        id: 1155,
-        nodeId: 1155,
-        name: 'a_png_file.png',
-        created: '2017-07-25T17:17:37.099Z',
-        createdBy: {
-            id: 1001,
-            firstName: 'Admin',
-            lastName: 'admin',
-            email: 'admin'
-        },
-        relatedContent: false,
-        contentAvailable: true,
-        link: false,
-        mimeType: 'image/png',
-        simpleType: 'image',
-        previewStatus: 'queued',
-        thumbnailStatus: 'queued',
-        properties: {
-            'pfx:property_one': 'testValue',
-            'pfx:property_two': true
-        }
-    };
-
-    const onlyLocalParams = {
-        fileSource: {
-            serviceId: 'local-file'
-        }
-    };
-
-    const contentSourceParam = {
-        fileSource: {
-            name: 'mock-alf-content',
-            serviceId: 'alfresco-content'
-        }
-    };
-
-    const menuTestSourceParam = {
-        fileSource: {
-            name: 'mock-alf-content',
-            serviceId: 'alfresco-content'
-        },
-        menuOptions: {
-            show: true,
-            download: true,
-            retrieveMetadata: true,
-            remove: true
-        }
-    };
-
-    const allSourceParams = {
-        fileSource: {
-            name: 'all file sources',
-            serviceId: 'all-file-sources',
-            destinationFolderPath: {
-                name: 'staticValue',
-                value: '-root-/myfiles',
-                type: 'value'
-            }
-        }
-    };
-
-    const allSourceWithRootParams = {
-        fileSource: {
-            name: 'all file sources',
-            serviceId: 'all-file-sources',
-            destinationFolderPath: {
-                name: 'staticValue',
-                value: '-root-',
-                type: 'value'
-            }
-        }
-    };
-
-    const allSourceWithWrongAliasParams = {
-        fileSource: {
-            name: 'all file sources',
-            serviceId: 'all-file-sources',
-            destinationFolderPath: {
-                name: 'staticValue',
-                value: '-wrongAlias-',
-                type: 'value'
-            }
-        }
-    };
-
-    const allSourceWithNoAliasParams = {
-        fileSource: {
-            name: 'all file sources',
-            serviceId: 'all-file-sources',
-            destinationFolderPath: {
-                name: 'staticValue',
-                value: '/noalias/createdFolder',
-                type: 'value'
-            }
-        }
-    };
-
-    const allSourceWithoutDestinationFolderPath = {
-        fileSource: {
-            name: 'all file sources',
-            serviceId: 'all-file-sources'
-        }
-    };
-
-    const allSourceWithoutValueProperty = {
-        fileSource: {
-            name: 'all file sources',
-            serviceId: 'all-file-sources',
-            destinationFolderPath: '-mockAlias-'
-        }
-    };
-
-    const fakeMinimalNode: Node = <Node> {
-        id: 'fake',
-        name: 'fake-name',
-        content: {
-            mimeType: 'application/pdf'
-        }
-    };
-
-    const fakeNodeWithProperties: Node = <Node> {
-        id: 'fake-properties',
-        name: 'fake-properties-name',
-        content: {
-            mimeType: 'application/pdf'
-        },
-        properties: {
-            'pfx:property_one': 'testValue',
-            'pfx:property_two': true
-        }
-    };
-
-    const expectedValues = { pfx_property_one: 'testValue', pfx_property_two: true };
-
-    const mockNodeId = new Promise(function (resolve) {
-        resolve('mock-node-id');
-    });
-
-    const fakeLocalPngAnswer = {
-        id: 1155,
-        nodeId: 1155,
-        name: 'a_png_file.png',
-        created: '2017-07-25T17:17:37.099Z',
-        createdBy: {
-            id: 1001,
-            firstName: 'Admin',
-            lastName: 'admin',
-            email: 'admin'
-        },
-        relatedContent: false,
-        contentAvailable: true,
-        link: false,
-        mimeType: 'image/png',
-        simpleType: 'image',
-        previewStatus: 'queued',
-        thumbnailStatus: 'queued'
-    };
 
     setupTestBed({
         imports: [
@@ -396,6 +258,100 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(fetchNodeIdFromRelativePathSpy).toHaveBeenCalledWith(alias, opt);
             expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('-root-/myfiles');
             expect(widget.rootNodeId).toEqual('mock-node-id');
+        });
+
+        it('should be able to use mapped string variable value if the destinationFolderPath set to string type variable', async () => {
+            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeIdBasedOnStringVariableValue);
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: []
+            });
+            widget.field.id = 'attach-file-alfresco';
+            widget.field.params = <FormFieldMetadata> allSourceWithStringTypeDestinationPath;
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
+
+            expect(attachButton).not.toBeNull();
+
+            attachButton.click();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const alias = '-root-';
+            const opt = { relativePath: '/pathBasedOnStringvariablevalue' };
+            expect(fetchNodeIdFromRelativePathSpy).toHaveBeenCalledWith(alias, opt);
+            expect(widget.rootNodeId).toEqual('mock-string-value-node-id');
+        });
+
+        it('should be able to use default location if mapped string variable value is undefined/empty', async () => {
+            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: []
+            });
+            widget.field.id = 'attach-file-alfresco';
+            widget.field.params = <FormFieldMetadata> allSourceWithStringTypeEmptyValue;
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
+
+            expect(attachButton).not.toBeNull();
+
+            attachButton.click();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const alias = '-my-';
+            const opt = { relativePath: '' };
+            expect(fetchNodeIdFromRelativePathSpy).toHaveBeenCalledWith(alias, opt);
+            expect(widget.rootNodeId).toEqual('mock-node-id');
+        });
+
+        it('should be able to use mapped folder variable value if destinationFolderPath set to folder type variable', async () => {
+            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath');
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: []
+            });
+            widget.field.id = 'attach-file-alfresco';
+            widget.field.params = <FormFieldMetadata> allSourceWithFolderTypeDestinationPath;
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
+
+            expect(attachButton).not.toBeNull();
+
+            attachButton.click();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            expect(fetchNodeIdFromRelativePathSpy).not.toHaveBeenCalled();
+            expect(widget.rootNodeId).toBe('mockNodeIdBasedOnFolderVariableValue');
+        });
+
+        it('should be able to use default location if the mapped folder variable value is undefined/empty', async () => {
+            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: []
+            });
+            widget.field.id = 'attach-file-alfresco';
+            widget.field.params = <FormFieldMetadata> allSourceWithFolderTypeEmptyValue;
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
+
+            expect(attachButton).not.toBeNull();
+
+            attachButton.click();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const alias = '-my-';
+            const opt = { relativePath: '' };
+            expect(fetchNodeIdFromRelativePathSpy).toHaveBeenCalledWith(alias, opt);
+            expect(widget.rootNodeId).toBe('mock-node-id');
         });
 
         it('Should be able to set given alias as rootNodeId if the nodeId of the alias is not fetched from the api', async () => {
