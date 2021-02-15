@@ -160,7 +160,7 @@ describe('Process list cloud', () => {
             await setFilter({ order: SORT_DIRECTION.DESC});
             await waitTillContentLoaded();
 
-            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Name')).toBe(true);
+            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Name')).toBe(true);
         });
 
         it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
