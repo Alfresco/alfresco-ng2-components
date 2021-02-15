@@ -18,27 +18,15 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CloudLayoutService } from './services/cloud-layout.service';
 import { NotificationModel, NotificationService } from '@alfresco/adf-core';
-import { gql } from 'apollo-angular';
 import { map } from 'rxjs/operators';
 import { NotificationCloudService } from '@alfresco/adf-process-services-cloud';
 import { TranslateService } from '@ngx-translate/core';
 
-const SUBSCRIPTION_QUERY = gql`
+const SUBSCRIPTION_QUERY = `
     subscription {
         engineEvents(eventType: [
             PROCESS_STARTED
-            PROCESS_COMPLETED
-            PROCESS_CREATED
-            PROCESS_CANCELLED
-            PROCESS_RESUMED
-            PROCESS_SUSPENDED
-            PROCESS_DEPLOYED
-            TASK_CREATED
-            TASK_COMPLETED
             TASK_ASSIGNED
-            TASK_ACTIVATED
-            TASK_SUSPENDED
-            TASK_CANCELLED
             TASK_UPDATED
         ]) {
             eventType
@@ -70,7 +58,7 @@ export class CloudLayoutComponent implements OnInit {
         let root: string = '';
         this.route.params.subscribe((params) => {
             this.appName = params.appName;
-            this.notificationCloudService.makeGraphQLQuery(
+            this.notificationCloudService.makeGQLQuery(
                 this.appName, SUBSCRIPTION_QUERY
             )
                 .pipe(map((events: any) => events.data.engineEvents))

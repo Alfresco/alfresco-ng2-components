@@ -17,7 +17,7 @@
 
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { split, DocumentNode, InMemoryCache } from '@apollo/client/core';
+import { split, gql, InMemoryCache } from '@apollo/client/core';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Injectable } from '@angular/core';
@@ -78,8 +78,8 @@ export class NotificationCloudService extends BaseCloudService {
         }
     }
 
-    makeGraphQLQuery(appName: string, query: DocumentNode) {
+    makeGQLQuery(appName: string, gqlQuery: string) {
         this.initNotificationsForApp(appName);
-        return this.apollo.subscribe({ query });
+        return this.apollo.subscribe({ query : gql(gqlQuery) });
     }
 }

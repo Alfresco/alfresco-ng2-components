@@ -236,7 +236,7 @@ describe('TaskFilterCloudService', () => {
     });
 
     it('should return engine event task subscription', (done) => {
-        spyOn(notificationCloudService, 'makeGraphQLQuery').and.returnValue(of(taskCloudEngineEventsMock));
+        spyOn(notificationCloudService, 'makeGQLQuery').and.returnValue(of(taskCloudEngineEventsMock));
 
         service.getTaskNotificationSubscription('myAppName').subscribe((res: TaskCloudEngineEvent[]) => {
             expect(res.length).toBe(1);

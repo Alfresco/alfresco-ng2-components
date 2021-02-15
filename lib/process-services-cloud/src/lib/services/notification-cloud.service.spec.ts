@@ -20,13 +20,13 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationCloudService } from './notification-cloud.service';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 
 describe('NotificationCloudService', () => {
     let service: NotificationCloudService;
     let apollo: Apollo;
 
-    const queryMock = gql`
+    const queryMock = `
         subscription {
             engineEvents(eventType: [
                 MY_EVENT
@@ -53,15 +53,15 @@ describe('NotificationCloudService', () => {
         const apolloCreateSpy = spyOn(apollo, 'create');
         const apolloSubscribeSpy = spyOn(apollo, 'subscribe');
 
-        service.makeGraphQLQuery('myAppName', queryMock);
+        service.makeGQLQuery('myAppName', queryMock);
         expect(service.appsListening.length).toBe(1);
         expect(service.appsListening[0]).toBe('myAppName');
 
-        service.makeGraphQLQuery('myAppName', queryMock);
+        service.makeGQLQuery('myAppName', queryMock);
         expect(service.appsListening.length).toBe(1);
         expect(service.appsListening[0]).toBe('myAppName');
 
-        service.makeGraphQLQuery('myAppName2', queryMock);
+        service.makeGQLQuery('myAppName2', queryMock);
         expect(service.appsListening.length).toBe(2);
         expect(service.appsListening[0]).toBe('myAppName');
         expect(service.appsListening[1]).toBe('myAppName2');

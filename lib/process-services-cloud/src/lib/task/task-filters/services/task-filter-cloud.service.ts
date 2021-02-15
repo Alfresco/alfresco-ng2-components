@@ -26,9 +26,8 @@ import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.servic
 import { TaskCloudNodePaging } from '../../task-list/models/task-cloud.model';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
-import { gql } from 'apollo-angular';
 
-const TASK_EVENT_SUBSCRIPTION_QUERY = gql`
+const TASK_EVENT_SUBSCRIPTION_QUERY = `
     subscription {
         engineEvents(eventType: [
             TASK_COMPLETED
@@ -337,7 +336,7 @@ export class TaskFilterCloudService extends BaseCloudService {
     }
 
     getTaskNotificationSubscription(appName: string): Observable<TaskCloudEngineEvent[]> {
-        return this.notificationCloudService.makeGraphQLQuery(appName, TASK_EVENT_SUBSCRIPTION_QUERY)
+        return this.notificationCloudService.makeGQLQuery(appName, TASK_EVENT_SUBSCRIPTION_QUERY)
             .pipe(map((events: any) => events.data.engineEvents));
     }
 }
