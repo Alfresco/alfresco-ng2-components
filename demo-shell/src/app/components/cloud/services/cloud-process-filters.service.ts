@@ -16,12 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ProcessFilterCloudModel } from '@alfresco/adf-process-services-cloud';
+import { ProcessFilterCloudModel, ProcessFilterCloudService } from '@alfresco/adf-process-services-cloud';
 import { AppConfigService } from '@alfresco/adf-core';
 
 @Injectable({ providedIn: 'root' })
 export class CloudProcessFiltersService {
-    constructor(private appConfigService: AppConfigService) {
+    constructor(private appConfigService: AppConfigService, private processFilterCloudService: ProcessFilterCloudService) {
     }
 
     get filterProperties(): string[] {
@@ -46,53 +46,10 @@ export class CloudProcessFiltersService {
     }
 
     readQueryParams(obj: Object): ProcessFilterCloudModel {
-        const model = Object.assign({}, obj) as ProcessFilterCloudModel;
-
-        if (obj.hasOwnProperty('appVersion') && obj['appVersion']) {
-            if (typeof obj['appVersion'] === 'string') {
-                model.appVersion = obj['appVersion'].split(',').map(str => parseInt(str, 10));
-            }
-        }
-
-        if (obj.hasOwnProperty('lastModifiedFrom')) {
-            model.lastModifiedFrom = new Date(parseInt(obj['lastModifiedFrom'], 10));
-        }
-
-        if (obj.hasOwnProperty('lastModifiedTo')) {
-            model.lastModifiedTo = new Date(parseInt(obj['lastModifiedTo'], 10));
-        }
-
-        return model;
+        return this.processFilterCloudService.readQueryParams(obj);
     }
 
     writeQueryParams(value: Object, appName?: string, id?: string): Object {
-        value = value || {};
-        const result = {
-            appName: appName || value['appName'],
-            id: id || value['id']
-        };
-
-        for (const prop of this.filterProperties) {
-            if (prop === 'appVersionMultiple') {
-                const versions = value['appVersion'];
-
-                if (Array.isArray(versions) && versions.length > 0) {
-                    result['appVersion'] = versions.join(',');
-                }
-            } else if (prop === 'lastModified') {
-                if (value['lastModifiedFrom']) {
-                    result['lastModifiedFrom'] = value['lastModifiedFrom'].valueOf();
-                }
-
-                if (value['lastModifiedTo']) {
-                    result['lastModifiedTo'] = value['lastModifiedTo'].valueOf();
-                }
-
-            } else if (value.hasOwnProperty(prop)) {
-                result[prop] = value[prop];
-            }
-        }
-
-        return result;
+        return this.processFilterCloudService.writeQueryParams(value, this.filterProperties, appName, id);
     }
 }

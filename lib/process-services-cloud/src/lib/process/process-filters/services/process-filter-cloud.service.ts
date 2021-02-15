@@ -37,6 +37,57 @@ export class ProcessFilterCloudService {
         this.filters$ = this.filtersSubject.asObservable();
     }
 
+    readQueryParams(obj: Object): ProcessFilterCloudModel {
+        const model = Object.assign({}, obj) as ProcessFilterCloudModel;
+
+        if (obj.hasOwnProperty('appVersion') && obj['appVersion']) {
+            if (typeof obj['appVersion'] === 'string') {
+                model.appVersion = obj['appVersion'].split(',').map(str => parseInt(str, 10));
+            }
+        }
+
+        if (obj.hasOwnProperty('lastModifiedFrom')) {
+            model.lastModifiedFrom = new Date(parseInt(obj['lastModifiedFrom'], 10));
+        }
+
+        if (obj.hasOwnProperty('lastModifiedTo')) {
+            model.lastModifiedTo = new Date(parseInt(obj['lastModifiedTo'], 10));
+        }
+
+        return model;
+    }
+
+    writeQueryParams(value: Object, filterProperties: string[], appName?: string, id?: string): Object {
+        value = value || {};
+        const result = {
+            appName: appName || value['appName'],
+            id: id || value['id']
+        };
+
+        for (const prop of filterProperties) {
+            if (prop === 'appVersionMultiple') {
+                const versions = value['appVersion'];
+
+                if (Array.isArray(versions) && versions.length > 0) {
+                    result['appVersion'] = versions.join(',');
+                }
+            } else if (prop === 'lastModified') {
+                if (value['lastModifiedFrom']) {
+                    result['lastModifiedFrom'] = value['lastModifiedFrom'].valueOf();
+                }
+
+                if (value['lastModifiedTo']) {
+                    result['lastModifiedTo'] = value['lastModifiedTo'].valueOf();
+                }
+
+            } else if (value.hasOwnProperty(prop)) {
+                result[prop] = value[prop];
+            }
+        }
+
+        return result;
+    }
+
     /**
      * Creates and returns the default process instance filters for a app.
      * @param appName Name of the target app
