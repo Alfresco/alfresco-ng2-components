@@ -16,6 +16,7 @@
  */
 
 import { Node } from '@alfresco/js-api';
+import { FileSourceTypes, DestinationFolderPathType } from '../models/form-cloud-representation.model';
 
 export const fakePngAnswer = {
     id: 1155,
@@ -50,14 +51,14 @@ export const onlyLocalParams = {
 export const contentSourceParam = {
     fileSource: {
         name: 'mock-alf-content',
-        serviceId: 'alfresco-content'
+        serviceId: FileSourceTypes.ALFRESCO_CONTENT_SOURCES_SERVICE_ID
     }
 };
 
 export const menuTestSourceParam = {
     fileSource: {
         name: 'mock-alf-content',
-        serviceId: 'alfresco-content'
+        serviceId: FileSourceTypes.ALFRESCO_CONTENT_SOURCES_SERVICE_ID
     },
     menuOptions: {
         show: true,
@@ -70,10 +71,10 @@ export const menuTestSourceParam = {
 export const allSourceParams = {
     fileSource: {
         name: 'all file sources',
-        serviceId: 'all-file-sources',
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
         destinationFolderPath: {
             value: '-root-/myfiles',
-            type: 'value'
+            type: DestinationFolderPathType.STATIC_TYPE
         }
     }
 };
@@ -81,11 +82,11 @@ export const allSourceParams = {
 export const allSourceWithStringTypeDestinationPath = {
     fileSource: {
         name: 'all file sources',
-        serviceId: 'all-file-sources',
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
         destinationFolderPath: {
             value: '-root-/pathBasedOnStringvariablevalue',
             name: 'stringVariableName',
-            type: 'string'
+            type: DestinationFolderPathType.STRING_TYPE
         }
     }
 };
@@ -93,11 +94,11 @@ export const allSourceWithStringTypeDestinationPath = {
 export const allSourceWithStringTypeEmptyValue = {
     fileSource: {
         name: 'all file sources',
-        serviceId: 'all-file-sources',
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
         destinationFolderPath: {
             value: null,
             name: 'stringVariableName',
-            type: 'string'
+            type: DestinationFolderPathType.STRING_TYPE
         }
     }
 };
@@ -105,11 +106,11 @@ export const allSourceWithStringTypeEmptyValue = {
 export const allSourceWithFolderTypeDestinationPath = {
     fileSource: {
         name: 'all file sources',
-        serviceId: 'all-file-sources',
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
         destinationFolderPath: {
             value: 'mockNodeIdBasedOnFolderVariableValue',
             name: 'folderVariableName',
-            type: 'folder'
+            type: DestinationFolderPathType.FOLDER_TYPE
         }
     }
 };
@@ -117,11 +118,11 @@ export const allSourceWithFolderTypeDestinationPath = {
 export const allSourceWithFolderTypeEmptyValue = {
     fileSource: {
         name: 'all file sources',
-        serviceId: 'all-file-sources',
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
         destinationFolderPath: {
             value: null,
             name: 'folderVariableName',
-            type: 'folder'
+            type: DestinationFolderPathType.FOLDER_TYPE
         }
     }
 };
@@ -129,10 +130,10 @@ export const allSourceWithFolderTypeEmptyValue = {
 export const allSourceWithRootParams = {
     fileSource: {
         name: 'all file sources',
-        serviceId: 'all-file-sources',
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
         destinationFolderPath: {
             value: '-root-',
-            type: 'value'
+            type: DestinationFolderPathType.STATIC_TYPE
         }
     }
 };
@@ -140,11 +141,11 @@ export const allSourceWithRootParams = {
 export const allSourceWithWrongAliasParams = {
     fileSource: {
         name: 'all file sources',
-        serviceId: 'all-file-sources',
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
         destinationFolderPath: {
             name: 'staticValue',
             value: '-wrongAlias-',
-            type: 'value'
+            type: DestinationFolderPathType.STATIC_TYPE
         }
     }
 };
@@ -152,11 +153,11 @@ export const allSourceWithWrongAliasParams = {
 export const allSourceWithNoAliasParams = {
     fileSource: {
         name: 'all file sources',
-        serviceId: 'all-file-sources',
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
         destinationFolderPath: {
             name: 'staticValue',
             value: '/noalias/createdFolder',
-            type: 'value'
+            type: DestinationFolderPathType.STATIC_TYPE
         }
     }
 };
@@ -164,14 +165,14 @@ export const allSourceWithNoAliasParams = {
 export const allSourceWithoutDestinationFolderPath = {
     fileSource: {
         name: 'all file sources',
-        serviceId: 'all-file-sources'
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID
     }
 };
 
 export const allSourceWithoutValueProperty = {
     fileSource: {
         name: 'all file sources',
-        serviceId: 'all-file-sources',
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
         destinationFolderPath: '-mockAlias-'
     }
 };

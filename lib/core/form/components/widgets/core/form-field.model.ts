@@ -26,7 +26,6 @@ import { FormFieldTypes } from './form-field-types';
 import { NumberFieldValidator } from './form-field-validator';
 import { FormWidgetModel } from './form-widget.model';
 import { FormModel } from './form.model';
-import { FileSourceTypes, DestinationFolderPathType } from './form-field-file-source';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -205,10 +204,6 @@ export class FormFieldModel extends FormWidgetModel {
             if (FormFieldTypes.isContainerType(this.type)) {
                 this.containerFactory(json, form);
             }
-
-            if (FormFieldTypes.isUploadType(this.type)) {
-                this.fetchDestinationFolderPathFromMappingVariable();
-            }
         }
 
         if (this.hasEmptyValue && this.options && this.options.length > 0) {
@@ -336,42 +331,6 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         return value;
-    }
-
-    private isAlfrescoAndLocal(): boolean {
-        return this.params?.fileSource?.serviceId === FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID;
-    }
-
-    private isDestinationPathVariableType(type: string): boolean {
-        return this.params?.fileSource?.destinationFolderPath?.type === type;
-    }
-
-    fetchDestinationFolderPathFromMappingVariable() {
-        if (this.isAlfrescoAndLocal()) {
-            this.prepareUploadWidgetDestinationFolderPathFromStringVariable();
-            this.prepareUploadWidgetDestinationFolderPathFromFolderVariable();
-        }
-    }
-
-    private prepareUploadWidgetDestinationFolderPathFromStringVariable() {
-        if (this.isDestinationPathVariableType(DestinationFolderPathType.STRING_TYPE)) {
-            this.setUploadWidgetDestinationFolderPath(this.getDestinationFolderPathValue());
-        }
-    }
-
-    private prepareUploadWidgetDestinationFolderPathFromFolderVariable() {
-        if (this.isDestinationPathVariableType(DestinationFolderPathType.FOLDER_TYPE)) {
-            const folderInstance = this.getDestinationFolderPathValue();
-            this.setUploadWidgetDestinationFolderPath(folderInstance?.length ? folderInstance[0].id : '' );
-        }
-    }
-
-    private setUploadWidgetDestinationFolderPath(path: string) {
-        this.params.fileSource.destinationFolderPath['value'] = path ? path : '';
-    }
-
-    private getDestinationFolderPathValue(): any {
-        return this.form.getProcessVariableValue(this.params.fileSource?.destinationFolderPath?.name);
     }
 
     updateForm() {
