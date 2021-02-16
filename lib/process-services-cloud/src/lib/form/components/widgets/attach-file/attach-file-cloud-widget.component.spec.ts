@@ -37,7 +37,7 @@ import {
     contentSourceParam,
     fakeMinimalNode,
     mockNodeId,
-    fakePngAnswer,
+    fakeLocalPngResponse,
     onlyLocalParams,
     allSourceWithRootParams,
     allSourceWithWrongAliasParams,
@@ -81,6 +81,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     let contentModelFormFileHandlerSpy: jasmine.Spy;
     let updateFormSpy: jasmine.Spy;
     let contentClickedSpy: jasmine.Spy;
+    let openUploadFileDialogSpy: jasmine.Spy;
 
     function createUploadWidgetField(form: FormModel, fieldId: string, value?: any, params?: any, multiple?: boolean, name?: string, readOnly?: boolean) {
         widget.field = new FormFieldModel(form, {
@@ -94,7 +95,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
     }
 
-    function clickOnAttachButton(id: string) {
+    function clickOnAttachFileWidget(id: string) {
         const attachButton: HTMLButtonElement = element.querySelector(`#${id}`);
         attachButton.click();
     }
@@ -124,6 +125,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         formService = TestBed.inject(FormService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
+        openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeMinimalNode]));
     }));
 
     afterEach(() => {
@@ -147,17 +149,11 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(element.querySelector('.adf-attach-widget__menu-upload')).not.toBeNull();
         });
     }));
-
     it('should be able to attach files coming from content selector', async () => {
-        spyOn(
-            contentCloudNodeSelectorService,
-            'openUploadFileDialog'
-        ).and.returnValue(of([fakeMinimalNode]));
-
         createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], contentSourceParam);
         fixture.detectChanges();
         await fixture.whenStable();
-        clickOnAttachButton('attach-file-alfresco');
+        clickOnAttachFileWidget('attach-file-alfresco');
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
@@ -170,15 +166,10 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     it('should be able to attach files coming from all files source', async () => {
         spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
-        spyOn(
-            contentCloudNodeSelectorService,
-            'openUploadFileDialog'
-        ).and.returnValue(of([fakeMinimalNode]));
-
         createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceParams);
         fixture.detectChanges();
         await fixture.whenStable();
-        clickOnAttachButton('attach-file-alfresco');
+        clickOnAttachFileWidget('attach-file-alfresco');
         await fixture.whenStable();
         fixture.detectChanges();
         const attachedFileName = fixture.debugElement.query(By.css('.adf-file'));
@@ -189,7 +180,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     });
 
     it('should display file list when field has value', async(() => {
-        createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [fakePngAnswer], onlyLocalParams);
+        createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [fakeLocalPngResponse], onlyLocalParams);
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -213,11 +204,6 @@ describe('AttachFileCloudWidgetComponent', () => {
     });
 
     describe('destinationFolderPath', () => {
-        let openUploadFileDialogSpy: jasmine.Spy;
-
-        beforeEach(async(() => {
-            openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeMinimalNode]));
-        }));
 
         it('should be able to fetch nodeId if destinationFolderPath is defined', async () => {
             const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
@@ -226,12 +212,13 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
 
             const alias = '-root-';
             const opt = { relativePath: '/myfiles' };
+
             expect(fetchNodeIdFromRelativePathSpy).toHaveBeenCalledWith(alias, opt);
             expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('-root-/myfiles');
             expect(widget.rootNodeId).toEqual('mock-node-id');
@@ -244,13 +231,13 @@ describe('AttachFileCloudWidgetComponent', () => {
             createUploadWidgetField(form, 'attach-file-alfresco', [], mockAllFileSourceWithStringVariablePathType);
             fixture.detectChanges();
             await fixture.whenStable();
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
-            fixture.detectChanges();
 
             const alias = '-root-';
             const opt = { relativePath: '/pathBasedOnStringvariablevalue' };
+
             expect(fetchNodeIdFromRelativePathSpy).toHaveBeenCalledWith(alias, opt);
             expect(widget.rootNodeId).toEqual('mock-string-value-node-id');
         });
@@ -261,12 +248,13 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
 
             const alias = '-my-';
             const opt = { relativePath: '' };
+
             expect(fetchNodeIdFromRelativePathSpy).toHaveBeenCalledWith(alias, opt);
             expect(widget.rootNodeId).toEqual('mock-node-id');
         });
@@ -277,10 +265,9 @@ describe('AttachFileCloudWidgetComponent', () => {
             createUploadWidgetField(form, 'attach-file-alfresco', [], mockAllFileSourceWithFolderVariablePathType);
             fixture.detectChanges();
             await fixture.whenStable();
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
-            fixture.detectChanges();
 
             expect(fetchNodeIdFromRelativePathSpy).not.toHaveBeenCalled();
             expect(widget.rootNodeId).toBe('mock-folder-id');
@@ -292,12 +279,13 @@ describe('AttachFileCloudWidgetComponent', () => {
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithFolderTypeEmptyValue);
             fixture.detectChanges();
             await fixture.whenStable();
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
 
             const alias = '-my-';
             const opt = { relativePath: '' };
+
             expect(fetchNodeIdFromRelativePathSpy).toHaveBeenCalledWith(alias, opt);
             expect(widget.rootNodeId).toBe('mock-node-id');
         });
@@ -306,7 +294,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithRootParams);
             fixture.detectChanges();
             await fixture.whenStable();
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -318,7 +306,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithWrongAliasParams, false);
             fixture.detectChanges();
             await fixture.whenStable();
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -331,7 +319,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithWrongAliasParams, true);
             fixture.detectChanges();
             await fixture.whenStable();
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -343,7 +331,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithNoAliasParams, true);
             fixture.detectChanges();
             await fixture.whenStable();
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -356,7 +344,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithoutDestinationFolderPath);
             fixture.detectChanges();
             await fixture.whenStable();
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -369,7 +357,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithoutValueProperty);
             fixture.detectChanges();
             await fixture.whenStable();
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -385,6 +373,7 @@ describe('AttachFileCloudWidgetComponent', () => {
                     }
                   ]
             });
+
             expect(widget.replaceAppNameAliasWithValue('/myfiles/-appname-/folder')).toBe('/myfiles/fakeapp/folder');
         });
 
@@ -398,10 +387,10 @@ describe('AttachFileCloudWidgetComponent', () => {
                 createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], contentSourceParam, false);
                 fixture.detectChanges();
                 await fixture.whenStable();
-                clickOnAttachButton('attach-file-alfresco');
+                clickOnAttachFileWidget('attach-file-alfresco');
                 fixture.detectChanges();
                 await fixture.whenStable();
-                fixture.detectChanges();
+
                 const alias = '-my-';
                 const opt = { relativePath: '' };
 
@@ -416,10 +405,9 @@ describe('AttachFileCloudWidgetComponent', () => {
                 createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], contentSourceParam, true);
                 fixture.detectChanges();
                 await fixture.whenStable();
-                clickOnAttachButton('attach-file-alfresco');
+                clickOnAttachFileWidget('attach-file-alfresco');
                 fixture.detectChanges();
                 await fixture.whenStable();
-                fixture.detectChanges();
 
                 const alias = '-my-';
                 const opt = { relativePath: '' };
@@ -433,10 +421,9 @@ describe('AttachFileCloudWidgetComponent', () => {
                 createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], contentSourceParam, false);
                 fixture.detectChanges();
                 await fixture.whenStable();
-                clickOnAttachButton('attach-file-alfresco');
+                clickOnAttachFileWidget('attach-file-alfresco');
                 fixture.detectChanges();
                 await fixture.whenStable();
-                fixture.detectChanges();
 
                 expect(widget.rootNodeId).toEqual('-my-');
                 expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', false, true);
@@ -465,7 +452,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         }));
 
         it('should not show empty list message when there are files', async(() => {
-            createUploadWidgetField(new FormModel(), 'fill-test', [fakePngAnswer], onlyLocalParams, null, null, true);
+            createUploadWidgetField(new FormModel(), 'fill-test', [fakeLocalPngResponse], onlyLocalParams, null, null, true);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(element.querySelector('#adf-attach-empty-list-fill-test')).toBeNull();
@@ -473,7 +460,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         }));
 
         it('should not show remove button when there are files attached', async(() => {
-            createUploadWidgetField(new FormModel(), 'fill-test', [fakePngAnswer], onlyLocalParams, null, null, true);
+            createUploadWidgetField(new FormModel(), 'fill-test', [fakeLocalPngResponse], onlyLocalParams, null, null, true);
             fixture.detectChanges();
             const menuButton: HTMLButtonElement = <HTMLButtonElement> (
                 fixture.debugElement.query(By.css('#file-1155-option-menu'))
@@ -481,6 +468,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             );
             menuButton.click();
             fixture.detectChanges();
+
             expect(fixture.debugElement.query(By.css('#file-1155-remove'))).toBeNull();
         }));
     });
@@ -489,10 +477,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         beforeEach(async () => {
             apiServiceSpy = spyOn(alfrescoApiService.getInstance().node, 'getNode').and.returnValue(new Promise(resolve => resolve({entry: fakeNodeWithProperties})));
             spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(new Promise(resolve => resolve('fake-properties')));
-            spyOn(
-                contentCloudNodeSelectorService,
-                'openUploadFileDialog'
-            ).and.returnValue(of([fakeNodeWithProperties]));
+            openUploadFileDialogSpy.and.returnValue(of([fakeNodeWithProperties]));
             widget.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
                 value: []
@@ -501,7 +486,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             widget.field.params = <FormFieldMetadata> menuTestSourceParam;
             fixture.detectChanges();
             await fixture.whenStable();
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
         });
@@ -658,11 +643,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             contentModelFormFileHandlerSpy = spyOn(widget, 'contentModelFormFileHandler').and.callThrough();
             updateFormSpy = spyOn(formService.updateFormValuesRequested, 'next');
             contentClickedSpy = spyOn(formService.formContentClicked, 'next');
-
-            spyOn(
-                contentCloudNodeSelectorService,
-                'openUploadFileDialog'
-            ).and.returnValue(of([fakeNodeWithProperties]));
+            openUploadFileDialogSpy.and.returnValue(of([fakeNodeWithProperties]));
             widget.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
                 value: []
@@ -739,10 +720,9 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should have been called on attach file when value was empty', async () => {
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
-            fixture.detectChanges();
 
             expect(contentModelFormFileHandlerSpy).toHaveBeenCalledWith(fakeNodeWithProperties);
             expect(updateFormSpy).toHaveBeenCalledWith(expectedValues);
@@ -756,7 +736,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            clickOnAttachButton('attach-file-alfresco');
+            clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -827,6 +807,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         it('it should get a destination folder path value from a string variable', () => {
             createUploadWidgetField(form, 'attach-file-attach', [], mockAllFileSourceWithStringVariablePathType);
             fixture.detectChanges();
+
             expect(widget.field.params.fileSource.destinationFolderPath.type).toBe('string');
             expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('-root-/pathBasedOnStringvariablevalue');
         });
@@ -840,9 +821,9 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('it should not have destination folder path property if the file source set to content source', () => {
-
             createUploadWidgetField(form, 'attach-file-attach', [], mockContentFileSource);
             fixture.detectChanges();
+
             expect(widget.field.params.fileSource['destinationFolderPath']).toBeUndefined();
         });
 

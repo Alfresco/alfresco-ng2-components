@@ -18,7 +18,7 @@
 import { Node } from '@alfresco/js-api';
 import { FileSourceTypes, DestinationFolderPathType } from '../models/form-cloud-representation.model';
 
-export const fakePngAnswer = {
+export const fakeLocalPngResponse = {
     id: 1155,
     nodeId: 1155,
     name: 'a_png_file.png',

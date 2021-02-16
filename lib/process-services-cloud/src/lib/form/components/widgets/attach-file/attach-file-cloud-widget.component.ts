@@ -120,7 +120,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     async openSelectDialog() {
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
-        const nodeId = await this.getDestinationFolderId();
+        const nodeId = await this.getDestinationFolderNodeId();
         this.rootNodeId = nodeId ? nodeId : AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
         this.contentNodeSelectorPanelService.customModels = this.field.params.customModels;
 
@@ -136,7 +136,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             });
     }
 
-    private async getDestinationFolderId() {
+    private async getDestinationFolderNodeId(): Promise<string> {
         let rootNodeId: string;
         let destinationFolderPath = <DestinationFolderPathModel> { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: '' };
         if (this.isAlfrescoAndLocal() && this.hasDestinationFolder()) {

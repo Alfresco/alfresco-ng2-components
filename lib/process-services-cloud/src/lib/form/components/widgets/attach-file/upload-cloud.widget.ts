@@ -69,7 +69,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
             this.fixIncompatibilityFromPreviousAndNewForm([]);
         }
         this.getMultipleFileParam();
-        this.getDestinationFolderPathFromMappingVariable();
+        this.setDestinationFolderPathFromMappedVariable();
     }
 
     removeFile(file: any) {
@@ -171,7 +171,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         return this.field?.params?.fileSource?.destinationFolderPath?.type === type;
     }
 
-    getDestinationFolderPathFromMappingVariable() {
+    setDestinationFolderPathFromMappedVariable() {
         if (this.isAlfrescoAndLocal()) {
             this.prepareUploadWidgetDestinationFolderPathFromStringVariable();
             this.prepareUploadWidgetDestinationFolderPathFromFolderVariable();
