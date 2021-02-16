@@ -346,6 +346,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.editProcessFilterForm.get(property.attributes?.to).setValue(
             dateRange.endDate ? dateRange.endDate : null
         );
+        this.editProcessFilterForm.get(property.attributes.dateType).setValue(DateCloudFilterType.RANGE);
     }
 
     onChangedUser(users: IdentityUserModel[], processProperty: ProcessFilterProperties) {
