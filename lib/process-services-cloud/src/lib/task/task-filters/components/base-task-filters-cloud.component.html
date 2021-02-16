@@ -1,16 +1,25 @@
 <ng-container *ngIf="filters$ | async as filterList; else loading">
-    <div *ngFor="let filter of filterList" class="adf-task-filters__entry">
+    <div *ngFor="let filter of filterList"
+         class="adf-task-filters__entry">
         <button (click)="onFilterClick(filter)"
-          [attr.aria-label]="filter.name | translate"
-          [id]="filter.id"
-          [attr.data-automation-id]="filter.key + '_filter'"
-          mat-button
-          [class.adf-active]="currentFilter === filter"
-          class="adf-filter-action-button adf-full-width" fxLayout="row" fxLayoutAlign="space-between center">
-          <adf-icon data-automation-id="adf-filter-icon" *ngIf="showIcons" [value]="filter.icon"></adf-icon>
-          <span data-automation-id="adf-filter-label" class="adf-filter-action-button__label">{{ filter.name | translate }}</span>
+                [attr.aria-label]="filter.name | translate"
+                [id]="filter.id"
+                [attr.data-automation-id]="filter.key + '_filter'"
+                mat-button
+                [class.adf-active]="currentFilter === filter"
+                class="adf-filter-action-button adf-full-width"
+                fxLayout="row"
+                fxLayoutAlign="space-between center">
+            <adf-icon data-automation-id="adf-filter-icon"
+                      *ngIf="showIcons"
+                      [value]="filter.icon"></adf-icon>
+            <span data-automation-id="adf-filter-label"
+                  class="adf-filter-action-button__label">{{ filter.name | translate }}</span>
         </button>
-        <span *ngIf="counters$[filter.key]" class="adf-filter-action-button__counter">
+        <span *ngIf="counters$[filter.key]"
+              [attr.data-automation-id]="filter.key + '_filter-counter'"
+              class="adf-filter-action-button__counter"
+              [class.adf-active]=wasFilterUpdated(filter.key)>
             {{ counters$[filter.key] | async }}
         </span>
     </div>

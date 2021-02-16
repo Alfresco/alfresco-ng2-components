@@ -21,7 +21,7 @@ export const fakeTaskDetailsCloud = {
         'appVersion': '',
         'id': '68d54a8f',
         'assignee': 'Phil Woods',
-        'name': 'This is a new task ',
+        'name': 'This is a new task',
         'description': 'This is the description ',
         'createdDate': 1545048055900,
         'dueDate': 1545091200000,

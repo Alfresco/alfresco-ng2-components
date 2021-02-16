@@ -20,8 +20,10 @@ import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
+import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
+import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 
 @Component({
     selector: 'adf-cloud-task-filters',
@@ -37,10 +39,13 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     @Output()
     filterClicked = new EventEmitter<TaskFilterCloudModel>();
 
+    /** Emitted when filter counters are updated. */
+    @Output()
+    filterCounterUpdated: EventEmitter<TaskCloudEngineEvent[]> = new EventEmitter<TaskCloudEngineEvent[]>();
+
     filters$: Observable<TaskFilterCloudModel[]>;
     filters: TaskFilterCloudModel[] = [];
     currentFilter: TaskFilterCloudModel;
-    counters = {};
 
     constructor(private taskFilterCloudService: TaskFilterCloudService,
                 private translationService: TranslationService) {
@@ -48,6 +53,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     ngOnInit() {
+        this.initFilterCounterNotifications();
         this.getFilters(this.appName);
     }
 
@@ -89,6 +95,30 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         });
     }
 
+    initFilterCounterNotifications() {
+        this.taskFilterCloudService.getTaskNotificationSubscription(this.appName)
+            .subscribe((result: TaskCloudEngineEvent[]) => {
+                result.map((taskEvent: TaskCloudEngineEvent) => {
+                    this.updateFilterCounter(taskEvent.entity);
+                });
+                this.filterCounterUpdated.emit(result);
+            });
+    }
+
+    updateFilterCounter(filterNotification: TaskDetailsCloudModel) {
+        this.filters.map((filter) => {
+            if (this.isFilterPresent(filter, filterNotification)) {
+                this.counters$[filter.key] = this.counters$[filter.key].pipe(map((counter) => counter + 1));
+                this.addToUpdatedCounters(filter.key);
+            }
+        });
+    }
+
+    isFilterPresent(filter: TaskFilterCloudModel, filterNotification: TaskDetailsCloudModel): boolean {
+        return filter.status === filterNotification.status
+            && filter.assignee === filterNotification.assignee;
+    }
+
     public selectFilter(paramFilter: FilterParamsModel) {
         if (paramFilter) {
             this.currentFilter = this.filters.find((filter, index) =>
@@ -104,7 +134,10 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     public selectFilterAndEmit(newParamFilter: FilterParamsModel) {
         if (newParamFilter) {
             this.selectFilter(newParamFilter);
-            this.filterSelected.emit(this.currentFilter);
+            if (this.currentFilter) {
+                this.resetFilterCounter(this.currentFilter.key);
+                this.filterSelected.emit(this.currentFilter);
+            }
         } else {
             this.currentFilter = undefined;
         }

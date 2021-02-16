@@ -1,5 +1,7 @@
 @mixin adf-cloud-task-filters-theme($theme) {
     $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $background: map-get($theme, background);
 
     .adf {
         &-task-filters__entry {
@@ -7,7 +9,6 @@
             padding: 12px 0 !important;
             height: 24px;
             width: 100%;
-            cursor: pointer;
             font-size: 14px !important;
             font-weight: bold;
             opacity: 1;
@@ -20,6 +21,7 @@
             .adf-filter-action-button {
                 opacity: 0.54;
                 padding: 16px;
+                cursor: pointer;
 
                 .adf-filter-action-button__label {
                     padding-left: 20px;
@@ -29,13 +31,26 @@
 
             .adf-filter-action-button__counter {
                 opacity: 0.54;
-                padding-left: 10px;
-                padding-top: 6px;
+                margin-left: 10px;
+                margin-top: 6px;
+
+                &.adf-active {
+                    margin-left: 8px;
+                    margin-top: 5px;
+                    padding: 0 5px;
+                    border-radius: 15px;
+                    background-color: mat-color($accent);
+                    color: mat-color($mat-grey, 50);
+                    font-size: smaller;
+                }
             }
+
 
             &:hover {
                 color: mat-color($primary);
-                .adf-filter-action-button__counter, .adf-filter-action-button {
+
+                .adf-filter-action-button__counter,
+                .adf-filter-action-button {
                     opacity: 1;
                 }
             }

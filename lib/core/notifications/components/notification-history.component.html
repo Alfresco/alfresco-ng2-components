@@ -46,7 +46,7 @@
                         </ng-template>
                         <p class="adf-notification-history-menu-message"
                            *ngFor="let message of notification.messages"
-                           mat-line>{{ message }}</p>
+                           mat-line [matTooltip]="message" matTooltipShowDelay="1000">{{ message }}</p>
                         <p class="adf-notification-history-menu-date"
                            mat-line> {{notification.datetime | adfTimeAgo}} </p>
                     </mat-list-item>

@@ -33,15 +33,19 @@ import {
     fakePreferenceWithNoTaskFilterPreference,
     fakeTaskCloudFilters,
     fakeTaskCloudPreferenceList,
-    fakeTaskFilter
+    fakeTaskFilter,
+    taskCloudEngineEventsMock
 } from '../mock/task-filters-cloud.mock';
 import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
+import { NotificationCloudService } from '../../../services/notification-cloud.service';
+import { TaskCloudEngineEvent } from './../../../models/engine-event-cloud.model';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
+    let notificationCloudService: NotificationCloudService;
 
     let getPreferencesSpy: jasmine.Spy;
     let getPreferenceByKeySpy: jasmine.Spy;
@@ -53,7 +57,7 @@ describe('TaskFilterCloudService', () => {
 
     setupTestBed({
         imports: [
-          HttpClientTestingModule
+            HttpClientTestingModule
         ],
         providers: [
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
@@ -64,6 +68,7 @@ describe('TaskFilterCloudService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(TaskFilterCloudService);
+        notificationCloudService = TestBed.inject(NotificationCloudService);
 
         const preferenceCloudService = service.preferenceService;
         createPreferenceSpy = spyOn(preferenceCloudService, 'createPreference').and.returnValue(of(fakeTaskCloudFilters));
@@ -229,6 +234,17 @@ describe('TaskFilterCloudService', () => {
         expect(service.isDefaultFilter(defaultFilterName)).toBe(true);
         expect(service.isDefaultFilter(fakeFilterName)).toBe(false);
     });
+
+    it('should return engine event task subscription', (done) => {
+        spyOn(notificationCloudService, 'makeGQLQuery').and.returnValue(of(taskCloudEngineEventsMock));
+
+        service.getTaskNotificationSubscription('myAppName').subscribe((res: TaskCloudEngineEvent[]) => {
+            expect(res.length).toBe(1);
+            expect(res[0].eventType).toBe('TASK_ASSIGNED');
+            expect(res[0].entity.name).toBe('This is a new task');
+            done();
+        });
+    });
 });
 
 describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService', () => {
@@ -240,9 +256,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
 
     setupTestBed({
-        imports: [
-            HttpClientTestingModule
-        ],
+        imports: [ HttpClientTestingModule ],
         providers: [
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]
