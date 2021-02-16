@@ -19,7 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging } from '@alfresco/js-api';
-import { FileModel, FileUploadStatus, NodesApiService, setupTestBed, SitesService, UploadService } from '@alfresco/adf-core';
+import { AppConfigService, FileModel, FileUploadStatus, NodesApiService, setupTestBed, SitesService, UploadService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
@@ -1245,6 +1245,32 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 const toggleFiltersPanelButton = fixture.debugElement.query(By.css('[data-automation-id="adf-toggle-search-panel-button"]'));
 
                 expect(toggleFiltersPanelButton).toEqual(null);
+            });
+        });
+
+        describe('Sorting', () => {
+            let appConfigService: AppConfigService;
+
+            beforeEach(() => {
+                appConfigService = TestBed.inject(AppConfigService);
+            });
+
+            it('should read the sorting value from appConfig json in case it is present', async () => {
+                const fakeSortingConfig = ['fakeKey', 'fakeAsc'];
+
+                appConfigService.config = Object.assign(appConfigService.config, {
+                    'adf-content-node-selector': { sorting: fakeSortingConfig }
+                });
+                fixture.detectChanges();
+
+                expect(component.sorting).toEqual(fakeSortingConfig);
+            });
+
+            it('should take default sorting when there is no content node selector sorting config in appConfig json', async () => {
+                appConfigService.config = null;
+                fixture.detectChanges();
+
+                expect(component.sorting).toEqual(['createdAt', 'desc']);
             });
         });
     });
