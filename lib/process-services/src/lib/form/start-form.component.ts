@@ -79,9 +79,6 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         const processDefinitionId = changes['processDefinitionId'];
         if (processDefinitionId && processDefinitionId.currentValue) {
             this.processDefinitionId = processDefinitionId.currentValue;
-        }
-
-        if (this.processDefinitionId) {
             this.visibilityService.cleanProcessVariable();
             this.getStartFormDefinition(this.processDefinitionId);
             return;
