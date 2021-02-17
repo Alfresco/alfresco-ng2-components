@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -162,9 +162,7 @@ export class EditProcessFilterCloudComponentPage {
     async setProperty(property: string, option: string): Promise<void> {
         const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(locator);
-        await locator.clear();
-        await locator.sendKeys(option);
-        await locator.sendKeys(protractor.Key.ENTER);
+        await BrowserActions.clearSendKeys(locator, option);
     }
 
     checkSaveButtonIsDisplayed(): Promise<void> {

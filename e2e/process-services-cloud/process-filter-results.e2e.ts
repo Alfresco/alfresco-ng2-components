@@ -190,10 +190,8 @@ describe('Process filters cloud', () => {
     it('[C311315] Should be able to filter by process definition id', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setProperty('processDefinitionId', processDefinition.entry.id);
-        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
-        await editProcessFilter.setProcessName(anotherProcessInstance.entry.name);
         await editProcessFilter.setProperty('processDefinitionId', anotherProcessDefinition.entry.id);
         await processList.checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
