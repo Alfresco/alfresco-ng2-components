@@ -90,7 +90,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         return !!this.storageService.getItem('loginFragment');
     }
 
-    protected async redirectToUrl(url: string): Promise<boolean> {
+    protected async redirectToUrl(url: string): Promise<boolean | UrlTree> {
         let urlToRedirect = `/${this.getLoginRoute()}`;
 
         if (!this.authenticationService.isOauth()) {
@@ -110,9 +110,9 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         return false;
     }
 
-    protected navigate(url: string): Promise<boolean> {
+    protected navigate(url: string): UrlTree {
         this.dialog.closeAll();
-        return this.router.navigateByUrl(url);
+        return this.router.parseUrl(url);
     }
 
     protected getOauthConfig(): OauthConfigModel {
