@@ -437,6 +437,12 @@
                         handler="lock"
                         title="DOCUMENT_LIST.ACTIONS.LOCK">
                     </content-action>
+                    <content-action
+                        icon="beach_access"
+                        target="document"
+                        title="DOCUMENT_LIST.ACTIONS.ASPECTS"
+                        (execute)="onAspectUpdate($event)">
+                    </content-action>
                 </content-actions>
             </adf-document-list>
                 </div>

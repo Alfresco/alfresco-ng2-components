@@ -459,5 +459,20 @@
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Open {{ name }}"
     }
+  },
+  "ADF-ASPECT-LIST" : {
+    "PROPERTY_NAME": "Property Name",
+    "DESCRIPTION": "Description",
+    "DATA_TYPE": "Data Type",
+    "DIALOG" : {
+       "TITLE" : "Customize Properties",
+       "DESCRIPTION": "Manage the properties associated with selected file(s). Choose from property aspects listed below, to expose and apply additional metadata and funcitonality",
+       "RESET": "Reset",
+       "CLEAR": "Clear",
+       "CANCEL": "Cancel",
+       "APPLY": "Apply",
+       "OVER-TABLE-MESSAGE" : "Select property aspects",
+       "SELECTED": "Selected"
+    }
   }
 }
