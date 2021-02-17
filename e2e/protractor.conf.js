@@ -282,7 +282,7 @@ exports.config = {
 
     },
 
-    afterLaunch: async function () {
+    afterLaunch: async function (statusCode) {
         if (SAVE_SCREENSHOT) {
             console.log(`Save screenshot enabled`);
 
@@ -299,7 +299,7 @@ exports.config = {
             console.log(`Save screenshot disabled`);
         }
 
-        return retry.afterLaunch(MAX_RETRIES);
+        return retry.afterLaunch(MAX_RETRIES, statusCode);
     }
 
 };
