@@ -44,15 +44,15 @@ export class AspectListService {
 
     getStandardAspects(whiteList: string[]): Observable<AspectEntry[]> {
         const where = `(modelIds in ('cm:contentmodel', 'emailserver:emailserverModel', 'smf:smartFolder', 'app:applicationmodel' ))`;
-        return from(this.alfrescoApiService.aspectsApi.listAspects(where))
+        return from(this.alfrescoApiService.aspectsApi.listAspects({where}))
         .pipe(
             map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries))
         );
     }
 
     getCustomAspects(): Observable<AspectEntry[]> {
-        const where = `(not namespaceUri matches('http://www.alfresco.*')`;
-        return from(this.alfrescoApiService.aspectsApi.listAspects(where))
+        const where = `(not namespaceUri matches('http://www.alfresco.*'))`;
+        return from(this.alfrescoApiService.aspectsApi.listAspects({where}))
         .pipe(
             map((result: AspectPaging) => result?.list?.entries)
         );

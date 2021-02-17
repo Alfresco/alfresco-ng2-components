@@ -8,6 +8,13 @@
 
     .adf {
 
+        &-aspect-list-spinner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
         &-aspect-list-container {
 
             padding-top: 3px;
