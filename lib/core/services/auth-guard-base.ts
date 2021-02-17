@@ -75,12 +75,12 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         return this.canActivate(route, state);
     }
 
-    protected async redirectSSOSuccessURL(): Promise<boolean> {
+    protected async redirectSSOSuccessURL(): Promise<boolean | UrlTree> {
         const redirectFragment = this.storageService.getItem('loginFragment');
 
         if (redirectFragment && this.getLoginRoute() !== redirectFragment) {
             this.storageService.removeItem('loginFragment');
-            return this.navigate(redirectFragment);
+            return this.router.parseUrl(redirectFragment);
         }
 
         return true;
