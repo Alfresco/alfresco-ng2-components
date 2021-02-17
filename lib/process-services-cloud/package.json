@@ -1,38 +1,38 @@
 {
-    "name": "@alfresco/adf-process-services-cloud",
-    "description": "Alfresco ADF process services cloud",
-    "version": "4.2.0",
-    "author": "Alfresco Software, Ltd.",
-    "main": "bundles/adf-process-services-cloud.js",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
-    },
-    "bugs": {
-        "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
-    },
-    "peerDependencies": {
-        "@angular/animations": ">=10.0.2",
-        "@angular/common": ">=10.0.2",
-        "@angular/core": ">=10.0.2",
-        "@angular/flex-layout": ">=10.0.0-beta.32",
-        "@angular/forms": ">=10.0.2",
-        "@angular/material": ">=10.0.1",
-        "@alfresco/js-api": "4.2.0",
-        "@alfresco/adf-core": "4.2.0",
-        "@alfresco/adf-content-services": "4.2.0",
-        "@apollo/client": "^3.3.7",
-        "@ngx-translate/core": ">=13.0.0",
-        "apollo-angular": "^2.2.0",
-        "moment": ">=2.22.2",
-        "subscriptions-transport-ws": "^0.9.18"
-    },
-    "keywords": [
-        "process-services-cloud",
-        "alfresco-component",
-        "angular",
-        "activiti",
-        "components"
-    ],
-    "license": "Apache-2.0"
+  "name": "@alfresco/adf-process-services-cloud",
+  "description": "Alfresco ADF process services cloud",
+  "version": "4.2.0",
+  "author": "Alfresco Software, Ltd.",
+  "main": "bundles/adf-process-services-cloud.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
+  },
+  "peerDependencies": {
+    "@angular/animations": ">=10.0.2",
+    "@angular/common": ">=10.0.2",
+    "@angular/core": ">=10.0.2",
+    "@angular/flex-layout": ">=10.0.0-beta.32",
+    "@angular/forms": ">=10.0.2",
+    "@angular/material": ">=10.0.1",
+    "@alfresco/js-api": "4.3.0-3224",
+    "@alfresco/adf-core": "4.2.0",
+    "@alfresco/adf-content-services": "4.2.0",
+    "@apollo/client": "^3.3.7",
+    "@ngx-translate/core": ">=13.0.0",
+    "apollo-angular": "^2.2.0",
+    "moment": ">=2.22.2",
+    "subscriptions-transport-ws": "^0.9.18"
+  },
+  "keywords": [
+    "process-services-cloud",
+    "alfresco-component",
+    "angular",
+    "activiti",
+    "components"
+  ],
+  "license": "Apache-2.0"
 }
