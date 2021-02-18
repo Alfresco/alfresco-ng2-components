@@ -181,7 +181,8 @@ describe('Process list cloud', () => {
             await processList.checkRowIsNotCheckedById(processInstances[2]);
         });
 
-        it('[C297467] Should be able to see selected processes', async () => {
+        // tslint:disable-next-line:ban
+        fit('[C297467] Should be able to see selected processes', async () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.enableTestingMode();
