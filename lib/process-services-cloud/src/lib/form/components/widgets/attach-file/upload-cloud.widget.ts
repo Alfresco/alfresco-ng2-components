@@ -187,12 +187,12 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     private prepareUploadWidgetDestinationFolderPathFromFolderVariable() {
         if (this.isPathVariableType(DestinationFolderPathType.FOLDER_TYPE)) {
             const folder = this.getDestinationFolderPathValue();
-            this.setUploadWidgetDestinationFolderPath(Array.isArray(folder) && folder?.length ? folder[0].id : folder?.id);
+            this.setUploadWidgetDestinationFolderPath(folder?.length ? folder[0].id : undefined);
         }
     }
 
     private setUploadWidgetDestinationFolderPath(path: string) {
-        this.field.params.fileSource.destinationFolderPath['value'] = path ? path : '';
+        this.field.params.fileSource.destinationFolderPath['value'] = path ? path : undefined;
     }
 
     private getDestinationFolderPathValue(): any {

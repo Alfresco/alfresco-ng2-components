@@ -56,7 +56,8 @@ import {
     mockContentFileSource,
     mockAllFileSourceWithStaticPathType,
     formVariables,
-    processVariables
+    processVariables,
+    mockAllFileSourceWithRenamedFolderVariablePathType
 } from '../../../mocks/attach-file-cloud-widget.mock';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -820,6 +821,22 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('mock-folder-id');
         });
 
+        it('it should get a destination folder path value from a folder variable', () => {
+            createUploadWidgetField(form, 'attach-file-attach', [], mockAllFileSourceWithFolderVariablePathType);
+            fixture.detectChanges();
+
+            expect(widget.field.params.fileSource.destinationFolderPath.type).toBe('folder');
+            expect(widget.field.params.fileSource.destinationFolderPath.value).toBe('mock-folder-id');
+        });
+
+        it('it should set destination folder path value to undefined if mapped variable deleted/renamed', () => {
+            createUploadWidgetField(form, 'attach-file-attach', [], mockAllFileSourceWithRenamedFolderVariablePathType);
+            fixture.detectChanges();
+
+            expect(widget.field.params.fileSource.destinationFolderPath.type).toBe('folder');
+            expect(widget.field.params.fileSource.destinationFolderPath.value).toBeUndefined();
+        });
+
         it('it should not have destination folder path property if the file source set to content source', () => {
             createUploadWidgetField(form, 'attach-file-attach', [], mockContentFileSource);
             fixture.detectChanges();
@@ -835,7 +852,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(getProcessVariableValueSpy).not.toHaveBeenCalled();
         });
 
-        it('it should not call getProcessVariableValue if the destination folder path type set to static', () => {
+        it('it should not call getProcessVariableValue if the destination folder path type set to static type', () => {
             createUploadWidgetField(form, 'attach-file-attach', [], mockAllFileSourceWithStaticPathType);
             fixture.detectChanges();
             const getProcessVariableValueSpy = spyOn(widget.field.form, 'getProcessVariableValue');

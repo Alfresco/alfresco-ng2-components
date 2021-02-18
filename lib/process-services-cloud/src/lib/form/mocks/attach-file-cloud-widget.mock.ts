@@ -266,6 +266,22 @@ export const mockAllFileSourceWithFolderVariablePathType = {
     editable: true
 };
 
+export const mockAllFileSourceWithRenamedFolderVariablePathType = {
+    label: 'File Source',
+    fileSource: {
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        name: 'Alfresco Content and Local',
+        destinationFolderPath: {
+            type: DestinationFolderPathType.FOLDER_TYPE,
+            name: 'name3',
+            id: 'var2',
+            value: ''
+        }
+    },
+    key: 'fileSource',
+    editable: true
+};
+
 export const formVariables = [
     {
         'id': 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
