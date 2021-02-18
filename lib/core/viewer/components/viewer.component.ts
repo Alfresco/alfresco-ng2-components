@@ -31,7 +31,7 @@ import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { fromEvent, Subject } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
-import { distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
+import { filter, skipWhile, takeUntil } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -259,23 +259,24 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.dialog.afterOpened.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-            this.shouldCloseViewer = false;
-        });
+        this.dialog.afterOpened.pipe(
+            skipWhile(() => !this.overlayMode),
+            takeUntil(this.onDestroy$)
+        ).subscribe(() => this.shouldCloseViewer = false);
 
-        this.dialog.afterAllClosed.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-            this.shouldCloseViewer = true;
-        });
-
+        this.dialog.afterAllClosed.pipe(
+            skipWhile(() => !this.overlayMode),
+            takeUntil(this.onDestroy$)
+        ).subscribe(() => this.shouldCloseViewer = true);
 
         this.keyDown$.pipe(
+            skipWhile(() => !this.overlayMode),
             filter((e: KeyboardEvent) => e.keyCode === 27),
-            distinctUntilChanged(),
             takeUntil(this.onDestroy$)
         ).subscribe( (event: KeyboardEvent) => {
             event.preventDefault();
 
-            if (this.shouldCloseViewer && this.overlayMode) {
+            if (this.shouldCloseViewer) {
                 this.close();
             }
         });
