@@ -76,6 +76,8 @@ update() {
     update_dependency "@alfresco/adf-content-services"
     update_dependency "@alfresco/adf-process-services"
     update_dependency "@alfresco/adf-process-services-cloud"
+    update_dependency "@alfresco/adf-cli"
+    update_dependency "@alfresco/adf-testing"
 
     git push origin $BRANCH_TO_CREATE
 
