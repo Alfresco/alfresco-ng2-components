@@ -21,7 +21,8 @@ import { of, throwError } from 'rxjs';
 import {
     startFormDateWidgetMock, startFormDropdownDefinitionMock,
     startFormTextDefinitionMock, startMockForm, startMockFormWithTab,
-    startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock
+    startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock,
+    taskFormSingleUploadMock, taskFormMultipleUploadMock. preselectedSingleNode, preselectedMultipleeNode
 } from './start-form.component.mock';
 import { StartFormComponent } from './start-form.component';
 import { FormService, WidgetVisibilityService, setupTestBed, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
@@ -91,6 +92,26 @@ describe('StartFormComponent', () => {
         component.processDefinitionId = undefined;
         component.ngOnChanges({ otherProp: new SimpleChange(exampleId1, exampleId2, true) });
         expect(formService.getStartFormDefinition).not.toHaveBeenCalled();
+    });
+
+    it('should be able to inject sigle file as value into the form with an upload single widget', () => {
+        getStartFormSpy.and.returnValue(of(taskFormSingleUploadMock));
+        component.data = preselectedSingleNode;
+        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId1, true) });
+
+        expect(component.form.getFieldById('fake-single-upload').value).toBeDefined();
+        expect(component.form.getFieldById('fake-single-upload').value.length).toBe(1);
+        expect(component.form.getFieldById('fake-single-upload').value).toBe(preselectedSingleNode['fake-single-upload']);
+    });
+
+    it('should be able to inject multiple files as value into the form with an upload multiple widget', () => {
+        getStartFormSpy.and.returnValue(of(taskFormMultipleUploadMock));
+        component.data = preselectedMultipleeNode;
+        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId1, true) });
+
+        expect(component.form.getFieldById('fake-multiple-upload').value).toBeDefined();
+        expect(component.form.getFieldById('fake-multiple-upload').value.length).toBe(2);
+        expect(component.form.getFieldById('fake-multiple-upload').value).toBe(preselectedMultipleeNode['fake-multiple-upload']);
     });
 
     it('should consume errors encountered when loading start form', () => {
