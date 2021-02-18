@@ -22,7 +22,7 @@ import {
     startFormDateWidgetMock, startFormDropdownDefinitionMock,
     startFormTextDefinitionMock, startMockForm, startMockFormWithTab,
     startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock,
-    taskFormSingleUploadMock, taskFormMultipleUploadMock. preselectedSingleNode, preselectedMultipleeNode
+    taskFormSingleUploadMock, taskFormMultipleUploadMock, preselectedSingleNode, preselectedMultipleeNode
 } from './start-form.component.mock';
 import { StartFormComponent } from './start-form.component';
 import { FormService, WidgetVisibilityService, setupTestBed, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
