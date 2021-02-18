@@ -28,10 +28,11 @@ import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
-import { Subscription } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
-import { filter } from 'rxjs/operators';
+import { distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'adf-viewer',
@@ -224,8 +225,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private cacheBusterNumber;
 
-    private subscriptions: Subscription[] = [];
-
     // Extensions that are supported by the Viewer without conversion
     private extensions = {
         image: ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
@@ -242,11 +241,16 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         media: ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/mp3', 'audio/ogg', 'audio/wav']
     };
 
+    private onDestroy$ = new Subject<boolean>();
+    private shouldCloseViewer = true;
+    private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
+
     constructor(private apiService: AlfrescoApiService,
                 private viewUtilService: ViewUtilService,
                 private logService: LogService,
                 private extensionService: AppExtensionService,
-                private el: ElementRef) {
+                private el: ElementRef,
+                public dialog: MatDialog) {
         viewUtilService.maxRetries = this.maxRetries;
     }
 
@@ -255,22 +259,39 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscriptions.push(
-            this.apiService.nodeUpdated.pipe(
-                filter((node) => node && node.id === this.nodeId && node.name !== this.fileName)
-            ).subscribe((node) => this.onNodeUpdated(node))
-        );
+        this.dialog.afterOpened.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.shouldCloseViewer = false;
+        });
 
-        this.subscriptions.push(
-            this.viewUtilService.viewerTypeChange.subscribe((type: string) => {
-                this.viewerType = type;
-            })
-        );
-        this.subscriptions.push(
-            this.viewUtilService.urlFileContentChange.subscribe((content: string) => {
-                this.urlFileContent = content;
-            })
-        );
+        this.dialog.afterAllClosed.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.shouldCloseViewer = true;
+        });
+
+
+        this.keyDown$.pipe(
+            filter((e: KeyboardEvent) => e.keyCode === 27),
+            distinctUntilChanged(),
+            takeUntil(this.onDestroy$)
+        ).subscribe( (event: KeyboardEvent) => {
+            event.preventDefault();
+
+            if (this.shouldCloseViewer && this.overlayMode) {
+                this.close();
+            }
+        });
+
+        this.apiService.nodeUpdated.pipe(
+            filter((node) => node && node.id === this.nodeId && node.name !== this.fileName),
+            takeUntil(this.onDestroy$)
+        ).subscribe((node) => this.onNodeUpdated(node))
+
+        this.viewUtilService.viewerTypeChange.pipe(takeUntil(this.onDestroy$)).subscribe((type: string) => {
+            this.viewerType = type;
+        });
+
+        this.viewUtilService.urlFileContentChange.pipe(takeUntil(this.onDestroy$)).subscribe((content: string) => {
+            this.urlFileContent = content;
+        });
 
         this.loadExtensions();
     }
@@ -284,8 +305,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-        this.subscriptions = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     private onNodeUpdated(node: Node) {
@@ -590,11 +611,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         const key = event.keyCode;
-
-        // Esc
-        if (key === 27 && this.overlayMode) { // esc
-            this.close();
-        }
 
         // Left arrow
         if (key === 37 && this.canNavigateBefore) {
