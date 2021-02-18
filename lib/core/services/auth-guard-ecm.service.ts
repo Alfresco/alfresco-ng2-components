@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import {
-    ActivatedRouteSnapshot, Router
+    ActivatedRouteSnapshot, Router, UrlTree
 } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
@@ -38,7 +38,7 @@ export class AuthGuardEcm extends AuthGuardBase {
         super(authenticationService, router, appConfigService, dialog, storageService);
     }
 
-    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string):  Promise<boolean> {
+    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
         if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
             return true;
         }
