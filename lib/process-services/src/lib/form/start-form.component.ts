@@ -84,6 +84,12 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
             return;
         }
 
+        const data = changes['data'];
+        if (data && data.currentValue) {
+            this.parseForm(this.form.json);
+            return;
+        }
+
         const processId = changes['processId'];
         if (processId && processId.currentValue) {
             this.visibilityService.cleanProcessVariable();
