@@ -1021,7 +1021,35 @@
   "content-metadata": {
     "presets": {
       "default": {
-        "exif:exif": "*"
+        "exif:exif": "*",
+        "cm:generalclassifiable": "*",
+        "cm:complianceable": "*",
+        "cm:dublincore": "*",
+        "cm:effectivity": "*",
+        "cm:summarizable": "*",
+        "cm:versionable": "*",
+        "cm:templatable": "*",
+        "cm:emailed": "*",
+        "emailserver:aliasable": "*",
+        "cm:taggable": "*",
+        "app:inlineeditable": "*",
+        "cm:geographic": "*",
+        "audio:audio": "*",
+        "cm:indexControl": "*",
+        "dp:restrictable": "*",
+        "smf:customConfigSmartFolder": "*",
+        "smf:systemConfigSmartFolder": "*",
+        "ai:products": "*",
+        "ai:dates": "*",
+        "ai:places": "*",
+        "ai:events": "*",
+        "ai:organizations": "*",
+        "ai:people": "*",
+        "ai:things": "*",
+        "ai:quantities": "*",
+        "ai:creativeWorks": "*",
+        "ai:labels": "*",
+        "ai:textLines": "*"
       },
       "all-aspects": "*",
       "custom-title": [{
