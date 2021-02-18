@@ -1,6 +1,6 @@
-<div id="aspect-list-container" class="adf-aspect-list-container">
+<div id="aspect-list-container" class="adf-aspect-list-container" *ngIf="aspects$ | async as aspects; else loading">
     <mat-accordion class="adf-accordion-aspect-list">
-        <mat-expansion-panel *ngFor="let aspect of (aspects$ | async); let colIndex = index" [id]="'aspect-list-'+aspect?.entry?.title">
+        <mat-expansion-panel *ngFor="let aspect of aspects; let colIndex = index" [id]="'aspect-list-'+aspect?.entry?.title">
             <mat-expansion-panel-header [id]="'aspect-list-'+aspect?.entry?.title+'header'">
                 <mat-panel-title>
                     <mat-checkbox class="adf-aspect-list-check-button" [id]="'aspect-list-'+colIndex+'-check'"
@@ -36,3 +36,9 @@
         </mat-expansion-panel>
     </mat-accordion>
 </div>
+
+<ng-template #loading>
+    <div class="adf-aspect-list-spinner">
+       <mat-spinner id="adf-aspect-spinner"></mat-spinner>
+    </div>
+</ng-template>

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { MinimalNode } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
@@ -44,6 +45,7 @@ export class CardViewUpdateService {
     itemUpdated$ = new Subject<UpdateNotification>();
     itemClicked$ = new Subject<ClickNotification>();
     updateItem$ = new Subject<CardViewBaseItemModel>();
+    updatedAspect$ = new Subject<MinimalNode>();
 
     update(property: CardViewBaseItemModel, newValue: any) {
         this.itemUpdated$.next({
@@ -64,6 +66,10 @@ export class CardViewUpdateService {
      */
     updateElement(notification: CardViewBaseItemModel) {
         this.updateItem$.next(notification);
+    }
+
+    updateNodeAspect(node: MinimalNode) {
+        this.updatedAspect$.next(node);
     }
 
 }

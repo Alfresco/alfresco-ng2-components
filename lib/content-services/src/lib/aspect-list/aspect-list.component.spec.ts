@@ -23,6 +23,7 @@ import { AspectListComponent } from './aspect-list.component';
 import { AspectListService } from './aspect-list.service';
 import { of } from 'rxjs';
 import { AspectEntry } from '@alfresco/js-api';
+import { delay } from 'rxjs/operators';
 
 const aspectListMock: AspectEntry[] = [{
     entry: {
@@ -78,6 +79,26 @@ describe('AspectListComponent', () => {
             ContentTestingModule
         ],
         providers: [AspectListService]
+    });
+
+    describe('Loading', () => {
+
+        beforeEach(() => {
+            fixture = TestBed.createComponent(AspectListComponent);
+            component = fixture.componentInstance;
+            nodeService = TestBed.inject(NodesApiService);
+            aspectListService = TestBed.inject(AspectListService);
+        });
+
+        it('should show the loading spinner when result is loading', () => {
+            const delayReusult = of([]).pipe(delay(0));
+            spyOn(nodeService, 'getNode').and.returnValue(delayReusult);
+            spyOn(aspectListService, 'getAspects').and.returnValue(delayReusult);
+            fixture.detectChanges();
+            const spinner = fixture.nativeElement.querySelector('#adf-aspect-spinner');
+            expect(spinner).toBeDefined();
+            expect(spinner).not.toBeNull();
+        });
     });
 
     describe('When passing a node id', () => {

@@ -8,10 +8,17 @@
 
     .adf {
 
+        &-aspect-list-spinner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
         &-aspect-list-container {
 
             padding-top: 3px;
-            max-height: 400px;
+            height: 400px;
             overflow: auto;
 
             .adf-aspect-list-check-button {

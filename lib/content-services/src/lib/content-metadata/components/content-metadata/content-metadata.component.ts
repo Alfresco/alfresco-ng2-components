@@ -26,7 +26,8 @@ import {
     AlfrescoApiService,
     TranslationService,
     AppConfigService,
-    CardViewBaseItemModel
+    CardViewBaseItemModel,
+    UpdateNotification
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
@@ -115,12 +116,17 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 debounceTime(200),
                 takeUntil(this.onDestroy$))
             .subscribe(
-                (updatedNode) => {
+                (updatedNode: UpdateNotification) => {
                     this.hasMetadataChanged = true;
                     this.targetProperty = updatedNode.target;
                     this.updateChanges(updatedNode.changed);
                 }
             );
+
+        this.cardViewUpdateService.updatedAspect$.pipe(
+            debounceTime(200),
+            takeUntil(this.onDestroy$))
+            .subscribe((node) => this.loadProperties(node));
 
         this.loadProperties(this.node);
     }
