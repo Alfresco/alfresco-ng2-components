@@ -66,8 +66,7 @@ describe('AuthGuardService', () => {
         spyOn(router, 'navigateByUrl');
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
 
-        expect(await authGuard.canActivate(null, state)).toBeFalsy();
-        expect(router.navigateByUrl).toHaveBeenCalled();
+        expect(await authGuard.canActivate(null, state)).toEqual(router.parseUrl('/login?redirectUrl=some-url'));
     }));
 
     it('if the alfresco js api is configured with withCredentials true should canActivate be true', async(async () => {
@@ -97,8 +96,7 @@ describe('AuthGuardService', () => {
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = false;
 
-        expect(await authGuard.canActivate(null, state)).toBeFalsy();
-        expect(router.navigateByUrl).toHaveBeenCalled();
+        expect(await authGuard.canActivate(null, state)).toEqual(router.parseUrl('/login'));
     }));
 
     it('should redirect url if the User is NOT logged in and isOAuth but no silentLogin configured', async(async () => {
@@ -107,8 +105,7 @@ describe('AuthGuardService', () => {
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = undefined;
 
-        expect(await authGuard.canActivate(null, state)).toBeFalsy();
-        expect(router.navigateByUrl).toHaveBeenCalled();
+        expect(await authGuard.canActivate(null, state)).toEqual(router.parseUrl('/login'));
     }));
 
     it('should NOT redirect url if the User is NOT logged in and isOAuth but with silentLogin configured', async(async () => {
@@ -128,12 +125,7 @@ describe('AuthGuardService', () => {
         spyOn(router, 'navigateByUrl');
         spyOn(authService, 'setRedirect');
 
-        await authGuard.canActivate(null, state);
-
-        expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL', url: 'some-url'
-        });
-        expect(router.navigateByUrl).toHaveBeenCalledWith('/login?redirectUrl=some-url');
+        expect(await authGuard.canActivate(null, state)).toEqual(router.parseUrl('/login?redirectUrl=some-url'));
     }));
 
     it('should set redirect url with query params', async(async () => {
@@ -144,12 +136,7 @@ describe('AuthGuardService', () => {
         spyOn(router, 'navigateByUrl');
         spyOn(authService, 'setRedirect');
 
-        await authGuard.canActivate(null, state);
-
-        expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL', url: 'some-url;q=query'
-        });
-        expect(router.navigateByUrl).toHaveBeenCalledWith('/login?redirectUrl=some-url;q=query');
+        expect(await authGuard.canActivate(null, state)).toEqual(router.parseUrl('/login?redirectUrl=some-url;q=query'));
     }));
 
     it('should get redirect url from config if there is one configured', async(async () => {
@@ -159,12 +146,7 @@ describe('AuthGuardService', () => {
         spyOn(router, 'navigateByUrl');
         spyOn(authService, 'setRedirect');
 
-        await authGuard.canActivate(null, state);
-
-        expect(authService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL', url: 'some-url'
-        });
-        expect(router.navigateByUrl).toHaveBeenCalledWith('/fakeLoginRoute?redirectUrl=some-url');
+        expect(await authGuard.canActivate(null, state)).toEqual(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
     }));
 
     it('should pass actual redirect when no state segments exists', async(async () => {
