@@ -30,6 +30,8 @@ import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -70,6 +72,13 @@ class ViewerWithCustomToolbarActionsComponent {
     `
 })
 class ViewerWithCustomSidebarComponent {
+}
+
+@Component({
+    selector: 'adf-dialog-dummy',
+    template: ``
+})
+class DummyDialogComponent {
 }
 
 @Component({
@@ -126,9 +135,11 @@ describe('ViewerComponent', () => {
     let fixture: ComponentFixture<ViewerComponent>;
     let alfrescoApiService: AlfrescoApiService;
     let element: HTMLElement;
+    let dialog: MatDialog;
 
     setupTestBed({
         imports: [
+            NoopAnimationsModule,
             TranslateModule.forRoot(),
             CoreTestingModule
         ],
@@ -149,7 +160,8 @@ describe('ViewerComponent', () => {
                 }
             },
             RenderingQueueServices,
-            { provide: Location, useClass: SpyLocation }
+            { provide: Location, useClass: SpyLocation },
+            MatDialog
         ]
     });
 
@@ -159,6 +171,7 @@ describe('ViewerComponent', () => {
         component = fixture.componentInstance;
 
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        dialog = TestBed.inject(MatDialog);
     });
 
     describe('Extension Type Test', () => {
@@ -776,13 +789,34 @@ describe('ViewerComponent', () => {
                 });
 
                 it('should Esc button hide the viewer', (done) => {
-                    EventMock.keyUp(27);
+                    EventMock.keyDown(27);
                     fixture.detectChanges();
 
                     fixture.whenStable().then(() => {
                         expect(element.querySelector('.adf-viewer-content')).toBeNull();
                         done();
                     });
+                });
+
+                it('should not close the viewer on Escape event if dialog was opened', (done) => {
+                    const event = new KeyboardEvent('keydown', {
+                        bubbles: true,
+                        keyCode: 27
+                    } as KeyboardEventInit );
+                    const dialogRef = dialog.open(DummyDialogComponent);
+
+                    dialogRef.afterClosed().subscribe(() => {
+                        document.body.dispatchEvent(event);
+                        fixture.detectChanges();
+                        expect(element.querySelector('.adf-viewer-content')).toBeNull();
+                        done();
+                    });
+
+                    fixture.detectChanges();
+
+                    document.body.dispatchEvent(event);
+                    fixture.detectChanges();
+                    expect(element.querySelector('.adf-viewer-content')).not.toBeNull();
                 });
             });
 
