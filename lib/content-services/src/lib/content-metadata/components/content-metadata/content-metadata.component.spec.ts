@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { Node } from '@alfresco/js-api';
+import { MinimalNode, Node } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import {
@@ -122,6 +122,17 @@ describe('ContentMetadataComponent', () => {
             expect(component.hasMetadataChanged).toEqual(true);
             expect(component.updateChanges).toHaveBeenCalled();
             expect(component.changedProperties).toEqual({ properties: { 'property-key': 'updated-value' } });
+        }));
+
+        it('nodeAspectUpdate', fakeAsync(() => {
+            const fakeNode: MinimalNode = <MinimalNode> { id: 'fake-minimal-node', aspectNames: ['ft:a', 'ft:b', 'ft:c'], name: 'fake-node'};
+            spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
+            spyOn(contentMetadataService, 'getBasicProperties').and.stub();
+            updateService.updateNodeAspect(fakeNode);
+
+            tick(600);
+            expect(contentMetadataService.getBasicProperties).toHaveBeenCalled();
+            expect(contentMetadataService.getGroupedProperties).toHaveBeenCalled();
         }));
 
         it('should save changedProperties on save click', fakeAsync(async () => {

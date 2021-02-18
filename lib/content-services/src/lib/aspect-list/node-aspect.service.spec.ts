@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService, NodesApiService, setupTestBed } from 'core';
+import { AlfrescoApiService, CardViewUpdateService, NodesApiService, setupTestBed } from 'core';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { AspectListService } from './aspect-list.service';
@@ -29,6 +29,7 @@ describe('NodeAspectService', () => {
     let nodeAspectService: NodeAspectService;
     let nodeApiService: NodesApiService;
     let alfrescoApiService: AlfrescoApiService;
+    let cardViewUpdateService: CardViewUpdateService;
 
     setupTestBed({
         imports: [
@@ -42,6 +43,7 @@ describe('NodeAspectService', () => {
         nodeAspectService = TestBed.inject(NodeAspectService);
         nodeApiService = TestBed.inject(NodesApiService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        cardViewUpdateService = TestBed.inject(CardViewUpdateService);
     });
 
     it('should open the aspect list dialog', () => {
@@ -61,6 +63,18 @@ describe('NodeAspectService', () => {
 
     it('should send and update node event once the node has been updated', (done) => {
         alfrescoApiService.nodeUpdated.subscribe((nodeUpdated) => {
+            expect(nodeUpdated.id).toBe('fake-node-id');
+            expect(nodeUpdated.aspectNames).toEqual(['a', 'b', 'c']);
+            done();
+        });
+        const fakeNode = { id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] };
+        spyOn(aspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
+        spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));
+        nodeAspectService.updateNodeAspects('fake-node-id');
+    });
+
+    it('should send and update node aspect once the node has been updated', (done) => {
+        cardViewUpdateService.updatedAspect$.subscribe((nodeUpdated) => {
             expect(nodeUpdated.id).toBe('fake-node-id');
             expect(nodeUpdated.aspectNames).toEqual(['a', 'b', 'c']);
             done();

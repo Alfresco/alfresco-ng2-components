@@ -17,11 +17,11 @@
 
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { from, Observable, Subject, zip } from 'rxjs';
+import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
+import { from, Observable, of, Subject, zip } from 'rxjs';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { AspectEntry, AspectPaging } from '@alfresco/js-api';
 
 @Injectable({
@@ -30,7 +30,9 @@ import { AspectEntry, AspectPaging } from '@alfresco/js-api';
 export class AspectListService {
 
     constructor(private alfrescoApiService: AlfrescoApiService,
-                private appConfigService: AppConfigService, private dialog: MatDialog) {
+                private appConfigService: AppConfigService,
+                private dialog: MatDialog,
+                private logService: LogService) {
     }
 
     getAspects(): Observable<AspectEntry[]> {
@@ -46,7 +48,11 @@ export class AspectListService {
         const where = `(modelIds in ('cm:contentmodel', 'emailserver:emailserverModel', 'smf:smartFolder', 'app:applicationmodel' ))`;
         return from(this.alfrescoApiService.aspectsApi.listAspects({where}))
         .pipe(
-            map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries))
+            map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries)),
+            catchError((error) => {
+                this.logService.error(error);
+                return of([]);
+            })
         );
     }
 
@@ -54,7 +60,11 @@ export class AspectListService {
         const where = `(not namespaceUri matches('http://www.alfresco.*'))`;
         return from(this.alfrescoApiService.aspectsApi.listAspects({where}))
         .pipe(
-            map((result: AspectPaging) => result?.list?.entries)
+            map((result: AspectPaging) => result?.list?.entries),
+            catchError((error) => {
+                this.logService.error(error);
+                return of([]);
+            })
         );
     }
 

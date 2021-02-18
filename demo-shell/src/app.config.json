@@ -1021,7 +1021,6 @@
   "content-metadata": {
     "presets": {
       "default": {
-        "includeAll": true,
         "exif:exif": "*"
       },
       "all-aspects": "*",
