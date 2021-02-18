@@ -284,7 +284,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.apiService.nodeUpdated.pipe(
             filter((node) => node && node.id === this.nodeId && node.name !== this.fileName),
             takeUntil(this.onDestroy$)
-        ).subscribe((node) => this.onNodeUpdated(node))
+        ).subscribe((node) => this.onNodeUpdated(node));
 
         this.viewUtilService.viewerTypeChange.pipe(takeUntil(this.onDestroy$)).subscribe((type: string) => {
             this.viewerType = type;
