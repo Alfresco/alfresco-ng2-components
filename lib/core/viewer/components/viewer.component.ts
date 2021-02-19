@@ -259,28 +259,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.dialog.afterOpened.pipe(
-            skipWhile(() => !this.overlayMode),
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => this.shouldCloseViewer = false);
-
-        this.dialog.afterAllClosed.pipe(
-            skipWhile(() => !this.overlayMode),
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => this.shouldCloseViewer = true);
-
-        this.keyDown$.pipe(
-            skipWhile(() => !this.overlayMode),
-            filter((e: KeyboardEvent) => e.keyCode === 27),
-            takeUntil(this.onDestroy$)
-        ).subscribe( (event: KeyboardEvent) => {
-            event.preventDefault();
-
-            if (this.shouldCloseViewer) {
-                this.close();
-            }
-        });
-
         this.apiService.nodeUpdated.pipe(
             filter((node) => node && node.id === this.nodeId && node.name !== this.fileName),
             takeUntil(this.onDestroy$)
@@ -294,6 +272,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.urlFileContent = content;
         });
 
+        this.closeOverlayManager();
         this.loadExtensions();
     }
 
@@ -697,6 +676,30 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     onUnsupportedFile() {
         this.viewerType = 'unknown';
+    }
+
+    private closeOverlayManager() {
+        this.dialog.afterOpened.pipe(
+            skipWhile(() => !this.overlayMode),
+            takeUntil(this.onDestroy$)
+        ).subscribe(() => this.shouldCloseViewer = false);
+
+        this.dialog.afterAllClosed.pipe(
+            skipWhile(() => !this.overlayMode),
+            takeUntil(this.onDestroy$)
+        ).subscribe(() => this.shouldCloseViewer = true);
+
+        this.keyDown$.pipe(
+            skipWhile(() => !this.overlayMode),
+            filter((e: KeyboardEvent) => e.keyCode === 27),
+            takeUntil(this.onDestroy$)
+        ).subscribe( (event: KeyboardEvent) => {
+            event.preventDefault();
+
+            if (this.shouldCloseViewer) {
+                this.close();
+            }
+        });
     }
 
     private generateCacheBusterNumber() {
