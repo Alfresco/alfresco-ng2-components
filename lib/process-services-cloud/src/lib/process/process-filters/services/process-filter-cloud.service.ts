@@ -161,10 +161,11 @@ export class ProcessFilterCloudService {
                 if (filters && filters.length === 0) {
                     return this.createProcessFilters(appName, key, [newFilter]);
                 } else {
-                    const existing = filters.find(filter => filter.name === name);
-                    if (existing) {
-                        filters.splice(filters.indexOf(existing), 1);
+                    const index = filters.findIndex(filter => filter.name === name);
+                    if (index >= 0) {
+                        filters.splice(index, 1);
                     }
+
                     filters.push(newFilter);
                     return this.preferenceService.updatePreference(appName, key, filters);
                 }

@@ -63,7 +63,7 @@ export class ProcessListCloudService extends BaseCloudService {
         }
     }
 
-    protected isPropertyValueValid(requestNode: any, property: string) {
+    protected isPropertyValueValid(requestNode: any, property: string): boolean {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 
