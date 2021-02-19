@@ -10,12 +10,27 @@
             }
         }
 
+        .mat-tab-body-wrapper {
+            flex-grow: 1;
+        }
+
+        .mat-tab-body-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        adf-upload-drag-area {
+            flex-grow: 1;
+        }
+
         .adf-upload-dialog {
 
             &__content {
-                max-height: 64%;
+                max-height: unset;
             }
 
+            display: flex;
+            flex-direction: column;
             height: 100%;
             width: 100%;
             position: unset;
@@ -23,12 +38,15 @@
         }
 
         .adf-upload-dialog-container {
-            height: 456px;
+            flex-grow: 1;
+            height: 100%;
         }
     }
 
     .adf-content-node-selector-dialog {
         &-content {
+            height: 465px;
+            max-height: 80vh;
             padding-left: 24px;
             padding-right: 24px;
         }
