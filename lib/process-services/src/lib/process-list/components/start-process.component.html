@@ -77,7 +77,7 @@
                 </mat-form-field>
         
                 <ng-container *ngIf="!isProcessDefinitionsLoading ; else showStartFormLoadingTemplate">
-                    <ng-container *ngIf="isProcessDefinitionSelected() && isMovingNodeDone ; else emptyProcessDefTemplate">
+                    <ng-container *ngIf="isProcessDefinitionSelected() ; else emptyProcessDefTemplate">
                         <ng-container  *ngIf="hasStartForm(); else noStartFormTemplate">
                             <adf-start-form
                                 #startForm

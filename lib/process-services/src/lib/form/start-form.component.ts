@@ -86,7 +86,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
 
         const data = changes['data'];
         if (data && data.currentValue) {
-            this.parseForm(this.form.json);
+            this.parseRefreshVisibilityValidateForm(this.form.json);
             return;
         }
 
@@ -109,11 +109,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
                             if (instance.variables) {
                                 form.processVariables = instance.variables;
                             }
-                            this.form = this.parseForm(form);
-                            this.visibilityService.refreshVisibility(this.form);
-                            this.form.validateForm();
-                            this.form.readOnly = this.readOnlyForm;
-                            this.onFormLoaded(this.form);
+                            this.parseRefreshVisibilityValidateForm(form);
                         },
                         (error) => this.handleError(error)
                     );
@@ -126,14 +122,18 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
             .subscribe(
                 (form) => {
                     this.formName = form.processDefinitionName;
-                    this.form = this.parseForm(form);
-                    this.visibilityService.refreshVisibility(this.form);
-                    this.form.validateForm();
-                    this.form.readOnly = this.readOnlyForm;
-                    this.onFormLoaded(this.form);
+                    this.parseRefreshVisibilityValidateForm(form);
                 },
                 (error) => this.handleError(error)
             );
+    }
+
+    parseRefreshVisibilityValidateForm(form) {
+        this.form = this.parseForm(form);
+        this.visibilityService.refreshVisibility(this.form);
+        this.form.validateForm();
+        this.form.readOnly = this.readOnlyForm;
+        this.onFormLoaded(this.form);
     }
 
     /** @override */

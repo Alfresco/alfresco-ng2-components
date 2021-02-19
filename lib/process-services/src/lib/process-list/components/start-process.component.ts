@@ -127,7 +127,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     isProcessDefinitionsLoading = true;
     isAppsLoading = true;
-    isMovingNodeDone = true;
     movedNodeToPS;
 
     private onDestroy$ = new Subject<boolean>();
@@ -359,7 +358,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     moveNodeFromCStoPS(): void {
-        this.isMovingNodeDone = false;
         const accountIdentifier = this.getAlfrescoRepositoryName();
 
         for (const key in this.values) {
@@ -369,7 +367,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                                              .map((content: MinimalNode) => this.activitiContentService.applyAlfrescoNode(content, null, accountIdentifier));
                 forkJoin(contents).subscribe((res: RelatedContentRepresentation[]) => {
                     this.movedNodeToPS = { [key]: [...res]};
-                    this.isMovingNodeDone = true;
                 });
             }
         }
