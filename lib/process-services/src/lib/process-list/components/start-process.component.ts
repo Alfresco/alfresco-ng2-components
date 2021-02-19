@@ -127,7 +127,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     isProcessDefinitionsLoading = true;
     isAppsLoading = true;
-    movedNodeToPS;
+    movedNodeToPS: FormValues;
 
     private onDestroy$ = new Subject<boolean>();
     constructor(private activitiProcess: ProcessService,
