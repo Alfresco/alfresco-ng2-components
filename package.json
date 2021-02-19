@@ -177,6 +177,7 @@
     "typedoc": "^0.20.14",
     "typescript": "3.9.8",
     "unist-util-select": "^3.0.2",
+    "webdriver-manager": "12.1.8",
     "webpack-cli": "^3.3.12"
   },
   "license": "Apache-2.0",
