@@ -25,8 +25,6 @@ then
     node ./scripts/pre-publish.js
 fi;
 
-npm install
-
 ./scripts/build/build-all-lib.sh
 
 echo "====== Build Demo shell for production ====="

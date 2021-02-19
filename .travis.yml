@@ -9,8 +9,7 @@ node_js:
   - '12.18.4'
 
 before_install: . ./scripts/ci/job_hooks/before_install.sh
-install:
-    echo "no install"
+install: echo "no install, see the first stage"
 
 env:
     global:
@@ -30,6 +29,7 @@ branches:
   - /.*beta.*/
 
 stages:
+  - name: Setup
   - name: Lint & Build Dist & Release
     if: tag IS blank
   - name: Check bundle
@@ -54,6 +54,17 @@ services:
 
 jobs:
     include:
+        # Setup ======================
+        - stage: Setup
+          name: "Setup npm cache"
+          script: npm ci
+          workspaces:
+            create:
+            name: node_modules_cache
+            paths:
+                - "./node_modules"
+            use: node_modules_cache
+
         # Run Only for any PR
         - stage: Lint & Build Dist & Release
           name:  Build
@@ -61,36 +72,54 @@ jobs:
             - ./scripts/travis/build/build.sh
             - ./scripts/travis/release/release-npm.sh
             - ./scripts/travis/release/release-docker.sh
-
           after_success:
             - ./scripts/ci/utils/artifact-to-s3.sh -a ./dist/demo-shell -o "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2"
             - ./scripts/ci/utils/artifact-to-s3.sh -a ./lib/dist -o "$S3_DBP_FOLDER/alfresco-libs.tar.bz2"
+          workspaces:
+            use: node_modules_cache
 
         - stage: Lint & Build Dist & Release
           name:  Lint
           script:
              - ./scripts/lint.sh
+          workspaces:
+            use: node_modules_cache
 
         - stage: Unit test
           name: Unit test content
           script:  ./scripts/travis/unit-test/content.sh
+          workspaces:
+            use: node_modules_cache
+
         - stage: Unit test
           name: Unit test core extension demo
           script: ./scripts/travis/unit-test/core-extension.sh
+          workspaces:
+            use: node_modules_cache
+
         - stage: Unit test
           name: Unit test process insights
           script: ./scripts/travis/unit-test/process.sh
+          workspaces:
+            use: node_modules_cache
+
         - stage: Unit test
           name: Unit test process-cloud
           script: ./scripts/travis/unit-test/process-cloud.sh
+          workspaces:
+            use: node_modules_cache
 
         - stage: Trigger Alpha ADF child build
           name: Trigger Alpha ADF child build
           script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha
+          workspaces:
+            use: node_modules_cache
 
         - stage: Trigger Beta ADF child build
           name: Trigger Beta ADF child build
           script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v beta
+          workspaces:
+            use: node_modules_cache
 
         - stage: Release tag
           script: ./scripts/travis/release/git-tag.sh
@@ -103,6 +132,8 @@ jobs:
             - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/core-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
+          workspaces:
+            use: node_modules_cache
 
         - stage: e2e Test
           name:  content
@@ -111,6 +142,8 @@ jobs:
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/content-services-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
+          workspaces:
+            use: node_modules_cache
 
         - stage: e2e Test
           name:  search
@@ -119,6 +152,8 @@ jobs:
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/search-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
+          workspaces:
+            use: node_modules_cache
 
         - stage: e2e Test
           name: process
@@ -128,6 +163,8 @@ jobs:
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/process-services-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
+          workspaces:
+            use: node_modules_cache
 
         - stage: e2e Test
           name: process Cloud
@@ -137,11 +174,15 @@ jobs:
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
+          workspaces:
+            use: node_modules_cache
 
         - stage: Check bundle
           script:
           - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
           - ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
+          workspaces:
+            use: node_modules_cache
 
 notifications:
   slack:
@@ -156,6 +197,6 @@ notifications:
       - "Message: %{message}"
 
 cache:
+  npm: true
   directories:
-  - node_modules
   - tmp
