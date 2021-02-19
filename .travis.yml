@@ -60,8 +60,8 @@ jobs:
           script: npm ci
           workspaces:
             create:
-            name: node_modules_cache
-            paths:
+              name: node_modules_cache
+              paths:
                 - "./node_modules"
             use: node_modules_cache
 
