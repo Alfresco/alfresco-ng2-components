@@ -1011,3 +1011,217 @@ export let startMockFormWithTab = {
     gridsterForm: false,
     globalDateFormat: 'D - M - YYYY'
 };
+
+export const taskFormSingleUploadMock = {
+    id: 4,
+    name: 'Translation request',
+    processDefinitionId: 'TranslationProcess:2:8',
+    processDefinitionName: 'Translation Process',
+    processDefinitionKey: 'TranslationProcess',
+    taskId: '91',
+    taskDefinitionKey: 'sid-DDECD9E4-0299-433F-9193-C3D905C3EEBE',
+    tabs: [],
+    fields: [
+        {
+            fieldType: 'ContainerRepresentation',
+            id: '1582747052793',
+            name: 'Label',
+            type: 'container',
+            value: null,
+            required: false,
+            readOnly: false,
+            overrideId: false,
+            colspan: 1,
+            placeholder: null,
+            minLength: 0,
+            maxLength: 0,
+            minValue: null,
+            maxValue: null,
+            regexPattern: null,
+            optionType: null,
+            hasEmptyValue: null,
+            options: null,
+            restUrl: null,
+            restResponsePath: null,
+            restIdProperty: null,
+            restLabelProperty: null,
+            tab: null,
+            className: null,
+            dateDisplayFormat: null,
+            layout: null,
+            sizeX: 2,
+            sizeY: 1,
+            row: -1,
+            col: -1,
+            visibilityCondition: null,
+            numberOfColumns: 2,
+            fields: {
+                '1': [
+                    {
+                        fieldType: 'AttachFileFieldRepresentation',
+                        id: 'fake-single-upload',
+                        name: 'Attach file - single type',
+                        type: 'upload',
+                        value: null,
+                        required: false,
+                        readOnly: false,
+                        overrideId: false,
+                        colspan: 1,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2,
+                            fileSource: {
+                              serviceId: 'all-file-sources',
+                              name: 'All file sources'
+                            },
+                            link: true
+                          },
+                        visibilityCondition: null
+                    }
+                ]
+            }
+        }
+    ],
+    outcomes: [],
+    javascriptEvents: [],
+    className: '',
+    style: '',
+    customFieldTemplates: {},
+    metadata: {},
+    variables: [],
+    customFieldsValueInfo: {},
+    gridsterForm: false,
+    globalDateFormat: 'D-M-YYYY'
+};
+
+export const taskFormMultipleUploadMock = {
+    id: 4,
+    name: 'Translation request',
+    processDefinitionId: 'TranslationProcess:2:8',
+    processDefinitionName: 'Translation Process',
+    processDefinitionKey: 'TranslationProcess',
+    taskId: '91',
+    taskDefinitionKey: 'sid-DDECD9E4-0299-433F-9193-C3D905C3EEBE',
+    tabs: [],
+    fields: [
+        {
+            fieldType: 'ContainerRepresentation',
+            id: '1582747052793',
+            name: 'Label',
+            type: 'container',
+            value: null,
+            required: false,
+            readOnly: false,
+            overrideId: false,
+            colspan: 1,
+            placeholder: null,
+            minLength: 0,
+            maxLength: 0,
+            minValue: null,
+            maxValue: null,
+            regexPattern: null,
+            optionType: null,
+            hasEmptyValue: null,
+            options: null,
+            restUrl: null,
+            restResponsePath: null,
+            restIdProperty: null,
+            restLabelProperty: null,
+            tab: null,
+            className: null,
+            dateDisplayFormat: null,
+            layout: null,
+            sizeX: 2,
+            sizeY: 1,
+            row: -1,
+            col: -1,
+            visibilityCondition: null,
+            numberOfColumns: 2,
+            fields: {
+                '1': [
+                    {
+                        fieldType: 'AttachFileFieldRepresentation',
+                        id: 'fake-multiple-upload',
+                        name: 'Attach file - multiple type',
+                        type: 'upload',
+                        value: null,
+                        required: false,
+                        readOnly: false,
+                        overrideId: false,
+                        colspan: 1,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2,
+                            fileSource: {
+                              serviceId: 'all-file-sources',
+                              name: 'All file sources'
+                            },
+                            link: true,
+                            multiple: true
+                          },
+                        visibilityCondition: null
+                    }
+                ]
+            }
+        }
+    ],
+    outcomes: [],
+    javascriptEvents: [],
+    className: '',
+    style: '',
+    customFieldTemplates: {},
+    metadata: {},
+    variables: [],
+    customFieldsValueInfo: {},
+    gridsterForm: false,
+    globalDateFormat: 'D-M-YYYY'
+};
+
+export const preselectedSingleNode = {
+    'fake-single-upload': [
+      {
+        id: 1027,
+        name: 'fake-file.docx',
+        relatedContent: false,
+        contentAvailable: true,
+        link: true,
+        source: 'alfresco-1-adw-contentAlfresco',
+        sourceId: '4a440e8f-7fe5-4d83-a042-a19ee10125fb;2.0@',
+        mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        simpleType: 'word',
+        previewStatus: 'queued',
+        thumbnailStatus: 'queued'
+      }
+    ]
+};
+
+export const preselectedMultipleeNode = {
+    'fake-multiple-upload': [
+      {
+        id: 1027,
+        name: 'fake-file.docx',
+        relatedContent: false,
+        contentAvailable: true,
+        link: true,
+        source: 'alfresco-1-adw-contentAlfresco',
+        sourceId: '4a440e8f-7fe5-4d83-a042-a19ee10125fb;2.0@',
+        mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        simpleType: 'word',
+        previewStatus: 'queued',
+        thumbnailStatus: 'queued'
+      },
+      {
+        id: 1028,
+        name: 'fake-file2.docx',
+        relatedContent: false,
+        contentAvailable: true,
+        link: true,
+        source: 'alfresco-1-adw-contentAlfresco',
+        sourceId: '4a440e8f-7fe5-4d83-a042-a19ee10125fb;2.0@',
+        mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        simpleType: 'word',
+        previewStatus: 'queued',
+        thumbnailStatus: 'queued'
+      }
+    ]
+};

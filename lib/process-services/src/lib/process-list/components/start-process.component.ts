@@ -127,6 +127,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     isProcessDefinitionsLoading = true;
     isAppsLoading = true;
+    movedNodeToPS: FormValues;
 
     private onDestroy$ = new Subject<boolean>();
     constructor(private activitiProcess: ProcessService,
@@ -364,7 +365,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                 const currentValue = Array.isArray(this.values[key]) ? this.values[key] : [this.values[key]];
                 const contents = currentValue.filter((value: any) => value && value.isFile)
                                              .map((content: MinimalNode) => this.activitiContentService.applyAlfrescoNode(content, null, accountIdentifier));
-                forkJoin(contents).subscribe((res: RelatedContentRepresentation[]) => this.values[key] = [...res] );
+                forkJoin(contents).subscribe((res: RelatedContentRepresentation[]) => {
+                    this.movedNodeToPS = { [key]: [...res]};
+                });
             }
         }
     }
