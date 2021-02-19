@@ -76,6 +76,11 @@ jobs:
             - ./scripts/ci/utils/artifact-to-s3.sh -a ./dist/demo-shell -o "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2"
             - ./scripts/ci/utils/artifact-to-s3.sh -a ./lib/dist -o "$S3_DBP_FOLDER/alfresco-libs.tar.bz2"
           workspaces:
+            # Built ADF packages need to be moved into node_modules, we need to update the workspace, that is why the "create"
+            create:
+              name: node_modules_cache
+              paths:
+                - "./node_modules"
             use: node_modules_cache
 
         - stage: Lint & Build Dist & Release
