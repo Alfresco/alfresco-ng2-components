@@ -22,6 +22,6 @@ then
   exit 1
 fi
 
-tar cvfj ./s3-artifact.tmp -C $ARTIFACT `ls $ARTIFACT`
+tar cfj ./s3-artifact.tmp -C $ARTIFACT `ls -A $ARTIFACT`
 aws s3 cp ./s3-artifact.tmp $OUTPUT
 rm ./s3-artifact.tmp
