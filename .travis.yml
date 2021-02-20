@@ -19,6 +19,9 @@ env:
         - REDIRECT_URI_LOGOUT=/logout/
         - BROWSER_RUN=true
         - MAXINSTANCES=2
+        - DEMO_SHELL_DIR="./dist/demo-shell"
+        - BUILT_LIBS_DIR="./lib/dist"
+        - NODE_MODULES_DIR="./node_modules"
 
 branches:
   only:
@@ -62,7 +65,7 @@ jobs:
             create:
               name: node_modules_cache
               paths:
-                - "./node_modules"
+                - "$NODE_MODULES_DIR"
             use: node_modules_cache
 
         # Run Only for any PR
@@ -72,15 +75,12 @@ jobs:
             - ./scripts/travis/build/build.sh
             - ./scripts/travis/release/release-npm.sh
             - ./scripts/travis/release/release-docker.sh
-          after_success:
-            - ./scripts/ci/utils/artifact-to-s3.sh -a ./dist/demo-shell -o "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2"
-            - ./scripts/ci/utils/artifact-to-s3.sh -a ./lib/dist -o "$S3_DBP_FOLDER/alfresco-libs.tar.bz2"
           workspaces:
-            # Built ADF packages need to be moved into node_modules, we need to update the workspace, that is why the "create"
             create:
-              name: node_modules_cache
+              name: built_artefacts_cache
               paths:
-                - "./node_modules"
+                - "$DEMO_SHELL_DIR"
+                - "$BUILT_LIBS_DIR"
             use: node_modules_cache
 
         - stage: Lint & Build Dist & Release
@@ -138,7 +138,14 @@ jobs:
           script: ./scripts/travis/e2e/core-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use: node_modules_cache
+            create:
+              name: smartrunner-cache-core
+              paths:
+                - "$SMART_RUNNER_DIRECTORY"
+            use:
+              - node_modules_cache
+              - built_artefacts_cache
+              - smartrunner-cache-core
 
         - stage: e2e Test
           name:  content
@@ -148,7 +155,14 @@ jobs:
           script: ./scripts/travis/e2e/content-services-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use: node_modules_cache
+            create:
+              name: smartrunner-cache-content
+              paths:
+                - "$SMART_RUNNER_DIRECTORY"
+            use:
+              - node_modules_cache
+              - built_artefacts_cache
+              - smartrunner-cache-content
 
         - stage: e2e Test
           name:  search
@@ -158,7 +172,14 @@ jobs:
           script: ./scripts/travis/e2e/search-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use: node_modules_cache
+            create:
+              name: smartrunner-cache-search
+              paths:
+                - "$SMART_RUNNER_DIRECTORY"
+            use:
+              - node_modules_cache
+              - built_artefacts_cache
+              - smartrunner-cache-search
 
         - stage: e2e Test
           name: process
@@ -169,7 +190,14 @@ jobs:
           script: ./scripts/travis/e2e/process-services-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use: node_modules_cache
+            create:
+              name: smartrunner-cache-process
+              paths:
+                - "$SMART_RUNNER_DIRECTORY"
+            use:
+              - node_modules_cache
+              - built_artefacts_cache
+              - smartrunner-cache-process
 
         - stage: e2e Test
           name: process Cloud
@@ -180,7 +208,14 @@ jobs:
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            use: node_modules_cache
+            create:
+              name: smartrunner-cache-process-cloud
+              paths:
+                - "$SMART_RUNNER_DIRECTORY"
+            use:
+              - node_modules_cache
+              - built_artefacts_cache
+              - smartrunner-cache-process-cloud
 
         - stage: Check bundle
           script:
