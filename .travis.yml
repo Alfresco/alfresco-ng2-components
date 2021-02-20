@@ -35,7 +35,7 @@ branches:
 
 stages:
   - name: Setup
-  - name: Build Dist & Release
+  - name: "Lint & Build Dist & Release"
     if: tag IS blank
   - name: Check bundle
     if: type = push AND tag IS blank
@@ -61,8 +61,8 @@ jobs:
     include:
         # Setup ======================
         - stage: Setup
-          name: "Setup node_modules cache && Lint"
-          script: ./scripts/lint.sh
+          name: "Node modules cache preparation"
+          script: echo "Only here for setting up the shared node_modules"
           workspaces:
             create:
               name: node_modules_cache
@@ -71,7 +71,7 @@ jobs:
             use: node_modules_cache
 
         # Run Only for any PR
-        - stage: Build Dist & Release
+        - stage: "Lint & Build Dist & Release"
           name:  Build
           script:
             - ./scripts/travis/build/build.sh
@@ -83,6 +83,12 @@ jobs:
               paths:
                 - "$DEMO_SHELL_DIR"
                 - "$BUILT_LIBS_DIR"
+            use: node_modules_cache
+
+        - stage: "Lint & Build Dist & Release"
+          name: "Lint"
+          script: ./scripts/lint.sh
+          workspaces:
             use: node_modules_cache
 
         - stage: Unit test
