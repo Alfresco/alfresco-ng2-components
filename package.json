@@ -50,7 +50,7 @@
     "06": "echo -------------------------------------------- Clean ----------------------------------------------",
     "06s": "",
     "clean": "rimraf dist node_modules lib/dist",
-    "snyk-protect": "snyk protect --quiet",
+    "snyk-protect": "snyk protect -q",
     "prepare": "npm run snyk-protect"
   },
   "repository": {
