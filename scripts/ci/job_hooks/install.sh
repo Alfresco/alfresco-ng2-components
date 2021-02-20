@@ -21,7 +21,7 @@ if [[ ! -d $NODE_MODULES_DIR ]]; then
     if [ "$?" -ne 0 ]
     then
         echo -e "\e[31mCache entry for current package-lock.json ($S3_NODE_MODULES_CACHE_ID) doesn't exist, doing installation now.\e[0m"
-        npm ci && scripts/ci/utils/artifact-to-s3.sh -a "$NODE_MODULES_DIR" -o "$S3_NODE_MODULES_CACHE_PATH"
+        npm ci --quiet && scripts/ci/utils/artifact-to-s3.sh -a "$NODE_MODULES_DIR" -o "$S3_NODE_MODULES_CACHE_PATH"
     # Otherwise the cache is already on S3
     else
         echo -e "\e[32mCache entry for current package-lock.json ($S3_NODE_MODULES_CACHE_ID) exist, downloading...\e[0m"
