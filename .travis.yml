@@ -9,19 +9,21 @@ node_js:
   - '12.18.4'
 
 before_install: . ./scripts/ci/job_hooks/before_install.sh
-install: echo "no install, see the first stage"
+install: ./scripts/ci/job_hooks/install.sh
 
 env:
     global:
+        - S3_DBP_PATH="s3://alfresco-travis-builds/adf"
+        - DEMO_SHELL_DIR="./dist/demo-shell"
+        - BUILT_LIBS_DIR="./lib/dist"
+        - NODE_MODULES_DIR="./node_modules"
+        - SMART_RUNNER_DIRECTORY=".protractor-smartrunner"
         #E2E VARIABLES
         - SAVE_SCREENSHOT=true
         - REDIRECT_URI=/
         - REDIRECT_URI_LOGOUT=/logout/
         - BROWSER_RUN=true
         - MAXINSTANCES=2
-        - DEMO_SHELL_DIR="./dist/demo-shell"
-        - BUILT_LIBS_DIR="./lib/dist"
-        - NODE_MODULES_DIR="./node_modules"
 
 branches:
   only:
@@ -33,7 +35,7 @@ branches:
 
 stages:
   - name: Setup
-  - name: Lint & Build Dist & Release
+  - name: Build Dist & Release
     if: tag IS blank
   - name: Check bundle
     if: type = push AND tag IS blank
@@ -59,8 +61,8 @@ jobs:
     include:
         # Setup ======================
         - stage: Setup
-          name: "Setup npm cache"
-          script: npm ci
+          name: "Setup node_modules cache && Lint"
+          script: ./scripts/lint.sh
           workspaces:
             create:
               name: node_modules_cache
@@ -69,7 +71,7 @@ jobs:
             use: node_modules_cache
 
         # Run Only for any PR
-        - stage: Lint & Build Dist & Release
+        - stage: Build Dist & Release
           name:  Build
           script:
             - ./scripts/travis/build/build.sh
@@ -81,13 +83,6 @@ jobs:
               paths:
                 - "$DEMO_SHELL_DIR"
                 - "$BUILT_LIBS_DIR"
-            use: node_modules_cache
-
-        - stage: Lint & Build Dist & Release
-          name:  Lint
-          script:
-             - ./scripts/lint.sh
-          workspaces:
             use: node_modules_cache
 
         - stage: Unit test
