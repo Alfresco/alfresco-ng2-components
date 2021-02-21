@@ -27,6 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
     imports: [
@@ -38,7 +39,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         TranslateModule,
         MatDialogModule,
         MatButtonModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatProgressSpinnerModule
     ],
     exports: [
         AspectListComponent,

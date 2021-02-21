@@ -33,7 +33,7 @@ import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
-import { DestinationFolderPathModel } from '../../../models/form-cloud-representation.model';
+import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import { ContentNodeSelectorPanelService } from '@alfresco/adf-content-services';
 
 @Component({
@@ -90,12 +90,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         }
     }
 
-    isAlfrescoAndLocal(): boolean {
-        return (
-            this.field.params &&
-            this.field.params.fileSource &&
-            this.field.params.fileSource.serviceId === 'all-file-sources'
-        );
+    isPathStaticType(): boolean {
+        return this.field.params?.fileSource?.destinationFolderPath?.type === DestinationFolderPathType.STATIC_TYPE;
     }
 
     isUploadButtonVisible(): boolean {
@@ -124,14 +120,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     async openSelectDialog() {
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
-        let destinationFolderPath = <DestinationFolderPathModel> { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: '' };
-        if (this.isAlfrescoAndLocal() && this.hasDestinationFolder()) {
-            destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath.value);
-            destinationFolderPath.path = this.replaceAppNameAliasWithValue(destinationFolderPath.path);
-        }
-        const nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
-        this.rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
-
+        const nodeId = await this.getDestinationFolderNodeId();
+        this.rootNodeId = nodeId ? nodeId : AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
         this.contentNodeSelectorPanelService.customModels = this.field.params.customModels;
 
         this.contentNodeSelectorService
@@ -144,6 +134,28 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                     this.contentModelFormFileHandler(selections && selections.length > 0 ? selections[0] : null);
                 }
             });
+    }
+
+    private async getDestinationFolderNodeId(): Promise<string> {
+        let rootNodeId: string;
+        let destinationFolderPath = <DestinationFolderPathModel> { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: '' };
+        if (this.isAlfrescoAndLocal() && this.hasDestinationFolder()) {
+            if (this.isPathVariableType(DestinationFolderPathType.STRING_TYPE) || this.isPathStaticType()) {
+                destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath.value);
+                destinationFolderPath.path = this.replaceAppNameAliasWithValue(destinationFolderPath.path);
+            }
+
+            if (this.isPathVariableType(DestinationFolderPathType.FOLDER_TYPE)) {
+                rootNodeId = this.field.params.fileSource.destinationFolderPath.value;
+            }
+        }
+
+        if (!rootNodeId) {
+            const nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
+            rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
+        }
+
+        return rootNodeId;
     }
 
     getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath: string): DestinationFolderPathModel {

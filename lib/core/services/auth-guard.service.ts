@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
@@ -67,11 +67,11 @@ export class AuthGuard extends AuthGuardBase {
         }
     }
 
-    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean> {
+    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
         if (this.authenticationService.isLoggedIn() || this.withCredentials) {
 
             return true;
         }
-        return this.redirectToUrl( redirectUrl);
+        return this.redirectToUrl(redirectUrl);
     }
 }

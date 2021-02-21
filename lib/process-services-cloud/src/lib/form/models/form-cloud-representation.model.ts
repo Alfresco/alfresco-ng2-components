@@ -54,3 +54,14 @@ export interface DestinationFolderPathModel {
     alias: string;
     path: string;
 }
+
+export enum FileSourceTypes {
+    ALL_FILE_SOURCES_SERVICE_ID = 'all-file-sources',
+    ALFRESCO_CONTENT_SOURCES_SERVICE_ID = 'alfresco-content'
+}
+
+export enum DestinationFolderPathType {
+    STATIC_TYPE = 'value',
+    STRING_TYPE = 'string',
+    FOLDER_TYPE = 'folder'
+}

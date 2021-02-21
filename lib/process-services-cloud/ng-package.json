@@ -13,5 +13,10 @@
       "moment-es6": "moment-es6",
       "@ngx-translate/core": "@ngx-translate/core"
     }
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "@apollo/client",
+    "apollo-angular",
+    "subscriptions-transport-ws"
+  ]
 }

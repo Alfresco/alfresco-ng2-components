@@ -241,7 +241,7 @@ describe('StartFormComponent', () => {
                 component.moveNodeFromCStoPS();
 
                 fixture.whenStable().then(() => {
-                    expect(component.values.file[0].id).toBe(1234);
+                    expect(component.movedNodeToPS.file[0].id).toBe(1234);
                     expect(applyAlfrescoNodeSpy).toHaveBeenCalled();
                 });
             }));
@@ -266,9 +266,9 @@ describe('StartFormComponent', () => {
                 component.moveNodeFromCStoPS();
 
                 fixture.whenStable().then(() => {
-                    expect(component.values.file.length).toBe(3);
-                    expect(component.values.file[0].id).toBe(1234);
-                    expect(component.values.file[1].id).toBe(1234);
+                    expect(component.movedNodeToPS.file.length).toBe(3);
+                    expect(component.movedNodeToPS.file[0].id).toBe(1234);
+                    expect(component.movedNodeToPS.file[1].id).toBe(1234);
                     expect(applyAlfrescoNodeSpy).toHaveBeenCalledTimes(3);
                 });
             }));

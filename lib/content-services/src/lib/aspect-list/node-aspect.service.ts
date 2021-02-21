@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, NodesApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, CardViewUpdateService, NodesApiService } from '@alfresco/adf-core';
 import { AspectListService } from './aspect-list.service';
 
 @Injectable({
@@ -26,13 +26,15 @@ export class NodeAspectService {
 
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private nodesApiService: NodesApiService,
-                private aspectListService: AspectListService) {
+                private aspectListService: AspectListService,
+                private cardViewUpdateService: CardViewUpdateService) {
     }
 
     updateNodeAspects(nodeId: string) {
         this.aspectListService.openAspectListDialog(nodeId).subscribe((aspectList) => {
             this.nodesApiService.updateNode(nodeId, { aspectNames: [...aspectList] }).subscribe((updatedNode) => {
                 this.alfrescoApiService.nodeUpdated.next(updatedNode);
+                this.cardViewUpdateService.updateNodeAspect(updatedNode);
             });
         });
     }

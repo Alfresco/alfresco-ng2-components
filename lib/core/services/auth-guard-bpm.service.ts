@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { AuthGuardBase } from './auth-guard-base';
@@ -36,7 +36,7 @@ export class AuthGuardBpm extends AuthGuardBase {
         super(authenticationService, router, appConfigService, dialog, storageService);
     }
 
-    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean> {
+    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
         if (this.authenticationService.isBpmLoggedIn() || this.withCredentials) {
             return true;
         }

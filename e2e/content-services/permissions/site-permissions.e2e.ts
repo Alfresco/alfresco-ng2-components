@@ -39,19 +39,19 @@ import CONSTANTS = require('../../util/constants');
 describe('Permissions Component', () => {
 
     const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
+
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const permissionsPage = new PermissionsPage();
-    const uploadActions = new UploadActions(apiService);
-
-    const contentList = contentServicesPage.getDocumentList();
-
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
     const metadataViewPage = new MetadataViewPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const uploadDialog = new UploadDialogPage();
     const versionManagePage = new VersionManagePage();
+
+    const contentList = contentServicesPage.getDocumentList();
 
     let publicSite, privateSite, folderName;
 
