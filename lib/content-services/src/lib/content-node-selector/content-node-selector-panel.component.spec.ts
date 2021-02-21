@@ -845,6 +845,18 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 }, 300);
             });
 
+            it('should not show the result list when results are returned but there is no search term typed', (done) => {
+                component.searchTerm = '';
+
+                setTimeout(() => {
+                    triggerSearchResults(fakeResultSetPaging);
+                    fixture.detectChanges();
+
+                    expect(component.showingSearchResults).toEqual(false);
+                    done();
+                }, 300);
+            });
+
             it('should highlight the results when search was performed in the next timeframe', (done) => {
                 typeToSearchBox('My');
 
