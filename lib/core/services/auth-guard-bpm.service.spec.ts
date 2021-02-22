@@ -95,7 +95,7 @@ describe('AuthGuardService BPM', () => {
         spyOn(router, 'navigateByUrl').and.stub();
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
-        expect(await authGuard.canActivate(null, route)).toEqual(router.parseUrl('/login?redirectUrl=some-url'));
+        expect(await authGuard.canActivate(null, route)).toBeFalsy();
     }));
 
     it('if the alfresco js api is NOT logged in should trigger a redirect event', async(async () => {
@@ -105,7 +105,8 @@ describe('AuthGuardService BPM', () => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
-        expect(await authGuard.canActivate(null, route)).toEqual(router.parseUrl('/login?redirectUrl=some-url'));
+        expect(await authGuard.canActivate(null, route)).toBeFalsy();
+        expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/login?redirectUrl=some-url'));
     }));
 
     it('should redirect url if the alfresco js api is NOT logged in and isOAuthWithoutSilentLogin', async(async () => {
@@ -115,20 +116,22 @@ describe('AuthGuardService BPM', () => {
         appConfigService.config.oauth2.silentLogin = false;
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
-        expect(await authGuard.canActivate(null, route)).toEqual(router.parseUrl('/login'));
+        expect(await authGuard.canActivate(null, route)).toBeFalsy();
+        expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
-    it('should redirect to login url if NOT  you are not logged in and silentLogin is false', async(async () => {
+    it('should redirect url if NOT logged in and isOAuth but no silentLogin configured', async(async () => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = undefined;
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
-        expect(await authGuard.canActivate(null, route)).toEqual(router.parseUrl('/login'));
+        expect(await authGuard.canActivate(null, route)).toBeFalsy();
+        expect(router.navigateByUrl).toHaveBeenCalled();
     }));
 
-    it('should set redirect url', async(async () => {
+    it('should set redirect url', async(() => {
         spyOn(authService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
@@ -167,13 +170,18 @@ describe('AuthGuardService BPM', () => {
         expect(authService.getRedirect()).toEqual('/');
     }));
 
-    it('should get redirect url from config if there is one configured', async(async () => {
+    it('should get redirect url from config if there is one configured', async(() => {
         appConfigService.config.loginRoute = 'fakeLoginRoute';
         spyOn(authService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
-        expect(await authGuard.canActivate(null, route)).toEqual(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
+        authGuard.canActivate(null, route);
+
+        expect(authService.setRedirect).toHaveBeenCalledWith({
+            provider: 'BPM', url: 'some-url'
+        });
+        expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
     }));
 
     it('should to close the material dialog if is redirect to the login', () => {

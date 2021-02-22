@@ -79,8 +79,9 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         const redirectFragment = this.storageService.getItem('loginFragment');
 
         if (redirectFragment && this.getLoginRoute() !== redirectFragment) {
+            await this.navigate(redirectFragment);
             this.storageService.removeItem('loginFragment');
-            return this.router.parseUrl(redirectFragment);
+            return false;
         }
 
         return true;
@@ -110,9 +111,10 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         return false;
     }
 
-    protected navigate(url: string): UrlTree {
+    protected async navigate(url: string): Promise<boolean> {
         this.dialog.closeAll();
-        return this.router.parseUrl(url);
+        await this.router.navigateByUrl(this.router.parseUrl(url));
+        return false;
     }
 
     protected getOauthConfig(): OauthConfigModel {

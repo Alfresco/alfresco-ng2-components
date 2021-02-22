@@ -20,7 +20,8 @@ import { BrowserActions } from './utils/browser-actions';
 import { BrowserVisibility } from './utils/browser-visibility';
 
 export class TestElement {
-    constructor(public elementFinder: ElementFinder) {}
+    constructor(public elementFinder: ElementFinder) {
+    }
 
     static byId(id: string): TestElement {
         return new TestElement(element(by.id(id)));
@@ -42,23 +43,41 @@ export class TestElement {
         return BrowserActions.click(this.elementFinder);
     }
 
-    async waitVisible(waitTimeout?: number) {
+    async isVisible(waitTimeout?: number): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.elementFinder, waitTimeout);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async waitVisible(waitTimeout?: number): Promise<any> {
         return BrowserVisibility.waitUntilElementIsVisible(this.elementFinder, waitTimeout);
     }
 
-    async waitNotVisible(waitTimeout?: number) {
+    async waitNotVisible(waitTimeout?: number): Promise<any> {
         return BrowserVisibility.waitUntilElementIsNotVisible(this.elementFinder, waitTimeout);
     }
 
-    async waitPresent(waitTimeout?: number) {
+    async isPresent(waitTimeout?: number): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsPresent(this.elementFinder, waitTimeout);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async waitPresent(waitTimeout?: number): Promise<any> {
         return BrowserVisibility.waitUntilElementIsPresent(this.elementFinder, waitTimeout);
     }
 
-    async waitNotPresent(waitTimeout?: number) {
+    async waitNotPresent(waitTimeout?: number): Promise<any> {
         return BrowserVisibility.waitUntilElementIsNotPresent(this.elementFinder, waitTimeout);
     }
 
-    async waitHasValue(value: string) {
+    async waitHasValue(value: string): Promise<any> {
         return BrowserVisibility.waitUntilElementHasValue(this.elementFinder, value);
     }
 
@@ -79,8 +98,8 @@ export class TestElement {
         return BrowserActions.getText(this.elementFinder);
     }
 
-    async typeText(text: string) {
-        return BrowserActions.clearSendKeys(this.elementFinder, text);
+    async typeText(text: string): Promise<void> {
+         await BrowserActions.clearSendKeys(this.elementFinder, text);
     }
 
     async clearInput() {

@@ -19,6 +19,8 @@
               "superagent",
               "event-emitter",
               "brace-expansion",
+              "zen-observable",
+              "subscriptions-transport-ws",
               "d",
               "chart.js"
             ],
