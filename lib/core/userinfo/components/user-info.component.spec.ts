@@ -554,6 +554,14 @@ describe('User info component', () => {
             getCurrentUserInfoStub = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
         }));
 
+        it('should show the identity user initials if is not ecm user', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(element.querySelector('#userinfo_container')).toBeDefined();
+            expect(element.querySelector('#user-initials-image').textContent).toContain('ff');
+        });
+
         it('should able to fetch identity userInfo', async(() => {
             fixture.detectChanges();
 
