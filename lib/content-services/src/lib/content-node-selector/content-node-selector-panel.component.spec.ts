@@ -744,6 +744,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
             }));
 
+            it('should folderIdToShow equal the folder node id when navigation changes', () => {
+                component.folderIdToShow = null;
+                const folderChangeEvent: NodeEntryEvent = new NodeEntryEvent(fakeNodeEntry);
+                component.onFolderChange(folderChangeEvent);
+
+                expect(component.folderIdToShow).toEqual(fakeNodeEntry.id);
+            });
+
             it('should clear the search field, nodes and chosenNode on folder navigation in the results list', async () => {
                 spyOn(component, 'clearSearch').and.callThrough();
                 triggerSearchResults(fakeResultSetPaging);
