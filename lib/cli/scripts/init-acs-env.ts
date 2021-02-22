@@ -139,13 +139,17 @@ async function checkEnv() {
         });
         await alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
-        logger.info('Login error environment down or inaccessible');
+        if (e.error.code === 'ETIMEDOUT') {
+            logger.error('The env is not reachable. Terminating');
+            process.exit(1);
+        }
+        logger.error('Login error environment down or inaccessible');
         counter++;
         if (MAX_RETRY === counter) {
-            logger.info('Give up');
+            logger.error('Give up');
             process.exit(1);
         } else {
-            logger.info(`Retry in 1 minute attempt N ${counter}`);
+            logger.error(`Retry in 1 minute attempt N ${counter}`);
             sleep(TIMEOUT);
             checkEnv();
         }

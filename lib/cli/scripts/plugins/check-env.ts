@@ -28,6 +28,10 @@ export class CheckEnv {
             });
             await this.alfrescoJsApi.login(this.username, this.password);
         } catch (e) {
+            if (e.error.code === 'ETIMEDOUT') {
+                logger.error('The env is not reachable. Terminating');
+                process.exit(1);
+            }
             logger.error('Login error environment down or inaccessible');
             this.counter++;
             if (this.MAX_RETRY === this.counter) {

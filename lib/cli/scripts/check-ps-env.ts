@@ -1,6 +1,8 @@
+/* tslint:disable */
 const alfrescoApi = require('@alfresco/js-api');
 const program = require('commander');
-
+/* tslint:enable */
+import { logger } from './logger';
 const MAX_RETRY = 10;
 const TIMEOUT = 60000;
 let counter = 0;
@@ -16,7 +18,6 @@ export default async function main(_args: string[]) {
         .option('-u, --username [type]', 'username ')
         .parse(process.argv);
 
-
     await checkEnv();
 }
 
@@ -29,22 +30,24 @@ async function checkEnv() {
 
         await alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
-        console.log('Login error environment down or inaccessible');
+        if (e.error.code === 'ETIMEDOUT') {
+            logger.error('The env is not reachable. Terminating');
+            process.exit(1);
+        }
+        logger.error('Login error environment down or inaccessible');
         counter++;
         if (MAX_RETRY === counter) {
-            console.log('Give up');
+            logger.error('Give up');
             process.exit(1);
         } else {
-            console.log(`Retry in 1 minute attempt N ${counter}`);
+            logger.error(`Retry in 1 minute attempt N ${counter}`);
             sleep(TIMEOUT);
             checkEnv();
         }
     }
-    console.log('ok');
 }
 
-
 function sleep(delay) {
-    var start = new Date().getTime();
-    while (new Date().getTime() < start + delay) ;
+    const start = new Date().getTime();
+    while (new Date().getTime() < start + delay) {  }
 }
