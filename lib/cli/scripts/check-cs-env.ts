@@ -1,8 +1,10 @@
+/* tslint:disable */
 const alfrescoApi = require('@alfresco/js-api');
 const program = require('commander');
 const path = require('path');
 const fs = require('fs');
-
+/* tslint:enable */
+import { logger } from './logger';
 const MAX_RETRY = 3;
 const TIMEOUT = 20000;
 let counter = 0;
@@ -20,7 +22,6 @@ export default async function main(_args: string[]) {
         .option('-r, --retry [type]', 'retry ')
         .parse(process.argv);
 
-
     await checkEnv();
     await checkDiskSpaceFullEnv();
 }
@@ -34,15 +35,19 @@ async function checkEnv() {
 
         await alfrescoJsApi.login(program.username, program.password);
     } catch (error) {
-        console.log('Login error environment down or inaccessible');
+        if (error.error.code === 'ETIMEDOUT') {
+            logger.error('The env is not reachable. Terminating');
+            process.exit(1);
+        }
+        logger.error('Login error environment down or inaccessible');
         counter++;
         const retry = program.retry || MAX_RETRY;
         const time = program.time || TIMEOUT;
         if (retry === counter) {
-            console.log('Give up');
+            logger.error('Give up');
             process.exit(1);
         } else {
-            console.log(`Retry in 1 minute attempt N ${counter}`, error);
+            logger.error(`Retry in 1 minute attempt N ${counter}`, error);
             sleep(time);
             checkEnv();
         }
@@ -50,7 +55,7 @@ async function checkEnv() {
 }
 
 async function checkDiskSpaceFullEnv() {
-    console.log(`Start Check disk full space`);
+    logger.info(`Start Check disk full space`);
 
     try {
 
@@ -80,11 +85,11 @@ async function checkDiskSpaceFullEnv() {
                 'overwrite': true
             });
         }
-        let pathFile = path.join(__dirname, '../', 'README.md');
+        const pathFile = path.join(__dirname, '../', 'README.md');
 
-        let file = fs.createReadStream(pathFile);
+        const file = fs.createReadStream(pathFile);
 
-        let uploadedFile = await alfrescoJsApi.upload.uploadFile(
+        const uploadedFile = await alfrescoJsApi.upload.uploadFile(
             file,
             '',
             folder.entry.id,
@@ -103,13 +108,13 @@ async function checkDiskSpaceFullEnv() {
         const retry = program.retry || MAX_RETRY;
         const time = program.time || TIMEOUT;
         if (retry === counter) {
-            console.log('=============================================================');
-            console.log('================ Not able to upload a file ==================');
-            console.log('================ Possible cause CS is full ==================');
-            console.log('=============================================================');
+            logger.info('=============================================================');
+            logger.info('================ Not able to upload a file ==================');
+            logger.info('================ Possible cause CS is full ==================');
+            logger.info('=============================================================');
             process.exit(1);
         } else {
-            console.log(`Retry N ${counter} ${error?.error?.status}`);
+            logger.error(`Retry N ${counter} ${error?.error?.status}`);
             sleep(time);
             checkDiskSpaceFullEnv();
         }
@@ -119,7 +124,6 @@ async function checkDiskSpaceFullEnv() {
 }
 
 function sleep(delay) {
-    console.log(`Sleep ${delay}`);
-    var start = new Date().getTime();
-    while (new Date().getTime() < start + delay) ;
+    const start = new Date().getTime();
+    while (new Date().getTime() < start + delay) {  }
 }
