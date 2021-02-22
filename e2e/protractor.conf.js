@@ -1,13 +1,13 @@
 const {LocalStorageUtil, Logger} = require('@alfresco/adf-testing');
 const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
-const retry = require('protractor-retry').retry;
+const retry = require('protractor-retry-angular-cli').retry;
 const tsConfig = require('./tsconfig.e2e.json');
 const testConfig = require('./test.config');
 const RESOURCES = require('./util/resources');
-const SmartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
 const fs = require('fs');
+const smartRunnerFactory = require('./smartrunner-factory');
 
 const {uploadScreenshot} = require('./protractor/save-remote');
 const argv = require('yargs').argv;
@@ -166,9 +166,7 @@ exports.config = {
         includeStackTrace: true,
         print: () => {
         },
-        ...SmartRunner.withOptionalExclusions(
-            resolve(__dirname, './protractor.excludes.json')
-        )
+        ...(process.env.CI ? smartRunnerFactory.applyExclusionFilter() : {} )
     },
 
     /**
@@ -200,11 +198,7 @@ exports.config = {
     async onPrepare() {
         if (process.env.CI) {
             retry.onPrepare();
-            const repoHash = process.env.GIT_HASH || '';
-            const outputDirectory = process.env.SMART_RUNNER_DIRECTORY;
-            console.log(`SmartRunner's repoHash: "${repoHash}"`);
-            console.log(`SmartRunner's outputDirectory: "${outputDirectory}"`);
-            SmartRunner.apply({outputDirectory, repoHash});
+            smartRunnerFactory.getInstance().onPrepare();
         }
 
         jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
@@ -282,7 +276,7 @@ exports.config = {
 
     },
 
-    afterLaunch: async function () {
+    afterLaunch: async function (statusCode) {
         if (SAVE_SCREENSHOT) {
             console.log(`Save screenshot enabled`);
 
@@ -299,7 +293,7 @@ exports.config = {
             console.log(`Save screenshot disabled`);
         }
 
-        return retry.afterLaunch(MAX_RETRIES);
+        return retry.afterLaunch(MAX_RETRIES, statusCode);
     }
 
 };

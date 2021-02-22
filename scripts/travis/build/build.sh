@@ -23,8 +23,6 @@ then
     fi
 
     node ./scripts/pre-publish.js
-
-    npm install
 fi;
 
 ./scripts/build/build-all-lib.sh

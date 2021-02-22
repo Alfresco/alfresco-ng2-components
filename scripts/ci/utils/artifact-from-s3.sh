@@ -23,9 +23,15 @@ then
 fi
 
 test ! -d $OUTPUT && mkdir -p $OUTPUT
-aws s3 cp $ARTIFACT ./s3-artifact.tmp
-echo 'artifact download done'
-tar -xvf ./s3-artifact.tmp -C $OUTPUT >&/dev/null
-echo 'tar the artifact done'
-rm ./s3-artifact.tmp
-echo 'remove tmp file'
+
+IS_PRESENT="$(aws s3 ls $ARTIFACT | wc -l | tr -d ' ')"
+if [ "${IS_PRESENT}" == "1" ]
+then
+  echo "File ${ARTIFACT} is present. Copying"
+  aws s3 cp $ARTIFACT ./s3-artifact.tmp
+  tar -xf ./s3-artifact.tmp -C $OUTPUT
+  rm ./s3-artifact.tmp
+else
+  echo "File ${ARTIFACT} not present"
+  exit 1;
+fi
