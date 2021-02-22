@@ -243,6 +243,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should not show the breadcrumb if search was performed as last action', async () => {
+                component.searchTerm = 'mock-search-term';
                 triggerSearchResults(fakeResultSetPaging);
 
                 fixture.detectChanges();
@@ -263,6 +264,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should show the breadcrumb for the selected node when search results are displayed', async () => {
+                component.searchTerm = 'mock-search-term';
                 triggerSearchResults(fakeResultSetPaging);
 
                 const chosenNode = new Node({ path: { elements: ['one'] } });
@@ -642,6 +644,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             }));
 
             it('should emit showingSearch event with true while searching', async () => {
+                component.searchTerm = 'mock-search-term';
                 spyOn(customResourcesService, 'hasCorrespondingNodeIds').and.returnValue(true);
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
 
@@ -685,6 +688,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should emit showingResults event with false if search api fails', async () => {
+                component.searchTerm = 'mock-search-term';
                 getCorrespondingNodeIdsSpy.and.throwError('Failed');
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
                 component.queryBuilderService.execute({ query: { query: 'search' } });
