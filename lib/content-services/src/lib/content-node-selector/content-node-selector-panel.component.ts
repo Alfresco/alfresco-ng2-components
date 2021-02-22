@@ -304,7 +304,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.queryBuilderService.executed
             .pipe(takeUntil(this.onDestroy$))
             .subscribe( (results: NodePaging) => {
-                this.showSearchResults(results);
+                if (this.searchTerm) {
+                    this.showSearchResults(results);
+                }
             });
 
         this.userPreferencesService
