@@ -241,6 +241,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     _chosenNode: Node [] = null;
     folderIdToShow: string | null = null;
     breadcrumbFolderTitle: string | null = null;
+    breadcrumbFolderNode: Node;
     startSiteGuid: string | null = null;
 
     @ViewChild(InfinitePaginationComponent, { static: true })
@@ -334,6 +335,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.onDestroy$))
         .subscribe((currentNode: Node) => {
             this.currentFolder.emit(currentNode);
+            this.breadcrumbFolderNode = currentNode;
     });
 
         this.sorting = this.appConfigService.get('adf-content-node-selector.sorting', ['createdAt', 'desc']);
@@ -431,21 +433,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.setTitleIfCustomSite(chosenSite);
         this.siteChange.emit(chosenSite.entry.title);
         this.queryBuilderService.update();
-    }
-
-    /**
-     * Returns the actually selected|entered folder node or null in case of searching for the breadcrumb
-     */
-    get breadcrumbFolderNode(): Node | null {
-        let folderNode: Node;
-
-        if (this.showingSearchResults && this.chosenNode) {
-            folderNode = this.chosenNode[0];
-        } else {
-            folderNode = this.documentList.folderNode;
-        }
-
-        return folderNode;
     }
 
     /**
@@ -558,7 +545,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Returns whether breadcrumb has to be shown or not
      */
     showBreadcrumbs() {
-        return !this.showingSearchResults || this.chosenNode;
+        return !this.showingSearchResults && this.currentFolderId;
     }
 
     /**

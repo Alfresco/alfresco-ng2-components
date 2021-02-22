@@ -262,18 +262,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             });
 
-            it('should show the breadcrumb for the selected node when search results are displayed', async () => {
-                triggerSearchResults(fakeResultSetPaging);
-
-                const chosenNode = new Node({ path: { elements: ['one'] } });
-                component.onCurrentSelection([ { entry: chosenNode } ]);
-                fixture.detectChanges();
-
-                const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
-                expect(breadcrumb).not.toBeNull();
-                expect(breadcrumb.componentInstance.folderNode.path).toBe(chosenNode.path);
-            });
-
             it('should NOT show the breadcrumb for the selected node when not on search results list', async () => {
                 triggerSearchResults(fakeResultSetPaging);
                 fixture.detectChanges();
