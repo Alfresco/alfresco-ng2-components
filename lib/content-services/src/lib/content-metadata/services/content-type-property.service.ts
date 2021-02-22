@@ -38,7 +38,7 @@ export class ContentTypePropertiesService {
             pipe(
                 map((contentType) => {
                     const contentTypesOptions$ = this.getContentTypesAsSelectOption(contentType);
-                    const contentTypeCard =  this.buildContentTypeSelectCardModel(contentType.entry.id, contentTypesOptions$);
+                    const contentTypeCard = this.buildContentTypeSelectCardModel(contentType.entry.id, contentTypesOptions$);
                     return [contentTypeCard];
                 }));
     }
@@ -56,12 +56,12 @@ export class ContentTypePropertiesService {
     }
 
     private getContentTypesAsSelectOption(currentType: TypeEntry): Observable<CardViewSelectItemOption<string>[]> {
-        const childrenTypes$ = this.contentTypeService.getContentTypeChildren(currentType.entry.id);
+        const childrenTypes$ = this.contentTypeService.getContentTypeChildren(currentType.entry.id, ['properties']);
         return zip(childrenTypes$, of(currentType)).pipe(
             distinctUntilChanged(),
             map(([contentTypesEntries, currentContentType]) => {
                 const updatedTypes = this.appendCurrentType(currentContentType, contentTypesEntries);
-                return updatedTypes.map((contentType) => <CardViewSelectItemOption<string>> { key: contentType.entry.id, label: contentType.entry.title ?? contentType.entry.id});
+                return updatedTypes.map((contentType) => <CardViewSelectItemOption<string>> { key: contentType.entry.id, label: contentType.entry.title ?? contentType.entry.id });
             }));
     }
 

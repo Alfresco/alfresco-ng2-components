@@ -37,35 +37,43 @@ export class AspectListService {
 
     getAspects(): Observable<AspectEntry[]> {
         const visibleAspectList = this.getVisibleAspects();
-        const standardAspects$ = this.getStandardAspects(visibleAspectList);
+        const standardAspects$ = this.getStandardAspects(visibleAspectList, ['properties']);
         const customAspects$ = this.getCustomAspects();
         return zip(standardAspects$, customAspects$).pipe(
             map(([standardAspectList, customAspectList]) => [...standardAspectList, ...customAspectList])
         );
     }
 
-    getStandardAspects(whiteList: string[]): Observable<AspectEntry[]> {
-        const where = `(modelIds in ('cm:contentmodel', 'emailserver:emailserverModel', 'smf:smartFolder', 'app:applicationmodel' ))`;
-        return from(this.alfrescoApiService.aspectsApi.listAspects({where}))
-        .pipe(
-            map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries)),
-            catchError((error) => {
-                this.logService.error(error);
-                return of([]);
-            })
-        );
+    getStandardAspects(whiteList: string[], includeFields: string[] = []): Observable<AspectEntry[]> {
+        const where = `(modelId in ('cm:contentmodel', 'emailserver:emailserverModel', 'smf:smartFolder', 'app:applicationmodel' ))`;
+        const opts: any = {
+            where,
+            include: includeFields
+        };
+        return from(this.alfrescoApiService.aspectsApi.listAspects(opts))
+            .pipe(
+                map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries)),
+                catchError((error) => {
+                    this.logService.error(error);
+                    return of([]);
+                })
+            );
     }
 
     getCustomAspects(): Observable<AspectEntry[]> {
         const where = `(not namespaceUri matches('http://www.alfresco.*'))`;
-        return from(this.alfrescoApiService.aspectsApi.listAspects({where}))
-        .pipe(
-            map((result: AspectPaging) => result?.list?.entries),
-            catchError((error) => {
-                this.logService.error(error);
-                return of([]);
-            })
-        );
+        const opts: any = {
+            where,
+            include: ['properties']
+        };
+        return from(this.alfrescoApiService.aspectsApi.listAspects(opts))
+            .pipe(
+                map((result: AspectPaging) => result?.list?.entries),
+                catchError((error) => {
+                    this.logService.error(error);
+                    return of([]);
+                })
+            );
     }
 
     private filterAspectByConfig(visibleAspectList: string[], aspectEntries: AspectEntry[]): AspectEntry[] {
