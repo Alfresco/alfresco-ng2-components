@@ -127,8 +127,6 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async doubleClickContentNodeSelectorResult(name: string): Promise<void> {
-        // First click to select from search mode and second click to actually open node
-        await this.dataTable.doubleClickRowByContent(name);
         await this.dataTable.doubleClickRowByContent(name);
     }
 
