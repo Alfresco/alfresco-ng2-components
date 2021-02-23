@@ -5,7 +5,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [[ $TRAVIS_EVENT_TYPE == "pull_request" ]];
 then
-    COMMIT_MESSAGE=$(git log -2 --pretty=%B)
+    HEAD_COMMIT_HASH=${TRAVIS_PULL_REQUEST_SHA:-${TRAVIS_COMMIT}}
+    COMMIT_MESSAGE=`git log --format=%B -n 1 $HEAD_COMMIT_HASH`
 fi;
 
 echo "ℹ️ Check Docker Image release for $COMMIT_MESSAGE type $TRAVIS_EVENT_TYPE on branch $TRAVIS_PULL_REQUEST_BRANCH"
