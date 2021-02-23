@@ -69,7 +69,6 @@ export class AuthGuard extends AuthGuardBase {
 
     async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
         if (this.authenticationService.isLoggedIn() || this.withCredentials) {
-
             return true;
         }
         return this.redirectToUrl(redirectUrl);
