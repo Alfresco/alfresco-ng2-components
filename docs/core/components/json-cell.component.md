@@ -12,27 +12,29 @@ Shows a JSON-formatted value inside a datatable component.
 ## Basic Usage
 
 ```html
-<adf-datatable ...>
+<adf-datatable>
    <data-columns>
-        <data-column key="entry.json" type="json" title="Json Column"></data-column>
+        <data-column key="json" type="json" title="Json Column"></data-column>
     </data-columns>
 </adf-datatable>
 ```
 
 You can specify the cell inside the `app.config.json` file:
 
-```javascript
-  "adf-cloud-process-list": {
+```json
+{
+    "adf-cloud-process-list": {
         "presets": {
             "default": [
                 {
-                    "key": "entry.json",
+                    "key": "json",
                     "type": "json",
                     "title": "Json cell value"
                 }
             ]
         }
-    },
+    }
+}
 ```
 
 ## Class members

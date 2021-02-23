@@ -35,7 +35,6 @@ import { ProcessListCloudSortingModel } from '../models/process-list-sorting.mod
 export class ProcessListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
 
     static PRESET_KEY = 'adf-cloud-process-list.presets';
-    static ENTRY_PREFIX = 'entry.';
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
@@ -288,7 +287,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     onRowClick(item: DataRowEvent) {
-        this.currentInstanceId = item.value.getValue('entry.id');
+        this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
     }
 
@@ -305,7 +304,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     onRowKeyUp(event: CustomEvent) {
         if (event.detail.keyboardEvent.key === 'Enter') {
             event.preventDefault();
-            this.currentInstanceId = event.detail.row.getValue('entry.id');
+            this.currentInstanceId = event.detail.row.getValue('id');
             this.rowClick.emit(this.currentInstanceId);
         }
     }
@@ -354,7 +353,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     setSorting(sortDetail) {
         const sorting = sortDetail ? {
-            orderBy: sortDetail.key.replace(ProcessListCloudComponent.ENTRY_PREFIX, ''),
+            orderBy: sortDetail.key,
             direction: sortDetail.direction.toUpperCase()
         } : { ... this.defaultSorting };
         this.sorting = [new ProcessListCloudSortingModel(sorting)];
@@ -362,7 +361,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     formatSorting(sorting: ProcessListCloudSortingModel[]) {
         this.formattedSorting = this.isValidSorting(sorting) ? [
-            ProcessListCloudComponent.ENTRY_PREFIX + sorting[0].orderBy,
+            sorting[0].orderBy,
             sorting[0].direction.toLocaleLowerCase()
         ] : null;
     }

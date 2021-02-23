@@ -16,23 +16,12 @@
  */
 import { async } from '@angular/core/testing';
 import { setupTestBed, StorageService, AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
-import { fakeProcessCloudList } from '../mock/process-list-service.mock';
 import { ProcessListCloudService } from './process-list-cloud.service';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 
-describe('Activiti ProcessList Cloud Service', () => {
+describe('ProcessListCloudService', () => {
     let service: ProcessListCloudService;
     let alfrescoApiMock: AlfrescoApiServiceMock;
-
-    function returnFakeProcessListResults() {
-        return {
-            oauth2Auth: {
-                callCustomApi: () => {
-                    return Promise.resolve(fakeProcessCloudList);
-                }
-            }
-        };
-    }
 
     function returnCallQueryParameters() {
         return {
@@ -66,20 +55,6 @@ describe('Activiti ProcessList Cloud Service', () => {
             new AppConfigService(null),
             new LogService(new AppConfigService(null)));
     }));
-
-    it('should return the processes', (done) => {
-        const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName' };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeProcessListResults);
-        service.getProcessByRequest(processRequest).subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(res).not.toBeNull();
-            expect(res.list.entries.length).toBe(3);
-            expect(res.list.entries[0].entry.appName).toBe('easy-peasy-japanesey');
-            expect(res.list.entries[1].entry.appName).toBe('easy-peasy-japanesey');
-            expect(res.list.entries[1].entry.appName).toBe('easy-peasy-japanesey');
-            done();
-        });
-    });
 
     it('should append to the call all the parameters', (done) => {
         const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };

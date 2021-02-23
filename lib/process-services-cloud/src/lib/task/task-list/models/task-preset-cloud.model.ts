@@ -18,20 +18,20 @@
 export const taskPresetsCloudDefaultModel = {
     'default': [
         {
-            'key': 'entry.name',
+            'key': 'name',
             'type': 'text',
             'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.NAME',
             'sortable': true
         },
         {
-            'key': 'entry.created',
+            'key': 'created',
             'type': 'text',
             'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED',
             'cssClass': 'hidden',
             'sortable': true
         },
         {
-            'key': 'entry.assignee',
+            'key': 'assignee',
             'type': 'text',
             'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE',
             'cssClass': 'hidden',
@@ -43,26 +43,26 @@ export const taskPresetsCloudDefaultModel = {
 export const serviceTaskPresetsCloudDefaultModel = {
     'default': [
         {
-            'key': 'entry.activityName',
+            'key': 'activityName',
             'type': 'text',
             'title': 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.ACTIVITY_NAME',
             'sortable': true
         },
         {
-            'key': 'entry.status',
+            'key': 'status',
             'type': 'text',
             'title': 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STATUS',
             'sortable': true
         },
         {
-            'key': 'entry.startedDate',
+            'key': 'startedDate',
             'type': 'text',
             'title': 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STARTED_DATE',
             'cssClass': 'hidden',
             'sortable': true
         },
         {
-            'key': 'entry.completedDate',
+            'key': 'completedDate',
             'type': 'text',
             'title': 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.COMPLETED_DATE',
             'cssClass': 'hidden',

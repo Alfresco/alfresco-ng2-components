@@ -22,37 +22,47 @@ import { Observable, throwError } from 'rxjs';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { TaskCloudNodePaging } from '../models/task-cloud.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class TaskListCloudService extends BaseCloudService {
 
     constructor(apiService: AlfrescoApiService,
                 appConfigService: AppConfigService,
-                private logService: LogService) {
+                protected logService: LogService) {
         super(apiService, appConfigService);
     }
 
     /**
      * Finds a task using an object with optional query properties.
      * @param requestNode Query object
+     * @param queryUrl Query url
      * @returns Task information
      */
-    getTaskByRequest(requestNode: TaskQueryCloudRequestModel): Observable<any> {
+    getTaskByRequest(requestNode: TaskQueryCloudRequestModel, queryUrl?: string): Observable<any> {
         if (requestNode.appName || requestNode.appName === '') {
-            const queryUrl = `${this.getBasePath(requestNode.appName)}/query/v1/tasks`;
+            queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/tasks`;
             const queryParams = this.buildQueryParams(requestNode);
             const sortingParams = this.buildSortingParam(requestNode.sorting);
             if (sortingParams) {
                 queryParams['sort'] = sortingParams;
             }
-            return this.get<TaskCloudNodePaging>(queryUrl, queryParams);
+            return this.get<TaskCloudNodePaging>(queryUrl, queryParams).pipe(
+                map((response: any) => {
+                    const entries = response.list && response.list.entries;
+                    if (entries) {
+                        response.list.entries = entries.map((entryData: any) => entryData.entry);
+                    }
+                    return response;
+                })
+            );
         } else {
             this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');
         }
     }
 
-    private buildQueryParams(requestNode: TaskQueryCloudRequestModel): Object {
+    protected buildQueryParams(requestNode: TaskQueryCloudRequestModel): Object {
         const queryParam: Object = {};
         for (const property in requestNode) {
             if (requestNode.hasOwnProperty(property) &&
@@ -64,15 +74,15 @@ export class TaskListCloudService extends BaseCloudService {
         return queryParam;
     }
 
-    private isExcludedField(property: string): boolean {
+    protected isExcludedField(property: string): boolean {
         return property === 'appName' || property === 'sorting';
     }
 
-    private isPropertyValueValid(requestNode: any, property: string): boolean {
+    protected isPropertyValueValid(requestNode: any, property: string): boolean {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 
-    private buildSortingParam(models: TaskListCloudSortingModel[]): string {
+    protected buildSortingParam(models: TaskListCloudSortingModel[]): string {
         let finalSorting: string = '';
         if (models) {
             for (const sort of models) {

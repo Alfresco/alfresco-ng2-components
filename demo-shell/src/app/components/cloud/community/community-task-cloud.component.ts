@@ -127,7 +127,7 @@ export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
 
     onRowsSelected(nodes) {
         this.resetSelectedRows();
-        this.selectedRows = nodes.map((node) => node.obj.entry);
+        this.selectedRows = nodes.map((node) => node.obj);
     }
 
     onFilterChange(filter: any) {
