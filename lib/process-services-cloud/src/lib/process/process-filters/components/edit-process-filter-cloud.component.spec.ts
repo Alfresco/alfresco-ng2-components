@@ -764,7 +764,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
             fixture.detectChanges();
             component.filterChange.subscribe(() => {
-                const completedDateTypeControl: AbstractControl = component.editProcessFilterForm.get('completedDateType');
+                const completedDateTypeControl = component.editProcessFilterForm.get('completedDateType');
                 expect(completedDateTypeControl.value).toEqual(DateCloudFilterType.RANGE);
                 done();
             });
