@@ -538,6 +538,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Sets showingSearchResults state to be able to differentiate between search results or folder results
      */
     onFolderChange($event: NodeEntryEvent): void {
+        this.folderIdToShow = $event.value.id;
         this.showingSearchResults = false;
         this.infiniteScroll = false;
         this.breadcrumbFolderTitle = null;
