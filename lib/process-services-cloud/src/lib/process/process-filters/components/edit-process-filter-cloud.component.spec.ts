@@ -745,6 +745,15 @@ describe('EditProcessFilterCloudComponent', () => {
             component.ngOnChanges({ 'id': taskFilterIdChange });
             fixture.detectChanges();
 
+            component.filterChange.subscribe(() => {
+                const completedDateTypeControl = component.editProcessFilterForm.get('completedDateType');
+                expect(completedDateTypeControl.value).toEqual(DateCloudFilterType.RANGE);
+                done();
+            });
+
+            component.onFilterChange();
+            fixture.detectChanges();
+
             const dateFilter = {
                 startDate: moment().startOf('day').toISOString(true),
                 endDate: moment().endOf('day').toISOString(true)
@@ -761,14 +770,6 @@ describe('EditProcessFilterCloudComponent', () => {
                     to: '_completedTo'
                 }
             });
-
-            fixture.detectChanges();
-            component.filterChange.subscribe(() => {
-                const completedDateTypeControl = component.editProcessFilterForm.get('completedDateType');
-                expect(completedDateTypeControl.value).toEqual(DateCloudFilterType.RANGE);
-                done();
-            });
-            component.onFilterChange();
         });
 
         it('should set the correct started date range when date range option is changed', (done) => {
