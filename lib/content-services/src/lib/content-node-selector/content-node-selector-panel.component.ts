@@ -242,6 +242,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     folderIdToShow: string | null = null;
     breadcrumbFolderTitle: string | null = null;
     startSiteGuid: string | null = null;
+    hasValidQuery: boolean = false;
 
     @ViewChild(InfinitePaginationComponent, { static: true })
     infinitePaginationComponent: InfinitePaginationComponent;
@@ -293,9 +294,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((queryBody: QueryBody) => {
                 if (queryBody) {
+                    this.hasValidQuery = true;
                     this.prepareDialogForNewSearch(queryBody);
                     this.queryBuilderService.execute(queryBody);
                 } else {
+                    this.hasValidQuery = false;
                     this.resetFolderToShow();
                     this.clearSearch();
                 }
@@ -303,8 +306,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
         this.queryBuilderService.executed
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe( (results: NodePaging) => {
-                if (this.searchTerm) {
+            .subscribe((results: NodePaging) => {
+                if (this.hasValidQuery) {
                     this.showSearchResults(results);
                 }
             });
