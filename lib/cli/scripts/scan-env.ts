@@ -18,10 +18,8 @@ let loginAttempts: number = 0;
 
 export default async function main(_args: string[]) {
 
-    // Pre-commit detects console.log as an attempt to call the function, when we just want to assign an empty function to it
-    // I'm defining a differently named reference to the object to get around this
-    const consoleReference = console;
-    consoleReference.log = () => {};
+    // tslint:disable-next-line: no-console
+    console.log = () => {};
 
     program
         .version('0.1.0')
