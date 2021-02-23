@@ -7,7 +7,8 @@
     "tslint.json": "*",
     "nx.json": "*",
     ".travis.yml": "*",
-    "demo-shell/src/index.html": "*"
+    "demo-shell/src/index.html": "*",
+    "e2e/protractor.excludes.json": "*"
   },
   "projects": {
     "demoshell": {
