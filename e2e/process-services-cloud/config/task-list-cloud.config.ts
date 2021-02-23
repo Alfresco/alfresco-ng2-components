@@ -25,84 +25,84 @@ export class TaskListCloudConfiguration {
             'presets': {
             'default': [
                 {
-                    'key': 'entry.id',
+                    'key': 'id',
                     'type': 'text',
                     'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.ID',
                     'sortable': true
                 },
                 {
-                    'key': 'entry.name',
+                    'key': 'name',
                     'type': 'text',
                     'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.NAME',
                     'sortable': true,
                     'cssClass': 'full-width name-column ellipsis-cell'
                 },
                 {
-                    'key': 'entry.processDefinitionId',
+                    'key': 'processDefinitionId',
                     'type': 'text',
                     'title': 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_DEF_ID',
                     'sortable': true,
                     'cssClass': 'full-width name-column ellipsis-cell'
                 },
                 {
-                    'key': 'entry.processInstanceId',
+                    'key': 'processInstanceId',
                     'type': 'text',
                     'title': 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_INSTANCE_ID',
                     'sortable': true,
                     'cssClass': 'full-width name-column ellipsis-cell'
                 },
                 {
-                    'key': 'entry.status',
+                    'key': 'status',
                     'type': 'text',
                     'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.STATUS',
                     'sortable': true
                 },
                 {
-                    'key': 'entry.priority',
+                    'key': 'priority',
                     'type': 'text',
                     'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY',
                     'sortable': true
                 },
                 {
-                    'key': 'entry.createdDate',
+                    'key': 'createdDate',
                     'type': 'date',
                     'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED_DATE',
                     'sortable': true,
                     'format': 'timeAgo'
                 },
                 {
-                    'key': 'entry.lastModified',
+                    'key': 'lastModified',
                     'type': 'date',
                     'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.LAST_MODIFIED',
                     'sortable': true,
                     'format': 'timeAgo'
                 },
                 {
-                    'key': 'entry.assignee',
+                    'key': 'assignee',
                     'type': 'text',
                     'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE',
                     'sortable': true
                 },
                 {
-                    'key': 'entry.parentTaskId',
+                    'key': 'parentTaskId',
                     'type': 'text',
                     'title': 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PARENT_TASK_ID',
                     'sortable': true
                 },
                 {
-                    'key': 'entry.priority',
+                    'key': 'priority',
                     'type': 'text',
                     'title': 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PRIORITY',
                     'sortable': true
                 },
                 {
-                    'key': 'entry.standalone',
+                    'key': 'standalone',
                     'type': 'text',
                     'title': 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STAND_ALONE',
                     'sortable': true
                 },
                 {
-                    'key': 'entry.owner',
+                    'key': 'owner',
                     'type': 'text',
                     'title': 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.OWNER',
                     'sortable': true

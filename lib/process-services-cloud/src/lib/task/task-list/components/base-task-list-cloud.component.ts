@@ -33,8 +33,6 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 // tslint:disable-next-line: directive-class-suffix
 export abstract class BaseTaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
 
-    static ENTRY_PREFIX = 'entry.';
-
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
@@ -202,7 +200,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     }
 
     onRowClick(item: DataRowEvent) {
-        this.currentInstanceId = item.value.getValue('entry.id');
+        this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
     }
 
@@ -219,7 +217,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     onRowKeyUp(event: CustomEvent) {
         if (event.detail.keyboardEvent.key === 'Enter') {
             event.preventDefault();
-            this.currentInstanceId = event.detail.row.getValue('entry.id');
+            this.currentInstanceId = event.detail.row.getValue('id');
             this.rowClick.emit(this.currentInstanceId);
         }
     }
@@ -238,7 +236,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
 
     setSorting(sortDetail) {
         const sorting = sortDetail ? {
-            orderBy: sortDetail.key.replace(BaseTaskListCloudComponent.ENTRY_PREFIX, ''),
+            orderBy: sortDetail.key,
             direction: sortDetail.direction.toUpperCase()
         } : { ... this.defaultSorting };
         this.sorting = [new TaskListCloudSortingModel(sorting)];
@@ -246,7 +244,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
 
     formatSorting(sorting: TaskListCloudSortingModel[]) {
         this.formattedSorting = this.isValidSorting(sorting) ? [
-            BaseTaskListCloudComponent.ENTRY_PREFIX + sorting[0].orderBy,
+            sorting[0].orderBy,
             sorting[0].direction.toLocaleLowerCase()
         ] : null;
     }

@@ -191,8 +191,6 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async clickSaveAsButton(): Promise<void> {
-        const disabledButton = element(by.css(("button[data-automation-id='adf-filter-action-saveAs'][disabled]")));
-        await BrowserVisibility.waitUntilElementIsNotVisible(disabledButton);
         await BrowserActions.click(this.saveAsButton);
         await browser.driver.sleep(1000);
     }

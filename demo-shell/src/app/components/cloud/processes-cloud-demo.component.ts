@@ -15,42 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import {
-    ProcessListCloudComponent,
-    ProcessFilterCloudModel,
-    ProcessListCloudSortingModel,
-    ProcessFiltersCloudComponent
-} from '@alfresco/adf-process-services-cloud';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { EditProcessFilterCloudComponent, ProcessFilterAction, ProcessFilterCloudModel, ProcessFilterCloudService } from '@alfresco/adf-process-services-cloud';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserPreferencesService, AppConfigService, DataCellEvent } from '@alfresco/adf-core';
+import { UserPreferencesService, DataCellEvent } from '@alfresco/adf-core';
 import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pagination } from '@alfresco/js-api';
+import { CloudProcessFiltersService } from './services/cloud-process-filters.service';
 
 @Component({
-    templateUrl: './processes-cloud-demo.component.html',
-    styleUrls: ['./processes-cloud-demo.component.scss']
+    templateUrl: './processes-cloud-demo.component.html'
 })
 export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
-
-    public static ACTION_SAVE_AS = 'saveAs';
-    public static ACTION_DELETE = 'delete';
-    static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
-
-    @ViewChild('processCloud')
-    processCloud: ProcessListCloudComponent;
-
-    @ViewChild('processFiltersCloud')
-    processFiltersCloud: ProcessFiltersCloudComponent;
-
     appName: string = '';
-    isFilterLoaded: boolean;
+    isFilterLoaded = false;
 
     filterId: string = '';
-    sortArray: any = [];
     selectedRow: any;
     multiselect: boolean;
     selectionMode: string;
@@ -61,7 +43,11 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     actions: any[] = [];
     selectedAction: { id: number, name: string, actionType: string};
     selectedContextAction: { id: number, name: string, actionType: string};
-    processFilterProperties: any  = { filterProperties: [], sortProperties: [], actions: [] };
+
+    filterProperties: string[];
+    filterSortProperties: string[];
+    filterActions: string[];
+
     processDetailsRedirection: boolean;
 
     editedFilter: ProcessFilterCloudModel;
@@ -73,24 +59,24 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private cloudLayoutService: CloudLayoutService,
-        private userPreference: UserPreferencesService,
-        private appConfig: AppConfigService) {
-        const properties = this.appConfig.get<Array<any>>(ProcessesCloudDemoComponent.PROCESS_FILTER_PROPERTY_KEYS);
-        if (properties) {
-            this.processFilterProperties = properties;
-        }
+        private cloudProcessFiltersService: CloudProcessFiltersService,
+        private processFilterCloudService: ProcessFilterCloudService,
+        private userPreference: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.isFilterLoaded = false;
-        this.route.parent.params.subscribe((params) => {
-            this.appName = params.appName;
-        });
+        this.filterProperties = this.cloudProcessFiltersService.filterProperties;
+        this.filterSortProperties = this.cloudProcessFiltersService.sortProperties;
+        this.filterActions = this.cloudProcessFiltersService.actions;
 
         this.route.queryParams.subscribe((params) => {
             this.isFilterLoaded = true;
-            this.onFilterChange(params);
+
+            this.appName = params.appName;
             this.filterId = params.id;
+
+            const model = this.cloudProcessFiltersService.readQueryParams(params);
+            this.loadFilter(model);
         });
 
         this.cloudLayoutService.settings$
@@ -134,31 +120,26 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         }
     }
 
-    onFilterChange(query: any) {
-        this.editedFilter = Object.assign({}, query);
-        this.sortArray = [
-            new ProcessListCloudSortingModel({
-                orderBy: this.editedFilter.sort,
-                direction: this.editedFilter.order
-            })
-        ];
+    onFilterChange(filter: ProcessFilterCloudModel) {
+        const queryParams = this.cloudProcessFiltersService.writeQueryParams(filter, this.appName, this.filterId);
+        this.router.navigate([`/cloud/${this.appName}/processes/`], {queryParams});
     }
 
-    onProcessFilterAction(filterAction: any) {
-        if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_DELETE) {
+    onProcessFilterAction(filterAction: ProcessFilterAction) {
+        if (filterAction.actionType === EditProcessFilterCloudComponent.ACTION_DELETE) {
             this.cloudLayoutService.setCurrentProcessFilterParam({ index: 0 });
         } else {
             this.cloudLayoutService.setCurrentProcessFilterParam({ id: filterAction.filter.id });
         }
 
-        if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
-            this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: filterAction.filter });
+        if ([EditProcessFilterCloudComponent.ACTION_SAVE, EditProcessFilterCloudComponent.ACTION_SAVE_AS].includes(filterAction.actionType)) {
+            this.onFilterChange(filterAction.filter);
         }
     }
 
     onRowsSelected(nodes) {
         this.resetSelectedRows();
-        this.selectedRows = nodes.map((node) => node.obj.entry);
+        this.selectedRows = nodes.map((node) => node.obj);
     }
 
     onShowRowActionsMenu(event: DataCellEvent) {
@@ -196,5 +177,13 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         const value = contextAction.data.entry;
         const action = contextAction.model;
         this.selectedContextAction = {id: value.id, name: value.name, actionType: action.title};
+    }
+
+    private loadFilter(model: ProcessFilterCloudModel) {
+        if (model && model.appName && model.id) {
+            this.processFilterCloudService.getFilterById(model.appName, model.id).subscribe(filter => {
+                this.editedFilter = Object.assign({}, filter, model);
+            });
+        }
     }
 }

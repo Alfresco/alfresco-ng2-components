@@ -236,11 +236,7 @@ describe('ProcessListCloudComponent', () => {
     });
 
     it('should emit row click event', (done) => {
-        const row = new ObjectDataRow({
-            entry: {
-                id: '999'
-            }
-        });
+        const row = new ObjectDataRow({ id: '999' });
         const rowEvent = new DataRowEvent(row, null);
         component.rowClick.subscribe((taskId) => {
             expect(taskId).toEqual('999');
@@ -293,7 +289,7 @@ describe('ProcessListCloudComponent', () => {
             });
             fixture.detectChanges();
             expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
-            expect(component.formattedSorting).toEqual([ProcessListCloudComponent.ENTRY_PREFIX + 'startDate', 'desc']);
+            expect(component.formattedSorting).toEqual(['startDate', 'desc']);
         });
 
         it('should reload process list when sorting on a column changes', () => {
@@ -312,7 +308,7 @@ describe('ProcessListCloudComponent', () => {
                     direction: 'ASC'
                 })
             ]);
-            expect(component.formattedSorting).toEqual(['entry.fakeName', 'asc']);
+            expect(component.formattedSorting).toEqual(['fakeName', 'asc']);
             expect(component.isListEmpty()).toBeFalsy();
             expect(getProcessByRequestSpy).toHaveBeenCalled();
         });

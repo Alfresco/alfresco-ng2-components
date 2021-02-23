@@ -17,7 +17,6 @@
 
 import { async } from '@angular/core/testing';
 import { setupTestBed, StorageService, AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
-import { fakeTaskCloudList } from '../mock/fake-task-response.mock';
 import { ServiceTaskListCloudService } from './service-task-list-cloud.service';
 import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
 
@@ -25,16 +24,6 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
 
     let service: ServiceTaskListCloudService;
     let alfrescoApiMock: AlfrescoApiServiceMock;
-
-    function returnFakeTaskListResults() {
-        return {
-            oauth2Auth: {
-                callCustomApi: () => {
-                    return Promise.resolve(fakeTaskCloudList);
-                }
-            }
-        };
-    }
 
     function returnCallQueryParameters() {
         return {
@@ -68,19 +57,6 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
             new AppConfigService(null),
             new LogService(new AppConfigService(null)));
     }));
-
-    it('should return the tasks', (done) => {
-        const taskRequest: ServiceTaskQueryCloudRequestModel = <ServiceTaskQueryCloudRequestModel> { appName: 'fakeName' };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskListResults);
-        service.getServiceTaskByRequest(taskRequest).subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(res).not.toBeNull();
-            expect(res.list.entries.length).toBe(2);
-            expect(res.list.entries[0].entry.appName).toBe('save-the-cheerleader');
-            expect(res.list.entries[1].entry.appName).toBe('save-the-cheerleader');
-            done();
-        });
-    });
 
     it('should append to the call all the parameters', (done) => {
         const taskRequest: ServiceTaskQueryCloudRequestModel = <ServiceTaskQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };
