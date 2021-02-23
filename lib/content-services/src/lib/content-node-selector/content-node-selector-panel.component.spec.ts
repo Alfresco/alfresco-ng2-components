@@ -243,7 +243,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should not show the breadcrumb if search was performed as last action', async () => {
-                component.searchTerm = 'mock-search-term';
+                searchQueryBuilderService.userQuery = 'mock-search-term';
+                searchQueryBuilderService.update();
                 triggerSearchResults(fakeResultSetPaging);
 
                 fixture.detectChanges();
@@ -264,7 +265,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should show the breadcrumb for the selected node when search results are displayed', async () => {
-                component.searchTerm = 'mock-search-term';
+                searchQueryBuilderService.userQuery = 'mock-search-term';
+                searchQueryBuilderService.update();
                 triggerSearchResults(fakeResultSetPaging);
 
                 const chosenNode = new Node({ path: { elements: ['one'] } });
@@ -644,7 +646,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
             }));
 
             it('should emit showingSearch event with true while searching', async () => {
-                component.searchTerm = 'mock-search-term';
+                searchQueryBuilderService.userQuery = 'mock-search-term';
+                searchQueryBuilderService.update();
                 spyOn(customResourcesService, 'hasCorrespondingNodeIds').and.returnValue(true);
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
 
@@ -688,7 +691,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should emit showingResults event with false if search api fails', async () => {
-                component.searchTerm = 'mock-search-term';
+                searchQueryBuilderService.userQuery = 'mock-search-term';
+                searchQueryBuilderService.update();
                 getCorrespondingNodeIdsSpy.and.throwError('Failed');
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
                 component.queryBuilderService.execute({ query: { query: 'search' } });
@@ -852,18 +856,21 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     fixture.detectChanges();
                     const documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
                     expect(documentList).not.toBeNull('Document list should be shown');
+                    expect(component.hasValidQuery).toEqual(true);
                     expect(documentList.componentInstance.currentFolderId).toBeNull();
                     done();
                 }, 300);
             });
 
             it('should not show the result list when results are returned but there is no search term typed', (done) => {
-                component.searchTerm = '';
+                searchQueryBuilderService.userQuery = '';
+                searchQueryBuilderService.update();
 
                 setTimeout(() => {
                     triggerSearchResults(fakeResultSetPaging);
                     fixture.detectChanges();
 
+                    expect(component.hasValidQuery).toEqual(false);
                     expect(component.showingSearchResults).toEqual(false);
                     done();
                 }, 300);
