@@ -16,7 +16,7 @@
  */
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
@@ -112,6 +112,8 @@ import localePl from '@angular/common/locales/pl';
 import localeFi from '@angular/common/locales/fi';
 import localeDa from '@angular/common/locales/da';
 import localeSv from '@angular/common/locales/sv';
+import { setupAppNotifications } from './services/app-notifications-factory';
+import { AppNotificationsService } from './services/app-notifications.service';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -225,6 +227,13 @@ registerLocaleData(localeSv);
                 name: 'lazy-loading',
                 source: 'resources/lazy-loading'
             }
+        },
+        AppNotificationsService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: setupAppNotifications,
+            deps: [AppNotificationsService],
+            multi: true
         }
     ],
     bootstrap: [AppComponent]
