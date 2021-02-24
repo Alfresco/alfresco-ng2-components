@@ -15,6 +15,9 @@ class PrCreator {
         if (prs.length < 1) {
             const { data: pr } = await this.repo.createPullRequest({ title, head, base });
             return pr.number;
+        } else {
+            // override the title to contains the latest adf dep number
+            prs[0].title = title;
         }
 
         return prs[0].number;
