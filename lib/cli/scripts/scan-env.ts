@@ -5,8 +5,8 @@ import { logger } from './logger';
 interface PeopleTally { enabled: number; disabled: number; }
 interface RowToPrint { label: string; value: number; }
 
-const MAX_ATTEMPTS = 10;
-const TIMEOUT = 60000;
+const MAX_ATTEMPTS = 1;
+const TIMEOUT = 180000;
 const MAX_PEOPLE_PER_PAGE = 100;
 const USERS_HOME_RELATIVE_PATH = 'User Homes';
 
@@ -17,6 +17,9 @@ let jsApiConnection: any;
 let loginAttempts: number = 0;
 
 export default async function main(_args: string[]) {
+
+    // tslint:disable-next-line: no-console
+    console.log = () => {};
 
     program
         .version('0.1.0')
@@ -91,13 +94,18 @@ async function handleLoginError(loginError) {
     if (loginAttempts === 0) {
         logger.error(`    ${red}Login SSO error${reset}`);
     }
+    checkEnvReachable(loginError);
     loginAttempts++;
     if (MAX_ATTEMPTS === loginAttempts) {
         if (loginError && loginError.response && loginError.response.text) {
-            const parsedJson = JSON.parse(loginError.response.text);
-            if (typeof parsedJson === 'object' && parsedJson.error) {
-                const { stackTrace, ...errorWithoutDeprecatedProperty } = parsedJson.error;
-                logger.error(errorWithoutDeprecatedProperty);
+            try {
+                const parsedJson = JSON.parse(loginError.response.text);
+                if (typeof parsedJson === 'object' && parsedJson.error) {
+                    const { stackTrace, ...errorWithoutDeprecatedProperty } = parsedJson.error;
+                    logger.error(errorWithoutDeprecatedProperty);
+                }
+            } catch (jsonParseError) {
+                logger.error(`    ${red}Could not parse the error response. Possibly non json format${reset}`);
             }
         }
         logger.error(`    ${red}Give up${reset}`);
@@ -106,6 +114,14 @@ async function handleLoginError(loginError) {
         logger.error(`    Retry in 1 minute attempt N ${loginAttempts}`);
         await wait(TIMEOUT);
         await attemptLogin();
+    }
+}
+
+function checkEnvReachable(loginError) {
+    const failingErrorCodes = ['ENOTFOUND', 'ETIMEDOUT', 'ECONNREFUSED'];
+    if (typeof loginError === 'object' && failingErrorCodes.indexOf(loginError.code) > -1) {
+        logger.error(`    ${red}The environment is not reachable (${loginError.code})${reset}`);
+        failScript();
     }
 }
 
@@ -193,18 +209,22 @@ async function getFilesCount(): Promise<number> {
 function handleError(error) {
     logger.error(`    ${red}Error encountered${reset}`);
     if (error && error.response && error.response.text) {
-        const parsedJson = JSON.parse(error.response.text);
-        if (typeof parsedJson === 'object' && parsedJson.error) {
-            const { stackTrace, ...errorWithoutDeprecatedProperty } = parsedJson.error;
-            logger.error(errorWithoutDeprecatedProperty);
+        try {
+            const parsedJson = JSON.parse(error.response.text);
+            if (typeof parsedJson === 'object' && parsedJson.error) {
+                const { stackTrace, ...errorWithoutDeprecatedProperty } = parsedJson.error;
+                logger.error(errorWithoutDeprecatedProperty);
+            }
+        } catch (jsonParseError) {
+            logger.error(`    ${red}Could not parse the error response. Possibly non json format${reset}`);
         }
     }
     failScript();
 }
 
 function failScript() {
-    logger.error(`${red}${bright}Environment scan failed. Exiting with non-zero code${reset}`);
-    process.exit(1);
+    logger.error(`${red}${bright}Environment scan failed. Exiting${reset}`);
+    process.exit(0);
 }
 
 async function wait(ms: number) {
