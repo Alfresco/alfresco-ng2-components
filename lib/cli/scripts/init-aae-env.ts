@@ -40,7 +40,6 @@ export interface ConfigArgs {
     devopsPassword: string;
     clientId: string;
     host: string;
-    oauth: string;
     identityHost: boolean;
 }
 
@@ -226,11 +225,10 @@ function deploy(model: any) {
 function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
     const config = {
         provider: 'BPM',
-        hostEcm: `${configArgs.host}`,
         hostBpm: `${configArgs.host}`,
         authType: 'OAUTH',
         oauth2: {
-            host: `${configArgs.oauth}/auth/realms/alfresco`,
+            host: `${configArgs.host}/auth/realms/alfresco`,
             clientId: `${configArgs.clientId}`,
             scope: 'openid',
             secret: '',
@@ -422,10 +420,8 @@ async function main(configArgs: ConfigArgs) {
     program
         .version('0.1.0')
         .description('The following command is in charge of Initializing the activiti cloud env with the default apps' +
-            'adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devevopsusername" --devopsPassword "devopspassword"')
+            'adf-cli init-aae-env --host "gateway_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devevopsusername" --devopsPassword "devopspassword"')
         .option('-h, --host [type]', 'Host gateway')
-        .option('-o, --oauth [type]', 'Host sso server')
-        .option('-jsonAppsPath, --oauth [type]', 'Host sso server')
         .option('--clientId [type]', 'sso client')
         .option('--modelerUsername [type]', 'username of a user with role ACTIVIT_MODELER')
         .option('--modelerPassword [type]', 'modeler password')
