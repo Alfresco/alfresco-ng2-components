@@ -124,7 +124,7 @@ describe('SearchDatetimeRangeComponent', () => {
         expect(context.update).toHaveBeenCalled();
     });
 
-    it('should update query builder on value changes', () => {
+    it('should update the query in UTC format when values change', () => {
         const context: any = {
             queryFragments: {},
             update() {
@@ -143,10 +143,34 @@ describe('SearchDatetimeRangeComponent', () => {
             to: toDatetime
         }, true);
 
-        const startDate = moment(fromDatetime).startOf('minute').format();
-        const endDate = moment(toDatetime).endOf('minute').format();
+        const expectedQuery = `cm:created:['2016-10-16T12:30:00Z' TO '2017-10-16T20:00:59Z']`;
 
-        const expectedQuery = `cm:created:['${startDate}' TO '${endDate}']`;
+        expect(context.queryFragments[component.id]).toEqual(expectedQuery);
+        expect(context.update).toHaveBeenCalled();
+    });
+
+    it('should be able to update the query in UTC format from a GMT format', () => {
+        const context: any = {
+            queryFragments: {},
+            update() {
+            }
+        };
+        const fromInGmt = '2021-02-24T17:00:00+02:00';
+        const toInGmt = '2021-02-28T15:00:00+02:00';
+
+        component.id = 'createdDateRange';
+        component.context = context;
+        component.settings = { field: 'cm:created' };
+
+        spyOn(context, 'update').and.stub();
+
+        fixture.detectChanges();
+        component.apply({
+            from: fromInGmt,
+            to: toInGmt
+        }, true);
+
+        const expectedQuery = `cm:created:['2021-02-24T15:00:00Z' TO '2021-02-28T13:00:59Z']`;
 
         expect(context.queryFragments[component.id]).toEqual(expectedQuery);
         expect(context.update).toHaveBeenCalled();

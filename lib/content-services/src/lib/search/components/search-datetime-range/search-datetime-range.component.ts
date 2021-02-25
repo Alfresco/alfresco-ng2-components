@@ -130,8 +130,8 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         if (isValid && this.id && this.context && this.settings && this.settings.field) {
             this.isActive = true;
 
-            const start = moment(model.from).startOf('minute').format();
-            const end = moment(model.to).endOf('minute').format();
+            const start = moment.utc(model.from).startOf('minute').format();
+            const end = moment.utc(model.to).endOf('minute').format();
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
             this.context.update();
