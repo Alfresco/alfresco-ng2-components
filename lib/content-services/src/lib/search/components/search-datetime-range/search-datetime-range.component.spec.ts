@@ -149,6 +149,33 @@ describe('SearchDatetimeRangeComponent', () => {
         expect(context.update).toHaveBeenCalled();
     });
 
+    it('should be able to update the query in UTC format from a GMT format', () => {
+        const context: any = {
+            queryFragments: {},
+            update() {
+            }
+        };
+        const fromInGmt = '2021-02-24T17:00:00+02:00';
+        const toInGmt = '2021-02-28T15:00:00+02:00';
+
+        component.id = 'createdDateRange';
+        component.context = context;
+        component.settings = { field: 'cm:created' };
+
+        spyOn(context, 'update').and.stub();
+
+        fixture.detectChanges();
+        component.apply({
+            from: fromInGmt,
+            to: toInGmt
+        }, true);
+
+        const expectedQuery = `cm:created:['2021-02-24T15:00:00Z' TO '2021-02-28T13:00:59Z']`;
+
+        expect(context.queryFragments[component.id]).toEqual(expectedQuery);
+        expect(context.update).toHaveBeenCalled();
+    });
+
     it('should show datetime-format error when an invalid datetime is set', async () => {
         fixture.detectChanges();
         component.onChangedHandler({ value: '10/14/2020 10:00:00 PM' }, component.from);
