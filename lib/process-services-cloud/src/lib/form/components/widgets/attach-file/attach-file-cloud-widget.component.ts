@@ -151,7 +151,15 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         }
 
         if (!rootNodeId) {
-            const nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
+            let nodeId: string;
+            if (destinationFolderPath.path) {
+                nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
+            }
+
+            if (!nodeId) {
+                nodeId = await this.contentNodeSelectorService.fetchAliasNodeId(destinationFolderPath.alias);
+            }
+
             rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
         }
 
