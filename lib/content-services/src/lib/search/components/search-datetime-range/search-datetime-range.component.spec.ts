@@ -124,7 +124,7 @@ describe('SearchDatetimeRangeComponent', () => {
         expect(context.update).toHaveBeenCalled();
     });
 
-    it('should update query builder on value changes', () => {
+    it('should update the query in UTC format when values change', () => {
         const context: any = {
             queryFragments: {},
             update() {
@@ -143,10 +143,7 @@ describe('SearchDatetimeRangeComponent', () => {
             to: toDatetime
         }, true);
 
-        const startDate = moment(fromDatetime).startOf('minute').format();
-        const endDate = moment(toDatetime).endOf('minute').format();
-
-        const expectedQuery = `cm:created:['${startDate}' TO '${endDate}']`;
+        const expectedQuery = `cm:created:['2016-10-16T12:30:00Z' TO '2017-10-16T20:00:59Z']`;
 
         expect(context.queryFragments[component.id]).toEqual(expectedQuery);
         expect(context.update).toHaveBeenCalled();
