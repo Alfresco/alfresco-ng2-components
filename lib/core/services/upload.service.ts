@@ -96,8 +96,8 @@ export class UploadService {
     }
 
     isQueueFinishedUploading(): boolean {
-        const finishedFileStates = [FileUploadStatus.Complete, FileUploadStatus.Aborted, FileUploadStatus.Error, FileUploadStatus.Deleted];
-        return this.queue.reduce((finishedUploading, currentFile) => {
+        const finishedFileStates = [FileUploadStatus.Complete, FileUploadStatus.Cancelled, FileUploadStatus.Aborted, FileUploadStatus.Error, FileUploadStatus.Deleted];
+        return this.queue.reduce((finishedUploading: boolean, currentFile: FileModel) => {
             return finishedUploading && finishedFileStates.indexOf(currentFile.status) > -1;
         }, true);
     }
