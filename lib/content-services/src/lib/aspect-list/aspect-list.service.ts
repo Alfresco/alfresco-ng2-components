@@ -37,18 +37,18 @@ export class AspectListService {
 
     getAspects(): Observable<AspectEntry[]> {
         const visibleAspectList = this.getVisibleAspects();
-        const standardAspects$ = this.getStandardAspects(visibleAspectList, ['properties']);
+        const standardAspects$ = this.getStandardAspects(visibleAspectList);
         const customAspects$ = this.getCustomAspects();
         return zip(standardAspects$, customAspects$).pipe(
             map(([standardAspectList, customAspectList]) => [...standardAspectList, ...customAspectList])
         );
     }
 
-    getStandardAspects(whiteList: string[], includeFields: string[] = []): Observable<AspectEntry[]> {
+    getStandardAspects(whiteList: string[]): Observable<AspectEntry[]> {
         const where = `(modelId in ('cm:contentmodel', 'emailserver:emailserverModel', 'smf:smartFolder', 'app:applicationmodel' ))`;
         const opts: any = {
             where,
-            include: includeFields
+            include: ['properties']
         };
         return from(this.alfrescoApiService.aspectsApi.listAspects(opts))
             .pipe(

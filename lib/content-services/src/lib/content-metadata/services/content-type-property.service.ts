@@ -56,7 +56,7 @@ export class ContentTypePropertiesService {
     }
 
     private getContentTypesAsSelectOption(currentType: TypeEntry): Observable<CardViewSelectItemOption<string>[]> {
-        const childrenTypes$ = this.contentTypeService.getContentTypeChildren(currentType.entry.id, ['properties']);
+        const childrenTypes$ = this.contentTypeService.getContentTypeChildren(currentType.entry.id);
         return zip(childrenTypes$, of(currentType)).pipe(
             distinctUntilChanged(),
             map(([contentTypesEntries, currentContentType]) => {
