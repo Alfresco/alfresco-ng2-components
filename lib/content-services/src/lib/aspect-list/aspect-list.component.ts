@@ -17,8 +17,8 @@
 
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { NodesApiService } from '@alfresco/adf-core';
-import { Observable, Subject } from 'rxjs';
-import { concatMap, takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject, zip } from 'rxjs';
+import { concatMap, map, takeUntil, tap } from 'rxjs/operators';
 import { AspectListService } from './aspect-list.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { AspectEntry } from '@alfresco/js-api';
@@ -56,9 +56,14 @@ export class AspectListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         if (this.nodeId) {
-            this.aspects$ = this.nodeApiService.getNode(this.nodeId).pipe(
-                tap((node) => {
-                    this.nodeAspects = node.aspectNames.filter((aspect) => this.aspectListService.getVisibleAspects().includes(aspect));
+            const node$ = this.nodeApiService.getNode(this.nodeId);
+            const customAspect$ = this.aspectListService.getCustomAspects()
+            .pipe(map(
+                (customAspects) => customAspects.flatMap((customAspect) => customAspect.entry.id)
+            ));
+            this.aspects$ = zip(node$, customAspect$).pipe(
+                tap(([node, customAspects]) => {
+                    this.nodeAspects = node.aspectNames.filter((aspect) => this.aspectListService.getVisibleAspects().includes(aspect) || customAspects.includes(aspect));
                     this.nodeAspectStatus = Array.from(node.aspectNames);
                     this.valueChanged.emit(this.nodeAspects);
                 }),
