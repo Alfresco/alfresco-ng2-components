@@ -58,7 +58,10 @@ describe('ContentTypeService', () => {
             expect(results).not.toBeNull();
             expect(results.length).toBe(1);
             expect(results[0].entry.id).toBe('fake-type-id');
-            expect(mockTypesApi.listTypes).toHaveBeenCalledWith({ where: '(parentIds in (\'whatever-whenever\') and not namespaceUri matches(\'http://www.alfresco.org/model.*\'))' });
+            expect(mockTypesApi.listTypes).toHaveBeenCalledWith({
+                where: '(parentId in (\'whatever-whenever\') and not namespaceUri matches(\'http://www.alfresco.*\'))',
+                include: [ 'properties']
+            });
             done();
         });
     });
