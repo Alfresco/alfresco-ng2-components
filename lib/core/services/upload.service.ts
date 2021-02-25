@@ -88,18 +88,14 @@ export class UploadService {
     }
 
     /**
-     * Checks whether the service is uploading a file.
-     * @returns True if a file is uploading, false otherwise
+     * Checks whether the service still has files uploading or awaiting upload.
+     * @returns True if files in the queue are still uploading, false otherwise
      */
     isUploading(): boolean {
-        return !!this.activeTask;
-    }
-
-    isQueueFinishedUploading(): boolean {
         const finishedFileStates = [FileUploadStatus.Complete, FileUploadStatus.Cancelled, FileUploadStatus.Aborted, FileUploadStatus.Error, FileUploadStatus.Deleted];
-        return this.queue.reduce((finishedUploading: boolean, currentFile: FileModel) => {
-            return finishedUploading && finishedFileStates.indexOf(currentFile.status) > -1;
-        }, true);
+        return this.queue.reduce((stillUploading: boolean, currentFile: FileModel) => {
+            return stillUploading || finishedFileStates.indexOf(currentFile.status) === -1;
+        }, false);
     }
 
     /**

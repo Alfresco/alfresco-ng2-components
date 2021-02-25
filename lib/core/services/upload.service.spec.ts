@@ -105,7 +105,7 @@ describe('UploadService', () => {
         expect(service.getQueue().length).toEqual(2);
     });
 
-    it('should have the queue finished uploading if all files are complete, cancelled, aborted, errored or deleted', () => {
+    it('should not have the queue uploading if all files are complete, cancelled, aborted, errored or deleted', () => {
         const file1 = new FileModel(<File> { name: 'fake-file-1', size: 10 });
         const file2 = new FileModel(<File> { name: 'fake-file-2', size: 20 });
         const file3 = new FileModel(<File> { name: 'fake-file-3', size: 30 });
@@ -117,20 +117,20 @@ describe('UploadService', () => {
         file4.status = FileUploadStatus.Error;
         file5.status = FileUploadStatus.Deleted;
         service.addToQueue(file1, file2, file3, file4, file5);
-        expect(service.isQueueFinishedUploading()).toBe(true);
+        expect(service.isUploading()).toBe(false);
     });
 
-    it('should not have the queue finished uploading if some files are still pending, starting or in progress', () => {
+    it('should have the queue still uploading if some files are still pending, starting or in progress', () => {
         const file1 = new FileModel(<File> { name: 'fake-file-1', size: 10 });
         const file2 = new FileModel(<File> { name: 'fake-file-2', size: 20 });
         service.addToQueue(file1, file2);
         file1.status = FileUploadStatus.Complete;
         file2.status = FileUploadStatus.Pending;
-        expect(service.isQueueFinishedUploading()).toBe(false);
+        expect(service.isUploading()).toBe(true);
         file2.status = FileUploadStatus.Starting;
-        expect(service.isQueueFinishedUploading()).toBe(false);
+        expect(service.isUploading()).toBe(true);
         file2.status = FileUploadStatus.Progress;
-        expect(service.isQueueFinishedUploading()).toBe(false);
+        expect(service.isUploading()).toBe(true);
     });
 
     it('should skip hidden macOS files', () => {
