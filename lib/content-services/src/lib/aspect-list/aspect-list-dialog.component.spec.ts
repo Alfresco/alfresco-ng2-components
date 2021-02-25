@@ -68,6 +68,27 @@ const aspectListMock: AspectEntry[] = [{
     }
 }];
 
+const customAspectListMock: AspectEntry[] = [{
+    entry: {
+        parentId: 'cst:customAspect',
+        id: 'cst:customAspect',
+        description: 'Custom Aspect with random description',
+        title: 'CustomAspect',
+        properties: [
+            {
+                id: 'channelPassword',
+                title: 'The authenticated channel password',
+                dataType: 'd:propA'
+            },
+            {
+                id: 'channelUsername',
+                title: 'The authenticated channel username',
+                dataType: 'd:propB'
+            }
+        ]
+    }
+}];
+
 describe('AspectListDialogComponent', () => {
     let fixture: ComponentFixture<AspectListDialogComponent>;
     let aspectListService: AspectListService;
@@ -246,9 +267,10 @@ describe('AspectListDialogComponent', () => {
         beforeEach(async () => {
             aspectListService = TestBed.inject(AspectListService);
             nodeService = TestBed.inject(NodesApiService);
-            spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
+            spyOn(aspectListService, 'getAspects').and.returnValue(of([...aspectListMock, ...customAspectListMock]));
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
-            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] }).pipe(delay(0)));
+            spyOn(aspectListService, 'getCustomAspects').and.returnValue(of(customAspectListMock));
+            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'cst:customAspect'] }).pipe(delay(0)));
             fixture = TestBed.createComponent(AspectListDialogComponent);
             fixture.componentInstance.data.select = new Subject<string[]>();
             fixture.detectChanges();
@@ -266,6 +288,16 @@ describe('AspectListDialogComponent', () => {
             expect(firstAspectCheckbox).toBeDefined();
             expect(firstAspectCheckbox).not.toBeNull();
             expect(firstAspectCheckbox.checked).toBeTruthy();
+
+            const notCheckedAspect: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-1-check-input');
+            expect(notCheckedAspect).toBeDefined();
+            expect(notCheckedAspect).not.toBeNull();
+            expect(notCheckedAspect.checked).toBeFalsy();
+
+            const customAspectCheckbox: HTMLInputElement = fixture.nativeElement.querySelector('#aspect-list-2-check-input');
+            expect(customAspectCheckbox).toBeDefined();
+            expect(customAspectCheckbox).not.toBeNull();
+            expect(customAspectCheckbox.checked).toBeTruthy();
         });
     });
 

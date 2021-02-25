@@ -66,6 +66,27 @@ const aspectListMock: AspectEntry[] = [{
     }
 }];
 
+const customAspectListMock: AspectEntry[] = [{
+    entry: {
+        parentId: 'cst:customAspect',
+        id: 'cst:customAspect',
+        description: 'Custom Aspect with random description',
+        title: 'CustomAspect',
+        properties: [
+            {
+                id: 'channelPassword',
+                title: 'The authenticated channel password',
+                dataType: 'd:propA'
+            },
+            {
+                id: 'channelUsername',
+                title: 'The authenticated channel username',
+                dataType: 'd:propB'
+            }
+        ]
+    }
+}];
+
 describe('AspectListComponent', () => {
 
     let component: AspectListComponent;
@@ -107,7 +128,8 @@ describe('AspectListComponent', () => {
             fixture = TestBed.createComponent(AspectListComponent);
             component = fixture.componentInstance;
             aspectListService = TestBed.inject(AspectListService);
-            spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
+            spyOn(aspectListService, 'getAspects').and.returnValue(of([...aspectListMock, ...customAspectListMock]));
+            spyOn(aspectListService, 'getCustomAspects').and.returnValue(of(customAspectListMock));
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
             nodeService = TestBed.inject(NodesApiService);
             spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] }));
