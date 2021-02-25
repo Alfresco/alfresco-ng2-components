@@ -120,7 +120,7 @@ describe('UploadService', () => {
         expect(service.isQueueFinishedUploading()).toBe(true);
     });
 
-    it('should not have the queue finished uploading if some files are still pending, starting, in progress or uploading', () => {
+    it('should not have the queue finished uploading if some files are still pending, starting or in progress', () => {
         const file1 = new FileModel(<File> { name: 'fake-file-1', size: 10 });
         const file2 = new FileModel(<File> { name: 'fake-file-2', size: 20 });
         service.addToQueue(file1, file2);
