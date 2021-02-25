@@ -80,7 +80,7 @@
         </button>
 
         <button mat-button
-                [disabled]="!hasNodeSelected()"
+                [disabled]="isChooseButtonDisabled()"
                 class="adf-choose-action"
                 (click)="onClick()"
                 data-automation-id="content-node-selector-actions-choose">{{ buttonActionName | translate }}

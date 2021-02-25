@@ -95,6 +95,13 @@ export class UploadService {
         return !!this.activeTask;
     }
 
+    isQueueFinishedUploading(): boolean {
+        const finishedFileStates = [FileUploadStatus.Complete, FileUploadStatus.Aborted, FileUploadStatus.Error, FileUploadStatus.Deleted];
+        return this.queue.reduce((finishedUploading, currentFile) => {
+            return finishedUploading && finishedFileStates.indexOf(currentFile.status) > -1;
+        }, true);
+    }
+
     /**
      * Gets the file Queue
      * @returns Array of files that form the queue
