@@ -20,6 +20,10 @@
 
         &-userinfo-name {
             padding: 0 5px;
+
+            @media screen and ($mat-small) {
+                display: none;
+            }
         }
 
         &-userinfo-pic {
