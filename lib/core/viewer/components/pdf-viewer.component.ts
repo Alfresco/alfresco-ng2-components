@@ -166,7 +166,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     executePdf(pdfOptions: PDFSource) {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
 
-        this.loadingTask = pdfjsLib.getDocument(pdfOptions);
+        this.loadingTask = pdfjsLib.getDocument({
+            ...pdfOptions,
+            disableAutoFetch: true,
+            disableStream: true
+        });
 
         this.loadingTask.onPassword = (callback, reason) => {
             this.onPdfPassword(callback, reason);
