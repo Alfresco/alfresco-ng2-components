@@ -169,7 +169,9 @@
       "SILENT": "Silent Login",
       "SCOPE": "Scope",
       "CLIENT": "Client ID",
-      "PUBLIC_URLS" : "Public urls silent Login"
+      "PUBLIC_URLS" : "Public urls silent Login",
+      "IDENTITY_HOST": "Identity Host",
+      "WEB_SOCKET_HOST": "Web Socket Host"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {

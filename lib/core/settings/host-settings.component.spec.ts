@@ -275,6 +275,7 @@ describe('HostSettingsComponent', () => {
         let bpmUrlInput;
         let ecmUrlInput;
         let identityUrlInput;
+        let webSocketUrlInput;
         let oauthHostUrlInput;
         let clientIdInput;
 
@@ -296,6 +297,7 @@ describe('HostSettingsComponent', () => {
             bpmUrlInput = element.querySelector('#bpmHost');
             ecmUrlInput = element.querySelector('#ecmHost');
             identityUrlInput = element.querySelector('#identityHost');
+            webSocketUrlInput = element.querySelector('#webSocketHost');
             oauthHostUrlInput = element.querySelector('#oauthHost');
             clientIdInput = element.querySelector('#clientId');
         });
@@ -306,8 +308,9 @@ describe('HostSettingsComponent', () => {
 
         it('should have a valid form when the urls are correct', (done) => {
             const urlBpm = 'http://localhost:9999/bpm';
-            const urlEcm = 'http://localhost:9999/bpm';
+            const urlEcm = 'http://localhost:9999/ecm';
             const urlIdentity = 'http://localhost:9999/identity';
+            const urlWS = 'wss://localhost:9999';
 
             component.form.statusChanges.subscribe((status: string) => {
                 expect(status).toEqual('VALID');
@@ -315,13 +318,10 @@ describe('HostSettingsComponent', () => {
             });
 
             ecmUrlInput.value = urlEcm;
-            ecmUrlInput.dispatchEvent(new Event('input'));
-
             bpmUrlInput.value = urlBpm;
-            bpmUrlInput.dispatchEvent(new Event('input'));
-
             identityUrlInput.value = urlIdentity;
-            identityUrlInput.dispatchEvent(new Event('input'));
+            webSocketUrlInput.value = urlWS;
+            webSocketUrlInput.dispatchEvent(new Event('input'));
         });
 
         it('should have an invalid form when the url inserted is wrong', (done) => {
@@ -383,6 +383,19 @@ describe('HostSettingsComponent', () => {
 
             clientIdInput.value = '';
             clientIdInput.dispatchEvent(new Event('input'));
+        });
+
+        it('should have an invalid form when the webSocketHost is wrong', (done) => {
+            const wsHostUrl = 'wrong';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('INVALID');
+                expect(component.webSocketHost.hasError('pattern')).toBeTruthy();
+                done();
+            });
+
+            webSocketUrlInput.value = wsHostUrl;
+            webSocketUrlInput.dispatchEvent(new Event('input'));
         });
    });
 });

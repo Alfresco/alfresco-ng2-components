@@ -40,7 +40,8 @@ export enum AppConfigValues {
     AUTH_WITH_CREDENTIALS = 'auth.withCredentials',
     APPLICATION = 'application',
     STORAGE_PREFIX = 'application.storagePrefix',
-    NOTIFY_DURATION = 'notificationDefaultDuration'
+    NOTIFY_DURATION = 'notificationDefaultDuration',
+    WEB_SOCKET_HOST = 'webSocketHost'
 }
 
 export enum Status {

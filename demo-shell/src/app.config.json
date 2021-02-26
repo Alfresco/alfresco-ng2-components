@@ -3,6 +3,7 @@
   "ecmHost": "{protocol}//{hostname}{:port}",
   "bpmHost": "{protocol}//{hostname}{:port}",
   "identityHost": "{protocol}//{hostname}{:port}/auth/admin/realms/alfresco",
+  "webSocketHost": "{protocol}//{hostname}{:port}",
   "loginRoute": "login",
   "providers": "ALL",
   "contextRootBpm": "activiti-app",

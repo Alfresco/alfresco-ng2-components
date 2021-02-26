@@ -35,6 +35,7 @@ import { ENTER } from '@angular/cdk/keycodes';
 export class HostSettingsComponent implements OnInit {
 
     HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
+    WS_HOST_REGEX: string = '^(ws|wss):\/\/.*[^/]$';
 
     /**
      * Tells the component which provider options are available. Possible valid values
@@ -84,15 +85,18 @@ export class HostSettingsComponent implements OnInit {
         if (authType === 'OAUTH') {
             this.addOAuthFormGroup();
             this.addIdentityHostFormControl();
+            this.addWebSocketHostFormControl();
         }
 
         this.form.get('authType').valueChanges.subscribe((value) => {
             if (value === 'BASIC') {
                 this.form.removeControl('oauthConfig');
                 this.form.removeControl('identityHost');
+                this.form.removeControl('webSocketHost');
             } else {
                 this.addOAuthFormGroup();
                 this.addIdentityHostFormControl();
+                this.addWebSocketHostFormControl();
             }
         });
 
@@ -129,6 +133,11 @@ export class HostSettingsComponent implements OnInit {
         this.form.addControl('identityHost', identityHostFormControl);
     }
 
+    private addWebSocketHostFormControl() {
+        const webSocketHostFormControl = this.createWebSocketFormControl();
+        this.form.addControl('webSocketHost', webSocketHostFormControl);
+    }
+
     private addECMFormControl() {
         if ((this.isECM() || this.isALL()) && !this.ecmHost) {
             const ecmFormControl = this.createECMFormControl();
@@ -158,6 +167,10 @@ export class HostSettingsComponent implements OnInit {
 
     private createIdentityFormControl(): AbstractControl {
         return new FormControl(this.appConfig.get<string>(AppConfigValues.IDENTITY_HOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
+    }
+
+    private createWebSocketFormControl(): AbstractControl {
+        return new FormControl(this.appConfig.get<string>(AppConfigValues.WEB_SOCKET_HOST), [Validators.required, Validators.pattern(this.WS_HOST_REGEX)]);
     }
 
     private createECMFormControl(): AbstractControl {
@@ -204,6 +217,7 @@ export class HostSettingsComponent implements OnInit {
 
         this.storageService.setItem(AppConfigValues.OAUTHCONFIG, JSON.stringify(values.oauthConfig));
         this.storageService.setItem(AppConfigValues.IDENTITY_HOST, values.identityHost);
+        this.storageService.setItem(AppConfigValues.WEB_SOCKET_HOST, values.webSocketHost);
     }
 
     private saveBPMValues(values: any) {
@@ -248,6 +262,10 @@ export class HostSettingsComponent implements OnInit {
 
     get identityHost(): AbstractControl {
         return this.form.get('identityHost');
+    }
+
+    get webSocketHost(): AbstractControl {
+        return this.form.get('webSocketHost');
     }
 
     get clientId(): AbstractControl {
