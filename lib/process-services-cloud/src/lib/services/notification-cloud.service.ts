@@ -39,8 +39,12 @@ export class NotificationCloudService extends BaseCloudService {
         super(apiService, appConfigService);
     }
 
-    private getUrlDomain(appName: string) {
-        return this.getBasePath(appName).split('://')[1];
+    private get webSocketHost() {
+        return this.contextRoot.split('://')[1];
+    }
+
+    private get protocol() {
+        return this.contextRoot.split('://')[0] === 'https' ? 'wss' : 'ws';
     }
 
     initNotificationsForApp(appName: string) {
@@ -51,7 +55,7 @@ export class NotificationCloudService extends BaseCloudService {
             });
 
             const webSocketLink = new WebSocketLink({
-                uri: `wss://${this.getUrlDomain(appName)}/notifications/ws/graphql`,
+                uri: `${this.protocol}://${this.webSocketHost}/${appName}/notifications/ws/graphql`,
                 options: {
                     reconnect: true,
                     lazy: true,
