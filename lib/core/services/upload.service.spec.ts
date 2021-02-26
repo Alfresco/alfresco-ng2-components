@@ -105,6 +105,41 @@ describe('UploadService', () => {
         expect(service.getQueue().length).toEqual(2);
     });
 
+    it('should not have the queue uploading if all files are complete, cancelled, aborted, errored or deleted', () => {
+        const file1 = new FileModel(<File> { name: 'fake-file-1', size: 10 });
+        const file2 = new FileModel(<File> { name: 'fake-file-2', size: 20 });
+        const file3 = new FileModel(<File> { name: 'fake-file-3', size: 30 });
+        const file4 = new FileModel(<File> { name: 'fake-file-4', size: 40 });
+        const file5 = new FileModel(<File> { name: 'fake-file-5', size: 50 });
+
+        file1.status = FileUploadStatus.Complete;
+        file2.status = FileUploadStatus.Cancelled;
+        file3.status = FileUploadStatus.Aborted;
+        file4.status = FileUploadStatus.Error;
+        file5.status = FileUploadStatus.Deleted;
+
+        service.addToQueue(file1, file2, file3, file4, file5);
+
+        expect(service.isUploading()).toBe(false);
+    });
+
+    it('should have the queue still uploading if some files are still pending, starting or in progress', () => {
+        const file1 = new FileModel(<File> { name: 'fake-file-1', size: 10 });
+        const file2 = new FileModel(<File> { name: 'fake-file-2', size: 20 });
+
+        service.addToQueue(file1, file2);
+
+        file1.status = FileUploadStatus.Complete;
+        file2.status = FileUploadStatus.Pending;
+        expect(service.isUploading()).toBe(true);
+
+        file2.status = FileUploadStatus.Starting;
+        expect(service.isUploading()).toBe(true);
+
+        file2.status = FileUploadStatus.Progress;
+        expect(service.isUploading()).toBe(true);
+    });
+
     it('should skip hidden macOS files', () => {
         const file1 = new FileModel(new File([''], '.git'));
         const file2 = new FileModel(new File([''], 'readme.md'));

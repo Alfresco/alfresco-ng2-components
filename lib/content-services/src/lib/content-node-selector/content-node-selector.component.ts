@@ -17,7 +17,7 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslationService, NotificationService, AllowableOperationsEnum, ContentService } from '@alfresco/adf-core';
+import { TranslationService, NotificationService, AllowableOperationsEnum, ContentService, UploadService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
@@ -44,6 +44,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     constructor(private translation: TranslationService,
                 private contentService: ContentService,
                 private notificationService: NotificationService,
+                private uploadService: UploadService,
                 private dialog: MatDialogRef<ContentNodeSelectorComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
@@ -105,6 +106,10 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     onError(error) {
         this.notificationService.showError(error);
+    }
+
+    isChooseButtonDisabled(): boolean {
+        return this.uploadService.isUploading() || !this.hasNodeSelected();
     }
 
     hasNodeSelected(): boolean {
