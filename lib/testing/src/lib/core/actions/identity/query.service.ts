@@ -24,11 +24,13 @@ export type TaskStatus = 'COMPLETED' | 'CREATED' | 'ASSIGNED' | 'SUSPENDED' | 'C
 export class QueryService {
 
     api: ApiService;
+    retryCount = 15;
 
     constructor(api: ApiService) {
         this.api = api;
     }
 
+    // @ts-ignore
     async getProcessInstanceTasks(processInstanceId, appName): Promise<any> {
         const predicate = (result: any) => {
             return result.list && result.list.entries.length > 0;
@@ -160,6 +162,46 @@ export class QueryService {
                     }
                 }
 
+            } catch (error) {
+                Logger.error('Get Task By Name - Service error');
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate);
+    }
+
+    async getTask(taskName, processInstanceId, appName, status): Promise<any> {
+
+        const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
+        const method = 'GET';
+
+        const queryParams = {}, postBody = {};
+
+        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+        for (let i = 0; i < data.list.entries.length; i++) {
+            if (data.list.entries[i].entry.name === taskName) {
+                const task = data.list.entries[i];
+
+                if (task.entry.status === status) {
+                    return task;
+                } else if (this.retryCount > 0) {
+                    this.retryCount--;
+                    return this.getTask(taskName, processInstanceId, appName, status);
+                } else {
+                    return task;
+                }
+            }
+        }
+    }
+
+    async getTaskByNameAndStatus(taskName, processInstanceId, appName, status: TaskStatus): Promise<any> {
+        const predicate = (result: any) => {
+            return !!result;
+        };
+
+        const apiCall = async () => {
+            try {
+                return this.getTask(taskName, processInstanceId, appName, status);
             } catch (error) {
                 Logger.error('Get Task By Name - Service error');
             }
