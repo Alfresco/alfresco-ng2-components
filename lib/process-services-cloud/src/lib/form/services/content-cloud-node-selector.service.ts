@@ -59,8 +59,8 @@ export class ContentCloudNodeSelectorService {
     }
 
     async fetchAliasNodeId(alias: string): Promise<string> {
-        const nodeEntry = await this.fetchNodeId(alias);
-        return nodeEntry?.entry?.id;
+        const aliasNodeEntry = await this.fetchNodeId(alias);
+        return aliasNodeEntry?.entry?.id;
     }
 
     async fetchNodeId(alias: string, opts?: { relativePath: string }): Promise<any> {
