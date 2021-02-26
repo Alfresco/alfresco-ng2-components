@@ -49,8 +49,22 @@ export class TaskFiltersCloudComponentPage {
         return BrowserActions.getText(this.activeFilter);
     }
 
+    async getTaskFilterCounter(filterName: string): Promise<string> {
+        const filterCounter = element.all(by.css(`[data-automation-id="${filterName}_filter-counter"]`)).first();
+        return BrowserActions.getText(filterCounter);
+    }
+
+    async checkTaskFilterCounter(filterName: string): Promise<void> {
+        const filterCounter = element.all(by.css(`[data-automation-id="${filterName}_filter-counter"]`)).first();
+        await BrowserVisibility.waitUntilElementHasText(filterCounter, '0');
+    }
+
+    async waitForNotification(filterName: string): Promise<void> {
+        const filterCounter = element(by.css(`[data-automation-id="${filterName}_filter-counter"][class*="adf-active"]`));
+        await BrowserVisibility.waitUntilElementIsVisible(filterCounter);
+    }
+
     getTaskFilterLocatorByFilterName(filterName: string): ElementFinder {
         return element.all(by.css(`button[data-automation-id="${filterName}_filter"]`)).first();
     }
-
 }

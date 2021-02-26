@@ -383,8 +383,8 @@ describe('TaskFiltersCloudComponent', () => {
 
     it('should update filter counter when notification received', async(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
-        const change = new SimpleChange(undefined, 'my-app-1', true);
-        component.ngOnChanges({ 'appName': change });
+        component.appName = 'my-app-1';
+        component.ngOnInit();
         fixture.detectChanges();
         component.showIcons = true;
         fixture.whenStable().then(() => {
@@ -399,7 +399,8 @@ describe('TaskFiltersCloudComponent', () => {
     it('should reset filter counter notification when filter is selected', async(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
         let change = new SimpleChange(undefined, 'my-app-1', true);
-        component.ngOnChanges({ 'appName': change });
+        component.appName = 'my-app-1';
+        component.ngOnInit();
         fixture.detectChanges();
         component.showIcons = true;
         fixture.whenStable().then(() => {

@@ -35,6 +35,11 @@ export class NotificationHistoryPage {
         await BrowserVisibility.waitUntilElementHasText(this.notificationList, text);
     }
 
+    async checkNotificationCenterHasNewNotifications(): Promise<void> {
+        const notificationListButton = element(by.css('#adf-notification-history-open-button [class*="mat-badge-active"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(notificationListButton);
+    }
+
     async checkNotificationIsNotPresent(text: string): Promise<void> {
         const notificationLisText = await BrowserActions.getText(this.notificationList);
         await expect(notificationLisText).not.toContain(text);

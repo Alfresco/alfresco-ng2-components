@@ -25,6 +25,11 @@ import { Apollo } from 'apollo-angular';
 describe('NotificationCloudService', () => {
     let service: NotificationCloudService;
     let apollo: Apollo;
+    let apolloCreateSpy;
+    let apolloSubscribeSpy;
+    const useMock = {
+        subscribe() {}
+    };
 
     const queryMock = `
         subscription {
@@ -47,12 +52,13 @@ describe('NotificationCloudService', () => {
     beforeEach(async(() => {
         service = TestBed.inject(NotificationCloudService);
         apollo = TestBed.inject(Apollo);
+
+        service.appsListening = [];
+        apolloCreateSpy = spyOn(apollo, 'createNamed');
+        apolloSubscribeSpy = spyOn(apollo, 'use').and.returnValue(useMock);
     }));
 
     it('should not create more than one websocket per app if it was already created', () => {
-        const apolloCreateSpy = spyOn(apollo, 'create');
-        const apolloSubscribeSpy = spyOn(apollo, 'subscribe');
-
         service.makeGQLQuery('myAppName', queryMock);
         expect(service.appsListening.length).toBe(1);
         expect(service.appsListening[0]).toBe('myAppName');
@@ -61,12 +67,20 @@ describe('NotificationCloudService', () => {
         expect(service.appsListening.length).toBe(1);
         expect(service.appsListening[0]).toBe('myAppName');
 
-        service.makeGQLQuery('myAppName2', queryMock);
+        expect(apolloCreateSpy).toHaveBeenCalledTimes(1);
+        expect(apolloSubscribeSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it('should create new websocket if it is subscribing to new app', () => {
+        service.makeGQLQuery('myAppName', queryMock);
+        expect(service.appsListening.length).toBe(1);
+        expect(service.appsListening[0]).toBe('myAppName');
+
+        service.makeGQLQuery('myOtherAppName', queryMock);
         expect(service.appsListening.length).toBe(2);
-        expect(service.appsListening[0]).toBe('myAppName');
-        expect(service.appsListening[1]).toBe('myAppName2');
+        expect(service.appsListening[1]).toBe('myOtherAppName');
 
         expect(apolloCreateSpy).toHaveBeenCalledTimes(2);
-        expect(apolloSubscribeSpy).toHaveBeenCalledTimes(3);
+        expect(apolloSubscribeSpy).toHaveBeenCalledTimes(2);
     });
 });

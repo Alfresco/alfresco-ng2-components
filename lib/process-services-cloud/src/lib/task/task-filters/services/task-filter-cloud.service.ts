@@ -34,8 +34,8 @@ const TASK_EVENT_SUBSCRIPTION_QUERY = `
             TASK_ASSIGNED
             TASK_ACTIVATED
             TASK_SUSPENDED
-            TASK_CANCELLED
-            TASK_UPDATED
+            TASK_CANCELLED,
+            TASK_CREATED
         ]) {
             eventType
             entity

@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}} task has been assigned to {{assignee}}",
     "PROCESS_STARTED": "{{processName}} process has been started",
-    "TASK_UPDATED": "{{taskName}} task details has been updated"
+    "TASK_UPDATED": "{{taskName}} task details have been updated",
+    "TASK_CREATED": "{{taskName}} task was created"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Form Data",

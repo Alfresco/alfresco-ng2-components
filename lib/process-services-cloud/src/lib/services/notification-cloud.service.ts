@@ -71,15 +71,15 @@ export class NotificationCloudService extends BaseCloudService {
                 httpLink
             );
 
-            this.apollo.create(<any> {
+            this.apollo.createNamed(appName, {
                 link,
-                cache: new InMemoryCache({})
+                cache: new InMemoryCache()
             });
         }
     }
 
     makeGQLQuery(appName: string, gqlQuery: string) {
         this.initNotificationsForApp(appName);
-        return this.apollo.subscribe({ query : gql(gqlQuery) });
+        return this.apollo.use(appName).subscribe({ query: gql(gqlQuery) });
     }
 }
