@@ -101,6 +101,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     private eventBus = new pdfjsViewer.EventBus();
+    private pdfjsDefaultOptions  = {
+        disableAutoFetch: true,
+        disableStream: true
+    };
 
     constructor(
         private dialog: MatDialog,
@@ -141,6 +145,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             const reader = new FileReader();
             reader.onload = async () => {
                 const pdfSource: PDFSource = {
+                    ...this.pdfjsDefaultOptions,
                     data: reader.result,
                     withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
                 };
@@ -152,6 +157,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         const urlFile = changes['urlFile'];
         if (urlFile && urlFile.currentValue) {
             const pdfSource: PDFSource = {
+                ...this.pdfjsDefaultOptions,
                 url: urlFile.currentValue,
                 withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
             };
@@ -166,11 +172,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     executePdf(pdfOptions: PDFSource) {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
 
-        this.loadingTask = pdfjsLib.getDocument({
-            ...pdfOptions,
-            disableAutoFetch: true,
-            disableStream: true
-        });
+        this.loadingTask = pdfjsLib.getDocument(pdfOptions);
 
         this.loadingTask.onPassword = (callback, reason) => {
             this.onPdfPassword(callback, reason);
