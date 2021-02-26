@@ -59,9 +59,10 @@ export class TaskFiltersCloudComponentPage {
         await BrowserVisibility.waitUntilElementHasText(filterCounter, '0');
     }
 
-    async waitForNotification(filterName: string): Promise<void> {
+    async checkNotificationCounterValue(filterName: string, counterValue: string): Promise<void> {
         const filterCounter = element(by.css(`[data-automation-id="${filterName}_filter-counter"][class*="adf-active"]`));
         await BrowserVisibility.waitUntilElementIsVisible(filterCounter);
+        await BrowserVisibility.waitUntilElementHasText(filterCounter, counterValue);
     }
 
     getTaskFilterLocatorByFilterName(filterName: string): ElementFinder {
