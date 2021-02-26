@@ -7,4 +7,9 @@
         max-height: 90vh;
         max-width: 100%;
     }
+
+    video.adf-audio-file::-webkit-media-text-track-display {
+        -webkit-transform: translateY(-50%) !important;
+        transform: translateY(-50%) !important;
+    }
 }
