@@ -19,14 +19,14 @@
             data-automation-id="adf-user-profile">
         <div class="adf-userinfo-button-profile" id="user-profile">
             <div *ngIf="identityUser$ | async as identityUser; else showBpmAndEcmUserImage" id="identity-user-image">
-                <div *ngIf="ecmUser$ | async as ecmUser; else initialTemplate">
-                    <div *ngIf="ecmUser.avatarId" class="adf-userinfo-profile-container">
-                        <img id="logged-user-img" [src]="getEcmAvatar(ecmUser.avatarId)" alt="user-info-profile-button"
+                <div *ngIf="(ecmUser$ | async)?.avatarId as avatarId; else initialTemplate">
+                    <div class="adf-userinfo-profile-container">
+                        <img id="logged-user-img" [src]="getEcmAvatar(avatarId)" alt="user-info-profile-button"
                              class="adf-userinfo-profile-image"/>
                     </div>
                 </div>
                 <ng-template #initialTemplate>
-                    <div [outerHTML]="identityUser | usernameInitials:'adf-userinfo-pic'"></div>
+                    <div [innerHTML]="identityUser | usernameInitials:'adf-userinfo-pic'"></div>
                 </ng-template>
             </div>
             <ng-template #showBpmAndEcmUserImage>

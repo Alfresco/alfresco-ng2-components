@@ -554,13 +554,14 @@ describe('User info component', () => {
             getCurrentUserInfoStub = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
         }));
 
-        it('should show the identity user initials if is not ecm user', async () => {
+        it('should show the identity user initials if is not ecm user', async(() => {
             fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('#user-initials-image').textContent).toContain('ff');
-        });
+            fixture.whenStable().then( () => {
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container')).toBeDefined();
+                expect(element.querySelector('#user-initials-image').textContent).toContain('ff');
+            });
+        }));
 
         it('should able to fetch identity userInfo', async(() => {
             fixture.detectChanges();
@@ -631,6 +632,20 @@ describe('User info component', () => {
                 expect(fullNameElement).toBeDefined();
                 expect(fullNameElement.textContent).toContain('fake-identity-first-name');
                 expect(fullNameElement.textContent).not.toContain('null');
+            });
+        }));
+
+        it('should not show initials if the user have avatar', async(() => {
+            getCurrentUserInfoStub.and.returnValue(of(identityUserWithOutLastNameMock));
+            spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmUser));
+            spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
+            fixture.detectChanges();
+
+            fixture.whenStable().then( () => {
+                fixture.detectChanges();
+                expect(element.querySelector('.adf-userinfo-pic')).toBeNull();
+                expect(element.querySelector('.adf-userinfo-profile-image')).toBeDefined();
+                expect(element.querySelector('.adf-userinfo-profile-image')).not.toBeNull();
             });
         }));
     });
