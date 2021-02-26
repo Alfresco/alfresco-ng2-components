@@ -104,8 +104,7 @@ describe('Task counters cloud', () => {
             const assigneeTask = await tasksService.createStandaloneTask(createdTaskName, simpleApp);
             await tasksService.claimTask(assigneeTask.entry.id, simpleApp);
 
-            await taskFilter.waitForNotification('my-tasks');
-            await expect(await taskFilter.getTaskFilterCounter('my-tasks')).toBe((parseInt(taskCounter, 10) + 1).toString());
+            await taskFilter.checkNotificationCounterValue('my-tasks', (parseInt(taskCounter, 10) + 1).toString());
 
             await notificationHistoryPage.clickNotificationButton();
             await notificationHistoryPage.clickMarkAsRead();
