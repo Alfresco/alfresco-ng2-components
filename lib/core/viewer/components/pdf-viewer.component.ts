@@ -101,6 +101,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     private eventBus = new pdfjsViewer.EventBus();
+    private pdfjsDefaultOptions  = {
+        disableAutoFetch: true,
+        disableStream: true
+    };
 
     constructor(
         private dialog: MatDialog,
@@ -141,6 +145,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             const reader = new FileReader();
             reader.onload = async () => {
                 const pdfSource: PDFSource = {
+                    ...this.pdfjsDefaultOptions,
                     data: reader.result,
                     withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
                 };
@@ -152,6 +157,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         const urlFile = changes['urlFile'];
         if (urlFile && urlFile.currentValue) {
             const pdfSource: PDFSource = {
+                ...this.pdfjsDefaultOptions,
                 url: urlFile.currentValue,
                 withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
             };
@@ -183,15 +189,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.displayPage = 1;
             this.initPDFViewer(pdfDocument);
 
-            pdfDocument.getPage(1).then(() => {
-                this.scalePage('auto');
-            }, () => {
-                this.error.emit();
-            });
-
-        }, () => {
-            this.error.emit();
-        });
+            return pdfDocument.getPage(1);
+        })
+        .then(() => this.scalePage('auto'))
+        .catch(() => this.error.emit());
     }
 
     initPDFViewer(pdfDocument: PDFDocumentProxy) {
