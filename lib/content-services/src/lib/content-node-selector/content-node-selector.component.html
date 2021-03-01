@@ -7,7 +7,8 @@
 <mat-tab-group class="adf-content-node-selector-dialog-content"
                mat-align-tabs="start"
                (selectedIndexChange)="onTabSelectionChange($event)"
-               [class.adf-content-node-selector-headless-tabs]="!canPerformLocalUpload()">
+               [class.adf-content-node-selector-headless-tabs]="!canPerformLocalUpload()"
+               dynamicHeight>
     <mat-tab label="{{ 'NODE_SELECTOR.REPOSITORY' | translate }}">
             <adf-content-node-selector-panel
                 [currentFolderId]="data?.currentFolderId"
