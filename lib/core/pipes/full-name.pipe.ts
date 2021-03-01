@@ -22,10 +22,10 @@ export class FullNamePipe implements PipeTransform {
     transform(user: any): string {
         let fullName = '';
         if (user) {
-            if (user.firstName) {
+            if (user.firstName && user.firstName !== 'null') {
                 fullName += user.firstName;
             }
-            if (user.lastName) {
+            if (user.lastName && user.lastName !== 'null') {
                 fullName += fullName.length > 0 ? ' ' : '';
                 fullName += user.lastName;
             }
