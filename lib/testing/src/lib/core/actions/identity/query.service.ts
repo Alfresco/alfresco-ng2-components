@@ -30,7 +30,6 @@ export class QueryService {
         this.api = api;
     }
 
-    // @ts-ignore
     async getProcessInstanceTasks(processInstanceId, appName): Promise<any> {
         const predicate = (result: any) => {
             return result.list && result.list.entries.length > 0;
