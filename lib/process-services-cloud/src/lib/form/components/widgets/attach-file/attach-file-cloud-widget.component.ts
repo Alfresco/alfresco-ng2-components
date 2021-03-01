@@ -151,21 +151,27 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         }
 
         if (!rootNodeId) {
-            let nodeId: string;
             try {
-                if (destinationFolderPath.path) {
-                    nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
-                }
-                if (!nodeId) {
-                    nodeId = await this.contentNodeSelectorService.fetchAliasNodeId(destinationFolderPath.alias);
-                }
+                const nodeId = await this.getNodeIdBasedOnPath(destinationFolderPath);
+                rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
             } catch (error) {
                 this.logService.error(error);
             }
-            rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
         }
 
         return rootNodeId;
+    }
+
+    private async getNodeIdBasedOnPath(destinationFolderPath: DestinationFolderPathModel) {
+        let nodeId: string;
+        if (destinationFolderPath.path) {
+            nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
+        }
+        if (!nodeId) {
+            nodeId = await this.contentNodeSelectorService.fetchAliasNodeId(destinationFolderPath.alias);
+        }
+
+        return nodeId;
     }
 
     getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath: string): DestinationFolderPathModel {
