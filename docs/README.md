@@ -13,11 +13,11 @@ its main source file. Note that ADF is developed continuously, so the source fil
 Components are sometimes marked with an icon to show their status. No icon indicates
 that the component is complete and suitable for normal use. The other status levels are:
 
-*   **Deprecated** ![](docassets/images/DeprecatedIcon.png) - The component is still available
+-   **Deprecated** ![](docassets/images/DeprecatedIcon.png) - The component is still available
     but is now obsolete and will probably be removed in a future version of ADF.
-*   **Experimental** ![](docassets/images/ExperimentalIcon.png) - The component is available for
+-   **Experimental** ![](docassets/images/ExperimentalIcon.png) - The component is available for
     experimentation but not fully complete and tested for production code.
-*   **Internal** ![](docassets/images/InternalIcon.png) - The component is available for
+-   **Internal** ![](docassets/images/InternalIcon.png) - The component is available for
     internal test use but not meant to be used in production
 
 There is also a set of ADF tutorials that describe how to accomplish tasks step-by-step.
@@ -25,45 +25,45 @@ See the [Tutorials index](tutorials/README.md) for the full list.
 
 A few other pages of information are also available:
 
-*   The [Version Index](versionIndex.md) has a list of components ordered by
+-   The [Version Index](versionIndex.md) has a list of components ordered by
     the ADF version where they were introduced.
-*   The [Release notes](release-notes/README.md) section has details of all
+-   The [Release notes](release-notes/README.md) section has details of all
     the features introduced and bugs fixed with each release.
-*   The [Version compatibility](compatibility.md) page shows which versions
+-   The [Version compatibility](compatibility.md) page shows which versions
     of Alfresco's backend servies (ACS and APS) are compatible with each released
     version of ADF.
-*   The [Roadmap](roadmap.md)
+-   The [Roadmap](roadmap.md)
     contains a preview of features we hope to release in future versions of ADF.
-*   The [License info](license-info/README.md) section lists the third-party libraries used by ADF along with links to their Open Source licenses.
-*   The [Vulnerability](vulnerability/README.md) section lists the third-party
+-   The [License info](license-info/README.md) section lists the third-party libraries used by ADF along with links to their Open Source licenses.
+-   The [Vulnerability](vulnerability/README.md) section lists the third-party
     libraries known vulnerability.
     libraries used by ADF along with links to their Open Source licenses.
-*   The [Breaking changes](breaking-changes/breaking-change-2.6.0-3.0.0.md) section lists
+-   The [Breaking changes](breaking-changes/breaking-change-2.6.0-3.0.0.md) section lists
     all breaking changes between major versions, such as removal of deprecated items.
-*   The [Upgrade guide](upgrade-guide/README.md) explains how to upgrade your project from an earlier version of ADF to the current version.
+-   The [Upgrade guide](upgrade-guide/README.md) explains how to upgrade your project from an earlier version of ADF to the current version.
 
 ## Contents
 
-*   [User Guide](#user-guide)
-*   [Core API](#core-api)
-*   [Content Services API](#content-services-api)
-*   [Process Services API](#process-services-api)
-*   [Process Services Cloud API](#process-services-cloud-api)
-*   [Extensions API](#extensions-api)
-*   [Insights API](#insights-api)
+-   [User Guide](#user-guide)
+-   [Core API](#core-api)
+-   [Content Services API](#content-services-api)
+-   [Process Services API](#process-services-api)
+-   [Process Services Cloud API](#process-services-cloud-api)
+-   [Extensions API](#extensions-api)
+-   [Insights API](#insights-api)
 
 ## User guide
 
 <!--guide start-->
 
-*   [Angular Material Design](user-guide/angular-material-design.md)
-*   [Form Extensibility and Customisation](user-guide/extensibility.md)
-*   [Internationalization in ADF](user-guide/internationalization.md)
-*   [Localization in ADF](user-guide/localization.md)
-*   [Theming](user-guide/theming.md)
-*   [Transclusion](user-guide/transclusion.md)
-*   [Typography](user-guide/typography.md)
-*   [Walkthrough - adding indicators to highlight information about a node](user-guide/metadata-indicators.md)
+-   [Angular Material Design](user-guide/angular-material-design.md)
+-   [Form Extensibility and Customisation](user-guide/extensibility.md)
+-   [Internationalization in ADF](user-guide/internationalization.md)
+-   [Localization in ADF](user-guide/localization.md)
+-   [Theming](user-guide/theming.md)
+-   [Transclusion](user-guide/transclusion.md)
+-   [Typography](user-guide/typography.md)
+-   [Walkthrough - adding indicators to highlight information about a node](user-guide/metadata-indicators.md)
 
 <!--guide end-->
 
@@ -81,7 +81,7 @@ for more information about installing and using the source code.
 ### Components
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [About Application Modules Component](core/components/about-application.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows which ADF libraries and plugins an application is using. | [Source](../lib/core/about/about-application-modules/about-application-modules.component.ts) |
 | [About GitHub Link Component](core/components/about-github-link.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows which version of the application is running based on the latest GitHub commit, as well as the server settings for the application. | [Source](../lib/core/about/about-github-link/about-github-link.component.ts) |
 | [About Product Version Component](core/components/about-product-version.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows which version of Process Services (BPM) and Content Services (ECM) an application is running. It also shows the relevant license information, application status and Alfresco modules running in an application. | [Source](../lib/core/about/about-product-version/about-product-version.component.ts) |
@@ -108,8 +108,8 @@ for more information about installing and using the source code.
 | [Login Dialog Panel component](core/components/login-dialog-panel.component.md) | Shows and manages a login dialog. | [Source](../lib/core/login/components/login-dialog-panel.component.ts) |
 | [Login Dialog component](core/components/login-dialog.component.md) | Allows a user to perform a login via a dialog. | [Source](../lib/core/login/components/login-dialog.component.ts) |
 | [Login component](core/components/login.component.md) | Authenticates to Alfresco Content Services and Alfresco Process Services. | [Source](../lib/core/login/components/login.component.ts) |
-| [Notification History component](core/components/notification-history.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | This component is in the current status just an experimental component.
-The main purpose of the Notification history component is list all the notification received in the current session. They will disappear from the list after the refresh. | [Source](../lib/core/notifications/components/notification-history.component.ts) |
+| [Notification History component](core/components/notification-history.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | This component is in the current status just an experimental component. |  |
+| The main purpose of the Notification history component is list all the notification received in the current session. They will disappear from the list after the refresh. | [Source](../lib/core/notifications/components/notification-history.component.ts) |  |
 | [Pagination Component](core/components/pagination.component.md) | Adds pagination to the component it is used with. | [Source](../lib/core/pagination/pagination.component.ts) |
 | [Search Text Input Component](core/components/search-text-input.component.md) | Displays a input text that supports autocompletion | [Source](../lib/core/search-text/search-text-input.component.ts) |
 | [Sidebar action menu component](core/components/sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../lib/core/layout/components/sidebar-action/sidebar-action-menu.component.ts) |
@@ -126,11 +126,12 @@ The main purpose of the Notification history component is list all the notificat
 ### Directives
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Check Allowable Operation directive](core/directives/check-allowable-operation.directive.md) | Selectively disables an HTML element or Angular component. | [Source](../lib/core/directives/check-allowable-operation.directive.ts) |
 | [Clipboard directive](core/directives/clipboard.directive.md) | Copies text to the clipboard. | [Source](../lib/core/clipboard/clipboard.directive.ts) |
-| [Context Menu directive](core/directives/context-menu.directive.md) | Adds a context menu to a component. | [Source](../lib/core/context-menu/context-menu.directive.ts) |
+| [Context Menu directive](core/directives/context-menu.directive.md) ![Deprecated](docassets/images/DeprecatedIcon.png) | Adds a context menu to a component. | [Source](../lib/core/context-menu/context-menu.directive.ts) |
 | [Highlight directive](core/directives/highlight.directive.md) | Adds highlighting to selected sections of an HTML element's content. | [Source](../lib/core/directives/highlight.directive.ts) |
+| [Infinite Select Scroll directive](core/directives/infinite-select-scroll.directive.md) | Load more options to select component if API returns more items | [Source](../lib/core/directives/infinite-select-scroll.directive.ts) |
 | [Logout directive](core/directives/logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../lib/core/directives/logout.directive.ts) |
 | [Node Delete directive](core/directives/node-delete.directive.md) | Deletes multiple files and folders. | [Source](../lib/core/directives/node-delete.directive.ts) |
 | [Node Download directive](core/directives/node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../lib/core/directives/node-download.directive.ts) |
@@ -138,18 +139,17 @@ The main purpose of the Notification history component is list all the notificat
 | [Node Restore directive](core/directives/node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../lib/core/directives/node-restore.directive.ts) |
 | [Upload Directive](core/directives/upload.directive.md) | Uploads content in response to file drag and drop. | [Source](../lib/core/directives/upload.directive.ts) |
 | [Version Compatibility Directive](core/directives/version-compatibility.directive.md) | Enables/disables components based on ACS version in use. | [Source](../lib/core/directives/version-compatibility.directive.ts) |
-| [Infinite Select Scroll](core/directives/infinite-select-scroll.directive.md) | Load more options to select component if API returns more items. | [Source](../lib/core/directives/infinite-select-scroll.directive.ts) |
 
 ### Dialogs
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Edit JSON Dialog](core/dialogs/edit-json.dialog.md) | Allows a user to preview or edit a JSON content in a dialog. | [Source](../lib/testing/src/lib/core/dialog/edit-json-dialog.ts) |
 
 ### Interfaces
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Card View Item interface](core/interfaces/card-view-item.interface.md) | Defines the implementation of an item in a Card View component. | [Source](../lib/core/card-view/interfaces/card-view-item.interface.ts) |
 | [DataTableAdapter interface](core/interfaces/datatable-adapter.interface.md) | Defines how table data is supplied to DataTable and Tasklist components. | [Source](../lib/core/datatable/data/datatable-adapter.ts) |
 | [FormFieldValidator interface](core/interfaces/form-field-validator.interface.md) | Defines how the input fields of Form and Task Details components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
@@ -158,7 +158,7 @@ The main purpose of the Notification history component is list all the notificat
 ### Models
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Bpm User model](core/models/bpm-user.model.md) | Contains information about a Process Services user. | [Source](../lib/core/models/bpm-user.model.ts) |
 | [Ecm User model](core/models/ecm-user.model.md) | Contains information about a Content Services user. | [Source](../lib/core/models/ecm-user.model.ts) |
 | [Form Field model](core/models/form-field.model.md) | Contains the value and metadata for a field of a Form component. | [Source](../lib/core/form/components/widgets/core/form-field.model.ts) |
@@ -168,7 +168,7 @@ The main purpose of the Notification history component is list all the notificat
 ### Pipes
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [App Config Pipe](core/pipes/app-config.pipe.md) | Retrieves values from the application configuration file directly. | [Source](../lib/core/app-config/app-config.pipe.ts) |
 | [Decimal Number Pipe](core/pipes/decimal-number.pipe.md) | Transforms a number to have a certain amount of digits in its integer part and also in its decimal part. | [Source](../lib/core/pipes/decimal-number.pipe.ts) |
 | [File Size pipe](core/pipes/file-size.pipe.md) | Converts a number of bytes to the equivalent in KB, MB, etc. | [Source](../lib/core/pipes/file-size.pipe.ts) |
@@ -176,7 +176,7 @@ The main purpose of the Notification history component is list all the notificat
 | [Full name pipe](core/pipes/full-name.pipe.md) | Joins the first and last name properties from a UserProcessModel object into a single string. | [Source](../lib/core/pipes/full-name.pipe.ts) |
 | [Localized Date pipe](core/pipes/localized-date.pipe.md) | Converts a date to a given format and locale. | [Source](../lib/core/pipes/localized-date.pipe.ts) |
 | [Mime Type Icon pipe](core/pipes/mime-type-icon.pipe.md) | Retrieves an icon to represent a MIME type. | [Source](../lib/core/pipes/mime-type-icon.pipe.ts) |
-| [Multi Value Pipe](core/pipes/multi-value.pipe.md) | Takes an array of strings and turns it into one string where items are separated by a separator. The default separator applied to the list is the comma ,   however, you can set your own separator in the params of the pipe. | [Source](../lib/core/pipes/multi-value.pipe.ts) |
+| [Multi Value Pipe](core/pipes/multi-value.pipe.md) | Takes an array of strings and turns it into one string where items are separated by a separator. The default separator applied to the list is the comma ,  however, you can set your own separator in the params of the pipe. | [Source](../lib/core/pipes/multi-value.pipe.ts) |
 | [Node Name Tooltip pipe](core/pipes/node-name-tooltip.pipe.md) | Formats the tooltip for a Node. | [Source](../lib/core/pipes/node-name-tooltip.pipe.ts) |
 | [Text Highlight pipe](core/pipes/text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string. | [Source](../lib/core/pipes/text-highlight.pipe.ts) |
 | [Time Ago pipe](core/pipes/time-ago.pipe.md) | Converts a recent past date into a number of days ago. | [Source](../lib/core/pipes/time-ago.pipe.ts) |
@@ -185,7 +185,7 @@ The main purpose of the Notification history component is list all the notificat
 ### Services
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [APS Alfresco Content Service](core/services/activiti-alfresco.service.md) | Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS). | [Source](../lib/core/form/services/activiti-alfresco.service.ts) |
 | [Alfresco Api Service](core/services/alfresco-api.service.md) | Provides access to an initialized AlfrescoJSApi instance. | [Source](../lib/core/services/alfresco-api.service.ts) |
 | [App Config service](core/services/app-config.service.md) | Supports app configuration settings, stored server side. | [Source](../lib/core/app-config/app-config.service.ts) |
@@ -238,7 +238,7 @@ The main purpose of the Notification history component is list all the notificat
 ### Widgets
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [APS Content Component](core/widgets/content.widget.md) | Shows the content preview. | [Source](../lib/core/form/components/widgets/content/content.widget.ts) |
 
 <!--core end-->
@@ -257,15 +257,19 @@ for more information about installing and using the source code.
 ### Components
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Add Permission Dialog Component](content-services/components/add-permission-dialog.component.md) | Displays a dialog to search for people or groups to add to the current node permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/add-permission/add-permission-dialog.component.ts) |
 | [Add Permission Panel Component](content-services/components/add-permission-panel.component.md) | Searches for people or groups to add to the current node permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/add-permission/add-permission-panel.component.ts) |
 | [Add Permission Component](content-services/components/add-permission.component.md) | Searches for people or groups to add to the current node permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/add-permission/add-permission.component.ts) |
+| [Aspect List Dialog component](content-services/components/aspect-list-dialog.component.md) | Allows a user to choose aspects for a node. | [Source](../lib/content-services/src/lib/aspect-list/aspect-list-dialog.component.ts) |
+| [Aspect List component](content-services/components/aspect-list.component.md) | This component will show in an expandable row list with checkboxes all the aspect of a node, if a node id is given, or otherwise a complete list. |  |
+| The aspect are filtered via the app.config.json in this way : | [Source](../lib/content-services/src/lib/aspect-list/aspect-list.component.ts) |  |
 | [Breadcrumb Component](content-services/components/breadcrumb.component.md) | Indicates the current position within a navigation hierarchy. | [Source](../lib/content-services/src/lib/breadcrumb/breadcrumb.component.ts) |
 | [Content Action component](content-services/components/content-action.component.md) | Adds options to a Document List actions menu for a particular content type. | [Source](../lib/content-services/src/lib/document-list/components/content-action/content-action.component.ts) |
 | [Content Metadata Card component](content-services/components/content-metadata-card.component.md) | Displays and edits metadata related to a node. | [Source](../lib/content-services/src/lib/content-metadata/components/content-metadata-card/content-metadata-card.component.ts) |
 | [Content Node Selector Panel component](content-services/components/content-node-selector-panel.component.md) | Opens a Content Node Selector  in its own dialog window. | [Source](../lib/content-services/src/lib/content-node-selector/content-node-selector-panel.component.ts) |
 | [Content Node Selector component](content-services/components/content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../lib/content-services/src/lib/content-node-selector/content-node-selector.component.ts) |
+| [Content Type Dialog component](content-services/components/content-type-dialog.component.md) | Confirm dialog when user changes content type of a node. | [Source](../lib/content-services/src/lib/content-type/content-type-dialog.component.ts) |
 | [Document List component](content-services/components/document-list.component.md) | Displays the documents from a repository. | [Source](../lib/content-services/src/lib/document-list/components/document-list.component.ts) |
 | [Dropdown Breadcrumb Component](content-services/components/dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../lib/content-services/src/lib/breadcrumb/dropdown-breadcrumb.component.ts) |
 | [File Uploading Dialog Component](content-services/components/file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components. | [Source](../lib/content-services/src/lib/upload/components/file-uploading-dialog.component.ts) |
@@ -301,7 +305,7 @@ for more information about installing and using the source code.
 ### Directives
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Node Public File Share Directive](content-services/directives/content-node-share.directive.md) | Creates and manages public shared links for files. | [Source](../lib/content-services/src/lib/content-node-share/content-node-share.directive.ts) |
 | [File Draggable directive](content-services/directives/file-draggable.directive.md) | Provides drag-and-drop features for an element such as a div. | [Source](../lib/content-services/src/lib/upload/directives/file-draggable.directive.ts) |
 | [Folder Create directive](content-services/directives/folder-create.directive.md) | Creates folders. | [Source](../lib/content-services/src/lib/folder-directive/folder-create.directive.ts) |
@@ -313,20 +317,20 @@ for more information about installing and using the source code.
 ### Dialogs
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Confirm dialog component](content-services/dialogs/confirm.dialog.md) | Requests a yes/no choice from the user. | [Source](../lib/content-services/src/lib/dialogs/confirm.dialog.ts) |
 | [Library dialog component](content-services/dialogs/library.dialog.md) | Creates a new Content Services document library/site. | [Source](../lib/content-services/src/lib/dialogs/library/library.dialog.ts) |
 
 ### Interfaces
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Search widget interface](content-services/interfaces/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/src/lib/search/search-widget.interface.ts) |
 
 ### Models
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Image Resolver Model](content-services/models/image-resolver.model.md) | Defines the Image Resolver function used by the Document List Component. | [Source](../lib/content-services/document-list/data/image-resolver.model.ts) |
 | [Permission Style model](content-services/models/permissions-style.model.md) | Sets custom CSS styles for rows of a Document List according to the item's permissions. | [Source](../lib/content-services/src/lib/document-list/models/permissions-style.model.ts) |
 | [Row Filter Model](content-services/models/row-filter.model.md) | Defines the Row Filter function used by the Document List Component. | [Source](../lib/content-services/document-list/data/row-filter.model.ts) |
@@ -334,13 +338,13 @@ for more information about installing and using the source code.
 ### Pipes
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [File upload error pipe](content-services/pipes/file-upload-error.pipe.md) | Converts an upload error code to an error message. | [Source](../lib/content-services/src/lib/upload/pipes/file-upload-error.pipe.ts) |
 
 ### Services
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Audit Service](content-services/services/audit.service.md) | Manages Audit apps and entries. | [Source](../lib/content-services/src/lib/audit/audit.service.ts) |
 | [Content Node Dialog service](content-services/services/content-node-dialog.service.md) | Displays and manages dialogs for selecting content to open, copy or upload. | [Source](../lib/content-services/src/lib/content-node-selector/content-node-dialog.service.ts) |
 | [Custom Resources service](content-services/services/custom-resources.service.md) | Manages Document List information that is specific to a user. | [Source](../lib/content-services/src/lib/document-list/services/custom-resources.service.ts) |
@@ -370,7 +374,7 @@ for more information about installing and using the source code.
 ### Components
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Apps List Component](process-services/components/apps-list.component.md) | Shows all available apps. | [Source](../lib/process-services/src/lib/app-list/apps-list.component.ts) |
 | [Attach Form component](process-services/components/attach-form.component.md) | This component can be used when there is no form attached to a task and you want to add one. | [Source](../lib/process-services/src/lib/task-list/components/attach-form.component.ts) |
 | [Checklist Component](process-services/components/checklist.component.md) | Shows the checklist task functionality. | [Source](../lib/process-services/src/lib/task-list/components/checklist.component.ts) |
@@ -402,7 +406,7 @@ for more information about installing and using the source code.
 ### Directives
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Claim Task Directive](process-services/directives/claim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Claims a task | [Source](../lib/process-services/src/lib/task-list/components/task-form/claim-task.directive.ts) |
 | [Process Audit Directive](process-services/directives/process-audit.directive.md) | Fetches the Process Audit information in PDF or JSON format. | [Source](../lib/process-services/src/lib/process-list/components/process-audit.directive.ts) |
 | [Task Audit Directive](process-services/directives/task-audit.directive.md) | Fetches the Task Audit information in PDF or JSON format. | [Source](../lib/process-services/src/lib/task-list/components/task-audit.directive.ts) |
@@ -411,13 +415,13 @@ for more information about installing and using the source code.
 ### Pipes
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Process name pipe](process-services/pipes/process-name.pipe.md) | When an identifier is specified, the input will be transformed replacing the identifiers with the values of the selected process definition provided. | [Source](../lib/process-services/src/lib/pipes/process-name.pipe.ts) |
 
 ### Services
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Process Filter Service](process-services/services/process-filter.service.md) | Manage Process Filters, which are pre-configured Process Instance queries. | [Source](../lib/process-services/src/lib/process-list/services/process-filter.service.ts) |
 | [Process Service](process-services/services/process.service.md) | Manages process instances, process variables, and process audit Log. | [Source](../lib/process-services/src/lib/process-list/services/process.service.ts) |
 | [Task Filter Service](process-services/services/task-filter.service.md) | Manage Task Filters, which are pre-configured Task Instance queries. | [Source](../lib/process-services/src/lib/task-list/services/task-filter.service.ts) |
@@ -439,7 +443,7 @@ for more information about installing and using the source code.
 ### Components
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [App List Cloud Component](process-services-cloud/components/app-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all deployed cloud application instances. | [Source](../lib/process-services-cloud/src/lib/app/components/app-list-cloud.component.ts) |
 | [Edit Process Filter Cloud component](process-services-cloud/components/edit-process-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows/edits process filter details. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts) |
 | [Edit Task Filter Cloud component](process-services-cloud/components/edit-task-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Edits task filter details. | [Source](../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filters/edit-task-filter-cloud.component.ts) |
@@ -447,9 +451,10 @@ for more information about installing and using the source code.
 | [Form cloud component](process-services-cloud/components/form-cloud.component.md) | Shows a form from Process Services. | [Source](../lib/process-services-cloud/src/lib/form/components/form-cloud.component.ts) |
 | [Form Definition Selector Cloud](process-services-cloud/components/form-definition-selector-cloud.component.md) | Allows one form to be selected from a dropdown list. For forms to be displayed in this component they will need to be compatible with standAlone tasks. | [Source](../lib/process-services-cloud/src/lib/form/components/form-definition-selector-cloud.component.ts) |
 | [Group Cloud component](process-services-cloud/components/group-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches Groups. | [Source](../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts) |
-| [](process-services-cloud/components/people-cloud.component.md) | Title: People Cloud Component
+| [](process-services-cloud/components/people-cloud.component.md) | Title: People Cloud Component |  |
+
 Added: v3.0.0
-Status: Experimental | [Source]() |
+Status: Experimental | [Source](<>) |
 | [Process Filters Cloud Component](process-services-cloud/components/process-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.ts) |
 | [Process Header Cloud Component](process-services-cloud/components/process-header-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all the information related to a process instance. | [Source](../lib/process-services-cloud/src/lib/process/process-header/components/process-header-cloud.component.ts) |
 | [Process Instance List Cloud component](process-services-cloud/components/process-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.ts) |
@@ -463,7 +468,7 @@ Status: Experimental | [Source]() |
 ### Directives
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Cancel Process Directive](process-services-cloud/directives/cancel-process.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Cancels a process | [Source](../lib/process-services-cloud/src/lib/process/directives/cancel-process.directive.ts) |
 | [Claim Task Cloud Directive](process-services-cloud/directives/claim-task-cloud.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Claims a task | [Source](../lib/process-services-cloud/src/lib/task/directives/claim-task-cloud.directive.ts) |
 | [Complete Task Directive](process-services-cloud/directives/complete-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Completes a task. | [Source](../lib/process-services-cloud/src/lib/task/directives/complete-task.directive.ts) |
@@ -472,14 +477,14 @@ Status: Experimental | [Source]() |
 ### Pipes
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Group initial pipe](process-services-cloud/pipes/group-initial.pipe.md) | Extracts the initial character from a group name. | [Source](../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
 | [Process name cloud pipe](process-services-cloud/pipes/process-name-cloud.pipe.md) | When an identifier is specified, the input will be transformed replacing the identifiers with the values of the selected process definition provided. | [Source](../lib/process-services-cloud/src/lib/pipes/process-name-cloud.pipe.ts) |
 
 ### Services
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Apps Process Cloud Service](process-services-cloud/services/apps-process-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Gets details of deployed apps for the current user. | [Source](../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts) |
 | [Form cloud service](process-services-cloud/services/form-cloud.service.md) | Implements Process Services form methods | [Source](../lib/process-services-cloud/src/lib/form/services/form-cloud.service.ts) |
 | [Group Cloud Service](process-services-cloud/services/group-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches and gets information for groups. | [Source](../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts) |
@@ -510,14 +515,14 @@ for more information about installing and using the source code.
 ### Components
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Dynamic Component](extensions/components/dynamic.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extension components. | [Source](../lib/extensions/src/lib/components/dynamic-component/dynamic.component.ts) |
 | [Preview Extension Component](extensions/components/preview-extension.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Supports dynamically-loaded viewer preview extensions. | [Source](../lib/extensions/src/lib/components/viewer/preview-extension.component.ts) |
 
 ### Services
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Extension Service](extensions/services/extension.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages and runs basic extension functionality. | [Source](../lib/extensions/src/lib/services/extension.service.ts) |
 
 <!--extensions end-->
@@ -536,7 +541,7 @@ for more information about installing and using the source code.
 ### Components
 
 | Name | Description | Source link |
-| --- | --- | --|
+| ---- | ----------- | ----------- |
 | [Analytics Generator Component](insights/components/analytics-generator.component.md) | Generates and shows charts | [Source](../lib/insights/src/lib/analytics-process/components/analytics-generator.component.ts) |
 | [APS Analytics List Component](insights/components/analytics-report-list.component.md) | Shows a list of all available reports | [Source](../lib/insights/src/lib/analytics-process/components/analytics-report-list.component.ts) |
 | [APS Analytics Component](insights/components/analytics.component.md) | Shows the charts related to the reportId passed as input | [Source](../lib/insights/src/lib/analytics-process/components/analytics.component.ts) |

@@ -13,15 +13,15 @@ Displays the standard three-region ADF application layout.
 
 ## Contents
 
-*   [Basic Usage](#basic-usage)
-    *   [Transclusions](#transclusions)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-    *   [Events](#events)
-*   [Details](#details)
-    *   [Template context](#template-context)
-    *   [menuOpenState$](#menuopenstate)
-    *   [Preserving the menu state](#preserving-the-menu-state)
+-   [Basic Usage](#basic-usage)
+    -   [Transclusions](#transclusions)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Template context](#template-context)
+    -   [menuOpenState$](#menuopenstate)
+    -   [Preserving the menu state](#preserving-the-menu-state)
 
 ## Basic Usage
 
@@ -68,7 +68,7 @@ sub-components (note the use of `<ng-template>` in the sub-components' body sect
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | expandedSidenav | `boolean` | true | Should the navigation region be expanded initially? |
 | hideSidenav | `boolean` | false | Toggles showing/hiding the navigation region. |
 | position | `string` | "start" | The side that the drawer is attached to. Possible values are 'start' and 'end'. |
@@ -79,8 +79,8 @@ sub-components (note the use of `<ng-template>` in the sub-components' body sect
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| expanded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the menu toggle and the collapsed/expanded state of the sideNav changes. |
+| ---- | ---- | ----------- |
+| expanded | `any` | Emitted when the menu toggle and the collapsed/expanded state of the sideNav changes. |
 
 ## Details
 
@@ -114,24 +114,24 @@ Mobile layout (screen width less than the `stepOver` value):
 
 Each template is given a context containing the following methods:
 
-*   `toggleMenu(): void`
+-   `toggleMenu(): void`
     Triggers menu toggling.
 
-*   `isMenuMinimized(): boolean`
+-   `isMenuMinimized(): boolean`
     The expanded/compact (minimized) state of the navigation. This one only makes sense in case of desktop size, when the screen size is above the value of stepOver.
 
 ### menuOpenState$
 
 Beside the template context's **isMenuMinimized** variable, another way to listen to the component's menu's open/closed state is with the `menuOpenState$` observable, which is driven by a `BehaviorSubject` in the background. The value emitted by this observable is the opposite of the `isMenuMinimized` template variable.
 
-| Name           | Type                                                                          | Default | Description                                     |
-| -------------- | ----------------------------------------------------------------------------- | ------- | ----------------------------------------------- |
-| menuOpenState$ | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;boolean> | true    | Another way to listen to menu open/closed state |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| menuOpenState$ | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;boolean> | true | Another way to listen to menu open/closed state |
 
 Every time the menu state is changed, the following values are emitted:
 
-*   true, if the menu changed to the opened state
-*   false, if the menu changed to the closed state
+-   true, if the menu changed to the opened state
+-   false, if the menu changed to the closed state
 
 ### Preserving the menu state
 

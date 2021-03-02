@@ -42,7 +42,7 @@ You can specify the cell inside the `app.config.json` file:
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | column | [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) |  | Data that defines the column. |
 | copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of the cell's content. |
 | data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data table adapter instance. |
@@ -58,4 +58,4 @@ This component provides a custom display to show JSON data in a
 
 ## See also
 
-*   [Datatable component](datatable.component.md)
+-   [Datatable component](datatable.component.md)

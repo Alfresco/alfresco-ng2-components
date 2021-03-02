@@ -12,68 +12,68 @@ Manipulates content related to a Process Instance or Task Instance in APS.
 
 ### Methods
 
-*   **createProcessRelatedContent**(processInstanceId: `string`, content: `any`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **createProcessRelatedContent**(processInstanceId: `string`, content: `any`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Associates an uploaded file with a process instance.
-    *   *processInstanceId:* `string`  - ID of the target process instance
-    *   *content:* `any`  - File to associate
-    *   *opts:* `any`  - (Optional) Options supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Details of created content
-*   **createTaskRelatedContent**(taskId: `string`, file: `any`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   _processInstanceId:_ `string`  - ID of the target process instance
+    -   _content:_ `any`  - File to associate
+    -   _opts:_ `any`  - (Optional) Options supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Details of created content
+-   **createTaskRelatedContent**(taskId: `string`, file: `any`, opts?: `any`): `any`<br/>
     Associates an uploaded file with a task instance.
-    *   *taskId:* `string`  - ID of the target task
-    *   *file:* `any`  - File to associate
-    *   *opts:* `any`  - (Optional) Options supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Details of created content
-*   **createTemporaryRawRelatedContent**(file: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RelatedContentRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md)`>`<br/>
+    -   _taskId:_ `string`  - ID of the target task
+    -   _file:_ `any`  - File to associate
+    -   _opts:_ `any`  - (Optional) Options supported by JS-API
+    -   **Returns** `any` - Details of created content
+-   **createTemporaryRawRelatedContent**(file: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RelatedContentRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md)`>`<br/>
     Create temporary related content from an uploaded file.
-    *   *file:* `any`  - File to use for content
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RelatedContentRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md)`>` - The created content data
-*   **deleteRelatedContent**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   _file:_ `any`  - File to use for content
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RelatedContentRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md)`>` - The created content data
+-   **deleteRelatedContent**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Deletes related content.
-    *   *contentId:* `number`  - Identifier of the content to delete
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null response that notifies when the deletion is complete
-*   **getContentPreview**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>`<br/>
+    -   _contentId:_ `number`  - Identifier of the content to delete
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null response that notifies when the deletion is complete
+-   **getContentPreview**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>`<br/>
     Gets the preview for a related content file.
-    *   *contentId:* `number`  - ID of the related content
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary data of the content preview
-*   **getContentThumbnail**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>`<br/>
+    -   _contentId:_ `number`  - ID of the related content
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary data of the content preview
+-   **getContentThumbnail**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>`<br/>
     Gets the thumbnail for a related content file.
-    *   *contentId:* `number`  - ID of the related content
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary data of the thumbnail image
-*   **getFileContent**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RelatedContentRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md)`>`<br/>
+    -   _contentId:_ `number`  - ID of the related content
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary data of the thumbnail image
+-   **getFileContent**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RelatedContentRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md)`>`<br/>
     Gets the metadata for a related content item.
-    *   *contentId:* `number`  - ID of the content item
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RelatedContentRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md)`>` - Metadata for the content
-*   **getFileRawContent**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>`<br/>
+    -   _contentId:_ `number`  - ID of the content item
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RelatedContentRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md)`>` - Metadata for the content
+-   **getFileRawContent**(contentId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>`<br/>
     Gets raw binary content data for a related content file.
-    *   *contentId:* `number`  - ID of the related content
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary data of the related content
-*   **getFileRawContentUrl**(contentId: `number`): `string`<br/>
+    -   _contentId:_ `number`  - ID of the related content
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary data of the related content
+-   **getFileRawContentUrl**(contentId: `number`): `string`<br/>
     Gets a URL for direct access to a related content file.
-    *   *contentId:* `number`  - ID of the related content
-    *   **Returns** `string` - URL to access the content
-*   **getProcessRelatedContent**(processId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   _contentId:_ `number`  - ID of the related content
+    -   **Returns** `string` - URL to access the content
+-   **getProcessRelatedContent**(processId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets related content items for a process instance.
-    *   *processId:* `string`  - ID of the target process
-    *   *opts:* `any`  - (Optional) Options supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Metadata for the content
-*   **getTaskRelatedContent**(taskId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   _processId:_ `string`  - ID of the target process
+    -   _opts:_ `any`  - (Optional) Options supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Metadata for the content
+-   **getTaskRelatedContent**(taskId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets related content items for a task instance.
-    *   *taskId:* `string`  - ID of the target task
-    *   *opts:* `any`  - (Optional) Options supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Metadata for the content
-*   **handleError**(error: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   _taskId:_ `string`  - ID of the target task
+    -   _opts:_ `any`  - (Optional) Options supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Metadata for the content
+-   **handleError**(error: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Reports an error message.
-    *   *error:* `any`  - Data object with optional `message` and `status` fields for the error
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Callback when an error occurs
-*   **toJson**(res: `any`): `any`<br/>
+    -   _error:_ `any`  - Data object with optional `message` and `status` fields for the error
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Callback when an error occurs
+-   **toJson**(res: `any`): `any`<br/>
     Creates a JSON representation of data.
-    *   *res:* `any`  - Object representing data
-    *   **Returns** `any` - JSON object
-*   **toJsonArray**(res: `any`): `any`<br/>
+    -   _res:_ `any`  - Object representing data
+    -   **Returns** `any` - JSON object
+-   **toJsonArray**(res: `any`): `any`<br/>
     Creates a JSON array representation of data.
-    *   *res:* `any`  - Object representing data
-    *   **Returns** `any` - JSON array object
+    -   _res:_ `any`  - Object representing data
+    -   **Returns** `any` - JSON array object
 
 ## Methods
 
@@ -120,7 +120,7 @@ export class SomePageComponent implements OnInit {
 ```
 
 In the above sample code the `file` is uploaded via an HTML input element.
-The `processInstanceId` refers to a process instance ID for a running process in APS.\
+The `processInstanceId` refers to a process instance ID for a running process in APS.\\
 The returned `relContent` object looks like in this sample:
 
     Related content:     
@@ -277,7 +277,7 @@ See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the
 
 #### getContentPreview(contentId: number): Observable`<Blob>`
 
-Get the preview file for a related content file. A content file might be for example a\
+Get the preview file for a related content file. A content file might be for example a\\
 MS Word document. This method would give you the PDF preview for this document,
 if it has been generated:
 
@@ -299,7 +299,7 @@ See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the
 
 #### getContentThumbnail(contentId: number): Observable`<Blob>`
 
-Get the thumbnail file for a related content file. A content file might be for example a\
+Get the thumbnail file for a related content file. A content file might be for example a\\
 MS Word document. This method would give you the image thumbnail for this document,
 if it has been generated:
 

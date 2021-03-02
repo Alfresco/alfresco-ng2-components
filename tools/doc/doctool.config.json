@@ -230,6 +230,8 @@
     ],
     "ignoreLinkWords" : [
       "Type",
-      "model"
+      "model",
+      "Node",
+      "User"
     ]
 }

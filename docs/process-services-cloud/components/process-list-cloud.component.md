@@ -11,15 +11,15 @@ Renders a list containing all the process instances matched by the parameters sp
 
 ## Contents
 
-*   [Basic Usage](#basic-usage)
-    *   [Transclusions](#transclusions)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-    *   [Events](#events)
-*   [Details](#details)
-    *   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
-    *   [Pagination strategy](#pagination-strategy)
-*   [See also](#see-also)
+-   [Basic Usage](#basic-usage)
+    -   [Transclusions](#transclusions)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
+    -   [Pagination strategy](#pagination-strategy)
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -49,7 +49,7 @@ when the process list is empty:
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
 | appName | `string` | "" | The name of the application. |
 | appVersion | `number \| number[]` |  | The version of the application. |
@@ -79,14 +79,14 @@ when the process list is empty:
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
-| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
+| executeRowAction | `any` | Emitted when the user executes a row action. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
 | rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected. |
-| showRowActionsMenu | `EventEmitter<DataCellEvent>` | Emitted before the actions menu is displayed for a row. |
-| showRowContextMenu | `EventEmitter<DataCellEvent>` | Emitted before the context menu is displayed for a row. |
-| success | `EventEmitter<any>` | Emitted when the list of process instances has been loaded successfully from the server. |
+| showRowActionsMenu | `any` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | `any` | Emitted before the context menu is displayed for a row. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details
 
@@ -161,7 +161,7 @@ information defined in `app.config.json` as in the example below:
 ```
 
 These are all the available columns that can be displayed in this component:
-***appName***, ***businessKey***, ***description***, ***id***, ***initiator***, ***lastModified***, ***processName***, ***parentId***, ***processDefinitionId***, ***processDefinitionKey***, and ***status***.
+**_appName_**, **_businessKey_**, **_description_**, **_id_**, **_initiator_**, **_lastModified_**, **_processName_**, **_parentId_**, **_processDefinitionId_**, **_processDefinitionKey_**, and **_status_**.
 
 ### Setting Sorting Order for the list
 
@@ -319,6 +319,6 @@ earlier), and perform the corresponding actions.
 
 ## See also
 
-*   [Data column component](../../core/components/data-column.component.md)
-*   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
-*   [Pagination component](../../core/components/pagination.component.md)
+-   [Data column component](../../core/components/data-column.component.md)
+-   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
+-   [Pagination component](../../core/components/pagination.component.md)

@@ -25,7 +25,7 @@ Shows all the information related to a task.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | appName | `string` | "" | (Required) The name of the application. |
 | showTitle | `boolean` | true | Show/Hide the task title |
 | taskId | `string` |  | (Required) The id of the task. |
@@ -33,10 +33,10 @@ Shows all the information related to a task.
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | claim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is claimed. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the given task has errors. |
-| unclaim | `EventEmitter<any>` | Emitted when the task is unclaimed (ie, requeued). |
+| unclaim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is unclaimed (ie, requeued). |
 
 ## Details
 
@@ -45,7 +45,7 @@ The component populates an internal array of
 
 By default all properties are displayed:
 
-***assignee***, ***status***, ***priority***, ***dueDate***, ***category***, ***parentName***, ***created***, ***id***, ***description***, ***formName***, ***candidateUsers***, ***candidateGroups***.
+**_assignee_**, **_status_**, **_priority_**, **_dueDate_**, **_category_**, **_parentName_**, **_created_**, **_id_**, **_description_**, **_formName_**, **_candidateUsers_**, **_candidateGroups_**.
 
 However, you can also choose which properties to show using a configuration in `app.config.json`:
 

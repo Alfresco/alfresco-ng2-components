@@ -21,7 +21,7 @@ Shows a list of all available reports
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | appId ID of the target app. |
 | layoutType | `string` |  | layout Type LIST or GRID. |
 | selectFirst | `boolean` | false | selectFirst. |
@@ -29,7 +29,7 @@ Shows a list of all available reports
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | error. |
+| ---- | ---- | ----------- |
+| error | `any` | error. |
 | reportClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ReportParametersModel`](../../../lib/insights/src/lib/diagram/models/report/report-parameters.model.ts)`>` | report Click. |
-| success | `EventEmitter<any>` | success. |
+| success | `any` | success. |

@@ -13,25 +13,25 @@ Maps type names to field component types for the [Card View component](../compon
 
 ### Methods
 
-*   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<Function>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)<br/>
+-   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<__type>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)<br/>
     Gets the currently active [DynamicComponentResolveFunction](../../../lib/core/services/dynamic-component-mapper.service.ts) for a field type.
-    *   *type:* `string`  - The type whose resolver you want
-    *   *defaultValue:* `Type<Function>`  - Default type returned for types that are not yet mapped
-    *   **Returns** [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts) - Resolver function
-*   **register**(components: `Function`, override: `boolean` = `false`)<br/>
+    -   _type:_ `string`  - The type whose resolver you want
+    -   _defaultValue:_ `Type<__type>`  - Default type returned for types that are not yet mapped
+    -   **Returns** [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts) - Resolver function
+-   **register**(components: `Function`, override: `boolean` = `false`)<br/>
     Register multiple components
-    *   *components:* `Function`  -
-    *   *override:* `boolean`  -
-*   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<Function>` = `this.defaultValue`): `Type<Function>`<br/>
+    -   _components:_ `Function`  - 
+    -   _override:_ `boolean`  - 
+-   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
     Finds the component type that is needed to render a form field.
-    *   *model:* [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) field model for the field to render
-    *   *defaultValue:* `Type<Function>`  - Default type returned for field types that are not yet mapped.
-    *   **Returns** `Type<Function>` - Component type
-*   **setComponentTypeResolver**(type: `string`, resolver: [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts), override: `boolean` = `true`)<br/>
+    -   _model:_ [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) field model for the field to render
+    -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
+    -   **Returns** `Type<__type>` - Component type
+-   **setComponentTypeResolver**(type: `string`, resolver: [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts), override: `boolean` = `true`)<br/>
     Sets or optionally replaces a [DynamicComponentResolveFunction](../../../lib/core/services/dynamic-component-mapper.service.ts) for a field type.
-    *   *type:* `string`  - The type whose resolver you want to set
-    *   *resolver:* [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - The new resolver function
-    *   *override:* `boolean`  - The new resolver will only replace an existing one if this parameter is true
+    -   _type:_ `string`  - The type whose resolver you want to set
+    -   _resolver:_ [`DynamicComponentResolveFunction`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - The new resolver function
+    -   _override:_ `boolean`  - The new resolver will only replace an existing one if this parameter is true
 
 ## Details
 
@@ -42,15 +42,15 @@ model object as a parameter and returns the component type needed to display tha
 
 The default mapping is shown below:
 
-| Type string | Component                                                                                                                |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------ |
-| 'text'      | [`CardViewTextItemComponent`](../../../lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) |
-| 'int'       | [`CardViewTextItemComponent`](../../../lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) |
-| 'float'     | [`CardViewTextItemComponent`](../../../lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) |
-| 'date'      | [`CardViewDateItemComponent`](../../../lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) |
-| 'datetime'  | [`CardViewDateItemComponent`](../../../lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) |
-| 'bool'      | [`CardViewBoolItemComponent`](../../../lib/core/card-view/components/card-view-boolitem/card-view-boolitem.component.ts) |
-| 'map'       | [`CardViewMapItemComponent`](../../../lib/core/card-view/components/card-view-mapitem/card-view-mapitem.component.ts)    |
+| Type string | Component |
+| ----------- | --------- |
+| 'text' | [`CardViewTextItemComponent`](../../../lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) |
+| 'int' | [`CardViewTextItemComponent`](../../../lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) |
+| 'float' | [`CardViewTextItemComponent`](../../../lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) |
+| 'date' | [`CardViewDateItemComponent`](../../../lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) |
+| 'datetime' | [`CardViewDateItemComponent`](../../../lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) |
+| 'bool' | [`CardViewBoolItemComponent`](../../../lib/core/card-view/components/card-view-boolitem/card-view-boolitem.component.ts) |
+| 'map' | [`CardViewMapItemComponent`](../../../lib/core/card-view/components/card-view-mapitem/card-view-mapitem.component.ts) |
 
 ### Adding new type mappings
 
@@ -75,5 +75,5 @@ export class SomeParentComponent {
 
 ## See also
 
-*   [Card View component](../components/card-view.component.md)
-*   [Card View Item interface](../interfaces/card-view-item.interface.md)
+-   [Card View component](../components/card-view.component.md)
+-   [Card View Item interface](../interfaces/card-view-item.interface.md)

@@ -26,5 +26,5 @@ Load more options to select component if API returns more items
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| scrollEnd | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event)`>` | Emitted when scroll reaches the last item. |
+| ---- | ---- | ----------- |
+| scrollEnd | `any` | Emitted when scroll reaches the last item. |

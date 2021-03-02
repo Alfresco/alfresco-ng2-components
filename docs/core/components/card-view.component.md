@@ -107,7 +107,7 @@ Defining properties from Typescript:
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | copyToClipboardAction | `boolean` | true | Toggles whether or not to enable copy to clipboard action. |
 | displayClearAction | `boolean` | true | Toggles whether or not to display clear action. |
 | displayEmpty | `boolean` | true | Toggles whether or not to show empty items in non-editable mode. |
@@ -121,16 +121,16 @@ Defining properties from Typescript:
 
 You define the property list, the [`CardViewComponent`](../../core/components/card-view.component.md) does the rest. Each property represents a card view item (a row) in the [card view component](card-view.component.md). The following item types are available by default:
 
-*   [**CardViewTextItemModel**](#card-text-item) - *for text items*
-*   [**CardViewMapItemModel**](#card-map-item) - *for map items*
-*   [**CardViewDateItemModel**](#card-date-item) - *for date items*
-*   [**CardViewDatetimeItemModel**](#card-datetime-item) - *for datetime items*
-*   [**CardViewBoolItemModel**](#card-bool-item) - *for bool items (checkbox)*
-*   [**CardViewIntItemModel**](#card-int-item) - *for integer items*
-*   [**CardViewFloatItemModel**](#card-float-item) - *for float items*
-*   [**CardViewKeyValuePairsItemModel**](#card-key-value-pairs-item) - *for key-value-pairs items*
-*   [**CardViewSelectItemModel**](#card-select-item) - *for select items*
-*   [**CardViewArrayItemModel**](#card-array-item) - *for array items*
+-   [**CardViewTextItemModel**](#card-text-item) - _for text items_
+-   [**CardViewMapItemModel**](#card-map-item) - _for map items_
+-   [**CardViewDateItemModel**](#card-date-item) - _for date items_
+-   [**CardViewDatetimeItemModel**](#card-datetime-item) - _for datetime items_
+-   [**CardViewBoolItemModel**](#card-bool-item) - _for bool items (checkbox)_
+-   [**CardViewIntItemModel**](#card-int-item) - _for integer items_
+-   [**CardViewFloatItemModel**](#card-float-item) - _for float items_
+-   [**CardViewKeyValuePairsItemModel**](#card-key-value-pairs-item) - _for key-value-pairs items_
+-   [**CardViewSelectItemModel**](#card-select-item) - _for select items_
+-   [**CardViewArrayItemModel**](#card-array-item) - _for array items_
 
 Each of these types implements the [Card View Item interface](../interfaces/card-view-item.interface.md):
 
@@ -156,8 +156,8 @@ this.
 You can optionally set up the card view so that its properties can be edited. You can control
 the editing of properties at two levels:
 
-*   **Global level** - *via the editable parameter of the card-view.component*
-*   **[`Property`](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) level** -  *in each property via the editable attribute*
+-   **Global level** - _via the editable parameter of the card-view.component_
+-   **[`Property`](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) level** -  _in each property via the editable attribute_
 
 If you set the global editable parameter to false, no properties can be edited regardless of their
 individual `editable` settings.
@@ -182,22 +182,22 @@ specific data types, as described below.
 const textItemProperty = new CardViewTextItemModel(options);
 ```
 
-| Name                          | Type                                                                                                                      | Default | Description                                                        |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------ |
-| label\*                       | string                                                                                                                    |         | Item label                                                         |
-| value\*                       | any                                                                                                                       |         | The original data value for the item                               |
-| key\*                         | string                                                                                                                    |         | Identifying key (important when editing the item)                  |
-| default                       | any                                                                                                                       |         | The default value to display if the value is empty                 |
-| displayValue\*                | string                                                                                                                    |         | The value to display                                               |
-| editable                      | boolean                                                                                                                   | false   | Toggles whether the item is editable                               |
-| clickable                     | boolean                                                                                                                   | false   | Toggles whether the property responds to clicks                    |
-| clickableCallBack             | function                                                                                                                  | null    | Function to execute when click the element                         |
-| copyToClipboardAction         | `boolean`                                                                                                                 | true    | Toggles whether or not to enable copy to clipboard action.         |
-| useChipsForMultiValueProperty | `boolean`                                                                                                                 | true    | Toggles whether or not to enable chips for multivalued properties. |
-| multiValueSeparator           | `string`                                                                                                                  | ','     | String separator between multi-value property items.               |
-| icon                          | string                                                                                                                    |         | The material icon to show beside the item if it is clickable       |
-| multiline                     | boolean                                                                                                                   | false   | Single or multiline text                                           |
-| pipes                         | [`CardViewTextItemPipeProperty`](../../../lib/core/card-view/interfaces/card-view-textitem-pipe-property.interface.ts)\[] | \[]     | Pipes to be applied to the text before display                     |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| value\* | any |  | The original data value for the item |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | any |  | The default value to display if the value is empty |
+| displayValue\* | string |  | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
+| clickable | boolean | false | Toggles whether the property responds to clicks |
+| clickableCallBack | function | null | Function to execute when click the element |
+| copyToClipboardAction | `boolean` | true | Toggles whether or not to enable copy to clipboard action. |
+| useChipsForMultiValueProperty | `boolean` | true | Toggles whether or not to enable chips for multivalued properties. |
+| multiValueSeparator | `string` | ',' | String separator between multi-value property items. |
+| icon | string |  | The material icon to show beside the item if it is clickable |
+| multiline | boolean | false | Single or multiline text |
+| pipes | [`CardViewTextItemPipeProperty`](../../../lib/core/card-view/interfaces/card-view-textitem-pipe-property.interface.ts)\[] | \[] | Pipes to be applied to the text before display |
 
 ##### Using pipes with a Card Text Item
 
@@ -227,14 +227,14 @@ new CardViewTextItemModel({
 const mapItemProperty = new CardViewMapItemModel(options);
 ```
 
-| Name           | Type    | Default | Description                                        |
-| -------------- | ------- | ------- | -------------------------------------------------- |
-| label\*        | string  |         | Item label                                         |
-| value\*        | Map     |         | A map that contains the key value pairs            |
-| key\*          | string  |         | Identifying key (important when editing the item)  |
-| default        | any     |         | The default value to display if the value is empty |
-| displayValue\* | string  |         | The value to display                               |
-| clickable      | boolean | false   | Toggles whether the property responds to clicks    |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| value\* | Map |  | A map that contains the key value pairs |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | any |  | The default value to display if the value is empty |
+| displayValue\* | string |  | The value to display |
+| clickable | boolean | false | Toggles whether the property responds to clicks |
 
 #### Card Date Item
 
@@ -244,16 +244,16 @@ const mapItemProperty = new CardViewMapItemModel(options);
 const dateItemProperty = new CardViewDateItemModel(options);
 ```
 
-| Name                  | Type      | Default       | Description                                                |
-| --------------------- | --------- | ------------- | ---------------------------------------------------------- |
-| label\*               | string    |               | Item label                                                 |
-| value\*               | any       |               | The original data value for the item                       |
-| copyToClipboardAction | `boolean` | true          | Toggles whether or not to enable copy to clipboard action. |
-| key\*                 | string    |               | Identifying key (important when editing the item)          |
-| default               | any       |               | The default value to display if the value is empty         |
-| displayValue\*        | any       |               | The value to display                                       |
-| editable              | boolean   | false         | Toggles whether the item is editable                       |
-| format                | string    | "MMM DD YYYY" | Any date format that momentjs accepts                      |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| value\* | any |  | The original data value for the item |
+| copyToClipboardAction | `boolean` | true | Toggles whether or not to enable copy to clipboard action. |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | any |  | The default value to display if the value is empty |
+| displayValue\* | any |  | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
+| format | string | "MMM DD YYYY" | Any date format that momentjs accepts |
 
 #### Card Datetime Item
 
@@ -263,15 +263,15 @@ const dateItemProperty = new CardViewDateItemModel(options);
 const datetimeItemProperty = new CardViewDatetimeItemModel(options);
 ```
 
-| Name           | Type    | Default             | Description                                        |
-| -------------- | ------- | ------------------- | -------------------------------------------------- |
-| label\*        | string  |                     | Item label                                         |
-| value\*        | any     |                     | The original data value for the item               |
-| key\*          | string  |                     | Identifying key (important when editing the item)  |
-| default        | any     | any                 | The default value to display if the value is empty |
-| displayValue\* | string  |                     | The value to display                               |
-| editable       | boolean | false               | Toggles whether the item is editable               |
-| format         | string  | "MMM DD YYYY HH:mm" | Any datetime format that momentjs accepts          |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| value\* | any |  | The original data value for the item |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | any | any | The default value to display if the value is empty |
+| displayValue\* | string |  | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
+| format | string | "MMM DD YYYY HH:mm" | Any datetime format that momentjs accepts |
 
 #### Card Bool Item
 
@@ -281,14 +281,14 @@ const datetimeItemProperty = new CardViewDatetimeItemModel(options);
 const boolItemProperty = new CardViewBoolItemModel(options);
 ```
 
-| Name           | Type    | Default | Description                                        |
-| -------------- | ------- | ------- | -------------------------------------------------- |
-| label\*        | string  |         | Item label                                         |
-| value\*        | boolean |         | The original data value for the item               |
-| key\*          | string  |         | Identifying key (important when editing the item)  |
-| default        | boolean | false   | The default value to display if the value is empty |
-| displayValue\* | boolean |         | The value to display                               |
-| editable       | boolean | false   | Toggles whether the item is editable               |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| value\* | boolean |  | The original data value for the item |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | boolean | false | The default value to display if the value is empty |
+| displayValue\* | boolean |  | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
 
 #### Card Int Item
 
@@ -298,14 +298,14 @@ const boolItemProperty = new CardViewBoolItemModel(options);
 const intItemProperty = new CardViewIntItemModel(options);
 ```
 
-| Name           | Type    | Default | Description                                        |
-| -------------- | ------- | ------- | -------------------------------------------------- |
-| label\*        | string  |         | Item label                                         |
-| value\*        | integer |         | The original data value for the item               |
-| key\*          | string  |         | Identifying key (important when editing the item)  |
-| default        | integer |         | The default value to display if the value is empty |
-| displayValue\* | integer |         | The value to display                               |
-| editable       | boolean | false   | Toggles whether the item is editable               |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| value\* | integer |  | The original data value for the item |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | integer |  | The default value to display if the value is empty |
+| displayValue\* | integer |  | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
 
 #### Card Float Item
 
@@ -315,14 +315,14 @@ const intItemProperty = new CardViewIntItemModel(options);
 const floatItemProperty = new CardViewFloatItemModel(options);
 ```
 
-| Name           | Type    | Default | Description                                        |
-| -------------- | ------- | ------- | -------------------------------------------------- |
-| label\*        | string  |         | Item label                                         |
-| value\*        | float   |         | The original data value for the item               |
-| key\*          | string  |         | Identifying key (important when editing the item)  |
-| default        | float   |         | The default value to display if the value is empty |
-| displayValue\* | float   |         | The value to display                               |
-| editable       | boolean | false   | Toggles whether the item is editable               |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| value\* | float |  | The original data value for the item |
+| key\* | string |  | Identifying key (important when editing the item) |
+| default | float |  | The default value to display if the value is empty |
+| displayValue\* | float |  | The value to display |
+| editable | boolean | false | Toggles whether the item is editable |
 
 #### Card Key Value Pairs Item
 
@@ -332,12 +332,12 @@ const floatItemProperty = new CardViewFloatItemModel(options);
 const keyValuePairsItemProperty = new CardViewKeyValuePairsItemModel(options);
 ```
 
-| Name     | Type                             | Default | Description                                       |
-| -------- | -------------------------------- | ------- | ------------------------------------------------- |
-| label\*  | string                           |         | Item label                                        |
-| key\*    | string                           |         | Identifying key (important when editing the item) |
-| editable | boolean                          | false   | Toggles whether the item is editable              |
-| value\*  | `[{ name: '', value: '' }, ...]` |         | The original data value for the item              |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| key\* | string |  | Identifying key (important when editing the item) |
+| editable | boolean | false | Toggles whether the item is editable |
+| value\* | `[{ name: '', value: '' }, ...]` |  | The original data value for the item |
 
 #### Card Select Item
 
@@ -347,13 +347,13 @@ const keyValuePairsItemProperty = new CardViewKeyValuePairsItemModel(options);
 const selectItemProperty = new CardViewSelectItemModel(options);
 ```
 
-| Name       | Type                                                                                                                                                                                       | Default | Description                                       |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | ------------------------------------------------- |
-| label\*    | string                                                                                                                                                                                     |         | Item label                                        |
-| key\*      | string                                                                                                                                                                                     |         | Identifying key (important when editing the item) |
-| editable   | boolean                                                                                                                                                                                    | false   | Toggles whether the item is editable              |
-| value      | string                                                                                                                                                                                     |         | The original data value for the item              |
-| options$\* | [`Observable`](http://reactivex.io/documentation/observable.html)<[`CardViewSelectItemOption`](../../../lib/core/card-view/interfaces/card-view-selectitem-properties.interface.ts)\[]> |         | The original data value for the item              |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| key\* | string |  | Identifying key (important when editing the item) |
+| editable | boolean | false | Toggles whether the item is editable |
+| value | string |  | The original data value for the item |
+| options$\* | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;[`CardViewSelectItemOption`](../../../lib/core/card-view/interfaces/card-view-selectitem-properties.interface.ts)\[]> |  | The original data value for the item |
 
 #### Card Array Item
 
@@ -363,14 +363,14 @@ const selectItemProperty = new CardViewSelectItemModel(options);
 const arrayItemProperty = new CardViewArrayItemModel(items);
 ```
 
-| Name     | Type                                                                                                                                                            | Default | Description                                       |
-| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------- |
-| label\*  | string                                                                                                                                                          |         | Item label                                        |
-| key\*    | string                                                                                                                                                          |         | Identifying key (important when editing the item) |
-| editable | boolean                                                                                                                                                         | false   | Toggles whether the item is editable              |
-| value    | [`Observable`](http://reactivex.io/documentation/observable.html)<[`CardViewArrayItem`](../../../lib/core/card-view/models/card-view-arrayitem.model.ts)\[]> |         | The original data value for the item              |
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| label\* | string |  | Item label |
+| key\* | string |  | Identifying key (important when editing the item) |
+| editable | boolean | false | Toggles whether the item is editable |
+| value | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;[`CardViewArrayItem`](../../../lib/core/card-view/models/card-view-arrayitem.model.ts)\[]> |  | The original data value for the item |
 
 ## See also
 
-*   [Card View Update service](../services/card-view-update.service.md)
-*   [Card View Item interface](../interfaces/card-view-item.interface.md)
+-   [Card View Update service](../services/card-view-update.service.md)
+-   [Card View Item interface](../interfaces/card-view-item.interface.md)

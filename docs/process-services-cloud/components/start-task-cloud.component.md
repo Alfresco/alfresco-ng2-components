@@ -24,7 +24,7 @@ Creates/starts a new task for the specified app.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | appName | `string` | "" | (required) Name of the app. |
 | maxNameLength | `number` |  | Maximum length of the task name. |
 | name | `string` | "" | Name of the task. |
@@ -32,7 +32,7 @@ Creates/starts a new task for the specified app.
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the cancel button is clicked by the user. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| success | `EventEmitter<any>` | Emitted when the task is successfully created. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is successfully created. |

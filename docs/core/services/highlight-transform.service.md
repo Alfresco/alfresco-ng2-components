@@ -13,12 +13,12 @@ Adds HTML to a string to highlight chosen sections.
 
 ### Methods
 
-*   **highlight**(text: `string`, search: `string`, wrapperClass: `string` = `"adf-highlight"`): [`HighlightTransformResult`](../../../lib/core/services/highlight-transform.service.ts)<br/>
+-   **highlight**(text: `string`, search: `string`, wrapperClass: `string` = `"adf-highlight"`): [`HighlightTransformResult`](../../../lib/core/services/highlight-transform.service.ts)<br/>
     Searches for `search` string(s) within `text` and highlights all occurrences.
-    *   *text:* `string`  - Text to search within
-    *   *search:* `string`  - Text pattern to search for
-    *   *wrapperClass:* `string`  - CSS class used to provide highlighting style
-    *   **Returns** [`HighlightTransformResult`](../../../lib/core/services/highlight-transform.service.ts) - New text along with boolean value to indicate whether anything was highlighted
+    -   _text:_ `string`  - Text to search within
+    -   _search:_ `string`  - Text pattern to search for
+    -   _wrapperClass:_ `string`  - CSS class used to provide highlighting style
+    -   **Returns** [`HighlightTransformResult`](../../../lib/core/services/highlight-transform.service.ts) - New text along with boolean value to indicate whether anything was highlighted
 
 ## Details
 
@@ -48,5 +48,5 @@ took place) and true otherwise.
 
 ## See also
 
-*   [Text highlight pipe](../pipes/text-highlight.pipe.md)
-*   [Highlight directive](../directives/highlight.directive.md)
+-   [Text highlight pipe](../pipes/text-highlight.pipe.md)
+-   [Highlight directive](../directives/highlight.directive.md)

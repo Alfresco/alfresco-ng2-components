@@ -24,7 +24,7 @@ Displays a dropdown menu to show and interact with the sites of the current user
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | hideMyFiles | `boolean` | false | Hide the "My Files" option. |
 | placeholder | `string` |  | Text or a translation key to act as a placeholder. Default value is the key "DROPDOWN.PLACEHOLDER_LABEL". |
 | relations | `string` |  | Filter for the results of the sites query. Possible values are "members" and "containers". When "members" is used, the site list will be restricted to the sites that the user is a member of. |
@@ -34,5 +34,5 @@ Displays a dropdown menu to show and interact with the sites of the current user
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | change | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>` | Emitted when the user selects a site. When the default option is selected, an empty model is emitted. |

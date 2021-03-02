@@ -20,7 +20,7 @@ Shows user information.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | bpmBackgroundImage | `string` |  | Custom path for the background banner image for APS users. |
 | ecmBackgroundImage | `string` |  | Custom path for the background banner image for ACS users. |
 | menuPositionX | [`MenuPositionX`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "after" | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |

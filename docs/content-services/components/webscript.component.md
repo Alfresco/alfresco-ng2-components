@@ -11,14 +11,14 @@ Provides access to Webscript features.
 
 ## Contents
 
-*   [Basic usage](#basic-usage)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-    *   [Events](#events)
-*   [Details](#details)
-    *   [Webscript View HTML example](#webscript-view-html-example)
-    *   [Webscript View DATATABLE example](#webscript-view-datatable-example)
-    *   [Webscript View JSON example](#webscript-view-json-example)
+-   [Basic usage](#basic-usage)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Webscript View HTML example](#webscript-view-html-example)
+    -   [Webscript View DATATABLE example](#webscript-view-datatable-example)
+    -   [Webscript View JSON example](#webscript-view-json-example)
 
 ## Basic usage
 
@@ -63,7 +63,7 @@ export class AppComponent {
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | contentType | `string` | "TEXT" | Content type to interpret the data received from the webscript. Can be "JSON" , "HTML" , "DATATABLE" or "TEXT" |
 | contextRoot | `string` | "alfresco" | Path where the application is deployed |
 | scriptArgs | `any` |  | Arguments to pass to the webscript. |
@@ -74,8 +74,8 @@ export class AppComponent {
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the operation succeeds. You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application. |
+| ---- | ---- | ----------- |
+| success | `any` | Emitted when the operation succeeds. You can get the plain data from the webscript through the **success** event parameter and use it as you need in your application. |
 
 ## Details
 

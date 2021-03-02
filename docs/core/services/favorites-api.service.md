@@ -13,23 +13,25 @@ Gets a list of items a user has marked as their favorites.
 
 ### Methods
 
-*   **getFavorites**(personId: `string`, options?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
+-   **getFavorites**(personId: `string`, options?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets the favorites for a user.
-    *   *personId:* `string`  - ID of the user
-    *   *options:* `any`  - (Optional) Options supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - List of favorites
-*   **remapFavoriteEntries**(entries: `any[]`): `any[]`<br/>
+    -   _personId:_ `string`  - ID of the user
+    -   _options:_ `any`  - (Optional) Options supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - List of favorites
+-   **remapFavoriteEntries**(entries: `any[]`): `any[]`<br/>
 
-    *   *entries:* `any[]`  -
-    *   **Returns** `any[]` -
-*   **remapFavoritesData**(data: `any` = `{}`): [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)<br/>
+    -   _entries:_ `any[]`  - 
+    -   **Returns** `any[]` - 
 
-    *   *data:* `any`  -
-    *   **Returns** [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) -
-*   **remapEntry**(\__namedParameters: `Function`): `any`<br/>
+-   **remapFavoritesData**(data: `any` = `{}`): [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)<br/>
 
-    *   *\__namedParameters:* `Function`  -
-    *   **Returns** `any` -
+    -   _data:_ `any`  - 
+    -   **Returns** [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) - 
+
+-   **remapEntry**(\_\_namedParameters: `Function`): `any`<br/>
+
+    -   _\_\_namedParameters:_ `Function`  - 
+    -   **Returns** `any` -
 
 ## Details
 

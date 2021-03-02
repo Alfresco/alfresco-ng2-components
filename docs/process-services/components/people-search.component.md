@@ -32,16 +32,16 @@ special sub-components in the body of the `<adf-people-search>` element:
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | results | [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>` |  | Parameters for displaying the list. |
 
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| closeSearch | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the "close" button is clicked. |
-| searchPeople | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a search is performed with a new keyword. |
-| success | `EventEmitter<UserProcessModel>` | Emitted when a user is selected and the action button is clicked. |
+| ---- | ---- | ----------- |
+| closeSearch | `any` | Emitted when the "close" button is clicked. |
+| searchPeople | `any` | Emitted when a search is performed with a new keyword. |
+| success | `any` | Emitted when a user is selected and the action button is clicked. |
 
 ## Details
 

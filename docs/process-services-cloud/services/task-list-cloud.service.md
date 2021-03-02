@@ -13,14 +13,16 @@ Searches tasks.
 
 ### Methods
 
-*   **getBasePath**(appName: `string`): `string`<br/>
+-   **getBasePath**(appName: `string`): `string`<br/>
 
-    *   *appName:* `string`  -
-    *   **Returns** `string` -
-*   **getTaskByRequest**(requestNode: [`TaskQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/filter-cloud-model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   _appName:_ `string`  - 
+    -   **Returns** `string` - 
+
+-   **getTaskByRequest**(requestNode: [`TaskQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/filter-cloud-model.ts), queryUrl?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Finds a task using an object with optional query properties.
-    *   *requestNode:* [`TaskQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/filter-cloud-model.ts)  - Query object
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Task information
+    -   _requestNode:_ [`TaskQueryCloudRequestModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/filter-cloud-model.ts)  - Query object
+    -   _queryUrl:_ `string`  - (Optional) Query url
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Task information
 
 ## Details
 

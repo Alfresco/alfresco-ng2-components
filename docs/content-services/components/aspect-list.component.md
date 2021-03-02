@@ -28,17 +28,17 @@ The aspect are filtered via the app.config.json in this way :
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
-| nodeId | `string` |  | Identifier of a node to apply likes to. |
+| ---- | ---- | ------------- | ----------- |
+| nodeId | `string` | "" | Node Id of the node that we want to update |
 
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| valueChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted every time the user select a new aspect. |
+| ---- | ---- | ----------- |
+| valueChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string[]>` | Emitted every time the user select a new aspect |
 
 ## See also
 
-*   [Aspect List Dialog component](rating.component.md)
-*   [Aspect List service](../services/rating.service.md)
-*   [Node Aspect service](../services/rating.service.md)
+-   [Aspect List Dialog component](rating.component.md)
+-   [Aspect List service](../services/rating.service.md)
+-   [Node Aspect service](../services/rating.service.md)
