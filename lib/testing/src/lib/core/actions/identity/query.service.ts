@@ -24,7 +24,6 @@ export type TaskStatus = 'COMPLETED' | 'CREATED' | 'ASSIGNED' | 'SUSPENDED' | 'C
 export class QueryService {
 
     api: ApiService;
-    retryCount = 15;
 
     constructor(api: ApiService) {
         this.api = api;
@@ -169,7 +168,7 @@ export class QueryService {
         return ApiUtil.waitForApi(apiCall, predicate);
     }
 
-    async getTask(taskName, processInstanceId, appName, status): Promise<any> {
+    async getTask(taskName: string, processInstanceId: string, appName: string, status: string, retryCount = 15): Promise<any> {
 
         const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
         const method = 'GET';
@@ -183,9 +182,8 @@ export class QueryService {
 
                 if (task.entry.status === status) {
                     return task;
-                } else if (this.retryCount > 0) {
-                    this.retryCount--;
-                    return this.getTask(taskName, processInstanceId, appName, status);
+                } else if (retryCount > 0) {
+                    return this.getTask(taskName, processInstanceId, appName, status, retryCount--);
                 } else {
                     return task;
                 }
