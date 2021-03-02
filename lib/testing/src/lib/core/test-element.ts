@@ -98,7 +98,7 @@ export class TestElement {
         return BrowserActions.getText(this.elementFinder);
     }
 
-    async getInputValue(): Promise<string> {
+    getInputValue(): Promise<string> {
         return BrowserActions.getInputValue(this.elementFinder);
     }
 
