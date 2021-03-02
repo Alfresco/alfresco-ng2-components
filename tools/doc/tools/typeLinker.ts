@@ -10,6 +10,7 @@ const includedNodeTypes = [
 
 let externalNameLinks;
 let linkOverrides;
+let ignoreLinkWords: any[];
 
 export function processDocs(mdCache, aggData) {
     initPhase(aggData, mdCache);
@@ -23,6 +24,7 @@ export function processDocs(mdCache, aggData) {
 
 function initPhase(aggData, mdCache) {
     externalNameLinks = aggData.config.externalNameLinks;
+    ignoreLinkWords = aggData.config.ignoreLinkWords;
 
     linkOverrides = {};
     aggData.config.linkOverrides.forEach(override => {
@@ -63,17 +65,22 @@ function updateFile(tree, pathname, aggData) {
                 (node.children[0].type === 'inlineCode') ||
                 (node.children[0].type === 'text')
             )) {
-                const link = resolveTypeLink(aggData, pathname, node.children[0].value);
+                if(!ignoreLinkWords.includes(node.children[0].value)){
+                    const link = resolveTypeLink(aggData, pathname, node.children[0].value);
 
-                if (link) {
-                    convertNodeToTypeLink(node, node.children[0].value, link);
+                    if (link) {
+                        convertNodeToTypeLink(node, node.children[0].value, link);
+                    }
                 }
             }
         } else if ((node.children) && (node.type !== 'heading')) {
             node.children.forEach((child, index) => {
                 if ((child.type === 'text') || (child.type === 'inlineCode')) {
-                    const newNodes = handleLinksInBodyText(aggData, pathname, child.value, child.type === 'inlineCode');
-                    node.children.splice(index, 1, ...newNodes);
+                    if(!ignoreLinkWords.includes(node.children[0].value)) {
+
+                        const newNodes = handleLinksInBodyText(aggData, pathname, child.value, child.type === 'inlineCode');
+                        node.children.splice(index, 1, ...newNodes);
+                    }
                 } else {
                     traverseMDTree(child);
                 }

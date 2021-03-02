@@ -2,6 +2,7 @@
   "compilerOptions": {
     "outDir": ".",
     "baseUrl": ".",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "target": "es5",
