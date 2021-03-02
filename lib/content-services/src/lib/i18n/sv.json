@@ -30,9 +30,6 @@
       "ARROW_ICON": "Ikon för högerpil"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "Läser in..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bekräfta",
     "ACTION": "Vill du fortsätta?",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "Sökresultat",
     "SELECT_LOCATION": "Välj plats",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Du kan inte ladda upp en fil medan en sökning pågår",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Användaren har inte tillstånd att ladda upp innehåll till mappen"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Användaren har inte tillstånd att ladda upp innehåll till mappen",
+    "REPOSITORY": "Arkiv",
+    "UPLOAD_FROM_DEVICE": "Ladda upp från din enhet"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "Skapad av",
       "CREATED_DATE": "Skapad datum",
       "MODIFIER": "Ändrad av",
-      "MODIFIED_DATE": "Ändringsdatum"
+      "MODIFIED_DATE": "Ändringsdatum",
+      "CONTENT_TYPE": "Innehållstyp"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Ändra innehållstyp",
+        "DESCRIPTION": "Genom att göra denna ändring av innehållstypen läggs vissa egenskaper och lagrade metadata permanent till dokumentet.",
+        "CONFIRM": "Är du säker på att du vill ändra innehållstypen?",
+        "CANCEL": "Avbryt",
+        "APPLY": "Spara ändringar",
+        "VIEW_DETAILS": "Visa detaljer",
+        "PROPERTY": {
+          "NAME": "Namn",
+          "DESCRIPTION": "Beskrivning",
+          "DATA_TYPE": "Datatyp"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Fel vid uppdatering av egenskaper",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Öppna {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Egenskapnamn",
+    "DESCRIPTION": "Beskrivning",
+    "DATA_TYPE": "Datatyp",
+    "DIALOG": {
+      "TITLE": "Anpassa egenskaper",
+      "DESCRIPTION": "Hantera egenskaperna som är associerade med valda filer. Välj bland egenskapsaspekterna nedan för att exponera och tillämpa ytterligare metadata och funktionalitet.",
+      "RESET": "Återställ",
+      "CLEAR": "Rensa",
+      "CANCEL": "Avbryt",
+      "APPLY": "Tillämpa",
+      "OVER-TABLE-MESSAGE": "Välj egenskapsaspekter",
+      "SELECTED": "Vald"
     }
   }
 }

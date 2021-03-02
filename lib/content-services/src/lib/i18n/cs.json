@@ -30,9 +30,6 @@
       "ARROW_ICON": "Ikona se šipkou doprava"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "Načítání..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Potvrdit",
     "ACTION": "Chcete pokračovat?",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "Výsledky hledání",
     "SELECT_LOCATION": "Vybrat umístění",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Soubor nelze nahrát, když probíhá hledání.",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Uživatel nemá oprávnění nahrávat obsah do složky."
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Uživatel nemá oprávnění nahrávat obsah do složky.",
+    "REPOSITORY": "Úložiště",
+    "UPLOAD_FROM_DEVICE": "Odeslat z vašeho zařízení"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "Autor",
       "CREATED_DATE": "Datum vytvoření",
       "MODIFIER": "Upravující",
-      "MODIFIED_DATE": "Datum úpravy"
+      "MODIFIED_DATE": "Datum úpravy",
+      "CONTENT_TYPE": "Typ obsahu"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Změnit typ obsahu",
+        "DESCRIPTION": "Tato změna typu obsahu způsobí, že budou do dokumentu natrvalo přidány vlastnosti a uložená metadata.",
+        "CONFIRM": "Opravdu chcete změnit typ obsahu?",
+        "CANCEL": "Zrušit",
+        "APPLY": "Uložit změny",
+        "VIEW_DETAILS": "Zobrazit podrobnosti",
+        "PROPERTY": {
+          "NAME": "Název",
+          "DESCRIPTION": "Popis",
+          "DATA_TYPE": "Typ dat"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Chyba aktualizace vlastnosti",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Otevřít {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Název vlastnosti",
+    "DESCRIPTION": "Popis",
+    "DATA_TYPE": "Typ dat",
+    "DIALOG": {
+      "TITLE": "Přizpůsobit vlastnosti",
+      "DESCRIPTION": "Můžete spravovat vlastnosti spojené s vybranými soubory. Pokud chcete zpřístupnit a používat další metadata a funkce, vybírejte z aspektů vlastností uvedených níže.",
+      "RESET": "Reset",
+      "CLEAR": "Vymazat",
+      "CANCEL": "Zrušit",
+      "APPLY": "Použít",
+      "OVER-TABLE-MESSAGE": "Vyberte aspekty vlastností",
+      "SELECTED": "Vybráno"
     }
   }
 }

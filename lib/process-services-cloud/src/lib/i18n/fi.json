@@ -95,7 +95,7 @@
       "JSON_CELL": "Json",
       "COMPLETED_BY": "Suorittaja",
       "PRIORITY_VALUES": {
-        "NOT_SET": "Ei määritetty",
+        "NONE": "Ei yhtään",
         "LOW": "Matala",
         "NORMAL": "Normaali",
         "HIGH": "Korkea"
@@ -122,17 +122,47 @@
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Omat tehtävät",
     "QUEUED_TASKS": "Jonossa olevat tehtävät",
-    "COMPLETED_TASKS": "Suoritetut tehtävät"
+    "COMPLETED_TASKS": "Suoritetut tehtävät",
+    "STATUS": {
+      "ALL": "Kaikki",
+      "CREATED": "Luotu",
+      "ASSIGNED": "Määritetyt",
+      "SUSPENDED": "Keskeytetty",
+      "CANCELLED": "Peruutettu",
+      "COMPLETED": "Suoritetut"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Nouseva",
+      "DESCENDING": "Laskeva"
+    }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
     "ALL_SERVICE_TASKS": "Kaikki palvelutehtävät",
     "ERRORED_TASKS": "Virheelliset tehtävät",
-    "COMPLETED_TASKS": "Suoritetut tehtävät"
+    "COMPLETED_TASKS": "Suoritetut tehtävät",
+    "STATUS": {
+      "ALL": "Kaikki",
+      "STARTED": "Aloitettu",
+      "COMPLETED": "Suoritetut",
+      "CANCELLED": "Peruutettu",
+      "ERROR": "Virhe"
+    }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "Kaikki",
     "RUNNING_PROCESSES": "Käynnissä",
-    "COMPLETED_PROCESSES": "Suoritetut"
+    "COMPLETED_PROCESSES": "Suoritetut",
+    "STATUS": {
+      "ALL": "Kaikki",
+      "RUNNING": "Käynnissä",
+      "SUSPENDED": "Keskeytetty",
+      "CANCELLED": "Peruutettu",
+      "COMPLETED": "Suoritetut"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Nouseva",
+      "DESCENDING": "Laskeva"
+    }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

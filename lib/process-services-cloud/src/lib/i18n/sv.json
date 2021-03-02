@@ -95,7 +95,7 @@
       "JSON_CELL": "Json",
       "COMPLETED_BY": "Slutförd av",
       "PRIORITY_VALUES": {
-        "NOT_SET": "Inte inställd",
+        "NONE": "Ingen",
         "LOW": "Låg",
         "NORMAL": "Medium",
         "HIGH": "Hög"
@@ -115,24 +115,54 @@
       "ACTIVITY_TYPE": "Status",
       "ID": "ID",
       "COMPLETED_DATE": "Datum slutförd",
-      "STARTED_DATE": "Datum påbörjad",
+      "STARTED_DATE": "Datum startad",
       "STATUS": "Status"
     }
   },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Mina uppgifter",
     "QUEUED_TASKS": "Köade uppgifter",
-    "COMPLETED_TASKS": "Slutförda uppgifter"
+    "COMPLETED_TASKS": "Slutförda uppgifter",
+    "STATUS": {
+      "ALL": "Alla",
+      "CREATED": "Skapad",
+      "ASSIGNED": "Tilldelad",
+      "SUSPENDED": "Avstängd",
+      "CANCELLED": "Avbruten",
+      "COMPLETED": "Slutförd"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Stigande",
+      "DESCENDING": "Sjunkande"
+    }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
     "ALL_SERVICE_TASKS": "Alla serviceuppgifter",
     "ERRORED_TASKS": "Uppgifter med fel",
-    "COMPLETED_TASKS": "Slutförda uppgifter"
+    "COMPLETED_TASKS": "Slutförda uppgifter",
+    "STATUS": {
+      "ALL": "Alla",
+      "STARTED": "Startade",
+      "COMPLETED": "Slutförd",
+      "CANCELLED": "Avbruten",
+      "ERROR": "Fel"
+    }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "Alla",
     "RUNNING_PROCESSES": "Kör",
-    "COMPLETED_PROCESSES": "Slutförd"
+    "COMPLETED_PROCESSES": "Slutförd",
+    "STATUS": {
+      "ALL": "Alla",
+      "RUNNING": "Kör",
+      "SUSPENDED": "Avstängd",
+      "CANCELLED": "Avbruten",
+      "COMPLETED": "Slutförd"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Stigande",
+      "DESCENDING": "Sjunkande"
+    }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {
@@ -215,7 +245,7 @@
       "LAST_MODIFIED_TO": "Senast ändrad till",
       "PROCESS_NAME": "Processnamn",
       "APP_VERSION": "Version av program",
-      "STARTED_DATE": "Datum påbörjad",
+      "STARTED_DATE": "Datum startad",
       "STARTED_BY": "Startad av",
       "COMPLETED_DATE": "Datum slutförd",
       "DATE_RANGE": {
@@ -320,7 +350,7 @@
       "STATUS": "Status",
       "BUSINESS_KEY": "Affärsnyckel",
       "INITIATOR": "Initerare",
-      "START_DATE": "Påbörjad",
+      "START_DATE": "Startade",
       "LAST_MODIFIED": "Uppdaterad",
       "PARENT_ID": "Överordnad ID",
       "NONE": "Ingen"

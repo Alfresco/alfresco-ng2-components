@@ -6,10 +6,11 @@
   "UNCLAIM": "Frigi",
   "START PROCESS": "Start prosess",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "Ingen meldinger",
+    "NO_MESSAGE": "Du har ingen varsler for øyeblikket.",
     "TITLE": "Varsler",
     "MARK_AS_READ": "Merk alle som lest",
-    "SYSTEM": "System"
+    "SYSTEM": "System",
+    "LOAD_MORE": "Last ned mer"
   },
   "FORM": {
     "START_FORM": {
@@ -198,7 +199,23 @@
         "CREATOR": "Oppretter",
         "CREATED_DATE": "Opprettelsesdato",
         "MODIFIER": "Modifikator",
-        "MODIFIED_DATE": "Endringsdato"
+        "MODIFIED_DATE": "Endringsdato",
+        "CONTENT_TYPE": "Innholdstype"
+      },
+      "CONTENT_TYPE": {
+        "DIALOG": {
+          "TITLE": "Endre innholdstype",
+          "DESCRIPTION": "Ved å foreta denne endringen i innholdstypen legges visse egenskaper og lagrede metadata permanent til i dokumentet.",
+          "CONFIRM": "Er du sikker på at du vil endre innholdstypen?",
+          "CANCEL": "Avbryt",
+          "APPLY": "Lagre endringer",
+          "VIEW_DETAILS": "Visningsdetaljer",
+          "PROPERTY": {
+            "NAME": "Navn",
+            "DESCRIPTION": "Beskrivelse",
+            "DATA_TYPE": "Datatype"
+          }
+        }
       },
       "ACTIONS": {
         "EDIT": "Rediger",
@@ -206,12 +223,14 @@
         "CANCEL": "Avbryt",
         "CLEAR": "Fjern",
         "TOGGLE": "Bytt verdi",
-        "COPY_TO_CLIPBOARD": "Dobbeltkllikk for å kopiere verdi"
+        "COPY_TO_CLIPBOARD": "Dobbeltkllikk for å kopiere verdi",
+        "EDIT_ASPECTS": "Redigeringaspekt"
       },
       "ACCESSIBILITY": {
         "EDIT": "Redigeringsknapp",
         "DATEPICKER": "Bruk piltastene for å navigere mellom datoer. Med pil opp og pil ned går du til samme dag i neste eller forrige uke. Med venstre og høyre pil går du én dag frem eller tilbake. Trykk på Enter eller Retur for å velge en dato.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Verdi kopiert til utklippstavle"
+        "COPY_TO_CLIPBOARD_MESSAGE": "Verdi kopiert til utklippstavle",
+        "EDIT_ASPECTS": "Redigeringaspekt"
       }
     },
     "SEARCH": {
@@ -256,7 +275,7 @@
       "LOGIN-ERROR-PROVIDERS": "Leverandører kan ikke være udefinert",
       "LOGIN-ERROR-CORS": "CORS-unntak, kontroller serverkonfigurasjonen",
       "LOGIN-ERROR-CSRF": "CSRF-unntak, angi \"disableCSRF\": true i app.config.json",
-      "LOGIN-ECM-LICENSE": "Alfresco Content Services-database i skrivebeskyttet modus",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services-datalager i skrivebeskyttet modus",
       "SSO-WRONG-CONFIGURATION": "SSO-godkjenningsserver kan ikke nås"
     },
     "BUTTON": {
@@ -376,7 +395,8 @@
       "CLOSE": "Lukk",
       "PLACEHOLDER": "Passord",
       "ERROR": "Passordet er feil"
-    }
+    },
+    "SUBTITLES": "Undertekster"
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
@@ -529,5 +549,8 @@
     "BUTTON": {
       "ARIA_LABEL": "Fjern"
     }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Laster inn..."
   }
 }

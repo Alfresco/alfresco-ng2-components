@@ -6,10 +6,11 @@
   "UNCLAIM": "Frigiv",
   "START PROCESS": "Start proces",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "Ingen meddelelser",
+    "NO_MESSAGE": "Du har ingen meddelelser i øjeblikket.",
     "TITLE": "Meddelelser",
     "MARK_AS_READ": "Markér alle som læst",
-    "SYSTEM": "System"
+    "SYSTEM": "System",
+    "LOAD_MORE": "Indlæs flere"
   },
   "FORM": {
     "START_FORM": {
@@ -198,7 +199,23 @@
         "CREATOR": "Oprettet af",
         "CREATED_DATE": "Oprettelsesdato",
         "MODIFIER": "Ændret af",
-        "MODIFIED_DATE": "Ændringsdato"
+        "MODIFIED_DATE": "Ændringsdato",
+        "CONTENT_TYPE": "Indholdstype"
+      },
+      "CONTENT_TYPE": {
+        "DIALOG": {
+          "TITLE": "Skift indholdstype",
+          "DESCRIPTION": "Udførelse af denne ændring til indholdstypen, vil tilføje visse egenskaber og lagrede metadata permanent til dokumentet.",
+          "CONFIRM": "Er du sikker på at du vil ændre indholdstypen?",
+          "CANCEL": "Annuller",
+          "APPLY": "Gem ændringerne",
+          "VIEW_DETAILS": "Vis detaljer",
+          "PROPERTY": {
+            "NAME": "Navn",
+            "DESCRIPTION": "Beskrivelse",
+            "DATA_TYPE": "Datatype"
+          }
+        }
       },
       "ACTIONS": {
         "EDIT": "Rediger",
@@ -206,12 +223,14 @@
         "CANCEL": "Annuller",
         "CLEAR": "Ryd",
         "TOGGLE": "Slå værdi til/fra",
-        "COPY_TO_CLIPBOARD": "Dobbeltklik for at kopiere værdien"
+        "COPY_TO_CLIPBOARD": "Dobbeltklik for at kopiere værdien",
+        "EDIT_ASPECTS": "Rediger udseende"
       },
       "ACCESSIBILITY": {
         "EDIT": "Redigér knap",
         "DATEPICKER": "Brug piletasterne til at navigere mellem datoer. Pil op og pil ned bruges til at gå til den næste eller forrige uge, på den samme dag. Brug venstre og højre pil til at gå til næste eller forrige dag. Tryk på Enter eller Return for at vælge en dato.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Værdien er kopieret til udklipsholderen"
+        "COPY_TO_CLIPBOARD_MESSAGE": "Værdien er kopieret til udklipsholderen",
+        "EDIT_ASPECTS": "Rediger udseende"
       }
     },
     "SEARCH": {
@@ -376,7 +395,8 @@
       "CLOSE": "Luk",
       "PLACEHOLDER": "Adgangskode",
       "ERROR": "Adgangskoden er forkert"
-    }
+    },
+    "SUBTITLES": "Undertekster"
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
@@ -529,5 +549,8 @@
     "BUTTON": {
       "ARIA_LABEL": "Ryd"
     }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Indlæser …"
   }
 }

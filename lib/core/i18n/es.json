@@ -6,10 +6,11 @@
   "UNCLAIM": "Liberar",
   "START PROCESS": "Iniciar proceso",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "No hay mensajes",
+    "NO_MESSAGE": "No tiene notificaciones en este momento.",
     "TITLE": "Notificaciones",
     "MARK_AS_READ": "Marcar todo como leído",
-    "SYSTEM": "Sistema"
+    "SYSTEM": "Sistema",
+    "LOAD_MORE": "Cargar más"
   },
   "FORM": {
     "START_FORM": {
@@ -198,7 +199,23 @@
         "CREATOR": "Creador",
         "CREATED_DATE": "Fecha de creación",
         "MODIFIER": "Modificador",
-        "MODIFIED_DATE": "Fecha de modificación"
+        "MODIFIED_DATE": "Fecha de modificación",
+        "CONTENT_TYPE": "Tipo de contenido"
+      },
+      "CONTENT_TYPE": {
+        "DIALOG": {
+          "TITLE": "Cambiar tipo de contenido",
+          "DESCRIPTION": "Al realizar este cambio de tipo de contenido, se añadirán propiedades y se guardarán metadatos en el documento de forma permanente.",
+          "CONFIRM": "¿Está seguro de que desea cambiar el tipo de contenido?",
+          "CANCEL": "Cancelar",
+          "APPLY": "Guardar cambios",
+          "VIEW_DETAILS": "Ver los detalles",
+          "PROPERTY": {
+            "NAME": "Nombre",
+            "DESCRIPTION": "Descripción",
+            "DATA_TYPE": "Tipo de datos"
+          }
+        }
       },
       "ACTIONS": {
         "EDIT": "Editar",
@@ -206,12 +223,14 @@
         "CANCEL": "Cancelar",
         "CLEAR": "Borrar",
         "TOGGLE": "Alternar valor",
-        "COPY_TO_CLIPBOARD": "Haga doble clic para copiar el valor"
+        "COPY_TO_CLIPBOARD": "Haga doble clic para copiar el valor",
+        "EDIT_ASPECTS": "Editar aspecto"
       },
       "ACCESSIBILITY": {
         "EDIT": "Botón Editar",
         "DATEPICKER": "Utilice las teclas de dirección para cambiar de fecha. Las teclas de arriba y abajo pasan al mismo día de la semana siguiente o anterior; y las de izquierda y derecha pasan al día siguiente o anterior. Pulse la tecla de entrada para seleccionar una fecha.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Valor copiado al portapapeles"
+        "COPY_TO_CLIPBOARD_MESSAGE": "Valor copiado al portapapeles",
+        "EDIT_ASPECTS": "Editar aspecto"
       }
     },
     "SEARCH": {
@@ -376,7 +395,8 @@
       "CLOSE": "Cerrar",
       "PLACEHOLDER": "Contraseña",
       "ERROR": "La contraseña es incorrecta"
-    }
+    },
+    "SUBTITLES": "Subtítulos"
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
@@ -529,5 +549,8 @@
     "BUTTON": {
       "ARIA_LABEL": "Borrar"
     }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Cargando..."
   }
 }

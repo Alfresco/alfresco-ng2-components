@@ -134,7 +134,7 @@
         "ERROR": {
           "REQUIRED": "Obligatorisk felt",
           "DATE": "Datoformat DD/MM/ÅÅÅÅ",
-          "MAXIMUM_LENGTH": "Længden er overskredet, maks. {{characters}} tegn",
+          "MAXIMUM_LENGTH": "Længden er overskredet, maks. {{characters}} tegn.",
           "MESSAGE": "Angiv en anden værdi"
         }
       }

@@ -95,7 +95,7 @@
       "JSON_CELL": "Json",
       "COMPLETED_BY": "إكمال بواسطة",
       "PRIORITY_VALUES": {
-        "NOT_SET": "غير معين",
+        "NONE": "بلا",
         "LOW": "منخفضة",
         "NORMAL": "متوسطة",
         "HIGH": "مرتفعة"
@@ -122,17 +122,47 @@
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "مهامي",
     "QUEUED_TASKS": "المهام بقائمة الانتظار",
-    "COMPLETED_TASKS": "مهام مكتملة"
+    "COMPLETED_TASKS": "مهام مكتملة",
+    "STATUS": {
+      "ALL": "الكل",
+      "CREATED": "تم الإنشاء",
+      "ASSIGNED": "معين",
+      "SUSPENDED": "معلق",
+      "CANCELLED": "ملغى",
+      "COMPLETED": "المكتملة"
+    },
+    "DIRECTION": {
+      "ASCENDING": "تصاعدي",
+      "DESCENDING": "تنازلي"
+    }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
     "ALL_SERVICE_TASKS": "كل مهام الخدمة",
     "ERRORED_TASKS": "المهام التي بها أخطاء",
-    "COMPLETED_TASKS": "مهام مكتملة"
+    "COMPLETED_TASKS": "مهام مكتملة",
+    "STATUS": {
+      "ALL": "الكل",
+      "STARTED": "بدأ",
+      "COMPLETED": "المكتملة",
+      "CANCELLED": "ملغى",
+      "ERROR": "خطأ"
+    }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "الكل",
     "RUNNING_PROCESSES": "قيد التشغيل",
-    "COMPLETED_PROCESSES": "المكتملة"
+    "COMPLETED_PROCESSES": "المكتملة",
+    "STATUS": {
+      "ALL": "الكل",
+      "RUNNING": "قيد التشغيل",
+      "SUSPENDED": "معلق",
+      "CANCELLED": "ملغى",
+      "COMPLETED": "المكتملة"
+    },
+    "DIRECTION": {
+      "ASCENDING": "تصاعدي",
+      "DESCENDING": "تنازلي"
+    }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

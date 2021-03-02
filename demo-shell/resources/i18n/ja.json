@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "削除を許可する",
       "SHOW_COMMENTS": "バージョンに関するコメントを表示",
-      "ALLOW_DOWNLOAD": "バージョンのダウンロードを許可",
+      "ALLOW_DOWNLOAD": "バージョンのダウンロードを許可する",
       "READ_ONLY": "読取り専用",
       "COMMENTS": "コメントを表示する",
       "VERSION_COMPARISON": "バージョンの比較を表示"
@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "入力プロパティを無効にし、サービスを使って設定する場合は、このチェックボックスをオンにします",
     "HEADER_DATA": "ヘッダーの日付",
     "TREE_VIEW": "ツリービュー",
+    "EXPAND_LIST": "拡張可能なアイテムリスト",
     "ICONS": "アイコン",
     "PEOPLE_GROUPS_CLOUD": "メンバー/グループのクラウド",
     "TASK_HEADER_CLOUD": {
@@ -121,13 +122,13 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "複数選択 (チェックボックスを使用)",
-    "THUMBNAILS": "サムネイルを有効にする",
+    "THUMBNAILS": "サムネイルを有効化",
     "ALLOW_DROP_FILES": "ファイルのドロップを許可",
     "MULTIPLE_FILE_UPLOAD": "複数ファイルのアップロード",
     "FOLDER_UPLOAD": "フォルダのアップロード",
     "CUSTOM_FILTER": "カスタム拡張子フィルタ",
     "MAX_SIZE": "最大サイズフィルタ",
-    "ENABLE_VERSIONING": "バージョン管理を有効にする",
+    "ENABLE_VERSIONING": "バージョン管理を有効化",
     "DESCRIPTION_UPLOAD": "アップロードを有効にします",
     "ENABLE_INFINITE_SCROLL": "無限スクロールを有効にする",
     "MULTISELECT_DESCRIPTION": "複数選択の切り替えを行うには、Cmd (Mac) キーまたは Ctrl (Windows) キーを押します",
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "バージョンの管理",
+      "ASPECTS": "アスペクトを更新",
       "LOCK": "ロック",
       "METADATA": "情報",
       "DOWNLOAD": "ダウンロード",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "保存",
     "RESTORE": "復元"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "{{taskName}}タスクが{{assignee}}に割り当てられました",
+    "PROCESS_STARTED": "{{processName}}プロセスが開始しました",
+    "TASK_UPDATED": "{{taskName}}タスクの詳細が更新されました"
   },
   "FORM-LOADING": {
     "FORM_DATA": "フォーム データ",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "カスタムのタイトル翻訳 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "カスタムのタイトル翻訳 2",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "ホームへ戻る"
+    },
     "507": {
       "TITLE": "ACS のディスクがいっぱいです",
       "DESCRIPTION": "コンテンツのサイズが、ネットワークまたはシステムに設定されているストレージクォータの上限を超えています。",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "ホームへ戻る"
       }
     }
   },

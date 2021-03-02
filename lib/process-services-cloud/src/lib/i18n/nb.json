@@ -95,9 +95,9 @@
       "JSON_CELL": "Json",
       "COMPLETED_BY": "Fullført av",
       "PRIORITY_VALUES": {
-        "NOT_SET": "Ikke angitt",
+        "NONE": "Ingen",
         "LOW": "Lav",
-        "NORMAL": "Normal",
+        "NORMAL": "Middels",
         "HIGH": "Høy"
       }
     },
@@ -122,17 +122,47 @@
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Mine oppgaver",
     "QUEUED_TASKS": "Oppgaver i kø",
-    "COMPLETED_TASKS": "Fullførte oppgaver"
+    "COMPLETED_TASKS": "Fullførte oppgaver",
+    "STATUS": {
+      "ALL": "Alle",
+      "CREATED": "Opprettet",
+      "ASSIGNED": "Tilordnet",
+      "SUSPENDED": "Deaktivert",
+      "CANCELLED": "Avbrutt",
+      "COMPLETED": "Fullført"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Stigende",
+      "DESCENDING": "Synkende"
+    }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
     "ALL_SERVICE_TASKS": "Alle serviceoppgaver",
     "ERRORED_TASKS": "Mislykkede oppgaver",
-    "COMPLETED_TASKS": "Fullførte oppgaver"
+    "COMPLETED_TASKS": "Fullførte oppgaver",
+    "STATUS": {
+      "ALL": "Alle",
+      "STARTED": "Startet",
+      "COMPLETED": "Fullført",
+      "CANCELLED": "Avbrutt",
+      "ERROR": "Feil"
+    }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "Alle",
     "RUNNING_PROCESSES": "Kjører",
-    "COMPLETED_PROCESSES": "Fullført"
+    "COMPLETED_PROCESSES": "Fullført",
+    "STATUS": {
+      "ALL": "Alle",
+      "RUNNING": "Kjører",
+      "SUSPENDED": "Deaktivert",
+      "CANCELLED": "Avbrutt",
+      "COMPLETED": "Fullført"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Stigende",
+      "DESCENDING": "Synkende"
+    }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

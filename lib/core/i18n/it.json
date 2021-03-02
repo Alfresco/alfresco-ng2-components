@@ -6,10 +6,11 @@
   "UNCLAIM": "Restituisci",
   "START PROCESS": "Avvia processo",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "Nessun messaggio",
+    "NO_MESSAGE": "Non sono presenti notifiche in questo momento.",
     "TITLE": "Notifiche",
     "MARK_AS_READ": "Seleziona tutti come già letti",
-    "SYSTEM": "Sistema"
+    "SYSTEM": "Sistema",
+    "LOAD_MORE": "Carica altro"
   },
   "FORM": {
     "START_FORM": {
@@ -198,7 +199,23 @@
         "CREATOR": "Creatore",
         "CREATED_DATE": "Data di creazione",
         "MODIFIER": "Modificatore",
-        "MODIFIED_DATE": "Data di modifica"
+        "MODIFIED_DATE": "Data di modifica",
+        "CONTENT_TYPE": "Tipo di contenuto"
+      },
+      "CONTENT_TYPE": {
+        "DIALOG": {
+          "TITLE": "Modifica il tipo di contenuto",
+          "DESCRIPTION": "Se si apporta questa modifica al tipo di contenuto, alcune proprietà e metadati memorizzati verranno aggiunti al documento in modo definitivo.",
+          "CONFIRM": "Modificare il tipo di contenuto?",
+          "CANCEL": "Annulla",
+          "APPLY": "Salva modifiche",
+          "VIEW_DETAILS": "Visualizza dettagli",
+          "PROPERTY": {
+            "NAME": "Nome",
+            "DESCRIPTION": "Descrizione",
+            "DATA_TYPE": "Tipo di dati"
+          }
+        }
       },
       "ACTIONS": {
         "EDIT": "Modifica",
@@ -206,12 +223,14 @@
         "CANCEL": "Annulla",
         "CLEAR": "Cancella",
         "TOGGLE": "Cambiare valore",
-        "COPY_TO_CLIPBOARD": "Fare doppio clic per copiare il valore"
+        "COPY_TO_CLIPBOARD": "Fare doppio clic per copiare il valore",
+        "EDIT_ASPECTS": "Modifica aspetto"
       },
       "ACCESSIBILITY": {
         "EDIT": "Pulsante Modifica",
         "DATEPICKER": "Usare i tasti freccia per spostarsi fra le date. I tasti Su e Giù passano alla settimana successiva o precedente, ma nello stesso giorno. I tasti Sinistra e Destra passano al giorno successivo o precedente. Premere Invio per selezionare una data.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Valore copiato negli appunti"
+        "COPY_TO_CLIPBOARD_MESSAGE": "Valore copiato negli appunti",
+        "EDIT_ASPECTS": "Modifica aspetto"
       }
     },
     "SEARCH": {
@@ -376,7 +395,8 @@
       "CLOSE": "Chiudi",
       "PLACEHOLDER": "Password",
       "ERROR": "Password errata"
-    }
+    },
+    "SUBTITLES": "Sottotitoli"
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
@@ -529,5 +549,8 @@
     "BUTTON": {
       "ARIA_LABEL": "Cancella"
     }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Caricamento in corso..."
   }
 }
