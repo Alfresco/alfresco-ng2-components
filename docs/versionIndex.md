@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v4.3.0](#v320)
 -   [v4.2.0](#v420)
 -   [v4.1.0](#v410)
 -   [v4.0.0](#v400)
@@ -33,6 +34,14 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v4.3.0
+
+<!--v430 start-->
+
+-   [Infinite select scroll directive](core/directives/infinite-select-scroll.directive.md)
+
+<!--v430 end-->
 
 ## v4.2.0
 
