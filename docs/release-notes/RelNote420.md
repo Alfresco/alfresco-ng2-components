@@ -1,5 +1,5 @@
 ---
-Title: Release notes v4.1.0
+Title: Release notes v4.2.0
 ---
 
 # Alfresco Application Development Framework (ADF) version 4.2.0 Release Note
@@ -32,7 +32,7 @@ You can contact Francesco Corti (francesco.corti at alfresco.com) for details of
 
 ## Goals for this release
 
-This is a minor release of the Alfresco Application Development Framework, developed to receive the latest and greatest benefits of the bugfixes and the enhacements planned since the release of the previous version.
+This is a minor release of the Alfresco Application Development Framework, developed to receive the latest and greatest benefits of the bugfixes and the enhancements planned since the release of the previous version.
 
 The highlights of this release is mainly about bugfixes and enhancements related to the Alfresco Process Application (APA) use cases.
 
@@ -55,6 +55,8 @@ The following is a brief list of references to help you get started with the new
 -   [Official GitHub Project - generator-ng2-alfresco-app](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
 Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+
+## PR merged 
 
 * [Alfresco/alfresco-ng2-components#6244 - Bump snyk from 1.413.2 to 1.413.3](https://github.com/Alfresco/alfresco-ng2-components/pull/6244)
 * [Alfresco/alfresco-ng2-components#6230 - Bump moment from 2.29.0 to 2.29.1](https://github.com/Alfresco/alfresco-ng2-components/pull/6230)
