@@ -260,7 +260,11 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     ngOnInit() {
         this.apiService.nodeUpdated.pipe(
-            filter((node) => node && node.id === this.nodeId && node.name !== this.fileName),
+            filter((node) => {
+                return node && node.id === this.nodeId &&
+                    (node.name !== this.fileName ||
+                        this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node));
+            }),
             takeUntil(this.onDestroy$)
         ).subscribe((node) => this.onNodeUpdated(node));
 
@@ -282,6 +286,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             .forEach((extension: ViewerExtensionRef) => {
                 this.externalExtensions.push(extension.fileExtension);
             });
+    }
+
+    private getNodeVersionProperty(node: Node): string {
+        return node?.properties['cm:versionLabel'] ?? '';
     }
 
     ngOnDestroy() {
