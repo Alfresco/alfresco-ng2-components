@@ -98,6 +98,10 @@ export class TestElement {
         return BrowserActions.getText(this.elementFinder);
     }
 
+    getInputValue(): Promise<string> {
+        return BrowserActions.getInputValue(this.elementFinder);
+    }
+
     async typeText(text: string): Promise<void> {
          await BrowserActions.clearSendKeys(this.elementFinder, text);
     }
