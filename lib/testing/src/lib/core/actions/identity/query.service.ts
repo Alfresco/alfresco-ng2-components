@@ -168,6 +168,45 @@ export class QueryService {
         return ApiUtil.waitForApi(apiCall, predicate);
     }
 
+    async getTask(taskName: string, processInstanceId: string, appName: string, status: string, retryCount = 15): Promise<any> {
+
+        const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
+        const method = 'GET';
+
+        const queryParams = {}, postBody = {};
+
+        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+        for (let i = 0; i < data.list.entries.length; i++) {
+            if (data.list.entries[i].entry.name === taskName) {
+                const task = data.list.entries[i];
+
+                if (task.entry.status === status) {
+                    return task;
+                } else if (retryCount > 0) {
+                    return this.getTask(taskName, processInstanceId, appName, status, retryCount--);
+                } else {
+                    return task;
+                }
+            }
+        }
+    }
+
+    async getTaskByNameAndStatus(taskName, processInstanceId, appName, status: TaskStatus): Promise<any> {
+        const predicate = (result: any) => {
+            return !!result;
+        };
+
+        const apiCall = async () => {
+            try {
+                return this.getTask(taskName, processInstanceId, appName, status);
+            } catch (error) {
+                Logger.error('Get Task By Name - Service error');
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate);
+    }
+
     async getProcessInstanceId(processName: string, appName: string): Promise<any> {
         const predicate = (result: any) => {
             return !!result;
