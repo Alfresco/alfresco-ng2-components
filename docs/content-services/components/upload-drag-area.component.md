@@ -11,15 +11,15 @@ Adds a drag and drop area to upload files to ACS.
 
 ## Contents
 
-*   [Basic Usage](#basic-usage)
-    *   [Transclusions](#transclusions)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-    *   [Events](#events)
-*   [Details](#details)
-    *   [Intercepting uploads](#intercepting-uploads)
-    *   [Example](#example)
-*   [See also](#see-also)
+-   [Basic Usage](#basic-usage)
+    -   [Transclusions](#transclusions)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Intercepting uploads](#intercepting-uploads)
+    -   [Example](#example)
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -60,7 +60,7 @@ as the drag/drop target:
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | acceptedFilesType | `string` | "\*" | Filter for accepted file types. |
 | comment | `string` |  | When you overwrite existing content, you can use the comment field to add a version comment that appears in the version history |
 | disabled | `boolean` | false | Toggles component disabled state (if there is no node permission checking). |
@@ -73,11 +73,11 @@ as the drag/drop target:
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../../lib/content-services/src/lib/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| success | `EventEmitter<any>` | Emitted when the file is uploaded successfully. |
-| updateFileVersion | `EventEmitter<CustomEvent<any>>` | Emitted when dropping a file over another file to update the version. |
+| ---- | ---- | ----------- |
+| beginUpload | `any` | Emitted when the upload begins. |
+| error | `any` | Emitted when an error occurs. |
+| success | `any` | Emitted when the file is uploaded successfully. |
+| updateFileVersion | `any` | Emitted when dropping a file over another file to update the version. |
 
 ## Details
 
@@ -87,9 +87,9 @@ You can intercept the upload process using the `beginUpload` event.
 
 The event has a type of [`UploadFilesEvent`](../../../lib/content-services/src/lib/upload/components/upload-files.event.ts) and provides the following APIs:
 
-*   **files**: accesses the [`FileInfo`](../../../lib/core/utils/file-utils.ts) objects that are prepared for the upload
-*   **pauseUpload**: pauses the upload and performs additional tasks, like showing the confirmation dialog
-*   **resumeUpload**: resumes the upload process
+-   **files**: accesses the [`FileInfo`](../../../lib/core/utils/file-utils.ts) objects that are prepared for the upload
+-   **pauseUpload**: pauses the upload and performs additional tasks, like showing the confirmation dialog
+-   **resumeUpload**: resumes the upload process
 
 ### Example
 
@@ -139,6 +139,6 @@ This could be either a selection of 2 or more files, or a folder with multiple e
 
 ## See also
 
-*   [File uploading dialog component](file-uploading-dialog.component.md)
-*   [Upload button component](upload-button.component.md)
-*   [File upload error pipe](../pipes/file-upload-error.pipe.md)
+-   [File uploading dialog component](file-uploading-dialog.component.md)
+-   [Upload button component](upload-button.component.md)
+-   [File upload error pipe](../pipes/file-upload-error.pipe.md)

@@ -28,7 +28,7 @@ Activates a file upload.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | acceptedFilesType | `string` | "\*" | Filter for accepted file types. |
 | comment | `string` |  | When you overwrite existing content, you can use the comment field to add a version comment that appears in the version history |
 | disabled | `boolean` | false | Toggles component disabled state (if there is no node permission checking). |
@@ -46,12 +46,12 @@ Activates a file upload.
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../../lib/content-services/src/lib/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| ---- | ---- | ----------- |
+| beginUpload | `any` | Emitted when the upload begins. |
+| error | `any` | Emitted when an error occurs. |
 | permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionModel`](../../../lib/content-services/src/lib/document-list/models/permissions.model.ts)`>` | Emitted when create permission is missing. |
-| success | `EventEmitter<any>` | Emitted when the file is uploaded successfully. |
-| updateFileVersion | `EventEmitter<CustomEvent<any>>` | Emitted when dropping a file over another file to update the version. |
+| success | `any` | Emitted when the file is uploaded successfully. |
+| updateFileVersion | `any` | Emitted when dropping a file over another file to update the version. |
 
 ## Details
 
@@ -85,5 +85,5 @@ export class MyComponent {
 
 ## See also
 
-*   [Upload Version Button component](upload-version-button.component.md)
-*   [File upload error pipe](../pipes/file-upload-error.pipe.md)
+-   [Upload Version Button component](upload-version-button.component.md)
+-   [File upload error pipe](../pipes/file-upload-error.pipe.md)

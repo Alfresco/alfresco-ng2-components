@@ -26,7 +26,7 @@ Adds highlighting to selected sections of an HTML element's content.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | classToApply | `string` | "adf-highlight" | CSS class used to apply highlighting. |
 | search | `string` | "" | Text to highlight. |
 | selector | `string` | "" | Class selector for highlightable elements. |
@@ -70,5 +70,5 @@ property:
 
 ## See also
 
-*   [Text highlight pipe](../pipes/text-highlight.pipe.md)
-*   [Highlight transform service](../services/highlight-transform.service.md)
+-   [Text highlight pipe](../pipes/text-highlight.pipe.md)
+-   [Highlight transform service](../services/highlight-transform.service.md)

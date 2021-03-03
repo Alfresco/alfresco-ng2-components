@@ -13,23 +13,23 @@ Stores items in the form of key-value pairs.
 
 ### Methods
 
-*   **clear**()<br/>
+-   **clear**()<br/>
     Removes all currently stored items.
-*   **getItem**(key: `string`): `string|null`<br/>
+-   **getItem**(key: `string`): `string|null`<br/>
     Gets an item.
-    *   *key:* `string`  - Key to identify the item
-    *   **Returns** `string|null` - The item (if any) retrieved by the key
-*   **hasItem**(key: `string`): `boolean`<br/>
+    -   _key:_ `string`  - Key to identify the item
+    -   **Returns** `string|null` - The item (if any) retrieved by the key
+-   **hasItem**(key: `string`): `boolean`<br/>
     Is any item currently stored under `key`?
-    *   *key:* `string`  - Key identifying item to check
-    *   **Returns** `boolean` - True if key retrieves an item, false otherwise
-*   **removeItem**(key: `string`)<br/>
+    -   _key:_ `string`  - Key identifying item to check
+    -   **Returns** `boolean` - True if key retrieves an item, false otherwise
+-   **removeItem**(key: `string`)<br/>
     Removes a single item.
-    *   *key:* `string`  - Key to identify the item
-*   **setItem**(key: `string`, data: `string`)<br/>
+    -   _key:_ `string`  - Key to identify the item
+-   **setItem**(key: `string`, data: `string`)<br/>
     Stores an item
-    *   *key:* `string`  - Key to identify the item
-    *   *data:* `string`  - Data to store
+    -   _key:_ `string`  - Key to identify the item
+    -   _data:_ `string`  - Data to store
 
 ## Details
 
@@ -69,5 +69,5 @@ The storagePrefix can allow you to login with multiple user in the same browser 
 
 ## See also
 
-*   [Cookie service](cookie.service.md)
-*   [Content service](content.service.md)
+-   [Cookie service](cookie.service.md)
+-   [Content service](content.service.md)

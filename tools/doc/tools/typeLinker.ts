@@ -10,6 +10,7 @@ const includedNodeTypes = [
 
 let externalNameLinks;
 let linkOverrides;
+let ignoreLinkWords: any[];
 
 export function processDocs(mdCache, aggData) {
     initPhase(aggData, mdCache);
@@ -23,6 +24,7 @@ export function processDocs(mdCache, aggData) {
 
 function initPhase(aggData, mdCache) {
     externalNameLinks = aggData.config.externalNameLinks;
+    ignoreLinkWords = aggData.config.ignoreLinkWords;
 
     linkOverrides = {};
     aggData.config.linkOverrides.forEach(override => {
@@ -63,17 +65,22 @@ function updateFile(tree, pathname, aggData) {
                 (node.children[0].type === 'inlineCode') ||
                 (node.children[0].type === 'text')
             )) {
-                const link = resolveTypeLink(aggData, pathname, node.children[0].value);
 
-                if (link) {
-                    convertNodeToTypeLink(node, node.children[0].value, link);
+                if (!ignoreLinkWords.includes(node.children[0].value)) {
+                    const link = resolveTypeLink(aggData, pathname, node.children[0].value);
+
+                    if (link) {
+                        convertNodeToTypeLink(node, node.children[0].value, link);
+                    }
                 }
             }
         } else if ((node.children) && (node.type !== 'heading')) {
             node.children.forEach((child, index) => {
                 if ((child.type === 'text') || (child.type === 'inlineCode')) {
+
                     const newNodes = handleLinksInBodyText(aggData, pathname, child.value, child.type === 'inlineCode');
                     node.children.splice(index, 1, ...newNodes);
+
                 } else {
                     traverseMDTree(child);
                 }
@@ -95,11 +102,13 @@ class SplitNameNode {
 }
 
 class SplitNameMatchElement {
-    constructor(public node: SplitNameNode, public textPos: number) {}
+    constructor(public node: SplitNameNode, public textPos: number) {
+    }
 }
 
 class SplitNameMatchResult {
-    constructor(public value: string, public startPos: number) {}
+    constructor(public value: string, public startPos: number) {
+    }
 }
 
 class SplitNameMatcher {
@@ -235,49 +244,54 @@ function handleLinksInBodyText(aggData, docFilePath: string, text: string, wrapI
     const matcher = new SplitNameMatcher(aggData.nameLookup.root);
 
     for (const scanner = new WordScanner(text); !scanner.finished(); scanner.next()) {
+
+
         const word = scanner.current
-        .replace(/'s$/, '')
-        .replace(/^[;:,\."']+/g, '')
-        .replace(/[;:,\."']+$/g, '');
+            .replace(/'s$/, '')
+            .replace(/^[;:,\."']+/g, '')
+            .replace(/[;:,\."']+$/g, '');
 
-        let link = resolveTypeLink(aggData, docFilePath, word);
-        let matchStart;
+        if (!ignoreLinkWords.includes(word)) {
 
-        if (!link) {
-            const match = matcher.nextWord(word.toLowerCase(), scanner.index);
+            let link = resolveTypeLink(aggData, docFilePath, word);
+            let matchStart;
 
-            if (match && match[0]) {
-                link = resolveTypeLink(aggData, docFilePath, match[0].value);
-                matchStart = match[0].startPos;
-            }
-        } else {
-            matchStart = scanner.index;
-        }
+            if (!link) {
+                const match = matcher.nextWord(word.toLowerCase(), scanner.index);
 
-        if (link) {
-            const linkText = text.substring(matchStart, scanner.nextSeparator);
-            let linkTitle;
-
-            if (wrapInlineCode) {
-                linkTitle = unist.makeInlineCode(linkText);
-            } else {
-                linkTitle = unist.makeText(linkText);
-            }
-
-            const linkNode = unist.makeLink(linkTitle, link);
-            const prevText = text.substring(currTextStart, matchStart);
-
-            if (prevText) {
-                if (wrapInlineCode) {
-                    result.push(unist.makeInlineCode(prevText));
-                } else {
-                    result.push(unist.makeText(prevText));
+                if (match && match[0]) {
+                    link = resolveTypeLink(aggData, docFilePath, match[0].value);
+                    matchStart = match[0].startPos;
                 }
+            } else {
+                matchStart = scanner.index;
             }
 
-            result.push(linkNode);
-            currTextStart = scanner.nextSeparator;
-            matcher.reset();
+            if (link) {
+                const linkText = text.substring(matchStart, scanner.nextSeparator);
+                let linkTitle;
+
+                if (wrapInlineCode) {
+                    linkTitle = unist.makeInlineCode(linkText);
+                } else {
+                    linkTitle = unist.makeText(linkText);
+                }
+
+                const linkNode = unist.makeLink(linkTitle, link);
+                const prevText = text.substring(currTextStart, matchStart);
+
+                if (prevText) {
+                    if (wrapInlineCode) {
+                        result.push(unist.makeInlineCode(prevText));
+                    } else {
+                        result.push(unist.makeText(prevText));
+                    }
+                }
+
+                result.push(linkNode);
+                currTextStart = scanner.nextSeparator;
+                matcher.reset();
+            }
         }
     }
 

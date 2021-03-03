@@ -64,11 +64,11 @@ In the component template use the [comment list component](comment-list.componen
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | comments | [`CommentModel`](../../../lib/core/models/comment.model.ts)`[]` |  | The comments data used to populate the list. |
 
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | clickRow | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`CommentModel`](../../../lib/core/models/comment.model.ts)`>` | Emitted when the user clicks on one of the comment rows. |

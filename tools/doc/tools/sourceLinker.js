@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.processDocs = void 0;
 var path = require("path");
 var unist_util_select_1 = require("unist-util-select");
 var ngHelpers = require("../ngHelpers");

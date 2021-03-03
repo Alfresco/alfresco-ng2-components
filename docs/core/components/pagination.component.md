@@ -13,14 +13,14 @@ Adds pagination to the component it is used with.
 
 ## Contents
 
-*   [Basic Usage](#basic-usage)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-    *   [Events](#events)
-*   [Details](#details)
-    *   [Integrating with the Document List component](#integrating-with-the-document-list-component)
-    *   [Custom pagination](#custom-pagination)
-*   [See also](#see-also)
+-   [Basic Usage](#basic-usage)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Integrating with the Document List component](#integrating-with-the-document-list-component)
+    -   [Custom pagination](#custom-pagination)
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -41,7 +41,7 @@ Adds pagination to the component it is used with.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | supportedPageSizes | `number[]` |  | An array of page sizes. |
 | target | [`PaginatedComponent`](../../../lib/core/pagination/paginated-component.interface.ts) |  | Component that provides custom pagination support. |
 | pagination | [`PaginationModel`](../../../lib/core/models/pagination.model.ts) |  | Pagination object. |
@@ -49,12 +49,12 @@ Adds pagination to the component it is used with.
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| change | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when pagination changes in any way. |
-| changePageNumber | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/models/pagination.model.ts)`>` | Emitted when the page number changes. |
-| changePageSize | `EventEmitter<PaginationModel>` | Emitted when the page size changes. |
-| nextPage | `EventEmitter<PaginationModel>` | Emitted when the next page is requested. |
-| prevPage | `EventEmitter<PaginationModel>` | Emitted when the previous page is requested. |
+| ---- | ---- | ----------- |
+| change | `any` | Emitted when pagination changes in any way. |
+| changePageNumber | `any` | Emitted when the page number changes. |
+| changePageSize | `any` | Emitted when the page size changes. |
+| nextPage | `any` | Emitted when the next page is requested. |
+| prevPage | `any` | Emitted when the previous page is requested. |
 
 ## Details
 
@@ -102,4 +102,4 @@ and pass the updated parameters.
 
 ## See also
 
-*   [Infinite Pagination component](infinite-pagination.component.md)
+-   [Infinite Pagination component](infinite-pagination.component.md)

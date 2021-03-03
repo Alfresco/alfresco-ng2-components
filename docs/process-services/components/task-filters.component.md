@@ -20,7 +20,7 @@ Shows all available filters.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
 | appName | `string` |  | Display filters available to the current user for the application with the specified name. |
 | filterParam | [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) |  | Parameters to use for the task filter. If there is no match then the default filter (the first one the list) is selected. |
@@ -29,11 +29,11 @@ Shows all available filters.
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during loading. |
 | filterClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when a filter is being clicked from the UI. |
-| filterSelected | `EventEmitter<FilterRepresentationModel>` | Emitted when a filter is being selected based on the filterParam input. |
-| success | `EventEmitter<any>` | Emitted when the list is loaded. |
+| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when a filter is being selected based on the filterParam input. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the list is loaded. |
 
 ## Details
 
@@ -50,8 +50,8 @@ Use the `filterParam` property to restrict the range of filters that are shown:
 You can use properties from [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)
 as the value of `filterParam` as shown in the table below:
 
-| Name  | Type   | Description                                         |
-| ----- | ------ | --------------------------------------------------- |
-| id    | string | The id of the task filter                           |
-| name  | string | The name of the task filter, lowercase is checked   |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| id | string | The id of the task filter |
+| name | string | The name of the task filter, lowercase is checked |
 | index | string | The zero-based position of the filter in the array. |

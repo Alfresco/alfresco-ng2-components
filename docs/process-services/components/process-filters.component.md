@@ -11,14 +11,14 @@ Collection of criteria used to filter process instances, which may be customized
 
 ## Contents
 
-*   [Basic Usage](#basic-usage)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-    *   [Events](#events)
-*   [Details](#details)
-    *   [How filter the activiti process filters](#how-filter-the-activiti-process-filters)
-    *   [FilterParamsModel](#filterparamsmodel)
-*   [See also](#see-also)
+-   [Basic Usage](#basic-usage)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [How filter the activiti process filters](#how-filter-the-activiti-process-filters)
+    -   [FilterParamsModel](#filterparamsmodel)
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -33,7 +33,7 @@ Collection of criteria used to filter process instances, which may be customized
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
 | appName | `string` |  | Display filters available to the current user for the application with the specified name. |
 | filterParam | [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts) |  | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
@@ -42,11 +42,11 @@ Collection of criteria used to filter process instances, which may be customized
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 | filterClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/UserProcessInstanceFilterRepresentation.md)`>` | Emitted when a filter is being clicked from the UI. |
-| filterSelected | `EventEmitter<UserProcessInstanceFilterRepresentation>` | Emitted when a filter is being selected based on the filterParam input. |
-| success | `EventEmitter<ProcessInstanceFilterRepresentation[]>` | Emitted when the list of filters has been successfully loaded from the server. |
+| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/UserProcessInstanceFilterRepresentation.md)`>` | Emitted when a filter is being selected based on the filterParam input. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md)`[]>` | Emitted when the list of filters has been successfully loaded from the server. |
 
 ## Details
 
@@ -78,12 +78,12 @@ You can use inside the filterParam one of the properties defined by [`FilterPara
 }
 ```
 
-| Name  | Type   | Description                                        |
-| ----- | ------ | -------------------------------------------------- |
-| id    | string | The id of the task filter.                         |
-| name  | string | The name of the task filter, lowercase is checked. |
-| index | number | Zero-based position of the filter in the array.    |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| id | string | The id of the task filter. |
+| name | string | The name of the task filter, lowercase is checked. |
+| index | number | Zero-based position of the filter in the array. |
 
 ## See also
 
-*   [Process Filter service](../services/process-filter.service.md)
+-   [Process Filter service](../services/process-filter.service.md)

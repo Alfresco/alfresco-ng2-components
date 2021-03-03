@@ -15,39 +15,43 @@ Shows a notification message with optional feedback.
 
 ### Methods
 
-*   **dismissSnackMessageAction**()<br/>
+-   **dismissSnackMessageAction**(): `any`<br/>
     dismiss the notification snackbar
-*   **openSnackMessage**(message: `string`, config?: `number|MatSnackBarConfig`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+    -   **Returns** `any` - 
+-   **openSnackMessage**(message: `string`, config?: `number|MatSnackBarConfig`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Opens a SnackBar notification to show a message.
-    *   *message:* `string`  - The message (or resource key) to show.
-    *   *config:* `number|MatSnackBarConfig`  - (Optional) Time before notification disappears after being shown or MatSnackBarConfig object
-    *   *interpolateArgs:* `any`  - (Optional) The interpolation parameters to add for the translation
-    *   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
-*   **openSnackMessageAction**(message: `string`, action: `string`, config?: `number|MatSnackBarConfig`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+    -   _message:_ `string`  - The message (or resource key) to show.
+    -   _config:_ `number|MatSnackBarConfig`  - (Optional) Time before notification disappears after being shown or MatSnackBarConfig object
+    -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
+    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
+-   **openSnackMessageAction**(message: `string`, action: `string`, config?: `number|MatSnackBarConfig`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Opens a SnackBar notification with a message and a response button.
-    *   *message:* `string`  - The message (or resource key) to show.
-    *   *action:* `string`  - Caption for the response button
-    *   *config:* `number|MatSnackBarConfig`  - (Optional) Time before notification disappears after being shown or MatSnackBarConfig object
-    *   *interpolateArgs:* `any`  - (Optional) The interpolation parameters to add for the translation
-    *   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
-*   **showError**(message: `string`, action?: `string`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+    -   _message:_ `string`  - The message (or resource key) to show.
+    -   _action:_ `string`  - Caption for the response button
+    -   _config:_ `number|MatSnackBarConfig`  - (Optional) Time before notification disappears after being shown or MatSnackBarConfig object
+    -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
+    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
+-   **pushToNotificationHistory**(notification: [`NotificationModel`](../../../lib/core/notifications/models/notification.model.ts))<br/>
+    Push new notification to Notification History
+    -   _notification:_ [`NotificationModel`](../../../lib/core/notifications/models/notification.model.ts)  - Notification model to be pushed.
+-   **showError**(message: `string`, action?: `string`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase error message
-    *   *message:* `string`  - Text message or translation key for the message.
-    *   *action:* `string`  - (Optional) Action name
-    *   *interpolateArgs:* `any`  - (Optional) The interpolation parameters to add for the translation
-    *   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` -
-*   **showInfo**(message: `string`, action?: `string`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+    -   _message:_ `string`  - Text message or translation key for the message.
+    -   _action:_ `string`  - (Optional) Action name
+    -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
+    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - 
+-   **showInfo**(message: `string`, action?: `string`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase info message
-    *   *message:* `string`  - Text message or translation key for the message.
-    *   *action:* `string`  - (Optional) Action name
-    *   *interpolateArgs:* `any`  - (Optional) The interpolation parameters to add for the translation
-    *   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` -
-*   **showWarning**(message: `string`, action?: `string`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+    -   _message:_ `string`  - Text message or translation key for the message.
+    -   _action:_ `string`  - (Optional) Action name
+    -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
+    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - 
+-   **showWarning**(message: `string`, action?: `string`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Rase warning message
-    *   *message:* `string`  - Text message or translation key for the message.
-    *   *action:* `string`  - (Optional) Action name
-    *   *interpolateArgs:* `any`  - (Optional) The interpolation parameters to add for the translation
-    *   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` -
+    -   _message:_ `string`  - Text message or translation key for the message.
+    -   _action:_ `string`  - (Optional) Action name
+    -   _interpolateArgs:_ `any`  - (Optional) The interpolation parameters to add for the translation
+    -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` -
 
 ## Details
 
@@ -123,9 +127,9 @@ You can also change the default 5000 ms adding the following configuration in th
 
 #### Notification types
 
-| Name  | Description |
-| --- | --- |
+| Name | Description |
+| ---- | ----------- |
 | info | To notify messages. It will be displayed with an info icon next to it. |
 | warn | To notify warning messages. It will be displayed with a warning icon next to it. |
 | error | To notify errors. It will be displayed with an error icon next to it. |
-| recursive | To notify recursive messages. If a message is prompt to duplicate an existing notification and you don't want to overload the notification history component with the same message use the recursive type. I.e. notifications coming from an API call that are triggered every time a component is initialized. It will be displayed with an info icon next to it. |
+| recursive | To notify recursive messages. If a message is prompt to duplicate an existing notification and you don't want to overload the [notification history component](../../core/components/notification-history.component.md) with the same message use the recursive type. I.e. notifications coming from an API call that are triggered every time a component is initialized. It will be displayed with an info icon next to it. |

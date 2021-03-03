@@ -34,7 +34,7 @@ Save and Complete buttons get disabled when at least one of the form's inputs ar
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | appName | `string` | "" | App id to fetch corresponding form and values. |
 | readOnly | `boolean` | false | Toggle readonly state of the task. |
 | showCancelButton | `boolean` | true | Toggle rendering of the `Cancel` button. |
@@ -47,18 +47,18 @@ Save and Complete buttons get disabled when at least one of the form's inputs ar
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| cancelClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the cancel button is clicked. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
-| formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
+| ---- | ---- | ----------- |
+| cancelClick | `any` | Emitted when the cancel button is clicked. |
+| error | `any` | Emitted when any error occurs. |
+| formCompleted | `any` | Emitted when the form is submitted with the `Complete` outcome. |
 | formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
-| formSaved | `EventEmitter<FormModel>` | Emitted when the form is saved. |
-| taskClaimed | `EventEmitter<string>` | Emitted when the task is claimed. |
-| taskCompleted | `EventEmitter<string>` | Emitted when the task is completed. |
-| taskUnclaimed | `EventEmitter<string>` | Emitted when the task is unclaimed. |
+| formSaved | `any` | Emitted when the form is saved. |
+| taskClaimed | `any` | Emitted when the task is claimed. |
+| taskCompleted | `any` | Emitted when the task is completed. |
+| taskUnclaimed | `any` | Emitted when the task is unclaimed. |
 
 ## See also
 
-*   [Form component](./form-cloud.component.md)
-*   [Form field model](../../core/models/form-field.model.md)
-*   [Form cloud service](../services/form-cloud.service.md)
+-   [Form component](./form-cloud.component.md)
+-   [Form field model](../../core/models/form-field.model.md)
+-   [Form cloud service](../services/form-cloud.service.md)

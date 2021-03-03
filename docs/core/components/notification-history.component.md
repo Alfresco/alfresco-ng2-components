@@ -23,11 +23,11 @@ The main purpose of the [Notification history component](../../core/components/n
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
+| maxNotifications | `number` | 5 | Maximum number of notifications to display. The rest will remain hidden until load more is clicked |
 | menuPositionX | `string` | "after" | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |
 | menuPositionY | `string` | "below" | Custom choice for opening the menu at the bottom. Can be `above` or `below`. |
-| maxNotifications | `number` | 5 | Maximum number of notifications to display. The rest will remain hidden until load more is clicked. |
 
 ## See also
 
-*   [Notification Service](../../core/services/notification.service.md)
+-   [Notification Service](../../core/services/notification.service.md)

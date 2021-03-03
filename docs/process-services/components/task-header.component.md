@@ -24,7 +24,7 @@ Shows all the information related to a task.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | formName | `string` | null | The name of the form. |
 | showClaimRelease | `boolean` | true | Toggles display of the claim/release button. |
 | taskDetails | [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts) |  | (required) Details related to the task. |
@@ -32,9 +32,9 @@ Shows all the information related to a task.
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | claim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is claimed. |
-| unclaim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is unclaimed (ie, requeued). |
+| unclaim | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task is unclaimed (ie, requeue). |
 
 ## Details
 
@@ -43,7 +43,7 @@ The component populates an internal array of
 
 By default all properties are displayed:
 
-***assignee***, ***status***, ***priority***, ***dueDate***, ***category***, ***parentName***, ***created***, ***id***, ***description***, ***formName***.
+**_assignee_**, **_status_**, **_priority_**, **_dueDate_**, **_category_**, **_parentName_**, **_created_**, **_id_**, **_description_**, **_formName_**.
 
 However, you can also choose which properties to show using a configuration in `app.config.json`:
 

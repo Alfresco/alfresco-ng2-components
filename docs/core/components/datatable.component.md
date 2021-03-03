@@ -15,21 +15,21 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
 
 ## Contents
 
-*   [Basic usage](#basic-usage)
-    *   [Setting the rows and column schema](#setting-the-rows-and-column-schema)
-    *   [Transclusions](#transclusions)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-    *   [Events](#events)
-*   [Details](#details)
-    *   [Supplying data for the table](#supplying-data-for-the-table)
-    *   [Customizing columns](#customizing-columns)
-    *   [DataTable DOM Events](#datatable-dom-events)
-    *   [Card view](#card-view)
-    *   [Using events](#using-events)
-    *   [Customizing the component's styles](#customizing-the-components-styles)
-*   [Resolver Function](#resolver-function)
-*   [See also](#see-also)
+-   [Basic usage](#basic-usage)
+    -   [Setting the rows and column schema](#setting-the-rows-and-column-schema)
+    -   [Transclusions](#transclusions)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Supplying data for the table](#supplying-data-for-the-table)
+    -   [Customizing columns](#customizing-columns)
+    -   [DataTable DOM Events](#datatable-dom-events)
+    -   [Card view](#card-view)
+    -   [Using events](#using-events)
+    -   [Customizing the component's styles](#customizing-the-components-styles)
+-   [Resolver Function](#resolver-function)
+-   [See also](#see-also)
 
 ## Basic usage
 
@@ -343,7 +343,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | actions | `boolean` | false | Toggles the data actions column. |
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
 | allowFiltering | `boolean` | false | Flag that indicate if the datatable allow the use facet [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) search for filtering. |
@@ -361,19 +361,19 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | rowStyleClass | `string` | "" | The CSS class to apply to every row. |
 | rows | `any[]` | \[] | The rows that the datatable will show. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| showHeader | `string` | ShowHeaderMode.Data | Toggles the header. |
-| sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : \[`created`, `desc`], \[`created`, `asc`], \[`due`, `desc`], \[`due`, `asc`] |
+| showHeader | `string` |  | Toggles the header. |
+| sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
-| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user clicks a row. |
-| rowDblClick | `EventEmitter<DataRowEvent>` | Emitted when the user double-clicks a row. |
-| showRowActionsMenu | `EventEmitter<DataCellEvent>` | Emitted before the actions menu is displayed for a row. |
-| showRowContextMenu | `EventEmitter<DataCellEvent>` | Emitted before the context menu is displayed for a row. |
+| ---- | ---- | ----------- |
+| executeRowAction | `any` | Emitted when the user executes a row action. |
+| rowClick | `any` | Emitted when the user clicks a row. |
+| rowDblClick | `any` | Emitted when the user double-clicks a row. |
+| showRowActionsMenu | `any` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | `any` | Emitted before the context menu is displayed for a row. |
 
 ## Details
 
@@ -395,18 +395,18 @@ for more information.
 Below are the DOM events emitted by the DataTable component.
 These events bubble up the component tree and can be handled by any parent component.
 
-| Name            | Description                                          |
-| --------------- | ---------------------------------------------------- |
-| row-click       | Raised when user clicks a row                        |
-| row-dblclick    | Raised when user double-clicks a row                 |
-| row-select      | Raised after user selects a row                      |
-| row-unselect    | Raised after user unselects a row                    |
-| row-keyup       | Raised on the 'keyup' event for the focused row.     |
+| Name | Description |
+| ---- | ----------- |
+| row-click | Raised when user clicks a row |
+| row-dblclick | Raised when user double-clicks a row |
+| row-select | Raised after user selects a row |
+| row-unselect | Raised after user unselects a row |
+| row-keyup | Raised on the 'keyup' event for the focused row. |
 | sorting-changed | Raised after user clicks the sortable column header. |
-| header-dragover | Raised when dragging content over the header.        |
-| header-drop     | Raised when data is dropped on the column header.    |
-| cell-dragover   | Raised when dragging data over the cell.             |
-| cell-drop       | Raised when data is dropped on the column cell.      |
+| header-dragover | Raised when dragging content over the header. |
+| header-drop | Raised when data is dropped on the column header. |
+| cell-dragover | Raised when dragging data over the cell. |
+| cell-drop | Raised when data is dropped on the column cell. |
 
 #### Drop Events
 
@@ -824,7 +824,7 @@ here is the sample resolver which merge the users property and status and it wil
 
 ## See also
 
-*   [Data column component](data-column.component.md)
-*   [Pagination component](pagination.component.md)
-*   [Data Table Adapter interface](../interfaces/datatable-adapter.interface.md)
-*   [Document list component](../../content-services/components/document-list.component.md)
+-   [Data column component](data-column.component.md)
+-   [Pagination component](pagination.component.md)
+-   [Data Table Adapter interface](../interfaces/datatable-adapter.interface.md)
+-   [Document list component](../../content-services/components/document-list.component.md)

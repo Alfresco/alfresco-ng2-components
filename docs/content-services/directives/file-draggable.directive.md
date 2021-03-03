@@ -39,15 +39,15 @@ Some sample CSS to show the drag and drop area:
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | enabled | `boolean` | true | Enables/disables drag-and-drop functionality. |
 
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| filesDropped | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<File[]>` | Emitted when one or more files are dragged and dropped onto the draggable element. |
-| folderEntityDropped | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a directory is dragged and dropped onto the draggable element. |
+| ---- | ---- | ----------- |
+| filesDropped | `any` | Emitted when one or more files are dragged and dropped onto the draggable element. |
+| folderEntityDropped | `any` | Emitted when a directory is dragged and dropped onto the draggable element. |
 
 ## Details
 
@@ -75,4 +75,4 @@ export class SomeComponent implements OnInit {
 
 ## See also
 
-*   [Upload Drag Area component](../components/upload-drag-area.component.md)
+-   [Upload Drag Area component](../components/upload-drag-area.component.md)

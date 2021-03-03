@@ -11,17 +11,17 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 
 ## Contents
 
-*   [Basic Usage](#basic-usage)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-*   [Details](#details)
-    *   [Conditional visibility](#conditional-visibility)
-    *   [Automatic column header translation](#automatic-column-header-translation)
-    *   [Custom tooltips](#custom-tooltips)
-    *   [Column Template](#column-template)
-    *   [Styling Techniques](#styling-techniques)
-    *   [Using the copyContent option](#using-the-copycontent-option)
-*   [See also](#see-also)
+-   [Basic Usage](#basic-usage)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+-   [Details](#details)
+    -   [Conditional visibility](#conditional-visibility)
+    -   [Automatic column header translation](#automatic-column-header-translation)
+    -   [Custom tooltips](#custom-tooltips)
+    -   [Column Template](#column-template)
+    -   [Styling Techniques](#styling-techniques)
+    -   [Using the copyContent option](#using-the-copycontent-option)
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -42,7 +42,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | copyContent | `boolean` |  | Enables/disables a [Clipboard directive](../../core/directives/clipboard.directive.md) to allow copying of cell contents. |
 | cssClass | `string` |  | Additional CSS class to be applied to column (header and cells). |
 | editable | `boolean` | false | Toggles the editing support of the column data. |
@@ -124,11 +124,11 @@ You can provide custom column/cell templates that may contain other Angular comp
 
 Every cell in the DataTable component is bound to the dynamic data context containing the following properties:
 
-| Name | Type                                                                        | Description                   |
-| ---- | --------------------------------------------------------------------------- | ----------------------------- |
-| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) | Data adapter instance.        |
-| row  | [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts)             | Current data row instance.    |
-| col  | [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts)       | Current data column instance. |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) | Data adapter instance. |
+| row | [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts) | Current data row instance. |
+| col | [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) | Current data column instance. |
 
 You can use all three properties to gain full access to underlying data from within your custom templates.
 In order to wire HTML templates with the data context you will need to define a variable that is bound to `$implicit` as shown below:
@@ -334,6 +334,6 @@ HTML `<data-column>` element example:
 
 ## See also
 
-*   [Document list component](../../content-services/components/document-list.component.md)
-*   [Datatable component](datatable.component.md)
-*   [Task list component](../../process-services/components/task-list.component.md)
+-   [Document list component](../../content-services/components/document-list.component.md)
+-   [Datatable component](datatable.component.md)
+-   [Task list component](../../process-services/components/task-list.component.md)

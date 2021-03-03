@@ -37,7 +37,7 @@ body of the element:
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | color | `string` |  | Background color for the header. It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'. |
 | expandedSidenav | `boolean` | true | expandedSidenav: Toggles the expanded state of the component. |
 | logo | `string` |  | Path to an image file for the application logo. |
@@ -50,8 +50,8 @@ body of the element:
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| clicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the sidenav button is clicked. |
+| ---- | ---- | ----------- |
+| clicked | `any` | Emitted when the sidenav button is clicked. |
 
 ## Details
 

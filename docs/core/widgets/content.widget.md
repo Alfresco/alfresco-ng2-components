@@ -21,15 +21,15 @@ Shows the content preview.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | id | `string` |  | The content id to show. |
 | showDocumentContent | `boolean` | true | Toggles showing document content. |
 
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| contentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the content is clicked. |
+| ---- | ---- | ----------- |
+| contentClick | `any` | Emitted when the content is clicked. |
 | contentLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the content has loaded. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| thumbnailLoaded | `EventEmitter<any>` | Emitted when the thumbnail has loaded. |
+| thumbnailLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the thumbnail has loaded. |

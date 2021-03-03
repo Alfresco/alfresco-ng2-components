@@ -20,14 +20,14 @@ Shows a dialog listing all the files uploaded with the Upload Button or Drag Are
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
+| alwaysVisible | `boolean` | false | Makes the dialog always visible even when there are no uploads. |
 | position | `string` | "right" | Dialog position. Can be 'left' or 'right'. |
-| alwaysVisible | `boolean` | false | Dialog visibility. When true it makes the dialog visible even when there are no uploads. |
 
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a file in the list has an error. |
 
 ## Details
@@ -38,6 +38,6 @@ This component should be used in combination with the
 
 ## See also
 
-*   [Upload button component](upload-button.component.md)
-*   [Upload drag area component](upload-drag-area.component.md)
-*   [File upload error pipe](../pipes/file-upload-error.pipe.md)
+-   [Upload button component](upload-button.component.md)
+-   [Upload drag area component](upload-drag-area.component.md)
+-   [File upload error pipe](../pipes/file-upload-error.pipe.md)

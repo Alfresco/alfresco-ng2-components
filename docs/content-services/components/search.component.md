@@ -11,15 +11,15 @@ Searches items for supplied search terms.
 
 ## Contents
 
-*   [Basic usage](#basic-usage)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-    *   [Events](#events)
-*   [Details](#details)
-    *   [Customise Search Results](#customise-search-results)
-    *   [Attach an input field to the search](#attach-an-input-field-to-the-search)
-    *   [Custom search configuration](#custom-search-configuration)
-*   [See Also](#see-also)
+-   [Basic usage](#basic-usage)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Customise Search Results](#customise-search-results)
+    -   [Attach an input field to the search](#attach-an-input-field-to-the-search)
+    -   [Custom search configuration](#custom-search-configuration)
+-   [See Also](#see-also)
 
 ## Basic usage
 
@@ -35,7 +35,7 @@ Searches items for supplied search terms.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | displayWith | `Function \| null` | null | Function that maps an option's value to its display value in the trigger. |
 | maxResults | `number` | 20 | Maximum number of results to show in the search. |
 | searchTerm | `string` | "" | Search term to use when executing the search. Updating this value will run a new search and update the results. |
@@ -45,7 +45,7 @@ Searches items for supplied search terms.
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 | resultLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when search results have fully loaded. |
 
@@ -160,5 +160,5 @@ customize your search.
 
 ## See Also
 
-*   [Search configuration interface](../../core/interfaces/search-configuration.interface.md)
-*   [Search configuration service](../../core/services/search-configuration.service.md)
+-   [Search configuration interface](../../core/interfaces/search-configuration.interface.md)
+-   [Search configuration service](../../core/services/search-configuration.service.md)

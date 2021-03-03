@@ -11,75 +11,75 @@ Accesses and manipulates ACS document nodes using their node IDs.
 
 ## Contents
 
-*   [Class members](#class-members)
-    *   [Methods](#methods)
-*   [Details](#details)
-    *   [Getting node information](#getting-node-information)
-    *   [Getting folder node contents](#getting-folder-node-contents)
-    *   [Creating and updating nodes](#creating-and-updating-nodes)
-    *   [Deleting and restoring nodes](#deleting-and-restoring-nodes)
-*   [See also](#see-also)
+-   [Class members](#class-members)
+    -   [Methods](#methods)
+-   [Details](#details)
+    -   [Getting node information](#getting-node-information)
+    -   [Getting folder node contents](#getting-folder-node-contents)
+    -   [Creating and updating nodes](#creating-and-updating-nodes)
+    -   [Deleting and restoring nodes](#deleting-and-restoring-nodes)
+-   [See also](#see-also)
 
 ## Class members
 
 ### Methods
 
-*   **createFolder**(parentNodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
+-   **createFolder**(parentNodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Creates a new folder node inside a parent folder.
-    *   *parentNodeId:* `string`  - ID of the parent folder node
-    *   *nodeBody:* `any`  - Data for the new folder
-    *   *options:* `any`  - Optional parameters supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Details of the new folder
-*   **createNode**(parentNodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
+    -   _parentNodeId:_ `string`  - ID of the parent folder node
+    -   _nodeBody:_ `any`  - Data for the new folder
+    -   _options:_ `any`  - Optional parameters supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Details of the new folder
+-   **createNode**(parentNodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Creates a new document node inside a folder.
-    *   *parentNodeId:* `string`  - ID of the parent folder node
-    *   *nodeBody:* `any`  - Data for the new node
-    *   *options:* `any`  - Optional parameters supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Details of the new node
-*   **createNodeInsideRoot**(name: `string`, nodeType: `string`, properties: `any`, path: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
+    -   _parentNodeId:_ `string`  - ID of the parent folder node
+    -   _nodeBody:_ `any`  - Data for the new node
+    -   _options:_ `any`  - Optional parameters supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Details of the new node
+-   **createNodeInsideRoot**(name: `string`, nodeType: `string`, properties: `any`, path: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Create a new Node inside `-root-` folder
-    *   *name:* `string`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) name
-    *   *nodeType:* `string`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) type
-    *   *properties:* `any`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) body properties
-    *   *path:* `string`  - Path to the node
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - The created node
-*   **createNodeMetadata**(nodeType: `string`, nameSpace: `any`, data: `any`, path: `string`, name?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
+    -   _name:_ `string`  - Node name
+    -   _nodeType:_ `string`  - Node type
+    -   _properties:_ `any`  - Node body properties
+    -   _path:_ `string`  - Path to the node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - The created node
+-   **createNodeMetadata**(nodeType: `string`, nameSpace: `any`, data: `any`, path: `string`, name?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Create a new Node from form metadata.
-    *   *nodeType:* `string`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) type
-    *   *nameSpace:* `any`  - Namespace for properties
-    *   *data:* `any`  - [Property](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) data to store in the node under namespace
-    *   *path:* `string`  - Path to the node
-    *   *name:* `string`  - (Optional) [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) name
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - The created node
-*   **deleteNode**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   _nodeType:_ `string`  - Node type
+    -   _nameSpace:_ `any`  - Namespace for properties
+    -   _data:_ `any`  - [Property](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) data to store in the node under namespace
+    -   _path:_ `string`  - Path to the node
+    -   _name:_ `string`  - (Optional) Node name
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - The created node
+-   **deleteNode**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Moves a node to the trashcan.
-    *   *nodeId:* `string`  - ID of the target node
-    *   *options:* `any`  - Optional parameters supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty result that notifies when the deletion is complete
-*   **getNode**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _options:_ `any`  - Optional parameters supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty result that notifies when the deletion is complete
+-   **getNode**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Gets the stored information about a node.
-    *   *nodeId:* `string`  - ID of the target node
-    *   *options:* `any`  - Optional parameters supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Node information
-*   **getNodeChildren**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _options:_ `any`  - Optional parameters supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Node information
+-   **getNodeChildren**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets the items contained in a folder node.
-    *   *nodeId:* `string`  - ID of the target node
-    *   *options:* `any`  - Optional parameters supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - List of child items from the folder
-*   **getNodeMetadata**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](../../../lib/core/models/node-metadata.model.ts)`>`<br/>
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _options:_ `any`  - Optional parameters supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - List of child items from the folder
+-   **getNodeMetadata**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](../../../lib/core/models/node-metadata.model.ts)`>`<br/>
     Get the metadata and the nodeType for a nodeId cleaned by the prefix.
-    *   *nodeId:* `string`  - ID of the target node
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](../../../lib/core/models/node-metadata.model.ts)`>` - Node metadata
-*   **restoreNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
+    -   _nodeId:_ `string`  - ID of the target node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](../../../lib/core/models/node-metadata.model.ts)`>` - Node metadata
+-   **restoreNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Restores a node previously moved to the trashcan.
-    *   *nodeId:* `string`  - ID of the node to restore
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Details of the restored node
-*   **updateNode**(nodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
+    -   _nodeId:_ `string`  - ID of the node to restore
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Details of the restored node
+-   **updateNode**(nodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Updates the information about a node.
-    *   *nodeId:* `string`  - ID of the target node
-    *   *nodeBody:* `any`  - New data for the node
-    *   *options:* `any`  - Optional parameters supported by JS-API
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Updated node information
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _nodeBody:_ `any`  - New data for the node
+    -   _options:_ `any`  - Optional parameters supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Updated node information
 
 ## Details
 
@@ -206,6 +206,6 @@ pages in the Alfresco JS API for further details and options. Note that you can 
 
 ## See also
 
-*   [Deleted nodes api service](deleted-nodes-api.service.md)
-*   [Document list component](../../content-services/components/document-list.component.md)
-*   [Node service](node.service.md)
+-   [Deleted nodes api service](deleted-nodes-api.service.md)
+-   [Document list component](../../content-services/components/document-list.component.md)
+-   [Node service](node.service.md)

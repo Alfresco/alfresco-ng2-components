@@ -13,43 +13,43 @@ Provides access to various APIs related to file upload features.
 
 ### Methods
 
-*   **addToQueue**(files: [`FileModel`](../../../lib/core/models/file.model.ts)`[]`): [`FileModel`](../../../lib/core/models/file.model.ts)`[]`<br/>
+-   **addToQueue**(files: [`FileModel`](../../../lib/core/models/file.model.ts)`[]`): [`FileModel`](../../../lib/core/models/file.model.ts)`[]`<br/>
     Adds files to the uploading queue to be uploaded
-    *   *files:* [`FileModel`](../../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files to queue
-    *   **Returns** [`FileModel`](../../../lib/core/models/file.model.ts)`[]` - Array of files that were not blocked from upload by the ignore list
-*   **cancelUpload**(files: [`FileModel`](../../../lib/core/models/file.model.ts)`[]`)<br/>
+    -   _files:_ [`FileModel`](../../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files to queue
+    -   **Returns** [`FileModel`](../../../lib/core/models/file.model.ts)`[]` - Array of files that were not blocked from upload by the ignore list
+-   **cancelUpload**(files: [`FileModel`](../../../lib/core/models/file.model.ts)`[]`)<br/>
     Cancels uploading of files. If the file is smaller than 1 MB the file will be uploaded and then the node deleted to prevent having files that were aborted but still uploaded.
-    *   *files:* [`FileModel`](../../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files specifying uploads to cancel
-*   **clearQueue**()<br/>
+    -   _files:_ [`FileModel`](../../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files specifying uploads to cancel
+-   **clearQueue**()<br/>
     Clears the upload queue
-*   **getQueue**(): [`FileModel`](../../../lib/core/models/file.model.ts)`[]`<br/>
+-   **getQueue**(): [`FileModel`](../../../lib/core/models/file.model.ts)`[]`<br/>
     Gets the file Queue
-    *   **Returns** [`FileModel`](../../../lib/core/models/file.model.ts)`[]` - Array of files that form the queue
-*   **getUploadPromise**(file: [`FileModel`](../../../lib/core/models/file.model.ts)): `any`<br/>
+    -   **Returns** [`FileModel`](../../../lib/core/models/file.model.ts)`[]` - Array of files that form the queue
+-   **getUploadPromise**(file: [`FileModel`](../../../lib/core/models/file.model.ts)): `any`<br/>
     Gets an upload promise for a file.
-    *   *file:* [`FileModel`](../../../lib/core/models/file.model.ts)  - The target file
-    *   **Returns** `any` - [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises) that is resolved if the upload is successful or error otherwise
-*   **isUploading**(): `boolean`<br/>
-    Checks whether the service is uploading a file.
-    *   **Returns** `boolean` - True if a file is uploading, false otherwise
-*   **uploadFilesInTheQueue**(emitter?: [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`)<br/>
+    -   _file:_ [`FileModel`](../../../lib/core/models/file.model.ts)  - The target file
+    -   **Returns** `any` - [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises) that is resolved if the upload is successful or error otherwise
+-   **isUploading**(): `boolean`<br/>
+    Checks whether the service still has files uploading or awaiting upload.
+    -   **Returns** `boolean` - True if files in the queue are still uploading, false otherwise
+-   **uploadFilesInTheQueue**(emitter?: [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`)<br/>
     Finds all the files in the queue that are not yet uploaded and uploads them into the directory folder.
-    *   *emitter:* [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`  - (Optional) Emitter to invoke on file status change
+    -   _emitter:_ [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`  - (Optional) Emitter to invoke on file status change
 
 ## Events
 
-| Name                | Type                                                                | Description                                                                                                                                     |
-| ------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| queueChanged        | [`FileModel`](../../../lib/core/models/file.model.ts)\[]            | Emitted when the file queue changes.                                                                                                            |
-| fileUpload          | [`FileUploadEvent`](../../../lib/core/events/file.event.ts)         | Emitted when a [File model](../../../lib/core/models/file.model.ts) changes its state.                                                          |
-| fileUploadStarting  | [`FileUploadEvent`](../../../lib/core/events/file.event.ts)         | Emitted when an upload starts.                                                                                                                  |
-| fileUploadCancelled | [`FileUploadEvent`](../../../lib/core/events/file.event.ts)         | Emitted when an upload gets cancelled by the user.                                                                                              |
-| fileUploadProgress  | [`FileUploadEvent`](../../../lib/core/events/file.event.ts)         | Emitted during the file upload process and contains the current progress for a particular [File model](../../../lib/core/models/file.model.ts). |
-| fileUploadAborted   | [`FileUploadEvent`](../../../lib/core/events/file.event.ts)         | Emitted when a file upload gets aborted by the server.                                                                                          |
-| fileUploadError     | [`FileUploadEvent`](../../../lib/core/events/file.event.ts)         | Emitted when an error occurs during a file upload.                                                                                              |
-| fileUploadComplete  | [`FileUploadCompleteEvent`](../../../lib/core/events/file.event.ts) | Emitted when a file upload is complete.                                                                                                         |
-| fileUploadDelete    | [`FileUploadDeleteEvent`](../../../lib/core/events/file.event.ts)   | Emitted when an uploaded file is removed from server.                                                                                           |
-| fileDeleted         | string                                                              | This can be invoked when a file is deleted from an external source to upload the file dialog status.                                            |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| queueChanged | [`FileModel`](../../../lib/core/models/file.model.ts)\[] | Emitted when the file queue changes. |
+| fileUpload | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted when a [File model](../../../lib/core/models/file.model.ts) changes its state. |
+| fileUploadStarting | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted when an upload starts. |
+| fileUploadCancelled | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted when an upload gets cancelled by the user. |
+| fileUploadProgress | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted during the file upload process and contains the current progress for a particular [File model](../../../lib/core/models/file.model.ts). |
+| fileUploadAborted | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted when a file upload gets aborted by the server. |
+| fileUploadError | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted when an error occurs during a file upload. |
+| fileUploadComplete | [`FileUploadCompleteEvent`](../../../lib/core/events/file.event.ts) | Emitted when a file upload is complete. |
+| fileUploadDelete | [`FileUploadDeleteEvent`](../../../lib/core/events/file.event.ts) | Emitted when an uploaded file is removed from server. |
+| fileDeleted | string | This can be invoked when a file is deleted from an external source to upload the file dialog status. |
 
 ## Details
 

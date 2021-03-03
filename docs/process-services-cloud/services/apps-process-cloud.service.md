@@ -13,15 +13,16 @@ Gets details of deployed apps for the current user.
 
 ### Methods
 
-*   **getDeployedApplicationsByStatus**(status: `string`, role?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`[]>`<br/>
+-   **getDeployedApplicationsByStatus**(status: `string`, role?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`[]>`<br/>
     Gets a list of deployed apps for this user by status.
-    *   *status:* `string`  - Required status value
-    *   *role:* `string`  - (Optional) to filter the apps
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`[]>` - The list of deployed apps
-*   **hasDeployedApps**(): `boolean`<br/>
+    -   _status:_ `string`  - Required status value
+    -   _role:_ `string`  - (Optional) to filter the apps
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`[]>` - The list of deployed apps
+-   **hasDeployedApps**(): `boolean`<br/>
 
-    *   **Returns** `boolean` -
-*   **loadApps**()<br/>
+    -   **Returns** `boolean` - 
+
+-   **loadApps**()<br/>
 
 ## Details
 
@@ -30,4 +31,4 @@ with modifications for cloud use.
 
 ## See also
 
-*   [Apps process service](../../core/services/apps-process.service.md)
+-   [Apps process service](../../core/services/apps-process.service.md)
