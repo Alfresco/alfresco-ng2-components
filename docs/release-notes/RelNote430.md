@@ -63,7 +63,6 @@ Please refer to the [official documentation](http://docs.alfresco.com/) for furt
 
 ## PR merged 
 
-```
 * [Alfresco/alfresco-ng2-components#6442 - Removed the TODO placeholders from the release note.](https://github.com/Alfresco/alfresco-ng2-components/pull/6442)
 * [Alfresco/alfresco-ng2-components#6440 - Bump @alfresco/js-api from 4.1.0 to 4.2.0](https://github.com/Alfresco/alfresco-ng2-components/pull/6440)
 * [Alfresco/alfresco-ng2-components#6438 - [ACA-4218] - fix tomorrow date range filter](https://github.com/Alfresco/alfresco-ng2-components/pull/6438)
@@ -249,7 +248,6 @@ Please refer to the [official documentation](http://docs.alfresco.com/) for furt
 * [Alfresco/alfresco-ng2-components#6747 - Update branch for JS-API PR#3256](https://github.com/Alfresco/alfresco-ng2-components/pull/6747)
 * [Alfresco/alfresco-ng2-components#6763 - [ACA-4202] - refreshing the preview when version has changed](https://github.com/Alfresco/alfresco-ng2-components/pull/6763)
 * [Alfresco/alfresco-ng2-components#6764 - Revert "[AAE-4637] Fix varying height of dialog when clicking on the Upload from your device tab"](https://github.com/Alfresco/alfresco-ng2-components/pull/6764)
-```
 
 Please refer to the [Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have any questions about the release, please contact us using [Gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
 
