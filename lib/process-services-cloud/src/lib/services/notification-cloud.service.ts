@@ -17,8 +17,9 @@
 
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { split, gql, InMemoryCache } from '@apollo/client/core';
+import { split, gql, InMemoryCache, ApolloLink, InMemoryCacheConfig } from '@apollo/client/core';
 import { WebSocketLink } from '@apollo/client/link/ws';
+import { onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Injectable } from '@angular/core';
 import { StorageService, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
@@ -75,9 +76,34 @@ export class NotificationCloudService extends BaseCloudService {
                 httpLink
             );
 
+            const errorLink = onError(({ graphQLErrors, operation, forward }) => {
+                if (graphQLErrors) {
+                    for (const err of graphQLErrors) {
+                        switch (err.extensions.code) {
+                            case 'UNAUTHENTICATED':
+                                const oldHeaders = operation.getContext().headers;
+                                operation.setContext({
+                                    headers: {
+                                        ...oldHeaders,
+                                        'X-Authorization': 'Bearer ' + this.storageService.getItem('access_token')
+                                    }
+                                });
+                                forward(operation);
+                                break;
+                            default:
+                        }
+                    }
+                }
+            });
+
             this.apollo.createNamed(appName, {
-                link,
-                cache: new InMemoryCache()
+                link: ApolloLink.from([errorLink, link]),
+                cache: new InMemoryCache({ merge: true } as InMemoryCacheConfig),
+                defaultOptions: {
+                    watchQuery: {
+                        errorPolicy: 'all'
+                    }
+                }
             });
         }
     }
