@@ -3,7 +3,7 @@
     "ACTIONS": {
       "RESTORE": "Restaurar",
       "DELETE": "Excluir",
-      "DOWNLOAD": "Download",
+      "DOWNLOAD": "Baixar",
       "VIEW": "Visualizar",
       "UPLOAD": {
         "TITLE": "Carregar nova versão",
@@ -29,9 +29,6 @@
       "ICON_TEXT": "Tipo de item {{ type }}",
       "ARROW_ICON": "Ícone de seta direita"
     }
-  },
-  "ADF_DROPDOWN": {
-    "LOADING": "Carregando..."
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Confirmar",
@@ -62,7 +59,7 @@
     "MENU_ACTIONS": {
       "VIEW": "Visualizar",
       "REMOVE": "Remover",
-      "DOWNLOAD": "Download"
+      "DOWNLOAD": "Baixar"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "Resultados da pesquisa",
     "SELECT_LOCATION": "Selecionar localização",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Não é possível carregar um arquivo enquanto uma pesquisa está em execução",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "O usuário não tem permissão para carregar conteúdo na pasta"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "O usuário não tem permissão para carregar conteúdo na pasta",
+    "REPOSITORY": "Repositório",
+    "UPLOAD_FROM_DEVICE": "Carregar do dispositivo"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -283,7 +282,7 @@
           "COPY": "Copiar"
         },
         "DOCUMENT": {
-          "DOWNLOAD": "Download",
+          "DOWNLOAD": "Baixar",
           "DELETE": "Excluir",
           "MOVE": "Mover",
           "COPY": "Copiar",
@@ -335,7 +334,23 @@
       "CREATOR": "Criador",
       "CREATED_DATE": "Data de criação",
       "MODIFIER": "Modificador",
-      "MODIFIED_DATE": "Data de modificação"
+      "MODIFIED_DATE": "Data de modificação",
+      "CONTENT_TYPE": "Tipo de conteúdo"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Alterar tipo de conteúdo",
+        "DESCRIPTION": "Fazer esta alteração ao tipo de conteúdo irá adicionar permanentemente propriedades e metadados armazenados ao documento.",
+        "CONFIRM": "Tem certeza de que deseja alterar o tipo de conteúdo?",
+        "CANCEL": "Cancelar",
+        "APPLY": "Salvar alterações",
+        "VIEW_DETAILS": "Exibir detalhes",
+        "PROPERTY": {
+          "NAME": "Nome",
+          "DESCRIPTION": "Descrição",
+          "DATA_TYPE": "Tipo de dados"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Erro ao atualizar a propriedade",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Abrir {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Nome da propriedade",
+    "DESCRIPTION": "Descrição",
+    "DATA_TYPE": "Tipo de dados",
+    "DIALOG": {
+      "TITLE": "Pesrsonalizar propriedades",
+      "DESCRIPTION": "Gerencie as propriedades associadas aos arquivos selecionados. Escolha a partir dos aspectos de propriedade listados abaixo, para expor e aplicar funcionalidade e metadados adicionais",
+      "RESET": "Redefinir",
+      "CLEAR": "Limpar",
+      "CANCEL": "Cancelar",
+      "APPLY": "Aplicar",
+      "OVER-TABLE-MESSAGE": "Selecionar aspectos de propriedade",
+      "SELECTED": "Seleção"
     }
   }
 }

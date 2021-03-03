@@ -30,9 +30,6 @@
       "ARROW_ICON": "أيقونة السهم الأيمن"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "يتم الآن التحميل..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "تأكيد",
     "ACTION": "هل تريد المتابعة؟",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "نتائج البحث",
     "SELECT_LOCATION": "تحديد المكان",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "لا يمكنك تحميل ملف أثناء تشغيل بحث",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "لا يملك المستخدم إذنًا لتحميل المحتوى إلى المجلد"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "لا يملك المستخدم إذنًا لتحميل المحتوى إلى المجلد",
+    "REPOSITORY": "مخزن",
+    "UPLOAD_FROM_DEVICE": "تحميل من جهازك"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "المنشئ",
       "CREATED_DATE": "تاريخ الإنشاء",
       "MODIFIER": "المعدل",
-      "MODIFIED_DATE": "تاريخ التعديل"
+      "MODIFIED_DATE": "تاريخ التعديل",
+      "CONTENT_TYPE": "نوع المحتوى"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "تغيير نوع المحتوى",
+        "DESCRIPTION": "سيؤدي إجراء هذا التغيير على نوع المحتوى إلى إضافة بعض الخصائص وبيانات التعريف المخزنة إلى المستند.",
+        "CONFIRM": "هل أنت متأكد أنك تريد تغيير نوع المحتوى؟?",
+        "CANCEL": "إلغاء",
+        "APPLY": "حفظ التغييرات",
+        "VIEW_DETAILS": "عرض التفاصيل",
+        "PROPERTY": {
+          "NAME": "الاسم",
+          "DESCRIPTION": "الوصف",
+          "DATA_TYPE": "نوع البيانات"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "خطأ في تحديث الخاصية",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "فتح {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "اسم الخاصية",
+    "DESCRIPTION": "الوصف",
+    "DATA_TYPE": "نوع البيانات",
+    "DIALOG": {
+      "TITLE": "تخصيص الخصائص",
+      "DESCRIPTION": "قم بإدارة الخصائص المرتبطة بالملف (الملفات) المحددة. اختر من بين جوانب الملكية المدرجة أدناه ، لعرض وتطبيق بيانات تعريف ووظائف إضافية",
+      "RESET": "إعادة تعيين",
+      "CLEAR": "مسح",
+      "CANCEL": "إلغاء",
+      "APPLY": "تطبيق",
+      "OVER-TABLE-MESSAGE": "حدد جوانب الملكية",
+      "SELECTED": "المحدد"
     }
   }
 }

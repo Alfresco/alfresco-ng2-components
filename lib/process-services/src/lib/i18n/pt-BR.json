@@ -205,7 +205,7 @@
     "MENU_ACTIONS": {
       "VIEW_CONTENT": "Visualizar",
       "REMOVE_CONTENT": "Remover",
-      "DOWNLOAD_CONTENT": "Download",
+      "DOWNLOAD_CONTENT": "Baixar",
       "DOWNLOAD_AUDIT": "Baixar auditoria",
       "VIEW_TASK": "Exibir tarefa"
     },

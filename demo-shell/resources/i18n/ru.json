@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Установите флажок, чтобы отключить свойство ввода и настроить, используя службу.",
     "HEADER_DATA": "Данные заголовка",
     "TREE_VIEW": "Иерархическое представление",
+    "EXPAND_LIST": "Расширяемый список элементов",
     "ICONS": "Значки",
     "PEOPLE_GROUPS_CLOUD": "Облако пользователей/групп",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Управление версиями",
+      "ASPECTS": "Обновить аспекты",
       "LOCK": "Блокировка",
       "METADATA": "Информация",
       "DOWNLOAD": "Скачать",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Хранилище",
     "RESTORE": "Восстановить"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "Задача {{taskName}} была назначена {{assignee}}",
+    "PROCESS_STARTED": "Процесс {{processName}} запущен",
+    "TASK_UPDATED": "Сведения о задаче {{taskName}} обновлены"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Данные формы",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Перевод пользовательского заголовка один",
   "GROUP-TITLE2-TRANSLATION-KEY": "Перевод пользовательского заголовка два",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Назад на главную"
+    },
     "507": {
       "TITLE": "Диск ACS заполнен",
       "DESCRIPTION": "Объем данных превысил максимально допустимое значение, установленное для сети или системы",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Назад на главную"
       }
     }
   },

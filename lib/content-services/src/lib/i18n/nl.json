@@ -30,9 +30,6 @@
       "ARROW_ICON": "Pictogram pijl-rechts"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "Laden..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bevestigen",
     "ACTION": "Wilt u doorgaan?",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "Zoekresultaten",
     "SELECT_LOCATION": "Locatie selecteren",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "U kunt geen bestand uploaden terwijl een zoekopdracht wordt uitgevoerd",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Gebruiker heeft geen rechten voor het uploaden van content naar de map"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Gebruiker heeft geen rechten voor het uploaden van content naar de map",
+    "REPOSITORY": "Repository",
+    "UPLOAD_FROM_DEVICE": "Uploaden vanaf uw apparaat"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "Maker",
       "CREATED_DATE": "Datum gemaakt",
       "MODIFIER": "Gewijzigd door",
-      "MODIFIED_DATE": "Datum gewijzigd"
+      "MODIFIED_DATE": "Datum gewijzigd",
+      "CONTENT_TYPE": "Contenttype"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Contenttype wijzigen",
+        "DESCRIPTION": "Met deze wijziging van het contenttype worden permanent bepaalde eigenschappen en opgeslagen metagegevens aan het document toegevoegd.",
+        "CONFIRM": "Weet u zeker dat u het contenttype wilt wijzigen?",
+        "CANCEL": "Annuleren",
+        "APPLY": "Wijzigingen opslaan",
+        "VIEW_DETAILS": "Details weergeven",
+        "PROPERTY": {
+          "NAME": "Naam",
+          "DESCRIPTION": "Beschrijving",
+          "DATA_TYPE": "Gegevenstype"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Fout bij het bijwerken van de eigenschap",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "{{ name }} openen"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Eigenschapsnaam",
+    "DESCRIPTION": "Beschrijving",
+    "DATA_TYPE": "Gegevenstype",
+    "DIALOG": {
+      "TITLE": "Eigenschappen aanpassen",
+      "DESCRIPTION": "Beheer de eigenschappen die zijn gekoppeld aan geselecteerde bestanden. Kies uit de onderstaande eigenschap-aspecten om aanvullende metagegevens en functionaliteit weer te geven en toe te passen",
+      "RESET": "Opnieuw instellen",
+      "CLEAR": "Wissen",
+      "CANCEL": "Annuleren",
+      "APPLY": "Toepassen",
+      "OVER-TABLE-MESSAGE": "Eigenschap-aspecten selecteren",
+      "SELECTED": "Geselecteerd"
     }
   }
 }

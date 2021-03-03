@@ -30,9 +30,6 @@
       "ARROW_ICON": "Icona freccia destra"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "Caricamento..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Conferma",
     "ACTION": "Procedere?",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "Risultati della ricerca",
     "SELECT_LOCATION": "Seleziona località",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Impossibile caricare un file mentre è ancora in esecuzione una ricerca",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "L'utente non dispone dell'autorizzazione per caricare il contenuto nella cartella"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "L'utente non dispone dell'autorizzazione per caricare il contenuto nella cartella",
+    "REPOSITORY": "Repository",
+    "UPLOAD_FROM_DEVICE": "Carica dal dispositivo"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "Creatore",
       "CREATED_DATE": "Data di creazione",
       "MODIFIER": "Modificatore",
-      "MODIFIED_DATE": "Data di modifica"
+      "MODIFIED_DATE": "Data di modifica",
+      "CONTENT_TYPE": "Tipo di contenuto"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Modifica il tipo di contenuto",
+        "DESCRIPTION": "Se si apporta questa modifica al tipo di contenuto, alcune proprietà e metadati memorizzati verranno aggiunti al documento in modo definitivo.",
+        "CONFIRM": "Modificare il tipo di contenuto?",
+        "CANCEL": "Annulla",
+        "APPLY": "Salva modifiche",
+        "VIEW_DETAILS": "Visualizza dettagli",
+        "PROPERTY": {
+          "NAME": "Nome",
+          "DESCRIPTION": "Descrizione",
+          "DATA_TYPE": "Tipo di dati"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Errore nell’aggiornamento della proprietà",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Apri {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Nome proprietà",
+    "DESCRIPTION": "Descrizione",
+    "DATA_TYPE": "Tipo di dati",
+    "DIALOG": {
+      "TITLE": "Personalizza proprietà",
+      "DESCRIPTION": "Consente di gestire le proprietà associate ai file selezionati. Per visualizzare e applicare altri metadati e funzionalità aggiuntive, è possibile scegliere tra gli aspetti delle proprietà elencati di seguito",
+      "RESET": "Reimposta",
+      "CLEAR": "Cancella",
+      "CANCEL": "Annulla",
+      "APPLY": "Applica",
+      "OVER-TABLE-MESSAGE": "Seleziona aspetti proprietà",
+      "SELECTED": "Selezionato"
     }
   }
 }

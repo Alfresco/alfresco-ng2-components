@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Kontrollera den här för att avaktivera indataegenskap och konfigurera genom att använda tjänsten",
     "HEADER_DATA": "Sidhuvuddata",
     "TREE_VIEW": "Trädvy",
+    "EXPAND_LIST": "Utökbar objektlista",
     "ICONS": "Ikoner",
     "PEOPLE_GROUPS_CLOUD": "Personer/grupp moln",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Hantera versioner",
+      "ASPECTS": "Uppdatera aspekter",
       "LOCK": "Lås",
       "METADATA": "Info",
       "DOWNLOAD": "Ladda ner",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Lagra",
     "RESTORE": "Återställ"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "{{taskName}} uppgiften har tilldelats till {{assignee}}",
+    "PROCESS_STARTED": "{{processName}} processen har startats",
+    "TASK_UPDATED": "{{taskName}} uppgiftsinformation har uppdaterats"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Formulärdata",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Anpassad titelöversättning ett",
   "GROUP-TITLE2-TRANSLATION-KEY": "Anpassad titelöversättning två",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Tillbaka hem"
+    },
     "507": {
       "TITLE": "ACS disk full",
       "DESCRIPTION": "Innehållet överskrider övergripande kvotbegränsning som är konfigurerad för nätverket eller systemet",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Tillbaka hem"
       }
     }
   },

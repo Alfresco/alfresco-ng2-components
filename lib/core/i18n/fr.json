@@ -6,10 +6,11 @@
   "UNCLAIM": "Libérer",
   "START PROCESS": "Démarrer le processus",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "Aucun message",
+    "NO_MESSAGE": "Aucune notification n'est disponible pour l'instant.",
     "TITLE": "Notifications",
     "MARK_AS_READ": "Marquer tout comme lu",
-    "SYSTEM": "Système"
+    "SYSTEM": "Système",
+    "LOAD_MORE": "Charger plus"
   },
   "FORM": {
     "START_FORM": {
@@ -198,7 +199,23 @@
         "CREATOR": "Créateur",
         "CREATED_DATE": "Date de création",
         "MODIFIER": "Modificateur",
-        "MODIFIED_DATE": "Date de Modification"
+        "MODIFIED_DATE": "Date de Modification",
+        "CONTENT_TYPE": "Type de contenu"
+      },
+      "CONTENT_TYPE": {
+        "DIALOG": {
+          "TITLE": "Modifier le type de contenu",
+          "DESCRIPTION": "Si vous modifiez le type de contenu, certaines propriétés et métadonnées stockées seront ajoutées de manière permanente au document.",
+          "CONFIRM": "Voulez-vous vraiment modifier le type de contenu ?",
+          "CANCEL": "Annuler",
+          "APPLY": "Enregistrer les modif.",
+          "VIEW_DETAILS": "Afficher les détails",
+          "PROPERTY": {
+            "NAME": "Nom",
+            "DESCRIPTION": "Description",
+            "DATA_TYPE": "Type de données"
+          }
+        }
       },
       "ACTIONS": {
         "EDIT": "Modifier",
@@ -206,12 +223,14 @@
         "CANCEL": "Annuler",
         "CLEAR": "Supprimer",
         "TOGGLE": "Basculer la valeur",
-        "COPY_TO_CLIPBOARD": "Faites un double clic pour copier la valeur"
+        "COPY_TO_CLIPBOARD": "Faites un double clic pour copier la valeur",
+        "EDIT_ASPECTS": "Modifier aspect"
       },
       "ACCESSIBILITY": {
         "EDIT": "Bouton Modifier",
         "DATEPICKER": "Utilisez les touches de direction pour naviguer entre les dates : haut et bas pour passer à la semaine suivante ou précédente en conservant le même jour ; gauche et droite pour passer au jour suivant ou précédent. Appuyez sur Entrée (Saut de ligne) pour sélectionner une date.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Valeur copiée dans le Presse-papiers"
+        "COPY_TO_CLIPBOARD_MESSAGE": "Valeur copiée dans le Presse-papiers",
+        "EDIT_ASPECTS": "Modifier aspect"
       }
     },
     "SEARCH": {
@@ -376,7 +395,8 @@
       "CLOSE": "Fermer",
       "PLACEHOLDER": "Mot de passe",
       "ERROR": "Mot de passe erroné"
-    }
+    },
+    "SUBTITLES": "Sous-titres"
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
@@ -529,5 +549,8 @@
     "BUTTON": {
       "ARIA_LABEL": "Supprimer"
     }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Chargement..."
   }
 }

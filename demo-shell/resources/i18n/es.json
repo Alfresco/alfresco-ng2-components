@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Marque esto para desactivar la propiedad de entrada y configurar el uso del servicio",
     "HEADER_DATA": "Datos de encabezado",
     "TREE_VIEW": "Vista de árbol",
+    "EXPAND_LIST": "Lista de elementos expandible",
     "ICONS": "Iconos",
     "PEOPLE_GROUPS_CLOUD": "Personas/Grupos en la nube",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Gestionar versiones",
+      "ASPECTS": "Actualizar aspectos",
       "LOCK": "Bloquear",
       "METADATA": "Información",
       "DOWNLOAD": "Descargar",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Almacenar",
     "RESTORE": "Restaurar"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "La tarea {{taskName}} ha sido asignada a {{assignee}}",
+    "PROCESS_STARTED": "Se ha iniciado el proceso {{processName}}",
+    "TASK_UPDATED": "Se actualizaron los detalles de la tarea {{taskName}}"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Datos del formulario",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Traducción de título personalizado 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "Traducción de título personalizado 2",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Volver al inicio"
+    },
     "507": {
       "TITLE": "Disco ACS lleno",
       "DESCRIPTION": "El contenido supera el límite de la cuota de almacenamiento general configurado para la red o sistema.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Volver al inicio"
       }
     }
   },

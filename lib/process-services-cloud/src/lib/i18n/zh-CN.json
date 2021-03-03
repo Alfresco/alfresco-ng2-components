@@ -3,7 +3,7 @@
     "MESSAGES": {
       "TITLE": "找不到进程",
       "SUBTITLE": "创建您想要今后轻松查找的新进程",
-      "NONE": "未选择进程实例过滤器。"
+      "NONE": "未选择进程实例筛选器。"
     },
     "PROPERTIES": {
       "NAME": "名称",
@@ -95,7 +95,7 @@
       "JSON_CELL": "Json",
       "COMPLETED_BY": "完成者",
       "PRIORITY_VALUES": {
-        "NOT_SET": "未设置",
+        "NONE": "无",
         "LOW": "低",
         "NORMAL": "正常",
         "HIGH": "高"
@@ -122,17 +122,47 @@
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "我的任务",
     "QUEUED_TASKS": "排队列的任务",
-    "COMPLETED_TASKS": "完成的任务"
+    "COMPLETED_TASKS": "完成的任务",
+    "STATUS": {
+      "ALL": "全部",
+      "CREATED": "已创建",
+      "ASSIGNED": "已指派",
+      "SUSPENDED": "已挂起",
+      "CANCELLED": "已取消",
+      "COMPLETED": "已完成"
+    },
+    "DIRECTION": {
+      "ASCENDING": "升序",
+      "DESCENDING": "降序"
+    }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
     "ALL_SERVICE_TASKS": "所有服务任务",
     "ERRORED_TASKS": "出错的任务",
-    "COMPLETED_TASKS": "完成的任务"
+    "COMPLETED_TASKS": "完成的任务",
+    "STATUS": {
+      "ALL": "全部",
+      "STARTED": "已启动",
+      "COMPLETED": "已完成",
+      "CANCELLED": "已取消",
+      "ERROR": "错误"
+    }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "全部",
     "RUNNING_PROCESSES": "运行",
-    "COMPLETED_PROCESSES": "已完成"
+    "COMPLETED_PROCESSES": "已完成",
+    "STATUS": {
+      "ALL": "全部",
+      "RUNNING": "运行",
+      "SUSPENDED": "已挂起",
+      "CANCELLED": "已取消",
+      "COMPLETED": "已完成"
+    },
+    "DIRECTION": {
+      "ASCENDING": "升序",
+      "DESCENDING": "降序"
+    }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

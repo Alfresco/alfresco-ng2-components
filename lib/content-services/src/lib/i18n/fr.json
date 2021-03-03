@@ -30,9 +30,6 @@
       "ARROW_ICON": "Icône flèche vers la droite"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "Chargement..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Confirmer",
     "ACTION": "Voulez-vous continuer ?",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "Résultats de la recherche",
     "SELECT_LOCATION": "Sélectionner l'emplacement",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Impossible d'importer un fichier pendant une recherche",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "L'utilisateur n'est pas autorisé à importer du contenu dans le dossier"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "L'utilisateur n'est pas autorisé à importer du contenu dans le dossier",
+    "REPOSITORY": "Entrepôt",
+    "UPLOAD_FROM_DEVICE": "Importer depuis votre appareil"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "Créateur",
       "CREATED_DATE": "Date de création",
       "MODIFIER": "Modificateur",
-      "MODIFIED_DATE": "Date de Modification"
+      "MODIFIED_DATE": "Date de Modification",
+      "CONTENT_TYPE": "Type de contenu"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Modifier le type de contenu",
+        "DESCRIPTION": "Si vous modifiez le type de contenu, certaines propriétés et métadonnées stockées seront ajoutées de manière permanente au document.",
+        "CONFIRM": "Voulez-vous vraiment modifier le type de contenu ?",
+        "CANCEL": "Annuler",
+        "APPLY": "Enregistrer les modif.",
+        "VIEW_DETAILS": "Afficher les détails",
+        "PROPERTY": {
+          "NAME": "Nom",
+          "DESCRIPTION": "Description",
+          "DATA_TYPE": "Type de données"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Erreur lors de la mise à jour de la propriété",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Ouvrir {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Nom de la propriété",
+    "DESCRIPTION": "Description",
+    "DATA_TYPE": "Type de données",
+    "DIALOG": {
+      "TITLE": "Personnaliser les propriétés",
+      "DESCRIPTION": "Gérer les propriétés associées au(x) fichier(s) sélectionné(s). Choisir parmi les aspects de propriétés répertoriés ci-dessous pour afficher et appliquer des métadonnées et fonctionnalités supplémentaires",
+      "RESET": "Réinitialiser",
+      "CLEAR": "Supprimer",
+      "CANCEL": "Annuler",
+      "APPLY": "Appliquer",
+      "OVER-TABLE-MESSAGE": "Sélectionner les aspects des propriétés",
+      "SELECTED": "Sélectionné"
     }
   }
 }

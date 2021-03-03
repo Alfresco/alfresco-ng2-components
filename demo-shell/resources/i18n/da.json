@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Vælg dette felt for at deaktivere inputegenskaben og konfigurere ved hjælp af tjenesten",
     "HEADER_DATA": "Headerdata",
     "TREE_VIEW": "Trævisning",
+    "EXPAND_LIST": "Udvidelig punktliste",
     "ICONS": "Ikoner",
     "PEOPLE_GROUPS_CLOUD": "Person/gruppecloud",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Administrer versioner",
+      "ASPECTS": "Opdater aspekter",
       "LOCK": "Lås",
       "METADATA": "Oplysninger",
       "DOWNLOAD": "Download",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Gem",
     "RESTORE": "Gendan"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "{{taskName}} opgave er blevet tildelt til {{assignee}}",
+    "PROCESS_STARTED": "{{processName}} processen er startet",
+    "TASK_UPDATED": "{{taskName}} opgavedetaljer er blevet opdateret"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Formulardata",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Brugerdefineret titel oversættelse et",
   "GROUP-TITLE2-TRANSLATION-KEY": "Brugerdefineret titel oversættelse to",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Tilbage til forsiden"
+    },
     "507": {
       "TITLE": "ACS-disken er fuld",
       "DESCRIPTION": "Indholdet overskrider den generelle lagerkvotegrænse, der er konfigureret for netværket eller systemet",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Tilbage til forsiden"
       }
     }
   },

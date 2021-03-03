@@ -30,9 +30,6 @@
       "ARROW_ICON": "Icono de dirección a la derecha"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "Cargando..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Confirmar",
     "ACTION": "¿Desea continuar?",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "Resultados de la búsqueda",
     "SELECT_LOCATION": "Seleccionar ubicación",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "No puede cargar un fichero mientras se está realizando una búsqueda",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "El usuario no tiene permiso para cargar contenido en la carpeta"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "El usuario no tiene permiso para cargar contenido en la carpeta",
+    "REPOSITORY": "Repositorio",
+    "UPLOAD_FROM_DEVICE": "Cargar desde su dispositivo"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "Creador",
       "CREATED_DATE": "Fecha de creación",
       "MODIFIER": "Modificador",
-      "MODIFIED_DATE": "Fecha de modificación"
+      "MODIFIED_DATE": "Fecha de modificación",
+      "CONTENT_TYPE": "Tipo de contenido"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Cambiar tipo de contenido",
+        "DESCRIPTION": "Al realizar este cambio de tipo de contenido, se añadirán propiedades y se guardarán metadatos en el documento de forma permanente.",
+        "CONFIRM": "¿Está seguro de que desea cambiar el tipo de contenido?",
+        "CANCEL": "Cancelar",
+        "APPLY": "Guardar cambios",
+        "VIEW_DETAILS": "Ver los detalles",
+        "PROPERTY": {
+          "NAME": "Nombre",
+          "DESCRIPTION": "Descripción",
+          "DATA_TYPE": "Tipo de datos"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Error al actualizar la propiedad",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Abrir {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Nombre de la propiedad",
+    "DESCRIPTION": "Descripción",
+    "DATA_TYPE": "Tipo de datos",
+    "DIALOG": {
+      "TITLE": "Personalizar propiedades",
+      "DESCRIPTION": "Gestione las propiedades asociadas con los ficheros seleccionados. Elija entre los aspectos de las propiedad que se enumeran a continuación, para mostrar y aplicar los metadatos y funcionalidades adicionales",
+      "RESET": "Reiniciar",
+      "CLEAR": "Borrar",
+      "CANCEL": "Cancelar",
+      "APPLY": "Aplicar",
+      "OVER-TABLE-MESSAGE": "Seleccionar aspectos de propiedades",
+      "SELECTED": "Seleccionado"
     }
   }
 }

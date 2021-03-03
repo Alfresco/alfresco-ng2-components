@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "حدد هذا لتعطيل خاصية الإدخال والتكوين باستخدام الخدمة",
     "HEADER_DATA": "بيانات العنوان",
     "TREE_VIEW": "طريقة عرض الشجرة",
+    "EXPAND_LIST": "قائمة العناصر القابلة للتوسيع",
     "ICONS": "أيقونات",
     "PEOPLE_GROUPS_CLOUD": "سحابة الأشخاص/المجموعة",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "إدارة الإصدارات",
+      "ASPECTS": "تحديث الجوانب",
       "LOCK": "قفل",
       "METADATA": "معلومات",
       "DOWNLOAD": "تنزيل",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "متجر",
     "RESTORE": "استعادة"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "تم تعيين المهمة {{taskName}} إلى {{assignee}}",
+    "PROCESS_STARTED": "تم بدء عملية {{processName}}",
+    "TASK_UPDATED": "تم تحديث تفاصيل مهمة {{taskName}}"
   },
   "FORM-LOADING": {
     "FORM_DATA": "بيانات النموذج",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "الترجمة الأولى للعنوان المخصص",
   "GROUP-TITLE2-TRANSLATION-KEY": "الترجمة الثانية للعنوان المخصص",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "عودة إلى الرئيسية"
+    },
     "507": {
       "TITLE": "قرص ACS ممتلئ",
       "DESCRIPTION": "يتجاوز المحتوى حد سعة التخزين المكون للشبكة أو النظام",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "عودة إلى الرئيسية"
       }
     }
   },

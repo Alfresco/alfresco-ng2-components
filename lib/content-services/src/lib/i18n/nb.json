@@ -30,9 +30,6 @@
       "ARROW_ICON": "Høyrepil-ikon"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "Laster inn..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bekreft",
     "ACTION": "Vil du fortsette?",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "Søkeresultater",
     "SELECT_LOCATION": "Velg plassering",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Du kan ikke laste opp en fil mens et søk fremdeles pågår",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Brukeren har ikke tillatelse til å laste opp innhold til mappen"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Brukeren har ikke tillatelse til å laste opp innhold til mappen",
+    "REPOSITORY": "Datalager",
+    "UPLOAD_FROM_DEVICE": "Last opp fra enheten din"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "Oppretter",
       "CREATED_DATE": "Opprettelsesdato",
       "MODIFIER": "Modifikator",
-      "MODIFIED_DATE": "Endringsdato"
+      "MODIFIED_DATE": "Endringsdato",
+      "CONTENT_TYPE": "Innholdstype"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Endre innholdstype",
+        "DESCRIPTION": "Ved å foreta denne endringen i innholdstypen legges visse egenskaper og lagrede metadata permanent til i dokumentet.",
+        "CONFIRM": "Er du sikker på at du vil endre innholdstypen?",
+        "CANCEL": "Avbryt",
+        "APPLY": "Lagre endringer",
+        "VIEW_DETAILS": "Visningsdetaljer",
+        "PROPERTY": {
+          "NAME": "Navn",
+          "DESCRIPTION": "Beskrivelse",
+          "DATA_TYPE": "Datatype"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Feil ved oppdatering av egenskap",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Åpne {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Egenskapsnavn",
+    "DESCRIPTION": "Beskrivelse",
+    "DATA_TYPE": "Datatype",
+    "DIALOG": {
+      "TITLE": "Tilpass egenskaper",
+      "DESCRIPTION": "Administrer egenskapene knyttet til valgte fil(er). Velg fra egenskapsaspektene opplistet nedenfor, for å vise og aktivere ytterligere metadata og funksjonalitet.",
+      "RESET": "Tilbakestill",
+      "CLEAR": "Fjern",
+      "CANCEL": "Avbryt",
+      "APPLY": "Bruk",
+      "OVER-TABLE-MESSAGE": "Velg egenskapsaspekter",
+      "SELECTED": "Valgt"
     }
   }
 }

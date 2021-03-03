@@ -6,10 +6,11 @@
   "UNCLAIM": "Zwolnij",
   "START PROCESS": "Rozpocznij proces",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "Brak komunikatów",
+    "NO_MESSAGE": "Aktualnie brak powiadomień.",
     "TITLE": "Powiadomienia",
     "MARK_AS_READ": "Oznacz wszystkie jako przeczytane",
-    "SYSTEM": "System"
+    "SYSTEM": "System",
+    "LOAD_MORE": "Wczytaj więcej"
   },
   "FORM": {
     "START_FORM": {
@@ -198,7 +199,23 @@
         "CREATOR": "Twórca",
         "CREATED_DATE": "Data utworzenia",
         "MODIFIER": "Modyfikator",
-        "MODIFIED_DATE": "Data modyfikacji"
+        "MODIFIED_DATE": "Data modyfikacji",
+        "CONTENT_TYPE": "Typ zawartości"
+      },
+      "CONTENT_TYPE": {
+        "DIALOG": {
+          "TITLE": "Zmień typ zawartości",
+          "DESCRIPTION": "Wprowadzenie tej zmiany typu zawartości spowoduje trwałe dodanie pewnych właściwości i zapisanie metadanych w dokumencie.",
+          "CONFIRM": "Czy na pewno zmienić typ zawartości?",
+          "CANCEL": "Anuluj",
+          "APPLY": "Zapisz zmiany",
+          "VIEW_DETAILS": "Wyświetl szczegóły",
+          "PROPERTY": {
+            "NAME": "Nazwa",
+            "DESCRIPTION": "Opis",
+            "DATA_TYPE": "Typ danych"
+          }
+        }
       },
       "ACTIONS": {
         "EDIT": "Edytuj",
@@ -206,12 +223,14 @@
         "CANCEL": "Anuluj",
         "CLEAR": "Wyczyść",
         "TOGGLE": "Przełącz wartość",
-        "COPY_TO_CLIPBOARD": "Kliknij dwa razy, aby skopiować wartość"
+        "COPY_TO_CLIPBOARD": "Kliknij dwa razy, aby skopiować wartość",
+        "EDIT_ASPECTS": "Edycja aspektu"
       },
       "ACCESSIBILITY": {
         "EDIT": "Przycisk Edytuj",
         "DATEPICKER": "Użyj klawiszy strzałek, aby przełączać między datami. Strzałki w górę i w dół przełączają na ten sam dzień w następnym lub poprzednim tygodniu. Natomiast strzałki w lewo i w prawo przełączają na następny lub poprzedni dzień. Naciśnij Enter lub Return, aby wybrać datę.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Wartość skopiowano do schowka"
+        "COPY_TO_CLIPBOARD_MESSAGE": "Wartość skopiowano do schowka",
+        "EDIT_ASPECTS": "Edycja aspektu"
       }
     },
     "SEARCH": {
@@ -376,7 +395,8 @@
       "CLOSE": "Zamknij",
       "PLACEHOLDER": "Hasło",
       "ERROR": "Hasło jest nieprawidłowe."
-    }
+    },
+    "SUBTITLES": "Napisy"
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
@@ -529,5 +549,8 @@
     "BUTTON": {
       "ARIA_LABEL": "Wyczyść"
     }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Wczytywanie..."
   }
 }

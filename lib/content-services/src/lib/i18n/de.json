@@ -30,9 +30,6 @@
       "ARROW_ICON": "Pfeil-nach-rechts-Symbol"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "Laden..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bestätigen",
     "ACTION": "Möchten Sie fortfahren?",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "Ergebnisse durchsuchen",
     "SELECT_LOCATION": "Speicherort auswählen",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Sie können während einer laufenden Suche keine Datei hochladen.",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Benutzer besitzt keine Berechtigung, um Inhalt in Ordner hochzuladen"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Benutzer besitzt keine Berechtigung, um Inhalt in Ordner hochzuladen",
+    "REPOSITORY": "Repository",
+    "UPLOAD_FROM_DEVICE": "Von Ihrem Gerät hochladen"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "Ersteller",
       "CREATED_DATE": "Datum der Erstellung",
       "MODIFIER": "Bearbeiter",
-      "MODIFIED_DATE": "Datum der Änderung"
+      "MODIFIED_DATE": "Datum der Änderung",
+      "CONTENT_TYPE": "Content-Typ"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Content-Typ ändern",
+        "DESCRIPTION": "Wenn Sie diese Änderung am Content-Typ vornehmen, werden dem Dokument einige Eigenschaften und gespeicherte Metadaten dauerhaft hinzugefügt.",
+        "CONFIRM": "Möchten Sie den Content-Typ wirklich ändern?",
+        "CANCEL": "Abbrechen",
+        "APPLY": "Änderungen speichern",
+        "VIEW_DETAILS": "Details anzeigen",
+        "PROPERTY": {
+          "NAME": "Name",
+          "DESCRIPTION": "Beschreibung",
+          "DATA_TYPE": "Datentyp"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Fehler beim Aktualisieren der Eigenschaft",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "{{ name }} öffnen"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Eigenschaftenname",
+    "DESCRIPTION": "Beschreibung",
+    "DATA_TYPE": "Datentyp",
+    "DIALOG": {
+      "TITLE": "Eigenschaften anpassen",
+      "DESCRIPTION": "Verwalten Sie die mit den ausgewählten Dateien verbundenen Eigenschaften. Wählen Sie aus den unten aufgeführten Eigenschaftsaspekten aus, um zusätzliche Metadaten und Funktionen anzuzeigen und anzuwenden",
+      "RESET": "Zurücksetzen",
+      "CLEAR": "Löschen",
+      "CANCEL": "Abbrechen",
+      "APPLY": "Anwenden",
+      "OVER-TABLE-MESSAGE": "Eigenschaftsaspekte auswählen",
+      "SELECTED": "Ausgewählt"
     }
   }
 }

@@ -6,10 +6,11 @@
   "UNCLAIM": "Avsäga",
   "START PROCESS": "Starta process",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "Inga meddelanden",
+    "NO_MESSAGE": "Du har inga aviseringar just nu.",
     "TITLE": "Aviseringar",
     "MARK_AS_READ": "Markera allt som läst",
-    "SYSTEM": "System"
+    "SYSTEM": "System",
+    "LOAD_MORE": "Läs in mer"
   },
   "FORM": {
     "START_FORM": {
@@ -198,7 +199,23 @@
         "CREATOR": "Skapad av",
         "CREATED_DATE": "Skapad datum",
         "MODIFIER": "Ändrad av",
-        "MODIFIED_DATE": "Ändringsdatum"
+        "MODIFIED_DATE": "Ändringsdatum",
+        "CONTENT_TYPE": "Innehållstyp"
+      },
+      "CONTENT_TYPE": {
+        "DIALOG": {
+          "TITLE": "Ändra innehållstyp",
+          "DESCRIPTION": "Genom att göra denna ändring av innehållstypen läggs vissa egenskaper och lagrade metadata permanent till dokumentet.",
+          "CONFIRM": "Är du säker på att du vill ändra innehållstypen?",
+          "CANCEL": "Avbryt",
+          "APPLY": "Spara ändringar",
+          "VIEW_DETAILS": "Visa detaljer",
+          "PROPERTY": {
+            "NAME": "Namn",
+            "DESCRIPTION": "Beskrivning",
+            "DATA_TYPE": "Datatyp"
+          }
+        }
       },
       "ACTIONS": {
         "EDIT": "Redigera",
@@ -206,12 +223,14 @@
         "CANCEL": "Avbryt",
         "CLEAR": "Rensa",
         "TOGGLE": "Växla värde",
-        "COPY_TO_CLIPBOARD": "Dubbelklicka för att kopiera värde"
+        "COPY_TO_CLIPBOARD": "Dubbelklicka för att kopiera värde",
+        "EDIT_ASPECTS": "Redigera aspekt"
       },
       "ACCESSIBILITY": {
         "EDIT": "Redigeringsknapp",
         "DATEPICKER": "Använd piltangenterna för att navigera mellan datumen. Upp och ner flyttar till nästa eller föregående vecka men på samma dag. Vänster och höger flyttar till nästa eller föregående dag. Tryck på Retur för att välja ett datum.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Värde kopierat till urklipp"
+        "COPY_TO_CLIPBOARD_MESSAGE": "Värde kopierat till urklipp",
+        "EDIT_ASPECTS": "Redigera aspekt"
       }
     },
     "SEARCH": {
@@ -376,7 +395,8 @@
       "CLOSE": "Stäng",
       "PLACEHOLDER": "Lösenord",
       "ERROR": "Lösenordet är fel"
-    }
+    },
+    "SUBTITLES": "Undertexter"
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
@@ -529,5 +549,8 @@
     "BUTTON": {
       "ARIA_LABEL": "Rensa"
     }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Läser in..."
   }
 }
