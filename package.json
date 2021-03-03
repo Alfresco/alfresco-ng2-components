@@ -130,6 +130,8 @@
     "css-loader": "^5.1.0",
     "dotenv": "^8.2.0",
     "github-api": "^3.4.0",
+    "graphql": "^15.4.0",
+    "graphql-request": "^3.1.0",
     "husky": "^5.1.2",
     "jasmine-ajax": "4.0.0",
     "jasmine-core": "~2.8.0",
