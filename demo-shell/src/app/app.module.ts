@@ -16,7 +16,7 @@
  */
 
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
@@ -114,7 +114,6 @@ import localeDa from '@angular/common/locales/da';
 import localeSv from '@angular/common/locales/sv';
 import { setupAppNotifications } from './services/app-notifications-factory';
 import { AppNotificationsService } from './services/app-notifications.service';
-import { UnauthorisedErrorHandler } from './services/unauthorised-error-handler.service';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -236,7 +235,6 @@ registerLocaleData(localeSv);
             deps: [AppNotificationsService],
             multi: true
         },
-        { provide: ErrorHandler, useClass: UnauthorisedErrorHandler },
     ],
     bootstrap: [AppComponent]
 })
