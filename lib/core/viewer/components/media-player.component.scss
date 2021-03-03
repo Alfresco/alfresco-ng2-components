@@ -8,7 +8,7 @@
         max-width: 100%;
     }
 
-    video.adf-audio-file::-webkit-media-text-track-display {
+    video.adf-audio-file::-webkit-media-text-track-container {
         -webkit-transform: translateY(-50%) !important;
         transform: translateY(-50%) !important;
     }
