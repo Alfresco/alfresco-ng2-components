@@ -107,6 +107,17 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture.destroy();
     });
 
+    it('should not raise filter change events if filter remains the same', () => {
+        let count = 0;
+        component.filterChange.subscribe(() => count++);
+
+        component.processFilter = fakeFilter;
+        component.processFilter = fakeFilter;
+        component.processFilter = fakeFilter;
+
+        expect(count).toBe(1);
+    });
+
     it('should fetch process instance filter by id', async(() => {
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
         component.ngOnChanges({ 'id': processFilterIdChange });

@@ -103,6 +103,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     @Input()
     set processFilter(value: ProcessFilterCloudModel) {
+        const isChanged = this.isFilterChanged(this._filter, value);
+
         this._filter = value;
 
         if (value?.appName) {
@@ -118,7 +120,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
         this.buildForm(this.processFilterProperties);
 
-        this.filterChange.emit(value);
+        if (isChanged) {
+            this.filterChange.emit(value);
+        }
     }
 
     status: Array<DropdownOption> = [
@@ -635,6 +639,17 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 value: 'businessKey'
             }
         ];
+    }
+
+    private isFilterChanged(oldValue: ProcessFilterCloudModel, newValue: ProcessFilterCloudModel): boolean {
+        const oldJson = JSON.stringify(
+            this.processFilterCloudService.writeQueryParams(oldValue || {}, this.filterProperties)
+        );
+        const newJson = JSON.stringify(
+            this.processFilterCloudService.writeQueryParams(newValue || {}, this.filterProperties)
+        );
+
+        return oldJson !== newJson;
     }
 
     private createProcessFilterProperties(filterModel: ProcessFilterCloudModel): ProcessFilterProperties[] {
