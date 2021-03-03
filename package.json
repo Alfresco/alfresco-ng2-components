@@ -150,7 +150,7 @@
     "license-checker": "^25.0.1",
     "lint-staged": "^10.5.1",
     "lite-server": "^2.6.1",
-    "markdownlint-cli": "^0.26.0",
+    "markdownlint-cli": "^0.27.1",
     "mdast": "^3.0.0",
     "mdast-util-compact": "^3.0.0",
     "mdast-util-heading-range": "^2.1.5",
