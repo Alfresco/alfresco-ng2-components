@@ -234,7 +234,7 @@ registerLocaleData(localeSv);
             useFactory: setupAppNotifications,
             deps: [AppNotificationsService],
             multi: true
-        },
+        }
     ],
     bootstrap: [AppComponent]
 })
