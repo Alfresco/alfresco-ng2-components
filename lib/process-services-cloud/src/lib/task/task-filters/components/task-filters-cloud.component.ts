@@ -46,7 +46,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     filters$: Observable<TaskFilterCloudModel[]>;
     filters: TaskFilterCloudModel[] = [];
     currentFilter: TaskFilterCloudModel;
-    notificationsEnabled: boolean;
 
     constructor(private taskFilterCloudService: TaskFilterCloudService,
                 private translationService: TranslationService) {
