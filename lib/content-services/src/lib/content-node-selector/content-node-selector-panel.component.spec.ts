@@ -328,6 +328,21 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     done();
                 });
             });
+
+            it('should show the breadcrumb for the selected node event if selection is not valid', async () => {
+                const chosenNode = new Node({ path: { elements: [{ id: 'testId', name: 'testName' }] } });
+                component.isSelectionValid = () => false;
+                searchQueryBuilderService.userQuery = 'mock-search-term';
+                searchQueryBuilderService.update();
+                triggerSearchResults(fakeResultSetPaging);
+
+                component.onCurrentSelection([ { entry: chosenNode } ]);
+                fixture.detectChanges();
+                const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
+
+                expect(breadcrumb.componentInstance.route[0].name).toBe('testName');
+                expect(breadcrumb.componentInstance.route[0].id).toBe('testId');
+            });
         });
 
         describe('Site selection', () => {
