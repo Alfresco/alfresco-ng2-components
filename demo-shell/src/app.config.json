@@ -1217,9 +1217,6 @@
       "label": "ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH"
     }
   ],
-  "adf-notifications": {
-    "adf-cloud-task-filters": true
-  },
   "alfresco-deployed-apps": [
     {
       "name": "candidatebaseapp"
