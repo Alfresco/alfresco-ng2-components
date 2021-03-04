@@ -52,11 +52,7 @@ export class LogoutDirective implements OnInit {
 
     getRedirectUri () {
         if (this.redirectUri === undefined ) {
-            if (this.auth.isOauth()) {
-                return this.appConfig.get<string>('oauth2.redirectUriLogout');
-            } else {
-                return this.appConfig.get<string>('loginRoute', '/login');
-            }
+            return this.appConfig.get<string>('loginRoute', '/login');
         }
         return this.redirectUri;
     }
@@ -70,7 +66,7 @@ export class LogoutDirective implements OnInit {
 
     redirectToUri() {
         const redirectRoute = this.getRedirectUri();
-        if (this.enableRedirect) {
+        if (this.enableRedirect && !this.auth.isOauth()) {
             this.router.navigate([redirectRoute]);
         }
     }
