@@ -6,10 +6,11 @@
   "UNCLAIM": "Anspruch aufheben",
   "START PROCESS": "Prozess starten",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "Keine Nachrichten",
+    "NO_MESSAGE": "Sie haben momentan keine Benachrichtigungen.",
     "TITLE": "Benachrichtigungen",
     "MARK_AS_READ": "Alles als gelesen markieren",
-    "SYSTEM": "System"
+    "SYSTEM": "System",
+    "LOAD_MORE": "Mehr laden"
   },
   "FORM": {
     "START_FORM": {
@@ -198,7 +199,23 @@
         "CREATOR": "Ersteller",
         "CREATED_DATE": "Datum der Erstellung",
         "MODIFIER": "Bearbeiter",
-        "MODIFIED_DATE": "Datum der Änderung"
+        "MODIFIED_DATE": "Datum der Änderung",
+        "CONTENT_TYPE": "Content-Typ"
+      },
+      "CONTENT_TYPE": {
+        "DIALOG": {
+          "TITLE": "Content-Typ ändern",
+          "DESCRIPTION": "Wenn Sie diese Änderung am Content-Typ vornehmen, werden dem Dokument einige Eigenschaften und gespeicherte Metadaten dauerhaft hinzugefügt.",
+          "CONFIRM": "Möchten Sie den Content-Typ wirklich ändern?",
+          "CANCEL": "Abbrechen",
+          "APPLY": "Änderungen speichern",
+          "VIEW_DETAILS": "Details anzeigen",
+          "PROPERTY": {
+            "NAME": "Name",
+            "DESCRIPTION": "Beschreibung",
+            "DATA_TYPE": "Datentyp"
+          }
+        }
       },
       "ACTIONS": {
         "EDIT": "Bearbeiten",
@@ -206,12 +223,14 @@
         "CANCEL": "Abbrechen",
         "CLEAR": "Löschen",
         "TOGGLE": "Umschaltwert",
-        "COPY_TO_CLIPBOARD": "Doppelklicken, um den Wert zu kopieren"
+        "COPY_TO_CLIPBOARD": "Doppelklicken, um den Wert zu kopieren",
+        "EDIT_ASPECTS": "Aspektbearbeitung"
       },
       "ACCESSIBILITY": {
-        "EDIT": "Schaltfläche 'Hinzufügen'",
+        "EDIT": "Schaltfläche 'Bearbeiten'",
         "DATEPICKER": "Mit den Pfeiltasten können Sie zwischen den Daten wechseln. Mit den Aufwärts- und Abwärtspfeilen gelangen Sie zum selben Tag der vorherigen bzw. nächsten Woche, mit den Links- und Rechtspfeilen gelangen Sie zum vorherigen bzw. zum nächsten Tag. Drücken Sie die Eingabetaste, um ein Datum auszuwählen.",
-        "COPY_TO_CLIPBOARD_MESSAGE": "Wert in Zwischenablage kopiert"
+        "COPY_TO_CLIPBOARD_MESSAGE": "Wert in Zwischenablage kopiert",
+        "EDIT_ASPECTS": "Aspektbearbeitung"
       }
     },
     "SEARCH": {
@@ -376,7 +395,8 @@
       "CLOSE": "Schließen",
       "PLACEHOLDER": "Passwort",
       "ERROR": "Passwort ist falsch"
-    }
+    },
+    "SUBTITLES": "Untertitel"
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
@@ -529,5 +549,8 @@
     "BUTTON": {
       "ARIA_LABEL": "Löschen"
     }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "Es wird geladen..."
   }
 }

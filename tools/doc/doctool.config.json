@@ -227,5 +227,11 @@
         "tutorials",
         "user-guide",
         "versionIndex"
+    ],
+    "ignoreLinkWords" : [
+      "Type",
+      "model",
+      "Node",
+      "User"
     ]
 }

@@ -1,6 +1,7 @@
 "use strict";
 // tslint:disable: no-console
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.processDocs = void 0;
 var path = require("path");
 var fs = require("fs");
 var unist_util_select_1 = require("unist-util-select");

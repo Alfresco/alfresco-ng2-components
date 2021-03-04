@@ -30,9 +30,6 @@
       "ARROW_ICON": "右箭头图标"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "正在加载..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "确认",
     "ACTION": "是否继续？",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "搜索结果",
     "SELECT_LOCATION": "选择位置",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "当搜索仍在运行时，您不能上传文件",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "用户没有向文件夹上传内容的权限"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "用户没有向文件夹上传内容的权限",
+    "REPOSITORY": "存储库",
+    "UPLOAD_FROM_DEVICE": "从设备上载"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "创建者",
       "CREATED_DATE": "创建日期",
       "MODIFIER": "修改者",
-      "MODIFIED_DATE": "修改日期"
+      "MODIFIED_DATE": "修改日期",
+      "CONTENT_TYPE": "内容类型"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "更改内容类型",
+        "DESCRIPTION": "对内容类型进行此更改将永久性地在文档中添加一些属性和存储的元数据.",
+        "CONFIRM": "确定要更改内容类型吗？?",
+        "CANCEL": "取消",
+        "APPLY": "保存更改",
+        "VIEW_DETAILS": "查看详细信息",
+        "PROPERTY": {
+          "NAME": "名称",
+          "DESCRIPTION": "说明",
+          "DATA_TYPE": "数据类型"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "更新属性时出错",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "打开 {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "属性名",
+    "DESCRIPTION": "说明",
+    "DATA_TYPE": "数据类型",
+    "DIALOG": {
+      "TITLE": "自定义属性",
+      "DESCRIPTION": "管理与选定文件关联的属性。从下面列出的属性方面进行选择，以公开和应用其他元数据和功能",
+      "RESET": "重置",
+      "CLEAR": "清除",
+      "CANCEL": "取消",
+      "APPLY": "应用",
+      "OVER-TABLE-MESSAGE": "选择属性方面",
+      "SELECTED": "已选择"
     }
   }
 }

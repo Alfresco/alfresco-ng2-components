@@ -13,14 +13,14 @@ Starts standalone tasks.
 
 ### Methods
 
-*   **createNewTask**(taskDetails: [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
-    (**Deprecated:** in 3.5.0, use TaskCloudService instead. Creates a new standalone task.)
-    *   *taskDetails:* [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)  - Details of the task to create
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Details of the newly created task
-*   **getBasePath**(appName: `string`): `string`<br/>
+-   **createNewTask**(taskDetails: [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
+    (**Deprecated:** in 3.5.0, use TaskCloudService instead. Creates a new standalone task.) 
+    -   _taskDetails:_ [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)  - Details of the task to create
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Details of the newly created task
+-   **getBasePath**(appName: `string`): `string`<br/>
 
-    *   *appName:* `string`  -
-    *   **Returns** `string` -
+    -   _appName:_ `string`  - 
+    -   **Returns** `string` -
 
 ## Details
 
@@ -31,4 +31,4 @@ but uses the cloud variants of the classes for the parameter and return value. S
 
 ## See also
 
-*   [Tasklist service](../../process-services/services/tasklist.service.md)
+-   [Tasklist service](../../process-services/services/tasklist.service.md)

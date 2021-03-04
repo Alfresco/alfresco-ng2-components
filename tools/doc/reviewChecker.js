@@ -24,7 +24,6 @@ var docsFolderPath = path.resolve('docs');
 var libFolders = ['core', 'content-services', 'extensions', 'insights', 'process-services', 'process-services-cloud'];
 libsearch(srcData, path.resolve(libFolder));
 var authToken = process.env.graphAuthToken;
-
 var client = new graphql_request_1.GraphQLClient('https://api.github.com/graphql', {
     headers: {
         Authorization: 'Bearer ' + authToken

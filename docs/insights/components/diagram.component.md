@@ -31,7 +31,7 @@ The below component shows the diagram of a running process instance with the act
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | height | `number` | 500 | height. |
 | metricColor | `any` |  | metricColor. |
 | metricPercentages | `any` |  | metricPercentages. |
@@ -43,6 +43,6 @@ The below component shows the diagram of a running process instance with the act
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | error. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | success. |
+| ---- | ---- | ----------- |
+| error | `any` | error. |
+| success | `any` | success. |

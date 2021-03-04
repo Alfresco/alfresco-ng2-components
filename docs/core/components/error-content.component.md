@@ -22,7 +22,7 @@ this.router.navigate(['/error', errorCode]);
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | errorCode | `string` |  | Error code associated with this error. |
 
 ## Details
@@ -63,4 +63,4 @@ For example you can have a custom action button with the following code
 
 ## See also
 
-*   [Empty Content component](empty-content.component.md)
+-   [Empty Content component](empty-content.component.md)

@@ -30,9 +30,6 @@
       "ARROW_ICON": "Oikea nuoli -kuvake"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "Ladataan..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Vahvista",
     "ACTION": "Haluatko jatkaa?",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "Hakutulokset",
     "SELECT_LOCATION": "Valitse sijainti",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Et voi ladata tiedostoa haun ollessa kesken",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Käyttäjällä ei ole oikeuksia ladata sisältöä kansioon"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Käyttäjällä ei ole oikeuksia ladata sisältöä kansioon",
+    "REPOSITORY": "Säilö",
+    "UPLOAD_FROM_DEVICE": "Lataa omalta laitteelta"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "Tekijä",
       "CREATED_DATE": "Luontipäivämäärä",
       "MODIFIER": "Muokkaaja",
-      "MODIFIED_DATE": "Muokkauspäivämäärä"
+      "MODIFIED_DATE": "Muokkauspäivämäärä",
+      "CONTENT_TYPE": "Sisältötyyppi"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Muuta sisältötyyppi",
+        "DESCRIPTION": "Sisältötyypin muuttaminen lisää asiakirjaan pysyvästi joitakin ominaisuuksia ja säilöttyjä metatietoja.",
+        "CONFIRM": "Haluatko varmasti muuttaa sisältötyypin?",
+        "CANCEL": "Peruuta",
+        "APPLY": "Tallenna muutokset",
+        "VIEW_DETAILS": "Näytä tiedot",
+        "PROPERTY": {
+          "NAME": "Nimi",
+          "DESCRIPTION": "Kuvaus",
+          "DATA_TYPE": "Tietotyyppi"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Ominaisuuden päivittämisessä tapahtui virhe",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Avaa {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Ominaisuustyyppi",
+    "DESCRIPTION": "Kuvaus",
+    "DATA_TYPE": "Tietotyyppi",
+    "DIALOG": {
+      "TITLE": "Muokkaa ominaisuuksia",
+      "DESCRIPTION": "Hallitse valittuihin tiedostoihin liittyviä ominaisuuksia.Valitse allaolevista ominaisuusjoukoista paljastaaksesi ja soveltaaksesi ylimääräisiä metatietoja ja toimivuuksia.",
+      "RESET": "Nollaa",
+      "CLEAR": "Tyhjennä",
+      "CANCEL": "Peruuta",
+      "APPLY": "Käytä",
+      "OVER-TABLE-MESSAGE": "Valitse ominaisuusjoukot",
+      "SELECTED": "Valitut"
     }
   }
 }

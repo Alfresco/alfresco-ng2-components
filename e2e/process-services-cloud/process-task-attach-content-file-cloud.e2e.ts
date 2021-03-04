@@ -170,6 +170,9 @@ describe('Process Task - Attach content file', () => {
         await contentUploadWidget.checkFileIsAttached(fileName);
         await contentUploadWidget.viewFile(fileName);
 
+        await viewerPage.checkToolbarIsDisplayed();
+        await viewerPage.checkInfoButtonIsDisplayed();
+        await viewerPage.checkDownloadButtonIsDisplayed();
         await viewerPage.checkFileThumbnailIsDisplayed();
         await viewerPage.checkFileNameIsDisplayed(fileName);
         await viewerPage.clickCloseButton();

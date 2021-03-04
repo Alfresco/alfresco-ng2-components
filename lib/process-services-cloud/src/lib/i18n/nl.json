@@ -95,7 +95,7 @@
       "JSON_CELL": "Json",
       "COMPLETED_BY": "Voltooid door",
       "PRIORITY_VALUES": {
-        "NOT_SET": "Niet ingesteld",
+        "NONE": "Geen",
         "LOW": "Laag",
         "NORMAL": "Normaal",
         "HIGH": "Hoog"
@@ -122,17 +122,47 @@
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Mijn taken",
     "QUEUED_TASKS": "Taken in wachtrij",
-    "COMPLETED_TASKS": "Voltooide taken"
+    "COMPLETED_TASKS": "Voltooide taken",
+    "STATUS": {
+      "ALL": "Alle",
+      "CREATED": "Gemaakt",
+      "ASSIGNED": "Toegewezen",
+      "SUSPENDED": "Uitgesteld",
+      "CANCELLED": "Geannuleerd",
+      "COMPLETED": "Voltooid"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Oplopend",
+      "DESCENDING": "Aflopend"
+    }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
     "ALL_SERVICE_TASKS": "Alle servicetaken",
     "ERRORED_TASKS": "Taken met fouten",
-    "COMPLETED_TASKS": "Voltooide taken"
+    "COMPLETED_TASKS": "Voltooide taken",
+    "STATUS": {
+      "ALL": "Alle",
+      "STARTED": "Gestart",
+      "COMPLETED": "Voltooid",
+      "CANCELLED": "Geannuleerd",
+      "ERROR": "Fout"
+    }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "Alle",
     "RUNNING_PROCESSES": "Wordt uitgevoerd",
-    "COMPLETED_PROCESSES": "Voltooid"
+    "COMPLETED_PROCESSES": "Voltooid",
+    "STATUS": {
+      "ALL": "Alle",
+      "RUNNING": "Wordt uitgevoerd",
+      "SUSPENDED": "Uitgesteld",
+      "CANCELLED": "Geannuleerd",
+      "COMPLETED": "Voltooid"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Oplopend",
+      "DESCENDING": "Aflopend"
+    }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

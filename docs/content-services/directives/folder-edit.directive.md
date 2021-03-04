@@ -31,16 +31,16 @@ Allows folders to be edited.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
-| folder | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |  | Folder node to edit. |
+| ---- | ---- | ------------- | ----------- |
+| folder | `Node` |  | Folder node to edit. |
 | title | `string` | null | Title of folder edit dialog. |
 
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs (eg, a folder with same name already exists). |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`>` | Emitted when the folder has been edited successfully. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Node>` | Emitted when the folder has been edited successfully. |
 
 ## Details
 

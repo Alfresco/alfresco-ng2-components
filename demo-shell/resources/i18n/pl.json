@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Kliknij ten element, aby wyłączyć właściwość wejściową i skonfigurować korzystając z usługi",
     "HEADER_DATA": "Dane nagłówka",
     "TREE_VIEW": "Widok drzewa",
+    "EXPAND_LIST": "Lista pozycji rozszerzalnych",
     "ICONS": "Ikony",
     "PEOPLE_GROUPS_CLOUD": "Chmura dla osób/grup",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Zarządzaj wersjami",
+      "ASPECTS": "Aktualizuj aspekty",
       "LOCK": "Blokada",
       "METADATA": "Informacje",
       "DOWNLOAD": "Pobierz",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Magazyn",
     "RESTORE": "Przywróć"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "Zadanie {{taskName}} zostało przydzielone do {{assignee}}",
+    "PROCESS_STARTED": "Proces {{processName}} został uruchomiony",
+    "TASK_UPDATED": "Szczegóły zadania {{taskName}} zostały zaktualizowane"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Dane formularza",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Tytuł niestandardowy — tłumaczenie pierwsze",
   "GROUP-TITLE2-TRANSLATION-KEY": "Tytuł niestandardowy — tłumaczenie drugie",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Powrót do strony głównej"
+    },
     "507": {
       "TITLE": "Dysk ACS pełny",
       "DESCRIPTION": "Zawartość przekracza limit łącznego przydziału miejsca w magazynie skonfigurowany w sieci lub systemie",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Powrót do strony głównej"
       }
     }
   },

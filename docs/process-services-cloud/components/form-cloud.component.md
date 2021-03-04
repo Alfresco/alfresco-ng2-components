@@ -11,18 +11,18 @@ Shows a [`form`](../../../lib/process-services-cloud/src/lib/form/models/form-cl
 
 ## Contents
 
-*   [Basic Usage](#basic-usage)
-    *   [Custom form outcomes template](#custom-form-outcomes-template)
-    *   [Empty form template](#empty-form-template)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-    *   [Events](#events)
-*   [Details](#details)
-    *   [Displaying a form](#displaying-a-form)
-    *   [Controlling outcome execution behaviour](#controlling-outcome-execution-behaviour)
-    *   [Field Validators](#field-validators)
-    *   [Common scenarios](#common-scenarios)
-*   [See also](#see-also)
+-   [Basic Usage](#basic-usage)
+    -   [Custom form outcomes template](#custom-form-outcomes-template)
+    -   [Empty form template](#empty-form-template)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Displaying a form](#displaying-a-form)
+    -   [Controlling outcome execution behaviour](#controlling-outcome-execution-behaviour)
+    -   [Field Validators](#field-validators)
+    -   [Common scenarios](#common-scenarios)
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -75,15 +75,15 @@ The template defined inside `empty-form` will be shown when no form definition i
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | appName | `string` | "" | App name to fetch corresponding form and values. |
 | appVersion | `number` |  | The application version to use when fetching data |
 | data | [`TaskVariableCloud`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`[]` |  | Custom form values map to be used with the rendered form. |
 | disableCompleteButton | `boolean` | false | If true then the `Complete` outcome button is shown but it will be disabled. |
 | disableSaveButton | `boolean` | false | If true then the `Save` outcome button is shown but will be disabled. |
 | disableStartProcessButton | `boolean` | false | If true then the `Start Process` outcome button is shown but it will be disabled. |
-| fieldValidators | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` |  | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) allow to override the form field validators provided. |
-| form | [`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts) |  | Underlying [form model](../../../lib/core/form/components/widgets/core/form.model.ts) instance. |
+| fieldValidators | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` |  | [FormFieldValidator](../../../lib/core/form/components/widgets/core/form-field-validator.ts) allow to override the form field validators provided. |
+| form | [`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts) |  | Underlying form model instance. |
 | formId | `string` |  | Task id to fetch corresponding form and values. |
 | nameNode | `string` |  | Name to assign to the new node where the metadata are stored. |
 | path | `string` |  | Path of the folder where the metadata will be stored. |
@@ -99,15 +99,15 @@ The template defined inside `empty-form` will be shown when no form definition i
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
 | executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
-| formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
-| formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
-| formDataRefreshed | `EventEmitter<FormModel>` | Emitted when form values are refreshed due to a data property change. |
-| formError | `EventEmitter<FormFieldModel[]>` | Emitted when the supplied form values have a validation error. |
-| formLoaded | `EventEmitter<FormModel>` | Emitted when the form is loaded or reloaded. |
-| formSaved | `EventEmitter<FormModel>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
+| formCompleted | `any` | Emitted when the form is submitted with the `Complete` outcome. |
+| formContentClicked | `any` | Emitted when form content is clicked. |
+| formDataRefreshed | `any` | Emitted when form values are refreshed due to a data property change. |
+| formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../../core/models/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
+| formLoaded | `any` | Emitted when the form is loaded or reloaded. |
+| formSaved | `any` | Emitted when the form is submitted with the `Save` or custom outcomes. |
 
 ## Details
 
@@ -166,7 +166,7 @@ In unusual circumstances, you may need to take complete control of form outcome 
 You can do this by implementing the `executeOutcome` event, which is emitted for both system
 outcomes and custom ones.
 
-Note that by default, the code in your `executeOutcome` handler is executed *before* the default
+Note that by default, the code in your `executeOutcome` handler is executed _before_ the default
 behavior but you can switch the default behavior off using `event.preventDefault()`.
 You might want to do this, for example, to provide custom form validation or to show a summary
 of the form validation before it is submitted.
@@ -209,8 +209,8 @@ export class MyView {
 
 There are two other functions that can be very useful when you need to control form outcomes:
 
-*   `saveTaskForm()` - Saves the current form
-*   `completeTaskForm(outcome?: string)` Saves and completes the form with a given outcome name
+-   `saveTaskForm()` - Saves the current form
+-   `completeTaskForm(outcome?: string)` Saves and completes the form with a given outcome name
 
 ### Field Validators
 
@@ -284,8 +284,8 @@ In the CSS, you can target any outcome ID and change the style as in this exampl
 
 ## See also
 
-*   [Form Field Validator interface](../../core/interfaces/form-field-validator.interface.md)
-*   [Extensibility](../../user-guide/extensibility.md)
-*   [Form rendering service](../../core/services/form-rendering.service.md)
-*   [Form field model](../../core/models/form-field.model.md)
-*   [Form cloud service](../services/form-cloud.service.md)
+-   [Form Field Validator interface](../../core/interfaces/form-field-validator.interface.md)
+-   [Extensibility](../../user-guide/extensibility.md)
+-   [Form rendering service](../../core/services/form-rendering.service.md)
+-   [Form field model](../../core/models/form-field.model.md)
+-   [Form cloud service](../services/form-cloud.service.md)

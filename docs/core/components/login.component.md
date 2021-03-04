@@ -13,20 +13,21 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 ## Contents
 
-*   [Basic usage](#basic-usage)
-    *   [Transclusions](#transclusions)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-    *   [Events](#events)
-*   [Details](#details)
-    *   [Handling events](#handling-events)
-    *   [Custom logo and background](#custom-logo-and-background)
-    *   [Customizing validation rules](#customizing-validation-rules)
-    *   [Call an external identity provider to fetch the auth token](#call-an-external-identity-provider-to-fetch-the-auth-token)
-    *   [Controlling form submit execution behaviour](#controlling-form-submit-execution-behaviour)
-    *   [Single Sign-On (SSO)](#single-sign-on-sso)
-    *   [Kerberos](#kerberos)
-*   [See Also](#see-also)
+-   [Basic usage](#basic-usage)
+    -   [Transclusions](#transclusions)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Handling events](#handling-events)
+    -   [Custom logo and background](#custom-logo-and-background)
+    -   [Customizing validation rules](#customizing-validation-rules)
+    -   [Call an external identity provider to fetch the auth token](#call-an-external-identity-provider-to-fetch-the-auth-token)
+    -   [Override the successRoute from app.config.json with Basic Auth](#override-the-successroute-from-appconfigjson-with-basic-auth)
+    -   [Controlling form submit execution behaviour](#controlling-form-submit-execution-behaviour)
+    -   [Single Sign-On (SSO)](#single-sign-on-sso)
+    -   [Kerberos](#kerberos)
+-   [See Also](#see-also)
 
 ## Basic usage
 
@@ -76,7 +77,7 @@ with custom input fields handled by your application or parent component:
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | backgroundImageUrl | `string` |  | Path to a custom background image. |
 | copyrightText | `string` |  | The copyright text below the login box. |
 | fieldsValidation | `any` |  | Custom validation rules for the login form. |
@@ -90,10 +91,10 @@ with custom input fields handled by your application or parent component:
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginErrorEvent`](../../../lib/core/login/models/login-error.event.ts)`>` | Emitted when the login fails. |
-| executeSubmit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSubmitEvent`](../../../lib/core/login/models/login-submit.event.ts)`>` | Emitted when the login form is submitted. |
-| success | `EventEmitter<LoginSuccessEvent>` | Emitted when the login is successful. |
+| ---- | ---- | ----------- |
+| error | `any` | Emitted when the login fails. |
+| executeSubmit | `any` | Emitted when the login form is submitted. |
+| success | `any` | Emitted when the login is successful. |
 
 ## Details
 
@@ -277,7 +278,7 @@ export class MyCustomLogin {
 ```
 
 Note that if you do not call `event.preventDefault()` then the default behaviour
-will execute *after* your custom code has completed.
+will execute _after_ your custom code has completed.
 
 ### Single Sign-On (SSO)
 
@@ -313,8 +314,8 @@ automatically to the authorization server when the user is not logged-in
 
 You can also enable automatic redirection to the OAuth provider using the following properties:
 
-*   `silentLogin`
-*   `redirectSilentIframeUri`
+-   `silentLogin`
+-   `redirectSilentIframeUri`
 
 ```json
 {
@@ -368,4 +369,4 @@ See [Kerberos Configuration](../../../docs/user-guide/kerberos.md) for instructi
 
 ## See Also
 
-*   [Logout directive](../directives/logout.directive.md)
+-   [Logout directive](../directives/logout.directive.md)

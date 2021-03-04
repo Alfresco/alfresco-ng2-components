@@ -33,7 +33,7 @@ You can contact Francesco Corti (francesco.corti at alfresco.com) for details of
 
 ## Goals for this release
 
-This is a minor release of the Alfresco Application Development Framework, developed to receive the latest and greatest benefits of the bugfixes and the enhacements planned since the release of the previous version.
+This is a minor release of the Alfresco Application Development Framework, developed to receive the latest and greatest benefits of the bugfixes and the enhancements planned since the release of the previous version.
 
 The highlights of this release is mainly about bugfixes and the new header filters for document list components.
 
@@ -62,7 +62,7 @@ The following is a brief list of references to help you get started with the new
 Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
 
 ## PR merged 
-                        
+
 * [Alfresco/alfresco-ng2-components#6023 - Bump mdast-util-toc from 2.1.0 to 5.0.3](https://github.com/Alfresco/alfresco-ng2-components/pull/6023)
 * [Alfresco/alfresco-ng2-components#6021 - Bump unist-util-select from 2.0.2 to 3.0.1](https://github.com/Alfresco/alfresco-ng2-components/pull/6021)
 * [Alfresco/alfresco-ng2-components#6012 - Bump mini-css-extract-plugin from 0.9.0 to 0.10.0](https://github.com/Alfresco/alfresco-ng2-components/pull/6012)

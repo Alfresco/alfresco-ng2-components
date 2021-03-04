@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Docset = exports.Text = exports.Link = exports.Paragraph = exports.Heading = exports.Root = exports.Parent = exports.Node = exports.schema = void 0;
 var mdToString = require("mdast-util-to-string");
 var jsyaml = require("js-yaml");
 exports.schema = "\n    type Query {\n        documents(idFilter: String = \"\"): [Root]\n    }\n\n    type Root {\n        id: ID\n        type: String\n        folder(depth: Int = 1): String\n        metadata(key: String): String\n        heading(depth: Int = 0): Heading\n        headings(depth: Int = 0): [Heading]\n        paragraph: Paragraph\n        paragraphs: [Paragraph]\n        link: Link\n        links: [Link]\n        text: Text\n        texts: [Text]\n        children: [Node]\n    }\n\n    type Heading {\n        depth: Int\n        plaintext: String\n        paragraph: Paragraph\n        paragraphs: [Paragraph]\n        link: Link\n        links: [Link]\n        children: [Node]\n    }\n\n    type Paragraph {\n        plaintext: String\n    }\n\n    type Link {\n        plaintext: String\n        title: String\n        url: String\n        paragraph: Paragraph\n        paragraphs: [Paragraph]\n        text: Text\n        texts: [Text]\n    }\n\n    type Text {\n        value: String\n    }\n\n    type Node {\n        type: String\n        children: [Node]\n    }\n";

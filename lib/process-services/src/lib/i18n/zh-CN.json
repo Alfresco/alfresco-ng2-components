@@ -181,7 +181,7 @@
     },
     "FILTERS": {
       "MESSAGES": {
-        "NONE": "未选择流程实例过滤器。"
+        "NONE": "未选择进程实例筛选器。"
       }
     },
     "PROPERTIES": {

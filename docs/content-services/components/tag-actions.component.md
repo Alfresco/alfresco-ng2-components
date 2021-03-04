@@ -24,13 +24,13 @@ Shows available actions for tags.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | nodeId | `string` |  | The identifier of a node. |
 
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| result | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an action is chosen. |
-| successAdd | `EventEmitter<any>` | Emitted when a tag is added successfully. |
+| result | `any` | Emitted when an action is chosen. |
+| successAdd | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a tag is added successfully. |

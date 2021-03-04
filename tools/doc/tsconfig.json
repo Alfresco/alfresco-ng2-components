@@ -2,11 +2,12 @@
   "compilerOptions": {
     "outDir": ".",
     "baseUrl": ".",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "target": "es5",
     "types": ["node", "@paperist/types-remark"],
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": ["./node_modules/@types"],
     "lib": ["es2018", "dom"]
   },
   "files": [

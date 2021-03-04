@@ -95,7 +95,7 @@
       "JSON_CELL": "JSON",
       "COMPLETED_BY": "完了者",
       "PRIORITY_VALUES": {
-        "NOT_SET": "設定なし",
+        "NONE": "なし",
         "LOW": "低",
         "NORMAL": "中",
         "HIGH": "高"
@@ -122,17 +122,47 @@
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "あなたのタスク",
     "QUEUED_TASKS": "キューに入っているタスク",
-    "COMPLETED_TASKS": "完了済みタスク"
+    "COMPLETED_TASKS": "完了済みタスク",
+    "STATUS": {
+      "ALL": "すべて",
+      "CREATED": "作成日",
+      "ASSIGNED": "割り当て済み",
+      "SUSPENDED": "中断",
+      "CANCELLED": "キャンセル",
+      "COMPLETED": "完了"
+    },
+    "DIRECTION": {
+      "ASCENDING": "昇順",
+      "DESCENDING": "降順"
+    }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
     "ALL_SERVICE_TASKS": "すべてのサービスタスク",
     "ERRORED_TASKS": "エラーのタスク",
-    "COMPLETED_TASKS": "完了済みタスク"
+    "COMPLETED_TASKS": "完了済みタスク",
+    "STATUS": {
+      "ALL": "すべて",
+      "STARTED": "開始日",
+      "COMPLETED": "完了",
+      "CANCELLED": "キャンセル",
+      "ERROR": "エラー"
+    }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "すべて",
     "RUNNING_PROCESSES": "進行中",
-    "COMPLETED_PROCESSES": "完了"
+    "COMPLETED_PROCESSES": "完了",
+    "STATUS": {
+      "ALL": "すべて",
+      "RUNNING": "進行中",
+      "SUSPENDED": "中断",
+      "CANCELLED": "キャンセル",
+      "COMPLETED": "完了"
+    },
+    "DIRECTION": {
+      "ASCENDING": "昇順",
+      "DESCENDING": "降順"
+    }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

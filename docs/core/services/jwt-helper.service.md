@@ -13,45 +13,45 @@ Decodes a JSON Web Token (JWT) to a JavaScript object.
 
 ### Methods
 
-*   **decodeToken**(token: `any`): `Object`<br/>
+-   **decodeToken**(token: `any`): `Object`<br/>
     Decodes a JSON web token into a JS object.
-    *   *token:* `any`  - Token in encoded form
-    *   **Returns** `Object` - Decoded token data object
-*   **getAccessToken**(): `string`<br/>
+    -   _token:_ `any`  - Token in encoded form
+    -   **Returns** `Object` - Decoded token data object
+-   **getAccessToken**(): `string`<br/>
     Gets access token
-    *   **Returns** `string` - access token
-*   **getClientRoles**(clientName: `string`): `string[]`<br/>
+    -   **Returns** `string` - access token
+-   **getClientRoles**(clientName: `string`): `string[]`<br/>
     Gets Client roles.
-    *   *clientName:* `string`  -
-    *   **Returns** `string[]` - Array of client roles
-*   **getRealmRoles**(): `string[]`<br/>
+    -   _clientName:_ `string`  - 
+    -   **Returns** `string[]` - Array of client roles
+-   **getRealmRoles**(): `string[]`<br/>
     Gets realm roles.
-    *   **Returns** `string[]` - Array of realm roles
-*   **getValueFromLocalAccessToken**(key: `string`)<br/>
+    -   **Returns** `string[]` - Array of realm roles
+-   **getValueFromLocalAccessToken**(key: `string`)<br/>
     Gets a named value from the user access token.
-    *   *key:* `string`  - Key name of the field to retrieve
-*   **getValueFromToken**(accessToken: `string`, key: `string`)<br/>
+    -   _key:_ `string`  - Key name of the field to retrieve
+-   **getValueFromToken**(accessToken: `string`, key: `string`)<br/>
     Gets a named value from the user access token.
-    *   *accessToken:* `string`  - your SSO access token where the value is encode
-    *   *key:* `string`  - Key name of the field to retrieve
-*   **hasClientRole**(clientName: `string`, role: `string`): `boolean`<br/>
+    -   _accessToken:_ `string`  - your SSO access token where the value is encode
+    -   _key:_ `string`  - Key name of the field to retrieve
+-   **hasClientRole**(clientName: `string`, role: `string`): `boolean`<br/>
     Checks for client role.
-    *   *clientName:* `string`  - Targeted client name
-    *   *role:* `string`  - Role name to check
-    *   **Returns** `boolean` - True if it contains given role, false otherwise
-*   **hasRealmRole**(role: `string`): `boolean`<br/>
+    -   _clientName:_ `string`  - Targeted client name
+    -   _role:_ `string`  - Role name to check
+    -   **Returns** `boolean` - True if it contains given role, false otherwise
+-   **hasRealmRole**(role: `string`): `boolean`<br/>
     Checks for single realm role.
-    *   *role:* `string`  - Role name to check
-    *   **Returns** `boolean` - True if it contains given role, false otherwise
-*   **hasRealmRoles**(rolesToCheck: `string[]`): `boolean`<br/>
+    -   _role:_ `string`  - Role name to check
+    -   **Returns** `boolean` - True if it contains given role, false otherwise
+-   **hasRealmRoles**(rolesToCheck: `string[]`): `boolean`<br/>
     Checks for realm roles.
-    *   *rolesToCheck:* `string[]`  - List of role names to check
-    *   **Returns** `boolean` - True if it contains at least one of the given roles, false otherwise
-*   **hasRealmRolesForClientRole**(clientName: `string`, rolesToCheck: `string[]`): `boolean`<br/>
+    -   _rolesToCheck:_ `string[]`  - List of role names to check
+    -   **Returns** `boolean` - True if it contains at least one of the given roles, false otherwise
+-   **hasRealmRolesForClientRole**(clientName: `string`, rolesToCheck: `string[]`): `boolean`<br/>
     Checks for client roles.
-    *   *clientName:* `string`  - Targeted client name
-    *   *rolesToCheck:* `string[]`  - List of role names to check
-    *   **Returns** `boolean` - True if it contains at least one of the given roles, false otherwise
+    -   _clientName:_ `string`  - Targeted client name
+    -   _rolesToCheck:_ `string[]`  - List of role names to check
+    -   **Returns** `boolean` - True if it contains at least one of the given roles, false otherwise
 
 ## Details
 
@@ -61,4 +61,4 @@ for full details of the standard and its uses.
 
 ## See also
 
-*   [Identity user service](identity-user.service.md)
+-   [Identity user service](identity-user.service.md)

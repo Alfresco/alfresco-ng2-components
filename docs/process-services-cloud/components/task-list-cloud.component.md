@@ -11,18 +11,18 @@ Renders a list containing all the tasks matched by the parameters specified.
 
 ## Contents
 
-*   [Basic Usage](#basic-usage)
-    *   [Transclusions](#transclusions)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-    *   [Events](#events)
-*   [Details](#details)
-    *   [Setting the column schema](#setting-the-column-schema)
-    *   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
-    *   [Pagination strategy](#pagination-strategy)
-    *   [DataTableAdapter example](#datatableadapter-example)
-    *   [DataColumn Features](#datacolumn-features)
-*   [See also](#see-also)
+-   [Basic Usage](#basic-usage)
+    -   [Transclusions](#transclusions)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Setting the column schema](#setting-the-column-schema)
+    -   [Setting Sorting Order for the list](#setting-sorting-order-for-the-list)
+    -   [Pagination strategy](#pagination-strategy)
+    -   [DataTableAdapter example](#datatableadapter-example)
+    -   [DataColumn Features](#datacolumn-features)
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -50,7 +50,7 @@ when the task list is empty:
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
 | appName | `string` | "" | The name of the application. |
 | assignee | `string` | "" | The assignee of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
@@ -88,14 +88,14 @@ when the task list is empty:
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
+| executeRowAction | `any` | Emitted when the user executes a row action. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a task in the list is clicked |
 | rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected |
-| showRowActionsMenu | `EventEmitter<DataCellEvent>` | Emitted before the actions menu is displayed for a row. |
-| showRowContextMenu | `EventEmitter<DataCellEvent>` | Emitted before the context menu is displayed for a row. |
-| success | `EventEmitter<any>` | Emitted when the task list is loaded |
+| showRowActionsMenu | `any` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | `any` | Emitted before the context menu is displayed for a row. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task list is loaded |
 
 ## Details
 
@@ -344,6 +344,6 @@ earlier), and perform the corresponding actions.
 
 ## See also
 
-*   [Data column component](../../core/components/data-column.component.md)
-*   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
-*   [Pagination component](../../core/components/pagination.component.md)
+-   [Data column component](../../core/components/data-column.component.md)
+-   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
+-   [Pagination component](../../core/components/pagination.component.md)

@@ -27,7 +27,7 @@ Displays a input text that supports autocompletion
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | autocomplete | `boolean` | false | Toggles auto-completion of the search input field. |
 | collapseOnSubmit | `boolean` | true | Collapse search bar on submit. |
 | debounceTime | `number` | 0 | Debounce time in milliseconds. |
@@ -42,8 +42,8 @@ Displays a input text that supports autocompletion
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | reset | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the result list is reset |
 | searchChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then it is truncated to an empty string. |
 | selectResult | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the result list is selected |
-| submit | `EventEmitter<any>` | Emitted when the search is submitted by pressing the ENTER key. The search term is provided as the value of the event. |
+| submit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the search is submitted by pressing the ENTER key. The search term is provided as the value of the event. |

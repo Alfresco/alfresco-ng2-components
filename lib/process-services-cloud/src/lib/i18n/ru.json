@@ -95,7 +95,7 @@
       "JSON_CELL": "Json",
       "COMPLETED_BY": "Выполнил(-а)",
       "PRIORITY_VALUES": {
-        "NOT_SET": "Не установлено",
+        "NONE": "Нет",
         "LOW": "Низкий",
         "NORMAL": "Средний",
         "HIGH": "Высокий"
@@ -122,17 +122,47 @@
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Мои задачи",
     "QUEUED_TASKS": "Задачи в очереди",
-    "COMPLETED_TASKS": "Завершенные задачи"
+    "COMPLETED_TASKS": "Завершенные задачи",
+    "STATUS": {
+      "ALL": "Все",
+      "CREATED": "Создано",
+      "ASSIGNED": "Назначенный",
+      "SUSPENDED": "Приостановленный",
+      "CANCELLED": "Отменённый",
+      "COMPLETED": "Завершенные"
+    },
+    "DIRECTION": {
+      "ASCENDING": "По возрастанию",
+      "DESCENDING": "По убыванию"
+    }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
     "ALL_SERVICE_TASKS": "Все сервисные задачи",
     "ERRORED_TASKS": "Задачи с ошибками",
-    "COMPLETED_TASKS": "Завершенные задачи"
+    "COMPLETED_TASKS": "Завершенные задачи",
+    "STATUS": {
+      "ALL": "Все",
+      "STARTED": "Запущено",
+      "COMPLETED": "Завершенные",
+      "CANCELLED": "Отменённый",
+      "ERROR": "Ошибка"
+    }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "Все",
     "RUNNING_PROCESSES": "Выполняются",
-    "COMPLETED_PROCESSES": "Завершенные"
+    "COMPLETED_PROCESSES": "Завершенные",
+    "STATUS": {
+      "ALL": "Все",
+      "RUNNING": "Выполняются",
+      "SUSPENDED": "Приостановленный",
+      "CANCELLED": "Отменённый",
+      "COMPLETED": "Завершенные"
+    },
+    "DIRECTION": {
+      "ASCENDING": "По возрастанию",
+      "DESCENDING": "По убыванию"
+    }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

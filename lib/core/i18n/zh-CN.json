@@ -6,10 +6,11 @@
   "UNCLAIM": "释放",
   "START PROCESS": "启动流程",
   "NOTIFICATIONS": {
-    "NO_MESSAGE": "无消息",
+    "NO_MESSAGE": "您目前没有通知。",
     "TITLE": "通知",
     "MARK_AS_READ": "全部标记为已读",
-    "SYSTEM": "系统"
+    "SYSTEM": "系统",
+    "LOAD_MORE": "加载更多"
   },
   "FORM": {
     "START_FORM": {
@@ -198,7 +199,23 @@
         "CREATOR": "创建者",
         "CREATED_DATE": "创建日期",
         "MODIFIER": "修改者",
-        "MODIFIED_DATE": "修改日期"
+        "MODIFIED_DATE": "修改日期",
+        "CONTENT_TYPE": "内容类型"
+      },
+      "CONTENT_TYPE": {
+        "DIALOG": {
+          "TITLE": "更改内容类型",
+          "DESCRIPTION": "对内容类型进行此更改将永久性地在文档中添加一些属性和存储的元数据。",
+          "CONFIRM": "确定要更改内容类型吗？",
+          "CANCEL": "取消",
+          "APPLY": "保存更改",
+          "VIEW_DETAILS": "查看详细信息",
+          "PROPERTY": {
+            "NAME": "名称",
+            "DESCRIPTION": "说明",
+            "DATA_TYPE": "数据类型"
+          }
+        }
       },
       "ACTIONS": {
         "EDIT": "编辑",
@@ -206,12 +223,14 @@
         "CANCEL": "取消",
         "CLEAR": "清除",
         "TOGGLE": "切换值",
-        "COPY_TO_CLIPBOARD": "双击以复制值"
+        "COPY_TO_CLIPBOARD": "双击以复制值",
+        "EDIT_ASPECTS": "纵横比编辑"
       },
       "ACCESSIBILITY": {
         "EDIT": "编辑按钮",
         "DATEPICKER": "使用箭头键在日期之间进行浏览。上下移动至同一天的下一周或上一周。左右移动到第二天或前一天。按 Enter（回车） 或 Return（返回） 键选择一个日期。",
-        "COPY_TO_CLIPBOARD_MESSAGE": "值已复制到剪贴板"
+        "COPY_TO_CLIPBOARD_MESSAGE": "值已复制到剪贴板",
+        "EDIT_ASPECTS": "纵横比编辑"
       }
     },
     "SEARCH": {
@@ -376,7 +395,8 @@
       "CLOSE": "关闭",
       "PLACEHOLDER": "密码",
       "ERROR": "密码错误"
-    }
+    },
+    "SUBTITLES": "字幕"
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
@@ -529,5 +549,8 @@
     "BUTTON": {
       "ARIA_LABEL": "清除"
     }
+  },
+  "ADF_DROPDOWN": {
+    "LOADING": "加载..."
   }
 }

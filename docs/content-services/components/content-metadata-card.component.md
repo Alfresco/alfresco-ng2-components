@@ -13,19 +13,19 @@ Displays and edits metadata related to a node.
 
 ## Contents
 
-*   [Basic Usage](#basic-usage)
-*   [Class members](#class-members)
-    *   [Properties](#properties)
-*   [Details](#details)
-    *   [Application config presets](#application-config-presets)
-    *   [Layout oriented config](#layout-oriented-config)
-    *   [Displaying all properties](#displaying-all-properties)
-    *   [Making aspects and properties read only](#making-aspects-and-properties-read-only)
-*   [What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect](#what-happens-when-there-is-a-whitelisted-aspect-in-the-config-but-the-given-node-doesnt-relate-to-that-aspect)
-*   [Multi value card properties](#multi-value-card-properties)
-    *   [Use chips for multi value properties](#use-chips-for-multi-value-properties)
-*   [Copy to Clipboard on click](#copy-to-clipboard-on-click)
-*   [Search select options (ACS 7+)](#search-select-options-acs-7)
+-   [Basic Usage](#basic-usage)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+-   [Details](#details)
+    -   [Application config presets](#application-config-presets)
+    -   [Layout oriented config](#layout-oriented-config)
+    -   [Displaying all properties](#displaying-all-properties)
+    -   [Making aspects and properties read only](#making-aspects-and-properties-read-only)
+-   [What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect](#what-happens-when-there-is-a-whitelisted-aspect-in-the-config-but-the-given-node-doesnt-relate-to-that-aspect)
+-   [Multi value card properties](#multi-value-card-properties)
+    -   [Use chips for multi value properties](#use-chips-for-multi-value-properties)
+-   [Copy to Clipboard on click](#copy-to-clipboard-on-click)
+-   [Search select options (ACS 7+)](#search-select-options-acs-7)
 
 ## Basic Usage
 
@@ -43,11 +43,11 @@ Displays and edits metadata related to a node.
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | displayAspect | `string` | null | (optional) This flag displays desired aspect when open for the first time fields. |
 | displayEmpty | `boolean` | false | (optional) This flag displays/hides empty metadata fields. |
 | multi | `boolean` | false | (optional) This flag allows the component to display more than one accordion at a time. |
-| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |  | (required) The node entity to fetch metadata about |
+| node | `Node` |  | (required) The node entity to fetch metadata about |
 | preset | `string` |  | (required) Name of the metadata preset, which defines aspects and their properties. |
 | readOnly | `boolean` | false | (optional) This flag sets the metadata in read only mode preventing changes. |
 | displayDefaultProperties | `boolean` |  | (optional) This flag displays/hides the metadata properties. |
@@ -151,7 +151,7 @@ can be "cherry picked" and grouped into an accordion drawer, along with a transl
 
 #### Basic elements
 
-The following config will produce one accordion group named "TRANSLATABLE_TITLE_FOR_GROUP\_1",
+The following config will produce one accordion group named "TRANSLATABLE_TITLE_FOR_GROUP_1",
 with all the properties from `custom:aspect` followed by the two properties (`exif:pixelXDimension`
 and `exif:pixelYDimension`) from the `exif:exif` aspect and then one property (`custom:myPropertyName`) from `custom:type`:
 
@@ -254,20 +254,20 @@ The result of this config would be two accordion groups with the following prope
 
 | GROUP-TITLE1-TRANSLATION-KEY |
 | ---------------------------- |
-| exif:param1                  |
-| exif:param2                  |
-| ...                          |
-| exif:paramN                  |
-| kitten:custom1               |
-| kitten:custom3               |
-| owner:name                   |
-| kitten:name                  |
-| kitten:color                 |
+| exif:param1 |
+| exif:param2 |
+| ... |
+| exif:paramN |
+| kitten:custom1 |
+| kitten:custom3 |
+| owner:name |
+| kitten:name |
+| kitten:color |
 
 | GROUP-TITLE2-TRANSLATION-KEY |
 | ---------------------------- |
-| kitten:favourite-food        |
-| kitten:recommended-food      |
+| kitten:favourite-food |
+| kitten:recommended-food |
 
 #### Making properties editable
 

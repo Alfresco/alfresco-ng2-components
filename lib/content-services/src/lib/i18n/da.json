@@ -30,9 +30,6 @@
       "ARROW_ICON": "Pil højre ikon"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "Indlæser ..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Bekræft",
     "ACTION": "Vil du fortsætte?",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "Søgeresultater",
     "SELECT_LOCATION": "Vælg placering",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Du kan ikke uploade en fil sideløbende med en søgning",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Bruger har ikke tilladelse til at uploade indhold til mappen"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Bruger har ikke tilladelse til at uploade indhold til mappen",
+    "REPOSITORY": "Opbevaringssted",
+    "UPLOAD_FROM_DEVICE": "Overfør fra din enhed"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "Oprettet af",
       "CREATED_DATE": "Oprettelsesdato",
       "MODIFIER": "Ændret af",
-      "MODIFIED_DATE": "Ændringsdato"
+      "MODIFIED_DATE": "Ændringsdato",
+      "CONTENT_TYPE": "Indholdstype"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Skift indholdstype",
+        "DESCRIPTION": "Udførelse af denne ændring til indholdstypen, vil tilføje visse egenskaber og lagrede metadata permanent til dokumentet.",
+        "CONFIRM": "Er du sikker på at du vil ændre indholdstypen?",
+        "CANCEL": "Annuller",
+        "APPLY": "Gem ændringerne",
+        "VIEW_DETAILS": "Vis detaljer",
+        "PROPERTY": {
+          "NAME": "Navn",
+          "DESCRIPTION": "Beskrivelse",
+          "DATA_TYPE": "Datatype"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Der opstod fejl under opdatering af egenskaben",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Åbn {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Egenskabsbetegnelse",
+    "DESCRIPTION": "Beskrivelse",
+    "DATA_TYPE": "Datatype",
+    "DIALOG": {
+      "TITLE": "Tilpas egenskaber",
+      "DESCRIPTION": "Administrer egenskaber tilknyttet til den/de valgte fil(er). Vælg mellem egenskaber for udseende angivet nedenfor, for at fremvise og anvende yderligere metadata og funktioner",
+      "RESET": "Nulstil",
+      "CLEAR": "Ryd",
+      "CANCEL": "Annuller",
+      "APPLY": "Anvend",
+      "OVER-TABLE-MESSAGE": "Vælg udseende for egenskab",
+      "SELECTED": "Valgt"
     }
   }
 }

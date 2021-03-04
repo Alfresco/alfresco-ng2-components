@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Cochez cette option pour désactiver la propriété d'entrée et configurer à partir du service",
     "HEADER_DATA": "Données d'en-tête",
     "TREE_VIEW": "Arborescence",
+    "EXPAND_LIST": "Liste déroulante",
     "ICONS": "Icônes",
     "PEOPLE_GROUPS_CLOUD": "Cloud des personnes/groupes",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Gérer les versions",
+      "ASPECTS": "Mettre à jour les aspects",
       "LOCK": "Verrouiller",
       "METADATA": "Informations",
       "DOWNLOAD": "Télécharger",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Stocker",
     "RESTORE": "Restaurer"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "La tâche {{taskName}} a été assignée à {{assignee}}",
+    "PROCESS_STARTED": "Le processus {{processName}} a été démarré",
+    "TASK_UPDATED": "Les détails de la tâche {{taskName}} ont été mis à jour"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Données du formulaire",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Titre personnalisé traduction un",
   "GROUP-TITLE2-TRANSLATION-KEY": "Titre personnalisé traduction deux",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Retour à l'accueil"
+    },
     "507": {
       "TITLE": "Disque ACS plein",
       "DESCRIPTION": "Le contenu dépasse le quota maximum de stockage configuré pour le réseau ou système",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Retour à l'accueil"
       }
     }
   },

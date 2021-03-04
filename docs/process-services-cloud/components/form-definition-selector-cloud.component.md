@@ -22,11 +22,11 @@ Allows one form to be selected from a dropdown list. For forms to be displayed i
 ### Properties
 
 | Name | Type | Default value | Description |
-| --- | --- | --- | --- |
+| ---- | ---- | ------------- | ----------- |
 | appName | `string` | "" | Name of the application. If specified, this shows the users who have access to the app. |
 
 ### Events
 
 | Name | Type | Description |
-| --- | --- | --- |
+| ---- | ---- | ----------- |
 | selectForm | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a form is selected. |

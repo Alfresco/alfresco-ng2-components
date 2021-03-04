@@ -13,40 +13,40 @@ Stores preferences for the app and for individual components.
 
 ### Methods
 
-*   **get**(property: `string`, defaultValue?: `string`): `string`<br/>
+-   **get**(property: `string`, defaultValue?: `string`): `string`<br/>
     Gets a preference property.
-    *   *property:* `string`  - Name of the property
-    *   *defaultValue:* `string`  - (Optional) Default to return if the property is not found
-    *   **Returns** `string` - Preference property
-*   **getDefaultLocale**(): `string`<br/>
+    -   _property:_ `string`  - Name of the property
+    -   _defaultValue:_ `string`  - (Optional) Default to return if the property is not found
+    -   **Returns** `string` - Preference property
+-   **getDefaultLocale**(): `string`<br/>
     Gets the default locale.
-    *   **Returns** `string` - Default locale language code
-*   **getPropertyKey**(property: `string`): `string`<br/>
+    -   **Returns** `string` - Default locale language code
+-   **getPropertyKey**(property: `string`): `string`<br/>
     Gets the full property key with prefix.
-    *   *property:* `string`  - The property name
-    *   **Returns** `string` - [Property](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) key
-*   **getStoragePrefix**(): `string`<br/>
+    -   _property:_ `string`  - The property name
+    -   **Returns** `string` - [Property](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) key
+-   **getStoragePrefix**(): `string`<br/>
     Gets the active storage prefix for preferences.
-    *   **Returns** `string` - Storage prefix
-*   **hasItem**(property: `string`): `boolean`<br/>
+    -   **Returns** `string` - Storage prefix
+-   **hasItem**(property: `string`): `boolean`<br/>
     Check if an item is present in the storage
-    *   *property:* `string`  - Name of the property
-    *   **Returns** `boolean` - True if the item is present, false otherwise
-*   **select**(property: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   _property:_ `string`  - Name of the property
+    -   **Returns** `boolean` - True if the item is present, false otherwise
+-   **select**(property: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Sets up a callback to notify when a property has changed.
-    *   *property:* `string`  - The property to watch
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Notification callback
-*   **set**(property: `string`, value: `any`)<br/>
+    -   _property:_ `string`  - The property to watch
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Notification callback
+-   **set**(property: `string`, value: `any`)<br/>
     Sets a preference property.
-    *   *property:* `string`  - Name of the property
-    *   *value:* `any`  - New value for the property
-*   **setStoragePrefix**(value: `string`)<br/>
+    -   _property:_ `string`  - Name of the property
+    -   _value:_ `any`  - New value for the property
+-   **setStoragePrefix**(value: `string`)<br/>
     Sets the active storage prefix for preferences.
-    *   *value:* `string`  - Name of the prefix
-*   **setWithoutStore**(property: `string`, value: `any`)<br/>
+    -   _value:_ `string`  - Name of the prefix
+-   **setWithoutStore**(property: `string`, value: `any`)<br/>
     Sets a preference property.
-    *   *property:* `string`  - Name of the property
-    *   *value:* `any`  - New value for the property
+    -   _property:_ `string`  - Name of the property
+    -   _value:_ `any`  - New value for the property
 
 ## Details
 
@@ -92,12 +92,12 @@ class AppComponent {
 
 The service also provides quick access to a set of the "known" properties used across ADF components:
 
-| Name           | Type      | Description                                                                                        |
-| -------------- | --------- | -------------------------------------------------------------------------------------------------- |
-| authType       | `string`  | Authorization type (can be "ECM", "BPM" or "ALL").                                                 |
-| disableCSRF    | `boolean` | Prevents the CSRF Token from being submitted if true. Only valid for Process Services.             |
-| paginationSize | `number`  | [`Pagination`](../../../lib/content-services/document-list/models/document-library.model.ts) size. |
-| locale         | `string`  | Current locale setting.                                                                            |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| authType | `string` | Authorization type (can be "ECM", "BPM" or "ALL"). |
+| disableCSRF | `boolean` | Prevents the CSRF Token from being submitted if true. Only valid for Process Services. |
+| paginationSize | `number` | [`Pagination`](../../../lib/content-services/document-list/models/document-library.model.ts) size. |
+| locale | `string` | Current locale setting. |
 
 ## User Preference onChange Stream
 

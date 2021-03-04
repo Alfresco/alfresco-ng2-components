@@ -17,15 +17,15 @@
       "HOME": "Página Inicial"
     },
     "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Permitir apagar",
+      "ALLOW_DELETE": "Permitir exclusão",
       "SHOW_COMMENTS": "Mostrar comentários em versões",
-      "ALLOW_DOWNLOAD": "Ativar download da versão",
+      "ALLOW_DOWNLOAD": "Ativar descarregamento da versão",
       "READ_ONLY": "Somente leitura",
       "COMMENTS": "Mostrar comentários",
       "VERSION_COMPARISON": "Mostrar comparação de versões"
     },
     "PERSONAL-FILES": "Arquivos pessoais",
-    "WARN-MULTIPLE-UPLOADS": "Exibir alerta para vários uploads.",
+    "WARN-MULTIPLE-UPLOADS": "Exibir alerta para vários carregamentos.",
     "CUSTOM-PERMISSION-MESSAGE": "Ativar mensagem de permissão personalizada",
     "MEDIUM-TIME-FORMAT": "Ativar formato de tempo regular para lista de documento",
     "SEARCH": {
@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Marque essa opção para desativar a inserção e configurar a utilização do serviço",
     "HEADER_DATA": "Dados do cabeçalho",
     "TREE_VIEW": "Exibição em árvore",
+    "EXPAND_LIST": "Lista de itens expansíveis",
     "ICONS": "Ícones",
     "PEOPLE_GROUPS_CLOUD": "Nuvem de Pessoas/Grupo",
     "TASK_HEADER_CLOUD": {
@@ -154,7 +155,7 @@
       "SHARE_EDIT": "Editar configurações",
       "NEW_FOLDER": "Nova Pasta",
       "EDIT_FOLDER": "Editar pasta",
-      "DOWNLOAD": "Download",
+      "DOWNLOAD": "Descarregar",
       "DELETE": "Excluir",
       "FAVORITES": "Adicionar aos favoritos",
       "SHARE": "Compartilhar",
@@ -166,9 +167,10 @@
     },
     "ACTIONS": {
       "VERSIONS": "Gerenciar versões",
+      "ASPECTS": "Atualizar aspectos",
       "LOCK": "Bloqueio",
       "METADATA": "Informações",
-      "DOWNLOAD": "Download",
+      "DOWNLOAD": "Descarregar",
       "PERMISSION": "Permissão",
       "FOLDER": {
         "COPY": "Copiar",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Armazenar",
     "RESTORE": "Restaurar"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "A tarefa {{taskName}} foi atribuída a {{assignee}}",
+    "PROCESS_STARTED": "O processo {{processName}} foi iniciado",
+    "TASK_UPDATED": "Os detalhes da tarefa {{taskName}} foram atualizados"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Dados do formulário",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Tradução um de título personalizado",
   "GROUP-TITLE2-TRANSLATION-KEY": "Tradução dois de título personalizado",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Voltar para a página inicial"
+    },
     "507": {
       "TITLE": "Disco ACS cheio",
       "DESCRIPTION": "O conteúdo excede o limite de armazenamento geral configurado para a rede ou o sistema",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Voltar para a página inicial"
       }
     }
   },
@@ -323,7 +330,7 @@
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Seleção Múltipla",
     "TESTING_MODE": "Modo de Teste",
-    "SELECTION_MODE": "Modo de Seleção",
+    "SELECTION_MODE": "Modo de seleção",
     "SELECTED_ROWS": "Linhas selecionadas",
     "TASK_DETAILS_REDIRECTION": "Exibir detalhes da tarefa ao clicar na tarefa",
     "PROCESS_DETAILS_REDIRECTION": "Exibir detalhes do processo ao clicar no processo",

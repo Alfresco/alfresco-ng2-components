@@ -13,7 +13,7 @@
         - working-with-nodes-api-service.md: 'Working with the Nodes API Service'
         - working-with-nodes-js-api.md: 'Working with nodes using the JS-API'
         - content-metadata-component.md: 'Content metadata component'
-- user-guide: 
+- user-guide:
     title: 'User guide'
     children:
         - adf-introduction.md: 'Introduction to ADF'
@@ -78,6 +78,7 @@
 - release-notes:
     title: 'Release notes'
     children:
+        - RelNote430.md: 'Release notes v4.3.0'
         - RelNote420.md: 'Release notes v4.2.0'
         - RelNote410.md: 'Release notes v4.1.0'
         - RelNote400.md: 'Release notes v4.0.0'
@@ -106,7 +107,7 @@
 - upgrade-guide:
     title: 'Upgrade Guide'
     children:
-        - upgrade40-41.md: 'From 4.1.0 to 4.2.0'
+        - upgrade41-42.md: 'From 4.1.0 to 4.2.0'
         - upgrade40-41.md: 'From 4.0.0 to 4.1.0'
         - upgrade39-40.md: 'From 3.9.0 to 4.0.0'
         - upgrade37-38.md: 'From 3.7.0 to 3.8.0'
@@ -117,7 +118,7 @@
 - vulnerability:
     title: 'Vulnerability'
     children:
-        - audit-info-4.1.0.md: 'Audit for 4.2.0'
+        - audit-info-4.2.0.md: 'Audit for 4.2.0'
         - audit-info-4.1.0.md: 'Audit for 4.1.0'
         - audit-info-4.0.0.md: 'Audit for 4.0.0'
         - audit-info-3.9.0.md: 'Audit for 3.9.0'
@@ -130,7 +131,7 @@
 - license-info:
     title: 'License info'
     children:
-        - license-info-4.1.0.md: 'License info for 4.2.0'
+        - license-info-4.2.0.md: 'License info for 4.2.0'
         - license-info-4.1.0.md: 'License info for 4.1.0'
         - license-info-4.0.0.md: 'License info for 4.0.0'
         - license-info-3.9.0.md: 'License info for 3.9.0'

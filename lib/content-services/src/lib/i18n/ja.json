@@ -30,9 +30,6 @@
       "ARROW_ICON": "右矢印アイコン"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "読み込んでいます..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "確定",
     "ACTION": "作業を続けますか?",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "検索結果",
     "SELECT_LOCATION": "場所の選択",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "検索がまだ実行中のため、ファイルをアップロードできません",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "ユーザーに、コンテンツをフォルダにアップロードする権限がありません"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "ユーザーに、コンテンツをフォルダにアップロードする権限がありません",
+    "REPOSITORY": "リポジトリ",
+    "UPLOAD_FROM_DEVICE": "使用中のデバイスからアップロード"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "作成者",
       "CREATED_DATE": "作成日",
       "MODIFIER": "変更者",
-      "MODIFIED_DATE": "変更日"
+      "MODIFIED_DATE": "変更日",
+      "CONTENT_TYPE": "コンテンツタイプ"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "コンテンツタイプを変更",
+        "DESCRIPTION": "この変更をコンテンツタイプに加えると、いくつかのプロパティと保存されているメタデータがドキュメントに恒久的に追加されます。",
+        "CONFIRM": "コンテンツタイプを変更しますか？?",
+        "CANCEL": "キャンセル",
+        "APPLY": "変更を保存する",
+        "VIEW_DETAILS": "詳細の表示",
+        "PROPERTY": {
+          "NAME": "名前",
+          "DESCRIPTION": "説明",
+          "DATA_TYPE": "データタイプ"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "プロパティの更新中にエラーが発生しました",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "{{ name }} を開く"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "プロパティ名",
+    "DESCRIPTION": "説明",
+    "DATA_TYPE": "データタイプ",
+    "DIALOG": {
+      "TITLE": "プロパティをカスタマイズ",
+      "DESCRIPTION": "選択したファイルに関連付けられたプロパティを管理します。追加のメタデータと機能性を公開したり適用したりするには、以下にリストされたプロパティアスペクトから選択します",
+      "RESET": "リセット",
+      "CLEAR": "消去",
+      "CANCEL": "キャンセル",
+      "APPLY": "適用",
+      "OVER-TABLE-MESSAGE": "プロパティアスペクトを選択します",
+      "SELECTED": "選択済み"
     }
   }
 }

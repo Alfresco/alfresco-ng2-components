@@ -95,7 +95,7 @@
       "JSON_CELL": "Json",
       "COMPLETED_BY": "Ukończone przez",
       "PRIORITY_VALUES": {
-        "NOT_SET": "Nie ustawiony",
+        "NONE": "Brak",
         "LOW": "Niska",
         "NORMAL": "Średni",
         "HIGH": "Wysoki"
@@ -122,17 +122,47 @@
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Moje zadania",
     "QUEUED_TASKS": "Oczekujące zadania",
-    "COMPLETED_TASKS": "Ukończone zadania"
+    "COMPLETED_TASKS": "Ukończone zadania",
+    "STATUS": {
+      "ALL": "Wszystkie",
+      "CREATED": "Utworzono",
+      "ASSIGNED": "Przypisane",
+      "SUSPENDED": "Zawieszone",
+      "CANCELLED": "Anulowane",
+      "COMPLETED": "Zakończone"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Rosnąco",
+      "DESCENDING": "Malejąco"
+    }
   },
   "ADF_CLOUD_SERVICE_TASK_FILTERS": {
     "ALL_SERVICE_TASKS": "Wszystkie zadania serwisowe",
     "ERRORED_TASKS": "Zadania błędne",
-    "COMPLETED_TASKS": "Ukończone zadania"
+    "COMPLETED_TASKS": "Ukończone zadania",
+    "STATUS": {
+      "ALL": "Wszystkie",
+      "STARTED": "Uruchomione",
+      "COMPLETED": "Zakończone",
+      "CANCELLED": "Anulowane",
+      "ERROR": "Błąd"
+    }
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "Wszystkie",
     "RUNNING_PROCESSES": "Uruchomione",
-    "COMPLETED_PROCESSES": "Zakończone"
+    "COMPLETED_PROCESSES": "Zakończone",
+    "STATUS": {
+      "ALL": "Wszystkie",
+      "RUNNING": "Uruchomione",
+      "SUSPENDED": "Zawieszone",
+      "CANCELLED": "Anulowane",
+      "COMPLETED": "Zakończone"
+    },
+    "DIRECTION": {
+      "ASCENDING": "Rosnąco",
+      "DESCENDING": "Malejąco"
+    }
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

@@ -11,14 +11,14 @@ Specifies required properties for [Search filter component](../components/search
 
 ## Contents
 
-*   [Basic usage](#basic-usage)
-    *   [Properties](#properties)
-*   [Details](#details)
-    *   [Implementing a custom widget](#implementing-a-custom-widget)
-    *   [Reading external settings](#reading-external-settings)
-    *   [Updating the final query](#updating-the-final-query)
-    *   [Registering a custom widget](#registering-a-custom-widget)
-*   [See also](#see-also)
+-   [Basic usage](#basic-usage)
+    -   [Properties](#properties)
+-   [Details](#details)
+    -   [Implementing a custom widget](#implementing-a-custom-widget)
+    -   [Reading external settings](#reading-external-settings)
+    -   [Updating the final query](#updating-the-final-query)
+    -   [Registering a custom widget](#registering-a-custom-widget)
+-   [See also](#see-also)
 
 ## Basic usage
 
@@ -32,11 +32,11 @@ export interface SearchWidget {
 
 ### Properties
 
-| Name     | Type                                                                                                       | Default value | Description                                                                                                      |
-| -------- | ---------------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------- |
-| id       | `string`                                                                                                   |               | Unique identifying value for the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts)        |
-| settings | [`SearchWidgetSettings`](../../../lib/content-services/src/lib/search/search-widget-settings.interface.ts) |               | Settings for component properties                                                                                |
-| context  | [`SearchQueryBuilderService`](../../content-services/services/search-query-builder.service.md)             |               | Instance of the [Search Query Builder service](../services/search-query-builder.service.md) to process the query |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| id | `string` |  | Unique identifying value for the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) |
+| settings | [`SearchWidgetSettings`](../../../lib/content-services/src/lib/search/search-widget-settings.interface.ts) |  | Settings for component properties |
+| context | [`SearchQueryBuilderService`](../../content-services/services/search-query-builder.service.md) |  | Instance of the [Search Query Builder service](../services/search-query-builder.service.md) to process the query |
 
 ## Details
 
@@ -184,10 +184,10 @@ and pass custom attributes, if your component supports them:
 
 ## See also
 
-*   [Search filter component](../components/search-filter.component.md)
-*   [Search check list component](../components/search-check-list.component.md)
-*   [Search date range component](../components/search-date-range.component.md)
-*   [Search number range component](../components/search-number-range.component.md)
-*   [Search radio component](../components/search-radio.component.md)
-*   [Search slider component](../components/search-slider.component.md)
-*   [Search text component](../components/search-text.component.md)
+-   [Search filter component](../components/search-filter.component.md)
+-   [Search check list component](../components/search-check-list.component.md)
+-   [Search date range component](../components/search-date-range.component.md)
+-   [Search number range component](../components/search-number-range.component.md)
+-   [Search radio component](../components/search-radio.component.md)
+-   [Search slider component](../components/search-slider.component.md)
+-   [Search text component](../components/search-text.component.md)

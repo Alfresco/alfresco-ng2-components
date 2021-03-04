@@ -1,5 +1,13 @@
 "use strict";
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.processDocs = void 0;
 var path = require("path");
 var unist = require("../unistHelpers");
 var ngHelpers = require("../ngHelpers");
@@ -10,6 +18,7 @@ var includedNodeTypes = [
 ];
 var externalNameLinks;
 var linkOverrides;
+var ignoreLinkWords;
 function processDocs(mdCache, aggData) {
     initPhase(aggData, mdCache);
     var pathnames = Object.keys(mdCache);
@@ -20,6 +29,7 @@ function processDocs(mdCache, aggData) {
 exports.processDocs = processDocs;
 function initPhase(aggData, mdCache) {
     externalNameLinks = aggData.config.externalNameLinks;
+    ignoreLinkWords = aggData.config.ignoreLinkWords;
     linkOverrides = {};
     aggData.config.linkOverrides.forEach(function (override) {
         linkOverrides[override.toLowerCase()] = 1;
@@ -49,9 +59,11 @@ function updateFile(tree, pathname, aggData) {
         if (node.type === 'link') {
             if (node.children[0] && ((node.children[0].type === 'inlineCode') ||
                 (node.children[0].type === 'text'))) {
-                var link = resolveTypeLink(aggData, pathname, node.children[0].value);
-                if (link) {
-                    convertNodeToTypeLink(node, node.children[0].value, link);
+                if (!ignoreLinkWords.includes(node.children[0].value)) {
+                    var link = resolveTypeLink(aggData, pathname, node.children[0].value);
+                    if (link) {
+                        convertNodeToTypeLink(node, node.children[0].value, link);
+                    }
                 }
             }
         }
@@ -60,7 +72,7 @@ function updateFile(tree, pathname, aggData) {
                 var _a;
                 if ((child.type === 'text') || (child.type === 'inlineCode')) {
                     var newNodes = handleLinksInBodyText(aggData, pathname, child.value, child.type === 'inlineCode');
-                    (_a = node.children).splice.apply(_a, [index, 1].concat(newNodes));
+                    (_a = node.children).splice.apply(_a, __spreadArrays([index, 1], newNodes));
                 }
                 else {
                     traverseMDTree(child);
@@ -211,40 +223,42 @@ function handleLinksInBodyText(aggData, docFilePath, text, wrapInlineCode) {
             .replace(/'s$/, '')
             .replace(/^[;:,\."']+/g, '')
             .replace(/[;:,\."']+$/g, '');
-        var link = resolveTypeLink(aggData, docFilePath, word);
-        var matchStart = void 0;
-        if (!link) {
-            var match = matcher.nextWord(word.toLowerCase(), scanner.index);
-            if (match && match[0]) {
-                link = resolveTypeLink(aggData, docFilePath, match[0].value);
-                matchStart = match[0].startPos;
-            }
-        }
-        else {
-            matchStart = scanner.index;
-        }
-        if (link) {
-            var linkText = text.substring(matchStart, scanner.nextSeparator);
-            var linkTitle = void 0;
-            if (wrapInlineCode) {
-                linkTitle = unist.makeInlineCode(linkText);
+        if (!ignoreLinkWords.includes(word)) {
+            var link = resolveTypeLink(aggData, docFilePath, word);
+            var matchStart = void 0;
+            if (!link) {
+                var match = matcher.nextWord(word.toLowerCase(), scanner.index);
+                if (match && match[0]) {
+                    link = resolveTypeLink(aggData, docFilePath, match[0].value);
+                    matchStart = match[0].startPos;
+                }
             }
             else {
-                linkTitle = unist.makeText(linkText);
+                matchStart = scanner.index;
             }
-            var linkNode = unist.makeLink(linkTitle, link);
-            var prevText = text.substring(currTextStart, matchStart);
-            if (prevText) {
+            if (link) {
+                var linkText = text.substring(matchStart, scanner.nextSeparator);
+                var linkTitle = void 0;
                 if (wrapInlineCode) {
-                    result.push(unist.makeInlineCode(prevText));
+                    linkTitle = unist.makeInlineCode(linkText);
                 }
                 else {
-                    result.push(unist.makeText(prevText));
+                    linkTitle = unist.makeText(linkText);
                 }
+                var linkNode = unist.makeLink(linkTitle, link);
+                var prevText = text.substring(currTextStart, matchStart);
+                if (prevText) {
+                    if (wrapInlineCode) {
+                        result.push(unist.makeInlineCode(prevText));
+                    }
+                    else {
+                        result.push(unist.makeText(prevText));
+                    }
+                }
+                result.push(linkNode);
+                currTextStart = scanner.nextSeparator;
+                matcher.reset();
             }
-            result.push(linkNode);
-            currTextStart = scanner.nextSeparator;
-            matcher.reset();
         }
     }
     var remainingText = text.substring(currTextStart, text.length);

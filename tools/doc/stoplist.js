@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Stoplist = void 0;
 var fs = require("fs");
 /* "Stoplist" of regular expressions to match against strings. */
 var Stoplist = /** @class */ (function () {

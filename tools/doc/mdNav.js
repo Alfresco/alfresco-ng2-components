@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MDNav = void 0;
 var MDNav = /** @class */ (function () {
     function MDNav(root, pos) {
         if (pos === void 0) { pos = 0; }
@@ -161,7 +162,7 @@ var MDNav = /** @class */ (function () {
                 return this.root.children[this.pos];
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDNav.prototype, "empty", {
@@ -170,14 +171,14 @@ var MDNav = /** @class */ (function () {
                 !this.root.children ||
                 (this.pos >= this.root.children.length);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDNav.prototype, "childNav", {
         get: function () {
             return new MDNav(this.item);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDNav.prototype, "value", {
@@ -189,7 +190,7 @@ var MDNav = /** @class */ (function () {
                 return '';
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(MDNav.prototype, "textValue", {
@@ -211,7 +212,7 @@ var MDNav = /** @class */ (function () {
                 return '';
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     return MDNav;

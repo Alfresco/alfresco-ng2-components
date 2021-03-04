@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.processDocs = void 0;
 var fs = require("fs");
 var path = require("path");
 var replaceSection = require("mdast-util-heading-range");

@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Aktivieren Sie diese Option, um die Eingabeeigenschaft zu deaktivieren und die Nutzung des Services zu konfigurieren",
     "HEADER_DATA": "Headerdaten",
     "TREE_VIEW": "Strukturansicht",
+    "EXPAND_LIST": "Erweiterbare Elementliste",
     "ICONS": "Symbole",
     "PEOPLE_GROUPS_CLOUD": "Personen-/Gruppen-Cloud",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Versionen verwalten",
+      "ASPECTS": "Aspekte aktualisieren",
       "LOCK": "Sperren",
       "METADATA": "Info",
       "DOWNLOAD": "Herunterladen",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Speichern",
     "RESTORE": "Wiederherstellen"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "Aufgabe '{{taskName}}' wurde {{assignee}} zugewiesen",
+    "PROCESS_STARTED": "Prozess '{{processName}}' wurde gestartet",
+    "TASK_UPDATED": "Aufgabe '{{taskName}}' wurde aktualisiert"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Formulardaten",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 2",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Zurück zur Startseite"
+    },
     "507": {
       "TITLE": "ACS-Datenträger voll",
       "DESCRIPTION": "Inhalt übersteigt die für das Netzwerk oder System konfigurierte Gesamtspeicherbegrenzung",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Zurück zur Startseite"
       }
     }
   },

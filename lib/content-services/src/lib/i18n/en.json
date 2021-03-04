@@ -466,7 +466,7 @@
     "DATA_TYPE": "Data Type",
     "DIALOG" : {
        "TITLE" : "Customize Properties",
-       "DESCRIPTION": "Manage the properties associated with selected file(s). Choose from property aspects listed below, to expose and apply additional metadata and funcitonality",
+       "DESCRIPTION": "Manage the properties associated with selected file(s). Choose from property aspects listed below, to expose and apply additional metadata and functionality",
        "RESET": "Reset",
        "CLEAR": "Clear",
        "CANCEL": "Cancel",

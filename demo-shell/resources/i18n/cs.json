@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Označením této možnosti zakážete vstupní vlastnost a ke konfiguraci použijete službu",
     "HEADER_DATA": "Data záhlaví",
     "TREE_VIEW": "Stromová struktura",
+    "EXPAND_LIST": "Rozšiřitený seznam položek",
     "ICONS": "Ikony",
     "PEOPLE_GROUPS_CLOUD": "Cloud osob/skupin",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Spravovat verze",
+      "ASPECTS": "Aktualizovat aspekty",
       "LOCK": "Zamknout",
       "METADATA": "Informace",
       "DOWNLOAD": "Stáhnout",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Uložit",
     "RESTORE": "Obnovit"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "Úkol {{taskName}} byl přiřazen uživateli {{assignee}}",
+    "PROCESS_STARTED": "Byl spuštěn proces {{processName}}",
+    "TASK_UPDATED": "Byly aktualizovány podrobnosti úkolu {{taskName}}"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Data formuláře",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Vlastní překlad názvu 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "Vlastní překlad názvu 2",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Zpět domů"
+    },
     "507": {
       "TITLE": "Disk ACS plný",
       "DESCRIPTION": "Obsah přesahuje celkovou kvótu úložiště nastavenou pro síť nebo systém",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Zpět domů"
       }
     }
   },

@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Jos haluat poistaa käytöstä annetun ominaisuuden ja määrittää palvelun avulla, valitse tämä",
     "HEADER_DATA": "Otsikkotiedot",
     "TREE_VIEW": "Puunäkymä",
+    "EXPAND_LIST": "Laajennettava kohdelista",
     "ICONS": "Kuvakkeet",
     "PEOPLE_GROUPS_CLOUD": "Ihmispilvi/Ryhmäpilvi",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Hallitse versioita",
+      "ASPECTS": "Päivitä ominaisuusjoukot",
       "LOCK": "Lukitse",
       "METADATA": "Tiedot",
       "DOWNLOAD": "Lataa",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Tallenna",
     "RESTORE": "Palauta"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "{{taskName}} -tehtävä on määritetty käyttäjälle {{assignee}}",
+    "PROCESS_STARTED": "{{processName}} -prosessi on käynnistetty",
+    "TASK_UPDATED": "{{taskName}} -tehtävän tiedot on päivitetty"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Lomaketiedot",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Oma otsikkokäännös yksi",
   "GROUP-TITLE2-TRANSLATION-KEY": "Oma otsikkokäännös kaksi",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Takaisin aloitussivulle"
+    },
     "507": {
       "TITLE": "ACS-levy täynnä",
       "DESCRIPTION": "Sisältö ylittää verkolle tai järjestelmälle määritetyn tallennustilan kokonaisrajoituksen",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Takaisin aloitussivulle"
       }
     }
   },

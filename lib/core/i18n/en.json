@@ -208,7 +208,7 @@
           "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
           "CONFIRM": "Are you sure you want to change the content type?",
           "CANCEL": "CANCEL",
-          "APPLY": "SAVE CHANGES",
+          "APPLY": "Save Changes",
           "VIEW_DETAILS": "View details",
           "PROPERTY" :{
             "NAME" : "Name",
@@ -224,13 +224,13 @@
         "CLEAR": "Clear",
         "TOGGLE": "Toggle value",
         "COPY_TO_CLIPBOARD": "Double click to copy value",
-        "EDIT_ASPECTS": "Aspect Edit"
+        "EDIT_ASPECTS": "Edit Aspect"
       },
       "ACCESSIBILITY": {
         "EDIT": "Edit button",
         "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down move to the next or previous week but on the same day. Left and right move to the next or previous day. Press Enter or Return to select a date.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Value copied to clipboard",
-        "EDIT_ASPECTS": "Aspect Edit"
+        "EDIT_ASPECTS": "Edit Aspect"
       }
     },
     "SEARCH": {

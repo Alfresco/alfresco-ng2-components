@@ -30,9 +30,6 @@
       "ARROW_ICON": "Ikona strzałki w prawo"
     }
   },
-  "ADF_DROPDOWN": {
-    "LOADING": "Wczytywanie..."
-  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Potwierdź",
     "ACTION": "Czy chcesz kontynuować?",
@@ -91,7 +88,9 @@
     "SEARCH_RESULTS": "Wyniki wyszukiwania",
     "SELECT_LOCATION": "Wybierz lokalizację",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Nie można przesłać pliku, ponieważ nadal trwa wyszukiwanie",
-    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Użytkownik nie ma uprawnienia do przesyłania zawartości do tego folderu"
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Użytkownik nie ma uprawnienia do przesyłania zawartości do tego folderu",
+    "REPOSITORY": "Repozytorium",
+    "UPLOAD_FROM_DEVICE": "Prześlij z urządzenia"
   },
   "OPERATION": {
     "SUCCESS": {
@@ -335,7 +334,23 @@
       "CREATOR": "Twórca",
       "CREATED_DATE": "Data utworzenia",
       "MODIFIER": "Modyfikator",
-      "MODIFIED_DATE": "Data modyfikacji"
+      "MODIFIED_DATE": "Data modyfikacji",
+      "CONTENT_TYPE": "Typ zawartości"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Zmień typ zawartości",
+        "DESCRIPTION": "Wprowadzenie tej zmiany typu zawartości spowoduje trwałe dodanie pewnych właściwości i zapisanie metadanych w dokumencie.",
+        "CONFIRM": "Czy na pewno zmienić typ zawartości?",
+        "CANCEL": "Anuluj",
+        "APPLY": "Zapisz zmiany",
+        "VIEW_DETAILS": "Wyświetl szczegóły",
+        "PROPERTY": {
+          "NAME": "Nazwa",
+          "DESCRIPTION": "Opis",
+          "DATA_TYPE": "Typ danych"
+        }
+      }
     },
     "ERRORS": {
       "GENERIC": "Błąd podczas aktualizowania właściwości",
@@ -443,6 +458,21 @@
   "NAME_COLUMN_LINK": {
     "ACCESSIBILITY": {
       "ARIA_LABEL": "Otwórz {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Nazwa właściwości",
+    "DESCRIPTION": "Opis",
+    "DATA_TYPE": "Typ danych",
+    "DIALOG": {
+      "TITLE": "Dostosuj właściwości",
+      "DESCRIPTION": "Zarządzaj właściwościami powiązanymi z wybranymi plikami. Wybierz aspekty właściwości z poniższej listy, aby ujawnić dodatkowe metadane i funkcje oraz zastosować je",
+      "RESET": "Resetuj",
+      "CLEAR": "Wyczyść",
+      "CANCEL": "Anuluj",
+      "APPLY": "Zastosuj",
+      "OVER-TABLE-MESSAGE": "Wybierz aspekty właściwości",
+      "SELECTED": "Wybrane"
     }
   }
 }

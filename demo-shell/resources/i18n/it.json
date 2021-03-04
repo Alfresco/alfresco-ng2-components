@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Selezionare per disattivare la proprietà di input ed eseguire la configurazione utilizzando il servizio",
     "HEADER_DATA": "Dati intestazione",
     "TREE_VIEW": "Vista struttura",
+    "EXPAND_LIST": "Elenco elementi espandibile",
     "ICONS": "Icone",
     "PEOPLE_GROUPS_CLOUD": "Cloud persone/gruppi",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Gestione versioni",
+      "ASPECTS": "Aggiorna aspetti",
       "LOCK": "Blocca",
       "METADATA": "Informazioni",
       "DOWNLOAD": "Scarica",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Memorizza",
     "RESTORE": "Ripristina"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "Il compito {{taskName}} è stato assegnato a {{assignee}}",
+    "PROCESS_STARTED": "Il processo {{processName}} è stato avviato",
+    "TASK_UPDATED": "I dettagli del compito {{taskName}} sono stati aggiornati"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Dati modulo",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Custom Title Translation One",
   "GROUP-TITLE2-TRANSLATION-KEY": "Custom Title Translation Two",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Torna alla home"
+    },
     "507": {
       "TITLE": "Dico ACS pieno",
       "DESCRIPTION": "Il contenuto supera il limite di archiviazione complessivo configurato per la rete o il sistema",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Torna alla home"
       }
     }
   },

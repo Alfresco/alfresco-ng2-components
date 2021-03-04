@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Schakel dit in om de invoereigenschap uit te schakelen en om te configureren via de service",
     "HEADER_DATA": "Koptekstgegevens",
     "TREE_VIEW": "Structuurweergave",
+    "EXPAND_LIST": "Uitvouwbare itemlijst",
     "ICONS": "Pictogrammen",
     "PEOPLE_GROUPS_CLOUD": "Personen-/groepencloud",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Versies beheren",
+      "ASPECTS": "Aspecten bijwerken",
       "LOCK": "Vergrendeling",
       "METADATA": "Info",
       "DOWNLOAD": "Downloaden",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Opslaan",
     "RESTORE": "Herstellen"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "{{taskName}}-taak is toegewezen aan {{assignee}}",
+    "PROCESS_STARTED": "{{processName}}-proces is gestart",
+    "TASK_UPDATED": "{{taskName}}-taakdetails zijn bijgewerkt"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Formuliergegevens",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Aangepaste titel vertaling één",
   "GROUP-TITLE2-TRANSLATION-KEY": "Aangepaste titel vertaling twee",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Terug naar Home"
+    },
     "507": {
       "TITLE": "ACS-schijf vol",
       "DESCRIPTION": "Content overschrijdt de totale opslaglimiet die is geconfigureerd voor het netwerk of systeem",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Terug naar Home"
       }
     }
   },

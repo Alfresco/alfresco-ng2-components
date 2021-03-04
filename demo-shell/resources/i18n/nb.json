@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "Velg dette for å deaktivere inndataegenskapen og konfigurere ved hjelp av tjenesten",
     "HEADER_DATA": "Overskriftsdata",
     "TREE_VIEW": "Trevisning",
+    "EXPAND_LIST": "Utvidbar elementliste",
     "ICONS": "Ikoner",
     "PEOPLE_GROUPS_CLOUD": "Person-/gruppesky",
     "TASK_HEADER_CLOUD": {
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Administrer versjoner",
+      "ASPECTS": "Oppdater aspekter",
       "LOCK": "Lås",
       "METADATA": "Info",
       "DOWNLOAD": "Last ned",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "Lagre",
     "RESTORE": "Gjenopprett"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "{{taskName}}-oppgaven er tilordnet til {{assignee}}",
+    "PROCESS_STARTED": "{{processName}}-prosessen er startet",
+    "TASK_UPDATED": "{{taskName}}-oppgavedetaljene er oppdatert"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Skjemadata",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Egendefinert tittel, oversettelse én",
   "GROUP-TITLE2-TRANSLATION-KEY": "Egendefinert tittel, oversettelse to",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "Tilbake til startsiden"
+    },
     "507": {
       "TITLE": "ACS-disk er full",
       "DESCRIPTION": "Innhold overgår samlet lagringskvotegrense konfigurert for nettverket eller systemet",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "Tilbake til startsiden"
       }
     }
   },

@@ -13,37 +13,37 @@ Manage Process Filters, which are pre-configured Process Instance queries.
 
 ### Methods
 
-*   **addProcessFilter**(filter: [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>`<br/>
+-   **addProcessFilter**(filter: [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>`<br/>
     Adds a filter.
-    *   *filter:* [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)  - The filter to add
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>` - The filter just added
-*   **callApiProcessFilters**(appId?: `number`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ResultListDataRepresentationUserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ResultListDataRepresentation%C2%ABUserProcessInstanceFilterRepresentation%C2%BB.md)`>`<br/>
+    -   _filter:_ [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)  - The filter to add
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>` - The filter just added
+-   **callApiProcessFilters**(appId?: `number`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ResultListDataRepresentationUserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ResultListDataRepresentation%C2%ABUserProcessInstanceFilterRepresentation%C2%BB.md)`>`<br/>
     Calls `getUserProcessInstanceFilters` from the Alfresco JS API.
-    *   *appId:* `number`  - (Optional) ID of the target app
-    *   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ResultListDataRepresentationUserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ResultListDataRepresentation%C2%ABUserProcessInstanceFilterRepresentation%C2%BB.md)`>` - List of filter details
-*   **createDefaultFilters**(appId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`[]>`<br/>
+    -   _appId:_ `number`  - (Optional) ID of the target app
+    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ResultListDataRepresentationUserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ResultListDataRepresentation%C2%ABUserProcessInstanceFilterRepresentation%C2%BB.md)`>` - List of filter details
+-   **createDefaultFilters**(appId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`[]>`<br/>
     Creates and returns the default filters for an app.
-    *   *appId:* `number`  - ID of the target app
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`[]>` - Default filters just created
-*   **getProcessFilterById**(filterId: `number`, appId?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>`<br/>
+    -   _appId:_ `number`  - ID of the target app
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`[]>` - Default filters just created
+-   **getProcessFilterById**(filterId: `number`, appId?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>`<br/>
     Retrieves the process filter by ID.
-    *   *filterId:* `number`  - ID of the filter
-    *   *appId:* `number`  - (Optional) ID of the target app
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>` - Details of the filter
-*   **getProcessFilterByName**(filterName: `string`, appId?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>`<br/>
+    -   _filterId:_ `number`  - ID of the filter
+    -   _appId:_ `number`  - (Optional) ID of the target app
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>` - Details of the filter
+-   **getProcessFilterByName**(filterName: `string`, appId?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>`<br/>
     Retrieves the process filter by name.
-    *   *filterName:* `string`  - Name of the filter
-    *   *appId:* `number`  - (Optional) ID of the target app
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>` - Details of the filter
-*   **getProcessFilters**(appId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`[]>`<br/>
+    -   _filterName:_ `string`  - Name of the filter
+    -   _appId:_ `number`  - (Optional) ID of the target app
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>` - Details of the filter
+-   **getProcessFilters**(appId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`[]>`<br/>
     Gets all filters defined for a Process App.
-    *   *appId:* `number`  - ID of the target app
-    *   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`[]>` - Array of filter details
-*   **getRunningFilterInstance**(appId: `number`, index?: `number`): [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)<br/>
+    -   _appId:_ `number`  - ID of the target app
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`[]>` - Array of filter details
+-   **getRunningFilterInstance**(appId: `number`, index?: `number`): [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)<br/>
     Creates and returns a filter that matches "running" process instances.
-    *   *appId:* `number`  - ID of the target app
-    *   *index:* `number`  - (Optional) of the filter (optional)
-    *   **Returns** [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts) - Filter just created
+    -   _appId:_ `number`  - ID of the target app
+    -   _index:_ `number`  - (Optional) of the filter (optional)
+    -   **Returns** [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts) - Filter just created
 
 ## Details
 
@@ -76,5 +76,5 @@ such as 'Running', 'Completed', 'All', etc.
 
 ## See also
 
-*   [Process Filters component](../components/process-filters.component.md)
-*   [Task Filter service](task-filter.service.md)
+-   [Process Filters component](../components/process-filters.component.md)
+-   [Task Filter service](task-filter.service.md)

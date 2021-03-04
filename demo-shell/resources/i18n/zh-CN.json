@@ -94,6 +94,7 @@
     "SEARCH_SERVICE_APPROACH": "选中此项以禁用输入属性并使用服务进行配置",
     "HEADER_DATA": "标头数据",
     "TREE_VIEW": "树视图",
+    "EXPAND_LIST": "可扩展项目列表",
     "ICONS": "图标",
     "PEOPLE_GROUPS_CLOUD": "人员/一组云",
     "TASK_HEADER_CLOUD": {
@@ -125,8 +126,8 @@
     "ALLOW_DROP_FILES": "在文件夹或文件中启用拖动文件",
     "MULTIPLE_FILE_UPLOAD": "上传多个文件",
     "FOLDER_UPLOAD": "文件夹上传",
-    "CUSTOM_FILTER": "自定义扩展过滤器",
-    "MAX_SIZE": "最大大小过滤器",
+    "CUSTOM_FILTER": "自定义扩展筛选器",
+    "MAX_SIZE": "最大大小筛选器",
     "ENABLE_VERSIONING": "启用版本控制",
     "DESCRIPTION_UPLOAD": "启用上传",
     "ENABLE_INFINITE_SCROLL": "启用无限滚动",
@@ -166,6 +167,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "管理版本",
+      "ASPECTS": "更新方面",
       "LOCK": "锁定",
       "METADATA": "信息",
       "DOWNLOAD": "下载",
@@ -213,6 +215,11 @@
   "FORM-LIST": {
     "STORE": "存储",
     "RESTORE": "恢复"
+  },
+  "NOTIFICATIONS": {
+    "TASK_ASSIGNED": "{{taskName}} 任务已分配给 {{assignee}}",
+    "PROCESS_STARTED": "{{processName}} 进程已启动",
+    "TASK_UPDATED": "{{taskName}} 任务详细信息已更新"
   },
   "FORM-LOADING": {
     "FORM_DATA": "表单数据",
@@ -287,14 +294,14 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "自定义标题翻译 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "自定义标题翻译 2",
   "ERROR_CONTENT": {
+    "RETURN_BUTTON": {
+      "TEXT": "返回到主页"
+    },
     "507": {
       "TITLE": "ACS 磁盘已满",
       "DESCRIPTION": "内容超出为网络或系统配置的总存储配额限制",
       "SECONDARY_BUTTON": {
         "TEXT": ""
-      },
-      "RETURN_BUTTON": {
-        "TEXT": "返回到主页"
       }
     }
   },

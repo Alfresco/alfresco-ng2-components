@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ComponentInfo = exports.MethodSigInfo = exports.ParamInfo = exports.PropInfo = void 0;
 var skipMethodNames = [
     'ngOnChanges',
     'ngOnDestroy',
@@ -53,7 +54,7 @@ var PropInfo = /** @class */ (function () {
         get: function () {
             return this.errorMessages;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     return PropInfo;
@@ -130,7 +131,7 @@ var MethodSigInfo = /** @class */ (function () {
         get: function () {
             return this.errorMessages;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     return MethodSigInfo;
@@ -193,7 +194,7 @@ var ComponentInfo = /** @class */ (function () {
             });
             return combinedErrors;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     return ComponentInfo;
