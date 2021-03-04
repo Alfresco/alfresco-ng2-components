@@ -66,7 +66,7 @@ describe('Restore content directive', () => {
     let testFolder: NodeEntry;
 
     const uploadActions = new UploadActions(apiService);
-    let folderWithContent, folderWithFolder, subFolder, subFile, testFile, restoreFile;
+    let folderWithContent, folderWithFolder, subFolder, subFile, testFile;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
