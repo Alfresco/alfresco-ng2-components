@@ -65,8 +65,8 @@ export class LogoutDirective implements OnInit {
     }
 
     redirectToUri() {
-        const redirectRoute = this.getRedirectUri();
         if (this.enableRedirect && !this.auth.isOauth()) {
+            const redirectRoute = this.getRedirectUri();
             this.router.navigate([redirectRoute]);
         }
     }
