@@ -155,7 +155,7 @@
     "protractor": "^7.0.0",
     "protractor-retry-angular-cli": "^2.0.2",
     "protractor-screenshoter-plugin": "0.10.3",
-    "protractor-smartrunner": "^2.0.0-beta6",
+    "protractor-smartrunner": "^2.0.0-beta10",
     "rimraf": "^3.0.2",
     "rxjs-tslint-rules": "^4.34.7",
     "sass-loader": "10.1.1",
