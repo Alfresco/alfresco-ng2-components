@@ -78,13 +78,13 @@ describe('Process Task - Attach content file', () => {
     let groupInfo: any;
 
     const pdfFileOne = {
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     };
 
     const pdfFileTwo = {
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_path
     };
 
     beforeAll(async () => {

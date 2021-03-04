@@ -102,10 +102,10 @@ describe('Edit process filters cloud', () => {
 
     it('[C291805] New process filter is added when clicking Save As button', async () => {
         await createNewProcessCustomFilter('New');
-        await browser.driver.sleep(1000);
 
         await expect(await processFilter.getActiveFilterName()).toBe('New');
         await editProcessFilter.openFilter();
+
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
         await processFilter.clickAllProcessesFilter();
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
@@ -122,11 +122,11 @@ describe('Edit process filters cloud', () => {
         await expect(await processFilter.getActiveFilterName()).toBe('New');
         await editProcessFilter.openFilter();
         await editProcessFilter.checkCustomiseFilterHeaderIsExpanded();
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
         await editProcessFilter.setSortFilterDropDown('Process Name');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Process Name');
         await editProcessFilter.clickSaveButton();
         await editProcessFilter.openFilter();
+
         await editProcessFilter.checkCustomiseFilterHeaderIsExpanded();
 
         await browser.driver.sleep(1000);
