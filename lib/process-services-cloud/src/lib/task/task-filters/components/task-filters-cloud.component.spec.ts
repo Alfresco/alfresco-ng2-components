@@ -397,7 +397,7 @@ describe('TaskFiltersCloudComponent', () => {
         });
     }));
 
-    it('should reset filter counter notification when filter is selected', async(() => {
+    it('should reset filter counter notification when filter is selected', fakeAsync(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
         let change = new SimpleChange(undefined, 'my-app-1', true);
         component.appName = 'my-app-1';
