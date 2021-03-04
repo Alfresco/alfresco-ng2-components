@@ -66,7 +66,7 @@ describe('Restore content directive', () => {
     let testFolder: NodeEntry;
 
     const uploadActions = new UploadActions(apiService);
-    let folderWithContent, folderWithFolder, subFolder, subFile, testFile, restoreFile;
+    let folderWithContent, folderWithFolder, subFolder, subFile, testFile;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -80,7 +80,6 @@ describe('Restore content directive', () => {
         testFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
         folderWithFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), folderWithFolder.entry.id);
-        restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
     });
 
     afterAll(async () => {
