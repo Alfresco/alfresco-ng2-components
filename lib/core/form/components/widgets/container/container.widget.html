@@ -23,7 +23,7 @@
 
 <ng-template #fixingTemplate>
     <section class="adf-grid-list-column-view" *ngIf="content?.isExpanded">
-        <div class="adf-grid-list-single-column" *ngFor="let column of content?.columns" [style.width.%]="getColumnWith(field)">
+        <div class="adf-grid-list-single-column" *ngFor="let column of content?.columns">
             <div class="adf-grid-list-column-view-item" *ngFor="let field of column?.fields">
                 <adf-form-field *ngIf="field" [field]="field"></adf-form-field>
             </div>
