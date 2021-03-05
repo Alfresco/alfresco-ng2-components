@@ -87,17 +87,16 @@ describe('LogoutDirective', () => {
             expect(router.navigate).toHaveBeenCalledWith(['fake-base-logout']);
         });
 
-        it('should redirect to redirectUriLogout on click if SSO auth', () => {
+        it('should never redirect if SSO auth, because the redirect is done by the js-api', () => {
             spyOn(router, 'navigate');
             spyOn(authService, 'isOauth').and.returnValue(true);
             spyOn(authService, 'logout').and.returnValue(of(true));
-            appConfig.config['oauth2.redirectUriLogout'] = 'fake-logout';
 
             const button = fixture.nativeElement.querySelector('button');
             button.click();
 
             expect(authService.logout).toHaveBeenCalled();
-            expect(router.navigate).toHaveBeenCalledWith(['fake-logout']);
+            expect(router.navigate).not.toHaveBeenCalled();
         });
 
         it('should redirect to login even on logout error', () => {
