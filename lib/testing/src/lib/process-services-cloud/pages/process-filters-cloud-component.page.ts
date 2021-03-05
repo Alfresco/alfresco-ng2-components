@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Locator, by, element, ElementFinder, browser } from 'protractor';
+import { Locator, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
@@ -42,25 +42,21 @@ export class ProcessFiltersCloudComponentPage {
     async clickProcessFilter(filterName: string): Promise<void> {
         const filter = this.getProcessFilterLocatorByFilterName(filterName);
         await BrowserActions.click(filter);
-        await browser.driver.sleep(2000);
     }
 
     async clickAllProcessesFilter(): Promise<void> {
         const filter = this.getProcessFilterLocatorByFilterName(FILTERS.ALL);
         await BrowserActions.click(filter);
-        await browser.driver.sleep(2000);
     }
 
     async clickCompletedProcessesFilter(): Promise<void> {
         const filter = this.getProcessFilterLocatorByFilterName(FILTERS.COMPLETED);
         await BrowserActions.click(filter);
-        await browser.driver.sleep(2000);
     }
 
     async clickRunningProcessesFilter(): Promise<void> {
         const filter = this.getProcessFilterLocatorByFilterName(FILTERS.RUNNING);
         await BrowserActions.click(filter);
-        await browser.driver.sleep(2000);
     }
 
     async checkAllProcessesFilterIsDisplayed(): Promise<void> {

@@ -115,9 +115,7 @@ describe('Edit process filters cloud', () => {
     });
 
     it('[C291807] A process filter is updated when clicking on save button', async () => {
-        await editProcessFilter.setSortFilterDropDown('Id');
-        await processFilter.clickAllProcessesFilter();
-        await editProcessFilter.saveAs('New');
+        await createNewProcessCustomFilter('New')
 
         await expect(await processFilter.getActiveFilterName()).toBe('New');
         await editProcessFilter.openFilter();
@@ -137,9 +135,7 @@ describe('Edit process filters cloud', () => {
     });
 
     it('[C291808] A process filter is deleted when clicking on delete button', async () => {
-        await editProcessFilter.setSortFilterDropDown('Id');
-        await processFilter.clickAllProcessesFilter();
-        await editProcessFilter.saveAs('New');
+        await createNewProcessCustomFilter('New')
 
         await editProcessFilter.openFilter();
         await expect(await processFilter.getActiveFilterName()).toBe('New');
@@ -172,7 +168,6 @@ describe('Edit process filters cloud', () => {
 
     it('[C291811] Save button of process filter dialog should be disabled when process name is empty', async () => {
         await editProcessFilter.setSortFilterDropDown('Id');
-        await processFilter.clickAllProcessesFilter();
         await editProcessFilter.clickSaveAsButton();
 
         const dialog = editProcessFilter.editProcessFilterDialog();
@@ -192,7 +187,6 @@ describe('Edit process filters cloud', () => {
 
     it('[C291809] Process filter dialog is displayed when clicking on Save As button', async () => {
         await editProcessFilter.setSortFilterDropDown('Name');
-        await processFilter.clickAllProcessesFilter();
         await editProcessFilter.clickSaveAsButton();
 
         const dialog = editProcessFilter.editProcessFilterDialog();
@@ -204,9 +198,9 @@ describe('Edit process filters cloud', () => {
         await dialog.clickOnCancelButton();
     });
 
-    async function createNewProcessCustomFilter(name: string): Promise<void> {
-        await editProcessFilter.setSortFilterDropDown('Id');
+    async function createNewProcessCustomFilter(name: string, sort = 'Id'): Promise<void> {
         await processFilter.clickAllProcessesFilter();
+        await editProcessFilter.setSortFilterDropDown(sort);
         await editProcessFilter.saveAs(name);
     }
 });

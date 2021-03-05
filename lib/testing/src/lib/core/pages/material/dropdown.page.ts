@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by, ElementFinder, browser } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
 import { Logger } from '../../utils/logger';
@@ -38,14 +38,16 @@ export class DropdownPage {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
         const optionElement = element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first();
         await BrowserActions.click(optionElement);
+        await browser.sleep(2500);
+        await BrowserVisibility.waitUntilElementHasText(this.dropDownElement.all(by.css('mat-form-field span')).first(), option);
     }
 
     async getValue(): Promise<string> {
-        return BrowserActions.getText(element(by.css('mat-form-field span')));
+        return BrowserActions.getText(this.dropDownElement.element(by.css('mat-form-field span')));
     }
 
     async getNumberOfOptions(): Promise<number> {
-        const dropdownOptions = element.all(by.css('.mat-select-panel mat-option'));
+        const dropdownOptions = this.dropDownElement.all(by.css('.mat-select-panel mat-option'));
         return dropdownOptions.count();
     }
 
