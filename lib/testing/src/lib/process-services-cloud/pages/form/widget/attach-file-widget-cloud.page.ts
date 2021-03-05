@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Locator, element, by, ElementFinder } from 'protractor';
+import { Locator, element, by, ElementFinder, browser } from 'protractor';
 import { BrowserActions } from '../../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../../core/utils/browser-visibility';
 
@@ -70,10 +70,12 @@ export class AttachFileWidgetCloudPage {
     }
 
     async clickActionMenu(fileName: string, actionName: string): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
         const fileId = await this.getFileId(fileName);
         const optionMenu = this.widget.element(by.css(`button[id='${fileId}-option-menu']`));
         await BrowserActions.click(optionMenu);
         await BrowserActions.waitUntilActionMenuIsVisible();
+        await browser.sleep(500);
         const actionButton = element(by.css(`button#${fileId}-${actionName}`));
         await BrowserActions.click(actionButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(actionButton);
