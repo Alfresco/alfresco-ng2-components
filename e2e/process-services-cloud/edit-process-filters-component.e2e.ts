@@ -115,7 +115,7 @@ describe('Edit process filters cloud', () => {
     });
 
     it('[C291807] A process filter is updated when clicking on save button', async () => {
-        await createNewProcessCustomFilter('New')
+        await createNewProcessCustomFilter('New');
 
         await expect(await processFilter.getActiveFilterName()).toBe('New');
         await editProcessFilter.openFilter();
@@ -135,7 +135,7 @@ describe('Edit process filters cloud', () => {
     });
 
     it('[C291808] A process filter is deleted when clicking on delete button', async () => {
-        await createNewProcessCustomFilter('New')
+        await createNewProcessCustomFilter('New');
 
         await editProcessFilter.openFilter();
         await expect(await processFilter.getActiveFilterName()).toBe('New');
