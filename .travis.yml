@@ -35,7 +35,7 @@ branches:
 
 stages:
   - name: Setup
-  - name: "Lint & Build Dist & Release"
+  - name: "Lint & Build lib"
     if: tag IS blank
   - name: "Build Demo Shell"
     if: (branch != master AND type != cron AND tag IS blank) OR type = api
@@ -73,8 +73,8 @@ jobs:
             use: node_modules_cache
 
         # Run Only for any PR
-        - stage: "Lint & Build Dist & Release"
-          name:  Build
+        - stage: "Lint & Build lib"
+          name:  "Build Lib"
           script:
             - ./scripts/travis/build/build-libs.sh
           workspaces:
@@ -92,7 +92,7 @@ jobs:
 
         # Run Only for any PR
         - stage: "Build Demo Shell"
-          name:  Build Demo Shell and dokcerize
+          name:  "Build Demo Shell and dockerize"
           script:
               # Build Demo shell for production docker"
               - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --prod
@@ -105,7 +105,7 @@ jobs:
 
          # Run Only for any PR
         - stage: "Build Demo Shell"
-          name:  Build Demo Shell for e2e
+          name:  "Build Demo Shell for e2e"
           script:
               # Build Demo shell for e2e"
               - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --configuration e2e
@@ -119,25 +119,25 @@ jobs:
               - built_libs_cache
 
         - stage: Unit test
-          name: Unit test content
+          name: "Unit test content"
           script:  ./scripts/travis/unit-test/content.sh
           workspaces:
             use: node_modules_cache
 
         - stage: Unit test
-          name: Unit test core extension demo
+          name: "Unit test core extension demo"
           script: ./scripts/travis/unit-test/core-extension.sh
           workspaces:
             use: node_modules_cache
 
         - stage: Unit test
-          name: Unit test process insights
+          name: "Unit test process insights"
           script: ./scripts/travis/unit-test/process.sh
           workspaces:
             use: node_modules_cache
 
         - stage: Unit test
-          name: Unit test process-cloud
+          name: "Unit test process-cloud"
           script: ./scripts/travis/unit-test/process-cloud.sh
           workspaces:
             use: node_modules_cache
