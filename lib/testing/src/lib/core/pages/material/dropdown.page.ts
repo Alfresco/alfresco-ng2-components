@@ -35,15 +35,15 @@ export class DropdownPage {
 
     async selectOption(option: string): Promise<void> {
         Logger.log(`Select dropdown option ${option}`);
-        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
-        const optionElement = element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first();
-        await BrowserActions.click(optionElement);
-        await browser.sleep(2500);
-        await BrowserVisibility.waitUntilElementHasText(this.dropDownElement.all(by.css('mat-form-field span')).first(), option);
+        if (await this.getValue() !== option) {
+            const optionElement = element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first();
+            await BrowserActions.click(optionElement);
+            await browser.waitForAngular();
+        }
     }
 
     async getValue(): Promise<string> {
-        return BrowserActions.getText(this.dropDownElement.element(by.css('mat-form-field span')));
+        return BrowserActions.getText(this.dropDownElement.all(by.css('mat-form-field span')).first());
     }
 
     async getNumberOfOptions(): Promise<number> {
@@ -78,11 +78,11 @@ export class DropdownPage {
         return BrowserActions.getText(selectedOption);
     }
 
-    async checkOptionIsDisplayed(option: string): Promise <void> {
+    async checkOptionIsDisplayed(option: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
     }
 
-    async checkOptionIsNotDisplayed(option: string): Promise <void> {
+    async checkOptionIsNotDisplayed(option: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
     }
 
