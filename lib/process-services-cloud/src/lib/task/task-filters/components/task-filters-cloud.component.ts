@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
@@ -98,6 +98,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     initFilterCounterNotifications() {
         if (this.appName) {
             this.taskFilterCloudService.getTaskNotificationSubscription(this.appName)
+                .pipe(debounceTime(5000))
                 .subscribe((result: TaskCloudEngineEvent[]) => {
                     result.map((taskEvent: TaskCloudEngineEvent) => {
                         this.checkFilterCounter(taskEvent.entity);

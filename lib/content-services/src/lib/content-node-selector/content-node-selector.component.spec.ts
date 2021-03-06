@@ -21,7 +21,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { Node, NodeEntry } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
-import { SitesService, ContentService } from '@alfresco/adf-core';
+import { SitesService, ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
@@ -79,7 +79,6 @@ describe('ContentNodeSelectorComponent', () => {
         fixture = TestBed.createComponent(ContentNodeSelectorComponent);
         component = fixture.componentInstance;
         const contentService = TestBed.inject(ContentService);
-        spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
 
         const fakeFolderNodeWithPermission = new NodeEntry({
             entry: {
@@ -96,7 +95,6 @@ describe('ContentNodeSelectorComponent', () => {
         spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
 
         component.data.showLocalUploadButton = true;
-        component.hasAllowableOperations = true;
         component.showingSearch = false;
         fixture.detectChanges();
     });
@@ -223,6 +221,27 @@ describe('ContentNodeSelectorComponent', () => {
             const actionButtonWithoutNodeSelected = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
 
             expect(actionButtonWithoutNodeSelected.nativeElement.disabled).toBe(true);
+        });
+    });
+
+    describe('Action button for current folder', () => {
+        it('should be disabled when current folder does not allow upload', () => {
+            const node = new Node({ id: 'fake'});
+            component.onCurrentFolder(node);
+            fixture.detectChanges();
+
+            const actionButtonWithoutNodeSelected = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+            expect(actionButtonWithoutNodeSelected.nativeElement.disabled).toBe(true);
+        });
+
+        it('should be enabled when current folder allows upload', () => {
+            const node = new Node({ id: 'fake', allowableOperations: [AllowableOperationsEnum.CREATE] });
+            component.onCurrentFolder(node);
+            component.chosenNode = [node];
+            fixture.detectChanges();
+
+            const actionButtonWithoutNodeSelected = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+            expect(actionButtonWithoutNodeSelected.nativeElement.disabled).toBe(false);
         });
     });
 

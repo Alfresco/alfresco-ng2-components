@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { from, Observable, of } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
@@ -381,10 +381,11 @@ describe('TaskFiltersCloudComponent', () => {
         });
     }));
 
-    it('should update filter counter when notification received', async(() => {
+    it('should update filter counter when notification received', fakeAsync(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
         component.appName = 'my-app-1';
         component.ngOnInit();
+        tick(5000);
         fixture.detectChanges();
         component.showIcons = true;
         fixture.whenStable().then(() => {
@@ -396,11 +397,12 @@ describe('TaskFiltersCloudComponent', () => {
         });
     }));
 
-    it('should reset filter counter notification when filter is selected', async(() => {
+    it('should reset filter counter notification when filter is selected', fakeAsync(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
         let change = new SimpleChange(undefined, 'my-app-1', true);
         component.appName = 'my-app-1';
         component.ngOnInit();
+        tick(5000);
         fixture.detectChanges();
         component.showIcons = true;
         fixture.whenStable().then(() => {
