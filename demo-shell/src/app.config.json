@@ -462,21 +462,21 @@
             "pattern": "cm:name:'(.*?)'",
             "field": "cm:name",
             "placeholder": "SEARCH.SEARCH_HEADER.FILTERS.NAME.PLACEHOLDER",
-            "searchSuffix" : "*",
-            "allowUpdateOnChange" : false
+            "searchSuffix": "*",
+            "allowUpdateOnChange": false
           }
         }
       },
       {
         "id": "checkList",
         "name": "SEARCH.SEARCH_HEADER.FILTERS.TYPE.TITLE",
-        "columnKey":"$thumbnail",
+        "columnKey": "$thumbnail",
         "enabled": true,
         "component": {
           "selector": "check-list",
           "settings": {
             "pageSize": 5,
-            "allowUpdateOnChange" : false,
+            "allowUpdateOnChange": false,
             "operator": "OR",
             "options": [
               {
@@ -494,12 +494,12 @@
       {
         "id": "contentSize",
         "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.TITLE",
-        "columnKey":"content.sizeInBytes",
+        "columnKey": "content.sizeInBytes",
         "enabled": true,
         "component": {
           "selector": "check-list",
           "settings": {
-            "allowUpdateOnChange" : false,
+            "allowUpdateOnChange": false,
             "options": [
               {
                 "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.SMALL",
@@ -529,7 +529,7 @@
         "component": {
           "selector": "date-range",
           "settings": {
-            "allowUpdateOnChange" : false,
+            "allowUpdateOnChange": false,
             "field": "cm:created",
             "dateFormat": "DD-MMM-YY",
             "maxDate": "today"
@@ -1052,22 +1052,24 @@
         "ai:textLines": "*"
       },
       "all-aspects": "*",
-      "custom-title": [{
-        "title": "Exif",
-        "items": [
-          {
-            "aspect": "exif:exif",
-            "editing": false,
-            "properties": [
-              "exif:pixelXDimension",
-              {
-                "title": "Custom YDimension Name",
-                "name": "exif:pixelYDimension"
-              }
-            ]
-          }
-        ]
-      }]
+      "custom-title": [
+        {
+          "title": "Exif",
+          "items": [
+            {
+              "aspect": "exif:exif",
+              "editing": false,
+              "properties": [
+                "exif:pixelXDimension",
+                {
+                  "title": "Custom YDimension Name",
+                  "name": "exif:pixelYDimension"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     "multi-value-pipe-separator": ", ",
     "multi-value-chips": true,
@@ -1227,11 +1229,38 @@
     }
   ],
   "aspect-visible": {
-    "default" : ["cm:generalclassifiable", "cm:complianceable",
-                 "cm:dublincore", "cm:effectivity", "cm:summarizable",
-                 "cm:versionable", "cm:templatable","cm:emailed", "emailserver:aliasable",
-                 "cm:taggable", "app:inlineeditable", "cm:geographic", "exif:exif",
-                 "audio:audio", "cm:indexControl", "dp:restrictable", "smf:customConfigSmartFolder", "smf:systemConfigSmartFolder"],
-    "ai": ["ai:products", "ai:dates", "ai:places", "ai:events", "ai:organizations", "ai:people", "ai:things", "ai:quantities", "ai:creativeWorks", "ai:labels", "ai:textLines"]
+    "default": [
+      "cm:generalclassifiable",
+      "cm:complianceable",
+      "cm:dublincore",
+      "cm:effectivity",
+      "cm:summarizable",
+      "cm:versionable",
+      "cm:templatable",
+      "cm:emailed",
+      "emailserver:aliasable",
+      "cm:taggable",
+      "app:inlineeditable",
+      "cm:geographic",
+      "exif:exif",
+      "audio:audio",
+      "cm:indexControl",
+      "dp:restrictable",
+      "smf:customConfigSmartFolder",
+      "smf:systemConfigSmartFolder"
+    ],
+    "ai": [
+      "ai:products",
+      "ai:dates",
+      "ai:places",
+      "ai:events",
+      "ai:organizations",
+      "ai:people",
+      "ai:things",
+      "ai:quantities",
+      "ai:creativeWorks",
+      "ai:labels",
+      "ai:textLines"
+    ]
   }
 }
