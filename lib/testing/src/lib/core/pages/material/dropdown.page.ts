@@ -35,19 +35,17 @@ export class DropdownPage {
 
     async selectOption(option: string): Promise<void> {
         Logger.log(`Select dropdown option ${option}`);
-        if (await this.getValue() !== option) {
-            const optionElement = element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first();
-            await BrowserActions.click(optionElement);
-            await browser.sleep(2500);
-        }
+        const optionElement = element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first();
+        await BrowserActions.click(optionElement);
+        await browser.waitForAngular();
     }
 
     async getValue(): Promise<string> {
-        return BrowserActions.getText(this.dropDownElement.all(by.css('mat-form-field span')).first());
+        return BrowserActions.getText(element(by.css('mat-form-field span')));
     }
 
     async getNumberOfOptions(): Promise<number> {
-        const dropdownOptions = this.dropDownElement.all(by.css('.mat-select-panel mat-option'));
+        const dropdownOptions = element.all(by.css('.mat-select-panel mat-option'));
         return dropdownOptions.count();
     }
 
