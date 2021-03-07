@@ -267,6 +267,12 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementHasText(this.fileName, filename);
     }
 
+    async checkFileIsOpenedInViewerAndClose(filename: string): Promise<void> {
+        await this.checkFileThumbnailIsDisplayed();
+        await this.checkFileNameIsDisplayed(filename);
+        await this.clickCloseButton();
+    }
+
     async checkPreviousPageButtonIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.previousPageButton);
     }

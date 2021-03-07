@@ -209,4 +209,42 @@ describe('AttachFileWidgetDialogComponent', () => {
             expect(matDialogRef.close).toHaveBeenCalled();
         });
     });
+
+    describe('Attach button', () => {
+
+        beforeEach(async(() => {
+           isLogged = true;
+        }));
+
+        it('should be disabled by default', () => {
+            fixture.detectChanges();
+            const actionButton = fixture.debugElement.query(By.css('[data-automation-id="attach-file-dialog-actions-choose"]'));
+
+            expect(actionButton.nativeElement.disabled).toBeTruthy();
+        });
+
+        it('should be enabled when a node is chosen', () => {
+            widget.onSelect([new Node({ id: 'fake' })]);
+            fixture.detectChanges();
+            const actionButton = fixture.debugElement.query(By.css('[data-automation-id="attach-file-dialog-actions-choose"]'));
+
+            expect(actionButton.nativeElement.disabled).toBeFalsy();
+        });
+
+        it('should be disabled when no node chosen', () => {
+            widget.onSelect([new Node({ id: 'fake' })]);
+            fixture.detectChanges();
+
+            const actionButtonWithNodeSelected = fixture.debugElement.query(By.css('[data-automation-id="attach-file-dialog-actions-choose"]'));
+
+            expect(actionButtonWithNodeSelected.nativeElement.disabled).toBe(false);
+
+            widget.onSelect([]);
+            fixture.detectChanges();
+
+            const actionButtonWithoutNodeSelected = fixture.debugElement.query(By.css('[data-automation-id="attach-file-dialog-actions-choose"]'));
+
+            expect(actionButtonWithoutNodeSelected.nativeElement.disabled).toBe(true);
+        });
+    });
 });

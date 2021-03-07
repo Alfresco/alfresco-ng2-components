@@ -40,7 +40,7 @@ LICENSE_GREP_RESULT=`grep "$LICENSE_GREP" "$LICENSE_README"`;
 if [ -z "$LICENSE_GREP_RESULT" ];
 then
     echo -e "\e[33mAdding third party license info for version: $VERSION\e[0m"
-    ./node_modules/@alfresco/adf-cli/bin/adf-cli licenses
+    npx @alfresco/adf-cli licenses
     mv "$ROOTDIR/license-info-$VERSION.md" "$ROOTDIR/docs/license-info/license-info-$VERSION.md"
     echo $LICENSE_ROW >> $LICENSE_README
 else
@@ -55,7 +55,7 @@ VULNERABILITY_GREP_RESULT=`grep "$VULNERABILITY_GREP" "$VULNERABILITY_README"`;
 if [ -z "$VULNERABILITY_GREP_RESULT" ];
 then
     echo -e "\e[33mAdding vulnerability info for version: $VERSION\e[0m"
-    ./node_modules/@alfresco/adf-cli/bin/adf-cli audit
+    npx @alfresco/adf-cli audit
     mv "$ROOTDIR/audit-info-$VERSION.md" "$ROOTDIR/docs/vulnerability/audit-info-$VERSION.md"
     echo $VULNERABILITY_ROW >> $VULNERABILITY_README
 else

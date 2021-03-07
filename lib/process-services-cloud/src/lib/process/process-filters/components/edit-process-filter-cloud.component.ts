@@ -235,7 +235,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
         this.filterChangeSub = this.editProcessFilterForm.valueChanges
             .pipe(
-                debounceTime(200),
+                debounceTime(500),
                 filter(() => this.isFormValid()),
                 takeUntil(this.onDestroy$)
             )

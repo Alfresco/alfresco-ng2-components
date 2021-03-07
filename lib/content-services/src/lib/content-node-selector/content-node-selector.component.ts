@@ -109,7 +109,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     isChooseButtonDisabled(): boolean {
-        return this.uploadService.isUploading() || !this.hasNodeSelected() || this.hasNoPermissionToUpload();
+        return this.uploadService.isUploading() || !this.hasNodeSelected();
     }
 
     hasNodeSelected(): boolean {

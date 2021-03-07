@@ -584,7 +584,7 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-        expect(sortOptions[0].nativeElement.textContent).toEqual(' ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME ');
+        expect(sortOptions[0].nativeElement.textContent).toEqual('ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME');
     });
 
     describe('edit filter actions', () => {

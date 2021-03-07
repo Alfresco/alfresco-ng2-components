@@ -58,7 +58,7 @@ export default function main(_args: string[], workingDir: string) {
         console.log(`Running audit on ${packagePath}`);
 
         const packageJson = JSON.parse(fs.readFileSync(packagePath).toString());
-        const cmd = 'npm audit --json';
+        const cmd = 'npm audit --json --prod';
         const jsonAudit = JSON.parse(shell.exec(cmd, { silent: true }));
 
         ejs.renderFile(templatePath, {

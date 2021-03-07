@@ -35,6 +35,8 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { deployedApps } from '../../mock/apps-list.mock';
+import { ProcessNamePipe } from '../../pipes/process-name.pipe';
+import { ProcessInstance } from '../models/process-instance.model';
 
 describe('StartFormComponent', () => {
 
@@ -512,6 +514,25 @@ describe('StartFormComponent', () => {
             });
             fixture.detectChanges();
             selectOptionByName(testProcessDef.name);
+        });
+
+        it('should set the process name using the processName pipe when a process definition gets selected', () => {
+            const processNamePipe = TestBed.inject(ProcessNamePipe);
+            const processNamePipeTransformSpy = spyOn(processNamePipe, 'transform').and.returnValue('fake-transformed-name');
+            const expectedProcessInstanceDetails = new ProcessInstance({ processDefinitionName: testProcessDef.name });
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
+
+            component.appId = 123;
+            const appIdChange = new SimpleChange(null, 123, true);
+            component.ngOnChanges({ 'appId': appIdChange });
+            fixture.detectChanges();
+
+            selectOptionByName(testProcessDef.name);
+
+            expect(processNamePipeTransformSpy).toHaveBeenCalledWith(component.name, expectedProcessInstanceDetails);
+            expect(component.nameController.dirty).toBe(true);
+            expect(component.nameController.touched).toBe(true);
+            expect(component.nameController.value).toEqual('fake-transformed-name');
         });
 
         it('should not emit start event when start the process without select a process and name', () => {
