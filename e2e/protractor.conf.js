@@ -115,7 +115,7 @@ exports.config = {
 
         maxInstances: MAXINSTANCES,
 
-        shardTestFiles: MAXINSTANCES > 1,
+        shardTestFiles: true,
 
         chromeOptions: {
             prefs: {

@@ -23,7 +23,7 @@ env:
         - REDIRECT_URI=/
         - REDIRECT_URI_LOGOUT=/logout/
         - BROWSER_RUN=true
-        - MAXINSTANCES=1
+        - MAXINSTANCES=2
 
 branches:
   only:
