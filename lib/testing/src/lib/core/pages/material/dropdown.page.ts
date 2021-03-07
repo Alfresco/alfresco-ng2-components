@@ -38,7 +38,7 @@ export class DropdownPage {
         if (await this.getValue() !== option) {
             const optionElement = element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first();
             await BrowserActions.click(optionElement);
-            await browser.waitForAngular();
+            await browser.sleep(2500);
         }
     }
 
