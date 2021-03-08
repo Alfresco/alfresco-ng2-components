@@ -1,15 +1,11 @@
 .adf {
     &-dropdown-widget {
         width: 100%;
-        padding: 0 4px;
+        margin-top: 13px;
 
         .adf-select {
             padding-top: 0 !important;
             width: 100%;
-        }
-
-        .adf-label {
-            display: block;
         }
 
         .mat-select-value-text {
