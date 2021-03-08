@@ -41,6 +41,8 @@ import { By } from '@angular/platform-browser';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
+import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 
 describe('StartProcessCloudComponent', () => {
 
@@ -794,6 +796,21 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             noProcessElement = fixture.nativeElement.querySelector('#no-process-message');
             expect(noProcessElement).not.toBeNull();
+        });
+
+        it('should call the processName cloud pipe to set the process name when a process definition gets selected', () => {
+            const processNameCloudPipe = TestBed.inject(ProcessNameCloudPipe);
+            const processNamePipeTransformSpy = spyOn(processNameCloudPipe, 'transform');
+            const expectedProcessInstanceDetails: ProcessInstanceCloud = { processDefinitionName: fakeProcessDefinitions[0].name};
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+
+            component.appName = 'myApp';
+            component.ngOnChanges({ appName: firstChange });
+            fixture.detectChanges();
+
+            selectOptionByName(fakeProcessDefinitions[0].name);
+
+            expect(processNamePipeTransformSpy).toHaveBeenCalledWith(component.name, expectedProcessInstanceDetails);
         });
     });
 });
