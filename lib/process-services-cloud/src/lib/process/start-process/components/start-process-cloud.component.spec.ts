@@ -798,9 +798,9 @@ describe('StartProcessCloudComponent', () => {
             expect(noProcessElement).not.toBeNull();
         });
 
-        it('should call the processName cloud pipe to set the process name when a process definition gets selected', () => {
+        it('should set the process name using the processName cloud pipe when a process definition gets selected', () => {
             const processNameCloudPipe = TestBed.inject(ProcessNameCloudPipe);
-            const processNamePipeTransformSpy = spyOn(processNameCloudPipe, 'transform');
+            const processNamePipeTransformSpy = spyOn(processNameCloudPipe, 'transform').and.returnValue('fake-transformed-name');
             const expectedProcessInstanceDetails: ProcessInstanceCloud = { processDefinitionName: fakeProcessDefinitions[0].name};
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
 
@@ -811,6 +811,9 @@ describe('StartProcessCloudComponent', () => {
             selectOptionByName(fakeProcessDefinitions[0].name);
 
             expect(processNamePipeTransformSpy).toHaveBeenCalledWith(component.name, expectedProcessInstanceDetails);
+            expect(component.processInstanceName.dirty).toBe(true);
+            expect(component.processInstanceName.touched).toBe(true);
+            expect(component.processInstanceName.value).toEqual('fake-transformed-name');
         });
     });
 });

@@ -516,9 +516,9 @@ describe('StartFormComponent', () => {
             selectOptionByName(testProcessDef.name);
         });
 
-        it('should call the processName pipe to set the process name when a process definition gets selected', () => {
+        it('should set the process name using the processName pipe when a process definition gets selected', () => {
             const processNamePipe = TestBed.inject(ProcessNamePipe);
-            const processNamePipeTransformSpy = spyOn(processNamePipe, 'transform');
+            const processNamePipeTransformSpy = spyOn(processNamePipe, 'transform').and.returnValue('fake-transformed-name');
             const expectedProcessInstanceDetails = new ProcessInstance({ processDefinitionName: testProcessDef.name });
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
 
@@ -530,6 +530,9 @@ describe('StartFormComponent', () => {
             selectOptionByName(testProcessDef.name);
 
             expect(processNamePipeTransformSpy).toHaveBeenCalledWith(component.name, expectedProcessInstanceDetails);
+            expect(component.nameController.dirty).toBe(true);
+            expect(component.nameController.touched).toBe(true);
+            expect(component.nameController.value).toEqual('fake-transformed-name');
         });
 
         it('should not emit start event when start the process without select a process and name', () => {
