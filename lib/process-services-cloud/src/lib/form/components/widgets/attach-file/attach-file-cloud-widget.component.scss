@@ -52,6 +52,8 @@
     &-attach-widget {
         width: 100%;
         word-break: break-all;
+        padding: 0.4375em 0;
+        border-top: 0.84375em solid transparent;
     }
 
     &-attach-widget__icon {
