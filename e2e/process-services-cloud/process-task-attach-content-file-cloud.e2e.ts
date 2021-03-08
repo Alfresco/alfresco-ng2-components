@@ -17,6 +17,7 @@
 
 import { browser } from 'protractor';
 import {
+    AttachFileWidgetCloudPage,
     ApiService,
     AppListCloudPage,
     ContentNodeSelectorDialogPage,
@@ -90,7 +91,7 @@ describe('Process Task - Attach content file', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
@@ -166,7 +167,7 @@ describe('Process Task - Attach content file', () => {
         await processList.checkContentIsDisplayedById(processInstance.entry.id);
     });
 
-    async function viewAttachedFile(contentUploadWidget, fileName: string): Promise<void> {
+    async function viewAttachedFile(contentUploadWidget: AttachFileWidgetCloudPage, fileName: string): Promise<void> {
         await contentUploadWidget.checkFileIsAttached(fileName);
         await contentUploadWidget.viewFile(fileName);
 

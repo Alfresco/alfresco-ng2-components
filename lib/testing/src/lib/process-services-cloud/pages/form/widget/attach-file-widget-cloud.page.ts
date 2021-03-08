@@ -75,10 +75,11 @@ export class AttachFileWidgetCloudPage {
         const optionMenu = this.widget.element(by.css(`button[id='${fileId}-option-menu']`));
         await BrowserActions.click(optionMenu);
         await BrowserActions.waitUntilActionMenuIsVisible();
-        await browser.sleep(500);
+        await browser.waitForAngular();
         const actionButton = element(by.css(`button#${fileId}-${actionName}`));
         await BrowserActions.click(actionButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(actionButton);
+        await browser.waitForAngular();
     }
 
     async removeFile(fileName: string): Promise<void> {
