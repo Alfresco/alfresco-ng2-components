@@ -10,8 +10,6 @@ This page lists all third party libraries the project depends on.
 
 | Name | Version | License |
 | --- | --- | --- |
-| [@alfresco/adf-testing](https://github.com/Alfresco/alfresco-ng2-components) | 4.3.0-31536 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [@alfresco/js-api](https://github.com/Alfresco/alfresco-js-api) | 4.3.0-3278 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [@angular/animations](https://github.com/angular/angular) | 10.0.12 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [@angular/cdk](https://github.com/angular/components) | 10.1.3 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [@angular/common](https://github.com/angular/angular) | 10.0.12 | [MIT](http://www.opensource.org/licenses/MIT) |
