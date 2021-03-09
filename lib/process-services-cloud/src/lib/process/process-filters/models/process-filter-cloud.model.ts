@@ -62,7 +62,7 @@ export class ProcessFilterCloudModel {
             this.appName = obj.appName || obj.appName === '' ? obj.appName : null;
             this.appVersion = obj.appVersion || null;
 
-            if (obj.appVersionMultiple && Array.isArray(obj.appVersionMultiple) && obj.appVersionMultiple.length > 0) {
+            if (obj.appVersionMultiple && Array.isArray(obj.appVersionMultiple)) {
                 this.appVersion = obj.appVersionMultiple;
             }
 
