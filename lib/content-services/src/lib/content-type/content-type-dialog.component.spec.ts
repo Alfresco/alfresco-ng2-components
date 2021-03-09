@@ -129,7 +129,7 @@ describe('Content Type Dialog Component', () => {
 
     it('should complete the select stream Cancel button is clicked', (done) => {
         data.select.subscribe(() => { }, () => { }, () => done());
-        const cancelButton: HTMLButtonElement = fixture.nativeElement.querySelector('#conten-type-dialog-actions-cancel');
+        const cancelButton: HTMLButtonElement = fixture.nativeElement.querySelector('#content-type-dialog-actions-cancel');
         expect(cancelButton).toBeDefined();
         cancelButton.click();
         fixture.detectChanges();
