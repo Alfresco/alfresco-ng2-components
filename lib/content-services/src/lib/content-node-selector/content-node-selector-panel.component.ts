@@ -77,7 +77,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     private showSiteList = true;
     private showSearchField = true;
-    private breadcrumbFolderNodeFallback: Node ;
 
     /** If true will restrict the search and breadcrumbs to the currentFolderId */
     @Input()
@@ -446,7 +445,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         let folderNode: Node;
 
         if (this.showingSearchResults && this.chosenNode) {
-            folderNode = this.chosenNode[0] || this.breadcrumbFolderNodeFallback;
+            folderNode = this.chosenNode[0];
         } else {
             folderNode = this.documentList.folderNode;
         }
@@ -466,7 +465,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.loadingSearchResults = true;
         this.addCorrespondingNodeIdsQuery();
         this.resetChosenNode();
-        this.breadcrumbFolderNodeFallback = null ;
     }
 
     /**
@@ -608,12 +606,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * @param nodesEntries
      */
     onCurrentSelection(nodesEntries: NodeEntry[]): void {
-        this.breadcrumbFolderNodeFallback = null;
         const validNodesEntity = nodesEntries.filter((node) => this.isSelectionValid(node.entry));
         this.chosenNode = validNodesEntity.map((node) => node.entry);
-        if (!this.chosenNode.length) {
-            this.breadcrumbFolderNodeFallback = nodesEntries[0].entry;
-        }
     }
 
     setTitleIfCustomSite(site: SiteEntry) {
