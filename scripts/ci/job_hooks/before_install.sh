@@ -19,17 +19,18 @@ export BASE_HASH="$(git wmerge-base origin/$BRANCH_NAME HEAD)"
 export HEAD_HASH=${TRAVIS_PULL_REQUEST_SHA:-${TRAVIS_COMMIT}}
 
 if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
-    export S3_DBP_ROOT_FOLDER="$S3_DBP_PATH/$TRAVIS_BRANCH"
+    echo "push"
 elif [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
-    export S3_DBP_ROOT_FOLDER="$S3_DBP_PATH/$TRAVIS_PULL_REQUEST"
+    echo "pull_request"
     export BASE_HASH="origin/$TRAVIS_BRANCH"
 elif [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
-    export S3_DBP_ROOT_FOLDER="$S3_DBP_PATH/cron"
+    echo "cron"
 else
-    export S3_DBP_ROOT_FOLDER="$S3_DBP_PATH/api"
+    echo "api"
 fi
 
-export S3_DBP_FOLDER="$S3_DBP_ROOT_FOLDER/$TRAVIS_BUILD_ID"
+# Cache for protractor smart-runner
+export S3_SMART_RUNNER_PATH="$S3_DBP_PATH/smart-runner/$TRAVIS_BUILD_ID"
 
 # Cache for node_modules
 export NODE_VERSION=`node -v`
@@ -38,9 +39,8 @@ export PACKAGE_LOCK_SHASUM=`shasum ./package-lock.json | cut -f 1 -d " "`
 export S3_NODE_MODULES_CACHE_ID=`echo $NODE_VERSION-$PACKAGE_LOCK_SHASUM | shasum  | cut -f 1 -d " "`
 export S3_NODE_MODULES_CACHE_PATH="$S3_DBP_PATH/cache/node_modules/$S3_NODE_MODULES_CACHE_ID.tar.bz2"
 
-echo "S3 DBP root folder: $S3_DBP_ROOT_FOLDER"
-echo "S3 DBP destination: $S3_DBP_FOLDER"
 echo "========== Caching settings =========="
+echo "S3_SMART_RUNNER_PATH: $S3_SMART_RUNNER_PATH"
 echo "PACKAGE_LOCK_SHASUM: $PACKAGE_LOCK_SHASUM"
 echo "NODE_VERSION: $NODE_VERSION"
 echo "S3_NODE_MODULES_CACHE_ID: $S3_NODE_MODULES_CACHE_ID"
