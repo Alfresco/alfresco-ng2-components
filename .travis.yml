@@ -213,6 +213,6 @@ notifications:
       - "Message: %{message}"
 
 cache:
-  npm: true
+  npm: false
   directories:
   - tmp
