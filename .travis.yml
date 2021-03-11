@@ -21,7 +21,6 @@ env:
         #E2E VARIABLES
         - SAVE_SCREENSHOT=true
         - REDIRECT_URI=/
-        - REDIRECT_URI_LOGOUT=/logout/
         - BROWSER_RUN=true
         - MAXINSTANCES=2
 
