@@ -16,8 +16,8 @@
  */
 
 import { ApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
-import { TreeViewPage } from './pages/tree-view.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { TreeViewPage } from './../pages/tree-view.page';
 
 describe('Tree View Component', () => {
 

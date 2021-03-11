@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { FileModel } from '../models/ACS/file.model';
+import { FileModel } from '../../models/ACS/file.model';
 import { ApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
-import { TagPage } from '../content-services/pages/tag.page';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
+import { TagPage } from '../../content-services/pages/tag.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
 
 describe('Tag component', () => {

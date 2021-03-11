@@ -24,13 +24,13 @@ import {
     UsersActions,
     WaitActions
 } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
-import { ContentServicesPage } from '../core/pages/content-services.page';
-import { LockFilePage } from '../content-services/pages/lock-file.page';
-import { FileModel } from '../models/ACS/file.model';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
+import { LockFilePage } from '../../content-services/pages/lock-file.page';
+import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NodeEntry } from '@alfresco/js-api';
-import CONSTANTS = require('../util/constants');
+import CONSTANTS = require('../../util/constants');
 
 describe('Lock File', () => {
 
