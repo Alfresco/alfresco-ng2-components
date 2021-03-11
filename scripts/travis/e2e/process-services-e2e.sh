@@ -4,7 +4,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
 
-export CONTEXT_ENV="process-services"
 export PROVIDER='BPM'
 export AUTH_TYPE="OAUTH"
 
