@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, Subject, from, throwError, Observer } from 'rxjs';
+import { Observable, from, throwError, Observer, ReplaySubject } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
@@ -39,8 +39,8 @@ export class AuthenticationService {
 
     private bearerExcludedUrls: string[] = ['auth/realms', 'resources/', 'assets/'];
 
-    onLogin: Subject<any> = new Subject<any>();
-    onLogout: Subject<any> = new Subject<any>();
+    onLogin: ReplaySubject<any> = new ReplaySubject<any>(1);
+    onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
     constructor(
         private appConfig: AppConfigService,

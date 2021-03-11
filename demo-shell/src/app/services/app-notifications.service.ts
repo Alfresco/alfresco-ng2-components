@@ -50,24 +50,34 @@ export class AppNotificationsService {
         private notificationCloudService: NotificationCloudService,
         private notificationService: NotificationService,
         private translateService: TranslateService,
-        private identityUserService: IdentityUserService
+        private identityUserService: IdentityUserService,
+        private alfrescoApiService: AlfrescoApiService
     ) {
-        this.authenticationService.onLogin.subscribe(() => {
-            if (this.authenticationService.isBPMProvider() || this.authenticationService.isALLProvider()) {
-                const deployedApps = this.appConfigService.get('alfresco-deployed-apps', []);
-                if (deployedApps?.length) {
-                    deployedApps.forEach((app) => {
-                        this.notificationCloudService
-                            .makeGQLQuery(app.name, SUBSCRIPTION_QUERY)
-                            .pipe(map((events: any) => events.data.engineEvents))
-                            .subscribe((result) => {
-                                result.map((engineEvent) => this.notifyEvent(engineEvent));
-                            });
-                    });
-                }
+        this.alfrescoApiService.alfrescoApiInitialized.subscribe(() => {
+            if (this.isProcessServicesEnabled()) {
+                this.alfrescoApiService.getInstance().oauth2Auth.once('token_issued', () => {
+
+                    const deployedApps = this.appConfigService.get('alfresco-deployed-apps', []);
+                    if (deployedApps?.length) {
+                        deployedApps.forEach((app) => {
+                            this.notificationCloudService
+                                .makeGQLQuery(app.name, SUBSCRIPTION_QUERY)
+                                .pipe(map((events: any) => events.data.engineEvents))
+                                .subscribe((result) => {
+                                    result.map((engineEvent) => this.notifyEvent(engineEvent));
+                                });
+                        });
+                    }
+
+                });
+
             }
 
         });
+    }
+
+    private isProcessServicesEnabled() {
+        return this.authenticationService.isLoggedIn() && (this.authenticationService.isBPMProvider() || this.authenticationService.isALLProvider());
     }
 
     notifyEvent(engineEvent) {

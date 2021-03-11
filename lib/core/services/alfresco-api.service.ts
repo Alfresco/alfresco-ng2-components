@@ -26,7 +26,7 @@ import {
     AlfrescoApiCompatibility, AlfrescoApiConfig, AspectsApi, TypesApi
 } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Subject, ReplaySubject } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { StorageService } from './storage.service';
 
@@ -41,8 +41,7 @@ export class AlfrescoApiService {
      */
     nodeUpdated = new Subject<Node>();
 
-    protected alfrescoApiInitializedSubject: BehaviorSubject<any>;
-    alfrescoApiInitialized: Observable<any>;
+    alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
     protected alfrescoApi: AlfrescoApiCompatibility;
 
@@ -113,15 +112,13 @@ export class AlfrescoApiService {
     constructor(
         protected appConfig: AppConfigService,
         protected storageService: StorageService) {
-        this.alfrescoApiInitializedSubject = new BehaviorSubject(null);
-        this.alfrescoApiInitialized = this.alfrescoApiInitializedSubject.asObservable();
     }
 
     async load() {
         await this.appConfig.load().then(() => {
             this.storageService.prefix = this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX, '');
             this.initAlfrescoApi();
-            this.alfrescoApiInitializedSubject.next(true);
+            this.alfrescoApiInitialized.next(true);
         });
     }
 
