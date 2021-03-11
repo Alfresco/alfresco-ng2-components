@@ -225,10 +225,6 @@ jobs:
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            create:
-              name: smartrunner-cache-process-cloud
-              paths:
-                - "$SMART_RUNNER_DIRECTORY"
             use:
               - node_modules_cache
               - built_libs_cache
@@ -246,10 +242,6 @@ jobs:
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            create:
-              name: smartrunner-cache-process-cloud
-              paths:
-                - "$SMART_RUNNER_DIRECTORY"
             use:
               - node_modules_cache
               - built_libs_cache
@@ -267,10 +259,6 @@ jobs:
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            create:
-              name: smartrunner-cache-process-cloud
-              paths:
-                - "$SMART_RUNNER_DIRECTORY"
             use:
               - node_modules_cache
               - built_libs_cache
@@ -288,10 +276,6 @@ jobs:
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            create:
-              name: smartrunner-cache-process-cloud
-              paths:
-                - "$SMART_RUNNER_DIRECTORY"
             use:
               - node_modules_cache
               - built_libs_cache
