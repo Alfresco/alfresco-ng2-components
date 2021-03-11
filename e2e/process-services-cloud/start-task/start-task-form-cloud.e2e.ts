@@ -16,8 +16,8 @@
  */
 
 import { browser, protractor } from 'protractor';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
-import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import {
     LoginPage,
     AppListCloudPage,
@@ -40,11 +40,11 @@ import {
     FileBrowserUtil, ProcessCloudWidgetPage,
     QueryService
 } from '@alfresco/adf-testing';
-import { StartProcessCloudConfiguration } from './config/start-process-cloud.config';
-import { ProcessCloudDemoPage } from './pages/process-cloud-demo.page';
-import { ProcessDetailsCloudDemoPage } from './pages/process-details-cloud-demo.page';
-import { FileModel } from '../models/ACS/file.model';
-import CONSTANTS = require('../util/constants');
+import { StartProcessCloudConfiguration } from './../config/start-process-cloud.config';
+import { ProcessCloudDemoPage } from './../pages/process-cloud-demo.page';
+import { ProcessDetailsCloudDemoPage } from './../pages/process-details-cloud-demo.page';
+import { FileModel } from '../../models/ACS/file.model';
+import CONSTANTS = require('../../util/constants');
 
 describe('Start Task Form', () => {
 

@@ -25,8 +25,8 @@ import {
     TasksService
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
+import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Task list cloud - selection', () => {
 

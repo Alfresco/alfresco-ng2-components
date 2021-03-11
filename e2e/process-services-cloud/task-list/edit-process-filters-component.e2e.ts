@@ -23,10 +23,10 @@ import {
     LoginPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { ProcessCloudDemoPage } from './pages/process-cloud-demo.page';
-import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
-import CONSTANTS = require('../util/constants');
+import { ProcessCloudDemoPage } from '../pages/process-cloud-demo.page';
+import { TasksCloudDemoPage } from '../pages/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import CONSTANTS = require('../../util/constants');
 
 describe('Edit process filters cloud', () => {
 

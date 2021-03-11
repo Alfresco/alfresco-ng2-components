@@ -379,7 +379,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     onFilterChange() {
         this.editTaskFilterForm.valueChanges
             .pipe(
-                debounceTime(200),
+                debounceTime(500),
                 filter(() => this.isFormValid()),
                 takeUntil(this.onDestroy$)
             )

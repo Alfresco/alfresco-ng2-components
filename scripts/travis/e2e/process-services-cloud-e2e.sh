@@ -6,7 +6,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
 
-export CONTEXT_ENV="process-services-cloud"
 export PROVIDER="ALL"
 export AUTH_TYPE="OAUTH"
 

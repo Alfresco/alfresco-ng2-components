@@ -29,8 +29,8 @@ import {
     ProcessDefinitionsService,
     QueryService
 } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
-import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 
 describe('Task counters cloud', () => {
 

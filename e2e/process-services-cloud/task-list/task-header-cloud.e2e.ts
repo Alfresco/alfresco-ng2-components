@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import CONSTANTS = require('../util/constants');
+import CONSTANTS = require('../../util/constants');
 import {
     ApiService,
     AppListCloudPage,
@@ -29,8 +29,8 @@ import {
     PeopleCloudComponentPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
+import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import moment = require('moment');
 
 const isValueInvalid = (value: any): boolean => {

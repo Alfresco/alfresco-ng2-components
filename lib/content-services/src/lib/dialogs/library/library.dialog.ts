@@ -103,7 +103,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
 
     this.form.controls['title'].valueChanges
       .pipe(
-        debounceTime(300),
+        debounceTime(500),
         mergeMap(
             (title) => this.checkLibraryNameExists(title),
             (title) => title

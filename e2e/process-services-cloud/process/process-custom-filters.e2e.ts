@@ -31,11 +31,11 @@ import {
     TasksService
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { ProcessCloudDemoPage } from './pages/process-cloud-demo.page';
-import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
-import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
-import { ProcessListCloudConfiguration } from './config/process-list-cloud.config';
+import { ProcessCloudDemoPage } from './../pages/process-cloud-demo.page';
+import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { EditProcessFilterConfiguration } from './../config/edit-process-filter.config';
+import { ProcessListCloudConfiguration } from './../config/process-list-cloud.config';
 
 describe('Process list cloud', () => {
 

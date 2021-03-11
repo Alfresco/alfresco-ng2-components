@@ -17,12 +17,12 @@
 
 import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginPage, ProcessDefinitionsService, ProcessHeaderCloudPage, ProcessInstancesService, QueryService, StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { ProcessCloudDemoPage } from './pages/process-cloud-demo.page';
-import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
-import CONSTANTS = require('../util/constants');
+import { ProcessCloudDemoPage } from './../pages/process-cloud-demo.page';
+import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import CONSTANTS = require('../../util/constants');
 import moment = require('moment');
-import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
+import { EditProcessFilterConfiguration } from './../config/edit-process-filter.config';
 
 describe('Process Header cloud component', () => {
 

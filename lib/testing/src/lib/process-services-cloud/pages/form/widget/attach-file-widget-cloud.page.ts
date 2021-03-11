@@ -71,10 +71,10 @@ export class AttachFileWidgetCloudPage {
     }
 
     async clickActionMenu(fileName: string, actionName: string): Promise<void> {
-        Logger.info('Click action menu')
+        Logger.info('Click action menu');
         await BrowserActions.closeMenuAndDialogs();
         const fileId = await this.getFileId(fileName);
-        Logger.info(`FileId ${fileId}`)
+        Logger.info(`FileId ${fileId}`);
         const optionMenu = this.widget.element(by.css(`button[id='${fileId}-option-menu']`));
         await BrowserActions.click(optionMenu);
         await BrowserActions.waitUntilActionMenuIsVisible();
