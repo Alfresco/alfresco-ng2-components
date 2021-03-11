@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AppConfigService, NotificationService, NotificationModel, AlfrescoApiService, IdentityUserService } from '@alfresco/adf-core';
+import { AppConfigService, NotificationService, NotificationModel, AlfrescoApiService, IdentityUserService, AuthenticationService } from '@alfresco/adf-core';
 import { NotificationCloudService } from '@alfresco/adf-process-services-cloud';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { map } from 'rxjs/operators';
+import { merge } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 const SUBSCRIPTION_QUERY = `
     subscription {
@@ -43,9 +44,16 @@ export class AppNotificationsService {
         private notificationService: NotificationService,
         private translateService: TranslateService,
         private identityUserService: IdentityUserService,
-        private alfrescoApiService: AlfrescoApiService
+        private alfrescoApiService: AlfrescoApiService,
+        private authenticationService: AuthenticationService
     ) {
-        this.alfrescoApiService.alfrescoApiInitialized.subscribe(() => {
+        merge(this.alfrescoApiService.alfrescoApiInitialized, this.authenticationService.onLogin)
+            .pipe(filter((status) => status))
+            .subscribe(() => this.initSubscriptions());
+    }
+
+    private initSubscriptions() {
+        if (this.isProcessServicesEnabled()) {
             const deployedApps = this.appConfigService.get('alfresco-deployed-apps', []);
             if (deployedApps?.length) {
                 deployedApps.forEach((app) => {
@@ -57,7 +65,11 @@ export class AppNotificationsService {
                         });
                 });
             }
-        });
+        }
+    }
+
+    private isProcessServicesEnabled() {
+        return this.authenticationService.isLoggedIn() && (this.authenticationService.isBPMProvider() || this.authenticationService.isALLProvider());
     }
 
     notifyEvent(engineEvent) {
