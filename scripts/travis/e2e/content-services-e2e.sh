@@ -6,7 +6,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
 
-export CONTEXT_ENV="content-services"
 export PROVIDER='ECM'
 export AUTH_TYPE='BASIC'
 
