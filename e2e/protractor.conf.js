@@ -294,6 +294,24 @@ exports.config = {
         }
 
         return retry.afterLaunch(MAX_RETRIES, statusCode);
+    },
+
+    onComplete: async function () {
+        browser.manage().logs().get('browser').then(function(browserLog) {
+            if (browserLog.length) {
+                browserLog = browserLog.filter((log)=>{
+                    return log.level.name_ === 'SEVERE';
+                })
+                if (browserLog.length) {
+                    console.error('\x1b[31m','============ Browser console error ===========');
+
+                    browserLog.forEach((log)=>{
+                        console.error('\x1b[31m', log.message);
+                    })
+
+                }
+            }
+        });
     }
 
 };
