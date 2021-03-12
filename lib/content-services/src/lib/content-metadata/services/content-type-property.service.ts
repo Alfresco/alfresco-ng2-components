@@ -66,8 +66,9 @@ export class ContentTypePropertiesService {
     }
 
     private appendCurrentType(currentType: TypeEntry, contentTypesEntries: TypeEntry[]): TypeEntry[] {
-        const resultTypes = contentTypesEntries;
-        if (contentTypesEntries.indexOf(currentType) === -1) {
+        const resultTypes = [...contentTypesEntries];
+        const currentTypePresent = contentTypesEntries.find((type) => type.entry.id === currentType.entry.id);
+        if (!currentTypePresent) {
             resultTypes.push(currentType);
         }
         return resultTypes;
