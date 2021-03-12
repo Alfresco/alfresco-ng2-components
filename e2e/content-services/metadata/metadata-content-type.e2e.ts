@@ -84,7 +84,7 @@ describe('content type', () => {
         }
     });
 
-    it('Should the user be able to select a new content type and save it only after the confirmation dialog',  async () => {
+    it('[C593560] Should the user be able to select a new content type and save it only after the confirmation dialog',  async () => {
         await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${pdfFile.id}/view)`);
 
         await viewerPage.clickInfoButton();
@@ -121,7 +121,7 @@ describe('content type', () => {
         await viewerPage.clickCloseButton();
     });
 
-    it('Should the user be able to select a new content type and not save it when press cancel in the confirmation dialog',  async () => {
+    it('[C593559] Should the user be able to select a new content type and not save it when press cancel in the confirmation dialog',  async () => {
         await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${docxFileModel.id}/view)`);
 
         await viewerPage.clickInfoButton();
