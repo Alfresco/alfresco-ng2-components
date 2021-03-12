@@ -182,7 +182,10 @@
         }
       },
       "formWithJsonWidget": {
-        "name": "form-with-json-widget"
+        "name": "form-with-json-widget",
+        "widgets": {
+          "displayJsonWidgetId": "DisplayJsonWidgetId"
+        }
       },
       "formWithAllWidgets": {
         "name": "form-with-all-widgets"
@@ -290,7 +293,17 @@
         "users": ["hruser"]
       }
     ],
-    "infrastructure": { "connectors": { "restconnector": {} }, "bridges": {} }
+    "infrastructure": { "connectors": { "restconnector": {} }, "bridges": {} },
+    "connectors": {
+      "restConnector": {
+        "response": {
+          "userId": 1,
+          "id": 1,
+          "title": "delectus aut autem",
+          "completed": false
+        }
+      }
+    }
   },
   "SUB_PROCESS_APP": {
     "name": "subprocessapp",
