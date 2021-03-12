@@ -176,7 +176,8 @@
       "uploadSingleMultiple": {
         "name": "upload-single-multiple",
         "widgets": {
-          "contentMultipleAttachFileId": "UploadMultipleFileFromContentId"
+          "contentMultipleAttachFileId": "UploadMultipleFileFromContentId",
+          "contentSingleAttachFileId": "UploadSingleFileFromContentId"
         }
       },
       "formWithJsonWidget": {

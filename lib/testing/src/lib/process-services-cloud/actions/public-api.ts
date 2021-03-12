@@ -17,6 +17,7 @@
 
 export * from './process-definitions.service';
 export * from './process-instances.service';
+export * from './process.services';
 export * from './message-events.service';
 export * from './form-cloud.service';
 export * from './tasks.service';
