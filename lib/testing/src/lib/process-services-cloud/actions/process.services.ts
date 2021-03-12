@@ -27,10 +27,10 @@ import { Logger } from '../../core/utils/logger';
 export class ProcessServices {
 
     private api: ApiService;
-    private processInstancesService: ProcessInstancesService;
-    private processDefinitionsService: ProcessDefinitionsService;
-    private tasksService: TasksService;
-    private queryService: QueryService;
+    public processInstancesService: ProcessInstancesService;
+    public processDefinitionsService: ProcessDefinitionsService;
+    public tasksService: TasksService;
+    public queryService: QueryService;
 
     constructor(api: ApiService) {
         this.api = api;
@@ -40,14 +40,20 @@ export class ProcessServices {
         this.queryService = new QueryService(this.api);
     }
 
-    async createProcessInstanceAndClaimFirstTask(processDefName, appName) {
+    async createProcessInstanceAndClaimFirstTask(processDefName, appName, taskIndex: number = 0, processInstanceName?: string) {
+        const processInstance = await this.createProcessInstance(processDefName, appName, processInstanceName);
+        const task = await this.queryService.getProcessInstanceTasks(processInstance.entry.id, appName);
+        await this.tasksService.claimTask(task.list.entries[taskIndex].entry.id, appName);
+
+        return processInstance;
+    }
+
+    async createProcessInstance(processDefName, appName, processInstanceName?: string) {
         const processDefinition = await this.processDefinitionsService.getProcessDefinitionByName(processDefName, appName);
         const processInstance = await this.processInstancesService.createProcessInstance(processDefinition.entry.key, appName, {
-            name:  StringUtil.generateRandomString(),
+            name:  processInstanceName? processInstanceName: StringUtil.generateRandomString(),
             businessKey: StringUtil.generateRandomString(),
         });
-        const task = await this.queryService.getProcessInstanceTasks(processInstance.entry.id, appName);
-        await this.tasksService.claimTask(task.list.entries[0].entry.id, appName);
 
         return processInstance;
     }
