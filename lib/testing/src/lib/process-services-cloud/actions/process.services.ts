@@ -16,29 +16,49 @@
  */
 
 import { ApiService } from '../../core/actions/api.service';
+import { ApiUtil } from '../../core/actions/api.util';
 import { ProcessDefinitionsService } from './process-definitions.service';
 import { ProcessInstancesService } from './process-instances.service';
 import { QueryService } from '../../core/actions/identity/query.service';
 import { TasksService } from './tasks.service';
 import { StringUtil } from '../../core/utils/string.util';
+import { Logger } from '../../core/utils/logger';
 
 export class ProcessServices {
 
-    api: ApiService;
+    private api: ApiService;
+    private processInstancesService: ProcessInstancesService;
+    private processDefinitionsService: ProcessDefinitionsService;
+    private tasksService: TasksService;
+    private queryService: QueryService;
 
     constructor(api: ApiService) {
         this.api = api;
+        this.processInstancesService = new ProcessInstancesService(this.api);
+        this.processDefinitionsService = new ProcessDefinitionsService(this.api);
+        this.tasksService = new TasksService(this.api);
+        this.queryService = new QueryService(this.api);
     }
 
     async createProcessInstanceAndClaimFirstTask(processDefName, appName) {
-        const processDefinition = await new ProcessDefinitionsService(this.api).getProcessDefinitionByName(processDefName, appName);
-        const processInstance = await new ProcessInstancesService(this.api).createProcessInstance(processDefinition.entry.key, appName, {
+        const processDefinition = await this.processDefinitionsService.getProcessDefinitionByName(processDefName, appName);
+        const processInstance = await this.processInstancesService.createProcessInstance(processDefinition.entry.key, appName, {
             name:  StringUtil.generateRandomString(),
             businessKey: StringUtil.generateRandomString(),
         });
-        const task = await new QueryService(this.api).getProcessInstanceTasks(processInstance.entry.id, appName);
-        await new TasksService(this.api).claimTask(task.list.entries[0].entry.id, appName);
+        const task = await this.queryService.getProcessInstanceTasks(processInstance.entry.id, appName);
+        await this.tasksService.claimTask(task.list.entries[0].entry.id, appName);
 
         return processInstance;
+    }
+
+    async waitForStatus(processInstanceId: string, appName: string, expectedStatus: string): Promise<any> {
+        const predicate = (result: any) => {
+            Logger.info(`Process instance ${processInstanceId} status found: ${result.entry.status}`);
+            return result.entry.status === expectedStatus;
+        };
+
+        const apiCall = async () => this.queryService.getProcessInstance(processInstanceId, appName);
+        return ApiUtil.waitForApi(apiCall, predicate, 3, 500);
     }
 }
