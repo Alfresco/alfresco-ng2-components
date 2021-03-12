@@ -33,7 +33,7 @@
 
     <button *ngIf="isLoggedIn()"
         mat-button
-        [disabled]="!chosenNode"
+        [disabled]="!hasNodeSelected()"
         class="adf-choose-action"
         (click)="onClick()"
         data-automation-id="attach-file-dialog-actions-choose">{{ buttonActionName | translate }}

@@ -105,4 +105,8 @@ export class AttachFileWidgetDialogComponent {
     getTitleTranslation(action: string, name?: string): string {
         return this.translation.instant(`ATTACH-FILE.ACTIONS.${action}_ITEM`, { name: this.translation.instant(name) });
     }
+
+    hasNodeSelected(): boolean {
+        return this.chosenNode?.length > 0;
+    }
 }
