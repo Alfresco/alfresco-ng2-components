@@ -51,8 +51,8 @@ export class ProcessServices {
     async createProcessInstance(processDefName, appName, processInstanceName?: string) {
         const processDefinition = await this.processDefinitionsService.getProcessDefinitionByName(processDefName, appName);
         const processInstance = await this.processInstancesService.createProcessInstance(processDefinition.entry.key, appName, {
-            name:  processInstanceName? processInstanceName: StringUtil.generateRandomString(),
-            businessKey: StringUtil.generateRandomString(),
+            name: processInstanceName ? processInstanceName : StringUtil.generateRandomString(),
+            businessKey: StringUtil.generateRandomString()
         });
 
         return processInstance;
