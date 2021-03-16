@@ -42,7 +42,7 @@ export class PeopleCloudComponentPage {
     }
 
     async searchAssigneeAndSelect(name: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name, 100);
         await this.selectAssigneeFromList(name);
     }
 
