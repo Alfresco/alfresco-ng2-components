@@ -11,14 +11,12 @@
 import LoginPage from '../pages/login-page';
 
 Cypress.Commands.add('login', (userName, password) => {
-
     const loginPage = new LoginPage();
-
+    loginPage.navigate();
     loginPage.getUserName().type(userName);
     loginPage.getPassword().type(password);
     loginPage.getLoginButton().click();
-
-    })
+})
 
 //
 // -- This is a child command --
@@ -31,5 +29,3 @@ Cypress.Commands.add('login', (userName, password) => {
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
-
