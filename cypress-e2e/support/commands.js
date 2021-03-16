@@ -8,10 +8,18 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 //
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
+import LoginPage from '../pages/login-page';
+
+Cypress.Commands.add('login', (userName, password) => {
+
+    const loginPage = new LoginPage();
+
+    loginPage.getUserName().type(userName);
+    loginPage.getPassword().type(password);
+    loginPage.getLoginButton().click();
+
+    })
+
 //
 // -- This is a child command --
 // Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
@@ -23,3 +31,5 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+
