@@ -1,0 +1,8 @@
+{
+  "fixturesFolder": "cypress-e2e/fixtures",
+  "integrationFolder": "cypress-e2e/integration",
+  "pluginsFile": "cypress-e2e/plugins/index.js",
+  "screenshotsFolder": "cypress-e2e/screenshots",
+  "videosFolder": "cypress-e2e/videos",
+  "supportFile": "cypress-e2e/support/index.js"
+}
