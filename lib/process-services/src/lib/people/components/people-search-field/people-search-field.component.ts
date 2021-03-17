@@ -51,7 +51,7 @@ export class PeopleSearchFieldComponent {
                 private translationService: TranslationService) {
         this.users$ = this.searchUser.valueChanges
             .pipe(
-                debounceTime(500),
+                debounceTime(200),
                 switchMap((searchWord: string) => {
                     if (searchWord && searchWord.trim()) {
                         return this.performSearch(searchWord);
