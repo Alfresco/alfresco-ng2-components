@@ -34,18 +34,18 @@ branches:
 
 stages:
   - name: Setup
-  - name: "Lint & Build lib"
+  - name: "Build lib"
     if: tag IS blank
   - name: "Check bundle"
     if: type = push AND tag IS blank
-  - name: "Unit test"
-    if: (branch != master AND type != cron AND tag IS blank) OR type = api
-  - name: "e2e Test"
-    if: (branch != master AND type != cron AND tag IS blank) OR type = api
   - name: "Trigger Alpha ADF child build"
     if: (branch = develop AND type = push) OR type = api
   - name: "Trigger Beta ADF child build"
     if: tag =~ .*beta.*
+  - name: "Build"
+    if: (branch != master AND type != cron AND tag IS blank) OR type = api
+  - name: "e2e Test"
+    if: (branch != master AND type != cron AND tag IS blank) OR type = api
   - name: "Release tag"
     if: type = cron OR branch = master
 
@@ -70,8 +70,8 @@ jobs:
             use: node_modules_cache
 
         # Run Only for any PR
-        - stage: "Lint & Build lib"
-          name:  "Build Lib"
+        - stage: "Build lib"
+          name:  "Lib::Build"
           script:
             - ./scripts/travis/build/build-libs.sh
             - ./scripts/travis/release/release-npm.sh
@@ -82,14 +82,14 @@ jobs:
                 - "$BUILT_LIBS_DIR"
             use: node_modules_cache
 
-        - stage: "Lint & Build lib"
+        - stage: "Build lib"
           name: "Lint"
           script: ./scripts/lint.sh
           workspaces:
               use: node_modules_cache
 
-        - stage: "Lint & Build lib"
-          name:  "Build Demo Shell and dockerize"
+        - stage: "Build"
+          name:  "Demo Shell :Build && dockerize"
           script:
               # Build Demo shell for production docker"
               - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --prod
@@ -103,46 +103,46 @@ jobs:
                   - node_modules_cache
                   - built_libs_cache
 
-        - stage: Unit test
-          name: "Unit test content"
+        - stage: "Build"
+          name: "content::unit"
           script:  ./scripts/travis/unit-test/content.sh
           workspaces:
             use: node_modules_cache
 
-        - stage: Unit test
-          name: "Unit test core extension demo"
+        - stage: "Build"
+          name: "core-extension::unit"
           script: ./scripts/travis/unit-test/core-extension.sh
           workspaces:
             use: node_modules_cache
 
-        - stage: Unit test
-          name: "Unit test process insights"
+        - stage: "Build"
+          name: "process-insights::unit"
           script: ./scripts/travis/unit-test/process.sh
           workspaces:
             use: node_modules_cache
 
-        - stage: Unit test
-          name: "Unit test process-cloud"
+        - stage: "Build"
+          name: "process-cloud::unit"
           script: ./scripts/travis/unit-test/process-cloud.sh
           workspaces:
             use: node_modules_cache
 
-        - stage: Trigger Alpha ADF child build
-          name: Trigger Alpha ADF child build
+        - stage: "Trigger Alpha ADF child build"
+          name: "Trigger Alpha ADF child build"
           script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha
           workspaces:
             use: node_modules_cache
 
-        - stage: Trigger Beta ADF child build
-          name: Trigger Beta ADF child build
+        - stage: "Trigger Beta ADF child build"
+          name: "Trigger Beta ADF child build"
           script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v beta
           workspaces:
             use: node_modules_cache
 
-        - stage: Release tag
+        - stage: "Release tag"
           script: ./scripts/travis/release/git-tag.sh
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name: "Core"
           before_script:
             - ./scripts/ci/job_hooks/before_e2e.sh
@@ -151,35 +151,13 @@ jobs:
           script: ./scripts/travis/e2e/core-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            create:
-              name: smartrunner-cache-core
-              paths:
-                - "$SMART_RUNNER_DIRECTORY"
             use:
               - node_modules_cache
               - built_libs_cache
-              - smartrunner-cache-core
               - built_demo_shell_cache
 
-        - stage: e2e Test
-          name:  "Content"
-          before_script:
-              - ./scripts/ci/job_hooks/before_e2e.sh
-              - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/content-services-e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
-          workspaces:
-            create:
-              name: smartrunner-cache-content
-              paths:
-                - "$SMART_RUNNER_DIRECTORY"
-            use:
-              - node_modules_cache
-              - built_libs_cache
-              - smartrunner-cache-content
-              - built_demo_shell_cache
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name:  "Content: Components"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
@@ -194,7 +172,7 @@ jobs:
           env:
               - CONTEXT_ENV="content-services/components"
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name:  "Content: Directives"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
@@ -209,7 +187,7 @@ jobs:
           env:
               - CONTEXT_ENV="content-services/directives"
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name:  "Content: Document List"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
@@ -224,8 +202,7 @@ jobs:
           env:
               - CONTEXT_ENV="content-services/document-list"
 
-
-        - stage: e2e Test
+        - stage: "e2e Test"
           name:  "Content: Metadata"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
@@ -240,7 +217,7 @@ jobs:
           env:
               - CONTEXT_ENV="content-services/metadata"
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name:  "Content: Upload and Versioning"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
@@ -255,7 +232,7 @@ jobs:
           env:
               - CONTEXT_ENV="content-services/upload"
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name:  "Search"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
@@ -263,17 +240,12 @@ jobs:
           script: ./scripts/travis/e2e/search-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            create:
-              name: smartrunner-cache-search
-              paths:
-                - "$SMART_RUNNER_DIRECTORY"
             use:
               - node_modules_cache
               - built_libs_cache
-              - smartrunner-cache-search
               - built_demo_shell_cache
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name: "Process: Form"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
@@ -282,19 +254,14 @@ jobs:
           script: ./scripts/travis/e2e/process-services-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            create:
-              name: smartrunner-cache-process
-              paths:
-                - "$SMART_RUNNER_DIRECTORY"
             use:
               - node_modules_cache
               - built_libs_cache
-              - smartrunner-cache-process
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="process-services/form"
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name: "Process: Process"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
@@ -310,7 +277,7 @@ jobs:
           env:
               - CONTEXT_ENV="process-services/process"
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name: "Process: Tasks"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
@@ -326,7 +293,7 @@ jobs:
           env:
               - CONTEXT_ENV="process-services/tasks"
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name: "Process: Widgets"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
@@ -342,7 +309,7 @@ jobs:
           env:
               - CONTEXT_ENV="process-services/widgets"
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name: "Process Cloud : Form"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
@@ -359,7 +326,7 @@ jobs:
           env:
               - CONTEXT_ENV="process-services-cloud/form-field"
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name: "Process Cloud : People"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
@@ -376,7 +343,7 @@ jobs:
           env:
               - CONTEXT_ENV="process-services-cloud/people"
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name: "Process Cloud : Process"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
@@ -393,7 +360,7 @@ jobs:
           env:
               - CONTEXT_ENV="process-services-cloud/process"
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name: "Process Cloud : Start Task"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
@@ -410,7 +377,7 @@ jobs:
           env:
               - CONTEXT_ENV="process-services-cloud/start-task"
 
-        - stage: e2e Test
+        - stage: "e2e Test"
           name: "Process Cloud : Tasks List"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
@@ -419,14 +386,9 @@ jobs:
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
-            create:
-              name: smartrunner-cache-process-cloud
-              paths:
-                - "$SMART_RUNNER_DIRECTORY"
             use:
               - node_modules_cache
               - built_libs_cache
-              - smartrunner-cache-process-cloud
               - built_demo_shell_cache
           env:
              - CONTEXT_ENV="process-services-cloud/task-list"
@@ -451,6 +413,6 @@ notifications:
       - "Message: %{message}"
 
 cache:
-  npm: true
+  npm: false
   directories:
   - tmp
