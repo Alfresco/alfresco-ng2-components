@@ -1,4 +1,3 @@
-/// <reference types="cypress" />
 import UserInfoPage from '../../pages/user-info.page';
 
 describe('Login', () => {
@@ -7,7 +6,7 @@ describe('Login', () => {
     const password = Cypress.env('hr_user_password');
 
     before(() => {
-        cy.loginUI(username, password);
+        cy.login(username, password);
     })
 
     after(() => {
@@ -16,6 +15,7 @@ describe('Login', () => {
     })
 
     it('Login UI test', () => {
+        cy.visit('/#/home');
         userInfo.getUserFullName().should('contain', 'HR User');
     })
 })
