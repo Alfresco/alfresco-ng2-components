@@ -29,7 +29,7 @@
     "03s": "",
     "lint-demo": "tslint -p tsconfig.json -c tslint.json",
     "lint-lib": "tslint -p ./lib/tsconfig.json -c ./lib/tslint.json",
-    "lint-e2e": "tsc -p tsconfig.e2e.json && tslint -p tsconfig.e2e.json -c tslint.json",
+    "lint-e2e": "tsc -p tsconfig.e2e.json",
     "validate-config": "ajv validate -s ./lib/core/app-config/schema.json -d ./demo-shell/src/app.config.json --errors=text --verbose",
     "spellcheck": "cspell 'demo-shell/{src,e2e}/**/*.ts' 'e2e/**/*.ts' 'lib/{content-services,core,extensions,insights,process-services,process-services-cloud}/**/*.ts'",
     "stylelint": "stylelint ./**/*.scss --config stylelint-config.json",
@@ -101,7 +101,7 @@
     "pdfjs-dist": "2.5.207",
     "raphael": "2.3.0",
     "rxjs": "^6.6.3",
-    "snyk": "^1.462.0",
+    "snyk": "^1.493.0",
     "subscriptions-transport-ws": "^0.9.18",
     "tslib": "^2.0.3",
     "zone.js": "~0.10.2"
