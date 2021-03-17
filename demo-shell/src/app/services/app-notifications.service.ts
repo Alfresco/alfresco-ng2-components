@@ -14,7 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AppConfigService, NotificationService, NotificationModel, AlfrescoApiService, IdentityUserService } from '@alfresco/adf-core';
+import {
+    AuthenticationService,
+    AppConfigService,
+    NotificationService,
+    NotificationModel,
+    AlfrescoApiService,
+    IdentityUserService
+} from '@alfresco/adf-core';
 import { NotificationCloudService } from '@alfresco/adf-process-services-cloud';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -39,6 +46,7 @@ export class AppNotificationsService {
 
     constructor(
         private appConfigService: AppConfigService,
+        private authenticationService: AuthenticationService,
         private notificationCloudService: NotificationCloudService,
         private notificationService: NotificationService,
         private translateService: TranslateService,
@@ -46,25 +54,40 @@ export class AppNotificationsService {
         private alfrescoApiService: AlfrescoApiService
     ) {
         this.alfrescoApiService.alfrescoApiInitialized.subscribe(() => {
-            const deployedApps = this.appConfigService.get('alfresco-deployed-apps', []);
-            if (deployedApps?.length) {
-                deployedApps.forEach((app) => {
-                    this.notificationCloudService
-                        .makeGQLQuery(app.name, SUBSCRIPTION_QUERY)
-                        .pipe(map((events: any) => events.data.engineEvents))
-                        .subscribe((result) => {
-                            result.map((engineEvent) => this.notifyEvent(engineEvent));
+            if (this.isProcessServicesEnabled()) {
+                this.alfrescoApiService.getInstance().oauth2Auth.once('token_issued', () => {
+
+                    const deployedApps = this.appConfigService.get('alfresco-deployed-apps', []);
+                    if (deployedApps?.length) {
+                        deployedApps.forEach((app) => {
+                            this.notificationCloudService
+                                .makeGQLQuery(app.name, SUBSCRIPTION_QUERY)
+                                .pipe(map((events: any) => events.data.engineEvents))
+                                .subscribe((result) => {
+                                    result.map((engineEvent) => this.notifyEvent(engineEvent));
+                                });
                         });
+                    }
+
                 });
+
             }
+
         });
+    }
+
+    private isProcessServicesEnabled() {
+        return this.authenticationService.isLoggedIn() && (this.authenticationService.isBPMProvider() || this.authenticationService.isALLProvider());
     }
 
     notifyEvent(engineEvent) {
         let message;
         switch (engineEvent.eventType) {
             case 'TASK_ASSIGNED':
-                message = this.translateService.instant('NOTIFICATIONS.TASK_ASSIGNED', { taskName: engineEvent.entity.name || '', assignee: engineEvent.entity.assignee });
+                message = this.translateService.instant('NOTIFICATIONS.TASK_ASSIGNED', {
+                    taskName: engineEvent.entity.name || '',
+                    assignee: engineEvent.entity.assignee
+                });
                 this.pushNotification(engineEvent, message);
                 break;
             case 'TASK_UPDATED':

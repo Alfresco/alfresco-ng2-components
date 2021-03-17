@@ -131,7 +131,7 @@ describe('StartProcessCloudComponent', () => {
             const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ 'appName': change });
             fixture.detectChanges();
-            tick(450);
+            tick(550);
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -167,7 +167,7 @@ describe('StartProcessCloudComponent', () => {
             typeValueInto('#processName', 'OLE');
             typeValueInto('#processDefinitionName', 'processwithoutform2');
             fixture.detectChanges();
-            tick(450);
+            tick(550);
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -244,7 +244,7 @@ describe('StartProcessCloudComponent', () => {
             typeValueInto('#processName', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
-            tick(450);
+            tick(550);
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -271,7 +271,7 @@ describe('StartProcessCloudComponent', () => {
             typeValueInto('#processName', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
-            tick(450);
+            tick(550);
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -299,7 +299,7 @@ describe('StartProcessCloudComponent', () => {
             typeValueInto('#processName', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
             fixture.detectChanges();
-            tick(450);
+            tick(550);
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -356,7 +356,7 @@ describe('StartProcessCloudComponent', () => {
             const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ 'appName': change });
             fixture.detectChanges();
-            tick(450);
+            tick(550);
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -383,7 +383,7 @@ describe('StartProcessCloudComponent', () => {
             const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ 'appName': change });
             fixture.detectChanges();
-            tick(450);
+            tick(550);
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();

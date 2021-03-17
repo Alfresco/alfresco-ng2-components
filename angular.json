@@ -162,6 +162,16 @@
                   "maximumWarning": "6kb"
                 }
               ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": true,
+              "buildOptimizer": true,
+              "verbose": false,
               "fileReplacements": [
                 {
                   "replace": "demo-shell/src/environments/environment.ts",

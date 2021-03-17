@@ -42,6 +42,8 @@ async function uploadScreenshot(retryCount, suffixFileName) {
         });
     }
 
+    suffixFileName = suffixFileName.replace(/\//g, '-');
+
     fs.renameSync(path.resolve(__dirname, '../../e2e-output/'), path.resolve(__dirname, `../../e2e-output-${retryCount}/`))
 
     const child_process = require("child_process");

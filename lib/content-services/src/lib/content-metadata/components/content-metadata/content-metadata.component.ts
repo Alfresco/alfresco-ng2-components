@@ -113,7 +113,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit() {
         this.cardViewUpdateService.itemUpdated$
             .pipe(
-                debounceTime(200),
+                debounceTime(500),
                 takeUntil(this.onDestroy$))
             .subscribe(
                 (updatedNode: UpdateNotification) => {
@@ -124,7 +124,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             );
 
         this.cardViewUpdateService.updatedAspect$.pipe(
-            debounceTime(200),
+            debounceTime(500),
             takeUntil(this.onDestroy$))
             .subscribe((node) => this.loadProperties(node));
 

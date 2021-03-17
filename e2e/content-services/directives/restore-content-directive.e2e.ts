@@ -66,8 +66,7 @@ describe('Restore content directive', () => {
     let testFolder: NodeEntry;
 
     const uploadActions = new UploadActions(apiService);
-    let folderWithContent, folderWithFolder, subFolder, subFile, testFile, restoreFile, publicSite, siteFolder,
-        siteFile;
+    let folderWithContent, folderWithFolder, subFolder, subFile, testFile;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -81,7 +80,6 @@ describe('Restore content directive', () => {
         testFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
         folderWithFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), folderWithFolder.entry.id);
-        restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
     });
 
     afterAll(async () => {
@@ -222,81 +220,6 @@ describe('Restore content directive', () => {
             await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
             await contentServicesPage.openFolder(folderWithFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
-        });
-
-        it('[C260241] Should display restore icon both for file and folder', async () => {
-            await contentServicesPage.checkContentIsDisplayed(testFolder.entry.name);
-            await contentServicesPage.checkContentIsDisplayed(restoreFile.entry.name);
-            await contentServicesPage.deleteContent(testFolder.entry.name);
-            await contentServicesPage.deleteContent(restoreFile.entry.name);
-
-            await navigationBarPage.clickTrashcanButton();
-            await trashcanPage.waitForTableBody();
-            await trashcanPage.checkRestoreButtonIsNotDisplayed();
-            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(testFolder.entry.name);
-            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(testFolder.entry.name);
-            await trashcanPage.checkRestoreButtonIsDisplayed();
-            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(testFolder.entry.name);
-            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsNotSelected(testFolder.entry.name);
-
-            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(restoreFile.entry.name);
-            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(restoreFile.entry.name);
-            await trashcanPage.checkRestoreButtonIsDisplayed();
-
-            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(testFolder.entry.name);
-            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(testFolder.entry.name);
-            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(restoreFile.entry.name);
-            await trashcanPage.checkRestoreButtonIsDisplayed();
-        });
-    });
-
-    describe('Restore deleted library', () => {
-
-        beforeAll(async () => {
-            await apiService.login(acsUser.username, acsUser.password);
-            const publicSiteName = `public-${StringUtil.generateRandomString(5)}`;
-            const publicSiteBody = { visibility: 'PUBLIC', title: publicSiteName };
-            publicSite = await apiService.getInstance().core.sitesApi.createSite(publicSiteBody);
-            siteFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), publicSite.entry.guid);
-            siteFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, siteFolder.entry.id);
-            await apiService.getInstance().core.sitesApi.deleteSite(publicSite.entry.id);
-        });
-
-        afterEach(async () => {
-            await navigationBarPage.clickLogoutButton();
-        });
-
-        beforeEach(async () => {
-            await loginPage.login(acsUser.username, acsUser.password);
-            await navigationBarPage.navigateToContentServices();
-            await contentServicesPage.waitForTableBody();
-        });
-
-        afterAll(async () => {
-            try {
-                await apiService.loginWithProfile('admin');
-                await apiService.getInstance().core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
-            } catch (error) {
-            }
-        });
-
-        it('[C260241] Should restore the deleted library along with contents inside', async () => {
-            await navigationBarPage.clickTrashcanButton();
-            await trashcanPage.waitForTableBody();
-            await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(publicSite.entry.id);
-            await trashcanPage.getDocumentList().dataTablePage().clickRowByContentCheckbox(publicSite.entry.id);
-            await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(publicSite.entry.id);
-            await trashcanPage.clickRestore();
-
-            await waitActions.nodeIsPresent(publicSite.entry.guid);
-
-            await navigationBarPage.goToSite(publicSite);
-            await contentServicesPage.waitForTableBody();
-
-            await contentServicesPage.checkContentIsDisplayed(siteFolder.entry.name);
-            await contentServicesPage.openFolder(siteFolder.entry.name);
-            await contentServicesPage.checkContentIsDisplayed(siteFile.entry.name);
-            await notificationHistoryPage.checkNotifyContains(publicSite.entry.id + ' item restored');
         });
     });
 

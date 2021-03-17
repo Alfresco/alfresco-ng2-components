@@ -6,7 +6,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
 
-export CONTEXT_ENV="content-services"
 export PROVIDER='ECM'
 export AUTH_TYPE='BASIC'
 
@@ -20,7 +19,7 @@ if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
 fi;
 
 #-b is needed to run the Folder upload test that are not workin in Headless chrome
-RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --use-dist -m 4 || exit 1)
+RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --use-dist || exit 1)
 if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" ||  "${TRAVIS_EVENT_TYPE}" == "push" ||  "${TRAVIS_EVENT_TYPE}" == "api" ]]; then
     echo "Run all e2e $CONTEXT_ENV"
     $RUN_CHECK

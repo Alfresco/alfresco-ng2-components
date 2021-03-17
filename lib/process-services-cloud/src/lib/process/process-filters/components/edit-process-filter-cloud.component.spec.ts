@@ -253,7 +253,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 fixture.detectChanges();
 
                 component.editProcessFilterForm.valueChanges
-                .pipe(debounceTime(300))
+                .pipe(debounceTime(500))
                 .subscribe(() => {
                     const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
                     fixture.detectChanges();
@@ -277,7 +277,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 fixture.detectChanges();
 
                 component.editProcessFilterForm.valueChanges
-                .pipe(debounceTime(300))
+                .pipe(debounceTime(500))
                 .subscribe(() => {
                     const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
                     fixture.detectChanges();

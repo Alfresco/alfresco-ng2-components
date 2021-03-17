@@ -257,7 +257,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 fixture.detectChanges();
 
                 component.editTaskFilterForm.valueChanges
-                    .pipe(debounceTime(300))
+                    .pipe(debounceTime(500))
                     .subscribe(() => {
                         const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
                         fixture.detectChanges();
@@ -343,7 +343,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 fixture.detectChanges();
 
                 component.editTaskFilterForm.valueChanges
-                    .pipe(debounceTime(300))
+                    .pipe(debounceTime(500))
                     .subscribe(() => {
                         const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
                         fixture.detectChanges();
@@ -367,7 +367,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 fixture.detectChanges();
 
                 component.editTaskFilterForm.valueChanges
-                    .pipe(debounceTime(300))
+                    .pipe(debounceTime(500))
                     .subscribe(() => {
                         const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
                         fixture.detectChanges();

@@ -34,7 +34,7 @@ export class AlfrescoApiServiceMock extends AlfrescoApiService {
 
     initialize(): Promise<any> {
         return new Promise((resolve) => {
-            this.alfrescoApiInitializedSubject.next(true);
+            this.alfrescoApiInitialized.next(true);
             resolve();
         });
     }

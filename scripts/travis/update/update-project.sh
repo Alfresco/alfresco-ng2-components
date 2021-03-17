@@ -97,11 +97,10 @@ while [[ $1 == -* ]]; do
     esac
 done
 
-cd "$REPO_DIR"
-
-JS_API_INSTALLED=$(npm list @alfresco/js-api --depth=0 --json | jq -r '.dependencies["@alfresco/js-api"].version')
-
+JS_API_INSTALLED=$(cat package.json | jq -r '.dependencies["@alfresco/js-api"]')
 echo "Current installed JS-API $JS_API_INSTALLED"
+
+cd "$REPO_DIR"
 
 if [[ (-z "$TOKEN") || (-z "$VERSION") ]]
   then

@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Locator, element, by, ElementFinder } from 'protractor';
+import { Locator, element, by, ElementFinder, browser } from 'protractor';
 import { BrowserActions } from '../../../../core/utils/browser-actions';
+import { Logger } from '../../../../core/utils/logger';
 import { BrowserVisibility } from '../../../../core/utils/browser-visibility';
 
 export class AttachFileWidgetCloudPage {
@@ -29,7 +30,7 @@ export class AttachFileWidgetCloudPage {
     }
 
     assignWidget(fieldId: string): void {
-        this.widget =  element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
+        this.widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
     }
 
     async clickAttachContentFile(fileId: string): Promise<void> {
@@ -70,13 +71,18 @@ export class AttachFileWidgetCloudPage {
     }
 
     async clickActionMenu(fileName: string, actionName: string): Promise<void> {
+        Logger.info('Click action menu');
+        await BrowserActions.closeMenuAndDialogs();
         const fileId = await this.getFileId(fileName);
+        Logger.info(`FileId ${fileId}`);
         const optionMenu = this.widget.element(by.css(`button[id='${fileId}-option-menu']`));
         await BrowserActions.click(optionMenu);
         await BrowserActions.waitUntilActionMenuIsVisible();
+        await browser.waitForAngular();
         const actionButton = element(by.css(`button#${fileId}-${actionName}`));
         await BrowserActions.click(actionButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(actionButton);
+        await browser.waitForAngular();
     }
 
     async removeFile(fileName: string): Promise<void> {

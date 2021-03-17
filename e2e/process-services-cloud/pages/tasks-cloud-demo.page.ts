@@ -21,7 +21,7 @@ import {
     TaskFiltersCloudComponentPage,
     EditTaskFilterCloudComponentPage,
     TaskListCloudComponentPage,
-    BrowserActions, DropdownPage, Logger, TestElement
+    BrowserActions, DropdownPage, TestElement, DataTableComponentPage
 } from '@alfresco/adf-testing';
 
 export class TasksCloudDemoPage {
@@ -52,6 +52,7 @@ export class TasksCloudDemoPage {
 
     editTaskFilterCloud = new EditTaskFilterCloudComponentPage();
     taskFilterCloudComponent = new TaskFiltersCloudComponentPage();
+    dataTableComponentPage = new DataTableComponentPage();
 
     async disableDisplayTaskDetails(): Promise<void> {
         await this.togglePage.disableToggle(this.displayTaskDetailsToggle);
@@ -161,22 +162,6 @@ export class TasksCloudDemoPage {
     }
 
     async waitTillContentLoaded(): Promise<void> {
-        if (await this.isSpinnerPresent()) {
-            Logger.log('wait loading spinner disappear');
-            await this.spinner.waitNotPresent();
-        }  else {
-            try {
-                Logger.log('wait loading spinner is present');
-                await this.spinner.waitPresent();
-            } catch {}
-        }
-    }
-
-    private async isSpinnerPresent(): Promise<boolean> {
-        try {
-            return await this.spinner.isDisplayed();
-        } catch {
-            return false;
-        }
+        await this.dataTableComponentPage.waitTillContentLoaded();
     }
 }

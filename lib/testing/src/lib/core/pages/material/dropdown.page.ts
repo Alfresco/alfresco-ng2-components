@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by, ElementFinder, browser } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
 import { Logger } from '../../utils/logger';
@@ -35,9 +35,9 @@ export class DropdownPage {
 
     async selectOption(option: string): Promise<void> {
         Logger.log(`Select dropdown option ${option}`);
-        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
         const optionElement = element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first();
         await BrowserActions.click(optionElement);
+        await browser.waitForAngular();
     }
 
     async getValue(): Promise<string> {
@@ -76,11 +76,11 @@ export class DropdownPage {
         return BrowserActions.getText(selectedOption);
     }
 
-    async checkOptionIsDisplayed(option: string): Promise <void> {
+    async checkOptionIsDisplayed(option: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
     }
 
-    async checkOptionIsNotDisplayed(option: string): Promise <void> {
+    async checkOptionIsNotDisplayed(option: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
     }
 
