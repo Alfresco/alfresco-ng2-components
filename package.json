@@ -53,7 +53,7 @@
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
     "cypress-open": "./node_modules/.bin/cypress open",
-    "cypress-run": "./node_modules/.bin/cypress install && ./node_modules/.bin/cypress run"
+    "cypress-run": "./node_modules/.bin/cypress run"
   },
   "repository": {
     "type": "git",
