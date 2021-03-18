@@ -14,7 +14,6 @@ class SettingsPage {
     }
 
     setProviderEcmSso(contentServiceURL, authHost, identityHost, clientId) {
-        // this.navigate();
         cy.get(providerDropdown).select('ECM');
         cy.get('[id*="mat-radio"]').contains('SSO').click();
         cy.get(ecmText).clear().type(contentServiceURL);
