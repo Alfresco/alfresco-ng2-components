@@ -24,6 +24,7 @@ env:
         - REDIRECT_URI_LOGOUT=/logout/
         - BROWSER_RUN=true
         - MAXINSTANCES=2
+        - URL_HOST_ADF="https://develop.envalfresco.com/adf"
 
 branches:
   only:
@@ -55,24 +56,9 @@ jobs:
                 - "$NODE_MODULES_DIR"
             use: node_modules_cache
 
-        - stage: "Build lib"
-          name:  "Lib::Build"
-          script:
-            - ./scripts/travis/build/build.sh
-          workspaces:
-            create:
-              name: built_libs_cache
-              paths:
-                - "$BUILT_LIBS_DIR"
-                - "$NODE_MODULES_DIR"
-            use: node_modules_cache
-
         - stage: Protractor E2E Test
           name: user-info
-          before_script:
-            - ./scripts/ci/job_hooks/before_e2e.sh
           script: ./scripts/travis/e2e/protractor-e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
               - node_modules_cache
@@ -81,7 +67,6 @@ jobs:
         - stage: Cypress user-info with UI Login
           name: cypress-user-info-with-UI
           script: npm run cy:run -- --record --spec "cypress-e2e/integration/demo/user-info-with-ui-login.js"
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
               - node_modules_cache
@@ -90,7 +75,6 @@ jobs:
         - stage: Cypress user-info without UI Login
           name: cypress-user-info-wo-UI
           script: npm run cy:run -- --record --spec "cypress-e2e/integration/demo/user-info-wo-ui-login.js"
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
               - node_modules_cache
