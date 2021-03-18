@@ -27,29 +27,13 @@ env:
 
 branches:
   only:
-  - master
-  - develop
-  - /.*old-env.*/
-  - /.*next-release.*/
-  - /.*beta.*/
+  - cypress-login-e2e
 
 stages:
   - name: Setup
-  - name: "Lint & Build Dist & Release"
-    if: tag IS blank
-  - name: Trigger Alpha ADF child build
-    if: (branch = develop AND type = push) OR type = api
-  - name: Check bundle
-    if: type = push AND tag IS blank
-  - name: Unit test
-    if: (branch != master AND type != cron AND tag IS blank) OR type = api
-  - name: e2e Test
-    if: (branch != master AND type != cron AND tag IS blank) OR type = api
-  - name: Trigger Beta ADF child build
-    if: tag =~ .*beta.*
-  - name: Release tag
-    if: type = cron OR branch = master
-
+  - name: Protractor user-info E2E Test
+  - name: Cypress user-info with UI Login
+  - name: Cypress user-info without UI Login
 addons:
     chrome: stable
 before_script:
@@ -70,135 +54,44 @@ jobs:
                 - "$NODE_MODULES_DIR"
             use: node_modules_cache
 
-        # Run Only for any PR
-        - stage: "Lint & Build Dist & Release"
-          name:  Build
-          script:
-            - ./scripts/travis/build/build.sh
-            - ./scripts/travis/release/release-npm.sh
-            - ./scripts/travis/release/release-docker.sh
-          workspaces:
-            create:
-              name: built_artefacts_cache
-              paths:
-                - "$DEMO_SHELL_DIR"
-                - "$BUILT_LIBS_DIR"
-            use: node_modules_cache
-
-        - stage: "Lint & Build Dist & Release"
-          name: "Lint"
-          script: ./scripts/lint.sh
-          workspaces:
-            use: node_modules_cache
-
-        - stage: Unit test
-          name: Unit test content
-          script:  ./scripts/travis/unit-test/content.sh
-          workspaces:
-            use: node_modules_cache
-
-        - stage: Unit test
-          name: Unit test core extension demo
-          script: ./scripts/travis/unit-test/core-extension.sh
-          workspaces:
-            use: node_modules_cache
-
-        - stage: Unit test
-          name: Unit test process insights
-          script: ./scripts/travis/unit-test/process.sh
-          workspaces:
-            use: node_modules_cache
-
-        - stage: Unit test
-          name: Unit test process-cloud
-          script: ./scripts/travis/unit-test/process-cloud.sh
-          workspaces:
-            use: node_modules_cache
-
-        - stage: Trigger Alpha ADF child build
-          name: Trigger Alpha ADF child build
-          script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v alpha
-          workspaces:
-            use: node_modules_cache
-
-        - stage: Trigger Beta ADF child build
-          name: Trigger Beta ADF child build
-          script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v beta
-          workspaces:
-            use: node_modules_cache
-
-        - stage: Release tag
-          script: ./scripts/travis/release/git-tag.sh
-
-        - stage: e2e Test
-          name: core
+        - stage: Protractor E2E Test
+          name: user-info
           before_script:
             - ./scripts/ci/job_hooks/before_e2e.sh
             - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
             - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/core-e2e.sh
+          script: ./scripts/travis/e2e/protractor-e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
               - node_modules_cache
               - built_artefacts_cache
-
-        - stage: e2e Test
-          name:  content
+        
+        - stage: Cypress user-info with UI Login
+          name: cypress-user-info-with-UI
           before_script:
-              - ./scripts/ci/job_hooks/before_e2e.sh
-              - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/content-services-e2e.sh
+            - ./scripts/ci/job_hooks/before_e2e.sh
+            - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+            - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
+          script: npm run cy:run -- --record --spec "cypress-e2e/integration/demo/user-info-with-ui-login.js"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
               - node_modules_cache
               - built_artefacts_cache
-
-        - stage: e2e Test
-          name:  search
+        
+        - stage: Cypress user-info without UI Login
+          name: cypress-user-info-wo-UI
           before_script:
-              - ./scripts/ci/job_hooks/before_e2e.sh
-              - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/search-e2e.sh
+            - ./scripts/ci/job_hooks/before_e2e.sh
+            - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
+            - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
+          script: npm run cy:run -- --record --spec "cypress-e2e/integration/demo/user-info-wo-ui-login.js"
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
               - node_modules_cache
               - built_artefacts_cache
-
-        - stage: e2e Test
-          name: process
-          before_script:
-              - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
-              - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
-              - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/process-services-e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
-          workspaces:
-            use:
-              - node_modules_cache
-              - built_artefacts_cache
-
-        - stage: e2e Test
-          name: process Cloud
-          before_script:
-              - ./scripts/ci/job_hooks/before_e2e.sh
-              - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-              - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
-          after_script: ./scripts/ci/job_hooks/after_e2e.sh
-          workspaces:
-            use:
-              - node_modules_cache
-              - built_artefacts_cache
-
-        - stage: Check bundle
-          script:
-          - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
-          - ./scripts/travis/build/npm-check-bundles.sh -v ${ADF_VERSION}
-          workspaces:
-            use: node_modules_cache
 
 notifications:
   slack:
