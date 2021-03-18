@@ -31,6 +31,7 @@ branches:
 
 stages:
   - name: Setup
+  - name: "Build lib"
   - name: Protractor user-info E2E Test
   - name: Cypress user-info with UI Login
   - name: Cypress user-info without UI Login
@@ -54,6 +55,19 @@ jobs:
                 - "$NODE_MODULES_DIR"
             use: node_modules_cache
 
+        - stage: "Build lib"
+          name:  "Lib::Build"
+          script:
+            - ./scripts/travis/build/build-libs.sh
+            - ./scripts/travis/release/release-npm.sh
+          workspaces:
+            create:
+              name: built_libs_cache
+              paths:
+                - "$BUILT_LIBS_DIR"
+                - "$NODE_MODULES_DIR"
+            use: node_modules_cache
+
         - stage: Protractor E2E Test
           name: user-info
           before_script:
@@ -66,11 +80,10 @@ jobs:
             use:
               - node_modules_cache
               - built_artefacts_cache
-        
+
         - stage: Cypress user-info with UI Login
           name: cypress-user-info-with-UI
           before_script:
-            - ./scripts/ci/job_hooks/before_e2e.sh
             - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
             - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
           script: npm run cy:run -- --record --spec "cypress-e2e/integration/demo/user-info-with-ui-login.js"
@@ -79,11 +92,10 @@ jobs:
             use:
               - node_modules_cache
               - built_artefacts_cache
-        
+
         - stage: Cypress user-info without UI Login
           name: cypress-user-info-wo-UI
           before_script:
-            - ./scripts/ci/job_hooks/before_e2e.sh
             - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
             - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
           script: npm run cy:run -- --record --spec "cypress-e2e/integration/demo/user-info-wo-ui-login.js"
