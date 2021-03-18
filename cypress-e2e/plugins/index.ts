@@ -27,5 +27,10 @@ module.exports = (on, config) => {
     config.env.baseUrl = process.env.URL_HOST_ADF;
     config.env.hr_user = process.env.HR_USER;
     config.env.hr_user_password = process.env.HR_USER_PASSWORD;
+    config.env.ecmHost = process.env.PROXY_HOST_ADF;
+    config.env.identityHost = `${process.env.HOST_SSO}/auth/admin/realms/alfresco`;
+    config.env.oauth2Host = `${process.env.HOST_SSO}/auth/realms/alfresco`;
+    config.env.oauth2ClientId = 'alfresco';
+
     return config;
 };

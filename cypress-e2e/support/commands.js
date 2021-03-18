@@ -9,8 +9,10 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 //
-import LoginPage from '../pages/login-page';
-import UserInfoPage from '../pages/user-info.page';
+import LoginPage from '../support/pages/login.page';
+import UserInfoPage from '../support/pages/user-info.page';
+import SettingsPage from '../support/pages/settings.page';
+
 import 'cypress-keycloak';
 
 
@@ -42,10 +44,15 @@ Cypress.Commands.overwrite('logout', (originalFn) => {
     });
 });
 
-
 Cypress.Commands.add('isUserLoggedIn', (username) => {
     const userInfo = new UserInfoPage();
     userInfo.getUserFullName().should('contain', username);
+});
+
+Cypress.Commands.add('setProviderEcmSso', (ecmHost, oauth2Host, identityHost, oauth2ClientId) => {
+    const settingsPage = new SettingsPage();
+    settingsPage.navigate();
+    settingsPage.setProviderEcmSso(ecmHost, oauth2Host, identityHost, oauth2ClientId);
 });
 
 

@@ -3,6 +3,7 @@
   "integrationFolder": "cypress-e2e/integration",
   "pluginsFile": "cypress-e2e/plugins/index.ts",
   "screenshotsFolder": "cypress-e2e/screenshots",
+  "video": false,
   "videosFolder": "cypress-e2e/videos",
   "supportFile": "cypress-e2e/support/index.js"
 }
