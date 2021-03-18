@@ -58,7 +58,7 @@ jobs:
         - stage: "Build lib"
           name:  "Lib::Build"
           script:
-            - ./scripts/travis/build/build-libs.sh
+            - ./scripts/travis/build/build.sh
             - ./scripts/travis/release/release-npm.sh
           workspaces:
             create:
