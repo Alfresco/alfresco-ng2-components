@@ -359,6 +359,10 @@ To enable public accessible urls, that don't need authentication, these must be 
 }
 ```
 
+#### Oauth2 Properties
+
+You can find all the oauth2 configurations in the [JS-API oauth2 properties documentation](https://github.com/Alfresco/alfresco-js-api#login-with-oauth2-alfresco-authorization-server)
+
 ### Kerberos
 
 The configuration for Kerberos authentication will allow users to access Alfresco products by entering their credentials only once when first logging into their Windows environment.
