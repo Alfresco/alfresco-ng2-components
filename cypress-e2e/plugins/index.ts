@@ -23,8 +23,8 @@ require('dotenv').config({ path: resolve(__dirname, '../../.env') });
 
 module.exports = (on, config) => {
 
-    config.baseUrl = process.env.URL_HOST_ADF;
-    config.env.baseUrl = process.env.URL_HOST_ADF;
+    config.baseUrl = `${process.env.URL_HOST_ADF}/adf`;
+    config.env.baseUrl = `${process.env.URL_HOST_ADF}/adf`;
     config.env.hr_user = process.env.HR_USER;
     config.env.hr_user_password = process.env.HR_USER_PASSWORD;
     config.env.ecmHost = process.env.PROXY_HOST_ADF;

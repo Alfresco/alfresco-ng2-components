@@ -24,7 +24,7 @@ env:
         - REDIRECT_URI_LOGOUT=/logout/
         - BROWSER_RUN=true
         - MAXINSTANCES=2
-        - URL_HOST_ADF="https://apadev.envalfresco.com/adf"
+        - URL_HOST_ADF="https://apadev.envalfresco.com"
 
 branches:
   only:
