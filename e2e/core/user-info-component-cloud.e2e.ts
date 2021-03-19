@@ -30,14 +30,20 @@ describe('User Info - SSO', () => {
     let identityUser;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
+        console.log('-------admin.username----------', browser.params.testConfig.users.admin.username);
+        console.log('-------ecmHost----------', browser.params.testConfig.appConfig.ecmHost)
+        console.log('-------oauth2.host----------', browser.params.testConfig.appConfig.oauth2.host)
+        console.log('-------identityHost----------', browser.params.testConfig.appConfig.identityHost)
+        console.log('-------oauth2.clientId----------', browser.params.testConfig.appConfig.oauth2.clientId)
 
+        await apiService.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
         identityUser = await usersActions.createUser();
 
         await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
             browser.params.testConfig.appConfig.oauth2.host,
             browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
 
+        console.log('-----------identity details-----------', identityUser.username, identityUser.password);
         await loginSSOPage.loginSSOIdentityService(identityUser.username, identityUser.password);
     });
 
