@@ -26,7 +26,7 @@ Cypress.Commands.add('loginUI', (userName, password) => {
 
 Cypress.Commands.overwrite('login', (originalFn, userName, password) => {
     originalFn({
-      root: 'https://develop.envalfresco.com',
+      root: 'https://apadev.envalfresco.com',
       realm: 'alfresco',
       username: userName,
       password: password,
@@ -38,7 +38,7 @@ Cypress.Commands.overwrite('login', (originalFn, userName, password) => {
 Cypress.Commands.overwrite('logout', (originalFn) => {
     cy.clearLocalStorage();
     originalFn({
-        root: 'https://develop.envalfresco.com',
+        root: 'https://apadev.envalfresco.com',
         realm: 'alfresco',
         redirect_uri: '/',
     });
