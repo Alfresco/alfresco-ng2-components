@@ -30,7 +30,7 @@ export class LocalizedRolePipe implements PipeTransform {
             const key = `ADF.ROLES.${value.toUpperCase()}`;
             const translation = this.translationService.instant(key);
 
-            if (translation) {
+            if (translation && translation !== key) {
                 return translation;
             }
         }
