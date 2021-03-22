@@ -1013,6 +1013,7 @@
       ],
       "properties": {
         "presets": {
+          "type": "object",
           "description": "Presets for content metadata component",
           "patternProperties": {
             ".*": {
@@ -1444,6 +1445,7 @@
           }
         },
         "sorting": {
+          "type" : "object",
           "description": "Sorting options and defaults",
           "required": [
             "options"
@@ -1483,18 +1485,10 @@
             },
             "defaults": {
               "description": "Predefined sorting to execute by default",
-              "options": {
-                "type": "array",
-                "minItems": 1,
-                "items": {
-                  "type": "object",
-                  "required": [
-                    "key",
-                    "label",
-                    "type",
-                    "field",
-                    "ascending"
-                  ],
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
                   "properties": {
                     "key": {
                       "type": "string"
@@ -1512,7 +1506,6 @@
                       "type": "boolean"
                     }
                   }
-                }
               }
             }
           }
