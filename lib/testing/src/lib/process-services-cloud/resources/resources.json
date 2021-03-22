@@ -151,7 +151,17 @@
         "name": "multilingualform"
       },
       "inputform": {
-        "name": "inputform"
+        "name": "inputform",
+        "widgets": {
+          "inputText": "inputText",
+          "inputNumber": "inputNumber",
+          "inputDate": "inputDate",
+          "inputCheckbox": "inputCheckbox",
+          "outputText": "outputText",
+          "outputNumber": "outputNumber",
+          "outputDate": "outputDate",
+          "outputCheckbox": "outputCheckbox"
+        }
       },
       "outputform": {
         "name": "outputform"
