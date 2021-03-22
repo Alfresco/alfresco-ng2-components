@@ -136,7 +136,17 @@
         "name": "form-with-single-input"
       },
       "tabVisibilityVars": {
-        "name": "tabvisibilitywithvars"
+        "name": "tabvisibilitywithvars",
+        "tabs": {
+          "tabWithFields": "tabWithFields",
+          "tabVarVar": "tabBasicVarVar",
+          "tabBasicVarField": "tabBasicVarField"
+        },
+        "widgets": {
+          "textOneId": "TextOne",
+          "textThreeId": "TextThree",
+          "numberOneId": "NumberOne"
+        }
       },
       "usertaskform": {
         "name": "usertaskform"
@@ -145,7 +155,11 @@
         "name": "dropdownform"
       },
       "formVisibility": {
-        "name": "form-visibility"
+        "name": "form-visibility",
+        "widgets": {
+          "textOneId": "Text",
+          "textTwoId": "Multilinetext"
+        }
       },
       "multilingualform": {
         "name": "multilingualform"

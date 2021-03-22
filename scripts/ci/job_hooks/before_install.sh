@@ -16,7 +16,7 @@ export NODE_OPTIONS="--max_old_space_size=30000"
 
 # Settings for Nx ---------------------------------------------------------------------
 export BASE_HASH="$(git wmerge-base origin/$BRANCH_NAME HEAD)"
-export HEAD_HASH=${TRAVIS_PULL_REQUEST_SHA:-${TRAVIS_COMMIT}}
+export HEAD_HASH="HEAD"
 
 if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
     echo "push"
