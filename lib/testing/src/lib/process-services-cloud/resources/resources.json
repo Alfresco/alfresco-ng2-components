@@ -125,7 +125,8 @@
       "candidateusersgroup": "candidateusersgroup",
       "candidateUserProcess": "candidateuserprocess",
       "outputVariablesMapping": "output-variables-mapping",
-      "outcomeVisibilityProcess": "outcome-visib-process"
+      "outcomeVisibilityProcess": "outcome-visib-process",
+      "restConnectorProcess": "rest-connector-process"
     },
     "forms": {
       "tabVisibilityFields": {
@@ -181,7 +182,10 @@
         }
       },
       "formWithJsonWidget": {
-        "name": "form-with-json-widget"
+        "name": "form-with-json-widget",
+        "widgets": {
+          "displayJsonWidgetId": "DisplayJsonWidgetId"
+        }
       },
       "formWithAllWidgets": {
         "name": "form-with-all-widgets"
@@ -274,7 +278,8 @@
       "candidateUserTask": "candidateUserTask",
       "salesUserTask": "salesuser task",
       "hrUserTask": "hruser task",
-      "attachLocalFile": "attach local file"
+      "attachLocalFile": "attach local file",
+      "userTaskToShowRestResult": "UserTaskToShowRestResult"
     },
     "security": [
       {
@@ -288,7 +293,17 @@
         "users": ["hruser"]
       }
     ],
-    "infrastructure": { "connectors": { "restconnector": {} }, "bridges": {} }
+    "infrastructure": { "connectors": { "restconnector": {} }, "bridges": {} },
+    "connectors": {
+      "restConnector": {
+        "response": {
+          "userId": 1,
+          "id": 1,
+          "title": "delectus aut autem",
+          "completed": false
+        }
+      }
+    }
   },
   "SUB_PROCESS_APP": {
     "name": "subprocessapp",

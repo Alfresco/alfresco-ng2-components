@@ -17,13 +17,15 @@
 
 import { FormFields } from '../form-fields';
 import { by, element, Locator } from 'protractor';
-import { BrowserVisibility } from '../../../utils/public-api';
+import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
+import { EditJsonDialog } from '../../../dialog/public-api';
 
 export class DisplayValueWidgetPage {
 
     formFields: FormFields = new FormFields();
     labelLocator: Locator = by.css("label[class*='adf-label']");
     inputLocator: Locator = by.css('input');
+    editJsonDialog = new EditJsonDialog();
 
     getFieldLabel(fieldId): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
@@ -50,5 +52,20 @@ export class DisplayValueWidgetPage {
         } catch {
             return false;
         }
+    }
+
+    async clickOnDisplayJsonValueWidget(fieldId: string) {
+        const jsonButton = element(by.css(`adf-form-field div[id='field-${fieldId}-container'] button`));
+        await BrowserActions.click(jsonButton);
+        await this.editJsonDialog.checkDialogIsDisplayed();
+    }
+
+    async getDisplayJsonValueDialogContent(): Promise<any> {
+        return JSON.parse(await (<any> this.editJsonDialog.getDialogContent()));
+    }
+
+    async closeDisplayJsonValuedDialog() {
+        await this.editJsonDialog.clickCloseButton();
+        await this.editJsonDialog.checkDialogIsNotDisplayed();
     }
 }
