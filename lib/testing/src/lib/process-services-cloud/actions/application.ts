@@ -59,7 +59,7 @@ export class Application {
                 Logger.error(`[Application] Undeploy application ${applicationName} failed with error: ${error.message}`);
             }
         };
-        return ApiUtil.waitForApi(apiCall, isApplicationUndeployed, 10, 3000);
+        return ApiUtil.waitForApi(apiCall, isApplicationUndeployed, 10, 15000);
     }
 
     async deleteDescriptor(name: string): Promise<void> {
