@@ -98,16 +98,12 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     initFilterCounterNotifications() {
         if (this.appName) {
             this.taskFilterCloudService.getTaskNotificationSubscription(this.appName)
-                .pipe(debounceTime(3000))
+                .pipe(debounceTime(5000))
                 .subscribe((result: TaskCloudEngineEvent[]) => {
                     result.map((taskEvent: TaskCloudEngineEvent) => {
                         this.checkFilterCounter(taskEvent.entity);
                     });
-
-                    if (this.updatedCounters.length) {
-                        this.updateFilterCounters();
-                        this.filterCounterUpdated.emit(result);
-                    }
+                    this.filterCounterUpdated.emit(result);
                 });
         }
     }
@@ -118,6 +114,10 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
                 this.addToUpdatedCounters(filter.key);
             }
         });
+
+        if (this.updatedCounters.length) {
+            this.updateFilterCounters();
+        }
     }
 
     isFilterPresent(filter: TaskFilterCloudModel, filterNotification: TaskDetailsCloudModel): boolean {
