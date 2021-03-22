@@ -17,7 +17,7 @@
 
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../core/actions/api.service';
-import { UserFilterOrderRepresentation, UserTaskFilterRepresentation } from '@alfresco/js-api';
+import { UserFilterOrderRepresentation, UserTaskFilterRepresentation, ResultListDataRepresentationUserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 
 export class UserFiltersUtil {
 
@@ -49,6 +49,15 @@ export class UserFiltersUtil {
             return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
         } catch (error) {
             Logger.error('List task filters - Service error, Response: ', error);
+        }
+    }
+
+    async getUserProcessFilters(appId?: number): Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation> {
+        try {
+            return this.apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: appId });
+        } catch (error) {
+            Logger.error('List process filters - Service error, Response: ', error);
+            return new ResultListDataRepresentationUserProcessInstanceFilterRepresentation();
         }
     }
 
