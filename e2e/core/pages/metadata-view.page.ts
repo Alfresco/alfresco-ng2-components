@@ -16,7 +16,7 @@
  */
 
 import { Locator, by, element, Key, protractor } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, DropdownPage, TestElement } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
 
@@ -214,6 +214,35 @@ export class MetadataViewPage {
     async checkPropertyIsVisible(propertyName: string, type: string): Promise<void> {
         const property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(property);
+    }
+
+    async hasContentType(contentType: string): Promise<string> {
+        const nodeType = TestElement.byText('div[data-automation-id="header-nodeType"] .adf-property-value', contentType);
+        return nodeType.waitVisible();
+    }
+
+    async changeContentType(option: string): Promise<void> {
+        const nodeType = TestElement.byCss('div[data-automation-id="header-nodeType"] mat-form-field');
+        await nodeType.waitPresent();
+        await nodeType.click();
+        const typesDropDownPage = new DropdownPage(nodeType.elementFinder);
+        await typesDropDownPage.checkOptionIsDisplayed(option);
+        await typesDropDownPage.selectOption(option);
+    }
+
+    async checkConfirmDialogDisplayed(): Promise<void> {
+        const confirmButton = TestElement.byCss('adf-content-type-dialog');
+        await confirmButton.waitPresent();
+    }
+
+    async applyNodeProperties(): Promise<void> {
+        const confirmButton = TestElement.byId('content-type-dialog-apply-button');
+        await confirmButton.click();
+    }
+
+    async cancelNodeProperties(): Promise<void> {
+        const cancelButton = TestElement.byId('content-type-dialog-actions-cancel');
+        await cancelButton.click();
     }
 
     async checkPropertyIsNotVisible(propertyName: string, type: string): Promise<void> {
