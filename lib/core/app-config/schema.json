@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "https://github.com/Alfresco/alfresco-ng2-components/tree/master/lib/core/app-config/schema.json",
+  "$id": "https://github.com/Alfresco/alfresco-ng2-components/tree/master/lib/core/app-config/schema.json",
   "title": "ADF Application config",
   "description": "Configuration object for ADF components used by your application",
   "definitions": {
@@ -348,6 +348,7 @@
                 },
                 "exclude": {
                   "type": "array",
+                  "minItems": 0,
                   "items": {
                     "description": "Property name",
                     "type": "string"
@@ -355,6 +356,7 @@
                 },
                 "readOnlyAspects": {
                   "type": "array",
+                  "minItems": 0,
                   "items": {
                     "description": "Disable editing in these aspects",
                     "type": "string"
@@ -362,6 +364,7 @@
                 },
                 "readOnlyProperties": {
                   "type": "array",
+                  "minItems": 0,
                   "items": {
                     "description": "Disable editing in these properties",
                     "type": "string"
@@ -1010,6 +1013,7 @@
       ],
       "properties": {
         "presets": {
+          "type": "object",
           "description": "Presets for content metadata component",
           "patternProperties": {
             ".*": {
@@ -1378,6 +1382,7 @@
           }
         },
         "highlight": {
+          "type": "object",
           "description": " Request that highlight fragments to be added to result set rows The properties reflect SOLR highlighting parameters.",
           "properties": {
             "prefix": {
@@ -1440,6 +1445,7 @@
           }
         },
         "sorting": {
+          "type" : "object",
           "description": "Sorting options and defaults",
           "required": [
             "options"
@@ -1479,18 +1485,10 @@
             },
             "defaults": {
               "description": "Predefined sorting to execute by default",
-              "options": {
-                "type": "array",
-                "minItems": 1,
-                "items": {
-                  "type": "object",
-                  "required": [
-                    "key",
-                    "label",
-                    "type",
-                    "field",
-                    "ascending"
-                  ],
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
                   "properties": {
                     "key": {
                       "type": "string"
@@ -1508,7 +1506,6 @@
                       "type": "boolean"
                     }
                   }
-                }
               }
             }
           }
