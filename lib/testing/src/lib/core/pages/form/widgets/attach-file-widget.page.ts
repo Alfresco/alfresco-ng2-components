@@ -124,7 +124,7 @@ export class AttachFileWidgetPage {
 
     async isRemoveFileOptionDisplayed(): Promise<boolean> {
         try {
-            await this.removeFileOptionButton.isDisplayed();
+            await BrowserVisibility.waitUntilElementIsVisible(this.removeFileOptionButton);
             return true;
         } catch {
             return false;
