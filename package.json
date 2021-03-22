@@ -38,7 +38,7 @@
     "start": "concurrently \"ng serve demoshell --open\" \"npm run style:dev -- --watch >&-\" ",
     "start:prod": "ng serve demoshell --prod --open",
     "build": "npm run style:dev && ng build demoshell",
-    "build:prod": "ode --max-old-space-size=12000 node_modules/@angular/cli/bin/ng build demoshell --prod",
+    "build:prod": "node --max-old-space-size=12000 node_modules/@angular/cli/bin/ng build demoshell --prod",
     "style:dev": "npm run webpack -- --config  ./lib/config/webpack.style.js --progress --profile --bail",
     "test": "ng test demoshell --watch=false",
     "05": "echo -------------------------------------------- E2e -----------------------------------------------",
