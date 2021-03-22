@@ -1104,6 +1104,9 @@
         "redirectUriLogout": {
           "type": "string"
         },
+        "refreshTokenTimeout": {
+          "type": "number"
+        },
         "publicUrls": {
           "type": "array",
           "items": {
