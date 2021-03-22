@@ -35,11 +35,11 @@ export class PermissionListComponent implements OnInit {
 
     /** Emitted when the permission is updated. */
     @Output()
-    update: EventEmitter<PermissionElement> = new EventEmitter();
+    update = new EventEmitter<PermissionElement>();
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter();
+    error = new EventEmitter<any>();
 
     permissionList: PermissionDisplayModel[];
     settableRoles: any[];
@@ -47,7 +47,6 @@ export class PermissionListComponent implements OnInit {
 
     constructor(private nodeService: NodesApiService,
                 private nodePermissionService: NodePermissionService) {
-
     }
 
     ngOnInit() {
@@ -61,7 +60,7 @@ export class PermissionListComponent implements OnInit {
     private fetchNodePermissions() {
         this.nodeService.getNode(this.nodeId).subscribe((node: Node) => {
             this.actualNode = node;
-            this.permissionList = this.getPermissionList(node);
+            this.permissionList = this.nodePermissionService.getNodePermissions(node);
 
             this.nodePermissionService.getNodeRoles(node).subscribe((settableList: string[]) => {
                 this.settableRoles = settableList;
@@ -69,26 +68,9 @@ export class PermissionListComponent implements OnInit {
         });
     }
 
-    private getPermissionList(node: Node): PermissionDisplayModel[] {
-        const allPermissions: PermissionDisplayModel[] = [];
-        if (node?.permissions?.locallySet) {
-            node.permissions.locallySet.map((permissionElement: PermissionElement) => {
-                const permission = new PermissionDisplayModel(permissionElement);
-                allPermissions.push(permission);
-            });
-        }
-        if (node?.permissions?.inherited) {
-            node.permissions.inherited.map((permissionElement: PermissionElement) => {
-                const permissionInherited = new PermissionDisplayModel(permissionElement);
-                permissionInherited.isInherited = true;
-                allPermissions.push(permissionInherited);
-            });
-        }
-        return allPermissions;
-    }
-
     saveNewRole(event: any, permissionRow: PermissionDisplayModel) {
-        const updatedPermissionRole: PermissionElement = this.buildUpdatedPermission(event.value, permissionRow);
+        const updatedPermissionRole = this.buildUpdatedPermission(event.value, permissionRow);
+
         this.nodePermissionService.updatePermissionRole(this.actualNode, updatedPermissionRole)
             .subscribe(() => {
                 this.update.emit(updatedPermissionRole);
@@ -96,11 +78,11 @@ export class PermissionListComponent implements OnInit {
     }
 
     private buildUpdatedPermission(newRole: string, permissionRow: PermissionDisplayModel): PermissionElement {
-        const permissionRole: PermissionElement = {};
-        permissionRole.accessStatus = permissionRow.accessStatus;
-        permissionRole.name = newRole;
-        permissionRole.authorityId = permissionRow.authorityId;
-        return permissionRole;
+        return {
+            accessStatus: permissionRow.accessStatus,
+            name: newRole,
+            authorityId: permissionRow.authorityId
+        };
     }
 
     removePermission(permissionRow: PermissionDisplayModel) {
@@ -111,5 +93,4 @@ export class PermissionListComponent implements OnInit {
                 error => this.error.emit(error)
             );
     }
-
 }

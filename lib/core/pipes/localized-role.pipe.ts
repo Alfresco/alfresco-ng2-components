@@ -15,17 +15,25 @@
  * limitations under the License.
  */
 
-export * from './decimal-number.pipe';
-export * from './file-size.pipe';
-export * from './file-type.pipe';
-export * from './format-space.pipe';
-export * from './full-name.pipe';
-export * from './localized-date.pipe';
-export * from './mime-type-icon.pipe';
-export * from './multi-value.pipe';
-export * from './node-name-tooltip.pipe';
-export * from './text-highlight.pipe';
-export * from './time-ago.pipe';
-export * from './user-initial.pipe';
-export * from './localized-role.pipe';
-export * from './pipe.module';
+import { Pipe, PipeTransform } from '@angular/core';
+import { TranslationService } from '../services';
+
+@Pipe({
+    name: 'adfLocalizedRole'
+})
+export class LocalizedRolePipe implements PipeTransform {
+    constructor(private translationService: TranslationService) {
+    }
+
+    transform(value: string): any {
+        if (value) {
+            const key = `ADF.ROLES.${value.toUpperCase()}`;
+            const translation = this.translationService.instant(key);
+
+            if (translation) {
+                return translation;
+            }
+        }
+        return value;
+    }
+}
