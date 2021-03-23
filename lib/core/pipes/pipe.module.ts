@@ -31,10 +31,12 @@ import { MultiValuePipe } from './multi-value.pipe';
 import { LocalizedDatePipe } from './localized-date.pipe';
 import { DecimalNumberPipe } from './decimal-number.pipe';
 import { LocalizedRolePipe } from './localized-role.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        TranslateModule
     ],
     declarations: [
         FileSizePipe,
