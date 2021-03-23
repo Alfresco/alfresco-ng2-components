@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CardViewItem, CardViewSelectItemModel, CardViewSelectItemOption } from '@alfresco/adf-core';
+import { CardViewItem, CardViewSelectItemModel, CardViewSelectItemOption, CardViewTextItemModel, VersionCompatibilityService } from '@alfresco/adf-core';
 import { Observable, of, Subject, zip } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { ContentTypeDialogComponent } from '../../content-type/content-type-dialog.component';
@@ -30,17 +30,34 @@ import { TypeEntry } from '@alfresco/js-api';
 })
 export class ContentTypePropertiesService {
 
-    constructor(private contentTypeService: ContentTypeService, private dialog: MatDialog) {
+    constructor(private contentTypeService: ContentTypeService,
+                private dialog: MatDialog,
+                private versionCompatibilityService: VersionCompatibilityService) {
     }
 
     getContentTypeCardItem(nodeType: string): Observable<CardViewItem[]> {
-        return this.contentTypeService.getContentTypeByPrefix(nodeType).
-            pipe(
-                map((contentType) => {
-                    const contentTypesOptions$ = this.getContentTypesAsSelectOption(contentType);
-                    const contentTypeCard = this.buildContentTypeSelectCardModel(contentType.entry.id, contentTypesOptions$);
-                    return [contentTypeCard];
-                }));
+        if (this.versionCompatibilityService.isVersionSupported('7')) {
+            return this.contentTypeService.getContentTypeByPrefix(nodeType).
+                pipe(
+                    map((contentType) => {
+                        const contentTypesOptions$ = this.getContentTypesAsSelectOption(contentType);
+                        const contentTypeCard = this.buildContentTypeSelectCardModel(contentType.entry.id, contentTypesOptions$);
+                        return [contentTypeCard];
+                    }));
+        } else {
+            return of([this.buildContentTypeTextCardModel(nodeType)]);
+        }
+    }
+
+    private buildContentTypeTextCardModel(currentValue: string): CardViewTextItemModel {
+        const contentTypeCard = new CardViewTextItemModel({
+            label: 'CORE.METADATA.BASIC.CONTENT_TYPE',
+            value: currentValue,
+            key: 'nodeType',
+            editable: false
+        });
+
+        return contentTypeCard;
     }
 
     private buildContentTypeSelectCardModel(currentValue: string, options$: Observable<CardViewSelectItemOption<string>[]>): CardViewSelectItemModel<string> {
