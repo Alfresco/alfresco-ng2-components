@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "Start e2e"
 
-echo "Start search e2e"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
 
-export CONTEXT_ENV="search"
-export PROVIDER='ECM'
-export AUTH_TYPE='BASIC'
+BASE_DIRECTORY=$(echo "$CONTEXT_ENV" | cut -d "/" -f1)
 
-if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ];then
+if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     echo "Calculate affected e2e $BASE_HASH $HEAD_HASH"
     echo "nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain"
     AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain || exit 1)"
@@ -19,21 +17,19 @@ if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ];then
     echo "Affected e2e ${AFFECTED_E2E}"
 fi;
 
-RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --use-dist || exit 1)
+if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$BASE_DIRECTORY" ||  "${TRAVIS_EVENT_TYPE}" == "push" ||  "${TRAVIS_EVENT_TYPE}" == "api" ]]; then
+    echo "Run all e2e $CONTEXT_ENV"
+    ./scripts/test-e2e-lib.sh --use-dist
+else if [[ $AFFECTED_E2E  == "e2e/$CONTEXT_ENV" ]]; then
+        echo "Run affected e2e"
 
-if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "content-services" || "${TRAVIS_EVENT_TYPE}" == "push" ||  "${TRAVIS_EVENT_TYPE}" == "api"  ]];
-then
-    $RUN_E2E --folder $CONTEXT_ENV
-else if [[ $AFFECTED_E2E  == "e2e/$CONTEXT_ENV" ]];
-    then
         HEAD_SHA_BRANCH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
         LIST_SPECS="$(git diff --name-only $HEAD_SHA_BRANCH HEAD | grep "^e2e/$CONTEXT_ENV" | paste -sd , -)"
 
         echo "Run $CONTEXT_ENV e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
 
-        if [[ $LIST_SPECS != "" ]];
-        then
-            $RUN_E2E --specs "$LIST_SPECS"
+        if [[ $LIST_SPECS != "" ]]; then
+            ./scripts/test-e2e-lib.sh --use-dist
         fi
     fi
 fi;

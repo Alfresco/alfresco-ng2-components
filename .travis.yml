@@ -23,6 +23,13 @@ env:
         - REDIRECT_URI=/
         - BROWSER_RUN=true
         - MAXINSTANCES=2
+        - PROXY_HOST_ADF=$E2E_HOST
+        - HOST_SSO=$HOST_SSO
+        - USERNAME_ADF=$E2E_USERNAME
+        - PASSWORD_ADF=$E2E_PASSWORD
+        - IDENTITY_ADMIN_EMAIL=$E2E_ADMIN_EMAIL_IDENTITY
+        - IDENTITY_ADMIN_PASSWORD=$E2E_ADMIN_PASSWORD_IDENTITY
+        - URL_HOST_ADF="http://localhost:4200"
 
 branches:
   only:
@@ -80,7 +87,7 @@ jobs:
               name: built_libs_cache
               paths:
                 - "$BUILT_LIBS_DIR"
-                - "$NODE_MODULES_DIR"                
+                - "$NODE_MODULES_DIR"
             use: node_modules_cache
 
         - stage: "Build lib"
@@ -148,20 +155,23 @@ jobs:
             - ./scripts/ci/job_hooks/before_e2e.sh
             - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
             - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/core-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
               - built_libs_cache
               - built_demo_shell_cache
-
+          env:
+              - CONTEXT_ENV="core"
+              - PROVIDER='ALL'
+              - AUTH_TYPE='OAUTH'
 
         - stage: "e2e Test"
           name:  "Content: Components"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/content-services-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -169,13 +179,15 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="content-services/components"
+              - PROVIDER="ECM"
+              - AUTH_TYPE="BASIC"
 
         - stage: "e2e Test"
           name:  "Content: Directives"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/content-services-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -183,13 +195,15 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="content-services/directives"
+              - PROVIDER="ECM"
+              - AUTH_TYPE="BASIC"
 
         - stage: "e2e Test"
           name:  "Content: Document List"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/content-services-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -197,13 +211,15 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="content-services/document-list"
+              - PROVIDER="ECM"
+              - AUTH_TYPE="BASIC"
 
         - stage: "e2e Test"
           name:  "Content: Metadata"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/content-services-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -211,13 +227,15 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="content-services/metadata"
+              - PROVIDER="ECM"
+              - AUTH_TYPE="BASIC"
 
         - stage: "e2e Test"
           name:  "Content: Upload and Versioning"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/content-services-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -225,18 +243,24 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="content-services/upload"
+              - PROVIDER="ECM"
+              - AUTH_TYPE="BASIC"
 
         - stage: "e2e Test"
           name:  "Search"
           before_script:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/search-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
               - built_libs_cache
               - built_demo_shell_cache
+          env:
+            - CONTEXT_ENV="search"
+            - PROVIDER="ECM"
+            - AUTH_TYPE="BASIC"
 
         - stage: "e2e Test"
           name: "Process: Form"
@@ -244,7 +268,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/process-services-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -252,6 +276,8 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="process-services/form"
+              - PROVIDER="BPM"
+              - AUTH_TYPE="OAUTH"
 
         - stage: "e2e Test"
           name: "Process: Process"
@@ -259,7 +285,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/process-services-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -267,6 +293,8 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="process-services/process"
+              - PROVIDER="BPM"
+              - AUTH_TYPE="OAUTH"
 
         - stage: "e2e Test"
           name: "Process: Tasks"
@@ -274,7 +302,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/process-services-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -282,6 +310,8 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="process-services/tasks"
+              - PROVIDER="BPM"
+              - AUTH_TYPE="OAUTH"
 
         - stage: "e2e Test"
           name: "Process: Widgets"
@@ -289,7 +319,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-external-cs-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/process-services-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -297,6 +327,8 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="process-services/widgets"
+              - PROVIDER="BPM"
+              - AUTH_TYPE="OAUTH"
 
         - stage: "e2e Test"
           name: "Process Cloud : Form"
@@ -304,7 +336,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -312,6 +344,8 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="process-services-cloud/form-field"
+              - PROVIDER="ALL"
+              - AUTH_TYPE="OAUTH"
 
         - stage: "e2e Test"
           name: "Process Cloud : People"
@@ -319,7 +353,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -327,6 +361,8 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="process-services-cloud/people"
+              - PROVIDER="ALL"
+              - AUTH_TYPE="OAUTH"
 
         - stage: "e2e Test"
           name: "Process Cloud : Process"
@@ -334,7 +370,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -342,6 +378,8 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="process-services-cloud/process"
+              - PROVIDER="ALL"
+              - AUTH_TYPE="OAUTH"
 
         - stage: "e2e Test"
           name: "Process Cloud : Start Task"
@@ -349,7 +387,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -357,6 +395,8 @@ jobs:
               - built_demo_shell_cache
           env:
               - CONTEXT_ENV="process-services-cloud/start-task"
+              - PROVIDER="ALL"
+              - AUTH_TYPE="OAUTH"
 
         - stage: "e2e Test"
           name: "Process Cloud : Tasks List"
@@ -364,7 +404,7 @@ jobs:
               - ./scripts/ci/job_hooks/before_e2e.sh
               - ./scripts/ci/check-env/check-cs-env.sh || travis_terminate 1
               - ./scripts/ci/check-env/check-ps-cloud-env.sh || travis_terminate 1
-          script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
+          script: ./scripts/travis/e2e/e2e.sh
           after_script: ./scripts/ci/job_hooks/after_e2e.sh
           workspaces:
             use:
@@ -372,6 +412,8 @@ jobs:
               - built_demo_shell_cache
           env:
              - CONTEXT_ENV="process-services-cloud/task-list"
+             - PROVIDER="ALL"
+             - AUTH_TYPE="OAUTH"
 
         - stage: Check bundle
           script:
