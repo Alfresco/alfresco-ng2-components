@@ -63,7 +63,7 @@ export class Descriptor {
                 Logger.error(`[Descriptor] Delete descriptor ${name} failed with error: ${error.message}`);
             }
         };
-        return ApiUtil.waitForApi(apiCall, isDescriptorDeleted, 10, 3000);
+        return ApiUtil.waitForApi(apiCall, isDescriptorDeleted, 10, 15000);
     }
 
     async get(name: string): Promise<any> {
