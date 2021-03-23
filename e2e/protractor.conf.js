@@ -15,7 +15,7 @@ const argv = require('yargs').argv;
 const width = 1657, height = 1657;
 
 const ENV_FILE = process.env.ENV_FILE;
-const GROUP_SUFFIX = process.env.PREFIX || 'adf';
+const GROUP_SUFFIX = process.env.PREFIX ||  process.env.TRAVIS_BUILD_NUMBER  || 'adf';
 
 if (ENV_FILE) {
     require('dotenv').config({path: ENV_FILE});
