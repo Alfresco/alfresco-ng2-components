@@ -29,46 +29,46 @@ describe('ContentTypePropertyService', () => {
     let versionCompatibilityService: VersionCompatibilityService;
     let contentTypeService: ContentTypeService;
 
-    const mockContent: any = { "entry":
-                            { "associations": [],
-                                "isArchive": true,
-                                 "includedInSupertypeQuery": true,
-                                 "description": "Base Content Object",
-                                 "isContainer": false,
-                                 "id": "fk:nodeType",
-                                 "title": "Content",
-                                 "properties": [{ "id": "cm:name", "title": "Name", "description": "Name", "dataType": "d:text", "isMultiValued": false, "isMandatory": true, "isMandatoryEnforced": true, "isProtected": false}],
-                                 "parentId": "cm:cmobject" } };
+    const mockContent: any = { 'entry':
+                            { 'associations': [],
+                                'isArchive': true,
+                                 'includedInSupertypeQuery': true,
+                                 'description': 'Base Content Object',
+                                 'isContainer': false,
+                                 'id': 'fk:nodeType',
+                                 'title': 'Content',
+                                 'properties': [{ 'id': 'cm:name', 'title': 'Name', 'description': 'Name', 'dataType': 'd:text', 'isMultiValued': false, 'isMandatory': true, 'isMandatoryEnforced': true, 'isProtected': false}],
+                                 'parentId': 'cm:cmobject' } };
     const mockSelectOptions = {
-        "list":
+        'list':
         {
-            "pagination": { "count": 1, "hasMoreItems": false, "totalItems": 1, "skipCount": 0, "maxItems": 100 },
-            "entries": [
+            'pagination': { 'count': 1, 'hasMoreItems': false, 'totalItems': 1, 'skipCount': 0, 'maxItems': 100 },
+            'entries': [
                 {
-                    "entry": {
-                        "isArchive": true,
-                        "includedInSupertypeQuery": true,
-                        "isContainer": false,
-                        "model": {
-                            "id": "e2e:test",
-                            "author": "E2e Automation User",
-                            "description": "Custom type e2e model",
-                            "namespaceUri": "http://www.customModel.com/whatever",
-                            "namespacePrefix": "e2e"
+                    'entry': {
+                        'isArchive': true,
+                        'includedInSupertypeQuery': true,
+                        'isContainer': false,
+                        'model': {
+                            'id': 'e2e:test',
+                            'author': 'E2e Automation User',
+                            'description': 'Custom type e2e model',
+                            'namespaceUri': 'http://www.customModel.com/whatever',
+                            'namespacePrefix': 'e2e'
                         },
-                        "id": "e2e:test",
-                        "title": "Test type",
-                        "properties": [{
-                            "id": "cm:name",
-                            "title": "Name",
-                            "description": "Name",
-                            "dataType": "d:text",
-                            "isMultiValued": false,
-                            "isMandatory": true,
-                            "isMandatoryEnforced": true,
-                            "isProtected": false
+                        'id': 'e2e:test',
+                        'title': 'Test type',
+                        'properties': [{
+                            'id': 'cm:name',
+                            'title': 'Name',
+                            'description': 'Name',
+                            'dataType': 'd:text',
+                            'isMultiValued': false,
+                            'isMandatory': true,
+                            'isMandatoryEnforced': true,
+                            'isProtected': false
                         }],
-                        "parentId": "cm:content"
+                        'parentId': 'cm:content'
                     }
                 }]
         }
@@ -98,7 +98,7 @@ describe('ContentTypePropertyService', () => {
             expect(items[0].editable).toBeFalsy();
             done();
         });
-    })
+    });
 
     it('should return a card select item for ACS version 7 and above', (done) => {
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(true);
@@ -113,6 +113,6 @@ describe('ContentTypePropertyService', () => {
             expect(items[0].editable).toBeTruthy();
             done();
         });
-    })
+    });
 
 });
