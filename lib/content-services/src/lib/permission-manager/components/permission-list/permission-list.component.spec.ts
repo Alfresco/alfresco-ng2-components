@@ -31,7 +31,7 @@ import { fakeNodeWithPermissions,
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('PermissionDisplayComponent', () => {
+describe('PermissionListComponent', () => {
 
     let fixture: ComponentFixture<PermissionListComponent>;
     let component: PermissionListComponent;

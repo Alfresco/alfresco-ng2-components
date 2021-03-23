@@ -35,7 +35,7 @@ describe('LocalizedRolePipe', () => {
         expect(pipe.transform('ADF.ROLES.CONSUMER')).toEqual('Consumer');
     });
 
-    it('should return original value when translation not present', () => {
+    it('should return the key when translation not present', () => {
         translationService.instant.and.callFake((value) => {
             if (value === 'ADF.ROLES.CONSUMER') {
                 return 'Consumer';
@@ -44,7 +44,7 @@ describe('LocalizedRolePipe', () => {
             }
         });
 
-        expect(pipe.transform('Contributor')).toBe('Contributor');
+        expect(pipe.transform('Contributor')).toBe('ADF.ROLES.CONTRIBUTOR');
         expect(pipe.transform('Consumer')).toEqual('Consumer');
     });
 });
