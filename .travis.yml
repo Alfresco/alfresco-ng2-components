@@ -162,7 +162,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="core"
+              - FOLDER="core"
               - PROVIDER='ALL'
               - AUTH_TYPE='OAUTH'
 
@@ -178,7 +178,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="content-services/components"
+              - FOLDER="content-services/components"
               - PROVIDER="ECM"
               - AUTH_TYPE="BASIC"
 
@@ -194,7 +194,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="content-services/directives"
+              - FOLDER="content-services/directives"
               - PROVIDER="ECM"
               - AUTH_TYPE="BASIC"
 
@@ -210,7 +210,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="content-services/document-list"
+              - FOLDER="content-services/document-list"
               - PROVIDER="ECM"
               - AUTH_TYPE="BASIC"
 
@@ -226,7 +226,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="content-services/metadata"
+              - FOLDER="content-services/metadata"
               - PROVIDER="ECM"
               - AUTH_TYPE="BASIC"
 
@@ -242,7 +242,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="content-services/upload"
+              - FOLDER="content-services/upload"
               - PROVIDER="ECM"
               - AUTH_TYPE="BASIC"
 
@@ -258,7 +258,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-            - CONTEXT_ENV="search"
+            - FOLDER="search"
             - PROVIDER="ECM"
             - AUTH_TYPE="BASIC"
 
@@ -275,7 +275,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="process-services/form"
+              - FOLDER="process-services/form"
               - PROVIDER="BPM"
               - AUTH_TYPE="OAUTH"
 
@@ -292,7 +292,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="process-services/process"
+              - FOLDER="process-services/process"
               - PROVIDER="BPM"
               - AUTH_TYPE="OAUTH"
 
@@ -309,7 +309,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="process-services/tasks"
+              - FOLDER="process-services/tasks"
               - PROVIDER="BPM"
               - AUTH_TYPE="OAUTH"
 
@@ -326,7 +326,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="process-services/widgets"
+              - FOLDER="process-services/widgets"
               - PROVIDER="BPM"
               - AUTH_TYPE="OAUTH"
 
@@ -343,7 +343,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="process-services-cloud/form-field"
+              - FOLDER="process-services-cloud/form-field"
               - PROVIDER="ALL"
               - AUTH_TYPE="OAUTH"
 
@@ -360,7 +360,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="process-services-cloud/people"
+              - FOLDER="process-services-cloud/people"
               - PROVIDER="ALL"
               - AUTH_TYPE="OAUTH"
 
@@ -377,7 +377,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="process-services-cloud/process"
+              - FOLDER="process-services-cloud/process"
               - PROVIDER="ALL"
               - AUTH_TYPE="OAUTH"
 
@@ -394,7 +394,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-              - CONTEXT_ENV="process-services-cloud/start-task"
+              - FOLDER="process-services-cloud/start-task"
               - PROVIDER="ALL"
               - AUTH_TYPE="OAUTH"
 
@@ -411,7 +411,7 @@ jobs:
               - built_libs_cache
               - built_demo_shell_cache
           env:
-             - CONTEXT_ENV="process-services-cloud/task-list"
+             - FOLDER="process-services-cloud/task-list"
              - PROVIDER="ALL"
              - AUTH_TYPE="OAUTH"
 
