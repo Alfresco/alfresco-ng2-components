@@ -16,7 +16,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { TranslationService } from '../services';
+import { TranslationService } from '../services/translation.service';
 
 @Pipe({
     name: 'adfLocalizedRole'
