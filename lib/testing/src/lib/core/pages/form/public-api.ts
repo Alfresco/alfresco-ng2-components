@@ -19,3 +19,4 @@ export * from './widgets/public-api';
 
 export * from './form-fields';
 export * from './form.page';
+export * from './start-form.page';

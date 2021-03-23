@@ -18,7 +18,7 @@
 import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 
-export class StartForm {
+export class StartFormPage {
     startProcessForm = element(by.css('.adf-start-form-container'));
 
     async checkStartProcessFormIsDisplayed(): Promise<void> {
