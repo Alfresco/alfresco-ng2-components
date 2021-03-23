@@ -32,7 +32,6 @@ export class StartProcessPage {
     formStartProcessButton = element(by.css('button[data-automation-id="adf-form-start process"]'));
     startProcessButton = element(by.css('button[data-automation-id="btn-start"]'));
     noProcess = element(by.css('.adf-empty-content__title'));
-    startProcessForm = element(by.css('.adf-start-form-container'));
     processDefinition = element(by.css('input[id="processDefinitionName"]'));
     processDefinitionOptionsPanel = element(by.css('div[class*="mat-autocomplete-panel"]'));
 
@@ -41,10 +40,6 @@ export class StartProcessPage {
 
     async checkNoProcessMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
-    }
-
-    async checkStartProcessFormIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.startProcessForm);
     }
 
     async pressDownArrowAndEnter(): Promise<void> {
