@@ -31,7 +31,7 @@ import { fakeNodeWithPermissions,
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('PermissionDisplayComponent', () => {
+describe('PermissionListComponent', () => {
 
     let fixture: ComponentFixture<PermissionListComponent>;
     let component: PermissionListComponent;
@@ -127,10 +127,10 @@ describe('PermissionDisplayComponent', () => {
                     const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
                     expect(options).not.toBeNull();
                     expect(options.length).toBe(4);
-                    expect(options[0].nativeElement.innerText).toContain('SiteCollaborator');
-                    expect(options[1].nativeElement.innerText).toContain('SiteConsumer');
-                    expect(options[2].nativeElement.innerText).toContain('SiteContributor');
-                    expect(options[3].nativeElement.innerText).toContain('SiteManager');
+                    expect(options[0].nativeElement.innerText).toContain('ADF.ROLES.SITECOLLABORATOR');
+                    expect(options[1].nativeElement.innerText).toContain('ADF.ROLES.SITECONSUMER');
+                    expect(options[2].nativeElement.innerText).toContain('ADF.ROLES.SITECONTRIBUTOR');
+                    expect(options[3].nativeElement.innerText).toContain('ADF.ROLES.SITEMANAGER');
                 });
             });
         }));
@@ -152,11 +152,11 @@ describe('PermissionDisplayComponent', () => {
                     const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
                     expect(options).not.toBeNull();
                     expect(options.length).toBe(5);
-                    expect(options[0].nativeElement.innerText).toContain('Contributor');
-                    expect(options[1].nativeElement.innerText).toContain('Collaborator');
-                    expect(options[2].nativeElement.innerText).toContain('Coordinator');
-                    expect(options[3].nativeElement.innerText).toContain('Editor');
-                    expect(options[4].nativeElement.innerText).toContain('Consumer');
+                    expect(options[0].nativeElement.innerText).toContain('ADF.ROLES.CONTRIBUTOR');
+                    expect(options[1].nativeElement.innerText).toContain('ADF.ROLES.COLLABORATOR');
+                    expect(options[2].nativeElement.innerText).toContain('ADF.ROLES.COORDINATOR');
+                    expect(options[3].nativeElement.innerText).toContain('ADF.ROLES.EDITOR');
+                    expect(options[4].nativeElement.innerText).toContain('ADF.ROLES.CONSUMER');
                 });
             });
         }));

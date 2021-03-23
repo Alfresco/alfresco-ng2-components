@@ -20,6 +20,7 @@ import { Observable, of, from, throwError } from 'rxjs';
 import { AlfrescoApiService, SearchService, NodesApiService, TranslationService } from '@alfresco/adf-core';
 import { QueryBody, Node, NodeEntry, PathElement, GroupMemberEntry, GroupMemberPaging, PermissionElement } from '@alfresco/js-api';
 import { switchMap, map } from 'rxjs/operators';
+import { PermissionDisplayModel } from '../models/permission.model';
 
 @Injectable({
     providedIn: 'root'
@@ -50,6 +51,25 @@ export class NodePermissionService {
                     }
                 })
             );
+    }
+
+    getNodePermissions(node: Node): PermissionDisplayModel[] {
+        const result: PermissionDisplayModel[] = [];
+
+        if (node?.permissions?.locallySet) {
+            node.permissions.locallySet.map((permissionElement) => {
+                result.push(new PermissionDisplayModel(permissionElement));
+            });
+        }
+
+        if (node?.permissions?.inherited) {
+            node.permissions.inherited.map((permissionElement) => {
+                const permissionInherited = new PermissionDisplayModel(permissionElement);
+                permissionInherited.isInherited = true;
+                result.push(permissionInherited);
+            });
+        }
+        return result;
     }
 
     /**
@@ -128,14 +148,13 @@ export class NodePermissionService {
 
     private transformNodeToPermissionElement(nodes: NodeEntry[], nodeRole: any): PermissionElement[] {
         return nodes.map((node) => {
-            const newPermissionElement: PermissionElement = <PermissionElement> {
+            return {
                 'authorityId': node.entry.properties['cm:authorityName'] ?
                     node.entry.properties['cm:authorityName'] :
                     node.entry.properties['cm:userName'],
                 'name': nodeRole,
                 'accessStatus': 'ALLOWED'
             };
-            return newPermissionElement;
         });
     }
 
@@ -188,10 +207,11 @@ export class NodePermissionService {
 
     private buildRetrieveSiteQueryBody(nodePath: PathElement[]): QueryBody {
         const pathNames = nodePath.map((node: PathElement) => 'name: "' + node.name + '"');
-        const buildedPathNames = pathNames.join(' OR ');
+        const builtPathNames = pathNames.join(' OR ');
+
         return {
             'query': {
-                'query': buildedPathNames
+                'query': builtPathNames
             },
             'paging': {
                 'maxItems': 100,

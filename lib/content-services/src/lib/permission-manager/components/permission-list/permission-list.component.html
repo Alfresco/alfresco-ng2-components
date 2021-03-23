@@ -33,11 +33,11 @@
                             [placeholder]="entry.data.getValue(entry.row, entry.col)"
                             value="{{entry.data.getValue(entry.row, entry.col)}}"
                             (selectionChange)="saveNewRole($event, entry.row.obj)">
-                          <mat-option *ngFor="let role of settableRoles" [value]="role">{{ role }}</mat-option>
+                          <mat-option *ngFor="let role of settableRoles" [value]="role">{{ role | adfLocalizedRole }}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <ng-template #show_only_label>
-                        <span>{{entry.data.getValue(entry.row, entry.col)}}</span>
+                        <span>{{ entry.data.getValue(entry.row, entry.col) | adfLocalizedRole }}</span>
                     </ng-template>
                 </ng-template>
             </data-column>
