@@ -22,7 +22,7 @@ import { MaterialModule } from '../material.module';
 import { PermissionListComponent } from './components/permission-list/permission-list.component';
 import { AddPermissionComponent } from './components/add-permission/add-permission.component';
 import { AddPermissionDialogComponent } from './components/add-permission/add-permission-dialog.component';
-import { CoreModule, DirectiveModule } from '@alfresco/adf-core';
+import { CoreModule, PipeModule } from '@alfresco/adf-core';
 import { InheritPermissionDirective } from './components/inherited-button.directive';
 import { NoPermissionTemplateComponent } from './components/permission-list/no-permission.component';
 import { AddPermissionPanelComponent } from './components/add-permission/add-permission-panel.component';
@@ -36,7 +36,7 @@ import { SearchModule } from '../search/search.module';
         ReactiveFormsModule,
         MaterialModule,
         SearchModule,
-        DirectiveModule
+        PipeModule
     ],
     declarations: [
         PermissionListComponent,
