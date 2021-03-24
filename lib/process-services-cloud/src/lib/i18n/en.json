@@ -374,7 +374,7 @@
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "Autocomplete form"
+    "RETRIEVE_METADATA": "Autofill form"
   },
   "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
     "ASSIGNED_TO_ME": "Assigned to me",
