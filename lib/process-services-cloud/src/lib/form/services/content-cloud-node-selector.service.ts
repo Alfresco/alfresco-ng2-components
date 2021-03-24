@@ -54,11 +54,17 @@ export class ContentCloudNodeSelectorService {
   }
 
     async fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
-        const nodeEntry: any = await this.apiService.getInstance().node
-            .getNode(alias, opts)
-            .catch((err) => this.handleError(err));
+        const relativePathNodeEntry: any = await this.apiService.getInstance().node
+        .getNode(alias, opts)
+        .catch((err) => this.handleError(err));
+        return relativePathNodeEntry?.entry?.id;
+    }
 
-        return nodeEntry?.entry?.id;
+    async fetchAliasNodeId(alias: string): Promise<string> {
+        const aliasNodeEntry: any = await this.apiService.getInstance().node
+        .getNode(alias)
+        .catch((err) => this.handleError(err));
+        return aliasNodeEntry?.entry?.id;
     }
 
   private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
