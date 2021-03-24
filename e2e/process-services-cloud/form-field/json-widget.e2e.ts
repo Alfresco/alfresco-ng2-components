@@ -89,7 +89,7 @@ describe('Form Field Component - JSON Widget', () => {
         await taskList.getDataTable().waitForTableBody();
     });
 
-    it('[C317461] View json field in standalone task ', async () => {
+    it('[C593999] View json field in standalone task ', async () => {
         await taskList.checkContentIsDisplayedByName(taskName);
         await taskList.selectRow(taskName);
 
