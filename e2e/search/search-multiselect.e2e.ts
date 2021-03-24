@@ -23,6 +23,7 @@ import { SearchFiltersPage } from './pages/search-filters.page';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
+import { SitesApi } from '@alfresco/js-api';
 
 describe('Search Component - Multi-Select Facet', () => {
     const loginPage = new LoginPage();
@@ -151,12 +152,14 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await apiService.login(userUploadingTxt.username, userUploadingTxt.password);
 
-            site = await apiService.getInstance().core.sitesApi.createSite({
+            const sitesApi = new SitesApi(apiService.getInstance());
+
+            site = await sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });
 
-            await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+            await sitesApi.createSiteMembership(site.entry.id, {
                 id: userUploadingImg.username,
                 role: CONSTANTS.CS_USER_ROLES.MANAGER
             });
@@ -232,7 +235,9 @@ describe('Search Component - Multi-Select Facet', () => {
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
             await uploadActions.deleteFileOrFolder(txtFile.entry.id);
-            await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+
+            const sitesApi = new SitesApi(apiService.getInstance());
+            await sitesApi.deleteSite(site.entry.id, { permanent: true });
         });
 
         it('[C280058] Should update filter facets items number when another filter facet item is selected', async () => {
