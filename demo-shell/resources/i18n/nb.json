@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}}-oppgaven er tilordnet til {{assignee}}",
     "PROCESS_STARTED": "{{processName}}-prosessen er startet",
-    "TASK_UPDATED": "{{taskName}}-oppgavedetaljene er oppdatert"
+    "TASK_UPDATED": "{{taskName}}-oppgavedetaljene er oppdatert",
+    "TASK_CREATED": "Oppgaven {{taskName}} ble opprettet"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Skjemadata",

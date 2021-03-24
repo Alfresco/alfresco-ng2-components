@@ -1,4 +1,18 @@
 {
+  "ADF": {
+    "ROLES": {
+      "ALL": "Все",
+      "CONTRIBUTOR": "Писатель",
+      "COLLABORATOR": "Редактор",
+      "COORDINATOR": "Координатор",
+      "EDITOR": "Корректор",
+      "CONSUMER": "Читатель",
+      "SITECOLLABORATOR": "Редактор сайта",
+      "SITECONSUMER": "Читатель сайта",
+      "SITECONTRIBUTOR": "Писатель сайта",
+      "SITEMANAGER": "Менеджер сайта"
+    }
+  },
   "SAVE": "Сохранить",
   "COMPLETE": "Завершить",
   "CANCEL": "Отмена",

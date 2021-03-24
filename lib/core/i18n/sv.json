@@ -1,4 +1,18 @@
 {
+  "ADF": {
+    "ROLES": {
+      "ALL": "Alla",
+      "CONTRIBUTOR": "Deltagare",
+      "COLLABORATOR": "Medarbetare",
+      "COORDINATOR": "Samordnare",
+      "EDITOR": "Redaktör",
+      "CONSUMER": "Förbrukare",
+      "SITECOLLABORATOR": "Samarbetsyta medarbetare",
+      "SITECONSUMER": "Samarbetsyta förbrukare",
+      "SITECONTRIBUTOR": "Samarbetsyta deltagare",
+      "SITEMANAGER": "Samarbetsyta hanterare"
+    }
+  },
   "SAVE": "Spara",
   "COMPLETE": "Slutför",
   "CANCEL": "Avbryt",

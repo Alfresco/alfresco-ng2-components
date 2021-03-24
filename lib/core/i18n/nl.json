@@ -1,4 +1,18 @@
 {
+  "ADF": {
+    "ROLES": {
+      "ALL": "Alle",
+      "CONTRIBUTOR": "Bijdrager",
+      "COLLABORATOR": "Medewerker",
+      "COORDINATOR": "Coördinator",
+      "EDITOR": "Editor",
+      "CONSUMER": "Consument",
+      "SITECOLLABORATOR": "Sitemedewerker",
+      "SITECONSUMER": "Sitegebruiker",
+      "SITECONTRIBUTOR": "Sitebijdrager",
+      "SITEMANAGER": "Sitemanager"
+    }
+  },
   "SAVE": "Opslaan",
   "COMPLETE": "Voltooid",
   "CANCEL": "Annuleren",

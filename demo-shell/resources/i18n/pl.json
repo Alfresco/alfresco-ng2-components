@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "Zadanie {{taskName}} zostało przydzielone do {{assignee}}",
     "PROCESS_STARTED": "Proces {{processName}} został uruchomiony",
-    "TASK_UPDATED": "Szczegóły zadania {{taskName}} zostały zaktualizowane"
+    "TASK_UPDATED": "Szczegóły zadania {{taskName}} zostały zaktualizowane",
+    "TASK_CREATED": "Zadanie {{taskName}} zostało utworzone"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Dane formularza",

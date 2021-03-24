@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "Задача {{taskName}} была назначена {{assignee}}",
     "PROCESS_STARTED": "Процесс {{processName}} запущен",
-    "TASK_UPDATED": "Сведения о задаче {{taskName}} обновлены"
+    "TASK_UPDATED": "Сведения о задаче {{taskName}} обновлены",
+    "TASK_CREATED": "{{taskName}} задача создана"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Данные формы",

@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}} -tehtävä on määritetty käyttäjälle {{assignee}}",
     "PROCESS_STARTED": "{{processName}} -prosessi on käynnistetty",
-    "TASK_UPDATED": "{{taskName}} -tehtävän tiedot on päivitetty"
+    "TASK_UPDATED": "{{taskName}} -tehtävän tiedot on päivitetty",
+    "TASK_CREATED": "{{taskName}} -tehtävä luotiin"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Lomaketiedot",

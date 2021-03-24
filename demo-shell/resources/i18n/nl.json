@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}}-taak is toegewezen aan {{assignee}}",
     "PROCESS_STARTED": "{{processName}}-proces is gestart",
-    "TASK_UPDATED": "{{taskName}}-taakdetails zijn bijgewerkt"
+    "TASK_UPDATED": "{{taskName}}-taakdetails zijn bijgewerkt",
+    "TASK_CREATED": "Taak {{taskName}} is gemaakt"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Formuliergegevens",

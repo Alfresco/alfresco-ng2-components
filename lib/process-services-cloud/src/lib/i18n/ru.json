@@ -24,7 +24,7 @@
       "PARENT_TASK_ID": "Идентификатор родительского задания",
       "PROCESS_DEF_ID": "Идентификатор определения процесса",
       "PROCESS_DEF_KEY": "Ключ определения процесса",
-      "APP_VERSION": "Версия выпуска приложения"
+      "APP_VERSION": "Версия приложения"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Начать процесс",
@@ -174,6 +174,7 @@
   },
   "ADF_CLOUD_EDIT_TASK_FILTER": {
     "TITLE": "Настройка фильтра",
+    "FILTER_NAME": "Имя фильтра",
     "TOOL_TIP": {
       "SAVE": "Сохранить фильтр",
       "SAVE_AS": "Сохранить фильтр как",
@@ -229,6 +230,7 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "Настройка фильтра",
+    "FILTER_NAME": "Имя фильтра",
     "LABEL": {
       "APP_NAME": "Название приложения",
       "PROCESS_INS_ID": "Идентификатор экземпляра процесса",

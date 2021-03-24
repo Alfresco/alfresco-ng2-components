@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "تم تعيين المهمة {{taskName}} إلى {{assignee}}",
     "PROCESS_STARTED": "تم بدء عملية {{processName}}",
-    "TASK_UPDATED": "تم تحديث تفاصيل مهمة {{taskName}}"
+    "TASK_UPDATED": "تم تحديث تفاصيل مهمة {{taskName}}",
+    "TASK_CREATED": "تم إنشاء المهمة {{TaskName}}"
   },
   "FORM-LOADING": {
     "FORM_DATA": "بيانات النموذج",

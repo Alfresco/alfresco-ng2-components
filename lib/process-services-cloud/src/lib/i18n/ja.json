@@ -24,7 +24,7 @@
       "PARENT_TASK_ID": "親タスク ID",
       "PROCESS_DEF_ID": "プロセス定義 ID",
       "PROCESS_DEF_KEY": "プロセス定義キー",
-      "APP_VERSION": "アプリケーションのリリースバージョン"
+      "APP_VERSION": "アプリケーションのバージョン"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "プロセスの開始",
@@ -174,6 +174,7 @@
   },
   "ADF_CLOUD_EDIT_TASK_FILTER": {
     "TITLE": "フィルタのカスタマイズ",
+    "FILTER_NAME": "フィルタの名前",
     "TOOL_TIP": {
       "SAVE": "フィルタの保存",
       "SAVE_AS": "フィルタに名前を付けて保存",
@@ -229,6 +230,7 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "フィルタのカスタマイズ",
+    "FILTER_NAME": "フィルタの名前",
     "LABEL": {
       "APP_NAME": "アプリケーション名",
       "PROCESS_INS_ID": "プロセスインスタンス ID",

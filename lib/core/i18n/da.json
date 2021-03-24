@@ -1,4 +1,18 @@
 {
+  "ADF": {
+    "ROLES": {
+      "ALL": "Alle",
+      "CONTRIBUTOR": "Bidragyder",
+      "COLLABORATOR": "Samarbejdspartner",
+      "COORDINATOR": "Koordinator",
+      "EDITOR": "Redaktør",
+      "CONSUMER": "Forbruger",
+      "SITECOLLABORATOR": "Site samarbejdspartner",
+      "SITECONSUMER": "Site forbruger",
+      "SITECONTRIBUTOR": "Site bidragyder",
+      "SITEMANAGER": "Site chef"
+    }
+  },
   "SAVE": "Gem",
   "COMPLETE": "Fuldført",
   "CANCEL": "Annuller",
@@ -224,13 +238,13 @@
         "CLEAR": "Ryd",
         "TOGGLE": "Slå værdi til/fra",
         "COPY_TO_CLIPBOARD": "Dobbeltklik for at kopiere værdien",
-        "EDIT_ASPECTS": "Rediger udseende"
+        "EDIT_ASPECTS": "Rediger aspekt"
       },
       "ACCESSIBILITY": {
         "EDIT": "Redigér knap",
         "DATEPICKER": "Brug piletasterne til at navigere mellem datoer. Pil op og pil ned bruges til at gå til den næste eller forrige uge, på den samme dag. Brug venstre og højre pil til at gå til næste eller forrige dag. Tryk på Enter eller Return for at vælge en dato.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Værdien er kopieret til udklipsholderen",
-        "EDIT_ASPECTS": "Rediger udseende"
+        "EDIT_ASPECTS": "Rediger aspekt"
       }
     },
     "SEARCH": {

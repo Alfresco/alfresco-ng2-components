@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}} uppgiften har tilldelats till {{assignee}}",
     "PROCESS_STARTED": "{{processName}} processen har startats",
-    "TASK_UPDATED": "{{taskName}} uppgiftsinformation har uppdaterats"
+    "TASK_UPDATED": "{{taskName}} uppgiftsinformation har uppdaterats",
+    "TASK_CREATED": "Uppgiften {{taskName}} skapades"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Formulärdata",
