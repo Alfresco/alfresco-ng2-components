@@ -43,7 +43,7 @@ describe('Document List Component', () => {
             acsUser = await usersActions.createUser();
 
             const sitesApi = new SitesApi(apiService.getInstance());
-            privateSite = sitesApi.createSite(privateSiteBody);
+            privateSite = await sitesApi.createSite(privateSiteBody);
 
             await loginPage.login(acsUser.username, acsUser.password);
         });
