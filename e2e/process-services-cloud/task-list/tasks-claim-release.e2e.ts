@@ -227,8 +227,8 @@ describe('Task claim/release', () => {
 
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
-            await taskFormCloudComponent.checkClaimButtonIsDisplayed();
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
+            await taskFormCloudComponent.checkClaimButtonIsDisplayed();
 
             await taskFormCloudComponent.clickClaimButton();
             await browser.refresh();
