@@ -20,6 +20,7 @@ import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { CreateLibraryDialogPage } from '../../core/pages/dialog/create-library-dialog.page';
 import { CustomSourcesPage } from '../../core/pages/custom-sources.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { SitesApi } from '@alfresco/js-api';
 
 describe('Create library directive', () => {
 
@@ -45,7 +46,9 @@ describe('Create library directive', () => {
         await apiService.loginWithProfile('admin');
 
         acsUser = await usersActions.createUser();
-        createSite = await apiService.getInstance().core.sitesApi.createSite({
+
+        const sitesApi = new SitesApi(apiService.getInstance());
+        createSite = await sitesApi.createSite({
             title: StringUtil.generateRandomString(20).toLowerCase(),
             visibility: 'PUBLIC'
         });
@@ -55,7 +58,10 @@ describe('Create library directive', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().core.sitesApi.deleteSite(createSite.entry.id, { permanent: true });
+
+        const sitesApi = new SitesApi(apiService.getInstance());
+        await sitesApi.deleteSite(createSite.entry.id, { permanent: true });
+
         await navigationBarPage.clickLogoutButton();
     });
 

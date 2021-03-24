@@ -22,6 +22,7 @@ import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
+import { SitesApi } from '@alfresco/js-api';
 
 describe('Upload - User permission', () => {
 
@@ -59,30 +60,34 @@ describe('Upload - User permission', () => {
     });
 
     beforeEach(async () => {
-        consumerSite = await apiService.getInstance().core.sitesApi.createSite({
+        const sitesApi = new SitesApi(apiService.getInstance());
+
+        consumerSite = await sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        managerSite = await apiService.getInstance().core.sitesApi.createSite({
+        managerSite = await sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(consumerSite.entry.id, {
+        await sitesApi.createSiteMembership(consumerSite.entry.id, {
             id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(managerSite.entry.id, {
+        await sitesApi.createSiteMembership(managerSite.entry.id, {
             id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
     });
 
     afterEach(async () => {
-        await apiService.getInstance().core.sitesApi.deleteSite(managerSite.entry.id, { permanent: true });
-        await apiService.getInstance().core.sitesApi.deleteSite(consumerSite.entry.id, { permanent: true });
+        const sitesApi = new SitesApi(apiService.getInstance());
+
+        await sitesApi.deleteSite(managerSite.entry.id, { permanent: true });
+        await sitesApi.deleteSite(consumerSite.entry.id, { permanent: true });
     });
 
     describe('Consumer permissions', () => {

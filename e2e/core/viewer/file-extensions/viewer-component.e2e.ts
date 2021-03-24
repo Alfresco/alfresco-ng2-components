@@ -30,6 +30,7 @@ import { FileModel } from '../../../models/ACS/file.model';
 import { FolderModel } from '../../../models/ACS/folder.model';
 import { NavigationBarPage } from '../../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../../util/constants');
+import { SitesApi } from '@alfresco/js-api';
 
 describe('Viewer', () => {
 
@@ -63,12 +64,14 @@ describe('Viewer', () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
 
-        site = await apiService.getInstance().core.sitesApi.createSite({
+        const sitesApi = new SitesApi(apiService.getInstance());
+
+        site = await sitesApi.createSite({
             title: StringUtil.generateRandomString(8),
             visibility: 'PUBLIC'
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+        await sitesApi.createSiteMembership(site.entry.id, {
             id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
@@ -80,7 +83,9 @@ describe('Viewer', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+
+        const sitesApi = new SitesApi(apiService.getInstance());
+        await sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     it('[C272813] Should be redirected to site when opening and closing a file in a site', async () => {

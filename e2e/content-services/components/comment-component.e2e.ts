@@ -30,6 +30,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
+import { SitesApi, SiteEntry } from '@alfresco/js-api';
 
 describe('Comment', () => {
 
@@ -165,17 +166,19 @@ describe('Comment', () => {
     });
 
     describe('Consumer Permissions', () => {
-        let site, pngUploadedFile;
+        let site: SiteEntry;
+        let pngUploadedFile;
 
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');
 
-            site = await apiService.getInstance().core.sitesApi.createSite({
+            const sitesApi = new SitesApi(apiService.getInstance());
+            site = await sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });
 
-            await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+            await sitesApi.createSiteMembership(site.entry.id, {
                 id: acsUser.username,
                 role: CONSTANTS.CS_USER_ROLES.CONSUMER
             });
@@ -190,7 +193,9 @@ describe('Comment', () => {
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
             await uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
-            await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+
+            const sitesApi = new SitesApi(apiService.getInstance());
+            await sitesApi.deleteSite(site.entry.id, { permanent: true });
         });
 
         it('[C290147] Should NOT be able to add comments to a site file with Consumer permissions', async () => {

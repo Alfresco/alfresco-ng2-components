@@ -31,6 +31,7 @@ import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
+import { SitesApi } from '@alfresco/js-api';
 
 describe('Version component permissions', () => {
 
@@ -78,32 +79,34 @@ describe('Version component permissions', () => {
         await usersActions.createUser(managerUser);
         await usersActions.createUser(fileCreatorUser);
 
-        site = await apiService.getInstance().core.sitesApi.createSite({
+        const sitesApi = new SitesApi(apiService.getInstance());
+
+        site = await sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+        await sitesApi.createSiteMembership(site.entry.id, {
             id: consumerUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+        await sitesApi.createSiteMembership(site.entry.id, {
             id: collaboratorUser.username,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+        await sitesApi.createSiteMembership(site.entry.id, {
             id: contributorUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+        await sitesApi.createSiteMembership(site.entry.id, {
             id: managerUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+        await sitesApi.createSiteMembership(site.entry.id, {
             id: fileCreatorUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
@@ -123,7 +126,9 @@ describe('Version component permissions', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+
+        const sitesApi = new SitesApi(apiService.getInstance());
+        await sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     describe('Manager', () => {

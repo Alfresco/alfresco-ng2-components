@@ -31,6 +31,7 @@ import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
+import { SitesApi } from '@alfresco/js-api';
 
 describe('Document List Component', () => {
 
@@ -66,11 +67,13 @@ describe('Document List Component', () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(anotherAcsUser);
-        site = await apiService.getInstance().core.sitesApi.createSite({
+
+        const sitesApi = new SitesApi(apiService.getInstance());
+        site = await sitesApi.createSite({
             title: StringUtil.generateRandomString(8),
             visibility: 'PUBLIC'
         });
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+        await sitesApi.createSiteMembership(site.entry.id, {
             id: anotherAcsUser.username,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
@@ -106,7 +109,9 @@ describe('Document List Component', () => {
         await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
         await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);
         await uploadActions.deleteFileOrFolder(destinationFolder.entry.id);
-        await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+
+        const sitesApi = new SitesApi(apiService.getInstance());
+        await sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     describe('Document List Component - Actions Move and Copy', () => {

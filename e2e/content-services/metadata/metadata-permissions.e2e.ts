@@ -29,6 +29,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
+import { SitesApi } from '@alfresco/js-api';
 
 describe('permissions', () => {
 
@@ -71,22 +72,24 @@ describe('permissions', () => {
         await usersActions.createUser(collaboratorUser);
         await usersActions.createUser(contributorUser);
 
-        site = await apiService.getInstance().core.sitesApi.createSite({
+        const sitesApi = new SitesApi(apiService.getInstance());
+
+        site = await sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+        await sitesApi.createSiteMembership(site.entry.id, {
             id: consumerUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+        await sitesApi.createSiteMembership(site.entry.id, {
             id: collaboratorUser.username,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+        await sitesApi.createSiteMembership(site.entry.id, {
             id: contributorUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
@@ -96,7 +99,9 @@ describe('permissions', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+
+        const sitesApi = new SitesApi(apiService.getInstance());
+        await sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     afterEach(async () => {

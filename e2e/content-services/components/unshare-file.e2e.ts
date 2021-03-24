@@ -27,7 +27,7 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { NodeEntry } from '@alfresco/js-api';
+import { NodeEntry, SitesApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { ShareDialogPage } from '../../core/pages/dialog/share-dialog.page';
@@ -77,11 +77,13 @@ describe('Unshare file', () => {
             }
         };
 
-        shareFilesSite = await apiService.getInstance().core.sitesApi.createSite(site);
+        const sitesApi = new SitesApi(apiService.getInstance());
 
-        const docLibId = (await apiService.getInstance().core.sitesApi.getSiteContainers(siteName)).list.entries[0].entry.id;
+        shareFilesSite = await sitesApi.createSite(site);
+
+        const docLibId = (await sitesApi.listSiteContainers(siteName)).list.entries[0].entry.id;
         const testFile1Id = (await apiService.getInstance().core.nodesApi.addNode(docLibId, nodeBody)).entry.id;
-        await apiService.getInstance().core.sitesApi.addSiteMember(siteName, {
+        await sitesApi.createSiteMembership(siteName, {
             id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
@@ -102,7 +104,9 @@ describe('Unshare file', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await apiService.getInstance().core.sitesApi.deleteSite(shareFilesSite.entry.id, { permanent: true });
+
+        const sitesApi = new SitesApi(apiService.getInstance());
+        await sitesApi.deleteSite(shareFilesSite.entry.id, { permanent: true });
     });
 
     describe('with permission', () => {

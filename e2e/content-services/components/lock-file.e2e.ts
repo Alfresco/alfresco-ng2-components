@@ -29,7 +29,7 @@ import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { LockFilePage } from '../../content-services/pages/lock-file.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { NodeEntry } from '@alfresco/js-api';
+import { NodeEntry, SitesApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Lock File', () => {
@@ -66,7 +66,9 @@ describe('Lock File', () => {
 
         await apiService.login(adminUser.username, adminUser.password);
 
-        site = await apiService.getInstance().core.sitesApi.createSite({
+        const sitesApi = new SitesApi(apiService.getInstance());
+
+        site = await sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PRIVATE'
         });
@@ -75,7 +77,7 @@ describe('Lock File', () => {
 
         documentLibrary = resultNode.list.entries[0].entry.id;
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+        await sitesApi.createSiteMembership(site.entry.id, {
             id: managerUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
@@ -84,8 +86,8 @@ describe('Lock File', () => {
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
         try {
-
-            await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+            const sitesApi = new SitesApi(apiService.getInstance());
+            await sitesApi.deleteSite(site.entry.id, { permanent: true });
         } catch (e) {
         }
     });

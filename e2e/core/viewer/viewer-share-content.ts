@@ -31,6 +31,7 @@ import { ShareDialogPage } from '../../core/pages/dialog/share-dialog.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
+import { SitesApi } from '@alfresco/js-api';
 
 describe('Viewer', () => {
 
@@ -65,12 +66,14 @@ describe('Viewer', () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
 
-        site = await apiService.getInstance().core.sitesApi.createSite({
+        const sitesApi = new SitesApi(apiService.getInstance());
+
+        site = await sitesApi.createSite({
             title: StringUtil.generateRandomString(8),
             visibility: 'PUBLIC'
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+        await sitesApi.createSiteMembership(site.entry.id, {
             id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
@@ -88,7 +91,8 @@ describe('Viewer', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+        const sitesApi = new SitesApi(apiService.getInstance());
+        await sitesApi.deleteSite(site.entry.id, { permanent: true });
         await apiService.login(acsUser.username, acsUser.password);
         await uploadActions.deleteFileOrFolder(wordFileUploaded.entry.id);
     });

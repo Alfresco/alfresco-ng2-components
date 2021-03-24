@@ -35,6 +35,7 @@ import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { VersionManagePage } from '../../core/pages/version-manager.page';
 import CONSTANTS = require('../../util/constants');
+import { SitesApi } from '@alfresco/js-api';
 
 describe('Permissions Component', () => {
 
@@ -104,33 +105,34 @@ describe('Permissions Component', () => {
         folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}`;
 
         const publicSiteBody = { visibility: 'PUBLIC', title: publicSiteName };
-
         const privateSiteBody = { visibility: 'PRIVATE', title: privateSiteName };
 
-        publicSite = await apiService.getInstance().core.sitesApi.createSite(publicSiteBody);
-        privateSite = await apiService.getInstance().core.sitesApi.createSite(privateSiteBody);
+        const sitesApi = new SitesApi(apiService.getInstance());
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(publicSite.entry.id, {
+        publicSite = await sitesApi.createSite(publicSiteBody);
+        privateSite = await sitesApi.createSite(privateSiteBody);
+
+        await sitesApi.createSiteMembership(publicSite.entry.id, {
             id: siteConsumerUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(publicSite.entry.id, {
+        await sitesApi.createSiteMembership(publicSite.entry.id, {
             id: collaboratorUser.username,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(publicSite.entry.id, {
+        await sitesApi.createSiteMembership(publicSite.entry.id, {
             id: contributorUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(publicSite.entry.id, {
+        await sitesApi.createSiteMembership(publicSite.entry.id, {
             id: managerUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(privateSite.entry.id, {
+        await sitesApi.createSiteMembership(privateSite.entry.id, {
             id: managerUser.username,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
@@ -154,8 +156,10 @@ describe('Permissions Component', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
-        await apiService.getInstance().core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
+
+        const sitesApi = new SitesApi(apiService.getInstance());
+        await sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
+        await sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
     });
 
     describe('Role Site Dropdown', () => {
@@ -192,17 +196,17 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(consumerUser.firstName);
             await permissionsPage.addPermissionsDialog.checkUserIsAdded(consumerUser.username);
 
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.username)).toEqual('SiteCollaborator');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.username)).toEqual(CONSTANTS.CS_USER_ROLES_I18N.COLLABORATOR);
 
             await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(consumerUser.username);
 
             const roleDropdownOptions = permissionsPage.addPermissionsDialog.getRoleDropdownOptions();
 
             await expect(await roleDropdownOptions.count()).toBe(4);
-            await expect(await BrowserActions.getText(roleDropdownOptions.get(0))).toBe(CONSTANTS.CS_USER_ROLES.COLLABORATOR);
-            await expect(await BrowserActions.getText(roleDropdownOptions.get(1))).toBe(CONSTANTS.CS_USER_ROLES.CONSUMER);
-            await expect(await BrowserActions.getText(roleDropdownOptions.get(2))).toBe(CONSTANTS.CS_USER_ROLES.CONTRIBUTOR);
-            await expect(await BrowserActions.getText(roleDropdownOptions.get(3))).toBe(CONSTANTS.CS_USER_ROLES.MANAGER);
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(0))).toBe(CONSTANTS.CS_USER_ROLES_I18N.COLLABORATOR);
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(1))).toBe(CONSTANTS.CS_USER_ROLES_I18N.CONSUMER);
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(2))).toBe(CONSTANTS.CS_USER_ROLES_I18N.CONTRIBUTOR);
+            await expect(await BrowserActions.getText(roleDropdownOptions.get(3))).toBe(CONSTANTS.CS_USER_ROLES_I18N.MANAGER);
         });
     });
 
