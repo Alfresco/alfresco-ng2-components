@@ -202,7 +202,7 @@ describe('Task claim/release', () => {
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.username, testUser.password);
-            await tasksService.createStandaloneTask(taskName, simpleApp, { 'candidateGroups': ["hr"] });
+            await tasksService.createStandaloneTask(taskName, simpleApp, { 'candidateGroups': ['hr'] });
 
             await loginSSOPage.login(testUser.username, testUser.password);
         });
