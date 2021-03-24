@@ -21,6 +21,7 @@ import {
     GroupIdentityService,
     IdentityService,
     EditJsonDialog,
+    FormCloudService,
     LoginPage,
     ProcessCloudWidgetPage,
     StringUtil,
@@ -50,6 +51,7 @@ describe('Form Field Component - JSON Widget', () => {
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
     const tasksService = new TasksService(apiService);
+    const formCloudService = new FormCloudService(apiService);
 
     const jsonWidget = widget.json();
 
@@ -57,7 +59,7 @@ describe('Form Field Component - JSON Widget', () => {
     let groupInfo;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const taskName = StringUtil.generateRandomString();
-    const formWithJsonWidgetId = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.formWithJsonWidget.widgets.displayJsonWidgetId;
+    const formWithJson = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.formWithJsonWidget;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
@@ -68,7 +70,9 @@ describe('Form Field Component - JSON Widget', () => {
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.username, testUser.password);
 
-        await tasksService.createStandaloneTask(taskName, simpleApp, { "assignee": testUser.username, "formKey": "form-ff22d7d6-0483-4c88-8c85-5638607105a6" });
+        const formId = await formCloudService.getIdByFormName(simpleApp, formWithJson.name);
+
+        await tasksService.createStandaloneTaskWithForm(taskName, simpleApp, formId, { "assignee": testUser.username });
 
         await loginSSOPage.login(testUser.username, testUser.password);
     });
@@ -92,8 +96,8 @@ describe('Form Field Component - JSON Widget', () => {
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
 
-        await jsonWidget.checkWidgetIsVisible(formWithJsonWidgetId);
-        await jsonWidget.clickJsonButton(formWithJsonWidgetId);
+        await jsonWidget.checkWidgetIsVisible(formWithJson.widgets.displayJsonWidgetId);
+        await jsonWidget.clickJsonButton(formWithJson.widgets.displayJsonWidgetId);
 
         await editJsonDialog.checkDialogIsDisplayed();
         await expect(await editJsonDialog.getDialogContent()).toBe('{}');
