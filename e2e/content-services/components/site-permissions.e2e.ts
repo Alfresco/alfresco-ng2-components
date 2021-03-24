@@ -196,7 +196,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(consumerUser.firstName);
             await permissionsPage.addPermissionsDialog.checkUserIsAdded(consumerUser.username);
 
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.username)).toEqual('SiteCollaborator');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.username)).toEqual(CONSTANTS.CS_USER_ROLES_I18N.COLLABORATOR);
 
             await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(consumerUser.username);
 
