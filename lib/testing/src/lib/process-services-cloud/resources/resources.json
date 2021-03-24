@@ -181,7 +181,10 @@
         "name": "outputform"
       },
       "exclusiveconditionform": {
-        "name": "exclusive-condition-form"
+        "name": "exclusive-condition-form",
+        "widgets": {
+          "exclusiveCondition": "exclusiveCondition"
+        }
       },
       "uploadlocalfileform": {
         "name": "upload-localfile-form"
@@ -303,7 +306,12 @@
       "salesUserTask": "salesuser task",
       "hrUserTask": "hruser task",
       "attachLocalFile": "attach local file",
-      "userTaskToShowRestResult": "UserTaskToShowRestResult"
+      "userTaskToShowRestResult": "UserTaskToShowRestResult",
+      "conditionTask":  "ConditionTask",
+      "userTask": "UserTask",
+      "terminateTask": "TerminateTask",
+      "mainTask": "MainTask",
+      "followingTask": "FollowingTask"
     },
     "security": [
       {
