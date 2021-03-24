@@ -146,6 +146,14 @@ exports.CS_USER_ROLES = {
     MANAGER: 'SiteManager'
 };
 
+// en-US version of the Site Role titles
+exports.CS_USER_ROLES_I18N = {
+    CONSUMER: 'Site Consumer',
+    COLLABORATOR: 'Site Collaborator',
+    CONTRIBUTOR: 'Site Contributor',
+    MANAGER: 'Site Manager'
+}
+
 exports.SERVICE_TASK_STATUS = {
     ALL:'ALL',
     STARTED:'STARTED',
