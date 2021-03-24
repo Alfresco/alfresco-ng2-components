@@ -30,6 +30,8 @@ env:
         - IDENTITY_ADMIN_EMAIL=$E2E_ADMIN_EMAIL_IDENTITY
         - IDENTITY_ADMIN_PASSWORD=$E2E_ADMIN_PASSWORD_IDENTITY
         - URL_HOST_ADF="http://localhost:4200"
+        - LOG_LEVEL="TRACE"
+
 
 branches:
   only:
