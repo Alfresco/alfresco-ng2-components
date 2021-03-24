@@ -29,7 +29,7 @@ import {
     StringUtil,
     TaskFormCloudComponent,
     TaskHeaderCloudPage,
-    TasksService,
+    TasksService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
@@ -109,14 +109,10 @@ describe('Task claim/release', () => {
     });
 
     describe('candidate group', () => {
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
         let candidate;
 
         beforeAll(async () => {
             await apiService.loginWithProfile('identityAdmin');
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
             candidate = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
             const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(candidate.idIdentityService, groupInfo.id);
@@ -206,7 +202,7 @@ describe('Task claim/release', () => {
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.username, testUser.password);
-            await tasksService.createStandaloneTask(taskName, simpleApp, { "candidateGroups": ["hr"] });
+            await tasksService.createStandaloneTask(taskName, simpleApp, { 'candidateGroups': ["hr"] });
 
             await loginSSOPage.login(testUser.username, testUser.password);
         });

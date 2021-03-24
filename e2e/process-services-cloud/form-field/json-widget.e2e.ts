@@ -27,7 +27,7 @@ import {
     StringUtil,
     TaskFormCloudComponent,
     TaskHeaderCloudPage,
-    TasksService,
+    TasksService
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from '.././pages/tasks-cloud-demo.page';
@@ -72,7 +72,7 @@ describe('Form Field Component - JSON Widget', () => {
 
         const formId = await formCloudService.getIdByFormName(simpleApp, formWithJson.name);
 
-        await tasksService.createStandaloneTaskWithForm(taskName, simpleApp, formId, { "assignee": testUser.username });
+        await tasksService.createStandaloneTaskWithForm(taskName, simpleApp, formId, { 'assignee': testUser.username });
 
         await loginSSOPage.login(testUser.username, testUser.password);
     });
