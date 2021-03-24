@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
-import { BrowserVisibility } from '../../utils/browser-visibility';
+import { TestElement } from '../../test-element';
 
 export class StartFormPage {
-    startProcessForm = element(by.css('.adf-start-form-container'));
+    startProcessForm = TestElement.byCss('.adf-start-form-container');
 
     async checkStartProcessFormIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.startProcessForm);
+        await this.startProcessForm.isDisplayed();
     }
 
 }
