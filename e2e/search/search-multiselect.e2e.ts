@@ -59,7 +59,8 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await apiService.login(acsUser.username, acsUser.password);
 
-            site = await apiService.getInstance().core.sitesApi.createSite({
+            const sitesApi = new SitesApi(apiService.getInstance());
+            site = await sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });
@@ -97,7 +98,8 @@ describe('Search Component - Multi-Select Facet', () => {
                 uploadActions.deleteFileOrFolder(txtFileSite.entry.id)
             ]);
 
-            await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+            const sitesApi = new SitesApi(apiService.getInstance());
+            await sitesApi.deleteSite(site.entry.id, { permanent: true });
             await navigationBarPage.clickLogoutButton();
         });
 
@@ -214,7 +216,8 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await apiService.login(acsUser.username, acsUser.password);
 
-            site = await apiService.getInstance().core.sitesApi.createSite({
+            const sitesApi = new SitesApi(apiService.getInstance());
+            site = await sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });

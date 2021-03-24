@@ -31,6 +31,7 @@ import {
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { SitesApi } from '@alfresco/js-api';
 
 describe('Delete Directive', () => {
 
@@ -234,12 +235,14 @@ describe('Delete Directive', () => {
         beforeAll(async () => {
             await apiService.login(acsUser.username, acsUser.password);
 
-            createdSite = await apiService.getInstance().core.sitesApi.createSite({
+            const sitesApi = new SitesApi(apiService.getInstance());
+
+            createdSite = await sitesApi.createSite({
                 title: StringUtil.generateRandomString(20).toLowerCase(),
                 visibility: 'PRIVATE'
             });
 
-            await apiService.getInstance().core.sitesApi.addSiteMember(createdSite.entry.id, {
+            await sitesApi.createSiteMembership(createdSite.entry.id, {
                 id: secondAcsUser.username,
                 role: 'SiteCollaborator'
             });
@@ -266,7 +269,8 @@ describe('Delete Directive', () => {
 
         afterAll(async () => {
             try {
-                await apiService.getInstance().core.sitesApi.deleteSite(createdSite.entry.id, { permanent: true });
+                const sitesApi = new SitesApi(apiService.getInstance());
+                await sitesApi.deleteSite(createdSite.entry.id, { permanent: true });
             } catch (error) {}
             await navigationBarPage.clickLogoutButton();
         });

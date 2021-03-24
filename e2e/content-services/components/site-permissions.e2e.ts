@@ -156,8 +156,10 @@ describe('Permissions Component', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
-        await apiService.getInstance().core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
+
+        const sitesApi = new SitesApi(apiService.getInstance());
+        await sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
+        await sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
     });
 
     describe('Role Site Dropdown', () => {

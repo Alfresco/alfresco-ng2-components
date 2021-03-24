@@ -86,8 +86,8 @@ describe('Lock File', () => {
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
         try {
-
-            await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+            const sitesApi = new SitesApi(apiService.getInstance());
+            await sitesApi.deleteSite(site.entry.id, { permanent: true });
         } catch (e) {
         }
     });

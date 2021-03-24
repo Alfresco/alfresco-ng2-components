@@ -193,7 +193,9 @@ describe('Comment', () => {
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
             await uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
-            await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+
+            const sitesApi = new SitesApi(apiService.getInstance());
+            await sitesApi.deleteSite(site.entry.id, { permanent: true });
         });
 
         it('[C290147] Should NOT be able to add comments to a site file with Consumer permissions', async () => {

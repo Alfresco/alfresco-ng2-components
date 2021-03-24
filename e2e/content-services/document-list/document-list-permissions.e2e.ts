@@ -19,6 +19,7 @@ import { browser } from 'protractor';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ApiService, BrowserActions, ErrorPage, LoginPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
+import { SitesApi } from '@alfresco/js-api';
 
 describe('Document List Component', () => {
 
@@ -41,7 +42,8 @@ describe('Document List Component', () => {
 
             acsUser = await usersActions.createUser();
 
-            privateSite = await apiService.getInstance().core.sitesApi.createSite(privateSiteBody);
+            const sitesApi = new SitesApi(apiService.getInstance());
+            privateSite = sitesApi.createSite(privateSiteBody);
 
             await loginPage.login(acsUser.username, acsUser.password);
         });
@@ -49,7 +51,9 @@ describe('Document List Component', () => {
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
             await navigationBarPage.clickLogoutButton();
-            await apiService.getInstance().core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
+
+            const sitesApi = new SitesApi(apiService.getInstance());
+            await sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
         });
 
         it('[C217334] Should display a message when accessing file without permissions', async () => {
