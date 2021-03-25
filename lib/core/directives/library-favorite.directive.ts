@@ -17,7 +17,7 @@
 
 import { Directive, HostListener, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { SiteBody, FavoriteBody, FavoriteEntry, Site } from '@alfresco/js-api';
-import { AlfrescoApiService } from '../services';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 export interface LibraryEntity {
     entry: Site;

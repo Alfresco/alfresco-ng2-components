@@ -23,7 +23,7 @@ import { of, throwError, Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { DirectiveModule } from './directive.module';
 import { CoreModule } from '../core.module';
-import { AlfrescoApiServiceMock } from '../mock';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 describe('LibraryMembershipDirective', () => {
     let alfrescoApiService: AlfrescoApiService;

@@ -17,8 +17,10 @@
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { SiteEntry, SiteMembershipRequestBody, SiteMemberEntry, SiteMembershipRequestEntry } from '@alfresco/js-api';
-import { AlfrescoApiService, SitesService, VersionCompatibilityService } from '../services';
 import { BehaviorSubject, from, Observable } from 'rxjs';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { SitesService } from '../services/sites.service';
+import { VersionCompatibilityService } from '../services/version-compatibility.service';
 
 export interface LibraryMembershipToggleEvent {
     updatedEntry?: any;

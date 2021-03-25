@@ -19,7 +19,7 @@ import { Component, ViewChild } from '@angular/core';
 import { LibraryEntity, LibraryFavoriteDirective } from './library-favorite.directive';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService } from '../services';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiServiceMock } from '../mock';
 
