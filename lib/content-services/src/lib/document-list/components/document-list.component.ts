@@ -455,7 +455,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.resetSelection();
+        if (!changes['preselectNodes']) {
+            this.resetSelection();
+        }
 
         if (Array.isArray(this.sorting)) {
             const [key, direction] = this.sorting;
@@ -499,17 +501,20 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     reload() {
         this.ngZone.run(() => {
             this.resetSelection();
-            if (this.node) {
-                if (this.data) {
-                    this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectedNodesBasedOnSelectionMode());
-                }
-                this.onPreselectNodes();
-                this.syncPagination();
-                this.onDataReady(this.node);
-            } else {
-                this.loadFolder();
-            }
         });
+    }
+
+    reloadWithoutResettingSelection() {
+        if (this.node) {
+            if (this.data) {
+                this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectedNodesBasedOnSelectionMode());
+            }
+            this.onPreselectNodes();
+            this.syncPagination();
+            this.onDataReady(this.node);
+        } else {
+            this.loadFolder();
+        }
     }
 
     contextActionCallback(action) {
@@ -800,7 +805,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     onNodeSelect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
-        this.selection = event.selection.filter(entry => entry.node).map((entry) => entry.node);
+        this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-select', {
             detail: {
                 node: event.row ? event.row.node : null,
@@ -926,12 +931,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     onPreselectNodes() {
         if (this.data?.hasPreselectedRows()) {
             const preselectedNodes = [...this.isSingleSelectionMode() ? [this.data.getPreselectedRows()[0]] : this.data.getPreselectedRows()];
-            const selectedNodes = [...this.selection, ...preselectedNodes];
-
             for (const node of preselectedNodes) {
                 this.dataTable.selectRow(node, true);
             }
-            this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> selectedNodes });
+
+            const selection = this.data.getSelectedRows();
+            this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> selection });
         }
     }
 

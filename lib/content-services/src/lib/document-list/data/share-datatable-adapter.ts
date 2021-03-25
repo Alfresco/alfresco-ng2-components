@@ -251,18 +251,20 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preselectNodes: NodeEntry[] = []) {
-        let shareDataRows: ShareDataRow[] = [];
+        let dataRows: DataRow[] = [];
         if (allowDropFiles !== undefined) {
             this.allowDropFiles = allowDropFiles;
         }
         if (nodePaging?.list) {
             const nodeEntries: NodeEntry[] = nodePaging.list.entries;
             if (nodeEntries?.length) {
-                shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle,
-                    this.thumbnailService, this.allowDropFiles));
+                dataRows = nodeEntries.map((item) => {
+                    const existingRow = this.rows.find(row => row.node.entry.id === item.entry.id);
+                    return existingRow ? existingRow : new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService, this.allowDropFiles);
+                });
 
                 if (this.filter) {
-                    shareDataRows = shareDataRows.filter(this.filter);
+                    dataRows = dataRows.filter(this.filter);
                 }
 
                 if (this.sortingMode !== 'server') {
@@ -270,7 +272,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                     if (this.columns?.length) {
                         const sorting = this.getSorting();
                         if (sorting) {
-                            this.sortRows(shareDataRows, sorting);
+                            this.sortRows(dataRows, sorting);
                         } else {
                             const sortable = this.columns.filter((c) => c.sortable);
                             if (sortable.length > 0) {
@@ -285,7 +287,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
 
         if (merge) {
-            const listPrunedDuplicate = shareDataRows.filter((elementToFilter: any) => {
+            const listPrunedDuplicate = dataRows.filter((elementToFilter: any) => {
                 const isPresent = this.rows.find((currentRow: any) => {
                     return currentRow.obj.entry.id === elementToFilter.obj.entry.id;
                 });
@@ -295,29 +297,27 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
             this.rows = this.rows.concat(listPrunedDuplicate);
         } else {
-            this.rows = shareDataRows;
+            this.rows = dataRows;
         }
 
-        this.selectRowsBasedOnGivenNodes(preselectNodes);
+        this.setPreselectedRowsFromPreselectedNodes(preselectNodes);
     }
 
-    selectRowsBasedOnGivenNodes(preselectNodes: NodeEntry[]) {
-        if (preselectNodes?.length) {
-            this.rows = this.rows.map((row) => {
-                preselectNodes.map((preselectedNode) => {
-                    if (row.obj.entry.id === preselectedNode.entry.id) {
-                        row.isSelected = true;
-                    }
-                });
-                return row;
-            });
-        }
-
-        this.preselectedRows = [...this.rows.filter((res) => res.isSelected)];
+    setPreselectedRowsFromPreselectedNodes(preselectNodes: NodeEntry[]) {
+        this.preselectedRows = [];
+        preselectNodes.forEach((preselectedNode: NodeEntry) => {
+            const rowOfPreselectedNode = this.rows.find(row => row.node.entry.id === preselectedNode.entry.id);
+            if (rowOfPreselectedNode) {
+                this.preselectedRows.push(rowOfPreselectedNode);
+            }
+        });
     }
 
     hasPreselectedRows(): boolean {
         return this.preselectedRows?.length > 0;
     }
 
+    getSelectedRows(): DataRow[] {
+        return this.rows.filter((row: DataRow) => row.isSelected);
+    }
 }
