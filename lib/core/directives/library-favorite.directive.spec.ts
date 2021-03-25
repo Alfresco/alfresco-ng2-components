@@ -42,7 +42,7 @@ describe('LibraryFavoriteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreModule.forRoot()/*, AppTestingModule*/],
+            imports: [TranslateModule.forRoot(), CoreModule.forRoot()],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
             ],
