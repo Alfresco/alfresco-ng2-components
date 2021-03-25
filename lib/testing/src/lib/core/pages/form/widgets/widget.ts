@@ -37,6 +37,7 @@ import { DocumentWidgetPage } from './document-widget.page';
 import { GroupWidgetPage } from './group-widget.page';
 import { TypeaheadWidgetPage } from './typeahead-widget.page';
 import { AttachFolderWidgetPage } from './attach-folder-widget.page';
+import { JsonWidgetPage } from './json-widget.page';
 
 export class Widget {
 
@@ -126,5 +127,9 @@ export class Widget {
 
     tab(): TabPage {
         return new TabPage();
+    }
+
+    json(): JsonWidgetPage {
+        return new JsonWidgetPage();
     }
 }

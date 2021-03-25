@@ -24,9 +24,12 @@ import {
     LocalStorageUtil,
     LoginPage,
     ProcessDefinitionsService,
-    ProcessInstancesService, StatusType,
+    ProcessInstancesService,
+    StatusType,
+    StringUtil,
     TaskFormCloudComponent,
-    TaskHeaderCloudPage
+    TaskHeaderCloudPage,
+    TasksService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
@@ -36,6 +39,7 @@ import { taskFilterConfiguration } from './../config/task-filter.config';
 describe('Task claim/release', () => {
 
     const candidateApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP;
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -51,6 +55,9 @@ describe('Task claim/release', () => {
     const apiService = new ApiService();
     const processDefinitionService = new ProcessDefinitionsService(apiService);
     const processInstancesService = new ProcessInstancesService(apiService);
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
+    const tasksService = new TasksService(apiService);
 
     let processInstance: ProcessInstanceCloud;
 
@@ -71,7 +78,7 @@ describe('Task claim/release', () => {
         });
 
         it('[C306874] Should be able to Claim/Release a process task which has a candidate user', async () => {
-            await setTaskFilter('Created', processInstance.id);
+            await setStatusTaskFilter('Created', processInstance.id);
 
             await taskList.checkContentIsDisplayedByName(candidateApp.tasks.candidateUserTask);
             await taskList.selectRow(candidateApp.tasks.candidateUserTask);
@@ -102,14 +109,10 @@ describe('Task claim/release', () => {
     });
 
     describe('candidate group', () => {
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
         let candidate;
 
         beforeAll(async () => {
             await apiService.loginWithProfile('identityAdmin');
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
             candidate = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
             const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(candidate.idIdentityService, groupInfo.id);
@@ -130,7 +133,7 @@ describe('Task claim/release', () => {
 
         it('[C306875] should be able to Claim/Release a process task which has a candidate group', async () => {
             await navigateToApp(browser.params.testConfig.users.hrUser);
-            await setTaskFilter('Created', processInstance.id);
+            await setStatusTaskFilter('Created', processInstance.id);
 
             await taskList.checkContentIsDisplayedByName(candidateApp.tasks.uploadFileTask);
             await taskList.selectRow(candidateApp.tasks.uploadFileTask);
@@ -158,7 +161,7 @@ describe('Task claim/release', () => {
 
             await navigationBarPage.clickLogoutButton();
             await navigateToApp(candidate);
-            await setTaskFilter('Created', processInstance.id);
+            await setStatusTaskFilter('Created', processInstance.id);
 
             await taskList.checkContentIsDisplayedByName(candidateApp.tasks.uploadFileTask);
             await taskList.selectRow(candidateApp.tasks.uploadFileTask);
@@ -187,6 +190,65 @@ describe('Task claim/release', () => {
 
     });
 
+    describe('standalone task', () => {
+        let testUser, groupInfo;
+        const taskName = StringUtil.generateRandomString();
+
+        beforeAll(async () => {
+            await apiService.loginWithProfile('identityAdmin');
+
+            testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+
+            await apiService.login(testUser.username, testUser.password);
+            await tasksService.createStandaloneTask(taskName, simpleApp, { 'candidateGroups': ['hr'] });
+
+            await loginSSOPage.login(testUser.username, testUser.password);
+        });
+
+        afterAll(async () => {
+            await apiService.loginWithProfile('identityAdmin');
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
+            await navigationBarPage.clickLogoutButton();
+        });
+
+        it('[C593997] Should be able to release/claim a standalone task ', async () => {
+            await navigationBarPage.navigateToProcessServicesCloudPage();
+            await appListCloudComponent.checkApsContainer();
+            await appListCloudComponent.goToApp(simpleApp);
+
+            await taskList.getDataTable().waitForTableBody();
+
+            await setStatusStandaloneTaskFilter('Created');
+
+            await taskList.checkContentIsDisplayedByName(taskName);
+            await taskList.selectRow(taskName);
+
+            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+
+            await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
+            await taskFormCloudComponent.checkClaimButtonIsDisplayed();
+
+            await taskFormCloudComponent.clickClaimButton();
+            await browser.refresh();
+            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+
+            await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
+            await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
+            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(testUser.username);
+
+            await taskFormCloudComponent.clickReleaseButton();
+            await browser.refresh();
+            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+
+            await taskFormCloudComponent.checkClaimButtonIsDisplayed();
+            await expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
+            await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
+        });
+
+    });
+
     async function navigateToApp(user: { username: string; password: string }) {
         await loginSSOPage.login(user.username, user.password);
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify(taskFilterConfiguration));
@@ -198,12 +260,19 @@ describe('Task claim/release', () => {
         await taskList.getDataTable().waitForTableBody();
     }
 
-    async function setTaskFilter(status: StatusType, processInstanceId: string) {
+    async function setStatusTaskFilter(status: StatusType, processInstanceId: string) {
         await editTaskFilter.openFilter();
         await editTaskFilter.clearAssignee();
         await editTaskFilter.setStatusFilterDropDown(status);
 
         await editTaskFilter.setProcessInstanceId(processInstanceId);
+        await editTaskFilter.openFilter();
+    }
+
+    async function setStatusStandaloneTaskFilter(status: StatusType) {
+        await editTaskFilter.openFilter();
+        await editTaskFilter.clearAssignee();
+        await editTaskFilter.setStatusFilterDropDown(status);
         await editTaskFilter.openFilter();
     }
 });
