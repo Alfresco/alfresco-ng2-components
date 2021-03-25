@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "Aufgabe '{{taskName}}' wurde {{assignee}} zugewiesen",
     "PROCESS_STARTED": "Prozess '{{processName}}' wurde gestartet",
-    "TASK_UPDATED": "Aufgabe '{{taskName}}' wurde aktualisiert"
+    "TASK_UPDATED": "Aufgabe '{{taskName}}' wurde aktualisiert",
+    "TASK_CREATED": "Die Aufgabe {{taskName}} wurde erstellt"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Formulardaten",

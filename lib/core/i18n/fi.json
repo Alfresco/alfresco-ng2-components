@@ -1,4 +1,18 @@
 {
+  "ADF": {
+    "ROLES": {
+      "ALL": "Kaikki",
+      "CONTRIBUTOR": "Osallistuja",
+      "COLLABORATOR": "Yhteistyökumppani",
+      "COORDINATOR": "Koordinaattori",
+      "EDITOR": "Muokkaaja",
+      "CONSUMER": "Kuluttaja",
+      "SITECOLLABORATOR": "Sivuston yhteistyökumppani",
+      "SITECONSUMER": "Sivuston kuluttaja",
+      "SITECONTRIBUTOR": "Sivuston osallistuja",
+      "SITEMANAGER": "Sivuston vastaava"
+    }
+  },
   "SAVE": "Tallenna",
   "COMPLETE": "Merkitse valmiiksi",
   "CANCEL": "Peruuta",

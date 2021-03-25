@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}} opgave er blevet tildelt til {{assignee}}",
     "PROCESS_STARTED": "{{processName}} processen er startet",
-    "TASK_UPDATED": "{{taskName}} opgavedetaljer er blevet opdateret"
+    "TASK_UPDATED": "{{taskName}} opgavedetaljer er blevet opdateret",
+    "TASK_CREATED": "Opgaven {{taskName}} blev oprettet"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Formulardata",

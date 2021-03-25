@@ -1,4 +1,18 @@
 {
+  "ADF": {
+    "ROLES": {
+      "ALL": "すべて",
+      "CONTRIBUTOR": "投稿者",
+      "COLLABORATOR": "共同作業者",
+      "COORDINATOR": "調整者",
+      "EDITOR": "編集者",
+      "CONSUMER": "利用者",
+      "SITECOLLABORATOR": "サイト共同作業者",
+      "SITECONSUMER": "サイト利用者",
+      "SITECONTRIBUTOR": "サイト投稿者",
+      "SITEMANAGER": "サイトマネージャ"
+    }
+  },
   "SAVE": "保存",
   "COMPLETE": "完了",
   "CANCEL": "キャンセル",
@@ -224,13 +238,13 @@
         "CLEAR": "消去",
         "TOGGLE": "値の切り替え",
         "COPY_TO_CLIPBOARD": "ダブルクリックして値をコピーします",
-        "EDIT_ASPECTS": "アスペクトの編集"
+        "EDIT_ASPECTS": "アスペクトを編集"
       },
       "ACCESSIBILITY": {
         "EDIT": "編集ボタン",
         "DATEPICKER": "矢印キーを使って日付を変更します。上下の矢印キーを使うと、同じ日付の次の週または前の週に移動できます。左右の矢印キーを使うと、次の日または前の日に移動できます。日付を選択するには、Enter キーまたはリターンキーを押します。",
         "COPY_TO_CLIPBOARD_MESSAGE": "値がクリップボードにコピーされました",
-        "EDIT_ASPECTS": "アスペクトの編集"
+        "EDIT_ASPECTS": "アスペクトを編集"
       }
     },
     "SEARCH": {

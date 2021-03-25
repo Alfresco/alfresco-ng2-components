@@ -1,4 +1,18 @@
 {
+  "ADF": {
+    "ROLES": {
+      "ALL": "Wszystkie",
+      "CONTRIBUTOR": "Współautor",
+      "COLLABORATOR": "Współpracownik",
+      "COORDINATOR": "Koordynator",
+      "EDITOR": "Edytor",
+      "CONSUMER": "Konsument",
+      "SITECOLLABORATOR": "Współpracownik",
+      "SITECONSUMER": "Konsument",
+      "SITECONTRIBUTOR": "Współautor",
+      "SITEMANAGER": "Menedżer"
+    }
+  },
   "SAVE": "Zapisz",
   "COMPLETE": "Zakończ",
   "CANCEL": "Anuluj",

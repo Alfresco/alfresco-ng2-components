@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "La tarea {{taskName}} ha sido asignada a {{assignee}}",
     "PROCESS_STARTED": "Se ha iniciado el proceso {{processName}}",
-    "TASK_UPDATED": "Se actualizaron los detalles de la tarea {{taskName}}"
+    "TASK_UPDATED": "Se actualizaron los detalles de la tarea {{taskName}}",
+    "TASK_CREATED": "Se ha creado la tarea {{taskName}}"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Datos del formulario",

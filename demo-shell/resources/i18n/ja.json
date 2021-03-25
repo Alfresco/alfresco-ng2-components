@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}}タスクが{{assignee}}に割り当てられました",
     "PROCESS_STARTED": "{{processName}}プロセスが開始しました",
-    "TASK_UPDATED": "{{taskName}}タスクの詳細が更新されました"
+    "TASK_UPDATED": "{{taskName}}タスクの詳細が更新されました",
+    "TASK_CREATED": "{{taskName}}タスクが作成されました"
   },
   "FORM-LOADING": {
     "FORM_DATA": "フォーム データ",

@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "Il compito {{taskName}} è stato assegnato a {{assignee}}",
     "PROCESS_STARTED": "Il processo {{processName}} è stato avviato",
-    "TASK_UPDATED": "I dettagli del compito {{taskName}} sono stati aggiornati"
+    "TASK_UPDATED": "I dettagli del compito {{taskName}} sono stati aggiornati",
+    "TASK_CREATED": "Il compito {{taskName}} è stato creato"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Dati modulo",

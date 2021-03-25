@@ -1,4 +1,18 @@
 {
+  "ADF": {
+    "ROLES": {
+      "ALL": "Vše",
+      "CONTRIBUTOR": "Přispěvatel",
+      "COLLABORATOR": "Spolupracovník",
+      "COORDINATOR": "Koordinátor",
+      "EDITOR": "Editor",
+      "CONSUMER": "Spotřebitel",
+      "SITECOLLABORATOR": "Spolupracovník stránek",
+      "SITECONSUMER": "Spotřebitel",
+      "SITECONTRIBUTOR": "Přispěvatel stránek",
+      "SITEMANAGER": "Správce stránek"
+    }
+  },
   "SAVE": "Uložit",
   "COMPLETE": "Dokončit",
   "CANCEL": "Zrušit",

@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "La tâche {{taskName}} a été assignée à {{assignee}}",
     "PROCESS_STARTED": "Le processus {{processName}} a été démarré",
-    "TASK_UPDATED": "Les détails de la tâche {{taskName}} ont été mis à jour"
+    "TASK_UPDATED": "Les détails de la tâche {{taskName}} ont été mis à jour",
+    "TASK_CREATED": "{{taskName}} tâche a été créée"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Données du formulaire",

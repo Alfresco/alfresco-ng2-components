@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}} 任务已分配给 {{assignee}}",
     "PROCESS_STARTED": "{{processName}} 进程已启动",
-    "TASK_UPDATED": "{{taskName}} 任务详细信息已更新"
+    "TASK_UPDATED": "{{taskName}} 任务详细信息已更新",
+    "TASK_CREATED": "{{taskName}} 任务已创建"
   },
   "FORM-LOADING": {
     "FORM_DATA": "表单数据",

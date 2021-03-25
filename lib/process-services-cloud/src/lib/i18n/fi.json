@@ -24,7 +24,7 @@
       "PARENT_TASK_ID": "Ylätason tehtävän tunnus",
       "PROCESS_DEF_ID": "Prosessimääritelmätunnus",
       "PROCESS_DEF_KEY": "Prosessimääritelmäavain",
-      "APP_VERSION": "Sovelluksen julkaisuversio"
+      "APP_VERSION": "Sovelluksen versio"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Käynnistä prosessi",
@@ -174,6 +174,7 @@
   },
   "ADF_CLOUD_EDIT_TASK_FILTER": {
     "TITLE": "Muokkaa suodatinta",
+    "FILTER_NAME": "Suodattimen nimi",
     "TOOL_TIP": {
       "SAVE": "Tallenna suodatin",
       "SAVE_AS": "Tallenna suodatin nimellä",
@@ -229,6 +230,7 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "Muokkaa suodatinta",
+    "FILTER_NAME": "Suodattimen nimi",
     "LABEL": {
       "APP_NAME": "Sovelluksen nimi",
       "PROCESS_INS_ID": "Prosessiesiintymätunnus",

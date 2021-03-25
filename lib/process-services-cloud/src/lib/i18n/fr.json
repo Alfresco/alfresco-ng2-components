@@ -174,6 +174,7 @@
   },
   "ADF_CLOUD_EDIT_TASK_FILTER": {
     "TITLE": "Personnaliser votre filtre",
+    "FILTER_NAME": "Nom du filtre",
     "TOOL_TIP": {
       "SAVE": "Enregistrer le filtre",
       "SAVE_AS": "Enregistrer le filtre sous",
@@ -229,6 +230,7 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "Personnaliser votre filtre",
+    "FILTER_NAME": "Nom du filtre",
     "LABEL": {
       "APP_NAME": "Nom de l'application",
       "PROCESS_INS_ID": "ID de l'instance de processus",

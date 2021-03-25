@@ -1,4 +1,18 @@
 {
+  "ADF": {
+    "ROLES": {
+      "ALL": "الكل",
+      "CONTRIBUTOR": "مساهم",
+      "COLLABORATOR": "معاون",
+      "COORDINATOR": "منسق",
+      "EDITOR": "محرر",
+      "CONSUMER": "مستهلك",
+      "SITECOLLABORATOR": "متعاون الموقع",
+      "SITECONSUMER": "مستهلك الموقع",
+      "SITECONTRIBUTOR": "مساهم الموقع",
+      "SITEMANAGER": "مدير الموقع"
+    }
+  },
   "SAVE": "حفظ",
   "COMPLETE": "تم",
   "CANCEL": "إلغاء",
@@ -224,13 +238,13 @@
         "CLEAR": "مسح",
         "TOGGLE": "تبديل القيمة",
         "COPY_TO_CLIPBOARD": "انقر مرتين لنسخ القيمة",
-        "EDIT_ASPECTS": "تحرير الجوانب"
+        "EDIT_ASPECTS": "تحرير الجانب"
       },
       "ACCESSIBILITY": {
         "EDIT": "الزر تحرير",
         "DATEPICKER": "استخدم مفاتيح الأسهم للتنقل بين التواريخ. السهمان لأعلى ولأسفل ينتقلان إلى الأسبوع التالي أو السابق لكن في اليوم نفسه. السهمان الأيسر والأيمن ينتقلان إلى اليوم التالي أو السابق. اضغط على مفتاح الإدخال لتحديد تاريخ.",
         "COPY_TO_CLIPBOARD_MESSAGE": "تم نسخ القيمة إلى الحافظة",
-        "EDIT_ASPECTS": "تحرير الجوانب"
+        "EDIT_ASPECTS": "تحرير الجانب"
       }
     },
     "SEARCH": {

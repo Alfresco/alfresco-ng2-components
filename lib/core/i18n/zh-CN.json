@@ -1,4 +1,18 @@
 {
+  "ADF": {
+    "ROLES": {
+      "ALL": "全部",
+      "CONTRIBUTOR": "贡献者",
+      "COLLABORATOR": "合作者",
+      "COORDINATOR": "协调者",
+      "EDITOR": "编辑者",
+      "CONSUMER": "使用者",
+      "SITECOLLABORATOR": "站点合作者",
+      "SITECONSUMER": "站点使用者",
+      "SITECONTRIBUTOR": "站点贡献者",
+      "SITEMANAGER": "站点管理员"
+    }
+  },
   "SAVE": "保存",
   "COMPLETE": "完成",
   "CANCEL": "取消",
@@ -224,13 +238,13 @@
         "CLEAR": "清除",
         "TOGGLE": "切换值",
         "COPY_TO_CLIPBOARD": "双击以复制值",
-        "EDIT_ASPECTS": "纵横比编辑"
+        "EDIT_ASPECTS": "编辑纵横比"
       },
       "ACCESSIBILITY": {
         "EDIT": "编辑按钮",
         "DATEPICKER": "使用箭头键在日期之间进行浏览。上下移动至同一天的下一周或上一周。左右移动到第二天或前一天。按 Enter（回车） 或 Return（返回） 键选择一个日期。",
         "COPY_TO_CLIPBOARD_MESSAGE": "值已复制到剪贴板",
-        "EDIT_ASPECTS": "纵横比编辑"
+        "EDIT_ASPECTS": "编辑纵横比"
       }
     },
     "SEARCH": {

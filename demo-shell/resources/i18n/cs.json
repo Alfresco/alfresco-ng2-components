@@ -219,7 +219,8 @@
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "Úkol {{taskName}} byl přiřazen uživateli {{assignee}}",
     "PROCESS_STARTED": "Byl spuštěn proces {{processName}}",
-    "TASK_UPDATED": "Byly aktualizovány podrobnosti úkolu {{taskName}}"
+    "TASK_UPDATED": "Byly aktualizovány podrobnosti úkolu {{taskName}}",
+    "TASK_CREATED": "Úkol {{taskName}} byl vytvořen"
   },
   "FORM-LOADING": {
     "FORM_DATA": "Data formuláře",
