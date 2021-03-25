@@ -151,6 +151,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     processFilterActions: ProcessFilterAction[] = [];
     toggleFilterActions: boolean = false;
     appVersionOptions: ProcessFilterOptions[] = [];
+    initiatorOptions: IdentityUserModel[] = [];
 
     private onDestroy$ = new Subject<boolean>();
     isLoading: boolean = false;
@@ -265,6 +266,12 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
         if (this.filterProperties.includes('appVersionMultiple')) {
             this.getAppVersionOptions();
+        }
+
+        if (this.filterProperties.includes('initiator')) {
+            this.initiatorOptions = !!this.processFilter.initiator
+                ? this.processFilter.initiator.split(',').map( username => Object.assign({}, { username: username }))
+                : [];
         }
 
         const defaultProperties = this.createProcessFilterProperties(this.processFilter);

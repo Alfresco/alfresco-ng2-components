@@ -32,7 +32,7 @@ export class ProcessFilterCloudModel {
     appVersion?: number | number[];
     processName: string;
     processInstanceId: string;
-    initiator: IdentityUserModel[];
+    initiator: string;
     status: string;
     sort: string;
     order: string;

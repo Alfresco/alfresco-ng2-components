@@ -157,7 +157,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-
         if (this.valueChanged(changes.preSelectUsers)
             || this.valueChanged(changes.mode)
             || this.valueChanged(changes.validate)

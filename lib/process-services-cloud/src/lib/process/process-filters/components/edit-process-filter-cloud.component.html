@@ -89,7 +89,7 @@
 
                         <div fxFlex="23%" *ngIf="processFilterProperty.type === 'people'">
                             <adf-cloud-people
-                                [preSelectUsers]="processFilterProperty.value"
+                                [preSelectUsers]="initiatorOptions"
                                 [title]="processFilterProperty.label"
                                 [validate]="true"
                                 [appName]="appName"
