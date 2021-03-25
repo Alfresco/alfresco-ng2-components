@@ -21,6 +21,5 @@ describe('User Info without UI Login', () => {
         userInfo.getSsoTitle().should('eq', 'HR User');
         userInfo.getSsoEmail().should('eq', ' hruser@example.com ');
         userInfo.closeUserProfile();
-        userInfo.dialogIsNotDisplayed();
     })
 })

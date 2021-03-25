@@ -1,11 +1,11 @@
 class SettingsPage {
-    providerDropdown = 'mat-select[#adf-provider-selector]';
-    ecmText = 'input[data-automation-id*="ecmHost"]';
+    providerDropdown = '#adf-provider-selector';
+    ecmText = '[data-automation-id*="ecmHost"]';
     authHostText = '#oauthHost';
     identityHostText = '#identityHost';
     clientIdText = '#clientId';
     logoutUrlText = '#logout-url';
-    applyButton = 'button[data-automation-id*="host-button"]';
+    applyButton = '[data-automation-id="host-button"]';
     silentLoginToggleLabel = 'mat-slide-toggle[name="silentLogin"] label';
 
     navigate() {
@@ -13,16 +13,18 @@ class SettingsPage {
         cy.visit(url);
     }
 
+
+
     setProviderEcmSso(contentServiceURL, authHost, identityHost, clientId) {
-        cy.get(providerDropdown).select('ECM');
+        cy.get(this.providerDropdown).click().get('mat-option').contains('ECM').click();
         cy.get('[id*="mat-radio"]').contains('SSO').click();
-        cy.get(ecmText).clear().type(contentServiceURL);
-        cy.get(authHostText).clear().type(authHost);
-        cy.get(identityHostText).clear().type(identityHost);
-        cy.get(silentLoginToggleLabel).click();
-        cy.get(clientIdText).clear().type(clientId);
-        cy.get(logoutUrlText).clear().type('/logout');
-        cy.get(applyButton).click();
+        cy.get(this.ecmText).clear().type(contentServiceURL);
+        cy.get(this.authHostText).clear().type(authHost);
+        cy.get(this.identityHostText).clear().type(identityHost);
+        cy.get(this.silentLoginToggleLabel).click();
+        cy.get(this.clientIdText).clear().type(clientId);
+        cy.get(this.logoutUrlText).clear().type('/logout');
+        cy.get(this.applyButton).click();
     }
 }
 export default SettingsPage;

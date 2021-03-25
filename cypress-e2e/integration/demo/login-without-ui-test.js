@@ -1,4 +1,4 @@
-import UserInfoPage from '../../pages/user-info.page';
+import UserInfoPage from '../../support/pages/user-info.page';
 
 describe('Login', () => {
     const userInfo = new UserInfoPage();

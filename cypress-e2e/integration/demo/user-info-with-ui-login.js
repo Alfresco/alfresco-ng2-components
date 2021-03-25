@@ -12,10 +12,6 @@ describe('User info with UI Login', () => {
 
     before(() => {
         cy.loginUI(username, password)
-            // .then(() => {
-            //     cy.setProviderEcmSso(ecmHost, identityHost, oauth2Host, oauth2ClientId);
-            //     cy.loginUI(username, password);
-            // })
     })
 
     after(() => {
@@ -30,6 +26,5 @@ describe('User info with UI Login', () => {
         userInfo.getSsoTitle().should('eq', 'HR User');
         userInfo.getSsoEmail().should('eq', ' hruser@example.com ');
         userInfo.closeUserProfile();
-        userInfo.dialogIsNotDisplayed();
     })
 })

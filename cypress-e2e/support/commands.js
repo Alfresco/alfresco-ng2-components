@@ -26,7 +26,7 @@ Cypress.Commands.add('loginUI', (userName, password) => {
 
 Cypress.Commands.overwrite('login', (originalFn, userName, password) => {
     originalFn({
-      root: 'https://apadev.envalfresco.com',
+      root: Cypress.env('ecmHost'),
       realm: 'alfresco',
       username: userName,
       password: password,
@@ -38,7 +38,7 @@ Cypress.Commands.overwrite('login', (originalFn, userName, password) => {
 Cypress.Commands.overwrite('logout', (originalFn) => {
     cy.clearLocalStorage();
     originalFn({
-        root: 'https://apadev.envalfresco.com',
+        root: Cypress.env('ecmHost'),
         realm: 'alfresco',
         redirect_uri: '/',
     });
@@ -51,7 +51,7 @@ Cypress.Commands.add('isUserLoggedIn', (username) => {
 
 Cypress.Commands.add('setProviderEcmSso', (ecmHost, oauth2Host, identityHost, oauth2ClientId) => {
     const settingsPage = new SettingsPage();
-    settingsPage.navigate();
+    // settingsPage.navigate();
     settingsPage.setProviderEcmSso(ecmHost, oauth2Host, identityHost, oauth2ClientId);
 });
 
