@@ -28,12 +28,29 @@
         "error_code": "200"
       }
     },
+    "processVariables": {
+      "processWithStartEventForm": {
+        "processJson": { "test": "ciao" }
+      }
+    },
     "forms": {
       "starteventform": "starteventform",
       "formtotestvalidations": "formtotestvalidations",
       "uploadfileform": "uploadfileform",
-      "inputform": "inputform",
-      "outputform": "outputform"
+      "inputForm": {
+        "name": "inputform",
+        "widgets": {
+          "inputJsonId": "inputjson",
+          "inputFile": "inputfile"
+        }
+      },
+      "outputForm": {
+        "name": "outputform",
+        "widgets": {
+          "outputJson": "outputjson",
+          "outputFile": "outputfile"
+        }
+      }
     },
     "security": [
       {
@@ -51,7 +68,9 @@
       "uploadFileTask": "UploadFileTask",
       "candidateUserTask": "candidateUserTask",
       "salesUserTask": "salesuser task",
-      "hrUserTask": "hruser task"
+      "hrUserTask": "hruser task",
+      "firstTaskMapping": "firsttaskmapping",
+      "secondTaskMapping": "secondtaskmapping"
     }
   },
   "SIMPLE_APP": {
