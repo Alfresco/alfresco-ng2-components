@@ -1004,8 +1004,7 @@
       "status",
       "sort",
       "order",
-      "processName",
-      "initiator"
+      "processName"
     ],
     "sortProperties": [
       "id",
