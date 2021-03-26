@@ -375,7 +375,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     onChangedUser(users: IdentityUserModel[], processProperty: ProcessFilterProperties) {
-        this.getPropertyController(processProperty).setValue(users);
+        this.getPropertyController(processProperty).setValue(users.map( user => user.username).join(','));
     }
 
     hasError(property: ProcessFilterProperties): boolean {

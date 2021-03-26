@@ -102,10 +102,6 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         }
     }
 
-    getInitiatorValue(): string {
-        return this.editedFilter.initiator?.map(initiator => initiator.username).join(',');
-    }
-
     onChangePageSize(event: Pagination) {
         this.userPreference.paginationSize = event.maxItems;
     }
@@ -181,9 +177,7 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
 
     private loadFilter(model: ProcessFilterCloudModel) {
         if (model && model.appName && model.id) {
-            this.processFilterCloudService.getFilterById(model.appName, model.id).subscribe(filter => {
-                this.editedFilter = Object.assign({}, filter, model);
-            });
+            this.editedFilter = model;
         }
     }
 }
