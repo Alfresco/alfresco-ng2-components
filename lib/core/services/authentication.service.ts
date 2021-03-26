@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError, Observer, ReplaySubject } from 'rxjs';
+import { Observable, from, throwError, Observer, ReplaySubject, Subject } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
@@ -39,7 +39,19 @@ export class AuthenticationService {
 
     private bearerExcludedUrls: string[] = ['auth/realms', 'resources/', 'assets/'];
 
+    /**
+     * Emits oAuth token exchange event
+     */
+    onTokenExchange: Subject<string> = new Subject<string>();
+
+    /**
+     * Emits Basic auth login event
+     */
     onLogin: ReplaySubject<any> = new ReplaySubject<any>(1);
+
+    /**
+     * Emits logout event
+     */
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
     constructor(
@@ -48,6 +60,15 @@ export class AuthenticationService {
         private alfrescoApi: AlfrescoApiService,
         private cookie: CookieService,
         private logService: LogService) {
+        this.listenForOauthTokenExchange();
+    }
+
+    private listenForOauthTokenExchange() {
+        this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
+            this.alfrescoApi.getInstance().oauth2Auth?.on('token_issued', () => {
+                this.onTokenExchange.next(this.alfrescoApi.getInstance().oauth2Auth.token);
+            });
+        });
     }
 
     /**
