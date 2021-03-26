@@ -15,19 +15,64 @@
  * limitations under the License.
  */
 
-import { Node } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
-import { ContentMetadataService } from './content-metadata.service';
-import { of } from 'rxjs';
 import { ContentTypePropertiesService } from './content-type-property.service';
-import { setupTestBed } from 'core';
+import { CardViewItem, CardViewSelectItemModel, CardViewTextItemModel, setupTestBed, VersionCompatibilityService } from 'core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ContentTypeService } from '../../content-type';
+import { of } from 'rxjs';
 
-describe('ContentMetaDataService', () => {
+describe('ContentTypePropertyService', () => {
 
-    let service: ContentMetadataService;
-    let contentPropertyService: ContentTypePropertiesService;
+    let service: ContentTypePropertiesService;
+    let versionCompatibilityService: VersionCompatibilityService;
+    let contentTypeService: ContentTypeService;
+
+    const mockContent: any = { 'entry':
+                            { 'associations': [],
+                                'isArchive': true,
+                                 'includedInSupertypeQuery': true,
+                                 'description': 'Base Content Object',
+                                 'isContainer': false,
+                                 'id': 'fk:nodeType',
+                                 'title': 'Content',
+                                 'properties': [{ 'id': 'cm:name', 'title': 'Name', 'description': 'Name', 'dataType': 'd:text', 'isMultiValued': false, 'isMandatory': true, 'isMandatoryEnforced': true, 'isProtected': false}],
+                                 'parentId': 'cm:cmobject' } };
+    const mockSelectOptions = {
+        'list':
+        {
+            'pagination': { 'count': 1, 'hasMoreItems': false, 'totalItems': 1, 'skipCount': 0, 'maxItems': 100 },
+            'entries': [
+                {
+                    'entry': {
+                        'isArchive': true,
+                        'includedInSupertypeQuery': true,
+                        'isContainer': false,
+                        'model': {
+                            'id': 'e2e:test',
+                            'author': 'E2e Automation User',
+                            'description': 'Custom type e2e model',
+                            'namespaceUri': 'http://www.customModel.com/whatever',
+                            'namespacePrefix': 'e2e'
+                        },
+                        'id': 'e2e:test',
+                        'title': 'Test type',
+                        'properties': [{
+                            'id': 'cm:name',
+                            'title': 'Name',
+                            'description': 'Name',
+                            'dataType': 'd:text',
+                            'isMultiValued': false,
+                            'isMandatory': true,
+                            'isMandatoryEnforced': true,
+                            'isProtected': false
+                        }],
+                        'parentId': 'cm:content'
+                    }
+                }]
+        }
+    };
 
     setupTestBed({
         imports: [
@@ -37,50 +82,37 @@ describe('ContentMetaDataService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.inject(ContentMetadataService);
-        contentPropertyService = TestBed.inject(ContentTypePropertiesService);
+        service = TestBed.inject(ContentTypePropertiesService);
+        versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
+        contentTypeService = TestBed.inject(ContentTypeService);
     });
 
-    it('should return all the properties of the node', () => {
-        const fakeNode: Node = <Node> {
-            name: 'Node',
-            id: 'fake-id',
-            isFile: true,
-            aspectNames: ['exif:exif'],
-            createdByUser: {displayName: 'test-user'},
-            modifiedByUser: {displayName: 'test-user-modified'}
-        };
-
-        service.getBasicProperties(fakeNode).subscribe(
-            (res) => {
-                expect(res.length).toEqual(10);
-                expect(res[0].value).toEqual('Node');
-                expect(res[1].value).toBeFalsy();
-                expect(res[2].value).toBe('test-user');
-            }
-        );
+    it('should return a card text item for ACS version below 7', (done) => {
+        spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(false);
+        service.getContentTypeCardItem('fk:nodeType').subscribe((items: CardViewItem[]) => {
+            expect(items.length).toBe(1);
+            expect(items[0] instanceof CardViewTextItemModel).toBeTruthy();
+            expect(items[0].label).toBe('CORE.METADATA.BASIC.CONTENT_TYPE');
+            expect(items[0].value).toBe('fk:nodeType');
+            expect(items[0].key).toBe('nodeType');
+            expect(items[0].editable).toBeFalsy();
+            done();
+        });
     });
 
-    it('should return the content type property', () => {
-        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type'}));
-
-        service.getContentTypeProperty('fn:fakenode').subscribe(
-            (res: any) => {
-                expect(res).toBeDefined();
-                expect(res).not.toBeNull();
-                expect(res.label).toBe('hello i am a weird content type');
-            }
-        );
-    });
-
-    it('should trigger the opening of the content type dialog', () => {
-        spyOn(contentPropertyService, 'openContentTypeDialogConfirm').and.returnValue(of());
-
-        service.openConfirmDialog('fn:fakenode').subscribe(
-            () => {
-                expect(contentPropertyService.openContentTypeDialogConfirm).toHaveBeenCalledWith('fn:fakenode');
-            }
-        );
+    it('should return a card select item for ACS version 7 and above', (done) => {
+        spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(true);
+        spyOn(contentTypeService, 'getContentTypeByPrefix').and.returnValue(of(mockContent));
+        spyOn(contentTypeService, 'getContentTypeChildren').and.returnValue(of(mockSelectOptions));
+        service.getContentTypeCardItem('fk:nodeType').subscribe((items: CardViewItem[]) => {
+            expect(items.length).toBe(1);
+            expect(items[0] instanceof CardViewSelectItemModel).toBeTruthy();
+            expect(items[0].label).toBe('CORE.METADATA.BASIC.CONTENT_TYPE');
+            expect(items[0].value).toBe('fk:nodeType');
+            expect(items[0].key).toBe('nodeType');
+            expect(items[0].editable).toBeTruthy();
+            done();
+        });
     });
 
 });
