@@ -215,10 +215,18 @@
         "name": "requirednumbervisibility"
       },
       "mealform": {
-        "name": "mealform"
+        "name": "mealform",
+        "widgets": {
+          "inputMeal": "meal"
+        }
       },
       "resultcollectionform": {
-        "name": "resultcollectionform"
+        "name": "resultcollectionform",
+        "widgets": {
+          "resultCollection1": "result1",
+          "resultCollection2": "result2",
+          "resultCollection3": "result3"
+        }
       },
       "uploadSingleMultiple": {
         "name": "upload-single-multiple",
