@@ -320,4 +320,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     getSelectedRows(): DataRow[] {
         return this.rows.filter((row: DataRow) => row.isSelected);
     }
+
+    getRowByNodeId(nodeId: string): DataRow {
+       return this.rows.find((row: DataRow) => row.node.entry.id === nodeId);
+    }
 }

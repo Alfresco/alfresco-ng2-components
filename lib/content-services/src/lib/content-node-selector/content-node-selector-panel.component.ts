@@ -378,7 +378,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.uploadService.fileUploadDeleted
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((deletedFileEvent: FileUploadDeleteEvent) => {
-                this.documentList.unselectPreselectedNode(deletedFileEvent.file);
+                this.documentList.unselectRowFromNodeId(deletedFileEvent.file.data.entry.id);
                 this.documentList.reloadWithoutResettingSelection();
             });
     }

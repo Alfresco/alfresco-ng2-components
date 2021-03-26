@@ -44,9 +44,7 @@ import {
     RequestPaginationModel,
     AlfrescoApiService,
     UserPreferenceValues,
-    LockService,
-    FileModel,
-    DataRow
+    LockService
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
@@ -942,9 +940,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    unselectPreselectedNode(node: FileModel) {
-        const preselectedNodes = [...this.isSingleSelectionMode() ? [this.data.getPreselectedRows()[0]] : this.data.getPreselectedRows()];
-        const rowToUnselect = preselectedNodes.find((row: DataRow) => row.node.entry.id === node.data.entry.id);
+    unselectRowFromNodeId(nodeId: string) {
+        const rowToUnselect = this.data.getRowByNodeId(nodeId);
         if (rowToUnselect?.isSelected) {
             this.dataTable.selectRow(rowToUnselect, false);
             const selection = this.data.getSelectedRows();
