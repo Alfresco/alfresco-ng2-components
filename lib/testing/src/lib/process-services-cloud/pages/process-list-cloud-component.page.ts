@@ -138,4 +138,10 @@ export class ProcessListCloudComponentPage {
         return options.length;
     }
 
+    async waitTillProcessListContentLoaded(): Promise<void> {
+        await this.checkProcessListIsLoaded();
+        await this.getDataTable().waitForTableBody();
+        await this.getDataTable().waitTillContentLoaded();
+    }
+
 }

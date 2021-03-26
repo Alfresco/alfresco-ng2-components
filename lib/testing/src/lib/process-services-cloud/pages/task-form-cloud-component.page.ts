@@ -150,4 +150,9 @@ export class TaskFormCloudComponent {
         return this.completeButton;
     }
 
+    async waitTillTaskFormDisplayed() {
+        await this.checkFormIsDisplayed();
+        await this.formFields().checkFormIsDisplayed();
+    }
+
 }
