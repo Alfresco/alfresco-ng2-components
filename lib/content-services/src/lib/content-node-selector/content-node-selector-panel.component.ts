@@ -36,7 +36,6 @@ import {
     UploadService,
     FileUploadCompleteEvent,
     FileUploadDeleteEvent,
-    FileModel,
     AppConfigService,
     DataSorting
 } from '@alfresco/adf-core';
@@ -379,19 +378,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.uploadService.fileUploadDeleted
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((deletedFileEvent: FileUploadDeleteEvent) => {
-                this.removeFromChosenNodes(deletedFileEvent.file);
+                this.documentList.unselectPreselectedNode(deletedFileEvent.file);
                 this.documentList.reloadWithoutResettingSelection();
             });
-    }
-
-    private removeFromChosenNodes(file: FileModel) {
-        if (this.chosenNode) {
-            const fileIndex = this.chosenNode.findIndex((chosenNode: Node) => chosenNode.id === file.data.entry.id);
-            if (fileIndex !== -1) {
-                this._chosenNode.splice(fileIndex, 1);
-                this.select.next(this._chosenNode);
-            }
-        }
     }
 
     private getStartSite() {
