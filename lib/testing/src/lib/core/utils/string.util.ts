@@ -107,4 +107,18 @@ export class StringUtil {
         return fileNames;
     }
 
+    /**
+     * Generates a random name for a process
+     */
+    static generateProcessName(): string {
+        return 'process_' + StringUtil.generateRandomString(5);
+    }
+
+    /**
+     * Generates a random name for a task
+     */
+    static generateUserTaskName(): string {
+        return 'userTask_' + StringUtil.generateRandomString(5);
+    }
+
 }
