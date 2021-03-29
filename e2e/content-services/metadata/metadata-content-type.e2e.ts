@@ -20,6 +20,7 @@ import {
     BrowserActions,
     LoginPage,
     ModelActions,
+    StringUtil,
     UploadActions,
     UserModel,
     UsersActions,
@@ -35,6 +36,7 @@ describe('content type', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const modelActions = new ModelActions(apiService);
+    const uploadActions = new UploadActions(apiService);
 
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
@@ -42,14 +44,14 @@ describe('content type', () => {
     const loginPage = new LoginPage();
 
     const model: CustomModel =  {
-        name: 'test',
-        namespaceUri: 'http://www.customModel.com/model/e2e/1.0',
-        namespacePrefix: 'e2e',
+        name: `test-${StringUtil.generateRandomString()}`,
+        namespaceUri: `http://www.customModel.com/model/${StringUtil.generateRandomString()}/1.0`,
+        namespacePrefix: `e2e-${StringUtil.generateRandomString()}`,
         author: 'E2e Automation User',
         description: 'Custom type e2e model',
-        status: 'DRAFT'
+        status: 'ACTIVE'
     };
-    const type: CustomType = { name: 'test', parentName: 'cm:content', title: 'Test type' };
+    const type: CustomType = { name: `test-${StringUtil.generateRandomString()}`, parentName: 'cm:content', title: `Test type - ${StringUtil.generateRandomString(2)}` };
     const pdfFile = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const docxFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
@@ -65,13 +67,12 @@ describe('content type', () => {
             if (typePaging.list.pagination.count === 0) {
                 await modelActions.createModel(model);
                 await modelActions.createType(model.name,  type);
-                await modelActions.activateCustomModel(model.name);
+                await modelActions.isCustomTypeSearchable(type.title);
             }
 
             acsUser = await usersActions.createUser();
             await apiService.login(acsUser.username, acsUser.password);
 
-            const uploadActions = new UploadActions(apiService);
             const filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
             pdfFile.id = filePdfNode.entry.id;
             const docsNode = await uploadActions.uploadFile(docxFileModel.location, docxFileModel.name, '-my-');
@@ -79,8 +80,20 @@ describe('content type', () => {
 
             await loginPage.login(acsUser.username, acsUser.password);
         } catch (e) {
-            console.error('Failed to setup custom types', JSON.stringify(e, null, 2));
-            fail();
+            fail('Failed to setup custom types :: ' + JSON.stringify(e, null, 2));
+        }
+    });
+
+    afterAll(async () => {
+        await apiService.login(acsUser.username, acsUser.password);
+        await uploadActions.deleteFileOrFolder(pdfFile.id);
+        await uploadActions.deleteFileOrFolder(docxFileModel.id);
+        try {
+            await apiService.loginWithProfile('admin');
+            await modelActions.deactivateCustomModel(model.name);
+            await modelActions.deleteCustomModel(model.name);
+        } catch (e) {
+            console.error('failed to delete the model', e);
         }
     });
 

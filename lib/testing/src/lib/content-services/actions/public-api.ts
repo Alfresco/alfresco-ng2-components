@@ -18,3 +18,5 @@
 export * from './upload.actions';
 export * from './permission.actions';
 export * from './model.actions';
+export * from './search.service';
+
