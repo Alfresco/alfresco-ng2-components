@@ -107,9 +107,17 @@ export function mergeObjects(...objects: object[]): any {
 
     objects.forEach((source) => {
         Object.keys(source).forEach((prop) => {
+            let replace = false;
+
+            if (prop.endsWith('.$replace')) {
+                replace = true;
+                prop = prop.replace('.$replace', '');
+            }
+
             if (!prop.startsWith('$')) {
-                if (prop in result && Array.isArray(result[prop])) {
-                    // result[prop] = result[prop].concat(source[prop]);
+                if (replace) {
+                    result[prop] = source[`${prop}.$replace`];
+                } else if (prop in result && Array.isArray(result[prop])) {
                     result[prop] = mergeArrays(result[prop], source[prop]);
                 } else if (prop in result && typeof result[prop] === 'object') {
                     result[prop] = mergeObjects(result[prop], source[prop]);
