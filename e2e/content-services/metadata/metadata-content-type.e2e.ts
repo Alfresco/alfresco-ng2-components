@@ -42,16 +42,17 @@ describe('content type', () => {
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
     const loginPage = new LoginPage();
+    const randomString = StringUtil.generateRandomString();
 
     const model: CustomModel =  {
-        name: `test-${StringUtil.generateRandomString()}`,
-        namespaceUri: `http://www.customModel.com/model/${StringUtil.generateRandomString()}/1.0`,
-        namespacePrefix: `e2e-${StringUtil.generateRandomString()}`,
+        name: `test-${randomString}`,
+        namespaceUri: `http://www.customModel.com/model/${randomString}/1.0`,
+        namespacePrefix: `e2e-${randomString}`,
         author: 'E2e Automation User',
         description: 'Custom type e2e model',
         status: 'ACTIVE'
     };
-    const type: CustomType = { name: `test-${StringUtil.generateRandomString()}`, parentName: 'cm:content', title: `Test type - ${StringUtil.generateRandomString(2)}` };
+    const type: CustomType = { name: `test-type-${randomString}`, parentName: 'cm:content', title: `Test type - ${randomString}` };
     const pdfFile = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const docxFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
@@ -62,13 +63,9 @@ describe('content type', () => {
     beforeAll( async () => {
         try {
             await apiService.loginWithProfile('admin');
-
-            const typePaging = await modelActions.listTypes({where: `(namespaceUri matches('http://www.customModel.*'))`});
-            if (typePaging.list.pagination.count === 0) {
-                await modelActions.createModel(model);
-                await modelActions.createType(model.name,  type);
-                await modelActions.isCustomTypeSearchable(type.title);
-            }
+            await modelActions.createModel(model);
+            await modelActions.createType(model.name,  type);
+            await modelActions.isCustomTypeSearchable(type.title);
 
             acsUser = await usersActions.createUser();
             await apiService.login(acsUser.username, acsUser.password);
