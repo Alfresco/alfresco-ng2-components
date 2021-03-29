@@ -251,20 +251,18 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preselectNodes: NodeEntry[] = []) {
-        let dataRows: DataRow[] = [];
+        let shareDataRows: ShareDataRow[] = [];
         if (allowDropFiles !== undefined) {
             this.allowDropFiles = allowDropFiles;
         }
         if (nodePaging?.list) {
             const nodeEntries: NodeEntry[] = nodePaging.list.entries;
             if (nodeEntries?.length) {
-                dataRows = nodeEntries.map((item) => {
-                    const existingRow = this.rows.find(row => row.node.entry.id === item.entry.id);
-                    return existingRow ? existingRow : new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService, this.allowDropFiles);
-                });
+                shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle,
+                    this.thumbnailService, this.allowDropFiles));
 
                 if (this.filter) {
-                    dataRows = dataRows.filter(this.filter);
+                    shareDataRows = shareDataRows.filter(this.filter);
                 }
 
                 if (this.sortingMode !== 'server') {
@@ -272,7 +270,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                     if (this.columns?.length) {
                         const sorting = this.getSorting();
                         if (sorting) {
-                            this.sortRows(dataRows, sorting);
+                            this.sortRows(shareDataRows, sorting);
                         } else {
                             const sortable = this.columns.filter((c) => c.sortable);
                             if (sortable.length > 0) {
@@ -287,7 +285,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
 
         if (merge) {
-            const listPrunedDuplicate = dataRows.filter((elementToFilter: any) => {
+            const listPrunedDuplicate = shareDataRows.filter((elementToFilter: any) => {
                 const isPresent = this.rows.find((currentRow: any) => {
                     return currentRow.obj.entry.id === elementToFilter.obj.entry.id;
                 });
@@ -297,7 +295,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
             this.rows = this.rows.concat(listPrunedDuplicate);
         } else {
-            this.rows = dataRows;
+            this.rows = shareDataRows;
         }
 
         this.setPreselectedRowsFromPreselectedNodes(preselectNodes);
@@ -306,7 +304,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     setPreselectedRowsFromPreselectedNodes(preselectNodes: NodeEntry[]) {
         this.preselectedRows = [];
         preselectNodes.forEach((preselectedNode: NodeEntry) => {
-            const rowOfPreselectedNode = this.rows.find(row => row.node.entry.id === preselectedNode.entry.id);
+            const rowOfPreselectedNode = this.getRowByNodeId(preselectedNode.entry.id);
             if (rowOfPreselectedNode) {
                 this.preselectedRows.push(rowOfPreselectedNode);
             }
