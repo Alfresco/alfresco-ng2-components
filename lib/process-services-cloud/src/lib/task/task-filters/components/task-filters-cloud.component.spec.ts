@@ -51,6 +51,7 @@ describe('TaskFiltersCloudComponent', () => {
 
     let component: TaskFiltersCloudComponent;
     let fixture: ComponentFixture<TaskFiltersCloudComponent>;
+    let getTaskFilterCounterSpy;
 
     setupTestBed({
         imports: [
@@ -68,7 +69,7 @@ describe('TaskFiltersCloudComponent', () => {
         component = fixture.componentInstance;
 
         taskFilterService = TestBed.inject(TaskFilterCloudService);
-        spyOn(taskFilterService, 'getTaskFilterCounter').and.returnValue(of(11));
+        getTaskFilterCounterSpy = spyOn(taskFilterService, 'getTaskFilterCounter').and.returnValue(of(11));
         spyOn(taskFilterService, 'getTaskNotificationSubscription').and.returnValue(of(taskNotifications));
     });
 
@@ -421,6 +422,23 @@ describe('TaskFiltersCloudComponent', () => {
                 updatedFilterCounters = fixture.debugElement.queryAll(By.css('span.adf-active'));
                 expect(updatedFilterCounters.length).toBe(0);
             });
+        });
+    }));
+
+    it('should update filter counter when filter is selected', fakeAsync(() => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        component.appName = 'my-app-1';
+        component.ngOnInit();
+        tick(5000);
+        fixture.detectChanges();
+        component.showIcons = true;
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${fakeGlobalFilter[0].key}_filter"]`);
+            filterButton.click();
+
+            fixture.detectChanges();
+            expect(getTaskFilterCounterSpy).toHaveBeenCalledWith(fakeGlobalFilter[0]);
         });
     }));
 });
