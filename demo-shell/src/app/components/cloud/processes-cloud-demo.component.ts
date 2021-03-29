@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EditProcessFilterCloudComponent, ProcessFilterAction, ProcessFilterCloudModel, ProcessFilterCloudService } from '@alfresco/adf-process-services-cloud';
+import { EditProcessFilterCloudComponent, ProcessFilterAction, ProcessFilterCloudModel } from '@alfresco/adf-process-services-cloud';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserPreferencesService, DataCellEvent } from '@alfresco/adf-core';
 import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
@@ -60,7 +60,6 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         private router: Router,
         private cloudLayoutService: CloudLayoutService,
         private cloudProcessFiltersService: CloudProcessFiltersService,
-        private processFilterCloudService: ProcessFilterCloudService,
         private userPreference: UserPreferencesService) {
     }
 
