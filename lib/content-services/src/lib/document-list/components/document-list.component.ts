@@ -501,6 +501,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     reload() {
         this.ngZone.run(() => {
             this.resetSelection();
+            this.reloadWithoutResettingSelection();
         });
     }
 
