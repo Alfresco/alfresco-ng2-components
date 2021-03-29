@@ -88,11 +88,13 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     updateFilterCounters() {
-        this.filters.forEach((filter) => {
-            if (filter.showCounter) {
-                this.counters$[filter.key] = this.taskFilterCloudService.getTaskFilterCounter(filter);
-            }
-        });
+        this.filters.forEach((filter: TaskFilterCloudModel) => this.updateFilterCounter(filter));
+    }
+
+    updateFilterCounter(filter: TaskFilterCloudModel) {
+        if (filter?.showCounter) {
+            this.counters$[filter.key] = this.taskFilterCloudService.getTaskFilterCounter(filter);
+        }
     }
 
     initFilterCounterNotifications() {
@@ -155,6 +157,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     public onFilterClick(filter: FilterParamsModel) {
         if (filter) {
             this.selectFilter(filter);
+            this.updateFilterCounter(this.currentFilter);
             this.filterClicked.emit(this.currentFilter);
         } else {
             this.currentFilter = undefined;

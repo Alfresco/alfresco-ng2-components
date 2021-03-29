@@ -253,7 +253,8 @@ export class TaskFilterCloudService extends BaseCloudService {
             const queryParams = {
                 assignee: taskFilter.assignee,
                 status: taskFilter.status,
-                appName: taskFilter.appName
+                appName: taskFilter.appName,
+                maxItems: 1
             };
             return this.get<TaskCloudNodePaging>(queryUrl, queryParams).pipe(
                 map((tasks) => tasks.list.pagination.totalItems)

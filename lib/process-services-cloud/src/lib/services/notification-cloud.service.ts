@@ -22,7 +22,7 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Injectable } from '@angular/core';
-import { StorageService, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
+import { AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { BaseCloudService } from './base-cloud.service';
 
 @Injectable({
@@ -35,8 +35,7 @@ export class NotificationCloudService extends BaseCloudService {
     constructor(apiService: AlfrescoApiService,
                 appConfigService: AppConfigService,
                 public apollo: Apollo,
-                private http: HttpLink,
-                private storageService: StorageService) {
+                private http: HttpLink) {
         super(apiService, appConfigService);
     }
 
@@ -62,7 +61,7 @@ export class NotificationCloudService extends BaseCloudService {
                     lazy: true,
                     connectionParams: {
                         kaInterval: 2000,
-                        'X-Authorization': 'Bearer ' + this.storageService.getItem('access_token')
+                        'X-Authorization': 'Bearer ' + this.apiService.getInstance().oauth2Auth.token
                     }
                 }
             });
@@ -85,7 +84,7 @@ export class NotificationCloudService extends BaseCloudService {
                                 operation.setContext({
                                     headers: {
                                         ...oldHeaders,
-                                        'X-Authorization': 'Bearer ' + this.storageService.getItem('access_token')
+                                        'X-Authorization': 'Bearer ' + this.apiService.getInstance().oauth2Auth.token
                                     }
                                 });
                                 forward(operation);
