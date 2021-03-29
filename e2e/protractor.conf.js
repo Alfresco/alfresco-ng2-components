@@ -119,7 +119,7 @@ exports.config = {
             "e2e/process-services-cloud/process/**/**/*e2e.ts",
             "e2e/process-services-cloud/form-field/**/**/*e2e.ts"
         ]
-    },t bvcxa
+    },
 
     useAllAngular2AppRoots: true,
 
