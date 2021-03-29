@@ -73,4 +73,12 @@ describe('EditTaskFilterCloudComponent', () => {
         const candidateGroups = fixture.debugElement.nativeElement.querySelector('.adf-group-cloud-filter');
         expect(candidateGroups).toBeTruthy();
     });
+
+    it('should have floating labels when values are present', () => {
+        fixture.detectChanges();
+        const inputLabelsNodes = document.querySelectorAll('mat-form-field');
+        inputLabelsNodes.forEach(labelNode => {
+            expect(labelNode.getAttribute('ng-reflect-float-label')).toBe('auto');
+        });
+    });
 });

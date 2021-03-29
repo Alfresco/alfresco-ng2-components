@@ -33,6 +33,7 @@ import { TaskCloudService } from '../../../services/task-cloud.service';
 import { fakeServiceFilter } from '../../mock/task-filters-cloud.mock';
 import { TranslateModule } from '@ngx-translate/core';
 import { EditServiceTaskFilterCloudComponent } from './edit-service-task-filter-cloud.component';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 describe('EditServiceTaskFilterCloudComponent', () => {
     let component: EditServiceTaskFilterCloudComponent;
@@ -48,7 +49,8 @@ describe('EditServiceTaskFilterCloudComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule,
-            TaskFiltersCloudModule
+            TaskFiltersCloudModule,
+            MatIconTestingModule
         ],
         providers: [
             MatDialog,
@@ -430,6 +432,14 @@ describe('EditServiceTaskFilterCloudComponent', () => {
             fixture.whenStable().then(() => {
                 const orderOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 expect(orderOptions.length).toEqual(2);
+            });
+        }));
+
+        it('should have floating labels when values are present', async(() => {
+            fixture.detectChanges();
+            const inputLabelsNodes = document.querySelectorAll('mat-form-field');
+            inputLabelsNodes.forEach(labelNode => {
+                expect(labelNode.getAttribute('ng-reflect-float-label')).toBe('auto');
             });
         }));
 

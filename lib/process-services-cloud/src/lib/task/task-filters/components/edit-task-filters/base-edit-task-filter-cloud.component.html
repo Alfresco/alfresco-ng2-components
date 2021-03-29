@@ -31,6 +31,7 @@
                 <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
                     <ng-container *ngFor="let taskFilterProperty of taskFilterProperties">
                         <mat-form-field fxFlex="23%"
+                                        [floatLabel]="'auto'"
                                         *ngIf="taskFilterProperty.type === 'select'"
                                         [attr.data-automation-id]="taskFilterProperty.key">
                             <mat-select placeholder="{{taskFilterProperty.label | translate}}"
@@ -44,6 +45,7 @@
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field fxFlex="23%"
+                                        [floatLabel]="'auto'"
                                         *ngIf="taskFilterProperty.type === 'text'"
                                         [attr.data-automation-id]="taskFilterProperty.key">
                             <input matInput
@@ -53,6 +55,7 @@
                                    [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key" />
                         </mat-form-field>
                         <mat-form-field fxFlex="23%"
+                                        [floatLabel]="'auto'"
                                         *ngIf="taskFilterProperty.type === 'date'"
                                         [attr.data-automation-id]="taskFilterProperty.key">
                             <mat-label>{{taskFilterProperty.label | translate}}</mat-label>

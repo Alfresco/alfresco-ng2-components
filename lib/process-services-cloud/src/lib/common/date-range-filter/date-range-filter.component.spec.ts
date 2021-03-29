@@ -145,4 +145,12 @@ describe('DateRangeFilterComponent', () => {
         expect(component.dateRangeForm.get('from').value).toEqual(moment(mockFilterProperty.value._startFrom));
         expect(component.dateRangeForm.get('to').value).toEqual(moment(mockFilterProperty.value._startTo));
     });
+
+    it('should have floating labels when values are present', () => {
+        fixture.detectChanges();
+        const inputLabelsNodes = document.querySelectorAll('mat-form-field');
+        inputLabelsNodes.forEach(labelNode => {
+            expect(labelNode.getAttribute('ng-reflect-float-label')).toBe('auto');
+        });
+    });
 });
