@@ -15,7 +15,7 @@ const argv = require('yargs').argv;
 const width = 1657, height = 1657;
 
 const ENV_FILE = process.env.ENV_FILE;
-const GROUP_SUFFIX = process.env.PREFIX ||  process.env.TRAVIS_BUILD_NUMBER  || 'adf';
+const GROUP_SUFFIX = process.env.PREFIX || process.env.TRAVIS_BUILD_NUMBER || 'adf';
 
 if (ENV_FILE) {
     require('dotenv').config({path: ENV_FILE});
@@ -103,6 +103,19 @@ exports.config = {
 
     specs: arraySpecs,
 
+    suites: {
+        smokeTest: [
+            "e2e/core/login/**/**/*e2e.ts",
+            "e2e/core/viewer/**/**/*e2e.ts",
+            "e2e/content-services/document-list/**/**/*e2e.ts",
+            "e2e/content-services/metadata/**/**/*e2e.ts",
+            "e2e/process-services/process/**/**/*e2e.ts",
+            "e2e/process-services/form/**/**/*e2e.ts",
+            "e2e/process-services-cloud/process/**/**/*e2e.ts",
+            "e2e/process-services-cloud/form-field/**/**/*e2e.ts"
+        ]
+    },
+
     useAllAngular2AppRoots: true,
 
     capabilities: {
@@ -166,7 +179,7 @@ exports.config = {
         includeStackTrace: true,
         print: () => {
         },
-        ...(process.env.CI ? smartRunnerFactory.applyExclusionFilter() : {} )
+        ...(process.env.CI ? smartRunnerFactory.applyExclusionFilter() : {})
     },
 
     /**
@@ -297,15 +310,15 @@ exports.config = {
     },
 
     onComplete: async function () {
-        browser.manage().logs().get('browser').then(function(browserLog) {
+        browser.manage().logs().get('browser').then(function (browserLog) {
             if (browserLog.length) {
-                browserLog = browserLog.filter((log)=>{
+                browserLog = browserLog.filter((log) => {
                     return log.level.name_ === 'SEVERE';
                 })
                 if (browserLog.length) {
-                    console.error('\x1b[31m','============ Browser console error ===========');
+                    console.error('\x1b[31m', '============ Browser console error ===========');
 
-                    browserLog.forEach((log)=>{
+                    browserLog.forEach((log) => {
                         console.error('\x1b[31m', log.message);
                     })
 
