@@ -80,11 +80,6 @@ export class TaskFormCloudComponent {
         await browser.sleep(500);
     }
 
-    async checkAndClickCompleteButton(): Promise<void> {
-        await this.isCompleteButtonEnabled();
-        await this.clickCompleteButton();
-    }
-
     async checkFormOutcomeButtonIsDisplayedByName(name: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`button[id="adf-form-${name}"]`)));
     }
@@ -155,16 +150,9 @@ export class TaskFormCloudComponent {
         return this.completeButton;
     }
 
-    async waitTillTaskFormDisplayed(): Promise<void> {
+    async waitTillTaskFormDisplayed() {
         await this.checkFormIsDisplayed();
         await this.formFields().checkFormIsDisplayed();
-    }
-
-    async checkFormAndCompleteTask(): Promise<void> {
-        await this.waitTillTaskFormDisplayed();
-        await this.checkCompleteButtonIsDisplayed();
-        await this.isCompleteButtonEnabled();
-        await this.clickCompleteButton();
     }
 
 }

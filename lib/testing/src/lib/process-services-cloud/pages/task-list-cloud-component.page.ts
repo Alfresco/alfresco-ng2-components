@@ -117,11 +117,6 @@ export class TaskListCloudComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.taskList);
     }
 
-    async checkTaskListAndContentAreLoaded(): Promise<void> {
-        await this.checkTaskListIsLoaded();
-        await this.getDataTable().waitTillContentLoaded();
-    }
-
     async getNoTasksFoundMessage(): Promise<string> {
         return BrowserActions.getText(this.noTasksFound);
     }
