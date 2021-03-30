@@ -250,7 +250,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preselectNodes: NodeEntry[] = []) {
+    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preselectNodes: NodeEntry[] = [], currentSelection?: NodeEntry[], selectionMode?: string) {
         let shareDataRows: ShareDataRow[] = [];
         if (allowDropFiles !== undefined) {
             this.allowDropFiles = allowDropFiles;
@@ -258,8 +258,17 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (nodePaging?.list) {
             const nodeEntries: NodeEntry[] = nodePaging.list.entries;
             if (nodeEntries?.length) {
-                shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle,
-                    this.thumbnailService, this.allowDropFiles));
+                shareDataRows = nodeEntries.map((item) => {
+                    const shareDataRow = new ShareDataRow(item, this.contentService, this.permissionsStyle,
+                        this.thumbnailService, this.allowDropFiles);
+
+                    const isRowToBeMarkedSelected = this.isRowToBeMarkedSelected(item, currentSelection, selectionMode);
+
+                    if (isRowToBeMarkedSelected) {
+                        shareDataRow.isSelected = true;
+                    }
+                    return shareDataRow;
+                });
 
                 if (this.filter) {
                     shareDataRows = shareDataRows.filter(this.filter);
@@ -298,17 +307,27 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             this.rows = shareDataRows;
         }
 
-        this.setPreselectedRowsFromPreselectedNodes(preselectNodes);
+        this.setPreselectedRowsFromPreselectedNodes(preselectNodes, selectionMode);
     }
 
-    setPreselectedRowsFromPreselectedNodes(preselectNodes: NodeEntry[]) {
+    setPreselectedRowsFromPreselectedNodes(preselectNodes: NodeEntry[], selectionMode: string) {
         this.preselectedRows = [];
-        preselectNodes.forEach((preselectedNode: NodeEntry) => {
-            const rowOfPreselectedNode = this.getRowByNodeId(preselectedNode.entry.id);
-            if (rowOfPreselectedNode) {
-                this.preselectedRows.push(rowOfPreselectedNode);
-            }
-        });
+        if (selectionMode === 'multiple') {
+            preselectNodes.forEach((preselectedNode: NodeEntry) => {
+                this.preselectRowFromNodeId(preselectedNode.entry.id);
+            });
+        } else if (preselectNodes.length) {
+            const lastNodeToPreselect = preselectNodes[preselectNodes.length - 1];
+            this.preselectRowFromNodeId(lastNodeToPreselect.entry.id);
+        }
+    }
+
+    preselectRowFromNodeId(nodeId: string) {
+        const rowOfPreselectedNode = this.getRowByNodeId(nodeId);
+        if (rowOfPreselectedNode) {
+            rowOfPreselectedNode.isSelected = true;
+            this.preselectedRows.push(rowOfPreselectedNode);
+        }
     }
 
     hasPreselectedRows(): boolean {
@@ -321,5 +340,9 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
     getRowByNodeId(nodeId: string): DataRow {
        return this.rows.find((row: DataRow) => row.node.entry.id === nodeId);
+    }
+
+    isRowToBeMarkedSelected(row: NodeEntry, currentSelection: NodeEntry[] = [], selectionMode: string): boolean {
+        return selectionMode === 'multiple' ? !!currentSelection.find(selectedNode => selectedNode.entry.id === row.entry.id) : false;
     }
 }
