@@ -107,18 +107,20 @@ export class StringUtil {
         return fileNames;
     }
 
-    /**
-     * Generates a random name for a process
+    /** Generates a random name for a process
+     * 
+     * @param length  {int} If this parameter is not provided the length is set to 5 by default.
      */
-    static generateProcessName(): string {
-        return 'process_' + StringUtil.generateRandomString(5);
+    static generateProcessName(length: number = 5): string {
+        return 'process_' + this.generateRandomString(length);
     }
 
-    /**
-     * Generates a random name for a task
+    /** Generates a random name for a process
+     * 
+     * @param length  {int} If this parameter is not provided the length is set to 5 by default.
      */
-    static generateUserTaskName(): string {
-        return 'userTask_' + StringUtil.generateRandomString(5);
+     static generateUserTaskName(length: number = 5): string {
+        return 'userTask_' + this.generateRandomString(length);
     }
 
 }
