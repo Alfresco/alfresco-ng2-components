@@ -108,7 +108,7 @@ export class StringUtil {
     }
 
     /** Generates a random name for a process
-     * 
+     *
      * @param length  {int} If this parameter is not provided the length is set to 5 by default.
      */
     static generateProcessName(length: number = 5): string {
@@ -116,7 +116,7 @@ export class StringUtil {
     }
 
     /** Generates a random name for a process
-     * 
+     *
      * @param length  {int} If this parameter is not provided the length is set to 5 by default.
      */
      static generateUserTaskName(length: number = 5): string {
