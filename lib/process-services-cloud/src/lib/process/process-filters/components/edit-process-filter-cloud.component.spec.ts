@@ -54,6 +54,7 @@ describe('EditProcessFilterCloudComponent', () => {
         name: 'FakeRunningProcess',
         icon: 'adjust',
         id: 'mock-process-filter-id',
+        initiator: 'user1,user2',
         status: 'RUNNING',
         appName: 'mock-app-name',
         appVersion: 1,
@@ -892,6 +893,16 @@ describe('EditProcessFilterCloudComponent', () => {
                 });
 
             });
+        });
+
+        it('should build initiator as object array', () => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'initiator'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+
+            expect(component.initiatorOptions).toEqual([ { username: 'user1' }, { username: 'user2'} ]);
         });
     });
 });

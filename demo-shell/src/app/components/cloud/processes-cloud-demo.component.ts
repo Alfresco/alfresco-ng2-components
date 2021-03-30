@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EditProcessFilterCloudComponent, ProcessFilterAction, ProcessFilterCloudModel, ProcessFilterCloudService } from '@alfresco/adf-process-services-cloud';
+import { EditProcessFilterCloudComponent, ProcessFilterAction, ProcessFilterCloudModel } from '@alfresco/adf-process-services-cloud';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserPreferencesService, DataCellEvent } from '@alfresco/adf-core';
 import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
@@ -60,7 +60,6 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         private router: Router,
         private cloudLayoutService: CloudLayoutService,
         private cloudProcessFiltersService: CloudProcessFiltersService,
-        private processFilterCloudService: ProcessFilterCloudService,
         private userPreference: UserPreferencesService) {
     }
 
@@ -100,10 +99,6 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
             this.contextMenu = settings.contextMenu;
             this.actions = settings.actions;
         }
-    }
-
-    getInitiatorValue(): string {
-        return this.editedFilter.initiator?.map(initiator => initiator.username).join(',');
     }
 
     onChangePageSize(event: Pagination) {
@@ -181,9 +176,7 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
 
     private loadFilter(model: ProcessFilterCloudModel) {
         if (model && model.appName && model.id) {
-            this.processFilterCloudService.getFilterById(model.appName, model.id).subscribe(filter => {
-                this.editedFilter = Object.assign({}, filter, model);
-            });
+            this.editedFilter = model;
         }
     }
 }
