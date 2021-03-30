@@ -17,8 +17,7 @@
 
 import { mergeObjects } from './extension-utils';
 
-// tslint:disable-next-line:ban
-fdescribe('Extension Utils', () => {
+describe('Extension Utils', () => {
     describe('mergeObjects', () => {
         it('should merge two objects', () => {
            const obj1 = { aHello: 1 };
