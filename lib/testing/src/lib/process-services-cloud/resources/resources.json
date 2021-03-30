@@ -326,6 +326,12 @@
             "name": "option3"
           }
         ]
+      },
+      "correlationKey": {
+        "name": "correlation-key-form",
+        "widgets": {
+            "setCorrelationKey": "correlationKey"
+        }
       }
     },
     "tasks": {
