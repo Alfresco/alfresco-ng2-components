@@ -62,7 +62,7 @@ export class EditTaskFilterCloudComponentPage {
 
     editTaskFilterDialogPage = new EditTaskFilterDialogPage();
     peopleCloudComponent = new PeopleCloudComponentPage();
-    groupCloudComponent = new GroupCloudComponentPage();;
+    groupCloudComponent = new GroupCloudComponentPage();
 
     dataTable = new DataTableComponentPage( element(by.css('adf-cloud-task-list')));
 
