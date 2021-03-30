@@ -777,6 +777,17 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     _startFrom: filterModel.startFrom || null,
                     _startTo: filterModel.startTo || null
                 }
+            },
+            {
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.SUSPENDED_DATE',
+                type: 'date-range',
+                key: 'suspendedDateRange',
+                attributes: { dateType: 'suspendedDateType', from: '_suspendedFrom', to: '_suspendedTo'},
+                value: {
+                    startedDateType: filterModel.suspendedDateType || null,
+                    _startFrom: filterModel.suspendedFrom || null,
+                    _startTo: filterModel.suspendedTo || null
+                }
             }
         ];
     }
