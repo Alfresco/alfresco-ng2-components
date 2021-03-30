@@ -245,7 +245,10 @@
         "name": "form-with-all-widgets"
       },
       "poolForm": {
-        "name": "pool-usertaskform"
+        "name": "pool-usertaskform",
+        "widgets": {
+          "string": "Text0rfn8p"
+        }
       },
       "attachFilesForm": {
         "name": "attach-files",
@@ -323,6 +326,12 @@
             "name": "option3"
           }
         ]
+      },
+      "correlationKey": {
+        "name": "correlation-key-form",
+        "widgets": {
+            "setCorrelationKey": "correlationKey"
+        }
       }
     },
     "tasks": {
@@ -338,7 +347,15 @@
       "userTask": "UserTask",
       "terminateTask": "TerminateTask",
       "mainTask": "MainTask",
-      "followingTask": "FollowingTask"
+      "followingTask": "FollowingTask",
+      "catchTask": "catchtask",
+      "calledTask": "calledtask",
+      "throwTask": "throwtask",
+      "interruptingBoundaryTask": "int-boundary-task",
+      "nonInterruptingBoundaryTask": "nonint-boundary-task",
+      "subprocessInterruptingTask": "subprocess-task",
+      "finalTask": "final-task",
+      "finalTaskUnited": "finaltask"
     },
     "security": [
       {
