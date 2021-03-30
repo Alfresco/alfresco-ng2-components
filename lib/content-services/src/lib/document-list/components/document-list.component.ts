@@ -490,7 +490,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (changes.node && changes.node.currentValue) {
                 const merge = this._pagination ? this._pagination.merge : false;
                 this.data.loadPage(changes.node.currentValue, merge, null, this.getPreselectedNodesBasedOnSelectionMode(), this.selection, this.selectionMode);
-                this.onPreselectNodes();
+                this.syncDatatableSelection();
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
@@ -510,7 +510,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (this.data) {
                 this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectedNodesBasedOnSelectionMode(), this.selection, this.selectionMode);
             }
-            this.onPreselectNodes();
+            this.syncDatatableSelection();
             this.syncPagination();
             this.onDataReady(this.node);
         } else {
@@ -702,7 +702,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (this.data) {
                 this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.getPreselectedNodesBasedOnSelectionMode(), this.selection, this.selectionMode);
             }
-            this.onPreselectNodes();
+            this.syncDatatableSelection();
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
         }
@@ -929,19 +929,17 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return this.hasPreselectedNodes() ? (this.isSingleSelectionMode() ? [this.preselectNodes[0]] : this.preselectNodes) : [];
     }
 
-    onPreselectNodes() {
-        if (this.data?.hasPreselectedRows()) {
-            const selection = [...this.isSingleSelectionMode() ? [this.data.getPreselectedRows()[0]] : this.data.getSelectedRows()];
-            this.dataTable.selection = selection;
-            this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> selection });
-        }
+    syncDatatableSelection() {
+        const selection = this.data.getSelectionBasedOnSelectionMode(this.selectionMode);
+        this.dataTable.selection = selection;
+        this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> selection });
     }
 
     unselectRowFromNodeId(nodeId: string) {
         const rowToUnselect = this.data.getRowByNodeId(nodeId);
         if (rowToUnselect?.isSelected) {
             rowToUnselect.isSelected = false;
-            const selection = this.data.getSelectedRows();
+            const selection = this.data.getSelectionBasedOnSelectionMode(this.selectionMode);
             this.dataTable.selection = selection;
             this.onNodeUnselect({ row: undefined, selection: <ShareDataRow[]> selection });
         }

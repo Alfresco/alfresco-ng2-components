@@ -345,4 +345,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     isRowToBeMarkedSelected(row: NodeEntry, currentSelection: NodeEntry[] = [], selectionMode: string): boolean {
         return selectionMode === 'multiple' ? !!currentSelection.find(selectedNode => selectedNode.entry.id === row.entry.id) : false;
     }
+
+    getSelectionBasedOnSelectionMode(selectionMode: string): DataRow[] {
+        return this.hasPreselectedRows() ? (selectionMode === 'single' ? [this.getPreselectedRows()[0]] : this.getSelectedRows()) : this.getSelectedRows();
+    }
 }

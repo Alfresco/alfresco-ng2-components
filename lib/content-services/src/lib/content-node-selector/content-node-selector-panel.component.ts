@@ -457,6 +457,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         }
         this.folderIdToShow = null;
         this.loadingSearchResults = true;
+        this.preselectedNodes = [];
         this.addCorrespondingNodeIdsQuery();
         this.resetChosenNode();
     }
