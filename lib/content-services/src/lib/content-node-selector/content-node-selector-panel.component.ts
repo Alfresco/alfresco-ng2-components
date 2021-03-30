@@ -282,7 +282,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     getSelectedCountTranslation(): string {
-        return this.translation.instant(`NODE_SELECTOR.SELECTED_COUNT`, { count: this.chosenNode?.length || 0 });
+        return this.translation.instant(`NODE_SELECTOR.SELECTED_COUNT`, { count: this.getSelectedCount() });
+    }
+
+    getSelectedCount(): number {
+        return this.chosenNode?.length || 0;
     }
 
     ngOnInit() {
