@@ -4,6 +4,7 @@
     <div class="adf-property-field">
         <div *ngIf="!isEditable()"
             class="adf-select-item-padding adf-property-value"
+            [attr.data-automation-id]="'select-readonly-value-' + property.key"
             data-automation-class="read-only-value">{{ (property.displayValue | async) | translate }}</div>
         <div *ngIf="isEditable()">
             <mat-form-field class="adf-select-item-padding-editable adf-property-value">

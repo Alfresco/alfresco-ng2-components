@@ -216,14 +216,15 @@ export class MetadataViewPage {
         await BrowserVisibility.waitUntilElementIsVisible(property);
     }
 
-    async hasContentType(contentType: string): Promise<string> {
-        const nodeType = TestElement.byText('div[data-automation-id="header-nodeType"] .adf-property-value', contentType);
-        return nodeType.waitVisible();
+    async hasContentType(contentType: string): Promise<boolean> {
+        const nodeType = TestElement.byText('[data-automation-id="select-readonly-value-nodeType"]', contentType);
+        await nodeType.waitVisible();
+        return nodeType.isPresent();
     }
 
     async changeContentType(option: string): Promise<void> {
         const nodeType = TestElement.byCss('div[data-automation-id="header-nodeType"] mat-form-field');
-        await nodeType.waitPresent();
+        await nodeType.waitVisible();
         await nodeType.click();
         const typesDropDownPage = new DropdownPage(nodeType.elementFinder);
         await typesDropDownPage.checkOptionIsDisplayed(option);
