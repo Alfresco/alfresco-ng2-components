@@ -112,7 +112,7 @@ export class StringUtil {
      * @param length  {int} If this parameter is not provided the length is set to 5 by default.
      */
     static generateProcessName(length: number = 5): string {
-        return 'process_' + this.generateRandomString(length);
+        return 'process_' + StringUtil.generateRandomString(length);
     }
 
     /** Generates a random name for a process
@@ -120,7 +120,7 @@ export class StringUtil {
      * @param length  {int} If this parameter is not provided the length is set to 5 by default.
      */
      static generateUserTaskName(length: number = 5): string {
-        return 'userTask_' + this.generateRandomString(length);
+        return 'userTask_' + StringUtil.generateRandomString(length);
     }
 
 }
