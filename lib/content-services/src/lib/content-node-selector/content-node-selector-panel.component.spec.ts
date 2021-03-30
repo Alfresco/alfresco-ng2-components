@@ -1360,5 +1360,24 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.sorting).toEqual(['createdAt', 'desc']);
             });
         });
+
+        describe('Selected nodes counter', () => {
+            it('should getSelectedCount return 0 by default', () => {
+                expect(component.getSelectedCount()).toBe(0);
+            });
+
+            it('should getSelectedCount return 1 when node is selected', () => {
+                component.onCurrentSelection([{ entry: new Node({ id: 'fake' }) }]);
+
+                expect(component.getSelectedCount()).toBe(1);
+            });
+
+            it('should getSelectedCount return 0 when the chosen nodes are reset', () => {
+                component.onCurrentSelection([{ entry: new Node({ id: 'fake' }) }]);
+                component.resetChosenNode();
+
+                expect(component.getSelectedCount()).toBe(0);
+            });
+        });
     });
 });
