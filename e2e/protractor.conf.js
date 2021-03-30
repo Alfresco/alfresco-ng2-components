@@ -105,19 +105,19 @@ exports.config = {
 
     suites: {
         smokeTestCore: [
-            "e2e/core/login/**/**/*e2e.ts",
-            "e2e/core/viewer/**/**/*e2e.ts"
+            "./core/login/**/*.e2e.ts",
+            "./core/viewer/**/*.e2e.ts"
         ],
         smokeTestCsSearch: [
-            "e2e/content-services/document-list/**/**/*e2e.ts",
-            "e2e/content-services/metadata/**/**/*e2e.ts",
-            "e2e/search/components/**/**/*e2e.ts"
+            "./content-services/document-list/**/*.e2e.ts",
+            "./content-services/metadata/**/*.e2e.ts",
+            "./search/components/**/*.e2e.ts"
         ],
         smokeTestPs: [
-            "e2e/process-services/process/**/**/*e2e.ts",
-            "e2e/process-services/form/**/**/*e2e.ts",
-            "e2e/process-services-cloud/process/**/**/*e2e.ts",
-            "e2e/process-services-cloud/form-field/**/**/*e2e.ts"
+            "./process-services/process/**/*.e2e.ts",
+            "./process-services/form/**/*.e2e.ts",
+            "./process-services-cloud/process/**/*.e2e.ts",
+            "./process-services-cloud/form-field/**/*.e2e.ts"
         ]
     },
 
