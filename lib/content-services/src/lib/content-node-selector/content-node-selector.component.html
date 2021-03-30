@@ -43,6 +43,10 @@
                     [readOnly]="true"
                     data-automation-id="content-node-selector-upload-breadcrumb"
                 ></adf-dropdown-breadcrumb>
+                <div
+                    data-automation-id="content-node-selector-upload-selected-counter">
+                    {{ getSelectedCountTranslation() }}
+                </div>
             </adf-toolbar-title>
         </adf-toolbar>
         <ng-template mat-tab-label>

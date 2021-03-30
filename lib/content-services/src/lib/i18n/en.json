@@ -90,7 +90,8 @@
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "You can't upload a file whilst a search is still running",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "User doesn't have permission to upload content to the folder",
     "REPOSITORY": "Repository",
-    "UPLOAD_FROM_DEVICE": "Upload from your device"
+    "UPLOAD_FROM_DEVICE": "Upload from your device",
+    "SELECTED_COUNT": "{{ count }} selected"
   },
   "OPERATION": {
     "SUCCESS": {
