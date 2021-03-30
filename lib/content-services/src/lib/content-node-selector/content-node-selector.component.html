@@ -45,7 +45,7 @@
                 ></adf-dropdown-breadcrumb>
                 <div
                     data-automation-id="content-node-selector-upload-selected-counter">
-                    {{ getSelectedCountTranslation() }}
+                    {{ 'NODE_SELECTOR.SELECTED_COUNT' | translate: { count: getSelectedCount() } }}
                 </div>
             </adf-toolbar-title>
         </adf-toolbar>

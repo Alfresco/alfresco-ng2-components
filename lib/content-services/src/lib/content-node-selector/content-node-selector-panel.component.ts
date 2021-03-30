@@ -37,8 +37,7 @@ import {
     FileUploadCompleteEvent,
     FileUploadDeleteEvent,
     AppConfigService,
-    DataSorting,
-    TranslationService
+    DataSorting
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, QueryBody, RequestScope } from '@alfresco/js-api';
@@ -268,8 +267,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 private uploadService: UploadService,
                 private sitesService: SitesService,
                 private appConfigService: AppConfigService,
-                private contentNodeSelectorPanelService: ContentNodeSelectorPanelService,
-                private translation: TranslationService) {
+                private contentNodeSelectorPanelService: ContentNodeSelectorPanelService) {
     }
 
     set chosenNode(value: Node[]) {
@@ -279,10 +277,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     get chosenNode() {
         return this._chosenNode;
-    }
-
-    getSelectedCountTranslation(): string {
-        return this.translation.instant(`NODE_SELECTOR.SELECTED_COUNT`, { count: this.getSelectedCount() });
     }
 
     getSelectedCount(): number {
