@@ -22,6 +22,7 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { PeopleCloudComponentPage } from './people-cloud-component.page';
+import { GroupCloudComponentPage } from './group-cloud-component.page';
 
 export type StatusType = 'All' | 'Created' | 'Assigned' | 'Cancelled' | 'Suspended' | 'Completed';
 
@@ -42,12 +43,14 @@ export class EditTaskFilterCloudComponentPage {
     saveAsButton = element(by.css('[data-automation-id="adf-filter-action-saveAs"]'));
     deleteButton = element(by.css('[data-automation-id="adf-filter-action-delete"]'));
     filter = element(by.css(`adf-cloud-edit-task-filter mat-expansion-panel-header`));
+    candidateGroup = element(by.css('[data-automation-id="adf-cloud-group-search-input"]'));
 
     private locatorAppNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-appName']`));
     private locatorStatusDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-status']`));
     private locatorSortDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-sort']`));
     private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`));
     private locatorCompletedDateDropdown = element(by.css(`mat-select[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`));
+    private locatorAssignmentDropdown = element(by.css(`.adf-task-assignment-filter`));
 
     appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
     statusDropdown = new DropdownPage(this.locatorStatusDropdown);
@@ -55,9 +58,11 @@ export class EditTaskFilterCloudComponentPage {
     priorityDropdown = new DropdownPage(this.priority);
     orderDropdown = new DropdownPage(this.locatorOrderDropdown);
     completedDateDropdown = new DropdownPage(this.locatorCompletedDateDropdown);
+    assignmentDropdown = new DropdownPage(this.locatorAssignmentDropdown);
 
     editTaskFilterDialogPage = new EditTaskFilterDialogPage();
     peopleCloudComponent = new PeopleCloudComponentPage();
+    groupCloudComponent = new GroupCloudComponentPage();;
 
     dataTable = new DataTableComponentPage( element(by.css('adf-cloud-task-list')));
 
