@@ -57,13 +57,17 @@ export class LanguageService {
         private userPreferencesService: UserPreferencesService) {
 
         const customLanguages = appConfigService.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
-        if (customLanguages && customLanguages.length > 0) {
-            this.languages.next(customLanguages);
-        }
+        this.setLanguages(customLanguages);
     }
 
     changeLanguage(language: LanguageItem) {
         this.userPreferencesService.locale = language.key;
         this.userPreferencesService.set('textOrientation', language.direction || 'ltr');
+    }
+
+    setLanguages(items: LanguageItem[]) {
+        if (items && items.length > 0) {
+            this.languages.next(items);
+        }
     }
 }
