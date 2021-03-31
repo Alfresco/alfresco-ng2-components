@@ -100,7 +100,6 @@ describe('content type', () => {
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await metadataViewPage.checkPropertyIsVisible('nodeType', 'select');
         await modelActions.isCustomTypeSearchable(type.title);
         await expect(await metadataViewPage.hasContentType('Content')).toBe(true, 'Content type not found');
 
@@ -122,7 +121,6 @@ describe('content type', () => {
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await metadataViewPage.checkPropertyIsVisible('nodeType', 'select');
         await modelActions.isCustomTypeSearchable(type.title);
         await expect(await metadataViewPage.hasContentType(type.title)).toBe(true, 'Content type not found');
 
@@ -138,7 +136,6 @@ describe('content type', () => {
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await metadataViewPage.checkPropertyIsVisible('nodeType', 'select');
         await modelActions.isCustomTypeSearchable(type.title);
         await expect(await metadataViewPage.hasContentType('Content')).toBe(true, 'Content type not found');
 
@@ -160,7 +157,6 @@ describe('content type', () => {
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await metadataViewPage.checkPropertyIsVisible('nodeType', 'select');
         await modelActions.isCustomTypeSearchable(type.title);
         await expect(await metadataViewPage.hasContentType('Content')).toBe(true, 'Content type not found');
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, Key, Locator, protractor } from 'protractor';
+import { by, element, Key, Locator, protractor } from 'protractor';
 import { BrowserActions, BrowserVisibility, DropdownPage, TestElement } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
@@ -217,8 +217,8 @@ export class MetadataViewPage {
     }
 
     async hasContentType(contentType: string): Promise<boolean> {
-        await browser.sleep(1000);
         const contentTypeSelector = '[data-automation-id="select-readonly-value-nodeType"]';
+        await TestElement.byCss(contentTypeSelector).waitPresent();
         const nodeType = TestElement.byText(contentTypeSelector, contentType);
         await nodeType.waitVisible();
         return nodeType.isPresent();
