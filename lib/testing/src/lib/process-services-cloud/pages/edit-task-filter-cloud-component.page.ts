@@ -43,7 +43,6 @@ export class EditTaskFilterCloudComponentPage {
     saveAsButton = element(by.css('[data-automation-id="adf-filter-action-saveAs"]'));
     deleteButton = element(by.css('[data-automation-id="adf-filter-action-delete"]'));
     filter = element(by.css(`adf-cloud-edit-task-filter mat-expansion-panel-header`));
-    candidateGroup = element(by.css('[data-automation-id="adf-cloud-group-search-input"]'));
 
     private locatorAppNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-appName']`));
     private locatorStatusDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-status']`));
