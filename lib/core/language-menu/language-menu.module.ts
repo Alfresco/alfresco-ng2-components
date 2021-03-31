@@ -20,17 +20,22 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
 import { LanguageMenuComponent } from './language-menu.component';
+import { LanguagePickerComponent } from './language-picker.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        TranslateModule
     ],
     declarations: [
-        LanguageMenuComponent
+        LanguageMenuComponent,
+        LanguagePickerComponent
     ],
     exports: [
-        LanguageMenuComponent
+        LanguageMenuComponent,
+        LanguagePickerComponent
     ]
 })
 export class LanguageMenuModule {}

@@ -15,10 +15,18 @@
  * limitations under the License.
  */
 
-import { Direction } from '@angular/cdk/bidi';
+import { Component } from '@angular/core';
 
-export interface LanguageItem {
-    key: string;
-    label: string;
-    direction?: Direction;
-}
+@Component({
+    selector: 'adf-picker-button',
+    template: `
+        <button mat-menu-item [matMenuTriggerFor]="langMenu">
+            <mat-icon>language</mat-icon>
+            {{ 'ADF.LANGUAGE' | translate }}
+        </button>
+        <mat-menu #langMenu="matMenu">
+            <adf-language-menu></adf-language-menu>
+        </mat-menu>
+    `
+})
+export class LanguagePickerComponent {}
