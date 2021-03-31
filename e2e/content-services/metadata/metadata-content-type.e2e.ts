@@ -15,17 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
-    BrowserActions,
-    LoginPage,
-    ModelActions,
-    StringUtil,
-    UploadActions,
-    UserModel,
-    UsersActions,
-    ViewerPage
-} from '@alfresco/adf-testing';
+import { ApiService, BrowserActions, LoginPage, ModelActions, StringUtil, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { CustomModel, CustomType } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
@@ -74,7 +64,6 @@ describe('content type', () => {
             const docsNode = await uploadActions.uploadFile(docxFileModel.location, docxFileModel.name, '-my-');
             docxFileModel.id = docsNode.entry.id;
 
-            await loginPage.login(acsUser.username, acsUser.password);
         } catch (e) {
             fail('Failed to setup custom types :: ' + JSON.stringify(e, null, 2));
         }
@@ -93,9 +82,18 @@ describe('content type', () => {
         }
     });
 
+    beforeEach( async () => {
+        await loginPage.login(acsUser.username, acsUser.password);
+        await navigationBarPage.navigateToContentServices();
+    });
+
+    afterEach( async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     it('[C593560] Should the user be able to select a new content type and save it only after the confirmation dialog',  async () => {
         await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${pdfFile.id}/view)`);
-
+        await viewerPage.checkFileIsLoaded(pdfFile.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
@@ -116,11 +114,8 @@ describe('content type', () => {
 
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(acsUser.username, acsUser.password);
-        await navigationBarPage.navigateToContentServices();
-
-        await viewerPage.viewFile(pdfFile.name);
-        await viewerPage.checkFileIsLoaded();
-
+        await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${pdfFile.id}/view)`);
+        await viewerPage.checkFileIsLoaded(pdfFile.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
@@ -136,7 +131,7 @@ describe('content type', () => {
 
     it('[C593559] Should the user be able to select a new content type and not save it when press cancel in the confirmation dialog',  async () => {
         await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${docxFileModel.id}/view)`);
-
+        await viewerPage.checkFileIsLoaded(docxFileModel.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
@@ -157,11 +152,8 @@ describe('content type', () => {
 
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(acsUser.username, acsUser.password);
-        await navigationBarPage.navigateToContentServices();
-
-        await viewerPage.viewFile(docxFileModel.name);
-        await viewerPage.checkFileIsLoaded();
-
+        await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${docxFileModel.id}/view)`);
+        await viewerPage.checkFileIsLoaded(docxFileModel.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
