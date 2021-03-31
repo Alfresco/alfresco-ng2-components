@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Direction } from '@angular/cdk/bidi';
 import { BehaviorSubject } from 'rxjs';
-import { AppConfigService, AppConfigValues } from '../app-config';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { UserPreferencesService } from './user-preferences.service';
 
 export interface LanguageItem {
