@@ -30,7 +30,7 @@ import { ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
-import {DropdownBreadcrumbComponent} from "../breadcrumb";
+import { DropdownBreadcrumbComponent } from "../breadcrumb";
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
