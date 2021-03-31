@@ -379,7 +379,7 @@
   "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
     "ASSIGNED_TO_ME": "Assigned to me",
     "UNASSIGNED": "Unassigned",
-    "LIST_OF_CANDIDATE_USERS": "List of candidate users",
+    "LIST_OF_CANDIDATE_USERS": "List of candidate groups",
     "ASSIGNEE": "Assignee",
     "ASSIGNMENT_TYPE": "Assignment type"
   }
