@@ -488,8 +488,9 @@ describe('ShareDataTableAdapter', () => {
             const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
             adapter.loadPage(mockNodePagingWithPreselectedNodes, null, null, mockPreselectedNodes);
 
-            expect(adapter.getPreselectedRows().length).toBe(1);
+            expect(adapter.getPreselectedRows().length).toBe(2);
             expect(adapter.getPreselectedRows()[0].isSelected).toBe(true);
+            expect(adapter.getPreselectedRows()[1].isSelected).toBe(true);
         });
 
         it('should set preselectedRows empty if preselectedNodes are undefined/empty', () => {

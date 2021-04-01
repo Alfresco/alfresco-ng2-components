@@ -27,6 +27,7 @@ export class ShareDataRow implements DataRow {
     isSelected: boolean = false;
     isDropTarget: boolean;
     cssClass: string = '';
+    id: string;
 
     get node(): NodeEntry {
         return this.obj;

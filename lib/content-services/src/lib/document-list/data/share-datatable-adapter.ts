@@ -261,7 +261,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 shareDataRows = nodeEntries.map((item) => {
                     const shareDataRow = new ShareDataRow(item, this.contentService, this.permissionsStyle,
                         this.thumbnailService, this.allowDropFiles);
-                    const isRowToBeMarkedSelected = !!currentSelection.find(selectedNode => selectedNode.entry.id === item.entry.id);
+                    const isRowToBeMarkedSelected = !!currentSelection?.find(selectedNode => selectedNode.entry.id === item.entry.id);
                     if (isRowToBeMarkedSelected) {
                         shareDataRow.isSelected = true;
                     }

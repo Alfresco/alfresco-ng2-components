@@ -360,10 +360,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     private onFileUploadEvent() {
         this.uploadService.fileUploadComplete
-        .pipe(
-            debounceTime(500),
-            takeUntil(this.onDestroy$)
-        )
+            .pipe(
+                debounceTime(500),
+                takeUntil(this.onDestroy$)
+            )
             .subscribe((fileUploadEvent: FileUploadCompleteEvent) => {
                 this.currentUploadBatch.push(fileUploadEvent.data);
                 if (!this.uploadService.isUploading()) {
