@@ -364,14 +364,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             debounceTime(500),
             takeUntil(this.onDestroy$)
         )
-        .subscribe((fileUploadEvent: FileUploadCompleteEvent) => {
-            this.currentUploadBatch.push(fileUploadEvent.data);
-            if (!this.uploadService.isUploading()) {
-                this.preselectedNodes = this.getPreselectNodesBasedOnSelectionMode();
-                this.currentUploadBatch = [];
-                this.documentList.reloadWithoutResettingSelection();
-            }
-        });
+            .subscribe((fileUploadEvent: FileUploadCompleteEvent) => {
+                this.currentUploadBatch.push(fileUploadEvent.data);
+                if (!this.uploadService.isUploading()) {
+                    this.preselectedNodes = this.getPreselectNodesBasedOnSelectionMode();
+                    this.currentUploadBatch = [];
+                    this.documentList.reloadWithoutResettingSelection();
+                }
+            });
     }
 
     private onFileUploadDeletedEvent() {
@@ -456,8 +456,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             this.infinitePaginationComponent.reset();
         }
         this.folderIdToShow = null;
-        this.loadingSearchResults = true;
         this.preselectedNodes = [];
+        this.loadingSearchResults = true;
         this.addCorrespondingNodeIdsQuery();
         this.resetChosenNode();
     }

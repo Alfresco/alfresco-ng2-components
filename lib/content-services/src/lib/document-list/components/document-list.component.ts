@@ -489,8 +489,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 const merge = this._pagination ? this._pagination.merge : false;
-                this.data.loadPage(changes.node.currentValue, merge, null, this.getPreselectedNodesBasedOnSelectionMode(), this.selection, this.selectionMode);
-                this.syncDatatableSelection();
+                this.data.loadPage(changes.node.currentValue, merge, null, this.getPreselectedNodesBasedOnSelectionMode(), this.selection);
+                this.onPreselectNodes();
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
@@ -508,9 +508,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     reloadWithoutResettingSelection() {
         if (this.node) {
             if (this.data) {
-                this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectedNodesBasedOnSelectionMode(), this.selection, this.selectionMode);
+                this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectedNodesBasedOnSelectionMode(), this.selection);
             }
-            this.syncDatatableSelection();
+            this.onPreselectNodes();
             this.syncPagination();
             this.onDataReady(this.node);
         } else {
@@ -700,9 +700,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
             if (this.data) {
-                this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.getPreselectedNodesBasedOnSelectionMode(), this.selection, this.selectionMode);
+                this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.getPreselectedNodesBasedOnSelectionMode(), this.selection);
             }
-            this.syncDatatableSelection();
+            this.onPreselectNodes();
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
         }
@@ -929,18 +929,24 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return this.hasPreselectedNodes() ? (this.isSingleSelectionMode() ? [this.preselectNodes[0]] : this.preselectNodes) : [];
     }
 
-    syncDatatableSelection() {
-        const selection = this.data.getSelectionBasedOnSelectionMode(this.selectionMode);
-        this.dataTable.selection = selection;
-        this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> selection });
+    onPreselectNodes() {
+        if (this.data?.hasPreselectedRows()) {
+            const preselectedNodes = [...this.isSingleSelectionMode() ? [this.data.getPreselectedRows()[0]] : this.data.getPreselectedRows()];
+            const selectedNodes = this.data.getSelectedRows();
+
+            for (const node of preselectedNodes) {
+                this.dataTable.selectRow(node, true);
+            }
+            this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> selectedNodes });
+        }
     }
 
     unselectRowFromNodeId(nodeId: string) {
         const rowToUnselect = this.data.getRowByNodeId(nodeId);
         if (rowToUnselect?.isSelected) {
             rowToUnselect.isSelected = false;
+            this.dataTable.selectRow(rowToUnselect, false);
             const selection = this.data.getSelectionBasedOnSelectionMode(this.selectionMode);
-            this.dataTable.selection = selection;
             this.onNodeUnselect({ row: undefined, selection: <ShareDataRow[]> selection });
         }
     }

@@ -250,7 +250,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preselectNodes: NodeEntry[] = [], currentSelection?: NodeEntry[], selectionMode?: string) {
+    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preselectNodes: NodeEntry[] = [], currentSelection?: NodeEntry[]) {
         let shareDataRows: ShareDataRow[] = [];
         if (allowDropFiles !== undefined) {
             this.allowDropFiles = allowDropFiles;
@@ -261,9 +261,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 shareDataRows = nodeEntries.map((item) => {
                     const shareDataRow = new ShareDataRow(item, this.contentService, this.permissionsStyle,
                         this.thumbnailService, this.allowDropFiles);
-
-                    const isRowToBeMarkedSelected = this.isRowToBeMarkedSelected(item, currentSelection, selectionMode);
-
+                    const isRowToBeMarkedSelected = !!currentSelection.find(selectedNode => selectedNode.entry.id === item.entry.id);
                     if (isRowToBeMarkedSelected) {
                         shareDataRow.isSelected = true;
                     }
@@ -306,20 +304,14 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         } else {
             this.rows = shareDataRows;
         }
-
-        this.setPreselectedRowsFromPreselectedNodes(preselectNodes, selectionMode);
+        this.setPreselectedRowsFromPreselectedNodes(preselectNodes);
     }
 
-    setPreselectedRowsFromPreselectedNodes(preselectNodes: NodeEntry[], selectionMode: string) {
+    setPreselectedRowsFromPreselectedNodes(preselectNodes: NodeEntry[]) {
         this.preselectedRows = [];
-        if (selectionMode === 'multiple') {
-            preselectNodes.forEach((preselectedNode: NodeEntry) => {
-                this.preselectRowFromNodeId(preselectedNode.entry.id);
-            });
-        } else if (preselectNodes.length) {
-            const lastNodeToPreselect = preselectNodes[preselectNodes.length - 1];
-            this.preselectRowFromNodeId(lastNodeToPreselect.entry.id);
-        }
+        preselectNodes.forEach((preselectedNode: NodeEntry) => {
+            this.preselectRowFromNodeId(preselectedNode.entry.id);
+        });
     }
 
     preselectRowFromNodeId(nodeId: string) {
@@ -340,10 +332,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
     getRowByNodeId(nodeId: string): DataRow {
        return this.rows.find((row: DataRow) => row.node.entry.id === nodeId);
-    }
-
-    isRowToBeMarkedSelected(row: NodeEntry, currentSelection: NodeEntry[] = [], selectionMode: string): boolean {
-        return selectionMode === 'multiple' ? !!currentSelection.find(selectedNode => selectedNode.entry.id === row.entry.id) : false;
     }
 
     getSelectionBasedOnSelectionMode(selectionMode: string): DataRow[] {
