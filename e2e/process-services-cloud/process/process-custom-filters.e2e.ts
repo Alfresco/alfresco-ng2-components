@@ -164,7 +164,7 @@ describe('Process list cloud ', () => {
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Name')).toBe(true);
         });
 
-        fit('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
+        it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
             await setFilter({ status: PROCESS_STATUS.RUNNING });
             await setFilter({ sort: 'Id'});
             await setFilter({ order: SORT_DIRECTION.ASC });
