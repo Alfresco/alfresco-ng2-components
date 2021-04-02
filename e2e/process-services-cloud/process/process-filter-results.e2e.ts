@@ -163,6 +163,7 @@ describe('Process filters cloud', () => {
     it('[C306887] Should be able to filter by appName', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setAppNameDropDown(candidateBaseApp);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setInitiator(`${testUser.firstName} ${testUser.lastName}`);
 
         await processList.getDataTable().waitTillContentLoaded();
@@ -200,10 +201,12 @@ describe('Process filters cloud', () => {
     it('[C311316] Should be able to filter by process definition key', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setProperty('processDefinitionKey', processDefinition.entry.key);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
         await editProcessFilter.setProcessName(anotherProcessInstance.entry.name);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProperty('processDefinitionKey', anotherProcessDefinition.entry.key);
         await processList.checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
@@ -239,6 +242,7 @@ describe('Process filters cloud', () => {
     it('[C306892] Should be able to filter by process status - Running', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.RUNNING);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
@@ -255,6 +259,7 @@ describe('Process filters cloud', () => {
     it('[C306892] Should be able to filter by process status - Completed', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.COMPLETED);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProcessName(completedProcess.entry.name);
         await processList.checkContentIsDisplayedByName(completedProcess.entry.name);
 
@@ -271,6 +276,7 @@ describe('Process filters cloud', () => {
     it('[C306892] Should be able to filter by process status - Suspended', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.SUSPENDED);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProcessName(suspendProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(suspendProcessInstance.entry.name);
 
@@ -299,6 +305,7 @@ describe('Process filters cloud', () => {
     it('[C311318] Should be able to filter by lastModifiedFrom - displays record when date = currentDate', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setProperty('lastModifiedFrom', currentDate);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
@@ -306,6 +313,7 @@ describe('Process filters cloud', () => {
     it('[C311318] Should be able to filter by lastModifiedFrom - displays record when date = beforeDate', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setProperty('lastModifiedFrom', beforeDate);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
@@ -313,6 +321,7 @@ describe('Process filters cloud', () => {
     it('[C311318] Should be able to filter by lastModifiedFrom - does not display record when date = afterDate', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProperty('lastModifiedFrom', afterDate);
         await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });
@@ -320,6 +329,7 @@ describe('Process filters cloud', () => {
     it('[C311319] Should be able to filter by lastModifiedTo - displays record when date = currentDate', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setProperty('lastModifiedTo', currentDate);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
@@ -327,6 +337,7 @@ describe('Process filters cloud', () => {
     it('[C311319] Should be able to filter by lastModifiedTo - does not display record when date = beforeDate', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setProperty('lastModifiedTo', beforeDate);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });
@@ -334,6 +345,7 @@ describe('Process filters cloud', () => {
     it('[C311319] Should be able to filter by lastModifiedTo - displays record when date = afterDate', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setProperty('lastModifiedTo', afterDate);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
@@ -341,6 +353,7 @@ describe('Process filters cloud', () => {
     it('[C311319] Should not display any processes when the lastModifiedFrom and lastModifiedTo are set to a future date', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setProperty('lastModifiedFrom', afterDate);
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProperty('lastModifiedTo', afterDate);
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
