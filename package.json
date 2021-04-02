@@ -101,7 +101,7 @@
     "pdfjs-dist": "2.5.207",
     "raphael": "2.3.0",
     "rxjs": "^6.6.3",
-    "snyk": "^1.503.0",
+    "snyk": "^1.521.0",
     "subscriptions-transport-ws": "^0.9.18",
     "tslib": "^2.0.3",
     "zone.js": "~0.10.2"
