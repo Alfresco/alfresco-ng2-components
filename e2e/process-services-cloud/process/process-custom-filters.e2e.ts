@@ -143,8 +143,9 @@ describe('Process list cloud ', () => {
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
         });
 
-        function setFilter(props: FilterProps): Promise<void> {
-            return editProcessFilter.setFilter(props);
+        async function setFilter(props: FilterProps): Promise<void> {
+            await editProcessFilter.setFilter(props);
+            await waitTillContentLoaded();
         }
 
         async function waitTillContentLoaded() {
@@ -152,64 +153,65 @@ describe('Process list cloud ', () => {
         }
 
         it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.RUNNING, sort: 'Name', order: SORT_DIRECTION.ASC });
-            await waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.RUNNING });
+            await setFilter({ sort: 'Name' });
+            await setFilter({ order: SORT_DIRECTION.ASC });
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Name')).toBe(true);
 
             await setFilter({ order: SORT_DIRECTION.DESC});
-            await waitTillContentLoaded();
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Name')).toBe(true);
         });
 
-        it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.RUNNING, sort: 'Id', order: SORT_DIRECTION.ASC });
-            await waitTillContentLoaded();
+        fit('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
+            await setFilter({ status: PROCESS_STATUS.RUNNING });
+            await setFilter({ sort: 'Id'});
+            await setFilter({ order: SORT_DIRECTION.ASC });
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Id')).toBe(true);
 
             await setFilter({ order: SORT_DIRECTION.DESC});
-            await waitTillContentLoaded();
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Id')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by status when Status is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'Status', order: SORT_DIRECTION.ASC });
-            await waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.ALL });
+            await setFilter({ sort: 'Status' });
+            await setFilter({ order: SORT_DIRECTION.ASC });
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Status')).toBe(true);
 
             await setFilter({ order: SORT_DIRECTION.DESC});
-            await waitTillContentLoaded();
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Status')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by started by when Started By is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'Started by', order: SORT_DIRECTION.ASC });
-            await waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.ALL });
+            await setFilter({ sort: 'Started by' });
+            await setFilter({ order: SORT_DIRECTION.ASC });
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Started by')).toBe(true);
 
             await setFilter({ order: SORT_DIRECTION.DESC});
-            await waitTillContentLoaded();
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Started by')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by processdefinitionid date when ProcessDefinitionId is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'ProcessDefinitionId', order: SORT_DIRECTION.ASC });
-            await waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.ALL });
+            await setFilter({ sort: 'ProcessDefinitionId' });
+            await setFilter({ order: SORT_DIRECTION.ASC });
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Process Definition Id')).toBe(true);
 
             await setFilter({ order: SORT_DIRECTION.DESC});
-            await waitTillContentLoaded();
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Process Definition Id')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by processdefinitionkey date when ProcessDefinitionKey is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'ProcessDefinitionKey', order: SORT_DIRECTION.ASC });
-            await waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.ALL });
+            await setFilter({ sort: 'ProcessDefinitionKey' });
+            await setFilter({ order: SORT_DIRECTION.ASC });
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Process Definition Key')).toBe(true);
 
@@ -218,24 +220,24 @@ describe('Process list cloud ', () => {
         });
 
         it('[C305054] Should display processes ordered by last modified date when Last Modified is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'Last Modified', order: SORT_DIRECTION.ASC });
-            await waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.ALL });
+            await setFilter({ sort: 'Last Modified' });
+            await setFilter({ order: SORT_DIRECTION.ASC });
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Last Modified')).toBe(true);
 
             await setFilter({ order: SORT_DIRECTION.DESC });
-            await waitTillContentLoaded();
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Last Modified')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by business key date when BusinessKey is selected from sort dropdown', async () => {
-            await setFilter({ status: PROCESS_STATUS.ALL, sort: 'Business Key', order: SORT_DIRECTION.ASC });
-            await waitTillContentLoaded();
+            await setFilter({ status: PROCESS_STATUS.ALL });
+            await setFilter({ sort: 'Business Key' });
+            await setFilter({ order: SORT_DIRECTION.ASC });
 
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Business Key')).toBe(true);
 
             await setFilter({ order: SORT_DIRECTION.DESC});
-            await waitTillContentLoaded();
             await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Business Key')).toBe(true);
         });
 
