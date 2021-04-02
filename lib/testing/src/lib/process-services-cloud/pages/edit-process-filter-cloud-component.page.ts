@@ -82,8 +82,9 @@ export class EditProcessFilterCloudComponentPage {
         return BrowserActions.getText(element(by.css("mat-form-field[data-automation-id='status'] span")));
     }
 
-    setSortFilterDropDown(option): Promise<void> {
-        return this.sortDropdown.selectDropdownOption(option);
+    async setSortFilterDropDown(option): Promise<void> {
+        await this.sortDropdown.selectDropdownOption(option);
+        await browser.sleep(1500);
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
