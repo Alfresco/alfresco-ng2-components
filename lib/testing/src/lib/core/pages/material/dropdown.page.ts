@@ -35,6 +35,7 @@ export class DropdownPage {
 
     async selectOption(option: string): Promise<void> {
         Logger.log(`Select dropdown option ${option}`);
+        await browser.sleep(2000);
         const optionElement = element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first();
         await BrowserActions.click(optionElement);
         await browser.waitForAngular();
