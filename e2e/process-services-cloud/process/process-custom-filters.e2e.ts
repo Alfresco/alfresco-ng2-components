@@ -37,7 +37,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { EditProcessFilterConfiguration } from './../config/edit-process-filter.config';
 import { ProcessListCloudConfiguration } from './../config/process-list-cloud.config';
 
-describe('Process list cloud', () => {
+describe('Process list cloud ', () => {
 
     // en-US values for the process status
     const PROCESS_STATUS = {
