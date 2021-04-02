@@ -31,6 +31,8 @@ export class DropdownPage {
     async clickDropdown(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dropDownElement);
         await BrowserActions.click(this.dropDownElement);
+        await browser.sleep(2000);
+        Logger.log(`After click dropdown arrow`);
     }
 
     async selectOption(option: string): Promise<void> {
