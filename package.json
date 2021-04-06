@@ -103,7 +103,7 @@
     "rxjs": "^6.6.3",
     "snyk": "^1.503.0",
     "subscriptions-transport-ws": "^0.9.18",
-    "tslib": "^2.0.3",
+    "tslib": "^2.2.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
