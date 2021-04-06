@@ -20,6 +20,7 @@
 import { exec } from './exec';
 import * as program from 'commander';
 import { logger } from './logger';
+import { resolve } from 'path';
 
 export interface PublishArgs {
     tag?: string;
@@ -71,15 +72,15 @@ function main(args) {
     program
         .version('0.1.0')
         .description('Move in the folder where you have your Dockerfile and run the command:\n\n' +
-            'adf-cli docker-publish --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}" --pathProject "$(pwd)"')
+            'adf-cli docker-publish --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}"')
         .option('--loginRepo [type]', 'URL registry')
         .option('--loginPassword [type]', ' password')
         .option('--loginUsername [type]', ' username')
         .option('--loginCheck [type]', 'perform login')
+        .option('--pathProject [type]', 'the path build context')
         .requiredOption('--dockerRepo [type]', 'docker repo')
         .requiredOption('--dockerTags [type]', ' tags')
         .requiredOption('--buildArgs [type]', ' buildArgs')
-        .requiredOption('--pathProject [type]', 'path project')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
@@ -89,6 +90,10 @@ function main(args) {
 
     if (args.loginCheck === true) {
         loginPerform(args);
+    }
+
+    if(args.pathProject === undefined) {
+        args.pathProject = resolve('./')
     }
 
     let mainTag;
