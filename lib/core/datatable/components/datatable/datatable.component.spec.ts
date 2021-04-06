@@ -40,6 +40,7 @@ class CustomColumnTemplateComponent {
 class FakeDataRow implements DataRow {
     isDropTarget = false;
     isSelected = true;
+    id?: string;
 
     hasValue() {
         return true;
@@ -591,6 +592,45 @@ describe('DataTable', () => {
             metaKey: true, preventDefault() {
             }
         });
+    });
+
+    it('should unselect the row searching it by row id, when row id is defined', () => {
+        const findSelectionByIdSpy = spyOn(dataTable, 'findSelectionById');
+        dataTable.data = new ObjectDataTableAdapter([],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        const fakeDataRows = [new FakeDataRow(), new FakeDataRow()];
+        fakeDataRows[0].id = 'fakeRowId';
+        fakeDataRows[1].id = 'fakeRowId2';
+
+        dataTable.data.setRows(fakeDataRows);
+        dataTable.selection = [...fakeDataRows];
+        const indexOfSpy = spyOn(dataTable.selection, 'indexOf');
+
+        dataTable.selectRow(fakeDataRows[0], false);
+
+        expect(indexOfSpy).not.toHaveBeenCalled();
+        expect(findSelectionByIdSpy).toHaveBeenCalledWith(fakeDataRows[0].id);
+    });
+
+    it('should unselect the row by searching for the exact same reference of it (indexOf), when row id is not defined ', () => {
+        const findSelectionByIdSpy = spyOn(dataTable, 'findSelectionById');
+        dataTable.data = new ObjectDataTableAdapter([],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        const fakeDataRows = [new FakeDataRow(), new FakeDataRow()];
+        dataTable.data.setRows(fakeDataRows);
+        dataTable.selection = [...fakeDataRows];
+        const indexOfSpy = spyOn(dataTable.selection, 'indexOf').and.returnValue(0);
+
+        dataTable.selectRow(fakeDataRows[0], false);
+
+        expect(indexOfSpy).toHaveBeenCalled();
+        expect(findSelectionByIdSpy).not.toHaveBeenCalled();
+        expect(dataTable.selection.length).toEqual(1);
+        expect(dataTable.selection[0]).toEqual(fakeDataRows[1]);
     });
 
     it('should select multiple rows with [multiple] selection mode and modifier key', (done) => {

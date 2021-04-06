@@ -625,7 +625,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         return this.selectionMode === 'single';
     }
 
-    private getPreselectNodesBasedOnSelectionMode(): NodeEntry[] {
+    getPreselectNodesBasedOnSelectionMode(): NodeEntry[] {
         let selectedNodes: NodeEntry[] = [];
 
         if (this.currentUploadBatch?.length) {

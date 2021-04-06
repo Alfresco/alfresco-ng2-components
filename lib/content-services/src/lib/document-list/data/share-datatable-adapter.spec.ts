@@ -480,5 +480,31 @@ describe('ShareDataTableAdapter', () => {
 
             expect(row.isDropTarget).toBeFalsy();
         });
+
+        it('should return all the selected rows', () => {
+            const file = new FileNode();
+            const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
+            const row1 = new ShareDataRow(file, contentService, null);
+            const row2 = new ShareDataRow(file, contentService, null);
+            const row3 = new ShareDataRow(file, contentService, null);
+
+            row1.isSelected = true;
+            row2.isSelected = true;
+            adapter.setRows([row1, row2, row3]);
+            const selectedRows = adapter.getSelectedRows();
+
+            expect(selectedRows.length).toEqual(2);
+            expect(selectedRows).toEqual([row1, row2]);
+        });
+
+        it('should return the row of the requested node id', () => {
+            const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
+            const fakeFiles = [new FileNode('fake-file-1', 'text/plain', 'fake-node-id-1'), new FileNode('fake-file-2', 'text/plain', 'fake-node-id-2')];
+            const fakeShareDataRows = [new ShareDataRow(fakeFiles[0], contentService, null), new ShareDataRow(fakeFiles[1], contentService, null)];
+            adapter.setRows(fakeShareDataRows);
+
+            expect(adapter.getRowByNodeId('fake-node-id-1')).toEqual(fakeShareDataRows[0]);
+            expect(adapter.getRowByNodeId('fake-node-id-2')).toEqual(fakeShareDataRows[1]);
+        });
    });
 });

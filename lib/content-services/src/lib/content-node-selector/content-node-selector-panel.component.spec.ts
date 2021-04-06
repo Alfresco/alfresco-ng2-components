@@ -1258,6 +1258,31 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     expect(documentListUnselectRowSpy).toHaveBeenCalledWith(fakeNodes[0].id);
                     expect(documentListReloadSpy).toHaveBeenCalled();
                 });
+
+                it('should return only the last uploaded node to become preselected when the selection mode is single', () => {
+                    fixture.detectChanges();
+                    const fakeNodes = [new NodeEntry({ id: 'fakeNode1' }), new NodeEntry({ id: 'fakeNode2' })];
+                    component.currentUploadBatch = fakeNodes;
+                    component.selectionMode = 'single';
+
+                    expect(component.getPreselectNodesBasedOnSelectionMode()).toEqual([fakeNodes[1]]);
+                });
+
+                it('should return all the uploaded nodes to become preselected when the selection mode is multiple', () => {
+                    fixture.detectChanges();
+                    const fakeNodes = [new NodeEntry({ id: 'fakeNode1' }), new NodeEntry({ id: 'fakeNode2' })];
+                    component.currentUploadBatch = fakeNodes;
+                    component.selectionMode = 'multiple';
+
+                    expect(component.getPreselectNodesBasedOnSelectionMode()).toEqual(fakeNodes);
+                });
+
+                it('should return an empty array when no files are uploaded', () => {
+                    fixture.detectChanges();
+                    component.currentUploadBatch = [];
+
+                    expect(component.getPreselectNodesBasedOnSelectionMode()).toEqual([]);
+                });
             });
 
         });
