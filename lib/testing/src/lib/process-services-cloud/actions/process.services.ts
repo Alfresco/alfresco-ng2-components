@@ -58,6 +58,17 @@ export class ProcessServices {
         return processInstance;
     }
 
+    async createProcessInstanceWithVariables(processDefName, appName, variables: any, processInstanceName?: string) {
+        const processDefinition = await this.processDefinitionsService.getProcessDefinitionByName(processDefName, appName);
+        const processInstance = await this.processInstancesService.createProcessInstance(processDefinition.entry.key, appName, {
+            name: processInstanceName ? processInstanceName : StringUtil.generateRandomString(),
+            businessKey: StringUtil.generateRandomString(),
+            variables: variables
+        });
+
+        return processInstance;
+    }
+
     async waitForStatus(processInstanceId: string, appName: string, expectedStatus: string): Promise<any> {
         const predicate = (result: any) => {
             Logger.info(`Process instance ${processInstanceId} status found: ${result.entry.status}`);
