@@ -45,7 +45,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
     allowDropFiles: boolean;
-    preselectedRows: DataRow[] = [];
 
     set sortingMode(value: string) {
         let newValue = (value || 'client').toLowerCase();
@@ -80,10 +79,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     setRows(rows: Array<DataRow>) {
         this.rows = rows || [];
         this.sort();
-    }
-
-    getPreselectedRows(): Array<DataRow> {
-        return this.preselectedRows;
     }
 
     getColumns(): Array<DataColumn> {
@@ -250,7 +245,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preselectNodes: NodeEntry[] = [], currentSelection?: NodeEntry[]) {
+    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean) {
         let shareDataRows: ShareDataRow[] = [];
         if (allowDropFiles !== undefined) {
             this.allowDropFiles = allowDropFiles;
@@ -258,15 +253,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (nodePaging?.list) {
             const nodeEntries: NodeEntry[] = nodePaging.list.entries;
             if (nodeEntries?.length) {
-                shareDataRows = nodeEntries.map((item) => {
-                    const shareDataRow = new ShareDataRow(item, this.contentService, this.permissionsStyle,
-                        this.thumbnailService, this.allowDropFiles);
-                    const isRowToBeMarkedSelected = !!currentSelection?.find(selectedNode => selectedNode.entry.id === item.entry.id);
-                    if (isRowToBeMarkedSelected) {
-                        shareDataRow.isSelected = true;
-                    }
-                    return shareDataRow;
-                });
+                shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService, this.allowDropFiles));
 
                 if (this.filter) {
                     shareDataRows = shareDataRows.filter(this.filter);
@@ -304,26 +291,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         } else {
             this.rows = shareDataRows;
         }
-        this.setPreselectedRowsFromPreselectedNodes(preselectNodes);
-    }
-
-    setPreselectedRowsFromPreselectedNodes(preselectNodes: NodeEntry[]) {
-        this.preselectedRows = [];
-        preselectNodes.forEach((preselectedNode: NodeEntry) => {
-            this.preselectRowFromNodeId(preselectedNode.entry.id);
-        });
-    }
-
-    preselectRowFromNodeId(nodeId: string) {
-        const rowOfPreselectedNode = this.getRowByNodeId(nodeId);
-        if (rowOfPreselectedNode) {
-            rowOfPreselectedNode.isSelected = true;
-            this.preselectedRows.push(rowOfPreselectedNode);
-        }
-    }
-
-    hasPreselectedRows(): boolean {
-        return this.preselectedRows?.length > 0;
     }
 
     getSelectedRows(): DataRow[] {
@@ -332,9 +299,5 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
     getRowByNodeId(nodeId: string): DataRow {
        return this.rows.find((row: DataRow) => row.node.entry.id === nodeId);
-    }
-
-    getSelectionBasedOnSelectionMode(selectionMode: string): DataRow[] {
-        return this.hasPreselectedRows() ? (selectionMode === 'single' ? [this.getPreselectedRows()[0]] : this.getSelectedRows()) : this.getSelectedRows();
     }
 }
