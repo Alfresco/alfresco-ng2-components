@@ -266,7 +266,7 @@
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         [formatTooltip]="getNodeNameTooltip">
                         <ng-template let-context>
-                            <adf-name-column [context]="context"></adf-name-column>
+                            <adf-name-column key="name" [context]="context"></adf-name-column>
                         </ng-template>
                     </data-column>
                     <data-column

@@ -16,9 +16,59 @@
  */
 
 import { NameColumnComponent } from './name-column.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { skip } from 'rxjs/operators';
 
 describe('NameColumnComponent', () => {
-  it('should be defined', () => {
-    expect(NameColumnComponent).toBeDefined();
-  });
+    let fixture: ComponentFixture<NameColumnComponent>;
+    let context: any;
+    let component: NameColumnComponent;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
+
+        fixture = TestBed.createComponent(NameColumnComponent);
+
+        context = {
+            row: {
+                node: {entry: {}},
+                getValue(key) {
+                    return key;
+                }
+            }
+        };
+
+        component = fixture.componentInstance;
+        component.context = context;
+    });
+
+    it('should set the display value based on default key', (done) => {
+        component.displayText$
+            .pipe(skip(1))
+            .subscribe(value => {
+                expect(value).toBe('name');
+                done();
+            });
+
+        component.ngOnInit();
+    });
+
+    it('should set the display value based on the custom key', (done) => {
+        component.key = 'title';
+        component.displayText$
+            .pipe(skip(1))
+            .subscribe(value => {
+                expect(value).toBe('title');
+                done();
+            });
+
+        component.ngOnInit();
+    });
 });
