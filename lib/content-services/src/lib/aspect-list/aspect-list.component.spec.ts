@@ -85,6 +85,21 @@ const customAspectListMock: AspectEntry[] = [{
             }
         ]
     }
+},
+{
+    entry: {
+        parentId: 'cst:nonamedAspect',
+        id: 'cst:nonamedAspect',
+        description: '',
+        title: '',
+        properties: [
+            {
+                id: 'channelPassword',
+                title: 'The authenticated channel password',
+                dataType: 'd:propA'
+            }
+        ]
+    }
 }];
 
 describe('AspectListComponent', () => {
@@ -149,6 +164,13 @@ describe('AspectListComponent', () => {
             expect(firstElement).toBeDefined();
             expect(secondElement).not.toBeNull();
             expect(secondElement).toBeDefined();
+        });
+
+        it('should show aspect id when name or title is not set', () => {
+            const noNameAspect: HTMLElement = fixture.nativeElement.querySelector('#aspect-list-cst-nonamedAspect .adf-aspect-list-element-title');
+            expect(noNameAspect).toBeDefined();
+            expect(noNameAspect).not.toBeNull();
+            expect(noNameAspect.innerText).toBe('cst:nonamedAspect');
         });
 
         it('should show the details when a row is clicked', () => {
