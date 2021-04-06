@@ -16,5 +16,5 @@
  */
 
 export * from './language-menu.component';
-export * from './language.interface';
 export * from './language-menu.module';
+export * from './language-picker.component';

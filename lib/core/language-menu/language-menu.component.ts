@@ -15,35 +15,28 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { UserPreferencesService } from '../services/user-preferences.service';
-import { LanguageItem } from './language.interface';
+import { Component } from '@angular/core';
+import { LanguageItem, LanguageService } from '../services/language.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'adf-language-menu',
-    templateUrl: 'language-menu.component.html'
+    template: `
+        <button
+            mat-menu-item
+            *ngFor="let language of languages$ | async"
+            (click)="changeLanguage(language)">{{language.label}}</button>
+    `
 })
-export class LanguageMenuComponent implements OnInit {
+export class LanguageMenuComponent {
 
-    languages: Array<LanguageItem> = [
-        { key: 'en', label: 'English'}
-    ];
+    languages$: Observable<LanguageItem[]>;
 
-    constructor(
-        private appConfig: AppConfigService,
-        private userPreference: UserPreferencesService) {
-    }
-
-    ngOnInit() {
-        const languagesConfigApp = this.appConfig.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
-        if (languagesConfigApp) {
-            this.languages = languagesConfigApp;
-        }
+    constructor(private languageService: LanguageService) {
+        this.languages$ = languageService.languages$;
     }
 
     changeLanguage(language: LanguageItem) {
-        this.userPreference.locale = language.key;
-        this.userPreference.set('textOrientation', language.direction || 'ltr');
+        this.languageService.changeLanguage(language);
     }
 }

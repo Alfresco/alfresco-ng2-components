@@ -18,10 +18,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LanguageMenuComponent } from './language-menu.component';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { UserPreferencesService } from '../services/user-preferences.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../services/language.service';
 
 describe('LanguageMenuComponent', () => {
 
@@ -29,6 +29,7 @@ describe('LanguageMenuComponent', () => {
     let component: LanguageMenuComponent;
     let appConfig: AppConfigService;
     let userPreferencesService: UserPreferencesService;
+    let languageService: LanguageService;
 
     const languages = <any> [
         {
@@ -46,33 +47,35 @@ describe('LanguageMenuComponent', () => {
         }
     ];
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
+
         fixture = TestBed.createComponent(LanguageMenuComponent);
         component = fixture.componentInstance;
         appConfig = TestBed.inject(AppConfigService);
         userPreferencesService = TestBed.inject(UserPreferencesService);
+        languageService = TestBed.inject(LanguageService);
     });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    it('should fetch the languages from the app config if present', () => {
+    it('should fetch the languages from the app config if present', async (done) => {
+        languageService.setLanguages(languages);
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        expect(component.languages).toEqual([{ key: 'en', label: 'English' }]);
-
-        appConfig.config.languages = languages;
-
-        component.ngOnInit();
-        expect(component.languages).toEqual(languages);
+        component.languages$.subscribe(langs => {
+            expect(langs).toEqual(languages);
+            done();
+        });
     });
 
     it('should change user preference locale', () => {

@@ -1,5 +1,6 @@
 {
   "ADF": {
+    "LANGUAGE": "Language",
     "ROLES": {
       "ALL": "All",
       "CONTRIBUTOR": "Contributor",
