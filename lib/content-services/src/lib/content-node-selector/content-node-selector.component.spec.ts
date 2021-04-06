@@ -30,7 +30,6 @@ import { ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
-import { DropdownBreadcrumbComponent } from "../breadcrumb";
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
@@ -451,9 +450,6 @@ describe('ContentNodeSelectorComponent', () => {
         it('should have injected the counter text', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
-                expect(breadcrumb).not.toBeNull('Breadcrumb not found');
-
                 const counterElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-upload-selected-counter"]'));
                 expect(counterElement).not.toBeNull();
                 expect(counterElement.nativeElement.innerText).toBe('NODE_SELECTOR.SELECTED_COUNT');
