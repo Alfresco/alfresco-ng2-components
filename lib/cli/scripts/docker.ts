@@ -22,7 +22,7 @@ import * as program from 'commander';
 import { logger } from './logger';
 import { resolve } from 'path';
 
-enum ACTIONS {
+enum TARGETS {
  Publish = 'publish',
  Link = 'link'
 }
@@ -56,9 +56,9 @@ function tagImagePerform(args: PublishArgs, tagImage: string, newTag: string) {
     logger.info(response);
 }
 
-function pullImagePerform(args: PublishArgs, sourceTag: string) {
-    logger.info(`Perform docker pull... ${args.dockerRepo}:${sourceTag}`);
-    const response = exec('docker', ['pull', `${args.dockerRepo}:${sourceTag}`], {});
+function pullImagePerform(dockerRepo: string,  sourceTag: string) {
+    logger.info(`Perform docker pull... ${dockerRepo}:${sourceTag}`);
+    const response = exec('docker', ['pull', `${dockerRepo}:${sourceTag}`], {});
     logger.info(response);
 }
 
@@ -90,7 +90,7 @@ function main(args) {
         .option('--pathProject [type]', 'the path build context')
         .option('--sourceTag [type]', 'sourceTag')
         .option('--buildArgs [type]', 'buildArgs')
-        .requiredOption('--action [type]', 'action: publish or link')
+        .option('--target [type]', 'target: publish or link',TARGETS.Publish)
         .requiredOption('--dockerRepo [type]', 'docker repo')
         .requiredOption('--dockerTags [type]', ' tags')
         .parse(process.argv);
@@ -99,13 +99,12 @@ function main(args) {
         program.outputHelp();
         return;
     }
-
-    if (args.action === ACTIONS.Publish && args.buildArgs === undefined) {
-        throw new Error(`error: required option --buildArgs [type] in case the action is ${ACTIONS.Publish}`);
+    if (program.opts().target === TARGETS.Publish && args.buildArgs === undefined) {
+        throw new Error(`error: required option --buildArgs [type] in case the target is ${TARGETS.Publish}`);
     }
 
-    if (args.action === ACTIONS.Link && args.sourceTag === undefined) {
-        throw new Error(`error: required option --sourceTag [type] in case the action is ${ACTIONS.Link}`);
+    if (program.opts().target === TARGETS.Link && args.sourceTag === undefined) {
+        throw new Error(`error: required option --sourceTag [type] in case the target is ${TARGETS.Link}`);
     }
 
     if(args.pathProject === undefined) {
@@ -120,17 +119,16 @@ function main(args) {
     if (args.dockerTags !== '') {
         args.dockerTags.split(',').forEach( (tag, index) => {
             if (tag) {
-                logger.info(`Analyzing tag:${tag} ... for action ${args.action}`);
-                if (args.action === ACTIONS.Publish) {
+                logger.info(`Analyzing tag:${tag} ... for target ${program.opts().target}`);
+                if (program.opts().target === TARGETS.Publish) {
                     if (index === 0) {
                         logger.info(`Build only once`);
                         mainTag = tag;
                         buildImagePerform(args, mainTag);
                     }
-                    
                 } else {
                     mainTag = args.sourceTag;
-                    pullImagePerform(args, mainTag);
+                    pullImagePerform(args.dockerRepo, mainTag);
                 }
                 tagImagePerform(args, mainTag, tag);
                 pushImagePerform(args, tag);
