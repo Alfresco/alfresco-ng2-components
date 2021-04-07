@@ -944,7 +944,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onPreselectNodes() {
         if (this.hasPreselectedNodes()) {
-            this.preselectRowsOfNodes(this.preselectNodes);
+            this.preselectRowsOfPreselectedNodes();
             const preselectedRows = this.getPreselectedRowsBasedOnSelectionMode();
             const selectedNodes = this.data.getSelectedRows();
 
@@ -966,9 +966,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    preselectRowsOfNodes(nodes: NodeEntry[]) {
+    preselectRowsOfPreselectedNodes() {
         this.preselectedRows = [];
-        nodes.forEach((preselectedNode: NodeEntry) => {
+        const preselectedNodes = this.getPreselectedNodesBasedOnSelectionMode();
+
+        preselectedNodes.forEach((preselectedNode: NodeEntry) => {
             const rowOfPreselectedNode = this.data.getRowByNodeId(preselectedNode.entry.id);
             if (rowOfPreselectedNode) {
                 rowOfPreselectedNode.isSelected = true;
