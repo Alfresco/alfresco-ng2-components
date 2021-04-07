@@ -20,8 +20,8 @@ import { TestElement } from '../../test-element';
 export class StartFormPage {
     startProcessForm = TestElement.byCss('.adf-start-form-container');
 
-    async checkStartProcessFormIsDisplayed(): Promise<void> {
-        await this.startProcessForm.isDisplayed();
+    async isStartProcessFormDisplayed(): Promise<boolean> {
+        return this.startProcessForm.isDisplayed();
     }
 
 }
