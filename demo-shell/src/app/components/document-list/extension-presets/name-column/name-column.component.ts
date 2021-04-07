@@ -44,6 +44,9 @@ export class NameColumnComponent implements OnInit, OnDestroy {
     @Input()
     context: any;
 
+    @Input()
+    key = 'name';
+
     displayText$ = new BehaviorSubject<string>('');
     node: NodeEntry;
 
@@ -73,7 +76,8 @@ export class NameColumnComponent implements OnInit, OnDestroy {
         this.node = this.context.row.node;
 
         if (this.node && this.node.entry) {
-            this.displayText$.next(this.node.entry.name || this.node.entry.id);
+            const displayText = this.context.row.getValue(this.key);
+            this.displayText$.next(displayText || this.node.entry.id);
         }
     }
 

@@ -583,7 +583,7 @@ For example:
 ```html
 <data-column key="name" title="Name">
     <ng-template let-context>
-        <adf-name-column [context]="context"></adf-name-column>
+        <adf-name-column key="name" [context]="context"></adf-name-column>
     </ng-template>
 </data-column>
 ```
