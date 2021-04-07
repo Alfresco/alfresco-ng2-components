@@ -12,8 +12,8 @@
                         {{'CORE.METADATA.CONTENT_TYPE.DIALOG.VIEW_DETAILS' | translate}}
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <table mat-table [dataSource]="currentContentType?.entry?.properties"
-                    *ngIf="currentContentType?.entry?.properties?.length > 0" class="adf-content-type-table">
+                <table mat-table [dataSource]="typeProperties"
+                    *ngIf="typeProperties?.length > 0" class="adf-content-type-table">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef> {{'CORE.METADATA.CONTENT_TYPE.DIALOG.PROPERTY.NAME' |
                             translate}} </th>
