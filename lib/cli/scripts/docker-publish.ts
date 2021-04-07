@@ -22,6 +22,10 @@ import * as program from 'commander';
 import { logger } from './logger';
 import { resolve } from 'path';
 
+enum ACTIONS {
+ Publish = 'publish',
+ Link = 'link'
+}
 export interface PublishArgs {
     tag?: string;
     loginCheck?: boolean;
@@ -86,7 +90,7 @@ function main(args) {
         .option('--pathProject [type]', 'the path build context')
         .option('--sourceTag [type]', 'sourceTag')
         .option('--buildArgs [type]', 'buildArgs')
-        .requiredOption('--action [type]', 'action publish link')
+        .requiredOption('--action [type]', 'action: publish or link')
         .requiredOption('--dockerRepo [type]', 'docker repo')
         .requiredOption('--dockerTags [type]', ' tags')
         .parse(process.argv);
@@ -96,12 +100,12 @@ function main(args) {
         return;
     }
 
-    if (args.action === 'publish' && args.buildArgs === undefined) {
-        throw new Error('error: required option --buildArgs [type] in case the action is publish');
+    if (args.action === ACTIONS.Publish && args.buildArgs === undefined) {
+        throw new Error(`error: required option --buildArgs [type] in case the action is ${ACTIONS.Publish}`);
     }
 
-    if (args.action === 'link' && args.sourceTag === undefined) {
-        throw new Error('error: required option --sourceTag [type] in case the action is link');
+    if (args.action === ACTIONS.Link && args.sourceTag === undefined) {
+        throw new Error(`error: required option --sourceTag [type] in case the action is ${ACTIONS.Link}`);
     }
 
     if(args.pathProject === undefined) {
@@ -117,7 +121,7 @@ function main(args) {
         args.dockerTags.split(',').forEach( (tag, index) => {
             if (tag) {
                 logger.info(`Analyzing tag:${tag} ... for action ${args.action}`);
-                if (args.action === 'publish') {
+                if (args.action === ACTIONS.Publish) {
                     if (index === 0) {
                         logger.info(`Build only once`);
                         mainTag = tag;
