@@ -47,7 +47,7 @@ In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 |check-plugin-env |Check plugin status |
 |artifact-from-s3  |Get artifact from S3 |
 |artifact-to-s3    |Get artifact to S3 |
-|docker            |Publish docker image|
+|docker            |Build and publish a docker image or create additional tag link |
 |init-aae-env      |Init env|
 |init-aps-env      |Init aps|
 |kubectl-delete    |delete kubectl |
