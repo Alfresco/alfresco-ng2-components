@@ -52,6 +52,12 @@ function tagImagePerform(args: PublishArgs, tagImage: string, newTag: string) {
     logger.info(response);
 }
 
+function pullImagePerform(args: PublishArgs, sourceTag: string) {
+    logger.info(`Perform docker pull... ${args.dockerRepo}:${sourceTag}`);
+    const response = exec('docker', ['pull', `${args.dockerRepo}:${sourceTag}`], {});
+    logger.info(response);
+}
+
 function pushImagePerform(args: PublishArgs, tag: string) {
     logger.info(`Perform docker push... ${args.dockerRepo}:${tag}`);
     const response = exec('docker', ['push', `${args.dockerRepo}:${tag}`], {});
@@ -59,7 +65,7 @@ function pushImagePerform(args: PublishArgs, tag: string) {
 }
 
 function cleanImagePerform(args: PublishArgs, tag: string) {
-    logger.info('Perform docker clean...');
+    logger.info(`Perform docker clean on tag:${tag}...`);
     const response = exec('docker', ['rmi', `-f`, `${args.dockerRepo}:${tag}`], {});
     logger.info(response);
 }
@@ -78,9 +84,11 @@ function main(args) {
         .option('--loginUsername [type]', ' username')
         .option('--loginCheck [type]', 'perform login')
         .option('--pathProject [type]', 'the path build context')
+        .option('--sourceTag [type]', 'sourceTag')
+        .option('--buildArgs [type]', 'buildArgs')
+        .requiredOption('--action [type]', 'action publish link')
         .requiredOption('--dockerRepo [type]', 'docker repo')
         .requiredOption('--dockerTags [type]', ' tags')
-        .requiredOption('--buildArgs [type]', ' buildArgs')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
@@ -88,29 +96,42 @@ function main(args) {
         return;
     }
 
-    if (args.loginCheck === true) {
-        loginPerform(args);
+    if (args.action === 'publish' && args.buildArgs === undefined) {
+        throw new Error('error: required option --buildArgs [type] in case the action is publish');
+    }
+
+    if (args.action === 'link' && args.sourceTag === undefined) {
+        throw new Error('error: required option --sourceTag [type] in case the action is link');
     }
 
     if(args.pathProject === undefined) {
         args.pathProject = resolve('./')
     }
 
+    if (args.loginCheck === true) {
+        loginPerform(args);
+    }
+
     let mainTag;
     if (args.dockerTags !== '') {
         args.dockerTags.split(',').forEach( (tag, index) => {
             if (tag) {
-                logger.info(`Analyzing tag:${tag} ...`);
-                if (index === 0) {
-                    logger.info(`Build only once`);
-                    mainTag = tag;
-                    buildImagePerform(args, mainTag);
+                logger.info(`Analyzing tag:${tag} ... for action ${args.action}`);
+                if (args.action === 'publish') {
+                    if (index === 0) {
+                        logger.info(`Build only once`);
+                        mainTag = tag;
+                        buildImagePerform(args, mainTag);
+                    }
+                    
+                } else {
+                    mainTag = args.sourceTag;
+                    pullImagePerform(args, mainTag);
                 }
                 tagImagePerform(args, mainTag, tag);
                 pushImagePerform(args, tag);
             }
         });
-        logger.info(`Clean the image with tag:${mainTag} ...`);
         cleanImagePerform(args, mainTag);
     } else {
         logger.error(`dockerTags cannot be empty ...`);
