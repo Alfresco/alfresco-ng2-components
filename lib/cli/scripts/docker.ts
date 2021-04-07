@@ -90,7 +90,7 @@ function main(args) {
         .option('--pathProject [type]', 'the path build context')
         .option('--sourceTag [type]', 'sourceTag')
         .option('--buildArgs [type]', 'buildArgs')
-        .option('--target [type]', 'target: publish or link',TARGETS.Publish)
+        .option('--target [type]', 'target: publish or link', TARGETS.Publish)
         .requiredOption('--dockerRepo [type]', 'docker repo')
         .requiredOption('--dockerTags [type]', ' tags')
         .parse(process.argv);
@@ -99,12 +99,20 @@ function main(args) {
         program.outputHelp();
         return;
     }
+
+    if (!Object.values(TARGETS).includes(program.opts().target)) {
+        logger.error(`error: invalid --target value. It can be ${Object.values(TARGETS)}`);
+        process.exit(1);
+    }
+
     if (program.opts().target === TARGETS.Publish && args.buildArgs === undefined) {
-        throw new Error(`error: required option --buildArgs [type] in case the target is ${TARGETS.Publish}`);
+        logger.error(`error: required option --buildArgs [type] in case the target is ${TARGETS.Publish}`);
+        process.exit(1);
     }
 
     if (program.opts().target === TARGETS.Link && args.sourceTag === undefined) {
-        throw new Error(`error: required option --sourceTag [type] in case the target is ${TARGETS.Link}`);
+        logger.error(`error: required option --sourceTag [type] in case the target is ${TARGETS.Link}`);
+        process.exit(1);
     }
 
     if(args.pathProject === undefined) {
