@@ -24,7 +24,7 @@
             <form [formGroup]="editProcessFilterForm" *ngIf="editProcessFilterForm">
                 <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
                     <ng-container *ngFor="let processFilterProperty of processFilterProperties">
-                        <mat-form-field fxFlex="23%" *ngIf="processFilterProperty.type === 'select'" [attr.data-automation-id]="processFilterProperty.key">
+                        <mat-form-field [floatLabel]="'auto'" fxFlex="23%" *ngIf="processFilterProperty.type === 'select'" [attr.data-automation-id]="processFilterProperty.key">
                             <mat-select
                                 placeholder="{{processFilterProperty.label | translate}}"
                                 [formControlName]="processFilterProperty.key"
@@ -36,7 +36,7 @@
                                 >{{ propertyOption.label | translate }}</mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field fxFlex="23%" *ngIf="processFilterProperty.type === 'multi-select'" [attr.data-automation-id]="processFilterProperty.key">
+                        <mat-form-field [floatLabel]="'auto'" fxFlex="23%" *ngIf="processFilterProperty.type === 'multi-select'" [attr.data-automation-id]="processFilterProperty.key">
                             <mat-select
                                 placeholder="{{processFilterProperty.label | translate}}"
                                 [formControlName]="processFilterProperty.key"
@@ -47,21 +47,21 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field fxFlex="23%" *ngIf="processFilterProperty.type === 'text'" [attr.data-automation-id]="processFilterProperty.key">
+                        <mat-form-field [floatLabel]="'auto'" fxFlex="23%" *ngIf="processFilterProperty.type === 'text'" [attr.data-automation-id]="processFilterProperty.key">
                             <input matInput
                                 [formControlName]="processFilterProperty.key"
                                 type="text"
                                 placeholder="{{processFilterProperty.label | translate}}"
                                 [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
                         </mat-form-field>
-                        <mat-form-field fxFlex="23%" *ngIf="processFilterProperty.type === 'number'" [attr.data-automation-id]="processFilterProperty.key">
+                        <mat-form-field [floatLabel]="'auto'" fxFlex="23%" *ngIf="processFilterProperty.type === 'number'" [attr.data-automation-id]="processFilterProperty.key">
                             <input matInput
                                 [formControlName]="processFilterProperty.key"
                                 type="number" min="0"
                                 placeholder="{{processFilterProperty.label | translate}}"
                                 [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
                         </mat-form-field>
-                        <mat-form-field fxFlex="23%" *ngIf="processFilterProperty.type === 'date'" [attr.data-automation-id]="processFilterProperty.key">
+                        <mat-form-field [floatLabel]="'auto'" fxFlex="23%" *ngIf="processFilterProperty.type === 'date'" [attr.data-automation-id]="processFilterProperty.key">
                             <mat-label>{{processFilterProperty.label | translate}}</mat-label>
                             <input
                                 matInput
