@@ -96,6 +96,10 @@ export class EditProcessFilterCloudComponentPage {
         await browser.sleep(1500);
     }
 
+    async setStartedBy(option: string): Promise<void> {
+        await this.peopleCloudComponent.searchAssigneeAndSelect(option);
+    }
+
     getOrderFilterDropDownValue(): Promise<string> {
         return BrowserActions.getText(element(by.css("mat-form-field[data-automation-id='order'] span")));
     }
