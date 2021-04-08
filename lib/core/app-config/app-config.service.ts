@@ -20,6 +20,7 @@ import { Injectable } from '@angular/core';
 import { ObjectUtils } from '../utils/object-utils';
 import { Observable, Subject } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
+import { ExtensionService, mergeObjects } from '@alfresco/adf-extensions';
 
 /* spellchecker: disable */
 export enum AppConfigValues {
@@ -69,9 +70,19 @@ export class AppConfigService {
     protected onLoadSubject: Subject<any>;
     onLoad: Observable<any>;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, extensionService: ExtensionService) {
         this.onLoadSubject = new Subject();
         this.onLoad = this.onLoadSubject.asObservable();
+
+        extensionService.setup$.subscribe((config) => {
+            if (config) {
+                const customConfig = config.appConfig;
+
+                if (customConfig) {
+                    this.config = mergeObjects(this.config, customConfig);
+                }
+            }
+        });
     }
 
     /**

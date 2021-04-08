@@ -27,9 +27,9 @@ export interface ExtensionRef {
     $license: string;
     $runtime?: string;
     $description?: string;
-
     $dependencies?: Array<string>;
 
+    appConfig?: any;
     rules?: Array<RuleRef>;
     routes?: Array<RouteRef>;
     actions?: Array<ActionRef>;

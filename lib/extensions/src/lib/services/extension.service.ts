@@ -25,6 +25,7 @@ import * as core from '../evaluators/core.evaluators';
 import { ComponentRegisterService } from './component-register.service';
 import { RuleService } from './rule.service';
 import { ExtensionElement } from '../config/extension-element';
+import { BehaviorSubject } from 'rxjs';
 
 export function extensionJsonsFactory() {
     return [];
@@ -57,6 +58,8 @@ export class ExtensionService {
     actions: Array<ActionRef> = [];
     features: Array<any> = [];
     authGuards: { [key: string]: Type<{}> } = {};
+
+    readonly setup$ = new BehaviorSubject<ExtensionConfig>(this.config);
 
     constructor(
         protected loader: ExtensionLoaderService,
@@ -103,6 +106,7 @@ export class ExtensionService {
         this.features = this.loader.getFeatures(config);
 
         this.ruleService.setup(config);
+        this.setup$.next(config);
     }
 
     /**
