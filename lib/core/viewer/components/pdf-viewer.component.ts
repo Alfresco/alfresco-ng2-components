@@ -166,8 +166,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             };
             if (this.cacheType) {
                 pdfSource.httpHeaders = {
-                    'Cache-Control': this.cacheType,
-                }
+                    'Cache-Control': this.cacheType
+                };
             }
             this.executePdf(pdfSource);
         }
