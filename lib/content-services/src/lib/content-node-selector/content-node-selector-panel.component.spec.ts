@@ -19,7 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging } from '@alfresco/js-api';
-import { AppConfigService, FileModel, FileUploadStatus, NodesApiService, setupTestBed, SitesService, UploadService } from '@alfresco/adf-core';
+import { AppConfigService, FileModel, FileUploadStatus, NodesApiService, setupTestBed, SitesService, UploadService, FileUploadCompleteEvent } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
@@ -1214,18 +1214,74 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     spyOn(documentListService, 'getFolder');
                 });
 
-                it('should remove the node from the chosenNodes when an upload gets deleted', () => {
+                it('should trigger preselection only after the upload batch contains all the uploads of the queue and no other uploads are in progress', fakeAsync(() => {
                     fixture.detectChanges();
-                    const selectSpy = spyOn(component.select, 'next');
+                    component.selectionMode = 'multiple';
+
+                    const isUploadingSpy = spyOn(uploadService, 'isUploading').and.returnValue(true);
+                    const documentListReloadSpy = spyOn(component.documentList, 'reloadWithoutResettingSelection');
+
+                    const fakeFileModels = [new FileModel(<File> { name: 'fake-name', size: 100 }), new FileModel(<File> { name: 'fake-name-2', size: 200 })];
+                    const fileUploadCompleteEvent  = new FileUploadCompleteEvent(fakeFileModels[0], 1, fakeFileModels[0], 0);
+                    uploadService.fileUploadComplete.next(fileUploadCompleteEvent);
+
+                    tick(500);
+                    fixture.detectChanges();
+
+                    expect(component.currentUploadBatch).toEqual([fileUploadCompleteEvent.data]);
+                    expect(component.preselectedNodes).toEqual([]);
+                    expect(documentListReloadSpy).not.toHaveBeenCalled();
+
+                    isUploadingSpy.and.returnValue(false);
+
+                    const secondFileUploadCompleteEvent  = new FileUploadCompleteEvent(fakeFileModels[1], 2, fakeFileModels[1], 0);
+                    uploadService.fileUploadComplete.next(secondFileUploadCompleteEvent);
+                    tick(500);
+
+                    expect(component.currentUploadBatch).toEqual([]);
+                    expect(component.preselectedNodes).toEqual([fileUploadCompleteEvent.data, secondFileUploadCompleteEvent.data]);
+                    expect(documentListReloadSpy).toHaveBeenCalled();
+                }));
+
+                it('should call document list to unselect the row of the deleted upload', () => {
+                    fixture.detectChanges();
+
+                    const documentListUnselectRowSpy = spyOn(component.documentList, 'unselectRowFromNodeId');
+                    const documentListReloadSpy = spyOn(component.documentList, 'reloadWithoutResettingSelection');
                     const fakeFileModel = new FileModel(<File> { name: 'fake-name', size: 10000000 });
                     const fakeNodes = [<Node> { id: 'fakeNodeId' }, <Node> { id: 'fakeNodeId2' }];
+
                     fakeFileModel.data = { entry: fakeNodes[0] };
                     fakeFileModel.status = FileUploadStatus.Deleted;
-                    component._chosenNode = [...fakeNodes];
                     uploadService.cancelUpload(fakeFileModel);
 
-                    expect(selectSpy).toHaveBeenCalledWith([fakeNodes[1]]);
-                    expect(component._chosenNode).toEqual([fakeNodes[1]]);
+                    expect(documentListUnselectRowSpy).toHaveBeenCalledWith(fakeNodes[0].id);
+                    expect(documentListReloadSpy).toHaveBeenCalled();
+                });
+
+                it('should return only the last uploaded node to become preselected when the selection mode is single', () => {
+                    fixture.detectChanges();
+                    const fakeNodes = [new NodeEntry({ id: 'fakeNode1' }), new NodeEntry({ id: 'fakeNode2' })];
+                    component.currentUploadBatch = fakeNodes;
+                    component.selectionMode = 'single';
+
+                    expect(component.getPreselectNodesBasedOnSelectionMode()).toEqual([fakeNodes[1]]);
+                });
+
+                it('should return all the uploaded nodes to become preselected when the selection mode is multiple', () => {
+                    fixture.detectChanges();
+                    const fakeNodes = [new NodeEntry({ id: 'fakeNode1' }), new NodeEntry({ id: 'fakeNode2' })];
+                    component.currentUploadBatch = fakeNodes;
+                    component.selectionMode = 'multiple';
+
+                    expect(component.getPreselectNodesBasedOnSelectionMode()).toEqual(fakeNodes);
+                });
+
+                it('should return an empty array when no files are uploaded', () => {
+                    fixture.detectChanges();
+                    component.currentUploadBatch = [];
+
+                    expect(component.getPreselectNodesBasedOnSelectionMode()).toEqual([]);
                 });
             });
 

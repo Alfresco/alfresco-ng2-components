@@ -16,7 +16,7 @@
  */
 
 import { DataColumn, DataRow, DataSorting, ContentService, ThumbnailService, setupTestBed } from '@alfresco/adf-core';
-import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode, mockPreselectedNodes, mockNodePagingWithPreselectedNodes, mockNode2, fakeNodePaging, mockNode1 } from './../../mock';
+import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode } from './../../mock';
 import { ShareDataRow } from './share-data-row.model';
 import { ShareDataTableAdapter } from './share-datatable-adapter';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -480,42 +480,31 @@ describe('ShareDataTableAdapter', () => {
 
             expect(row.isDropTarget).toBeFalsy();
         });
-   });
 
-    describe('Preselect rows', () => {
+        it('should return all the selected rows', () => {
+            const file = new FileNode();
+            const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
+            const row1 = new ShareDataRow(file, contentService, null);
+            const row2 = new ShareDataRow(file, contentService, null);
+            const row3 = new ShareDataRow(file, contentService, null);
 
-        it('should set isSelected to be true for each preselectRow if the preselectedNodes are defined', () => {
-            const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
-            adapter.loadPage(mockNodePagingWithPreselectedNodes, null, null, mockPreselectedNodes);
+            row1.isSelected = true;
+            row2.isSelected = true;
+            adapter.setRows([row1, row2, row3]);
+            const selectedRows = adapter.getSelectedRows();
 
-            expect(adapter.getPreselectedRows().length).toBe(1);
-            expect(adapter.getPreselectedRows()[0].isSelected).toBe(true);
+            expect(selectedRows.length).toEqual(2);
+            expect(selectedRows).toEqual([row1, row2]);
         });
 
-        it('should set preselectedRows empty if preselectedNodes are undefined/empty', () => {
-            const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
-            adapter.loadPage(mockNodePagingWithPreselectedNodes, null, null, []);
+        it('should return the row of the requested node id', () => {
+            const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
+            const fakeFiles = [new FileNode('fake-file-1', 'text/plain', 'fake-node-id-1'), new FileNode('fake-file-2', 'text/plain', 'fake-node-id-2')];
+            const fakeShareDataRows = [new ShareDataRow(fakeFiles[0], contentService, null), new ShareDataRow(fakeFiles[1], contentService, null)];
+            adapter.setRows(fakeShareDataRows);
 
-            expect(adapter.getPreselectedRows().length).toBe(0);
-        });
-
-        it('should set preselectedRows empty if preselectedNodes are not found in the list', () => {
-            const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
-            mockNode2.id = 'mock-file-id';
-            const preselectedNode = [ { entry: mockNode2 }];
-            adapter.loadPage(fakeNodePaging, null, null, preselectedNode);
-
-            expect(adapter.getPreselectedRows().length).toBe(0);
-        });
-
-        it('should preselected rows contain only the valid rows that exist in the datatable', () => {
-            const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
-            const nonExistingEntry = {...mockNode1};
-            nonExistingEntry.id = 'non-existing-entry-id';
-            const preselectedNodes = [{ entry: nonExistingEntry }, { entry: mockNode1 }, { entry: mockNode2 }];
-            adapter.loadPage(mockNodePagingWithPreselectedNodes, null, null, preselectedNodes);
-
-            expect(adapter.getPreselectedRows().length).toBe(2);
+            expect(adapter.getRowByNodeId('fake-node-id-1')).toEqual(fakeShareDataRows[0]);
+            expect(adapter.getRowByNodeId('fake-node-id-2')).toEqual(fakeShareDataRows[1]);
         });
    });
 });

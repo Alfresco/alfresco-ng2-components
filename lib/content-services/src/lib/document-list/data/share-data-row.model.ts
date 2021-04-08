@@ -27,6 +27,7 @@ export class ShareDataRow implements DataRow {
     isSelected: boolean = false;
     isDropTarget: boolean;
     cssClass: string = '';
+    id: string;
 
     get node(): NodeEntry {
         return this.obj;
@@ -50,6 +51,7 @@ export class ShareDataRow implements DataRow {
         if (permissionsStyle) {
             this.cssClass = this.getPermissionClass(obj);
         }
+        this.id = this.getId();
     }
 
     checkNodeTypeAndPermissions(nodeEntry: NodeEntry) {
@@ -117,5 +119,9 @@ export class ShareDataRow implements DataRow {
 
     hasValue(key: string): boolean {
         return this.getValue(key) !== undefined;
+    }
+
+    getId(): string {
+        return this.obj.entry.id || undefined;
     }
 }

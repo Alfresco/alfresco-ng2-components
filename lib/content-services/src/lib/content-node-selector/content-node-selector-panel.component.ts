@@ -36,7 +36,6 @@ import {
     UploadService,
     FileUploadCompleteEvent,
     FileUploadDeleteEvent,
-    FileModel,
     AppConfigService,
     DataSorting
 } from '@alfresco/adf-core';
@@ -45,7 +44,7 @@ import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, QueryBo
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
-import { debounceTime, takeUntil, scan } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { Subject } from 'rxjs';
@@ -253,6 +252,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     target: PaginatedComponent;
     preselectedNodes: NodeEntry[] = [];
+    currentUploadBatch: NodeEntry[] = [];
+
     sorting: string[] | DataSorting;
 
     searchPanelExpanded: boolean = false;
@@ -359,34 +360,27 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     private onFileUploadEvent() {
         this.uploadService.fileUploadComplete
-        .pipe(
-            debounceTime(500),
-            scan((files, currentFile) => [...files, currentFile], []),
-            takeUntil(this.onDestroy$)
-        )
-        .subscribe((uploadedFiles: FileUploadCompleteEvent[]) => {
-            this.preselectedNodes = this.getPreselectNodesBasedOnSelectionMode(uploadedFiles);
-            this.documentList.reload();
-        });
+            .pipe(
+                debounceTime(500),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe((fileUploadEvent: FileUploadCompleteEvent) => {
+                this.currentUploadBatch.push(fileUploadEvent.data);
+                if (!this.uploadService.isUploading()) {
+                    this.preselectedNodes = this.getPreselectNodesBasedOnSelectionMode();
+                    this.currentUploadBatch = [];
+                    this.documentList.reloadWithoutResettingSelection();
+                }
+            });
     }
 
     private onFileUploadDeletedEvent() {
         this.uploadService.fileUploadDeleted
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((deletedFileEvent: FileUploadDeleteEvent) => {
-                this.removeFromChosenNodes(deletedFileEvent.file);
-                this.documentList.reload();
+                this.documentList.unselectRowFromNodeId(deletedFileEvent.file.data.entry.id);
+                this.documentList.reloadWithoutResettingSelection();
             });
-    }
-
-    private removeFromChosenNodes(file: FileModel) {
-        if (this.chosenNode) {
-            const fileIndex = this.chosenNode.findIndex((chosenNode: Node) => chosenNode.id === file.data.entry.id);
-            if (fileIndex !== -1) {
-                this._chosenNode.splice(fileIndex, 1);
-                this.select.next(this._chosenNode);
-            }
-        }
     }
 
     private getStartSite() {
@@ -462,6 +456,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             this.infinitePaginationComponent.reset();
         }
         this.folderIdToShow = null;
+        this.preselectedNodes = [];
         this.loadingSearchResults = true;
         this.addCorrespondingNodeIdsQuery();
         this.resetChosenNode();
@@ -630,14 +625,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         return this.selectionMode === 'single';
     }
 
-    private getPreselectNodesBasedOnSelectionMode(uploadedFiles: FileUploadCompleteEvent[]): NodeEntry[] {
+    getPreselectNodesBasedOnSelectionMode(): NodeEntry[] {
         let selectedNodes: NodeEntry[] = [];
 
-        if (uploadedFiles && uploadedFiles.length > 0 ) {
+        if (this.currentUploadBatch?.length) {
             if (this.isSingleSelectionMode()) {
-                selectedNodes = [...[uploadedFiles[uploadedFiles.length - 1]].map((uploadedFile) => uploadedFile.data)];
+                selectedNodes = [this.currentUploadBatch[this.currentUploadBatch.length - 1]];
             } else {
-                selectedNodes = [...uploadedFiles.map((uploadedFile) => uploadedFile.data)];
+                selectedNodes = this.currentUploadBatch;
             }
         }
 

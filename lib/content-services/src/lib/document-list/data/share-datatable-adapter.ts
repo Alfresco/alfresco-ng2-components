@@ -45,7 +45,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
     allowDropFiles: boolean;
-    preselectedRows: DataRow[] = [];
 
     set sortingMode(value: string) {
         let newValue = (value || 'client').toLowerCase();
@@ -80,10 +79,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     setRows(rows: Array<DataRow>) {
         this.rows = rows || [];
         this.sort();
-    }
-
-    getPreselectedRows(): Array<DataRow> {
-        return this.preselectedRows;
     }
 
     getColumns(): Array<DataColumn> {
@@ -250,7 +245,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preselectNodes: NodeEntry[] = []) {
+    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean) {
         let shareDataRows: ShareDataRow[] = [];
         if (allowDropFiles !== undefined) {
             this.allowDropFiles = allowDropFiles;
@@ -258,8 +253,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (nodePaging?.list) {
             const nodeEntries: NodeEntry[] = nodePaging.list.entries;
             if (nodeEntries?.length) {
-                shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle,
-                    this.thumbnailService, this.allowDropFiles));
+                shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService, this.allowDropFiles));
 
                 if (this.filter) {
                     shareDataRows = shareDataRows.filter(this.filter);
@@ -297,27 +291,13 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         } else {
             this.rows = shareDataRows;
         }
-
-        this.selectRowsBasedOnGivenNodes(preselectNodes);
     }
 
-    selectRowsBasedOnGivenNodes(preselectNodes: NodeEntry[]) {
-        if (preselectNodes?.length) {
-            this.rows = this.rows.map((row) => {
-                preselectNodes.map((preselectedNode) => {
-                    if (row.obj.entry.id === preselectedNode.entry.id) {
-                        row.isSelected = true;
-                    }
-                });
-                return row;
-            });
-        }
-
-        this.preselectedRows = [...this.rows.filter((res) => res.isSelected)];
+    getSelectedRows(): DataRow[] {
+        return this.rows.filter((row: DataRow) => row.isSelected);
     }
 
-    hasPreselectedRows(): boolean {
-        return this.preselectedRows?.length > 0;
+    getRowByNodeId(nodeId: string): DataRow {
+       return this.rows.find((row: DataRow) => row.node.entry.id === nodeId);
     }
-
 }

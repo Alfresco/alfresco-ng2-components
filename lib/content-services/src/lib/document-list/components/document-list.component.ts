@@ -44,7 +44,8 @@ import {
     RequestPaginationModel,
     AlfrescoApiService,
     UserPreferenceValues,
-    LockService
+    LockService,
+    DataRow
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
@@ -329,6 +330,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     $folderNode: Subject<Node> = new Subject<Node>();
     allowFiltering: boolean = true;
     orderBy: string[] = null;
+    preselectedRows: DataRow[] = [];
 
     // @deprecated 3.0.0
     folderNode: Node;
@@ -455,7 +457,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.resetSelection();
+        if (!changes['preselectNodes']) {
+            this.resetSelection();
+        }
 
         if (Array.isArray(this.sorting)) {
             const [key, direction] = this.sorting;
@@ -487,7 +491,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 const merge = this._pagination ? this._pagination.merge : false;
-                this.data.loadPage(changes.node.currentValue, merge, null, this.getPreselectedNodesBasedOnSelectionMode());
+                this.data.loadPage(changes.node.currentValue, merge, null);
+                this.preserveExistingSelection();
                 this.onPreselectNodes();
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.imageResolver) {
@@ -499,17 +504,22 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     reload() {
         this.ngZone.run(() => {
             this.resetSelection();
-            if (this.node) {
-                if (this.data) {
-                    this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectedNodesBasedOnSelectionMode());
-                }
-                this.onPreselectNodes();
-                this.syncPagination();
-                this.onDataReady(this.node);
-            } else {
-                this.loadFolder();
-            }
+            this.reloadWithoutResettingSelection();
         });
+    }
+
+    reloadWithoutResettingSelection() {
+        if (this.node) {
+            if (this.data) {
+                this.data.loadPage(this.node, this._pagination.merge, null);
+                this.preserveExistingSelection();
+            }
+            this.onPreselectNodes();
+            this.syncPagination();
+            this.onDataReady(this.node);
+        } else {
+            this.loadFolder();
+        }
     }
 
     contextActionCallback(action) {
@@ -694,7 +704,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
             if (this.data) {
-                this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.getPreselectedNodesBasedOnSelectionMode());
+                this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles);
+                this.preserveExistingSelection();
             }
             this.onPreselectNodes();
             this.setLoadingState(false);
@@ -800,7 +811,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     onNodeSelect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
-        this.selection = event.selection.filter(entry => entry.node).map((entry) => entry.node);
+        this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-select', {
             detail: {
                 node: event.row ? event.row.node : null,
@@ -923,15 +934,58 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return this.hasPreselectedNodes() ? (this.isSingleSelectionMode() ? [this.preselectNodes[0]] : this.preselectNodes) : [];
     }
 
-    onPreselectNodes() {
-        if (this.data?.hasPreselectedRows()) {
-            const preselectedNodes = [...this.isSingleSelectionMode() ? [this.data.getPreselectedRows()[0]] : this.data.getPreselectedRows()];
-            const selectedNodes = [...this.selection, ...preselectedNodes];
+    getPreselectedRowsBasedOnSelectionMode(): DataRow[] {
+        return this.hasPreselectedRows() ? (this.isSingleSelectionMode() ? [this.preselectedRows[0]] : this.preselectedRows) : [];
+    }
 
-            for (const node of preselectedNodes) {
+    getSelectionBasedOnSelectionMode(): DataRow[] {
+        return this.hasPreselectedRows() ? (this.isSingleSelectionMode() ? [this.preselectedRows[0]] : this.data.getSelectedRows()) : this.data.getSelectedRows();
+    }
+
+    onPreselectNodes() {
+        if (this.hasPreselectedNodes()) {
+            this.preselectRowsOfPreselectedNodes();
+            const preselectedRows = this.getPreselectedRowsBasedOnSelectionMode();
+            const selectedNodes = this.data.getSelectedRows();
+
+            for (const node of preselectedRows) {
                 this.dataTable.selectRow(node, true);
             }
             this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> selectedNodes });
+        }
+    }
+
+    preserveExistingSelection() {
+        if (this.isMultipleSelectionMode()) {
+            for (const selection of this.selection) {
+                const rowOfSelection = this.data.getRowByNodeId(selection.entry.id);
+                if (rowOfSelection) {
+                    rowOfSelection.isSelected = true;
+                }
+            }
+        }
+    }
+
+    preselectRowsOfPreselectedNodes() {
+        this.preselectedRows = [];
+        const preselectedNodes = this.getPreselectedNodesBasedOnSelectionMode();
+
+        preselectedNodes.forEach((preselectedNode: NodeEntry) => {
+            const rowOfPreselectedNode = this.data.getRowByNodeId(preselectedNode.entry.id);
+            if (rowOfPreselectedNode) {
+                rowOfPreselectedNode.isSelected = true;
+                this.preselectedRows.push(rowOfPreselectedNode);
+            }
+        });
+    }
+
+    unselectRowFromNodeId(nodeId: string) {
+        const rowToUnselect = this.data.getRowByNodeId(nodeId);
+        if (rowToUnselect?.isSelected) {
+            rowToUnselect.isSelected = false;
+            this.dataTable.selectRow(rowToUnselect, false);
+            const selection = this.getSelectionBasedOnSelectionMode();
+            this.onNodeUnselect({ row: undefined, selection: <ShareDataRow[]> selection });
         }
     }
 
@@ -939,7 +993,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return this.selectionMode === 'single';
     }
 
+    isMultipleSelectionMode(): boolean {
+        return this.selectionMode === 'multiple';
+    }
+
     hasPreselectedNodes(): boolean {
         return this.preselectNodes?.length > 0;
+    }
+
+    hasPreselectedRows(): boolean {
+        return this.preselectedRows?.length > 0;
     }
 }

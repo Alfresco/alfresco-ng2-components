@@ -33,10 +33,10 @@ export class PageNode extends NodePaging {
 }
 
 export class FileNode extends NodeMinimalEntry {
-    constructor(name?: string, mimeType?: string) {
+    constructor(name?: string, mimeType?: string, id?: string) {
         super();
         this.entry = new NodeMinimal();
-        this.entry.id = 'file-id';
+        this.entry.id = id || 'file-id';
         this.entry.isFile = true;
         this.entry.isFolder = false;
         this.entry.name = name;

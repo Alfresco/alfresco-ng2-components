@@ -308,7 +308,7 @@ export const mockPreselectedNodes: NodeEntry[] = [
         entry: mockNode1
     },
     {
-        entry: mockNode1
+        entry: mockNode2
     }
 ];
 

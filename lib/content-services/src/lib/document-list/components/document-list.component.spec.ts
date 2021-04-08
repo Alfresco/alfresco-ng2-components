@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, QueryList, Component, ViewChild } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, QueryList, Component, ViewChild, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import {
     setupTestBed,
@@ -32,13 +32,17 @@ import {
 } from '@alfresco/adf-core';
 import { Subject, of, throwError } from 'rxjs';
 import {
-    FileNode, FolderNode,
+    FileNode,
+    FolderNode,
     fakeNodeAnswerWithNOEntries,
     fakeNodeWithNoPermission,
     fakeGetSitesAnswer,
     fakeGetSiteMembership,
     mockPreselectedNodes,
-    mockNodePagingWithPreselectedNodes
+    mockNodePagingWithPreselectedNodes,
+    mockNode1,
+    mockNode2,
+    mockNode3
 } from '../../mock';
 import { ContentActionModel } from '../models/content-action.model';
 import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
@@ -234,6 +238,47 @@ describe('DocumentList', () => {
                 'modifiedByUser.displayName'
             ]);
         });
+    });
+
+    it('should not reset the selection when preselectNodes input changes', () => {
+        const resetSelectionSpy = spyOn(documentList, 'resetSelection').and.callThrough();
+        documentList.selection = [{ entry: mockNode3 }];
+        const changes: SimpleChanges = {
+            'preselectNodes': {
+                previousValue: undefined,
+                currentValue: mockPreselectedNodes,
+                firstChange: true,
+                isFirstChange(): boolean { return this.firstChange; }
+            }
+        };
+        documentList.ngOnChanges(changes);
+
+        expect(resetSelectionSpy).not.toHaveBeenCalled();
+        expect(documentList.selection).toEqual([{ entry: mockNode3 }]);
+    });
+
+    it('should reset the selection for every change other than preselectNodes', () => {
+        const resetSelectionSpy = spyOn(documentList, 'resetSelection').and.callThrough();
+        documentList.selection = [{ entry: mockNode3 }];
+        const changes: SimpleChanges = {
+            'mockChange': {
+                previousValue: undefined,
+                currentValue: ['mockChangeValue'],
+                firstChange: true,
+                isFirstChange(): boolean { return this.firstChange; }
+            }
+        };
+        documentList.ngOnChanges(changes);
+
+        expect(resetSelectionSpy).toHaveBeenCalled();
+        expect(documentList.selection).toEqual([]);
+    });
+
+    it('should reloadWithoutResettingSelection not reset the selection', () => {
+        documentList.selection = [{ entry: mockNode3 }];
+        documentList.reloadWithoutResettingSelection();
+
+        expect(documentList.selection).toEqual([{ entry: mockNode3 }]);
     });
 
     it('should update schema if columns change', fakeAsync(() => {
@@ -1532,23 +1577,7 @@ describe('DocumentList', () => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_created.svg`);
         });
 
-        it('should able to emit nodeSelected event with preselectedNodes on the reload', async () => {
-            const nodeSelectedSpy = spyOn(documentList.nodeSelected, 'emit');
-
-            fixture.detectChanges();
-
-            documentList.node = mockNodePagingWithPreselectedNodes;
-            documentList.preselectNodes = mockPreselectedNodes;
-            documentList.reload();
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(documentList.preselectNodes.length).toBe(2);
-            expect(nodeSelectedSpy).toHaveBeenCalled();
-        });
-
-        it('should be able to select first node from the preselectedNodes when selectionMode set to single', async () => {
+        it('should return only the first node of the preselectedNodes when selection mode is single', async () => {
             documentList.selectionMode = 'single';
             fixture.detectChanges();
 
@@ -1563,7 +1592,7 @@ describe('DocumentList', () => {
             expect(documentList.getPreselectedNodesBasedOnSelectionMode().length).toBe(1);
         });
 
-        it('should be able to select all preselectedNodes when selectionMode set to multiple', async () => {
+        it('should return all the preselectedNodes when selection mode is multiple', async () => {
             documentList.selectionMode = 'multiple';
             fixture.detectChanges();
 
@@ -1581,11 +1610,11 @@ describe('DocumentList', () => {
         it('should call the datatable select row method for each preselected node', async () => {
             const datatableSelectRowSpy = spyOn(documentList.dataTable, 'selectRow');
             const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
-            spyOn(documentList.data, 'hasPreselectedRows').and.returnValue(true);
-            spyOn(documentList.data, 'getPreselectedRows').and.returnValue(fakeDatatableRows);
 
-            documentList.selectionMode = 'multiple';
+            spyOn(documentList, 'preselectRowsOfPreselectedNodes');
+            documentList.preselectedRows = fakeDatatableRows;
             documentList.preselectNodes = mockPreselectedNodes;
+            documentList.selectionMode = 'multiple';
             documentList.onPreselectNodes();
 
             fixture.detectChanges();
@@ -1607,6 +1636,165 @@ describe('DocumentList', () => {
             await fixture.whenStable();
 
             expect(nodeSelectedSpy).not.toHaveBeenCalled();
+        });
+
+        it('should return only the first preselected row when selection mode is single', () => {
+            documentList.selectionMode = 'single';
+            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            documentList.preselectedRows = fakeDatatableRows;
+            const preselectedRows = documentList.getPreselectedRowsBasedOnSelectionMode();
+
+            expect(preselectedRows.length).toEqual(1);
+            expect(preselectedRows[0]).toEqual(fakeDatatableRows[0]);
+        });
+
+        it('should return all the preselected rows when selection mode is multiple', () => {
+            documentList.selectionMode = 'multiple';
+            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            documentList.preselectedRows = fakeDatatableRows;
+            const preselectedRows = documentList.getPreselectedRowsBasedOnSelectionMode();
+
+            expect(preselectedRows.length).toEqual(2);
+            expect(preselectedRows).toEqual(fakeDatatableRows);
+        });
+
+        it('should return an empty array when there are no preselected rows', () => {
+            documentList.preselectedRows = undefined;
+            const preselectedRows = documentList.getPreselectedRowsBasedOnSelectionMode();
+
+            expect(preselectedRows).toEqual([]);
+        });
+
+        it('should the combined selection be only the first preselected row when selection mode is single', () => {
+            const getSelectionFromAdapterSpy = spyOn(documentList.data, 'getSelectedRows');
+            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            documentList.preselectedRows = fakeDatatableRows;
+            documentList.selectionMode = 'single';
+            const selection = documentList.getSelectionBasedOnSelectionMode();
+
+            expect(selection.length).toEqual(1);
+            expect(selection[0]).toEqual(fakeDatatableRows[0]);
+            expect(getSelectionFromAdapterSpy).not.toHaveBeenCalled();
+        });
+
+        it('should get the selection from the adapter when selection mode is multiple', () => {
+            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            fakeDatatableRows[0].isSelected = true;
+            fakeDatatableRows[1].isSelected = false;
+            documentList.data.setRows(fakeDatatableRows);
+
+            const getSelectionFromAdapterSpy = spyOn(documentList.data, 'getSelectedRows').and.callThrough();
+            documentList.selectionMode = 'multiple';
+            documentList.preselectedRows = fakeDatatableRows;
+            const selection = documentList.getSelectionBasedOnSelectionMode();
+
+            expect(getSelectionFromAdapterSpy).toHaveBeenCalled();
+            expect(selection.length).toEqual(1);
+            expect(selection[0]).toEqual(fakeDatatableRows[0]);
+        });
+
+        it('should preserve the existing selection when selection mode is multiple', () => {
+            fixture.detectChanges();
+            documentList.node = mockNodePagingWithPreselectedNodes;
+            documentList.selection = [{ entry: mockNode1 }, { entry: mockNode2 }];
+            documentList.selectionMode = 'multiple';
+            documentList.reloadWithoutResettingSelection();
+            const selectedRows = documentList.data.getSelectedRows();
+
+            expect(selectedRows.length).toEqual(2);
+            expect(selectedRows[0].id).toEqual(mockNode1.id);
+            expect(selectedRows[0].isSelected).toEqual(true);
+            expect(selectedRows[1].id).toEqual(mockNode2.id);
+            expect(selectedRows[1].isSelected).toEqual(true);
+        });
+
+        it('should not preserve the existing selection when selection mode is single', () => {
+            fixture.detectChanges();
+            documentList.node = mockNodePagingWithPreselectedNodes;
+            documentList.selection = [{ entry: mockNode1 }, { entry: mockNode2 }];
+            documentList.selectionMode = 'single';
+            documentList.reloadWithoutResettingSelection();
+            const selectedRows = documentList.data.getSelectedRows();
+
+            expect(selectedRows.length).toEqual(0);
+        });
+
+        it('should unselect the row from the node id', () => {
+            const datatableSelectRowSpy = spyOn(documentList.dataTable, 'selectRow');
+            const getRowByNodeIdSpy = spyOn(documentList.data, 'getRowByNodeId').and.callThrough();
+            const onNodeUnselectSpy = spyOn(documentList, 'onNodeUnselect');
+            const getSelectionSpy = spyOn(documentList, 'getSelectionBasedOnSelectionMode').and.callThrough();
+
+            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            fakeDatatableRows[0].isSelected = true;
+            documentList.data.setRows(fakeDatatableRows);
+            let selectedRows = documentList.data.getSelectedRows();
+
+            expect(selectedRows.length).toEqual(1);
+
+            documentList.unselectRowFromNodeId(mockPreselectedNodes[0].entry.id);
+            selectedRows = documentList.data.getSelectedRows();
+
+            expect(selectedRows).toEqual([]);
+            expect(getSelectionSpy).toHaveBeenCalled();
+            expect(getRowByNodeIdSpy).toHaveBeenCalledWith(mockPreselectedNodes[0].entry.id);
+            expect(datatableSelectRowSpy).toHaveBeenCalledWith(fakeDatatableRows[0], false);
+            expect(onNodeUnselectSpy).toHaveBeenCalledWith({ row: undefined, selection: <ShareDataRow[]> selectedRows });
+        });
+
+        it('should preselect the rows of the preselected nodes', () => {
+            const getRowByNodeIdSpy = spyOn(documentList.data, 'getRowByNodeId').and.callThrough();
+            const getPreselectedNodesSpy = spyOn(documentList, 'getPreselectedNodesBasedOnSelectionMode').and.callThrough();
+
+            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            documentList.data.setRows(fakeDatatableRows);
+
+            documentList.selectionMode = 'multiple';
+            documentList.preselectNodes = [...mockPreselectedNodes, { entry: mockNode3 }];
+
+            documentList.preselectRowsOfPreselectedNodes();
+            const selectedRows = documentList.data.getSelectedRows();
+
+            expect(getPreselectedNodesSpy).toHaveBeenCalled();
+            expect(selectedRows.length).toEqual(2);
+            expect(selectedRows[0].isSelected).toEqual(true);
+            expect(selectedRows[1].isSelected).toEqual(true);
+
+            expect(documentList.preselectedRows.length).toEqual(2);
+            expect(documentList.preselectedRows).toEqual(fakeDatatableRows);
+
+            expect(getRowByNodeIdSpy).toHaveBeenCalledWith(fakeDatatableRows[0].id);
+            expect(getRowByNodeIdSpy).toHaveBeenCalledWith(fakeDatatableRows[1].id);
+        });
+
+        it('should select the rows of the preselected nodes and emit the new combined selection', () => {
+            const hasPreselectedNodesSpy = spyOn(documentList, 'hasPreselectedNodes').and.callThrough();
+            const preselectRowsOfPreselectedNodesSpy = spyOn(documentList, 'preselectRowsOfPreselectedNodes').and.callThrough();
+            const getPreselectedRowsBasedOnSelectionModeSpy = spyOn(documentList, 'getPreselectedRowsBasedOnSelectionMode').and.callThrough();
+            const onNodeSelectSpy = spyOn(documentList, 'onNodeSelect').and.callThrough();
+
+            const fakeDatatableRows = [
+                new ShareDataRow(mockPreselectedNodes[0], contentService, null),
+                new ShareDataRow(mockPreselectedNodes[1], contentService, null),
+                new ShareDataRow({ entry: mockNode3 }, contentService, null)
+            ];
+            fakeDatatableRows[2].isSelected = true;
+            documentList.data.setRows(fakeDatatableRows);
+
+            documentList.selection = [{ entry: mockNode3 }];
+            documentList.selectionMode = 'multiple';
+            documentList.preselectNodes = mockPreselectedNodes;
+            documentList.onPreselectNodes();
+            const selectedRows = documentList.data.getSelectedRows();
+
+            expect(hasPreselectedNodesSpy).toHaveBeenCalled();
+            expect(preselectRowsOfPreselectedNodesSpy).toHaveBeenCalled();
+            expect(getPreselectedRowsBasedOnSelectionModeSpy).toHaveBeenCalled();
+            expect(selectedRows.length).toEqual(3);
+            expect(selectedRows[0].id).toEqual(mockNode1.id);
+            expect(selectedRows[1].id).toEqual(mockNode2.id);
+            expect(selectedRows[2].id).toEqual(mockNode3.id);
+            expect(onNodeSelectSpy).toHaveBeenCalledWith({ row: undefined, selection: <ShareDataRow[]> selectedRows });
         });
     });
 });
