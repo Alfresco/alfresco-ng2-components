@@ -47,7 +47,7 @@ In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 |check-plugin-env |Check plugin status |
 |artifact-from-s3  |Get artifact from S3 |
 |artifact-to-s3    |Get artifact to S3 |
-|docker-publish    |publish docker image|
+|docker            |Build and publish a docker image or create additional tag link |
 |init-aae-env      |Init env|
 |init-aps-env      |Init aps|
 |kubectl-delete    |delete kubectl |
@@ -81,18 +81,28 @@ npm install
 adf-cli audit
 ```
 
-### Docker publish
+### Docker
+The command provides 2 targets 'Publish' (default value) and 'Link'
 
+Publish target
 Move in the folder where you have your `Dockerfile` and run the command:
 
 ```bash
-adf-cli docker-publish --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}" --pathProject "$(pwd)"
+adf-cli docker --target "publish" --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}"
 ```
 
 If you want to specify a different docker registry you can run
 ```bash
---loginCheck --loginUsername "username" --loginPassword "password" --loginRepo "quay.io"--dockerRepo "${docker_repository}"  --dockerTags "${TAGS}" --pathProject "$(pwd)"
+--loginCheck --loginUsername "username" --loginPassword "password" --loginRepo "quay.io"--dockerRepo "${docker_repository}"  --dockerTags "${TAGS}"
 ```
+
+Link target
+In case you don't need to publish a new image but you would like to create a link to an already existing image (sourceTag) you can use the link target.
+
+```bash
+adf-cli docker --target "link" --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}"  --sourceTag "develop"
+```
+
 
 ### Kubectl update pod image
 
