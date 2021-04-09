@@ -39,7 +39,7 @@ describe('DecimalNumberPipe', () => {
     beforeEach(async(() => {
         userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
-        pipe = new DecimalNumberPipe(userPreferences, new AppConfigService(null));
+        pipe = new DecimalNumberPipe(userPreferences, TestBed.inject(AppConfigService));
     }));
 
     it('should return number localized and rounded following the default config', () => {

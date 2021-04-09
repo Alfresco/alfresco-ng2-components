@@ -41,6 +41,9 @@ describe('StartTaskCloudComponent', () => {
     const mock = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(taskDetailsMock)
+        },
+        isEcmLoggedIn() {
+            return false;
         }
     };
 

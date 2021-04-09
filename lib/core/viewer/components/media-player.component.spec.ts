@@ -21,7 +21,6 @@ import { MediaPlayerComponent } from './media-player.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { AlfrescoApiService } from '../../services';
 import { NodeEntry } from '@alfresco/js-api';
 
@@ -36,9 +35,6 @@ describe('Test Media player component ', () => {
         imports: [
             TranslateModule.forRoot(),
             CoreTestingModule
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
         ]
     });
 

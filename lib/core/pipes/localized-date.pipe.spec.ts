@@ -42,7 +42,7 @@ describe('LocalizedDatePipe', () => {
     beforeEach(async(() => {
         userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
-        pipe = new LocalizedDatePipe(userPreferences, new AppConfigService(null));
+        pipe = new LocalizedDatePipe(userPreferences, TestBed.inject(AppConfigService));
     }));
 
     it('should return time with locale en-US', () => {

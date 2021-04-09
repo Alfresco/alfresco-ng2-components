@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { fakeAppPromise } from '../../mock';
 import { fakeFiltersResponse, fakeAppFilter } from '../../mock/task/task-filters.mock';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
-import { AlfrescoApiServiceMock, LogService, AppConfigService, setupTestBed, CoreModule, StorageService } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 declare let jasmine: any;
 
@@ -30,14 +31,13 @@ describe('Activiti Task filter Service', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreModule.forRoot(),
+            ProcessTestingModule
         ]
     });
 
     beforeEach(async(() => {
-        service = new TaskFilterService(
-            new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService()),
-            new LogService(new AppConfigService(null)));
+        service = TestBed.inject(TaskFilterService);
         jasmine.Ajax.install();
     }));
 
@@ -127,7 +127,7 @@ describe('Activiti Task filter Service', () => {
         });
 
         it('should return the default filters', (done) => {
-            service.createDefaultFilters(1234).subscribe((res: FilterRepresentationModel []) => {
+            service.createDefaultFilters(1234).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(4);
                 expect(res[0].name).toEqual('My Tasks');
@@ -175,7 +175,7 @@ describe('Activiti Task filter Service', () => {
         });
 
         it('should be able create filters and add sorting information to the response', (done) => {
-            service.createDefaultFilters(1234).subscribe((res: FilterRepresentationModel []) => {
+            service.createDefaultFilters(1234).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(4);
                 expect(res[0].name).toEqual('My Tasks');
@@ -235,7 +235,7 @@ describe('Activiti Task filter Service', () => {
                 assignment: 'fake-assignment'
             });
 
-            service.addFilter(filterFake).subscribe((res: FilterRepresentationModel) => {
+            service.addFilter(filterFake).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.id).not.toEqual(null);
                 expect(res.name).toEqual('FakeNameFilter');

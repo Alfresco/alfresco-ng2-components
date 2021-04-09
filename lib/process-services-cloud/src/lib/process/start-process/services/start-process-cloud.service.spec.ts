@@ -37,6 +37,9 @@ describe('StartProcessCloudService', () => {
                     status: 'RUNNING'
                 }
             })
+        },
+        isEcmLoggedIn() {
+            return false;
         }
     };
 

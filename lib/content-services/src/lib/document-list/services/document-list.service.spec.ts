@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiServiceMock, AlfrescoApiService,
-    AppConfigService, ContentService, setupTestBed, LogService, AppConfigServiceMock, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
-import { CustomResourcesService } from './custom-resources.service';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -72,11 +70,8 @@ describe('DocumentListService', () => {
     });
 
     beforeEach(() => {
-        const logService = new LogService(new AppConfigServiceMock(null));
-        const contentService = TestBed.inject(ContentService);
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
-        const customActionService = new CustomResourcesService(alfrescoApiService, logService);
-        service = new DocumentListService(contentService, alfrescoApiService, logService, customActionService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        service = TestBed.inject(DocumentListService);
         jasmine.Ajax.install();
     });
 

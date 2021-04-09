@@ -35,8 +35,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 @NgModule({
     imports: [
         NoopAnimationsModule,
-        TranslateModule,
-        CoreModule,
+        TranslateModule.forRoot(),
+        CoreModule.forRoot(),
         ProcessModule,
         RouterTestingModule
     ],

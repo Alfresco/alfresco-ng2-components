@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { exampleProcess, fakeProcessInstances, mockError, fakeProcessDef, fakeTasksList } from '../../mock';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
-import { AlfrescoApiService, AlfrescoApiServiceMock, AppConfigService,
-    setupTestBed, CoreModule, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 declare let moment: any;
 
@@ -33,12 +33,13 @@ describe('ProcessService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreModule.forRoot(),
+            ProcessTestingModule
         ]
     });
 
     beforeEach(() => {
-        apiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        apiService = TestBed.inject(AlfrescoApiService);
         service = new ProcessService(apiService);
         alfrescoApi = apiService.getInstance();
     });
@@ -47,7 +48,7 @@ describe('ProcessService', () => {
 
         let getProcessInstances: jasmine.Spy;
 
-        const filter: ProcessFilterParamRepresentationModel = new ProcessFilterParamRepresentationModel({
+        const filter = new ProcessFilterParamRepresentationModel({
             processDefinitionId: '1',
             appDefinitionId: '1',
             page: 1,

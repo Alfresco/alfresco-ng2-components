@@ -23,7 +23,8 @@ import { UserPreferencesService, UserPreferenceValues } from './user-preferences
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../mock';
 
 describe('UserPreferencesService', () => {
 
@@ -53,7 +54,7 @@ describe('UserPreferencesService', () => {
 
         storage = TestBed.inject(StorageService);
         translate = TestBed.inject(TranslateService);
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        alfrescoApiService = TestBed.inject(AlfrescoApiService) as AlfrescoApiServiceMock;
     });
 
     beforeEach(() => {
@@ -71,7 +72,7 @@ describe('UserPreferencesService', () => {
     describe(' with pagination config', () => {
 
         beforeEach(() => {
-            preferences = new UserPreferencesService(translate, appConfig, storage, alfrescoApiService);
+            preferences = TestBed.inject(UserPreferencesService);
         });
 
         it('should get default pagination from app config', (done) => {
@@ -183,7 +184,6 @@ describe('UserPreferencesService', () => {
                 }
             ];
             appConfig.config.locale = 'fake-locale-config';
-            preferences = new UserPreferencesService(translate, appConfig, storage, alfrescoApiService);
             alfrescoApiService.initialize();
             const textOrientation = preferences.getPropertyKey('textOrientation');
             expect(storage.getItem(textOrientation)).toBe('ltr');
@@ -197,7 +197,6 @@ describe('UserPreferencesService', () => {
                 }
             ];
             appConfig.config.locale = 'fake-locale-config';
-            preferences = new UserPreferencesService(translate, appConfig, storage, alfrescoApiService);
             alfrescoApiService.initialize();
             const textOrientation = preferences.getPropertyKey('textOrientation');
             expect(storage.getItem(textOrientation)).toBe('rtl');
@@ -209,7 +208,6 @@ describe('UserPreferencesService', () => {
                     key: 'fake-locale-browser'
                 }
             ];
-            preferences = new UserPreferencesService(translate, appConfig, storage, alfrescoApiService);
             alfrescoApiService.initialize();
 
             const textOrientation = preferences.getPropertyKey('textOrientation');
@@ -224,7 +222,6 @@ describe('UserPreferencesService', () => {
                 }
             ];
             spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locale-browser');
-            preferences = new UserPreferencesService(translate, appConfig, storage, alfrescoApiService);
             alfrescoApiService.initialize();
 
             changeDisposable = preferences.onChange

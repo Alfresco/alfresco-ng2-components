@@ -43,6 +43,9 @@ describe('PeopleCloudComponent', () => {
     const mock = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(mockUsers)
+        },
+        isEcmLoggedIn() {
+            return false;
         }
     };
 

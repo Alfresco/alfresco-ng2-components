@@ -14,14 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { async } from '@angular/core/testing';
-import { setupTestBed, StorageService, AlfrescoApiServiceMock, LogService, AppConfigService, CoreModule } from '@alfresco/adf-core';
+import { async, TestBed } from '@angular/core/testing';
+import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { ProcessListCloudService } from './process-list-cloud.service';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
+import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 
 describe('ProcessListCloudService', () => {
     let service: ProcessListCloudService;
-    let alfrescoApiMock: AlfrescoApiServiceMock;
+    let alfrescoApiService: AlfrescoApiService;
 
     function returnCallQueryParameters() {
         return {
@@ -29,6 +30,9 @@ describe('ProcessListCloudService', () => {
                 callCustomApi: (_queryUrl, _operation, _context, queryParams) => {
                     return Promise.resolve(queryParams);
                 }
+            },
+            isEcmLoggedIn() {
+                return false;
             }
         };
     }
@@ -39,26 +43,27 @@ describe('ProcessListCloudService', () => {
                 callCustomApi: (queryUrl) => {
                     return Promise.resolve(queryUrl);
                 }
+            },
+            isEcmLoggedIn() {
+                return false;
             }
         };
     }
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            ProcessServiceCloudTestingModule
         ]
     });
 
     beforeEach(async(() => {
-        alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
-        service = new ProcessListCloudService(alfrescoApiMock,
-            new AppConfigService(null),
-            new LogService(new AppConfigService(null)));
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        service = TestBed.inject(ProcessListCloudService);
     }));
 
     it('should append to the call all the parameters', (done) => {
         const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallQueryParameters);
+        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallQueryParameters);
         service.getProcessByRequest(processRequest).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -71,7 +76,7 @@ describe('ProcessListCloudService', () => {
 
     it('should concat the app name to the request url', (done) => {
         const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallUrl);
+        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallUrl);
         service.getProcessByRequest(processRequest).subscribe((requestUrl) => {
             expect(requestUrl).toBeDefined();
             expect(requestUrl).not.toBeNull();
@@ -85,7 +90,7 @@ describe('ProcessListCloudService', () => {
             appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service',
             sorting: [{ orderBy: 'NAME', direction: 'DESC' }, { orderBy: 'TITLE', direction: 'ASC' }]
         };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallQueryParameters);
+        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallQueryParameters);
         service.getProcessByRequest(processRequest).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -96,7 +101,7 @@ describe('ProcessListCloudService', () => {
 
     it('should return an error when app name is not specified', (done) => {
         const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: null };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallUrl);
+        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallUrl);
         service.getProcessByRequest(processRequest).subscribe(
             () => { },
             (error) => {

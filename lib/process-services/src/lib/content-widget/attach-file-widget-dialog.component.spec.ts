@@ -21,7 +21,7 @@ import { ContentModule, ContentNodeSelectorPanelComponent, DocumentListService }
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
-import { setupTestBed, AuthenticationService, SitesService, AlfrescoApiService, AlfrescoApiServiceMock, NodesApiService } from '@alfresco/adf-core';
+import { setupTestBed, AuthenticationService, SitesService, AlfrescoApiService, NodesApiService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -53,12 +53,11 @@ describe('AttachFileWidgetDialogComponent', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            ProcessTestingModule,
-            ContentModule.forRoot()
+            ContentModule.forRoot(),
+            ProcessTestingModule
         ],
         providers: [
             { provide: MAT_DIALOG_DATA, useValue: data },
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
             { provide: MatDialogRef, useValue: { close: () => of() } }
         ],
         schemas: [NO_ERRORS_SCHEMA]

@@ -19,11 +19,12 @@ import { SearchQueryBuilderService } from './search-query-builder.service';
 import { SearchConfiguration } from './search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
 import { FacetField } from './facet-field.interface';
+import { TestBed } from '@angular/core/testing';
 
 describe('SearchQueryBuilder', () => {
 
     const buildConfig = (searchSettings): AppConfigService => {
-        const config = new AppConfigService(null);
+        const config = TestBed.inject(AppConfigService);
         config.config.search = searchSettings;
         return config;
     };

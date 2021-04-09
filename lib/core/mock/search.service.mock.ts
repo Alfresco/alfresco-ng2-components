@@ -59,5 +59,8 @@ export let searchMockApi = {
         queriesApi: {
             findNodes: () => Promise.resolve(fakeSearch)
         }
+    },
+    isEcmLoggedIn() {
+        return false;
     }
 };

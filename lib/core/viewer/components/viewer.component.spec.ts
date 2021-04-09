@@ -26,7 +26,6 @@ import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerComponent } from './viewer.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -151,7 +150,6 @@ describe('ViewerComponent', () => {
             ViewerWithCustomToolbarActionsComponent
         ],
         providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
             {
                 provide: RenditionsService, useValue: {
                     getRendition: () => {

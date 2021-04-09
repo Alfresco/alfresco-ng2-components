@@ -36,9 +36,9 @@ import { RouterTestingModule } from '@angular/router/testing';
         HttpClientModule,
         NoopAnimationsModule,
         RouterTestingModule,
-        TranslateModule,
-        CoreModule,
-        ProcessServicesCloudModule
+        TranslateModule.forRoot(),
+        CoreModule.forRoot(),
+        ProcessServicesCloudModule.forRoot()
     ],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },

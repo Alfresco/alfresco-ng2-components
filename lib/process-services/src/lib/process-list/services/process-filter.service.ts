@@ -38,9 +38,9 @@ export class ProcessFilterService {
     getProcessFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
         return from(this.callApiProcessFilters(appId))
             .pipe(
-                map((response: any) => {
+                map((response) => {
                     const filters: FilterProcessRepresentationModel[] = [];
-                    response.data.forEach((filter: FilterProcessRepresentationModel) => {
+                    response.data.forEach((filter) => {
                         const filterModel = new FilterProcessRepresentationModel(filter);
                         filters.push(filterModel);
                     });

@@ -70,10 +70,6 @@ describe('AppConfigService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    it('should export service in the module', () => {
-        expect(appConfigService).toBeDefined();
-    });
-
     it('should stream only the selected attribute changes when using select', async(() => {
         appConfigService.config.testProp = true;
         appConfigService.select('testProp').subscribe((property) => {

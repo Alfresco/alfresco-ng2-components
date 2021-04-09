@@ -33,6 +33,9 @@ describe('AppsProcessCloudService', () => {
     const apiMock = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve({list : { entries: [ {entry: fakeApplicationInstance[0]}, {entry: fakeApplicationInstance[1]}] }})
+        },
+        isEcmLoggedIn() {
+            return false;
         }
     };
 
@@ -41,14 +44,19 @@ describe('AppsProcessCloudService', () => {
             TranslateModule.forRoot(),
             CoreTestingModule,
             ProcessServiceCloudTestingModule
+        ],
+        providers: [
+            AlfrescoApiService,
+            AppConfigService
         ]
     });
 
     beforeEach(() => {
-        service = TestBed.inject(AppsProcessCloudService);
-        appConfigService = TestBed.inject(AppConfigService);
         apiService = TestBed.inject(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(apiMock);
+
+        service = TestBed.inject(AppsProcessCloudService);
+        appConfigService = TestBed.inject(AppConfigService);
     });
 
     it('should get the deployed applications no apps are specified in app.config', (done) => {

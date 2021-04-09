@@ -54,6 +54,9 @@ describe('EditTaskFilterCloudComponent', () => {
     const mock = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(fakeApplicationInstance)
+        },
+        isEcmLoggedIn() {
+            return false;
         }
     };
 

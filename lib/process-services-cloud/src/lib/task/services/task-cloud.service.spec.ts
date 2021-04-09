@@ -38,6 +38,9 @@ describe('Task Cloud Service', () => {
                 callCustomApi : () => {
                     return Promise.resolve(taskCompleteCloudMock);
                 }
+            },
+            isEcmLoggedIn() {
+                return false;
             }
         };
     }
@@ -48,6 +51,9 @@ describe('Task Cloud Service', () => {
                 callCustomApi : () => {
                     return Promise.reject(taskCompleteCloudMock);
                 }
+            },
+            isEcmLoggedIn() {
+                return false;
             }
         };
     }
@@ -58,6 +64,9 @@ describe('Task Cloud Service', () => {
                 callCustomApi : () => {
                     return Promise.resolve(fakeTaskDetailsCloud);
                 }
+            },
+            isEcmLoggedIn() {
+                return false;
             }
         };
     }
@@ -68,6 +77,9 @@ describe('Task Cloud Service', () => {
                 callCustomApi : () => {
                     return Promise.resolve(['mockuser1', 'mockuser2', 'mockuser3']);
                 }
+            },
+            isEcmLoggedIn() {
+                return false;
             }
         };
     }
@@ -78,6 +90,9 @@ describe('Task Cloud Service', () => {
                 callCustomApi : () => {
                     return Promise.resolve(['mockgroup1', 'mockgroup2', 'mockgroup3']);
                 }
+            },
+            isEcmLoggedIn() {
+                return false;
             }
         };
     }
