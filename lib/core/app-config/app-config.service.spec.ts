@@ -16,15 +16,17 @@
  */
 
 import { HttpClientModule } from '@angular/common/http';
-import { async, inject, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { AppConfigService } from './app-config.service';
 import { AppConfigModule } from './app-config.module';
+import { ExtensionService } from '@alfresco/adf-extensions';
 
 declare let jasmine: any;
 
 describe('AppConfigService', () => {
 
     let appConfigService: AppConfigService;
+    let extensionService: ExtensionService;
 
     const mockResponse = {
         ecmHost: 'http://localhost:4000/ecm',
@@ -44,30 +46,45 @@ describe('AppConfigService', () => {
             imports: [
                 HttpClientModule,
                 AppConfigModule
-            ],
-            providers: [
-                { provide: AppConfigService, useClass: AppConfigService }
             ]
         });
 
         jasmine.Ajax.install();
     });
 
-    beforeEach(
-        inject([AppConfigService], (appConfig: AppConfigService) => {
-            appConfigService = appConfig;
-            appConfigService.load();
+    beforeEach(() => {
+        extensionService = TestBed.inject(ExtensionService);
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(mockResponse)
-            });
-        })
-    );
+        appConfigService = TestBed.inject(AppConfigService);
+        appConfigService.load();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(mockResponse)
+        });
+    });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
+    });
+
+    it('should merge the configs from extensions', () => {
+        appConfigService.config = {
+            application: {
+                name: 'application name'
+            }
+        };
+
+        extensionService.setup$.next({
+            appConfig: {
+                application: {
+                    name: 'custom name'
+                }
+            }
+        } as any);
+
+        expect(appConfigService.get('application.name')).toEqual('custom name');
     });
 
     it('should stream only the selected attribute changes when using select', async(() => {
