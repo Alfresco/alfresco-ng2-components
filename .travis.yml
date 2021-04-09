@@ -46,7 +46,7 @@ stages:
   - name: "Check bundle"
     if: type = push AND tag IS blank
   - name: "Trigger Alpha ADF child build"
-    if: (branch = develop AND type = push) OR type = api
+    if: branch = develop AND type = cron
   - name: "Trigger Beta ADF child build"
     if: tag =~ .*beta.*
   - name: "Build"
