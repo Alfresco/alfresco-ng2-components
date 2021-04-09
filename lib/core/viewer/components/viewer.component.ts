@@ -224,6 +224,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     viewerExtensions: Array<ViewerExtensionRef> = [];
 
     private cacheBusterNumber;
+    cacheTypeForContent = '';
 
     // Extensions that are supported by the Viewer without conversion
     private extensions = {
@@ -278,6 +279,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
         this.closeOverlayManager();
         this.loadExtensions();
+        this.cacheTypeForContent = '';
     }
 
     private loadExtensions() {
@@ -299,6 +301,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private onNodeUpdated(node: Node) {
         if (node && node.id === this.nodeId) {
+            this.cacheTypeForContent = 'no-cache';
             this.generateCacheBusterNumber();
             this.isLoading = true;
             this.setUpNodeFile(node).then(() => {

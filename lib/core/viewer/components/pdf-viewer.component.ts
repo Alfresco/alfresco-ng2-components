@@ -68,6 +68,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Input()
     thumbnailsTemplate: TemplateRef<any> = null;
 
+    @Input()
+    cacheType: string = '';
+
     @Output()
     rendered = new EventEmitter<any>();
 
@@ -161,6 +164,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 url: urlFile.currentValue,
                 withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
             };
+            if (this.cacheType) {
+                pdfSource.httpHeaders = {
+                    'Cache-Control': this.cacheType
+                };
+            }
             this.executePdf(pdfSource);
         }
 
