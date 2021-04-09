@@ -18,11 +18,16 @@
 import { CustomResourcesService } from './custom-resources.service';
 import { PaginationModel } from '@alfresco/adf-core';
 import { TestBed } from '@angular/core/testing';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('CustomResourcesService', () => {
     let customResourcesService: CustomResourcesService;
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [ContentTestingModule]
+        });
+
         customResourcesService = TestBed.inject(CustomResourcesService);
     });
 

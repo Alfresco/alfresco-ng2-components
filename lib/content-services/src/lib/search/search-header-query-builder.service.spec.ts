@@ -19,8 +19,15 @@ import { SearchConfiguration } from './search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from './search-header-query-builder.service';
 import { TestBed } from '@angular/core/testing';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('SearchHeaderQueryBuilderService', () => {
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [ContentTestingModule]
+        });
+    });
 
     const buildConfig = (searchSettings): AppConfigService => {
         const config = TestBed.inject(AppConfigService);

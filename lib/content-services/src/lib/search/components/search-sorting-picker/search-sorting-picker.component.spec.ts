@@ -20,6 +20,7 @@ import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { AppConfigService } from '@alfresco/adf-core';
 import { SearchConfiguration } from '../../search-configuration.interface';
 import { TestBed } from '@angular/core/testing';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('SearchSortingPickerComponent', () => {
 
@@ -33,6 +34,10 @@ describe('SearchSortingPickerComponent', () => {
     };
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [ContentTestingModule]
+        });
+
         const config: SearchConfiguration = {
             sorting: {
                 options: [

@@ -148,6 +148,10 @@ describe('AspectListService', () => {
         let aspectTypesApi: any;
 
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [ContentTestingModule]
+            });
+
             aspectTypesApi = jasmine.createSpyObj('AspectsApi', ['listAspects']);
             appConfigService = TestBed.inject(AppConfigService);
             apiService = TestBed.inject(AlfrescoApiService);
