@@ -21,7 +21,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { Node, NodeEntry } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
-import { SitesService, ContentService } from '@alfresco/adf-core';
+import { SitesService, ContentService, UploadService, FileModel, FileUploadEvent } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
@@ -35,6 +35,7 @@ describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;
     let data: any;
+    let uploadService: UploadService;
 
     beforeEach(() => {
         data = {
@@ -71,6 +72,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         const documentListService = TestBed.inject(DocumentListService);
         const sitesService: SitesService = TestBed.inject(SitesService);
+        uploadService = TestBed.inject(UploadService);
 
         spyOn(documentListService, 'getFolder').and.callThrough();
         spyOn(documentListService, 'getFolderNode').and.callThrough();
@@ -391,6 +393,46 @@ describe('ContentNodeSelectorComponent', () => {
             const tabGroup = fixture.debugElement.queryAll(By.css('.adf-content-node-selector-headless-tabs'))[0];
 
             expect(tabGroup).toBe(undefined);
+        });
+    });
+
+    describe('Drag and drop area', () => {
+        it('should uploadStarted be false by default', () => {
+            expect(component.uploadStarted).toBe(false);
+        });
+
+        it('should uploadStarted become true when the first upload gets started', () => {
+            const fileUploadEvent  = new FileUploadEvent(new FileModel(<File> { name: 'fake-name', size: 100 }));
+            uploadService.fileUploadStarting.next(fileUploadEvent);
+
+            expect(component.uploadStarted).toBe(true);
+        });
+
+        it('should show drag and drop area with the empty list template when no upload has started', async () => {
+            enableLocalUpload();
+            const uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[1];
+            uploadFromLocalTab.nativeElement.click();
+
+            fixture.detectChanges();
+            await fixture.whenRenderingDone();
+            const emptyListTemplate = fixture.nativeElement.querySelector('[data-automation-id="adf-empty-list"]');
+            const dragAndDropArea = fixture.debugElement.query(By.css('.adf-upload-drag-area'));
+
+            expect(emptyListTemplate).not.toBeNull();
+            expect(dragAndDropArea).not.toBeNull();
+        });
+
+        it('should not show the empty list template when an upload has started', async () => {
+            enableLocalUpload();
+            const uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[1];
+            uploadFromLocalTab.nativeElement.click();
+
+            component.uploadStarted = true;
+            fixture.detectChanges();
+            await fixture.whenRenderingDone();
+            const emptyListTemplate = fixture.nativeElement.querySelector('[data-automation-id="adf-empty-list"]');
+
+            expect(emptyListTemplate).toBeNull();
         });
     });
 });

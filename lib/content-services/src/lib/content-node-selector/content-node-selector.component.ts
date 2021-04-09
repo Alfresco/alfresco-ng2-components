@@ -39,6 +39,9 @@ export class ContentNodeSelectorComponent implements OnInit {
     hasAllowableOperations = false;
     isLoading = true;
     selectedTabIndex: number = 0;
+    uploadStarted: boolean = false;
+
+    emptyFolderImageUrl: string = '../assets/images/empty_doc_lib.svg';
     breadcrumbFolderNode: Node;
 
     constructor(private translation: TranslationService,
@@ -65,6 +68,10 @@ export class ContentNodeSelectorComponent implements OnInit {
 
         this.dialog.backdropClick().subscribe(() => {
            this.close();
+        });
+
+        this.uploadService.fileUploadStarting.subscribe(() => {
+            this.uploadStarted = true;
         });
     }
 
