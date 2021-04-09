@@ -68,7 +68,7 @@ const aspectListMock: AspectEntry[] = [{
 
 const customAspectListMock: AspectEntry[] = [{
     entry: {
-        parentId: 'cst:customAspect',
+        parentId: 'cst:parentAspect',
         id: 'cst:customAspect',
         description: 'Custom Aspect with random description',
         title: 'CustomAspect',
@@ -88,7 +88,7 @@ const customAspectListMock: AspectEntry[] = [{
 },
 {
     entry: {
-        parentId: 'cst:nonamedAspect',
+        parentId: 'cst:commonaspect',
         id: 'cst:nonamedAspect',
         description: '',
         title: '',

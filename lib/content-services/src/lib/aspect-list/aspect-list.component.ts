@@ -101,4 +101,12 @@ export class AspectListComponent implements OnInit, OnDestroy {
         this.nodeAspects = [];
         this.valueChanged.emit(this.nodeAspects);
     }
+
+    getId(aspect: any): string {
+        return aspect?.entry?.title ? aspect?.entry?.title : aspect?.entry?.id.replace(':', '-');
+    }
+
+    getTitle(aspect: any): string {
+        return aspect?.entry?.title ? aspect?.entry?.title : aspect?.entry?.id;
+    }
 }

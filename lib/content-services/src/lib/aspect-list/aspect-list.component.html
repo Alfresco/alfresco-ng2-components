@@ -1,18 +1,18 @@
 <div id="aspect-list-container" class="adf-aspect-list-container" *ngIf="aspects$ | async as aspects; else loading">
     <mat-accordion class="adf-accordion-aspect-list">
-        <mat-expansion-panel *ngFor="let aspect of aspects; let colIndex = index" [id]="'aspect-list-'+(aspect?.entry?.title ? aspect?.entry?.title : aspect?.entry?.id.replace(':', '-'))">
-            <mat-expansion-panel-header [id]="'aspect-list-'+(aspect?.entry?.title ? aspect?.entry?.title : aspect?.entry?.id.replace(':', '-'))+'header'">
+        <mat-expansion-panel *ngFor="let aspect of aspects; let colIndex = index" [id]="'aspect-list-'+getId(aspect)">
+            <mat-expansion-panel-header [id]="'aspect-list-'+(getId(aspect))+'header'">
                 <mat-panel-title>
                     <mat-checkbox class="adf-aspect-list-check-button" [id]="'aspect-list-'+colIndex+'-check'"
                                   [checked]="nodeAspects?.includes(aspect?.entry?.id)"
                                   (click)="onCheckBoxClick($event)"
                                   (change)="onChange($event, aspect?.entry?.id)">
                     </mat-checkbox>
-                    <p class="adf-aspect-list-element-title">{{aspect?.entry?.title ? aspect?.entry?.title : aspect?.entry?.id}}</p>
+                    <p class="adf-aspect-list-element-title">{{getTitle(aspect)}}</p>
                 </mat-panel-title>
                 <mat-panel-description [id]="'aspect-list-'+colIndex+'-title'"
-                                        [matTooltip]="(aspect?.entry?.title ? aspect?.entry?.title : aspect?.entry?.id)">
-                    {{aspect?.entry?.title ? aspect?.entry?.title : aspect?.entry?.id}}
+                                        [matTooltip]="getTitle(aspect)">
+                    {{getTitle(aspect)}}
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <p class="adf-property-paragraph" [id]="'aspect-list-'+colIndex+'-description'"> {{aspect?.entry?.description}}</p>
