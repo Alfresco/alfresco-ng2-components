@@ -120,8 +120,7 @@ exports.config = {
         smokeTestPs: [
             "./process-services/process/**/*.e2e.ts",
             "./process-services/form/**/*.e2e.ts",
-            "./process-services-cloud/process/**/*.e2e.ts",
-            "./process-services-cloud/form-field/**/*.e2e.ts"
+            "./process-services-cloud/process/**/*.e2e.ts"
         ]
     },
 
