@@ -29,7 +29,7 @@ const elementCustom: TypeEntry = {
     entry: {
         id: 'ck:pippobaudo',
         title: 'PIPPO-BAUDO',
-        model: {id:'what', namespacePrefix : 'ck'},
+        model: { id: 'what', namespacePrefix: 'ck' },
         description: 'Doloro reaepgfihawpefih peahfa powfj p[qwofhjaq[ fq[owfj[qowjf[qowfgh[qowh f[qowhfj [qwohf',
         parentId: 'cm:content',
         properties: [
