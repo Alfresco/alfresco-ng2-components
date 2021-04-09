@@ -35,7 +35,7 @@
     <mat-tab *ngIf="canPerformLocalUpload()"
              [disabled]="isNotAllowedToUpload()">
         <adf-toolbar>
-            <adf-toolbar-title>
+            <adf-toolbar-title [adf-node-counter]="getSelectedCount()">
                 <adf-dropdown-breadcrumb
                     class="adf-content-node-selector-content-breadcrumb"
                     [folderNode]="breadcrumbFolderNode"
@@ -43,10 +43,6 @@
                     [readOnly]="true"
                     data-automation-id="content-node-selector-upload-breadcrumb"
                 ></adf-dropdown-breadcrumb>
-                <div
-                    data-automation-id="content-node-selector-upload-selected-counter">
-                    {{ 'NODE_SELECTOR.SELECTED_COUNT' | translate: { count: getSelectedCount() } }}
-                </div>
             </adf-toolbar-title>
         </adf-toolbar>
         <ng-template mat-tab-label>

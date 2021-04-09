@@ -18,19 +18,25 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
+import { TranslateModule } from "@ngx-translate/core";
 
 import { NodeLockDirective } from './node-lock.directive';
+import { NodeCounterComponent, NodeCounterDirective } from "./node-counter.directive";
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        TranslateModule
     ],
     declarations: [
-        NodeLockDirective
+        NodeLockDirective,
+        NodeCounterDirective,
+        NodeCounterComponent
     ],
     exports: [
-        NodeLockDirective
+        NodeLockDirective,
+        NodeCounterDirective
     ]
 })
 export class ContentDirectiveModule {

@@ -30,6 +30,7 @@ import { DocumentListModule } from '../document-list/document-list.module';
 import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
 import { UploadModule } from '../upload/upload.module';
 import { SearchQueryBuilderService } from '../search/search-query-builder.service';
+import { ContentDirectiveModule } from "../directives/content-directive.module";
 
 @NgModule({
     imports: [
@@ -42,7 +43,8 @@ import { SearchQueryBuilderService } from '../search/search-query-builder.servic
         BreadcrumbModule,
         SearchModule,
         DocumentListModule,
-        UploadModule
+        UploadModule,
+        ContentDirectiveModule
     ],
     exports: [
         ContentNodeSelectorPanelComponent,
