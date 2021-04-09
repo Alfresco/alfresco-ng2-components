@@ -123,10 +123,6 @@ export class AttachFileWidgetPage {
         return this.removeFileOptionButton.isEnabled();
     }
 
-    async isRemoveFileOptionDisplayed(): Promise<boolean> {
-        return this.removeFileOptionButton.isDisplayed();
-    }
-
     async checkUploadIsNotVisible(fieldId): Promise<void> {
         const alfrescoTypeUploadLocator = by.css(`button[id="${fieldId}"]`);
         const widget = await this.formFields.getWidget(fieldId);
