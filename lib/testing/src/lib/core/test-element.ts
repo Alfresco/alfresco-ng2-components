@@ -143,7 +143,12 @@ export class TestElement {
      * Test whether this element is currently displayed.
      */
     async isDisplayed(): Promise<boolean> {
-        return this.elementFinder.isDisplayed();
+        try {
+            await this.elementFinder.isDisplayed();
+            return true;
+        } catch {
+            return false;
+        }
     }
 
     /**

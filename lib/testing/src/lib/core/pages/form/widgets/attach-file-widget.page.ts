@@ -18,6 +18,7 @@
 import { FormFields } from '../form-fields';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import { Locator, element, by, browser } from 'protractor';
+import { TestElement } from '../../../test-element';
 
 export class AttachFileWidgetPage {
 
@@ -30,7 +31,7 @@ export class AttachFileWidgetPage {
     attachedFileOptions = element(by.css('.mat-menu-panel .mat-menu-content'));
     viewFileOptionButton = element(by.css(`.mat-menu-panel .mat-menu-content button[id$="show-file"]`));
     downloadFileOptionButton = element(by.css(`.mat-menu-panel .mat-menu-content button[id$="download-file"]`));
-    removeFileOptionButton = element(by.css(`.mat-menu-panel .mat-menu-content button[id$="remove"]`));
+    removeFileOptionButton = TestElement.byCss(`.mat-menu-panel .mat-menu-content button[id$="remove"]`);
 
     async attachFile(fieldId, fileLocation): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
@@ -88,14 +89,14 @@ export class AttachFileWidgetPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.attachedFileOptions);
         await BrowserVisibility.waitUntilElementIsVisible(this.viewFileOptionButton);
         await BrowserVisibility.waitUntilElementIsVisible(this.downloadFileOptionButton);
-        await BrowserVisibility.waitUntilElementIsVisible(this.removeFileOptionButton);
+        await this.removeFileOptionButton.waitVisible();
     }
 
     async checkAttachFileOptionsCompletedForm(): Promise <void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.attachedFileOptions);
         await BrowserVisibility.waitUntilElementIsVisible(this.viewFileOptionButton);
         await BrowserVisibility.waitUntilElementIsVisible(this.downloadFileOptionButton);
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.removeFileOptionButton);
+        await this.removeFileOptionButton.waitNotVisible();
     }
 
     async viewAttachedFile(): Promise<void> {
@@ -107,7 +108,7 @@ export class AttachFileWidgetPage {
     }
 
     async removeAttachedFile(): Promise<void> {
-        await BrowserActions.click(this.removeFileOptionButton);
+        await this.removeFileOptionButton.click();
     }
 
     async viewFileEnabled(): Promise<boolean> {

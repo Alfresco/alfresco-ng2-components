@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-export * from './widgets/public-api';
+import { TestElement } from '../../test-element';
 
-export * from './form-fields';
-export * from './form.page';
-export * from './start-form.page';
+export class StartFormPage {
+    startProcessForm = TestElement.byCss('.adf-start-form-container');
+}
