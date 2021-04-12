@@ -446,14 +446,5 @@ describe('ContentNodeSelectorComponent', () => {
 
             expect(component.getSelectedCount()).toBe(1);
         });
-
-        it('should have injected the counter text', () => {
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const counterElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-upload-selected-counter"]'));
-                expect(counterElement).not.toBeNull();
-                expect(counterElement.nativeElement.innerText).toBe('NODE_SELECTOR.SELECTED_COUNT');
-            });
-        });
     });
 });

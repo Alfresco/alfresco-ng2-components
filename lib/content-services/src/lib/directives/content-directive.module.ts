@@ -18,10 +18,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
-import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule } from '@ngx-translate/core';
 
 import { NodeLockDirective } from './node-lock.directive';
-import { NodeCounterComponent, NodeCounterDirective } from "./node-counter.directive";
+import { NodeCounterComponent, NodeCounterDirective } from './node-counter.directive';
 
 @NgModule({
     imports: [

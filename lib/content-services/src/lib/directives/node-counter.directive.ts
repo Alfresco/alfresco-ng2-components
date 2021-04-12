@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2021 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Directive, Input, Component, OnInit, OnChanges, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+import { Directive, Input, Component, OnInit, OnChanges, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 
 @Directive({
     selector: '[adf-node-counter]'
@@ -51,5 +51,5 @@ export class NodeCounterDirective implements OnInit, OnChanges {
     `
 })
 export class NodeCounterComponent {
-    counter: number
+    counter: number;
 }
