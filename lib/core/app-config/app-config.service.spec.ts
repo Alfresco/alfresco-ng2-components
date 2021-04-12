@@ -35,7 +35,6 @@ describe('AppConfigService', () => {
     let appConfigService: AppConfigService;
     let extensionService: ExtensionService;
 
-
     const mockResponse = {
         ecmHost: 'http://localhost:4000/ecm',
         bpmHost: 'http://localhost:4000/ecm',
