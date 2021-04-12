@@ -30,7 +30,6 @@ class TestExtensionService extends ExtensionService {
     }
 }
 
-
 describe('AppConfigService', () => {
 
     let appConfigService: AppConfigService;
