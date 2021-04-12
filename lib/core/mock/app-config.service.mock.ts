@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService, Status } from '../app-config/app-config.service';
 import { HttpClient } from '@angular/common/http';
 import { ExtensionService } from '@alfresco/adf-extensions';
 @Injectable()
@@ -37,7 +37,8 @@ export class AppConfigServiceMock extends AppConfigService {
 
     load(): Promise<any> {
         return new Promise((resolve) => {
-            this.onLoadSubject.next(this.config);
+            this.status = Status.LOADED;
+            this.onDataLoaded(this.config);
             resolve(this.config);
         });
     }

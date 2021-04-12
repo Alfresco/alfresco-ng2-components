@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { async, TestBed } from '@angular/core/testing';
 import { AppConfigService } from './app-config.service';
 import { AppConfigModule } from './app-config.module';
 import { ExtensionConfig, ExtensionService } from '@alfresco/adf-extensions';
-
-declare let jasmine: any;
+import { of } from 'rxjs';
 
 class TestExtensionService extends ExtensionService {
 
@@ -34,6 +33,7 @@ describe('AppConfigService', () => {
 
     let appConfigService: AppConfigService;
     let extensionService: ExtensionService;
+    let httpClient: HttpClient;
 
     const mockResponse = {
         ecmHost: 'http://localhost:4000/ecm',
@@ -58,25 +58,16 @@ describe('AppConfigService', () => {
                 { provide: ExtensionService, useClass: TestExtensionService }
             ]
         });
-
-        jasmine.Ajax.install();
     });
 
     beforeEach(() => {
+        httpClient = TestBed.inject(HttpClient);
+        spyOn(httpClient, 'get').and.returnValue(of(mockResponse));
+
         extensionService = TestBed.inject(ExtensionService);
 
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.load();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(mockResponse)
-        });
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
     });
 
     it('should merge the configs from extensions', () => {
@@ -95,6 +86,29 @@ describe('AppConfigService', () => {
         } as any);
 
         expect(appConfigService.get('application.name')).toEqual('custom name');
+    });
+
+    it('should merge the configs upon new data loaded', async (done) => {
+        appConfigService.config = {
+            application: {
+                name: 'application name'
+            }
+        };
+
+        (extensionService as TestExtensionService).onSetup({
+            appConfig: {
+                application: {
+                    name: 'custom name'
+                }
+            }
+        } as any);
+
+        expect(appConfigService.get('application.name')).toEqual('custom name');
+
+        await appConfigService.load();
+
+        expect(appConfigService.get('application.name')).toEqual('custom name');
+        done();
     });
 
     it('should stream only the selected attribute changes when using select', async(() => {

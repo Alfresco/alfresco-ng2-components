@@ -19,8 +19,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ObjectUtils } from '../utils/object-utils';
 import { Observable, Subject } from 'rxjs';
-import { map, distinctUntilChanged } from 'rxjs/operators';
-import { ExtensionService, mergeObjects } from '@alfresco/adf-extensions';
+import { map, distinctUntilChanged, take } from 'rxjs/operators';
+import { ExtensionConfig, ExtensionService, mergeObjects } from '@alfresco/adf-extensions';
 
 /* spellchecker: disable */
 export enum AppConfigValues {
@@ -70,18 +70,12 @@ export class AppConfigService {
     protected onLoadSubject: Subject<any>;
     onLoad: Observable<any>;
 
-    constructor(private http: HttpClient, extensionService: ExtensionService) {
+    constructor(protected http: HttpClient, protected extensionService: ExtensionService) {
         this.onLoadSubject = new Subject();
         this.onLoad = this.onLoadSubject.asObservable();
 
         extensionService.setup$.subscribe((config) => {
-            if (config) {
-                const customConfig = config.appConfig;
-
-                if (customConfig) {
-                    this.config = mergeObjects(this.config, customConfig);
-                }
-            }
+            this.onExtensionsLoaded(config);
         });
     }
 
@@ -153,6 +147,29 @@ export class AppConfigService {
         return location.port ? prefix + location.port : '';
     }
 
+    protected onLoaded() {
+        this.onLoadSubject.next(this.config);
+    }
+
+    protected onDataLoaded(data: any) {
+        this.config = Object.assign({}, this.config, data || {});
+        this.onLoadSubject.next(this.config);
+
+        this.extensionService.setup$
+            .pipe(take(1))
+            .subscribe((config) => this.onExtensionsLoaded(config));
+    }
+
+    protected onExtensionsLoaded(config: ExtensionConfig) {
+        if (config) {
+            const customConfig = config.appConfig;
+
+            if (customConfig) {
+                this.config = mergeObjects(this.config, customConfig);
+            }
+        }
+    }
+
     /**
      * Loads the config file.
      * @returns Notification when loading is complete
@@ -163,11 +180,10 @@ export class AppConfigService {
 
             if (this.status === Status.INIT) {
                 this.status = Status.LOADING;
-                await this.http.get(configUrl).subscribe(
+                this.http.get(configUrl).subscribe(
                     (data: any) => {
                         this.status = Status.LOADED;
-                        this.config = Object.assign({}, this.config, data || {});
-                        this.onLoadSubject.next(this.config);
+                        this.onDataLoaded(data);
                         resolve(this.config);
                     },
                     () => {
