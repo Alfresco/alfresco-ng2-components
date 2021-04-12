@@ -138,12 +138,6 @@ jobs:
           workspaces:
             use: built_libs_cache
 
-        - stage: "Trigger Beta ADF child build"
-          name: "Trigger Beta ADF child build"
-          script: ./scripts/travis/update/update-project.sh -p $TRAVIS_BUILD_NUMBER -t $GITHUB_TOKEN -v beta
-          workspaces:
-            use: built_libs_cache
-
         - stage: "Release tag"
           script: ./scripts/travis/release/git-tag.sh
 
