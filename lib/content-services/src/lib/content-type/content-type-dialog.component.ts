@@ -35,6 +35,7 @@ export class ContentTypeDialogComponent implements OnInit {
     confirmMessage: string;
 
     currentContentType: TypeEntry;
+    typeProperties: any[] = [];
 
     propertyColumns: string[] = ['name', 'title', 'dataType'];
 
@@ -48,6 +49,7 @@ export class ContentTypeDialogComponent implements OnInit {
 
         this.contentTypeService.getContentTypeByPrefix(this.nodeType).subscribe((contentTypeEntry) => {
             this.currentContentType = contentTypeEntry;
+            this.typeProperties = this.currentContentType.entry.properties.filter((property) => property.id.startsWith(this.currentContentType.entry.model.namespacePrefix));
         });
     }
 

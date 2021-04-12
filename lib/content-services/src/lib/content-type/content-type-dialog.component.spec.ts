@@ -29,9 +29,20 @@ const elementCustom: TypeEntry = {
     entry: {
         id: 'ck:pippobaudo',
         title: 'PIPPO-BAUDO',
+        model: { id: 'what', namespacePrefix: 'ck' },
         description: 'Doloro reaepgfihawpefih peahfa powfj p[qwofhjaq[ fq[owfj[qowjf[qowfgh[qowh f[qowhfj [qwohf',
         parentId: 'cm:content',
         properties: [
+            {
+                id: 'lm:PropA',
+                dataType: 'lm:notshowed',
+                defaultValue: 'I NEVER show uP',
+                description: 'A inherited property',
+                isMandatory: false,
+                isMandatoryEnforced: false,
+                isMultiValued: false,
+                title: 'PropertyHidden'
+            },
             {
                 id: 'ck:PropA',
                 dataType: 'ck:propA',
@@ -135,7 +146,7 @@ describe('Content Type Dialog Component', () => {
         fixture.detectChanges();
     });
 
-    it('should show the property of the aspect', async () => {
+    it('should show the property with the aspect prefix not the inherited ones', async () => {
         const showPropertyAccordon: HTMLButtonElement = fixture.nativeElement.querySelector('.adf-content-type-accordion .mat-expansion-panel-header');
         expect(showPropertyAccordon).toBeDefined();
         showPropertyAccordon.click();
