@@ -19,14 +19,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { async, TestBed } from '@angular/core/testing';
 import { AppConfigService } from './app-config.service';
 import { AppConfigModule } from './app-config.module';
-import { ExtensionService } from '@alfresco/adf-extensions';
+import { ExtensionConfig, ExtensionService } from '@alfresco/adf-extensions';
 
 declare let jasmine: any;
+
+class TestExtensionService extends ExtensionService {
+
+    onSetup(config: ExtensionConfig) {
+        this.onSetup$.next(config);
+    }
+}
+
 
 describe('AppConfigService', () => {
 
     let appConfigService: AppConfigService;
     let extensionService: ExtensionService;
+
 
     const mockResponse = {
         ecmHost: 'http://localhost:4000/ecm',
@@ -46,6 +55,9 @@ describe('AppConfigService', () => {
             imports: [
                 HttpClientModule,
                 AppConfigModule
+            ],
+            providers: [
+                { provide: ExtensionService, useClass: TestExtensionService }
             ]
         });
 
@@ -76,7 +88,7 @@ describe('AppConfigService', () => {
             }
         };
 
-        extensionService.setup$.next({
+        (extensionService as TestExtensionService).onSetup({
             appConfig: {
                 application: {
                     name: 'custom name'
