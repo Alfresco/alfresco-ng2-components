@@ -38,7 +38,7 @@ export class BasicPropertiesService {
             new CardViewTextItemModel({
                 label: 'CORE.METADATA.BASIC.NAME',
                 value: node.name,
-                key: 'name',
+                key: 'properties.cm:name',
                 editable: true
             }),
             new CardViewTextItemModel({

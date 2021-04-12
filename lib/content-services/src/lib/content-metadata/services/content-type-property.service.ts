@@ -23,7 +23,8 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 import { ContentTypeDialogComponent } from '../../content-type/content-type-dialog.component';
 import { ContentTypeDialogComponentData } from '../../content-type/content-type-metadata.interface';
 import { ContentTypeService } from '../../content-type/content-type.service';
-import { TypeEntry } from '@alfresco/js-api';
+import { Node, Property, TypeEntry } from '@alfresco/js-api';
+import { PropertyGroupTranslatorService } from './property-groups-translator.service';
 
 @Injectable({
     providedIn: 'root'
@@ -31,22 +32,49 @@ import { TypeEntry } from '@alfresco/js-api';
 export class ContentTypePropertiesService {
 
     constructor(private contentTypeService: ContentTypeService,
-                private dialog: MatDialog,
-                private versionCompatibilityService: VersionCompatibilityService) {
+        private dialog: MatDialog,
+        private versionCompatibilityService: VersionCompatibilityService,
+        private propertyGroupTranslatorService: PropertyGroupTranslatorService) {
     }
 
-    getContentTypeCardItem(nodeType: string): Observable<CardViewItem[]> {
+    getContentTypeCardItem(node: Node): Observable<CardViewItem[]> {
         if (this.versionCompatibilityService.isVersionSupported('7')) {
-            return this.contentTypeService.getContentTypeByPrefix(nodeType).
+            return this.contentTypeService.getContentTypeByPrefix(node.nodeType).
                 pipe(
                     map((contentType) => {
                         const contentTypesOptions$ = this.getContentTypesAsSelectOption(contentType);
                         const contentTypeCard = this.buildContentTypeSelectCardModel(contentType.entry.id, contentTypesOptions$);
-                        return [contentTypeCard];
+                        const filteredProperties =  contentType.entry.properties.filter((property) => property.id.startsWith(contentType.entry.model.namespacePrefix));
+                        const propertiesCard = this.buildCardItemsFromPropertyList(filteredProperties, node.properties);
+                        return [contentTypeCard, ...propertiesCard];
                     }));
         } else {
-            return of([this.buildContentTypeTextCardModel(nodeType)]);
+            return of([this.buildContentTypeTextCardModel(node.nodeType)]);
         }
+    }
+
+    getContentTypePropertiesCards(node: Node): Observable<CardViewItem[]> {
+        return this.contentTypeService.getContentTypeByPrefix(node.nodeType).
+            pipe(
+                map((contentType) => {
+                    const typeProperties: Property[] = this.getContentTypeSpecificProperties(contentType);
+                    return this.buildCardItemsFromPropertyList(typeProperties, node.properties);
+                }));
+    }
+
+    buildCardItemsFromPropertyList(properties: Property[], currentProperties: any): CardViewItem[] {
+        return properties.map((property) => {
+            const propertyValue = currentProperties[property.id];
+            return this.buildCardItemFromProperty(property, propertyValue);
+        });
+    }
+
+    private buildCardItemFromProperty(property: Property, propertyValue: any): CardViewItem {
+        return this.propertyGroupTranslatorService.translateProperty(property, propertyValue, true);
+    }
+
+    private getContentTypeSpecificProperties(contentType: TypeEntry): Property[] {
+        return contentType.entry.properties.filter((property) => property.id.startsWith(contentType.entry.model.namespacePrefix));
     }
 
     private buildContentTypeTextCardModel(currentValue: string): CardViewTextItemModel {
@@ -78,7 +106,7 @@ export class ContentTypePropertiesService {
             distinctUntilChanged(),
             map(([contentTypesEntries, currentContentType]) => {
                 const updatedTypes = this.appendCurrentType(currentContentType, contentTypesEntries);
-                return updatedTypes.map((contentType) => <CardViewSelectItemOption<string>> { key: contentType.entry.id, label: contentType.entry.title ?? contentType.entry.id });
+                return updatedTypes.map((contentType) => <CardViewSelectItemOption<string>>{ key: contentType.entry.id, label: contentType.entry.title ?? contentType.entry.id });
             }));
     }
 

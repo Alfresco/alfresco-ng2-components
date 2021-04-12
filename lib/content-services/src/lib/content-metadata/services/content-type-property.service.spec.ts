@@ -22,6 +22,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTypeService } from '../../content-type';
 import { of } from 'rxjs';
+import { Node } from '@alfresco/js-api';
 
 describe('ContentTypePropertyService', () => {
 
@@ -37,6 +38,7 @@ describe('ContentTypePropertyService', () => {
                                  'isContainer': false,
                                  'id': 'fk:nodeType',
                                  'title': 'Content',
+                                 'model' : { 'namespacePrefix' : 'fk'},
                                  'properties': [{ 'id': 'cm:name', 'title': 'Name', 'description': 'Name', 'dataType': 'd:text', 'isMultiValued': false, 'isMandatory': true, 'isMandatoryEnforced': true, 'isProtected': false}],
                                  'parentId': 'cm:cmobject' } };
     const mockSelectOptions = {
@@ -88,8 +90,18 @@ describe('ContentTypePropertyService', () => {
     });
 
     it('should return a card text item for ACS version below 7', (done) => {
+        const fakeNode: Node = <Node> {
+            name: 'Node',
+            id: 'fake-id',
+            isFile: true,
+            aspectNames: ['exif:exif'],
+            nodeType: 'fk:nodeType',
+            createdByUser: {displayName: 'test-user'},
+            modifiedByUser: {displayName: 'test-user-modified'},
+            properties: []
+        };
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(false);
-        service.getContentTypeCardItem('fk:nodeType').subscribe((items: CardViewItem[]) => {
+        service.getContentTypeCardItem(fakeNode).subscribe((items: CardViewItem[]) => {
             expect(items.length).toBe(1);
             expect(items[0] instanceof CardViewTextItemModel).toBeTruthy();
             expect(items[0].label).toBe('CORE.METADATA.BASIC.CONTENT_TYPE');
@@ -101,10 +113,20 @@ describe('ContentTypePropertyService', () => {
     });
 
     it('should return a card select item for ACS version 7 and above', (done) => {
+        const fakeNode: Node = <Node> {
+            name: 'Node',
+            id: 'fake-id',
+            isFile: true,
+            aspectNames: ['exif:exif'],
+            nodeType: 'fn:fakenode',
+            createdByUser: {displayName: 'test-user'},
+            modifiedByUser: {displayName: 'test-user-modified'},
+            properties: []
+        };
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(true);
         spyOn(contentTypeService, 'getContentTypeByPrefix').and.returnValue(of(mockContent));
         spyOn(contentTypeService, 'getContentTypeChildren').and.returnValue(of(mockSelectOptions));
-        service.getContentTypeCardItem('fk:nodeType').subscribe((items: CardViewItem[]) => {
+        service.getContentTypeCardItem(fakeNode).subscribe((items: CardViewItem[]) => {
             expect(items.length).toBe(1);
             expect(items[0] instanceof CardViewSelectItemModel).toBeTruthy();
             expect(items[0].label).toBe('CORE.METADATA.BASIC.CONTENT_TYPE');

@@ -168,9 +168,12 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     private getProperties(node: Node) {
         const properties$ = this.contentMetadataService.getBasicProperties(node);
-        const contentTypeProperty$ = this.contentMetadataService.getContentTypeProperty(node.nodeType);
+        const contentTypeProperty$ = this.contentMetadataService.getContentTypeProperty(node);
         return zip(properties$, contentTypeProperty$)
-            .pipe(map(([properties, contentTypeProperty]) => [...properties, ...contentTypeProperty]));
+            .pipe(map(([properties, contentTypeProperty]) => {
+                let filteredProperties = contentTypeProperty.filter((property) => properties.findIndex((baseProperty) => baseProperty.key === property.key) === -1);
+                return [...properties, ...filteredProperties];
+            }));
     }
 
     updateChanges(updatedNodeChanges) {
