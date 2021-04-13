@@ -18,6 +18,7 @@ Shows all available filters.
 -   [Details](#details)
     -   [Filtering APS2 task filters](#filtering-aps2-task-filters)
     -   [Showing Filter Counters](#showing-filter-counters)
+    -   [Updating Filter Counters](#updating-filter-counters)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -35,7 +36,7 @@ Shows all available filters.
 | appName | `string` | "" | Display filters available to the current user for the application with the specified name. |
 | filterParam | [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) |  | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
 | showIcons | `boolean` | false | Toggles display of the filter's icons. |
-
+| enableNotifications | `boolean` | false |Enable Bubble Notifications on Task Filter Count |
 ### Events
 
 | Name | Type | Description |
@@ -66,13 +67,29 @@ as the value of `filterParam` as shown in the table below:
 | id | string | The id of the task filter |
 | name | string | The name of the task filter, lowercase is checked |
 | key | string | The key of the task filter |
-| index | string | The zero-based position of the filter in the array. |
+| index | string | The zero-based position of the filter in the array |
 
 ### Showing Filter Counters
 
 By default, filter counters are hidden. If you want to display filter counters you will need to add the `showCounter` property set to `true` in your [TaskFilterCloudModel](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts). 
 
 ![](../../docassets/images/task-filter-counter.png)
+
+### Updating Filter Counters
+
+If you want to show a a notification bubble as task filters change you can enable it directly from the component inputs or from the app.config.json
+
+```json
+{
+    ...
+    "adf-cloud-task-filters": {
+        "ws-notifications": true
+    }
+    ...
+}
+```
+
+![](../../docassets/images/update-filter-bubble.png)
 
 ## See also
 

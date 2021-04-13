@@ -1009,6 +1009,9 @@
     "expandedSidenav": true,
     "preserveState": true
   },
+  "adf-cloud-task-filters": {
+    "ws-notifications": true
+  },
   "adf-cloud-task-list": {
     "presets": {
       "default": [

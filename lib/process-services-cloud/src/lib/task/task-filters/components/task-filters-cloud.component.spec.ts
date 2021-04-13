@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { from, Observable, of } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
@@ -32,6 +32,7 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('TaskFiltersCloudComponent', () => {
 
     let taskFilterService: TaskFilterCloudService;
+    let appConfigService: AppConfigService;
 
     const fakeGlobalFilterObservable =
         new Observable(function (observer) {
@@ -71,6 +72,8 @@ describe('TaskFiltersCloudComponent', () => {
         taskFilterService = TestBed.inject(TaskFilterCloudService);
         getTaskFilterCounterSpy = spyOn(taskFilterService, 'getTaskFilterCounter').and.returnValue(of(11));
         spyOn(taskFilterService, 'getTaskNotificationSubscription').and.returnValue(of(taskNotifications));
+
+        appConfigService = TestBed.inject(AppConfigService);
     });
 
     it('should attach specific icon for each filter if hasIcon is true', async(() => {
@@ -385,6 +388,7 @@ describe('TaskFiltersCloudComponent', () => {
     it('should update filter counter when notification received', fakeAsync(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
         component.appName = 'my-app-1';
+        component.enableNotifications = true;
         component.ngOnInit();
         tick(5000);
         fixture.detectChanges();
@@ -398,10 +402,56 @@ describe('TaskFiltersCloudComponent', () => {
         });
     }));
 
+    it('should not update filter counter when notifications are disabled', fakeAsync(() => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        component.appName = 'my-app-1';
+        component.enableNotifications = false;
+        component.ngOnInit();
+        tick(5000);
+        fixture.detectChanges();
+        component.showIcons = true;
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const updatedFilterCounters = fixture.debugElement.queryAll(By.css('span.adf-active'));
+            expect(updatedFilterCounters.length).toBe(0);
+        });
+    }));
+
+    it('should not update filter counter when notifications are disabled from app.config.json', fakeAsync(() => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(appConfigService, 'get').and.returnValue(false);
+        component.appName = 'my-app-1';
+        component.ngOnInit();
+        tick(5000);
+        fixture.detectChanges();
+        component.showIcons = true;
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const updatedFilterCounters = fixture.debugElement.queryAll(By.css('span.adf-active'));
+            expect(updatedFilterCounters.length).toBe(0);
+        });
+    }));
+
+    it('should not update filter counter when notifications are disabled from app.config.json', fakeAsync(() => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(appConfigService, 'get').and.returnValue(false);
+        component.appName = 'my-app-1';
+        component.ngOnInit();
+        tick(5000);
+        fixture.detectChanges();
+        component.showIcons = true;
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const updatedFilterCounters = fixture.debugElement.queryAll(By.css('span.adf-active'));
+            expect(updatedFilterCounters.length).toBe(0);
+        });
+    }));
+
     it('should reset filter counter notification when filter is selected', fakeAsync(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
         let change = new SimpleChange(undefined, 'my-app-1', true);
         component.appName = 'my-app-1';
+        component.enableNotifications = true;
         component.ngOnInit();
         tick(5000);
         fixture.detectChanges();

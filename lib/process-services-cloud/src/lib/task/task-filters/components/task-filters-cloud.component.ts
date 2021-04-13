@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
-import { TranslationService } from '@alfresco/adf-core';
+import { AppConfigService, TranslationService } from '@alfresco/adf-core';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
@@ -31,6 +31,13 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
     styleUrls: ['base-task-filters-cloud.component.scss']
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
+
+    static WS_NOTIFICATIONS_KEY = 'adf-cloud-task-filters.ws-notifications';
+
+    /** Enable Bubble Notifications on Task Filter Count */
+    @Input()
+    enableNotifications: boolean;
+
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<TaskFilterCloudModel>();
@@ -48,12 +55,18 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     currentFilter: TaskFilterCloudModel;
 
     constructor(private taskFilterCloudService: TaskFilterCloudService,
-                private translationService: TranslationService) {
+                private translationService: TranslationService,
+                appConfigService: AppConfigService) {
         super();
+        if (this.enableNotifications === undefined) {
+            this.enableNotifications = appConfigService.get(TaskFiltersCloudComponent.WS_NOTIFICATIONS_KEY, false);
+        }
     }
 
     ngOnInit() {
-        this.initFilterCounterNotifications();
+        if (this.enableNotifications) {
+            this.initFilterCounterNotifications();
+        }
         this.getFilters(this.appName);
     }
 

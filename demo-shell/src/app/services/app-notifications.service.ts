@@ -54,7 +54,7 @@ export class AppNotificationsService {
         private alfrescoApiService: AlfrescoApiService
     ) {
         this.alfrescoApiService.alfrescoApiInitialized.subscribe(() => {
-            if (this.isProcessServicesEnabled()) {
+            if (this.isProcessServicesEnabled() && this.areWSNotificationsEnabled()) {
                 this.alfrescoApiService.getInstance().oauth2Auth.once('token_issued', () => {
 
                     const deployedApps = this.appConfigService.get('alfresco-deployed-apps', []);
@@ -78,6 +78,10 @@ export class AppNotificationsService {
 
     private isProcessServicesEnabled() {
         return this.authenticationService.isLoggedIn() && (this.authenticationService.isBPMProvider() || this.authenticationService.isALLProvider());
+    }
+
+    private areWSNotificationsEnabled() {
+        return this.appConfigService.get('adf-cloud-task-filters.ws-notifications', false);
     }
 
     notifyEvent(engineEvent) {
