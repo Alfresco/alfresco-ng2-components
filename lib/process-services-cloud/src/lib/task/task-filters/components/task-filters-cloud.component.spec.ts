@@ -432,21 +432,6 @@ describe('TaskFiltersCloudComponent', () => {
         });
     }));
 
-    it('should not update filter counter when notifications are disabled from app.config.json', fakeAsync(() => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
-        spyOn(appConfigService, 'get').and.returnValue(false);
-        component.appName = 'my-app-1';
-        component.ngOnInit();
-        tick(5000);
-        fixture.detectChanges();
-        component.showIcons = true;
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const updatedFilterCounters = fixture.debugElement.queryAll(By.css('span.adf-active'));
-            expect(updatedFilterCounters.length).toBe(0);
-        });
-    }));
-
     it('should reset filter counter notification when filter is selected', fakeAsync(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
         let change = new SimpleChange(undefined, 'my-app-1', true);
