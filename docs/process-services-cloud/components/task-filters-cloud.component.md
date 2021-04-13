@@ -82,9 +82,7 @@ If you want to show a a notification bubble as task filters change you can enabl
 ```json
 {
     ...
-    "adf-cloud-task-filters": {
-        "ws-notifications": true
-    }
+    "ws-notifications": true
     ...
 }
 ```

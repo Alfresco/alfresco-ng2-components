@@ -32,7 +32,7 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
 
-    static WS_NOTIFICATIONS_KEY = 'adf-cloud-task-filters.ws-notifications';
+    static WS_NOTIFICATIONS_KEY = 'ws-notifications';
 
     /** Enable Bubble Notifications on Task Filter Count */
     @Input()
