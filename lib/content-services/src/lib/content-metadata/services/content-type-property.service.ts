@@ -55,7 +55,7 @@ export class ContentTypePropertiesService {
 
     buildCardItemsFromPropertyList(properties: Property[], currentProperties: any): CardViewItem[] {
         return properties.map((property) => {
-            const propertyValue = currentProperties[property.id];
+            const propertyValue = currentProperties ? currentProperties[property.id] : null;
             return this.buildCardItemFromProperty(property, propertyValue);
         });
     }
