@@ -82,7 +82,9 @@ If you want to show a a notification bubble as task filters change you can enabl
 ```json
 {
     ...
-    "ws-notifications": true
+    "notifications": {
+        "task-filters": true
+    }
     ...
 }
 ```

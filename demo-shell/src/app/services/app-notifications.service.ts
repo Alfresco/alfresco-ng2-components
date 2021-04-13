@@ -81,7 +81,7 @@ export class AppNotificationsService {
     }
 
     private areWSNotificationsEnabled(): boolean {
-        return this.appConfigService.get('ws-notifications', false);
+        return this.appConfigService.get('notifications.task-filters', false);
     }
 
     notifyEvent(engineEvent) {

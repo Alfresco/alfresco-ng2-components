@@ -32,7 +32,7 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
 
-    static WS_NOTIFICATIONS_KEY = 'ws-notifications';
+    static WS_NOTIFICATIONS_KEY = 'notifications.task-filters';
 
     /** Enable Bubble Notifications on Task Filter Count */
     @Input()
@@ -56,17 +56,16 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     constructor(private taskFilterCloudService: TaskFilterCloudService,
                 private translationService: TranslationService,
-                appConfigService: AppConfigService) {
+                private appConfigService: AppConfigService) {
         super();
-        if (this.enableNotifications === undefined) {
-            this.enableNotifications = appConfigService.get(TaskFiltersCloudComponent.WS_NOTIFICATIONS_KEY, false);
-        }
+
     }
 
     ngOnInit() {
-        if (this.enableNotifications) {
-            this.initFilterCounterNotifications();
+        if (this.enableNotifications === undefined) {
+            this.enableNotifications = this.appConfigService.get(TaskFiltersCloudComponent.WS_NOTIFICATIONS_KEY, false);
         }
+        this.initFilterCounterNotifications();
         this.getFilters(this.appName);
     }
 
@@ -111,7 +110,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     initFilterCounterNotifications() {
-        if (this.appName) {
+        if (this.appName && this.enableNotifications) {
             this.taskFilterCloudService.getTaskNotificationSubscription(this.appName)
                 .pipe(debounceTime(3000))
                 .subscribe((result: TaskCloudEngineEvent[]) => {
