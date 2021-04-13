@@ -32,7 +32,7 @@ import {
 } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { Constraint, Definition } from '@alfresco/js-api';
+import { Constraint, Definition, Property as PropertyBase } from '@alfresco/js-api';
 
 describe('PropertyGroupTranslatorService', () => {
 
@@ -340,6 +340,46 @@ describe('PropertyGroupTranslatorService', () => {
             const cardViewProperty: CardViewSelectItemModel<CardViewSelectItemProperties<string>> = <CardViewSelectItemModel<CardViewSelectItemProperties<string>>> cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewSelectItemModel).toBeTruthy('Property should be instance of CardViewBoolItemModel');
             expect(cardViewProperty.value).toBe('two');
+        });
+
+        it('should translate content type properties into card items', () => {
+            const propertyBase = <PropertyBase> {
+                'id': 'fk:brendonstare',
+                'title': 'Brendon',
+                'description': 'is watching the dark emperor',
+                'dataType': 'd:text',
+                'isMultiValued': true,
+                'isMandatory': true,
+                'defaultValue': 'default',
+                'isMandatoryEnforced': true,
+                'isProtected': false
+            };
+
+            const cardViewProperty = service.translateProperty(propertyBase, 'Scary Brandon and the DuckTales', true);
+
+            expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
+            expect(cardViewProperty.value).toBe('Scary Brandon and the DuckTales');
+            expect(cardViewProperty.key).toBe('properties.fk:brendonstare');
+        });
+
+        it('should translate content type properties into card items with default value when no value is passed', () => {
+            const propertyBase = <PropertyBase> {
+                'id': 'fk:brendonstare',
+                'title': 'Brendon',
+                'description': 'is watching the dark emperor',
+                'dataType': 'd:text',
+                'isMultiValued': true,
+                'isMandatory': true,
+                'defaultValue': 'default',
+                'isMandatoryEnforced': true,
+                'isProtected': false
+            };
+
+            const cardViewProperty = service.translateProperty(propertyBase, null, true);
+
+            expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
+            expect(cardViewProperty.value).toBe('default');
+            expect(cardViewProperty.key).toBe('properties.fk:brendonstare');
         });
     });
 });

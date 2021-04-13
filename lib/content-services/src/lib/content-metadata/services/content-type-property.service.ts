@@ -32,9 +32,9 @@ import { PropertyGroupTranslatorService } from './property-groups-translator.ser
 export class ContentTypePropertiesService {
 
     constructor(private contentTypeService: ContentTypeService,
-        private dialog: MatDialog,
-        private versionCompatibilityService: VersionCompatibilityService,
-        private propertyGroupTranslatorService: PropertyGroupTranslatorService) {
+                private dialog: MatDialog,
+                private versionCompatibilityService: VersionCompatibilityService,
+                private propertyGroupTranslatorService: PropertyGroupTranslatorService) {
     }
 
     getContentTypeCardItem(node: Node): Observable<CardViewItem[]> {
@@ -44,22 +44,13 @@ export class ContentTypePropertiesService {
                     map((contentType) => {
                         const contentTypesOptions$ = this.getContentTypesAsSelectOption(contentType);
                         const contentTypeCard = this.buildContentTypeSelectCardModel(contentType.entry.id, contentTypesOptions$);
-                        const filteredProperties =  contentType.entry.properties.filter((property) => property.id.startsWith(contentType.entry.model.namespacePrefix));
+                        const filteredProperties =  this.getContentTypeSpecificProperties(contentType);
                         const propertiesCard = this.buildCardItemsFromPropertyList(filteredProperties, node.properties);
                         return [contentTypeCard, ...propertiesCard];
                     }));
         } else {
             return of([this.buildContentTypeTextCardModel(node.nodeType)]);
         }
-    }
-
-    getContentTypePropertiesCards(node: Node): Observable<CardViewItem[]> {
-        return this.contentTypeService.getContentTypeByPrefix(node.nodeType).
-            pipe(
-                map((contentType) => {
-                    const typeProperties: Property[] = this.getContentTypeSpecificProperties(contentType);
-                    return this.buildCardItemsFromPropertyList(typeProperties, node.properties);
-                }));
     }
 
     buildCardItemsFromPropertyList(properties: Property[], currentProperties: any): CardViewItem[] {
@@ -106,7 +97,7 @@ export class ContentTypePropertiesService {
             distinctUntilChanged(),
             map(([contentTypesEntries, currentContentType]) => {
                 const updatedTypes = this.appendCurrentType(currentContentType, contentTypesEntries);
-                return updatedTypes.map((contentType) => <CardViewSelectItemOption<string>>{ key: contentType.entry.id, label: contentType.entry.title ?? contentType.entry.id });
+                return updatedTypes.map((contentType) => <CardViewSelectItemOption<string>> { key: contentType.entry.id, label: contentType.entry.title ?? contentType.entry.id });
             }));
     }
 

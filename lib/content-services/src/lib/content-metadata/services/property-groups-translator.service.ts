@@ -33,8 +33,7 @@ import {
 } from '@alfresco/adf-core';
 import { Property, CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { of } from 'rxjs';
-import { Definition, Constraint } from '@alfresco/js-api';
-import { Property as PropertyBase } from '@alfresco/js-api';
+import { Definition, Constraint, Property as PropertyBase } from '@alfresco/js-api';
 
 const D_TEXT = 'd:text';
 const D_MLTEXT = 'd:mltext';
