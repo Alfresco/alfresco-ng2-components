@@ -33,7 +33,7 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import moment = require('moment');
 
-fdescribe('Metadata component', () => {
+describe('Metadata component', () => {
 
     const METADATA = {
         DATA_FORMAT: 'll',
