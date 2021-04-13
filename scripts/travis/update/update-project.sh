@@ -55,7 +55,7 @@ update_js_dependency() {
     done
 
     git add .
-    git commit -n -m "[auto-commit] Update $PKG to $PKG_VERSION for branch: $BRANCH_TO_CREATE originated from $PKG PR: $PR_NUMBER"
+    git commit -n -m "[ci:force][auto-commit] Update $PKG to $PKG_VERSION for branch: $BRANCH_TO_CREATE originated from $PKG PR: $PR_NUMBER"
 }
 
 update() {
