@@ -602,6 +602,10 @@
       "minItems": 0,
       "uniqueItems": true
     },
+    "appConfig": {
+      "description": "Application configuration parameters to add/override",
+      "type": "object"
+    },
     "rules": {
       "description": "List of rule definitions",
       "type": "array",
