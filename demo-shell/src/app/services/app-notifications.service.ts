@@ -76,11 +76,11 @@ export class AppNotificationsService {
         });
     }
 
-    private isProcessServicesEnabled() {
+    private isProcessServicesEnabled(): boolean {
         return this.authenticationService.isLoggedIn() && (this.authenticationService.isBPMProvider() || this.authenticationService.isALLProvider());
     }
 
-    private areWSNotificationsEnabled() {
+    private areWSNotificationsEnabled(): boolean {
         return this.appConfigService.get('adf-cloud-task-filters.ws-notifications', false);
     }
 
