@@ -39,6 +39,9 @@ describe('PreferenceService', () => {
         callCustomApi: () => {
           return Promise.resolve(mockResponse);
         }
+      },
+      isEcmLoggedIn() {
+        return false;
       }
     };
   }
@@ -46,6 +49,9 @@ describe('PreferenceService', () => {
   const apiErrorMock = {
     oauth2Auth: {
       callCustomApi: () => Promise.reject(errorResponse)
+    },
+    isEcmLoggedIn() {
+        return false;
     }
   };
 

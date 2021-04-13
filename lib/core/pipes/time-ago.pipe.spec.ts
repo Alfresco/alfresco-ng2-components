@@ -39,7 +39,7 @@ describe('TimeAgoPipe', () => {
     beforeEach(async(() => {
         userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
-        pipe = new TimeAgoPipe(userPreferences, new AppConfigService(null));
+        pipe = new TimeAgoPipe(userPreferences, TestBed.inject(AppConfigService));
     }));
 
     it('should return time difference for a given date', () => {

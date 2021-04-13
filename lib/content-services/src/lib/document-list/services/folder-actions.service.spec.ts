@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiServiceMock, AppConfigService, ContentService, setupTestBed, TranslationMock, StorageService } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -41,10 +41,8 @@ describe('FolderActionsService', () => {
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
-        const contentService = TestBed.inject(ContentService);
-        const alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
-        documentListService = new DocumentListService(contentService, alfrescoApiService, null, null);
-        service = new FolderActionsService(null, documentListService, contentService,  new TranslationMock());
+        documentListService = TestBed.inject(DocumentListService);
+        service = TestBed.inject(FolderActionsService);
     });
 
     it('should register custom action handler', () => {

@@ -16,19 +16,17 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { fakeAsync, tick } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
-import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { StorageService } from '../services/storage.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 describe('NodeFavoriteDirective', () => {
 
-    let directive;
-    let alfrescoApiService;
+    let directive: NodeFavoriteDirective;
+    let alfrescoApiService: AlfrescoApiService;
 
     setupTestBed({
         imports: [
@@ -38,7 +36,7 @@ describe('NodeFavoriteDirective', () => {
     });
 
     beforeEach(() => {
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         directive = new NodeFavoriteDirective( alfrescoApiService);
     });
 

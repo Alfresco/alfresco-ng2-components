@@ -16,16 +16,19 @@
  */
 
 import { CustomResourcesService } from './custom-resources.service';
-import { PaginationModel, AlfrescoApiServiceMock, AppConfigService, LogService, AppConfigServiceMock, StorageService } from '@alfresco/adf-core';
+import { PaginationModel } from '@alfresco/adf-core';
+import { TestBed } from '@angular/core/testing';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('CustomResourcesService', () => {
     let customResourcesService: CustomResourcesService;
 
     beforeEach(() => {
-        const logService = new LogService(new AppConfigServiceMock(null));
-        const alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        TestBed.configureTestingModule({
+            imports: [ContentTestingModule]
+        });
 
-        customResourcesService = new CustomResourcesService(alfrescoApiService, logService);
+        customResourcesService = TestBed.inject(CustomResourcesService);
     });
 
     describe('loadFavorites', () => {

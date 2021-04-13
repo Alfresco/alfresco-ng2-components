@@ -23,7 +23,7 @@ import { of, throwError, Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { DirectiveModule } from './directive.module';
 import { CoreModule } from '../core.module';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('LibraryMembershipDirective', () => {
     let alfrescoApiService: AlfrescoApiService;
@@ -40,9 +40,11 @@ describe('LibraryMembershipDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), DirectiveModule, CoreModule.forRoot()],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            imports: [
+                TranslateModule.forRoot(),
+                DirectiveModule,
+                CoreModule.forRoot(),
+                CoreTestingModule
             ],
             schemas: [NO_ERRORS_SCHEMA]
         });

@@ -40,8 +40,8 @@ import { VersionCompatibilityService } from '../services/version-compatibility.s
         NoopAnimationsModule,
         RouterTestingModule,
         HttpClientModule,
-        TranslateModule,
-        CoreModule
+        TranslateModule.forRoot(),
+        CoreModule.forRoot()
     ],
     providers: [
         DatePipe,

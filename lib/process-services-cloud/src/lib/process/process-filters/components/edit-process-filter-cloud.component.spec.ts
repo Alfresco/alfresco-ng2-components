@@ -67,14 +67,17 @@ describe('EditProcessFilterCloudComponent', () => {
     const mock = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(fakeApplicationInstance)
+        },
+        isEcmLoggedIn() {
+            return false;
         }
     };
 
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
             ProcessFiltersCloudModule,
+            ProcessServiceCloudTestingModule,
             MatIconTestingModule
         ],
         providers: [

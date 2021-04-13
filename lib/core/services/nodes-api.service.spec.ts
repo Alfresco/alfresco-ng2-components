@@ -45,6 +45,9 @@ describe('NodesApiService', () => {
                 getNodeChildren: jasmine.createSpy('getNodeChildren'),
                 addNode: jasmine.createSpy('addNode')
             }
+        },
+        isEcmLoggedIn() {
+            return false;
         }
     };
 

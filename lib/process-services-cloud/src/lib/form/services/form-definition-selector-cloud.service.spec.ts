@@ -70,7 +70,12 @@ describe('Form Definition Selector Cloud Service', () => {
     beforeEach(() => {
         service = TestBed.inject(FormDefinitionSelectorCloudService);
         apiService = TestBed.inject(AlfrescoApiService);
-        spyOn(apiService, 'getInstance').and.returnValue({ oauth2Auth: oauth2Auth });
+        spyOn(apiService, 'getInstance').and.returnValue({
+            oauth2Auth: oauth2Auth,
+            isEcmLoggedIn() {
+                return false;
+            }
+        });
     });
 
     it('should fetch all the forms when getForms is called', (done) => {

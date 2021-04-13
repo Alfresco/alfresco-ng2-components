@@ -17,25 +17,39 @@
 
 import { DateCellComponent } from '../date-cell/date-cell.component';
 import { Subject } from 'rxjs';
-import { AlfrescoApiServiceMock, AppConfigService, StorageService } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
+import { TestBed } from '@angular/core/testing';
+import { CoreTestingModule } from '../../../testing';
+import { AlfrescoApiService } from '../../../services/alfresco-api.service';
+import { CoreModule } from '../../../core.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DataTableCellComponent', () => {
-    let alfrescoApiService: AlfrescoApiServiceMock;
+    let alfrescoApiService: AlfrescoApiService;
+    let appConfigService: AppConfigService;
 
     beforeEach(() => {
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot(),
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        appConfigService = TestBed.inject(AppConfigService);
     });
 
     it('should use medium format by default', () => {
-        const component = new DateCellComponent(null, null, new AppConfigService(null));
+        const component = new DateCellComponent(null, null, appConfigService);
         expect(component.format).toBe('medium');
     });
 
     it('should use column format', () => {
         const component = new DateCellComponent(null, <any> {
             nodeUpdated: new Subject<any>()
-        }, new AppConfigService(null));
+        }, appConfigService);
         component.column = {
             key: 'created',
             type: 'date',
@@ -50,7 +64,7 @@ describe('DataTableCellComponent', () => {
         const component = new DateCellComponent(
             null,
             alfrescoApiService,
-            new AppConfigService(null)
+            appConfigService
         );
 
         component.column = {
@@ -85,7 +99,7 @@ describe('DataTableCellComponent', () => {
         const component = new DateCellComponent(
             null,
             alfrescoApiService,
-            new AppConfigService(null)
+            appConfigService
         );
 
         component.column = {
@@ -120,7 +134,7 @@ describe('DataTableCellComponent', () => {
         const component = new DateCellComponent(
             null,
             alfrescoApiService,
-            new AppConfigService(null)
+            appConfigService
         );
 
         component.column = {

@@ -43,6 +43,9 @@ describe('GroupCloudComponent', () => {
     const mock = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(mockIdentityGroups)
+        },
+        isEcmLoggedIn() {
+            return false;
         }
     };
 

@@ -52,6 +52,9 @@ describe('TaskHeaderCloudComponent', () => {
     const mock = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve({})
+        },
+        isEcmLoggedIn() {
+            return false;
         }
     };
 

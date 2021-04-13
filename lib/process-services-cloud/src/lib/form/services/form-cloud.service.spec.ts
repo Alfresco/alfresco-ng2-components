@@ -49,7 +49,13 @@ describe('Form Cloud service', () => {
     beforeEach(() => {
         service = TestBed.inject(FormCloudService);
         apiService = TestBed.inject(AlfrescoApiService);
-        spyOn(apiService, 'getInstance').and.returnValue({ oauth2Auth: oauth2Auth });
+
+        spyOn(apiService, 'getInstance').and.returnValue({
+            oauth2Auth: oauth2Auth,
+            isEcmLoggedIn() {
+                return false;
+            }
+        });
     });
 
     describe('Form tests', () => {

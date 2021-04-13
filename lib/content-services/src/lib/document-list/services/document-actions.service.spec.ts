@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiServiceMock, AppConfigService, ContentService,
-    setupTestBed, TranslationMock, AlfrescoApiService, StorageService
-} from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
@@ -36,21 +34,12 @@ describe('DocumentActionsService', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
-        ],
-        providers: [
-            {
-                provide: AlfrescoApiService,
-                useValue: new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService())
-            }
         ]
     });
 
     beforeEach(() => {
-        const alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
-        const contentService = TestBed.inject(ContentService);
-
-        documentListService = new DocumentListService(contentService, alfrescoApiService, null, null);
-        service = new DocumentActionsService(null, null, new TranslationMock(), documentListService, contentService);
+        documentListService = TestBed.inject(DocumentListService);
+        service = TestBed.inject(DocumentActionsService);
     });
 
     it('should register default download action', () => {

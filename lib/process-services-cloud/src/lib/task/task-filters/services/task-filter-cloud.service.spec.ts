@@ -16,14 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import {
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
-    AppConfigService,
-    AppConfigServiceMock,
-    IdentityUserService,
-    setupTestBed
-} from '@alfresco/adf-core';
+import { IdentityUserService, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
@@ -42,6 +35,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { TaskCloudEngineEvent } from './../../../models/engine-event-cloud.model';
+import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -57,12 +51,11 @@ describe('TaskFilterCloudService', () => {
 
     setupTestBed({
         imports: [
-            HttpClientTestingModule
+            HttpClientTestingModule,
+            ProcessServiceCloudTestingModule
         ],
         providers: [
-            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            { provide: AppConfigService, useClass: AppConfigServiceMock }
+            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
         ]
     });
 

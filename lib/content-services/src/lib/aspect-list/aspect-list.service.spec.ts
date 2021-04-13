@@ -142,16 +142,25 @@ describe('AspectListService', () => {
     describe('should fetch the list of the aspects', () => {
 
         let service: AspectListService;
-        const appConfigService: AppConfigService = new AppConfigService(null);
-
-        const aspectTypesApi = jasmine.createSpyObj('AspectsApi', ['listAspects']);
-        const apiService: AlfrescoApiService = new AlfrescoApiService(null, null);
-        const logService: LogService = new LogService(appConfigService);
+        let appConfigService: AppConfigService;
+        let apiService: AlfrescoApiService;
+        let logService: LogService;
+        let aspectTypesApi: any;
 
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [ContentTestingModule]
+            });
+
+            aspectTypesApi = jasmine.createSpyObj('AspectsApi', ['listAspects']);
+            appConfigService = TestBed.inject(AppConfigService);
+            apiService = TestBed.inject(AlfrescoApiService);
+            logService = TestBed.inject(LogService);
+
             spyOn(appConfigService, 'get').and.returnValue({ 'default': ['frs:AspectOne'] });
             spyOnProperty(apiService, 'aspectsApi').and.returnValue(aspectTypesApi);
-            service = new AspectListService(apiService, appConfigService, null, logService);
+
+            service = TestBed.inject(AspectListService);
         });
 
         it('should get the list of only available aspects', async(() => {
