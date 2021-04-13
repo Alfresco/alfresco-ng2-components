@@ -97,7 +97,7 @@ export class ApiService {
             try {
                 await this.apiService.login(profile.username, profile.password);
             } catch (error) {
-                Logger.error(`Failed to login with ${profile.username}`, error.message);
+                Logger.error(`Failed to login with ${profile.username}`, error?.message);
                 throw new Error(`Login failed with ${profile.username}`);
             }
         } else {
