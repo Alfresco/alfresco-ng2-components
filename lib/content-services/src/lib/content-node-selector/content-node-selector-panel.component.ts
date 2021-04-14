@@ -550,12 +550,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Attempts to set the currently loaded node
+     * Emits when the folder is loaded
      */
     onFolderLoaded(): void {
-        if (!this.showingSearchResults) {
-            this.attemptNodeSelection(this.documentList.folderNode);
-        }
         this.folderLoaded.emit();
     }
 
@@ -578,17 +575,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
         if (this.searchTerm.length > 0) {
             this.queryBuilderService.update();
-        }
-    }
-
-    /**
-     * Selects node as chosen if it has the right permission, clears the selection otherwise
-     *
-     * @param entry
-     */
-    private attemptNodeSelection(entry: Node): void {
-        if (entry && this.isSelectionValid(entry)) {
-            this.chosenNode = [entry];
         }
     }
 
