@@ -32,7 +32,7 @@ export class FileSizePipe implements PipeTransform {
             return '';
         }
 
-        const bytes = parseInt(paramByte);
+        const bytes = parseInt(paramByte, 10);
         if (isNaN(bytes)) {
             return '';
         }
