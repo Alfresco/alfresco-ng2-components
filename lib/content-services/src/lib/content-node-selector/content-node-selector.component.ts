@@ -107,6 +107,10 @@ export class ContentNodeSelectorComponent implements OnInit {
         return this.translation.instant(`NODE_SELECTOR.${action}_ITEM`, { name: this.translation.instant(name) });
     }
 
+    getSelectedCount(): number {
+        return this.chosenNode?.length || 0;
+    }
+
     isMultipleSelection(): boolean {
         return this.data.selectionMode === 'multiple';
     }

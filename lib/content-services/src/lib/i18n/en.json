@@ -474,5 +474,8 @@
        "OVER-TABLE-MESSAGE" : "Select property aspects",
        "SELECTED": "Selected"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} selected"
   }
 }

@@ -35,7 +35,7 @@
     <mat-tab *ngIf="canPerformLocalUpload()"
              [disabled]="isNotAllowedToUpload()">
         <adf-toolbar>
-            <adf-toolbar-title>
+            <adf-toolbar-title [adf-node-counter]="getSelectedCount()">
                 <adf-dropdown-breadcrumb
                     class="adf-content-node-selector-content-breadcrumb"
                     [folderNode]="breadcrumbFolderNode"

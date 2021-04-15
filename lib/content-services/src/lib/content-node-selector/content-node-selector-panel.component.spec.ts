@@ -372,6 +372,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             beforeEach(() => {
                 const documentListService = TestBed.inject(DocumentListService);
                 const expectedDefaultFolderNode = <NodeEntry> { entry: { path: { elements: [] } } };
+                component.isSelectionValid = (node: Node) => node.isFile;
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
                 spyOn(documentListService, 'getFolder').and.returnValue(of({
@@ -1026,6 +1027,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
             });
 
+            it('should the selection become the currently navigated folder when the folder loads (Acts as destination for cases like copy action)', () => {
+                const fakeFolderNode = <Node> { id: 'fakeNodeId', isFolder: true };
+                component.documentList.folderNode = fakeFolderNode;
+                component.onFolderLoaded();
+
+                expect(component.chosenNode).toEqual([fakeFolderNode]);
+            });
+
             describe('in the case when isSelectionValid is a custom function for checking permissions,', () => {
 
                 beforeEach(() => {
@@ -1358,6 +1367,25 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 expect(component.sorting).toEqual(['createdAt', 'desc']);
+            });
+        });
+
+        describe('Selected nodes counter', () => {
+            it('should getSelectedCount return 0 by default', () => {
+                expect(component.getSelectedCount()).toBe(0);
+            });
+
+            it('should getSelectedCount return 1 when node is selected', () => {
+                component.onCurrentSelection([{ entry: new Node({ id: 'fake', isFile: true }) }]);
+
+                expect(component.getSelectedCount()).toBe(1);
+            });
+
+            it('should getSelectedCount return 0 when the chosen nodes are reset', () => {
+                component.onCurrentSelection([{ entry: new Node({ id: 'fake', isFile: true }) }]);
+                component.resetChosenNode();
+
+                expect(component.getSelectedCount()).toBe(0);
             });
         });
     });
