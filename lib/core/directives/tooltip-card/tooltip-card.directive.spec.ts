@@ -25,7 +25,7 @@ import { By } from '@angular/platform-browser';
 import { TooltipCardComponent } from './tooltip-card.component';
 
 @Component({
-    template: `<span #span [adf-tooltip-card]="'Sample text'" [image]="'/assets/testImg.png'" [width]="'400'" class="test-component"></span>`
+    template: `<span #span [adf-tooltip-card]="'Sample text'" [image]="'/assets/testImg.png'" [width]="'400'" [htmlContent]="'this is the <b>html</b> raw code'" class="test-component"></span>`
 })
 class TestComponent {
     @ViewChild(TooltipCardDirective, { static: true })
@@ -74,12 +74,14 @@ describe('TooltipCardDirective', () => {
         fixture.detectChanges();
         tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
         expect(tooltipCard).not.toBeNull();
-        const text = overlay.querySelector<HTMLElement>('div.adf-tooltip-card p');
-        const img = overlay.querySelector<HTMLElement>('div.adf-tooltip-card img');
+        const text = tooltipCard.querySelector<HTMLElement>('p');
+        const img = tooltipCard.querySelector<HTMLElement>('img');
+        const div = tooltipCard.querySelector<HTMLElement>('div');
         expect(tooltipCard.getAttribute('style')).toBe('width: 400px;');
         expect(text.textContent.trim()).toEqual('Sample text');
         expect(img.getAttribute('src')).toEqual('/assets/testImg.png');
         expect(img.getAttribute('width')).toEqual('400');
+        expect(div.innerHTML).toEqual('this is the <b>html</b> raw code');
     });
 
     it('should hide tooltip-card on mouse leave', () => {
