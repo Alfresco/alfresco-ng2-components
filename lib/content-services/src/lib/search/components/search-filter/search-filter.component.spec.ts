@@ -988,6 +988,15 @@ describe('SearchFilterComponent', () => {
             expect(component.selectFacetBucket).toHaveBeenCalledTimes(2);
         });
 
+        it('should reset the query fragments when reset All is clicked', () => {
+            component.queryBuilder.queryFragments = { 'fragment1' : 'value1'};
+            component.responseFacets = [];
+            spyOn(queryBuilder, 'resetToDefaults').and.stub();
+            component.resetAll();
+            expect(component.queryBuilder.queryFragments).toEqual({});
+            expect(queryBuilder.resetToDefaults).toHaveBeenCalled();
+        });
+
     });
 });
 
