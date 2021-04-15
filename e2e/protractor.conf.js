@@ -108,8 +108,6 @@ exports.config = {
             "./core/login-sso/login-sso.e2e.ts",
             "./core/login/login-component.e2e.ts",
             "./core/login/remember-me.e2e.ts",
-            "./core/pages/version-manager.page.ts",
-            "./core/pages/custom-sources.page.ts",
             "./core/viewer/**/*.e2e.ts"
         ],
         smokeTestCsSearch: [
