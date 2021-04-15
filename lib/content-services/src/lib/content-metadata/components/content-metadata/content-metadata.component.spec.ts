@@ -240,7 +240,7 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
-            expect(contentMetadataService.getContentTypeProperty).toHaveBeenCalledWith(node.nodeType);
+            expect(contentMetadataService.getContentTypeProperty).toHaveBeenCalledWith(expectedNode);
             expect(contentMetadataService.getBasicProperties).toHaveBeenCalledWith(expectedNode);
         });
 

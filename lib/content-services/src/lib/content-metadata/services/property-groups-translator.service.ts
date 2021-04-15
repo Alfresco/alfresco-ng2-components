@@ -33,7 +33,7 @@ import {
 } from '@alfresco/adf-core';
 import { Property, CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { of } from 'rxjs';
-import { Definition, Constraint } from '@alfresco/js-api';
+import { Definition, Constraint, Property as PropertyBase } from '@alfresco/js-api';
 
 const D_TEXT = 'd:text';
 const D_MLTEXT = 'd:mltext';
@@ -69,6 +69,23 @@ export class PropertyGroupTranslatorService {
         });
     }
 
+    public translateProperty(property: PropertyBase, startValue?: any, allowEditing: boolean = false): CardViewItem {
+        this.checkECMTypeValidity(property.dataType);
+
+        const prefix = 'properties.';
+
+        const propertyDefinition: CardViewItemProperties = {
+            label: property.title || property.id,
+            value: startValue ? startValue : property.defaultValue,
+            key: `${prefix}${property.id}`,
+            default: property.defaultValue,
+            editable: !!allowEditing ? allowEditing : false,
+            constraints: property?.constraints
+        };
+
+        return this.transform(propertyDefinition, property.dataType, property.isMultiValued);
+    }
+
     private translateArray(properties: Property[], propertyValues: any, definition: Definition): CardViewItem[] {
         return properties.map((property) => {
             return this.translate(property, propertyValues, this.getPropertyConstraints(property.name, definition));
@@ -94,6 +111,10 @@ export class PropertyGroupTranslatorService {
             constraints: constraints
         };
 
+        return this.transform(propertyDefinition, property.dataType, property.multiValued);
+    }
+
+    private transform(propertyDefinition: CardViewItemProperties, dataType: string, isMultiValued: boolean): CardViewItem {
         let cardViewItemProperty: CardViewItem;
 
         if (this.isListOfValues(propertyDefinition.constraints)) {
@@ -102,7 +123,7 @@ export class PropertyGroupTranslatorService {
 
             cardViewItemProperty = new CardViewSelectItemModel(properties);
         } else {
-            switch (property.dataType) {
+            switch (dataType) {
                 case D_MLTEXT:
                     cardViewItemProperty = new CardViewTextItemModel(Object.assign(propertyDefinition, {
                         multiline: true
@@ -136,8 +157,8 @@ export class PropertyGroupTranslatorService {
                 case D_TEXT:
                 default:
                     cardViewItemProperty = new CardViewTextItemModel(Object.assign(propertyDefinition, {
-                        multivalued: property.multiValued,
-                        multiline: property.multiValued,
+                        multivalued: isMultiValued,
+                        multiline: isMultiValued,
                         pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator]}]
                     }));
             }

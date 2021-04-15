@@ -464,7 +464,7 @@ describe('Content Services Viewer', () => {
         await viewerPage.clickOnTab('Properties');
         await viewerPage.checkTabIsActive('Properties');
         await metadataViewPage.editIconClick();
-        await metadataViewPage.enterPropertyText('name', newName);
+        await metadataViewPage.enterPropertyText('properties.cm:name', newName);
         await metadataViewPage.clickSaveMetadata();
         await viewerPage.clickCloseButton();
     }
