@@ -25,6 +25,14 @@ export class TooltipCardDirective implements OnInit {
     @Input('adf-tooltip-card') text = '';
     @Input() image = '';
     @Input() width = '300';
+    @Input() htmlContent = '';
+    @Input() originX: 'start' | 'center' | 'end' = 'start';
+    @Input() originY: 'top' | 'center' | 'bottom' = 'top';
+    @Input() overlayX: 'start' | 'center' | 'end' = 'start';
+    @Input() overlayY: 'top' | 'center' | 'bottom' = 'bottom';
+    @Input() offsetX = 0;
+    @Input() offsetY = -8;
+
     private overlayRef: OverlayRef;
 
     constructor(
@@ -37,11 +45,12 @@ export class TooltipCardDirective implements OnInit {
         const positionStrategy = this.overlayPositionBuilder
             .flexibleConnectedTo(this.elementRef)
             .withPositions([{
-                originX: 'start',
-                originY: 'top',
-                overlayX: 'start',
-                overlayY: 'bottom',
-                offsetY: -8
+                originX: this.originX,
+                originY: this.originY,
+                overlayX: this.overlayX,
+                overlayY: this.overlayY,
+                offsetY: this.offsetY,
+                offsetX: this.offsetX
             }]);
 
         this.overlayRef = this.overlay.create({ positionStrategy });
@@ -54,6 +63,7 @@ export class TooltipCardDirective implements OnInit {
         tooltipRef.instance.text = this.text;
         tooltipRef.instance.image = this.image;
         tooltipRef.instance.width = this.width;
+        tooltipRef.instance.htmlContent = this.htmlContent;
     }
 
     @HostListener('mouseout')

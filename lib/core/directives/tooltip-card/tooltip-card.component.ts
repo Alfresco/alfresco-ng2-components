@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, SecurityContext } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-tooltip-card-component',
@@ -37,5 +38,12 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export class TooltipCardComponent {
     @Input() image = '';
     @Input() text = '';
+    @Input() htmlContent = '';
     @Input() width = '300';
+
+    constructor(private sanitizer: DomSanitizer) { }
+
+    sanitizedHtmlContent(): string {
+        return this.sanitizer.sanitize(SecurityContext.HTML, this.htmlContent);
+    }
 }
