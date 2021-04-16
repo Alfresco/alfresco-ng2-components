@@ -22,5 +22,3 @@ if [[ $AFFECTED_LIBS =~ "extensions" || "${TRAVIS_EVENT_TYPE}" == "push"  ]];
 then
     ng test extensions --watch=false || exit 1;
 fi;
-
-bash <(curl -s https://codecov.io/bash) -X gcov

@@ -15,5 +15,3 @@ if [[ $AFFECTED_LIBS =~ "content-services" ||  "${TRAVIS_EVENT_TYPE}" == "push" 
 then
     ng test content-services --watch=false || exit 1;
 fi;
-
-bash <(curl -s https://codecov.io/bash) -X gcov
