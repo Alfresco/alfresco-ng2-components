@@ -19,8 +19,8 @@ import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
-import { PersonPaging, Person, PersonEntry } from '@alfresco/js-api';
-import { ContentPersonCreateModel } from '../models/ecm-user.model';
+import { PersonPaging, PersonEntry } from '@alfresco/js-api';
+import { ContentCreatePersonModel, EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
 
 @Injectable({
@@ -56,11 +56,11 @@ export class PeopleContentService {
     }
 
     /**
-     * Create person.
-     * @param model Optional parameters
-     * @returns New person Observable<Person>
+     * Creates new person.
+     * @param newPerson Object containing the new person details.
+     * @returns Created new person
      */
-    createPerson(newPerson: ContentPersonCreateModel): Observable<Person> {
+    createPerson(newPerson: ContentCreatePersonModel): Observable<EcmUserModel> {
         const payload = { id: newPerson.username, firstName: newPerson.firstName, lastName: newPerson.lastName, email: newPerson.email, password: newPerson.password };
         return from(this.peopleApi.addPerson(payload)).pipe(
             map((res: PersonEntry) => res.entry),
@@ -71,9 +71,9 @@ export class PeopleContentService {
     /**
      * List people.
      * @param opts Optional parameters
-     * @returns List of People information Observable<Person[]>
+     * @returns List of People information
      */
-    getPersons(opts?: any): Observable<Person[]>  {
+    getPersons(opts?: any): Observable<EcmUserModel[]>  {
         const defaultOptions = {
             skipCount: 0,
             maxItems: 25
@@ -81,7 +81,7 @@ export class PeopleContentService {
         const queryOptions = Object.assign({}, defaultOptions, opts);
         return from(this.peopleApi.getPersons(queryOptions)).pipe(
             map((response: PersonPaging) => {
-                return response?.list?.entries?.length ? response.list.entries.map((entry) => entry.entry) : [];
+                return response?.list?.entries?.length ? response.list.entries.map((entry) => <EcmUserModel> entry.entry) : [];
             }),
             catchError((error) => this.handleError(error))
         );

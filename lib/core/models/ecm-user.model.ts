@@ -60,7 +60,7 @@ export class EcmUserModel implements Person {
     }
 }
 
-export interface ContentPersonCreateModel extends PersonBodyCreate {
+export interface ContentCreatePersonModel extends PersonBodyCreate {
     username: string;
     password: string;
 }
