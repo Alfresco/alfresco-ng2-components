@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Person } from '@alfresco/js-api';
+import { Person, PersonBodyCreate } from '@alfresco/js-api';
 import { EcmCompanyModel } from './ecm-company.model';
 
 export class EcmUserModel implements Person {
@@ -58,4 +58,9 @@ export class EcmUserModel implements Person {
         this.enabled = obj && obj.enabled;
         this.emailNotificationsEnabled = obj && obj.emailNotificationsEnabled;
     }
+}
+
+export interface ContentPersonCreateModel extends PersonBodyCreate {
+    username: string;
+    password: string;
 }

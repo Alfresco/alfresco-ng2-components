@@ -16,16 +16,19 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
+import { Observable, from, of, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { PersonPaging, Person, PersonEntry } from '@alfresco/js-api';
+import { ContentPersonCreateModel } from '../models/ecm-user.model';
+import { LogService } from './log.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PeopleContentService {
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
 
     private get peopleApi() {
        return this.apiService.getInstance().core.peopleApi;
@@ -50,5 +53,42 @@ export class PeopleContentService {
      */
     getCurrentPerson(): Observable<any> {
         return this.getPerson('-me-');
+    }
+
+    /**
+     * Create person.
+     * @param model Optional parameters
+     * @returns New person Observable<Person>
+     */
+    createPerson(newPerson: ContentPersonCreateModel): Observable<Person> {
+        const payload = { id: newPerson.username, firstName: newPerson.firstName, lastName: newPerson.lastName, email: newPerson.email, password: newPerson.password };
+        return from(this.peopleApi.addPerson(payload)).pipe(
+            map((res: PersonEntry) => res.entry),
+            catchError((err) => of(err))
+        );
+    }
+
+    /**
+     * List people.
+     * @param opts Optional parameters
+     * @returns List of People information Observable<Person[]>
+     */
+    getPersons(opts?: any): Observable<Person[]>  {
+        const defaultOptions = {
+            skipCount: 0,
+            maxItems: 25
+        };
+        const queryOptions = Object.assign({}, defaultOptions, opts);
+        return from(this.peopleApi.getPersons(queryOptions)).pipe(
+            map((response: PersonPaging) => {
+                return response?.list?.entries?.length ? response.list.entries.map((entry) => entry.entry) : [];
+            }),
+            catchError((error) => this.handleError(error))
+        );
+    }
+
+    private handleError(error: any) {
+        this.logService.error(error);
+        return throwError(error || 'Server error');
     }
 }
