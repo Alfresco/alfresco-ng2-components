@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, of, throwError } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
 import { PersonEntry, PeopleApi } from '@alfresco/js-api';
@@ -28,10 +28,12 @@ import { LogService } from './log.service';
 })
 export class PeopleContentService {
 
+    private _peopleApi: PeopleApi;
+
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
 
-    private get peopleApi() {
-        return new PeopleApi(this.apiService.getInstance());
+    get peopleApi() {
+        return this._peopleApi || (this._peopleApi = new PeopleApi(this.apiService.getInstance()));
     }
 
     /**
@@ -43,7 +45,7 @@ export class PeopleContentService {
         const promise = this.peopleApi.getPerson(personId);
 
         return from(promise).pipe(
-            catchError((err) => of(err))
+            catchError((error) => this.handleError(error))
         );
     }
 
@@ -60,10 +62,9 @@ export class PeopleContentService {
      * @param newPerson Object containing the new person details.
      * @returns Created new person
      */
-    createPerson(newPerson: ContentCreatePersonModel): Observable<EcmUserModel> {
-        const payload = { id: newPerson.username, firstName: newPerson.firstName, lastName: newPerson.lastName, email: newPerson.email, password: newPerson.password };
-        return from(this.peopleApi.createPerson(payload)).pipe(
-            map((res: PersonEntry) => <EcmUserModel> res.entry),
+    createPerson(newPerson: ContentCreatePersonModel): Observable<EcmUserModel> {;
+        return from(this.peopleApi.createPerson(newPerson)).pipe(
+            map((res: PersonEntry) => <EcmUserModel> res?.entry),
             catchError((error) => this.handleError(error))
         );
     }

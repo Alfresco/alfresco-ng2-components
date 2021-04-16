@@ -15,87 +15,91 @@
  * limitations under the License.
  */
 
-import { async, inject, TestBed } from '@angular/core/testing';
+import { PeopleContentService } from "./people-content.service";
+import { TestBed } from '@angular/core/testing';
+import { setupTestBed } from '../testing/setup-test-bed';
+import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { PeopleContentService } from './people-content.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { fakeEcmUser, createNewPersonMock } from '../mock/ecm-user.service.mock';
+import { LogService } from './log.service';
 
-class PeopleContentServiceTest {
-    service: any = null;
-    setup: any = {
-        rejectGetPerson: false
-    };
+describe('PeopleContentService', () => {
 
-    constructor(setup: any = {}) {
-        Object.assign(this.setup, setup);
+    let service: PeopleContentService;
+    let logService: LogService;
 
-        const { alfrescoApiServiceMock } = this;
-
-        const alfrescoApiServiceProvider = {
-            provide: AlfrescoApiService,
-            useValue: alfrescoApiServiceMock
-        };
-
-        TestBed.configureTestingModule({
-            providers: [
-                alfrescoApiServiceProvider,
-                PeopleContentService
-            ]
-        });
-
-        inject([ PeopleContentService ], (service) => {
-            this.service = service;
-        })();
-    }
-
-    private get alfrescoApiServiceMock(): any {
-        const { setup } = this;
-
-        const peopleApiMock = {
-            getPerson: jasmine.createSpy('getPersonSpy').and.callFake((personId) => {
-                return new Promise((resolve, reject) => {
-                    setup.rejectGetPerson
-                        ? reject()
-                        : resolve({ id: personId });
-                });
-            })
-        };
-
-        return {
-            getInstance: () => {
-                return {
-                    core: { peopleApi: peopleApiMock }
-                };
-            }
-        };
-    }
-
-    get peopleApiGetPersonSpy() {
-        return this.service.peopleApi.getPerson;
-    }
-
-    get peopleApiGetPersonArguments() {
-        return this.peopleApiGetPersonSpy.calls.mostRecent().args;
-    }
-}
-
-describe('PeopleAPI', () => {
-    describe('Get persons', () => {
-        it('calls method by an id', async(() => {
-            const test = new PeopleContentServiceTest();
-
-            test.service.getPerson('person-1').subscribe(() => {
-                expect(test.peopleApiGetPersonArguments[0])
-                    .toBe('person-1');
-            });
-        }));
-
-        it('calls method with "-me-"', async(() => {
-            const test = new PeopleContentServiceTest();
-
-            test.service.getCurrentPerson().subscribe(() => {
-                expect(test.peopleApiGetPersonArguments[0])
-                    .toBe('-me-');
-            });
-        }));
+    setupTestBed({
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ],
+        providers: [
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ],
     });
-});
+
+    beforeEach(() => {
+        service = TestBed.inject(PeopleContentService);
+        logService = TestBed.inject(LogService);
+    });
+
+    it('should be able to fetch person details based on id', (done) => {
+        spyOn(service.peopleApi, 'getPerson').and.returnValue(Promise.resolve({ entry: fakeEcmUser }));
+        service.getPerson('fake-id').subscribe((person) => {
+            expect(person.entry.id).toEqual('fake-id');
+            expect(person.entry.email).toEqual('fakeEcm@ecmUser.com');
+            done();
+        })
+    });
+
+    it('calls getPerson api method by an id', (done) => {
+        const getPersonSpy = spyOn(service.peopleApi, 'getPerson').and.returnValue(Promise.resolve({}));
+        service.getPerson('fake-id').subscribe(() => {
+            expect(getPersonSpy).toHaveBeenCalledWith('fake-id');
+            done();
+        })
+    });
+
+    it('calls getPerson api method with "-me-"', (done) => {
+        const getPersonSpy = spyOn(service.peopleApi, 'getPerson').and.returnValue(Promise.resolve({}));
+        service.getPerson('-me-').subscribe(() => {
+            expect(getPersonSpy).toHaveBeenCalledWith('-me-');
+            done();
+        });
+    });
+
+    it('should be able to create new person', (done) => {
+        spyOn(service.peopleApi, 'createPerson').and.returnValue(Promise.resolve({ entry: fakeEcmUser }));
+        service.createPerson(createNewPersonMock).subscribe((person) => {
+            expect(person.id).toEqual('fake-id');
+            expect(person.email).toEqual('fakeEcm@ecmUser.com');
+            done();
+        });
+    });
+
+    it('should be able to call createPerson api with new person details', (done) => {
+        const createPersonSpy = spyOn(service.peopleApi, 'createPerson').and.returnValue(Promise.resolve({ entry: fakeEcmUser }));
+        service.createPerson(createNewPersonMock).subscribe((person) => {
+            expect(person.id).toEqual('fake-id');
+            expect(person.email).toEqual('fakeEcm@ecmUser.com');
+            expect(createPersonSpy).toHaveBeenCalledWith(createNewPersonMock);
+            done();
+        });
+    });
+
+    it('should be able to throw an error if createPerson api failed', (done) => {
+        const createPersonSpy = spyOn(service.peopleApi, 'createPerson').and.returnValue(Promise.reject({ message: 'failed to create new person' }));
+        const logErrorSpy = spyOn(logService, 'error');
+        service.createPerson(createNewPersonMock).subscribe(
+        () => {},
+        (error) => {
+            expect(error).toEqual({ message: 'failed to create new person' });
+            expect(createPersonSpy).toHaveBeenCalled();
+            expect(logErrorSpy).toHaveBeenCalledWith({ message: 'failed to create new person' })
+            done();
+        });
+    });
+
+})
