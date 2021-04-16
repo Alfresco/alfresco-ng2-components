@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { PeopleContentService } from "./people-content.service";
-import { TestBed } from '@angular/core/testing';
-import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreTestingModule } from '../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { fakeEcmUser, createNewPersonMock } from '../mock/ecm-user.service.mock';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
+import { PeopleContentService } from './people-content.service';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { setupTestBed } from '../testing/setup-test-bed';
+import { TranslateModule } from '@ngx-translate/core';
+import { TestBed } from '@angular/core/testing';
 import { LogService } from './log.service';
 
 describe('PeopleContentService', () => {
@@ -37,7 +37,7 @@ describe('PeopleContentService', () => {
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
-        ],
+        ]
     });
 
     beforeEach(() => {
@@ -51,7 +51,7 @@ describe('PeopleContentService', () => {
             expect(person.entry.id).toEqual('fake-id');
             expect(person.entry.email).toEqual('fakeEcm@ecmUser.com');
             done();
-        })
+        });
     });
 
     it('calls getPerson api method by an id', (done) => {
@@ -59,7 +59,7 @@ describe('PeopleContentService', () => {
         service.getPerson('fake-id').subscribe(() => {
             expect(getPersonSpy).toHaveBeenCalledWith('fake-id');
             done();
-        })
+        });
     });
 
     it('calls getPerson api method with "-me-"', (done) => {
@@ -97,9 +97,8 @@ describe('PeopleContentService', () => {
         (error) => {
             expect(error).toEqual({ message: 'failed to create new person' });
             expect(createPersonSpy).toHaveBeenCalled();
-            expect(logErrorSpy).toHaveBeenCalledWith({ message: 'failed to create new person' })
+            expect(logErrorSpy).toHaveBeenCalledWith({ message: 'failed to create new person' });
             done();
         });
     });
-
-})
+});

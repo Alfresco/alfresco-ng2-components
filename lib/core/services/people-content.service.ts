@@ -62,7 +62,7 @@ export class PeopleContentService {
      * @param newPerson Object containing the new person details.
      * @returns Created new person
      */
-    createPerson(newPerson: PersonBodyCreate, opts?: any): Observable<EcmUserModel> {;
+    createPerson(newPerson: PersonBodyCreate, opts?: any): Observable<EcmUserModel> {
         return from(this.peopleApi.createPerson(newPerson, opts)).pipe(
             map((res: PersonEntry) => <EcmUserModel> res?.entry),
             catchError((error) => this.handleError(error))
