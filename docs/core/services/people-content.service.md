@@ -23,11 +23,7 @@ Gets information about a Content Services user.
 -   **createPerson**(newPerson: [`ContentCreatePersonModel`](../../core/models/ecm-user.model.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
     Creates new person.
     -   _newPerson:_ `<`[`ContentCreatePersonModel`](../../core/models/ecm-user.model.md)`>`  - Object containing the new person details
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html) `<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>` - Created new person
--   **getPersons**(opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>`<br/>
-    List people.
-    -   _opts:_ `any`  - Optional parameters
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>` - List of People information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html) `<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>` - Created new person.
 
 ## Details
 
@@ -43,11 +39,6 @@ method in the Alfresco JS API for more information about the REST calls used by 
 See the
 [createPerson](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/PeopleApi.md#createPerson)
 method in the Alfresco JS API for more information about the REST calls used by this service.
-
-See the
-[listPeople](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/PeopleApi.md#listPeople)
-method in the Alfresco JS API for more information about the REST calls used by this service.
-
 
 ## See also
 

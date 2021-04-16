@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
-import { PersonPaging, PersonEntry } from '@alfresco/js-api';
+import { PersonEntry, PeopleApi } from '@alfresco/js-api';
 import { ContentCreatePersonModel, EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
 
@@ -31,7 +31,7 @@ export class PeopleContentService {
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
 
     private get peopleApi() {
-       return this.apiService.getInstance().core.peopleApi;
+        return new PeopleApi(this.apiService.getInstance());
     }
 
     /**
@@ -62,27 +62,8 @@ export class PeopleContentService {
      */
     createPerson(newPerson: ContentCreatePersonModel): Observable<EcmUserModel> {
         const payload = { id: newPerson.username, firstName: newPerson.firstName, lastName: newPerson.lastName, email: newPerson.email, password: newPerson.password };
-        return from(this.peopleApi.addPerson(payload)).pipe(
-            map((res: PersonEntry) => res.entry),
-            catchError((err) => of(err))
-        );
-    }
-
-    /**
-     * List people.
-     * @param opts Optional parameters
-     * @returns List of People information
-     */
-    getPersons(opts?: any): Observable<EcmUserModel[]>  {
-        const defaultOptions = {
-            skipCount: 0,
-            maxItems: 25
-        };
-        const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.peopleApi.getPersons(queryOptions)).pipe(
-            map((response: PersonPaging) => {
-                return response?.list?.entries?.length ? response.list.entries.map((entry) => <EcmUserModel> entry.entry) : [];
-            }),
+        return from(this.peopleApi.createPerson(payload)).pipe(
+            map((res: PersonEntry) => <EcmUserModel> res.entry),
             catchError((error) => this.handleError(error))
         );
     }
