@@ -5,20 +5,20 @@
     $viewer-image-outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;
 
     .adf-image-viewer {
+        width: 100%;
+
         .adf-image-container {
             &:focus {
                 outline-offset: -1px;
                 outline: $viewer-image-outline;
             }
             display: flex;
-            flex: 1;
-            text-align: center;
-            flex-direction: row;
-            justify-content: center;
             height: 90vh;
+            align-items: center;
+            justify-content: center;
             img {
-                width: 100%;
-                object-fit: contain;
+                max-height: 100%;
+                max-width: 100%;
             }
             /* query for Microsoft IE 11*/
             @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
@@ -41,6 +41,15 @@
                 border-width: 0;
                 border-radius: 2px;
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+            }
+
+            .main-toolbar {
+                display: inline-block;
+            }
+
+            .secondary-toolbar {
+                display: inline-block;
+                margin-left: 10px;
             }
 
         }
