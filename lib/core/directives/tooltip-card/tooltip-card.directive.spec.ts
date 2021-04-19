@@ -96,4 +96,17 @@ describe('TooltipCardDirective', () => {
         tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
         expect(tooltipCard).toBeNull();
     });
+
+    it('should hide tooltip-card on destroy', () => {
+        const span = fixture.debugElement.query(By.css('span.test-component'));
+        span.triggerEventHandler('mouseenter', {});
+        fixture.detectChanges();
+        let tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
+        expect(tooltipCard).not.toBeNull();
+
+        fixture.componentInstance.directive.ngOnDestroy();
+        fixture.detectChanges();
+        tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
+        expect(tooltipCard).toBeNull();
+    });
 });
