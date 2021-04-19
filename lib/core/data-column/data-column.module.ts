@@ -20,7 +20,7 @@ import { NgModule } from '@angular/core';
 
 import { DataColumnListComponent } from './data-column-list.component';
 import { DataColumnComponent } from './data-column.component';
-import { DateColumnHeaderComponent } from './data-column-header.js';
+import { DateColumnHeaderComponent } from './data-column-header.component';
 
 @NgModule({
     imports: [
