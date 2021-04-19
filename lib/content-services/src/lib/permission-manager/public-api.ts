@@ -28,7 +28,9 @@ export * from './components/add-permission/search-config-permission.service';
 export * from './components/user-icon-column/user-icon-column.component';
 export * from './components/user-name-column/user-name-column.component';
 export * from './components/user-role-column/user-role-column.component';
+export * from './components/node-path-column/node-path-column.component';
 export * from './components/permission-container/permission-container.component';
+export * from './components/pop-over.directive';
 export * from './models/member.model';
 export * from './models/role.model';
 
