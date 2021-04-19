@@ -2,7 +2,7 @@
 Title: Permission List Component
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-11-20
+Last reviewed: 2020-2-17
 ---
 
 # [Permission List Component](../../../lib/content-services/src/lib/permission-manager/components/permission-list/permission-list.component.ts "Defined in permission-list.component.ts")
@@ -14,22 +14,9 @@ Shows node permissions as a table.
 ## Basic Usage
 
 ```html
-<adf-permission-list [nodeId]="nodeId">
-</adf-permission-list>
+<adf-permission-list [nodeId]="nodeId"></adf-permission-list>
 ```
 
-### [Transclusions](../../user-guide/transclusion.md)
-
-When the list is empty, the contents will simply say "No permissions" by default,
-but you can also supply your own content:
-
-```html
-<adf-permission-list [nodeId]="nodeId">
-  <adf-no-permission-template>
-    Custom no permission template!
-  </adf-no-permission-template>
-</adf-permission-list>
-```
 
 ## Class members
 

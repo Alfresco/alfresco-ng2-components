@@ -120,7 +120,7 @@ To disable the tooltip your function can return `null` or an empty string.
 
 ### Column Template
 
-You can provide custom column/cell templates that may contain other Angular components or HTML elements:
+You can provide custom column/cell header and templates that may contain other Angular components or HTML elements:
 
 Every cell in the DataTable component is bound to the dynamic data context containing the following properties:
 
@@ -184,6 +184,23 @@ In the Example below we will prepend `Hi!` to each file and folder name in the l
 ```
 
 <!-- {% endraw %} -->
+
+In the Example below we will shows capitalised custom name for a column:
+
+<!-- {% raw %} -->
+
+```html
+<data-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
+    <adf-data-column-header>
+        <ng-template let-entry="$implicit">
+            <span>NAME</span>
+        </ng-template>
+    </adf-data-column-header>
+</data-column>
+```
+
+<!-- {% endraw %} -->
+
 
 In the Example below we will integrate the [adf-tag-node-list](../../content-services/components/tag-node-list.component.md) component
 within the document list.

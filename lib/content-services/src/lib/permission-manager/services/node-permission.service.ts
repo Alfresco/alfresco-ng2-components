@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
+import { AlfrescoApiService, NodesApiService, SearchService, TranslationService } from '@alfresco/adf-core';
+import { Group, GroupMemberEntry, GroupMemberPaging, Node, PathElement, PermissionElement, Person, QueryBody } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { Observable, of, from, throwError } from 'rxjs';
-import { AlfrescoApiService, SearchService, NodesApiService, TranslationService } from '@alfresco/adf-core';
-import { QueryBody, Node, NodeEntry, PathElement, GroupMemberEntry, GroupMemberPaging, PermissionElement } from '@alfresco/js-api';
-import { switchMap, map } from 'rxjs/operators';
+import { forkJoin, from, Observable, of, throwError } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { PermissionDisplayModel } from '../models/permission.model';
+import { RoleModel } from '../models/role.model';
 
 @Injectable({
     providedIn: 'root'
@@ -96,27 +97,21 @@ export class NodePermissionService {
      * @param permissionList New permission settings
      * @returns Node with updated permissions
      */
-    updateNodePermissions(nodeId: string, permissionList: NodeEntry[]): Observable<Node> {
+    updateNodePermissions(nodeId: string, permissionList: PermissionElement[]): Observable<Node> {
        return this.nodeService.getNode(nodeId).pipe(
-           switchMap((node) => {
-                return this.getNodeRoles(node).pipe(
-                    switchMap((nodeRoles) => of({node, nodeRoles}) )
-                );
-            }),
-            switchMap(({node, nodeRoles}) => this.updateLocallySetPermissions(node, permissionList, nodeRoles))
+            switchMap((node) => this.updateLocallySetPermissions(node, permissionList))
         );
     }
 
     /**
      * Updates the locally set permissions for a node.
      * @param node ID of the target node
-     * @param nodes Permission settings
-     * @param nodeRole Permission role
+     * @param permissions Permission settings
      * @returns Node with updated permissions
      */
-    updateLocallySetPermissions(node: Node, nodes: NodeEntry[], nodeRole: string[]): Observable<Node> {
+    updateLocallySetPermissions(node: Node, permissions: PermissionElement[]): Observable<Node> {
         const permissionBody = { permissions: { locallySet: []} };
-        const permissionList = this.transformNodeToPermissionElement(nodes, nodeRole[0]);
+        const permissionList = permissions;
         const duplicatedPermissions = this.getDuplicatedPermissions(node.permissions.locallySet, permissionList);
         if (duplicatedPermissions.length > 0) {
             const list = duplicatedPermissions.map((permission) => 'authority -> ' + permission.authorityId + ' / role -> ' + permission.name).join(', ');
@@ -144,18 +139,6 @@ export class NodePermissionService {
         return oldPermission.accessStatus === newPermission.accessStatus &&
                oldPermission.authorityId === newPermission.authorityId &&
                oldPermission.name === newPermission.name;
-    }
-
-    private transformNodeToPermissionElement(nodes: NodeEntry[], nodeRole: any): PermissionElement[] {
-        return nodes.map((node) => {
-            return {
-                'authorityId': node.entry.properties['cm:authorityName'] ?
-                    node.entry.properties['cm:authorityName'] :
-                    node.entry.properties['cm:userName'],
-                'name': nodeRole,
-                'accessStatus': 'ALLOWED'
-            };
-        });
     }
 
     /**
@@ -227,4 +210,99 @@ export class NodePermissionService {
         };
     }
 
+    getLocalPermissions(node: Node): PermissionDisplayModel[] {
+        const result: PermissionDisplayModel[] = [];
+
+        if (node?.permissions?.locallySet) {
+            node.permissions.locallySet.forEach((permissionElement) => {
+                result.push(new PermissionDisplayModel(permissionElement));
+            });
+        }
+
+        return result;
+    }
+
+    getInheritedPermission(node: Node): PermissionDisplayModel[] {
+        const result: PermissionDisplayModel[] = [];
+
+        if (node?.permissions?.inherited) {
+            node.permissions.inherited.forEach((permissionElement) => {
+                const permissionInherited = new PermissionDisplayModel(permissionElement);
+                permissionInherited.isInherited = true;
+                result.push(permissionInherited);
+            });
+        }
+        return result;
+    }
+
+    /**
+     * Removes permissions setting from a node.
+     * @param node target node with permission
+     * @param permissions Permissions to remove
+     * @returns Node with modified permissions
+     */
+    removePermissions(node: Node, permissions: PermissionElement[]): Observable<Node> {
+        const permissionBody = { permissions: { locallySet: [] } };
+
+        permissions.forEach((permission) => {
+                const index = node.permissions.locallySet.findIndex((locallySet) =>  locallySet.authorityId === permission.authorityId);
+                if (index !== -1) {
+                    node.permissions.locallySet.splice(index, 1);
+                }
+        });
+        permissionBody.permissions.locallySet = node.permissions.locallySet;
+        return this.nodeService.updateNode(node.id, permissionBody);
+    }
+
+    /**
+     * updates permissions setting from a node.
+     * @param node target node with permission
+     * @param permissions Permissions to update
+     * @returns Node with modified permissions
+     */
+    updatePermissions(node: Node, permissions: PermissionElement[]): Observable<Node> {
+        const permissionBody = { permissions: { locallySet: [] } };
+        permissionBody.permissions.locallySet = permissions;
+        return this.nodeService.updateNode(node.id, permissionBody);
+    }
+
+    /**
+     * Gets all node detail for nodeId along with settable permissions.
+     * @param nodeId Id of the node
+     * @returns node and it's associated roles { node: Node; roles: RoleModel[] }
+     */
+     getNodeWithRoles(nodeId: string): Observable<{ node: Node; roles: RoleModel[] }> {
+         return this.nodeService.getNode(nodeId).pipe(
+            switchMap(node => {
+                return forkJoin({
+                     node: of(node),
+                     roles: this.getNodeRoles(node)
+                          .pipe(
+                             map(_roles => _roles.map(role => ({ role, label: role }))
+                          )
+                       )
+                    });
+                })
+            );
+     }
+
+     transformNodeToPerson(node: Node): Person | null {
+         if (node.nodeType === 'cm:person') {
+             const firstName = node.properties['cm:firstName'];
+             const lastName =  node.properties['cm:lastName'];
+             const email =  node.properties['cm:email'];
+             const id =  node.properties['cm:userName'];
+             return new Person({ id, firstName, lastName, email});
+         }
+         return null;
+     }
+
+     transformNodeToGroup(node: Node): Group | null {
+         if (node.nodeType === 'cm:authorityContainer') {
+             const displayName = node.properties['cm:authorityDisplayName'] || node.properties['cm:authorityName'];
+             const id = node.properties['cm:authorityName'];
+             return new Group({ displayName, id });
+         }
+         return null;
+     }
 }

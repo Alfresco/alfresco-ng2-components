@@ -15,26 +15,26 @@
  * limitations under the License.
  */
 
+import { User } from '@alfresco/adf-core';
+import { NodeEntry } from '@alfresco/js-api';
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { User } from '@alfresco/adf-core';
+import { NodePermissionService } from '../../services/node-permission.service';
 
 @Component({
     selector: 'adf-user-icon-column',
     template: `
-        <div class="adf-cell-value" *ngIf="!context.row.isSelected">
-            <ng-container *ngIf="!showIcon && (displayText$ | async) as user">
-                <div [outerHTML]="user | usernameInitials: 'adf-userinfo-profile-initials'"></div>
-            </ng-container>
-
-            <ng-container *ngIf="showIcon">
-                <mat-icon *ngIf="isUser">perm_identity</mat-icon>
-                <mat-icon *ngIf="!isUser">people_alt</mat-icon>
+        <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'"  *ngIf="!context?.row?.isSelected">
+            <ng-container *ngIf="displayText$ | async as user">
+                <mat-icon *ngIf="group" class="adf-people-icon">people_alt_outline</mat-icon>
+                <div *ngIf="!group" [outerHTML]="user | usernameInitials: 'adf-people-initial'"></div>
             </ng-container>
         </div>
-
-        <mat-icon *ngIf="context.row.isSelected" class="adf-cell-value" svgIcon="selected"></mat-icon>
+        <div class="adf-cell-value" *ngIf="context?.row?.isSelected">
+            <mat-icon class="adf-people-select-icon" svgIcon="selected"></mat-icon>
+        </div>
     `,
+    styleUrls: ['./user-icon-column.component.scss'],
     host: { class: 'adf-user-icon-column adf-datatable-content-cell' }
 })
 export class UserIconColumnComponent implements OnInit {
@@ -42,18 +42,38 @@ export class UserIconColumnComponent implements OnInit {
     context: any;
 
     @Input()
-    showIcon = false;
+    node: NodeEntry;
 
     displayText$ = new BehaviorSubject<User>(null);
-    isUser = false;
+    group = false;
+
+    constructor(private nodePermissionService: NodePermissionService) {}
 
     ngOnInit() {
-        this.updateValue();
+        if (this.context) {
+            this.updateContextValue();
+        }
+
+        if (this.node) {
+            this.updateNodeValue();
+        }
     }
 
-    protected updateValue() {
-        const { person, group } = this.context.row.obj.entry;
-        this.isUser = !!person;
+    protected updateContextValue() {
+        const { person, group, authorityId } = this.context.row.obj?.entry ?? this.context.row.obj;
+        this.displayText$.next(person || group || { displayName: authorityId });
+        this.group = this.isGroup(group, authorityId);
+    }
+
+    private updateNodeValue() {
+        const { entry } = this.node;
+        const person = this.nodePermissionService.transformNodeToPerson(entry);
+        const group = this.nodePermissionService.transformNodeToGroup(entry);
         this.displayText$.next(person || group);
+        this.group = !!group;
+    }
+
+    private isGroup(group, authorityId): boolean {
+        return !!group || authorityId?.startsWith('GROUP_') || authorityId?.startsWith('ROLE_');
     }
 }

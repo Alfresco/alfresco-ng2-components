@@ -24,17 +24,17 @@ import { RoleModel } from '../../models/role.model';
       <mat-form-field floatLabel="never">
           <mat-select
               (click)="$event.stopPropagation()"
-              [placeholder]="placeholder | translate "
+              [placeholder]="placeholder | translate"
               [value]="value"
               [disabled]="disabled"
               (selectionChange)="onRoleChanged($event.value)">
               <mat-option *ngFor="let role of roles" [value]="role.role"
-              >{{ role.label }}
+              >{{ role.label | adfLocalizedRole }}
               </mat-option>
           </mat-select>
       </mat-form-field>
   `,
-    host: { class: 'adf-user-role-column adf-datatable-content-cell' }
+    host: { class: 'adf-user-role-column adf-datatable-content-cell adf-expand-cell-4' }
 })
 export class UserRoleColumnComponent {
 
@@ -48,7 +48,7 @@ export class UserRoleColumnComponent {
     disabled = false;
 
     @Input()
-    placeholder: string = 'Select role';
+    placeholder: string = 'PERMISSION_MANAGER.LABELS.SELECT-ROLE';
 
     @Output()
     roleChanged: EventEmitter<string> = new EventEmitter<string>();

@@ -74,14 +74,13 @@ describe('Permissions Component', () => {
     });
 
     const groupBody = {
-        id: StringUtil.generateRandomString(),
+        id: `GROUP_${StringUtil.generateRandomString()}`,
         displayName: StringUtil.generateRandomString()
     };
 
     const fileOwnerUser = new UserModel();
     const filePermissionUser = new UserModel();
 
-    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.username + ' / role -> Contributor';
     const roleConsumerFolderModel = new FolderModel({ name: 'roleConsumer' + StringUtil.generateRandomString() });
     const roleCoordinatorFolderModel = new FolderModel({ name: 'roleCoordinator' + StringUtil.generateRandomString() });
     const roleCollaboratorFolderModel = new FolderModel({ name: 'roleCollaborator' + StringUtil.generateRandomString() });
@@ -163,8 +162,11 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
             await permissionsPage.addPermissionsDialog.searchUserOrGroup(groupBody.id);
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(groupBody.displayName);
-
-            await permissionsPage.addPermissionsDialog.checkGroupIsAdded(groupBody.id);
+            await permissionsPage.addPermissionsDialog.selectRole(groupBody.displayName, 'Consumer');
+            await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'button should be enabled');
+            await permissionsPage.addPermissionsDialog.clickAddButton();
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('Added 0 user\'s 1 group\'s');
+            await permissionsPage.checkUserIsAdded(groupBody.id);
         });
 
         it('[C277100] Should display EVERYONE group in the search result set', async () => {
@@ -198,7 +200,12 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
             await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.firstName);
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(filePermissionUser.firstName);
-            await permissionsPage.addPermissionsDialog.checkUserIsAdded(filePermissionUser.username);
+            await permissionsPage.addPermissionsDialog.selectRole(filePermissionUser.fullName, 'Contributor');
+            await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'button should be enabled');
+            await permissionsPage.addPermissionsDialog.clickAddButton();
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('Added 1 user\'s 0 group\'s');
+            await notificationPage.waitForSnackBarToClose();
+            await permissionsPage.checkUserIsAdded(filePermissionUser.username);
         });
 
         afterEach(async () => {
@@ -207,8 +214,8 @@ describe('Permissions Component', () => {
         });
 
         it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', async () => {
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
-            await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(filePermissionUser.username);
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
+            await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.username);
             const roleDropdownOptions = permissionsPage.addPermissionsDialog.getRoleDropdownOptions();
             await expect(await roleDropdownOptions.count()).toBe(5);
 
@@ -220,16 +227,24 @@ describe('Permissions Component', () => {
 
             await BrowserActions.closeMenuAndDialogs();
             await permissionsPage.changePermission(filePermissionUser.username, 'Collaborator');
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Collaborator');
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated');
+            await notificationPage.waitForSnackBarToClose();
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Collaborator');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Coordinator');
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Coordinator');
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated');
+            await notificationPage.waitForSnackBarToClose();
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Coordinator');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Editor');
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Editor');
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated');
+            await notificationPage.waitForSnackBarToClose();
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Editor');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Consumer');
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Consumer');
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated');
+            await notificationPage.waitForSnackBarToClose();
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Consumer');
         });
 
         it('[C276980] Should not be able to duplicate User or Group to the locally set permissions', async () => {
@@ -239,15 +254,15 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
             await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.firstName);
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(filePermissionUser.firstName);
-
-            await expect(await notificationPage.getSnackBarMessage()).toEqual(duplicateUserPermissionMessage);
-            await notificationHistoryPage.checkNotifyContains(duplicateUserPermissionMessage);
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.fullName)).toEqual('Contributor');
+            await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(false, 'button should not be enabled');
         });
 
         it('[C276982] Should be able to remove User or Group from the locally set permissions', async () => {
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
-            await permissionsPage.addPermissionsDialog.clickDeletePermissionButton();
-            await permissionsPage.addPermissionsDialog.checkUserIsDeleted(filePermissionUser.username);
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
+            await permissionsPage.clickDeletePermissionButton(filePermissionUser.username);
+            await permissionsPage.checkUserIsDeleted(filePermissionUser.username);
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group deleted');
         });
     });
 
@@ -376,13 +391,10 @@ describe('Permissions Component', () => {
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             await contentList.rightClickOnRow('RoleConsumer' + fileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Permission');
-            await permissionsPage.addPermissionsDialog.checkPermissionInheritedButtonIsDisplayed();
-            await permissionsPage.addPermissionButton.waitVisible();
-            await permissionsPage.addPermissionsDialog.clickPermissionInheritedButton();
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('You are not allowed to change permissions');
-            await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('You are not allowed to change permissions');
-            await notificationHistoryPage.checkNotifyContains('You are not allowed to change permissions');
+            await permissionsPage.waitVisible();
+            await permissionsPage.waitTillContentLoads();
+            await permissionsPage.waitForError();
+            await expect(await permissionsPage.noPermissionContent()).toContain('This item no longer exists or you don\'t have permission to view it.');
         });
     });
 });

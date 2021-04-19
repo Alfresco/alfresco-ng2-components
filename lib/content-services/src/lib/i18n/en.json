@@ -385,7 +385,8 @@
       "NO_PERMISSIONS": "No permissions"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Search",
+      "SEARCH": "Search for users or groups to add",
+      "TITLE": "Add user or group to",
       "TYPE-MESSAGE": "Type something to start searching groups or people",
       "NO-RESULT": "No result found for this search",
       "ADD-ACTION": "ADD",
@@ -393,7 +394,41 @@
       "BASE-DIALOG-TITLE": "Search a group or people to add...",
       "EVERYONE": "EVERYONE"
     },
+    "COLUMN": {
+      "NAME": "Users and Groups ({{ count }})",
+      "LOCATION": "Location",
+      "BULK-ROLE": "Set all role to"
+    },
+    "LABELS": {
+      "ON": "On",
+      "OFF": "Off",
+      "DIRECT-PERMISSIONS": "Direct Applied Permission",
+      "INHERITED-PERMISSIONS": "Inherited Permission",
+      "INHERITED-SUBTITLE": "{{count}} users or groups are inheriting permission from a parent folder",
+      "SELECT-ROLE": "Select role"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "No users/groups",
+      "EMPTY-SUBTITLE": "Add user/group to manage permission.",
+      "NO-MEMBERS": "Add groups or people to manage roles",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Updated {{user}} user's {{group}} group's",
+      "PERMISSION-UPDATE-SUCCESS": "User/Group updated",
+      "PERMISSION-UPDATE-FAIL": "Failed to update user/group",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Deleted {{user}} user's {{group}} group's",
+      "PERMISSION-DELETE-SUCCESS": "User/Group deleted",
+      "PERMISSION-DELETE-FAIL": "Failed to delete user/group",
+      "PERMISSION-ADD-SUCCESS": "Added {{user}} user's {{group}} group's",
+      "PERMISSION-ADD-FAIL": "Failed to add user/group",
+      "INHERIT-ENABLE-SUCCESS": "Enabled inherited Permission",
+      "INHERIT-DISABLE-SUCCESS": "Disabled inherited Permission",
+      "TOGGLE-PERMISSION-FAILED": "Failed to toggle inherit Permission"
+    },
+    "ACTION": {
+      "DELETE": "Delete",
+      "ADD-PERMISSION": "Add User or Group"
+    },
     "ERROR": {
+      "NOT-FOUND": "This item no longer exists or you don't have permission to view it.",
       "DUPLICATE-PERMISSION": "One or more of the permissions you have set is already present : {{list}}",
       "NOT-ALLOWED": "You are not allowed to change permissions"
     }

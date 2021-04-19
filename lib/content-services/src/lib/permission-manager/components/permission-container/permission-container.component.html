@@ -1,0 +1,93 @@
+<adf-datatable class="adf-datatable-permission"
+               id="adf-permission-display-container"
+               [rows]="permissions"
+               stickyHeader="true"
+               selectionMode="multiple">
+
+    <data-columns>
+        <data-column class="adf-key-icon"
+                     key="icon"
+                     type="icon"
+                     [sortable]="false">
+            <ng-template let-context>
+                <adf-user-icon-column [context]="context"></adf-user-icon-column>
+            </ng-template>
+        </data-column>
+
+        <data-column class="adf-authorityId-label adf-ellipsis-cell adf-expand-cell-2"
+                     [title]="'PERMISSION_MANAGER.COLUMN.NAME' | translate:{count:permissions.length}"
+                     key="authorityId">
+            <ng-template let-context>
+                <adf-user-name-column [context]="context"></adf-user-name-column>
+            </ng-template>
+        </data-column>
+
+        <data-column class="adf-authorityId-label adf-ellipsis-cell adf-expand-cell-2"
+                     title="PERMISSION_MANAGER.COLUMN.LOCATION"
+                     key="location"
+                     *ngIf="node && showLocation">
+            <ng-template>
+                <adf-node-path-column [node]="node"></adf-node-path-column>
+            </ng-template>
+        </data-column>
+
+        <data-column
+            class="adf-ellipsis-cell adf-expand-cell-1"
+            title="PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE"
+            key="name"
+            sortable="false">
+            <ng-template let-entry="$implicit">
+                <adf-user-role-column *ngIf="!isReadOnly else show_only_label"
+                                      [placeholder]="entry.data.getValue(entry.row, entry.col)"
+                                      [value]="entry.data.getValue(entry.row, entry.col)"
+                                      [roles]="roles"
+                                      id="adf-select-role-permission"
+                                      (roleChanged)="updateRole($event, entry.row.obj)">
+                </adf-user-role-column>
+                <ng-template #show_only_label>
+                    <span>{{ entry.data.getValue(entry.row, entry.col) | adfLocalizedRole }}</span>
+                </ng-template>
+            </ng-template>
+
+            <adf-data-column-header *ngIf="!isReadOnly">
+                <ng-template>
+                    <adf-user-role-column class="adf-permission-role-column-header"
+                                          placeholder="PERMISSION_MANAGER.COLUMN.BULK-ROLE"
+                                          [roles]="roles"
+                                          [value]="bulkSelectionRole"
+                                          id="adf-bulk-select-role-permission"
+                                          (roleChanged)="bulkRoleUpdate($event)">
+                    </adf-user-role-column>
+                </ng-template>
+            </adf-data-column-header>
+        </data-column>
+
+        <data-column class="adf-delete-permission" key="delete" *ngIf="!isReadOnly" sortable="false">
+            <ng-template let-entry="$implicit">
+                <button mat-icon-button
+                        (click)="removePermission($event, entry.row.obj)"
+                        [attr.data-automation-id]="'adf-delete-permission-button-' + entry.row.obj.authorityId">
+                    <mat-icon>delete_outline</mat-icon>
+                </button>
+            </ng-template>
+        </data-column>
+    </data-columns>
+
+    <adf-no-content-template>
+        <ng-template>
+            <adf-empty-content
+                id="adf-no-permissions-template"
+                icon="supervisor_account"
+                title="PERMISSION_MANAGER.MESSAGE.EMPTY-PERMISSION"
+                subtitle="PERMISSION_MANAGER.MESSAGE.EMPTY-SUBTITLE">
+            </adf-empty-content>
+        </ng-template>
+    </adf-no-content-template>
+
+    <adf-no-permission-template>
+        <ng-template>
+            <ng-content select="adf-custom-no-permission-template, no-permission-content"></ng-content>
+        </ng-template>
+    </adf-no-permission-template>
+
+</adf-datatable>

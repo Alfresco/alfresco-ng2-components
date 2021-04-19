@@ -15,15 +15,16 @@
  * limitations under the License.
  */
 
+import { AllowableOperationsEnum, ContentService } from '@alfresco/adf-core';
+import { Node, PermissionElement } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';
 import { Injectable } from '@angular/core';
-import { Subject, Observable, throwError } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { NodePermissionService } from './node-permission.service';
 import { AddPermissionDialogComponent } from '../components/add-permission/add-permission-dialog.component';
 import { AddPermissionDialogData } from '../components/add-permission/add-permission-dialog-data.interface';
-import { NodeEntry, Node } from '@alfresco/js-api';
-import { NodePermissionService } from './node-permission.service';
-import { ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
-import { switchMap } from 'rxjs/operators';
+import { RoleModel } from '../models/role.model';
 
 @Injectable({
     providedIn: 'root'
@@ -37,25 +38,27 @@ export class NodePermissionDialogService {
 
     /**
      * Opens a dialog to add permissions to a node.
-     * @param node ID of the target node
+     * @param node target node
+     * @param roles settable roles for the node
      * @param title Dialog title
      * @returns Node with updated permissions
      */
-    openAddPermissionDialog(node: Node, title?: string): Observable<NodeEntry[]> {
+    openAddPermissionDialog(node: Node, roles: RoleModel[], title?: string): Observable<PermissionElement[]> {
         if (this.contentService.hasAllowableOperations(node, AllowableOperationsEnum.UPDATEPERMISSIONS)) {
-            const confirm = new Subject<NodeEntry[]>();
+            const confirm = new Subject<PermissionElement[]>();
 
             confirm.subscribe({
                 complete: this.close.bind(this)
             });
 
             const data: AddPermissionDialogData = {
-                nodeId: node.id,
+                node: node,
                 title: title,
-                confirm: confirm
+                confirm: confirm,
+                roles
             };
 
-            this.openDialog(data, 'adf-add-permission-dialog', '630px');
+            this.openDialog(data, 'adf-add-permission-dialog', '800px');
             return confirm;
         } else {
             const errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
@@ -65,7 +68,7 @@ export class NodePermissionDialogService {
     }
 
     private openDialog(data: any, currentPanelClass: string, chosenWidth: string) {
-        this.dialog.open(AddPermissionDialogComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
+        this.dialog.open(AddPermissionDialogComponent, { data, panelClass: currentPanelClass, width: chosenWidth, restoreFocus: true });
     }
 
     /**
@@ -82,10 +85,10 @@ export class NodePermissionDialogService {
      * @returns Node with updated permissions
      */
     updateNodePermissionByDialog(nodeId?: string, title?: string): Observable<Node> {
-        return this.contentService.getNode(nodeId, { include: ['allowableOperations'] })
+        return this.nodePermissionService.getNodeWithRoles(nodeId)
             .pipe(
-                switchMap((node) => {
-                    return this.openAddPermissionDialog(node.entry, title)
+                switchMap(({node, roles}) => {
+                    return this.openAddPermissionDialog(node, roles, title)
                         .pipe(
                             switchMap((selection) => {
                                 return this.nodePermissionService.updateNodePermissions(nodeId, selection);

@@ -16,6 +16,6 @@
  */
 
 export interface RoleModel {
-label: String;
-role: String;
+    label: string;
+    role: string;
 }

@@ -16,7 +16,6 @@
  */
 
 export * from './components/permission-list/permission-list.component';
-export * from './components/permission-list/no-permission.component';
 export * from './components/inherited-button.directive';
 export * from './models/permission.model';
 export * from './services/node-permission-dialog.service';
@@ -26,5 +25,11 @@ export * from './components/add-permission/add-permission-panel.component';
 export * from './components/add-permission/add-permission.component';
 export * from './components/add-permission/add-permission-dialog.component';
 export * from './components/add-permission/search-config-permission.service';
+export * from './components/user-icon-column/user-icon-column.component';
+export * from './components/user-name-column/user-name-column.component';
+export * from './components/user-role-column/user-role-column.component';
+export * from './components/permission-container/permission-container.component';
+export * from './models/member.model';
+export * from './models/role.model';
 
 export * from './permission-manager.module';

@@ -1,18 +1,3 @@
-<div class="app-inherit_permission_button">
-    <button mat-raised-button
-            [color]="toggleStatus?'accent':'primary'"
-            adf-inherit-permission [nodeId]="nodeId"
-            (error)="showErrorMessage($event)"
-            (updated)="onUpdatedPermissions($event)">
-            {{ (toggleStatus?'DEMO_PERMISSION.INHERITED_PERMISSIONS_BUTTON':'DEMO_PERMISSION.INHERIT_PERMISSION_BUTTON') | translate}}</button>
-    <button mat-button color="primary" (click)="openAddPermissionDialog()" data-automation-id="adf-add-permission-button">Add User or Group</button>
+<div class="app-permission-section">
+    <adf-permission-list [nodeId]="nodeId"></adf-permission-list>
 </div>
-
-<div>
-    <adf-permission-list #permissionList
-                        [nodeId]="nodeId"
-                        (update)="reloadList()"
-                        (error)="showErrorMessage($event)">
-	</adf-permission-list>
-</div>
-

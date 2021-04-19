@@ -25,7 +25,7 @@
 
         .mat-dialog-content {
             margin: 0;
-            overflow: hidden;
+            overflow: auto;
         }
 
         .mat-dialog-actions {
@@ -49,6 +49,20 @@
                 &:enabled {
                     color: mat-color($primary);
                 }
+            }
+        }
+
+        .adf {
+            &-search-user-button {
+                width: 100%;
+                .mat-button-wrapper {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+
+            &-add-member-action {
+                padding: 0 15px;
             }
         }
     }

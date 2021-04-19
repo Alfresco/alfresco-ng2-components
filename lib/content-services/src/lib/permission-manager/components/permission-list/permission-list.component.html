@@ -1,84 +1,106 @@
-<div id="adf-permission-display-container" class="adf-display-permission-container">
-
-    <div *ngIf="!permissionList || !permissionList.length" id="adf-no-permissions-template">
-        <div #ref>
-            <ng-content select="adf-no-permission-template"></ng-content>
-        </div>
-
-        <p *ngIf="ref.children.length == 0">
-            {{ 'PERMISSION_MANAGER.PERMISSION_DISPLAY.NO_PERMISSIONS' | translate }}
-        </p>
+<mat-card class="adf-permission-card" id="adf-permission-manager-card">
+    <div *ngIf="!(permissionList.data$ | async) && permissionList.loading$ | async" class="adf-permission-loader">
+        <mat-progress-spinner [color]="'primary'"
+                              [mode]="'indeterminate'">
+        </mat-progress-spinner>
     </div>
 
-    <adf-datatable [rows]="permissionList" class="adf-datatable-permission" *ngIf="permissionList && permissionList.length">
-        <data-columns>
-            <data-column
-                class="adf-key-icon"
-                key="icon" type="icon"
-                [sortable]="false">
-            </data-column>
-            <data-column
-                class="adf-authorityId-label adf-ellipsis-cell adf-expand-cell-2"
-                title="PERMISSION_MANAGER.PERMISSION_DISPLAY.AUTHORITY_ID"
-                key="authorityId">
-            </data-column>
-            <data-column
-                class="adf-ellipsis-cell adf-expand-cell-1"
-                title="PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE"
-                key="name">
-                <ng-template let-entry="$implicit">
-                    <mat-form-field *ngIf="!entry.row.getValue('isInherited') else show_only_label">
-                        <mat-select
-                            id="adf-select-role-permission"
-                            [placeholder]="entry.data.getValue(entry.row, entry.col)"
-                            value="{{entry.data.getValue(entry.row, entry.col)}}"
-                            (selectionChange)="saveNewRole($event, entry.row.obj)">
-                          <mat-option *ngFor="let role of settableRoles" [value]="role">{{ role | adfLocalizedRole }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <ng-template #show_only_label>
-                        <span>{{ entry.data.getValue(entry.row, entry.col) | adfLocalizedRole }}</span>
-                    </ng-template>
-                </ng-template>
-            </data-column>
-            <data-column
-                class="adf-permission-label"
-                title="PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED"
-                key="isInherited"
-                [focus]="false">
-                <ng-template let-entry="$implicit">
-                    <mat-chip-list>
-                        <mat-chip
-                            *ngIf="!!entry.data.getValue(entry.row, entry.col) else locally_set_chip"
-                            class="mat-chip mat-primary mat-standard-chip mat-chip-selected adf-inherited-label"
-                            id="adf-permission-inherited-label"
-                            color="primary"
-                            selected="true">{{'PERMISSION_MANAGER.PERMISSION_DISPLAY.INHERITED' | translate}}</mat-chip>
-                    </mat-chip-list>
-                    <ng-template #locally_set_chip>
-                        <mat-chip-list class="adf-locallyset-label">
-                            <mat-chip
-                                id="adf-permission-locallyset-label"
-                                color="accent"
-                                selected="true">
-                                {{'PERMISSION_MANAGER.PERMISSION_DISPLAY.LOCALLY_SET' | translate}}
-                            </mat-chip>
-                        </mat-chip-list>
-                    </ng-template>
-                </ng-template>
-            </data-column>
-            <data-column class="adf-delete-permission" key="delete">
-                <ng-template let-entry="$implicit">
-                    <button
-                        *ngIf="!entry.row.getValue('isInherited')"
-                        mat-icon-button
-                        color="primary"
-                        (click)="removePermission(entry.row.obj)"
-                        data-automation-id="adf-delete-permission-button">
-                        <mat-icon>highlight_off</mat-icon>
-                    </button>
-                </ng-template>
-            </data-column>
-        </data-columns>
-    </adf-datatable>
-</div>
+    <div *ngIf="permissionList.error$ | async">
+        <div class="adf-no-permission__template">
+            <mat-icon [color]="'error'">error</mat-icon>
+            <p class="adf-no-permission__template--text">{{ 'PERMISSION_MANAGER.ERROR.NOT-FOUND'| translate }}</p>
+        </div>
+    </div>
+
+    <ng-container *ngIf="permissionList.data$ | async as model">
+        <div class="adf-permission-container" #target>
+
+            <div class="adf-permission-header">
+                <span class="adf-inherit-container">
+                    <h3 class="adf-inherit-container-header">
+                        {{'PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS' | translate }}
+
+                        {{ (model.node.permissions.isInheritanceEnabled ? "PERMISSION_MANAGER.LABELS.ON" : "PERMISSION_MANAGER.LABELS.OFF") | translate }}
+                    </h3>
+
+                    <mat-slide-toggle
+                        class="adf-inherit-toggle"
+                        data-automation-id="adf-inherit-toggle-button"
+                        [checked]="model.node.permissions.isInheritanceEnabled"
+                        (change)="permissionList.toggleInherited($event)">
+                    </mat-slide-toggle>
+                </span>
+
+                <span class="adf-inherit-subtitle" title="total">
+                    {{'PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE' | translate: { count: model.inheritedPermissions.length } }}
+                </span>
+            </div>
+
+            <button
+                mat-button
+                data-automation-id="permission-info-button"
+                [adf-pop-over]="inheritedPermission"
+                [target]="target"
+                #popOver="adfPopOver"
+                *ngIf="model.node.permissions.isInheritanceEnabled">
+                {{ popOver.open ? "Hide" : "Show" }}
+                <mat-icon *ngIf="popOver.open"> keyboard_arrow_up </mat-icon>
+                <mat-icon *ngIf="!popOver.open"> keyboard_arrow_down </mat-icon>
+            </button>
+        </div>
+
+        <ng-template #inheritedPermission>
+            <div class="adf-pop-over-card">
+                <adf-permission-container
+                    data-automation-id="adf-inherited-permission"
+                    [isReadOnly]="true"
+                    [node]="model.node"
+                    [permissions]="model.inheritedPermissions"
+                    [showLocation]="true"
+                    [roles]="model.roles">
+                </adf-permission-container>
+            </div>
+        </ng-template>
+
+        <mat-card-content style="overflow: hidden">
+            <section class="adf-permission-content-header">
+                <h3>{{'PERMISSION_MANAGER.LABELS.DIRECT-PERMISSIONS' | translate }}</h3>
+
+                <div class="adf-toolbar--spacer"></div>
+
+                <button
+                    mat-button
+                    [matTooltip]="'PERMISSION_MANAGER.ACTION.DELETE' | translate"
+                    [disabled]="!selectedPermissions?.length"
+                    (click)="deleteSelection()"
+                    data-automation-id="adf-delete-selected-permission">
+                    <mat-icon>delete_outline</mat-icon>
+                </button>
+
+                <adf-toolbar-divider></adf-toolbar-divider>
+
+                <button
+                    mat-button
+                    [matTooltip]="'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate"
+                    (click)="openAddPermissionDialog()"
+                    data-automation-id="adf-add-permission-button">
+                    <mat-icon>person_add_outline</mat-icon>
+                </button>
+            </section>
+
+            <adf-permission-container
+                class="adf-permission-list"
+                data-automation-id="adf-locally-set-permission"
+                [node]="model.node"
+                [permissions]="model.localPermissions"
+                (update)="updatePermission($event)"
+                (delete)="deletePermission($event)"
+                (updateAll)="updateAllPermission($event)"
+                (row-select)="onSelect($event.detail.selection)"
+                (row-unselect)="onSelect($event.detail.selection)"
+                [roles]="model.roles">
+            </adf-permission-container>
+
+        </mat-card-content>
+    </ng-container>
+</mat-card>

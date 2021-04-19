@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { NodeEntry, Node } from '@alfresco/js-api';
+import { AllowableOperationsEnum, ContentService } from '@alfresco/adf-core';
+import { Node, NodeEntry, PermissionElement } from '@alfresco/js-api';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { NodePermissionService } from '../../services/node-permission.service';
-import { NodesApiService, ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
+import { RoleModel } from '../../models/role.model';
 
 @Component({
     selector: 'adf-add-permission',
@@ -26,6 +27,9 @@ import { NodesApiService, ContentService, AllowableOperationsEnum } from '@alfre
     styleUrls: ['./add-permission.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
+/*
+ * @deprecated in 4.3.0, use adf-add-permission-panel instead.
+ */
 export class AddPermissionComponent implements OnInit {
 
     /** ID of the target node. */
@@ -42,14 +46,16 @@ export class AddPermissionComponent implements OnInit {
 
     selectedItems: NodeEntry[] = [];
     currentNode: Node;
-    currentNodeRoles: string[];
+    currentNodeRoles: RoleModel[];
 
     constructor(private nodePermissionService: NodePermissionService,
-                private nodeApiService: NodesApiService,
                 private contentService: ContentService) { }
 
     ngOnInit(): void {
-        this.nodeApiService.getNode(this.nodeId).subscribe((node) => this.currentNode = node);
+        this.nodePermissionService.getNodeWithRoles(this.nodeId).subscribe(({node, roles }) => {
+            this.currentNode = node;
+            this.currentNodeRoles = roles;
+        });
     }
 
     onSelect(selection: NodeEntry[]) {
@@ -63,7 +69,8 @@ export class AddPermissionComponent implements OnInit {
 
     applySelection() {
         if (this.contentService.hasAllowableOperations(this.currentNode, AllowableOperationsEnum.UPDATEPERMISSIONS)) {
-            this.nodePermissionService.updateNodePermissions(this.nodeId, this.selectedItems)
+            const permissions = this.transformNodeToPermissionElement(this.selectedItems, this.currentNodeRoles[0]);
+            this.nodePermissionService.updateNodePermissions(this.nodeId, permissions)
                 .subscribe(
                     (node) => {
                         this.success.emit(node);
@@ -74,4 +81,13 @@ export class AddPermissionComponent implements OnInit {
         }
     }
 
+    private transformNodeToPermissionElement(nodes: NodeEntry[], nodeRole: any): PermissionElement[] {
+        return nodes.map((node) => {
+            return {
+                'authorityId': node.entry.properties['cm:authorityName'] ?? node.entry.properties['cm:userName'],
+                'name': nodeRole,
+                'accessStatus': 'ALLOWED'
+            };
+        });
+    }
 }

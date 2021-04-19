@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, OnInit, EventEmitter, Output } from '@angular/core';
-import { NodesApiService } from '@alfresco/adf-core';
-import { Node, PermissionElement } from '@alfresco/js-api';
+import { ObjectDataRow } from '@alfresco/adf-core';
+import { PermissionElement } from '@alfresco/js-api';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { PermissionDisplayModel } from '../../models/permission.model';
-import { NodePermissionService } from '../../services/node-permission.service';
+import { PermissionListService } from './permission-list.service';
 
 @Component({
     selector: 'adf-permission-list',
@@ -27,70 +27,54 @@ import { NodePermissionService } from '../../services/node-permission.service';
     styleUrls: ['./permission-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class PermissionListComponent implements OnInit {
-
+export class PermissionListComponent {
     /** ID of the node whose permissions you want to show. */
     @Input()
-    nodeId: string = '';
+    nodeId: string;
 
     /** Emitted when the permission is updated. */
     @Output()
-    update = new EventEmitter<PermissionElement>();
+    update: EventEmitter<PermissionElement>;
 
     /** Emitted when an error occurs. */
     @Output()
-    error = new EventEmitter<any>();
+    error: EventEmitter<any>;
 
-    permissionList: PermissionDisplayModel[];
-    settableRoles: any[];
-    actualNode: Node;
+    selectedPermissions: PermissionDisplayModel[] = [];
 
-    constructor(private nodeService: NodesApiService,
-                private nodePermissionService: NodePermissionService) {
+    constructor(public readonly permissionList: PermissionListService) {
+        this.error = this.permissionList.errored;
+        this.update = this.permissionList.updated;
     }
 
-    ngOnInit() {
-        this.fetchNodePermissions();
+    ngOnInit(): void {
+        this.permissionList.fetchPermission(this.nodeId);
     }
 
-    reload() {
-        this.fetchNodePermissions();
+    openAddPermissionDialog() {
+        this.permissionList.updateNodePermissionByDialog();
     }
 
-    private fetchNodePermissions() {
-        this.nodeService.getNode(this.nodeId).subscribe((node: Node) => {
-            this.actualNode = node;
-            this.permissionList = this.nodePermissionService.getNodePermissions(node);
-
-            this.nodePermissionService.getNodeRoles(node).subscribe((settableList: string[]) => {
-                this.settableRoles = settableList;
-            });
-        });
+    onSelect(selections: ObjectDataRow[]) {
+        this.selectedPermissions = selections.map((selection) => selection['obj']);
     }
 
-    saveNewRole(event: any, permissionRow: PermissionDisplayModel) {
-        const updatedPermissionRole = this.buildUpdatedPermission(event.value, permissionRow);
-
-        this.nodePermissionService.updatePermissionRole(this.actualNode, updatedPermissionRole)
-            .subscribe(() => {
-                this.update.emit(updatedPermissionRole);
-            });
+    deleteSelection() {
+        this.permissionList.deletePermissions(this.selectedPermissions);
+        this.selectedPermissions = [];
     }
 
-    private buildUpdatedPermission(newRole: string, permissionRow: PermissionDisplayModel): PermissionElement {
-        return {
-            accessStatus: permissionRow.accessStatus,
-            name: newRole,
-            authorityId: permissionRow.authorityId
-        };
+    updatePermission({role, permission}) {
+        this.permissionList.updateRole(role, permission);
     }
 
-    removePermission(permissionRow: PermissionDisplayModel) {
-        this.nodePermissionService
-            .removePermission(this.actualNode, permissionRow)
-            .subscribe(
-                node => this.update.emit(node),
-                error => this.error.emit(error)
-            );
+    deletePermission(permission: PermissionDisplayModel) {
+        this.selectedPermissions = [];
+        this.permissionList.deletePermission(permission);
+    }
+
+    updateAllPermission(role: string) {
+        this.permissionList.bulkRoleUpdate(role);
+        this.selectedPermissions = [];
     }
 }

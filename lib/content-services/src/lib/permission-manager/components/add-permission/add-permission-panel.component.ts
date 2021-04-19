@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, EventEmitter, Output, ViewChild } from '@angular/core';
-import { SearchPermissionConfigurationService } from './search-config-permission.service';
 import { SearchService, SearchConfigurationService } from '@alfresco/adf-core';
-import { SearchComponent } from '../../../search/components/search.component';
+import { NodeEntry } from '@alfresco/js-api';
+import { Component, ViewEncapsulation, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { NodeEntry } from '@alfresco/js-api';
+import { SearchPermissionConfigurationService } from './search-config-permission.service';
+import { SearchComponent } from '../../../search/components/search.component';
 
 @Component({
     selector: 'adf-add-permission-panel',
@@ -48,7 +48,7 @@ export class AddPermissionPanelComponent {
 
     selectedItems: NodeEntry[] = [];
 
-    EVERYONE: NodeEntry = new NodeEntry({ entry: { properties: {'cm:authorityName': 'GROUP_EVERYONE'}}});
+    EVERYONE: NodeEntry = new NodeEntry({ entry: { nodeType: 'cm:authorityContainer', properties: {'cm:authorityName': 'GROUP_EVERYONE'}}});
 
     constructor() {
         this.searchInput.valueChanges
@@ -70,6 +70,13 @@ export class AddPermissionPanelComponent {
             this.selectedItems.push(item);
         }
         this.select.emit(this.selectedItems);
+    }
+
+    selectAll(items: NodeEntry[]) {
+        if (items?.length > 0) {
+            this.selectedItems = items;
+            this.select.emit(this.selectedItems);
+        }
     }
 
     private isAlreadySelected(item: NodeEntry): boolean {

@@ -15,12 +15,25 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-input-rename  */
+/* tslint:disable:component-selector no-input-rename  */
 
-import { Component } from '@angular/core';
+import { Component, ContentChild, TemplateRef } from '@angular/core';
+import { DataColumnComponent } from './data-column.component';
 
 @Component({
-    selector: 'adf-no-permission-template',
-    template: '<ng-content></ng-content>'
+    selector: 'adf-data-column-header',
+    template: ''
 })
-export class NoPermissionTemplateComponent {}
+export class DateColumnHeaderComponent {
+
+    @ContentChild(TemplateRef)
+    public template: TemplateRef<any>;
+
+    constructor(private columnComponent: DataColumnComponent) {}
+
+    ngAfterContentInit() {
+        if (this.columnComponent) {
+            this.columnComponent.header = this.template;
+        }
+    }
+}

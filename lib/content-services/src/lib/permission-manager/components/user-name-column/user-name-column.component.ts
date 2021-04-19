@@ -17,48 +17,67 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Group, NodeEntry, Person } from '@alfresco/js-api';
+import { NodePermissionService } from '../../services/node-permission.service';
 
 @Component({
     selector: 'adf-user-name-column',
     template: `
-        <div class="adf-datatable-cell-value adf-user">
-            <div class="adf-user-name-column"  title="{{ displayText$ | async }}">
-                {{ displayText$ | async }}
-            </div>
-
-            <div class="adf-user-email-column" title="{{ subTitleText$ | async }}">
-                {{ subTitleText$ | async }}
-            </div>
+        <div class="adf-ellipsis-cell adf-user" [attr.data-automation-id]="displayText$ | async">
+            <span title="{{ displayText$ | async }}"> {{ displayText$ | async }}</span>
+            <br/>
+            <span title="{{ subTitleText$ | async }}">{{ subTitleText$ | async }}</span>
         </div>
     `,
-    host: { class: 'adf-user-name-column adf-datatable-content-cell' },
+    host: { class: 'adf-user-name-column adf-datatable-content-cell adf-expand-cell-5 adf-ellipsis-cell' },
     styleUrls: [ './user-name-column.component.scss' ]
 })
 export class UserNameColumnComponent implements OnInit {
     @Input()
     context: any;
 
+    @Input()
+    node: NodeEntry;
+
     displayText$ = new BehaviorSubject<string>('');
     subTitleText$ = new BehaviorSubject<string>('');
 
+    constructor(private nodePermissionService: NodePermissionService) {}
+
     ngOnInit() {
-        this.updateValue();
+        if (this.context) {
+            this.updateContextValue();
+        }
+
+        if (this.node) {
+            this.updateNodeValue();
+        }
     }
 
-    protected updateValue() {
-        const { user, group } = this.context.row.obj.entry;
-        let name: string, email: string = '';
-
-        if (user) {
-            name = `${user.firstName ?? ''} ${user.lastName ?? ''}`;
-            email = user.email ?? '';
+    protected updateValue(person: Person, group: Group) {
+        if (person) {
+            this.displayText$.next(`${person.firstName ?? ''} ${person.lastName ?? ''}`);
+            this.subTitleText$.next(person.email ?? '');
         }
 
         if (group) {
-            name = `${user.displayName}`;
+            this.displayText$.next(group.displayName);
         }
-
-        this.displayText$.next(name);
-        this.subTitleText$.next(email);
     }
+
+    private updateContextValue() {
+        const { person, group, authorityId } = this.context.row.obj?.entry ?? this.context.row.obj;
+        if (authorityId) {
+            this.updateValue(null, { displayName: authorityId } as any);
+        } else {
+            this.updateValue(person, group);
+        }
+    }
+
+    private updateNodeValue() {
+        const { entry } = this.node;
+        const person = this.nodePermissionService.transformNodeToPerson(entry);
+        const group = this.nodePermissionService.transformNodeToGroup(entry);
+        this.updateValue(person, group);
+     }
 }

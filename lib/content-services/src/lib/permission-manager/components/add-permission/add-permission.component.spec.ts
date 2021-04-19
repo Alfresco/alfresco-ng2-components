@@ -15,24 +15,23 @@
  * limitations under the License.
  */
 
+import { setupTestBed } from '@alfresco/adf-core';
+import { Node } from '@alfresco/js-api';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddPermissionComponent } from './add-permission.component';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
-import { setupTestBed, NodesApiService } from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { NodePermissionService } from '../../services/node-permission.service';
-import { Node } from '@alfresco/js-api';
-import { TranslateModule } from '@ngx-translate/core';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('AddPermissionComponent', () => {
 
     let fixture: ComponentFixture<AddPermissionComponent>;
     let element: HTMLElement;
     let nodePermissionService: NodePermissionService;
-    let nodeApiService: NodesApiService;
 
     setupTestBed({
         imports: [
@@ -42,11 +41,10 @@ describe('AddPermissionComponent', () => {
     });
 
     beforeEach(() => {
-        nodeApiService  = TestBed.inject(NodesApiService);
-        spyOn(nodeApiService, 'getNode').and.returnValue(of({ id: 'fake-node', allowableOperations: ['updatePermissions']}));
+        nodePermissionService = TestBed.inject(NodePermissionService);
+        spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({ node: { id: 'fake-node', allowableOperations: ['updatePermissions']}, roles: [] }));
         fixture = TestBed.createComponent(AddPermissionComponent);
         element = fixture.nativeElement;
-        nodePermissionService = TestBed.inject(NodePermissionService);
         fixture.detectChanges();
     });
 

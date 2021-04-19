@@ -36,6 +36,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { VersionManagePage } from '../../core/pages/version-manager.page';
 import CONSTANTS = require('../../util/constants');
 import { SitesApi } from '@alfresco/js-api';
+import { NotificationDemoPage } from '../../core/pages/notification.page';
 
 describe('Permissions Component', () => {
 
@@ -49,6 +50,7 @@ describe('Permissions Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const metadataViewPage = new MetadataViewPage();
     const notificationHistoryPage = new NotificationHistoryPage();
+    const notificationPage = new NotificationDemoPage();
     const uploadDialog = new UploadDialogPage();
     const versionManagePage = new VersionManagePage();
 
@@ -194,11 +196,18 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.searchUserOrGroup(consumerUser.username);
 
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(consumerUser.firstName);
-            await permissionsPage.addPermissionsDialog.checkUserIsAdded(consumerUser.username);
+            await permissionsPage.addPermissionsDialog.selectRole(consumerUser.fullName, 'Site Collaborator');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.fullName)).toEqual('Site Collaborator');
+            await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'button should not be enabled');
+            await permissionsPage.addPermissionsDialog.clickAddButton();
+            await expect(await notificationPage.getSnackBarMessage()).toEqual("Added 1 user's 0 group's");
+            await notificationPage.waitForSnackBarToClose();
 
-            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.username)).toEqual(CONSTANTS.CS_USER_ROLES_I18N.COLLABORATOR);
+            await permissionsPage.checkUserIsAdded(consumerUser.username);
 
-            await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(consumerUser.username);
+            await expect(await permissionsPage.getRoleCellValue(consumerUser.username)).toEqual(CONSTANTS.CS_USER_ROLES_I18N.COLLABORATOR);
+
+            await permissionsPage.clickRoleDropdownByUserOrGroupName(consumerUser.username);
 
             const roleDropdownOptions = permissionsPage.addPermissionsDialog.getRoleDropdownOptions();
 

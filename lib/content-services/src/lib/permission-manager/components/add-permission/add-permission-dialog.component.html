@@ -1,15 +1,112 @@
 <h2 mat-dialog-title id="add-permission-dialog-title">
-    {{(data?.title ? data?.title : 'PERMISSION_MANAGER.ADD-PERMISSION.BASE-DIALOG-TITLE') | translate}}
+    {{ (data?.title ? data?.title : "PERMISSION_MANAGER.ADD-PERMISSION.BASE-DIALOG-TITLE") | translate }}
 </h2>
-<mat-dialog-content>
-    <adf-add-permission-panel
-        (select)="onSelect($event)">
-    </adf-add-permission-panel>
-</mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-button mat-dialog-close id="add-permission-dialog-close-button">{{'PERMISSION_MANAGER.ADD-PERMISSION.CLOSE-ACTION' | translate}}</button>
-    <button mat-button id="add-permission-dialog-confirm-button" [mat-dialog-close]="true"
-            class="adf-choose-action"
-            [disabled]="currentSelection?.length === 0"
-            (click)="onAddClicked()">{{'PERMISSION_MANAGER.ADD-PERMISSION.ADD-ACTION' | translate}}</button>
-</mat-dialog-actions>
+
+<ng-container *ngIf="!isSearchActive">
+    <mat-dialog-content>
+        <button mat-button (click)="enableSearch()" class="adf-search-user-button">
+            {{ "PERMISSION_MANAGER.ADD-PERMISSION.SEARCH" | translate }}
+            <span class="adf-toolbar--spacer"></span>
+            <mat-icon>search</mat-icon>
+        </button>
+
+        <adf-datatable [rows]="selectedMembers"
+                       selectionMode="none"
+                       stickyHeader="true"
+                       data-automation-id="adf-user-role-selection-table"
+                       *ngIf="selectedMembers.length">
+            <data-columns>
+                <data-column class="adf-key-icon" key="icon" type="icon" [sortable]="false">
+                    <ng-template let-context>
+                        <adf-user-icon-column [context]="context"></adf-user-icon-column>
+                    </ng-template>
+                </data-column>
+
+                <data-column class="adf-authorityId-label adf-ellipsis-cell adf-expand-cell-2"
+                             [title]="'Users and Groups (' + selectedMembers.length + ')'"
+                             key="id">
+                    <ng-template let-context>
+                        <adf-user-name-column [context]="context"></adf-user-name-column>
+                    </ng-template>
+                </data-column>
+
+                <data-column class="adf-ellipsis-cell adf-expand-cell-1"
+                             title="PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE"
+                             key="role">
+                    <ng-template let-entry="$implicit">
+                        <adf-user-role-column *ngIf="!entry.row.obj.readonly else read_only_label"
+                                              [placeholder]="entry.data.getValue(entry.row, entry.col)"
+                                              [value]="entry.data.getValue(entry.row, entry.col)"
+                                              [roles]="data.roles"
+                                              id="adf-select-role-permission"
+                                              (roleChanged)="onMemberUpdate($event, entry.row.obj)">
+                        </adf-user-role-column>
+                        <ng-template #read_only_label>
+                            <span>{{ entry.data.getValue(entry.row, entry.col) | adfLocalizedRole }}</span>
+                        </ng-template>
+                    </ng-template>
+
+                    <adf-data-column-header>
+                        <ng-template>
+                            <adf-user-role-column  class="adf-permission-role-column-header"
+                                                   placeholder="PERMISSION_MANAGER.COLUMN.BULK-ROLE"
+                                                   [roles]="data.roles"
+                                                   id="adf-bulk-select-role-permission"
+                                                   (roleChanged)="onBulkUpdate($event)">
+                            </adf-user-role-column>
+                        </ng-template>
+                    </adf-data-column-header>
+                </data-column>
+
+                <data-column class="adf-delete-permission" key="" sortable="false">
+                    <ng-template let-entry="$implicit">
+                        <button mat-icon-button
+                                class="adf-add-member-action"
+                                [style.display]="entry.row.obj.readonly ? 'none': 'block'"
+                                (click)="onMemberDelete(entry.row.obj)"
+                                data-automation-id="adf-delete-permission-button">
+                            <mat-icon>highlight_off</mat-icon>
+                        </button>
+                    </ng-template>
+                </data-column>
+            </data-columns>
+        </adf-datatable>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button mat-button
+                mat-dialog-close
+                data-automation-id="add-permission-dialog-close-button">
+            {{ "PERMISSION_MANAGER.ADD-PERMISSION.CLOSE-ACTION" | translate }}
+        </button>
+        <button mat-button
+                data-automation-id="add-permission-dialog-confirm-button"
+                [mat-dialog-close]="true"
+                class="adf-choose-action"
+                [disabled]="!isValid()"
+                (click)="onAddClicked()">
+            {{ "PERMISSION_MANAGER.ADD-PERMISSION.ADD-ACTION" | translate }}
+        </button>
+    </mat-dialog-actions>
+</ng-container>
+
+<ng-container *ngIf="isSearchActive">
+    <mat-dialog-content>
+        <adf-add-permission-panel (select)="onSelect($event)"></adf-add-permission-panel>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+            <button mat-button
+                    (click)="canCloseDialog()"
+                    data-automation-id="add-permission-dialog-close-button">
+                {{ "PERMISSION_MANAGER.ADD-PERMISSION.CLOSE-ACTION" | translate }}
+            </button>
+            <button mat-button
+                    data-automation-id="add-permission-dialog-confirm-button"
+                    [disabled]="!currentSelection.length"
+                    (click)="onSearchAddClicked()">
+                {{ "PERMISSION_MANAGER.ADD-PERMISSION.ADD-ACTION" | translate }}
+            </button>
+    </mat-dialog-actions>
+</ng-container>
