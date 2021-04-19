@@ -41,7 +41,7 @@ export const setupTestBed = (moduleDef: TestModuleMetadata) => {
                     TestBed.resetTestingModule = () => TestBed;
                     done();
                 })
-                .catch(done.fail)
+                .catch(done.fail);
       }
     );
 ​
