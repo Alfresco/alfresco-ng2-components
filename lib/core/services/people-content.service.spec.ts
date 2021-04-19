@@ -84,7 +84,7 @@ describe('PeopleContentService', () => {
         service.createPerson(createNewPersonMock).subscribe((person) => {
             expect(person.id).toEqual('fake-id');
             expect(person.email).toEqual('fakeEcm@ecmUser.com');
-            expect(createPersonSpy).toHaveBeenCalledWith(createNewPersonMock);
+            expect(createPersonSpy).toHaveBeenCalledWith(createNewPersonMock, undefined);
             done();
         });
     });
