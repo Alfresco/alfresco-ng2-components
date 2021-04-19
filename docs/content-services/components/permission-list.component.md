@@ -2,7 +2,7 @@
 Title: Permission List Component
 Added: v2.3.0
 Status: Active
-Last reviewed: 2020-2-17
+Last reviewed: 2021-4-17
 ---
 
 # [Permission List Component](../../../lib/content-services/src/lib/permission-manager/components/permission-list/permission-list.component.ts "Defined in permission-list.component.ts")
