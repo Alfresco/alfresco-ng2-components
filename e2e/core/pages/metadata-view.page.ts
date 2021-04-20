@@ -225,7 +225,7 @@ export class MetadataViewPage {
     }
 
     async changeContentType(option: string): Promise<void> {
-        const nodeType = TestElement.byCss('div[data-automation-id="header-nodeType"] mat-form-field');
+        const nodeType = TestElement.byCss('div[data-automation-id="header-nodeType"] .mat-select-trigger');
         await nodeType.waitVisible();
         await nodeType.click();
         const typesDropDownPage = new DropdownPage(nodeType.elementFinder);
