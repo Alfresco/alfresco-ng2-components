@@ -784,7 +784,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 key: 'suspendedDateRange',
                 attributes: { dateType: 'suspendedDateType', from: '_suspendedFrom', to: '_suspendedTo'},
                 value: {
-                    startedDateType: filterModel.suspendedDateType || null,
+                    suspendedDateType: filterModel.suspendedDateType || null,
                     _startFrom: filterModel.suspendedFrom || null,
                     _startTo: filterModel.suspendedTo || null
                 }
