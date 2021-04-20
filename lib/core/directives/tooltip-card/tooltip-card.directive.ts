@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ComponentRef, Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
+import { ComponentRef, Directive, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { TooltipCardComponent } from './tooltip-card.component';
 
 @Directive({ selector: '[adf-tooltip-card]' })
-export class TooltipCardDirective implements OnInit {
+export class TooltipCardDirective implements OnInit, OnDestroy {
 
     @Input('adf-tooltip-card') text = '';
     @Input() image = '';
@@ -39,6 +39,10 @@ export class TooltipCardDirective implements OnInit {
         private overlay: Overlay,
         private overlayPositionBuilder: OverlayPositionBuilder,
         private elementRef: ElementRef) {
+    }
+
+    ngOnDestroy(): void {
+        this.hide();
     }
 
     ngOnInit(): void {
