@@ -36,6 +36,8 @@ export class ProcessQueryCloudRequestModel {
    startTo?: string;
    completedFrom?: string;
    completedTo?: string;
+   suspendedFrom?: string;
+   suspendedTo?: string;
    completedDate?: string;
    maxItems: number;
    skipCount: number;
@@ -60,6 +62,8 @@ export class ProcessQueryCloudRequestModel {
            this.startTo = obj.startTo;
            this.completedFrom = obj.completedFrom;
            this.completedTo = obj.completedTo;
+           this.suspendedFrom = obj.suspendedFrom;
+           this.suspendedTo = obj.suspendedTo;
            this.completedDate = obj.completedDate;
            this.maxItems = obj.maxItems;
            this.skipCount = obj.skipCount;

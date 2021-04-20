@@ -400,6 +400,21 @@ describe('EditProcessFilterCloudComponent', () => {
         });
     });
 
+    it('should get form attributes for suspendedData', async() => {
+        fixture.detectChanges();
+        component.filterProperties = ['appName', 'suspendedDateRange'];
+        fixture.detectChanges();
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(component.editProcessFilterForm.get('_suspendedFrom')).toBeDefined();
+            expect(component.editProcessFilterForm.get('_suspendedTo')).toBeDefined();
+            expect(component.editProcessFilterForm.get('suspendedDateType')).toBeDefined();
+        });
+    });
+
     it('should able to build a editProcessFilter form with default properties if input is empty', async(() => {
         fixture.detectChanges();
         component.filterProperties = [];
