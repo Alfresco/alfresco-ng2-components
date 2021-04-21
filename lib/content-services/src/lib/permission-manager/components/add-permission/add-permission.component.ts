@@ -28,7 +28,7 @@ import { RoleModel } from '../../models/role.model';
     encapsulation: ViewEncapsulation.None
 })
 /*
- * @deprecated in 4.3.0, use adf-add-permission-panel instead.
+ * @deprecated in 4.4.0, use adf-add-permission-panel instead.
  */
 export class AddPermissionComponent implements OnInit {
 
@@ -69,10 +69,9 @@ export class AddPermissionComponent implements OnInit {
 
     applySelection() {
         if (this.contentService.hasAllowableOperations(this.currentNode, AllowableOperationsEnum.UPDATEPERMISSIONS)) {
-            const permissions = this.transformNodeToPermissionElement(this.selectedItems, this.currentNodeRoles[0]);
+            const permissions = this.transformNodeToPermissionElement(this.selectedItems, this.currentNodeRoles[0].role);
             this.nodePermissionService.updateNodePermissions(this.nodeId, permissions)
-                .subscribe(
-                    (node) => {
+                .subscribe((node) => {
                         this.success.emit(node);
                     },
                     (error) => {
@@ -81,11 +80,11 @@ export class AddPermissionComponent implements OnInit {
         }
     }
 
-    private transformNodeToPermissionElement(nodes: NodeEntry[], nodeRole: any): PermissionElement[] {
+    private transformNodeToPermissionElement(nodes: NodeEntry[], role: string): PermissionElement[] {
         return nodes.map((node) => {
             return {
                 'authorityId': node.entry.properties['cm:authorityName'] ?? node.entry.properties['cm:userName'],
-                'name': nodeRole,
+                'name': role,
                 'accessStatus': 'ALLOWED'
             };
         });

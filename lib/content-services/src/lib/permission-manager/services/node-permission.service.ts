@@ -286,23 +286,21 @@ export class NodePermissionService {
             );
      }
 
-     transformNodeToPerson(node: Node): Person | null {
+     transformNodeToUserPerson(node: Node): { person: Person, group: Group } {
+         let person = null, group = null;
          if (node.nodeType === 'cm:person') {
              const firstName = node.properties['cm:firstName'];
              const lastName =  node.properties['cm:lastName'];
              const email =  node.properties['cm:email'];
              const id =  node.properties['cm:userName'];
-             return new Person({ id, firstName, lastName, email});
+             person = new Person({ id, firstName, lastName, email});
          }
-         return null;
-     }
 
-     transformNodeToGroup(node: Node): Group | null {
          if (node.nodeType === 'cm:authorityContainer') {
              const displayName = node.properties['cm:authorityDisplayName'] || node.properties['cm:authorityName'];
              const id = node.properties['cm:authorityName'];
-             return new Group({ displayName, id });
+             group = new Group({ displayName, id });
          }
-         return null;
+         return  { person, group };
      }
 }

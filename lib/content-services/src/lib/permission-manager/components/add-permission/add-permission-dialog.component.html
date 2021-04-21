@@ -34,16 +34,13 @@
                              title="PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE"
                              key="role">
                     <ng-template let-entry="$implicit">
-                        <adf-user-role-column *ngIf="!entry.row.obj.readonly else read_only_label"
+                        <adf-user-role-column [readonly]="entry.row.obj.readonly"
                                               [placeholder]="entry.data.getValue(entry.row, entry.col)"
                                               [value]="entry.data.getValue(entry.row, entry.col)"
                                               [roles]="data.roles"
                                               id="adf-select-role-permission"
                                               (roleChanged)="onMemberUpdate($event, entry.row.obj)">
                         </adf-user-role-column>
-                        <ng-template #read_only_label>
-                            <span>{{ entry.data.getValue(entry.row, entry.col) | adfLocalizedRole }}</span>
-                        </ng-template>
                     </ng-template>
 
                     <adf-data-column-header>

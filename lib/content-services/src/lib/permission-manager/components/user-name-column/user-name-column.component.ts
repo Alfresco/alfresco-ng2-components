@@ -45,39 +45,30 @@ export class UserNameColumnComponent implements OnInit {
     constructor(private nodePermissionService: NodePermissionService) {}
 
     ngOnInit() {
-        if (this.context) {
-            this.updateContextValue();
+        if (this.context != null) {
+            const { person, group, authorityId } = this.context.row.obj?.entry ?? this.context.row.obj;
+            const permissionGroup = authorityId ? { displayName: authorityId } as  Group : null;
+            this.updatePerson(person);
+            this.updateGroup(group || permissionGroup);
         }
 
         if (this.node) {
-            this.updateNodeValue();
+            const { person, group } = this.nodePermissionService.transformNodeToUserPerson(this.node.entry);
+            this.updatePerson(person);
+            this.updateGroup(group);
         }
     }
 
-    protected updateValue(person: Person, group: Group) {
+    private updatePerson(person: Person) {
         if (person) {
             this.displayText$.next(`${person.firstName ?? ''} ${person.lastName ?? ''}`);
             this.subTitleText$.next(person.email ?? '');
         }
+   }
 
+    private updateGroup(group: Group) {
         if (group) {
             this.displayText$.next(group.displayName);
         }
     }
-
-    private updateContextValue() {
-        const { person, group, authorityId } = this.context.row.obj?.entry ?? this.context.row.obj;
-        if (authorityId) {
-            this.updateValue(null, { displayName: authorityId } as any);
-        } else {
-            this.updateValue(person, group);
-        }
-    }
-
-    private updateNodeValue() {
-        const { entry } = this.node;
-        const person = this.nodePermissionService.transformNodeToPerson(entry);
-        const group = this.nodePermissionService.transformNodeToGroup(entry);
-        this.updateValue(person, group);
-     }
 }

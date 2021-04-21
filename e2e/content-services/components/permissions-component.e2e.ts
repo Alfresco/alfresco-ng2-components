@@ -165,7 +165,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.selectRole(groupBody.displayName, 'Consumer');
             await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'button should be enabled');
             await permissionsPage.addPermissionsDialog.clickAddButton();
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('Added 0 user\'s 1 group\'s');
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('Added 0 user(s) 1 group(s)');
             await permissionsPage.checkUserIsAdded(groupBody.id);
         });
 
@@ -203,7 +203,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.selectRole(filePermissionUser.fullName, 'Contributor');
             await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'button should be enabled');
             await permissionsPage.addPermissionsDialog.clickAddButton();
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('Added 1 user\'s 0 group\'s');
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('Added 1 user(s) 0 group(s)');
             await notificationPage.waitForSnackBarToClose();
             await permissionsPage.checkUserIsAdded(filePermissionUser.username);
         });
@@ -216,6 +216,7 @@ describe('Permissions Component', () => {
         it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', async () => {
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.username);
+            await browser.sleep(500);
             const roleDropdownOptions = permissionsPage.addPermissionsDialog.getRoleDropdownOptions();
             await expect(await roleDropdownOptions.count()).toBe(5);
 
@@ -227,22 +228,22 @@ describe('Permissions Component', () => {
 
             await BrowserActions.closeMenuAndDialogs();
             await permissionsPage.changePermission(filePermissionUser.username, 'Collaborator');
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated');
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated', 'Collaborator update snackbar not shown');
             await notificationPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Collaborator');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Coordinator');
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated');
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated', 'Coordinator update snackbar not shown');
             await notificationPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Coordinator');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Editor');
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated');
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated', 'Editor update snackbar not shown');
             await notificationPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Editor');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Consumer');
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated');
+            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated', 'Consumer update snackbar not shown');
             await notificationPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Consumer');
         });

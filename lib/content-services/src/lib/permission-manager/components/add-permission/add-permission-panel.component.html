@@ -50,7 +50,7 @@
                 <adf-user-icon-column [node]="item"></adf-user-icon-column>
                 <p class="adf-result-name">
                     <ng-container *ngIf="item.entry?.properties['cm:authorityDisplayName']; else authorityName">
-                        {{item.entry?.properties['cm:authorityDisplayName']}}
+                        {{item.entry.properties['cm:authorityDisplayName']}}
                     </ng-container>
                     <ng-template #authorityName>
                         <ng-container *ngIf="item.entry?.properties['cm:authorityName']; else owner">
@@ -58,7 +58,8 @@
                         </ng-container>
                     </ng-template>
                     <ng-template #owner>
-                        {{item.entry?.properties['cm:owner']?.displayName}}
+                        {{item.entry?.properties['cm:firstName'] ? item.entry?.properties['cm:firstName'] : '' }}
+                        {{item.entry?.properties['cm:lastName'] ? item.entry?.properties['cm:lastName']: ''}}
                     </ng-template>
                 </p>
             </mat-list-option>

@@ -37,16 +37,13 @@
             key="name"
             sortable="false">
             <ng-template let-entry="$implicit">
-                <adf-user-role-column *ngIf="!isReadOnly else show_only_label"
+                <adf-user-role-column [readonly]="isReadOnly"
                                       [placeholder]="entry.data.getValue(entry.row, entry.col)"
                                       [value]="entry.data.getValue(entry.row, entry.col)"
                                       [roles]="roles"
                                       id="adf-select-role-permission"
                                       (roleChanged)="updateRole($event, entry.row.obj)">
                 </adf-user-role-column>
-                <ng-template #show_only_label>
-                    <span>{{ entry.data.getValue(entry.row, entry.col) | adfLocalizedRole }}</span>
-                </ng-template>
             </ng-template>
 
             <adf-data-column-header *ngIf="!isReadOnly">
@@ -83,11 +80,5 @@
             </adf-empty-content>
         </ng-template>
     </adf-no-content-template>
-
-    <adf-no-permission-template>
-        <ng-template>
-            <ng-content select="adf-custom-no-permission-template, no-permission-content"></ng-content>
-        </ng-template>
-    </adf-no-permission-template>
 
 </adf-datatable>

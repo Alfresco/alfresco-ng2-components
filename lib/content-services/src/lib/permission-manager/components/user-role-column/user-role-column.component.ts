@@ -21,20 +21,29 @@ import { RoleModel } from '../../models/role.model';
 @Component({
   selector: 'adf-user-role-column',
   template: `
-      <mat-form-field floatLabel="never">
+      <mat-form-field floatLabel="never" class="adf-role-selector-field" *ngIf="!readonly">
           <mat-select
               (click)="$event.stopPropagation()"
               [placeholder]="placeholder | translate"
               [value]="value"
-              [disabled]="disabled"
               (selectionChange)="onRoleChanged($event.value)">
-              <mat-option *ngFor="let role of roles" [value]="role.role"
-              >{{ role.label | adfLocalizedRole }}
+              <mat-option *ngFor="let role of roles" [value]="role.role">
+                  {{ role.label | adfLocalizedRole }}
               </mat-option>
           </mat-select>
       </mat-form-field>
+
+      <span class="adf-datatable-cell-value" [title]="value | adfLocalizedRole" *ngIf="readonly">
+          {{value | adfLocalizedRole}}
+      </span>
   `,
-    host: { class: 'adf-user-role-column adf-datatable-content-cell adf-expand-cell-4' }
+    host: { class: 'adf-user-role-column adf-datatable-content-cell adf-expand-cell-4' },
+    styles: [
+        `.adf-role-selector-field {
+            width: 100%;
+        }
+        `
+    ]
 })
 export class UserRoleColumnComponent {
 
@@ -45,7 +54,7 @@ export class UserRoleColumnComponent {
     value: string;
 
     @Input()
-    disabled = false;
+    readonly = false;
 
     @Input()
     placeholder: string = 'PERMISSION_MANAGER.LABELS.SELECT-ROLE';

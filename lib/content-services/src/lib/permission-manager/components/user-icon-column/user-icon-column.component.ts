@@ -51,26 +51,16 @@ export class UserIconColumnComponent implements OnInit {
 
     ngOnInit() {
         if (this.context) {
-            this.updateContextValue();
+            const { person, group, authorityId } = this.context.row.obj?.entry ?? this.context.row.obj;
+            this.group = this.isGroup(group, authorityId);
+            this.displayText$.next(person || group || { displayName: authorityId });
         }
 
         if (this.node) {
-            this.updateNodeValue();
+            const { person, group } = this.nodePermissionService.transformNodeToUserPerson(this.node.entry);
+            this.group = this.isGroup(group, null);
+            this.displayText$.next(person || group);
         }
-    }
-
-    protected updateContextValue() {
-        const { person, group, authorityId } = this.context.row.obj?.entry ?? this.context.row.obj;
-        this.displayText$.next(person || group || { displayName: authorityId });
-        this.group = this.isGroup(group, authorityId);
-    }
-
-    private updateNodeValue() {
-        const { entry } = this.node;
-        const person = this.nodePermissionService.transformNodeToPerson(entry);
-        const group = this.nodePermissionService.transformNodeToGroup(entry);
-        this.displayText$.next(person || group);
-        this.group = !!group;
     }
 
     private isGroup(group, authorityId): boolean {
