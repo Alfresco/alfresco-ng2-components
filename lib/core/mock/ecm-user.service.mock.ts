@@ -90,3 +90,12 @@ export let fakeEcmEditedUser = {
     enabled: true,
     emailNotificationsEnabled: true
 };
+
+export const createNewPersonMock = {
+    id: 'fake-id',
+    firstName: 'fake-ecm-first-name',
+    lastName: 'fake-ecm-last-name',
+    description: 'i am a fake user for test',
+    password: 'fake-avatar-id',
+    email: 'fakeEcm@ecmUser.com'
+};

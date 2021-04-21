@@ -20,6 +20,10 @@ Gets information about a Content Services user.
     Gets information about a user identified by their username.
     -   _personId:_ `string`  - ID of the target user
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - User information
+-   **createPerson**(newPerson: [PersonBodyCreate](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PersonBodyCreate.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
+    Creates new person.
+    -   _newPerson:_ `<`[PersonBodyCreate](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PersonBodyCreate.md)`>`  - Object containing the new person details
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html) `<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>` - Created new person.
 
 ## Details
 
@@ -30,6 +34,10 @@ returned for a particular person.
 
 See the
 [getPerson](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/PeopleApi.md#getPerson)
+method in the Alfresco JS API for more information about the REST calls used by this service.
+
+See the
+[createPerson](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/PeopleApi.md#createPerson)
 method in the Alfresco JS API for more information about the REST calls used by this service.
 
 ## See also
