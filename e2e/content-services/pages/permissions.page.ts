@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-import { AddPermissionsDialogPage, BrowserActions, DataTableComponentPage, Logger, TestElement } from '@alfresco/adf-testing';
+import {
+    AddPermissionsDialogPage,
+    BrowserActions,
+    DataTableComponentPage,
+    DropdownPage,
+    Logger,
+    TestElement
+} from '@alfresco/adf-testing';
 import { browser, by, element } from 'protractor';
 
 export class PermissionsPage {
@@ -38,7 +45,8 @@ export class PermissionsPage {
 
     async changePermission(name: string, role: string): Promise<void> {
         await this.clickRoleDropdownByUserOrGroupName(name);
-        await this.addPermissionsDialog.selectOption(role);
+        await new DropdownPage().selectOption(role);
+        await this.dataTableComponentPage.checkRowByContentIsNotSelected(name);
     }
 
     async checkUserIsAdded(id: string) {

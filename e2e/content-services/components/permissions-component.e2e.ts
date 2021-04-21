@@ -229,23 +229,18 @@ describe('Permissions Component', () => {
 
             await BrowserActions.closeMenuAndDialogs();
             await permissionsPage.changePermission(filePermissionUser.username, 'Collaborator');
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated', 'Collaborator update snackbar not shown');
-            await notificationPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Collaborator');
+            await browser.sleep(2000);
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Coordinator');
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated', 'Coordinator update snackbar not shown');
-            await notificationPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Coordinator');
+            await browser.sleep(2000);
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Editor');
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated', 'Editor update snackbar not shown');
-            await notificationPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Editor');
+            await browser.sleep(2000);
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Consumer');
-            await expect(await notificationPage.getSnackBarMessage()).toEqual('User/Group updated', 'Consumer update snackbar not shown');
-            await notificationPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Consumer');
         });
 
