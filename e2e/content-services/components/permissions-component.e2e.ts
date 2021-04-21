@@ -194,6 +194,7 @@ describe('Permissions Component', () => {
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             await contentList.rightClickOnRow(fileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Permission');
+            await permissionsPage.waitVisible();
             await permissionsPage.addPermissionButton.waitVisible();
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
