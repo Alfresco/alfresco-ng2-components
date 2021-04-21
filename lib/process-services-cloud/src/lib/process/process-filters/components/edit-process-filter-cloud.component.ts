@@ -204,6 +204,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     private getAttributesControlConfig(property: ProcessFilterProperties) {
+        console.log(property);
+        console.log(this.processFilter);
         return Object.values(property.attributes).reduce((result, key) => {
             result[key] = property.value[key];
             return result;
@@ -785,8 +787,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 attributes: { dateType: 'suspendedDateType', from: '_suspendedFrom', to: '_suspendedTo'},
                 value: {
                     suspendedDateType: filterModel.suspendedDateType || null,
-                    _startFrom: filterModel.suspendedFrom || null,
-                    _startTo: filterModel.suspendedTo || null
+                    _suspendedFrom: filterModel.suspendedFrom || null,
+                    _suspendedTo: filterModel.suspendedTo || null
                 }
             }
         ];

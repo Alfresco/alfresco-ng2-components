@@ -401,6 +401,18 @@ describe('EditProcessFilterCloudComponent', () => {
     });
 
     it('should get form attributes for suspendedData', async() => {
+        const filter = new ProcessFilterCloudModel({
+            id: 'filter-id',
+            name: 'ADF_CLOUD_PROCESS_FILTERS.RUNNING_PROCESSES',
+            sort: 'my-custom-sort',
+            processDefinitionId: 'process-definition-id',
+            priority: '12',
+            suspendedDateType: DateCloudFilterType.RANGE,
+        });
+        filter.suspendedFrom = new Date(2021, 1, 1).toString(),
+        filter.suspendedTo =  new Date(2021, 1, 2).toString()
+        getProcessFilterByIdSpy.and.returnValue(of(filter));
+
         fixture.detectChanges();
         component.filterProperties = ['appName', 'suspendedDateRange'];
         fixture.detectChanges();
@@ -409,9 +421,9 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(component.editProcessFilterForm.get('_suspendedFrom')).toBeDefined();
-            expect(component.editProcessFilterForm.get('_suspendedTo')).toBeDefined();
-            expect(component.editProcessFilterForm.get('suspendedDateType')).toBeDefined();
+            expect(component.editProcessFilterForm.get('_suspendedFrom').value).toEqual(new Date(2021, 1, 1).toString());
+            expect(component.editProcessFilterForm.get('_suspendedTo').value).toEqual(new Date(2021, 1, 2).toString());
+            expect(component.editProcessFilterForm.get('suspendedDateType').value).toEqual(DateCloudFilterType.RANGE);
         });
     });
 
