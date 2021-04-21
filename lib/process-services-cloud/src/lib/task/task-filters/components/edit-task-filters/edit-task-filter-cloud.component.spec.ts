@@ -53,7 +53,8 @@ describe('EditTaskFilterCloudComponent', () => {
 
     const mock = {
         oauth2Auth: {
-            callCustomApi: () => Promise.resolve(fakeApplicationInstance)
+            callCustomApi: () => Promise.resolve(fakeApplicationInstance),
+            on: jasmine.createSpy('on')
         },
         isEcmLoggedIn() {
             return false;

@@ -42,7 +42,8 @@ describe('GroupCloudComponent', () => {
 
     const mock = {
         oauth2Auth: {
-            callCustomApi: () => Promise.resolve(mockIdentityGroups)
+            callCustomApi: () => Promise.resolve(mockIdentityGroups),
+            on: jasmine.createSpy('on')
         },
         isEcmLoggedIn() {
             return false;

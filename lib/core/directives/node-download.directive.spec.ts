@@ -24,6 +24,7 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeDownloadDirective } from './node-download.directive';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { mockOauth2Auth } from '../mock';
 
 @Component({
     template: '<div [adfNodeDownload]="selection" [version]="version"></div>'
@@ -63,7 +64,7 @@ describe('NodeDownloadDirective', () => {
     });
 
     it('should not download node when selection is empty', () => {
-        spyOn(apiService, 'getInstance');
+        spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
         component.selection = [];
 
         fixture.detectChanges();
