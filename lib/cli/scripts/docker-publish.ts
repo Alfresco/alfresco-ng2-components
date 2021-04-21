@@ -17,10 +17,8 @@
  * limitations under the License.
  */
 
-
 import * as docker from './docker';
 
 export default function (args: any)  {
     docker.default(args);
 }
-

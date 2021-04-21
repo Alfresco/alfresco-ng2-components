@@ -43,7 +43,7 @@ describe('AddPermissionComponent', () => {
     beforeEach(() => {
         nodePermissionService = TestBed.inject(NodePermissionService);
         spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(
-            of({ node: { id: 'fake-node', allowableOperations: ['updatePermissions']}, roles: [{ label:'Test' , role: 'test'}] })
+            of({ node: { id: 'fake-node', allowableOperations: ['updatePermissions']}, roles: [{ label: 'Test' , role: 'test'}] })
         );
         fixture = TestBed.createComponent(AddPermissionComponent);
         element = fixture.nativeElement;
