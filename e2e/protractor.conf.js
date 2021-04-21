@@ -105,7 +105,9 @@ exports.config = {
 
     suites: {
         smokeTestCore: [
-            "./core/login/**/*.e2e.ts",
+            "./core/login-sso/login-sso.e2e.ts",
+            "./core/login/login-component.e2e.ts",
+            "./core/login/remember-me.e2e.ts",
             "./core/viewer/**/*.e2e.ts"
         ],
         smokeTestCsSearch: [
@@ -116,8 +118,7 @@ exports.config = {
         smokeTestPs: [
             "./process-services/process/**/*.e2e.ts",
             "./process-services/form/**/*.e2e.ts",
-            "./process-services-cloud/process/**/*.e2e.ts",
-            "./process-services-cloud/form-field/**/*.e2e.ts"
+            "./process-services-cloud/process/**/*.e2e.ts"
         ]
     },
 
