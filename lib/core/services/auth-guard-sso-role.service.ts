@@ -26,7 +26,7 @@ import { PeopleContentService } from './people-content.service';
 })
 export class AuthGuardSsoRoleService implements CanActivate {
     acsAdminRole = 'ACS_ADMIN';
-    hasAcsAdminRole = false;
+    hasAcsAdminRole: boolean;
 
     constructor(private jwtHelperService: JwtHelperService,
                 private router: Router,
@@ -42,7 +42,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
         if (route.data) {
             if (route.data['roles']) {
                 const rolesToCheck: string[] = route.data['roles'];
-                if (rolesToCheck.includes(this.acsAdminRole)) {
+                if (this.hasAcsAdminRole === undefined && rolesToCheck.includes(this.acsAdminRole)) {
                     this.hasAcsAdminRole = await this.isAcsAdmin();
                 }
                 hasRealmRole = this.jwtHelperService.hasRealmRoles(rolesToCheck) || this.hasAcsAdminRole;
