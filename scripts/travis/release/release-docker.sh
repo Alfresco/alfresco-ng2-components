@@ -12,7 +12,7 @@ fi;
 echo "ℹ️ Check Docker Image release for $COMMIT_MESSAGE type $TRAVIS_EVENT_TYPE on branch $TRAVIS_PULL_REQUEST_BRANCH"
 
 if [[ $TRAVIS_EVENT_TYPE == "push" || $TRAVIS_EVENT_TYPE == "cron"  || ( $TRAVIS_EVENT_TYPE == "pull_request" && $COMMIT_MESSAGE == *"[create docker image]"* )]];
-the
+then
 
     if [[ $TRAVIS_BRANCH == "develop" || $TRAVIS_BRANCH == "master" ]];
     then
