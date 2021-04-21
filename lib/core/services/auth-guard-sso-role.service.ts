@@ -19,24 +19,33 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from './jwt-helper.service';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { PeopleContentService } from './people-content.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuardSsoRoleService implements CanActivate {
+    acsAdminRole = 'ACS_ADMIN';
+    hasAcsAdminRole = false;
 
-    constructor(private jwtHelperService: JwtHelperService, private router: Router, private dialog: MatDialog) {
+    constructor(private jwtHelperService: JwtHelperService,
+                private router: Router,
+                private dialog: MatDialog,
+                private peopleContentService: PeopleContentService) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot): boolean {
+    async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
         let hasRole;
         let hasRealmRole = false;
         let hasClientRole = true;
 
         if (route.data) {
             if (route.data['roles']) {
-                const rolesToCheck = route.data['roles'];
-                hasRealmRole = this.jwtHelperService.hasRealmRoles(rolesToCheck);
+                const rolesToCheck: string[] = route.data['roles'];
+                if (rolesToCheck.includes(this.acsAdminRole)) {
+                    this.hasAcsAdminRole = await this.isAcsAdmin();
+                }
+                hasRealmRole = this.jwtHelperService.hasRealmRoles(rolesToCheck) || this.hasAcsAdminRole;
             }
 
             if (route.data['clientRoles']) {
@@ -57,5 +66,10 @@ export class AuthGuardSsoRoleService implements CanActivate {
         }
 
         return hasRole;
+    }
+
+    async isAcsAdmin(): Promise<boolean> {
+        const user = await this.peopleContentService.getCurrentPerson().toPromise();
+        return user?.entry?.capabilities?.isAdmin || false;
     }
 }
