@@ -30,21 +30,20 @@ const preventAngularFromResetting = () => (TestBed.resetTestingModule = () => Te
 const allowAngularToReset = () => (TestBed.resetTestingModule = resetTestingModule);
 
 export const setupTestBed = (moduleDef: TestModuleMetadata) => {
-    beforeAll((done) =>
-        (async () => {
+    beforeAll((done) => {
             localStorage.clear();
             sessionStorage.clear();
             resetTestingModule();
             preventAngularFromResetting();
             TestBed.configureTestingModule(moduleDef);
-            await TestBed.compileComponents();
-
-            // prevent Angular from resetting testing module
-            TestBed.resetTestingModule = () => TestBed;
-        })()
-            .then(done)
-            .catch(done.fail)
+            TestBed.compileComponents()
+                .then(() => {
+                    TestBed.resetTestingModule = () => TestBed;
+                    done();
+                })
+                .catch(done.fail);
+      }
     );
-
+​
     afterAll(() => allowAngularToReset());
 };
