@@ -398,7 +398,6 @@ describe('Permissions Component', () => {
             await contentList.rightClickOnRow('RoleConsumer' + fileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Permission');
             await permissionsPage.checkPermissionManagerDisplayed();
-            await permissionsPage.checkPermissionListDisplayed();
             await permissionsPage.errorElement.waitPresent();
             await expect(await permissionsPage.noPermissionContent()).toContain('This item no longer exists or you don\'t have permission to view it.');
         });
