@@ -88,7 +88,7 @@ export class PermissionsPage {
         const inheritButton = TestElement.byCss(this.inheritedButton);
         await inheritButton.waitVisible();
         const appliedStyles = await inheritButton.getAttribute('class');
-        return appliedStyles.indexOf('mat-checked') != -1;
+        return appliedStyles.indexOf('mat-checked') !== -1;
     }
 
     async toggleInheritPermission(): Promise<void> {

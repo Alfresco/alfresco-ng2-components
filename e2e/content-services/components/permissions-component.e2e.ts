@@ -184,11 +184,11 @@ describe('Permissions Component', () => {
 
         it('should be able to toggle the inherited permission', async () => {
             await permissionsPage.checkPermissionListDisplayed();
-            expect(await permissionsPage.isInherited()).toBe(true, 'Inherited permission should be on');
+            await expect(await permissionsPage.isInherited()).toBe(true, 'Inherited permission should be on');
             await permissionsPage.toggleInheritPermission();
             await expect(await notificationPage.getSnackBarMessage()).toContain('Disabled inherited permission', 'Disabled notification not shown');
             await notificationPage.waitForSnackBarToClose();
-            expect(await permissionsPage.isInherited()).toBe(false, 'Inherited permission should be off');
+            await expect(await permissionsPage.isInherited()).toBe(false, 'Inherited permission should be off');
         });
     });
 
