@@ -419,8 +419,8 @@
       "PERMISSION-DELETE-FAIL": "Failed to delete user/group",
       "PERMISSION-ADD-SUCCESS": "Added {{user}} user(s) {{group}} group(s)",
       "PERMISSION-ADD-FAIL": "Failed to add user/group",
-      "INHERIT-ENABLE-SUCCESS": "Enabled inherited Permission",
-      "INHERIT-DISABLE-SUCCESS": "Disabled inherited Permission",
+      "INHERIT-ENABLE-SUCCESS": "Enabled inherited permission",
+      "INHERIT-DISABLE-SUCCESS": "Disabled inherited permission",
       "TOGGLE-PERMISSION-FAILED": "Failed to toggle inherit Permission"
     },
     "ACTION": {

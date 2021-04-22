@@ -34,10 +34,6 @@ export class AddPermissionsDialogPage {
     searchUserInput = element(by.id('searchInput'));
     searchResults = element(by.css('#adf-add-permission-authority-results #adf-search-results-content'));
     addButton = element(by.css('[data-automation-id="add-permission-dialog-confirm-button"]'));
-    permissionInheritedButton = element(by.css('mat-slide-toggle[data-automation-id="adf-inherit-toggle-button"]'));
-    noPermissions = element(by.id('adf-no-permissions-template'));
-    deletePermissionButton = element(by.css('button[data-automation-id="adf-delete-permission-button"]'));
-    permissionDisplayContainer = element(by.id('adf-permission-display-container'));
     closeButton = element(by.id('add-permission-dialog-close-button'));
 
     async clickCloseButton(): Promise<void> {
@@ -71,26 +67,6 @@ export class AddPermissionsDialogPage {
         await BrowserActions.click(this.addButton);
     }
 
-    async checkPermissionInheritedButtonIsDisplayed() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.permissionInheritedButton);
-    }
-
-    async clickPermissionInheritedButton(): Promise<void> {
-        await BrowserActions.click(this.permissionInheritedButton);
-    }
-
-    async clickDeletePermissionButton(): Promise<void> {
-        await BrowserActions.click(this.deletePermissionButton);
-    }
-
-    async checkNoPermissionsIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.noPermissions);
-    }
-
-    async getPermissionInheritedButtonText(text: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementHasText(this.permissionInheritedButton, text);
-    }
-
     async checkPermissionsDatatableIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css('[class*="adf-datatable-permission"]')));
     }
@@ -111,10 +87,6 @@ export class AddPermissionsDialogPage {
 
     async selectOption(name: string): Promise<void> {
         await new DropdownPage().selectOption(name);
-    }
-
-    async checkPermissionContainerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.permissionDisplayContainer);
     }
 
     async checkUserOrGroupIsDisplayed(name: string): Promise<void> {

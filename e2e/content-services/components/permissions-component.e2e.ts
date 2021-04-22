@@ -134,7 +134,7 @@ describe('Permissions Component', () => {
 
             await contentList.rightClickOnRow(fileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Permission');
-            await permissionsPage.addPermissionsDialog.checkPermissionContainerIsDisplayed();
+            await permissionsPage.checkPermissionManagerDisplayed();
         });
 
         afterEach(async () => {
@@ -181,6 +181,15 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkResultListIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkUserOrGroupIsDisplayed('EVERYONE');
         });
+
+        it('should be able to toggle the inherited permission', async () => {
+            await permissionsPage.checkPermissionListDisplayed();
+            expect(await permissionsPage.isInherited()).toBe(true, 'Inherited permission should be on');
+            await permissionsPage.toggleInheritPermission();
+            await expect(await notificationPage.getSnackBarMessage()).toContain('Disabled inherited permission', 'Disabled notification not shown');
+            await notificationPage.waitForSnackBarToClose();
+            expect(await permissionsPage.isInherited()).toBe(false, 'Inherited permission should be off');
+        });
     });
 
     describe('Changing and duplicate Permissions', () => {
@@ -194,7 +203,7 @@ describe('Permissions Component', () => {
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             await contentList.rightClickOnRow(fileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Permission');
-            await permissionsPage.waitVisible();
+            await permissionsPage.checkPermissionManagerDisplayed();
             await permissionsPage.addPermissionButton.waitVisible();
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
@@ -217,7 +226,6 @@ describe('Permissions Component', () => {
         it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', async () => {
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
             await permissionsPage.clickRoleDropdownByUserOrGroupName(filePermissionUser.username);
-            await browser.sleep(500);
             const roleDropdownOptions = permissionsPage.addPermissionsDialog.getRoleDropdownOptions();
             await expect(await roleDropdownOptions.count()).toBe(5);
 
@@ -229,18 +237,19 @@ describe('Permissions Component', () => {
 
             await BrowserActions.closeMenuAndDialogs();
             await permissionsPage.changePermission(filePermissionUser.username, 'Collaborator');
-            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Collaborator');
             await notificationPage.waitForSnackBarToClose();
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Collaborator');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Coordinator');
-            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Coordinator');
             await notificationPage.waitForSnackBarToClose();
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Coordinator');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Editor');
-            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Editor');
             await notificationPage.waitForSnackBarToClose();
+            await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Editor');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Consumer');
+            await notificationPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Consumer');
         });
 
@@ -388,8 +397,8 @@ describe('Permissions Component', () => {
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             await contentList.rightClickOnRow('RoleConsumer' + fileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Permission');
-            await permissionsPage.waitVisible();
-            await permissionsPage.waitTillContentLoads();
+            await permissionsPage.checkPermissionManagerDisplayed();
+            await permissionsPage.checkPermissionListDisplayed();
             await permissionsPage.errorElement.waitPresent();
             await expect(await permissionsPage.noPermissionContent()).toContain('This item no longer exists or you don\'t have permission to view it.');
         });
