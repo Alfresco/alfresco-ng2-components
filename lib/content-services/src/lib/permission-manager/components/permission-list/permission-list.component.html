@@ -5,12 +5,12 @@
         </mat-progress-spinner>
     </div>
 
-    <div *ngIf="permissionList.error$ | async">
-        <div class="adf-no-permission__template">
+    <ng-container *ngIf="permissionList.error$ | async">
+        <div class="adf-no-permission__template" id="adf-permission-manager-error">
             <mat-icon [color]="'error'">error</mat-icon>
             <p class="adf-no-permission__template--text">{{ 'PERMISSION_MANAGER.ERROR.NOT-FOUND'| translate }}</p>
         </div>
-    </div>
+    </ng-container>
 
     <ng-container *ngIf="permissionList.data$ | async as model">
         <div class="adf-permission-container" #target>

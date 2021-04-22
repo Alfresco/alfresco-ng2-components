@@ -185,7 +185,7 @@ In the Example below we will prepend `Hi!` to each file and folder name in the l
 
 <!-- {% endraw %} -->
 
-In the Example below we will shows capitalised custom name for a column:
+In the example below we will show capitalised custom name for a column:
 
 <!-- {% raw %} -->
 

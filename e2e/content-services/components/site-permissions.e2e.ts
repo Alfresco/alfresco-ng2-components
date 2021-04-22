@@ -198,7 +198,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(consumerUser.firstName);
             await permissionsPage.addPermissionsDialog.selectRole(consumerUser.fullName, 'Site Collaborator');
             await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.fullName)).toEqual('Site Collaborator');
-            await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'button should not be enabled');
+            await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'Add button should be enabled');
             await permissionsPage.addPermissionsDialog.clickAddButton();
             await expect(await notificationPage.getSnackBarMessage()).toEqual('Added 1 user(s) 0 group(s)');
             await notificationPage.waitForSnackBarToClose();

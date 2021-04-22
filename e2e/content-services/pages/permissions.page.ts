@@ -30,8 +30,8 @@ export class PermissionsPage {
     dataTableComponentPage = new DataTableComponentPage();
     addPermissionsDialog = new AddPermissionsDialogPage();
 
-    rootElement = TestElement.byId('adf-permission-manager-card');
-    emptyElement = new TestElement(this.rootElement.elementFinder.element(by.css('.adf-no-permission__template')));
+    rootElement = 'adf-permission-manager-card';
+    errorElement = TestElement.byId('adf-permission-manager-error');
     addPermissionButton = TestElement.byCss("button[data-automation-id='adf-add-permission-button']");
     addPermissionDialog = element(by.css('adf-add-permission-dialog'));
     searchUserInput = element(by.id('searchInput'));
@@ -44,6 +44,7 @@ export class PermissionsPage {
     closeButton = TestElement.byCss('#add-permission-dialog-close-button');
 
     async changePermission(name: string, role: string): Promise<void> {
+        await browser.sleep(500);
         await this.clickRoleDropdownByUserOrGroupName(name);
         await new DropdownPage().selectOption(role);
         await this.dataTableComponentPage.checkRowByContentIsNotSelected(name);
@@ -69,7 +70,6 @@ export class PermissionsPage {
         const userOrGroupName = TestElement.byCss(`[data-automation-id="adf-delete-permission-button-${username}"]`);
         await userOrGroupName.waitPresent();
         await userOrGroupName.click();
-
     }
 
     async checkUserIsDeleted(username: string): Promise<void> {
@@ -83,24 +83,16 @@ export class PermissionsPage {
     }
 
     async waitVisible(): Promise<void> {
-        await this.rootElement.waitPresent();
-    }
-
-    async isErrored(): Promise<boolean> {
-        return this.emptyElement.isPresent();
-    }
-
-    async waitForError(): Promise<void> {
-        await this.emptyElement.waitPresent();
+        await TestElement.byId(this.rootElement).waitVisible();
     }
 
     async waitTillContentLoads(): Promise<void> {
         await browser.sleep(500);
-        const loader = new TestElement(this.rootElement.elementFinder.element(by.css('adf-permission-loader')));
+        const loader = TestElement.byCss(`[id="${this.rootElement}"] adf-permission-loader`);
         let isNotDisplayed;
         try {
             isNotDisplayed = await loader.waitNotPresent();
-            if (await this.isErrored()) {
+            if (await this.errorElement.isPresent()) {
                 Logger.log(`Error page reached`);
             }
         } catch (error) {

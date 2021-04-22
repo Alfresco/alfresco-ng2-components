@@ -230,15 +230,15 @@ describe('Permissions Component', () => {
             await BrowserActions.closeMenuAndDialogs();
             await permissionsPage.changePermission(filePermissionUser.username, 'Collaborator');
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Collaborator');
-            await browser.sleep(2000);
+            await notificationPage.waitForSnackBarToClose();
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Coordinator');
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Coordinator');
-            await browser.sleep(2000);
+            await notificationPage.waitForSnackBarToClose();
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Editor');
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Editor');
-            await browser.sleep(2000);
+            await notificationPage.waitForSnackBarToClose();
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Consumer');
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Consumer');
@@ -390,7 +390,7 @@ describe('Permissions Component', () => {
             await contentServicesPage.pressContextMenuActionNamed('Permission');
             await permissionsPage.waitVisible();
             await permissionsPage.waitTillContentLoads();
-            await permissionsPage.waitForError();
+            await permissionsPage.errorElement.waitPresent();
             await expect(await permissionsPage.noPermissionContent()).toContain('This item no longer exists or you don\'t have permission to view it.');
         });
     });
