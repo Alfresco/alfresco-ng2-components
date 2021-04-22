@@ -23,12 +23,16 @@ import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
+import { PeopleContentService } from './people-content.service';
+import { of } from 'rxjs';
+import { getMockAcsUserWithCapabilities } from '../mock';
 
 describe('Auth Guard SSO role service', () => {
 
     let authGuard: AuthGuardSsoRoleService;
     let jwtHelperService: JwtHelperService;
     let routerService: Router;
+    let peopleContentService: PeopleContentService;
 
     setupTestBed({
         imports: [
@@ -42,6 +46,7 @@ describe('Auth Guard SSO role service', () => {
         authGuard = TestBed.inject(AuthGuardSsoRoleService);
         jwtHelperService = TestBed.inject(JwtHelperService);
         routerService = TestBed.inject(Router);
+        peopleContentService = TestBed.inject(PeopleContentService);
     });
 
     it('Should canActivate be true if the Role is present int the JWT token', async(async () => {
@@ -184,5 +189,61 @@ describe('Auth Guard SSO role service', () => {
 
         expect(await authGuard.canActivate(route)).toBeFalsy();
         expect(materialDialog.closeAll).toHaveBeenCalled();
+    });
+
+    describe('ACS Admin', () => {
+
+        afterEach(() => {
+            authGuard.hasAcsAdminRole = undefined;
+        });
+
+        it('Should canActivate be true when the role is set to ACS_ADMIN and the user is an ACS admin', async () => {
+            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getMockAcsUserWithCapabilities(true, false, false)));
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { 'roles': ['ACS_ADMIN'] };
+
+            expect(await authGuard.canActivate(router)).toBeTruthy();
+            expect(authGuard.hasAcsAdminRole).toBe(true);
+        });
+
+        it('Should canActivate be false when the role is set to ACS_ADMIN but the user is not an ACS admin', async () => {
+            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getMockAcsUserWithCapabilities(false, false, false)));
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { 'roles': ['ACS_ADMIN'] };
+
+            expect(await authGuard.canActivate(router)).toBeFalsy();
+            expect(authGuard.hasAcsAdminRole).toBe(false);
+        });
+
+        it('Should make the api call to check if the user is an ACS admin only once', async () => {
+            const getCurrentPersonSpy = spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getMockAcsUserWithCapabilities(false, false, false)));
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { 'roles': ['ACS_ADMIN'] };
+
+            await authGuard.canActivate(router);
+
+            expect(authGuard.hasAcsAdminRole).toBe(false);
+            expect(getCurrentPersonSpy.calls.count()).toEqual(1);
+
+            await authGuard.canActivate(router);
+
+            expect(authGuard.hasAcsAdminRole).toBe(false);
+            expect(getCurrentPersonSpy.calls.count()).toEqual(1);
+        });
+
+        it('Should not make any api call to check if the user is an ACS admin when there is no ACS_ADMIN in the data roles', async () => {
+            const getCurrentPersonSpy = spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getMockAcsUserWithCapabilities(true, false, false)));
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { 'roles': ['fakeRole'] };
+
+            await authGuard.canActivate(router);
+
+            expect(getCurrentPersonSpy).not.toHaveBeenCalled();
+            expect(authGuard.hasAcsAdminRole).toBe(undefined);
+        });
     });
 });

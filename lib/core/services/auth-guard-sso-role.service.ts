@@ -20,6 +20,7 @@ import { JwtHelperService } from './jwt-helper.service';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PeopleContentService } from './people-content.service';
+import { PersonEntry } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -69,7 +70,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
     }
 
     async isAcsAdmin(): Promise<boolean> {
-        const user = await this.peopleContentService.getCurrentPerson().toPromise();
-        return user?.entry?.capabilities?.isAdmin || false;
+        const user: PersonEntry = await this.peopleContentService.getCurrentPerson().toPromise();
+        return user?.entry?.capabilities?.isAdmin;
     }
 }
