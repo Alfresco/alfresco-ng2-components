@@ -407,10 +407,10 @@ describe('EditProcessFilterCloudComponent', () => {
             sort: 'my-custom-sort',
             processDefinitionId: 'process-definition-id',
             priority: '12',
-            suspendedDateType: DateCloudFilterType.RANGE,
+            suspendedDateType: DateCloudFilterType.RANGE
         });
-        filter.suspendedFrom = new Date(2021, 1, 1).toString(),
-        filter.suspendedTo =  new Date(2021, 1, 2).toString()
+        filter.suspendedFrom = new Date(2021, 1, 1).toString();
+        filter.suspendedTo =  new Date(2021, 1, 2).toString();
         getProcessFilterByIdSpy.and.returnValue(of(filter));
 
         fixture.detectChanges();

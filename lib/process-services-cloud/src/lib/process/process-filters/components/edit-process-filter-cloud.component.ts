@@ -204,8 +204,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     private getAttributesControlConfig(property: ProcessFilterProperties) {
-        console.log(property);
-        console.log(this.processFilter);
         return Object.values(property.attributes).reduce((result, key) => {
             result[key] = property.value[key];
             return result;
