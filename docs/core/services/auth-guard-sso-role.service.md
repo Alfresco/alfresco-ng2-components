@@ -31,6 +31,7 @@ const appRoutes: Routes = [
 ```
 
 If the user now clicks on a link or button that follows this route, they will be not able to access this content if they do not have the Realms roles.
+<br>**Note**: An additional role ACS_ADMIN can be used in the roles array, which will result in checking whether the logged in user has ACS Admin capabilities or not, as this role is not part of the JWT token it will call an ACS API to determine it.
 
 
 Client role Example 
