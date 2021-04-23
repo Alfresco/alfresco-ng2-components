@@ -450,7 +450,7 @@ async function checkAcsEnv() {
             ['application/json']
         );
         const repositoryStatus = repositoryEntry?.entry?.repository?.status;
-        logger.info(`ACS repository is runnig. Status: ${JSON.stringify(repositoryStatus)}`);
+        logger.info(`ACS repository is running. Status: ${JSON.stringify(repositoryStatus)}`);
     } catch (e) {
         logger.error('ACS is not reachable. Terminating');
         process.exit(1);
