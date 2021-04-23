@@ -31,7 +31,8 @@ export enum ContentGroups {
     providedIn: 'root'
 })
 export class PeopleContentService {
-    hasContentAdminRole: boolean;
+    private hasContentAdminRole: boolean = false;
+    hasCheckedIsContentAdmin: boolean = false;
 
     private _peopleApi: PeopleApi;
 
@@ -76,9 +77,10 @@ export class PeopleContentService {
     }
 
     async isContentAdmin(): Promise<boolean> {
-        if (this.hasContentAdminRole === undefined) {
+        if (!this.hasCheckedIsContentAdmin) {
             const user: PersonEntry = await this.getCurrentPerson().toPromise();
             this.hasContentAdminRole = user?.entry?.capabilities?.isAdmin;
+            this.hasCheckedIsContentAdmin = true;
         }
         return this.hasContentAdminRole;
     }

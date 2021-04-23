@@ -194,7 +194,7 @@ describe('Auth Guard SSO role service', () => {
     describe('Content Admin', () => {
 
         afterEach(() => {
-           peopleContentService.hasContentAdminRole = undefined;
+           peopleContentService.hasCheckedIsContentAdmin = false;
         });
 
         it('Should give access to a content section (ALFRESCO_ADMINISTRATORS) when the user has content admin capability', async () => {
