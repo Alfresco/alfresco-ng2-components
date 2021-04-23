@@ -50,7 +50,7 @@ export let fakeEcmUser = {
     emailNotificationsEnabled: true
 };
 
-export let fakeEcmUser2 = {
+export const fakeEcmUser2 = {
     id: 'another-fake-id',
     firstName: 'another-fake-first-name',
     lastName: 'another',
@@ -103,7 +103,7 @@ export let fakeEcmEditedUser = {
     emailNotificationsEnabled: true
 };
 
-export let fakeEcmUserList = {
+export const fakeEcmUserList = {
     list: {
         pagination: {
             count: 2,

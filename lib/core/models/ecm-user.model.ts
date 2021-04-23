@@ -15,28 +15,32 @@
  * limitations under the License.
  */
 
-import { Person } from '@alfresco/js-api';
+import { Capabilities } from '@alfresco/js-api';
 import { EcmCompanyModel } from './ecm-company.model';
 
-export class EcmUserModel implements Person {
+export class EcmUserModel {
     id: string;
     firstName: string;
-    lastName: string;
-    description: string;
-    avatarId: string;
+    lastName?: string;
+    displayName?: string;
+    description?: string;
+    avatarId?: string;
     email: string;
-    skypeId: string;
-    googleId: string;
-    instantMessageId: string;
-    jobTitle: string;
-    location: string;
+    skypeId?: string;
+    googleId?: string;
+    instantMessageId?: string;
+    jobTitle?: string;
+    location?: string;
     company: EcmCompanyModel;
-    mobile: string;
-    telephone: string;
-    statusUpdatedAt: Date;
-    userStatus: string;
+    mobile?: string;
+    telephone?: string;
+    statusUpdatedAt?: Date;
+    userStatus?: string;
     enabled: boolean;
-    emailNotificationsEnabled: boolean;
+    emailNotificationsEnabled?: boolean;
+    aspectNames?: string[];
+    properties?: { [key: string]: string; };
+    capabilities?: Capabilities;
 
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
@@ -57,5 +61,8 @@ export class EcmUserModel implements Person {
         this.userStatus = obj && obj.userStatus;
         this.enabled = obj && obj.enabled;
         this.emailNotificationsEnabled = obj && obj.emailNotificationsEnabled;
+        this.aspectNames = obj && obj.aspectNames;
+        this.properties = obj && obj.properties;
+        this.capabilities = obj && obj.capabilities;
     }
 }

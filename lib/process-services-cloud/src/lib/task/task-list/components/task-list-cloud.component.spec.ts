@@ -24,7 +24,7 @@ import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTask, fakeCustomSchema } from '../mock/fake-task-response.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { Person } from '@alfresco/js-api';
+import { EcmUserModel } from '../../../../../../core/models/ecm-user.model';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { skip } from 'rxjs/operators';
@@ -47,7 +47,7 @@ class CustomTaskListComponent {
     @ViewChild(TaskListCloudComponent)
     taskList: TaskListCloudComponent;
 
-    getFullName(person: Person): string {
+    getFullName(person: EcmUserModel): string {
         return `${person.firstName} ${person.lastName}`;
     }
 }

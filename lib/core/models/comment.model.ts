@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Person } from '@alfresco/js-api';
+import { EcmUserModel } from './ecm-user.model';
 
 export class CommentModel {
     id: number;
     message: string;
     created: Date;
-    createdBy: Person;
+    createdBy: EcmUserModel;
     isSelected: boolean;
 
     constructor(obj?: any) {

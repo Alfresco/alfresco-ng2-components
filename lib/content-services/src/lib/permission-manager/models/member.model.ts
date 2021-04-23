@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Group, Node, NodeEntry, PermissionElement, Person } from '@alfresco/js-api';
+import { Group, Node, NodeEntry, PermissionElement } from '@alfresco/js-api';
 import { PermissionDisplayModel } from './permission.model';
 import { RoleModel } from './role.model';
+import { EcmUserModel } from '../../../../../core/models/ecm-user.model';
 
 export interface NodePermissionsModel {
     node: Node;
@@ -31,7 +32,7 @@ export class MemberModel {
     role: string;
     accessStatus: PermissionElement.AccessStatusEnum | string;
     entry: {
-        person?: Person;
+        person?: EcmUserModel;
         group?: Group;
     };
     readonly: boolean = false;
@@ -46,7 +47,7 @@ export class MemberModel {
         const result = new MemberModel();
 
         if (entry.nodeType === 'cm:person') {
-            const person = new Person({
+            const person = new EcmUserModel({
                 firstName: entry.properties['cm:firstName'],
                 lastName: entry.properties['cm:lastName'],
                 email: entry.properties['cm:email'],

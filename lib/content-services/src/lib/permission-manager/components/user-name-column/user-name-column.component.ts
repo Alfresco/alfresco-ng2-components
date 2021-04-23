@@ -17,8 +17,9 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Group, NodeEntry, Person } from '@alfresco/js-api';
+import { Group, NodeEntry } from '@alfresco/js-api';
 import { NodePermissionService } from '../../services/node-permission.service';
+import { EcmUserModel } from '../../../../../../core/models/ecm-user.model';
 
 @Component({
     selector: 'adf-user-name-column',
@@ -59,7 +60,7 @@ export class UserNameColumnComponent implements OnInit {
         }
     }
 
-    private updatePerson(person: Person) {
+    private updatePerson(person: EcmUserModel) {
         if (person) {
             this.displayText$.next(`${person.firstName ?? ''} ${person.lastName ?? ''}`);
             this.subTitleText$.next(person.email ?? '');
