@@ -53,10 +53,10 @@ export class AttachFileWidgetPage {
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
-    async checkFilesAreAttachedToWidget(fieldId, name): Promise<void> {
-        await name.forEach(async fileName => {
+    async checkFilesAreAttachedToWidget(fieldId, names): Promise<void> {
+        for (const fileName of names) {
             await this.checkFileIsAttached(fieldId, fileName);
-        });
+        }
     }
 
     async checkFileIsNotAttached(fieldId, name): Promise<void> {
