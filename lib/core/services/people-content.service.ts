@@ -64,6 +64,25 @@ export class PeopleContentService {
     }
 
     /**
+     * Gets a list of people.
+     * @param opts Optional parameters supported by JS-API
+     * @returns Array of people
+     */
+    listPeople(options?): Observable<EcmUserModel[]> {
+        const promise = this.peopleApi.listPeople(options);
+        return from(promise).pipe(
+            map(response => {
+                const people: EcmUserModel[] = [];
+                response.list.entries.forEach((person: PersonEntry) => {
+                    people.push(<EcmUserModel> person?.entry);
+                });
+                return people;
+            }),
+            catchError((err) => this.handleError(err))
+        );
+    }
+
+    /**
      * Creates new person.
      * @param newPerson Object containing the new person details.
      * @param opts Optional parameters

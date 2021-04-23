@@ -50,6 +50,17 @@ export let fakeEcmUser = {
     emailNotificationsEnabled: true
 };
 
+export let fakeEcmUser2 = {
+    id: "another-fake-id",
+    firstName: "another-fake-first-name",
+    lastName: "another",
+    displayName: "admin.adf User",
+    email: "admin.adf@alfresco.com",
+    company: null,
+    enabled: true,
+    emailNotificationsEnabled: true
+};
+
 export let fakeEcmUserNoImage = {
     id: 'fake-id',
     firstName: 'fake-first-name',
@@ -90,6 +101,26 @@ export let fakeEcmEditedUser = {
     userStatus: 'active',
     enabled: true,
     emailNotificationsEnabled: true
+};
+
+export let fakeEcmUserList = {
+    list: {
+        pagination: {
+            count: 2,
+            hasMoreItems: false,
+            totalItems: 2,
+            skipCount: 0,
+            maxItems: 100
+        },
+        entries: [
+            {
+                entry: fakeEcmUser
+            },
+            {
+                entry: fakeEcmUser2
+            }
+        ]
+    }
 };
 
 export const createNewPersonMock = {
