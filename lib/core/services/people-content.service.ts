@@ -31,7 +31,7 @@ export enum ContentGroups {
     providedIn: 'root'
 })
 export class PeopleContentService {
-    private hasContentAdminRole: boolean;
+    hasContentAdminRole: boolean;
 
     private _peopleApi: PeopleApi;
 

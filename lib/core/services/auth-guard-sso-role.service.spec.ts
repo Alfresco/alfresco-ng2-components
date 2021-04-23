@@ -193,6 +193,10 @@ describe('Auth Guard SSO role service', () => {
 
     describe('Content Admin', () => {
 
+        afterEach(() => {
+           peopleContentService.hasContentAdminRole = undefined;
+        });
+
         it('Should give access to a content section (ALFRESCO_ADMINISTRATORS) when the user has content admin capability', async () => {
             spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
 
