@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-input-rename  */
-
-import { Component } from '@angular/core';
-
-@Component({
-    selector: 'adf-no-permission-template',
-    template: '<ng-content></ng-content>'
-})
-export class NoPermissionTemplateComponent {}
+export interface RoleModel {
+    label: string;
+    role: string;
+}

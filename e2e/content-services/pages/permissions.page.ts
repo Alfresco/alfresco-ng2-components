@@ -15,29 +15,84 @@
  * limitations under the License.
  */
 
-import { DataTableComponentPage, AddPermissionsDialogPage, TestElement } from '@alfresco/adf-testing';
-import { browser, by, element } from 'protractor';
+import {
+    AddPermissionsDialogPage,
+    BrowserActions,
+    DataTableComponentPage,
+    DropdownPage,
+    TestElement
+} from '@alfresco/adf-testing';
+import { browser, by } from 'protractor';
 
 export class PermissionsPage {
 
     dataTableComponentPage = new DataTableComponentPage();
     addPermissionsDialog = new AddPermissionsDialogPage();
 
+    rootElement = 'adf-permission-manager-card';
+    inheritedButton = '[data-automation-id="adf-inherit-toggle-button"]';
+    errorElement = TestElement.byId('adf-permission-manager-error');
+    localPermissionList = TestElement.byCss('[data-automation-id="adf-locally-set-permission"]');
     addPermissionButton = TestElement.byCss("button[data-automation-id='adf-add-permission-button']");
-    addPermissionDialog = element(by.css('adf-add-permission-dialog'));
-    searchUserInput = element(by.id('searchInput'));
-    searchResults = element(by.css('#adf-add-permission-authority-results #adf-search-results-content'));
-    addButton = element(by.id('add-permission-dialog-confirm-button'));
-    permissionInheritedButton = element.all(by.css('.app-inherit_permission_button button')).first();
-    noPermissions = element(by.id('adf-no-permissions-template'));
-    deletePermissionButton = element(by.css(`button[data-automation-id='adf-delete-permission-button']`));
-    permissionDisplayContainer = element(by.id('adf-permission-display-container'));
-    closeButton = TestElement.byCss('#add-permission-dialog-close-button');
 
     async changePermission(name: string, role: string): Promise<void> {
-        await this.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(name);
-        await this.addPermissionsDialog.selectOption(role);
+        await browser.sleep(1000);
+        await this.clickRoleDropdownByUserOrGroupName(name);
+        await new DropdownPage().selectOption(role);
+        await this.dataTableComponentPage.checkRowByContentIsNotSelected(name);
+    }
+
+    async checkUserIsAdded(id: string) {
+        const userOrGroupName = TestElement.byCss('div[data-automation-id="' + id + '"]');
+        await userOrGroupName.waitPresent();
+    }
+
+    async getRoleCellValue(username: string): Promise<string> {
+        const locator = this.dataTableComponentPage.getCellByRowContentAndColumn('Users and Groups', username, 'Role');
+        return BrowserActions.getText(locator);
+    }
+
+    async clickRoleDropdownByUserOrGroupName(name: string): Promise<void> {
+        const row = this.dataTableComponentPage.getRow('Users and Groups', name);
+        await row.click();
+        await BrowserActions.click(row.element(by.css('[id="adf-select-role-permission"] .mat-select-trigger')));
+        await TestElement.byCss('.mat-select-panel').waitVisible();
+    }
+
+    async clickDeletePermissionButton(username: string): Promise<void> {
+        const userOrGroupName = TestElement.byCss(`[data-automation-id="adf-delete-permission-button-${username}"]`);
+        await userOrGroupName.waitPresent();
+        await userOrGroupName.click();
+    }
+
+    async checkUserIsDeleted(username: string): Promise<void> {
+        const userOrGroupName = TestElement.byCss('div[data-automation-id="' + username + '"]');
+        await userOrGroupName.waitNotPresent();
+    }
+
+    async noPermissionContent(): Promise<string> {
+        const noPermission = TestElement.byCss('.adf-no-permission__template--text');
+        return noPermission.getText();
+    }
+
+    async checkPermissionManagerDisplayed(): Promise<void> {
+        await TestElement.byId(this.rootElement).waitVisible();
+    }
+
+    async checkPermissionListDisplayed(): Promise<void> {
         await browser.sleep(500);
-        await this.dataTableComponentPage.checkRowIsNotSelected('Authority ID', name);
+        await this.localPermissionList.waitVisible();
+    }
+
+    async isInherited(): Promise<boolean> {
+        const inheritButton = TestElement.byCss(this.inheritedButton);
+        await inheritButton.waitVisible();
+        const appliedStyles = await inheritButton.getAttribute('class');
+        return appliedStyles.indexOf('mat-checked') !== -1;
+    }
+
+    async toggleInheritPermission(): Promise<void> {
+        const inheritButton = TestElement.byCss(`${this.inheritedButton} label`);
+        await inheritButton.click();
     }
 }

@@ -15,21 +15,24 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { PermissionListComponent } from './permission-list.component';
-import { By } from '@angular/platform-browser';
 import { NodesApiService, SearchService, setupTestBed } from '@alfresco/adf-core';
-import { of } from 'rxjs';
-import { NodePermissionService } from '../../services/node-permission.service';
-import { fakeNodeWithPermissions,
-         fakeNodeInheritedOnly,
-         fakeNodeWithOnlyLocally,
-         fakeSiteNodeResponse,
-         fakeSiteRoles,
-         fakeNodeWithoutPermissions,
-         fakeEmptyResponse } from '../../../mock/permission-list.component.mock';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
+import { of, throwError } from 'rxjs';
+import { PermissionListComponent } from './permission-list.component';
+import { NodePermissionService } from '../../services/node-permission.service';
+import {
+    fakeEmptyResponse,
+    fakeNodeInheritedOnly,
+    fakeNodeWithOnlyLocally,
+    fakeNodeWithoutPermissions,
+    fakeNodeWithPermissions,
+    fakeReadOnlyNodeInherited,
+    fakeSiteNodeResponse,
+    fakeSiteRoles
+} from '../../../mock/permission-list.component.mock';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('PermissionListComponent', () => {
 
@@ -39,6 +42,9 @@ describe('PermissionListComponent', () => {
     let nodeService: NodesApiService;
     let nodePermissionService: NodePermissionService;
     let searchApiService: SearchService;
+    let getNodeSpy: jasmine.Spy;
+    let searchQuerySpy: jasmine.Spy;
+    const fakeLocalPermission = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
 
     setupTestBed({
         imports: [
@@ -54,142 +60,188 @@ describe('PermissionListComponent', () => {
         nodeService = TestBed.inject(NodesApiService);
         nodePermissionService = TestBed.inject(NodePermissionService);
         searchApiService = TestBed.inject(SearchService);
+
+        spyOn(nodePermissionService, 'getGroupMemberByGroupName').and.returnValue(of(fakeSiteRoles));
+        getNodeSpy = spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithoutPermissions));
+        searchQuerySpy = spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
+        component.nodeId = 'fake-node-id';
+        fixture.detectChanges();
     });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    it('should be able to render the component', () => {
-        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithOnlyLocally));
-        spyOn(nodePermissionService, 'getNodeRoles').and.returnValue(of([]));
-        fixture.detectChanges();
-        expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
+    it('should render default layout', async () => {
+        component.nodeId = 'fake-node-id';
+        getNodeSpy.and.returnValue(of(fakeNodeWithoutPermissions));
+        component.ngOnInit();
+        await fixture.detectChanges();
+        expect(element.querySelector('.adf-permission-container')).not.toBeNull();
+        expect(element.querySelector('[data-automation-id="adf-locally-set-permission"]')).not.toBeNull();
     });
 
-    it('should render default empty template when no permissions', () => {
+    it('should render error template', async () => {
         component.nodeId = 'fake-node-id';
-        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithoutPermissions));
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
-        fixture.detectChanges();
+        getNodeSpy.and.returnValue(throwError(null));
+        component.ngOnInit();
+        await fixture.detectChanges();
 
-        expect(element.querySelector('#adf-no-permissions-template')).not.toBeNull();
-        expect(element.querySelector('#adf-permission-display-container .adf-datatable-permission')).toBeNull();
+        expect(element.querySelector('.adf-no-permission__template')).not.toBeNull();
+        expect(element.querySelector('.adf-no-permission__template p').textContent).toContain('PERMISSION_MANAGER.ERROR.NOT-FOUND');
     });
 
     it('should show the node permissions', () => {
         component.nodeId = 'fake-node-id';
-        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithPermissions));
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
+        getNodeSpy.and.returnValue(of(fakeNodeWithPermissions));
+        component.ngOnInit();
         fixture.detectChanges();
-        expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
-        expect(element.querySelectorAll('.adf-datatable-row').length).toBe(4);
+
+        expect(element.querySelectorAll('[data-automation-id="adf-locally-set-permission"] .adf-datatable-row').length).toBe(2);
+
+        const showButton: HTMLButtonElement = element.querySelector('[data-automation-id="permission-info-button"]');
+        showButton.click();
+        fixture.detectChanges();
+
+        expect(document.querySelectorAll('[data-automation-id="adf-inherited-permission"] .adf-datatable-row').length).toBe(3);
     });
 
-    it('should show inherited label for inherited permissions', () => {
-        component.nodeId = 'fake-node-id';
-        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeInheritedOnly));
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
-        fixture.detectChanges();
-        expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
-        expect(element.querySelector('#adf-permission-inherited-label')).toBeDefined();
-        expect(element.querySelector('#adf-permission-inherited-label')).not.toBeNull();
-    });
+    describe('Inherited Permission', () => {
+        it('should show inherited details',  async() => {
+            getNodeSpy.and.returnValue(of(fakeNodeInheritedOnly));
+            component.ngOnInit();
+            await fixture.detectChanges();
 
-    describe('when it is a locally set permission', () => {
-
-        it('should show locally set label for locally set permissions',  () => {
-            component.nodeId = 'fake-node-id';
-            spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithOnlyLocally));
-            spyOn(nodePermissionService, 'getGroupMemberByGroupName').and.returnValue(of(fakeSiteRoles));
-            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
-            fixture.detectChanges();
-            expect(element.querySelector('#adf-permission-display-container')).not.toBeNull();
-            expect(element.querySelector('#adf-permission-locallyset-label')).toBeDefined();
-            expect(element.querySelector('#adf-permission-locallyset-label')).not.toBeNull();
+            expect(element.querySelector('.adf-inherit-container .mat-checked')).toBeDefined();
+            expect(element.querySelector('.adf-inherit-container h3').textContent.trim())
+                .toBe('PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.ON');
+            expect(element.querySelector('span[title="total"]').textContent.trim())
+                .toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
         });
 
-        it('should show a dropdown with the possible roles',  async(() => {
-            component.nodeId = 'fake-node-id';
-            spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithOnlyLocally));
-            spyOn(nodePermissionService, 'getGroupMemberByGroupName').and.returnValue(of(fakeSiteRoles));
-            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#adf-select-role-permission')).toBeDefined();
-                expect(element.querySelector('#adf-select-role-permission')).not.toBeNull();
-                const selectBox = fixture.debugElement.query(By.css(('#adf-select-role-permission .mat-select-trigger')));
-                selectBox.triggerEventHandler('click', null);
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
-                    expect(options).not.toBeNull();
-                    expect(options.length).toBe(4);
-                    expect(options[0].nativeElement.innerText).toContain('ADF.ROLES.SITECOLLABORATOR');
-                    expect(options[1].nativeElement.innerText).toContain('ADF.ROLES.SITECONSUMER');
-                    expect(options[2].nativeElement.innerText).toContain('ADF.ROLES.SITECONTRIBUTOR');
-                    expect(options[3].nativeElement.innerText).toContain('ADF.ROLES.SITEMANAGER');
-                });
-            });
-        }));
+        it('should toggle the inherited button',  async() => {
+            getNodeSpy.and.returnValue(of(fakeNodeInheritedOnly));
+            component.ngOnInit();
+            await fixture.detectChanges();
 
-        it('should show the settable roles if the node is not in any site',  async(() => {
-            component.nodeId = 'fake-node-id';
-            spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithOnlyLocally));
-            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#adf-select-role-permission')).toBeDefined();
-                expect(element.querySelector('#adf-select-role-permission')).not.toBeNull();
-                const selectBox = fixture.debugElement.query(By.css(('#adf-select-role-permission .mat-select-trigger')));
-                selectBox.triggerEventHandler('click', null);
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
-                    expect(options).not.toBeNull();
-                    expect(options.length).toBe(5);
-                    expect(options[0].nativeElement.innerText).toContain('ADF.ROLES.CONTRIBUTOR');
-                    expect(options[1].nativeElement.innerText).toContain('ADF.ROLES.COLLABORATOR');
-                    expect(options[2].nativeElement.innerText).toContain('ADF.ROLES.COORDINATOR');
-                    expect(options[3].nativeElement.innerText).toContain('ADF.ROLES.EDITOR');
-                    expect(options[4].nativeElement.innerText).toContain('ADF.ROLES.CONSUMER');
-                });
-            });
-        }));
+            expect(element.querySelector('.adf-inherit-container .mat-checked')).toBeDefined();
+            expect(element.querySelector('.adf-inherit-container h3').textContent.trim())
+                .toBe('PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.ON');
+            expect(element.querySelector('span[title="total"]').textContent.trim())
+                .toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
 
-        it('should update the role when another value is chosen',  async(() => {
-            component.nodeId = 'fake-node-id';
-            spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithOnlyLocally));
-            spyOn(nodeService, 'updateNode').and.returnValue(of({id: 'fake-updated-node'}));
-            spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
-            component.update.subscribe((updatedPermission) => {
-                expect(updatedPermission).not.toBeNull();
-                expect(updatedPermission.name).toBe('Editor');
-                expect(updatedPermission.authorityId).toBe('GROUP_EVERYONE');
-                expect(updatedPermission.accessStatus).toBe('ALLOWED');
-            });
+            spyOn(nodeService, 'updateNode').and.returnValue(of(fakeLocalPermission));
+
+            const slider = fixture.debugElement.query(By.css('mat-slide-toggle'));
+            slider.triggerEventHandler('change', { source: { checked: false } });
+            await fixture.detectChanges();
+
+            expect(element.querySelector('.adf-inherit-container .mat-checked')).toBe(null);
+            expect(element.querySelector('.adf-inherit-container h3').textContent.trim())
+                .toBe('PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.OFF');
+            expect(element.querySelector('span[title="total"]').textContent.trim())
+                .toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
+        });
+
+        it('should not toggle inherited button for read only users',  async () => {
+            getNodeSpy.and.returnValue(of(fakeReadOnlyNodeInherited));
+            component.ngOnInit();
+            await fixture.detectChanges();
+
+            expect(element.querySelector('.adf-inherit-container .mat-checked')).toBeDefined();
+            expect(element.querySelector('.adf-inherit-container h3').textContent.trim())
+                .toBe('PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.ON');
+            expect(element.querySelector('span[title="total"]').textContent.trim())
+                .toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
+
+            spyOn(nodeService, 'updateNode').and.returnValue(of(fakeLocalPermission));
+
+            const slider = fixture.debugElement.query(By.css('mat-slide-toggle'));
+            slider.triggerEventHandler('change', { source: { checked: false } });
+            await fixture.detectChanges();
+
+            expect(element.querySelector('.adf-inherit-container .mat-checked')).toBeDefined();
+            expect(element.querySelector('.adf-inherit-container h3').textContent.trim())
+                .toBe('PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.ON');
+            expect(element.querySelector('span[title="total"]').textContent.trim())
+                .toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
+            expect(document.querySelector('simple-snack-bar').textContent)
+                .toContain('PERMISSION_MANAGER.ERROR.NOT-ALLOWED');
+        });
+
+    });
+
+    describe('locally set permission', () => {
+        beforeEach(() => {
+            getNodeSpy.and.returnValue(of(fakeLocalPermission));
+        });
+
+        it('should show locally set permissions',  async() => {
+            searchQuerySpy.and.returnValue(of(fakeSiteNodeResponse));
+            component.ngOnInit();
+
+            await fixture.detectChanges();
+            expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
+            expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
+        });
+
+        it('should see the settable roles if the node is not in any site', async() => {
+            searchQuerySpy.and.returnValue(of(fakeSiteNodeResponse));
+            component.ngOnInit();
+
+            await fixture.detectChanges();
+            expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
+            expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
+
+            const selectBox = fixture.debugElement.query(By.css(('[id="adf-select-role-permission"] .mat-select-trigger')));
+            selectBox.triggerEventHandler('click', null);
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#adf-select-role-permission')).toBeDefined();
-                expect(element.querySelector('#adf-select-role-permission')).not.toBeNull();
-                const selectBox = fixture.debugElement.query(By.css(('#adf-select-role-permission .mat-select-trigger')));
-                selectBox.triggerEventHandler('click', null);
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
-                    expect(options).not.toBeNull();
-                    expect(options.length).toBe(5);
-                    options[3].triggerEventHandler('click', {});
-                    fixture.detectChanges();
-                    expect(nodeService.updateNode).toHaveBeenCalled();
-                });
-            });
-        }));
-   });
+
+            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+            expect(options).not.toBeNull();
+            expect(options.length).toBe(4);
+            expect(options[0].nativeElement.innerText).toContain('ADF.ROLES.SITECOLLABORATOR');
+            expect(options[1].nativeElement.innerText).toContain('ADF.ROLES.SITECONSUMER');
+            expect(options[2].nativeElement.innerText).toContain('ADF.ROLES.SITECONTRIBUTOR');
+            expect(options[3].nativeElement.innerText).toContain('ADF.ROLES.SITEMANAGER');
+        });
+
+        it('should update the role when another value is chosen',  async () => {
+            spyOn(nodeService, 'updateNode').and.returnValue(of({id: 'fake-uwpdated-node'}));
+            searchQuerySpy.and.returnValue(of(fakeEmptyResponse));
+            component.ngOnInit();
+
+            await fixture.detectChanges();
+
+            expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
+            expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
+
+            const selectBox = fixture.debugElement.query(By.css(('[id="adf-select-role-permission"] .mat-select-trigger')));
+            selectBox.triggerEventHandler('click', null);
+            fixture.detectChanges();
+            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+            expect(options).not.toBeNull();
+            expect(options.length).toBe(5);
+            options[3].triggerEventHandler('click', {});
+            fixture.detectChanges();
+            expect(nodeService.updateNode).toHaveBeenCalledWith('f472543f-7218-403d-917b-7a5861257244', { permissions: { locallySet: [ { accessStatus: 'ALLOWED', name: 'Editor', authorityId: 'GROUP_EVERYONE' } ] } });
+        });
+
+        it('should delete the person',  async () => {
+            spyOn(nodeService, 'updateNode').and.returnValue(of({id: 'fake-uwpdated-node'}));
+            searchQuerySpy.and.returnValue(of(fakeEmptyResponse));
+            component.ngOnInit();
+            await fixture.detectChanges();
+
+            expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
+            expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
+
+            const showButton: HTMLButtonElement = element.querySelector('[data-automation-id="adf-delete-permission-button-GROUP_EVERYONE"]');
+            showButton.click();
+            fixture.detectChanges();
+
+            expect(nodeService.updateNode).toHaveBeenCalledWith('f472543f-7218-403d-917b-7a5861257244', { permissions: { locallySet: [ ] } });
+        });
+
+    });
 });

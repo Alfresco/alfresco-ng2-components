@@ -1,50 +1,92 @@
 @mixin adf-permission-list-theme($theme) {
-    $adf-permission-list-width: 70% !default;
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
 
     .adf {
-        &-permission-label {
-            max-width: 130px;
-            min-width: 100px;
-            margin-left: 50px;
+        &-permission-card {
+            height: 100%;
+            box-sizing: border-box;
+            display: flex !important;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        &-delete-permission {
-            max-width: 50px;
+        &-permission-loader {
+            margin-left: 45%;
+            overflow: hidden;
         }
 
-        &-authorityId-label {
-            min-width: 100px;
-        }
-
-        &-key-icon {
-            max-width: 50px;
-        }
-
-        &-ellipsis-cell {
-            position: sticky;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        &-display-permission-container {
+        &-permission-container {
             display: flex;
-            justify-content: space-around;
-            flex: 1;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border: 1px solid mat-color($foreground, divider);
         }
 
-        &-datatable-permission {
+        &-inherit-container {
             display: flex;
-            min-width: 450px;
-            width: $adf-permission-list-width;
+            flex-direction: row;
+            align-items: center;
+
+            &-header {
+                margin-bottom: 10px;
+                margin-top: 10px;
+            }
         }
 
-        &-locallyset-label {
-           padding: 4px;
+        &-inherit-toggle {
+            padding-left: 30px;
         }
 
-        &-inherited-label {
-            width: 92.13px;
-            justify-content: center;
+        &-inherit-subtitle {
+            padding-bottom: 5px;
+        }
+
+        &-permission-content-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 5px 15px;
+        }
+
+        &-permission-role-column-header {
+            position: relative !important;
+            height: 40px;
+            .mat-form-field-infix {
+                border: none;
+            }
+        }
+
+        &-permission-header {
+            @include flex-column;
+        }
+
+        &-permission-list {
+            display: flex;
+            height: calc(100% - 63px);
+        }
+    }
+
+
+    [aria-sort='Ascending'] adf-user-role-column,
+    [aria-sort='Descending'] adf-user-role-column {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+
+    .adf-permission-pop-over {
+        padding-right: 15px;
+        width: 100%;
+
+        .adf-pop-over-card {
+            width: 100%;
+            @include mat-elevation(16, mat-color($foreground, divider), 0.8);
         }
     }
 }

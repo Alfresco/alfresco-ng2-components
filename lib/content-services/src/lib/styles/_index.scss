@@ -28,7 +28,9 @@
 @import '../version-manager/version-comparison.component';
 @import '../content-type/content-type-dialog.component';
 @import '../aspect-list/aspect-list.component';
-@import '../aspect-list//aspect-list-dialog.component';
+@import '../aspect-list/aspect-list-dialog.component';
+@import '../permission-manager/components/permission-container/permission-container.component';
+@import '../permission-manager/components/user-icon-column/user-icon-column.component';
 
 @mixin adf-content-services-theme($theme) {
     @include adf-breadcrumb-theme($theme);
@@ -48,6 +50,8 @@
     @include adf-content-node-selector-dialog-theme($theme);
     @include adf-content-metadata-module-theme($theme);
     @include adf-permission-list-theme($theme);
+    @include adf-permission-container-theme($theme);
+    @include adf-user-icon-column-theme($theme);
     @include adf-add-permission-theme($theme);
     @include adf-add-permission-dialog-theme($theme);
     @include adf-add-permission-panel-theme($theme);

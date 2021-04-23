@@ -15,24 +15,23 @@
  * limitations under the License.
  */
 
+import { setupTestBed } from '@alfresco/adf-core';
+import { Node } from '@alfresco/js-api';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddPermissionComponent } from './add-permission.component';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
-import { setupTestBed, NodesApiService } from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { NodePermissionService } from '../../services/node-permission.service';
-import { Node } from '@alfresco/js-api';
-import { TranslateModule } from '@ngx-translate/core';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('AddPermissionComponent', () => {
 
     let fixture: ComponentFixture<AddPermissionComponent>;
     let element: HTMLElement;
     let nodePermissionService: NodePermissionService;
-    let nodeApiService: NodesApiService;
 
     setupTestBed({
         imports: [
@@ -42,11 +41,12 @@ describe('AddPermissionComponent', () => {
     });
 
     beforeEach(() => {
-        nodeApiService  = TestBed.inject(NodesApiService);
-        spyOn(nodeApiService, 'getNode').and.returnValue(of({ id: 'fake-node', allowableOperations: ['updatePermissions']}));
+        nodePermissionService = TestBed.inject(NodePermissionService);
+        spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(
+            of({ node: { id: 'fake-node', allowableOperations: ['updatePermissions']}, roles: [{ label: 'Test' , role: 'test'}] })
+        );
         fixture = TestBed.createComponent(AddPermissionComponent);
         element = fixture.nativeElement;
-        nodePermissionService = TestBed.inject(NodePermissionService);
         fixture.detectChanges();
     });
 
@@ -84,7 +84,7 @@ describe('AddPermissionComponent', () => {
         });
     }));
 
-    it('should emit a success event when the node is updated', (done) => {
+    it('should emit a success event when the node is updated', async (done) => {
         fixture.componentInstance.selectedItems = fakeAuthorityResults;
         spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(of({ id: 'fake-node-id'}));
 
@@ -93,12 +93,9 @@ describe('AddPermissionComponent', () => {
             done();
         });
 
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
-            addButton.click();
-        });
+        await fixture.detectChanges();
+        const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
+        addButton.click();
     });
 
     it('should NOT emit a success event when the user does not have permission to update the node', () => {
@@ -111,7 +108,7 @@ describe('AddPermissionComponent', () => {
         expect(spySuccess).not.toHaveBeenCalled();
     });
 
-    it('should emit an error event when the node update fail', (done) => {
+    it('should emit an error event when the node update fail', async (done) => {
         fixture.componentInstance.selectedItems = fakeAuthorityResults;
         spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(throwError({ error: 'err'}));
 
@@ -120,11 +117,8 @@ describe('AddPermissionComponent', () => {
             done();
         });
 
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
-            addButton.click();
-        });
+        await fixture.detectChanges();
+        const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
+        addButton.click();
     });
 });

@@ -1,0 +1,45 @@
+@mixin adf-permission-container-theme($theme) {
+    $adf-permission-list-width: 100% !default;
+
+    .adf {
+        &-permission-label {
+            max-width: 130px;
+            min-width: 100px;
+            margin-left: 50px;
+        }
+
+        &-delete-permission {
+            max-width: 50px;
+        }
+
+        &-authorityId-label {
+            min-width: 100px;
+        }
+
+        &-key-icon {
+            max-width: 50px;
+        }
+
+        &-ellipsis-cell {
+            position: sticky;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &-display-permission-container {
+            display: flex;
+            justify-content: space-around;
+            flex: 1;
+        }
+
+        &-datatable-permission {
+            display: flex;
+            min-width: 450px;
+            width: $adf-permission-list-width;
+
+            &.adf-datatable {
+                overflow: hidden;
+            }
+        }
+    }
+}

@@ -28,15 +28,12 @@ const column = {
 export class AddPermissionsDialogPage {
 
     dataTableComponentPage: DataTableComponentPage = new DataTableComponentPage();
+    userRoleDataTableComponentPage: DataTableComponentPage = new DataTableComponentPage(element(by.css('[data-automation-id="adf-user-role-selection-table"]')));
 
     addPermissionDialog = element(by.css('adf-add-permission-dialog'));
     searchUserInput = element(by.id('searchInput'));
     searchResults = element(by.css('#adf-add-permission-authority-results #adf-search-results-content'));
-    addButton = element(by.id('add-permission-dialog-confirm-button'));
-    permissionInheritedButton = element.all(by.css('div[class="app-inherit_permission_button"] button')).first();
-    noPermissions = element(by.id('adf-no-permissions-template'));
-    deletePermissionButton = element(by.css('button[data-automation-id="adf-delete-permission-button"]'));
-    permissionDisplayContainer = element(by.id('adf-permission-display-container'));
+    addButton = element(by.css('[data-automation-id="add-permission-dialog-confirm-button"]'));
     closeButton = element(by.id('add-permission-dialog-close-button'));
 
     async clickCloseButton(): Promise<void> {
@@ -70,52 +67,17 @@ export class AddPermissionsDialogPage {
         await BrowserActions.click(this.addButton);
     }
 
-    async checkUserIsAdded(name: string): Promise<void> {
-        const userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(userOrGroupName);
-    }
-
-    async checkGroupIsAdded(name: string): Promise<void> {
-        const userOrGroupName = element(by.css('div[data-automation-id="text_GROUP_' + name + '"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(userOrGroupName);
-    }
-
-    async checkUserIsDeleted(name: string): Promise<void> {
-        const userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
-        await BrowserVisibility.waitUntilElementIsNotVisible(userOrGroupName);
-    }
-
-    async checkPermissionInheritedButtonIsDisplayed() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.permissionInheritedButton);
-    }
-
-    async clickPermissionInheritedButton(): Promise<void> {
-        await BrowserActions.click(this.permissionInheritedButton);
-    }
-
-    async clickDeletePermissionButton(): Promise<void> {
-        await BrowserActions.click(this.deletePermissionButton);
-    }
-
-    async checkNoPermissionsIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.noPermissions);
-    }
-
-    async getPermissionInheritedButtonText(text: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementHasText(this.permissionInheritedButton, text);
-    }
-
     async checkPermissionsDatatableIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css('[class*="adf-datatable-permission"]')));
     }
 
     async getRoleCellValue(rowName: string): Promise<string> {
-        const locator = this.dataTableComponentPage.getCellByRowContentAndColumn('Authority ID', rowName, column.role);
+        const locator = this.dataTableComponentPage.getCellByRowContentAndColumn('Users and Groups', rowName, column.role);
         return BrowserActions.getText(locator);
     }
 
     async clickRoleDropdownByUserOrGroupName(name: string): Promise<void> {
-        const row = this.dataTableComponentPage.getRow('Authority ID', name);
+        const row = this.dataTableComponentPage.getRow('Users and Groups', name);
         await BrowserActions.click(row.element(by.id('adf-select-role-permission')));
     }
 
@@ -127,12 +89,23 @@ export class AddPermissionsDialogPage {
         await new DropdownPage().selectOption(name);
     }
 
-    async checkPermissionContainerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.permissionDisplayContainer);
-    }
-
     async checkUserOrGroupIsDisplayed(name: string): Promise<void> {
         const userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
         await BrowserVisibility.waitUntilElementIsVisible(userOrGroupName);
+    }
+
+    async addButtonIsEnabled(): Promise<boolean> {
+        return this.addButton.isEnabled();
+    }
+
+    async clickAddButton(): Promise<void> {
+        await BrowserActions.click(this.addButton);
+    }
+
+    async selectRole(name: string, role) {
+        const row = this.userRoleDataTableComponentPage.getRow('Users and Groups', name);
+        await BrowserActions.click(row.element(by.css('[id="adf-select-role-permission"] .mat-select-trigger')));
+        await this.getRoleDropdownOptions();
+        await this.selectOption(role);
     }
 }

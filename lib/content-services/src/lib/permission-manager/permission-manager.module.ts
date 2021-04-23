@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { CoreModule, PipeModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,11 +23,15 @@ import { MaterialModule } from '../material.module';
 import { PermissionListComponent } from './components/permission-list/permission-list.component';
 import { AddPermissionComponent } from './components/add-permission/add-permission.component';
 import { AddPermissionDialogComponent } from './components/add-permission/add-permission-dialog.component';
-import { CoreModule, PipeModule } from '@alfresco/adf-core';
 import { InheritPermissionDirective } from './components/inherited-button.directive';
-import { NoPermissionTemplateComponent } from './components/permission-list/no-permission.component';
 import { AddPermissionPanelComponent } from './components/add-permission/add-permission-panel.component';
 import { SearchModule } from '../search/search.module';
+import { UserNameColumnComponent } from './components/user-name-column/user-name-column.component';
+import { UserIconColumnComponent } from './components/user-icon-column/user-icon-column.component';
+import { UserRoleColumnComponent } from './components/user-role-column/user-role-column.component';
+import { NodePathColumnComponent } from './components/node-path-column/node-path-column.component';
+import { PopOverDirective } from './components/pop-over.directive';
+import { PermissionContainerComponent } from './components/permission-container/permission-container.component';
 
 @NgModule({
     imports: [
@@ -40,19 +45,28 @@ import { SearchModule } from '../search/search.module';
     ],
     declarations: [
         PermissionListComponent,
-        NoPermissionTemplateComponent,
         AddPermissionPanelComponent,
         InheritPermissionDirective,
         AddPermissionComponent,
-        AddPermissionDialogComponent
+        AddPermissionDialogComponent,
+        UserNameColumnComponent,
+        UserIconColumnComponent,
+        UserRoleColumnComponent,
+        PopOverDirective,
+        NodePathColumnComponent,
+        PermissionContainerComponent
     ],
     exports: [
         PermissionListComponent,
-        NoPermissionTemplateComponent,
         AddPermissionPanelComponent,
         InheritPermissionDirective,
         AddPermissionComponent,
-        AddPermissionDialogComponent
+        AddPermissionDialogComponent,
+        UserNameColumnComponent,
+        UserIconColumnComponent,
+        UserRoleColumnComponent,
+        PopOverDirective,
+        NodePathColumnComponent
     ]
 })
 export class PermissionManagerModule {}

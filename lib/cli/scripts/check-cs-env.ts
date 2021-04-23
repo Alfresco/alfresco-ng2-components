@@ -35,7 +35,7 @@ async function checkEnv() {
 
         await alfrescoJsApi.login(program.username, program.password);
     } catch (error) {
-        if (error?.error.code === 'ETIMEDOUT') {
+        if (error?.error?.code === 'ETIMEDOUT') {
             logger.error('The env is not reachable. Terminating');
             process.exit(1);
         }

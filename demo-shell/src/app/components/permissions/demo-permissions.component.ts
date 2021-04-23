@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Optional, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Optional } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { PermissionListComponent, NodePermissionDialogService } from '@alfresco/adf-content-services';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
-import { NodesApiService, NotificationService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-permissions',
@@ -28,16 +25,9 @@ import { NodesApiService, NotificationService } from '@alfresco/adf-core';
 })
 export class DemoPermissionComponent implements OnInit {
 
-    @ViewChild('permissionList', { static: true })
-    displayPermissionComponent: PermissionListComponent;
-
     nodeId: string;
-    toggleStatus = false;
 
-    constructor(@Optional() private route: ActivatedRoute,
-                private nodeService: NodesApiService,
-                private nodePermissionDialogService: NodePermissionDialogService,
-                private notificationService: NotificationService) {
+    constructor(@Optional() private route: ActivatedRoute) {
     }
 
     ngOnInit() {
@@ -48,34 +38,5 @@ export class DemoPermissionComponent implements OnInit {
                 }
             });
         }
-        this.nodeService
-            .getNode(this.nodeId, {include: ['permissions'] })
-            .subscribe( (currentNode: MinimalNodeEntryEntity) => {
-                this.toggleStatus = currentNode.permissions?.isInheritanceEnabled ?? false;
-            });
     }
-
-    onUpdatedPermissions(node: MinimalNodeEntryEntity) {
-        this.toggleStatus = node.permissions?.isInheritanceEnabled ?? false;
-        this.displayPermissionComponent.reload();
-    }
-
-    reloadList() {
-        this.displayPermissionComponent.reload();
-    }
-
-    openAddPermissionDialog() {
-        this.nodePermissionDialogService
-            .updateNodePermissionByDialog(this.nodeId)
-            .subscribe(
-                () =>  this.displayPermissionComponent.reload(),
-                (error) => this.showErrorMessage(error)
-            );
-    }
-
-    showErrorMessage(error) {
-        const message = error.message ? error.message : error;
-        this.notificationService.openSnackMessage(message);
-    }
-
 }

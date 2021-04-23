@@ -31,6 +31,23 @@ describe('NodePermissionService', () => {
     let service: NodePermissionService;
     let nodeService: NodesApiService;
     let searchApiService: SearchService;
+    const fakePermissionElements: PermissionElement[] = [
+        {
+            authorityId: fakeAuthorityResults[0].entry.properties['cm:userName'],
+            name: 'Consumer',
+            accessStatus: 'ALLOWED'
+        },
+        {
+            authorityId: fakeAuthorityResults[1].entry.properties['cm:userName'],
+            name: 'Consumer',
+            accessStatus: 'ALLOWED'
+        },
+        {
+            authorityId: fakeAuthorityResults[2].entry.properties['cm:authorityName'],
+            name: 'Consumer',
+            accessStatus: 'ALLOWED'
+        }
+    ];
 
     setupTestBed({
         imports: [
@@ -87,7 +104,7 @@ describe('NodePermissionService', () => {
 
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
 
-        service.updatePermissionRole(fakeNodeWithOnlyLocally, fakePermission).subscribe((node: Node) => {
+        service.updatePermissionRole(JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally)), fakePermission).subscribe((node: Node) => {
             expect(node).not.toBeNull();
             expect(node.id).toBe('fake-updated-node');
             expect(node.permissions.locallySet.length).toBe(1);
@@ -119,10 +136,8 @@ describe('NodePermissionService', () => {
         const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeCopy));
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
-        spyOn(service, 'getGroupMemberByGroupName').and.returnValue(of(fakeSiteRoles));
 
-        service.updateNodePermissions('fake-node-id', fakeAuthorityResults).subscribe((node: Node) => {
+        service.updateNodePermissions('fake-node-id', fakePermissionElements).subscribe((node: Node) => {
             expect(node).not.toBeNull();
             expect(node.id).toBe('fake-updated-node');
             expect(node.permissions.locallySet.length).toBe(4);
@@ -136,7 +151,7 @@ describe('NodePermissionService', () => {
         const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
 
-        service.updateLocallySetPermissions(fakeNodeCopy, fakeAuthorityResults, fakeSiteRoles).subscribe((node: Node) => {
+        service.updateLocallySetPermissions(fakeNodeCopy, fakePermissionElements).subscribe((node: Node) => {
             expect(node).not.toBeNull();
             expect(node.id).toBe('fake-updated-node');
             expect(node.permissions.locallySet.length).toBe(4);
@@ -150,8 +165,7 @@ describe('NodePermissionService', () => {
         const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithoutPermissions));
         fakeNodeCopy.permissions.locallySet = undefined;
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
-
-        service.updateLocallySetPermissions(fakeNodeCopy, fakeAuthorityResults, fakeSiteRoles).subscribe((node: Node) => {
+        service.updateLocallySetPermissions(fakeNodeCopy, fakePermissionElements).subscribe((node: Node) => {
             expect(node).not.toBeNull();
             expect(node.id).toBe('fake-updated-node');
             expect(node.permissions.locallySet.length).toBe(3);
@@ -164,31 +178,58 @@ describe('NodePermissionService', () => {
     it('should fail when user select the same authority and role to add', async(() => {
         const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
 
-        const fakeDuplicateAuthority: any = [{
-            'entry': {
-                'isFolder': false,
-                'search': {
-                    'score': 0.3541112
-                },
-                'isFile': false,
-                'name': 'GROUP_EVERYONE',
-                'location': 'nodes',
-                'id': 'GROUP_EVERYONE',
-                'nodeType': 'cm:authorityContainer',
-                'properties': {
-                    'cm:authorityName': 'GROUP_EVERYONE'
-                },
-                'parentId': '030d833e-da8e-4f5c-8ef9-d809638bd04b'
-            }
+        const fakeDuplicateAuthority: PermissionElement []  = [{
+            authorityId: 'GROUP_EVERYONE',
+            accessStatus: 'ALLOWED',
+            name: 'Contributor'
         }];
 
-        service.updateLocallySetPermissions(fakeNodeCopy, fakeDuplicateAuthority, ['Contributor'])
+        service.updateLocallySetPermissions(fakeNodeCopy, fakeDuplicateAuthority)
             .subscribe(() => {
-
+                fail('should throw exception');
             }, (errorMessage) => {
                 expect(errorMessage).not.toBeNull();
                 expect(errorMessage).toBeDefined();
                 expect(errorMessage).toBe('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION');
             });
+    }));
+
+    it('should be able to remove the locallyset permission', async(() => {
+        const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithoutPermissions));
+        fakeNodeCopy.permissions.locallySet = [...fakePermissionElements];
+        spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
+        service.removePermissions(fakeNodeCopy, [fakePermissionElements[2]]).subscribe((node: Node) => {
+            expect(node).not.toBeNull();
+            expect(node.id).toBe('fake-updated-node');
+            expect(node.permissions.locallySet.length).toBe(2);
+            expect(node.permissions.locallySet[0].authorityId).toBe(fakePermissionElements[0].authorityId);
+            expect(node.permissions.locallySet[1].authorityId).toBe(fakePermissionElements[1].authorityId);
+        });
+    }));
+
+    it('should be able to replace the locally set', async(() => {
+        const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
+        fakeNodeCopy.permissions.locallySet = [];
+        spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
+        service.updatePermissions(fakeNodeCopy, fakePermissionElements).subscribe((node: Node) => {
+            expect(node).not.toBeNull();
+            expect(node.id).toBe('fake-updated-node');
+            expect(node.permissions.locallySet.length).toBe(3);
+            expect(node.permissions.locallySet[0].authorityId).toBe(fakePermissionElements[0].authorityId);
+            expect(node.permissions.locallySet[1].authorityId).toBe(fakePermissionElements[1].authorityId);
+            expect(node.permissions.locallySet[2].authorityId).toBe(fakePermissionElements[2].authorityId);
+        });
+    }));
+
+    it('should be able to get node and it\'s roles', async(() => {
+        const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeCopy));
+        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
+        spyOn(service, 'getGroupMemberByGroupName').and.returnValue(of(fakeSiteRoles));
+        service.getNodeWithRoles('node-id').subscribe(({ node, roles }) => {
+            expect(node).toBe(fakeNodeCopy);
+            expect(roles.length).toBe(4);
+            expect(roles[0].role).toBe('SiteCollaborator');
+        });
     }));
 });

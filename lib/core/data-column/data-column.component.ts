@@ -82,6 +82,9 @@ export class DataColumnComponent implements OnInit {
     @Input()
     sortingKey: string;
 
+    /** Data column header template */
+    header?: TemplateRef<any>;
+
     ngOnInit() {
         if (!this.srTitle && this.key === '$thumbnail') {
             this.srTitle = 'Thumbnail';
