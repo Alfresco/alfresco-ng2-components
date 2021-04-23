@@ -140,6 +140,7 @@ async function checkEnv() {
             checkEnv();
         }
     }
+    await checkAcsEnv();
 }
 
 async function hasDefaultTenant(tenantId, tenantName) {
@@ -433,4 +434,25 @@ async function downloadLicenseFile(apsLicensePath) {
 function sleep(delay) {
     const start = new Date().getTime();
     while (new Date().getTime() < start + delay) {  }
+}
+
+async function checkAcsEnv() {
+    try {
+        const repositoryEntry = await alfrescoJsApiRepo.oauth2Auth.callCustomApi(
+            `${program.host}/alfresco/api/discovery`,
+            'GET',
+            {},
+            {},
+            {},
+            {},
+            {},
+            ['application/json'],
+            ['application/json']
+        );
+        const repositoryStatus = repositoryEntry?.entry?.repository?.status;
+        logger.info(`ACS repository is runnig. Status: ${JSON.stringify(repositoryStatus)}`);
+    } catch (e) {
+        logger.error('ACS is not reachable. Terminating');
+        process.exit(1);
+    }
 }
