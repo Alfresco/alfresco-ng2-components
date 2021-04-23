@@ -23,10 +23,15 @@ import { PersonEntry, PeopleApi, PersonBodyCreate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
 
+export enum ContentGroups {
+    ALFRESCO_ADMINISTRATORS = 'ALFRESCO_ADMINISTRATORS'
+}
+
 @Injectable({
     providedIn: 'root'
 })
 export class PeopleContentService {
+    private hasContentAdminRole: boolean;
 
     private _peopleApi: PeopleApi;
 
@@ -60,6 +65,7 @@ export class PeopleContentService {
     /**
      * Creates new person.
      * @param newPerson Object containing the new person details.
+     * @param opts Optional parameters
      * @returns Created new person
      */
     createPerson(newPerson: PersonBodyCreate, opts?: any): Observable<EcmUserModel> {
@@ -67,6 +73,14 @@ export class PeopleContentService {
             map((res: PersonEntry) => <EcmUserModel> res?.entry),
             catchError((error) => this.handleError(error))
         );
+    }
+
+    async isContentAdmin(): Promise<boolean> {
+        if (this.hasContentAdminRole === undefined) {
+            const user: PersonEntry = await this.getCurrentPerson().toPromise();
+            this.hasContentAdminRole = user?.entry?.capabilities?.isAdmin;
+        }
+        return this.hasContentAdminRole;
     }
 
     private handleError(error: any) {

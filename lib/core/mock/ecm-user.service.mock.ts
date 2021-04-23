@@ -101,13 +101,22 @@ export const createNewPersonMock = {
     email: 'fakeEcm@ecmUser.com'
 };
 
-export function getMockAcsUserWithCapabilities(isAdmin: boolean, isGuest: boolean, isMutable: boolean): PersonEntry {
+export function getFakeUserWithContentAdminCapability(): PersonEntry {
     const fakeEcmUserWithAdminCapabilities = {
         ...fakeEcmUser,
         capabilities: {
-            isAdmin,
-            isGuest,
-            isMutable
+            isAdmin: true
+        }
+    };
+    const mockPerson = new Person(fakeEcmUserWithAdminCapabilities);
+    return { entry: mockPerson };
+}
+
+export function getFakeUserWithContentUserCapability(): PersonEntry {
+    const fakeEcmUserWithAdminCapabilities = {
+        ...fakeEcmUser,
+        capabilities: {
+            isAdmin: false
         }
     };
     const mockPerson = new Person(fakeEcmUserWithAdminCapabilities);

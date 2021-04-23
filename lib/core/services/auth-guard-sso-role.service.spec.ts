@@ -25,7 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { PeopleContentService } from './people-content.service';
 import { of } from 'rxjs';
-import { getMockAcsUserWithCapabilities } from '../mock';
+import { getFakeUserWithContentAdminCapability, getFakeUserWithContentUserCapability } from '../mock/ecm-user.service.mock';
 
 describe('Auth Guard SSO role service', () => {
 
@@ -191,59 +191,34 @@ describe('Auth Guard SSO role service', () => {
         expect(materialDialog.closeAll).toHaveBeenCalled();
     });
 
-    describe('ACS Admin', () => {
+    describe('Content Admin', () => {
 
-        afterEach(() => {
-            authGuard.hasAcsAdminRole = undefined;
-        });
-
-        it('Should canActivate be true when the role is set to ACS_ADMIN and the user is an ACS admin', async () => {
-            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getMockAcsUserWithCapabilities(true, false, false)));
+        it('Should give access to a content section (ALFRESCO_ADMINISTRATORS) when the user has content admin capability', async () => {
+            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { 'roles': ['ACS_ADMIN'] };
+            router.data = { 'roles': ['ALFRESCO_ADMINISTRATORS'] };
 
             expect(await authGuard.canActivate(router)).toBeTruthy();
-            expect(authGuard.hasAcsAdminRole).toBe(true);
         });
 
-        it('Should canActivate be false when the role is set to ACS_ADMIN but the user is not an ACS admin', async () => {
-            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getMockAcsUserWithCapabilities(false, false, false)));
+        it('Should not give access to a content section (ALFRESCO_ADMINISTRATORS) when the user does not have content admin capability', async () => {
+            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentUserCapability()));
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { 'roles': ['ACS_ADMIN'] };
+            router.data = { 'roles': ['ALFRESCO_ADMINISTRATORS'] };
 
             expect(await authGuard.canActivate(router)).toBeFalsy();
-            expect(authGuard.hasAcsAdminRole).toBe(false);
         });
 
-        it('Should make the api call to check if the user is an ACS admin only once', async () => {
-            const getCurrentPersonSpy = spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getMockAcsUserWithCapabilities(false, false, false)));
-
-            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { 'roles': ['ACS_ADMIN'] };
-
-            await authGuard.canActivate(router);
-
-            expect(authGuard.hasAcsAdminRole).toBe(false);
-            expect(getCurrentPersonSpy.calls.count()).toEqual(1);
-
-            await authGuard.canActivate(router);
-
-            expect(authGuard.hasAcsAdminRole).toBe(false);
-            expect(getCurrentPersonSpy.calls.count()).toEqual(1);
-        });
-
-        it('Should not make any api call to check if the user is an ACS admin when there is no ACS_ADMIN in the data roles', async () => {
-            const getCurrentPersonSpy = spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getMockAcsUserWithCapabilities(true, false, false)));
-
+        it('Should not call the service to check if the user has content admin capability when the roles do not contain ALFRESCO_ADMINISTRATORS', async () => {
+            const getCurrentPersonSpy = spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { 'roles': ['fakeRole'] };
 
             await authGuard.canActivate(router);
 
             expect(getCurrentPersonSpy).not.toHaveBeenCalled();
-            expect(authGuard.hasAcsAdminRole).toBe(undefined);
         });
     });
 });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { fakeEcmUser, createNewPersonMock } from '../mock/ecm-user.service.mock';
+import { fakeEcmUser, createNewPersonMock, getFakeUserWithContentAdminCapability } from '../mock/ecm-user.service.mock';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { PeopleContentService } from './people-content.service';
@@ -24,6 +24,7 @@ import { setupTestBed } from '../testing/setup-test-bed';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
 import { LogService } from './log.service';
+import { of } from 'rxjs';
 
 describe('PeopleContentService', () => {
 
@@ -100,5 +101,17 @@ describe('PeopleContentService', () => {
             expect(logErrorSpy).toHaveBeenCalledWith({ message: 'failed to create new person' });
             done();
         });
+    });
+
+    it('Should make the api call to check if the user is a content admin only once', async () => {
+        const getCurrentPersonSpy = spyOn(service.peopleApi, 'getPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
+
+        expect(await service.isContentAdmin()).toBe(true);
+        expect(getCurrentPersonSpy.calls.count()).toEqual(1);
+
+        await service.isContentAdmin();
+
+        expect(await service.isContentAdmin()).toBe(true);
+        expect(getCurrentPersonSpy.calls.count()).toEqual(1);
     });
 });

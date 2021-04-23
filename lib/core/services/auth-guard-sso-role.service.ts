@@ -19,16 +19,12 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from './jwt-helper.service';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { PeopleContentService } from './people-content.service';
-import { PersonEntry } from '@alfresco/js-api';
+import { ContentGroups, PeopleContentService } from './people-content.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuardSsoRoleService implements CanActivate {
-    acsAdminRole = 'ACS_ADMIN';
-    hasAcsAdminRole: boolean;
-
     constructor(private jwtHelperService: JwtHelperService,
                 private router: Router,
                 private dialog: MatDialog,
@@ -43,10 +39,8 @@ export class AuthGuardSsoRoleService implements CanActivate {
         if (route.data) {
             if (route.data['roles']) {
                 const rolesToCheck: string[] = route.data['roles'];
-                if (this.hasAcsAdminRole === undefined && rolesToCheck.includes(this.acsAdminRole)) {
-                    this.hasAcsAdminRole = await this.isAcsAdmin();
-                }
-                hasRealmRole = this.jwtHelperService.hasRealmRoles(rolesToCheck) || this.hasAcsAdminRole;
+                const isContentAdmin = rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) ? await this.peopleContentService.isContentAdmin() : false;
+                hasRealmRole = this.jwtHelperService.hasRealmRoles(rolesToCheck) || isContentAdmin;
             }
 
             if (route.data['clientRoles']) {
@@ -67,10 +61,5 @@ export class AuthGuardSsoRoleService implements CanActivate {
         }
 
         return hasRole;
-    }
-
-    async isAcsAdmin(): Promise<boolean> {
-        const user: PersonEntry = await this.peopleContentService.getCurrentPerson().toPromise();
-        return user?.entry?.capabilities?.isAdmin;
     }
 }
