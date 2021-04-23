@@ -27,7 +27,7 @@ import { LogService } from './log.service';
 import { of } from 'rxjs';
 import { EcmUserModel } from '../models/ecm-user.model';
 
-fdescribe('PeopleContentService', () => {
+describe('PeopleContentService', () => {
 
     let service: PeopleContentService;
     let logService: LogService;
@@ -89,7 +89,7 @@ fdescribe('PeopleContentService', () => {
             expect(listPeopleSpy).toHaveBeenCalled();
             done();
         });
-    })
+    });
 
     it('should be able to create new person', (done) => {
         spyOn(service.peopleApi, 'createPerson').and.returnValue(Promise.resolve({ entry: fakeEcmUser }));

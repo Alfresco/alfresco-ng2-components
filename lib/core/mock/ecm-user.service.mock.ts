@@ -51,11 +51,11 @@ export let fakeEcmUser = {
 };
 
 export let fakeEcmUser2 = {
-    id: "another-fake-id",
-    firstName: "another-fake-first-name",
-    lastName: "another",
-    displayName: "admin.adf User",
-    email: "admin.adf@alfresco.com",
+    id: 'another-fake-id',
+    firstName: 'another-fake-first-name',
+    lastName: 'another',
+    displayName: 'admin.adf User',
+    email: 'admin.adf@alfresco.com',
     company: null,
     enabled: true,
     emailNotificationsEnabled: true
