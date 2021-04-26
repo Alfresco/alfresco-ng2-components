@@ -11,14 +11,14 @@ echo "================== AFFECTED_LIBS  ${AFFECTED_LIBS} ==================="
 
 echo "================== core unit ==================="
 
-if [[ $AFFECTED_LIBS =~ "core" || "${TRAVIS_EVENT_TYPE}" == "push" ]];
+if [[ $AFFECTED_LIBS =~ "core" || "${TRAVIS_EVENT_TYPE}" == "push" || "${TRAVIS_EVENT_TYPE}" == "cron" ]];
 then
     ng test core --watch=false || exit 1;
 fi;
 
 echo "================== extensions unit ==================="
 
-if [[ $AFFECTED_LIBS =~ "extensions" || "${TRAVIS_EVENT_TYPE}" == "push"  ]];
+if [[ $AFFECTED_LIBS =~ "extensions" || "${TRAVIS_EVENT_TYPE}" == "push" || "${TRAVIS_EVENT_TYPE}" == "cron" ]];
 then
     ng test extensions --watch=false || exit 1;
 fi;
