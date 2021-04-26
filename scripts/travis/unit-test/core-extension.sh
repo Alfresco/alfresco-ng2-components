@@ -18,7 +18,7 @@ fi;
 
 echo "================== extensions unit ==================="
 
-if [[ $AFFECTED_LIBS =~ "extensions" || "${TRAVIS_EVENT_TYPE}" == "push" ]];
+if [[ $AFFECTED_LIBS =~ "extensions" || "${TRAVIS_EVENT_TYPE}" == "push"  ]];
 then
     ng test extensions --watch=false || exit 1;
 fi;
