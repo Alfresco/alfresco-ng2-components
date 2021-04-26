@@ -17,7 +17,7 @@ if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     echo "Affected e2e ${AFFECTED_E2E}"
 fi;
 
-if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$BASE_DIRECTORY" ||  "${TRAVIS_EVENT_TYPE}" == "push" ||  "${TRAVIS_EVENT_TYPE}" == "api" ]]; then
+if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$BASE_DIRECTORY" ||  "${TRAVIS_EVENT_TYPE}" == "push" ||  "${TRAVIS_EVENT_TYPE}" == "api" ||  "${TRAVIS_EVENT_TYPE}" == "cron" ]]; then
     echo "Run all e2e $FOLDER"
     ./scripts/test-e2e-lib.sh --use-dist
 else if [[ $AFFECTED_E2E  == "e2e/$FOLDER" ]]; then
