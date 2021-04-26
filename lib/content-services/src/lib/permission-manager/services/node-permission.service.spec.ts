@@ -233,7 +233,7 @@ describe('NodePermissionService', () => {
         });
     }));
 
-    it('should give node role if search API failed', async(() => {
+    it('should provide node and default role if search API failed', async(() => {
         const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeCopy));
         spyOn(searchApiService, 'searchByQueryBody').and.returnValue(throwError('search service down'));
