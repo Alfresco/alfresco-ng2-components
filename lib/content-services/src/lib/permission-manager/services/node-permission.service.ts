@@ -19,7 +19,7 @@ import { AlfrescoApiService, NodesApiService, SearchService, TranslationService 
 import { Group, GroupMemberEntry, GroupMemberPaging, Node, PathElement, PermissionElement, Person, QueryBody } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { PermissionDisplayModel } from '../models/permission.model';
 import { RoleModel } from '../models/role.model';
 
