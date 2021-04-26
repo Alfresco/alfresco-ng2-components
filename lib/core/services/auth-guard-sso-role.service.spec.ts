@@ -23,12 +23,16 @@ import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
+import { PeopleContentService } from './people-content.service';
+import { of } from 'rxjs';
+import { getFakeUserWithContentAdminCapability, getFakeUserWithContentUserCapability } from '../mock/ecm-user.service.mock';
 
 describe('Auth Guard SSO role service', () => {
 
     let authGuard: AuthGuardSsoRoleService;
     let jwtHelperService: JwtHelperService;
     let routerService: Router;
+    let peopleContentService: PeopleContentService;
 
     setupTestBed({
         imports: [
@@ -42,6 +46,7 @@ describe('Auth Guard SSO role service', () => {
         authGuard = TestBed.inject(AuthGuardSsoRoleService);
         jwtHelperService = TestBed.inject(JwtHelperService);
         routerService = TestBed.inject(Router);
+        peopleContentService = TestBed.inject(PeopleContentService);
     });
 
     it('Should canActivate be true if the Role is present int the JWT token', async(async () => {
@@ -184,5 +189,40 @@ describe('Auth Guard SSO role service', () => {
 
         expect(await authGuard.canActivate(route)).toBeFalsy();
         expect(materialDialog.closeAll).toHaveBeenCalled();
+    });
+
+    describe('Content Admin', () => {
+
+        afterEach(() => {
+           peopleContentService.hasCheckedIsContentAdmin = false;
+        });
+
+        it('Should give access to a content section (ALFRESCO_ADMINISTRATORS) when the user has content admin capability', async () => {
+            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { 'roles': ['ALFRESCO_ADMINISTRATORS'] };
+
+            expect(await authGuard.canActivate(router)).toBeTruthy();
+        });
+
+        it('Should not give access to a content section (ALFRESCO_ADMINISTRATORS) when the user does not have content admin capability', async () => {
+            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentUserCapability()));
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { 'roles': ['ALFRESCO_ADMINISTRATORS'] };
+
+            expect(await authGuard.canActivate(router)).toBeFalsy();
+        });
+
+        it('Should not call the service to check if the user has content admin capability when the roles do not contain ALFRESCO_ADMINISTRATORS', async () => {
+            const getCurrentPersonSpy = spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { 'roles': ['fakeRole'] };
+
+            await authGuard.canActivate(router);
+
+            expect(getCurrentPersonSpy).not.toHaveBeenCalled();
+        });
     });
 });

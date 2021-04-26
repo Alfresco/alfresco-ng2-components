@@ -16,6 +16,7 @@
  */
 
 import { EcmCompanyModel } from '../models/ecm-company.model';
+import { PersonEntry, Person } from '@alfresco/js-api';
 
 export let fakeEcmCompany: EcmCompanyModel = {
     organization: 'company-fake-name',
@@ -99,3 +100,25 @@ export const createNewPersonMock = {
     password: 'fake-avatar-id',
     email: 'fakeEcm@ecmUser.com'
 };
+
+export function getFakeUserWithContentAdminCapability(): PersonEntry {
+    const fakeEcmUserWithAdminCapabilities = {
+        ...fakeEcmUser,
+        capabilities: {
+            isAdmin: true
+        }
+    };
+    const mockPerson = new Person(fakeEcmUserWithAdminCapabilities);
+    return { entry: mockPerson };
+}
+
+export function getFakeUserWithContentUserCapability(): PersonEntry {
+    const fakeEcmUserWithAdminCapabilities = {
+        ...fakeEcmUser,
+        capabilities: {
+            isAdmin: false
+        }
+    };
+    const mockPerson = new Person(fakeEcmUserWithAdminCapabilities);
+    return { entry: mockPerson };
+}
