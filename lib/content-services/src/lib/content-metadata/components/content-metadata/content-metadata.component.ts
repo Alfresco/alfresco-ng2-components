@@ -208,6 +208,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             }))
             .subscribe((updatedNode) => {
                 if (updatedNode) {
+                    if (this.hasContentTypeChanged(this.changedProperties)) {
+                        this.cardViewUpdateService.updateNodeAspect(this.node);
+                    }
                     this.revertChanges();
                     Object.assign(this.node, updatedNode);
                     this.alfrescoApiService.nodeUpdated.next(this.node);
