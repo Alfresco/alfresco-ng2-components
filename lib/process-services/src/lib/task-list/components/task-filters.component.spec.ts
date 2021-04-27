@@ -105,6 +105,18 @@ describe('TaskFiltersComponent', () => {
         component.ngOnInit();
     });
 
+    it('should be able to call create default task filters api if there are no filters available on given appId', async () => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of([]));
+        const filtersMock = [{ name: 'dafult-task-filter-1'}, { name: 'dafult-task-filter-2'}];
+        const createDefaultFiltersSpy = spyOn(taskFilterService, 'createDefaultFilters').and.returnValue(of(filtersMock));
+        const appId = '2';
+        const change = new SimpleChange(null, appId, true);
+        component.ngOnChanges({ 'appId': change });
+        fixture.detectChanges();
+
+        expect(createDefaultFiltersSpy).toHaveBeenCalledWith(appId);
+    });
+
     it('should return the filter task list, filtered By Name', (done) => {
 
         const fakeDeployedApplicationsPromise = new Promise(function (resolve) {
@@ -350,5 +362,31 @@ describe('TaskFiltersComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         expect(component.currentFilter).toBe(undefined);
+    });
+
+    describe('Display Task Filters', () => {
+
+        it('Should be able to display default task filters', async  () => {
+            spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of([]));
+            const defaultTaskFiltersMock = [
+                { name: 'dafult-my-filter' },
+                { name: 'dafult-involved-filter' },
+                { name: 'dafult-completed-filter' },
+            ]
+            spyOn(taskFilterService, 'createDefaultFilters').and.returnValue(of(defaultTaskFiltersMock));
+            const appId = '2';
+            const change = new SimpleChange(null, appId, true);
+            component.ngOnChanges({ 'appId': change });
+
+            fixture.detectChanges();
+
+            const taskFilterOne = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="dafult-my-filter_filter"]`);
+            const taskFilterTwo = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="dafult-involved-filter_filter"]`);
+            const taskFilterThree = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="dafult-completed-filter_filter"]`);
+
+            expect(taskFilterOne.innerText).toBe('dafult-my-filter');
+            expect(taskFilterTwo.innerText).toBe('dafult-involved-filter');
+            expect(taskFilterThree.innerText).toBe('dafult-completed-filter');
+        });
     });
 });
