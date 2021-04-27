@@ -50,9 +50,9 @@ stages:
   - name: "Build Demo shell"
     if: type = push AND tag IS blank
   - name: "Unit test Lib"
-    if: branch = develop AND (type = cron || type = pull_request)
+    if: type = cron || type = pull_request
   - name: "e2e Test"
-    if: branch = develop AND (type = cron || type = pull_request)
+    if: type = cron || type = pull_request
   - name: "Release tag"
     if: branch = master
   - name: "Deprecate develop builds"
