@@ -28,7 +28,7 @@ import { Subject } from 'rxjs';
 export class LogService {
 
     get currentLogLevel() {
-        const configLevel: string = this.appConfig.get<string>(AppConfigValues.E2E_LOG_LEVEL);
+        const configLevel: string = this.appConfig.get<string>(AppConfigValues.LOG_LEVEL);
 
         if (configLevel) {
             return this.getLogLevel(configLevel);

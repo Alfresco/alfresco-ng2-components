@@ -35,7 +35,7 @@ export enum AppConfigValues {
     CONTEXTROOTECM = 'contextRootEcm',
     CONTEXTROOTBPM = 'contextRootBpm',
     ALFRESCO_REPOSITORY_NAME = 'alfrescoRepositoryName',
-    E2E_LOG_LEVEL = 'logLevel',
+    LOG_LEVEL = 'logLevel',
     LOGIN_ROUTE = 'loginRoute',
     DISABLECSRF = 'disableCSRF',
     AUTH_WITH_CREDENTIALS = 'auth.withCredentials',
