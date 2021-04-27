@@ -43,10 +43,10 @@ export class ImgViewerComponent implements OnInit, AfterViewInit, OnChanges {
     showToolbar = true;
 
     @Input()
-    showRotate = true;
+    showSecondaryToolbar = true;
 
     @Input()
-    showUpdateToolbar = true;
+    showImageRotate = true;
 
     @Input()
     urlFile: string;
@@ -61,7 +61,7 @@ export class ImgViewerComponent implements OnInit, AfterViewInit, OnChanges {
     error = new EventEmitter<any>();
 
     @Output()
-    submit = new EventEmitter<Blob>();
+    submit = new EventEmitter<any>();
 
     @ViewChild('image', { static: false})
     public imageElement: ElementRef;
@@ -95,17 +95,33 @@ export class ImgViewerComponent implements OnInit, AfterViewInit, OnChanges {
             dragMode: 'move',
             background: false,
             scalable: true,
+            zoomOnWheel: false,
             toggleDragModeOnDblclick: false,
             viewMode: 1,
+            checkCrossOrigin: false,
             ready: () => {
                 window.addEventListener('keydown', (this.onKeyDown.bind(this)));
-                this.cropper.zoomTo(this.scale);
+
+                if (this.imageElement.nativeElement.width < this.cropper.getContainerData().width) {
+                    const width = this.imageElement.nativeElement.width;
+                    const height = this.imageElement.nativeElement.height;
+                    const top = (this.cropper.getContainerData().height - this.imageElement.nativeElement.height) / 2;
+                    const left = (this.cropper.getContainerData().width - this.imageElement.nativeElement.width) / 2;
+
+                    this.cropper.setCanvasData({
+                        width: width,
+                        height: height,
+                        top,
+                        left
+                    });
+                }
             }
         });
     }
 
     ngOnDestroy() {
         window.removeEventListener('keydown', this.onKeyDown);
+        this.cropper.destroy();
     }
 
     onKeyDown(event: KeyboardEvent) {
@@ -151,7 +167,7 @@ export class ImgViewerComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     zoomIn() {
-        this.cropper.zoom( +0.2);
+        this.cropper.zoom( 0.2);
         this.scale = +((this.scale + 0.2).toFixed(1));
     }
 
@@ -168,8 +184,8 @@ export class ImgViewerComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     save() {
-        this.cropper.getCroppedCanvas().toBlob((newImage: Blob) => {
-            this.submit.emit(newImage);
+        this.cropper.getCroppedCanvas().toBlob((blob) => {
+            this.submit.emit(blob);
         });
     }
 

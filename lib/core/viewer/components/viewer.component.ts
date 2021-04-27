@@ -33,7 +33,6 @@ import { ViewUtilService } from '../services/view-util.service';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { filter, skipWhile, takeUntil } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { VersionManagerDialogAdapterComponent } from '../../../../demo-shell/src/app/components/files/version-manager-dialog-adapter.component';
 
 @Component({
     selector: 'adf-viewer',
@@ -97,6 +96,14 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     /** Hide or show the toolbar */
     @Input()
     showToolbar = true;
+
+    /** Hide or show the secondary toolbar */
+    @Input()
+    showSecondaryToolbar = false;
+
+    /** Hide or show the rotate button for adf-image-viewer */
+    @Input()
+    showImageRotate = true;
 
     /** Specifies the name of the file when it is not available from the URL. */
     @Input()
@@ -206,6 +213,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     /** Emitted when the shared link used is not valid. */
     @Output()
     invalidSharedLink = new EventEmitter();
+
+    /** Emitted when user updates a node via rotate, crop, etc. */
+    @Output()
+    fileSubmit = new EventEmitter<Blob>();
 
     TRY_TIMEOUT: number = 10000;
 
@@ -687,15 +698,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     onSubmitFile(newImageBlob: Blob) {
-        const newImageFile: File = new File([newImageBlob], this.nodeEntry.entry.name);
-        const contentEntry = this.nodeEntry.entry;
-        const newFileVersion = newImageFile;
-
-        this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: { contentEntry, newFileVersion  },
-                panelClass: 'adf-version-manager-dialog',
-                width: '630px'
-            });
+        this.fileSubmit.emit(newImageBlob);
     }
 
     onUnsupportedFile() {

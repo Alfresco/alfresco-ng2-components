@@ -220,6 +220,8 @@
                             <adf-img-viewer [urlFile]="urlFileContent"
                                             [nameFile]="displayName"
                                             [blobFile]="blobFile"
+                                            [showImageRotate]="showImageRotate"
+                                            [showSecondaryToolbar]="showSecondaryToolbar"
                                             (error)="onUnsupportedFile()"
                                             (submit)="onSubmitFile($event)"
                             ></adf-img-viewer>

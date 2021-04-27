@@ -27,7 +27,7 @@
         </button>
 
         <button
-            *ngIf="showRotate" id="viewer-rotate-button"
+            *ngIf="showImageRotate" id="viewer-rotate-button"
             title="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
             attr.aria-label="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
             mat-icon-button
@@ -46,7 +46,7 @@
 
     </adf-toolbar>
 
-    <adf-toolbar class="secondary-toolbar" *ngIf="showUpdateToolbar && isEditing">
+    <adf-toolbar class="secondary-toolbar" *ngIf="showSecondaryToolbar && isEditing">
         <button
             id="viewer-cancel-button"
             title="{{ 'ADF_VIEWER.ARIA.CANCEL' | translate }}"
