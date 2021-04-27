@@ -120,7 +120,7 @@ export class SomePageComponent implements OnInit {
 ```
 
 In the above sample code the `file` is uploaded via an HTML input element.
-The `processInstanceId` refers to a process instance ID for a running process in APS.\\
+The `processInstanceId` refers to a process instance ID for a running process in APS.
 The returned `relContent` object looks like in this sample:
 
     Related content:     
