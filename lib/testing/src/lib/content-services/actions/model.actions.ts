@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CustomModel, CustomModelApi, CustomType, TypePaging, TypesApi } from '@alfresco/js-api';
+import { CustomModel, CustomModelApi, CustomModelProperty, CustomType, TypePaging, TypesApi } from '@alfresco/js-api';
 import { ApiService } from '../../core/actions/api.service';
 import { ApiUtil } from '../../core/actions/api.util';
 import { Logger } from '../../core/utils/logger';
@@ -35,6 +35,10 @@ export class ModelActions {
 
     async createType(modelName, { name, parentName, title, description}: CustomType ): Promise<{ entry: CustomType }> {
         return this.customModelApi.createCustomType(modelName, name, parentName, title, description);
+    }
+
+    async addPropertyToType(modelName: string, typeName: string, properties?: CustomModelProperty[]): Promise<CustomType> {
+        return this.customModelApi.addPropertyToType(modelName , typeName, properties);
     }
 
     async activateCustomModel(modelName: string): Promise<{ entry: CustomModel }> {

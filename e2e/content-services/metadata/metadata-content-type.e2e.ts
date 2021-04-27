@@ -43,6 +43,7 @@ describe('content type', () => {
         status: 'ACTIVE'
     };
     const type: CustomType = { name: `test-type-${randomString}`, parentName: 'cm:content', title: `Test type - ${randomString}` };
+    const property = { name: `test-property-${randomString}`, title: `Test property - ${randomString}`, dataType: 'd:text', defaultValue: randomString };
     const pdfFile = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const docxFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
@@ -55,6 +56,7 @@ describe('content type', () => {
             await apiService.loginWithProfile('admin');
             await modelActions.createModel(model);
             await modelActions.createType(model.name,  type);
+            await modelActions.addPropertyToType(model.name,  type.name, [property]);
 
             acsUser = await usersActions.createUser();
             await apiService.login(acsUser.username, acsUser.password);
@@ -107,9 +109,11 @@ describe('content type', () => {
 
         await metadataViewPage.changeContentType(type.title);
         await metadataViewPage.clickSaveMetadata();
-
         await metadataViewPage.checkConfirmDialogDisplayed();
         await metadataViewPage.applyNodeProperties();
+
+        await modelActions.isCustomTypeSearchable(type.title);
+        await expect(await metadataViewPage.getPropertyText(`properties.${model.namespacePrefix}:${property.name}`)).toContain(property.defaultValue);
 
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(acsUser.username, acsUser.password);
@@ -123,6 +127,7 @@ describe('content type', () => {
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
         await modelActions.isCustomTypeSearchable(type.title);
         await expect(await metadataViewPage.hasContentType(type.title)).toBe(true, 'Content type not found');
+        await expect(await metadataViewPage.getPropertyText(`properties.${model.namespacePrefix}:${property.name}`)).toContain(property.defaultValue);
 
         await viewerPage.clickCloseButton();
     });

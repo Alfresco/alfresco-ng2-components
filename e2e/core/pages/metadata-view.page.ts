@@ -226,7 +226,6 @@ export class MetadataViewPage {
 
     async changeContentType(option: string): Promise<void> {
         const nodeType = TestElement.byCss('div[data-automation-id="header-nodeType"] .mat-select-trigger');
-        await nodeType.waitVisible();
         await nodeType.click();
         const typesDropDownPage = new DropdownPage(nodeType.elementFinder);
         await typesDropDownPage.checkOptionIsDisplayed(option);
@@ -249,8 +248,13 @@ export class MetadataViewPage {
     }
 
     async checkPropertyIsNotVisible(propertyName: string, type: string): Promise<void> {
-        const property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
-        await BrowserVisibility.waitUntilElementIsNotVisible(property);
+        await TestElement.byCss('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]').waitNotVisible();
+    }
+
+    async getCustomPropertyValue(propertyName: string): Promise<string> {
+        const customProperty = TestElement.byCss(`[data-automation-id="header-properties.${propertyName}"]`);
+        await customProperty.waitVisible();
+        return customProperty.getText();
     }
 
     async clickCloseButton(): Promise<void> {

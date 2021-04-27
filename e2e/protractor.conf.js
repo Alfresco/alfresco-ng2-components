@@ -250,6 +250,21 @@ exports.config = {
             })
         );
 
+        function disableCSSAnimation() {
+            const css = '* {' +
+                '-webkit-transition-duration: 0s !important;' +
+                'transition-duration: 0s !important;' +
+                '-webkit-animation-duration: 0s !important;' +
+                'animation-duration: 0s !important;' +
+                '}';
+            const head = document.head || document.getElementsByTagName('head')[0];
+            const style = document.createElement('style');
+
+            style.type = 'text/css';
+            style.appendChild(document.createTextNode(css));
+            head.appendChild(style);
+        }
+
         // @ts-ignore
         await browser.driver.executeScript(disableCSSAnimation);
 
@@ -258,7 +273,7 @@ exports.config = {
         await browser.get(`${HOST}/#/settings`);
         await browser.waitForAngularEnabled(true);
 
-        if (typeof LocalStorageUtil.clearStorage === "function") {
+        try {
             await LocalStorageUtil.clearStorage();
             // @ts-ignore
             await LocalStorageUtil.setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);
@@ -282,26 +297,10 @@ exports.config = {
 
             await LocalStorageUtil.apiReset();
 
-        } else {
+        } catch (error) {
             Logger.error(`====== Demo shell not able to start ======`);
             process.exit();
         }
-
-        function disableCSSAnimation() {
-            const css = '* {' +
-                '-webkit-transition-duration: 0s !important;' +
-                'transition-duration: 0s !important;' +
-                '-webkit-animation-duration: 0s !important;' +
-                'animation-duration: 0s !important;' +
-                '}';
-            const head = document.head || document.getElementsByTagName('head')[0];
-            const style = document.createElement('style');
-
-            style.type = 'text/css';
-            style.appendChild(document.createTextNode(css));
-            head.appendChild(style);
-        }
-
     },
 
     afterLaunch: async function (statusCode) {
