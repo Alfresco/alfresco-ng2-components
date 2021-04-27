@@ -109,8 +109,8 @@ export class ImgViewerComponent implements OnInit, AfterViewInit, OnChanges {
                     const left = (this.cropper.getContainerData().width - this.imageElement.nativeElement.width) / 2;
 
                     this.cropper.setCanvasData({
-                        width: width,
-                        height: height,
+                        width,
+                        height,
                         top,
                         left
                     });
