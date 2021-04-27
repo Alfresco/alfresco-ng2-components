@@ -51,7 +51,8 @@ describe('TaskHeaderCloudComponent', () => {
 
     const mock = {
         oauth2Auth: {
-            callCustomApi: () => Promise.resolve({})
+            callCustomApi: () => Promise.resolve({}),
+            on: jasmine.createSpy('on')
         },
         isEcmLoggedIn() {
             return false;

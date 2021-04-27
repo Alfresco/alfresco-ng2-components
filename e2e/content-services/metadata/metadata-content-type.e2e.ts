@@ -15,16 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
-    BrowserActions,
-    LoginPage,
-    ModelActions,
-    UploadActions,
-    UserModel,
-    UsersActions,
-    ViewerPage
-} from '@alfresco/adf-testing';
+import { ApiService, BrowserActions, LoginPage, ModelActions, StringUtil, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { CustomModel, CustomType } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
@@ -35,21 +26,23 @@ describe('content type', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const modelActions = new ModelActions(apiService);
+    const uploadActions = new UploadActions(apiService);
 
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
     const loginPage = new LoginPage();
+    const randomString = StringUtil.generateRandomString();
 
     const model: CustomModel =  {
-        name: 'test',
-        namespaceUri: 'http://www.customModel.com/model/e2e/1.0',
-        namespacePrefix: 'e2e',
+        name: `test-${randomString}`,
+        namespaceUri: `http://www.customModel.com/model/${randomString}/1.0`,
+        namespacePrefix: `e2e-${randomString}`,
         author: 'E2e Automation User',
         description: 'Custom type e2e model',
-        status: 'DRAFT'
+        status: 'ACTIVE'
     };
-    const type: CustomType = { name: 'test', parentName: 'cm:content', title: 'Test type' };
+    const type: CustomType = { name: `test-type-${randomString}`, parentName: 'cm:content', title: `Test type - ${randomString}` };
     const pdfFile = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const docxFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
@@ -60,40 +53,55 @@ describe('content type', () => {
     beforeAll( async () => {
         try {
             await apiService.loginWithProfile('admin');
-
-            const typePaging = await modelActions.listTypes({where: `(namespaceUri matches('http://www.customModel.*'))`});
-            if (typePaging.list.pagination.count === 0) {
-                await modelActions.createModel(model);
-                await modelActions.createType(model.name,  type);
-                await modelActions.activateCustomModel(model.name);
-            }
+            await modelActions.createModel(model);
+            await modelActions.createType(model.name,  type);
 
             acsUser = await usersActions.createUser();
             await apiService.login(acsUser.username, acsUser.password);
 
-            const uploadActions = new UploadActions(apiService);
             const filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
             pdfFile.id = filePdfNode.entry.id;
             const docsNode = await uploadActions.uploadFile(docxFileModel.location, docxFileModel.name, '-my-');
             docxFileModel.id = docsNode.entry.id;
 
-            await loginPage.login(acsUser.username, acsUser.password);
         } catch (e) {
-            console.error('Failed to setup custom types', JSON.stringify(e, null, 2));
-            fail();
+            fail('Failed to setup custom types :: ' + JSON.stringify(e, null, 2));
         }
+    });
+
+    afterAll(async () => {
+        await apiService.login(acsUser.username, acsUser.password);
+        await uploadActions.deleteFileOrFolder(pdfFile.id);
+        await uploadActions.deleteFileOrFolder(docxFileModel.id);
+        try {
+            await apiService.loginWithProfile('admin');
+            await modelActions.deactivateCustomModel(model.name);
+            await modelActions.deleteCustomModel(model.name);
+        } catch (e) {
+            console.error('failed to delete the model', e);
+        }
+    });
+
+    beforeEach( async () => {
+        await loginPage.login(acsUser.username, acsUser.password);
+        await navigationBarPage.navigateToContentServices();
+    });
+
+    afterEach( async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C593560] Should the user be able to select a new content type and save it only after the confirmation dialog',  async () => {
         await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${pdfFile.id}/view)`);
-
+        await viewerPage.checkFileIsLoaded(pdfFile.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await metadataViewPage.hasContentType('Content');
+        await modelActions.isCustomTypeSearchable(type.title);
+        await expect(await metadataViewPage.hasContentType('Content')).toBe(true, 'Content type not found');
 
         await metadataViewPage.editIconClick();
 
@@ -105,32 +113,31 @@ describe('content type', () => {
 
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(acsUser.username, acsUser.password);
-        await navigationBarPage.navigateToContentServices();
-
-        await viewerPage.viewFile(pdfFile.name);
-        await viewerPage.checkFileIsLoaded();
-
+        await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${pdfFile.id}/view)`);
+        await viewerPage.checkFileIsLoaded(pdfFile.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await metadataViewPage.hasContentType(type.title);
+        await modelActions.isCustomTypeSearchable(type.title);
+        await expect(await metadataViewPage.hasContentType(type.title)).toBe(true, 'Content type not found');
 
         await viewerPage.clickCloseButton();
     });
 
     it('[C593559] Should the user be able to select a new content type and not save it when press cancel in the confirmation dialog',  async () => {
         await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${docxFileModel.id}/view)`);
-
+        await viewerPage.checkFileIsLoaded(docxFileModel.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await metadataViewPage.hasContentType('Content');
+        await modelActions.isCustomTypeSearchable(type.title);
+        await expect(await metadataViewPage.hasContentType('Content')).toBe(true, 'Content type not found');
 
         await metadataViewPage.editIconClick();
 
@@ -142,18 +149,16 @@ describe('content type', () => {
 
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(acsUser.username, acsUser.password);
-        await navigationBarPage.navigateToContentServices();
-
-        await viewerPage.viewFile(docxFileModel.name);
-        await viewerPage.checkFileIsLoaded();
-
+        await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${docxFileModel.id}/view)`);
+        await viewerPage.checkFileIsLoaded(docxFileModel.name);
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await metadataViewPage.hasContentType('Content');
+        await modelActions.isCustomTypeSearchable(type.title);
+        await expect(await metadataViewPage.hasContentType('Content')).toBe(true, 'Content type not found');
 
         await viewerPage.clickCloseButton();
     });

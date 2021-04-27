@@ -42,7 +42,8 @@ describe('PeopleCloudComponent', () => {
 
     const mock = {
         oauth2Auth: {
-            callCustomApi: () => Promise.resolve(mockUsers)
+            callCustomApi: () => Promise.resolve(mockUsers),
+            on: jasmine.createSpy('on')
         },
         isEcmLoggedIn() {
             return false;

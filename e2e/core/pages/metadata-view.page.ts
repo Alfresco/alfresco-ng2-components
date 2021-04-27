@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Locator, by, element, Key, protractor } from 'protractor';
-import { BrowserVisibility, BrowserActions, DropdownPage, TestElement } from '@alfresco/adf-testing';
+import { by, element, Key, Locator, protractor } from 'protractor';
+import { BrowserActions, BrowserVisibility, DropdownPage, TestElement } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
 
@@ -216,14 +216,17 @@ export class MetadataViewPage {
         await BrowserVisibility.waitUntilElementIsVisible(property);
     }
 
-    async hasContentType(contentType: string): Promise<string> {
-        const nodeType = TestElement.byText('div[data-automation-id="header-nodeType"] .adf-property-value', contentType);
-        return nodeType.waitVisible();
+    async hasContentType(contentType: string): Promise<boolean> {
+        const contentTypeSelector = '[data-automation-id="select-readonly-value-nodeType"]';
+        await TestElement.byCss(contentTypeSelector).waitPresent();
+        const nodeType = TestElement.byText(contentTypeSelector, contentType);
+        await nodeType.waitVisible();
+        return nodeType.isPresent();
     }
 
     async changeContentType(option: string): Promise<void> {
-        const nodeType = TestElement.byCss('div[data-automation-id="header-nodeType"] mat-form-field');
-        await nodeType.waitPresent();
+        const nodeType = TestElement.byCss('div[data-automation-id="header-nodeType"] .mat-select-trigger');
+        await nodeType.waitVisible();
         await nodeType.click();
         const typesDropDownPage = new DropdownPage(nodeType.elementFinder);
         await typesDropDownPage.checkOptionIsDisplayed(option);

@@ -16,10 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { from, merge, Observable, BehaviorSubject, throwError } from 'rxjs';
+import { from, merge, Observable, throwError, Subject } from 'rxjs';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { catchError, filter, map, switchMap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
 import { Activiti, SystemPropertiesRepresentation } from '@alfresco/js-api';
 import { AuthenticationService } from './authentication.service';
 
@@ -31,13 +31,13 @@ export class DiscoveryApiService {
     /**
      * Gets product information for Content Services.
      */
-    ecmProductInfo$ = new BehaviorSubject<EcmProductVersionModel>(null);
+    ecmProductInfo$ = new Subject<EcmProductVersionModel>();
 
     constructor(
         private apiService: AlfrescoApiService,
         private authenticationService: AuthenticationService) {
 
-        merge(this.apiService.alfrescoApiInitialized, this.authenticationService.onLogin)
+        merge(this.authenticationService.onTokenExchange.pipe(take(1)), this.authenticationService.onLogin)
             .pipe(
                 filter(() => this.apiService.getInstance()?.isEcmLoggedIn()),
                 switchMap(() => this.getEcmProductInfo())

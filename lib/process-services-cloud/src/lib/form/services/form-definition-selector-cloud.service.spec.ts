@@ -52,7 +52,7 @@ const responseBody = [
     }
 ];
 
-const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi']);
+const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi', 'on']);
 
 describe('Form Definition Selector Cloud Service', () => {
 
