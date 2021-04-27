@@ -47,10 +47,12 @@ stages:
     if: type = push AND tag IS blank
   - name: "Trigger Alpha ADF child build"
     if: branch = develop AND type = cron
-  - name: "Build Demo shell and Unit test Lib"
-    if: branch != master AND tag IS blank
+  - name: "Build Demo shell"
+    if: type = push AND tag IS blank
+  - name: "Unit test Lib"
+    if: branch = develop AND (type = cron || type = pull_request)
   - name: "e2e Test"
-    if: branch != master AND tag IS blank
+    if: branch = develop AND (type = cron || type = pull_request)
   - name: "Release tag"
     if: branch = master
   - name: "Deprecate develop builds"
@@ -96,7 +98,7 @@ jobs:
           workspaces:
               use: node_modules_cache
 
-        - stage: "Build Demo shell and Unit test Lib"
+        - stage: "Build Demo shell"
           name:  "Demo Shell :Build && dockerize"
           script:
               # Build Demo shell for production docker"
@@ -110,25 +112,25 @@ jobs:
               use:
                   - built_libs_cache
 
-        - stage: "Build Demo shell and Unit test Lib"
+        - stage: "Unit test Lib"
           name: "content::unit"
           script:  ./scripts/travis/unit-test/content.sh
           workspaces:
             use: built_libs_cache
 
-        - stage: "Build Demo shell and Unit test Lib"
+        - stage: "Unit test Lib"
           name: "core-extension::unit"
           script: ./scripts/travis/unit-test/core-extension.sh
           workspaces:
             use: built_libs_cache
 
-        - stage: "Build Demo shell and Unit test Lib"
+        - stage: "Unit test Lib"
           name: "process-insights::unit"
           script: ./scripts/travis/unit-test/process.sh
           workspaces:
             use: built_libs_cache
 
-        - stage: "Build Demo shell and Unit test Lib"
+        - stage: "Unit test Lib"
           name: "process-cloud::unit"
           script: ./scripts/travis/unit-test/process-cloud.sh
           workspaces:
