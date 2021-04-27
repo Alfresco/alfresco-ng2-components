@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
+import { ApiService } from './api.service';
 import { ResultSetPaging, SearchApi } from '@alfresco/js-api';
-import { ApiService } from '../../core/actions/api.service';
-import { Logger } from '../../core/utils/logger';
-import { ApiUtil } from '../../core/actions/api.util';
-import { UserModel } from '../../core/models/user.model';
+import { Logger } from '../utils/logger';
+import { ApiUtil } from './api.util';
+import { UserModel } from '../models/user.model';
 
 export class SearchService {
     apiService: ApiService;
