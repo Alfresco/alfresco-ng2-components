@@ -66,6 +66,7 @@ describe('content type', () => {
             const docsNode = await uploadActions.uploadFile(docxFileModel.location, docxFileModel.name, '-my-');
             docxFileModel.id = docsNode.entry.id;
 
+            await modelActions.isCustomTypeSearchable(type.title);
         } catch (e) {
             fail('Failed to setup custom types :: ' + JSON.stringify(e, null, 2));
         }
@@ -102,7 +103,6 @@ describe('content type', () => {
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await modelActions.isCustomTypeSearchable(type.title);
         await expect(await metadataViewPage.hasContentType('Content')).toBe(true, 'Content type not found');
 
         await metadataViewPage.editIconClick();
@@ -112,8 +112,8 @@ describe('content type', () => {
         await metadataViewPage.checkConfirmDialogDisplayed();
         await metadataViewPage.applyNodeProperties();
 
-        await modelActions.isCustomTypeSearchable(type.title);
-        await expect(await metadataViewPage.getPropertyText(`properties.${model.namespacePrefix}:${property.name}`)).toContain(property.defaultValue);
+        await expect(await metadataViewPage.checkPropertyDisplayed(`properties.${model.namespacePrefix}:${property.name}`))
+            .toContain(property.defaultValue, 'Custom property not found');
 
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(acsUser.username, acsUser.password);
@@ -125,7 +125,6 @@ describe('content type', () => {
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await modelActions.isCustomTypeSearchable(type.title);
         await expect(await metadataViewPage.hasContentType(type.title)).toBe(true, 'Content type not found');
         await expect(await metadataViewPage.getPropertyText(`properties.${model.namespacePrefix}:${property.name}`)).toContain(property.defaultValue);
 
@@ -141,7 +140,6 @@ describe('content type', () => {
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await modelActions.isCustomTypeSearchable(type.title);
         await expect(await metadataViewPage.hasContentType('Content')).toBe(true, 'Content type not found');
 
         await metadataViewPage.editIconClick();
@@ -162,9 +160,7 @@ describe('content type', () => {
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await modelActions.isCustomTypeSearchable(type.title);
         await expect(await metadataViewPage.hasContentType('Content')).toBe(true, 'Content type not found');
-
         await viewerPage.clickCloseButton();
     });
 });

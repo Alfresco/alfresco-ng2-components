@@ -16,7 +16,7 @@
  */
 
 import { by, element, Key, Locator, protractor } from 'protractor';
-import { BrowserActions, BrowserVisibility, DropdownPage, TestElement } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DropdownPage, TestElement, Logger } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
 
@@ -216,12 +216,35 @@ export class MetadataViewPage {
         await BrowserVisibility.waitUntilElementIsVisible(property);
     }
 
-    async hasContentType(contentType: string): Promise<boolean> {
+    async hasContentType(contentType: string, attempt = 0, maxAttempt = 5): Promise<any> {
         const contentTypeSelector = '[data-automation-id="select-readonly-value-nodeType"]';
-        await TestElement.byCss(contentTypeSelector).waitPresent();
-        const nodeType = TestElement.byText(contentTypeSelector, contentType);
-        await nodeType.waitVisible();
-        return nodeType.isPresent();
+        const type = TestElement.byText(contentTypeSelector, contentType);
+        try {
+            await type.waitVisible();
+
+            if (await type.isPresent()) {
+                return true;
+            }
+
+            if (attempt > maxAttempt) {
+                return false;
+            }
+        } catch (e) {
+            Logger.log(`re trying content type attempt :: ${attempt}`);
+            return this.hasContentType(contentType, + 1, maxAttempt);
+        }
+    }
+
+    async checkPropertyDisplayed(propertyName: string, attempt = 0, maxAttempt = 5): Promise<any> {
+        try {
+            return this.getPropertyText(propertyName);
+            if (attempt > maxAttempt) {
+                return '';
+            }
+        } catch (e) {
+            Logger.log(`re trying custom property attempt :: ${attempt}`);
+            return this.checkPropertyDisplayed(propertyName, + 1, maxAttempt);
+        }
     }
 
     async changeContentType(option: string): Promise<void> {
