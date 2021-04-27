@@ -34,10 +34,10 @@ const REDIRECT_URI = process.env.REDIRECT_URI || "/";
 const REDIRECT_URI_LOGOUT = process.env.REDIRECT_URI_LOGOUT || "#/logout";
 
 const EXTERNAL_ACS_HOST = process.env.EXTERNAL_ACS_HOST;
-const LOG_LEVEL = process.env.LOG_LEVEL || 'ERROR';
+const E2E_LOG_LEVEL = process.env.E2E_LOG_LEVEL || 'ERROR';
 
 const appConfig = {
-    "log": LOG_LEVEL,
+    "log": E2E_LOG_LEVEL,
     "ecmHost": HOST_ECM,
     "bpmHost": HOST_BPM,
     "identityHost": `${HOST_SSO}/auth/admin/realms/alfresco`,
