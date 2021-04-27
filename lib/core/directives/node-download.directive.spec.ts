@@ -24,7 +24,6 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeDownloadDirective } from './node-download.directive';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { mockOauth2Auth } from '../mock';
 
 @Component({
     template: '<div [adfNodeDownload]="selection" [version]="version"></div>'
@@ -42,6 +41,12 @@ describe('NodeDownloadDirective', () => {
     let apiService: AlfrescoApiService;
     let contentService;
     let dialogSpy;
+    const mockOauth2Auth = {
+        oauth2Auth: {
+            callCustomApi: () => Promise.resolve(),
+            on: jasmine.createSpy('on')
+        }
+    };
 
     setupTestBed({
         imports: [

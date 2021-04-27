@@ -21,12 +21,10 @@ import { ApiUtil } from '../../core/actions/api.util';
 import { Logger } from '../../core/utils/logger';
 
 export class ModelActions {
-    apiService: ApiService;
     customModelApi: CustomModelApi;
     typesApi: TypesApi;
 
     constructor(apiService: ApiService) {
-        this.apiService = apiService;
         this.customModelApi = new CustomModelApi(apiService.getInstance());
         this.typesApi = new TypesApi(apiService.getInstance());
     }

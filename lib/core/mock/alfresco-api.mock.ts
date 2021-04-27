@@ -33,10 +33,3 @@ export class AlfrescoApiMock {
     changeConfig() {
     }
 }
-
-export const mockOauth2Auth = {
-    oauth2Auth: {
-        callCustomApi: () => Promise.resolve(),
-        on: jasmine.createSpy('on')
-    }
-};

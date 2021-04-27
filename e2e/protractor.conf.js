@@ -254,7 +254,9 @@ exports.config = {
         await browser.driver.executeScript(disableCSSAnimation);
 
         // @ts-ignore
+        await browser.waitForAngularEnabled(false);
         await browser.get(`${HOST}/#/settings`);
+        await browser.waitForAngularEnabled(true);
 
         if (typeof LocalStorageUtil.clearStorage === "function") {
             await LocalStorageUtil.clearStorage();
