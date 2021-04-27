@@ -473,7 +473,7 @@ Now you can access Document List properties or call methods directly:
 console.log(documentList.currentFolderId);
 ```
 
-**Important note**:\\
+**Important note**:
 You must not access child components any earlier in the component lifecycle than
 the `AfterViewInit` state. Any UI click (buttons, links, etc.) event handlers are fine but
 an earlier event like `ngOnInit` is not.
