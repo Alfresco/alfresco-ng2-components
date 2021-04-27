@@ -20,7 +20,7 @@ import {
     ApiService,
     BrowserActions,
     LoginPage,
-    NotificationHistoryPage,
+    NotificationHistoryPage, SearchService,
     StringUtil,
     UploadActions,
     UserModel,
@@ -42,6 +42,7 @@ describe('Permissions Component', () => {
 
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
+    const searchService = new SearchService(apiService);
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -89,71 +90,81 @@ describe('Permissions Component', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        await apiService.loginWithProfile('admin');
-        await usersActions.createUser(folderOwnerUser);
-        await usersActions.createUser(siteConsumerUser);
-        await usersActions.createUser(consumerUser);
-        await usersActions.createUser(contributorUser);
-        await usersActions.createUser(collaboratorUser);
-        await usersActions.createUser(managerUser);
-        await apiService.login(folderOwnerUser.username, folderOwnerUser.password);
+        try {
+            await apiService.loginWithProfile('admin');
+            await usersActions.createUser(folderOwnerUser);
+            await usersActions.createUser(siteConsumerUser);
+            await usersActions.createUser(consumerUser);
+            await usersActions.createUser(contributorUser);
+            await usersActions.createUser(collaboratorUser);
+            await usersActions.createUser(managerUser);
+            await apiService.login(folderOwnerUser.username, folderOwnerUser.password);
 
-        await browser.sleep(browser.params.testConfig.timeouts.index_search);
+            const publicSiteName = `PUBLIC_TEST_SITE_${StringUtil.generateRandomString(5)}`;
 
-        const publicSiteName = `PUBLIC_TEST_SITE_${StringUtil.generateRandomString(5)}`;
+            const privateSiteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
 
-        const privateSiteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
+            folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}`;
 
-        folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}`;
+            const publicSiteBody = { visibility: 'PUBLIC', title: publicSiteName };
+            const privateSiteBody = { visibility: 'PRIVATE', title: privateSiteName };
 
-        const publicSiteBody = { visibility: 'PUBLIC', title: publicSiteName };
-        const privateSiteBody = { visibility: 'PRIVATE', title: privateSiteName };
+            const sitesApi = new SitesApi(apiService.getInstance());
 
-        const sitesApi = new SitesApi(apiService.getInstance());
+            publicSite = await sitesApi.createSite(publicSiteBody);
+            privateSite = await sitesApi.createSite(privateSiteBody);
 
-        publicSite = await sitesApi.createSite(publicSiteBody);
-        privateSite = await sitesApi.createSite(privateSiteBody);
-
-        await sitesApi.createSiteMembership(publicSite.entry.id, {
-            id: siteConsumerUser.username,
-            role: CONSTANTS.CS_USER_ROLES.CONSUMER
-        });
-
-        await sitesApi.createSiteMembership(publicSite.entry.id, {
-            id: collaboratorUser.username,
-            role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
-        });
-
-        await sitesApi.createSiteMembership(publicSite.entry.id, {
-            id: contributorUser.username,
-            role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
-        });
-
-        await sitesApi.createSiteMembership(publicSite.entry.id, {
-            id: managerUser.username,
-            role: CONSTANTS.CS_USER_ROLES.MANAGER
-        });
-
-        await sitesApi.createSiteMembership(privateSite.entry.id, {
-            id: managerUser.username,
-            role: CONSTANTS.CS_USER_ROLES.MANAGER
-        });
-
-        siteFolder = await uploadActions.createFolder(folderName, publicSite.entry.guid);
-        privateSiteFile = await uploadActions.uploadFile(fileModel.location, 'privateSite' + fileModel.name, privateSite.entry.guid);
-
-        await apiService.getInstance().core.nodesApi.updateNode(privateSiteFile.entry.id,
-            {
-                permissions: {
-                    locallySet: [{
-                        authorityId: managerUser.username,
-                        name: 'SiteConsumer',
-                        accessStatus: 'ALLOWED'
-                    }]
-                }
+            await sitesApi.createSiteMembership(publicSite.entry.id, {
+                id: siteConsumerUser.username,
+                role: CONSTANTS.CS_USER_ROLES.CONSUMER
             });
 
-        await uploadActions.uploadFile(fileModel.location, 'Site' + fileModel.name, siteFolder.entry.id);
+            await sitesApi.createSiteMembership(publicSite.entry.id, {
+                id: collaboratorUser.username,
+                role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
+            });
+
+            await sitesApi.createSiteMembership(publicSite.entry.id, {
+                id: contributorUser.username,
+                role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
+            });
+
+            await sitesApi.createSiteMembership(publicSite.entry.id, {
+                id: managerUser.username,
+                role: CONSTANTS.CS_USER_ROLES.MANAGER
+            });
+
+            await sitesApi.createSiteMembership(privateSite.entry.id, {
+                id: managerUser.username,
+                role: CONSTANTS.CS_USER_ROLES.MANAGER
+            });
+
+            siteFolder = await uploadActions.createFolder(folderName, publicSite.entry.guid);
+            privateSiteFile = await uploadActions.uploadFile(fileModel.location, 'privateSite' + fileModel.name, privateSite.entry.guid);
+
+            await apiService.getInstance().core.nodesApi.updateNode(privateSiteFile.entry.id,
+                {
+                    permissions: {
+                        locallySet: [{
+                            authorityId: managerUser.username,
+                            name: 'SiteConsumer',
+                            accessStatus: 'ALLOWED'
+                        }]
+                    }
+                });
+
+            await uploadActions.uploadFile(fileModel.location, 'Site' + fileModel.name, siteFolder.entry.id);
+
+            // to sync user in acs
+            try {
+                await searchService.isUserSearchable(consumerUser);
+            } catch (e) {
+                console.error(`*****\n Failed to sync user \n*****`);
+            }
+            await browser.sleep(browser.params.testConfig.timeouts.index_search);
+        } catch (error) {
+            fail('Failed to setup site permission : ' + JSON.stringify(error, null, 2))
+        }
     });
 
     afterAll(async () => {
@@ -192,6 +203,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
 
             await permissionsPage.addPermissionsDialog.searchUserOrGroup(consumerUser.username);
+            await permissionsPage.addPermissionsDialog.checkResultListIsDisplayed();
 
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(consumerUser.firstName);
             await permissionsPage.addPermissionsDialog.selectRole(consumerUser.fullName, 'Site Collaborator');

@@ -90,34 +90,42 @@ describe('Permissions Component', () => {
     let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder;
 
     beforeAll(async () => {
-        await apiService.loginWithProfile('admin');
-        await usersActions.createUser(fileOwnerUser);
-        await usersActions.createUser(filePermissionUser);
-        await apiService.getInstance().core.groupsApi.createGroup(groupBody);
+        try {
+            await apiService.loginWithProfile('admin');
+            await usersActions.createUser(fileOwnerUser);
+            await usersActions.createUser(filePermissionUser);
+            await apiService.getInstance().core.groupsApi.createGroup(groupBody);
 
-        // to sync user in acs
-        await searchService.isUserSearchable(filePermissionUser);
+            await apiService.login(fileOwnerUser.username, fileOwnerUser.password);
+            roleConsumerFolder = await uploadActions.createFolder(roleConsumerFolderModel.name, '-my-');
+            roleCoordinatorFolder = await uploadActions.createFolder(roleCoordinatorFolderModel.name, '-my-');
+            roleContributorFolder = await uploadActions.createFolder(roleContributorFolderModel.name, '-my-');
+            roleCollaboratorFolder = await uploadActions.createFolder(roleCollaboratorFolderModel.name, '-my-');
+            roleEditorFolder = await uploadActions.createFolder(roleEditorFolderModel.name, '-my-');
 
-        await apiService.login(fileOwnerUser.username, fileOwnerUser.password);
-        roleConsumerFolder = await uploadActions.createFolder(roleConsumerFolderModel.name, '-my-');
-        roleCoordinatorFolder = await uploadActions.createFolder(roleCoordinatorFolderModel.name, '-my-');
-        roleContributorFolder = await uploadActions.createFolder(roleContributorFolderModel.name, '-my-');
-        roleCollaboratorFolder = await uploadActions.createFolder(roleCollaboratorFolderModel.name, '-my-');
-        roleEditorFolder = await uploadActions.createFolder(roleEditorFolderModel.name, '-my-');
+            await uploadActions.uploadFile(fileModel.location, 'RoleConsumer' + fileModel.name, roleConsumerFolder.entry.id);
+            await uploadActions.uploadFile(fileModel.location, 'RoleContributor' + fileModel.name, roleContributorFolder.entry.id);
+            await uploadActions.uploadFile(fileModel.location, 'RoleCoordinator' + fileModel.name, roleCoordinatorFolder.entry.id);
+            await uploadActions.uploadFile(fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
+            await uploadActions.uploadFile(fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
 
-        await uploadActions.uploadFile(fileModel.location, 'RoleConsumer' + fileModel.name, roleConsumerFolder.entry.id);
-        await uploadActions.uploadFile(fileModel.location, 'RoleContributor' + fileModel.name, roleContributorFolder.entry.id);
-        await uploadActions.uploadFile(fileModel.location, 'RoleCoordinator' + fileModel.name, roleCoordinatorFolder.entry.id);
-        await uploadActions.uploadFile(fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
-        await uploadActions.uploadFile(fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
+            await permissionActions.addRoleForUser(filePermissionUser.username, 'Consumer', roleConsumerFolder);
+            await permissionActions.addRoleForUser(filePermissionUser.username, 'Collaborator', roleCollaboratorFolder);
+            await permissionActions.addRoleForUser(filePermissionUser.username, 'Coordinator', roleCoordinatorFolder);
+            await permissionActions.addRoleForUser(filePermissionUser.username, 'Contributor', roleContributorFolder);
+            await permissionActions.addRoleForUser(filePermissionUser.username, 'Editor', roleEditorFolder);
 
-        await permissionActions.addRoleForUser(filePermissionUser.username, 'Consumer', roleConsumerFolder);
-        await permissionActions.addRoleForUser(filePermissionUser.username, 'Collaborator', roleCollaboratorFolder);
-        await permissionActions.addRoleForUser(filePermissionUser.username, 'Coordinator', roleCoordinatorFolder);
-        await permissionActions.addRoleForUser(filePermissionUser.username, 'Contributor', roleContributorFolder);
-        await permissionActions.addRoleForUser(filePermissionUser.username, 'Editor', roleEditorFolder);
 
-        await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
+            // to sync user in acs
+            try {
+                await searchService.isUserSearchable(filePermissionUser);
+            } catch (e) {
+                console.error(`*****\n Failed to sync user \n*****`);
+            }
+            await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
+        } catch (e) {
+            fail('Failed to set up permission : \n' + JSON.stringify(e, null, 2));
+        }
     });
 
     describe('Inherit and assigning permissions', () => {
@@ -209,6 +217,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
             await permissionsPage.addPermissionsDialog.searchUserOrGroup(filePermissionUser.firstName);
+            await permissionsPage.addPermissionsDialog.checkResultListIsDisplayed();
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(filePermissionUser.firstName);
             await permissionsPage.addPermissionsDialog.selectRole(filePermissionUser.fullName, 'Contributor');
             await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'button should be enabled');
