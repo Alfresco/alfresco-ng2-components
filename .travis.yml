@@ -48,7 +48,7 @@ stages:
   - name: "Trigger Alpha ADF child build"
     if: branch = develop AND type = cron
   - name: "Build Demo shell"
-    if: type = push AND tag IS blank
+    if: tag IS blank
   - name: "Unit test Lib"
     if: type = cron || type = pull_request
   - name: "e2e Test"
