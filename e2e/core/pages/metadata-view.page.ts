@@ -231,7 +231,7 @@ export class MetadataViewPage {
             }
         } catch (e) {
             Logger.log(`re trying content type attempt :: ${attempt}`);
-            return this.hasContentType(contentType, + 1, maxAttempt);
+            return this.hasContentType(contentType, attempt + 1, maxAttempt);
         }
     }
 
@@ -243,7 +243,7 @@ export class MetadataViewPage {
             }
         } catch (e) {
             Logger.log(`re trying custom property attempt :: ${attempt}`);
-            return this.checkPropertyDisplayed(propertyName, + 1, maxAttempt);
+            return this.checkPropertyDisplayed(propertyName, attempt + 1, maxAttempt);
         }
     }
 
