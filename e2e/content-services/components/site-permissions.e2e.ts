@@ -163,7 +163,7 @@ describe('Permissions Component', () => {
             }
             await browser.sleep(browser.params.testConfig.timeouts.index_search);
         } catch (error) {
-            fail('Failed to setup site permission : ' + JSON.stringify(error, null, 2))
+            fail('Failed to setup site permission : ' + JSON.stringify(error, null, 2));
         }
     });
 

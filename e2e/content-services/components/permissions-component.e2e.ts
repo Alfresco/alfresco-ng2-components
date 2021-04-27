@@ -115,7 +115,6 @@ describe('Permissions Component', () => {
             await permissionActions.addRoleForUser(filePermissionUser.username, 'Contributor', roleContributorFolder);
             await permissionActions.addRoleForUser(filePermissionUser.username, 'Editor', roleEditorFolder);
 
-
             // to sync user in acs
             try {
                 await searchService.isUserSearchable(filePermissionUser);
