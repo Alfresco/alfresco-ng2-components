@@ -184,6 +184,7 @@ export class ImgViewerComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     save() {
+        this.isEditing = false;
         this.cropper.getCroppedCanvas().toBlob((blob) => {
             this.submit.emit(blob);
         });
