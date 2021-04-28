@@ -249,12 +249,26 @@ export class MetadataViewPage {
         }
     }
 
-    async changeContentType(option: string): Promise<void> {
+    async changeContentType(option: string, attempt = 0, maxAttempt = 5): Promise<boolean> {
         const nodeType = TestElement.byCss('div[data-automation-id="header-nodeType"] .mat-select-trigger');
-        await nodeType.click();
-        const typesDropDownPage = new DropdownPage(nodeType.elementFinder);
-        await typesDropDownPage.checkOptionIsDisplayed(option);
-        await typesDropDownPage.selectOption(option);
+        if (attempt > maxAttempt) {
+            console.error(`content type select option not found`);
+            return false;
+        }
+        try {
+            await nodeType.waitVisible();
+            if (await nodeType.isPresent()) {
+                await nodeType.click();
+                const typesDropDownPage = new DropdownPage(nodeType.elementFinder);
+                await typesDropDownPage.checkOptionIsDisplayed(option);
+                await typesDropDownPage.selectOption(option);
+                return true;
+            }
+            return this.changeContentType(option, attempt + 1, maxAttempt)
+        } catch (error) {
+            console.error(`re trying content type options attempt :: ${attempt}`);
+            return  this.changeContentType(option, attempt + 1, maxAttempt)
+        }
     }
 
     async checkConfirmDialogDisplayed(): Promise<void> {
@@ -274,12 +288,6 @@ export class MetadataViewPage {
 
     async checkPropertyIsNotVisible(propertyName: string, type: string): Promise<void> {
         await TestElement.byCss('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]').waitNotVisible();
-    }
-
-    async getCustomPropertyValue(propertyName: string): Promise<string> {
-        const customProperty = TestElement.byCss(`[data-automation-id="header-properties.${propertyName}"]`);
-        await customProperty.waitVisible();
-        return customProperty.getText();
     }
 
     async clickCloseButton(): Promise<void> {
