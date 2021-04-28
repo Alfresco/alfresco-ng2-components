@@ -770,9 +770,9 @@ describe('TaskFormComponent', () => {
         });
     });
 
-    describe('Enable/Disable Task Form Fields', () => {
+    describe('Task Form Fields Visibility', () => {
 
-        it('Should be able to disable task form fields if the readOnlyForm input set true', async () => {
+        it('Should task form fields be disabled when the form is readonly', async () => {
             fixture.detectChanges();
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
             component.taskId = '456';
@@ -793,7 +793,7 @@ describe('TaskFormComponent', () => {
             expect(inputFieldThree['disabled']).toEqual(true, 'Task Form field is enabled');
         });
 
-        it('Should be able to disable task form fields if the task is not claimed', async () => {
+        it('Should task form fields be disabled when the task has not been claimed', async () => {
             fixture.detectChanges();
             getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsMock));
             component.taskId = '456';
@@ -813,7 +813,7 @@ describe('TaskFormComponent', () => {
             expect(inputFieldThree['disabled']).toEqual(true, 'Task Form field is enabled');
         });
 
-        it('Should be able to disable task form fields if the task completed', async () => {
+        it('Should task form fields be disabled when the task is completed', async () => {
             fixture.detectChanges();
             getTaskDetailsSpy.and.returnValue(of(completedTaskWithFormMock));
             component.taskId = '456';
@@ -833,7 +833,7 @@ describe('TaskFormComponent', () => {
             expect(inputFieldThree['disabled']).toEqual(true);
         });
 
-        it('Should be able to enable Form fields after claiming a task', async() => {
+        it('Should task form fields be enabled when the task is claimed', async() => {
             fixture.detectChanges();
             getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsMock.assignee));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
@@ -877,7 +877,7 @@ describe('TaskFormComponent', () => {
             expect(releaseButton).toBeNull();
         });
 
-        it('Task form action button status before claiming a task with form', async() => {
+        it('Should show only the Claim button as enabled before claiming a task with form', async() => {
             getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsMock));
             component.taskId = 'mock-task-id';
             fixture.detectChanges();
@@ -894,11 +894,11 @@ describe('TaskFormComponent', () => {
             expect(completeButton).not.toBeNull();
             expect(completeButton['disabled']).toBe(true, 'Complete button is enabled');
             expect(claimButton).not.toBeNull();
-            expect(claimButton.nativeElement.disabled).toBe(false);
+            expect(claimButton.nativeElement.disabled).toBe(false, 'Claim button is disabled');
             expect(releaseButton).toBeNull();
         });
 
-        it('Task form action button status after claiming a task with form', async() => {
+        it('Should show only Save/Complete/Release buttons as enabled after claiming a task with form', async() => {
             getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsMock.assignee));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
             component.taskId = 'mock-task-id';
@@ -916,11 +916,11 @@ describe('TaskFormComponent', () => {
             expect(completeButton).not.toBeNull();
             expect(completeButton['disabled']).toBe(false, 'Complete button is disabled');
             expect(releaseButton).not.toBeNull();
-            expect(releaseButton.nativeElement.disabled).toBe(false);
+            expect(releaseButton.nativeElement.disabled).toBe(false, 'Release button is disabled');
             expect(claimButton).toBeNull();
         });
 
-        it('Task form action button status before claiming a task without a form', async() => {
+        it('Should show only the Claim button as enabled before claiming a task without form', async() => {
             const claimableTaskDetailsWithoutFormMock = { ...claimableTaskDetailsMock, formKey: null }
             getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsWithoutFormMock));
             component.taskId = 'mock-task-id';
@@ -941,7 +941,7 @@ describe('TaskFormComponent', () => {
             expect(releaseButton).toBeNull();
         });
 
-        it('Task form action button status after claiming a task without a form', async() => {
+        it('Should show only Complete/Release buttons as enabled after claiming a task without form', async() => {
             const claimedTaskDetailsWithoutFormMock = { ...claimedTaskDetailsMock, formKey: null }
             getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsWithoutFormMock.assignee));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsWithoutFormMock));

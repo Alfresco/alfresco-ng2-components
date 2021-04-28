@@ -105,7 +105,7 @@ describe('TaskFiltersComponent', () => {
         component.ngOnInit();
     });
 
-    it('should be able to call create default task filters api if there are no filters available on given appId', async () => {
+    it('Should call the API to create the default task filters when no task filters exist', async () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of([]));
         const filtersMock = [{ name: 'dafult-task-filter-1'}, { name: 'dafult-task-filter-2'}];
         const createDefaultFiltersSpy = spyOn(taskFilterService, 'createDefaultFilters').and.returnValue(of(filtersMock));
