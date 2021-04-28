@@ -18,7 +18,7 @@
 import { EcmCompanyModel } from '../models/ecm-company.model';
 import { PersonEntry, Person } from '@alfresco/js-api';
 
-export let fakeEcmCompany: EcmCompanyModel = {
+export const fakeEcmCompany: EcmCompanyModel = {
     organization: 'company-fake-name',
     address1: 'fake-address-1',
     address2: 'fake-address-2',
@@ -29,7 +29,7 @@ export let fakeEcmCompany: EcmCompanyModel = {
     email: 'fakeCompany@fake.com'
 };
 
-export let fakeEcmUser = {
+export const fakeEcmUser = {
     id: 'fake-id',
     firstName: 'fake-ecm-first-name',
     lastName: 'fake-ecm-last-name',
@@ -61,7 +61,7 @@ export const fakeEcmUser2 = {
     emailNotificationsEnabled: true
 };
 
-export let fakeEcmUserNoImage = {
+export const fakeEcmUserNoImage = {
     id: 'fake-id',
     firstName: 'fake-first-name',
     lastName: 'fake-last-name',
@@ -82,7 +82,7 @@ export let fakeEcmUserNoImage = {
     emailNotificationsEnabled: true
 };
 
-export let fakeEcmEditedUser = {
+export const fakeEcmEditedUser = {
     id: 'fake-id',
     firstName: null,
     lastName: 'fake-last-name',

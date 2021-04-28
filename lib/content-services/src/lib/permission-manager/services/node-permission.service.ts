@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, NodesApiService, SearchService, TranslationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, NodesApiService, SearchService, TranslationService, EcmUserModel } from '@alfresco/adf-core';
 import { Group, GroupMemberEntry, GroupMemberPaging, Node, PathElement, PermissionElement, QueryBody } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { PermissionDisplayModel } from '../models/permission.model';
 import { RoleModel } from '../models/role.model';
-import { EcmUserModel } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
