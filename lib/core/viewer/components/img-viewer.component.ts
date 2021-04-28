@@ -22,7 +22,6 @@ import {
     SimpleChanges,
     ViewEncapsulation,
     ElementRef,
-    OnInit,
     Output,
     EventEmitter, AfterViewInit, ViewChild
 } from '@angular/core';

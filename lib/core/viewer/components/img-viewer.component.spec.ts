@@ -16,13 +16,11 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ContentService } from '../../services/content.service';
-
 import { ImgViewerComponent } from './img-viewer.component';
-import { setupTestBed } from '../../testing/setup-test-bed';
+import { setupTestBed, CoreTestingModule } from '../../testing';
 import { AppConfigService } from '@alfresco/adf-core';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 

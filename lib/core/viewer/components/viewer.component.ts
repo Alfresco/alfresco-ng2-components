@@ -99,11 +99,11 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     /** Hide or show the secondary toolbar */
     @Input()
-    showSecondaryToolbar = false;
+    readonly showSecondaryToolbar = false;
 
     /** Hide or show the rotate button for adf-image-viewer */
     @Input()
-    showImageRotate = true;
+    readonly showImageRotate = true;
 
     /** Specifies the name of the file when it is not available from the URL. */
     @Input()
