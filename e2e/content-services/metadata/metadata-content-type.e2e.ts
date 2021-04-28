@@ -104,7 +104,8 @@ describe('content type', () => {
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await expect(await metadataViewPage.hasContentType('Content')).toBe(true, 'Content type not found');
+        const defaultType  = (await metadataViewPage.hasContentType('Content')) || (await metadataViewPage.hasContentType('cm:content'));
+        await expect(defaultType).toBe(true, 'Content type not found');
 
         await metadataViewPage.editIconClick();
 
@@ -126,7 +127,8 @@ describe('content type', () => {
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await expect(await metadataViewPage.hasContentType(type.title)).toBe(true, 'Content type not found');
+        const customType  = (await metadataViewPage.hasContentType(type.title)) || (await metadataViewPage.hasContentType(`${model.namespacePrefix}:${type.name}`));
+        await expect(customType).toBe(true, 'Custom type not found');
         await expect(await metadataViewPage.getPropertyText(`properties.${model.namespacePrefix}:${property.name}`)).toContain(property.defaultValue);
 
         await viewerPage.clickCloseButton();
@@ -141,7 +143,8 @@ describe('content type', () => {
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await expect(await metadataViewPage.hasContentType('Content')).toBe(true, 'Content type not found');
+        let defaultType  = (await metadataViewPage.hasContentType('Content')) || (await metadataViewPage.hasContentType('cm:content'));
+        await expect(defaultType).toBe(true, 'Content type not found');
 
         await metadataViewPage.editIconClick();
 
@@ -161,7 +164,8 @@ describe('content type', () => {
         await metadataViewPage.editIconIsDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
-        await expect(await metadataViewPage.hasContentType('Content')).toBe(true, 'Content type not found');
+        defaultType  = (await metadataViewPage.hasContentType('Content')) || (await metadataViewPage.hasContentType('cm:content'));
+        await expect(defaultType).toBe(true, 'Content type not found');
         await viewerPage.clickCloseButton();
     });
 });

@@ -16,7 +16,7 @@
  */
 
 import { by, element, Key, Locator, protractor } from 'protractor';
-import { BrowserActions, BrowserVisibility, DropdownPage, TestElement, Logger } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DropdownPage, TestElement } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
 
@@ -224,13 +224,13 @@ export class MetadataViewPage {
                 return false;
             }
             await type.waitVisible();
-
             const isPresent = type.isPresent();
-            if (isPresent)
+            if (isPresent) {
                 return true;
-            return this.hasContentType(contentType, attempt + 1, maxAttempt)
+            }
+            return this.hasContentType(contentType, attempt + 1, maxAttempt);
         } catch (e) {
-            Logger.log(`re trying content type attempt :: ${attempt}`);
+            console.error(`re trying content type attempt :: ${attempt}`);
             return this.hasContentType(contentType, attempt + 1, maxAttempt);
         }
     }
@@ -244,7 +244,7 @@ export class MetadataViewPage {
             await TestElement.byCss('[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]').waitVisible();
             return this.getPropertyText(propertyName);
         } catch (e) {
-            Logger.log(`re trying custom property attempt :: ${attempt}`);
+            console.error(`re trying custom property attempt :: ${attempt}`);
             return this.checkPropertyDisplayed(propertyName, type, attempt + 1, maxAttempt);
         }
     }
