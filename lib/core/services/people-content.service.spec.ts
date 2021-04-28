@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { fakeEcmUser, createNewPersonMock, getFakeUserWithContentAdminCapability } from '../mock/ecm-user.service.mock';
+import { fakeEcmUser, fakeEcmUserList, createNewPersonMock, getFakeUserWithContentAdminCapability } from '../mock/ecm-user.service.mock';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { PeopleContentService } from './people-content.service';
@@ -25,6 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
 import { LogService } from './log.service';
 import { of } from 'rxjs';
+import { EcmUserModel } from '../models/ecm-user.model';
 
 describe('PeopleContentService', () => {
 
@@ -67,6 +68,25 @@ describe('PeopleContentService', () => {
         const getPersonSpy = spyOn(service.peopleApi, 'getPerson').and.returnValue(Promise.resolve({}));
         service.getPerson('-me-').subscribe(() => {
             expect(getPersonSpy).toHaveBeenCalledWith('-me-');
+            done();
+        });
+    });
+
+    it('should be able to list people', (done) => {
+        spyOn(service.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
+        service.listPeople().subscribe((people: EcmUserModel[]) => {
+            expect(people).toBeDefined();
+            expect(people.length).toEqual(2);
+            expect(people[0].id).toEqual('fake-id');
+            expect(people[1].id).toEqual('another-fake-id');
+            done();
+        });
+    });
+
+    it('should call listPeople api method', (done) => {
+        const listPeopleSpy = spyOn(service.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
+        service.listPeople().subscribe(() => {
+            expect(listPeopleSpy).toHaveBeenCalled();
             done();
         });
     });

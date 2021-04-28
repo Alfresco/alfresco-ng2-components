@@ -18,13 +18,12 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, EcmUserModel } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTask, fakeCustomSchema } from '../mock/fake-task-response.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { Person } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { skip } from 'rxjs/operators';
@@ -47,7 +46,7 @@ class CustomTaskListComponent {
     @ViewChild(TaskListCloudComponent)
     taskList: TaskListCloudComponent;
 
-    getFullName(person: Person): string {
+    getFullName(person: EcmUserModel): string {
         return `${person.firstName} ${person.lastName}`;
     }
 }

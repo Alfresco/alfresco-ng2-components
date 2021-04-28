@@ -18,7 +18,7 @@
 import { EcmCompanyModel } from '../models/ecm-company.model';
 import { PersonEntry, Person } from '@alfresco/js-api';
 
-export let fakeEcmCompany: EcmCompanyModel = {
+export const fakeEcmCompany: EcmCompanyModel = {
     organization: 'company-fake-name',
     address1: 'fake-address-1',
     address2: 'fake-address-2',
@@ -29,7 +29,7 @@ export let fakeEcmCompany: EcmCompanyModel = {
     email: 'fakeCompany@fake.com'
 };
 
-export let fakeEcmUser = {
+export const fakeEcmUser = {
     id: 'fake-id',
     firstName: 'fake-ecm-first-name',
     lastName: 'fake-ecm-last-name',
@@ -50,7 +50,18 @@ export let fakeEcmUser = {
     emailNotificationsEnabled: true
 };
 
-export let fakeEcmUserNoImage = {
+export const fakeEcmUser2 = {
+    id: 'another-fake-id',
+    firstName: 'another-fake-first-name',
+    lastName: 'another',
+    displayName: 'admin.adf User',
+    email: 'admin.adf@alfresco.com',
+    company: null,
+    enabled: true,
+    emailNotificationsEnabled: true
+};
+
+export const fakeEcmUserNoImage = {
     id: 'fake-id',
     firstName: 'fake-first-name',
     lastName: 'fake-last-name',
@@ -71,7 +82,7 @@ export let fakeEcmUserNoImage = {
     emailNotificationsEnabled: true
 };
 
-export let fakeEcmEditedUser = {
+export const fakeEcmEditedUser = {
     id: 'fake-id',
     firstName: null,
     lastName: 'fake-last-name',
@@ -90,6 +101,26 @@ export let fakeEcmEditedUser = {
     userStatus: 'active',
     enabled: true,
     emailNotificationsEnabled: true
+};
+
+export const fakeEcmUserList = {
+    list: {
+        pagination: {
+            count: 2,
+            hasMoreItems: false,
+            totalItems: 2,
+            skipCount: 0,
+            maxItems: 100
+        },
+        entries: [
+            {
+                entry: fakeEcmUser
+            },
+            {
+                entry: fakeEcmUser2
+            }
+        ]
+    }
 };
 
 export const createNewPersonMock = {

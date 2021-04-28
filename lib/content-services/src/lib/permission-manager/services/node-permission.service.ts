@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, NodesApiService, SearchService, TranslationService } from '@alfresco/adf-core';
-import { Group, GroupMemberEntry, GroupMemberPaging, Node, PathElement, PermissionElement, Person, QueryBody } from '@alfresco/js-api';
+import { AlfrescoApiService, NodesApiService, SearchService, TranslationService, EcmUserModel } from '@alfresco/adf-core';
+import { Group, GroupMemberEntry, GroupMemberPaging, Node, PathElement, PermissionElement, QueryBody } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -287,14 +287,14 @@ export class NodePermissionService {
             );
      }
 
-     transformNodeToUserPerson(node: Node): { person: Person, group: Group } {
+     transformNodeToUserPerson(node: Node): { person: EcmUserModel, group: Group } {
          let person = null, group = null;
          if (node.nodeType === 'cm:person') {
              const firstName = node.properties['cm:firstName'];
              const lastName =  node.properties['cm:lastName'];
              const email =  node.properties['cm:email'];
              const id =  node.properties['cm:userName'];
-             person = new Person({ id, firstName, lastName, email});
+             person = new EcmUserModel({ id, firstName, lastName, email});
          }
 
          if (node.nodeType === 'cm:authorityContainer') {
