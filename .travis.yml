@@ -13,6 +13,10 @@ install: ./scripts/ci/job_hooks/install.sh
 
 env:
     global:
+        # REPOSITORY
+        - REPO_OWNER="Alfresco"
+        - REPO_NAME="alfresco-ng2-components"
+
         - S3_DBP_PATH="s3://alfresco-travis-builds/adf"
         - DEMO_SHELL_DIR="./dist/demo-shell"
         - BUILT_LIBS_DIR="./lib/dist"
@@ -40,6 +44,7 @@ branches:
   - /.*beta.*/
 
 stages:
+  - name: Prerequisite
   - name: Setup
   - name: "Build lib"
     if: tag IS blank
@@ -67,6 +72,15 @@ services:
 
 jobs:
     include:
+        # Big Bang ===================
+        - stage: Prerequisite
+          name: "Before anything unnece$$ary happens..."
+          if: type == pull_request
+          language: python
+          python: 3.8
+          install: echo "no install here"
+          script: ./scripts/ci/jobs/dbpci-build-guard-check $TRAVIS_PULL_REQUEST || exit 1
+
         # Setup ======================
         - stage: Setup
           name: "Node modules cache preparation"

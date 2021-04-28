@@ -15,14 +15,17 @@ export GIT_HASH=`git rev-parse HEAD`
 export NODE_OPTIONS="--max_old_space_size=30000"
 
 # Settings for Nx ---------------------------------------------------------------------
-export BASE_HASH="$(git merge-base origin/$BRANCH_NAME HEAD)"
+export BASE_HASH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
 export HEAD_HASH="HEAD"
+export HEAD_COMMIT_HASH=${TRAVIS_PULL_REQUEST_SHA:-${TRAVIS_COMMIT}}
+export COMMIT_MESSAGE=`git log --format=%B -n 1 $HEAD_COMMIT_HASH`
 
 if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
     echo "push"
 elif [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     echo "pull_request"
     export BASE_HASH="origin/$TRAVIS_BRANCH"
+    source $PARENT_DIR/partials/_ci-flags-parser.sh
 elif [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
     echo "cron"
 else
