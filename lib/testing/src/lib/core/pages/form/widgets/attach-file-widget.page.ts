@@ -47,16 +47,16 @@ export class AttachFileWidgetPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(fileItem);
     }
 
-    async checkFileIsAttached(fieldId, name): Promise<void> {
+    async checkFileIsAttached(fieldId: string, name: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
         const fileAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
-    async checkFilesAreAttachedToWidget(fieldId, name): Promise<void> {
-        await name.forEach(async fileName => {
+    async checkFilesAreAttachedToWidget(fieldId: string, names: string[]): Promise<void> {
+        for (const fileName of names) {
             await this.checkFileIsAttached(fieldId, fileName);
-        });
+        }
     }
 
     async checkFileIsNotAttached(fieldId, name): Promise<void> {

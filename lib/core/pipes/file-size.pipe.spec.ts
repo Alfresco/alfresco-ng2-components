@@ -44,6 +44,7 @@ describe('FileSizePipe', () => {
     it('returns empty string with invalid input', () => {
         expect(pipe.transform(null)).toBe('');
         expect(pipe.transform(undefined)).toBe('');
+        expect(pipe.transform(NaN)).toBe('');
     });
 
     it('should convert value to Bytes', () => {

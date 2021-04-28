@@ -1,5 +1,6 @@
 <div @tooltip class="adf-tooltip-card" [style.width.px]="width">
-    <img [src]="image" [width]="width" alt="{{text}}">
-    <hr *ngIf="image"/>
-    <p>{{text}}</p>
+    <img *ngIf="image " [src]="image" [width]="width" alt="{{text}}">
+    <hr *ngIf="image" />
+    <p *ngIf="text">{{text}}</p>
+    <div *ngIf="htmlContent" [innerHTML]="sanitizedHtmlContent()" class="adf-tooltip-card-content"></div>
 </div>

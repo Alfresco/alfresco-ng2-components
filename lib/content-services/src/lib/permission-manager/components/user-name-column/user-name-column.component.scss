@@ -1,0 +1,24 @@
+@mixin member-theme($theme) {
+    $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
+
+    .adf-user {
+        display: flex;
+        flex-direction: column;
+
+        &-name-column {
+            padding: 2px 10px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        &-email-column {
+            padding: 2px 10px;
+            font-size: 14px;
+            letter-spacing: -0.2px;
+            line-height: 1.43;
+            color: mat-color($foreground, text, 0.72);
+        }
+
+    }
+}

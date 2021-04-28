@@ -27,8 +27,13 @@ export class FileSizePipe implements PipeTransform {
     constructor(private translation: TranslationService) {
     }
 
-    transform(bytes: number, decimals: number = 2): string {
-        if (bytes == null) {
+    transform(paramByte: any, decimals: number = 2): string {
+        if (paramByte == null) {
+            return '';
+        }
+
+        const bytes = parseInt(paramByte, 10);
+        if (isNaN(bytes)) {
             return '';
         }
 

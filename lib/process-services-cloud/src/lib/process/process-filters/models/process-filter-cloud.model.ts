@@ -44,12 +44,15 @@ export class ProcessFilterCloudModel {
     startedDate: Date;
     completedDateType: DateCloudFilterType;
     startedDateType: DateCloudFilterType;
+    suspendedDateType: DateCloudFilterType;
     completedDate: Date;
 
     private _completedFrom: string;
     private _completedTo: string;
     private _startFrom: string;
     private _startTo: string;
+    private _suspendedFrom: string;
+    private _suspendedTo: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -82,9 +85,12 @@ export class ProcessFilterCloudModel {
             this.startTo = obj._startTo || null;
             this.completedDateType = obj.completedDateType || null;
             this.startedDateType = obj.startedDateType || null;
+            this.suspendedDateType = obj.suspendedDateType || null;
             this.completedFrom = obj._completedFrom || null;
             this.completedTo = obj._completedTo || null;
             this.completedDate = obj.completedDate || null;
+            this._suspendedFrom = obj._suspendedFrom || null;
+            this._suspendedTo = obj._suspendedTo || null;
         }
     }
 
@@ -130,6 +136,28 @@ export class ProcessFilterCloudModel {
             return this._startTo;
         }
         return this.getEndDate(this.startedDateType);
+    }
+
+    set suspendedFrom(suspendedFrom: string) {
+        this._suspendedFrom = suspendedFrom;
+    }
+
+    set suspendedTo(suspendedTo: string) {
+        this._suspendedTo = suspendedTo;
+    }
+
+    get suspendedFrom(): string {
+        if (this.isDateRangeType(this.suspendedDateType)) {
+            return this._suspendedFrom;
+        }
+        return this.getEndDate(this.suspendedDateType);
+    }
+
+    get suspendedTo(): string {
+        if (this.isDateRangeType(this.suspendedDateType)) {
+            return this._suspendedTo;
+        }
+        return this.getEndDate(this.suspendedDateType);
     }
 
     private getStartDate(key: DateCloudFilterType) {

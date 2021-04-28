@@ -32,6 +32,7 @@ export class ObjectDataColumn implements DataColumn {
     copyContent?: boolean;
     focus?: boolean;
     sortingKey?: string;
+    header?: TemplateRef<any>;
 
     constructor(input: any) {
         this.key = input.key;
@@ -45,5 +46,6 @@ export class ObjectDataColumn implements DataColumn {
         this.copyContent = input.copyContent;
         this.focus = input.focus;
         this.sortingKey = input.sortingKey;
+        this.header = input.template;
     }
 }

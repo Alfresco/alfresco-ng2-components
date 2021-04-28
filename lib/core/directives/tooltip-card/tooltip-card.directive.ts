@@ -14,17 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ComponentRef, Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
+import { ComponentRef, Directive, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { TooltipCardComponent } from './tooltip-card.component';
 
 @Directive({ selector: '[adf-tooltip-card]' })
-export class TooltipCardDirective implements OnInit {
+export class TooltipCardDirective implements OnInit, OnDestroy {
 
     @Input('adf-tooltip-card') text = '';
     @Input() image = '';
     @Input() width = '300';
+    @Input() htmlContent = '';
+    @Input() originX: 'start' | 'center' | 'end' = 'start';
+    @Input() originY: 'top' | 'center' | 'bottom' = 'top';
+    @Input() overlayX: 'start' | 'center' | 'end' = 'start';
+    @Input() overlayY: 'top' | 'center' | 'bottom' = 'bottom';
+    @Input() offsetX = 0;
+    @Input() offsetY = -8;
+
     private overlayRef: OverlayRef;
 
     constructor(
@@ -33,15 +41,20 @@ export class TooltipCardDirective implements OnInit {
         private elementRef: ElementRef) {
     }
 
+    ngOnDestroy(): void {
+        this.hide();
+    }
+
     ngOnInit(): void {
         const positionStrategy = this.overlayPositionBuilder
             .flexibleConnectedTo(this.elementRef)
             .withPositions([{
-                originX: 'start',
-                originY: 'top',
-                overlayX: 'start',
-                overlayY: 'bottom',
-                offsetY: -8
+                originX: this.originX,
+                originY: this.originY,
+                overlayX: this.overlayX,
+                overlayY: this.overlayY,
+                offsetY: this.offsetY,
+                offsetX: this.offsetX
             }]);
 
         this.overlayRef = this.overlay.create({ positionStrategy });
@@ -54,6 +67,7 @@ export class TooltipCardDirective implements OnInit {
         tooltipRef.instance.text = this.text;
         tooltipRef.instance.image = this.image;
         tooltipRef.instance.width = this.width;
+        tooltipRef.instance.htmlContent = this.htmlContent;
     }
 
     @HostListener('mouseout')

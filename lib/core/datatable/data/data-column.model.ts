@@ -43,4 +43,5 @@ export interface DataColumn {
     editable?: boolean;
     focus?: boolean;
     sortingKey?: string;
+    header?: TemplateRef<any>;
 }

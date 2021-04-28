@@ -10,15 +10,9 @@ npx @alfresco/adf-cli@alpha update-commit-sha --pointer "HEAD" --pathPackage "$(
 
 if [ $TRAVIS_EVENT_TYPE == "push"  ] || [ $TRAVIS_EVENT_TYPE == "cron" ]
 then
-    if [[ $TRAVIS_BRANCH == "develop" ]];
+    if [ $TRAVIS_BRANCH == "develop"] || [ $TRAVIS_EVENT_TYPE == "cron" ]
     then
         NEXT_VERSION=-nextalpha
-        ./scripts/update-version.sh -gnu $NEXT_VERSION || exit 1;
-    fi
-
-    if [[ $TRAVIS_EVENT_TYPE == "cron" ]];
-    then
-        NEXT_VERSION=-nextbeta
         ./scripts/update-version.sh -gnu $NEXT_VERSION || exit 1;
     fi
 

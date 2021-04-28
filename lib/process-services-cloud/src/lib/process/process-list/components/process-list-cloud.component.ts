@@ -110,6 +110,14 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     completedDate: string = '';
 
+    /** Filter the processes. Display only process with suspendedFrom equal to the supplied date. */
+    @Input()
+    suspendedFrom: string = '';
+
+    /** Filter the processes. Display only process with suspendedTo equal to the supplied date. */
+    @Input()
+    suspendedTo: string = '';
+
     /**
      * Row selection mode. Can be "none", "single" or "multiple".
      * For multiple mode, you can use Cmd (macOS) or Ctrl (Win) modifier
@@ -341,6 +349,8 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             startTo: this.startTo,
             completedFrom: this.completedFrom,
             completedTo: this.completedTo,
+            suspendedFrom: this.suspendedFrom,
+            suspendedTo: this.suspendedTo,
             completedDate: this.completedDate,
             sorting: this.sorting
         };

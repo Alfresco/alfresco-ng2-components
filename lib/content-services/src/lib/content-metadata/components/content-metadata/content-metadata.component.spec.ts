@@ -204,6 +204,29 @@ describe('ContentMetadataComponent', () => {
             expect(contentMetadataService.openConfirmDialog).toHaveBeenCalledWith({nodeType: 'ft:poppoli'});
             expect(nodesApiService.updateNode).toHaveBeenCalled();
         }));
+
+        it('should retrigger the load of the properties when the content type has changed', fakeAsync(() => {
+            component.editable = true;
+            const property = <CardViewBaseItemModel> { key: 'nodeType', value: 'ft:sbiruli' };
+            const expectedNode = Object.assign({}, node, { nodeType: 'ft:sbiruli' });
+            spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
+            spyOn(updateService, 'updateNodeAspect');
+            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
+                return of(expectedNode);
+            });
+
+            updateService.update(property, 'ft:poppoli');
+            tick(600);
+
+            fixture.detectChanges();
+            tick(100);
+            const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
+            saveButton.nativeElement.click();
+
+            tick(100);
+            expect(component.node).toEqual(expectedNode);
+            expect(updateService.updateNodeAspect).toHaveBeenCalledWith(expectedNode);
+        }));
     });
 
     describe('Reseting', () => {
@@ -240,7 +263,7 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
-            expect(contentMetadataService.getContentTypeProperty).toHaveBeenCalledWith(node.nodeType);
+            expect(contentMetadataService.getContentTypeProperty).toHaveBeenCalledWith(expectedNode);
             expect(contentMetadataService.getBasicProperties).toHaveBeenCalledWith(expectedNode);
         });
 

@@ -115,8 +115,8 @@ function main(args) {
         process.exit(1);
     }
 
-    if(args.pathProject === undefined) {
-        args.pathProject = resolve('./')
+    if (args.pathProject === undefined) {
+        args.pathProject = resolve('./');
     }
 
     if (args.loginCheck === true) {

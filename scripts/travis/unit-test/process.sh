@@ -22,5 +22,3 @@ if [[ $AFFECTED_LIBS =~ "insights" || "${TRAVIS_EVENT_TYPE}" == "push"  ]];
 then
     ng test insights --watch=false || exit 1;
 fi;
-
-bash <(curl -s https://codecov.io/bash) -X gcov

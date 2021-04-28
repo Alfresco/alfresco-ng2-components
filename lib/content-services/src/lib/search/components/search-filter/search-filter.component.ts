@@ -178,8 +178,14 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         this.queryBuilder.update();
     }
 
+    resetQueryFragments() {
+        this.queryBuilder.queryFragments = {};
+        this.queryBuilder.resetToDefaults();
+    }
+
     resetAll() {
         this.resetAllSelectedBuckets();
+        this.resetQueryFragments();
         this.responseFacets = null;
     }
 

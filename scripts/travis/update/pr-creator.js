@@ -35,8 +35,6 @@ async function main() {
         .option('-title, --title [type]', 'title')
         .parse(process.argv);
 
-    console.log('process.argv ', program);
-
     const { token, title, head, repo } = program,
         prCreator = new PrCreator(ORGANISATION, repo, token);
 
@@ -49,10 +47,15 @@ async function main() {
 
 main()
     .then(prNumber => {
+        console.log("======= PR Created =========");
+
         console.log(prNumber)
         process.exit(0);
     })
     .catch(error => {
-        console.error(error);
+
+        console.error("======= Impossible create PR =========");
+        console.error(error.response.status);
+        console.error(error.response.statusText);
         process.exit(1);
     });

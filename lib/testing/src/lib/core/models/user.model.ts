@@ -49,6 +49,10 @@ export class UserModel {
         this.id = details.id ? details.id : this.id;
     }
 
+    get fullName() {
+        return `${this.firstName ?? ''} ${this.lastName ?? ''}`;
+    }
+
     getAPSModel() {
         return new UserRepresentation({
             firstName: this.firstName,

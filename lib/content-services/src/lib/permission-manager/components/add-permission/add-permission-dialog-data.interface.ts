@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { NodeEntry } from '@alfresco/js-api';
+import { Node, PermissionElement } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
+import { RoleModel } from '../../models/role.model';
 
 export interface AddPermissionDialogData {
     title?: string;
-    nodeId: string;
-    confirm: Subject<NodeEntry[]>;
+    node: Node;
+    roles: RoleModel[];
+    confirm: Subject<PermissionElement[]>;
 }

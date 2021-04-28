@@ -19,24 +19,28 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from './jwt-helper.service';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { ContentGroups, PeopleContentService } from './people-content.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuardSsoRoleService implements CanActivate {
-
-    constructor(private jwtHelperService: JwtHelperService, private router: Router, private dialog: MatDialog) {
+    constructor(private jwtHelperService: JwtHelperService,
+                private router: Router,
+                private dialog: MatDialog,
+                private peopleContentService: PeopleContentService) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot): boolean {
+    async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
         let hasRole;
         let hasRealmRole = false;
         let hasClientRole = true;
 
         if (route.data) {
             if (route.data['roles']) {
-                const rolesToCheck = route.data['roles'];
-                hasRealmRole = this.jwtHelperService.hasRealmRoles(rolesToCheck);
+                const rolesToCheck: string[] = route.data['roles'];
+                const isContentAdmin = rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) ? await this.peopleContentService.isContentAdmin() : false;
+                hasRealmRole = this.jwtHelperService.hasRealmRoles(rolesToCheck) || isContentAdmin;
             }
 
             if (route.data['clientRoles']) {

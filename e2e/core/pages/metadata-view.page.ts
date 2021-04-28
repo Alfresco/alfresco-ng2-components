@@ -23,7 +23,7 @@ export class MetadataViewPage {
     title = element(by.css(`div[info-drawer-title]`));
     expandedAspect = element(by.css(`mat-expansion-panel-header[aria-expanded='true']`));
     aspectTitle: Locator = by.css(`mat-panel-title`);
-    name = element(by.css(`[data-automation-id='card-textitem-value-name']`));
+    name = element(by.css(`[data-automation-id='card-textitem-value-properties.cm:name']`));
     creator = element(by.css(`[data-automation-id='card-textitem-value-createdByUser.displayName']`));
     createdDate = element(by.css(`span[data-automation-id='card-dateitem-createdAt'] span`));
     modifier = element(by.css(`[data-automation-id='card-textitem-value-modifiedByUser.displayName']`));

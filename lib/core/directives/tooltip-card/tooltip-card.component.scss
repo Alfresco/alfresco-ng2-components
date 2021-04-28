@@ -17,7 +17,7 @@
         padding: 12px;
         border-radius: 6px;
 
-        p {
+        p, div {
             font-size: mat-font-size($alfresco-typography, caption);
             color: mat-color($foreground, text, 0.75);
             margin: 0;

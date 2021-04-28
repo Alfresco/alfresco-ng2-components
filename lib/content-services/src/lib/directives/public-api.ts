@@ -17,3 +17,4 @@
 
 export * from './content-directive.module';
 export * from './node-lock.directive';
+export * from './node-counter.directive';

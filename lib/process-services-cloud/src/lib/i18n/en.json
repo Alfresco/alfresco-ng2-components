@@ -248,6 +248,7 @@
       "PROCESS_NAME": "Process Name",
       "APP_VERSION": "AppVersion",
       "STARTED_DATE": "Started Date",
+      "SUSPENDED_DATE": "Suspended Date",
       "STARTED_BY": "Started by",
       "COMPLETED_DATE": "Completed Date",
       "DATE_RANGE": {

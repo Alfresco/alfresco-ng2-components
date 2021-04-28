@@ -14,7 +14,7 @@ then
 
     if [[ $TRAVIS_EVENT_TYPE == "cron" ]];
     then
-        TAG_NPM=beta
+        TAG_NPM=alpha
     fi
 
     echo "Publishing on npm with tag $TAG_NPM"

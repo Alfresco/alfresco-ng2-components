@@ -105,7 +105,9 @@ exports.config = {
 
     suites: {
         smokeTestCore: [
-            "./core/login/**/*.e2e.ts",
+            "./core/login-sso/login-sso.e2e.ts",
+            "./core/login/login-component.e2e.ts",
+            "./core/login/remember-me.e2e.ts",
             "./core/viewer/**/*.e2e.ts"
         ],
         smokeTestCsSearch: [
@@ -116,8 +118,7 @@ exports.config = {
         smokeTestPs: [
             "./process-services/process/**/*.e2e.ts",
             "./process-services/form/**/*.e2e.ts",
-            "./process-services-cloud/process/**/*.e2e.ts",
-            "./process-services-cloud/form-field/**/*.e2e.ts"
+            "./process-services-cloud/process/**/*.e2e.ts"
         ]
     },
 
@@ -254,42 +255,49 @@ exports.config = {
 
         // @ts-ignore
         await browser.get(`${HOST}/#/settings`);
-        await LocalStorageUtil.clearStorage();
-        // @ts-ignore
-        await LocalStorageUtil.setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);
-        // @ts-ignore
-        await LocalStorageUtil.setStorageItem('bpmHost', browser.params.testConfig.appConfig.bpmHost);
-        // @ts-ignore
-        await LocalStorageUtil.setStorageItem('providers', browser.params.testConfig.appConfig.provider);
-        await LocalStorageUtil.setStorageItem('baseShareUrl', `${HOST}/#`);
 
-        // @ts-ignore
-        await LocalStorageUtil.setStorageItem('authType', browser.params.testConfig.appConfig.authType);
-
-        // @ts-ignore
-        if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
+        if (typeof LocalStorageUtil.clearStorage === "function") {
+            await LocalStorageUtil.clearStorage();
+            // @ts-ignore
+            await LocalStorageUtil.setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);
+            // @ts-ignore
+            await LocalStorageUtil.setStorageItem('bpmHost', browser.params.testConfig.appConfig.bpmHost);
+            // @ts-ignore
+            await LocalStorageUtil.setStorageItem('providers', browser.params.testConfig.appConfig.provider);
+            await LocalStorageUtil.setStorageItem('baseShareUrl', `${HOST}/#`);
 
             // @ts-ignore
-            await LocalStorageUtil.setStorageItem('identityHost', browser.params.testConfig.appConfig.identityHost);
+            await LocalStorageUtil.setStorageItem('authType', browser.params.testConfig.appConfig.authType);
+
             // @ts-ignore
-            await LocalStorageUtil.setStorageItem('oauth2', JSON.stringify(browser.params.testConfig.appConfig.oauth2));
-        }
+            if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
 
-        await LocalStorageUtil.apiReset();
+                // @ts-ignore
+                await LocalStorageUtil.setStorageItem('identityHost', browser.params.testConfig.appConfig.identityHost);
+                // @ts-ignore
+                await LocalStorageUtil.setStorageItem('oauth2', JSON.stringify(browser.params.testConfig.appConfig.oauth2));
+            }
 
-        function disableCSSAnimation() {
-            const css = '* {' +
-                '-webkit-transition-duration: 0s !important;' +
-                'transition-duration: 0s !important;' +
-                '-webkit-animation-duration: 0s !important;' +
-                'animation-duration: 0s !important;' +
-                '}';
-            const head = document.head || document.getElementsByTagName('head')[0];
-            const style = document.createElement('style');
+            await LocalStorageUtil.apiReset();
 
-            style.type = 'text/css';
-            style.appendChild(document.createTextNode(css));
-            head.appendChild(style);
+            function disableCSSAnimation() {
+                const css = '* {' +
+                    '-webkit-transition-duration: 0s !important;' +
+                    'transition-duration: 0s !important;' +
+                    '-webkit-animation-duration: 0s !important;' +
+                    'animation-duration: 0s !important;' +
+                    '}';
+                const head = document.head || document.getElementsByTagName('head')[0];
+                const style = document.createElement('style');
+
+                style.type = 'text/css';
+                style.appendChild(document.createTextNode(css));
+                head.appendChild(style);
+            }
+
+        } else {
+            Logger.error(`====== Demo shell not able to start ======`);
+            process.exit();
         }
 
     },

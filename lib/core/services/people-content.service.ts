@@ -16,19 +16,30 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { PersonEntry, PeopleApi, PersonBodyCreate } from '@alfresco/js-api';
+import { EcmUserModel } from '../models/ecm-user.model';
+import { LogService } from './log.service';
+
+export enum ContentGroups {
+    ALFRESCO_ADMINISTRATORS = 'ALFRESCO_ADMINISTRATORS'
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class PeopleContentService {
+    private hasContentAdminRole: boolean = false;
+    hasCheckedIsContentAdmin: boolean = false;
 
-    constructor(private apiService: AlfrescoApiService) {}
+    private _peopleApi: PeopleApi;
 
-    private get peopleApi() {
-       return this.apiService.getInstance().core.peopleApi;
+    constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
+
+    get peopleApi() {
+        return this._peopleApi || (this._peopleApi = new PeopleApi(this.apiService.getInstance()));
     }
 
     /**
@@ -40,7 +51,7 @@ export class PeopleContentService {
         const promise = this.peopleApi.getPerson(personId);
 
         return from(promise).pipe(
-            catchError((err) => of(err))
+            catchError((error) => this.handleError(error))
         );
     }
 
@@ -50,5 +61,32 @@ export class PeopleContentService {
      */
     getCurrentPerson(): Observable<any> {
         return this.getPerson('-me-');
+    }
+
+    /**
+     * Creates new person.
+     * @param newPerson Object containing the new person details.
+     * @param opts Optional parameters
+     * @returns Created new person
+     */
+    createPerson(newPerson: PersonBodyCreate, opts?: any): Observable<EcmUserModel> {
+        return from(this.peopleApi.createPerson(newPerson, opts)).pipe(
+            map((res: PersonEntry) => <EcmUserModel> res?.entry),
+            catchError((error) => this.handleError(error))
+        );
+    }
+
+    async isContentAdmin(): Promise<boolean> {
+        if (!this.hasCheckedIsContentAdmin) {
+            const user: PersonEntry = await this.getCurrentPerson().toPromise();
+            this.hasContentAdminRole = user?.entry?.capabilities?.isAdmin;
+            this.hasCheckedIsContentAdmin = true;
+        }
+        return this.hasContentAdminRole;
+    }
+
+    private handleError(error: any) {
+        this.logService.error(error);
+        return throwError(error || 'Server error');
     }
 }

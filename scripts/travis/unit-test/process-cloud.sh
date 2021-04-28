@@ -16,5 +16,3 @@ if [[ $AFFECTED_LIBS =~ "process-services-cloud" || "${TRAVIS_EVENT_TYPE}" == "p
 then
     ng test process-services-cloud --watch=false || exit 1;
 fi;
-
-bash <(curl -s https://codecov.io/bash) -X gcov
