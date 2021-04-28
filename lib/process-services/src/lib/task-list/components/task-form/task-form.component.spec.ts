@@ -857,12 +857,11 @@ describe('TaskFormComponent', () => {
 
     describe('Task form action buttons', () => {
 
-        it('Task form action status when candidate user is not have a access to the task claimed by another candidate user', async() => {
+        it('Should disable Complete button when candidate user is not have a access to the task claimed by another candidate user', async() => {
             getTaskDetailsSpy.and.returnValue(of(involvedUserTaskForm));
             component.taskId = 'mock-task-id';
             fixture.detectChanges();
             await fixture.whenStable();
-            fixture.detectChanges();
 
             const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
@@ -882,7 +881,6 @@ describe('TaskFormComponent', () => {
             component.taskId = 'mock-task-id';
             fixture.detectChanges();
             await fixture.whenStable();
-            fixture.detectChanges();
 
             const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
@@ -904,7 +902,6 @@ describe('TaskFormComponent', () => {
             component.taskId = 'mock-task-id';
             fixture.detectChanges();
             await fixture.whenStable();
-            fixture.detectChanges();
 
             const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
@@ -921,12 +918,11 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should show only the Claim button as enabled before claiming a task without form', async() => {
-            const claimableTaskDetailsWithoutFormMock = { ...claimableTaskDetailsMock, formKey: null }
+            const claimableTaskDetailsWithoutFormMock = { ...claimableTaskDetailsMock, formKey: null };
             getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsWithoutFormMock));
             component.taskId = 'mock-task-id';
             fixture.detectChanges();
             await fixture.whenStable();
-            fixture.detectChanges();
 
             const cancelButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-cancel-button');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
@@ -942,13 +938,12 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should show only Complete/Release buttons as enabled after claiming a task without form', async() => {
-            const claimedTaskDetailsWithoutFormMock = { ...claimedTaskDetailsMock, formKey: null }
+            const claimedTaskDetailsWithoutFormMock = { ...claimedTaskDetailsMock, formKey: null };
             getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsWithoutFormMock.assignee));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsWithoutFormMock));
             component.taskId = 'mock-task-id';
             fixture.detectChanges();
             await fixture.whenStable();
-            fixture.detectChanges();
 
             const cancelButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-cancel-button');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
@@ -962,5 +957,5 @@ describe('TaskFormComponent', () => {
             expect(releaseButton.nativeElement.disabled).toBe(false, 'Release button is disabled');
             expect(claimButton).toBeNull();
         });
-    })
+    });
 });
