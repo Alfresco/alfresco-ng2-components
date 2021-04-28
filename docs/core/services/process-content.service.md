@@ -277,7 +277,7 @@ See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the
 
 #### getContentPreview(contentId: number): Observable`<Blob>`
 
-Get the preview file for a related content file. A content file might be for example a\\
+Get the preview file for a related content file. A content file might be for example a
 MS Word document. This method would give you the PDF preview for this document,
 if it has been generated:
 
@@ -299,7 +299,7 @@ See `getProcessRelatedContent` and `getTaskRelatedContent` for how to get to the
 
 #### getContentThumbnail(contentId: number): Observable`<Blob>`
 
-Get the thumbnail file for a related content file. A content file might be for example a\\
+Get the thumbnail file for a related content file. A content file might be for example a
 MS Word document. This method would give you the image thumbnail for this document,
 if it has been generated:
 
