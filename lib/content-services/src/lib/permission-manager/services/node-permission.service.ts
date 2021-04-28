@@ -22,7 +22,7 @@ import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { PermissionDisplayModel } from '../models/permission.model';
 import { RoleModel } from '../models/role.model';
-import { EcmUserModel } from '../../../../../core/models/ecm-user.model';
+import { EcmUserModel } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'

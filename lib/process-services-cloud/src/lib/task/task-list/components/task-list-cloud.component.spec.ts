@@ -24,7 +24,7 @@ import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTask, fakeCustomSchema } from '../mock/fake-task-response.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { EcmUserModel } from '../../../../../../core/models/ecm-user.model';
+import { EcmUserModel } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { skip } from 'rxjs/operators';

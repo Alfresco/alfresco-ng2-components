@@ -18,7 +18,7 @@
 import { Group, Node, NodeEntry, PermissionElement } from '@alfresco/js-api';
 import { PermissionDisplayModel } from './permission.model';
 import { RoleModel } from './role.model';
-import { EcmUserModel } from '../../../../../core/models/ecm-user.model';
+import { EcmUserModel } from '@alfresco/adf-core';
 
 export interface NodePermissionsModel {
     node: Node;
