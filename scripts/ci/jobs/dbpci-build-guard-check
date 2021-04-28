@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+EXIT_STATUS_DRAFT=0
+EXIT_STATUS_APPROVAL=0
+PR_NUMBER=null
+
+if [ "${CI_FORCE_RUN}" == "true" ]; then
+    echo -e "\e[32mWarning: CI_FORCE_RUN has been set to true, CI run will continue.\e[0m"
+    exit 0;
+fi
+
+APPROVAL_CHECK=true
+VERBOSE=false
+for var in "$@"
+do
+    case "$var" in
+      --no-approval-check) APPROVAL_CHECK=false;;
+      --verbose) VERBOSE=true;;
+      *) PR_NUMBER=$var
+    esac
+done
+
+echo -e "\e[33mFetching data from Github APi for PR: $PR_NUMBER\e[0m"
+
+PR_DATA=`curl \
+    -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_TOKEN}" \
+    https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/pulls/${PR_NUMBER}`
+DRAFT=`echo ${PR_DATA} | jq .draft`
+
+if [ "${DRAFT}" == "false" ]; then
+    echo -e "\e[32mPR is NOT DRAFT anymore, build can proceed.\e[0m"
+else
+    echo -e "\e[31mPR is DRAFT, build will stop.\e[0m"
+    EXIT_STATUS_DRAFT=1
+fi
+
+if [ "$APPROVAL_CHECK" == "true" ]; then
+    PR_REVIEW_DATA=`curl \
+        -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_TOKEN}" \
+        https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/pulls/${PR_NUMBER}/reviews?per_page=100`
+    APPROVED=`echo ${PR_REVIEW_DATA} | jq 'map(select(.state == "APPROVED")) | any'`
+
+    if [ "${APPROVED}" == "true" ]; then
+        echo -e "\e[32mPR is approved, build can proceed.\e[0m"
+    else
+        echo -e "\e[31mPR is NOT APPROVED yet, build will stop.\e[0m"
+        EXIT_STATUS_APPROVAL=1
+
+    fi
+fi
+
+[[ "$VERBOSE" == "true" ]] && echo $PR_DATA | jq
+[[ "$VERBOSE" == "true" ]] && echo $PR_REVIEW_DATA | jq
+
+EXIT_CODE=$(( $EXIT_STATUS_DRAFT + $EXIT_STATUS_APPROVAL ))
+exit $EXIT_CODE

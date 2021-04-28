@@ -23,6 +23,7 @@ if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
 elif [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     echo "pull_request"
     export BASE_HASH="origin/$TRAVIS_BRANCH"
+    source $PARENT_DIR/partials/_ci-flags-parser.sh
 elif [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
     echo "cron"
 else
