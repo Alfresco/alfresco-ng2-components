@@ -216,34 +216,36 @@ export class MetadataViewPage {
         await BrowserVisibility.waitUntilElementIsVisible(property);
     }
 
-    async hasContentType(contentType: string, attempt = 0, maxAttempt = 5): Promise<any> {
+    async hasContentType(contentType: string, attempt = 0, maxAttempt = 5): Promise<boolean> {
         const contentTypeSelector = '[data-automation-id="select-readonly-value-nodeType"]';
         const type = TestElement.byText(contentTypeSelector, contentType);
         try {
-            await type.waitVisible();
-
-            if (await type.isPresent()) {
-                return true;
-            }
-
             if (attempt > maxAttempt) {
                 return false;
             }
+            await type.waitVisible();
+
+            const isPresent = type.isPresent();
+            if (isPresent)
+                return true;
+            return this.hasContentType(contentType, attempt + 1, maxAttempt)
         } catch (e) {
             Logger.log(`re trying content type attempt :: ${attempt}`);
             return this.hasContentType(contentType, attempt + 1, maxAttempt);
         }
     }
 
-    async checkPropertyDisplayed(propertyName: string, attempt = 0, maxAttempt = 5): Promise<any> {
+    async checkPropertyDisplayed(propertyName: string, type?: string, attempt = 0, maxAttempt = 5): Promise<string> {
         try {
-            return this.getPropertyText(propertyName);
             if (attempt > maxAttempt) {
                 return '';
             }
+            const propertyType = type || 'textitem';
+            await TestElement.byCss('[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]').waitVisible();
+            return this.getPropertyText(propertyName);
         } catch (e) {
             Logger.log(`re trying custom property attempt :: ${attempt}`);
-            return this.checkPropertyDisplayed(propertyName, attempt + 1, maxAttempt);
+            return this.checkPropertyDisplayed(propertyName, type, attempt + 1, maxAttempt);
         }
     }
 

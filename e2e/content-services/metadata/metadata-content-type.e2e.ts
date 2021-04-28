@@ -40,7 +40,7 @@ describe('content type', () => {
         namespacePrefix: `e2e-${randomString}`,
         author: 'E2e Automation User',
         description: 'Custom type e2e model',
-        status: 'ACTIVE'
+        status: 'DRAFT'
     };
     const type: CustomType = { name: `test-type-${randomString}`, parentName: 'cm:content', title: `Test type - ${randomString}` };
     const property = { name: `test-property-${randomString}`, title: `Test property - ${randomString}`, dataType: 'd:text', defaultValue: randomString };
@@ -57,6 +57,7 @@ describe('content type', () => {
             await modelActions.createModel(model);
             await modelActions.createType(model.name,  type);
             await modelActions.addPropertyToType(model.name,  type.name, [property]);
+            await modelActions.activateCustomModel(model.name);
 
             acsUser = await usersActions.createUser();
             await apiService.login(acsUser.username, acsUser.password);
