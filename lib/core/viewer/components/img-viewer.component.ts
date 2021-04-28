@@ -37,7 +37,7 @@ import Cropper from 'cropperjs';
     host: { 'class': 'adf-image-viewer' },
     encapsulation: ViewEncapsulation.None
 })
-export class ImgViewerComponent implements OnInit, AfterViewInit, OnChanges {
+export class ImgViewerComponent implements AfterViewInit, OnChanges {
 
     @Input()
     showToolbar = true;
@@ -86,8 +86,6 @@ export class ImgViewerComponent implements OnInit, AfterViewInit, OnChanges {
             this.scale = scaling;
         }
     }
-
-    ngOnInit() {}
 
     ngAfterViewInit() {
         this.cropper = new Cropper(this.imageElement.nativeElement, {

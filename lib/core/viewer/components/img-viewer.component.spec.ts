@@ -222,11 +222,6 @@ describe('Test Img viewer component ', () => {
             expect(rotateButtonElement).not.toEqual(null);
         });
 
-        it('should show rotate button by default', () => {
-            const rotateButtonElement = element.querySelector('#viewer-rotate-button');
-            expect(rotateButtonElement).not.toEqual(null);
-        });
-
         it('should rotate image by -90 degrees on button click', fakeAsync(() => {
             spyOn(component, 'rotateImage').and.callThrough();
             spyOn(component.cropper, 'rotate');
