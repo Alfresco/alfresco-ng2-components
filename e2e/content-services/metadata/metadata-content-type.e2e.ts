@@ -15,12 +15,23 @@
  * limitations under the License.
  */
 
-import { ApiService, BrowserActions, LoginPage, ModelActions, StringUtil, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    BrowserActions,
+    LoginPage,
+    ModelActions,
+    StringUtil,
+    UploadActions,
+    UserModel,
+    UsersActions,
+    ViewerPage
+} from '@alfresco/adf-testing';
 import { CustomModel, CustomType } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
 
 describe('content type', () => {
     const apiService = new ApiService();
@@ -31,6 +42,7 @@ describe('content type', () => {
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
+    const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginPage();
     const randomString = StringUtil.generateRandomString();
 
@@ -58,6 +70,7 @@ describe('content type', () => {
             await modelActions.createType(model.name,  type);
             await modelActions.addPropertyToType(model.name,  type.name, [property]);
             await modelActions.activateCustomModel(model.name);
+            await modelActions.isCustomTypeSearchable(type.title);
 
             acsUser = await usersActions.createUser();
             await apiService.login(acsUser.username, acsUser.password);
@@ -67,7 +80,6 @@ describe('content type', () => {
             const docsNode = await uploadActions.uploadFile(docxFileModel.location, docxFileModel.name, '-my-');
             docxFileModel.id = docsNode.entry.id;
 
-            await modelActions.isCustomTypeSearchable(type.title);
         } catch (e) {
             fail('Failed to setup custom types :: ' + JSON.stringify(e, null, 2));
         }
@@ -89,6 +101,8 @@ describe('content type', () => {
     beforeEach( async () => {
         await loginPage.login(acsUser.username, acsUser.password);
         await navigationBarPage.navigateToContentServices();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+        await browser.sleep(3000); // wait for sso session to initiate
     });
 
     afterEach( async () => {
@@ -109,7 +123,7 @@ describe('content type', () => {
 
         await metadataViewPage.editIconClick();
 
-        await metadataViewPage.changeContentType(type.title);
+        await expect(await metadataViewPage.changeContentType(type.title)).toBe(true, 'Failed to update node type.');
         await metadataViewPage.clickSaveMetadata();
         await metadataViewPage.checkConfirmDialogDisplayed();
         await metadataViewPage.applyNodeProperties();
@@ -119,6 +133,8 @@ describe('content type', () => {
 
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(acsUser.username, acsUser.password);
+        await navigationBarPage.navigateToContentServices();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${pdfFile.id}/view)`);
         await viewerPage.checkFileIsLoaded(pdfFile.name);
         await viewerPage.clickInfoButton();
@@ -148,7 +164,7 @@ describe('content type', () => {
 
         await metadataViewPage.editIconClick();
 
-        await metadataViewPage.changeContentType(type.title);
+        await expect(await metadataViewPage.changeContentType(type.title)).toBe(true, 'Failed to update node type.');
         await metadataViewPage.clickSaveMetadata();
 
         await metadataViewPage.checkConfirmDialogDisplayed();
@@ -156,6 +172,8 @@ describe('content type', () => {
 
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(acsUser.username, acsUser.password);
+        await navigationBarPage.navigateToContentServices();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${docxFileModel.id}/view)`);
         await viewerPage.checkFileIsLoaded(docxFileModel.name);
         await viewerPage.clickInfoButton();
