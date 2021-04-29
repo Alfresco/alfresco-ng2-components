@@ -3,7 +3,7 @@
 </div>
 
 <div class="adf-image-viewer__toolbar" *ngIf="showToolbar">
-    <adf-toolbar class="main-toolbar">
+    <adf-toolbar class="adf-main-toolbar">
         <button
             id="viewer-zoom-out-button"
             title="{{ 'ADF_VIEWER.ARIA.ZOOM_OUT' | translate }}"
@@ -27,7 +27,7 @@
         </button>
 
         <button
-            *ngIf="showImageRotate" id="viewer-rotate-button"
+            *ngIf="!readOnly" id="viewer-rotate-button"
             title="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
             attr.aria-label="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
             mat-icon-button
@@ -46,7 +46,7 @@
 
     </adf-toolbar>
 
-    <adf-toolbar class="secondary-toolbar" *ngIf="showSecondaryToolbar && isEditing">
+    <adf-toolbar class="adf-secondary-toolbar" *ngIf="!readOnly && isEditing">
         <button
             id="viewer-cancel-button"
             title="{{ 'ADF_VIEWER.ARIA.CANCEL' | translate }}"

@@ -42,10 +42,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges {
     showToolbar = true;
 
     @Input()
-    showSecondaryToolbar = true;
-
-    @Input()
-    showImageRotate = true;
+    readOnly = true;
 
     @Input()
     urlFile: string;

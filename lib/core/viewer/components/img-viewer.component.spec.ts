@@ -208,21 +208,23 @@ describe('Test Img viewer component ', () => {
             expect(component.scale).toBe(0.2);
         }));
 
-        it('should not show rotate button if showImageRotate is false', () => {
-            component.showImageRotate = false;
+        it('should show rotate button if not in read only mode', () => {
+            component.readOnly = false;
             fixture.detectChanges();
-            const rotateButtonElement = element.querySelector('#viewer-rotate-button');
-            expect(rotateButtonElement).toEqual(null);
-        });
-
-        it('should show rotate button by default', () => {
             const rotateButtonElement = element.querySelector('#viewer-rotate-button');
             expect(rotateButtonElement).not.toEqual(null);
         });
 
+        it('should not show rotate button by default', () => {
+            const rotateButtonElement = element.querySelector('#viewer-rotate-button');
+            expect(rotateButtonElement).toEqual(null);
+        });
+
         it('should rotate image by -90 degrees on button click', fakeAsync(() => {
+            component.readOnly = false;
             spyOn(component, 'rotateImage').and.callThrough();
             spyOn(component.cropper, 'rotate');
+            fixture.detectChanges();
             const rotateButtonElement = fixture.debugElement.query(By.css('#viewer-rotate-button'));
             rotateButtonElement.triggerEventHandler('click', null);
             tick();
@@ -231,25 +233,26 @@ describe('Test Img viewer component ', () => {
             expect(component.cropper.rotate).toHaveBeenCalledWith(-90);
         }));
 
-        it('should display or not the second toolbar if false option is passed', fakeAsync(() => {
+        it('should display or not the second toolbar if in read only mode', fakeAsync(() => {
             component.isEditing = true;
-            component.showSecondaryToolbar = false;
+            component.readOnly = true;
             fixture.detectChanges();
-            let secondaryToolbar = document.querySelector('.secondary-toolbar');
+            let secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
             expect(secondaryToolbar).toEqual(null);
 
-            component.showSecondaryToolbar = true;
+            component.readOnly = false;
             fixture.detectChanges();
-            secondaryToolbar = document.querySelector('.secondary-toolbar');
+            secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
             expect(secondaryToolbar).not.toEqual(null);
         }));
 
         it('should display second toolbar in rotate mode', fakeAsync(() => {
+            component.readOnly = false;
             expect(component.isEditing).toEqual(false);
             component.rotateImage();
             expect(component.isEditing).toEqual(true);
             fixture.detectChanges();
-            const secondaryToolbar = document.querySelector('.secondary-toolbar');
+            const secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
             const resetButton = document.querySelector('#viewer-cancel-button');
             const saveButton = document.querySelector('#viewer-save-button');
             expect(secondaryToolbar).not.toEqual(null);
@@ -258,6 +261,7 @@ describe('Test Img viewer component ', () => {
         }));
 
         it('should reset the scale and hide second toolbar', fakeAsync(() => {
+            component.readOnly = false;
             component.isEditing = true;
             spyOn(component, 'reset').and.callThrough();
             spyOn(component.cropper, 'reset');
@@ -275,6 +279,7 @@ describe('Test Img viewer component ', () => {
         }));
 
         it('should save when clicked on toolbar button', fakeAsync(() => {
+            component.readOnly = false;
             component.isEditing = true;
             spyOn(component, 'save');
             fixture.detectChanges();
