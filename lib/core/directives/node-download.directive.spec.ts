@@ -41,6 +41,12 @@ describe('NodeDownloadDirective', () => {
     let apiService: AlfrescoApiService;
     let contentService;
     let dialogSpy;
+    const mockOauth2Auth = {
+        oauth2Auth: {
+            callCustomApi: () => Promise.resolve(),
+            on: jasmine.createSpy('on')
+        }
+    };
 
     setupTestBed({
         imports: [
@@ -63,7 +69,7 @@ describe('NodeDownloadDirective', () => {
     });
 
     it('should not download node when selection is empty', () => {
-        spyOn(apiService, 'getInstance');
+        spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
         component.selection = [];
 
         fixture.detectChanges();

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Locator, by, element, Key, protractor } from 'protractor';
-import { BrowserVisibility, BrowserActions, DropdownPage, TestElement } from '@alfresco/adf-testing';
+import { by, element, Key, Locator, protractor } from 'protractor';
+import { BrowserActions, BrowserVisibility, DropdownPage, TestElement, Logger } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
 
@@ -216,18 +216,60 @@ export class MetadataViewPage {
         await BrowserVisibility.waitUntilElementIsVisible(property);
     }
 
-    async hasContentType(contentType: string): Promise<string> {
-        const nodeType = TestElement.byText('div[data-automation-id="header-nodeType"] .adf-property-value', contentType);
-        return nodeType.waitVisible();
+    async hasContentType(contentType: string, attempt = 0, maxAttempt = 3): Promise<boolean> {
+        const contentTypeSelector = '[data-automation-id="select-readonly-value-nodeType"]';
+        const type = TestElement.byText(contentTypeSelector, contentType);
+        try {
+            if (attempt > maxAttempt) {
+                return false;
+            }
+            await type.waitVisible();
+            const isPresent = type.isPresent();
+            if (isPresent) {
+                return true;
+            }
+            return this.hasContentType(contentType, attempt + 1, maxAttempt);
+        } catch (e) {
+            Logger.log(`re trying content type attempt :: ${attempt}`);
+            return this.hasContentType(contentType, attempt + 1, maxAttempt);
+        }
     }
 
-    async changeContentType(option: string): Promise<void> {
-        const nodeType = TestElement.byCss('div[data-automation-id="header-nodeType"] mat-form-field');
-        await nodeType.waitPresent();
-        await nodeType.click();
-        const typesDropDownPage = new DropdownPage(nodeType.elementFinder);
-        await typesDropDownPage.checkOptionIsDisplayed(option);
-        await typesDropDownPage.selectOption(option);
+    async checkPropertyDisplayed(propertyName: string, type?: string, attempt = 0, maxAttempt = 3): Promise<string> {
+        try {
+            if (attempt > maxAttempt) {
+                return '';
+            }
+            const propertyType = type || 'textitem';
+            await TestElement.byCss('[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]').waitVisible();
+            return this.getPropertyText(propertyName);
+        } catch (e) {
+            Logger.log(`re trying custom property attempt :: ${attempt}`);
+            return this.checkPropertyDisplayed(propertyName, type, attempt + 1, maxAttempt);
+        }
+    }
+
+    async changeContentType(option: string, attempt = 0, maxAttempt = 3): Promise<boolean> {
+        const nodeType = TestElement.byCss('div[data-automation-id="header-nodeType"] .mat-select-trigger');
+        if (attempt > maxAttempt) {
+            console.error(`content type select option not found. check acs version may be lesser than 7.0.0`);
+            return false;
+        }
+        try {
+            await nodeType.waitVisible();
+            if (await nodeType.isPresent()) {
+                await nodeType.click();
+                const typesDropDownPage = new DropdownPage(nodeType.elementFinder);
+                await typesDropDownPage.checkOptionIsDisplayed(option);
+                await typesDropDownPage.selectOption(option);
+                return true;
+            }
+            return this.changeContentType(option, attempt + 1, maxAttempt);
+        } catch (error) {
+            Logger.log(`re trying content type options attempt :: ${attempt}`);
+            await BrowserActions.closeMenuAndDialogs();
+            return  this.changeContentType(option, attempt + 1, maxAttempt);
+        }
     }
 
     async checkConfirmDialogDisplayed(): Promise<void> {
@@ -246,8 +288,7 @@ export class MetadataViewPage {
     }
 
     async checkPropertyIsNotVisible(propertyName: string, type: string): Promise<void> {
-        const property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
-        await BrowserVisibility.waitUntilElementIsNotVisible(property);
+        await TestElement.byCss('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]').waitNotVisible();
     }
 
     async clickCloseButton(): Promise<void> {

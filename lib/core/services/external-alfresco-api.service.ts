@@ -22,7 +22,7 @@ import {
     Core,
     Node
 } from '@alfresco/js-api';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -33,6 +33,8 @@ export class ExternalAlfrescoApiService {
      * Publish/subscribe to events related to node updates.
      */
     nodeUpdated = new Subject<Node>();
+
+    alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
     protected alfrescoApi: AlfrescoApiCompatibility;
 
@@ -60,6 +62,7 @@ export class ExternalAlfrescoApiService {
             domainPrefix
         };
         this.initAlfrescoApi(config);
+        this.alfrescoApiInitialized.next(true);
     }
 
     protected initAlfrescoApi(config) {

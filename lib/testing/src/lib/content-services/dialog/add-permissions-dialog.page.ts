@@ -20,6 +20,7 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
+import { TestElement } from '../../core/test-element';
 
 const column = {
     role: 'Role'
@@ -102,10 +103,10 @@ export class AddPermissionsDialogPage {
         await BrowserActions.click(this.addButton);
     }
 
-    async selectRole(name: string, role) {
+    async selectRole(name: string, role: string) {
         const row = this.userRoleDataTableComponentPage.getRow('Users and Groups', name);
         await BrowserActions.click(row.element(by.css('[id="adf-select-role-permission"] .mat-select-trigger')));
-        await this.getRoleDropdownOptions();
+        await TestElement.byCss('.mat-select-panel').waitVisible();
         await this.selectOption(role);
     }
 }
