@@ -4,6 +4,10 @@
     $background: map-get($theme, background);
 
     adf-content-node-selector {
+        .mat-tab-body {
+            height: 68vh !important;
+        }
+
         .adf-content-node-selector-headless-tabs {
             .mat-tab-header {
                 display: none;
@@ -24,11 +28,31 @@
         }
 
         .adf-upload-dialog-container {
-            height: 456px;
+            height: 368px;
         }
 
         .adf-toolbar-title {
             place-items: center;
+        }
+
+        .adf-content-node-selector-local-upload-content {
+            adf-upload-drag-area {
+                adf-empty-list {
+                    .adf-empty-folder-drag-drop {
+                        margin-top: 0px;
+                        min-height:40px;
+                        font-size: 28px;
+                    }
+                    .adf-empty-folder-any-files-here-to-add {
+                        margin-top: 0px;
+                    }
+                    .adf-empty-folder-image {
+                        margin-top: 0px;
+                        height: 100px;
+                        width: 300px;
+                    }
+                }
+            }
         }
     }
 

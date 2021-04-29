@@ -34,39 +34,45 @@
     </mat-tab>
     <mat-tab *ngIf="canPerformLocalUpload()"
              [disabled]="isNotAllowedToUpload()">
-        <adf-toolbar>
-            <adf-toolbar-title [adf-node-counter]="getSelectedCount()">
-                <adf-dropdown-breadcrumb
-                    class="adf-content-node-selector-content-breadcrumb"
-                    [folderNode]="breadcrumbFolderNode"
-                    [rootId]="data?.currentFolderId"
-                    [readOnly]="true"
-                    data-automation-id="content-node-selector-upload-breadcrumb"
-                ></adf-dropdown-breadcrumb>
-            </adf-toolbar-title>
-        </adf-toolbar>
-        <ng-template mat-tab-label>
-            {{ 'NODE_SELECTOR.UPLOAD_FROM_DEVICE' | translate }}
-            <mat-icon *ngIf="hasUploadError()"
-                      data-automation-id="adf-content-node-selector-disabled-tab-info-icon"
-                      matTooltip="{{ getWarningMessage() | translate }}">info
-            </mat-icon>
-        </ng-template>
-        <adf-upload-drag-area [rootFolderId]="currentDirectoryId">
-            <div [class.adf-upload-dialog-container]="uploadStarted">
-                <adf-file-uploading-dialog [alwaysVisible]="true"></adf-file-uploading-dialog>
-            </div>
-            <adf-empty-list data-automation-id="adf-empty-list" *ngIf="!uploadStarted">
-                <div class="adf-empty-list_template adf-empty-folder">
-                    <div fxHide.lt-md="true"
-                         class="adf-empty-folder-drag-drop">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate }}</div>
-                    <div fxHide.lt-md="true"
-                         class="adf-empty-folder-any-files-here-to-add">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate }}</div>
-                    <img [alt]="'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate" class="adf-empty-folder-image"
-                         [src]="emptyFolderImageUrl">
-                </div>
-            </adf-empty-list>
-        </adf-upload-drag-area>
+             <div  class="adf-content-node-selector-local-upload-container">
+                 <div  class="adf-content-node-selector-local-upload-header">
+                    <adf-toolbar>
+                        <adf-toolbar-title [adf-node-counter]="getSelectedCount()">
+                            <adf-dropdown-breadcrumb
+                                class="adf-content-node-selector-content-breadcrumb"
+                                [folderNode]="breadcrumbFolderNode"
+                                [rootId]="data?.currentFolderId"
+                                [readOnly]="true"
+                                data-automation-id="content-node-selector-upload-breadcrumb"
+                            ></adf-dropdown-breadcrumb>
+                        </adf-toolbar-title>
+                    </adf-toolbar>
+                    <ng-template mat-tab-label>
+                        {{ 'NODE_SELECTOR.UPLOAD_FROM_DEVICE' | translate }}
+                        <mat-icon *ngIf="hasUploadError()"
+                                  data-automation-id="adf-content-node-selector-disabled-tab-info-icon"
+                                  matTooltip="{{ getWarningMessage() | translate }}">info
+                        </mat-icon>
+                    </ng-template>
+                 </div>
+                 <div class="adf-content-node-selector-local-upload-content">
+                    <adf-upload-drag-area [rootFolderId]="currentDirectoryId">
+                        <div [class.adf-upload-dialog-container]="uploadStarted">
+                            <adf-file-uploading-dialog [alwaysVisible]="true"></adf-file-uploading-dialog>
+                        </div>
+                        <adf-empty-list data-automation-id="adf-empty-list" *ngIf="!uploadStarted">
+                            <div class="adf-empty-list_template adf-empty-folder">
+                                <div fxHide.lt-md="true"
+                                     class="adf-empty-folder-drag-drop">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate }}</div>
+                                <div fxHide.lt-md="true"
+                                     class="adf-empty-folder-any-files-here-to-add">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate }}</div>
+                                <img [alt]="'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate" class="adf-empty-folder-image"
+                                     [src]="emptyFolderImageUrl">
+                            </div>
+                        </adf-empty-list>
+                    </adf-upload-drag-area>
+                 </div>
+             </div>
     </mat-tab>
 </mat-tab-group>
 
