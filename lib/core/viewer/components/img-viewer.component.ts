@@ -23,7 +23,7 @@ import {
     ViewEncapsulation,
     ElementRef,
     Output,
-    EventEmitter, AfterViewInit, ViewChild
+    EventEmitter, AfterViewInit, ViewChild, HostListener
 } from '@angular/core';
 import { ContentService } from '../../services/content.service';
 import { AppConfigService } from './../../app-config/app-config.service';
@@ -94,8 +94,6 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges {
             viewMode: 1,
             checkCrossOrigin: false,
             ready: () => {
-                window.addEventListener('keydown', (this.onKeyDown.bind(this)));
-
                 if (this.imageElement.nativeElement.width < this.cropper.getContainerData().width) {
                     const width = this.imageElement.nativeElement.width;
                     const height = this.imageElement.nativeElement.height;
@@ -114,10 +112,10 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges {
     }
 
     ngOnDestroy() {
-        window.removeEventListener('keydown', this.onKeyDown);
         this.cropper.destroy();
     }
 
+    @HostListener('document:keydown', ['$event'])
     onKeyDown(event: KeyboardEvent) {
         switch (event.key) {
             case 'ArrowLeft':
