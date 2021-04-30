@@ -28,7 +28,7 @@
         }
 
         .adf-upload-dialog-container {
-            height: 368px;
+            height: 400px;
         }
 
         .adf-toolbar-title {
@@ -39,17 +39,12 @@
             adf-upload-drag-area {
                 adf-empty-list {
                     .adf-empty-folder-drag-drop {
-                        margin-top: 0px;
-                        min-height:40px;
-                        font-size: 28px;
-                    }
-                    .adf-empty-folder-any-files-here-to-add {
-                        margin-top: 0px;
+                        min-height:46px;
+                        font-size: 40px;
                     }
                     .adf-empty-folder-image {
-                        margin-top: 0px;
                         height: 100px;
-                        width: 300px;
+                        width: 460px;
                     }
                 }
             }
