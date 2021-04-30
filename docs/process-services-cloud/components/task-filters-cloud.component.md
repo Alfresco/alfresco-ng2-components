@@ -36,7 +36,7 @@ Shows all available filters.
 | appName | `string` | "" | Display filters available to the current user for the application with the specified name. |
 | filterParam | [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) |  | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
 | showIcons | `boolean` | false | Toggles display of the filter's icons. |
-| enableNotifications | `boolean` | false |Enable Bubble Notifications on Task Filter Count |
+
 ### Events
 
 | Name | Type | Description |
@@ -77,14 +77,12 @@ By default, filter counters are hidden. If you want to display filter counters y
 
 ### Updating Filter Counters
 
-If you want to show a a notification bubble as task filters change you can enable it directly from the component inputs or from the app.config.json
+If you want to disable notification bubbles as task filters change you can change it directly  from the app.config.json.
 
 ```json
 {
     ...
-    "notifications": {
-        "task-filters": true
-    }
+    "notifications": true
     ...
 }
 ```

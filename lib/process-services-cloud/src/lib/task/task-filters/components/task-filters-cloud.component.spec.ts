@@ -387,8 +387,8 @@ describe('TaskFiltersCloudComponent', () => {
 
     it('should update filter counter when notification received', fakeAsync(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(appConfigService, 'get').and.returnValue(true);
         component.appName = 'my-app-1';
-        component.enableNotifications = true;
         component.ngOnInit();
         tick(5000);
         fixture.detectChanges();
@@ -399,21 +399,6 @@ describe('TaskFiltersCloudComponent', () => {
             expect(updatedFilterCounters.length).toBe(1);
             expect(Object.keys(component.counters$).length).toBe(1);
             expect(component.counters$['fake-involved-tasks']).toBeDefined();
-        });
-    }));
-
-    it('should not update filter counter when notifications are disabled', fakeAsync(() => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
-        component.appName = 'my-app-1';
-        component.enableNotifications = false;
-        component.ngOnInit();
-        tick(5000);
-        fixture.detectChanges();
-        component.showIcons = true;
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const updatedFilterCounters = fixture.debugElement.queryAll(By.css('span.adf-active'));
-            expect(updatedFilterCounters.length).toBe(0);
         });
     }));
 
@@ -434,9 +419,9 @@ describe('TaskFiltersCloudComponent', () => {
 
     it('should reset filter counter notification when filter is selected', fakeAsync(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(appConfigService, 'get').and.returnValue(true);
         let change = new SimpleChange(undefined, 'my-app-1', true);
         component.appName = 'my-app-1';
-        component.enableNotifications = true;
         component.ngOnInit();
         tick(5000);
         fixture.detectChanges();

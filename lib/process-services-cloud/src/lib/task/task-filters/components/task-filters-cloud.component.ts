@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, Input } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
@@ -32,12 +32,6 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
 
-    static WS_NOTIFICATIONS_KEY = 'notifications.task-filters';
-
-    /** Enable Bubble Notifications on Task Filter Count */
-    @Input()
-    enableNotifications: boolean;
-
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<TaskFilterCloudModel>();
@@ -53,18 +47,16 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     filters$: Observable<TaskFilterCloudModel[]>;
     filters: TaskFilterCloudModel[] = [];
     currentFilter: TaskFilterCloudModel;
+    enableNotifications: boolean;
 
     constructor(private taskFilterCloudService: TaskFilterCloudService,
                 private translationService: TranslationService,
                 private appConfigService: AppConfigService) {
         super();
-
     }
 
     ngOnInit() {
-        if (this.enableNotifications === undefined) {
-            this.enableNotifications = this.appConfigService.get(TaskFiltersCloudComponent.WS_NOTIFICATIONS_KEY, false);
-        }
+        this.enableNotifications = this.appConfigService.get('notifications', true);
         this.initFilterCounterNotifications();
         this.getFilters(this.appName);
     }
