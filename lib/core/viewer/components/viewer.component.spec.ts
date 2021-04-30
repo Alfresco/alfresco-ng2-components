@@ -966,6 +966,7 @@ describe('ViewerComponent', () => {
                 const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
                 const fakeBlob = new Blob([data], { type: 'image/png' });
                 component.onSubmitFile(fakeBlob);
+
                 expect(component.fileSubmit.emit).toHaveBeenCalledWith(fakeBlob);
             });
         });

@@ -212,6 +212,7 @@ describe('Test Img viewer component ', () => {
             component.readOnly = false;
             fixture.detectChanges();
             const rotateButtonElement = element.querySelector('#viewer-rotate-button');
+
             expect(rotateButtonElement).not.toEqual(null);
         });
 
@@ -228,50 +229,78 @@ describe('Test Img viewer component ', () => {
             const rotateButtonElement = fixture.debugElement.query(By.css('#viewer-rotate-button'));
             rotateButtonElement.triggerEventHandler('click', null);
             tick();
+
             expect(component.rotateImage).toHaveBeenCalled();
-            component.rotateImage();
             expect(component.cropper.rotate).toHaveBeenCalledWith(-90);
         }));
 
-        it('should display or not the second toolbar if in read only mode', fakeAsync(() => {
-            component.isEditing = true;
-            component.readOnly = true;
-            fixture.detectChanges();
-            let secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
-            expect(secondaryToolbar).toEqual(null);
-
+        it('should display the second toolbar when in editing and not in read only mode', fakeAsync(() => {
             component.readOnly = false;
+            component.isEditing = true;
             fixture.detectChanges();
-            secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
+            const secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
+
             expect(secondaryToolbar).not.toEqual(null);
         }));
 
+        it('should not display the second toolbar when in read only mode', () => {
+            component.readOnly = true;
+            fixture.detectChanges();
+            const secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
+
+            expect(secondaryToolbar).toEqual(null);
+        });
+
+        it('should not display the second toolbar when not in editing', () => {
+            component.readOnly = true;
+            component.isEditing = false;
+            fixture.detectChanges();
+            const secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
+
+            expect(secondaryToolbar).toEqual(null);
+        });
+
         it('should display second toolbar in rotate mode', fakeAsync(() => {
             component.readOnly = false;
-            expect(component.isEditing).toEqual(false);
-            component.rotateImage();
-            expect(component.isEditing).toEqual(true);
+            component.isEditing = true;
+
             fixture.detectChanges();
             const secondaryToolbar = document.querySelector('.adf-secondary-toolbar');
             const resetButton = document.querySelector('#viewer-cancel-button');
             const saveButton = document.querySelector('#viewer-save-button');
+
             expect(secondaryToolbar).not.toEqual(null);
             expect(resetButton).not.toEqual(null);
             expect(saveButton).not.toEqual(null);
         }));
 
+        it('should not be in editing mode by default', () => {
+            component.readOnly = false;
+
+            expect(component.isEditing).toEqual(false);
+        });
+
+        it('should get in editing mode when the image gets rotated', () => {
+            component.readOnly = false;
+            component.rotateImage();
+
+            expect(component.isEditing).toEqual(true);
+        });
+
         it('should reset the scale and hide second toolbar', fakeAsync(() => {
             component.readOnly = false;
             component.isEditing = true;
+
             spyOn(component, 'reset').and.callThrough();
             spyOn(component.cropper, 'reset');
             spyOn(component.cropper, 'zoomTo');
+
             fixture.detectChanges();
             const cancelButtonElement = fixture.debugElement.query(By.css('#viewer-cancel-button'));
             cancelButtonElement.triggerEventHandler('click', null);
             tick();
+
             expect(component.reset).toHaveBeenCalled();
-            component.reset();
             expect(component.scale).toEqual(1.0);
             expect(component.isEditing).toEqual(false);
             expect(component.cropper.reset).toHaveBeenCalled();
@@ -281,11 +310,13 @@ describe('Test Img viewer component ', () => {
         it('should save when clicked on toolbar button', fakeAsync(() => {
             component.readOnly = false;
             component.isEditing = true;
+
             spyOn(component, 'save');
             fixture.detectChanges();
             const saveButtonElement = fixture.debugElement.query(By.css('#viewer-save-button'));
             saveButtonElement.triggerEventHandler('click', null);
             tick();
+
             expect(component.save).toHaveBeenCalled();
         }));
 
