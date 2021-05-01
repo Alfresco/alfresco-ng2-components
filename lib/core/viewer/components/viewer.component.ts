@@ -97,6 +97,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     showToolbar = true;
 
+    /** Hide or show media management actions for image-viewer component */
+    @Input()
+    readOnly = true;
+
     /** Specifies the name of the file when it is not available from the URL. */
     @Input()
     displayName: string;
@@ -205,6 +209,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     /** Emitted when the shared link used is not valid. */
     @Output()
     invalidSharedLink = new EventEmitter();
+
+    /** Emitted when user updates a node via rotate, crop, etc. */
+    @Output()
+    fileSubmit = new EventEmitter<Blob>();
 
     TRY_TIMEOUT: number = 10000;
 
@@ -683,6 +691,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             });
         }
 
+    }
+
+    onSubmitFile(newImageBlob: Blob) {
+        this.fileSubmit.emit(newImageBlob);
     }
 
     onUnsupportedFile() {

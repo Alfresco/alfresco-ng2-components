@@ -960,6 +960,15 @@ describe('ViewerComponent', () => {
 
                 component.ngOnChanges();
             });
+
+            it('should emit new blob when emitted by image-viewer ', () => {
+                spyOn(component.fileSubmit, 'emit');
+                const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+                const fakeBlob = new Blob([data], { type: 'image/png' });
+                component.onSubmitFile(fakeBlob);
+
+                expect(component.fileSubmit.emit).toHaveBeenCalledWith(fakeBlob);
+            });
         });
 
         describe('display name property override by urlFile', () => {

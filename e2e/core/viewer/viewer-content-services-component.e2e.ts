@@ -221,8 +221,6 @@ describe('Content Services Viewer', () => {
             await viewerPage.checkZoomInButtonIsDisplayed();
             await viewerPage.checkZoomOutButtonIsDisplayed();
             await viewerPage.checkPercentageIsDisplayed();
-            await viewerPage.checkRotateLeftButtonIsDisplayed();
-            await viewerPage.checkRotateRightButtonIsDisplayed();
             await viewerPage.checkScaleImgButtonIsDisplayed();
 
             await viewerPage.clickCloseButton();
@@ -241,15 +239,6 @@ describe('Content Services Viewer', () => {
             zoom = await viewerPage.getZoom();
             await viewerPage.clickZoomOutButton();
             await viewerPage.checkZoomedOut(zoom);
-
-            await viewerPage.clickRotateLeftButton();
-            await viewerPage.checkRotation('transform: scale(1, 1) rotate(-90deg) translate(0px, 0px);');
-
-            await viewerPage.clickScaleImgButton();
-            await viewerPage.checkRotation('transform: scale(1, 1) rotate(0deg) translate(0px, 0px);');
-
-            await viewerPage.clickRotateRightButton();
-            await viewerPage.checkRotation('transform: scale(1, 1) rotate(90deg) translate(0px, 0px);');
 
             await viewerPage.clickCloseButton();
         });

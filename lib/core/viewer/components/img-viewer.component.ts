@@ -22,14 +22,12 @@ import {
     SimpleChanges,
     ViewEncapsulation,
     ElementRef,
-    OnInit,
-    OnDestroy,
     Output,
-    EventEmitter
+    EventEmitter, AfterViewInit, ViewChild, HostListener
 } from '@angular/core';
 import { ContentService } from '../../services/content.service';
 import { AppConfigService } from './../../app-config/app-config.service';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import Cropper from 'cropperjs';
 
 @Component({
     selector: 'adf-img-viewer',
@@ -38,10 +36,13 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
     host: { 'class': 'adf-image-viewer' },
     encapsulation: ViewEncapsulation.None
 })
-export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
+export class ImgViewerComponent implements AfterViewInit, OnChanges {
 
     @Input()
     showToolbar = true;
+
+    @Input()
+    readOnly = true;
 
     @Input()
     urlFile: string;
@@ -55,128 +56,94 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     error = new EventEmitter<any>();
 
-    rotate: number = 0;
-    scaleX: number = 1.0;
-    scaleY: number = 1.0;
-    offsetX: number = 0;
-    offsetY: number = 0;
-    step: number = 4;
-    isDragged: boolean = false;
+    @Output()
+    submit = new EventEmitter<any>();
 
-    private drag = { x: 0, y: 0 };
-    private delta = { x: 0, y: 0 };
+    @ViewChild('image', { static: false})
+    public imageElement: ElementRef;
 
-    get transform(): SafeStyle {
-        return this.sanitizer.bypassSecurityTrustStyle(`scale(${this.scaleX}, ${this.scaleY}) rotate(${this.rotate}deg) translate(${this.offsetX}px, ${this.offsetY}px)`);
-    }
+    public scale: number = 1.0;
+    public cropper: Cropper;
+    public isEditing: boolean = false;
 
     get currentScaleText(): string {
-        return Math.round(this.scaleX * 100) + '%';
+        return Math.round(this.scale * 100) + '%';
     }
 
-    private element: HTMLElement;
-
     constructor(
-        private sanitizer: DomSanitizer,
         private appConfigService: AppConfigService,
-        private contentService: ContentService,
-        private el: ElementRef) {
+        private contentService: ContentService) {
         this.initializeScaling();
     }
 
     initializeScaling() {
         const scaling = this.appConfigService.get<number>('adf-viewer.image-viewer-scaling', undefined) / 100;
         if (scaling) {
-            this.scaleX = scaling;
-            this.scaleY = scaling;
+            this.scale = scaling;
         }
     }
 
-    ngOnInit() {
-        this.element = <HTMLElement> this.el.nativeElement.querySelector('#viewer-image');
+    ngAfterViewInit() {
+        this.cropper = new Cropper(this.imageElement.nativeElement, {
+            autoCrop: false,
+            dragMode: 'move',
+            background: false,
+            scalable: true,
+            zoomOnWheel: false,
+            toggleDragModeOnDblclick: false,
+            viewMode: 1,
+            checkCrossOrigin: false,
+            ready: () => {
+                if (this.imageElement.nativeElement.width < this.cropper.getContainerData().width) {
+                    const width = this.imageElement.nativeElement.width;
+                    const height = this.imageElement.nativeElement.height;
+                    const top = (this.cropper.getContainerData().height - this.imageElement.nativeElement.height) / 2;
+                    const left = (this.cropper.getContainerData().width - this.imageElement.nativeElement.width) / 2;
 
-        if (this.element) {
-            this.element.addEventListener('mousedown', this.onMouseDown.bind(this));
-            this.element.addEventListener('mouseup', this.onMouseUp.bind(this));
-            this.element.addEventListener('mouseleave', this.onMouseLeave.bind(this));
-            this.element.addEventListener('mouseout', this.onMouseOut.bind(this));
-            this.element.addEventListener('mousemove', this.onMouseMove.bind(this));
-        }
+                    this.cropper.setCanvasData({
+                        width,
+                        height,
+                        top,
+                        left
+                    });
+                }
+            }
+        });
     }
 
     ngOnDestroy() {
-        if (this.element) {
-            this.element.removeEventListener('mousedown', this.onMouseDown);
-            this.element.removeEventListener('mouseup', this.onMouseUp);
-            this.element.removeEventListener('mouseleave', this.onMouseLeave);
-            this.element.removeEventListener('mouseout', this.onMouseOut);
-            this.element.removeEventListener('mousemove', this.onMouseMove);
-        }
+        this.cropper.destroy();
     }
 
+    @HostListener('document:keydown', ['$event'])
     onKeyDown(event: KeyboardEvent) {
-        const scaleX = (this.scaleX !== 0 ? this.scaleX : 1.0);
-        const scaleY = (this.scaleY !== 0 ? this.scaleY : 1.0);
-
-        if (event.key === 'ArrowDown') {
-            this.offsetY += (this.step / scaleY);
-        }
-
-        if (event.key === 'ArrowUp') {
-            this.offsetY -= (this.step / scaleY);
-        }
-
-        if (event.key === 'ArrowRight') {
-            this.offsetX += (this.step / scaleX);
-        }
-
-        if (event.key === 'ArrowLeft') {
-            this.offsetX -= (this.step / scaleX);
-        }
-    }
-
-    onMouseDown(event: MouseEvent) {
-        event.preventDefault();
-        this.isDragged = true;
-        this.drag = { x: event.pageX, y: event.pageY };
-    }
-
-    onMouseMove(event: MouseEvent) {
-        if (this.isDragged) {
-            event.preventDefault();
-
-            this.delta.x = event.pageX - this.drag.x;
-            this.delta.y = event.pageY - this.drag.y;
-
-            this.drag.x = event.pageX;
-            this.drag.y = event.pageY;
-
-            const scaleX = (this.scaleX !== 0 ? this.scaleX : 1.0);
-            const scaleY = (this.scaleY !== 0 ? this.scaleY : 1.0);
-
-            this.offsetX += (this.delta.x / scaleX);
-            this.offsetY += (this.delta.y / scaleY);
-        }
-    }
-
-    onMouseUp(event: MouseEvent) {
-        if (this.isDragged) {
-            event.preventDefault();
-            this.isDragged = false;
-        }
-    }
-
-    onMouseLeave(event: MouseEvent) {
-        if (this.isDragged) {
-            event.preventDefault();
-            this.isDragged = false;
-        }
-    }
-
-    onMouseOut(event: MouseEvent) {
-        if (this.isDragged) {
-            event.preventDefault();
-            this.isDragged = false;
+        switch (event.key) {
+            case 'ArrowLeft':
+                event.preventDefault();
+                this.cropper.move(-3, 0);
+                break;
+            case 'ArrowUp':
+                event.preventDefault();
+                this.cropper.move(0, -3);
+                break;
+            case 'ArrowRight':
+                event.preventDefault();
+                this.cropper.move(3, 0);
+                break;
+            case 'ArrowDown':
+                event.preventDefault();
+                this.cropper.move(0, 3);
+                break;
+            case 'i':
+                this.zoomIn();
+                break;
+            case 'o':
+                this.zoomOut();
+                break;
+            case 'r':
+                this.rotateImage();
+                break;
+            default:
         }
     }
 
@@ -192,34 +159,34 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     zoomIn() {
-        const ratio = +((this.scaleX + 0.2).toFixed(1));
-        this.scaleX = this.scaleY = ratio;
+        this.cropper.zoom( 0.2);
+        this.scale = +((this.scale + 0.2).toFixed(1));
     }
 
     zoomOut() {
-        let ratio = +((this.scaleX - 0.2).toFixed(1));
-        if (ratio < 0.2) {
-            ratio = 0.2;
+        if (this.scale > 0.2) {
+            this.cropper.zoom( -0.2 );
+            this.scale = +((this.scale - 0.2).toFixed(1));
         }
-        this.scaleX = this.scaleY = ratio;
     }
 
-    rotateLeft() {
-        const angle = this.rotate - 90;
-        this.rotate = Math.abs(angle) < 360 ? angle : 0;
+    rotateImage() {
+        this.isEditing = true;
+        this.cropper.rotate( -90);
     }
 
-    rotateRight() {
-        const angle = this.rotate + 90;
-        this.rotate = Math.abs(angle) < 360 ? angle : 0;
+    save() {
+        this.isEditing = false;
+        this.cropper.getCroppedCanvas().toBlob((blob) => {
+            this.submit.emit(blob);
+        });
     }
 
     reset() {
-        this.rotate = 0;
-        this.scaleX = 1.0;
-        this.scaleY = 1.0;
-        this.offsetX = 0;
-        this.offsetY = 0;
+        this.isEditing = false;
+        this.cropper.reset();
+        this.scale = 1.0;
+        this.cropper.zoomTo(this.scale);
     }
 
     onImageError() {

@@ -93,6 +93,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension). |
 | nodeId | `string` | null | Node Id of the file to load. |
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
+| readOnly | `boolean` | true | Hide or show media management actions for [Image-viewer component](../../../lib/core/viewer/components/img-viewer.component.ts "Defined in img-viewer.component.ts") |
 | sharedLinkId | `string` | null | Shared link id (to display shared file). |
 | showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. |
 | showRightSidebar | `boolean` | false | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`. |
@@ -110,6 +111,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | extensionChange | `any` | Emitted when the filename extension changes. |
+| fileSubmit | `Blob` | Emitted when media management actions occur. |
 | goBack | `any` | Emitted when user clicks the 'Back' button. |
 | invalidSharedLink | `any` | Emitted when the shared link used is not valid. |
 | navigateBefore | `any` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |

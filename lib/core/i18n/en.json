@@ -384,8 +384,9 @@
       "ZOOM_IN": "Zoom in",
       "ZOOM_OUT": "Zoom out",
       "FIT_PAGE": "Fit page",
-      "ROTATE_LEFT": "Rotate left",
-      "ROTATE_RIGHT": "Rotate right",
+      "ROTATE": "Rotate",
+      "SAVE": "Save",
+      "CANCEL": "Cancel",
       "RESET": "Reset",
       "THUMBNAILS": "Document thumbnails",
       "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel"
