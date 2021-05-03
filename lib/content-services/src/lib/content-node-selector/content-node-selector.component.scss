@@ -4,9 +4,6 @@
     $background: map-get($theme, background);
 
     adf-content-node-selector {
-        .mat-tab-body {
-            height: 68vh !important;
-        }
 
         .adf-content-node-selector-headless-tabs {
             .mat-tab-header {
@@ -28,7 +25,7 @@
         }
 
         .adf-upload-dialog-container {
-            height: 400px;
+            height: 380px;
         }
 
         .adf-toolbar-title {
@@ -36,6 +33,8 @@
         }
 
         .adf-content-node-selector-local-upload-content {
+            height: 368px;
+
             adf-upload-drag-area {
                 adf-empty-list {
                     .adf-empty-folder-drag-drop {
