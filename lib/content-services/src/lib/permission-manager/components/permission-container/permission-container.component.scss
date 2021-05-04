@@ -1,44 +1,30 @@
 @mixin adf-permission-container-theme($theme) {
     $adf-permission-list-width: 100% !default;
 
-    .adf {
-        &-permission-label {
-            max-width: 130px;
-            min-width: 100px;
-            margin-left: 50px;
-        }
+    .adf-datatable-permission {
+        display: flex;
+        min-width: 450px;
+        width: $adf-permission-list-width;
 
-        &-delete-permission {
-            max-width: 50px;
-        }
+        &.adf-datatable {
+            overflow: hidden;
 
-        &-authorityId-label {
-            min-width: 100px;
-        }
+            .adf-delete-permission-column {
+                min-width: 80px;
 
-        &-key-icon {
-            max-width: 50px;
-        }
+                .adf-cell-value {
+                    width: 80px;
+                    padding-right: 10px;
+                    place-content: flex-end;
+                }
+            }
 
-        &-ellipsis-cell {
-            position: sticky;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+            .adf-authorityId-column {
+                flex: 40%;
+            }
 
-        &-display-permission-container {
-            display: flex;
-            justify-content: space-around;
-            flex: 1;
-        }
-
-        &-datatable-permission {
-            display: flex;
-            min-width: 450px;
-            width: $adf-permission-list-width;
-
-            &.adf-datatable {
-                overflow: hidden;
+            .adf-authority-icon-column {
+                min-width: 40px;
             }
         }
     }

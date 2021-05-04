@@ -24,14 +24,14 @@ import { NodePermissionService } from '../../services/node-permission.service';
 @Component({
     selector: 'adf-user-icon-column',
     template: `
-        <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'"  *ngIf="!context?.row?.isSelected">
+        <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'"  *ngIf="!isSelected">
             <ng-container *ngIf="displayText$ | async as user">
                 <mat-icon *ngIf="group" class="adf-people-icon">people_alt_outline</mat-icon>
                 <div *ngIf="!group" [outerHTML]="user | usernameInitials: 'adf-people-initial'"></div>
             </ng-container>
         </div>
-        <div class="adf-cell-value" *ngIf="context?.row?.isSelected">
-            <mat-icon class="adf-people-select-icon" svgIcon="selected"></mat-icon>
+        <div class="adf-cell-value" *ngIf="isSelected">
+            <mat-icon class="adf-people-select-icon adf-datatable-selected" svgIcon="selected"></mat-icon>
         </div>
     `,
     styleUrls: ['./user-icon-column.component.scss'],
@@ -44,8 +44,15 @@ export class UserIconColumnComponent implements OnInit {
     @Input()
     node: NodeEntry;
 
+    @Input()
+    selected: boolean = false;
+
     displayText$ = new BehaviorSubject<User>(null);
     group = false;
+
+    get isSelected() {
+        return this.context?.row?.isSelected || this.selected;
+    }
 
     constructor(private nodePermissionService: NodePermissionService) {}
 

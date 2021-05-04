@@ -33,7 +33,7 @@ import { RoleModel } from '../../models/role.model';
           </mat-select>
       </mat-form-field>
 
-      <span class="adf-datatable-cell-value" [title]="value | adfLocalizedRole" *ngIf="readonly">
+      <span class="adf-datatable-cell-value adf-readonly-role" [title]="value | adfLocalizedRole" *ngIf="readonly">
           {{value | adfLocalizedRole}}
       </span>
   `,
@@ -41,6 +41,13 @@ import { RoleModel } from '../../models/role.model';
     styles: [
         `.adf-role-selector-field {
             width: 100%;
+            .mat-form-field {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+        .adf-readonly-role {
+            padding-left: 0 !important;
         }
         `
     ]

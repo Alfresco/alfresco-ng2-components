@@ -386,11 +386,12 @@
     },
     "ADD-PERMISSION": {
       "SEARCH": "Search for users or groups to add",
-      "TITLE": "Add user or group to",
+      "TITLE": "Add permission",
       "TYPE-MESSAGE": "Type something to start searching groups or people",
       "NO-RESULT": "No result found for this search",
+      "SELECT-ACTION": "SELECT",
       "ADD-ACTION": "ADD",
-      "CLOSE-ACTION": "CLOSE",
+      "CLOSE-ACTION": "CANCEL",
       "BASE-DIALOG-TITLE": "Search a group or people to add...",
       "EVERYONE": "EVERYONE"
     },
@@ -402,7 +403,7 @@
     "LABELS": {
       "ON": "On",
       "OFF": "Off",
-      "DIRECT-PERMISSIONS": "Direct Applied Permission",
+      "DIRECT-PERMISSIONS": "Directly Applied Permission",
       "INHERITED-PERMISSIONS": "Inherited Permission",
       "INHERITED-SUBTITLE": "{{count}} users or groups are inheriting permission from a parent folder",
       "SELECT-ROLE": "Select role"
@@ -414,7 +415,7 @@
       "PERMISSION-BULK-UPDATE-SUCCESS": "Updated {{user}} user(s) {{group}} group(s)",
       "PERMISSION-UPDATE-SUCCESS": "User/Group updated",
       "PERMISSION-UPDATE-FAIL": "Failed to update user/group",
-      "PERMISSION-BULK-DELETE-SUCCESS": "Deleted {{user}} user(s_ {{group}} group(s)",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Deleted {{user}} user(s) {{group}} group(s)",
       "PERMISSION-DELETE-SUCCESS": "User/Group deleted",
       "PERMISSION-DELETE-FAIL": "Failed to delete user/group",
       "PERMISSION-ADD-SUCCESS": "Added {{user}} user(s) {{group}} group(s)",

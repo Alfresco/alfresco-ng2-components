@@ -102,7 +102,7 @@ export class PermissionListService {
 
     updateNodePermissionByDialog() {
         this.nodePermissionDialogService
-            .openAddPermissionDialog(this.node, this.roles)
+            .openAddPermissionDialog(this.node, this.roles, 'PERMISSION_MANAGER.ADD-PERMISSION.TITLE')
             .pipe(
                 switchMap(selection => {
                     const total = selection.length;

@@ -5,12 +5,13 @@
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $mat-menu-border-radius: 2px !default;
+    $search-result-height: calc(100% - 75px);
 
     .adf {
 
         &-permission-result-list {
             display: flex;
-            height: 300px;
+            height: $search-result-height;
             overflow: auto;
             border: 2px solid mat-color($foreground, base, 0.07);
 
@@ -27,7 +28,7 @@
             display: flex;
             align-items: center;
             justify-content: space-around;
-            height: 300px;
+            height: $search-result-height;
             overflow: auto;
             border: 2px solid mat-color($foreground, base, 0.07);
         }
@@ -54,13 +55,19 @@
             }
         }
 
-        &-list-option-item .mat-list-text {
-            display: flex;
-            flex-direction: row !important;
-            align-items: center;
+        &-list-option-item {
+            mat-pseudo-checkbox {
+                display: none;
+            }
 
-            .adf-result-name {
-                padding-left: 16px !important;
+            .mat-list-text {
+                display: flex;
+                flex-direction: row !important;
+                align-items: center;
+
+                .adf-result-name {
+                    padding-left: 16px !important;
+                }
             }
         }
 
