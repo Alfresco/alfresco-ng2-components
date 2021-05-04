@@ -39,6 +39,8 @@ import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy {
 
     static MAX_NAME_LENGTH: number = 255;
+    static PROCESS_DEFINITION_DEBOUNCE: number = 300;
+    static PROCESS_FORM_DEBOUNCE: number = 400;
 
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
@@ -118,7 +120,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         });
 
         this.processDefinition.valueChanges
-            .pipe(debounceTime(500))
+            .pipe(debounceTime(StartProcessCloudComponent.PROCESS_DEFINITION_DEBOUNCE))
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((processDefinitionName) => {
                 this.selectProcessDefinitionByProcesDefinitionName(processDefinitionName);
@@ -126,7 +128,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
         this.processForm.valueChanges
             .pipe(
-                debounceTime(400),
+                debounceTime(StartProcessCloudComponent.PROCESS_FORM_DEBOUNCE),
                 tap(() => this.disableStartButton = true),
                 distinctUntilChanged(),
                 filter(() => this.isProcessSelectionValid()),
