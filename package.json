@@ -161,7 +161,7 @@
     "sass-loader": "10.1.1",
     "scss-bundle": "2.3.2",
     "selenium-webdriver": "4.0.0-alpha.7",
-    "stylelint": "^13.10.0",
+    "stylelint": "^13.13.1",
     "ts-node": "^9.0.0",
     "tsconfig-paths": "^3.9.0",
     "tslint": "6.1.3",
