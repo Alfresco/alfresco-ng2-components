@@ -19,7 +19,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
-import { debounceTime, filter, takeUntil, finalize, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, takeUntil, finalize, switchMap, map } from 'rxjs/operators';
 import { Subject, Observable, Subscription } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
@@ -139,12 +139,12 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         EditProcessFilterCloudComponent.ACTION_SAVE,
         EditProcessFilterCloudComponent.ACTION_DELETE
     ];
-    applicationNames: any[] = [];
+    applicationNames: DropdownOption[] = [];
     allProcessDefinitionNamesOption: DropdownOption = {
         label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL',
         value: ''
     };
-    processDefinitionNames: any[] = [];
+    processDefinitionNames: DropdownOption[] = [];
     editProcessFilterForm: FormGroup;
     processFilterProperties: ProcessFilterProperties[] = [];
     processFilterActions: ProcessFilterAction[] = [];
@@ -387,30 +387,41 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     getRunningApplications() {
-        this.applicationNames = [];
-
-        this.appsProcessCloudService
-            .getDeployedApplicationsByStatus('RUNNING', this.role)
-            .subscribe((applications) => {
-                if (applications && applications.length > 0) {
-                    applications.map((application) => {
-                        this.applicationNames.push({ label: application.name, value: application.name });
-                    });
-                }
+        this.processDefinitionNames = [];
+        if (!this.applicationNames.length) {
+            this.appsProcessCloudService
+            .getDeployedApplicationsByStatus('RUNNING', this.role).pipe(
+                map((response) => {
+                    let result = [];
+                    if (response?.length) {
+                        result = response.map((res) => {
+                            return {label: res.name, value: res.name }
+                        })
+                    }
+                    return result;
+                })
+            )
+            .subscribe((applications: DropdownOption[]) => {
+                this.applicationNames.push(...applications);
             });
+        }
     }
 
     getProcessDefinitions() {
-        this.processDefinitionNames = [];
-
-        this.processCloudService.getProcessDefinitions(this.appName).subscribe((processDefinitions) => {
-            if (processDefinitions && processDefinitions.length > 0) {
-                this.processDefinitionNames.push(this.allProcessDefinitionNamesOption);
-                processDefinitions.map((processDefinition) => {
-                    this.processDefinitionNames.push({ label: processDefinition.name, value: processDefinition.name });
-                });
-            }
-        });
+        if(!this.processDefinitionNames.length) {
+            this.processCloudService.getProcessDefinitions(this.appName).pipe(
+            map((response) => {
+                let result = [this.allProcessDefinitionNamesOption];
+                if (response?.length) {
+                    result = response.map((res) => {
+                        return { label: res.name, value: res.name }
+                    })
+                }
+                return result;
+            })).subscribe((processDefinitions: DropdownOption[]) => {
+                this.processDefinitionNames.push(...processDefinitions);
+            });
+        }
     }
 
     executeFilterActions(action: ProcessFilterAction): void {
