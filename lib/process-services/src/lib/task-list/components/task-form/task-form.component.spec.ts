@@ -44,7 +44,8 @@ import {
     initiatorWithCandidatesTaskDetailsMock,
     involvedUserTaskForm,
     fakeUser,
-    involvedGroupTaskForm
+    involvedGroupTaskForm,
+    completedTaskWithFormMock
 } from '../../../mock/task/task-details.mock';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
@@ -766,6 +767,195 @@ describe('TaskFormComponent', () => {
             expect(activitFormSelector).toBeDefined();
             expect(saveButton.disabled).toEqual(false);
             expect(completeButton.disabled).toEqual(true);
+        });
+    });
+
+    describe('Task Form Fields Visibility', () => {
+
+        it('Should task form fields be disabled when the form is readonly', async () => {
+            fixture.detectChanges();
+            getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
+            component.taskId = '456';
+            component.readOnlyForm = true;
+            component.ngOnInit();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const activitFormSelector = element.querySelector('adf-form');
+            const inputFieldOne = fixture.debugElement.nativeElement.querySelector('#text1');
+            const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
+            const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
+            expect(activitFormSelector).toBeDefined();
+            expect(inputFieldOne['disabled']).toEqual(true, 'Task Form field is enabled');
+            expect(inputFieldTwo['disabled']).toEqual(true, 'Task Form field is enabled');
+            expect(inputFieldThree['disabled']).toEqual(true, 'Task Form field is enabled');
+        });
+
+        it('Should task form fields be disabled when the task has not been claimed', async () => {
+            fixture.detectChanges();
+            getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsMock));
+            component.taskId = '456';
+            component.ngOnInit();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const activitFormSelector = element.querySelector('adf-form');
+            const inputFieldOne = fixture.debugElement.nativeElement.querySelector('#text1');
+            const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
+            const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
+            expect(activitFormSelector).toBeDefined();
+            expect(inputFieldOne['disabled']).toEqual(true, 'Task Form field is enabled');
+            expect(inputFieldTwo['disabled']).toEqual(true, 'Task Form field is enabled');
+            expect(inputFieldThree['disabled']).toEqual(true, 'Task Form field is enabled');
+        });
+
+        it('Should task form fields be disabled when the task is completed', async () => {
+            fixture.detectChanges();
+            getTaskDetailsSpy.and.returnValue(of(completedTaskWithFormMock));
+            component.taskId = '456';
+            component.ngOnInit();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const activitFormSelector = element.querySelector('adf-form');
+            const inputFieldOne = fixture.debugElement.nativeElement.querySelector('#text1');
+            const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
+            const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
+
+            expect(activitFormSelector).toBeDefined();
+            expect(inputFieldOne['disabled']).toEqual(true);
+            expect(inputFieldTwo['disabled']).toEqual(true);
+            expect(inputFieldThree['disabled']).toEqual(true);
+        });
+
+        it('Should task form fields be enabled when the task is claimed', async() => {
+            fixture.detectChanges();
+            getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsMock.assignee));
+            getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
+            component.taskId = '456';
+            component.ngOnInit();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const activitFormSelector = element.querySelector('adf-form');
+            const inputFieldOne = fixture.debugElement.nativeElement.querySelector('#text1');
+            const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
+            const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
+
+            expect(activitFormSelector).toBeDefined();
+            expect(inputFieldOne['disabled']).toEqual(false, 'Task Form field is disabled');
+            expect(inputFieldTwo['disabled']).toEqual(false, 'Task Form field is disabled');
+            expect(inputFieldThree['disabled']).toEqual(false, 'Task Form field is disabled');
+        });
+    });
+
+    describe('Task form action buttons', () => {
+
+        it('Should disable Complete button when candidate user is not have a access to the task claimed by another candidate user', async() => {
+            getTaskDetailsSpy.and.returnValue(of(involvedUserTaskForm));
+            component.taskId = 'mock-task-id';
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
+            const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
+            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
+            const releaseButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+
+            expect(saveButton).not.toBeNull();
+            expect(saveButton['disabled']).toBe(false, 'Save button is disabled');
+            expect(completeButton).not.toBeNull();
+            expect(completeButton['disabled']).toBe(true, 'Complete button is disabled');
+            expect(claimButton).toBeNull();
+            expect(releaseButton).toBeNull();
+        });
+
+        it('Should show only the Claim button as enabled before claiming a task with form', async() => {
+            getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsMock));
+            component.taskId = 'mock-task-id';
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
+            const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
+            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
+            const releaseButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+
+            expect(saveButton).not.toBeNull();
+            expect(saveButton['disabled']).toBe(true, 'Save button is enabled');
+            expect(completeButton).not.toBeNull();
+            expect(completeButton['disabled']).toBe(true, 'Complete button is enabled');
+            expect(claimButton).not.toBeNull();
+            expect(claimButton.nativeElement.disabled).toBe(false, 'Claim button is disabled');
+            expect(releaseButton).toBeNull();
+        });
+
+        it('Should show only Save/Complete/Release buttons as enabled after claiming a task with form', async() => {
+            getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsMock.assignee));
+            getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
+            component.taskId = 'mock-task-id';
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
+            const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
+            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
+            const releaseButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+
+            expect(saveButton).not.toBeNull();
+            expect(saveButton['disabled']).toBe(false, 'Save button is disabled');
+            expect(completeButton).not.toBeNull();
+            expect(completeButton['disabled']).toBe(false, 'Complete button is disabled');
+            expect(releaseButton).not.toBeNull();
+            expect(releaseButton.nativeElement.disabled).toBe(false, 'Release button is disabled');
+            expect(claimButton).toBeNull();
+        });
+
+        it('Should show only the Claim button as enabled before claiming a task without form', async() => {
+            const claimableTaskDetailsWithoutFormMock = { ...claimableTaskDetailsMock, formKey: null };
+            getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsWithoutFormMock));
+            component.taskId = 'mock-task-id';
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const cancelButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-cancel-button');
+            const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
+            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
+            const releaseButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+
+            expect(cancelButton).not.toBeNull();
+            expect(completeButton).not.toBeNull();
+            expect(completeButton['disabled']).toEqual(true, 'Complete button is enabled');
+            expect(claimButton).not.toBeNull();
+            expect(claimButton.nativeElement.disabled).toBe(false, 'Claim button is disabled');
+            expect(releaseButton).toBeNull();
+        });
+
+        it('Should show only Complete/Release buttons as enabled after claiming a task without form', async() => {
+            const claimedTaskDetailsWithoutFormMock = { ...claimedTaskDetailsMock, formKey: null };
+            getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsWithoutFormMock.assignee));
+            getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsWithoutFormMock));
+            component.taskId = 'mock-task-id';
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const cancelButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-cancel-button');
+            const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
+            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
+            const releaseButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+
+            expect(cancelButton).not.toBeNull();
+            expect(completeButton).not.toBeNull();
+            expect(completeButton['disabled']).toEqual(false, 'Complete button is disabled');
+            expect(releaseButton).not.toBeNull();
+            expect(releaseButton.nativeElement.disabled).toBe(false, 'Release button is disabled');
+            expect(claimButton).toBeNull();
         });
     });
 });
