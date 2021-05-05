@@ -115,7 +115,6 @@ describe('UserIconColumnComponent', () => {
         });
     });
 
-
     it('should render select icon', () => {
         component.selected = true;
         component.ngOnInit();
