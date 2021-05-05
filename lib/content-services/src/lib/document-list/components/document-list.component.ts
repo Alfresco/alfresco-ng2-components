@@ -330,6 +330,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     allowFiltering: boolean = true;
     orderBy: string[] = null;
     preselectedRows: DataRow[] = [];
+    skippedSelection: NodeEntry[] = [];
+    skippedPreselection: NodeEntry[] = [];
 
     // @deprecated 3.0.0
     folderNode: Node;
@@ -894,7 +896,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this._pagination.maxItems = requestPaginationModel.maxItems;
         this._pagination.merge = requestPaginationModel.merge;
         this._pagination.skipCount = requestPaginationModel.skipCount;
-        this.reload();
+        this.reloadWithoutResettingSelection();
     }
 
     private syncPagination() {
@@ -942,6 +944,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     onPreselectNodes() {
+        this.preselectedRows = this.selectSkippedNodes(this.skippedPreselection);
+
         if (this.hasPreselectedNodes()) {
             this.preselectRowsOfPreselectedNodes();
             const preselectedRows = this.getPreselectedRowsBasedOnSelectionMode();
@@ -956,17 +960,16 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     preserveExistingSelection() {
         if (this.isMultipleSelectionMode()) {
+            this.selectSkippedNodes(this.skippedSelection);
+
             for (const selection of this.selection) {
                 const rowOfSelection = this.data.getRowByNodeId(selection.entry.id);
-                if (rowOfSelection) {
-                    rowOfSelection.isSelected = true;
-                }
+                rowOfSelection ? rowOfSelection.isSelected = true : this.skippedSelection.push(selection);
             }
         }
     }
 
     preselectRowsOfPreselectedNodes() {
-        this.preselectedRows = [];
         const preselectedNodes = this.getPreselectedNodesBasedOnSelectionMode();
 
         preselectedNodes.forEach((preselectedNode: NodeEntry) => {
@@ -974,8 +977,28 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (rowOfPreselectedNode) {
                 rowOfPreselectedNode.isSelected = true;
                 this.preselectedRows.push(rowOfPreselectedNode);
+            } else {
+                this.skippedPreselection.push(preselectedNode);
             }
         });
+    }
+
+    selectSkippedNodes(skippedNodes: NodeEntry[]): DataRow[] {
+        const successfullySelectedRows: DataRow[] = [];
+        if (skippedNodes.length) {
+            for (const skippedNode of [...skippedNodes]) {
+                const rowOfSkippedNode = this.data.getRowByNodeId(skippedNode.entry.id);
+                if (rowOfSkippedNode) {
+                    rowOfSkippedNode.isSelected = true;
+                    successfullySelectedRows.push(rowOfSkippedNode);
+                    const indexOfSkippedNode = skippedNodes.indexOf(skippedNode);
+                    if (indexOfSkippedNode > -1) {
+                        skippedNodes.splice(indexOfSkippedNode, 1);
+                    }
+                }
+            }
+        }
+        return successfullySelectedRows;
     }
 
     unselectRowFromNodeId(nodeId: string) {

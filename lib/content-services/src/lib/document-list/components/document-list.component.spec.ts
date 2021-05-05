@@ -53,7 +53,7 @@ import { DocumentListService } from './../services/document-list.service';
 import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { FavoritePaging, NodeEntry } from '@alfresco/js-api';
+import { FavoritePaging, NodeEntry, Node } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { DocumentListModule } from '../document-list.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -1604,8 +1604,7 @@ describe('DocumentList', () => {
             const datatableSelectRowSpy = spyOn(documentList.dataTable, 'selectRow');
             const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
 
-            spyOn(documentList, 'preselectRowsOfPreselectedNodes');
-            documentList.preselectedRows = fakeDatatableRows;
+            documentList.data.setRows(fakeDatatableRows);
             documentList.preselectNodes = mockPreselectedNodes;
             documentList.selectionMode = 'multiple';
             documentList.onPreselectNodes();
@@ -1788,6 +1787,76 @@ describe('DocumentList', () => {
             expect(selectedRows[1].id).toEqual(mockNode2.id);
             expect(selectedRows[2].id).toEqual(mockNode3.id);
             expect(onNodeSelectSpy).toHaveBeenCalledWith({ row: undefined, selection: <ShareDataRow[]> selectedRows });
+        });
+
+        describe('Skipped Selection/Preselection', () => {
+            const mockNodeNotPresentInDocList = new Node({ id: 'fake', name: 'fake' });
+            beforeEach(() => {
+                fixture.detectChanges();
+                documentList.selectionMode = 'multiple';
+                documentList.node = mockNodePagingWithPreselectedNodes;
+            });
+
+            it('Should the skipped selection be empty by default', () => {
+                expect(documentList.skippedSelection.length).toBe(0);
+            });
+
+            it('Should the skipped selection be empty by default', () => {
+                expect(documentList.skippedPreselection.length).toBe(0);
+            });
+
+            it('Should add the selected node to the skipped selections when it\'s selection can not be preserved', () => {
+                documentList.selection = [{ entry: mockNodeNotPresentInDocList }];
+                documentList.reloadWithoutResettingSelection();
+
+                expect(documentList.skippedSelection.length).toBe(1);
+                expect(documentList.skippedSelection).toEqual([{ entry: mockNodeNotPresentInDocList }]);
+            });
+
+            it('Should add a preselected node to the skipped preselected nodes when it can not be marked as selected', () => {
+                documentList.preselectNodes = [...mockPreselectedNodes, { entry: mockNodeNotPresentInDocList }];
+                documentList.reloadWithoutResettingSelection();
+
+                expect(documentList.skippedPreselection.length).toBe(1);
+                expect(documentList.skippedPreselection).toEqual([{ entry: mockNodeNotPresentInDocList }]);
+            });
+
+            it('Should attempt to select the skipped selections/pre-selections when document list reloads', () => {
+                const selectSkippedNodesSpy = spyOn(documentList, 'selectSkippedNodes');
+                documentList.skippedSelection = [{ entry: mockNode1 }];
+                documentList.skippedPreselection = [{ entry: mockNode2 }];
+                documentList.reloadWithoutResettingSelection();
+
+                expect(selectSkippedNodesSpy).toHaveBeenCalledTimes(2);
+                expect(selectSkippedNodesSpy.calls.argsFor(0)[0]).toEqual([{ entry: mockNode1 }]);
+                expect(selectSkippedNodesSpy.calls.argsFor(1)[0]).toEqual([{ entry: mockNode2 }]);
+            });
+
+            it('Should select the rows of the skippedNodes when they are present in the document list', () => {
+                const fakeDatatableRows = [new ShareDataRow({ entry: mockNode1 }, contentService, null), new ShareDataRow({ entry: mockNode2 }, contentService, null)];
+                documentList.data.setRows(fakeDatatableRows);
+                const skippedNodes = [{ entry: mockNode1 }, { entry: mockNodeNotPresentInDocList }];
+                const successfullySelectedRows = documentList.selectSkippedNodes(skippedNodes);
+
+                expect(skippedNodes.length).toEqual(1);
+                expect(skippedNodes).toEqual([{ entry: mockNodeNotPresentInDocList }]);
+                expect(successfullySelectedRows).toEqual([fakeDatatableRows[0]]);
+            });
+
+            it('Should not select any rows when the rows of the skipped nodes are not present in the document list', () => {
+                const fakeDatatableRows = [new ShareDataRow({ entry: mockNode1 }, contentService, null), new ShareDataRow({ entry: mockNode2 }, contentService, null)];
+                documentList.data.setRows(fakeDatatableRows);
+                const skippedNodes = [{ entry: mockNodeNotPresentInDocList }];
+                const successfullySelectedRows = documentList.selectSkippedNodes(skippedNodes);
+
+                expect(skippedNodes.length).toEqual(1);
+                expect(skippedNodes).toEqual([{ entry: mockNodeNotPresentInDocList }]);
+                expect(successfullySelectedRows).toEqual([]);
+            });
+
+            it('Should return an empty array when the skipped selection argument is an empty array', () => {
+                expect(documentList.selectSkippedNodes([])).toEqual([]);
+            });
         });
     });
 });
