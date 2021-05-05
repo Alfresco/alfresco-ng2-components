@@ -1,5 +1,4 @@
 @import '~@angular/material/theming';
-@import '~cropperjs/dist/cropper.min.css';
 
 @mixin adf-viewer-theme($theme) {
     $background: map-get($theme, background);
