@@ -98,8 +98,8 @@
         .adf-pop-over-card {
             width: 100%;
             overflow: hidden;
-            box-shadow: 0px 8px 9px -5px mat-color($foreground, divider),
-            0px 15px 22px 2px mat-color($foreground, divider);
+            box-shadow: 0 8px 9px -5px mat-color($foreground, divider),
+            0 15px 22px 2px mat-color($foreground, divider);
         }
     }
 }

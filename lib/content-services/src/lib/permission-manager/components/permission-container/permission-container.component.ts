@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { PermissionDisplayModel } from '../../models/permission.model';
 import { RoleModel } from '../../models/role.model';
@@ -44,7 +44,7 @@ export class PermissionContainerComponent implements OnChanges {
     showLocation = false;
 
     @Input()
-    selectionMode = 'multiple';// none|single|multiple
+    selectionMode = 'multiple'; // none|single|multiple
 
     /** Emitted when the permission is updated. */
     @Output()

@@ -50,7 +50,7 @@ export class UserIconColumnComponent implements OnInit {
     displayText$ = new BehaviorSubject<User>(null);
     group = false;
 
-    get isSelected() {
+    get isSelected(): boolean {
         return this.context?.row?.isSelected || this.selected;
     }
 

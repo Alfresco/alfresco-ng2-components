@@ -115,4 +115,12 @@ describe('UserIconColumnComponent', () => {
         });
     });
 
+
+    it('should render select icon', () => {
+        component.selected = true;
+        component.ngOnInit();
+        fixture.detectChanges();
+        expect(element.querySelector('mat-icon[svgIcon="selected"]')).toBeDefined();
+        expect(component.isSelected).toBe(true);
+    });
 });
