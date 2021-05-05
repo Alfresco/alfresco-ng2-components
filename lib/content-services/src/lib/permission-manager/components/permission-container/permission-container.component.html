@@ -2,27 +2,24 @@
                id="adf-permission-display-container"
                [rows]="permissions"
                stickyHeader="true"
-               selectionMode="multiple">
+               [selectionMode]="selectionMode">
 
     <data-columns>
-        <data-column class="adf-key-icon"
-                     key="icon"
-                     type="icon"
-                     [sortable]="false">
+        <data-column class="adf-datatable-cell--image adf-authority-icon-column" key="$thumbunail" [sortable]="false">
             <ng-template let-context>
                 <adf-user-icon-column [context]="context"></adf-user-icon-column>
             </ng-template>
         </data-column>
 
-        <data-column class="adf-authorityId-label adf-ellipsis-cell adf-expand-cell-2"
+        <data-column class="adf-ellipsis-cell adf-expand-cell-5 adf-authorityId-column"
                      [title]="'PERMISSION_MANAGER.COLUMN.NAME' | translate:{count:permissions.length}"
                      key="authorityId">
             <ng-template let-context>
                 <adf-user-name-column [context]="context"></adf-user-name-column>
             </ng-template>
-        </data-column>
+        </data-column>d
 
-        <data-column class="adf-authorityId-label adf-ellipsis-cell adf-expand-cell-2"
+        <data-column class="adf-ellipsis-cell adf-expand-cell-5 adf-authorityId-column"
                      title="PERMISSION_MANAGER.COLUMN.LOCATION"
                      key="location"
                      *ngIf="node && showLocation">
@@ -32,7 +29,7 @@
         </data-column>
 
         <data-column
-            class="adf-ellipsis-cell adf-expand-cell-1"
+            class="adf-ellipsis-cell adf-expand-cell-4"
             title="PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE"
             key="name"
             sortable="false">
@@ -59,7 +56,7 @@
             </adf-data-column-header>
         </data-column>
 
-        <data-column class="adf-delete-permission" key="delete" *ngIf="!isReadOnly" sortable="false">
+        <data-column class="adf-datatable-cell adf-delete-permission-column" key="" *ngIf="!isReadOnly" [sortable]="false">
             <ng-template let-entry="$implicit">
                 <button mat-icon-button
                         (click)="removePermission($event, entry.row.obj)"

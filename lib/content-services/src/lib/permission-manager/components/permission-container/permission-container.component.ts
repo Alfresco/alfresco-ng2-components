@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { PermissionDisplayModel } from '../../models/permission.model';
 import { RoleModel } from '../../models/role.model';
@@ -23,7 +23,8 @@ import { RoleModel } from '../../models/role.model';
 @Component({
   selector: 'adf-permission-container',
   templateUrl: './permission-container.component.html',
-  styleUrls: ['./permission-container.component.scss']
+  styleUrls: ['./permission-container.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PermissionContainerComponent implements OnChanges {
 
@@ -41,6 +42,9 @@ export class PermissionContainerComponent implements OnChanges {
 
     @Input()
     showLocation = false;
+
+    @Input()
+    selectionMode = 'multiple'; // none|single|multiple
 
     /** Emitted when the permission is updated. */
     @Output()

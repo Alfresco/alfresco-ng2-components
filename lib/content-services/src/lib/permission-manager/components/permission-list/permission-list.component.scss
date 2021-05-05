@@ -25,7 +25,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 15px;
-            border: 1px solid mat-color($foreground, divider);
+            border: 1px solid mat-color($foreground, base, 0.07);
         }
 
         &-inherit-container {
@@ -70,6 +70,18 @@
             display: flex;
             height: calc(100% - 63px);
         }
+
+        &-local-permission-container {
+            overflow: hidden;
+            flex: 1 1 auto;
+        }
+
+        &-datatable-list {
+            .adf-datatable-selected > svg {
+                width: 40px;
+                height: 40px;
+            }
+        }
     }
 
 
@@ -79,14 +91,15 @@
         padding-right: 10px;
     }
 
-
     .adf-permission-pop-over {
         padding-right: 15px;
         width: 100%;
 
         .adf-pop-over-card {
             width: 100%;
-            @include mat-elevation(16, mat-color($foreground, divider), 0.8);
+            overflow: hidden;
+            box-shadow: 0 8px 9px -5px mat-color($foreground, divider),
+            0 15px 22px 2px mat-color($foreground, divider);
         }
     }
 }

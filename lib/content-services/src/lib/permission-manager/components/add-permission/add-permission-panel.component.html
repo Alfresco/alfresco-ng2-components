@@ -23,8 +23,9 @@
 </mat-form-field>
 
 <div *ngIf="searchedWord?.length === 0"
+     class="adf-permission-start-message"
      id="adf-add-permission-type-search">
-    <span class="adf-permission-start-message">{{'PERMISSION_MANAGER.ADD-PERMISSION.TYPE-MESSAGE' | translate}}</span>
+    <span>{{'PERMISSION_MANAGER.ADD-PERMISSION.TYPE-MESSAGE' | translate}}</span>
 </div>
 
 <adf-search #search
@@ -36,8 +37,9 @@
         <mat-selection-list class="adf-permission-result-list-elements" (keydown.control.a)="selectAll( data?.list?.entries)">
             <mat-list-option id="adf-add-permission-group-everyone"
                              class="adf-list-option-item"
+                             #eveyone
                              (click)="elementClicked(EVERYONE)">
-                <adf-user-icon-column [node]="EVERYONE" id="add-group-icon"></adf-user-icon-column>
+                <adf-user-icon-column [node]="EVERYONE" id="add-group-icon" [selected]="eveyone.selected"></adf-user-icon-column>
                 <p class="adf-result-name">
                     {{'PERMISSION_MANAGER.ADD-PERMISSION.EVERYONE' | translate}}
                 </p>
@@ -46,8 +48,9 @@
             <mat-list-option *ngFor="let item of data?.list?.entries; let idx = index"
                              (click)="elementClicked(item)"
                              class="adf-list-option-item"
-                             id="result_option_{{idx}}">
-                <adf-user-icon-column [node]="item"></adf-user-icon-column>
+                             id="result_option_{{idx}}"
+                             #option>
+                <adf-user-icon-column [node]="item" [selected]="option.selected"></adf-user-icon-column>
                 <p class="adf-result-name">
                     <ng-container *ngIf="item.entry?.properties['cm:authorityDisplayName']; else authorityName">
                         {{item.entry.properties['cm:authorityDisplayName']}}

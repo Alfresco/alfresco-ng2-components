@@ -57,16 +57,25 @@
                     [node]="model.node"
                     [permissions]="model.inheritedPermissions"
                     [showLocation]="true"
+                    [selectionMode]="'none'"
                     [roles]="model.roles">
                 </adf-permission-container>
             </div>
         </ng-template>
 
-        <mat-card-content style="overflow: hidden">
+        <mat-card-content class="adf-local-permission-container">
             <section class="adf-permission-content-header">
                 <h3>{{'PERMISSION_MANAGER.LABELS.DIRECT-PERMISSIONS' | translate }}</h3>
 
                 <div class="adf-toolbar--spacer"></div>
+
+                <button
+                    mat-button
+                    [matTooltip]="'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate"
+                    (click)="openAddPermissionDialog()"
+                    data-automation-id="adf-add-permission-button">
+                    <mat-icon>person_add_outline</mat-icon>
+                </button>
 
                 <button
                     mat-button
@@ -75,16 +84,6 @@
                     (click)="deleteSelection()"
                     data-automation-id="adf-delete-selected-permission">
                     <mat-icon>delete_outline</mat-icon>
-                </button>
-
-                <adf-toolbar-divider></adf-toolbar-divider>
-
-                <button
-                    mat-button
-                    [matTooltip]="'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate"
-                    (click)="openAddPermissionDialog()"
-                    data-automation-id="adf-add-permission-button">
-                    <mat-icon>person_add_outline</mat-icon>
                 </button>
             </section>
 

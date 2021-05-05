@@ -1,6 +1,6 @@
 @mixin adf-user-icon-column-theme($theme) {
     $primary: map-get($theme, primary);
-    $foreground: map-get($theme, foreground);
+    $document-list-selection-color: mat-color($accent) !default;
 
     .adf {
         &-people-initial {
@@ -11,7 +11,7 @@
             align-items: center;
             width: 40px;
             height: 40px;
-            color: mat-color($foreground, text);
+            color: mat-color($primary, default-contrast) !important;
             font-weight: bolder;
             font-size: 18px;
             text-transform: uppercase;
@@ -23,12 +23,18 @@
             background: mat-color($primary);
             border-radius: 50%;
             padding: 10px;
-            color: mat-color($foreground, text);
+            color: mat-color($primary, default-contrast) !important;
             font-weight: bolder;
             font-size: 20px;
         }
+
         &-people-select-icon {
-            padding: 10px;
+            margin: 0 !important;
+            svg {
+                fill: $document-list-selection-color;
+                width: 40px;
+                height: 40px;
+            }
         }
     }
 }

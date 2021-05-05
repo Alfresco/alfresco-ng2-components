@@ -25,11 +25,21 @@
 
         .mat-dialog-content {
             margin: 0;
-            overflow: auto;
+            overflow: hidden;
+            flex-grow: 1;
+            height: 80vh;
+
+            .adf-new-permission-table {
+                height: 90%;
+            }
+
+            .adf-search-container {
+                height: 100%;
+            }
         }
 
         .mat-dialog-actions {
-            padding: 8px;
+            padding: 0 24px;
             background-color: mat-color($background, background);
             display: flex;
             justify-content: flex-end;

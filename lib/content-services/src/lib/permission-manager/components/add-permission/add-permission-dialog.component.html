@@ -10,64 +10,66 @@
             <mat-icon>search</mat-icon>
         </button>
 
-        <adf-datatable [rows]="selectedMembers"
-                       selectionMode="none"
-                       stickyHeader="true"
-                       data-automation-id="adf-user-role-selection-table"
-                       *ngIf="selectedMembers.length">
-            <data-columns>
-                <data-column class="adf-key-icon" key="icon" type="icon" [sortable]="false">
-                    <ng-template let-context>
-                        <adf-user-icon-column [context]="context"></adf-user-icon-column>
-                    </ng-template>
-                </data-column>
+        <div class="adf-new-permission-table">
+            <adf-datatable [rows]="selectedMembers"
+                           class="adf-datatable-permission"
+                           selectionMode="none"
+                           stickyHeader="true"
+                           data-automation-id="adf-user-role-selection-table"
+                           *ngIf="selectedMembers.length">
+                <data-columns>
+                    <data-column class="adf-datatable-cell--image adf-authority-icon-column" key="$thumbunail" [sortable]="false">
+                        <ng-template let-context>
+                            <adf-user-icon-column [context]="context"></adf-user-icon-column>
+                        </ng-template>
+                    </data-column>
 
-                <data-column class="adf-authorityId-label adf-ellipsis-cell adf-expand-cell-2"
-                             [title]="'Users and Groups (' + selectedMembers.length + ')'"
-                             key="id">
-                    <ng-template let-context>
-                        <adf-user-name-column [context]="context"></adf-user-name-column>
-                    </ng-template>
-                </data-column>
+                    <data-column class="adf-ellipsis-cell adf-expand-cell-5 adf-authorityId-column"
+                                 [title]="'PERMISSION_MANAGER.COLUMN.NAME' | translate:{count:selectedMembers.length}"
+                                 key="id">
+                        <ng-template let-context>
+                            <adf-user-name-column [context]="context"></adf-user-name-column>
+                        </ng-template>
+                    </data-column>
 
-                <data-column class="adf-ellipsis-cell adf-expand-cell-1"
-                             title="PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE"
-                             key="role">
-                    <ng-template let-entry="$implicit">
-                        <adf-user-role-column [readonly]="entry.row.obj.readonly"
-                                              [placeholder]="entry.data.getValue(entry.row, entry.col)"
-                                              [value]="entry.data.getValue(entry.row, entry.col)"
-                                              [roles]="data.roles"
-                                              id="adf-select-role-permission"
-                                              (roleChanged)="onMemberUpdate($event, entry.row.obj)">
-                        </adf-user-role-column>
-                    </ng-template>
-
-                    <adf-data-column-header>
-                        <ng-template>
-                            <adf-user-role-column  class="adf-permission-role-column-header"
-                                                   placeholder="PERMISSION_MANAGER.COLUMN.BULK-ROLE"
-                                                   [roles]="data.roles"
-                                                   id="adf-bulk-select-role-permission"
-                                                   (roleChanged)="onBulkUpdate($event)">
+                    <data-column class="adf-ellipsis-cell adf-expand-cell-4"
+                                 title="PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE"
+                                 key="role">
+                        <ng-template let-entry="$implicit">
+                            <adf-user-role-column [readonly]="entry.row.obj.readonly"
+                                                  [value]="entry.data.getValue(entry.row, entry.col)"
+                                                  [roles]="data.roles"
+                                                  id="adf-select-role-permission"
+                                                  (roleChanged)="onMemberUpdate($event, entry.row.obj)">
                             </adf-user-role-column>
                         </ng-template>
-                    </adf-data-column-header>
-                </data-column>
 
-                <data-column class="adf-delete-permission" key="" sortable="false">
-                    <ng-template let-entry="$implicit">
-                        <button mat-icon-button
-                                class="adf-add-member-action"
-                                [style.display]="entry.row.obj.readonly ? 'none': 'block'"
-                                (click)="onMemberDelete(entry.row.obj)"
-                                data-automation-id="adf-delete-permission-button">
-                            <mat-icon>highlight_off</mat-icon>
-                        </button>
-                    </ng-template>
-                </data-column>
-            </data-columns>
-        </adf-datatable>
+                        <adf-data-column-header>
+                            <ng-template>
+                                <adf-user-role-column  class="adf-permission-role-column-header"
+                                                       placeholder="PERMISSION_MANAGER.COLUMN.BULK-ROLE"
+                                                       [roles]="data.roles"
+                                                       id="adf-bulk-select-role-permission"
+                                                       (roleChanged)="onBulkUpdate($event)">
+                                </adf-user-role-column>
+                            </ng-template>
+                        </adf-data-column-header>
+                    </data-column>
+
+                    <data-column class="adf-datatable-cell adf-delete-permission-column" key="" sortable="false">
+                        <ng-template let-entry="$implicit">
+                            <button mat-icon-button
+                                    class="adf-add-member-action"
+                                    [style.display]="entry.row.obj.readonly ? 'none': 'block'"
+                                    (click)="onMemberDelete(entry.row.obj)"
+                                    data-automation-id="adf-delete-permission-button">
+                                <mat-icon>highlight_off</mat-icon>
+                            </button>
+                        </ng-template>
+                    </data-column>
+                </data-columns>
+            </adf-datatable>
+        </div>
 
     </mat-dialog-content>
 
@@ -90,7 +92,7 @@
 
 <ng-container *ngIf="isSearchActive">
     <mat-dialog-content>
-        <adf-add-permission-panel (select)="onSelect($event)"></adf-add-permission-panel>
+        <adf-add-permission-panel class="adf-search-container" (select)="onSelect($event)"></adf-add-permission-panel>
     </mat-dialog-content>
 
     <mat-dialog-actions>
@@ -103,7 +105,7 @@
                     data-automation-id="add-permission-dialog-confirm-button"
                     [disabled]="!currentSelection.length"
                     (click)="onSearchAddClicked()">
-                {{ "PERMISSION_MANAGER.ADD-PERMISSION.ADD-ACTION" | translate }}
+                {{ "PERMISSION_MANAGER.ADD-PERMISSION.SELECT-ACTION" | translate }}
             </button>
     </mat-dialog-actions>
 </ng-container>
