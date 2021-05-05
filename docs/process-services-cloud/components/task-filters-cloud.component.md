@@ -18,6 +18,7 @@ Shows all available filters.
 -   [Details](#details)
     -   [Filtering APS2 task filters](#filtering-aps2-task-filters)
     -   [Showing Filter Counters](#showing-filter-counters)
+    -   [Updating Filter Counters](#updating-filter-counters)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -66,13 +67,27 @@ as the value of `filterParam` as shown in the table below:
 | id | string | The id of the task filter |
 | name | string | The name of the task filter, lowercase is checked |
 | key | string | The key of the task filter |
-| index | string | The zero-based position of the filter in the array. |
+| index | string | The zero-based position of the filter in the array |
 
 ### Showing Filter Counters
 
 By default, filter counters are hidden. If you want to display filter counters you will need to add the `showCounter` property set to `true` in your [TaskFilterCloudModel](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts). 
 
 ![](../../docassets/images/task-filter-counter.png)
+
+### Updating Filter Counters
+
+If you want to disable notification bubbles as task filters change you can change it directly  from the app.config.json.
+
+```json
+{
+    ...
+    "notifications": true
+    ...
+}
+```
+
+![](../../docassets/images/update-filter-bubble.png)
 
 ## See also
 

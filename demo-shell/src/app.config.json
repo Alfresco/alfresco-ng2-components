@@ -33,6 +33,7 @@
     "name": "Alfresco ADF Application",
     "copyright": "© 2016 - 2021 Alfresco Software, Inc. All Rights Reserved."
   },
+  "notifications": true,
   "search": {
     "filterWithContains": true,
     "app:fields": [

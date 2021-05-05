@@ -19,7 +19,7 @@ import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit } fro
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
-import { TranslationService } from '@alfresco/adf-core';
+import { AppConfigService, TranslationService } from '@alfresco/adf-core';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
@@ -31,6 +31,7 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
     styleUrls: ['base-task-filters-cloud.component.scss']
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
+
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<TaskFilterCloudModel>();
@@ -46,13 +47,16 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     filters$: Observable<TaskFilterCloudModel[]>;
     filters: TaskFilterCloudModel[] = [];
     currentFilter: TaskFilterCloudModel;
+    enableNotifications: boolean;
 
     constructor(private taskFilterCloudService: TaskFilterCloudService,
-                private translationService: TranslationService) {
+                private translationService: TranslationService,
+                private appConfigService: AppConfigService) {
         super();
     }
 
     ngOnInit() {
+        this.enableNotifications = this.appConfigService.get('notifications', true);
         this.initFilterCounterNotifications();
         this.getFilters(this.appName);
     }
@@ -98,7 +102,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     initFilterCounterNotifications() {
-        if (this.appName) {
+        if (this.appName && this.enableNotifications) {
             this.taskFilterCloudService.getTaskNotificationSubscription(this.appName)
                 .pipe(debounceTime(3000))
                 .subscribe((result: TaskCloudEngineEvent[]) => {
