@@ -91,7 +91,7 @@ describe('TooltipCardDirective', () => {
         let tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
         expect(tooltipCard).not.toBeNull();
 
-        span.triggerEventHandler('mouseout', {});
+        span.triggerEventHandler('mouseleave', {});
         fixture.detectChanges();
         tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
         expect(tooltipCard).toBeNull();
