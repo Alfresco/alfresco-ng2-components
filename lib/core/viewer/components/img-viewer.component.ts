@@ -178,7 +178,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges {
 
     cropImage() {
         this.isEditing = true;
-        this.cropper.setDragMode( 'crop');
+        this.cropper.setDragMode('crop');
         this.cropper.crop();
     }
 
