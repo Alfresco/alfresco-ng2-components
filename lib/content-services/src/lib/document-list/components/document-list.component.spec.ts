@@ -1466,6 +1466,9 @@ describe('DocumentList', () => {
         expect(documentList.currentFolderId).toBe('-mysites-');
     });
 
+
+    //old
+
     it('should reload data upon changing pagination settings', () => {
         spyOn(documentList, 'reload').and.stub();
 
@@ -1477,6 +1480,40 @@ describe('DocumentList', () => {
         });
 
         expect(documentList.reload).toHaveBeenCalled();
+    });
+
+    it('should reload and reset the selection when the pagination is not of type infinite', () => {
+        documentList.selection = [{ entry: mockNode1 }];
+        documentList.infinitePagination = false;
+        spyOn(documentList, 'reload').and.callThrough();
+
+        documentList.maxItems = 0;
+
+        documentList.updatePagination({
+            maxItems: 10,
+            skipCount: 10
+        });
+
+        expect(documentList.reload).toHaveBeenCalled();
+        expect(documentList.selection).toEqual([]);
+    });
+
+    it('should reload without resetting the selection when the pagination is of type infinite', () => {
+        documentList.selection = [{ entry: mockNode1 }];
+        documentList.infinitePagination = true;
+        spyOn(documentList, 'reloadWithoutResettingSelection').and.callThrough();
+        spyOn(documentList, 'resetSelection').and.callThrough();
+
+        documentList.maxItems = 0;
+
+        documentList.updatePagination({
+            maxItems: 10,
+            skipCount: 10
+        });
+
+        expect(documentList.reloadWithoutResettingSelection).toHaveBeenCalled();
+        expect(documentList.resetSelection).not.toHaveBeenCalled();
+        expect(documentList.selection).toEqual([{ entry: mockNode1 }]);
     });
 
     it('should NOT reload data on first call of ngOnChanges', () => {
