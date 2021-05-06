@@ -179,15 +179,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     allowDropFiles: boolean = false;
 
-    /**
-     * Flag that indicates if the pagination that will be used
-     * along with document list is of type infinite.
-     * see the docs to learn about the different types of pagination.
-     * Default value: "false"
-     */
-    @Input()
-    infinitePagination: boolean = false;
-
     /** Defines default sorting. The format is an array of 2 strings `[key, direction]`
      * i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to
      * override the default sorting detected by the component based on columns.
@@ -905,7 +896,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this._pagination.maxItems = requestPaginationModel.maxItems;
         this._pagination.merge = requestPaginationModel.merge;
         this._pagination.skipCount = requestPaginationModel.skipCount;
-        this.infinitePagination ? this.reloadWithoutResettingSelection() : this.reload();
+        this._pagination.merge ? this.reloadWithoutResettingSelection() : this.reload();
     }
 
     private syncPagination() {
