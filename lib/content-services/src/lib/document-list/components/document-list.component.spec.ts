@@ -1801,7 +1801,7 @@ describe('DocumentList', () => {
                 expect(documentList.skippedSelection.length).toBe(0);
             });
 
-            it('Should the skipped selection be empty by default', () => {
+            it('Should the skipped pre-selection be empty by default', () => {
                 expect(documentList.skippedPreselection.length).toBe(0);
             });
 
