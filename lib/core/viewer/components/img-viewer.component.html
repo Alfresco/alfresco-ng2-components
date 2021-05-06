@@ -34,6 +34,14 @@
             (click)="rotateImage()">
             <mat-icon>rotate_left</mat-icon>
         </button>
+        <button
+            *ngIf="!readOnly" id="viewer-crop-button"
+            title="{{ 'ADF_VIEWER.ARIA.CROP' | translate }}"
+            attr.aria-label="{{ 'ADF_VIEWER.ARIA.CROP' | translate }}"
+            mat-icon-button
+            (click)="cropImage()">
+            <mat-icon>crop</mat-icon>
+        </button>
 
         <button
             id="viewer-reset-button"

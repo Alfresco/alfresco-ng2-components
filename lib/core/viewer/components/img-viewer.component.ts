@@ -89,6 +89,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges {
             dragMode: 'move',
             background: false,
             scalable: true,
+            modal: false,
             zoomOnWheel: false,
             toggleDragModeOnDblclick: false,
             viewMode: 1,
@@ -175,16 +176,26 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges {
         this.cropper.rotate( -90);
     }
 
+    cropImage() {
+        this.isEditing = true;
+        this.cropper.setDragMode('crop');
+        this.cropper.crop();
+    }
+
     save() {
         this.isEditing = false;
+        this.cropper.setDragMode('move');
         this.cropper.getCroppedCanvas().toBlob((blob) => {
             this.submit.emit(blob);
+            this.cropper.clear();
         });
     }
 
     reset() {
         this.isEditing = false;
+        this.cropper.clear();
         this.cropper.reset();
+        this.cropper.setDragMode('move');
         this.scale = 1.0;
         this.cropper.zoomTo(this.scale);
     }

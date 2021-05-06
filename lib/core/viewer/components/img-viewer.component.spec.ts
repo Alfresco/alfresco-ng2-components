@@ -221,6 +221,26 @@ describe('Test Img viewer component ', () => {
             expect(rotateButtonElement).toEqual(null);
         });
 
+        it('should not show crop button by default', () => {
+            const rotateButtonElement = element.querySelector('#viewer-crop-button');
+            expect(rotateButtonElement).toEqual(null);
+        });
+
+        it('should start cropping when clicking the crop button', fakeAsync(() => {
+            component.readOnly = false;
+            spyOn(component, 'cropImage').and.callThrough();
+            spyOn(component.cropper, 'crop');
+            spyOn(component.cropper, 'setDragMode');
+            fixture.detectChanges();
+            const cropButtonElement = fixture.debugElement.query(By.css('#viewer-crop-button'));
+            cropButtonElement.triggerEventHandler('click', null);
+            tick();
+
+            expect(component.cropImage).toHaveBeenCalled();
+            expect(component.cropper.crop).toHaveBeenCalled();
+            expect(component.cropper.setDragMode).toHaveBeenCalledWith('crop');
+        }));
+
         it('should rotate image by -90 degrees on button click', fakeAsync(() => {
             component.readOnly = false;
             spyOn(component, 'rotateImage').and.callThrough();
@@ -260,7 +280,7 @@ describe('Test Img viewer component ', () => {
             expect(secondaryToolbar).toEqual(null);
         });
 
-        it('should display second toolbar in rotate mode', fakeAsync(() => {
+        it('should display second toolbar in edit mode', fakeAsync(() => {
             component.readOnly = false;
             component.isEditing = true;
 
@@ -283,6 +303,13 @@ describe('Test Img viewer component ', () => {
         it('should get in editing mode when the image gets rotated', () => {
             component.readOnly = false;
             component.rotateImage();
+
+            expect(component.isEditing).toEqual(true);
+        });
+
+        it('should get in editing mode when the image gets cropped', () => {
+            component.readOnly = false;
+            component.cropImage();
 
             expect(component.isEditing).toEqual(true);
         });
