@@ -70,7 +70,7 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
         tooltipRef.instance.htmlContent = this.htmlContent;
     }
 
-    @HostListener('mouseout')
+    @HostListener('mouseleave')
     hide() {
         this.overlayRef.detach();
     }
