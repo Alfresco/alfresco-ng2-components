@@ -65,7 +65,7 @@ export class TaskDetailsModel implements TaskRepresentation {
     constructor(obj?: any) {
         if (obj) {
             this.id = obj.id || null;
-            this.name = obj.name || null;
+            this.name = obj.name || 'No name';
             this.priority = obj.priority;
             this.assignee = obj.assignee ? new UserProcessModel(obj.assignee) : null;
             this.adhocTaskCanBeReassigned = obj.adhocTaskCanBeReassigned;
