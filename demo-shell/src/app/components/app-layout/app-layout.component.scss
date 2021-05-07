@@ -14,6 +14,10 @@
         }
     }
 
+    adf-file-uploading-dialog {
+        z-index: 1100;
+    }
+
     .app-layout {
         display: flex;
         flex: 1;
