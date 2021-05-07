@@ -29,8 +29,12 @@ export class CardViewIntItemModel extends CardViewTextItemModel implements CardV
         super(cardViewTextItemProperties);
 
         this.validators.push(new CardViewItemIntValidator());
-        if (cardViewTextItemProperties.value) {
+        if (cardViewTextItemProperties.value && !cardViewTextItemProperties.multivalued) {
             this.value = parseInt(cardViewTextItemProperties.value, 10);
         }
+    }
+
+    get displayValue(): string {
+        return this.applyPipes(this.value);
     }
 }

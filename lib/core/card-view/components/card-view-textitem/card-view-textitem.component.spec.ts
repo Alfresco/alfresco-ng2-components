@@ -180,7 +180,48 @@ describe('CardViewTextItemComponent', () => {
             expect(valueChips[0].nativeElement.innerText.trim()).toBe('item1');
             expect(valueChips[1].nativeElement.innerText.trim()).toBe('item2');
             expect(valueChips[2].nativeElement.innerText.trim()).toBe('item3');
+        });
 
+        it('should render chips for multivalue integers when chips are enabled', async () => {
+            component.property = new CardViewIntItemModel({
+                label: 'Text label',
+                value: [1, 2, 3],
+                key: 'textkey',
+                editable: true,
+                multivalued: true
+            });
+            component.useChipsForMultiValueProperty = true;
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
+            expect(valueChips).not.toBeNull();
+            expect(valueChips.length).toBe(3);
+            expect(valueChips[0].nativeElement.innerText.trim()).toBe('1');
+            expect(valueChips[1].nativeElement.innerText.trim()).toBe('2');
+            expect(valueChips[2].nativeElement.innerText.trim()).toBe('3');
+        });
+
+        it('should render chips for multivalue decimal numbers when chips are enabled', async () => {
+            component.property = new CardViewFloatItemModel({
+                label: 'Text label',
+                value: [1.1, 2.2, 3.3],
+                key: 'textkey',
+                editable: true,
+                multivalued: true
+            });
+            component.useChipsForMultiValueProperty = true;
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
+            expect(valueChips).not.toBeNull();
+            expect(valueChips.length).toBe(3);
+            expect(valueChips[0].nativeElement.innerText.trim()).toBe('1.1');
+            expect(valueChips[1].nativeElement.innerText.trim()).toBe('2.2');
+            expect(valueChips[2].nativeElement.innerText.trim()).toBe('3.3');
         });
 
         it('should render string for multivalue properties when chips are disabled', async () => {

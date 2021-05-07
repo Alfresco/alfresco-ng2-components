@@ -76,7 +76,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         if (changes.property && changes.property.firstChange) {
             this.textInput.valueChanges
                 .pipe(
-                    filter(textInputValue => textInputValue !== this.editedValue),
+                    filter(textInputValue => textInputValue !== this.editedValue && textInputValue !== null),
                     debounceTime(50),
                     takeUntil(this.onDestroy$)
                 )

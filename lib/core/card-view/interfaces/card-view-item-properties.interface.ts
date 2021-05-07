@@ -29,4 +29,5 @@ export interface CardViewItemProperties {
     validators?: CardViewItemValidator[];
     data?: any;
     constraints?: Constraint[];
+    multivalued?: boolean;
 }

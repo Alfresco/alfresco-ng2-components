@@ -125,6 +125,15 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 format: 'shortDate',
                 editable: this.isEditable
             }),
+            new CardViewDateItemModel({
+                label: 'CardView Date Item',
+                value: [new Date(1983, 11, 24, 10, 0, 30)],
+                key: 'date',
+                default: new Date(1983, 11, 24, 10, 0, 30),
+                format: 'shortDate',
+                editable: this.isEditable,
+                multivalued: true
+            }),
             new CardViewDatetimeItemModel({
                 label: 'CardView Datetime Item',
                 value: new Date(1983, 11, 24, 10, 0, 0),
@@ -132,6 +141,15 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 default: new Date(1983, 11, 24, 10, 0, 0),
                 format: 'short',
                 editable: this.isEditable
+            }),
+            new CardViewDatetimeItemModel({
+                label: 'CardView Datetime Item',
+                value: [new Date(1983, 11, 24, 10, 0, 0)],
+                key: 'datetime',
+                default: new Date(1983, 11, 24, 10, 0, 0),
+                format: 'short',
+                editable: this.isEditable,
+                multivalued: true
             }),
             new CardViewBoolItemModel({
                 label: 'CardView Boolean Item',
@@ -160,6 +178,15 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 key: 'float',
                 default: 0.0,
                 editable: this.isEditable,
+                pipes: [{ pipe: this.decimalNumberPipe }]
+            }),
+            new CardViewFloatItemModel({
+                label: 'CardView Float Item',
+                value: [9.9],
+                key: 'float',
+                default: 0.0,
+                editable: this.isEditable,
+                multivalued: true,
                 pipes: [{ pipe: this.decimalNumberPipe }]
             }),
             new CardViewKeyValuePairsItemModel({

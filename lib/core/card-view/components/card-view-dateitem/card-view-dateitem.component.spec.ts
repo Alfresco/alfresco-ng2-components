@@ -25,6 +25,7 @@ import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { AppConfigService } from '@alfresco/adf-core';
+import { CardViewDatetimeItemModel } from './../../models/card-view-datetimeitem.model';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardViewDateItemComponent', () => {
@@ -192,7 +193,7 @@ describe('CardViewDateItemComponent', () => {
         component.editable = true;
         component.property.editable = true;
         const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
-        const expectedDate = moment('Jul 10 2017', 'MMM DD YY');
+        const expectedDate = moment('Jul 10 2017', 'MMM DD YYYY');
         fixture.detectChanges();
         const property = { ...component.property };
 
@@ -231,7 +232,7 @@ describe('CardViewDateItemComponent', () => {
         component.editable = false;
         fixture.detectChanges();
 
-        const doubleClickEl = fixture.debugElement.query(By.css(`[data-automation-id="card-dateitem-${component.property.key}"] span`));
+        const doubleClickEl = fixture.debugElement.query(By.css(`[data-automation-id="card-dateitem-${component.property.key}"]`));
         doubleClickEl.triggerEventHandler('dblclick', new MouseEvent('dblclick'));
 
         fixture.detectChanges();
@@ -345,5 +346,43 @@ describe('CardViewDateItemComponent', () => {
 
         fixture.detectChanges();
         expect(component.property.value).toEqual(expectedDate.toDate());
+    });
+
+    it('should render chips for multivalue dates when chips are enabled', async () => {
+        component.property = new CardViewDateItemModel({
+            label: 'Text label',
+            value: ['Jul 10 2017 00:01:00', 'Jul 11 2017 00:01:00', 'Jul 12 2017 00:01:00'],
+            key: 'textkey',
+            editable: true,
+            multivalued: true
+        });
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
+        expect(valueChips).not.toBeNull();
+        expect(valueChips.length).toBe(3);
+        expect(valueChips[0].nativeElement.innerText.trim()).toBe('Jul 10, 2017');
+        expect(valueChips[1].nativeElement.innerText.trim()).toBe('Jul 11, 2017');
+        expect(valueChips[2].nativeElement.innerText.trim()).toBe('Jul 12, 2017');
+    });
+
+    it('should render chips for multivalue datetimes when chips are enabled', async () => {
+        component.property = new CardViewDatetimeItemModel({
+            label: 'Text label',
+            value: ['Jul 10 2017 00:01:00', 'Jul 11 2017 00:01:00', 'Jul 12 2017 00:01:00'],
+            key: 'textkey',
+            editable: true,
+            multivalued: true
+        });
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
+        expect(valueChips).not.toBeNull();
+        expect(valueChips.length).toBe(3);
+        expect(valueChips[0].nativeElement.innerText.trim()).toBe('Jul 10, 2017, 0:01');
+        expect(valueChips[1].nativeElement.innerText.trim()).toBe('Jul 11, 2017, 0:01');
+        expect(valueChips[2].nativeElement.innerText.trim()).toBe('Jul 12, 2017, 0:01');
     });
 });

@@ -119,7 +119,7 @@ export class PropertyGroupTranslatorService {
 
         if (this.isListOfValues(propertyDefinition.constraints)) {
             const options = propertyDefinition.constraints[0].parameters.allowedValues.map((value) => ({ key: value, label: value }));
-            const properties =  Object.assign(propertyDefinition, { options$: of(options) });
+            const properties = Object.assign(propertyDefinition, { options$: of(options) });
 
             cardViewItemProperty = new CardViewSelectItemModel(properties);
         } else {
@@ -132,22 +132,32 @@ export class PropertyGroupTranslatorService {
 
                 case D_INT:
                 case D_LONG:
-                    cardViewItemProperty = new CardViewIntItemModel(propertyDefinition);
+                    cardViewItemProperty = new CardViewIntItemModel(Object.assign(propertyDefinition, {
+                        multivalued: isMultiValued,
+                        pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                    }));
                     break;
 
                 case D_FLOAT:
                 case D_DOUBLE:
                     cardViewItemProperty = new CardViewFloatItemModel(Object.assign(propertyDefinition, {
-                        pipes: [{ pipe: this.decimalNumberPipe }]
+                        multivalued: isMultiValued,
+                        pipes: [{ pipe: this.decimalNumberPipe }, { pipe: this.multiValuePipe, params: [this.valueSeparator] } ]
                     }));
                     break;
 
                 case D_DATE:
-                    cardViewItemProperty = new CardViewDateItemModel(propertyDefinition);
+                    cardViewItemProperty = new CardViewDateItemModel(Object.assign(propertyDefinition, {
+                        multivalued: isMultiValued,
+                        pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                    }));
                     break;
 
                 case D_DATETIME:
-                    cardViewItemProperty = new CardViewDatetimeItemModel(propertyDefinition);
+                    cardViewItemProperty = new CardViewDatetimeItemModel(Object.assign(propertyDefinition, {
+                        multivalued: isMultiValued,
+                        pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                    }));
                     break;
 
                 case D_BOOLEAN:
@@ -159,7 +169,7 @@ export class PropertyGroupTranslatorService {
                     cardViewItemProperty = new CardViewTextItemModel(Object.assign(propertyDefinition, {
                         multivalued: isMultiValued,
                         multiline: isMultiValued,
-                        pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator]}]
+                        pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
                     }));
             }
         }

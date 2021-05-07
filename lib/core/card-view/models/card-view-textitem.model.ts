@@ -24,14 +24,12 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
     type: string = 'text';
     inputType: string = 'text';
     multiline?: boolean;
-    multivalued?: boolean;
     pipes?: CardViewTextItemPipeProperty[];
     clickCallBack?: any;
 
     constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
         super(cardViewTextItemProperties);
         this.multiline = !!cardViewTextItemProperties.multiline;
-        this.multivalued = !!cardViewTextItemProperties.multivalued;
         this.pipes = cardViewTextItemProperties.pipes || [];
         this.clickCallBack = cardViewTextItemProperties.clickCallBack ? cardViewTextItemProperties.clickCallBack : null;
 
@@ -44,7 +42,7 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
         return this.applyPipes(this.value);
     }
 
-    private applyPipes(displayValue) {
+    applyPipes(displayValue) {
         if (this.pipes.length) {
             displayValue = this.pipes.reduce((accumulator, { pipe, params = [] }) => {
                 return pipe.transform(accumulator, ...params);
