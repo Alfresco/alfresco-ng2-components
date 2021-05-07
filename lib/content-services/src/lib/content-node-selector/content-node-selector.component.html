@@ -63,7 +63,7 @@
                     <div fxHide.lt-md="true"
                          class="adf-empty-folder-any-files-here-to-add">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate }}</div>
                     <img [alt]="'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate" class="adf-empty-folder-image"
-                         [src]="emptyFolderImageUrl">
+                         [src]="getEmptyDocLibImage()">
                 </div>
             </adf-empty-list>
         </adf-upload-drag-area>

@@ -17,7 +17,7 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslationService, NotificationService, AllowableOperationsEnum, ContentService, UploadService } from '@alfresco/adf-core';
+import { TranslationService, NotificationService, AllowableOperationsEnum, ContentService, UploadService, ThumbnailService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
@@ -41,7 +41,6 @@ export class ContentNodeSelectorComponent implements OnInit {
     selectedTabIndex: number = 0;
     uploadStarted: boolean = false;
 
-    emptyFolderImageUrl: string = '../assets/images/empty_doc_lib.svg';
     breadcrumbFolderNode: Node;
 
     constructor(private translation: TranslationService,
@@ -49,6 +48,7 @@ export class ContentNodeSelectorComponent implements OnInit {
                 private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private dialog: MatDialogRef<ContentNodeSelectorComponent>,
+                private thumbnailService: ThumbnailService,
                 @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `NODE_SELECTOR.${this.action}`;
@@ -101,6 +101,10 @@ export class ContentNodeSelectorComponent implements OnInit {
         if (this.action === 'CHOOSE' && siteTitle) {
             this.title = this.getTitleTranslation(this.action, siteTitle);
         }
+    }
+
+    getEmptyDocLibImage(): string {
+        return this.thumbnailService.getMimeTypeIcon('emptyDocLib');
     }
 
     getTitleTranslation(action: string, name: string): string {
