@@ -30,6 +30,8 @@ import { ProcessFilterCloudService } from '../services/process-filter-cloud.serv
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
+import { ProcessDefinitionCloud } from 'process-services-cloud/src/lib/models/process-definition-cloud.model';
+import { ApplicationInstanceModel } from 'process-services-cloud/src/lib/app/models/application-instance.model';
 
 export interface DropdownOption {
     value: string;
@@ -391,8 +393,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         if (!this.applicationNames.length) {
             this.appsProcessCloudService
             .getDeployedApplicationsByStatus('RUNNING', this.role).pipe(
-                map((response) => {
-                    let result = [];
+                map((response: ApplicationInstanceModel[]) => {
+                    let result: DropdownOption[] = [];
                     if (response?.length) {
                         result = response.map((res) => {
                             return {label: res.name, value: res.name }
@@ -410,8 +412,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     getProcessDefinitions() {
         if(!this.processDefinitionNames.length) {
             this.processCloudService.getProcessDefinitions(this.appName).pipe(
-            map((response) => {
-                let result = [this.allProcessDefinitionNamesOption];
+            map((response: ProcessDefinitionCloud[]) => {
+                let result: DropdownOption[] = [];
                 if (response?.length) {
                     result = response.map((res) => {
                         return { label: res.name, value: res.name }
@@ -419,7 +421,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 }
                 return result;
             })).subscribe((processDefinitions: DropdownOption[]) => {
-                this.processDefinitionNames.push(...processDefinitions);
+                this.processDefinitionNames.push(...<DropdownOption[]> [this.allProcessDefinitionNamesOption, ...processDefinitions]);
             });
         }
     }

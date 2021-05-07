@@ -25,7 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
-import { EditProcessFilterCloudComponent } from './edit-process-filter-cloud.component';
+import { EditProcessFilterCloudComponent, DropdownOption } from './edit-process-filter-cloud.component';
 import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
@@ -472,6 +472,23 @@ describe('EditProcessFilterCloudComponent', () => {
         });
     }));
 
+    it('should not be able to call an API to fetch running applications when applications are available', async(() => {
+        fixture.detectChanges();
+        component.applicationNames = [{ label: 'mock-app-name', value: 'mock-app-name' } ]
+        component.filterProperties = ['appName', 'processName'];
+        fixture.detectChanges();
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+        const appController = component.editProcessFilterForm.get('appName');
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(getRunningApplicationsSpy).not.toHaveBeenCalled();
+            expect(appController).toBeDefined();
+            expect(appController.value).toEqual('mock-app-name');
+        });
+    }));
+
     it('should fetch applications when appName and appVersion input is set', async(() => {
         fixture.detectChanges();
         component.filterProperties = ['appName', 'processName', 'appVersion'];
@@ -548,6 +565,28 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             expect(processSpy).toHaveBeenCalled();
+            expect(controller).toBeDefined();
+            const processDefinitionNamesOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+            expect(processDefinitionNamesOptions[0].nativeElement.value).toBeUndefined();
+            expect(processDefinitionNamesOptions[0].nativeElement.innerText).toEqual(component.allProcessDefinitionNamesOption.label);
+        });
+    }));
+
+    it('should not be able to call an API to fetch process definitions if processDefinitions are available', async(() => {
+        const getProcessDefSpy = spyOn(processService, 'getProcessDefinitions').and.callThrough();
+        component.filterProperties = ['processDefinitionName'];
+        const mockProcessDef = <DropdownOption[]> [component.allProcessDefinitionNamesOption, {label: 'ProcessDefOne', value: 'process-def-name-1'}, { label: 'ProcessDefTwo', value: 'process-def-name-2'}];
+        component.processDefinitionNames.push(...mockProcessDef);
+        fixture.detectChanges();
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+        const controller = component.editProcessFilterForm.get('processDefinitionName');
+        const processDefinitionNamesElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-processDefinitionName"]');
+        processDefinitionNamesElement.click();
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(getProcessDefSpy).not.toHaveBeenCalled();
             expect(controller).toBeDefined();
             const processDefinitionNamesOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
             expect(processDefinitionNamesOptions[0].nativeElement.value).toBeUndefined();
