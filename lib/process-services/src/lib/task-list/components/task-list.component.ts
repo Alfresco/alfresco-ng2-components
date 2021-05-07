@@ -31,6 +31,7 @@ import { TaskListService } from './../services/tasklist.service';
 import moment from 'moment-es6';
 import { takeUntil, finalize } from 'rxjs/operators';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { ResultListDataRepresentationTaskRepresentation, TaskRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-tasklist',
@@ -279,7 +280,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         this.loadTasksByState()
             .pipe(finalize(() => this.isLoading = false))
             .subscribe(
-                tasks => {
+                (tasks: ResultListDataRepresentationTaskRepresentation ) => {
                     this.rows = this.optimizeTaskDetails(tasks.data);
                     this.selectTask(this.landingTaskId);
                     this.success.emit(tasks);
@@ -381,12 +382,9 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * Optimize name field
      * @param instances
      */
-    private optimizeTaskDetails(instances: TaskDetailsModel[]): TaskDetailsModel[] {
-        instances = instances.map((task) => {
-            if (!task.name) {
-                task.name = 'No name';
-            }
-            return task;
+    private optimizeTaskDetails(instances: TaskRepresentation[]): TaskDetailsModel[] {
+        instances = instances.map((task: TaskRepresentation) => {
+            return new TaskDetailsModel(task);
         });
         return instances;
     }
