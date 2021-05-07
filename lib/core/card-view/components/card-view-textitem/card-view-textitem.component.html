@@ -72,7 +72,7 @@
                         [floatLabel]="'never'">
             <input matInput
                    class="adf-property-value"
-                   [placeholder]="property.default | translate"
+                   [placeholder]="editedValue ? '' : property.default | translate"
                    [matChipInputFor]="chipList"
                    [matChipInputAddOnBlur]="true"
                    (matChipInputTokenEnd)="addValueToList($event)"

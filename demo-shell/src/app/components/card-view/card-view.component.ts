@@ -126,7 +126,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 editable: this.isEditable
             }),
             new CardViewDateItemModel({
-                label: 'CardView Date Item',
+                label: 'CardView Date Item - Multivalue (chips)',
                 value: [new Date(1983, 11, 24, 10, 0, 30)],
                 key: 'date',
                 default: new Date(1983, 11, 24, 10, 0, 30),
@@ -143,7 +143,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 editable: this.isEditable
             }),
             new CardViewDatetimeItemModel({
-                label: 'CardView Datetime Item',
+                label: 'CardView Datetime Item - Multivalue (chips)',
                 value: [new Date(1983, 11, 24, 10, 0, 0)],
                 key: 'datetime',
                 default: new Date(1983, 11, 24, 10, 0, 0),
@@ -181,7 +181,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 pipes: [{ pipe: this.decimalNumberPipe }]
             }),
             new CardViewFloatItemModel({
-                label: 'CardView Float Item',
+                label: 'CardView Float Item - Multivalue (chips)',
                 value: [9.9],
                 key: 'float',
                 default: 0.0,

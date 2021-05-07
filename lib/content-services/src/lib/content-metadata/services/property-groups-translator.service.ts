@@ -55,9 +55,9 @@ export class PropertyGroupTranslatorService {
     valueSeparator: string;
 
     constructor(private logService: LogService,
-                private multiValuePipe: MultiValuePipe,
-                private decimalNumberPipe: DecimalNumberPipe,
-                private appConfig: AppConfigService) {
+        private multiValuePipe: MultiValuePipe,
+        private decimalNumberPipe: DecimalNumberPipe,
+        private appConfig: AppConfigService) {
         this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
     }
 
@@ -142,7 +142,10 @@ export class PropertyGroupTranslatorService {
                 case D_DOUBLE:
                     cardViewItemProperty = new CardViewFloatItemModel(Object.assign(propertyDefinition, {
                         multivalued: isMultiValued,
-                        pipes: [{ pipe: this.decimalNumberPipe }, { pipe: this.multiValuePipe, params: [this.valueSeparator] } ]
+                        pipes: [
+                            { pipe: this.decimalNumberPipe },
+                            { pipe: this.multiValuePipe, params: [this.valueSeparator] }
+                        ]
                     }));
                     break;
 
