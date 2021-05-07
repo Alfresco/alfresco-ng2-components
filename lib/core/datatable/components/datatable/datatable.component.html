@@ -38,7 +38,7 @@
                     <span *ngIf="col.title && col.sortable" class="adf-sr-only" aria-live="polite">{{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}</span>
                     <ng-template *ngIf="allowFiltering" [ngTemplateOutlet]="headerFilterTemplate" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
                 </ng-container>
-                <ng-template *ngIf="col.header" [ngTemplateOutlet]="col.header"></ng-template>
+                <ng-template *ngIf="col.header" [ngTemplateOutlet]="col.header" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
             </div>
             <!-- Actions (right) -->
             <div *ngIf="actions && actionsPosition === 'right'" class="adf-actions-column adf-datatable-cell-header adf-datatable__actions-cell">
