@@ -27,13 +27,13 @@ import { DataColumnComponent } from './data-column.component';
 export class DateColumnHeaderComponent {
 
     @ContentChild(TemplateRef)
-    public template: TemplateRef<any>;
+    public header: TemplateRef<any>;
 
     constructor(private columnComponent: DataColumnComponent) {}
 
     ngAfterContentInit() {
         if (this.columnComponent) {
-            this.columnComponent.header = this.template;
+            this.columnComponent.header = this.header;
         }
     }
 }
