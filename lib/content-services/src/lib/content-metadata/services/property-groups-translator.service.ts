@@ -55,9 +55,9 @@ export class PropertyGroupTranslatorService {
     valueSeparator: string;
 
     constructor(private logService: LogService,
-        private multiValuePipe: MultiValuePipe,
-        private decimalNumberPipe: DecimalNumberPipe,
-        private appConfig: AppConfigService) {
+                private multiValuePipe: MultiValuePipe,
+                private decimalNumberPipe: DecimalNumberPipe,
+                private appConfig: AppConfigService) {
         this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
     }
 
