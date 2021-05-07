@@ -185,8 +185,10 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges {
     save() {
         this.isEditing = false;
         this.cropper.setDragMode('move');
+
         this.cropper.getCroppedCanvas().toBlob((blob) => {
             this.submit.emit(blob);
+            this.cropper.replace(this.cropper.getCroppedCanvas().toDataURL());
             this.cropper.clear();
         });
     }
