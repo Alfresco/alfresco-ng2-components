@@ -25,9 +25,9 @@ export class MetadataViewPage {
     aspectTitle: Locator = by.css(`mat-panel-title`);
     name = element(by.css(`[data-automation-id='card-textitem-value-properties.cm:name']`));
     creator = element(by.css(`[data-automation-id='card-textitem-value-createdByUser.displayName']`));
-    createdDate = element(by.css(`span[data-automation-id='card-dateitem-createdAt'] span`));
+    createdDate = element(by.css(`span[data-automation-id='card-dateitem-createdAt']`));
     modifier = element(by.css(`[data-automation-id='card-textitem-value-modifiedByUser.displayName']`));
-    modifiedDate = element(by.css(`span[data-automation-id='card-dateitem-modifiedAt'] span`));
+    modifiedDate = element(by.css(`span[data-automation-id='card-dateitem-modifiedAt']`));
     mimetypeName = element(by.css(`[data-automation-id='card-textitem-value-content.mimeTypeName']`));
     size = element(by.css(`[data-automation-id='card-textitem-value-content.sizeInBytes']`));
     description = element(by.css(`span[data-automation-id='card-textitem-value-properties.cm:description']`));
