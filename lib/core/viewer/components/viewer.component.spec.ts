@@ -961,13 +961,26 @@ describe('ViewerComponent', () => {
                 component.ngOnChanges();
             });
 
-            it('should emit new blob when emitted by image-viewer ', () => {
-                spyOn(component.fileSubmit, 'emit');
+            it('should update version when emitted by image-viewer and user has update permissions', () => {
+                component.readOnly = false;
+                component.nodeEntry = new NodeEntry({ entry: { name: 'fakeImage.png', id: '12', content: { mimeType: 'txt' } } });
                 const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
                 const fakeBlob = new Blob([data], { type: 'image/png' });
                 component.onSubmitFile(fakeBlob);
+                fixture.detectChanges();
 
-                expect(component.fileSubmit.emit).toHaveBeenCalledWith(fakeBlob);
+                expect(component.blobFile).toEqual(fakeBlob);
+            });
+
+            it('should not update version when emitted by image-viewer and user doesn`t have update permissions', () => {
+                component.readOnly = true;
+                component.nodeEntry = new NodeEntry({ entry: { name: 'fakeImage.png', id: '12', content: { mimeType: 'txt' } } });
+                const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+                const fakeBlob = new Blob([data], { type: 'image/png' });
+                component.onSubmitFile(fakeBlob);
+                fixture.detectChanges();
+
+                expect(component.blobFile).toEqual(undefined);
             });
         });
 
