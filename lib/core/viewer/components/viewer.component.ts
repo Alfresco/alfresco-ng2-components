@@ -33,6 +33,9 @@ import { ViewUtilService } from '../services/view-util.service';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { filter, skipWhile, takeUntil } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
+import { ContentService } from '../../services/content.service';
+import { UploadService } from '../../services/upload.service';
+import { FileModel } from '../../models';
 
 @Component({
     selector: 'adf-viewer',
@@ -96,10 +99,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     /** Hide or show the toolbar */
     @Input()
     showToolbar = true;
-
-    /** Hide or show media management actions for image-viewer component */
-    @Input()
-    readOnly = true;
 
     /** Specifies the name of the file when it is not available from the URL. */
     @Input()
@@ -210,10 +209,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     invalidSharedLink = new EventEmitter();
 
-    /** Emitted when user updates a node via rotate, crop, etc. */
-    @Output()
-    fileSubmit = new EventEmitter<Blob>();
-
     TRY_TIMEOUT: number = 10000;
 
     viewerType = 'unknown';
@@ -230,6 +225,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     sidebarLeftTemplateContext: { node: Node } = { node: null };
     fileTitle: string;
     viewerExtensions: Array<ViewerExtensionRef> = [];
+    readOnly = true;
 
     private cacheBusterNumber;
     cacheTypeForContent = '';
@@ -258,6 +254,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 private viewUtilService: ViewUtilService,
                 private logService: LogService,
                 private extensionService: AppExtensionService,
+                private contentService: ContentService,
+                private uploadService: UploadService,
                 private el: ElementRef,
                 public dialog: MatDialog) {
         viewUtilService.maxRetries = this.maxRetries;
@@ -402,6 +400,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private async setUpNodeFile(nodeData: Node, versionData?: Version) {
+        this.readOnly = !this.contentService.hasAllowableOperations(nodeData, 'update');
+
         let setupNode;
 
         if (versionData && versionData.content) {
@@ -694,7 +694,22 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     onSubmitFile(newImageBlob: Blob) {
-        this.fileSubmit.emit(newImageBlob);
+        const newImageFile: File = new File([newImageBlob], this?.nodeEntry?.entry?.name, { type: this?.nodeEntry?.entry?.content?.mimeType });
+        if (this?.nodeEntry?.entry?.id && !this.readOnly) {
+            const newFile = new FileModel(
+                newImageFile,
+                {
+                    majorVersion: false,
+                    newVersion: true,
+                    parentId: this?.nodeEntry?.entry?.parentId,
+                    nodeType: this?.nodeEntry?.entry?.content?.mimeType
+                },
+                this?.nodeEntry?.entry?.id
+            );
+            this.blobFile = newImageBlob;
+            this.uploadService.addToQueue(...[newFile]);
+            this.uploadService.uploadFilesInTheQueue();
+        }
     }
 
     onUnsupportedFile() {
