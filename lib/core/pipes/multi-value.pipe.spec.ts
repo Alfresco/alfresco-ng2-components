@@ -36,9 +36,14 @@ describe('FullNamePipe', () => {
         pipe = TestBed.inject(MultiValuePipe);
    });
 
-    it('should add the separator when a list is provided', () => {
+    it('should add the separator when a string list is provided', () => {
         const values = ['cat', 'house', 'dog'];
         expect(pipe.transform(values)).toBe('cat, house, dog');
+    });
+
+    it('should add the separator when a number list is provided', () => {
+        const values = [1, 2, 3];
+        expect(pipe.transform(values)).toBe('1, 2, 3');
     });
 
     it('should add custom separator when set', () => {

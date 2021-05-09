@@ -28,7 +28,7 @@ export class TaskHeaderCloudPage {
     priorityCardSelectItem = new CardSelectItemPage('priority');
     dueDateField = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
     categoryCardTextItem = new CardTextItemPage('category');
-    createdField = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
+    createdField = element(by.css('span[data-automation-id="card-dateitem-created"]'));
     parentNameCardTextItem = new CardTextItemPage('parentName');
     parentTaskIdCardTextItem = new CardTextItemPage('parentTaskId');
     endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();

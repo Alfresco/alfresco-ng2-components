@@ -89,6 +89,8 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
         if (this.property.value) {
             this.valueDate = moment(this.property.value, this.dateFormat);
+        } else if (this.property.multivalued && !this.property.value) {
+            this.property.value = [];
         }
     }
 
@@ -118,8 +120,8 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
             const momentDate = moment(newDateValue.value, this.dateFormat, true);
             if (momentDate.isValid()) {
                 this.valueDate = momentDate;
-                this.cardViewUpdateService.update(<CardViewDateItemModel> { ...this.property }, momentDate.toDate());
                 this.property.value = momentDate.toDate();
+                this.update();
             }
         }
     }
@@ -135,4 +137,24 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
         this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
     }
+
+    addDateToList(newDateValue) {
+        if (newDateValue) {
+            const momentDate = moment(newDateValue.value, this.dateFormat, true);
+            if (momentDate.isValid()) {
+                this.property.value.push(momentDate.toDate());
+                this.update();
+            }
+        }
+    }
+
+    removeValueFromList(itemIndex: number) {
+        this.property.value.splice(itemIndex, 1);
+        this.update();
+    }
+
+    update() {
+        this.cardViewUpdateService.update(<CardViewDateItemModel> { ...this.property }, this.property.value);
+    }
+
 }

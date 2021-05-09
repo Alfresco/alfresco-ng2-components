@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BaseCardView } from '../base-card-view';
@@ -68,7 +68,8 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     constructor(cardViewUpdateService: CardViewUpdateService,
                 private clipboardService: ClipboardService,
-                private translateService: TranslationService) {
+                private translateService: TranslationService,
+                private cd: ChangeDetectorRef) {
         super(cardViewUpdateService);
     }
 
@@ -76,7 +77,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         if (changes.property && changes.property.firstChange) {
             this.textInput.valueChanges
                 .pipe(
-                    filter(textInputValue => textInputValue !== this.editedValue),
+                    filter(textInputValue => textInputValue !== this.editedValue && textInputValue !== null),
                     debounceTime(50),
                     takeUntil(this.onDestroy$)
                 )
@@ -125,9 +126,8 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     update(): void {
         if (this.property.isValid(this.editedValue)) {
-            const updatedValue = this.prepareValueForUpload(this.property, this.editedValue);
-            this.cardViewUpdateService.update(<CardViewTextItemModel> { ...this.property }, updatedValue);
-            this.property.value = updatedValue;
+            this.property.value = this.prepareValueForUpload(this.property, this.editedValue);
+            this.cardViewUpdateService.update(<CardViewTextItemModel> { ...this.property }, this.property.value);
             this.resetErrorMessages();
         } else {
             this.errors = this.property.getValidationErrors(this.editedValue);
@@ -143,9 +143,10 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     removeValueFromList(itemIndex: number) {
-        if (typeof this.editedValue !== 'string') {
+        if (Array.isArray(this.editedValue)) {
             this.editedValue.splice(itemIndex, 1);
             this.update();
+            this.cd.detectChanges();
         }
     }
 

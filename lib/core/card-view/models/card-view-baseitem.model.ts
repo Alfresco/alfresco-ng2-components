@@ -29,6 +29,7 @@ export abstract class CardViewBaseItemModel {
     validators?: CardViewItemValidator[];
     data?: any;
     type?: string;
+    multivalued?: boolean;
 
     constructor(cardViewItemProperties: CardViewItemProperties) {
         this.label = cardViewItemProperties.label || '';
@@ -40,6 +41,7 @@ export abstract class CardViewBaseItemModel {
         this.icon = cardViewItemProperties.icon || '';
         this.validators = cardViewItemProperties.validators || [];
         this.data = cardViewItemProperties.data || null;
+        this.multivalued = !!cardViewItemProperties.multivalued;
 
         if (cardViewItemProperties?.constraints?.length ?? 0) {
             for (const constraint of cardViewItemProperties.constraints) {
@@ -51,7 +53,7 @@ export abstract class CardViewBaseItemModel {
     }
 
     isEmpty(): boolean {
-        return this.value === undefined || this.value === null || this.value === '';
+        return this.value === undefined || this.value === null || this.value.length === 0;
     }
 
     isValid(newValue: any): boolean {

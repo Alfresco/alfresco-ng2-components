@@ -13,6 +13,22 @@
             float: right;
         }
 
+        &-dateitem-chip-list-container.adf-property-field {
+            margin-bottom: -7px !important;
+            border-bottom: 0;
+            cursor: pointer;
+
+            .adf-dateitem-editable-controls {
+                margin-top: 15px;
+            }
+
+            .mat-datetimepicker-toggle {
+                position: absolute;
+                right: 0;
+                top: -20px;
+            }
+        }
+
         &-dateitem-editable {
             cursor: pointer;
             border-bottom: 1px solid mat-color($foreground, text, 0.42);
@@ -53,6 +69,7 @@
                     padding-left: 8px;
                     opacity: 0.3;
                 }
+
                 &:hover mat-icon.adf-date-reset-icon {
                     opacity: 1;
                 }

@@ -42,11 +42,19 @@ export class CardViewDateItemModel extends CardViewBaseItemModel implements Card
     }
 
     get displayValue() {
-        if (!this.value) {
-            return this.default;
+        if (this.multivalued) {
+            if (this.value) {
+                return this.value.map((date) => this.transformDate(date));
+            } else {
+                return this.default ? [this.default] : [];
+            }
         } else {
-            this.localizedDatePipe = new LocalizedDatePipe();
-            return this.localizedDatePipe.transform(this.value, this.format, this.locale);
+            return this.value ? this.transformDate(this.value) : this.default;
         }
+    }
+
+    transformDate(value: any) {
+        this.localizedDatePipe = new LocalizedDatePipe();
+        return this.localizedDatePipe.transform(value, this.format, this.locale);
     }
 }

@@ -71,8 +71,8 @@ export class DecimalNumberPipe implements PipeTransform, OnDestroy {
         const actualDigitsInfo = `${actualMinIntegerDigits}.${actualMinFractionDigits}-${actualMaxFractionDigits}`;
         const actualLocale = locale || this.defaultLocale;
 
-        const datePipe: DecimalPipe = new DecimalPipe(actualLocale);
-        return datePipe.transform(value, actualDigitsInfo);
+        const decimalPipe: DecimalPipe = new DecimalPipe(actualLocale);
+        return decimalPipe.transform(value, actualDigitsInfo);
     }
 
     ngOnDestroy(): void {

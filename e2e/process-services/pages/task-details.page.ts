@@ -35,7 +35,7 @@ export class TaskDetailsPage {
     parentTaskIdField = element(by.css('[data-automation-id="card-textitem-value-parentTaskId"] '));
     durationField = element(by.css('[data-automation-id="card-textitem-value-duration"] '));
     endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
-    createdField = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
+    createdField = element(by.css('span[data-automation-id="card-dateitem-created"]'));
     idField = element.all(by.css('[data-automation-id="card-textitem-value-id"]')).first();
     descriptionField = element(by.css('[data-automation-id="card-textitem-value-description"]'));
     dueDateField = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
