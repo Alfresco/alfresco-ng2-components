@@ -36,6 +36,17 @@ import { TranslateModule } from '@ngx-translate/core';
 class CustomColumnTemplateComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
 }
+@Component({
+    selector: 'adf-custom-column-header-component',
+    template: `
+        <ng-template #tmplRef>
+            CUSTOM HEADER
+        </ng-template>
+    `
+})
+class CustomColumnHeaderComponent {
+    @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
+}
 
 class FakeDataRow implements DataRow {
     isDropTarget = false;
@@ -74,7 +85,7 @@ describe('DataTable', () => {
             TranslateModule.forRoot(),
             CoreTestingModule
         ],
-        schemas: [NO_ERRORS_SCHEMA]
+        declarations: [CustomColumnHeaderComponent]
     });
 
     beforeEach(() => {
@@ -1306,8 +1317,8 @@ describe('DataTable', () => {
         spyOn(dataTable, 'resolverFn').and.callFake(resolverFn);
         fixture.detectChanges();
 
-        const id1 = element.querySelector('[data-automation-id="text_1');
-        const id2 = element.querySelector('[data-automation-id="text_2');
+        const id1 = element.querySelector('[data-automation-id="text_1"]');
+        const id2 = element.querySelector('[data-automation-id="text_2"]');
         const namesId1 = element.querySelector('[data-automation-id="text_foo - bar"]');
         const namesId2 = element.querySelector('[data-automation-id="text_bar - baz"]');
 
@@ -1332,6 +1343,26 @@ describe('DataTable', () => {
         dataTable.ngOnChanges({ 'columns': columnsChange });
         const expectedNewDataColumns = [new ObjectDataColumn(newDataColumnsSchema)];
         expect(dataTable.data.getColumns()).toEqual(expectedNewDataColumns);
+    });
+
+    it('should render the custom column header', () => {
+        const customHeader = TestBed.createComponent(CustomColumnHeaderComponent).componentInstance.templateRef;
+        dataTable.data = new ObjectDataTableAdapter([
+                { id: 1, name: 'foo' },
+                { id: 2, name: 'bar' }
+            ],
+            [
+                new ObjectDataColumn({ key: 'id', title: 'ID' }),
+                new ObjectDataColumn({ key: 'name', title: 'Name', header: customHeader })
+            ]
+        );
+        fixture.detectChanges();
+
+        const idColumn = element.querySelector('[data-automation-id="auto_id_id"]');
+        const nameColumn = element.querySelector('[data-automation-id="auto_id_name"]');
+
+        expect(idColumn.innerText).toContain('ID');
+        expect(nameColumn.innerText).toContain('CUSTOM HEADER');
     });
 });
 

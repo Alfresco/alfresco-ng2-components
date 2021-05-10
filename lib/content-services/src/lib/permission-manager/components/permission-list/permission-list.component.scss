@@ -75,15 +75,7 @@
             overflow: hidden;
             flex: 1 1 auto;
         }
-
-        &-datatable-list {
-            .adf-datatable-selected > svg {
-                width: 40px;
-                height: 40px;
-            }
-        }
     }
-
 
     [aria-sort='Ascending'] adf-user-role-column,
     [aria-sort='Descending'] adf-user-role-column {

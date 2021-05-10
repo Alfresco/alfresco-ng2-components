@@ -26,6 +26,11 @@
             .adf-authority-icon-column {
                 min-width: 40px;
             }
+
+            .adf-datatable-selected > svg {
+                width: 40px;
+                height: 40px;
+            }
         }
     }
 }
