@@ -46,8 +46,8 @@ Some sample CSS to show the drag and drop area:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| filesDropped | `any` | Emitted when one or more files are dragged and dropped onto the draggable element. |
-| folderEntityDropped | `any` | Emitted when a directory is dragged and dropped onto the draggable element. |
+| filesDropped | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<File[]>` | Emitted when one or more files are dragged and dropped onto the draggable element. |
+| folderEntityDropped | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a directory is dragged and dropped onto the draggable element. |
 
 ## Details
 

@@ -48,14 +48,14 @@ Save and Complete buttons get disabled when at least one of the form's inputs ar
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| cancelClick | `any` | Emitted when the cancel button is clicked. |
-| error | `any` | Emitted when any error occurs. |
-| formCompleted | `any` | Emitted when the form is submitted with the `Complete` outcome. |
+| cancelClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the cancel button is clicked. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
+| formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
 | formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
-| formSaved | `any` | Emitted when the form is saved. |
-| taskClaimed | `any` | Emitted when the task is claimed. |
-| taskCompleted | `any` | Emitted when the task is completed. |
-| taskUnclaimed | `any` | Emitted when the task is unclaimed. |
+| formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is saved. |
+| taskClaimed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the task is claimed. |
+| taskCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the task is completed. |
+| taskUnclaimed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the task is unclaimed. |
 
 ## See also
 

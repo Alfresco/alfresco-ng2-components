@@ -85,5 +85,5 @@ You can use column templates with the [people list component](people-list.compon
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| clickAction | `any` | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
-| clickRow | `any` | Emitted when the user clicks a row in the people list. |
+| clickAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserEventModel`](../../../lib/process-services/src/lib/task-list/models/user-event.model.ts)`>` | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
+| clickRow | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`>` | Emitted when the user clicks a row in the people list. |

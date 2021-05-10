@@ -33,6 +33,6 @@ Shows the charts related to the reportId passed as input
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| editReport | `any` | emitted when editReport. |
-| reportDeleted | `any` | emitted when reportDeleted. |
-| reportSaved | `any` | emitted when reportSaved. |
+| editReport | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | emitted when editReport. |
+| reportDeleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | emitted when reportDeleted. |
+| reportSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | emitted when reportSaved. |

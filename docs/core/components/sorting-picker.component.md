@@ -36,8 +36,8 @@ Selects from a set of predefined sorting definitions and directions.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| sortingChange | `any` | Raised each time direction gets changed. |
-| valueChange | `any` | Raised each time sorting key gets changed. |
+| sortingChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Raised each time direction gets changed. |
+| valueChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Raised each time sorting key gets changed. |
 
 ## Details
 

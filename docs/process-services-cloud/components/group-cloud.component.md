@@ -51,10 +51,10 @@ Searches Groups.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| changedGroups | `any` | Emitted when a group selection change. |
-| removeGroup | `any` | Emitted when a group is removed. |
-| selectGroup | `any` | Emitted when a group is selected. |
-| warning | `any` | Emitted when an warning occurs. |
+| changedGroups | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]>` | Emitted when a group selection change. |
+| removeGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`>` | Emitted when a group is removed. |
+| selectGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`>` | Emitted when a group is selected. |
+| warning | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an warning occurs. |
 
 ## Details
 

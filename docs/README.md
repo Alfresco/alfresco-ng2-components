@@ -311,6 +311,7 @@ for more information about installing and using the source code.
 | [Folder Create directive](content-services/directives/folder-create.directive.md) | Creates folders. | [Source](../lib/content-services/src/lib/folder-directive/folder-create.directive.ts) |
 | [Folder Edit directive](content-services/directives/folder-edit.directive.md) | Allows folders to be edited. | [Source](../lib/content-services/src/lib/folder-directive/folder-edit.directive.ts) |
 | [Inherit Permission directive](content-services/directives/inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/inherited-button.directive.ts) |
+| [Node Counter directive](content-services/directives/node-counter.directive.md) | Appends a counter to an element. | [Source](../lib/content-services/src/lib/directives/node-counter.directive.ts) |
 | [Node Lock directive](content-services/directives/node-lock.directive.md) | Locks or unlocks a node. | [Source](../lib/content-services/src/lib/directives/node-lock.directive.ts) |
 | [Toggle Icon directive](content-services/directives/toggle-icon.directive.md) | Toggle icon on mouse or keyboard event for a selectable element. | [Source](../lib/content-services/src/lib/upload/directives/toggle-icon.directive.ts) |
 

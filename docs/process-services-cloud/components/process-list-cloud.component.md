@@ -75,17 +75,19 @@ when the process list is empty:
 | startTo | `string` | "" | Filter the processes. Display only process with startedDate less than the supplied date. |
 | status | `string` | "" | Filter the processes to display only the ones with this status. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
+| suspendedFrom | `string` | "" | Filter the processes. Display only process with suspendedFrom equal to the supplied date. |
+| suspendedTo | `string` | "" | Filter the processes. Display only process with suspendedTo equal to the supplied date. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
-| executeRowAction | `any` | Emitted when the user executes a row action. |
+| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
 | rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected. |
-| showRowActionsMenu | `any` | Emitted before the actions menu is displayed for a row. |
-| showRowContextMenu | `any` | Emitted before the context menu is displayed for a row. |
+| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details

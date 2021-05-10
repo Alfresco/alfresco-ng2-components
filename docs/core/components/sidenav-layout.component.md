@@ -80,7 +80,7 @@ sub-components (note the use of `<ng-template>` in the sub-components' body sect
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| expanded | `any` | Emitted when the menu toggle and the collapsed/expanded state of the sideNav changes. |
+| expanded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the menu toggle and the collapsed/expanded state of the sideNav changes. |
 
 ## Details
 

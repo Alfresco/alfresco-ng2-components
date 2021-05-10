@@ -201,7 +201,6 @@ In the example below we will show capitalised custom name for a column:
 
 <!-- {% endraw %} -->
 
-
 In the Example below we will integrate the [adf-tag-node-list](../../content-services/components/tag-node-list.component.md) component
 within the document list.
 

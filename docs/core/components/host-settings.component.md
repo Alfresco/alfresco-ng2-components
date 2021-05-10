@@ -40,6 +40,6 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| cancel | `any` | Emitted when the user cancels the changes. |
-| error | `any` | Emitted when the URL is invalid. |
-| success | `any` | Emitted when the changes are successfully applied. |
+| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the user cancels the changes. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the URL is invalid. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the changes are successfully applied. |

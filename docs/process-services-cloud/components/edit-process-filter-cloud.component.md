@@ -58,8 +58,8 @@ Shows/edits process filter details.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| action | `any` | Emitted when a filter action occurs i.e Save, SaveAs, Delete. |
-| filterChange | `any` | Emitted when a process instance filter property changes. |
+| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterAction`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a filter action occurs i.e Save, SaveAs, Delete. |
+| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a process instance filter property changes. |
 
 ## Details
 
