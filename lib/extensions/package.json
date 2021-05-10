@@ -15,7 +15,7 @@
   "peerDependencies": {
     "@angular/common": ">=10.0.2",
     "@angular/core": ">=10.0.2",
-    "@alfresco/js-api": "4.4.0-3449"
+    "@alfresco/js-api": "4.4.0-3475"
   },
   "keywords": [
     "extensions",
