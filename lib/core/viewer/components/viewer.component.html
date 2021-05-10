@@ -222,6 +222,7 @@
                                             [blobFile]="blobFile"
                                             [readOnly]="readOnly"
                                             (error)="onUnsupportedFile()"
+                                            (submit)="onSubmitFile($event)"
                             ></adf-img-viewer>
                         </ng-container>
 
