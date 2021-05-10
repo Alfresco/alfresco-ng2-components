@@ -57,8 +57,8 @@ Edits task filter details.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| action | `any` | Emitted when a filter action occurs (i.e Save, Save As, Delete). |
-| filterChange | `any` | Emitted when a task filter property changes. |
+| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterAction`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter action occurs (i.e Save, Save As, Delete). |
+| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when a task filter property changes. |
 
 ## Details
 

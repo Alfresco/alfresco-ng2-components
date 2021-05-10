@@ -13,20 +13,26 @@ Gets information about a Content Services user.
 
 ### Methods
 
+-   **createPerson**(newPerson: [`PersonBodyCreate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/model/personBodyCreate.ts), opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
+    Creates new person.
+    -   _newPerson:_ [`PersonBodyCreate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/model/personBodyCreate.ts)  - Object containing the new person details.
+    -   _opts:_ `any`  - (Optional) Optional parameters
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - Created new person
 -   **getCurrentPerson**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets information about the user who is currently logged in.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - User information
 -   **getPerson**(personId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
-    Gets information about a user identified by their ID.
+    Gets information about a user identified by their username.
     -   _personId:_ `string`  - ID of the target user
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - User information
--   **listPeople**(options: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>`<br/> Gets information on a list of users
-    - _options:_ `any` - Optional parameters supported by JS-API
-    - **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>`
--   **createPerson**(newPerson: [`PersonBodyCreate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PersonBodyCreate.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
-    Creates new person.
-    -   _newPerson:_ `<`[`PersonBodyCreate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PersonBodyCreate.md)`>`  - Object containing the new person details
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - Created new person.
+-   **isContentAdmin**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<boolean>`<br/>
+
+    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<boolean>` - 
+
+-   **listPeople**(options?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>`<br/>
+    Gets a list of people.
+    -   _options:_ `any`  - (Optional) Optional parameters supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>` - Array of people
 
 ## Details
 

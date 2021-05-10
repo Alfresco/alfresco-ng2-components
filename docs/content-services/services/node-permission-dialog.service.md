@@ -15,11 +15,12 @@ Displays dialogs to let the user set node permissions.
 
 -   **close**()<br/>
     Closes the currently-open dialog.
--   **openAddPermissionDialog**(node: `Node`, title?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]>`<br/>
+-   **openAddPermissionDialog**(node: `Node`, roles: [`RoleModel`](../../../lib/content-services/src/lib/permission-manager/models/role.model.ts)`[]`, title?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)`[]>`<br/>
     Opens a dialog to add permissions to a node.
-    -   _node:_ `Node`  - ID of the target node
+    -   _node:_ `Node`  - target node
+    -   _roles:_ [`RoleModel`](../../../lib/content-services/src/lib/permission-manager/models/role.model.ts)`[]`  - settable roles for the node
     -   _title:_ `string`  - (Optional) Dialog title
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]>` - Node with updated permissions
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)`[]>` - Node with updated permissions
 -   **updateNodePermissionByDialog**(nodeId?: `string`, title?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>`<br/>
     Opens a dialog to update permissions for a node.
     -   _nodeId:_ `string`  - (Optional) ID of the target node

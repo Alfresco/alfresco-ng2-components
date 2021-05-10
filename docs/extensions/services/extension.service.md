@@ -26,10 +26,10 @@ Manages and runs basic extension functionality.
     Retrieves one or more auth guards using an array of ID values.
     -   _ids:_ `string[]`  - Array of ID value to look for
     -   **Returns** `Array<Type<__type>>` - Array of auth guards or empty array if none were found
--   **getComponentById**(id: `string`): `any`<br/>
+-   **getComponentById**(id: `string`): `Type<>`<br/>
     Retrieves a registered [extension component](../../../lib/extensions/src/lib/services/component-register.service.ts) using its ID value.
     -   _id:_ `string`  - The ID value to look for
-    -   **Returns** `any` - The component or null if not found
+    -   **Returns** `Type<>` - The component or null if not found
 -   **getElements**(key: `string`, fallback: `Array<>` = `[]`): `Array<>`<br/>
 
     -   _key:_ `string`  - 

@@ -13,9 +13,9 @@ Gets information about a Content Services user.
 
 ### Methods
 
--   **getCurrentUserInfo**(): `any`<br/>
+-   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
     Gets information about the user who is currently logged-in.
-    -   **Returns** `any` - User information as for getUserInfo
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - User information as for getUserInfo
 -   **getUserInfo**(userName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
     Gets information about a user identified by their username.
     -   _userName:_ `string`  - Target username

@@ -92,9 +92,9 @@ with custom input fields handled by your application or parent component:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | `any` | Emitted when the login fails. |
-| executeSubmit | `any` | Emitted when the login form is submitted. |
-| success | `any` | Emitted when the login is successful. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginErrorEvent`](../../../lib/core/login/models/login-error.event.ts)`>` | Emitted when the login fails. |
+| executeSubmit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSubmitEvent`](../../../lib/core/login/models/login-submit.event.ts)`>` | Emitted when the login form is submitted. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSuccessEvent`](../../../lib/core/login/models/login-success.event.ts)`>` | Emitted when the login is successful. |
 
 ## Details
 

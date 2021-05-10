@@ -31,7 +31,7 @@ Displays detailed information about a specified process instance
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | `any` | Emitted when an error occurs. |
-| processCancelled | `any` | Emitted when the current process is cancelled by the user from within the component. |
-| showProcessDiagram | `any` | Emitted when the "show diagram" button is clicked. |
-| taskClick | `any` | Emitted when a task is clicked. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| processCancelled | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the current process is cancelled by the user from within the component. |
+| showProcessDiagram | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the "show diagram" button is clicked. |
+| taskClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsEvent`](../../../lib/process-services/src/lib/task-list/models/task-details.event.ts)`>` | Emitted when a task is clicked. |

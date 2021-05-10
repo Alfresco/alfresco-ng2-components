@@ -17,7 +17,7 @@ Shows tags for an item.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| result | `any` | Emitted when a tag is selected. |
+| result | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a tag is selected. |
 
 ## See Also
 

@@ -17,14 +17,13 @@ Shows node permissions as a table.
 <adf-permission-list [nodeId]="nodeId"></adf-permission-list>
 ```
 
-
 ## Class members
 
 ### Properties
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| nodeId | `string` | "" | ID of the node whose permissions you want to show. |
+| nodeId | `string` |  | ID of the node whose permissions you want to show. |
 
 ### Events
 

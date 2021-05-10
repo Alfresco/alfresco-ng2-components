@@ -15,9 +15,8 @@ Shows a notification message with optional feedback.
 
 ### Methods
 
--   **dismissSnackMessageAction**(): `any`<br/>
+-   **dismissSnackMessageAction**()<br/>
     dismiss the notification snackbar
-    -   **Returns** `any` - 
 -   **openSnackMessage**(message: `string`, config?: `number|MatSnackBarConfig`, interpolateArgs?: `any`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Opens a SnackBar notification to show a message.
     -   _message:_ `string`  - The message (or resource key) to show.

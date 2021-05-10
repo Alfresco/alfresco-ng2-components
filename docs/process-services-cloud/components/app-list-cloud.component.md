@@ -53,4 +53,4 @@ For example :
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| appClick | `any` | Emitted when an app entry is clicked. |
+| appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`>` | Emitted when an app entry is clicked. |

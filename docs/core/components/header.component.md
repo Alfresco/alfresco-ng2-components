@@ -51,7 +51,7 @@ body of the element:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| clicked | `any` | Emitted when the sidenav button is clicked. |
+| clicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the sidenav button is clicked. |
 
 ## Details
 

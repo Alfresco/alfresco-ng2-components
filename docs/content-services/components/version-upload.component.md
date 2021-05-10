@@ -30,11 +30,11 @@ Displays the new version's minor/major changes and the optional comment of a nod
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| cancel | `any` | Emitted when an cancelling during upload. |
-| commentChanged | `any` | Emitted when the comment is changed. |
-| error | `any` | Emitted when an error occurs. |
-| success | `any` | Emitted when the file is uploaded successfully. |
-| versionChanged | `any` | Emitted when the version is changed. |
+| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an cancelling during upload. |
+| commentChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the comment is changed. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the file is uploaded successfully. |
+| versionChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the version is changed. |
 
 ## Details
 

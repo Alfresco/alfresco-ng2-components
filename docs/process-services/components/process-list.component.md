@@ -71,10 +71,10 @@ when the process list is empty:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | `any` | Emitted when an error occurs while loading the list of process instances from the server. |
-| rowClick | `any` | Emitted when a row in the process list is clicked. |
-| showRowContextMenu | `any` | Emitted before the context menu is displayed for a row. |
-| success | `any` | Emitted when the list of process instances has been loaded successfully from the server. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
+| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
+| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessListModel`](../../../lib/process-services/src/lib/process-list/models/process-list.model.ts)`>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details
 

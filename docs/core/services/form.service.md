@@ -73,7 +73,7 @@ class MyComponent {
     Saves a form.  
 
     -   `formId` - ID of the form to save 
-    -   `formModel` - [Model](../../../lib/cli/node_modules/@alfresco/js-api/src/api/model-rest-api/model/model.ts) data for the form
+    -   `formModel` - [`Model`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/model-rest-api/model/model.ts) data for the form
 
 -   `searchFrom(name: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Search for a form by name.  

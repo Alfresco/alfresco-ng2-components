@@ -74,10 +74,10 @@ as the drag/drop target:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| beginUpload | `any` | Emitted when the upload begins. |
-| error | `any` | Emitted when an error occurs. |
-| success | `any` | Emitted when the file is uploaded successfully. |
-| updateFileVersion | `any` | Emitted when dropping a file over another file to update the version. |
+| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../../lib/content-services/src/lib/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the file is uploaded successfully. |
+| updateFileVersion | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<CustomEvent<any>>` | Emitted when dropping a file over another file to update the version. |
 
 ## Details
 

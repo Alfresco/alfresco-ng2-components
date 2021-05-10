@@ -38,7 +38,7 @@ Indicates the current position within a navigation hierarchy using a dropdown me
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| navigate | `any` | Emitted when the user clicks on a breadcrumb. |
+| navigate | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PathElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PathElement.md)`>` | Emitted when the user clicks on a breadcrumb. |
 
 ## Details
 

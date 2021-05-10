@@ -18,31 +18,64 @@ Manages role permissions for content nodes.
     -   _groupName:_ `string`  - Name of group to look for members
     -   _opts:_ `any`  - (Optional) Extra options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`GroupMemberPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/GroupMemberPaging.md)`>` - List of members
+-   **getInheritedPermission**(node: `Node`): [`PermissionDisplayModel`](../../../lib/content-services/src/lib/permission-manager/models/permission.model.ts)`[]`<br/>
+
+    -   _node:_ `Node`  - 
+    -   **Returns** [`PermissionDisplayModel`](../../../lib/content-services/src/lib/permission-manager/models/permission.model.ts)`[]` - 
+
+-   **getLocalPermissions**(node: `Node`): [`PermissionDisplayModel`](../../../lib/content-services/src/lib/permission-manager/models/permission.model.ts)`[]`<br/>
+
+    -   _node:_ `Node`  - 
+    -   **Returns** [`PermissionDisplayModel`](../../../lib/content-services/src/lib/permission-manager/models/permission.model.ts)`[]` - 
+
+-   **getNodePermissions**(node: `Node`): [`PermissionDisplayModel`](../../../lib/content-services/src/lib/permission-manager/models/permission.model.ts)`[]`<br/>
+
+    -   _node:_ `Node`  - 
+    -   **Returns** [`PermissionDisplayModel`](../../../lib/content-services/src/lib/permission-manager/models/permission.model.ts)`[]` - 
+
 -   **getNodeRoles**(node: `Node`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>`<br/>
     Gets a list of roles for the current node.
     -   _node:_ `Node`  - The target node
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>` - Array of strings representing the roles
+-   **getNodeWithRoles**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Function>`<br/>
+    Gets all node detail for nodeId along with settable permissions.
+    -   _nodeId:_ `string`  - Id of the node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Function>` - node and it's associated roles { node: Node; roles: RoleModel\[] }
 -   **removePermission**(node: `Node`, permissionToRemove: [`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>`<br/>
     Removes a permission setting from a node.
     -   _node:_ `Node`  - ID of the target node
     -   _permissionToRemove:_ [`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)  - Permission setting to remove
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>` - Node with modified permissions
--   **updateLocallySetPermissions**(node: `Node`, nodes: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]`, nodeRole: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>`<br/>
+-   **removePermissions**(node: `Node`, permissions: [`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>`<br/>
+    Removes permissions setting from a node.
+    -   _node:_ `Node`  - target node with permission
+    -   _permissions:_ [`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)`[]`  - Permissions to remove
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>` - Node with modified permissions
+-   **transformNodeToUserPerson**(node: `Node`): `Function`<br/>
+
+    -   _node:_ `Node`  - 
+    -   **Returns** `Function` - 
+
+-   **updateLocallySetPermissions**(node: `Node`, permissions: [`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>`<br/>
     Updates the locally set permissions for a node.
     -   _node:_ `Node`  - ID of the target node
-    -   _nodes:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]`  - Permission settings
-    -   _nodeRole:_ `string[]`  - Permission role
+    -   _permissions:_ [`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)`[]`  - Permission settings
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>` - Node with updated permissions
--   **updateNodePermissions**(nodeId: `string`, permissionList: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>`<br/>
+-   **updateNodePermissions**(nodeId: `string`, permissionList: [`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>`<br/>
     Update permissions for a node.
     -   _nodeId:_ `string`  - ID of the target node
-    -   _permissionList:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]`  - New permission settings
+    -   _permissionList:_ [`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)`[]`  - New permission settings
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>` - Node with updated permissions
 -   **updatePermissionRole**(node: `Node`, updatedPermissionRole: [`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>`<br/>
     Updates the permission role for a node.
     -   _node:_ `Node`  - Target node
     -   _updatedPermissionRole:_ [`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)  - Permission role to update or add
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>` - Node with updated permission
+-   **updatePermissions**(node: `Node`, permissions: [`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>`<br/>
+    updates permissions setting from a node.
+    -   _node:_ `Node`  - target node with permission
+    -   _permissions:_ [`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)`[]`  - Permissions to update
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Node>` - Node with modified permissions
 
 ## Details
 

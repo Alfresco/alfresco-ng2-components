@@ -43,7 +43,7 @@ The properties are described in the table below:
 | nodeType | `string` | "" | current prefixed name of the content type selected |
 
 If you don't want to manage the dialog yourself then it is easier to use the
-methods of the Content Type [Property](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) Service, which create
+methods of the Content Type [`Property`](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) Service, which create
 the dialog for you.
 
 ### Usage example

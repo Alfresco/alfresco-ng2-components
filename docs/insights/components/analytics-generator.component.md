@@ -30,5 +30,5 @@ Generates and shows charts
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | `any` | error. |
-| success | `any` | success. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | error. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | success. |

@@ -31,7 +31,7 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | preSelectUsers | [`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]` | \[] | Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username |
 | readOnly | `boolean` | false | Show the info in readonly mode |
 | roles | `string[]` |  | Role names of the users to be listed. |
-| searchUserCtrl | `any` |  | FormControl to search the user |
+| searchUserCtrl | `FormControl` |  | FormControl to search the user |
 | title | `string` |  | Placeholder translation key |
 | userChipsCtrl | `FormControl` |  | FormControl to list of users |
 | validate | `boolean` | false | This flag enables the validation on the preSelectUsers passed as input. In case the flag is true the components call the [identity service](../../../lib/testing/src/lib/core/actions/identity/identity.service.ts) to verify the validity of the information passed as input. Otherwise, no check will be done. |
@@ -40,10 +40,10 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| changedUsers | `any` | Emitted when a user selection change. |
-| removeUser | `any` | Emitted when a selected user is removed in multi selection mode. |
-| selectUser | `any` | Emitted when a user is selected. |
-| warning | `any` | Emitted when an warning occurs. |
+| changedUsers | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>` | Emitted when a user selection change. |
+| removeUser | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`>` | Emitted when a selected user is removed in multi selection mode. |
+| selectUser | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`>` | Emitted when a user is selected. |
+| warning | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an warning occurs. |
 
 ## Details
 

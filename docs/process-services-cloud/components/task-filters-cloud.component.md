@@ -42,9 +42,9 @@ Shows all available filters.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during loading. |
-| filterClicked | `any` | Emitted when a filter is being clicked from the UI. |
+| filterClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter is being clicked from the UI. |
 | filterCounterUpdated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskCloudEngineEvent`](../../../lib/process-services-cloud/src/lib/models/engine-event-cloud.model.ts)`[]>` | Emitted when filter counters are updated. |
-| filterSelected | `any` | Emitted when a filter is being selected based on the filterParam input. |
+| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter is being selected based on the filterParam input. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the list is loaded. |
 
 ## Details
@@ -71,7 +71,7 @@ as the value of `filterParam` as shown in the table below:
 
 ### Showing Filter Counters
 
-By default, filter counters are hidden. If you want to display filter counters you will need to add the `showCounter` property set to `true` in your [TaskFilterCloudModel](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts). 
+By default, filter counters are hidden. If you want to display filter counters you will need to add the `showCounter` property set to `true` in your [`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts). 
 
 ![](../../docassets/images/task-filter-counter.png)
 

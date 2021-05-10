@@ -13,11 +13,11 @@ Implements node operations used by the [Document List component](../components/d
 
 ### Methods
 
--   **copyNode**(nodeId: `string`, targetParentId: `string`): `any`<br/>
+-   **copyNode**(nodeId: `string`, targetParentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Copy a node to destination node
     -   _nodeId:_ `string`  - The id of the node to be copied
     -   _targetParentId:_ `string`  - The id of the folder where the node will be copied
-    -   **Returns** `any` - [NodeEntry](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) for the copied node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - NodeEntry for the copied node
 -   **deleteNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Deletes a node.
     -   _nodeId:_ `string`  - ID of the node to delete
@@ -51,11 +51,11 @@ Implements node operations used by the [Document List component](../components/d
     -   _where:_ `string`  - (Optional) Optionally filter the list
     -   _orderBy:_ `string[]`  - (Optional) order by node property
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/src/lib/document-list/models/document-folder.model.ts)`>` - Details of the folder
--   **moveNode**(nodeId: `string`, targetParentId: `string`): `any`<br/>
+-   **moveNode**(nodeId: `string`, targetParentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Moves a node to destination node.
     -   _nodeId:_ `string`  - The id of the node to be moved
     -   _targetParentId:_ `string`  - The id of the folder where the node will be moved
-    -   **Returns** `any` - [NodeEntry](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) for the moved node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - NodeEntry for the moved node
 
 ## Details
 

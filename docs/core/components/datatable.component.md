@@ -369,11 +369,11 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| executeRowAction | `any` | Emitted when the user executes a row action. |
-| rowClick | `any` | Emitted when the user clicks a row. |
-| rowDblClick | `any` | Emitted when the user double-clicks a row. |
-| showRowActionsMenu | `any` | Emitted before the actions menu is displayed for a row. |
-| showRowContextMenu | `any` | Emitted before the context menu is displayed for a row. |
+| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
+| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user clicks a row. |
+| rowDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user double-clicks a row. |
+| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
 
 ## Details
 

@@ -27,4 +27,4 @@ Load more options to select component if API returns more items
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| scrollEnd | `any` | Emitted when scroll reaches the last item. |
+| scrollEnd | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Event>` | Emitted when scroll reaches the last item. |
