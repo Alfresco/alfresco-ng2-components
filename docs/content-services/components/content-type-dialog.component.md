@@ -11,7 +11,7 @@ Confirm dialog when user changes content type of a node.
 
 ## Details
 
-The [Content Type Dialog component](content-type-dialog.component.md) works as a dialog showing a confirm message when the user changes the conten type of a node. It is showing the properties of the new content type selected.
+The [Content Type Dialog component](content-type-dialog.component.md) works as a dialog showing a confirm message when the user changes the content type of a node. It is showing the properties of the new content type selected.
 
 ### Showing the dialog
 
