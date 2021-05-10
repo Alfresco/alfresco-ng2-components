@@ -162,7 +162,7 @@ export class ThumbnailService {
         'save-as': './assets/images/save-as.svg',
         'save': './assets/images/save.svg',
         'task': './assets/images/task.svg',
-        'emptyDocLib': './assets/images/empty_doc_lib.svg',
+        'emptyDocLib': './assets/images/empty_doc_lib.svg'
     };
 
     constructor(protected apiService: AlfrescoApiService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
