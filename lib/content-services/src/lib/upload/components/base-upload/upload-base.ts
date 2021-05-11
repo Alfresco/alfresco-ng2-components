@@ -87,7 +87,10 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     ngOnInit() {
         this.uploadService.fileUploadError
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(error => this.error.emit(error));
+            .subscribe(error => {
+                this.disabled = false;
+                this.error.emit(error);
+            });
     }
 
     ngOnDestroy() {
@@ -100,6 +103,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
      * @param files
      */
     uploadFiles(files: File[]): void {
+        this.disabled = true;
         const filteredFiles: FileModel[] = files
             .map<FileModel>((file: File) => {
                 return this.createFileModel(file, this.rootFolderId, ((<any> file).webkitRelativePath || '').replace(/\/[^\/]*$/, ''));

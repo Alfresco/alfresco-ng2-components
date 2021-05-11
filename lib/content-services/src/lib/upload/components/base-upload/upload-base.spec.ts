@@ -142,6 +142,18 @@ describe('UploadBase', () => {
                 done();
             });
         }));
+
+        it('should disable upload button on upload begin', (done) => {
+            spyOn(uploadService, 'addToQueue').and.stub();
+            spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
+            component.beginUpload.subscribe(() => {
+                expect(component.disabled).toEqual(true);
+                done();
+            });
+            const file = <File> { name: 'bigFile.png', size: 1000 };
+            component.uploadFiles([file]);
+            fixture.detectChanges();
+        })
    });
 
     describe('fileSize', () => {
@@ -212,6 +224,15 @@ describe('UploadBase', () => {
             const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
             expect(filesCalledWith.length).toBe(2);
         });
+
+        it('should enable upload button when error occurs', (done) => {
+            component.error.subscribe(() => {
+                expect(component.disabled).toEqual(false);
+                done();
+            });
+            uploadService.fileUploadError.next();
+            fixture.detectChanges();
+        })
     });
 
     describe('uploadFiles', () => {
