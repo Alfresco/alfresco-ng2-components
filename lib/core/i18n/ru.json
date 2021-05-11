@@ -1,5 +1,6 @@
 {
   "ADF": {
+    "LANGUAGE": "Язык",
     "ROLES": {
       "ALL": "Все",
       "CONTRIBUTOR": "Писатель",
@@ -383,8 +384,9 @@
       "ZOOM_IN": "Увеличить",
       "ZOOM_OUT": "Уменьшить",
       "FIT_PAGE": "По размеру страницы",
-      "ROTATE_LEFT": "Повернуть влево",
-      "ROTATE_RIGHT": "Повернуть вправо",
+      "ROTATE": "Повернуть",
+      "SAVE": "Сохранить",
+      "CANCEL": "Отмена",
       "RESET": "Сброс",
       "THUMBNAILS": "Миниатюры документов",
       "THUMBNAILS_PANLEL_CLOSE": "Закрыть панель эскизов"

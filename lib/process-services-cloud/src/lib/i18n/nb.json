@@ -248,6 +248,7 @@
       "PROCESS_NAME": "Prosessnavn",
       "APP_VERSION": "Programutgaveversjon",
       "STARTED_DATE": "Startet dato",
+      "SUSPENDED_DATE": "Stanset dato",
       "STARTED_BY": "Startet av",
       "COMPLETED_DATE": "Fullført dato",
       "DATE_RANGE": {
@@ -374,12 +375,12 @@
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "Fyll ut skjemafeltene med denne filens metadata"
+    "RETRIEVE_METADATA": "Fyll ut skjema automatisk"
   },
   "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
     "ASSIGNED_TO_ME": "Tilordnet meg",
     "UNASSIGNED": "Ikke tilordnet",
-    "LIST_OF_CANDIDATE_USERS": "Liste over kandidatbrukere",
+    "LIST_OF_CANDIDATE_GROUPS": "Liste over kandidatgrupper",
     "ASSIGNEE": "Tilordnet",
     "ASSIGNMENT_TYPE": "Tilordningstype"
   }

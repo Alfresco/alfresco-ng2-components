@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "Keine Berechtigungen"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Suchen",
+      "SEARCH": "Nach hinzuzufügenden Benutzern oder Gruppen suchen",
+      "TITLE": "Berechtigung hinzufügen",
       "TYPE-MESSAGE": "Geben Sie etwas ein, um nach Gruppen oder Personen zu suchen",
       "NO-RESULT": "Für diese Suchanfrage wurden keine Ergebnisse gefunden",
       "ADD-ACTION": "Hinzufügen",
-      "CLOSE-ACTION": "Schließen",
+      "CLOSE-ACTION": "ABBRECHEN",
       "BASE-DIALOG-TITLE": "Es wird nach Gruppen oder Personen gesucht, die hinzugefügt werden können...",
       "EVERYONE": "JEDER"
     },
+    "COLUMN": {
+      "NAME": "Benutzer und Gruppen ({{ count }})",
+      "LOCATION": "Speicherort",
+      "BULK-ROLE": "Alle Rollen festlegen auf"
+    },
+    "LABELS": {
+      "ON": "Ein",
+      "OFF": "Aus",
+      "DIRECT-PERMISSIONS": "Direkt angewendete Berechtigung",
+      "INHERITED-PERMISSIONS": "Geerbte Berechtigung",
+      "INHERITED-SUBTITLE": "{{count}} Benutzer oder Gruppen erben Berechtigungen von einem übergeordneten Ordner.",
+      "SELECT-ROLE": "Rolle auswählen"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Keine Benutzer/Gruppen",
+      "EMPTY-SUBTITLE": "Fügen Sie Benutzer/Gruppen hinzu, um Berechtigungen zu verwalten.",
+      "NO-MEMBERS": "Fügen Sie Gruppen oder Personen hinzu, um Rollen zu verwalten.",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "{{user}} Benutzer {{group}} Gruppe(n) aktualisiert",
+      "PERMISSION-UPDATE-SUCCESS": "Benutzer/Gruppe aktualisiert",
+      "PERMISSION-UPDATE-FAIL": "Fehler beim Aktualisieren von Benutzer/Gruppe",
+      "PERMISSION-BULK-DELETE-SUCCESS": "{{user}} Benutzer {{group}} Gruppe(n) gelöscht",
+      "PERMISSION-DELETE-SUCCESS": "Benutzer/Gruppe gelöscht",
+      "PERMISSION-DELETE-FAIL": "Fehler beim Löschen von Benutzer/Gruppe",
+      "PERMISSION-ADD-SUCCESS": "{{user}} Benutzer {{group}} Gruppe(n) hinzugefügt",
+      "PERMISSION-ADD-FAIL": "Fehler beim Hinzufügen von Benutzer/Gruppe",
+      "INHERIT-ENABLE-SUCCESS": "Geerbte Berechtigung aktiviert",
+      "INHERIT-DISABLE-SUCCESS": "Geerbte Berechtigung deaktiviert",
+      "TOGGLE-PERMISSION-FAILED": "Fehler beim Umschalten der geerbten Berechtigung"
+    },
+    "ACTION": {
+      "DELETE": "Löschen",
+      "ADD-PERMISSION": "Benutzer oder Gruppe hinzufügen"
+    },
     "ERROR": {
+      "NOT-FOUND": "Dieses Element gibt es nicht mehr oder Sie verfügen nicht über die für die Anzeige nötigen Benutzerrechte.",
       "DUPLICATE-PERMISSION": "Mindestens eine der von Ihnen bestimmten Berechtigungen ist bereits vorhanden: {{list}}",
       "NOT-ALLOWED": "Sie sind nicht zum Ändern von Berechtigungen berechtigt."
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "Eigenschaftsaspekte auswählen",
       "SELECTED": "Ausgewählt"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} ausgewählt"
   }
 }

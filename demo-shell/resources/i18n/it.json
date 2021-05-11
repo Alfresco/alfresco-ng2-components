@@ -39,8 +39,8 @@
   },
   "title": "Benvenuto",
   "VERSION": {
-    "NO_PERMISSION": "Non si dispone dei permessi per gestire versioni di questo contenuto",
-    "NO_PERMISSION_EVENT": "Non si dispone dei permessi ${event.permission} di ${event.action} ${event.type}",
+    "NO_PERMISSION": "Non si dispone dell'autorizzazione per gestire versioni di questo contenuto",
+    "NO_PERMISSION_EVENT": "Non si dispone dell'autorizzazione ${event.permission} per ${event.action} ${event.type}",
     "CHOOSE_FILE": "Seleziona un file per visualizzarne le versioni",
     "DIALOG": {
       "CLOSE": "Chiudi",
@@ -171,7 +171,7 @@
       "LOCK": "Blocca",
       "METADATA": "Informazioni",
       "DOWNLOAD": "Scarica",
-      "PERMISSION": "Permesso",
+      "PERMISSION": "Autorizzazione",
       "FOLDER": {
         "COPY": "Copia",
         "MOVE": "Sposta",
@@ -269,8 +269,8 @@
     "NODE_LIST": "Elenco tag per ID nodo"
   },
   "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Eredita permessi",
-    "INHERITED_PERMISSIONS_BUTTON": "Permesso ereditato"
+    "INHERIT_PERMISSION_BUTTON": "Eredita autorizzazione",
+    "INHERITED_PERMISSIONS_BUTTON": "Autorizzazione ereditata"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

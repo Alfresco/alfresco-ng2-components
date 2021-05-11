@@ -40,7 +40,7 @@
     "EMPTY": {
       "HEADER": "Questa cartella è vuota"
     },
-    "NO_PERMISSION": "Non si dispone dei permessi per visualizzare questo file o questa cartella.",
+    "NO_PERMISSION": "Non si dispone dell'autorizzazione per visualizzare questo file o questa cartella.",
     "LAYOUT": {
       "CREATED": "Creato",
       "CREATED_BY": "Creato da",
@@ -164,7 +164,7 @@
     "BUTTON": {
       "UPLOAD_FILE": "Carica file",
       "UPLOAD_FOLDER": "Carica cartella",
-      "PERMISSION_CHECK_ERROR": "Errore durante la verifica dei permessi."
+      "PERMISSION_CHECK_ERROR": "Errore durante la verifica delle autorizzazioni."
     },
     "VERSION": {
       "MESSAGES": {
@@ -320,7 +320,7 @@
     }
   },
   "PERMISSION": {
-    "LACKOF": "Non  si dispone dei permessi {{permission}} per {{action}} {{type}}"
+    "LACKOF": "Non si dispone dell'autorizzazione {{permission}} per {{action}} {{type}}"
   },
   "METADATA": {
     "BASIC": {
@@ -374,7 +374,7 @@
       "REMOVE": "Rimuovi"
     },
     "UNSHARE_ERROR": "Errore durante l'annullamento della condivisione di questo file",
-    "UNSHARE_PERMISSION_ERROR": "Non si dispone dei permessi per rimuovere la condivisione di questo file"
+    "UNSHARE_PERMISSION_ERROR": "Non si dispone dell'autorizzazione per rimuovere la condivisione di questo file"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "Nessuna autorizzazione"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Cerca",
+      "SEARCH": "Cerca utenti o gruppi da aggiungere",
+      "TITLE": "Aggiungi autorizzazione",
       "TYPE-MESSAGE": "Digita per iniziare a cercare gruppi o persone",
       "NO-RESULT": "Nessun risultato trovato per la ricerca",
       "ADD-ACTION": "Aggiungi",
-      "CLOSE-ACTION": "Chiudi",
+      "CLOSE-ACTION": "Annulla",
       "BASE-DIALOG-TITLE": "Cerca un gruppo o una persona da aggiungere...",
       "EVERYONE": "Tutti"
     },
+    "COLUMN": {
+      "NAME": "Utenti e gruppi ({{ count }})",
+      "LOCATION": "Località",
+      "BULK-ROLE": "Imposta tutti i ruoli su"
+    },
+    "LABELS": {
+      "ON": "Attivata",
+      "OFF": "Disattivata",
+      "DIRECT-PERMISSIONS": "Autorizzazione applicata direttamente",
+      "INHERITED-PERMISSIONS": "Autorizzazione ereditata",
+      "INHERITED-SUBTITLE": "{{count}} utenti o gruppi ereditano l'autorizzazione da una cartella principale",
+      "SELECT-ROLE": "Seleziona ruolo"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Nessun utente/gruppo",
+      "EMPTY-SUBTITLE": "Aggiungere un utente/gruppo per gestire l'autorizzazione.",
+      "NO-MEMBERS": "Aggiungi gruppi o utenti per gestire i ruoli",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "{{user}} utenti {{group}} gruppi aggiornati",
+      "PERMISSION-UPDATE-SUCCESS": "Utente/gruppo aggiornato",
+      "PERMISSION-UPDATE-FAIL": "Impossibile aggiornare utente/gruppo",
+      "PERMISSION-BULK-DELETE-SUCCESS": "{{user}} utenti {{group}} gruppi eliminati",
+      "PERMISSION-DELETE-SUCCESS": "Utente/gruppo eliminato",
+      "PERMISSION-DELETE-FAIL": "Impossibile eliminare utente/gruppo",
+      "PERMISSION-ADD-SUCCESS": "{{user}} utenti {{group}} gruppi aggiunti",
+      "PERMISSION-ADD-FAIL": "Impossibile aggiungere utente/gruppo",
+      "INHERIT-ENABLE-SUCCESS": "Autorizzazione ereditata abilitata",
+      "INHERIT-DISABLE-SUCCESS": "Autorizzazione ereditata disabilitata",
+      "TOGGLE-PERMISSION-FAILED": "Impossibile abilitare/disabilitare autorizzazione ereditata"
+    },
+    "ACTION": {
+      "DELETE": "Elimina",
+      "ADD-PERMISSION": "Aggiungi utente o gruppo"
+    },
     "ERROR": {
+      "NOT-FOUND": "Questo elemento non esiste più o non si dispone delle autorizzazioni per visualizzarlo.",
       "DUPLICATE-PERMISSION": "Uno o più autorizzazioni impostate sono già presenti: {{list}}",
       "NOT-ALLOWED": "Non è consentito modificare le autorizzazioni"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "Seleziona aspetti proprietà",
       "SELECTED": "Selezionato"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} selezionati"
   }
 }

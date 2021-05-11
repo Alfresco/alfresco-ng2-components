@@ -59,7 +59,7 @@
       },
       "ERROR": {
         "TITLE": "Si è verificato un errore",
-        "SUBTITLE": "Verificare di disporre dei permessi per accedere alle app"
+        "SUBTITLE": "Verificare di disporre dell'autorizzazione per accedere alle app"
       }
     },
     "START_TASK": {
@@ -248,6 +248,7 @@
       "PROCESS_NAME": "Nome processo",
       "APP_VERSION": "Versione app",
       "STARTED_DATE": "Data di inizio",
+      "SUSPENDED_DATE": "Data di sospensione",
       "STARTED_BY": "Avviato da",
       "COMPLETED_DATE": "Data di completamento",
       "DATE_RANGE": {
@@ -374,12 +375,12 @@
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "Compilare i campi del modulo con i metadati di questo file"
+    "RETRIEVE_METADATA": "Compilazione automatica modulo"
   },
   "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
     "ASSIGNED_TO_ME": "Assegnato a me",
     "UNASSIGNED": "Non assegnato",
-    "LIST_OF_CANDIDATE_USERS": "Elenco di utenti candidati",
+    "LIST_OF_CANDIDATE_GROUPS": "Elenco di gruppi candidati",
     "ASSIGNEE": "Assegnatario",
     "ASSIGNMENT_TYPE": "Tipo di assegnazione"
   }

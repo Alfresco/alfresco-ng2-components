@@ -248,6 +248,7 @@
       "PROCESS_NAME": "流程名称",
       "APP_VERSION": "App 版本",
       "STARTED_DATE": "开始日期",
+      "SUSPENDED_DATE": "暂停日期",
       "STARTED_BY": "启动者",
       "COMPLETED_DATE": "完成日期",
       "DATE_RANGE": {
@@ -374,12 +375,12 @@
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "用此文件的元数据填充表单字段"
+    "RETRIEVE_METADATA": "自动填充表单"
   },
   "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
     "ASSIGNED_TO_ME": "指派给我",
     "UNASSIGNED": "未指派",
-    "LIST_OF_CANDIDATE_USERS": "候选者列表",
+    "LIST_OF_CANDIDATE_GROUPS": "候选组列表",
     "ASSIGNEE": "被指派者",
     "ASSIGNMENT_TYPE": "指派类型"
   }

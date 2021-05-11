@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "Pas de droit d'accès"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Rechercher",
+      "SEARCH": "Rechercher des utilisateurs ou des groupes à ajouter",
+      "TITLE": "Ajouter des droits d'accès",
       "TYPE-MESSAGE": "Entrez du texte pour rechercher des groupes ou des personnes",
       "NO-RESULT": "La recherche n'a donné aucun résultat",
       "ADD-ACTION": "Ajouter",
-      "CLOSE-ACTION": "Fermer",
+      "CLOSE-ACTION": "Annuler",
       "BASE-DIALOG-TITLE": "Rechercher un groupe ou une personne à ajouter...",
       "EVERYONE": "Tout le monde"
     },
+    "COLUMN": {
+      "NAME": "Utilisateurs et groupes ({{ count }})",
+      "LOCATION": "Emplacement",
+      "BULK-ROLE": "Définir tous les rôles sur"
+    },
+    "LABELS": {
+      "ON": "Activé",
+      "OFF": "Désactivé",
+      "DIRECT-PERMISSIONS": "Droits d'accès directement appliqués",
+      "INHERITED-PERMISSIONS": "Droits d'accès hérités",
+      "INHERITED-SUBTITLE": "{{count}} utilisateurs ou groupes héritent des droits d'accès d'un dossier parent",
+      "SELECT-ROLE": "Sélectionner un rôle"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Aucun utilisateur/groupe",
+      "EMPTY-SUBTITLE": "Ajouter un utilisateur/groupe pour gérer les droits d'accès.",
+      "NO-MEMBERS": "Ajouter des groupes ou des personnes pour gérer les rôles",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "{{user}} utilisateur(s) {{group}} groupe(s) mis à jour",
+      "PERMISSION-UPDATE-SUCCESS": "Utilisateur/groupe mis à jour",
+      "PERMISSION-UPDATE-FAIL": "Impossible de mettre à jour l'utilisateur/le groupe",
+      "PERMISSION-BULK-DELETE-SUCCESS": "{{user}} utilisateur(s) {{group}} groupe(s) supprimé(s)",
+      "PERMISSION-DELETE-SUCCESS": "Utilisateur/groupe supprimé",
+      "PERMISSION-DELETE-FAIL": "Impossible de supprimer l'utilisateur/le groupe",
+      "PERMISSION-ADD-SUCCESS": "{{user}} utilisateur(s) {{group}} groupe(s) ajouté(s)",
+      "PERMISSION-ADD-FAIL": "Impossible d'ajouter l'utilisateur/le groupe",
+      "INHERIT-ENABLE-SUCCESS": "Droits d'accès hérités activés",
+      "INHERIT-DISABLE-SUCCESS": "Droits d'accès hérités désactivés",
+      "TOGGLE-PERMISSION-FAILED": "Impossible d'activer/désactiver Hériter des droits d'accès"
+    },
+    "ACTION": {
+      "DELETE": "Supprimer",
+      "ADD-PERMISSION": "Ajouter un utilisateur ou un groupe"
+    },
     "ERROR": {
+      "NOT-FOUND": "Cet élément n'existe plus ou vous n'avez pas les droits pour le consulter.",
       "DUPLICATE-PERMISSION": "Un ou plusieurs droits d'accès définis existent déjà : {{list}}",
       "NOT-ALLOWED": "Vous n'avez pas le droit de modifier les droits d'accès"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "Sélectionner les aspects des propriétés",
       "SELECTED": "Sélectionné"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} sélectionné(s)"
   }
 }

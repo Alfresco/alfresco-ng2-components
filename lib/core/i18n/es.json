@@ -1,5 +1,6 @@
 {
   "ADF": {
+    "LANGUAGE": "Idioma",
     "ROLES": {
       "ALL": "Todos",
       "CONTRIBUTOR": "Contribuidor",
@@ -383,8 +384,9 @@
       "ZOOM_IN": "Acercar",
       "ZOOM_OUT": "Alejar",
       "FIT_PAGE": "Ajustar página",
-      "ROTATE_LEFT": "Girar a la izquierda",
-      "ROTATE_RIGHT": "Girar a la derecha",
+      "ROTATE": "Girar",
+      "SAVE": "Guardar",
+      "CANCEL": "Cancelar",
       "RESET": "Reiniciar",
       "THUMBNAILS": "Miniaturas de documento",
       "THUMBNAILS_PANLEL_CLOSE": "Cerrar panel de miniaturas"

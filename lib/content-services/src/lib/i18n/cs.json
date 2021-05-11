@@ -252,7 +252,7 @@
         "INVALID-FORMAT": "Neplatný formát",
         "INVALID-DATE": "Neplatné datum. Datum musí být ve formátu '{{ requiredFormat }}'.",
         "BEYOND-MAX-DATE": "Datum nesplňuje limit pro nejvzdálenější datum.",
-        "INVALID-DATETIME": "Neplatné datum a čas. Datum a čas musí být ve formátu ‚{{ requiredFormat }}.",
+        "INVALID-DATETIME": "Neplatné datum a čas. Datum a čas musí být ve formátu '{{ requiredFormat }}'.",
         "BEYOND-MAX-DATETIME": "Datum a čas překračuje maximální datum a čas."
       }
     },
@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "Bez oprávnění"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Hledat",
+      "SEARCH": "Hledat uživatele nebo skupiny pro přidání",
+      "TITLE": "Přidat oprávnění",
       "TYPE-MESSAGE": "Začněte hledat skupiny nebo osoby jednoduše zadáním textu",
       "NO-RESULT": "Hledanému výrazu neodpovídají žádné výsledky",
       "ADD-ACTION": "Přidat",
-      "CLOSE-ACTION": "Zavřít",
+      "CLOSE-ACTION": "ZRUŠIT",
       "BASE-DIALOG-TITLE": "Vyhledejte skupinu nebo osoby, které chcete přidat...",
       "EVERYONE": "Každý"
     },
+    "COLUMN": {
+      "NAME": "Uživatelé a skupiny ({{ count }})",
+      "LOCATION": "Umístění",
+      "BULK-ROLE": "Nastavit všechny role na"
+    },
+    "LABELS": {
+      "ON": "Zapnuto",
+      "OFF": "Vypnuto",
+      "DIRECT-PERMISSIONS": "Přímo použité oprávnění",
+      "INHERITED-PERMISSIONS": "Zděděné oprávnění",
+      "INHERITED-SUBTITLE": "Uživatelé nebo skupiny ({{count}}) dědí oprávnění z nadřazené složky",
+      "SELECT-ROLE": "Vybrat roli"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Žádní uživatelé/skupiny",
+      "EMPTY-SUBTITLE": "Pokud chcete spravovat oprávnění, přidejte uživatele/skupinu.",
+      "NO-MEMBERS": "Pokud chcete spravovat role, přidejte skupiny nebo osoby",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Aktualizovaní uživatelé: {{user}}, skupiny: {{group}}",
+      "PERMISSION-UPDATE-SUCCESS": "Uživatel/skupina aktualizován(a)",
+      "PERMISSION-UPDATE-FAIL": "Uživatele/skupinu se nepodařilo aktualizovat",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Odstranění uživatelé: {{user}}, skupiny: {{group}}",
+      "PERMISSION-DELETE-SUCCESS": "Uživatel/skupina odstraněn(a)",
+      "PERMISSION-DELETE-FAIL": "Uživatele/skupinu se nepodařilo odstranit",
+      "PERMISSION-ADD-SUCCESS": "Přidaní uživatelé: {{user}}, skupiny: {{group}}",
+      "PERMISSION-ADD-FAIL": "Uživatele/skupinu se nepodařilo přidat",
+      "INHERIT-ENABLE-SUCCESS": "Povoleno zděděné oprávnění",
+      "INHERIT-DISABLE-SUCCESS": "Zakázáno zděděné oprávnění",
+      "TOGGLE-PERMISSION-FAILED": "Nepodařilo se přepnout zděděné oprávnění"
+    },
+    "ACTION": {
+      "DELETE": "Odstranit",
+      "ADD-PERMISSION": "Přidat uživatele nebo skupinu"
+    },
     "ERROR": {
+      "NOT-FOUND": "Tato položka již neexistuje nebo nemáte dostatečná oprávnění pro její zobrazení.",
       "DUPLICATE-PERMISSION": "Alespoň jedno z vámi nastavených oprávnění již existuje: {{list}}",
       "NOT-ALLOWED": "Nemáte oprávnění měnit oprávnění"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "Vyberte aspekty vlastností",
       "SELECTED": "Vybráno"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "Vybráno: {{ count }}"
   }
 }

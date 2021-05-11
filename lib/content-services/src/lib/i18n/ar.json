@@ -341,7 +341,7 @@
       "DIALOG": {
         "TITLE": "تغيير نوع المحتوى",
         "DESCRIPTION": "سيؤدي إجراء هذا التغيير على نوع المحتوى إلى إضافة بعض الخصائص وبيانات التعريف المخزنة إلى المستند.",
-        "CONFIRM": "هل أنت متأكد أنك تريد تغيير نوع المحتوى؟?",
+        "CONFIRM": "هل أنت متأكد أنك تريد تغيير نوع المحتوى؟",
         "CANCEL": "إلغاء",
         "APPLY": "حفظ التغييرات",
         "VIEW_DETAILS": "عرض التفاصيل",
@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "لا توجد أذونات"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "بحث",
+      "SEARCH": "بحث عن مستخدمين أو مجموعات لإضافتها",
+      "TITLE": "إضافة إذن",
       "TYPE-MESSAGE": "اكتب شيئًا لبدء البحث في المجموعات أو الأشخاص",
       "NO-RESULT": "لم يتم العثور على نتيجة لهذا البحث",
       "ADD-ACTION": "إضافة",
-      "CLOSE-ACTION": "إغلاق",
+      "CLOSE-ACTION": "إلغاء",
       "BASE-DIALOG-TITLE": "بحث عن مجموعة أو أشخاص لإضافتهم...",
       "EVERYONE": "كل شخص"
     },
+    "COLUMN": {
+      "NAME": "المستخدمون والمجموعات ({{count}})",
+      "LOCATION": "مكان",
+      "BULK-ROLE": "تعيين كل دور الى"
+    },
+    "LABELS": {
+      "ON": "تشغيل",
+      "OFF": "إيقاف",
+      "DIRECT-PERMISSIONS": "الإذن المطبق بشكل مباشر",
+      "INHERITED-PERMISSIONS": "إذن موروث",
+      "INHERITED-SUBTITLE": "{{count}} المستخدمين أو المجموعات يرثون الإذن من مجلد رئيسي",
+      "SELECT-ROLE": "حدد الدور"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "لا مستخدمين / مجموعات",
+      "EMPTY-SUBTITLE": "إضافة مستخدم / مجموعة لإدارة الإذن.",
+      "NO-MEMBERS": "أضف مجموعات أو أشخاصًا لإدارة الأدوار",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "تم تحديث {{user}} مستخدم (مستخدمين) {{group}} مجموعة (مجموعات)",
+      "PERMISSION-UPDATE-SUCCESS": "تم تحديث المستخدم / المجموعة",
+      "PERMISSION-UPDATE-FAIL": "تعذّر تحديث المستخدم / المجموعة",
+      "PERMISSION-BULK-DELETE-SUCCESS": "تم حذف {{user}} مستخدم (مستخدمين) {{group}} مجموعة (مجموعات)",
+      "PERMISSION-DELETE-SUCCESS": "تم حذف المستخدم / المجموعة",
+      "PERMISSION-DELETE-FAIL": "تعذّر حذف المستخدم / المجموعة",
+      "PERMISSION-ADD-SUCCESS": "تمت إضافة {{user}} مستخدم (مستخدمين) {{group}} مجموعة (مجموعات)",
+      "PERMISSION-ADD-FAIL": "تعذّر إضافة مستخدم / مجموعة",
+      "INHERIT-ENABLE-SUCCESS": "تم تمكين الإذن الموروث",
+      "INHERIT-DISABLE-SUCCESS": "الإذن الموروث المعطل",
+      "TOGGLE-PERMISSION-FAILED": "تعذّر تبديل الإذن المورث"
+    },
+    "ACTION": {
+      "DELETE": "حذف",
+      "ADD-PERMISSION": "إضافة مستخدم أو مجموعة"
+    },
     "ERROR": {
+      "NOT-FOUND": "لم يعد هذا العنصر موجودًا أو ليس لديك إذن لعرضه.",
       "DUPLICATE-PERMISSION": "أحد الأذونات أو أكثر من إذن قمت بتعيينه موجود بالفعل : {{list}}",
       "NOT-ALLOWED": "غير مسموح لك بتغيير الأذونات"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "حدد جوانب الملكية",
       "SELECTED": "المحدد"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "تم تحديد {{count}}"
   }
 }

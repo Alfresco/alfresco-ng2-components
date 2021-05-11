@@ -1,5 +1,6 @@
 {
   "ADF": {
+    "LANGUAGE": "Kieli",
     "ROLES": {
       "ALL": "Kaikki",
       "CONTRIBUTOR": "Osallistuja",
@@ -383,8 +384,9 @@
       "ZOOM_IN": "Lähennä",
       "ZOOM_OUT": "Loitonna",
       "FIT_PAGE": "Sovita sivu",
-      "ROTATE_LEFT": "Käännä vasemmalle",
-      "ROTATE_RIGHT": "Käännä oikealle",
+      "ROTATE": "Kierrä",
+      "SAVE": "Tallenna",
+      "CANCEL": "Peruuta",
       "RESET": "Nollaa",
       "THUMBNAILS": "Asiakirjojen esikatselukuvakkeet",
       "THUMBNAILS_PANLEL_CLOSE": "Sulje pikkukuvapaneeli"

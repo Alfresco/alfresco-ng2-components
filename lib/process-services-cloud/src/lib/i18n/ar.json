@@ -248,6 +248,7 @@
       "PROCESS_NAME": "اسم العملية",
       "APP_VERSION": "إصدار التطبيق",
       "STARTED_DATE": "تاريخ البدء",
+      "SUSPENDED_DATE": "تاريخ معلق",
       "STARTED_BY": "بدأ حسب",
       "COMPLETED_DATE": "تاريخ الإكمال",
       "DATE_RANGE": {
@@ -374,12 +375,12 @@
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "ملء حقول النموذج ببيانات تعريف هذا الملف"
+    "RETRIEVE_METADATA": "نموذج الملء التلقائي"
   },
   "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
     "ASSIGNED_TO_ME": "معين لي",
     "UNASSIGNED": "غير معين",
-    "LIST_OF_CANDIDATE_USERS": "قائمة المستخدمين المرشحين",
+    "LIST_OF_CANDIDATE_GROUPS": "قائمة المجموعات المرشحة",
     "ASSIGNEE": "معين له",
     "ASSIGNMENT_TYPE": "نوع التعيين"
   }

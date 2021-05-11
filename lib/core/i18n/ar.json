@@ -1,5 +1,6 @@
 {
   "ADF": {
+    "LANGUAGE": "اللغة",
     "ROLES": {
       "ALL": "الكل",
       "CONTRIBUTOR": "مساهم",
@@ -383,8 +384,9 @@
       "ZOOM_IN": "تكبير",
       "ZOOM_OUT": "تصغير",
       "FIT_PAGE": "ملاءمة الصفحة",
-      "ROTATE_LEFT": "تدوير لليسار",
-      "ROTATE_RIGHT": "تدوير لليمين",
+      "ROTATE": "تدوير",
+      "SAVE": "حفظ",
+      "CANCEL": "إلغاء",
       "RESET": "إعادة تعيين",
       "THUMBNAILS": "الصور المصغرة للمستندات",
       "THUMBNAILS_PANLEL_CLOSE": "إغلاق لوحة الصور المصغرة"

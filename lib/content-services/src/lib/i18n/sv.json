@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "Inga behörigheter"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Sök",
+      "SEARCH": "Sök användare eller grupper att lägga till",
+      "TITLE": "Lägg till behörighet",
       "TYPE-MESSAGE": "Skriv något för att börja söka grupper eller personer",
       "NO-RESULT": "Inga resultat hittades för den här sökningen",
       "ADD-ACTION": "Lägg till",
-      "CLOSE-ACTION": "Stäng",
+      "CLOSE-ACTION": "Avbryt",
       "BASE-DIALOG-TITLE": "Sök en grupp eller personer att lägga till...",
       "EVERYONE": "Alla"
     },
+    "COLUMN": {
+      "NAME": "Användare och grupper ({{ count }})",
+      "LOCATION": "Plats",
+      "BULK-ROLE": "Ställ in alla roller till"
+    },
+    "LABELS": {
+      "ON": "På",
+      "OFF": "Av",
+      "DIRECT-PERMISSIONS": "Direkt tillämpat behörighet",
+      "INHERITED-PERMISSIONS": "Ärvt behörighet",
+      "INHERITED-SUBTITLE": "{{count}} användare eller grupper ärver behörighet från en överordnad mapp",
+      "SELECT-ROLE": "Välj roll"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Inga användare/grupper",
+      "EMPTY-SUBTITLE": "Lägg till användare/grupp för att hantera behörighet.",
+      "NO-MEMBERS": "Lägg till användare eller personer för att hantera roller",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Uppdaterade {{user}} användare {{group}} grupp(er)",
+      "PERMISSION-UPDATE-SUCCESS": "Användare/grupp uppdaterade",
+      "PERMISSION-UPDATE-FAIL": "Misslyckades att uppdatera användare/grupp",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Raderad {{user}} användare {{group}} grupp(er)",
+      "PERMISSION-DELETE-SUCCESS": "Raderad användare/grupp",
+      "PERMISSION-DELETE-FAIL": "Misslyckades att radera användare/grupp",
+      "PERMISSION-ADD-SUCCESS": "Lagt till {{user}} användare {{group}} grupp(er)",
+      "PERMISSION-ADD-FAIL": "Misslyckades att lägga till användare/grupp",
+      "INHERIT-ENABLE-SUCCESS": "Aktiverad ärvt behörighet",
+      "INHERIT-DISABLE-SUCCESS": "Inaktiverad ärvt behörighet",
+      "TOGGLE-PERMISSION-FAILED": "Misslyckades att växla ärvt behörighet"
+    },
+    "ACTION": {
+      "DELETE": "Radera",
+      "ADD-PERMISSION": "Lägg till användare eller grupp"
+    },
     "ERROR": {
+      "NOT-FOUND": "Objektet finns inte längre eller så du har inte behörighet att visa det.",
       "DUPLICATE-PERMISSION": "Ett eller flera av de behörigheter du har ställt in finns redan: {{list}}",
       "NOT-ALLOWED": "Du har inte tillåtelse att ändra behörigheter"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "Välj egenskapsaspekter",
       "SELECTED": "Vald"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} vald"
   }
 }
