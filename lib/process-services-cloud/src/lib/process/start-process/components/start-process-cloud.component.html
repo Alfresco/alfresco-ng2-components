@@ -47,7 +47,7 @@
                         {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxNameLength } }}
                     </mat-error>
                     <mat-error *ngIf="processInstanceName.hasError('pattern')">
-                        {{ 'ADF_CLOUD_PROCESS_LIST.ERROR.SPACE_VALIDATOR' | translate }}
+                        {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.SPACE_VALIDATOR' | translate }}
                     </mat-error>
                 </mat-form-field>
             </form>
