@@ -33,7 +33,8 @@ import {
     VersionCompatibilityService,
     FormService,
     UploadWidgetContentLinkModel,
-    ContentLinkModel
+    ContentLinkModel,
+    DiscoveryApiService
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
@@ -105,6 +106,10 @@ describe('FormCloudComponent', () => {
             },
             {
                 provide: VersionCompatibilityService,
+                useValue: {}
+            },
+            {
+                provide: DiscoveryApiService,
                 useValue: {}
             }
         ]
@@ -999,13 +1004,13 @@ describe('FormCloudComponent', () => {
             expect(getLabelValue('dateField')).toEqual('Date field (D-M-YYYY)');
             expect(getLabelValue('amountField')).toEqual('Amount field');
 
-            expect(translateService.getLangs()).toEqual(['en', '']);
+            expect(translateService.getLangs()).toEqual(['en', 'en-GB']);
             fixture.ngZone.run(() => translateService.use('fr'));
 
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(translateService.getLangs()).toEqual(['en', '', 'fr']);
+            expect(translateService.getLangs()).toEqual(['en', 'en-GB', 'fr']);
             expect(getLabelValue('textField')).toEqual('Champ de texte');
             expect(getLabelValue('fildUploadField')).toEqual('Téléchargement de fichiers');
             expect(getLabelValue('dateField')).toEqual('Champ de date (D-M-YYYY)');

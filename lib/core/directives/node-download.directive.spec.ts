@@ -45,7 +45,8 @@ describe('NodeDownloadDirective', () => {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(),
             on: jasmine.createSpy('on')
-        }
+        },
+        isEcmLoggedIn: jasmine.createSpy('isEcmLoggedIn')
     };
 
     setupTestBed({
