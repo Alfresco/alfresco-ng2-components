@@ -153,7 +153,7 @@ describe('UploadBase', () => {
             const file = <File> { name: 'bigFile.png', size: 1000 };
             component.uploadFiles([file]);
             fixture.detectChanges();
-        })
+        });
    });
 
     describe('fileSize', () => {
@@ -232,7 +232,7 @@ describe('UploadBase', () => {
             });
             uploadService.fileUploadError.next();
             fixture.detectChanges();
-        })
+        });
     });
 
     describe('uploadFiles', () => {
