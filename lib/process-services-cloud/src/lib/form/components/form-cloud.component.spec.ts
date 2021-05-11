@@ -34,7 +34,7 @@ import {
     FormService,
     UploadWidgetContentLinkModel,
     ContentLinkModel,
-    DiscoveryApiService
+    AlfrescoApiService
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
@@ -53,6 +53,13 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { Node } from '@alfresco/js-api';
+const mockOauth2Auth = {
+    oauth2Auth: {
+        callCustomApi: () => Promise.resolve(),
+        on: jasmine.createSpy('on')
+    },
+    isEcmLoggedIn: jasmine.createSpy('isEcmLoggedIn')
+};
 
 describe('FormCloudComponent', () => {
     let formCloudService: FormCloudService;
@@ -107,15 +114,16 @@ describe('FormCloudComponent', () => {
             {
                 provide: VersionCompatibilityService,
                 useValue: {}
-            },
-            {
-                provide: DiscoveryApiService,
-                useValue: {}
             }
         ]
     });
 
     beforeEach(async(() => {
+        const appConfigService = TestBed.inject(AppConfigService);
+        spyOn(appConfigService, 'get').and.returnValue([]);
+        const apiService = TestBed.inject(AlfrescoApiService);
+        spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
+
         formRenderingService = TestBed.inject(CloudFormRenderingService);
         formCloudService = TestBed.inject(FormCloudService);
 
@@ -123,9 +131,6 @@ describe('FormCloudComponent', () => {
 
         visibilityService = TestBed.inject(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.callThrough();
-
-        const appConfigService = TestBed.inject(AppConfigService);
-        spyOn(appConfigService, 'get').and.returnValue([]);
 
         fixture = TestBed.createComponent(FormCloudComponent);
         formComponent = fixture.componentInstance;
@@ -1004,13 +1009,13 @@ describe('FormCloudComponent', () => {
             expect(getLabelValue('dateField')).toEqual('Date field (D-M-YYYY)');
             expect(getLabelValue('amountField')).toEqual('Amount field');
 
-            expect(translateService.getLangs()).toEqual(['en', 'en-GB']);
+            expect(translateService.getLangs()).toEqual(['en', '']);
             fixture.ngZone.run(() => translateService.use('fr'));
 
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(translateService.getLangs()).toEqual(['en', 'en-GB', 'fr']);
+            expect(translateService.getLangs()).toEqual(['en', '', 'fr']);
             expect(getLabelValue('textField')).toEqual('Champ de texte');
             expect(getLabelValue('fildUploadField')).toEqual('Téléchargement de fichiers');
             expect(getLabelValue('dateField')).toEqual('Champ de date (D-M-YYYY)');
@@ -1146,6 +1151,9 @@ describe('retrieve metadata on submit', () => {
     beforeEach(async(() => {
        const appConfigService = TestBed.inject(AppConfigService);
        spyOn(appConfigService, 'get').and.returnValue([]);
+       const apiService = TestBed.inject(AlfrescoApiService);
+       spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
+
        formService = TestBed.inject(FormService);
 
        fixture = TestBed.createComponent(FormCloudComponent);
