@@ -111,6 +111,10 @@ export class ContentNodeSelectorComponent implements OnInit {
         return this.chosenNode?.length || 0;
     }
 
+    isCounterVisible(): boolean {
+        return this.action === 'ATTACH';
+    }
+
     isMultipleSelection(): boolean {
         return this.data.selectionMode === 'multiple';
     }
