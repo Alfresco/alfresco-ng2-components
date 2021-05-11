@@ -41,7 +41,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     selectedTabIndex: number = 0;
     uploadStarted: boolean = false;
 
-    emptyFolderImageUrl: string = '../assets/images/empty_doc_lib.svg';
+    emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
     breadcrumbFolderNode: Node;
 
     constructor(private translation: TranslationService,
