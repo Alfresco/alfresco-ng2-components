@@ -62,5 +62,6 @@ export let searchMockApi = {
     },
     isEcmLoggedIn() {
         return false;
-    }
+    },
+    reply: () => ''
 };

@@ -26,7 +26,7 @@ import { NodePermissionService } from '../../services/node-permission.service';
     template: `
         <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'"  *ngIf="!isSelected">
             <ng-container *ngIf="displayText$ | async as user">
-                <mat-icon *ngIf="group" class="adf-people-icon">people_alt_outline</mat-icon>
+                <mat-icon *ngIf="group" class="adf-group-icon">people_alt_outline</mat-icon>
                 <div *ngIf="!group" [outerHTML]="user | usernameInitials: 'adf-people-initial'"></div>
             </ng-container>
         </div>

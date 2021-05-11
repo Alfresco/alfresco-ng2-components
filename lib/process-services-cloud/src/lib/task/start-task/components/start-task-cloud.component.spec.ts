@@ -40,12 +40,12 @@ describe('StartTaskCloudComponent', () => {
 
     const mock = {
         oauth2Auth: {
-            callCustomApi: () => Promise.resolve(taskDetailsMock),
-            on: jasmine.createSpy('on')
+            callCustomApi: () => Promise.resolve(taskDetailsMock)
         },
         isEcmLoggedIn() {
             return false;
-        }
+        },
+        reply: jasmine.createSpy('reply')
     };
 
     const mockUser: IdentityUserModel = {username: 'currentUser', firstName: 'Test', lastName: 'User', email: 'currentUser@test.com'};

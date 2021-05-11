@@ -48,7 +48,8 @@ describe('NodesApiService', () => {
         },
         isEcmLoggedIn() {
             return false;
-        }
+        },
+        reply: jasmine.createSpy('reply')
     };
 
     setupTestBed({
