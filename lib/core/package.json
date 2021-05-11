@@ -11,6 +11,9 @@
   "bugs": {
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
+  "dependencies": {
+    "cropperjs": "1.5.11"
+  },
   "peerDependencies": {
     "@angular/animations": ">=10.0.2",
     "@angular/cdk": ">=10.0.1",
@@ -26,7 +29,6 @@
     "@alfresco/js-api": "4.4.0-3475",
     "@alfresco/adf-extensions": "4.3.0",
     "@ngx-translate/core": ">=13.0.0",
-    "cropperjs": "1.5.11",
     "minimatch-browser": ">=1.0.0",
     "moment": ">=2.22.2",
     "pdfjs-dist": ">=2.3.200"
