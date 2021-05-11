@@ -220,7 +220,7 @@ describe('Discovery Api Service', () => {
         });
     });
 
-    describe('Oauth', () => {
+    describe('OnLogin Event', () => {
         setupTestBed({
             imports: [
                 TranslateModule.forRoot(),
@@ -234,7 +234,7 @@ describe('Discovery Api Service', () => {
             authenticationService = TestBed.inject(AuthenticationService);
         });
 
-        it('Should retrieve the info about the product for Oauth', done => {
+        it('Should retrieve the info about the product on login/refresh the application', done => {
             spyOn(apiService.getInstance(), 'isEcmLoggedIn').and.returnValue(true);
             spyOn(service, 'getEcmProductInfo').and.returnValue(of(new EcmProductVersionModel(fakeEcmDiscoveryResponse)));
 
@@ -252,7 +252,7 @@ describe('Discovery Api Service', () => {
                     done();
                 }
             );
-            authenticationService.onTokenExchange.next('<token>');
+            authenticationService.onLogin.next('<token>');
         });
     });
 });

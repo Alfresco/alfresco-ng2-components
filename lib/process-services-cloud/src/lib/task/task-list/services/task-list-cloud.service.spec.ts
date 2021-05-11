@@ -32,12 +32,12 @@ describe('TaskListCloudService', () => {
             oauth2Auth: {
                 callCustomApi : (_queryUrl, _operation, _context, queryParams) => {
                     return Promise.resolve(queryParams);
-                },
-                on: jasmine.createSpy('on')
+                }
             },
             isEcmLoggedIn() {
                 return false;
-            }
+            },
+            reply: jasmine.createSpy('reply')
         };
     }
 

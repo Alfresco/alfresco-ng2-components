@@ -33,11 +33,11 @@ describe('AppsProcessCloudService', () => {
     const apiMock = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve({list : { entries: [ {entry: fakeApplicationInstance[0]}, {entry: fakeApplicationInstance[1]}] }}),
-            on: jasmine.createSpy('on')
         },
         isEcmLoggedIn() {
             return false;
-        }
+        },
+        reply: jasmine.createSpy('reply')
     };
 
     setupTestBed({

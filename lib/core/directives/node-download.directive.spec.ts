@@ -43,10 +43,10 @@ describe('NodeDownloadDirective', () => {
     let dialogSpy;
     const mockOauth2Auth = {
         oauth2Auth: {
-            callCustomApi: () => Promise.resolve(),
-            on: jasmine.createSpy('on')
+            callCustomApi: () => Promise.resolve()
         },
-        isEcmLoggedIn: jasmine.createSpy('isEcmLoggedIn')
+        isEcmLoggedIn: jasmine.createSpy('isEcmLoggedIn'),
+        reply: jasmine.createSpy('reply')
     };
 
     setupTestBed({

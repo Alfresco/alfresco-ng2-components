@@ -20,7 +20,6 @@ import { By } from '@angular/platform-browser';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import {
-    AppConfigService,
     CoreModule,
     FormFieldModel,
     FormFieldTypes,
@@ -53,12 +52,13 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { Node } from '@alfresco/js-api';
+
 const mockOauth2Auth = {
     oauth2Auth: {
-        callCustomApi: () => Promise.resolve(),
-        on: jasmine.createSpy('on')
+        callCustomApi: () => Promise.resolve()
     },
-    isEcmLoggedIn: jasmine.createSpy('isEcmLoggedIn')
+    isEcmLoggedIn: jasmine.createSpy('isEcmLoggedIn'),
+    reply: jasmine.createSpy('reply')
 };
 
 describe('FormCloudComponent', () => {
@@ -119,8 +119,6 @@ describe('FormCloudComponent', () => {
     });
 
     beforeEach(async(() => {
-        const appConfigService = TestBed.inject(AppConfigService);
-        spyOn(appConfigService, 'get').and.returnValue([]);
         const apiService = TestBed.inject(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
 
@@ -1149,8 +1147,6 @@ describe('retrieve metadata on submit', () => {
     };
 
     beforeEach(async(() => {
-       const appConfigService = TestBed.inject(AppConfigService);
-       spyOn(appConfigService, 'get').and.returnValue([]);
        const apiService = TestBed.inject(AlfrescoApiService);
        spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
 

@@ -29,7 +29,7 @@ const responseBody = {
         { id: 'id', name: 'name', formKey: 'form-key' }
 };
 
-const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi', 'on']);
+const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi']);
 
 describe('Form Cloud service', () => {
 
@@ -54,7 +54,8 @@ describe('Form Cloud service', () => {
             oauth2Auth: oauth2Auth,
             isEcmLoggedIn() {
                 return false;
-            }
+            },
+            reply: jasmine.createSpy('reply')
         });
     });
 

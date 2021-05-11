@@ -74,7 +74,8 @@ describe('Form Definition Selector Cloud Service', () => {
             oauth2Auth: oauth2Auth,
             isEcmLoggedIn() {
                 return false;
-            }
+            },
+            reply: jasmine.createSpy('reply')
         });
     });
 

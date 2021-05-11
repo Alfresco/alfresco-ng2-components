@@ -45,12 +45,12 @@ describe('NotificationCloudService', () => {
 
     const apiServiceMock = {
         oauth2Auth: {
-            token: '1234567',
-            on: jasmine.createSpy('on')
+            token: '1234567'
         },
         isEcmLoggedIn() {
             return false;
-        }
+        },
+        reply: jasmine.createSpy('reply')
     };
 
     setupTestBed({
