@@ -1,5 +1,6 @@
 {
   "ADF": {
+    "LANGUAGE": "Taal",
     "ROLES": {
       "ALL": "Alle",
       "CONTRIBUTOR": "Bijdrager",
@@ -383,8 +384,9 @@
       "ZOOM_IN": "Inzoomen",
       "ZOOM_OUT": "Uitzoomen",
       "FIT_PAGE": "Aangepast aan pagina",
-      "ROTATE_LEFT": "Linksom draaien",
-      "ROTATE_RIGHT": "Rechtsom draaien",
+      "ROTATE": "Draaien",
+      "SAVE": "Opslaan",
+      "CANCEL": "Annuleren",
       "RESET": "Opnieuw instellen",
       "THUMBNAILS": "Documentminiaturen",
       "THUMBNAILS_PANLEL_CLOSE": "Venster met miniaturen sluiten"

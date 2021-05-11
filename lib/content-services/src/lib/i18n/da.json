@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "Ingen tilladelser"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Søg",
+      "SEARCH": "Søg efter brugere eller grupper, der skal tilføjes",
+      "TITLE": "Tilføj tilladelse",
       "TYPE-MESSAGE": "Skriv noget for at begynde at søge efter grupper eller personer",
       "NO-RESULT": "Der blev ikke fundet nogen resultater for denne søgning",
       "ADD-ACTION": "Tilføj",
-      "CLOSE-ACTION": "Luk",
+      "CLOSE-ACTION": "ANNULLER",
       "BASE-DIALOG-TITLE": "Søg efter en gruppe eller personer, du vil tilføje...",
       "EVERYONE": "Alle"
     },
+    "COLUMN": {
+      "NAME": "Brugere og grupper ({{ count }})",
+      "LOCATION": "Placering",
+      "BULK-ROLE": "Sæt alle funktioner til"
+    },
+    "LABELS": {
+      "ON": "On",
+      "OFF": "Off",
+      "DIRECT-PERMISSIONS": "Direkte tilføjet tilladelse",
+      "INHERITED-PERMISSIONS": "Nedarvet tilladelse",
+      "INHERITED-SUBTITLE": "{{count}} brugere eller grupper arver tilladelse fra overordnet mappe",
+      "SELECT-ROLE": "Vælg funktion"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Ingen brugere/grupper",
+      "EMPTY-SUBTITLE": "Tilføj bruger/gruppe til at administrere tilladelse.",
+      "NO-MEMBERS": "Tilføj  grupper eller folkt til at administrere funktioner",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Opdateret {{user}} bruger(e) {{group}} gruppe(r)",
+      "PERMISSION-UPDATE-SUCCESS": "Bruger/gruppe opdateret",
+      "PERMISSION-UPDATE-FAIL": "Opdatering af bruger/gruppe mislykket",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Slettet {{user}} bruger(e) {{group}} gruppe(r)",
+      "PERMISSION-DELETE-SUCCESS": "Bruger/gruppe slettet",
+      "PERMISSION-DELETE-FAIL": "Sletning  af bruger/gruppe mislykket",
+      "PERMISSION-ADD-SUCCESS": "Tilføjet {{user}} bruger(e) {{group}} gruppe(r)",
+      "PERMISSION-ADD-FAIL": "Tilføjelse af bruger/gruppe mislykket",
+      "INHERIT-ENABLE-SUCCESS": "Aktiveret nedarvet tilladelse",
+      "INHERIT-DISABLE-SUCCESS": "Deaktiveret nedarvet tilladelse",
+      "TOGGLE-PERMISSION-FAILED": "Skift af arvetilladelse mislykket"
+    },
+    "ACTION": {
+      "DELETE": "Slet",
+      "ADD-PERMISSION": "Tilføj bruger eller gruppe"
+    },
     "ERROR": {
+      "NOT-FOUND": "Elementet findes ikke længere, eller du har ikke tilladelse til at få det vist.",
       "DUPLICATE-PERMISSION": "En eller flere af de angivne tilladelser findes allerede: {{list}}",
       "NOT-ALLOWED": "Du har ikke tilladelse til at ændre tilladelserne"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "Vælg udseende for egenskab",
       "SELECTED": "Valgt"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} valgt"
   }
 }

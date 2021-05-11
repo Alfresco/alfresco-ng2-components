@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "Ei oikeuksia"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Hae",
+      "SEARCH": "Hae käyttäjiä tai ryhmiä lisättäväksi",
+      "TITLE": "Lisää oikeus",
       "TYPE-MESSAGE": "Aloita ryhmien tai ihmisten hakeminen kirjoittamalla jotain",
       "NO-RESULT": "Tällä haulla ei löydy yhtään tulosta",
       "ADD-ACTION": "Lisää",
-      "CLOSE-ACTION": "Sulje",
+      "CLOSE-ACTION": "Peruuta",
       "BASE-DIALOG-TITLE": "Hae lisättävää ryhmää tai ihmistä...",
       "EVERYONE": "Kaikki"
     },
+    "COLUMN": {
+      "NAME": "Käyttäjät ja ryhmät ({{ count }})",
+      "LOCATION": "Sijainti",
+      "BULK-ROLE": "Määritä kaikki roolit seuraavaan:"
+    },
+    "LABELS": {
+      "ON": "Päällä",
+      "OFF": "Pois",
+      "DIRECT-PERMISSIONS": "Suoraan määrätty oikeus",
+      "INHERITED-PERMISSIONS": "Peritty oikeus",
+      "INHERITED-SUBTITLE": "{{count}} käyttäjää tai ryhmää perii oikeuden ylätason kansiolta",
+      "SELECT-ROLE": "Valitse rooli"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Ei käyttäjiä/ryhmiä",
+      "EMPTY-SUBTITLE": "Lisää käyttäjä/ryhmä hallitaksesi oikeuksia",
+      "NO-MEMBERS": "Lisää ryhmiä tai henkilöitä hallitaksesi rooleja",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Päivitettiin {{user}} käyttäjä(t) {{group}} ryhmä(t)",
+      "PERMISSION-UPDATE-SUCCESS": "Käyttäjä/ryhmä päivitettiin",
+      "PERMISSION-UPDATE-FAIL": "Käyttäjän/ryhmän päivittäminen epäonnistui",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Poistettiin {{user}} käyttäjä(t) {{group}} ryhmä(t)",
+      "PERMISSION-DELETE-SUCCESS": "Käyttäjä/ryhmä poistettiin",
+      "PERMISSION-DELETE-FAIL": "Käyttäjän/ryhmän poistaminen epäonnistui",
+      "PERMISSION-ADD-SUCCESS": "Lisättiin {{user}} käyttäjä(t) {{group}} ryhmä(t)",
+      "PERMISSION-ADD-FAIL": "Käyttäjän/ryhmän lisääminen epäonnistui",
+      "INHERIT-ENABLE-SUCCESS": "Peritty oikeus mahdollistettiin",
+      "INHERIT-DISABLE-SUCCESS": "Peritty oikeus estettiin",
+      "TOGGLE-PERMISSION-FAILED": "Perityn oikeuden vaihtaminen epäonnistui"
+    },
+    "ACTION": {
+      "DELETE": "Poista",
+      "ADD-PERMISSION": "Lisää käyttäjä tai ryhmä"
+    },
     "ERROR": {
+      "NOT-FOUND": "Tätä kohdetta ei ole enää olemassa tai sinulla ei ole oikeuksia sen tarkasteluun.",
       "DUPLICATE-PERMISSION": "Ainakin yksi jo määrittämistäsi oikeuksista on jo mukana: {{list}}",
       "NOT-ALLOWED": "Et voi muokata oikeuksia"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "Valitse ominaisuusjoukot",
       "SELECTED": "Valitut"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} valittiin"
   }
 }

@@ -248,6 +248,7 @@
       "PROCESS_NAME": "Prosessin nimi",
       "APP_VERSION": "Sovellusversio",
       "STARTED_DATE": "Alkamispäivä",
+      "SUSPENDED_DATE": "Keskeytyspäivä",
       "STARTED_BY": "Aloittaja:",
       "COMPLETED_DATE": "Suorituspäivä",
       "DATE_RANGE": {
@@ -374,12 +375,12 @@
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "Täytä lomakekentät tämän tiedoston metatiedoilla"
+    "RETRIEVE_METADATA": "Lomakkeen automaattinen täyttö"
   },
   "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
     "ASSIGNED_TO_ME": "Määritetty minulle",
     "UNASSIGNED": "Määrittämätön",
-    "LIST_OF_CANDIDATE_USERS": "Kandidaattikäyttäjien luettelo",
+    "LIST_OF_CANDIDATE_GROUPS": "Kandidaattiryhmien lista",
     "ASSIGNEE": "Vastuuhenkilö",
     "ASSIGNMENT_TYPE": "Määrityksen tyyppi"
   }

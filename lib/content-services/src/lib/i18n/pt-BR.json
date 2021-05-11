@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "Nenhuma permissão"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Pesquisar",
+      "SEARCH": "Pesquisar usuários ou grupos para adicionar",
+      "TITLE": "Adicionar permissão",
       "TYPE-MESSAGE": "Digite para começar a pesquisar grupos ou pessoas",
       "NO-RESULT": "Nenhum resultado encontrado para esta pesquisa",
       "ADD-ACTION": "Adicionar",
-      "CLOSE-ACTION": "Fechar",
+      "CLOSE-ACTION": "CANCELAR",
       "BASE-DIALOG-TITLE": "Pesquise um grupo ou pessoa para adicionar...",
       "EVERYONE": "Todos"
     },
+    "COLUMN": {
+      "NAME": "Usuários e grupos ({{ count }})",
+      "LOCATION": "Localização",
+      "BULK-ROLE": "Definir todos os papéis como"
+    },
+    "LABELS": {
+      "ON": "Ativada",
+      "OFF": "Desativada",
+      "DIRECT-PERMISSIONS": "Permissão aplicada diretamente",
+      "INHERITED-PERMISSIONS": "Permissão herdada",
+      "INHERITED-SUBTITLE": "{{count}} usuários ou grupos estão herdando a permissão de uma pasta primária",
+      "SELECT-ROLE": "Selecionar o papel"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Nenhum usuário/grupo",
+      "EMPTY-SUBTITLE": "Adicione um usuário/grupo para gerenciar permissões.",
+      "NO-MEMBERS": "Adicionar grupos ou pessoas para gerenciar papéis",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "{{user}} usuários/{{group}} grupos atualizados",
+      "PERMISSION-UPDATE-SUCCESS": "Usuário/grupo atualizado",
+      "PERMISSION-UPDATE-FAIL": "Falha ao atualizar usuário/grupo",
+      "PERMISSION-BULK-DELETE-SUCCESS": "{{user}} usuários/{{group}} grupos excluídos",
+      "PERMISSION-DELETE-SUCCESS": "Usuário/grupo excluído",
+      "PERMISSION-DELETE-FAIL": "Falha ao excluir usuário/grupo",
+      "PERMISSION-ADD-SUCCESS": "{{user}} usuários/{{group}} grupos adicionados",
+      "PERMISSION-ADD-FAIL": "Falha ao adicionar usuário/grupo",
+      "INHERIT-ENABLE-SUCCESS": "Permissão herdada ativada",
+      "INHERIT-DISABLE-SUCCESS": "Permissão herdada desativada",
+      "TOGGLE-PERMISSION-FAILED": "Falha ao ativar/desativar a permissão herdada"
+    },
+    "ACTION": {
+      "DELETE": "Excluir",
+      "ADD-PERMISSION": "Adicionar usuário ou grupo"
+    },
     "ERROR": {
+      "NOT-FOUND": "Este item não existe, ou você não tem permissão de visualização.",
       "DUPLICATE-PERMISSION": "Uma ou mais permissões definidas já está presente: {{list}}",
       "NOT-ALLOWED": "Você não pode alterar permissões"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "Selecionar aspectos de propriedade",
       "SELECTED": "Seleção"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} selecionado(s)"
   }
 }

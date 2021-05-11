@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "Sin permisos"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Buscar",
+      "SEARCH": "Buscar usuarios o grupos que añadir",
+      "TITLE": "Añadir permiso",
       "TYPE-MESSAGE": "Escriba algo para comenzar a buscar grupos o personas",
       "NO-RESULT": "No se han encontrado resultados para esta búsqueda",
       "ADD-ACTION": "Añadir",
-      "CLOSE-ACTION": "Cerrar",
+      "CLOSE-ACTION": "Cancelar",
       "BASE-DIALOG-TITLE": "Buscar un grupo o personas para añadir...",
       "EVERYONE": "Todos"
     },
+    "COLUMN": {
+      "NAME": "Usuarios y grupos ({{ count }})",
+      "LOCATION": "Ubicación",
+      "BULK-ROLE": "Establecer todas las funciones a"
+    },
+    "LABELS": {
+      "ON": "Activado",
+      "OFF": "Desactivado",
+      "DIRECT-PERMISSIONS": "Permiso aplicado directamente",
+      "INHERITED-PERMISSIONS": "Permiso heredado",
+      "INHERITED-SUBTITLE": "{{count}} usuarios o grupos están heredando el permiso de una carpeta principal",
+      "SELECT-ROLE": "Seleccionar función"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Sin usuarios/grupos",
+      "EMPTY-SUBTITLE": "Añadir un usuario/grupo para administrar el permiso.",
+      "NO-MEMBERS": "Añadir grupos o personas para administrar funciones",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Usuario(s) {{user}} grupo(s) {{group}} actualizados",
+      "PERMISSION-UPDATE-SUCCESS": "Usuario/Grupo actualizado",
+      "PERMISSION-UPDATE-FAIL": "Error al actualizar usuario/grupo",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Usuario(s) {{user}} grupo(s) {{group}} eliminados",
+      "PERMISSION-DELETE-SUCCESS": "Usuario/Grupo eliminado",
+      "PERMISSION-DELETE-FAIL": "Error al eliminar usuario/grupo",
+      "PERMISSION-ADD-SUCCESS": "Usuario(s) {{user}} grupo(s) {{group}} añadidos",
+      "PERMISSION-ADD-FAIL": "Error al añadir usuario/grupo",
+      "INHERIT-ENABLE-SUCCESS": "Permiso heredado habilitado",
+      "INHERIT-DISABLE-SUCCESS": "Permiso heredado inhabilitado",
+      "TOGGLE-PERMISSION-FAILED": "Error al alternar permiso heredado"
+    },
+    "ACTION": {
+      "DELETE": "Eliminar",
+      "ADD-PERMISSION": "Añadir usuario o grupo"
+    },
     "ERROR": {
+      "NOT-FOUND": "Este elemento ya no existe o no tiene permiso para verlo.",
       "DUPLICATE-PERMISSION": "Uno o más de los permisos que ha establecido ya existe: {{list}}",
       "NOT-ALLOWED": "No puede cambiar los permisos"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "Seleccionar aspectos de propiedades",
       "SELECTED": "Seleccionado"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} seleccionado(s)"
   }
 }

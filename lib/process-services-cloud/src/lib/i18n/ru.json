@@ -248,6 +248,7 @@
       "PROCESS_NAME": "Имя процесса",
       "APP_VERSION": "Версия приложения",
       "STARTED_DATE": "Дата начала",
+      "SUSPENDED_DATE": "Дата приостановки",
       "STARTED_BY": "Запущено пользователем",
       "COMPLETED_DATE": "Дата выполнения",
       "DATE_RANGE": {
@@ -374,12 +375,12 @@
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "Заполните поля формы метаданными этого файла"
+    "RETRIEVE_METADATA": "Автоматически заполнить форму"
   },
   "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
     "ASSIGNED_TO_ME": "Назначенные мне",
     "UNASSIGNED": "Неназначенные",
-    "LIST_OF_CANDIDATE_USERS": "Список пользователей-кандидатов",
+    "LIST_OF_CANDIDATE_GROUPS": "Список групп-кандидатов",
     "ASSIGNEE": "Исполнитель",
     "ASSIGNMENT_TYPE": "Тип задания"
   }

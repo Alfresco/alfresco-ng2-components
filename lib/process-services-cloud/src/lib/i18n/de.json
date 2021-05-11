@@ -248,6 +248,7 @@
       "PROCESS_NAME": "Prozessname",
       "APP_VERSION": "App-Version",
       "STARTED_DATE": "Startdatum",
+      "SUSPENDED_DATE": "Sperrdatum",
       "STARTED_BY": "Gestartet von",
       "COMPLETED_DATE": "Abschlussdatum",
       "DATE_RANGE": {
@@ -374,12 +375,12 @@
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "Formularfelder mit den Metadaten dieser Datei ausfüllen"
+    "RETRIEVE_METADATA": "AutoAusfüllen-Formular"
   },
   "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
     "ASSIGNED_TO_ME": "Mir zugewiesen",
     "UNASSIGNED": "Nicht zugewiesen",
-    "LIST_OF_CANDIDATE_USERS": "Liste der Kandidatenbenutzer",
+    "LIST_OF_CANDIDATE_GROUPS": "Liste der Kandidatengruppen",
     "ASSIGNEE": "Zugewiesener Benutzer",
     "ASSIGNMENT_TYPE": "Zuweisungstyp"
   }

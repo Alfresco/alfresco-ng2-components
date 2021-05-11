@@ -171,7 +171,7 @@
       "LOCK": "Vergrendeling",
       "METADATA": "Info",
       "DOWNLOAD": "Downloaden",
-      "PERMISSION": "Machtiging",
+      "PERMISSION": "Rechten",
       "FOLDER": {
         "COPY": "Kopiëren",
         "MOVE": "Verplaatsen",
@@ -269,8 +269,8 @@
     "NODE_LIST": "Taglijst per node-id"
   },
   "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Machtiging overnemen",
-    "INHERITED_PERMISSIONS_BUTTON": "Machtiging overgenomen"
+    "INHERIT_PERMISSION_BUTTON": "Rechten overnemen",
+    "INHERITED_PERMISSIONS_BUTTON": "Rechten overgenomen"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

@@ -1,5 +1,6 @@
 {
   "ADF": {
+    "LANGUAGE": "言語",
     "ROLES": {
       "ALL": "すべて",
       "CONTRIBUTOR": "投稿者",
@@ -383,8 +384,9 @@
       "ZOOM_IN": "ズームイン",
       "ZOOM_OUT": "ズームアウト",
       "FIT_PAGE": "ページに合わせる",
-      "ROTATE_LEFT": "左に回転",
-      "ROTATE_RIGHT": "右に回転",
+      "ROTATE": "回転",
+      "SAVE": "保存",
+      "CANCEL": "キャンセル",
       "RESET": "リセット",
       "THUMBNAILS": "文書のサムネイル",
       "THUMBNAILS_PANLEL_CLOSE": "サムネイルパネルを閉じる"
