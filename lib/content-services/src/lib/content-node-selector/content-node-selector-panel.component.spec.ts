@@ -1044,7 +1044,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.chosenNode).toEqual([fakeFolderNode]);
             });
 
-            it('should the update pagination after row filtering for copy and move action', () => {
+            it('should update the pagination after filtering rows on copy and move action', () => {
                 component.documentList.folderNode = fakeFolderNode;
                 const fakeNodePage: NodePaging = {
                     list: {
