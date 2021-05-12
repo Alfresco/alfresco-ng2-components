@@ -552,11 +552,21 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     /**
      * Attempts to set the currently loaded node
      */
-    onFolderLoaded(): void {
+    onFolderLoaded(pageList: NodePaging): void {
+        this.updatePaginationAfterRowFilter(pageList);
         if (!this.showingSearchResults) {
             this.attemptNodeSelection(this.documentList.folderNode);
         }
         this.folderLoaded.emit();
+    }
+
+    /**
+     * Updates pagination.hasMoreItems to false after filtering only folders during 'COPY' and 'MOVE' action
+     */
+    updatePaginationAfterRowFilter(page: NodePaging): void {
+        if (this.documentList.data.getRows().length < this.DEFAULT_PAGINATION.maxItems) {
+            page.list.pagination.hasMoreItems = false;
+        }
     }
 
     /**

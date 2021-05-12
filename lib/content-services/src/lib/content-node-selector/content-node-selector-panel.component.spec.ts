@@ -18,8 +18,8 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging } from '@alfresco/js-api';
-import { AppConfigService, FileModel, FileUploadStatus, NodesApiService, setupTestBed, SitesService, UploadService, FileUploadCompleteEvent } from '@alfresco/adf-core';
+import { Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging, UserInfo } from '@alfresco/js-api';
+import { AppConfigService, FileModel, FileUploadStatus, NodesApiService, setupTestBed, SitesService, UploadService, FileUploadCompleteEvent, DataRow, ThumbnailService, ContentService, DataColumn } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
@@ -28,7 +28,7 @@ import { DocumentListService } from '../document-list/services/document-list.ser
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
-import { NodeEntryEvent, ShareDataRow } from '../document-list';
+import { NodeEntryEvent, ShareDataRow, ShareDataTableAdapter } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../search';
 import { mockQueryBody } from '../mock/search-query.mock';
@@ -66,6 +66,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
     let searchQueryBuilderService: SearchQueryBuilderService;
     let contentNodeSelectorPanelService: ContentNodeSelectorPanelService;
     let uploadService: UploadService;
+    let thumbnailService: ThumbnailService;
+    let contentService: ContentService;
 
     function typeToSearchBox(searchTerm = 'string-to-search') {
         const searchInput = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-input"]'));
@@ -97,6 +99,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
             sitesService = TestBed.inject(SitesService);
             contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
             uploadService = TestBed.inject(UploadService);
+            contentService = TestBed.inject(ContentService);
+            thumbnailService = TestBed.inject(ThumbnailService);
+
             searchQueryBuilderService = component.queryBuilderService;
             component.queryBuilderService.resetToDefaults();
 
@@ -1016,23 +1021,76 @@ describe('ContentNodeSelectorPanelComponent', () => {
         describe('Chosen node', () => {
 
             const entry: Node = <Node> { id: 'fakeid'};
-            const nodePage: NodePaging = <NodePaging> { list: {}, pagination: {} };
+            const nodePage: NodePaging = <NodePaging> { list: { pagination: {} } };
             let hasAllowableOperations;
+            const fakeFolderNode = <Node> { id: 'fakeNodeId', isFolder: true };
 
             function returnHasPermission(): boolean {
                 return hasAllowableOperations;
             }
 
             beforeEach(() => {
+                const schema = [<DataColumn> {}];
+                const rows = [<DataRow> {}, <DataRow> {}];
+                component.documentList.data = new ShareDataTableAdapter(thumbnailService, contentService, schema);
+                spyOn(component.documentList.data, 'getRows').and.returnValue(rows);
                 spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
             });
 
             it('should the selection become the currently navigated folder when the folder loads (Acts as destination for cases like copy action)', () => {
-                const fakeFolderNode = <Node> { id: 'fakeNodeId', isFolder: true };
                 component.documentList.folderNode = fakeFolderNode;
-                component.onFolderLoaded();
+                component.onFolderLoaded(nodePage);
 
                 expect(component.chosenNode).toEqual([fakeFolderNode]);
+            });
+
+            it('should the update pagination after row filtering for copy and move action', () => {
+                component.documentList.folderNode = fakeFolderNode;
+                const fakeNodePage: NodePaging = {
+                    list: {
+                        pagination: {
+                            hasMoreItems: true,
+                            totalItems: 2
+                        },
+                        entries: [
+                            {
+                                entry: {
+                                    id: '123',
+                                    name: 'MyFolder',
+                                    isFile: false,
+                                    isFolder: true,
+                                    nodeType: 'mock',
+                                    modifiedAt: new Date(),
+                                    modifiedByUser: new UserInfo(),
+                                    createdAt: new Date(),
+                                    createdByUser: new UserInfo()
+                                }
+                            },
+                            {
+                                entry: {
+                                    id: '456',
+                                    name: 'MyFolder2',
+                                    isFile: false,
+                                    isFolder: true,
+                                    nodeType: 'mock',
+                                    modifiedAt: new Date(),
+                                    modifiedByUser: new UserInfo(),
+                                    createdAt: new Date(),
+                                    createdByUser: new UserInfo()
+                                }
+                            }
+                        ]
+                    }
+                };
+                component.DEFAULT_PAGINATION.maxItems = 1;
+                component.documentList.ready.emit(fakeNodePage);
+                component.onFolderLoaded(fakeNodePage);
+                expect(fakeNodePage.list.pagination.hasMoreItems).toBe(true);
+
+                component.DEFAULT_PAGINATION.maxItems = 25;
+                component.onFolderLoaded(fakeNodePage);
+
+                expect(fakeNodePage.list.pagination.hasMoreItems).toBe(false);
             });
 
             describe('in the case when isSelectionValid is a custom function for checking permissions,', () => {
