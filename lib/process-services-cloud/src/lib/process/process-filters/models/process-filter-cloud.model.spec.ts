@@ -41,9 +41,7 @@ describe('ProcessFilterCloudModel', () => {
     it('should get suspended start and end date if date type is today', () => {
         const date = new Date();
         const model = new ProcessFilterCloudModel({
-            suspendedDateType: DateCloudFilterType.TODAY,
-            _suspendedFrom: date,
-            _suspendedTo: date
+            suspendedDateType: DateCloudFilterType.TODAY
         });
         expect(model.suspendedFrom).toEqual(moment(date).startOf('day').toISOString(true));
         expect(model.suspendedTo).toEqual(moment(date).endOf('day').toISOString(true));
@@ -52,9 +50,7 @@ describe('ProcessFilterCloudModel', () => {
     it('should get completed date start and end date if date type is today', () => {
         const date = new Date();
         const model = new ProcessFilterCloudModel({
-            completedDateType: DateCloudFilterType.TODAY,
-            _completedFrom: date,
-            _completedTo: date
+            completedDateType: DateCloudFilterType.TODAY
         });
         expect(model.completedFrom).toEqual(moment(date).startOf('day').toISOString(true));
         expect(model.completedTo).toEqual(moment(date).endOf('day').toISOString(true));
@@ -63,9 +59,7 @@ describe('ProcessFilterCloudModel', () => {
     it('should get started date start and end date if date type is today', () => {
         const date = new Date();
         const model = new ProcessFilterCloudModel({
-            startedDateType: DateCloudFilterType.TODAY,
-            _startFrom: date,
-            _startTo: date
+            startedDateType: DateCloudFilterType.TODAY
         });
         expect(model.startFrom).toEqual(moment(date).startOf('day').toISOString(true));
         expect(model.startTo).toEqual(moment(date).endOf('day').toISOString(true));
