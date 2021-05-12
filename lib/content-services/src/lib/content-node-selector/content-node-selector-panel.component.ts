@@ -564,7 +564,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Updates pagination.hasMoreItems to false after filtering only folders during 'COPY' and 'MOVE' action
      */
     updatePaginationAfterRowFilter(nodePaging: NodePaging): void {
-        if (this.documentList.data.getRows().length < this.DEFAULT_PAGINATION.maxItems) {
+        if (this.documentList.data.getRows().length < nodePaging.list.pagination.maxItems) {
             nodePaging.list.pagination.hasMoreItems = false;
         }
     }

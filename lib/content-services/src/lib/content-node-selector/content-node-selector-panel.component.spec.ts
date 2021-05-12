@@ -54,7 +54,7 @@ const fakeResultSetPaging: ResultSetPaging = {
     }
 };
 
-describe('ContentNodeSelectorPanelComponent', () => {
+fdescribe('ContentNodeSelectorPanelComponent', () => {
     const debounceSearch = 200;
     let component: ContentNodeSelectorPanelComponent;
     let fixture: ComponentFixture<ContentNodeSelectorPanelComponent>;
@@ -1044,12 +1044,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.chosenNode).toEqual([fakeFolderNode]);
             });
 
-            it('should update the pagination after filtering rows on copy and move action', () => {
+            fit('should update the pagination after filtering rows on copy and move action', () => {
                 component.documentList.folderNode = fakeFolderNode;
-                const fakeNodePage: NodePaging = {
+                let fakeNodePage: NodePaging = {
                     list: {
                         pagination: {
                             hasMoreItems: true,
+                            maxItems: 1,
                             totalItems: 2
                         },
                         entries: [
@@ -1082,12 +1083,11 @@ describe('ContentNodeSelectorPanelComponent', () => {
                         ]
                     }
                 };
-                component.DEFAULT_PAGINATION.maxItems = 1;
                 component.documentList.ready.emit(fakeNodePage);
                 component.onFolderLoaded(fakeNodePage);
-                expect(fakeNodePage.list.pagination.hasMoreItems).toBe(true);
 
-                component.DEFAULT_PAGINATION.maxItems = 25;
+                expect(fakeNodePage.list.pagination.hasMoreItems).toBe(true);
+                fakeNodePage.list.pagination.maxItems = 25;
                 component.onFolderLoaded(fakeNodePage);
 
                 expect(fakeNodePage.list.pagination.hasMoreItems).toBe(false);
