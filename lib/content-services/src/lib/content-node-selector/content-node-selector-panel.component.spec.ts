@@ -54,7 +54,7 @@ const fakeResultSetPaging: ResultSetPaging = {
     }
 };
 
-fdescribe('ContentNodeSelectorPanelComponent', () => {
+describe('ContentNodeSelectorPanelComponent', () => {
     const debounceSearch = 200;
     let component: ContentNodeSelectorPanelComponent;
     let fixture: ComponentFixture<ContentNodeSelectorPanelComponent>;
@@ -1044,7 +1044,7 @@ fdescribe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.chosenNode).toEqual([fakeFolderNode]);
             });
 
-            fit('should update the pagination after filtering rows on copy and move action', () => {
+            it('should update the pagination after filtering rows on copy and move action', () => {
                 component.documentList.folderNode = fakeFolderNode;
                 let fakeNodePage: NodePaging = {
                     list: {
