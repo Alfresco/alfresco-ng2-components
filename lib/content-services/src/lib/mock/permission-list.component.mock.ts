@@ -124,7 +124,8 @@ export const fakeNodeInheritedOnly = {
           },
           {
             'id': 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
-            'name': 'testsite'
+            'name': 'testsite',
+            'nodeType': 'si:site'
           },
           {
             'id': '71626fae-0c04-4d0c-a129-20fa4c178716',

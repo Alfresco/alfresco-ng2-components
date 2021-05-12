@@ -43,8 +43,7 @@ export class PermissionListService {
                 node,
                 roles,
                 inheritedPermissions: this.nodePermissionService.getInheritedPermission(node),
-                localPermissions: this.nodePermissionService.getLocalPermissions(node),
-                allPermission: this.nodePermissionService.getNodePermissions(node)
+                localPermissions: this.nodePermissionService.getLocalPermissions(node)
             };
         })
     );
@@ -76,12 +75,24 @@ export class PermissionListService {
 
     toggleInherited(change: MatSlideToggleChange) {
         if (this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATEPERMISSIONS)) {
+            let updateLocalPermission$ = of(null);
             const nodeBody = {
                 permissions: {
                     isInheritanceEnabled: !this.node.permissions.isInheritanceEnabled
                 }
             };
-            this.nodeService.updateNode(this.node.id, nodeBody, {include: ['permissions']})
+
+            const tempNode = { ...this.node, permissions: { ...this.node.permissions, isInheritanceEnabled: !this.node.permissions.isInheritanceEnabled } };
+            if (!this.hasLocalPermission(tempNode)) {
+                const authorityId = this.getManagerAuthority(this.node);
+                const permissions = [
+                    ...(this.node.permissions.locallySet || []),
+                    { authorityId, name: 'SiteManager', accessStatus: 'ALLOWED' }
+                ];
+                updateLocalPermission$ = this.nodePermissionService.updatePermissions(this.node, permissions);
+            }
+
+            updateLocalPermission$.pipe(switchMap(() => this.nodeService.updateNode(this.node.id, nodeBody, {include: ['permissions']})))
                 .subscribe(
                     (nodeUpdated: Node) => {
                         const message = nodeUpdated.permissions.isInheritanceEnabled ? 'PERMISSION_MANAGER.MESSAGE.INHERIT-ENABLE-SUCCESS' : 'PERMISSION_MANAGER.MESSAGE.INHERIT-DISABLE-SUCCESS';
@@ -173,10 +184,14 @@ export class PermissionListService {
     }
 
     deletePermission(permission: PermissionDisplayModel) {
+        const cloneNode = { ...this.node, permissions: { ...this.node.permissions, locallySet: [ ...this.node.permissions.locallySet ] } };
         this.nodePermissionService
-            .removePermission(this.node, permission)
+            .removePermission(cloneNode, permission)
             .subscribe((node) => {
                     this.notificationService.showInfo('PERMISSION_MANAGER.MESSAGE.PERMISSION-DELETE-SUCCESS');
+                    if (!node.permissions.locallySet) {
+                       node.permissions.locallySet = []
+                    }
                     this.reloadNode(node);
                 },
                 () => {
@@ -199,6 +214,23 @@ export class PermissionListService {
             Object.assign(this.node.permissions, node.permissions);
         }
         this.nodeWithRoles$.next({ node: this.node, roles: this.roles });
+    }
+
+    private hasLocalPermission(node: Node) {
+        if (node.permissions.isInheritanceEnabled) {
+            return true;
+        }
+        const sitePath = node.path?.elements?.find((path) => path.nodeType === 'st:site');
+        if (sitePath) {
+            const authorityId = `GROUP_site_${sitePath.name}_SiteManager`;
+            return !!node.permissions.locallySet?.find((permission) => permission.authorityId === authorityId);
+        }
+        return false;
+    }
+
+    private getManagerAuthority(node: Node) {
+        const sitePath = node.path.elements.find((path) => path.nodeType === 'si:site');
+        return `GROUP_site_${sitePath.name}_SiteManager`;
     }
 
     private isGroup(authorityId) {
