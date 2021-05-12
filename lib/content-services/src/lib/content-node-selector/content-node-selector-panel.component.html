@@ -43,7 +43,7 @@
         </adf-search-panel>
         <div class="adf-content-node-selector-document-list-container">
     <adf-toolbar>
-        <adf-toolbar-title [adf-node-counter]="getSelectedCount()">
+        <adf-toolbar-title>
             <ng-container *ngIf="!showBreadcrumbs()">
                 <span role="heading" aria-level="3" class="adf-search-results-label">{{ 'NODE_SELECTOR.SEARCH_RESULTS' | translate }}</span>
             </ng-container>
@@ -57,6 +57,7 @@
                 [root]="breadcrumbFolderTitle"
                 data-automation-id="content-node-selector-content-breadcrumb">
             </adf-dropdown-breadcrumb>
+            <ng-container *ngIf="showNodeCounter" [adf-node-counter]="getSelectedCount()"></ng-container>
         </adf-toolbar-title>
     </adf-toolbar>
 

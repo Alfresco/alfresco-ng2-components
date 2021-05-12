@@ -45,6 +45,7 @@ Opens a [Content Node Selector](content-node-selector.component.md)  in its own 
 | showDropdownSiteList | `boolean` |  | Toggle sites list dropdown rendering |
 | showFilesInResult | `void` |  | Shows the files and folders in the search result |
 | showSearch | `boolean` |  | Toggle search input rendering |
+| showNodeCounter | `boolean` | false | Shows the node counter in the breadcrumb |
 
 ### Events
 
