@@ -65,7 +65,7 @@ describe('VersionUploadComponent', () => {
     });
 
     it('should disabled upload button on upload starts',  fakeAsync(() => {
-        component.uploadStarting.subscribe(() => {
+        component.uploadStarted.subscribe(() => {
             expect(component.disabled).toEqual(true);
         });
         uploadService.fileUploadStarting.next();
