@@ -112,7 +112,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     isCounterVisible(): boolean {
-        return this.action === 'ATTACH';
+        return this.action === 'ATTACH' || this.action === 'CHOOSE';
     }
 
     isMultipleSelection(): boolean {

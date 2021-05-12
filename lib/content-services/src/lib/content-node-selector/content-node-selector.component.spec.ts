@@ -446,5 +446,19 @@ describe('ContentNodeSelectorComponent', () => {
 
             expect(component.getSelectedCount()).toBe(1);
         });
+
+        it('should show the counter depending on the action', () => {
+            component.action = 'ATTACH';
+            expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).not.toBe(null);
+
+            component.action = 'CHOOSE';
+            expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).not.toBe(null);
+
+            component.action = 'COPY';
+            expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
+
+            component.action = 'MOVE';
+            expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
+        });
     });
 });
