@@ -74,7 +74,7 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
 
     /** Emitted when the upload starts */
     @Output()
-    uploadStarting = new EventEmitter<FileUploadEvent>();
+    uploadStarted = new EventEmitter<FileUploadEvent>();
 
     constructor(private contentService: ContentService, private uploadService: UploadService) {
     }
@@ -84,7 +84,7 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((event: FileUploadEvent) => {
                 this.disabled = true;
-                this.uploadStarting.emit(event);
+                this.uploadStarted.emit(event);
             });
     }
 
