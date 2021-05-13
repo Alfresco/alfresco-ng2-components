@@ -694,8 +694,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     onSubmitFile(newImageBlob: Blob) {
-        const newImageFile: File = new File([newImageBlob], this?.nodeEntry?.entry?.name, { type: this?.nodeEntry?.entry?.content?.mimeType });
         if (this?.nodeEntry?.entry?.id && !this.readOnly) {
+            const newImageFile: File = new File([newImageBlob], this?.nodeEntry?.entry?.name, { type: this?.nodeEntry?.entry?.content?.mimeType });
             const newFile = new FileModel(
                 newImageFile,
                 {
@@ -706,7 +706,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 },
                 this?.nodeEntry?.entry?.id
             );
-            this.blobFile = newImageBlob;
             this.uploadService.addToQueue(...[newFile]);
             this.uploadService.uploadFilesInTheQueue();
         }

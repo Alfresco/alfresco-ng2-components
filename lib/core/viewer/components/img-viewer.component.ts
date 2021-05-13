@@ -153,6 +153,10 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges {
             this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
             return;
         }
+        const urlFile = changes['urlFile'];
+        if (urlFile?.currentValue && !this.blobFile && this.cropper) {
+            this.cropper.replace(this.urlFile);
+        }
         if (!this.urlFile && !this.blobFile) {
             throw new Error('Attribute urlFile or blobFile is required');
         }
@@ -187,7 +191,6 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges {
 
         this.cropper.getCroppedCanvas().toBlob((blob) => {
             this.submit.emit(blob);
-            this.cropper.replace(this.cropper.getCroppedCanvas().toDataURL());
             this.cropper.clear();
         });
     }

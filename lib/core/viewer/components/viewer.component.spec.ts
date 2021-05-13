@@ -31,6 +31,7 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UploadService } from '../../services/upload.service';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -135,6 +136,7 @@ describe('ViewerComponent', () => {
     let alfrescoApiService: AlfrescoApiService;
     let element: HTMLElement;
     let dialog: MatDialog;
+    let uploadService: UploadService;
 
     setupTestBed({
         imports: [
@@ -168,6 +170,7 @@ describe('ViewerComponent', () => {
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
+        uploadService = TestBed.inject(UploadService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
     });
@@ -962,6 +965,7 @@ describe('ViewerComponent', () => {
             });
 
             it('should update version when emitted by image-viewer and user has update permissions', () => {
+                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
                 component.readOnly = false;
                 component.nodeEntry = new NodeEntry({ entry: { name: 'fakeImage.png', id: '12', content: { mimeType: 'txt' } } });
                 const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
@@ -969,10 +973,11 @@ describe('ViewerComponent', () => {
                 component.onSubmitFile(fakeBlob);
                 fixture.detectChanges();
 
-                expect(component.blobFile).toEqual(fakeBlob);
+                expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalled();
             });
 
             it('should not update version when emitted by image-viewer and user doesn`t have update permissions', () => {
+                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
                 component.readOnly = true;
                 component.nodeEntry = new NodeEntry({ entry: { name: 'fakeImage.png', id: '12', content: { mimeType: 'txt' } } });
                 const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
@@ -980,7 +985,7 @@ describe('ViewerComponent', () => {
                 component.onSubmitFile(fakeBlob);
                 fixture.detectChanges();
 
-                expect(component.blobFile).toEqual(undefined);
+                expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
             });
         });
 
