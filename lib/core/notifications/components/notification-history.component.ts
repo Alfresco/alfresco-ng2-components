@@ -67,11 +67,11 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
 
     ngAfterViewInit(): void {
         this.notificationService.notifications$
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe((notification: NotificationModel) => {
-            this.addNewNotification(notification);
-            this.cd.detectChanges();
-        });
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((notification: NotificationModel) => {
+                this.addNewNotification(notification);
+                this.cd.detectChanges();
+            });
     }
 
     ngOnDestroy() {
@@ -113,7 +113,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     markAsRead() {
         this.notifications = [];
         this.paginatedNotifications = [];
-        this.storageService.removeItem('notifications');
+        this.storageService.removeItem(NotificationHistoryComponent.NOTIFICATION_STORAGE);
         this.createPagination();
         this.trigger.closeMenu();
     }
