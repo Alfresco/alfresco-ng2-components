@@ -331,20 +331,18 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return document.getElementById(`${this.randomPdfId}-viewer-viewerPdf`);
     }
 
-    checkPageFitInContainer(scale: number) {
+    checkPageFitInContainer(scale: number): number {
         const documentContainerSize = this.getDocumentContainer();
         const page = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
 
         if (page.width > documentContainerSize.clientWidth) {
             scale = Math.fround((documentContainerSize.clientWidth - 20) / page.width);
             if (scale < this.MIN_SCALE) {
-                return this.MIN_SCALE;
-            } else {
-                return scale;
+                scale = this.MIN_SCALE;
             }
-        } else {
-            return scale;
         }
+
+        return scale;
     }
 
     /**
