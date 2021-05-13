@@ -94,19 +94,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges {
             viewMode: 1,
             checkCrossOrigin: false,
             ready: () => {
-                if (this.imageElement.nativeElement.width < this.cropper.getContainerData().width) {
-                    const width = this.imageElement.nativeElement.width;
-                    const height = this.imageElement.nativeElement.height;
-                    const top = (this.cropper.getContainerData().height - this.imageElement.nativeElement.height) / 2;
-                    const left = (this.cropper.getContainerData().width - this.imageElement.nativeElement.width) / 2;
-
-                    this.cropper.setCanvasData({
-                        width,
-                        height,
-                        top,
-                        left
-                    });
-                }
+                this.updateCanvasContainer();
             }
         });
     }
@@ -198,7 +186,23 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges {
         this.cropper.reset();
         this.cropper.setDragMode('move');
         this.scale = 1.0;
-        this.cropper.zoomTo(this.scale);
+        this.updateCanvasContainer();
+    }
+
+    updateCanvasContainer() {
+        if (this.imageElement.nativeElement.width < this.cropper.getContainerData().width) {
+            const width = this.imageElement.nativeElement.width;
+            const height = this.imageElement.nativeElement.height;
+            const top = (this.cropper.getContainerData().height - this.imageElement.nativeElement.height) / 2;
+            const left = (this.cropper.getContainerData().width - this.imageElement.nativeElement.width) / 2;
+
+            this.cropper.setCanvasData({
+                width,
+                height,
+                top,
+                left
+            });
+        }
     }
 
     onImageError() {
