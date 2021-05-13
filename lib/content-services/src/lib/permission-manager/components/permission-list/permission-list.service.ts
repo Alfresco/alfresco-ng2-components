@@ -45,7 +45,7 @@ export class PermissionListService {
                 node,
                 roles,
                 localPermissions,
-                inheritedPermissions: this.nodePermissionService.getInheritedPermission(node),
+                inheritedPermissions: this.nodePermissionService.getInheritedPermission(node)
             };
         })
     );
@@ -191,7 +191,7 @@ export class PermissionListService {
             .subscribe((node) => {
                     this.notificationService.showInfo('PERMISSION_MANAGER.MESSAGE.PERMISSION-DELETE-SUCCESS');
                     if (!node.permissions.locallySet) {
-                       node.permissions.locallySet = []
+                       node.permissions.locallySet = [];
                     }
                     this.reloadNode(node);
                 },
@@ -226,7 +226,7 @@ export class PermissionListService {
         }
 
         if (!hasLocalManagerPermission && authorityId) {
-            return authorityId
+            return authorityId;
         }
         return null;
     }
