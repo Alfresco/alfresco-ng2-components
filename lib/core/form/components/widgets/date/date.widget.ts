@@ -55,7 +55,6 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
 
     minDate: Moment;
     maxDate: Moment;
-    displayDate: Moment;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -83,7 +82,6 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
                 this.maxDate = moment(this.field.maxValue, this.DATE_FORMAT);
             }
         }
-        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);
     }
 
     ngOnDestroy() {

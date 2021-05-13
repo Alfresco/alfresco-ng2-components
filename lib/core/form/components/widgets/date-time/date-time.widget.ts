@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
@@ -43,11 +43,10 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['./date-time.widget.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy, OnChanges {
+export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
     minDate: Moment;
     maxDate: Moment;
-    displayDate: Moment;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -74,17 +73,6 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
             if (this.field.maxValue) {
                 this.maxDate = moment(this.field.maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
             }
-        }
-        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat)
-            .add(
-                moment(this.field.value, this.field.dateDisplayFormat).utcOffset(),
-                'minutes');
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes && changes.field  && !changes.field.firstChange && changes.field.currentValue.value !== changes.field.previousValue.value) {
-            this.displayDate = moment(changes.field.currentValue.value, this.field.dateDisplayFormat)
-                .add(moment(changes.field.currentValue.value, this.field.dateDisplayFormat).utcOffset(), 'minutes');
         }
     }
 
