@@ -63,7 +63,7 @@ describe('Notification History Component', () => {
     }));
 
     afterEach(() => {
-        storage.removeItem('notifications');
+        storage.removeItem(NotificationHistoryComponent.NOTIFICATION_STORAGE);
         fixture.destroy();
     });
 
@@ -89,7 +89,7 @@ describe('Notification History Component', () => {
                 const markAllAsRead = <HTMLButtonElement> overlayContainerElement.querySelector('#adf-notification-history-mark-as-read');
                 markAllAsRead.click();
                 fixture.detectChanges();
-                expect(storage.getItem('notifications')).toBeNull();
+                expect(storage.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)).toBeNull();
                 expect(component.notifications.length).toBe(0);
                 done();
             });
@@ -150,7 +150,7 @@ describe('Notification History Component', () => {
         });
 
         it('should read notifications from local storage', (done) => {
-            storage.setItem('notifications', JSON.stringify([{
+            storage.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify([{
                 messages: ['My new message'],
                 datetime: new Date(),
                 type: NOTIFICATION_TYPE.RECURSIVE

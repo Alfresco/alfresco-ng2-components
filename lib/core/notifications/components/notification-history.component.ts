@@ -32,6 +32,7 @@ import { Pagination } from '@alfresco/js-api';
 export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterViewInit {
 
     public static MAX_NOTIFICATION_STACK_LENGTH = 100;
+    public static NOTIFICATION_STORAGE = 'notification-history';
 
     @ViewChild(MatMenuTrigger, { static: true })
     trigger: MatMenuTrigger;
@@ -61,7 +62,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     ngOnInit() {
-        this.notifications = JSON.parse(this.storageService.getItem('notifications')) || [];
+        this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];
     }
 
     ngAfterViewInit(): void {
@@ -90,7 +91,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     saveNotifications() {
-        this.storageService.setItem('notifications', JSON.stringify(this.notifications.filter((notification) =>
+        this.storageService.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(this.notifications.filter((notification) =>
             notification.type !== NOTIFICATION_TYPE.RECURSIVE
         )));
     }
