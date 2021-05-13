@@ -306,6 +306,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                         }
                         horizontalScale = Math.round(horizontalScale);
                         scale = Math.min(this.MAX_AUTO_SCALE, horizontalScale);
+                        scale = this.checkPageFitInContainer(scale);
 
                         break;
                     default:
@@ -316,6 +317,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 this.setScaleUpdatePages(scale);
             } else {
                 this.currentScale = 0;
+                scale = this.checkPageFitInContainer(scale);
                 this.setScaleUpdatePages(scale);
             }
         }
@@ -327,6 +329,22 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     private getViewer() {
         return document.getElementById(`${this.randomPdfId}-viewer-viewerPdf`);
+    }
+
+    checkPageFitInContainer(scale: number) {
+        const documentContainerSize = this.getDocumentContainer();
+        const page = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
+
+        if (page.width > documentContainerSize.clientWidth) {
+            scale = Math.fround((documentContainerSize.clientWidth - 20) / page.width);
+            if (scale < this.MIN_SCALE) {
+                return this.MIN_SCALE;
+            } else {
+                return scale;
+            }
+        } else {
+            return scale;
+        }
     }
 
     /**
