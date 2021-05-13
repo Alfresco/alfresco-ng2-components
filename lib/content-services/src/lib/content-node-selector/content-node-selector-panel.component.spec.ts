@@ -1046,7 +1046,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it('should update the pagination after filtering rows on copy and move action', () => {
                 component.documentList.folderNode = fakeFolderNode;
-                let fakeNodePage: NodePaging = {
+                const fakeNodePage: NodePaging = {
                     list: {
                         pagination: {
                             hasMoreItems: true,
