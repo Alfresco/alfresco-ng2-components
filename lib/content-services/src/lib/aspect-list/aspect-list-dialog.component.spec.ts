@@ -94,6 +94,7 @@ describe('AspectListDialogComponent', () => {
     let aspectListService: AspectListService;
     let nodeService: NodesApiService;
     let data: AspectListDialogComponentData;
+    const event = new KeyboardEvent('keydown', {'key': 'Escape'});
 
     describe('Without passing node id', () => {
 
@@ -116,7 +117,7 @@ describe('AspectListDialogComponent', () => {
                     {
                         provide: MatDialogRef,
                         useValue: {
-                            keydownEvents: () => of(null),
+                            keydownEvents: () => of(event),
                             backdropClick: () => of(null),
                             close: jasmine.createSpy('close')
                         }
