@@ -22,7 +22,7 @@ import { of, throwError } from 'rxjs';
 import { PermissionListService } from './permission-list.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { NodePermissionService } from '../../services/node-permission.service';
-import { fakeNodeInheritedOnly, fakeNodeWithOnlyLocally } from '../../../mock/permission-list.component.mock';
+import { fakeNodeInheritedOnly, fakeNodeLocalSiteManager, fakeNodeWithOnlyLocally } from '../../../mock/permission-list.component.mock';
 import { PermissionDisplayModel } from '../../models/permission.model';
 
 describe('PermissionListService', () => {
@@ -82,30 +82,36 @@ describe('PermissionListService', () => {
             expect(notificationService.showError).toHaveBeenCalledWith('PERMISSION_MANAGER.ERROR.NOT-ALLOWED');
         });
 
-        it('should include the local permission before toggle', () => {
-            const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly)), event = { source: { checked: true } };
-            const updateNode = JSON.parse(JSON.stringify(fakeNodeInheritedOnly));
-            updateNode.permissions.isInheritanceEnabled = false;
+        it('should include the local permission before toggle', (done) => {
+            const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly)), event = { source: { checked: false } };
             spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));
             spyOn(nodePermissionService, 'updatePermissions').and.returnValue(of(null));
-            spyOn(nodesApiService, 'updateNode').and.returnValue(of(updateNode));
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(JSON.parse(JSON.stringify(fakeNodeLocalSiteManager))));
             service.fetchPermission('fetch node');
 
+            const subscription = service.data$.subscribe(({ localPermissions }) => {
+                expect(localPermissions[0].authorityId).toBe('GROUP_site_testsite_SiteManager');
+                expect(localPermissions[0].readonly).toBe(true);
+                expect(localPermissions[1].authorityId).toBe('superadminuser');
+                expect(localPermissions[1].readonly).toBe(undefined);
+                expect(nodePermissionService.updatePermissions).toHaveBeenCalled();
+                expect(nodesApiService.updateNode).toHaveBeenCalled();
+                expect(notificationService.showInfo).toHaveBeenCalledWith('PERMISSION_MANAGER.MESSAGE.INHERIT-DISABLE-SUCCESS');
+                subscription.unsubscribe();
+                done();
+            });
             service.toggleInherited(event as any);
-            expect(nodePermissionService.updatePermissions).toHaveBeenCalled();
-            expect(nodesApiService.updateNode).toHaveBeenCalled();
-            expect(notificationService.showInfo).toHaveBeenCalledWith('PERMISSION_MANAGER.MESSAGE.INHERIT-DISABLE-SUCCESS');
         });
 
         it('should not update local permission before toggle', () => {
-            const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly)), event = { source: { checked: true } };
+            const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly)), event = { source: { checked: false } };
             const updateNode = JSON.parse(JSON.stringify(fakeNodeInheritedOnly));
-            node.permissions.localySet = [{
+            node.permissions.locallySet = [{
                 'authorityId': 'GROUP_site_testsite_SiteManager',
                 'name': 'SiteManager',
                 'accessStatus': 'ALLOWED'
             }];
-            node.permissions.isInheritanceEnabled = true;
+            updateNode.permissions.isInheritanceEnabled = false;
             spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));
             spyOn(nodePermissionService, 'updatePermissions').and.returnValue(of(null));
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(updateNode));
@@ -114,11 +120,12 @@ describe('PermissionListService', () => {
             service.toggleInherited(event as any);
             expect(nodePermissionService.updatePermissions).not.toHaveBeenCalled();
             expect(nodesApiService.updateNode).toHaveBeenCalled();
-            expect(notificationService.showInfo).toHaveBeenCalledWith('PERMISSION_MANAGER.MESSAGE.INHERIT-ENABLE-SUCCESS');
+            expect(notificationService.showInfo).toHaveBeenCalledWith('PERMISSION_MANAGER.MESSAGE.INHERIT-DISABLE-SUCCESS');
         });
 
         it('should show message for errored toggle', () => {
             const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly)), event = { source: { checked: false } };
+            node.permissions.isInheritanceEnabled = true;
             spyOn(nodesApiService, 'updateNode').and.returnValue(throwError('Failed to update'));
             spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));
             service.fetchPermission('fetch node');

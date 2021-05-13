@@ -56,7 +56,7 @@ export class PermissionListComponent {
     }
 
     onSelect(selections: ObjectDataRow[]) {
-        this.selectedPermissions = selections.map((selection) => selection['obj']);
+        this.selectedPermissions = selections.map((selection) => selection['obj']).filter((permission) => !permission.readonly);
     }
 
     deleteSelection() {
