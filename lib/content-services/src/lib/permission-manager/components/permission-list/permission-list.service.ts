@@ -52,6 +52,7 @@ export class PermissionListService {
 
     private node: Node;
     private roles: RoleModel[];
+    private SITE_MANAGER_ROLE = 'SiteManager';
 
     constructor(
         private nodeService: NodesApiService,
@@ -88,7 +89,7 @@ export class PermissionListService {
             if (authorityId) {
                 const permissions = [
                     ...(this.node.permissions.locallySet || []),
-                    { authorityId, name: 'SiteManager', accessStatus: 'ALLOWED' }
+                    { authorityId, name: this.SITE_MANAGER_ROLE, accessStatus: 'ALLOWED' }
                 ];
                 updateLocalPermission$ = this.nodePermissionService.updatePermissions(this.node, permissions);
             }
@@ -205,7 +206,7 @@ export class PermissionListService {
     private buildUpdatedPermission(role: string, permission: PermissionElement): PermissionElement {
         return {
             accessStatus: permission.accessStatus,
-            name:  this.canUpdateThePermission(this.node, permission) ? role :  permission.name,
+            name: this.canUpdateThePermission(this.node, permission) ? role :  permission.name,
             authorityId: permission.authorityId
         };
     }
@@ -221,8 +222,8 @@ export class PermissionListService {
         const sitePath = node.path.elements.find((path) => path.nodeType === 'st:site');
         let hasLocalManagerPermission = false, authorityId: string;
         if (sitePath) {
-            authorityId = `GROUP_site_${sitePath.name}_SiteManager`;
-            hasLocalManagerPermission = !!node.permissions.locallySet?.find((permission) => permission.authorityId === authorityId && permission.name === 'SiteManager');
+            authorityId = `GROUP_site_${sitePath.name}_${this.SITE_MANAGER_ROLE}`;
+            hasLocalManagerPermission = !!node.permissions.locallySet?.find((permission) => permission.authorityId === authorityId && permission.name === this.SITE_MANAGER_ROLE);
         }
 
         if (!hasLocalManagerPermission && authorityId) {
@@ -243,8 +244,8 @@ export class PermissionListService {
     canUpdateThePermission(node: Node, permission: PermissionElement): boolean {
         const sitePath = node.path.elements.find((path) => path.nodeType === 'st:site');
         if (!node.permissions.isInheritanceEnabled && sitePath) {
-           const authorityId = `GROUP_site_${sitePath.name}_SiteManager`;
-           return !(permission.authorityId === authorityId && permission.name === 'SiteManager');
+           const authorityId = `GROUP_site_${sitePath.name}_${this.SITE_MANAGER_ROLE}`;
+           return !(permission.authorityId === authorityId && permission.name === this.SITE_MANAGER_ROLE);
         }
         return true;
     }
