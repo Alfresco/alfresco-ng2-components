@@ -45,6 +45,14 @@ export class AspectListDialogComponent implements OnInit {
         this.dialog.backdropClick().subscribe(() => {
             this.close();
         });
+        this.dialog.keydownEvents().subscribe(event => {
+            // Esc
+            if (event.keyCode === 27) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                this.close();
+            }
+        });
     }
 
     onValueChanged(aspectList: string[]) {

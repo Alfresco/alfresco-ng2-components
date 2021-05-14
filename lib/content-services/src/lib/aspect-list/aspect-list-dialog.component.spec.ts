@@ -94,6 +94,10 @@ describe('AspectListDialogComponent', () => {
     let aspectListService: AspectListService;
     let nodeService: NodesApiService;
     let data: AspectListDialogComponentData;
+    const event = new KeyboardEvent('keydown', {
+        bubbles: true,
+        keyCode: 27
+    } as KeyboardEventInit );
 
     describe('Without passing node id', () => {
 
@@ -116,7 +120,7 @@ describe('AspectListDialogComponent', () => {
                     {
                         provide: MatDialogRef,
                         useValue: {
-                            keydownEvents: () => of(null),
+                            keydownEvents: () => of(event),
                             backdropClick: () => of(null),
                             close: jasmine.createSpy('close')
                         }
@@ -255,7 +259,7 @@ describe('AspectListDialogComponent', () => {
                         provide: MatDialogRef,
                         useValue: {
                             close: jasmine.createSpy('close'),
-                            keydownEvents: () => of(null),
+                            keydownEvents: () => of(event),
                             backdropClick: () => of(null)
                         }
                     }
