@@ -34,7 +34,7 @@
             key="name"
             sortable="false">
             <ng-template let-entry="$implicit">
-                <adf-user-role-column [readonly]="isReadOnly"
+                <adf-user-role-column [readonly]="entry.row.obj.readonly || isReadOnly"
                                       [placeholder]="entry.data.getValue(entry.row, entry.col)"
                                       [value]="entry.data.getValue(entry.row, entry.col)"
                                       [roles]="roles"
@@ -59,6 +59,7 @@
         <data-column class="adf-datatable-cell adf-delete-permission-column" key="" *ngIf="!isReadOnly" [sortable]="false">
             <ng-template let-entry="$implicit">
                 <button mat-icon-button
+                        [disabled]="entry.row.obj.readonly"
                         (click)="removePermission($event, entry.row.obj)"
                         [attr.data-automation-id]="'adf-delete-permission-button-' + entry.row.obj.authorityId">
                     <mat-icon>delete_outline</mat-icon>

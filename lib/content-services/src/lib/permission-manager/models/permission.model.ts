@@ -24,6 +24,7 @@ export class PermissionDisplayModel implements PermissionElement {
     accessStatus?: PermissionElement.AccessStatusEnum;
     isInherited: boolean = false;
     icon: string;
+    readonly?: boolean;
 
     constructor(obj?: any) {
         if (obj) {

@@ -25,6 +25,7 @@ import { NodePermissionService } from '../../services/node-permission.service';
 import {
     fakeEmptyResponse,
     fakeNodeInheritedOnly,
+    fakeNodeLocalSiteManager,
     fakeNodeWithOnlyLocally,
     fakeNodeWithoutPermissions,
     fakeNodeWithPermissions,
@@ -206,6 +207,19 @@ describe('PermissionListComponent', () => {
             expect(options[3].nativeElement.innerText).toContain('ADF.ROLES.SITEMANAGER');
         });
 
+        it('should show readonly member for site manager to toggle the inherit permission', async() => {
+            getNodeSpy.and.returnValue(of(fakeNodeLocalSiteManager));
+            component.ngOnInit();
+
+            await fixture.detectChanges();
+            expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_site_testsite_SiteManager');
+            expect(element.querySelector('#adf-select-role-permission').textContent).toContain('ADF.ROLES.SITEMANAGER');
+            const deleteButton: HTMLButtonElement = element.querySelector('[data-automation-id="adf-delete-permission-button-GROUP_site_testsite_SiteManager"]');
+            expect(deleteButton.disabled).toBe(true);
+            const otherDeleteButton: HTMLButtonElement = element.querySelector('[data-automation-id="adf-delete-permission-button-superadminuser"]');
+            expect(otherDeleteButton.disabled).toBe(false);
+        });
+
         it('should update the role when another value is chosen',  async () => {
             spyOn(nodeService, 'updateNode').and.returnValue(of({id: 'fake-uwpdated-node'}));
             searchQuerySpy.and.returnValue(of(fakeEmptyResponse));
@@ -236,8 +250,8 @@ describe('PermissionListComponent', () => {
             expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
             expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
 
-            const showButton: HTMLButtonElement = element.querySelector('[data-automation-id="adf-delete-permission-button-GROUP_EVERYONE"]');
-            showButton.click();
+            const deleteButton: HTMLButtonElement = element.querySelector('[data-automation-id="adf-delete-permission-button-GROUP_EVERYONE"]');
+            deleteButton.click();
             fixture.detectChanges();
 
             expect(nodeService.updateNode).toHaveBeenCalledWith('f472543f-7218-403d-917b-7a5861257244', { permissions: { locallySet: [ ] } });
