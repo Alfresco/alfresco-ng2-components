@@ -378,22 +378,57 @@
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
-      "INHERITED": "継承された権限",
+      "INHERITED": "継承済み",
       "AUTHORITY_ID": "権限 ID",
       "ROLE": "役割",
       "LOCALLY_SET": "ローカルで設定された権限",
       "NO_PERMISSIONS": "権限がありません"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "検索",
+      "SEARCH": "追加するユーザー / グループを検索",
+      "TITLE": "権限を追加",
       "TYPE-MESSAGE": "グループまたはメンバーの検索条件を入力してください",
       "NO-RESULT": "この条件に一致する結果はありません",
       "ADD-ACTION": "追加",
-      "CLOSE-ACTION": "閉じる",
+      "CLOSE-ACTION": "キャンセル",
       "BASE-DIALOG-TITLE": "追加するグループまたはメンバーの検索...",
       "EVERYONE": "全員"
     },
+    "COLUMN": {
+      "NAME": "ユーザーとグループ({{ count }})",
+      "LOCATION": "場所",
+      "BULK-ROLE": "すべての役割を設定"
+    },
+    "LABELS": {
+      "ON": "オン",
+      "OFF": "オフ",
+      "DIRECT-PERMISSIONS": "直接適用される権限",
+      "INHERITED-PERMISSIONS": "継承権限",
+      "INHERITED-SUBTITLE": "{{count}}ユーザーやグループが親フォルダから権限を継承しています",
+      "SELECT-ROLE": "役割の選択"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "ユーザー/グループなし",
+      "EMPTY-SUBTITLE": "ユーザー/グループを追加して権限を管理します。",
+      "NO-MEMBERS": "グループや人を追加して役割を管理します",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "更新した{{user}}ユーザー{{group}}グループ",
+      "PERMISSION-UPDATE-SUCCESS": "ユーザー/グループの更新",
+      "PERMISSION-UPDATE-FAIL": "ユーザー/グループの更新に失敗しました",
+      "PERMISSION-BULK-DELETE-SUCCESS": "削除した{{user}}ユーザー{{group}}グループ",
+      "PERMISSION-DELETE-SUCCESS": "ユーザー/グループの削除",
+      "PERMISSION-DELETE-FAIL": "ユーザー/グループの削除に失敗しました",
+      "PERMISSION-ADD-SUCCESS": "追加した{{user}}ユーザー{{group}}グループ",
+      "PERMISSION-ADD-FAIL": "ユーザー/グループの追加に失敗しました",
+      "INHERIT-ENABLE-SUCCESS": "継承権限を有効化",
+      "INHERIT-DISABLE-SUCCESS": "継承権限を無効化",
+      "TOGGLE-PERMISSION-FAILED": "継承権限の切り替えに失敗しました"
+    },
+    "ACTION": {
+      "DELETE": "削除",
+      "ADD-PERMISSION": "ユーザー/グループの追加"
+    },
     "ERROR": {
+      "NOT-FOUND": "このアイテムは削除されたか、このアイテムを表示する権限がありません。",
       "DUPLICATE-PERMISSION": "設定済みの権限が既にあります: {{list}}",
       "NOT-ALLOWED": "権限を変更することはできません"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "プロパティアスペクトを選択します",
       "SELECTED": "選択済み"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }}を選択"
   }
 }

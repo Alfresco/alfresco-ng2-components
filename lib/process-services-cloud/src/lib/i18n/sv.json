@@ -248,6 +248,7 @@
       "PROCESS_NAME": "Processnamn",
       "APP_VERSION": "Version av program",
       "STARTED_DATE": "Datum startad",
+      "SUSPENDED_DATE": "Avstängd datum",
       "STARTED_BY": "Startad av",
       "COMPLETED_DATE": "Datum slutförd",
       "DATE_RANGE": {
@@ -374,12 +375,12 @@
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "Fyll i fälten i formuläret med metadata för denna fil"
+    "RETRIEVE_METADATA": "Fyll i formuläret automatiskt"
   },
   "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
     "ASSIGNED_TO_ME": "Tilldelad till mig",
     "UNASSIGNED": "Otilldelad",
-    "LIST_OF_CANDIDATE_USERS": "Lista över kandidatanvändare",
+    "LIST_OF_CANDIDATE_GROUPS": "Lista över kandidatgrupper",
     "ASSIGNEE": "Tilldelad användare",
     "ASSIGNMENT_TYPE": "Uppgiftstyp"
   }

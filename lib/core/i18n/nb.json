@@ -1,5 +1,6 @@
 {
   "ADF": {
+    "LANGUAGE": "Språk",
     "ROLES": {
       "ALL": "Alle",
       "CONTRIBUTOR": "Bidragsyter",
@@ -383,8 +384,9 @@
       "ZOOM_IN": "Zoom inn",
       "ZOOM_OUT": "Zoom ut",
       "FIT_PAGE": "Tilpass side",
-      "ROTATE_LEFT": "Roter mot venstre",
-      "ROTATE_RIGHT": "Roter mot høyre",
+      "ROTATE": "Roter",
+      "SAVE": "Lagre",
+      "CANCEL": "Avbryt",
       "RESET": "Tilbakestill",
       "THUMBNAILS": "Miniatyrbilder for dokument",
       "THUMBNAILS_PANLEL_CLOSE": "Lukk miniatyrbildepanel"

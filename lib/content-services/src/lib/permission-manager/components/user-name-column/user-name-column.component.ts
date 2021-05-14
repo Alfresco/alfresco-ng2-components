@@ -24,10 +24,12 @@ import { EcmUserModel } from '@alfresco/adf-core';
 @Component({
     selector: 'adf-user-name-column',
     template: `
-        <div class="adf-ellipsis-cell adf-user" [attr.data-automation-id]="displayText$ | async">
-            <span title="{{ displayText$ | async }}"> {{ displayText$ | async }}</span>
+        <div class="adf-ellipsis-cell" [attr.data-automation-id]="displayText$ | async">
+            <span class="adf-user-name-column" title="{{ displayText$ | async }}"> {{ displayText$ | async }}</span>
             <br/>
-            <span title="{{ subTitleText$ | async }}">{{ subTitleText$ | async }}</span>
+            <span class="adf-user-email-column" title="{{ subTitleText$ | async }}" *ngIf="subTitleText$ | async">
+                {{ subTitleText$ | async }}
+            </span>
         </div>
     `,
     host: { class: 'adf-user-name-column adf-datatable-content-cell adf-expand-cell-5 adf-ellipsis-cell' },

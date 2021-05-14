@@ -102,7 +102,6 @@ describe('content type', () => {
         await loginPage.login(acsUser.username, acsUser.password);
         await navigationBarPage.navigateToContentServices();
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
-        await browser.sleep(8000); // wait for sso session to initiate
     });
 
     afterEach( async () => {

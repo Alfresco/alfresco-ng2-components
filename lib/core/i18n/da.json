@@ -1,5 +1,6 @@
 {
   "ADF": {
+    "LANGUAGE": "Sprog",
     "ROLES": {
       "ALL": "Alle",
       "CONTRIBUTOR": "Bidragyder",
@@ -383,8 +384,9 @@
       "ZOOM_IN": "Zoom ind",
       "ZOOM_OUT": "Zoom ud",
       "FIT_PAGE": "Tilpas side",
-      "ROTATE_LEFT": "Roter til venstre",
-      "ROTATE_RIGHT": "Roter til højre",
+      "ROTATE": "Roter",
+      "SAVE": "Gem",
+      "CANCEL": "Annuller",
       "RESET": "Nulstil",
       "THUMBNAILS": "Dokumentminiaturer",
       "THUMBNAILS_PANLEL_CLOSE": "Luk miniaturepanel"
@@ -565,6 +567,6 @@
     }
   },
   "ADF_DROPDOWN": {
-    "LOADING": "Indlæser …"
+    "LOADING": "Indlæser..."
   }
 }

@@ -269,7 +269,7 @@
     "NODE_LIST": "Liste de balises par ID de nœud"
   },
   "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Hériter les droits d'accès",
+    "INHERIT_PERMISSION_BUTTON": "Hériter des droits d'accès",
     "INHERITED_PERMISSIONS_BUTTON": "Droits d'accès hérités"
   },
   "TASK_LIST_DEMO": {

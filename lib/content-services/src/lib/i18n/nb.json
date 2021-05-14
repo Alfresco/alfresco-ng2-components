@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "Ingen tillatelser"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Søk",
+      "SEARCH": "Søk etter brukere eller grupper å legge til",
+      "TITLE": "Legg til tillatelse",
       "TYPE-MESSAGE": "Skriv inn tekst for å starte søk etter grupper eller personer",
       "NO-RESULT": "Ingen resultater funnet for dette søket",
       "ADD-ACTION": "Legg til",
-      "CLOSE-ACTION": "Lukk",
+      "CLOSE-ACTION": "AVBRYT",
       "BASE-DIALOG-TITLE": "Søk etter en gruppe eller personer å legge til...",
       "EVERYONE": "Alle"
     },
+    "COLUMN": {
+      "NAME": "Brukere og grupper ({{ count }})",
+      "LOCATION": "Sted",
+      "BULK-ROLE": "Angi alle roller til"
+    },
+    "LABELS": {
+      "ON": "På",
+      "OFF": "Av",
+      "DIRECT-PERMISSIONS": "Direkte brukt tillatelse",
+      "INHERITED-PERMISSIONS": "Arvet tillatelse",
+      "INHERITED-SUBTITLE": "{{count}} brukere eller grupper arver tillatelse fra en overordnet mappe",
+      "SELECT-ROLE": "Velg rolle"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Ingen brukere/grupper",
+      "EMPTY-SUBTITLE": "Legg til bruker/gruppe for å administrere tillatelser.",
+      "NO-MEMBERS": "Legg til grupper eller personer for å administrere roller",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Oppdaterte {{user}} bruker(e) {{group}} gruppe(r)",
+      "PERMISSION-UPDATE-SUCCESS": "Bruker/gruppe oppdatert",
+      "PERMISSION-UPDATE-FAIL": "Kunne ikke oppdatere bruker/gruppe",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Slettet {{user}} bruker(e) {{group}} gruppe(r)",
+      "PERMISSION-DELETE-SUCCESS": "Bruker/gruppe slettet",
+      "PERMISSION-DELETE-FAIL": "Kunne ikke slette bruker/gruppe",
+      "PERMISSION-ADD-SUCCESS": "La til {{user}} bruker(e) {{group}} gruppe(r)",
+      "PERMISSION-ADD-FAIL": "Kunne ikke legge til bruker/gruppe",
+      "INHERIT-ENABLE-SUCCESS": "Aktiverte arvet tillatelse",
+      "INHERIT-DISABLE-SUCCESS": "Deaktiverte arvet tillatelse",
+      "TOGGLE-PERMISSION-FAILED": "Kunne ikke aktivere/deaktivere arvet tillatelse"
+    },
+    "ACTION": {
+      "DELETE": "Slett",
+      "ADD-PERMISSION": "Legg til bruker eller gruppe"
+    },
     "ERROR": {
+      "NOT-FOUND": "Dette elementet finnes ikke lenger, eller du har ikke tillatelse til å se det.",
       "DUPLICATE-PERMISSION": "Én eller flere av tillatelsene du har angitt, er allerede til stede: {{list}}",
       "NOT-ALLOWED": "Du har ikke lov til å endre tillatelser"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "Velg egenskapsaspekter",
       "SELECTED": "Valgt"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} valgt"
   }
 }

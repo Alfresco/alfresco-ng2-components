@@ -248,6 +248,7 @@
       "PROCESS_NAME": "Název procesu",
       "APP_VERSION": "Verze aplikace",
       "STARTED_DATE": "Datum zahájení",
+      "SUSPENDED_DATE": "Datum pozastavení",
       "STARTED_BY": "Zahájil(a)",
       "COMPLETED_DATE": "Datum dokončení",
       "DATE_RANGE": {
@@ -374,12 +375,12 @@
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "Vyplnit pole formuláře metadaty tohoto souboru"
+    "RETRIEVE_METADATA": "Automatické vyplnění formuláře"
   },
   "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
     "ASSIGNED_TO_ME": "Přiděleno mně",
     "UNASSIGNED": "Nepřiděleno",
-    "LIST_OF_CANDIDATE_USERS": "Seznam uživatelů-kandidátů",
+    "LIST_OF_CANDIDATE_GROUPS": "Seznam skupin kandidátů",
     "ASSIGNEE": "Pověřená osoba",
     "ASSIGNMENT_TYPE": "Typ přidělení"
   }

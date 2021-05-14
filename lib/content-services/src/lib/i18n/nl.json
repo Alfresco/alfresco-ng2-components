@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "Geen rechten"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "Zoeken",
+      "SEARCH": "Zoeken naar gebruikers of groepen om toe te voegen",
+      "TITLE": "Rechten toevoegen",
       "TYPE-MESSAGE": "Voer iets in om te beginnen met zoeken naar groepen of personen",
       "NO-RESULT": "Geen resultaten gevonden voor deze zoekopdracht",
       "ADD-ACTION": "Toevoegen",
-      "CLOSE-ACTION": "Sluiten",
+      "CLOSE-ACTION": "Annuleren",
       "BASE-DIALOG-TITLE": "Een groep of personen zoeken om toe te voegen...",
       "EVERYONE": "Iedereen"
     },
+    "COLUMN": {
+      "NAME": "Gebruikers en groepen ({{ count }})",
+      "LOCATION": "Locatie",
+      "BULK-ROLE": "Alle rollen instellen op"
+    },
+    "LABELS": {
+      "ON": "Aan",
+      "OFF": "Uit",
+      "DIRECT-PERMISSIONS": "Rechtstreeks toegepaste rechten",
+      "INHERITED-PERMISSIONS": "Overgenomen rechten",
+      "INHERITED-SUBTITLE": "{{count}} gebruikers of groepen nemen rechten over van een bovenliggende map",
+      "SELECT-ROLE": "Rol selecteren"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "Geen gebruikers/groepen",
+      "EMPTY-SUBTITLE": "Voeg gebruiker/groep toe om rechten te beheren.",
+      "NO-MEMBERS": "Voeg groepen of personen toe om rollen te beheren",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "{{user}} gebruiker(s) {{group}} groep(en) bijgewerkt",
+      "PERMISSION-UPDATE-SUCCESS": "Gebruiker/groep bijgewerkt",
+      "PERMISSION-UPDATE-FAIL": "Kan gebruiker/groep niet bijwerken",
+      "PERMISSION-BULK-DELETE-SUCCESS": "{{user}} gebruiker(s) {{group}} groep(en) verwijderd",
+      "PERMISSION-DELETE-SUCCESS": "Gebruiker/groep verwijderd",
+      "PERMISSION-DELETE-FAIL": "Kan gebruiker/groep niet verwijderen",
+      "PERMISSION-ADD-SUCCESS": "{{user}} gebruiker(s) {{group}} groep(en) toegevoegd",
+      "PERMISSION-ADD-FAIL": "Kan gebruiker/groep niet toevoegen",
+      "INHERIT-ENABLE-SUCCESS": "Overgenomen rechten ingeschakeld",
+      "INHERIT-DISABLE-SUCCESS": "Overgenomen rechten uitgeschakeld",
+      "TOGGLE-PERMISSION-FAILED": "Kan overgenomen rechten niet in-/uitschakelen"
+    },
+    "ACTION": {
+      "DELETE": "Verwijderen",
+      "ADD-PERMISSION": "Gebruiker of groep toevoegen"
+    },
     "ERROR": {
+      "NOT-FOUND": "Dit item bestaat niet meer of u hebt geen rechten om het weer te geven.",
       "DUPLICATE-PERMISSION": "Een of meerdere rechten die u hebt ingesteld zijn al aanwezig: {{list}}",
       "NOT-ALLOWED": "Het is u niet toegestaan om rechten te wijzigen"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "Eigenschap-aspecten selecteren",
       "SELECTED": "Geselecteerd"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} geselecteerd"
   }
 }

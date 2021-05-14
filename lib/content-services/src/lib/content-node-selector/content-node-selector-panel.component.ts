@@ -76,6 +76,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     private showSiteList = true;
     private showSearchField = true;
+    private showCounter = false;
 
     /** If true will restrict the search and breadcrumbs to the currentFolderId */
     @Input()
@@ -198,6 +199,16 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             const showFilesQuery = `TYPE:'cm:folder'${value ? " OR TYPE:'cm:content'" : ''}`;
             this.queryBuilderService.addFilterQuery(showFilesQuery);
         }
+    }
+
+    /** Shows the node counter in the breadcrumb */
+    @Input()
+    set showNodeCounter(value: boolean) {
+        this.showCounter = value ?? false;
+    }
+
+    get showNodeCounter(): boolean {
+        return this.showCounter;
     }
 
     /** Emitted when the user has chosen an item. */

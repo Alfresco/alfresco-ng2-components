@@ -1,5 +1,6 @@
 {
   "ADF": {
+    "LANGUAGE": "Jazyk",
     "ROLES": {
       "ALL": "Vše",
       "CONTRIBUTOR": "Přispěvatel",
@@ -7,10 +8,10 @@
       "COORDINATOR": "Koordinátor",
       "EDITOR": "Editor",
       "CONSUMER": "Spotřebitel",
-      "SITECOLLABORATOR": "Spolupracovník stránek",
-      "SITECONSUMER": "Spotřebitel",
-      "SITECONTRIBUTOR": "Přispěvatel stránek",
-      "SITEMANAGER": "Správce stránek"
+      "SITECOLLABORATOR": "Spolupracovník v místě",
+      "SITECONSUMER": "Spotřebitel v místě",
+      "SITECONTRIBUTOR": "Přispěvatel v místě",
+      "SITEMANAGER": "Správce místa"
     }
   },
   "SAVE": "Uložit",
@@ -383,8 +384,9 @@
       "ZOOM_IN": "Přiblížit",
       "ZOOM_OUT": "Oddálit",
       "FIT_PAGE": "Přizpůsobit na stránku",
-      "ROTATE_LEFT": "Otočit vlevo",
-      "ROTATE_RIGHT": "Otočit vpravo",
+      "ROTATE": "Otočit",
+      "SAVE": "Uložit",
+      "CANCEL": "Zrušit",
       "RESET": "Reset",
       "THUMBNAILS": "Miniatury dokumentů",
       "THUMBNAILS_PANLEL_CLOSE": "Zavřít panel Miniatury"

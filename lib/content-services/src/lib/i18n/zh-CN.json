@@ -385,15 +385,50 @@
       "NO_PERMISSIONS": "无权限"
     },
     "ADD-PERMISSION": {
-      "SEARCH": "搜索",
+      "SEARCH": "搜索要添加的用户或组",
+      "TITLE": "添加权限",
       "TYPE-MESSAGE": "输入内容以开始搜索组或人员",
       "NO-RESULT": "找不到此搜索的结果",
       "ADD-ACTION": "添加",
-      "CLOSE-ACTION": "关闭",
+      "CLOSE-ACTION": "取消",
       "BASE-DIALOG-TITLE": "搜索要添加的组或人员...",
       "EVERYONE": "任何人"
     },
+    "COLUMN": {
+      "NAME": "用户和组 ({{ count }})",
+      "LOCATION": "位置",
+      "BULK-ROLE": "将所有角色设置为"
+    },
+    "LABELS": {
+      "ON": "开启",
+      "OFF": "关闭",
+      "DIRECT-PERMISSIONS": "直接应用权限",
+      "INHERITED-PERMISSIONS": "继承的权限",
+      "INHERITED-SUBTITLE": "{{count}} 用户或组正在从父文件夹继承权限",
+      "SELECT-ROLE": "选择角色"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "无用户/组",
+      "EMPTY-SUBTITLE": "添加用户/组以管理权限。",
+      "NO-MEMBERS": "添加组或人员以管理角色",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "已更新 {{user}} 用户 {{group}} 组",
+      "PERMISSION-UPDATE-SUCCESS": "用户/组已更新",
+      "PERMISSION-UPDATE-FAIL": "无法更新用户/组",
+      "PERMISSION-BULK-DELETE-SUCCESS": "已删除 {{user}} 用户 {{group}} 组",
+      "PERMISSION-DELETE-SUCCESS": "用户/组已删除",
+      "PERMISSION-DELETE-FAIL": "无法删除用户/组",
+      "PERMISSION-ADD-SUCCESS": "已添加 {{user}} 用户 {{group}} 组",
+      "PERMISSION-ADD-FAIL": "无法添加用户/组",
+      "INHERIT-ENABLE-SUCCESS": "已启用继承权限",
+      "INHERIT-DISABLE-SUCCESS": "已禁用继承权限",
+      "TOGGLE-PERMISSION-FAILED": "无法切换继承权限"
+    },
+    "ACTION": {
+      "DELETE": "删除",
+      "ADD-PERMISSION": "添加用户或组"
+    },
     "ERROR": {
+      "NOT-FOUND": "此项目不再存在，或者您无权对其进行查看。",
       "DUPLICATE-PERMISSION": "您所设置的一个或多个权限已经存在：{{list}}",
       "NOT-ALLOWED": "不允许更改权限"
     }
@@ -474,5 +509,8 @@
       "OVER-TABLE-MESSAGE": "选择属性方面",
       "SELECTED": "已选择"
     }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "已选择 {{ count }} 个"
   }
 }

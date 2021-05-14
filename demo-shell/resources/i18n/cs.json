@@ -252,11 +252,11 @@
       "CREATED_THIS_YEAR": "1.Vytvořeno tento rok",
       "MIMETYPE": "2.Typ: HTML",
       "XTRASMALL": "3.Velikost: extra malé",
-      "SMALL": "3.Velikost: malé",
-      "MEDIUM": "3.Velikost: střední",
-      "LARGE": "3.Velikost: velké",
-      "XTRALARGE": "3.Velikost: extra velké",
-      "XXTRALARGE": "3.Velikost: XX velké"
+      "SMALL": "4.Velikost: malé",
+      "MEDIUM": "5.Velikost: střední",
+      "LARGE": "6.Velikost: velké",
+      "XTRALARGE": "7.Velikost: extra velké",
+      "XXTRALARGE": "8.Velikost: XX velké"
     }
   },
   "SOCIAL": {

@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ViewEncapsulation, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { ContentService } from '@alfresco/adf-core';
+import { ContentService, FileUploadEvent, UploadService } from '@alfresco/adf-core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-version-upload',
@@ -26,11 +28,13 @@ import { ContentService } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-version-upload' }
 })
-export class VersionUploadComponent {
+export class VersionUploadComponent implements OnInit, OnDestroy {
 
     semanticVersion: string = 'minor';
     comment: string;
     uploadVersion: boolean = false;
+    disabled: boolean = false;
+    onDestroy$ = new Subject();
 
     /** The target node. */
     @Input()
@@ -68,11 +72,24 @@ export class VersionUploadComponent {
     @Output()
     commentChanged = new EventEmitter<string>();
 
-    constructor(private contentService: ContentService) {
+    /** Emitted when the upload starts */
+    @Output()
+    uploadStarted = new EventEmitter<FileUploadEvent>();
+
+    constructor(private contentService: ContentService, private uploadService: UploadService) {
+    }
+
+    ngOnInit() {
+        this.uploadService.fileUploadStarting
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((event: FileUploadEvent) => {
+                this.disabled = true;
+                this.uploadStarted.emit(event);
+            });
     }
 
     canUpload(): boolean {
-        return this.contentService.hasAllowableOperations(this.node, 'update');
+        return this.contentService.hasAllowableOperations(this.node, 'update') && !this.disabled;
     }
 
     isMajorVersion(): boolean {
@@ -80,6 +97,7 @@ export class VersionUploadComponent {
     }
 
     cancelUpload() {
+        this.disabled = false;
         this.cancel.emit();
     }
 
@@ -92,11 +110,18 @@ export class VersionUploadComponent {
     }
 
     onSuccess(event: any) {
+        this.disabled = false;
         this.success.emit(event);
     }
 
     onError(event: any) {
+        this.disabled = false;
         this.error.emit(event);
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 
 }

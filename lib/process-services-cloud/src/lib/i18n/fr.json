@@ -70,7 +70,7 @@
           "DESCRIPTION": "Description",
           "ATTACHFORM": "Joindre un formulaire",
           "ASSIGNEE": "Personne assignée",
-          "CANDIDATE_GROUP": "Groupe de candidats",
+          "CANDIDATE_GROUP": "Groupe candidat",
           "FORM": "Formulaire",
           "DATE": "Choisir la date",
           "NONE": "Aucun",
@@ -248,6 +248,7 @@
       "PROCESS_NAME": "Nom du processus",
       "APP_VERSION": "Version de l'application",
       "STARTED_DATE": "Date de début",
+      "SUSPENDED_DATE": "Date de suspension",
       "STARTED_BY": "Démarré par",
       "COMPLETED_DATE": "Date de fin",
       "DATE_RANGE": {
@@ -374,12 +375,12 @@
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
-    "RETRIEVE_METADATA": "Remplir les champs du formulaire avec les métadonnées de ce fichier"
+    "RETRIEVE_METADATA": "Remplir le formulaire automatiquement"
   },
   "ADF_CLOUD_TASK_ASSIGNEMNT_FILTER": {
     "ASSIGNED_TO_ME": "Qui m'est assigné",
     "UNASSIGNED": "Non assigné",
-    "LIST_OF_CANDIDATE_USERS": "Liste des utilisateurs candidats",
+    "LIST_OF_CANDIDATE_GROUPS": "Liste des groupes candidats",
     "ASSIGNEE": "Personne assignée",
     "ASSIGNMENT_TYPE": "Type d'affectation"
   }

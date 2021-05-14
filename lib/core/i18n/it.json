@@ -1,5 +1,6 @@
 {
   "ADF": {
+    "LANGUAGE": "Lingua",
     "ROLES": {
       "ALL": "Tutti",
       "CONTRIBUTOR": "Contributore",
@@ -383,8 +384,9 @@
       "ZOOM_IN": "Zoom avanti",
       "ZOOM_OUT": "Zoom indietro",
       "FIT_PAGE": "Adatta pagina",
-      "ROTATE_LEFT": "Ruota a sinistra",
-      "ROTATE_RIGHT": "Ruota a destra",
+      "ROTATE": "Ruota",
+      "SAVE": "Salva",
+      "CANCEL": "Annulla",
       "RESET": "Reimposta",
       "THUMBNAILS": "Miniature documento",
       "THUMBNAILS_PANLEL_CLOSE": "Chiudi pannello miniature"
@@ -424,7 +426,7 @@
       }
     },
     "403": {
-      "TITLE": "Non si dispone dei permessi per accedere al server.",
+      "TITLE": "Non si dispone dell'autorizzazione per accedere al server.",
       "DESCRIPTION": "Accesso alla risorsa sul server non consentito.",
       "SECONDARY_BUTTON": {
         "TEXT": "Segnala errore"

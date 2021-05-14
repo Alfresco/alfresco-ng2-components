@@ -38,12 +38,12 @@ describe('PreferenceService', () => {
       oauth2Auth: {
         callCustomApi: () => {
           return Promise.resolve(mockResponse);
-        },
-        on: jasmine.createSpy('on')
+        }
       },
       isEcmLoggedIn() {
         return false;
-      }
+      },
+      reply: jasmine.createSpy('reply')
     };
   }
 

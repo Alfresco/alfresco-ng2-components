@@ -203,3 +203,11 @@ The following command is in charge of checking plugin status by given plugin nam
 adf-cli check-plugin-env --host "gateway_env" --pluginName "Name of the plugin" --appName "appName" -u "username" -p "password" 
 --ui "uiName"
 ```
+
+### Scan the environment
+
+The following command will scan the environment to show various information on its current status:
+
+```bash
+adf-cli scan-env --host "https://example.com" -u "admin" -p "password"
+```

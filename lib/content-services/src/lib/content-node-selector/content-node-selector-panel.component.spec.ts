@@ -1387,6 +1387,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(component.getSelectedCount()).toBe(0);
             });
+
+            it('should not render component input if `showNodeCounter` is false', () => {
+                component.showNodeCounter = false;
+                fixture.detectChanges();
+                expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
+            });
         });
     });
 });
