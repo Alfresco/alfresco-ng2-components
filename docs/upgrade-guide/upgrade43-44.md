@@ -1,10 +1,10 @@
 ---
-Title: Upgrading from ADF v4.1 to v4.2
+Title: Upgrading from ADF v4.3 to v4.4
 ---
 
-# Upgrading from ADF v4.1 to v4.2
+# Upgrading from ADF v4.3 to v4.4
 
-This guide explains how to upgrade your ADF v4.1 project to work with v4.2.
+This guide explains how to upgrade your ADF v4.3 project to work with v4.4.
 
 Do not skip this task, if you want your application to be updated to a most recent version of ADF. 
 Upgrades of multiple versions of ADF cannot be done in one step only, but should follow the chain of sequential updates. 
@@ -73,11 +73,11 @@ After starting the app, if everything is working fine, that's all and you don't 
     ```json
     "dependencies": {
         ...
-        "@alfresco/adf-core": "4.2.0",
-        "@alfresco/adf-content-services": "4.2.0",
-        "@alfresco/adf-process-services-cloud": "4.2.0",
-        "@alfresco/adf-insights": "4.2.0",
-        "@alfresco/js-api": "4.2.0",
+        "@alfresco/adf-core": "4.4.0",
+        "@alfresco/adf-content-services": "4.4.0",
+        "@alfresco/adf-process-services-cloud": "4.4.0",
+        "@alfresco/adf-insights": "4.4.0",
+        "@alfresco/js-api": "4.4.0",
         ...
     ```
 

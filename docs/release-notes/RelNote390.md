@@ -10,8 +10,6 @@ This is the latest **General Available** release of the Application Development 
 
 The release can be found on GitHub at [this location](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/3.9.0).
 
-You can contact Francesco Corti (francesco.corti at alfresco.com) for details of features planned for future versions of ADF. 
-
 ## Contents
 
 -   [New package versions](#new-package-versions)

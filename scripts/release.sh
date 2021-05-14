@@ -9,7 +9,6 @@ show_help() {
     echo "Usage: release.sh -v <new release version> [OPTIONS]"
     echo ""
     echo "-v or --version: the new version of the libraries"
-    echo "-s or --skip-adf: skip the adf version update to the latest of that package"
 }
 
 set_version() {
@@ -37,6 +36,8 @@ LICENSE_GREP=`escape_for_grep "$LICENSE_ROW"`
 LICENSE_README="$ROOTDIR/docs/license-info/README.md";
 LICENSE_GREP_RESULT=`grep "$LICENSE_GREP" "$LICENSE_README"`;
 
+#./scripts/update-version.sh -v $VERSION
+
 if [ -z "$LICENSE_GREP_RESULT" ];
 then
     echo -e "\e[33mAdding third party license info for version: $VERSION\e[0m"
@@ -55,11 +56,9 @@ VULNERABILITY_GREP_RESULT=`grep "$VULNERABILITY_GREP" "$VULNERABILITY_README"`;
 if [ -z "$VULNERABILITY_GREP_RESULT" ];
 then
     echo -e "\e[33mAdding vulnerability info for version: $VERSION\e[0m"
-    npx @alfresco/adf-cli audit
+    npx @alfresco/adf-cli@alpha audit
     mv "$ROOTDIR/audit-info-$VERSION.md" "$ROOTDIR/docs/vulnerability/audit-info-$VERSION.md"
     echo $VULNERABILITY_ROW >> $VULNERABILITY_README
 else
     echo -e "\e[32mVulnerability info is already added for version: $VERSION, nothing to do here.\e[0m"
 fi
-
-./scripts/update-version.sh -v $VERSION
