@@ -150,7 +150,7 @@ export class ProcessFilterCloudModel {
         if (this.isDateRangeType(this.suspendedDateType)) {
             return this._suspendedFrom;
         }
-        return this.getEndDate(this.suspendedDateType);
+        return this.getStartDate(this.suspendedDateType);
     }
 
     get suspendedTo(): string {
