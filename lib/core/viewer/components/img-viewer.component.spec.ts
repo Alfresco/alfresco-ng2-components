@@ -319,7 +319,9 @@ describe('Test Img viewer component ', () => {
             component.isEditing = true;
 
             spyOn(component, 'reset').and.callThrough();
+            spyOn(component, 'updateCanvasContainer');
             spyOn(component.cropper, 'reset');
+            spyOn(component.cropper, 'clear');
             spyOn(component.cropper, 'zoomTo');
 
             fixture.detectChanges();
@@ -331,7 +333,8 @@ describe('Test Img viewer component ', () => {
             expect(component.scale).toEqual(1.0);
             expect(component.isEditing).toEqual(false);
             expect(component.cropper.reset).toHaveBeenCalled();
-            expect(component.cropper.zoomTo).toHaveBeenCalledWith(component.scale);
+            expect(component.cropper.clear).toHaveBeenCalled();
+            expect(component.updateCanvasContainer).toHaveBeenCalled();
         }));
 
         it('should save when clicked on toolbar button', fakeAsync(() => {
