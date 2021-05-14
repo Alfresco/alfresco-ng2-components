@@ -3,7 +3,7 @@ Title: App extensions
 Added: 3.0.0
 ---
 
-# App extensions
+# App Extensions
 
 ADF lets you simplify the app developer's task by providing an **extensible app**
 as a starting point.
@@ -20,14 +20,14 @@ family.
 
 ## Contents
 
--   [Extension points](#extension-points)
--   [Extensibility features](#extensibility-features)
--   [Setting up an app for extensibility](#setting-up-an-app-for-extensibility)
--   [Creating extensions](#creating-extensions)
-    -   [Routes](#routes)
-    -   [Actions](#actions)
-    -   [Rules](#rules)
-    -   [Features](#features)
+- [Extension points](#extension-points)
+- [Extensibility features](#extensibility-features)
+- [Setting up an app for extensibility](#setting-up-an-app-for-extensibility)
+- [Creating extensions](#creating-extensions)
+  - [Routes](#routes)
+  - [Actions](#actions)
+  - [Rules](#rules)
+  - [Features](#features)
 
 ## Extension points
 
@@ -45,21 +45,21 @@ a place in the app where the actual content will be supplied dynamically.
 ADF provides a number of features that offer extension points or help
 with extensibility in general:
 
--   **Components**: The [Dynamic component](../extensions/components/dynamic.component.md)
+- **Components**: The [Dynamic component](../extensions/components/dynamic.component.md)
     has no content of its own but it has an `id` property that
     references a registered component extension ID. The referenced component
     will be added as a child of the Dynamic component at runtime.
--   **Routes**: These are registered as  key/ID strings that resolve to standard
+- **Routes**: These are registered as  key/ID strings that resolve to standard
     Angular routes. This feature can be used, say, that a click on a list item
     should send the user _somewhere_ but leave the actual destination up to the
     developer.
--   **Auth guards**: Routes can be protected by auth guards
+- **Auth guards**: Routes can be protected by auth guards
     to prevent unauthorized users from accessing pages they shouldn't see.
--   **Rules**: These are tests that produce a boolean result depending on the app state.
+- **Rules**: These are tests that produce a boolean result depending on the app state.
     The extensible app can use them with _features_ or `ngIf` directives, for example, to show or
     hide content in certain conditions. The exact conditions, however, are chosen
     by the developer who extends the app.
--   **Actions**: The extensible app can define a set of **application actions** that
+- **Actions**: The extensible app can define a set of **application actions** that
     perform basic operations in the app. These are each referenced by a unique key
     string and can take a data value as a parameter. Items from this set can then
     be referenced by extension actions. These contain their own key/ID string along
@@ -68,7 +68,7 @@ with extensibility in general:
     say) or an expression that calculates a result from app state. The expression could,
     for example, return the current user's name, the currently selected list item or a
     string composed from several data items.
--   **Features**: What counts as a "feature" varies according to the application but
+- **Features**: What counts as a "feature" varies according to the application but
     it is intended to mean any salient piece of functionality that can be
     customized by extensions. For example, a toolbar, navigation bar,
     login page or tools menu might all be regarded as features. Any of these
@@ -121,6 +121,77 @@ You can use the `load` method of the [Extension service](../extensions/services/
 convenient object that implements the [`ExtensionConfig`](../../lib/extensions/src/lib/config/extension.config.ts) and [`ExtensionRef`](../../lib/extensions/src/lib/config/extension.config.ts) interfaces.
 Note that the `extension.schema.json` file contains a [JSON schema](http://json-schema.org/)
 that allows for format checking and also text completion in some editors.
+
+### Replacing Values
+
+By default, the data from the extensions gets merged with the existing one.
+
+For example:
+
+**Application Data**
+
+```json
+{
+    "languages": [
+        { "key": "en", "title": "English" },
+        { "key": "it", "title": "Italian" }
+    ]
+}
+```
+
+**Extension Data**
+
+```json
+{
+    "languages": [
+        { "key": "fr", "title": "French" },
+    ]
+}
+```
+
+**Expected Result**
+
+At runtime, the application is going to display three languages
+
+```json
+{
+    "languages": [
+        { "key": "en", "title": "English" },
+        { "key": "it", "title": "Italian" },
+        { "key": "fr", "title": "French" },
+    ]
+}
+```
+
+You can replace the value by using the special key syntax:
+
+```json
+{
+    "<name>.$replace": "<value>"
+}
+```
+
+**Example:**
+
+```json
+{
+    "languages.$replace": [
+        { "key": "fr", "title": "French" }
+    ]
+}
+```
+
+**Expected Result**
+
+At runtime, the application is going to display languages provided by the extension (given that no other extension file replaces the values, otherwise it is going to be a "last wins" scenario)
+
+```json
+{
+    "languages": [
+        { key: "fr", "title": "French" }
+    ]
+}
+```
 
 ### Routes
 
@@ -233,9 +304,9 @@ relationships to hold among the parameter rules. A few useful metarules
 are defined in the
 [core.evaluators.ts](../../lib/extensions/src/lib/evaluators/core.evaluators.ts) file:
 
--   `every`: Returns true only if all the parameter rules return true
--   `some`: Returns true if one or more of the parameter rules return true
--   `not`: Returns true only if all the parameter rules return false
+- `every`: Returns true only if all the parameter rules return true
+- `some`: Returns true if one or more of the parameter rules return true
+- `not`: Returns true only if all the parameter rules return false
 
 Note that parameter rules can also recursively invoke their own rules, etc.
 
@@ -249,10 +320,10 @@ using actions, rules, etc, defined elsewhere in the config. Suppose, for
 example, the app has a tools menu that can be extended with extra commands.
 The properties for a new command might include:
 
--   The title shown in the menu
--   An icon shown next to the title
--   The action that is activated when the command is selected
--   A rule that determines whether or not the command is enabled
+- The title shown in the menu
+- An icon shown next to the title
+- The action that is activated when the command is selected
+- A rule that determines whether or not the command is enabled
 
 A `features` object to add an extra item to this menu might look like
 the following:
