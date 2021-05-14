@@ -31,6 +31,8 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UploadService } from '../../services/upload.service';
+import { FileModel } from '../../models';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -135,6 +137,7 @@ describe('ViewerComponent', () => {
     let alfrescoApiService: AlfrescoApiService;
     let element: HTMLElement;
     let dialog: MatDialog;
+    let uploadService: UploadService;
 
     setupTestBed({
         imports: [
@@ -168,6 +171,7 @@ describe('ViewerComponent', () => {
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
+        uploadService = TestBed.inject(UploadService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
     });
@@ -962,25 +966,40 @@ describe('ViewerComponent', () => {
             });
 
             it('should update version when emitted by image-viewer and user has update permissions', () => {
+                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
+                spyOn(uploadService, 'addToQueue');
                 component.readOnly = false;
-                component.nodeEntry = new NodeEntry({ entry: { name: 'fakeImage.png', id: '12', content: { mimeType: 'txt' } } });
+                component.nodeEntry = new NodeEntry({ entry: { name: 'fakeImage.png', id: '12', content: { mimeType: 'img/png' } } });
                 const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
                 const fakeBlob = new Blob([data], { type: 'image/png' });
+                const newImageFile: File = new File([fakeBlob], component?.nodeEntry?.entry?.name, { type: component?.nodeEntry?.entry?.content?.mimeType });
+                const newFile = new FileModel(
+                    newImageFile,
+                    {
+                        majorVersion: false,
+                        newVersion: true,
+                        parentId: component?.nodeEntry?.entry?.parentId,
+                        nodeType: component?.nodeEntry?.entry?.content?.mimeType
+                    },
+                    component.nodeEntry.entry?.id
+                );
                 component.onSubmitFile(fakeBlob);
                 fixture.detectChanges();
 
-                expect(component.blobFile).toEqual(fakeBlob);
+                expect(uploadService.addToQueue).toHaveBeenCalledWith(...[newFile]);
+                expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalled();
             });
 
             it('should not update version when emitted by image-viewer and user doesn`t have update permissions', () => {
+                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
                 component.readOnly = true;
-                component.nodeEntry = new NodeEntry({ entry: { name: 'fakeImage.png', id: '12', content: { mimeType: 'txt' } } });
+                component.nodeEntry = new NodeEntry({ entry: { name: 'fakeImage.png', id: '12', content: { mimeType: 'img/png' } } });
                 const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
                 const fakeBlob = new Blob([data], { type: 'image/png' });
                 component.onSubmitFile(fakeBlob);
                 fixture.detectChanges();
 
-                expect(component.blobFile).toEqual(undefined);
+                expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
             });
         });
 
