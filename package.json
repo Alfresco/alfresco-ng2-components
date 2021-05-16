@@ -128,7 +128,7 @@
     "concurrently": "^6.0.0",
     "cspell": "^5.3.8",
     "css-loader": "^5.2.4",
-    "dotenv": "^8.2.0",
+    "dotenv": "^9.0.2",
     "github-api": "^3.4.0",
     "graphql": "^15.4.0",
     "graphql-request": "^3.1.0",
