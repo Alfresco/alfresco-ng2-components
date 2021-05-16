@@ -126,7 +126,7 @@
     "codelyzer": "^6.0.1",
     "commander": "6.2.1",
     "concurrently": "^6.0.0",
-    "cspell": "^5.3.8",
+    "cspell": "^5.4.1",
     "css-loader": "^5.2.4",
     "dotenv": "^8.2.0",
     "github-api": "^3.4.0",
