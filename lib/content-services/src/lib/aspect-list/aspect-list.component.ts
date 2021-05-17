@@ -42,7 +42,8 @@ export class AspectListComponent implements OnInit, OnDestroy {
     propertyColumns: string[] = ['name', 'title', 'dataType'];
     aspects$: Observable<AspectEntry[]> = null;
     nodeAspects: string[] = [];
-    nodeAspectStatus: string[] = null;
+    nodeAspectStatus: string[] = [];
+    hasEqualAspect: boolean = true;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -64,7 +65,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
             this.aspects$ = zip(node$, customAspect$).pipe(
                 tap(([node, customAspects]) => {
                     this.nodeAspects = node.aspectNames.filter((aspect) => this.aspectListService.getVisibleAspects().includes(aspect) || customAspects.includes(aspect));
-                    this.nodeAspectStatus = Array.from(node.aspectNames);
+                    this.nodeAspectStatus = [ ...this.nodeAspects ];
                     this.valueChanged.emit(this.nodeAspects);
                 }),
                 concatMap(() => this.aspectListService.getAspects()),
@@ -85,12 +86,14 @@ export class AspectListComponent implements OnInit, OnDestroy {
         } else {
             this.nodeAspects.splice(this.nodeAspects.indexOf(prefixedName), 1);
         }
+        this.updateEqualityOfAspectList();
         this.valueChanged.emit(this.nodeAspects);
     }
 
     reset() {
         if (this.nodeAspectStatus && this.nodeAspectStatus.length > 0) {
             this.nodeAspects.splice(0, this.nodeAspects.length, ...this.nodeAspectStatus);
+            this.hasEqualAspect = true;
             this.valueChanged.emit(this.nodeAspects);
         } else {
             this.clear();
@@ -99,6 +102,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
 
     clear() {
         this.nodeAspects = [];
+        this.updateEqualityOfAspectList();
         this.valueChanged.emit(this.nodeAspects);
     }
 
@@ -108,5 +112,13 @@ export class AspectListComponent implements OnInit, OnDestroy {
 
     getTitle(aspect: any): string {
         return aspect?.entry?.title ? aspect?.entry?.title : aspect?.entry?.id;
+    }
+
+    private updateEqualityOfAspectList() {
+        if (this.nodeAspectStatus.length !== this.nodeAspects.length) {
+            this.hasEqualAspect =  false;
+        } else {
+            this.hasEqualAspect = this.nodeAspects.every((aspect) => this.nodeAspectStatus.includes(aspect));
+        }
     }
 }

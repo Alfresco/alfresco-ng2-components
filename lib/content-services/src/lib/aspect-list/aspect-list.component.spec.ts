@@ -156,6 +156,15 @@ describe('AspectListComponent', () => {
             fixture.destroy();
         });
 
+        it('should return true when same aspect list selected', () => {
+            expect(component.hasEqualAspect).toBe(true);
+        });
+
+        it('should return false when different aspect list selected', () => {
+            component.clear();
+            expect(component.hasEqualAspect).toBe(false);
+        });
+
         it('should show all the aspects', () => {
             const firstElement = fixture.nativeElement.querySelector('#aspect-list-FirstAspect');
             const secondElement = fixture.nativeElement.querySelector('#aspect-list-SecondAspect');
