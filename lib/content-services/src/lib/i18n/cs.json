@@ -389,6 +389,7 @@
       "TITLE": "Přidat oprávnění",
       "TYPE-MESSAGE": "Začněte hledat skupiny nebo osoby jednoduše zadáním textu",
       "NO-RESULT": "Hledanému výrazu neodpovídají žádné výsledky",
+      "SELECT-ACTION": "VYBRAT",
       "ADD-ACTION": "Přidat",
       "CLOSE-ACTION": "ZRUŠIT",
       "BASE-DIALOG-TITLE": "Vyhledejte skupinu nebo osoby, které chcete přidat...",
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "Vybráno: {{ count }}"
-  }
+  },
+  "swsdp": "Ukázka: Projekt návrhu webové stránky"
 }

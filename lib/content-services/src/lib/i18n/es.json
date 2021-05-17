@@ -389,6 +389,7 @@
       "TITLE": "Añadir permiso",
       "TYPE-MESSAGE": "Escriba algo para comenzar a buscar grupos o personas",
       "NO-RESULT": "No se han encontrado resultados para esta búsqueda",
+      "SELECT-ACTION": "Seleccionar",
       "ADD-ACTION": "Añadir",
       "CLOSE-ACTION": "Cancelar",
       "BASE-DIALOG-TITLE": "Buscar un grupo o personas para añadir...",
@@ -397,7 +398,7 @@
     "COLUMN": {
       "NAME": "Usuarios y grupos ({{ count }})",
       "LOCATION": "Ubicación",
-      "BULK-ROLE": "Establecer todas las funciones a"
+      "BULK-ROLE": "Set all roles to"
     },
     "LABELS": {
       "ON": "Activado",
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} seleccionado(s)"
-  }
+  },
+  "swsdp": "Ejemplo: Proyecto de diseño de sitio web"
 }

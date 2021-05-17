@@ -389,6 +389,7 @@
       "TITLE": "Lisää oikeus",
       "TYPE-MESSAGE": "Aloita ryhmien tai ihmisten hakeminen kirjoittamalla jotain",
       "NO-RESULT": "Tällä haulla ei löydy yhtään tulosta",
+      "SELECT-ACTION": "Valitse",
       "ADD-ACTION": "Lisää",
       "CLOSE-ACTION": "Peruuta",
       "BASE-DIALOG-TITLE": "Hae lisättävää ryhmää tai ihmistä...",
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} valittiin"
-  }
+  },
+  "swsdp": "Otos: Verkkosivuston suunnitteluprojekti"
 }

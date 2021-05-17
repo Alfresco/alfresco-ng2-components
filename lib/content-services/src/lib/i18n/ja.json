@@ -389,6 +389,7 @@
       "TITLE": "権限を追加",
       "TYPE-MESSAGE": "グループまたはメンバーの検索条件を入力してください",
       "NO-RESULT": "この条件に一致する結果はありません",
+      "SELECT-ACTION": "選択",
       "ADD-ACTION": "追加",
       "CLOSE-ACTION": "キャンセル",
       "BASE-DIALOG-TITLE": "追加するグループまたはメンバーの検索...",
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }}を選択"
-  }
+  },
+  "swsdp": "サンプル：Webサイトデザインプロジェクト"
 }

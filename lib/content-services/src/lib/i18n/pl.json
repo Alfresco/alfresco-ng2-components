@@ -389,6 +389,7 @@
       "TITLE": "Dodaj uprawnienie",
       "TYPE-MESSAGE": "Wpisz jakiś tekst, aby rozpocząć wyszukiwanie grup lub osób.",
       "NO-RESULT": "Brak wyników dla tego wyszukiwania.",
+      "SELECT-ACTION": "WYBIERZ",
       "ADD-ACTION": "Dodaj",
       "CLOSE-ACTION": "ANULUJ",
       "BASE-DIALOG-TITLE": "Wyszukaj grupę lub osoby do dodania...",
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "Liczba zaznaczonych: {{ count }}"
-  }
+  },
+  "swsdp": "Przykład: projekt układu witryny internetowej"
 }

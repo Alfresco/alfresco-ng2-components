@@ -389,7 +389,8 @@
       "TITLE": "Berechtigung hinzufügen",
       "TYPE-MESSAGE": "Geben Sie etwas ein, um nach Gruppen oder Personen zu suchen",
       "NO-RESULT": "Für diese Suchanfrage wurden keine Ergebnisse gefunden",
-      "ADD-ACTION": "Hinzufügen",
+      "SELECT-ACTION": "AUSWÄHLEN",
+      "ADD-ACTION": "HINZUFÜGEN",
       "CLOSE-ACTION": "ABBRECHEN",
       "BASE-DIALOG-TITLE": "Es wird nach Gruppen oder Personen gesucht, die hinzugefügt werden können...",
       "EVERYONE": "JEDER"
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} ausgewählt"
-  }
+  },
+  "swsdp": "Beispiel: Website-Design-Projekt"
 }

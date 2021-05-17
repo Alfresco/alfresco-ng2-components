@@ -389,6 +389,7 @@
       "TITLE": "Lägg till behörighet",
       "TYPE-MESSAGE": "Skriv något för att börja söka grupper eller personer",
       "NO-RESULT": "Inga resultat hittades för den här sökningen",
+      "SELECT-ACTION": "Välj",
       "ADD-ACTION": "Lägg till",
       "CLOSE-ACTION": "Avbryt",
       "BASE-DIALOG-TITLE": "Sök en grupp eller personer att lägga till...",
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} vald"
-  }
+  },
+  "swsdp": "Sampel: Webbplatsdesignprojekt"
 }
