@@ -389,6 +389,7 @@
       "TITLE": "Tilføj tilladelse",
       "TYPE-MESSAGE": "Skriv noget for at begynde at søge efter grupper eller personer",
       "NO-RESULT": "Der blev ikke fundet nogen resultater for denne søgning",
+      "SELECT-ACTION": "VÆLG",
       "ADD-ACTION": "Tilføj",
       "CLOSE-ACTION": "ANNULLER",
       "BASE-DIALOG-TITLE": "Søg efter en gruppe eller personer, du vil tilføje...",
@@ -397,7 +398,7 @@
     "COLUMN": {
       "NAME": "Brugere og grupper ({{ count }})",
       "LOCATION": "Placering",
-      "BULK-ROLE": "Sæt alle funktioner til"
+      "BULK-ROLE": "Sæt alle roller til"
     },
     "LABELS": {
       "ON": "On",
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} valgt"
-  }
+  },
+  "swsdp": "Prøve: Websted Design Projekt"
 }

@@ -389,6 +389,7 @@
       "TITLE": "添加权限",
       "TYPE-MESSAGE": "输入内容以开始搜索组或人员",
       "NO-RESULT": "找不到此搜索的结果",
+      "SELECT-ACTION": "选择",
       "ADD-ACTION": "添加",
       "CLOSE-ACTION": "取消",
       "BASE-DIALOG-TITLE": "搜索要添加的组或人员...",
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "已选择 {{ count }} 个"
-  }
+  },
+  "swsdp": "示例: 网站设计项目"
 }

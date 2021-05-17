@@ -389,6 +389,7 @@
       "TITLE": "Rechten toevoegen",
       "TYPE-MESSAGE": "Voer iets in om te beginnen met zoeken naar groepen of personen",
       "NO-RESULT": "Geen resultaten gevonden voor deze zoekopdracht",
+      "SELECT-ACTION": "Selecteren",
       "ADD-ACTION": "Toevoegen",
       "CLOSE-ACTION": "Annuleren",
       "BASE-DIALOG-TITLE": "Een groep of personen zoeken om toe te voegen...",
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} geselecteerd"
-  }
+  },
+  "swsdp": "Voorbeeld: Websiteontwerpproject"
 }

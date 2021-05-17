@@ -389,6 +389,7 @@
       "TITLE": "Ajouter des droits d'accès",
       "TYPE-MESSAGE": "Entrez du texte pour rechercher des groupes ou des personnes",
       "NO-RESULT": "La recherche n'a donné aucun résultat",
+      "SELECT-ACTION": "Sélectionner",
       "ADD-ACTION": "Ajouter",
       "CLOSE-ACTION": "Annuler",
       "BASE-DIALOG-TITLE": "Rechercher un groupe ou une personne à ajouter...",
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} sélectionné(s)"
-  }
+  },
+  "swsdp": "Exemple : projet de conception de site Web"
 }

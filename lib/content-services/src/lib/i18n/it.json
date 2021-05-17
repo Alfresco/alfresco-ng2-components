@@ -389,6 +389,7 @@
       "TITLE": "Aggiungi autorizzazione",
       "TYPE-MESSAGE": "Digita per iniziare a cercare gruppi o persone",
       "NO-RESULT": "Nessun risultato trovato per la ricerca",
+      "SELECT-ACTION": "Seleziona",
       "ADD-ACTION": "Aggiungi",
       "CLOSE-ACTION": "Annulla",
       "BASE-DIALOG-TITLE": "Cerca un gruppo o una persona da aggiungere...",
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} selezionati"
-  }
+  },
+  "swsdp": "Esempio: Progetto di sviluppo di sito Web"
 }

@@ -389,7 +389,8 @@
       "TITLE": "Legg til tillatelse",
       "TYPE-MESSAGE": "Skriv inn tekst for å starte søk etter grupper eller personer",
       "NO-RESULT": "Ingen resultater funnet for dette søket",
-      "ADD-ACTION": "Legg til",
+      "SELECT-ACTION": "VELG",
+      "ADD-ACTION": "LEGG TIL",
       "CLOSE-ACTION": "AVBRYT",
       "BASE-DIALOG-TITLE": "Søk etter en gruppe eller personer å legge til...",
       "EVERYONE": "Alle"
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} valgt"
-  }
+  },
+  "swsdp": "Eksempel: Prosjekt for nettsteddesign"
 }

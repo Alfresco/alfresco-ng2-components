@@ -389,6 +389,7 @@
       "TITLE": "Adicionar permissão",
       "TYPE-MESSAGE": "Digite para começar a pesquisar grupos ou pessoas",
       "NO-RESULT": "Nenhum resultado encontrado para esta pesquisa",
+      "SELECT-ACTION": "SELECIONAR",
       "ADD-ACTION": "Adicionar",
       "CLOSE-ACTION": "CANCELAR",
       "BASE-DIALOG-TITLE": "Pesquise um grupo ou pessoa para adicionar...",
@@ -397,7 +398,7 @@
     "COLUMN": {
       "NAME": "Usuários e grupos ({{ count }})",
       "LOCATION": "Localização",
-      "BULK-ROLE": "Definir todos os papéis como"
+      "BULK-ROLE": "Definir todas as funções como"
     },
     "LABELS": {
       "ON": "Ativada",
@@ -512,5 +513,6 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} selecionado(s)"
-  }
+  },
+  "swsdp": "Amostra: Projeto de design do site da Web"
 }
