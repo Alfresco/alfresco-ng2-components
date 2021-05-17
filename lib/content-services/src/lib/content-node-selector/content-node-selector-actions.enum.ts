@@ -15,12 +15,9 @@
  * limitations under the License.
  */
 
-export * from './name-location-cell/name-location-cell.component';
-export * from './content-node-selector.component-data.interface';
-export * from './content-node-selector-panel.component';
-export * from './content-node-selector.component';
-export * from './content-node-dialog.service';
-export * from './content-node-selector-panel.service';
-export * from './content-node-selector-actions.enum';
-
-export * from './content-node-selector.module';
+export enum ContentNodeSelectorActionsEnum {
+    ATTACH = 'ATTACH',
+    CHOOSE = 'CHOOSE',
+    COPY = 'COPY',
+    MOVE = 'MOVE'
+}
