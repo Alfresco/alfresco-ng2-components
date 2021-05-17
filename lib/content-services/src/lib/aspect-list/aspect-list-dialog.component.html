@@ -32,6 +32,7 @@
         </button>
 
         <button mat-button (click)="onApply()" id="aspect-list-dialog-actions-apply"
+            [disabled]="aspectList.hasEqualAspect"
             data-automation-id="aspect-list-dialog-actions-apply">{{
             'ADF-ASPECT-LIST.DIALOG.APPLY' | translate }}
         </button>
