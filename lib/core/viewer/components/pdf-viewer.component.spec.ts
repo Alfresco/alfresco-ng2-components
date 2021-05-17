@@ -625,6 +625,16 @@ describe('Test PdfViewer component', () => {
                 });
             }, 25000);
 
+            it('should check if page fits to documentContainer', (done) => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent, 'checkPageFitInContainer');
+                componentUrlTestComponent.pdfViewerComponent.scalePage(1);
+
+                fixtureUrlTestComponent.detectChanges();
+                fixtureUrlTestComponent.whenStable().then(() => {
+                    expect(componentUrlTestComponent.pdfViewerComponent.checkPageFitInContainer).toHaveBeenCalled();
+                    done();
+                });
+            });
         });
 
         describe('Zoom', () => {
