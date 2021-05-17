@@ -15,7 +15,7 @@ commit any changes you are currently working on. If you aren't using versioning
 then be sure to make a backup copy of your project before going ahead with the
 upgrade.
 
-This guide explains how to upgrade your ADF v3.2 project to work with v3.3.
+This guide explains how to upgrade your ADF v4.3 project to work with v4.4.
 
 Do not skip this task, if you want your application to be updated to a most recent version of ADF. Upgrades of multiple versions of ADF cannot be done in one step only, but should follow the chain of sequential updates. 
 
