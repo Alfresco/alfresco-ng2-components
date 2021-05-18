@@ -21,7 +21,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { Node, NodeEntry } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
-import { SitesService, ContentService, UploadService, FileModel, FileUploadEvent } from '@alfresco/adf-core';
+import { ContentService, FileModel, FileUploadEvent, SitesService, UploadService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
@@ -30,6 +30,7 @@ import { ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
+import { NodeActionsEnum } from '../document-list/models/node-actions.enum';
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
@@ -40,7 +41,7 @@ describe('ContentNodeSelectorComponent', () => {
     beforeEach(() => {
         data = {
             title: 'Choose along citizen...',
-            actionName: 'choose',
+            actionName: NodeActionsEnum.CHOOSE,
             select: new EventEmitter<Node>(),
             rowFilter: (shareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
             imageResolver: () => 'piccolo',
@@ -448,19 +449,19 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should show the counter depending on the action', () => {
-            component.action = 'ATTACH';
+            component.action = NodeActionsEnum.ATTACH;
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).not.toBe(null);
 
-            component.action = 'CHOOSE';
+            component.action = NodeActionsEnum.CHOOSE;
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).not.toBe(null);
 
-            component.action = 'COPY';
+            component.action = NodeActionsEnum.COPY;
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
 
-            component.action = 'MOVE';
+            component.action = NodeActionsEnum.MOVE;
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
         });

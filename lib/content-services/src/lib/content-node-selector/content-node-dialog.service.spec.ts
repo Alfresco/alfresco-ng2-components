@@ -15,15 +15,16 @@
  * limitations under the License.
  */
 
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { NodeEntry, Node, SitePaging, Site } from '@alfresco/js-api';
-import { AppConfigService, SitesService, setupTestBed } from '@alfresco/adf-core';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Node, NodeEntry, Site, SitePaging } from '@alfresco/js-api';
+import { AppConfigService, setupTestBed, SitesService } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject, of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { NodeActionsEnum } from '../document-list/models/node-actions.enum';
 
 const fakeNodeEntry: NodeEntry = <NodeEntry> {
     entry: {
@@ -105,12 +106,12 @@ describe('ContentNodeDialogService', () => {
     });
 
     it('should be able to open the dialog when node has permission', () => {
-        service.openCopyMoveDialog('fake-action', fakeNode, '!update');
+        service.openCopyMoveDialog(NodeActionsEnum.CHOOSE, fakeNode, '!update');
         expect(spyOnDialogOpen).toHaveBeenCalled();
     });
 
     it('should NOT be able to open the dialog when node has NOT permission', () => {
-        service.openCopyMoveDialog('fake-action', fakeNode, 'noperm').subscribe(
+        service.openCopyMoveDialog(NodeActionsEnum.CHOOSE, fakeNode, 'noperm').subscribe(
             () => {},
             (error) => {
                 expect(spyOnDialogOpen).not.toHaveBeenCalled();
@@ -202,7 +203,7 @@ describe('ContentNodeDialogService', () => {
                 testContentNodeSelectorComponentData = config.data;
                 return { componentInstance: {} };
             });
-            service.openCopyMoveDialog('fake-action', fakeNode, '!update');
+            service.openCopyMoveDialog(NodeActionsEnum.CHOOSE, fakeNode, '!update');
         });
 
         it('should NOT allow selection for sites', () => {

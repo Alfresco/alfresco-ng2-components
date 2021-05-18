@@ -44,6 +44,7 @@ export * from './models/content-action.model';
 export * from './models/document-library.model';
 export * from './models/permissions.model';
 export * from './models/permissions-style.model';
+export * from './models/node-actions.enum';
 
 export * from './interfaces/document-list-loader.interface';
 

@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
-import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, ContentNodeSelectorActionsEnum } from '@alfresco/adf-content-services';
+import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeActionsEnum } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
 import { Observable, Subject, throwError } from 'rxjs';
 
@@ -39,7 +39,7 @@ export class ContentCloudNodeSelectorService {
     });
     const data = <ContentNodeSelectorComponentData> {
       title: 'Select a file',
-      actionName: ContentNodeSelectorActionsEnum.ATTACH,
+      actionName: NodeActionsEnum.ATTACH,
       currentFolderId,
       restrictRootToCurrentFolderId,
       select,

@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-export enum ContentNodeSelectorActionsEnum {
+export enum NodeActionsEnum {
     ATTACH = 'ATTACH',
     CHOOSE = 'CHOOSE',
     COPY = 'COPY',
-    MOVE = 'MOVE'
+    MOVE = 'MOVE',
+    NEXT = 'NEXT'
 }

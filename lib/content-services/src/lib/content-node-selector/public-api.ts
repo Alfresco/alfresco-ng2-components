@@ -21,6 +21,5 @@ export * from './content-node-selector-panel.component';
 export * from './content-node-selector.component';
 export * from './content-node-dialog.service';
 export * from './content-node-selector-panel.service';
-export * from './content-node-selector-actions.enum';
 
 export * from './content-node-selector.module';

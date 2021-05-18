@@ -22,7 +22,7 @@ import { Node } from '@alfresco/js-api';
 
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { NodeEntryEvent } from '../document-list/components/node.event';
-import { ContentNodeSelectorActionsEnum } from "./content-node-selector-actions.enum";
+import { NodeActionsEnum } from '../document-list/models/node-actions.enum';
 
 @Component({
     selector: 'adf-content-node-selector',
@@ -32,7 +32,7 @@ import { ContentNodeSelectorActionsEnum } from "./content-node-selector-actions.
 })
 export class ContentNodeSelectorComponent implements OnInit {
     title: string;
-    action: ContentNodeSelectorActionsEnum;
+    action: NodeActionsEnum;
     buttonActionName: string;
     chosenNode: Node[];
     currentDirectoryId: string;
@@ -51,7 +51,7 @@ export class ContentNodeSelectorComponent implements OnInit {
                 private uploadService: UploadService,
                 private dialog: MatDialogRef<ContentNodeSelectorComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
-        this.action = data.actionName ?? ContentNodeSelectorActionsEnum.CHOOSE;
+        this.action = data.actionName ?? NodeActionsEnum.CHOOSE;
         this.buttonActionName = `NODE_SELECTOR.${this.action}`;
         this.title = data.title;
         this.currentDirectoryId = data.currentFolderId;
@@ -99,12 +99,12 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     updateTitle(siteTitle: string) {
-        if (this.action === ContentNodeSelectorActionsEnum.CHOOSE && siteTitle) {
+        if (this.action === NodeActionsEnum.CHOOSE && siteTitle) {
             this.title = this.getTitleTranslation(this.action, siteTitle);
         }
     }
 
-    getTitleTranslation(action: ContentNodeSelectorActionsEnum, name: string): string {
+    getTitleTranslation(action: NodeActionsEnum, name: string): string {
         return this.translation.instant(`NODE_SELECTOR.${action}_ITEM`, { name: this.translation.instant(name) });
     }
 
@@ -113,7 +113,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     isCounterVisible(): boolean {
-        return this.action === ContentNodeSelectorActionsEnum.ATTACH || this.action === ContentNodeSelectorActionsEnum.CHOOSE;
+        return this.action === NodeActionsEnum.ATTACH || this.action === NodeActionsEnum.CHOOSE;
     }
 
     isMultipleSelection(): boolean {

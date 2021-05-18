@@ -24,7 +24,7 @@ import { Node, NodeEntry, SitePaging } from '@alfresco/js-api';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
-import { ContentNodeSelectorActionsEnum } from './content-node-selector-actions.enum';
+import { NodeActionsEnum } from '../document-list/models/node-actions.enum';
 import { NodeLockDialogComponent } from '../dialogs/node-lock.dialog';
 import { switchMap } from 'rxjs/operators';
 
@@ -62,7 +62,7 @@ export class ContentNodeDialogService {
      */
     openFileBrowseDialogByFolderId(folderNodeId: string): Observable<Node[]> {
         return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((nodeEntry: NodeEntry) => {
-            return this.openUploadFileDialog(ContentNodeSelectorActionsEnum.CHOOSE, nodeEntry.entry, true);
+            return this.openUploadFileDialog(NodeActionsEnum.CHOOSE, nodeEntry.entry, true);
         }));
     }
 
@@ -127,7 +127,7 @@ export class ContentNodeDialogService {
      */
     openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<Node[]> {
         return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((node: NodeEntry) => {
-            return this.openUploadFolderDialog(ContentNodeSelectorActionsEnum.CHOOSE, node.entry);
+            return this.openUploadFolderDialog(NodeActionsEnum.CHOOSE, node.entry);
         }));
     }
 
@@ -139,7 +139,7 @@ export class ContentNodeDialogService {
      * @param excludeSiteContent The site content that should be filtered out
      * @returns Information about files that were copied/moved
      */
-    openCopyMoveDialog(action: ContentNodeSelectorActionsEnum, contentEntry: Node, permission?: string, excludeSiteContent?: string[]): Observable<Node[]> {
+    openCopyMoveDialog(action: NodeActionsEnum, contentEntry: Node, permission?: string, excludeSiteContent?: string[]): Observable<Node[]> {
         if (this.contentService.hasAllowableOperations(contentEntry, permission)) {
 
             const select = new Subject<Node[]>();
@@ -184,7 +184,7 @@ export class ContentNodeDialogService {
      * @param contentEntry  Item to upload
      * @returns Information about the chosen folder(s)
      */
-    openUploadFolderDialog(action: ContentNodeSelectorActionsEnum, contentEntry: Node): Observable<Node[]> {
+    openUploadFolderDialog(action: NodeActionsEnum, contentEntry: Node): Observable<Node[]> {
         const select = new Subject<Node[]>();
         select.subscribe({
             complete: this.close.bind(this)
@@ -212,7 +212,7 @@ export class ContentNodeDialogService {
      * @param showFilesInResult Show files in dialog search result
      * @returns Information about the chosen file(s)
      */
-    openUploadFileDialog(action: ContentNodeSelectorActionsEnum, contentEntry: Node, showFilesInResult = false): Observable<Node[]> {
+    openUploadFileDialog(action: NodeActionsEnum, contentEntry: Node, showFilesInResult = false): Observable<Node[]> {
         const select = new Subject<Node[]>();
         select.subscribe({
             complete: this.close.bind(this)
