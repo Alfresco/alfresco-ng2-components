@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ContentChildren, EventEmitter, Input, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, EventEmitter, HostListener, Input, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 @Component({
     selector: 'adf-info-drawer-tab',
@@ -60,6 +60,16 @@ export class InfoDrawerComponent {
 
     @ContentChildren(InfoDrawerTabComponent)
     contentBlocks: QueryList<InfoDrawerTabComponent>;
+
+    @HostListener('keydown', ['$event'])
+    onKeyDown(event: KeyboardEvent) {
+        event.cancelBubble = true;
+    }
+
+    @HostListener('keyup', ['$event'])
+    onKeyUp(event: KeyboardEvent) {
+        event.cancelBubble = true;
+    }
 
     showTabLayout(): boolean {
         return this.contentBlocks.length > 0;
