@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-viewer-sidebar',
@@ -25,4 +25,13 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     template: `<ng-content></ng-content>`
 })
 export class ViewerSidebarComponent {
+    @HostListener('keydown', ['$event'])
+    onKeyDown(event: KeyboardEvent) {
+        event.cancelBubble = true;
+    }
+
+    @HostListener('keyup', ['$event'])
+    onKeyUp(event: KeyboardEvent) {
+        event.cancelBubble = true;
+    }
 }
