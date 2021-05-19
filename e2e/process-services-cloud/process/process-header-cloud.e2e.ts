@@ -69,11 +69,11 @@ describe('Process Header cloud component', () => {
 
             await apiService.login(testUser.username, testUser.password);
 
-            const dropdownRestProcess = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+            const simpleProcess = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
             const processparent = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.processes.processparent, subProcessApp);
 
-            runningProcess = await processInstancesService.createProcessInstance(dropdownRestProcess.entry.key,
+            runningProcess = await processInstancesService.createProcessInstance(simpleProcess.entry.key,
                 simpleApp, { name: StringUtil.generateRandomString(), businessKey: 'test' });
 
             runningCreatedDate = moment(runningProcess.entry.startDate).format(formatDate);

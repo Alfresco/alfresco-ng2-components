@@ -79,7 +79,7 @@
     "processes": {
       "processwithvariables": "processwithvariables",
       "simpleProcess": "simpleprocess",
-      "dropdownrestprocess": "dropdownrestprocess",
+      "dropdownoptionsprocess": "dropdownoptionsprocess",
       "multilingualprocess": "multilingualprocess",
       "processWithTabVisibility": "processwithtabvisibility",
       "startmessageevent": "start-message-event",
