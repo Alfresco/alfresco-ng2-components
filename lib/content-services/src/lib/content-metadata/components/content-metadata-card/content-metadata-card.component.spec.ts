@@ -59,6 +59,7 @@ describe('ContentMetadataCardComponent', () => {
 
         component.node = node;
         component.preset = preset;
+        component.editAspectSupported = true;
         nodeAspectService = TestBed.inject(NodeAspectService);
         spyOn(contentMetadataService, 'getContentTypeProperty').and.returnValue(of([]));
         fixture.detectChanges();
@@ -220,6 +221,7 @@ describe('ContentMetadataCardComponent', () => {
         component.node.id = 'fake-node-id';
         component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
         spyOn(nodeAspectService, 'updateNodeAspects').and.stub();
+
         fixture.detectChanges();
 
         const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-edit-aspect"]'));
@@ -227,5 +229,18 @@ describe('ContentMetadataCardComponent', () => {
         fixture.detectChanges();
 
         expect(nodeAspectService.updateNodeAspects).toHaveBeenCalledWith('fake-node-id');
+    });
+
+    it('should not show the edit aspect button if ACS version is not supported', () => {
+        component.editable = true;
+        component.node.id = 'fake-node-id';
+        component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
+        spyOn(nodeAspectService, 'updateNodeAspects').and.stub();
+        component.editAspectSupported = false;
+        fixture.detectChanges();
+
+        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-edit-aspect"]'));
+
+        expect(button).toBeNull();
     });
 });

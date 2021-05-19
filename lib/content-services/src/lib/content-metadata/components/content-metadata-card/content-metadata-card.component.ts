@@ -17,7 +17,7 @@
 
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
+import { ContentService, AllowableOperationsEnum, VersionCompatibilityService } from '@alfresco/adf-core';
 import { NodeAspectService } from '../../../aspect-list/node-aspect.service';
 @Component({
     selector: 'adf-content-metadata-card',
@@ -81,7 +81,10 @@ export class ContentMetadataCardComponent implements OnChanges {
 
     expanded: boolean;
 
-    constructor(private contentService: ContentService, private nodeAspectService: NodeAspectService) {
+    editAspectSupported = false;
+
+    constructor(private contentService: ContentService, private nodeAspectService: NodeAspectService, private versionCompatibilityService: VersionCompatibilityService) {
+        this.editAspectSupported = this.versionCompatibilityService.isVersionSupported('7');
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -108,5 +111,9 @@ export class ContentMetadataCardComponent implements OnChanges {
 
     openAspectDialog() {
         this.nodeAspectService.updateNodeAspects(this.node.id);
+    }
+
+    isEditAspectSupported(): boolean {
+        return !this.readOnly && this.hasAllowableOperations() && this.editAspectSupported;
     }
 }
