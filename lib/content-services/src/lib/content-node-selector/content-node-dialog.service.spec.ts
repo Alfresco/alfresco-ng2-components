@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Node, NodeEntry, Site, SitePaging } from '@alfresco/js-api';
-import { AppConfigService, setupTestBed, SitesService } from '@alfresco/adf-core';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { NodeEntry, Node, SitePaging, Site } from '@alfresco/js-api';
+import { AppConfigService, SitesService, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
-import { of, Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NodeActionsEnum } from '../document-list/models/node-actions.enum';
