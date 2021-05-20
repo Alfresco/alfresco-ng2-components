@@ -73,7 +73,7 @@ describe('Task form cloud component', () => {
     let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, formTaskId, assigneeTaskId, assigneeReleaseTask, candidateUsersTask ;
     let dateTimerTaskId, dateTimerTask, dateTimerChangedTaskId, dateTimerChangedTask, dropdownOptionsTask;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         try {
             await apiService.loginWithProfile('hrUser');
             createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
@@ -134,7 +134,6 @@ describe('Task form cloud component', () => {
             assigneeTaskId = assigneeReleaseTask.list.entries[0].entry.id;
 
             await loginSSOPage.loginWithProfile('hrUser');
-            done();
         } catch (error) {
             Logger.error('Error in beforeAll: ', error);
         }
