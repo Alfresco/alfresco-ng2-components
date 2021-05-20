@@ -222,7 +222,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .getFilterById(this.appName, this.id)
             .pipe(finalize(() => this.isLoading = false))
             .subscribe(response => {
-                console.log('I cucking called on every time');
                 this.processFilter = new ProcessFilterCloudModel(
                     Object.assign({}, response || {}, this.processFilter || {})
                 );
@@ -260,8 +259,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     onAppNameChange() {
         const appNameController = this.editProcessFilterForm?.get('appName');
         if(appNameController) {
-            appNameController.valueChanges.subscribe((res) => {
-                console.log('called', res);
+            appNameController.valueChanges.subscribe(() => {
                 this.resetAppVersionsAndProcessDefinitionsOnAppNameChange();
             })
         }

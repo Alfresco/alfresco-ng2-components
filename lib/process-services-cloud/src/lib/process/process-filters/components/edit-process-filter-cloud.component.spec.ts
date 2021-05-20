@@ -456,7 +456,7 @@ describe('EditProcessFilterCloudComponent', () => {
         });
     }));
 
-    it('should not be able to call an API to fetch running apps, appVersions and processDefinitions when chaning filter properties except appName', async () => {
+    it('should not be able to call an API to fetch running apps, appVersions and processDefinitions when changing filter properties except appName', async () => {
         fixture.detectChanges();
         const applicationVersionsSpy = spyOn(processService, 'getApplicationVersions').and.callThrough();
         const processDefinitionSpy = spyOn(processService, 'getProcessDefinitions').and.callThrough();
@@ -465,8 +465,9 @@ describe('EditProcessFilterCloudComponent', () => {
         component.applicationNames = [{ label: 'mock-app-name', value: 'mock-app-name' } ]
         component.appVersionOptions = [{ label: '1', value: '1' }];
         component.processDefinitionNames = [{ label: 'process-def-name', value: 'process-def-name' }];
+        component.processFilter = fakeFilter;
         fixture.detectChanges();
-        const processNameController = component.editProcessFilterForm.get('processName');
+        const processNameController = component.editProcessFilterForm.get('processDefinitionName');
         processNameController.setValue('invoiceProcess');
         fixture.detectChanges();
         await fixture.whenStable();
