@@ -78,6 +78,19 @@ export class EditTaskFilterCloudComponentPage {
         await browser.driver.sleep(1000);
     }
 
+    async expandFilter(): Promise<void> {
+        await this.isFilterDisplayed();
+        await BrowserActions.click(this.customiseFilter);
+        await this.checkHeaderIsExpanded();
+    }
+
+    async checkHeaderIsExpanded(): Promise<void> {
+        const expansionPanelExtended = element.all(by.css('mat-expansion-panel-header.mat-expanded')).first();
+        await BrowserVisibility.waitUntilElementIsVisible(expansionPanelExtended);
+        const content = element.all(by.css('div.mat-expansion-panel-content[style*="visible"]')).first();
+        await BrowserVisibility.waitUntilElementIsVisible(content);
+    }
+
     async setStatusFilterDropDown(option: StatusType): Promise<void> {
         await this.statusDropdown.selectDropdownOption(option);
         await this.dataTable.waitTillContentLoaded();

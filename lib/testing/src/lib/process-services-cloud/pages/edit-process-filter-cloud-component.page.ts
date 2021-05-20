@@ -67,10 +67,16 @@ export class EditProcessFilterCloudComponentPage {
         await browser.driver.sleep(5000);
     }
 
-    async checkCustomiseFilterHeaderIsExpanded(): Promise<void> {
-        const expansionPanelExtended = element.all(by.css('mat-expansion-panel-header[class*="mat-expanded"]')).first();
+    async expandFilter(): Promise<void> {
+        await this.isFilterDisplayed();
+        await BrowserActions.click(this.customiseFilter);
+        await this.checkHeaderIsExpanded();
+    }
+
+    async checkHeaderIsExpanded(): Promise<void> {
+        const expansionPanelExtended = element.all(by.css('mat-expansion-panel-header.mat-expanded')).first();
         await BrowserVisibility.waitUntilElementIsVisible(expansionPanelExtended);
-        const content = element.all(by.css('div[class*="mat-expansion-panel-content "][style*="visible"]')).first();
+        const content = element.all(by.css('div.mat-expansion-panel-content[style*="visible"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(content);
     }
 
@@ -218,7 +224,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async setFilter(props: FilterProps): Promise<void> {
-        await this.openFilter();
+        await this.expandFilter();
         if (props.name) { await this.setProcessName(props.name); }
         if (props.status) { await this.setStatusFilterDropDown(props.status); }
         if (props.sort) { await this.setSortFilterDropDown(props.sort);     }

@@ -71,7 +71,7 @@ describe('Edit process filters cloud', () => {
         await processFilter.clickOnProcessFilters();
 
         await editProcessFilter.openFilter();
-        await editProcessFilter.checkCustomiseFilterHeaderIsExpanded();
+        await editProcessFilter.checkHeaderIsExpanded();
         await processFilter.clickAllProcessesFilter();
     });
 
@@ -119,13 +119,13 @@ describe('Edit process filters cloud', () => {
 
         await expect(await processFilter.getActiveFilterName()).toBe('New');
         await editProcessFilter.openFilter();
-        await editProcessFilter.checkCustomiseFilterHeaderIsExpanded();
+        await editProcessFilter.checkHeaderIsExpanded();
         await editProcessFilter.setSortFilterDropDown('Process Name');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Process Name');
         await editProcessFilter.clickSaveButton();
         await editProcessFilter.openFilter();
 
-        await editProcessFilter.checkCustomiseFilterHeaderIsExpanded();
+        await editProcessFilter.checkHeaderIsExpanded();
 
         await browser.driver.sleep(1000);
 
@@ -179,7 +179,7 @@ describe('Edit process filters cloud', () => {
         await dialog.clickOnCancelButton();
 
         await editProcessFilter.openFilter();
-        await editProcessFilter.checkCustomiseFilterHeaderIsExpanded();
+        await editProcessFilter.checkHeaderIsExpanded();
         await editProcessFilter.setSortFilterDropDown('Start Date');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
         await editProcessFilter.clickSaveButton();
