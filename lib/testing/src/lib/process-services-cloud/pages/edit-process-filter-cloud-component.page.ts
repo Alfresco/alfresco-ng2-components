@@ -70,10 +70,10 @@ export class EditProcessFilterCloudComponentPage {
     async expandFilter(): Promise<void> {
         await this.isFilterDisplayed();
         await BrowserActions.click(this.customiseFilter);
-        await this.checkCustomiseFilterHeaderIsExpanded();
+        await this.checkHeaderIsExpanded();
     }
 
-    async checkCustomiseFilterHeaderIsExpanded(): Promise<void> {
+    async checkHeaderIsExpanded(): Promise<void> {
         const expansionPanelExtended = element.all(by.css('mat-expansion-panel-header[class*="mat-expanded"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(expansionPanelExtended);
         const content = element.all(by.css('div.mat-expansion-panel-content[style*="visible"]')).first();
