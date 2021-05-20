@@ -32,6 +32,7 @@ import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 import { ProcessDefinitionCloud } from 'process-services-cloud/src/lib/models/process-definition-cloud.model';
 import { ApplicationInstanceModel } from 'process-services-cloud/src/lib/app/models/application-instance.model';
+import { ApplicationVersionModel } from '../../../models/application-version.model';
 
 export interface DropdownOption {
     value: string;
@@ -191,6 +192,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     buildForm(processFilterProperties: ProcessFilterProperties[]) {
         this.editProcessFilterForm = this.formBuilder.group(this.getFormControlsConfig(processFilterProperties));
         this.onFilterChange();
+        this.onAppNameChange();
     }
 
     getFormControlsConfig(processFilterProperties: ProcessFilterProperties[]): any {
@@ -220,6 +222,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .getFilterById(this.appName, this.id)
             .pipe(finalize(() => this.isLoading = false))
             .subscribe(response => {
+                console.log('I cucking called on every time');
                 this.processFilter = new ProcessFilterCloudModel(
                     Object.assign({}, response || {}, this.processFilter || {})
                 );
@@ -252,6 +255,21 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     this.filterChange.emit(newValue);
                 }
             });
+    }
+
+    onAppNameChange() {
+        const appNameController = this.editProcessFilterForm?.get('appName');
+        if(appNameController) {
+            appNameController.valueChanges.subscribe((res) => {
+                console.log('called', res);
+                this.resetAppVersionsAndProcessDefinitionsOnAppNameChange();
+            })
+        }
+    }
+
+    resetAppVersionsAndProcessDefinitionsOnAppNameChange() {
+        this.appVersionOptions = [];
+        this.processDefinitionNames = [];
     }
 
     createAndFilterProperties(): ProcessFilterProperties[] {
@@ -309,14 +327,23 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     getAppVersionOptions() {
-        this.appVersionOptions = [];
-
-        this.processCloudService.getApplicationVersions(this.appName).subscribe((appVersions) => {
-            appVersions.forEach(appVersion => {
-                this.appVersionOptions.push({ label: appVersion.entry.version, value: appVersion.entry.version });
+        if (!this.appVersionOptions.length) {
+            this.processCloudService.getApplicationVersions(this.appName).pipe(
+                map((response: ApplicationVersionModel[]) => {
+                    let appVersions: DropdownOption[] = [];
+                    if (response?.length) {
+                        appVersions = response.map((res) => {
+                            return { label: res.entry.version, value: res.entry.version }
+                        })
+                    }
+                    return appVersions;
+                })
+            ).subscribe((appVersions) => {
+                this.appVersionOptions.push(...appVersions);
             });
-        });
+        }
     }
+
 
     checkMandatorySortProperties() {
         if (this.sortProperties === undefined || this.sortProperties.length === 0) {
@@ -389,18 +416,17 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     getRunningApplications() {
-        this.processDefinitionNames = [];
         if (!this.applicationNames.length) {
             this.appsProcessCloudService
             .getDeployedApplicationsByStatus('RUNNING', this.role).pipe(
                 map((response: ApplicationInstanceModel[]) => {
-                    let result: DropdownOption[] = [];
+                    let applications: DropdownOption[] = [];
                     if (response?.length) {
-                        result = response.map((res) => {
+                        applications = response.map((res) => {
                             return {label: res.name, value: res.name }
                         })
                     }
-                    return result;
+                    return applications;
                 })
             )
             .subscribe((applications: DropdownOption[]) => {
@@ -413,13 +439,13 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         if(!this.processDefinitionNames.length) {
             this.processCloudService.getProcessDefinitions(this.appName).pipe(
             map((response: ProcessDefinitionCloud[]) => {
-                let result: DropdownOption[] = [];
+                let processDefinitions: DropdownOption[] = [];
                 if (response?.length) {
-                    result = response.map((res) => {
+                    processDefinitions = response.map((res) => {
                         return { label: res.name, value: res.name }
                     })
                 }
-                return result;
+                return processDefinitions;
             })).subscribe((processDefinitions: DropdownOption[]) => {
                 this.processDefinitionNames.push(...<DropdownOption[]> [this.allProcessDefinitionNamesOption, ...processDefinitions]);
             });
