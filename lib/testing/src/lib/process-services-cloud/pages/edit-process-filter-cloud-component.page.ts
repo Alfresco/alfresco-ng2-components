@@ -76,7 +76,7 @@ export class EditProcessFilterCloudComponentPage {
     async checkCustomiseFilterHeaderIsExpanded(): Promise<void> {
         const expansionPanelExtended = element.all(by.css('mat-expansion-panel-header[class*="mat-expanded"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(expansionPanelExtended);
-        const content = element.all(by.css('div[class*="mat-expansion-panel-content "][style*="visible"]')).first();
+        const content = element.all(by.css('div.mat-expansion-panel-content[style*="visible"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(content);
     }
 
