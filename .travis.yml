@@ -1,6 +1,6 @@
 import:
   - source: Alfresco/alfresco-build-tools:.travis.docker_hub_login.yml@v1.1.1
-  
+
 git:
   depth: 3
   quiet: true
@@ -54,13 +54,13 @@ stages:
   - name: "Check bundle"
     if: type = push AND tag IS blank
   - name: "Trigger Alpha ADF child build"
-    if: branch = develop AND type = cron
+    if: branch = develop AND (type = cron || type = api)
   - name: "Build Demo shell"
     if: tag IS blank
   - name: "Unit test Lib"
-    if: type = cron || type = pull_request
+    if: type = pull_request || (type = cron || type = api)
   - name: "e2e Test"
-    if: type = cron || type = pull_request
+    if: type = pull_request || (type = cron || type = api)
   - name: "Release tag"
     if: branch = master
   - name: "Deprecate develop builds"
@@ -99,8 +99,8 @@ jobs:
         - stage: "Build lib"
           name:  "Lib::Build"
           script:
-            - ./scripts/travis/build/build-libs.sh
-            - ./scripts/travis/release/release-npm.sh
+            - ./scripts/travis/build/build-libs.sh || travis_terminate 1
+            - ./scripts/travis/release/release-npm.sh || travis_terminate 1
           workspaces:
             create:
               name: built_libs_cache
@@ -163,7 +163,9 @@ jobs:
           script: ./scripts/travis/release/git-tag.sh
 
         - stage: "Deprecate develop builds"
-          script: ./scripts/travis/release/deprecate-develop-build.sh -v ${ADF_VERSION}
+          script:
+              - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
+              - ./scripts/travis/release/deprecate-develop-build.sh -v ${ADF_VERSION}
 
         - stage: "e2e Test"
           name: "Core"
