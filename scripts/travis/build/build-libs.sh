@@ -8,10 +8,12 @@ rm -rf tmp && mkdir tmp;
 
 npx @alfresco/adf-cli@alpha update-commit-sha --pointer "HEAD" --pathPackage "$(pwd)"
 
-if [ $TRAVIS_EVENT_TYPE == "push"  ] || [ $TRAVIS_EVENT_TYPE == "cron" ]
+if [ $TRAVIS_EVENT_TYPE == "push" ] || [ $TRAVIS_EVENT_TYPE == "cron" ] || [ $TRAVIS_EVENT_TYPE == "api" ]
 then
-    if [ $TRAVIS_BRANCH == "develop"] || [ $TRAVIS_EVENT_TYPE == "cron" ]
+    if [ $TRAVIS_BRANCH == "develop" ] || [ $TRAVIS_EVENT_TYPE == "cron" ] || [ $TRAVIS_EVENT_TYPE == "api" ]
     then
+
+        echo "Replace NPM version with new Alpha tag"
         NEXT_VERSION=-nextalpha
         ./scripts/update-version.sh -gnu $NEXT_VERSION || exit 1;
     fi
