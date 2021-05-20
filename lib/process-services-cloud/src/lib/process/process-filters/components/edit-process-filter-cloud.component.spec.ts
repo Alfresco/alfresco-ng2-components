@@ -456,6 +456,48 @@ describe('EditProcessFilterCloudComponent', () => {
         });
     }));
 
+    it('should not be able to call an API to fetch running apps, appVersions and processDefinitions when chaning filter properties except appName', async () => {
+        fixture.detectChanges();
+        const applicationVersionsSpy = spyOn(processService, 'getApplicationVersions').and.callThrough();
+        const processDefinitionSpy = spyOn(processService, 'getProcessDefinitions').and.callThrough();
+
+        component.filterProperties = ['appName', 'processDefinitionName', 'appVersionMultiple','processName'];
+        component.applicationNames = [{ label: 'mock-app-name', value: 'mock-app-name' } ]
+        component.appVersionOptions = [{ label: '1', value: '1' }];
+        component.processDefinitionNames = [{ label: 'process-def-name', value: 'process-def-name' }];
+        fixture.detectChanges();
+        const processNameController = component.editProcessFilterForm.get('processName');
+        processNameController.setValue('invoiceProcess');
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(getRunningApplicationsSpy).not.toHaveBeenCalled();
+        expect(applicationVersionsSpy).not.toHaveBeenCalled();
+        expect(processDefinitionSpy).not.toHaveBeenCalled();
+    });
+
+    it('should be able to set appVersions and processDefinitions to empty if appName changed', async () => {
+        fixture.detectChanges();
+        component.filterProperties = ['appName', 'processName'];
+        component.appVersionOptions = [{ label: '1', value: '1' }];
+        component.processDefinitionNames = [{ label: 'process-def-name', value: 'process-def-name' }];
+        fixture.detectChanges();
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+
+        expect(component.appVersionOptions.length).toEqual(1);
+        expect(component.processDefinitionNames.length).toEqual(1);
+
+        const appController = component.editProcessFilterForm.get('appName');
+        appController.setValue('appNameChanged');
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.appVersionOptions.length).toEqual(0);
+        expect(component.processDefinitionNames.length).toEqual(0);
+    });
+
     it('should able to fetch running applications when appName property defined in the input', async(() => {
         fixture.detectChanges();
         component.filterProperties = ['appName', 'processName'];
@@ -472,7 +514,7 @@ describe('EditProcessFilterCloudComponent', () => {
         });
     }));
 
-    it('should not be able to call an API to fetch running applications when applications are available', async(() => {
+    it('should not be able to call an API to fetch running applications when applications are available', async () => {
         fixture.detectChanges();
         component.applicationNames = [{ label: 'mock-app-name', value: 'mock-app-name' } ]
         component.filterProperties = ['appName', 'processName'];
@@ -480,14 +522,14 @@ describe('EditProcessFilterCloudComponent', () => {
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
         component.ngOnChanges({ 'id': processFilterIdChange });
         fixture.detectChanges();
+        await fixture.whenStable();
+
         const appController = component.editProcessFilterForm.get('appName');
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(getRunningApplicationsSpy).not.toHaveBeenCalled();
-            expect(appController).toBeDefined();
-            expect(appController.value).toEqual('mock-app-name');
-        });
-    }));
+
+        expect(appController).toBeDefined();
+        expect(getRunningApplicationsSpy).not.toHaveBeenCalled();
+        expect(appController.value).toEqual('mock-app-name');
+    });
 
     it('should fetch applications when appName and appVersion input is set', async(() => {
         fixture.detectChanges();
@@ -551,6 +593,34 @@ describe('EditProcessFilterCloudComponent', () => {
         expect(appVersionOptions[1].nativeElement.innerText).toEqual('2');
     });
 
+    it('should not be able to call an API to fetch appVersionMultiple options when appVersions are available', async () => {
+        const applicationVersionsSpy = spyOn(processService, 'getApplicationVersions').and.callThrough()
+        fixture.detectChanges();
+
+        component.filterProperties = ['appVersionMultiple'];
+        component.appVersionOptions = [{ label: '1', value: '1' }, { label: '2', value: '2' }]
+        fixture.detectChanges();
+
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+
+        const controller = component.editProcessFilterForm.get('appVersionMultiple');
+        const appVersionMultiple = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-appVersionMultiple"]');
+        appVersionMultiple.click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const appVersionOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+
+        expect(applicationVersionsSpy).not.toHaveBeenCalled();
+        expect(controller).toBeDefined();
+        expect(appVersionOptions.length).toEqual(2);
+        expect(appVersionOptions[0].nativeElement.innerText).toEqual('1');
+        expect(appVersionOptions[1].nativeElement.innerText).toEqual('2');
+    });
+
     it('should fetch process definitions when processDefinitionName filter property is set', async(() => {
         const processSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of([{ id: 'fake-id', name: 'fake-name' }]));
         fixture.detectChanges();
@@ -572,7 +642,7 @@ describe('EditProcessFilterCloudComponent', () => {
         });
     }));
 
-    it('should not be able to call an API to fetch process definitions if processDefinitions are available', async(() => {
+    it('should not be able to call an API to fetch process definitions if processDefinitions are available', async() => {
         const getProcessDefSpy = spyOn(processService, 'getProcessDefinitions').and.callThrough();
         component.filterProperties = ['processDefinitionName'];
         const mockProcessDef = <DropdownOption[]> [component.allProcessDefinitionNamesOption, {label: 'ProcessDefOne', value: 'process-def-name-1'}, { label: 'ProcessDefTwo', value: 'process-def-name-2'}];
@@ -581,18 +651,19 @@ describe('EditProcessFilterCloudComponent', () => {
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
         component.ngOnChanges({ 'id': processFilterIdChange });
         fixture.detectChanges();
+
         const controller = component.editProcessFilterForm.get('processDefinitionName');
         const processDefinitionNamesElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-processDefinitionName"]');
         processDefinitionNamesElement.click();
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(getProcessDefSpy).not.toHaveBeenCalled();
-            expect(controller).toBeDefined();
-            const processDefinitionNamesOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-            expect(processDefinitionNamesOptions[0].nativeElement.value).toBeUndefined();
-            expect(processDefinitionNamesOptions[0].nativeElement.innerText).toEqual(component.allProcessDefinitionNamesOption.label);
-        });
-    }));
+        await fixture.whenStable();
+
+        const processDefinitionNamesOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+        expect(controller).toBeDefined();
+        expect(getProcessDefSpy).not.toHaveBeenCalled();
+        expect(processDefinitionNamesOptions[0].nativeElement.value).toBeUndefined();
+        expect(processDefinitionNamesOptions[0].nativeElement.innerText).toEqual(component.allProcessDefinitionNamesOption.label);
+    });
 
     it('should display default sort properties', async(() => {
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
