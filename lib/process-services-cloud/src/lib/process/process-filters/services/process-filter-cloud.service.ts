@@ -18,10 +18,13 @@
 import { IdentityUserService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
-import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel, DropdownOption } from '../models/process-filter-cloud.model';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
+import { ProcessCloudService } from '../../services/process-cloud.service';
+import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
+import { ApplicationVersionModel } from 'process-services-cloud/src/lib/models/application-version.model';
 @Injectable({
     providedIn: 'root'
 })
@@ -32,7 +35,9 @@ export class ProcessFilterCloudService {
 
     constructor(
         @Inject(PROCESS_FILTERS_SERVICE_TOKEN) public preferenceService: PreferenceCloudServiceInterface,
-        private identityUserService: IdentityUserService) {
+        private identityUserService: IdentityUserService,
+        private appsProcessCloudService: AppsProcessCloudService,
+        private processCloudService: ProcessCloudService) {
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
     }
@@ -354,5 +359,49 @@ export class ProcessFilterCloudService {
                 order: 'DESC'
             })
         ];
+    }
+
+    fetchRunningApplications(status: string, role: string) {
+        return this.appsProcessCloudService.getDeployedApplicationsByStatus(status, role).pipe(
+                    map((response: any[]) => {
+                        const applications: DropdownOption[] = [];
+                        if (response?.length) {
+                            response.forEach(res => {
+                                applications.push( { label: res.name, value: res.name });
+                            });
+                        }
+                        return applications;
+                    })
+                );
+    }
+
+    fetchApplicationVersions(appName: string) {
+        return this.processCloudService.getApplicationVersions(appName).pipe(
+                    map((response: ApplicationVersionModel[]) => {
+                        const appVersions: DropdownOption[] = [];
+                        if (response?.length) {
+                            response.forEach(res => {
+                                appVersions.push( { label: res.entry.version, value: res.entry.version });
+                            });
+                        }
+                        return appVersions;
+                    })
+                );
+    }
+
+
+    fetchProcessDefinitions(appName: string) {
+        const allProcessDefinitionNamesOption: DropdownOption = { label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL', value: '' };
+        return this.processCloudService.getProcessDefinitions(appName).pipe(
+                map((response: any[]) => {
+                    const processDefinitions: DropdownOption[] = [];
+                    if (response?.length) {
+                        response.forEach(res => {
+                            processDefinitions.push( { label: res.name, value: res.name });
+                        });
+                    }
+                    return [ allProcessDefinitionNamesOption, ...processDefinitions];
+                })
+            );
     }
 }

@@ -17,6 +17,7 @@
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
 import { ComponentSelectionMode } from '../../../types';
+import { Observable } from 'rxjs';
 
 export class ProcessFilterCloudModel {
 
@@ -180,9 +181,9 @@ export interface ProcessFilterAction {
     filter?: ProcessFilterCloudModel;
 }
 
-export interface ProcessFilterOptions {
-    label?: string;
-    value?: string | object;
+export interface DropdownOption {
+    value: string;
+    label: string;
 }
 
 export interface ProcessFilterProperties {
@@ -191,7 +192,7 @@ export interface ProcessFilterProperties {
     value?: any;
     key?: string;
     attributes?: { [key: string]: string; };
-    options?: ProcessFilterOptions[];
+    options?: Observable<any[]>;
     dateFilterOptions?: DateCloudFilterType[];
     selectionMode?: ComponentSelectionMode;
 }
