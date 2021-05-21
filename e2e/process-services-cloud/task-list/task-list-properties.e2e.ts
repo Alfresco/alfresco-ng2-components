@@ -83,7 +83,7 @@ describe('Edit task filters and task list properties', () => {
         await tasksService.claimTask(notDisplayedTask.entry.id, candidateBaseApp);
 
         processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.candidateusersgroup, simpleApp);
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.candidateUsersGroup, simpleApp);
 
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
