@@ -114,7 +114,7 @@ describe('Start Task - Group Cloud Component', () => {
         await startTask.clickStartButton();
 
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await editTaskFilter.clearAssignee();
 
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
@@ -138,7 +138,7 @@ describe('Start Task - Group Cloud Component', () => {
         await startTask.clickStartButton();
 
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await editTaskFilter.clearAssignee();
 
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();

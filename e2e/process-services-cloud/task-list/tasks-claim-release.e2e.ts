@@ -261,7 +261,7 @@ describe('Task claim/release', () => {
     }
 
     async function setStatusTaskFilter(status: StatusType, processInstanceId: string) {
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await editTaskFilter.clearAssignee();
         await editTaskFilter.setStatusFilterDropDown(status);
 
@@ -270,7 +270,7 @@ describe('Task claim/release', () => {
     }
 
     async function setStatusStandaloneTaskFilter(status: StatusType) {
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await editTaskFilter.clearAssignee();
         await editTaskFilter.setStatusFilterDropDown(status);
         await editTaskFilter.openFilter();

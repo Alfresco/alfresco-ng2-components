@@ -107,7 +107,7 @@ describe('Process filters cloud', () => {
 
         it('[C290043] Should display process in Running Processes List when process is started', async () => {
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
-            await editProcessFilterCloudComponentPage.openFilter();
+            await editProcessFilterCloudComponentPage.expandFilter();
             await editProcessFilterCloudComponentPage.setProcessName(runningProcess.entry.name);
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.RUNNING);
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
@@ -125,7 +125,7 @@ describe('Process filters cloud', () => {
 
         it('[C290044] Should display process in Completed Processes List when process is completed', async () => {
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
-            await editProcessFilterCloudComponentPage.openFilter();
+            await editProcessFilterCloudComponentPage.expandFilter();
             await editProcessFilterCloudComponentPage.setProcessName(completedProcess.entry.name);
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.RUNNING);
             await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedById(completedProcess.entry.id);

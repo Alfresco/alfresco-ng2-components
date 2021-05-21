@@ -134,7 +134,7 @@ describe('Edit task filters and task list properties', () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
-            await editTaskFilter.openFilter();
+            await editTaskFilter.expandFilter();
             await taskFilter.checkTaskFilterIsDisplayed('my-tasks');
         });
 

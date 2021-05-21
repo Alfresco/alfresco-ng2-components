@@ -156,7 +156,7 @@ describe('Task form cloud component', () => {
         await taskList.getDataTable().waitTillContentLoaded();
 
         await expect(taskFilter.getActiveFilterName()).toBe('My Tasks');
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await editTaskFilter.clearAssignee();
         await editTaskFilter.setStatusFilterDropDown('Created');
 
@@ -304,9 +304,7 @@ describe('Task form cloud component', () => {
             await taskList.getDataTable().waitTillContentLoaded();
 
             await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
-            await editTaskFilter.openFilter();
-
-            await browser.driver.sleep(1000);
+            await editTaskFilter.expandFilter();
 
             await editTaskFilter.clearAssignee();
             await editTaskFilter.setStatusFilterDropDown('Created');

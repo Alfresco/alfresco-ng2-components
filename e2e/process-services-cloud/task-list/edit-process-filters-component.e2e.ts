@@ -70,8 +70,7 @@ describe('Edit process filters cloud', () => {
         await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
         await processFilter.clickOnProcessFilters();
 
-        await editProcessFilter.openFilter();
-        await editProcessFilter.checkHeaderIsExpanded();
+        await editProcessFilter.expandFilter();
         await processFilter.clickAllProcessesFilter();
     });
 
@@ -87,7 +86,7 @@ describe('Edit process filters cloud', () => {
         await createNewProcessCustomFilter('New');
         await expect(await processFilter.getActiveFilterName()).toBe('New');
         await processFilter.clickProcessFilter('custom-new');
-        await editProcessFilter.openFilter();
+        await editProcessFilter.expandFilter();
         await editProcessFilter.setSortFilterDropDown('Start Date');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
 
@@ -104,7 +103,7 @@ describe('Edit process filters cloud', () => {
         await createNewProcessCustomFilter('New');
 
         await expect(await processFilter.getActiveFilterName()).toBe('New');
-        await editProcessFilter.openFilter();
+        await editProcessFilter.expandFilter();
 
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
         await processFilter.clickAllProcessesFilter();
@@ -118,16 +117,11 @@ describe('Edit process filters cloud', () => {
         await createNewProcessCustomFilter('New');
 
         await expect(await processFilter.getActiveFilterName()).toBe('New');
-        await editProcessFilter.openFilter();
-        await editProcessFilter.checkHeaderIsExpanded();
+        await editProcessFilter.expandFilter();
         await editProcessFilter.setSortFilterDropDown('Process Name');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Process Name');
         await editProcessFilter.clickSaveButton();
-        await editProcessFilter.openFilter();
-
-        await editProcessFilter.checkHeaderIsExpanded();
-
-        await browser.driver.sleep(1000);
+        await editProcessFilter.expandFilter();
 
         await expect(await processFilter.getActiveFilterName()).toBe('New');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Process Name');
@@ -137,7 +131,7 @@ describe('Edit process filters cloud', () => {
     it('[C291808] A process filter is deleted when clicking on delete button', async () => {
         await createNewProcessCustomFilter('New');
 
-        await editProcessFilter.openFilter();
+        await editProcessFilter.expandFilter();
         await expect(await processFilter.getActiveFilterName()).toBe('New');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
         await editProcessFilter.clickDeleteButton();
@@ -159,7 +153,7 @@ describe('Edit process filters cloud', () => {
         await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.ALL);
         await processFilter.clickRunningProcessesFilter();
         await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-        await editProcessFilter.openFilter();
+        await editProcessFilter.expandFilter();
         await processFilter.clickAllProcessesFilter();
         await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.ALL);
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
@@ -178,8 +172,7 @@ describe('Edit process filters cloud', () => {
         await expect(await dialog.checkCancelButtonIsEnabled()).toEqual(true);
         await dialog.clickOnCancelButton();
 
-        await editProcessFilter.openFilter();
-        await editProcessFilter.checkHeaderIsExpanded();
+        await editProcessFilter.expandFilter();
         await editProcessFilter.setSortFilterDropDown('Start Date');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
         await editProcessFilter.clickSaveButton();

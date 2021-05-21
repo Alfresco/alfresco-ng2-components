@@ -50,10 +50,6 @@ describe('Edit task filters cloud', () => {
     const completedTaskName = StringUtil.generateRandomString(),
         assignedTaskName = StringUtil.generateRandomString();
 
-    async function openFilter() {
-        await editTaskFilter.openFilter();
-    }
-
     async function clickTaskFilter(name: string) {
         await taskFilter.clickTaskFilter(name);
     }
@@ -94,7 +90,7 @@ describe('Edit task filters cloud', () => {
     });
 
     it('[C291785] All the filters property should be set up accordingly with the Query Param', async () => {
-        await openFilter();
+        await editTaskFilter.expandFilter();
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
@@ -116,14 +112,14 @@ describe('Edit task filters cloud', () => {
 
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
-        await openFilter();
+        await editTaskFilter.openFilter();
     });
 
     it('[C306896] Delete Save and Save as actions should be displayed and disabled when clicking on default filter header', async () => {
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
-        await openFilter();
+        await editTaskFilter.expandFilter();
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
@@ -136,7 +132,7 @@ describe('Edit task filters cloud', () => {
         await expect(await editTaskFilter.checkSaveButtonIsEnabled()).toEqual(false);
         await expect(await editTaskFilter.checkSaveAsButtonIsEnabled()).toEqual(false);
         await expect(await editTaskFilter.checkDeleteButtonIsEnabled()).toEqual(false);
-        await openFilter();
+        await editTaskFilter.openFilter();
     });
 
     it('[C586756] Delete, Save and Save as actions should be displayed and enabled when clicking on custom filter header', async () => {
@@ -145,7 +141,7 @@ describe('Edit task filters cloud', () => {
         await clickTaskFilter('custom-new');
         await waitTillContentLoaded();
 
-        await openFilter();
+        await editTaskFilter.expandFilter();
         await clickTaskFilter('custom-new');
         await waitTillContentLoaded();
 
@@ -164,7 +160,7 @@ describe('Edit task filters cloud', () => {
     it('[C291795] New filter is added when clicking Save As button', async () => {
         await createNewCustomFilter('New');
         await expect(await taskFilter.getActiveFilterName()).toBe('New');
-        await openFilter();
+        await editTaskFilter.expandFilter();
         await expect(await editTaskFilter.checkSaveButtonIsEnabled()).toEqual(false);
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await expect(await editTaskFilter.checkSaveAsButtonIsEnabled()).toEqual(false);
@@ -184,7 +180,7 @@ describe('Edit task filters cloud', () => {
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await editTaskFilter.setSortFilterDropDown('id');
 
         await clickTaskFilter('my-tasks');
@@ -197,7 +193,7 @@ describe('Edit task filters cloud', () => {
         await editTaskFilterDialog.clickOnSaveButton();
 
         await expect(await taskFilter.getActiveFilterName()).toBe('New');
-        await openFilter();
+        await editTaskFilter.expandFilter();
 
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.setSortFilterDropDown('priority');
@@ -206,13 +202,13 @@ describe('Edit task filters cloud', () => {
         await editTaskFilter.editTaskFilterDialog().clickOnSaveButton();
 
         await expect(await taskFilter.getActiveFilterName()).toBe('New');
-        await openFilter();
+        await editTaskFilter.expandFilter();
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('priority');
         await editTaskFilter.clickDeleteButton();
         await clickTaskFilter('custom-new');
         await waitTillContentLoaded();
 
-        await openFilter();
+        await editTaskFilter.expandFilter();
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.clickDeleteButton();
     });
@@ -221,7 +217,7 @@ describe('Edit task filters cloud', () => {
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await editTaskFilter.setSortFilterDropDown('id');
 
         await clickTaskFilter('my-tasks');
@@ -234,11 +230,11 @@ describe('Edit task filters cloud', () => {
         await editTaskFilterDialog.clickOnSaveButton();
 
         await expect(await taskFilter.getActiveFilterName()).toBe('New');
-        await openFilter();
+        await editTaskFilter.expandFilter();
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.setSortFilterDropDown('name');
         await editTaskFilter.clickSaveButton();
-        await openFilter();
+        await editTaskFilter.expandFilter();
 
         await expect(await taskFilter.getActiveFilterName()).toBe('New');
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('name');
@@ -249,7 +245,7 @@ describe('Edit task filters cloud', () => {
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await editTaskFilter.setSortFilterDropDown('id');
 
         await clickTaskFilter('my-tasks');
@@ -262,7 +258,7 @@ describe('Edit task filters cloud', () => {
         await editTaskFilterDialog.clickOnSaveButton();
 
         await expect(await taskFilter.getActiveFilterName()).toBe('New');
-        await openFilter();
+        await editTaskFilter.expandFilter();
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.clickDeleteButton();
 
@@ -274,7 +270,7 @@ describe('Edit task filters cloud', () => {
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await editTaskFilter.setSortFilterDropDown('priority');
 
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('priority');
@@ -294,19 +290,19 @@ describe('Edit task filters cloud', () => {
         await waitTillContentLoaded();
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
-        await openFilter();
+        await editTaskFilter.expandFilter();
 
         await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate');
 
-        await openFilter();
+        await editTaskFilter.openFilter();
     });
 
     it('[C291801] Save button of task filter dialog should be disabled when task name is empty', async () => {
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await editTaskFilter.setSortFilterDropDown('id');
 
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
@@ -326,7 +322,7 @@ describe('Edit task filters cloud', () => {
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await editTaskFilter.setSortFilterDropDown('id');
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.clickSaveAsButton();
@@ -344,7 +340,7 @@ describe('Edit task filters cloud', () => {
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await editTaskFilter.setSortFilterDropDown('id');
 
         await clickTaskFilter('my-tasks');

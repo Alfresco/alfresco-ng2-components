@@ -101,7 +101,7 @@ describe('Process filters cloud', () => {
     });
 
     it('[C290040] Should be able to open the Task Details page by clicking on the process name', async () => {
-        await editProcessFilter.openFilter();
+        await editProcessFilter.expandFilter();
         await editProcessFilter.setAppNameDropDown(simpleApp);
         await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.RUNNING);
         await editProcessFilter.setProperty('processInstanceId', processInstance.id);

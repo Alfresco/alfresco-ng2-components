@@ -261,10 +261,8 @@ describe('Start Task Form', () => {
             await startProcessPage.clickStartProcessButton();
             await processFilter.clickRunningProcessesFilter();
             await expect(await processFilter.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
-            await editProcessFilter.openFilter();
+            await editProcessFilter.expandFilter();
             await editProcessFilter.setProcessName(startEventFormProcess);
-
-            await browser.sleep(1000);
 
             await processList.getDataTable().waitTillContentLoaded();
             await processList.checkContentIsDisplayedByName(startEventFormProcess);
@@ -289,7 +287,7 @@ describe('Start Task Form', () => {
 
             await processFilter.clickOnProcessFilters();
             await processFilter.clickCompletedProcessesFilter();
-            await editProcessFilter.openFilter();
+            await editProcessFilter.expandFilter();
             await editProcessFilter.setProcessName(startEventFormProcess);
             await processList.checkContentIsDisplayedById(processId);
         });
