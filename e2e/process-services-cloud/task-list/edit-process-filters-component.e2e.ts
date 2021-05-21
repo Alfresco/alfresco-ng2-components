@@ -165,17 +165,11 @@ describe('Edit process filters cloud', () => {
         await editProcessFilter.clickSaveAsButton();
 
         const dialog = editProcessFilter.editProcessFilterDialog();
-        await dialog.clearFilterName();
 
         await expect(await dialog.getFilterName()).toEqual('');
         await expect(await dialog.checkSaveButtonIsEnabled()).toEqual(false);
         await expect(await dialog.checkCancelButtonIsEnabled()).toEqual(true);
         await dialog.clickOnCancelButton();
-
-        await editProcessFilter.expandFilter();
-        await editProcessFilter.setSortFilterDropDown('Start Date');
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
-        await editProcessFilter.clickSaveButton();
     });
 
     it('[C291809] Process filter dialog is displayed when clicking on Save As button', async () => {
@@ -185,9 +179,9 @@ describe('Edit process filters cloud', () => {
         const dialog = editProcessFilter.editProcessFilterDialog();
 
         await expect(await dialog.checkCancelButtonIsEnabled()).toEqual(true);
-        await expect(await dialog.checkSaveButtonIsEnabled()).toEqual(true);
+        await expect(await dialog.checkSaveButtonIsEnabled()).toEqual(false);
         await expect(await dialog.getTitle()).toEqual('Save filter as');
-        await expect(await dialog.getFilterName()).toEqual(PROCESSES.ALL);
+        await expect(await dialog.getFilterName()).toEqual('');
         await dialog.clickOnCancelButton();
     });
 
