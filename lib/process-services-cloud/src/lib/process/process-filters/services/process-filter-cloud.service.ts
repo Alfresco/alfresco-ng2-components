@@ -24,7 +24,7 @@ import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.ser
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { ApplicationVersionModel } from 'process-services-cloud/src/lib/models/application-version.model';
+import { ApplicationVersionModel } from '../../../models/application-version.model';
 @Injectable({
     providedIn: 'root'
 })
@@ -388,7 +388,6 @@ export class ProcessFilterCloudService {
                     })
                 );
     }
-
 
     fetchProcessDefinitions(appName: string) {
         const allProcessDefinitionNamesOption: DropdownOption = { label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL', value: '' };

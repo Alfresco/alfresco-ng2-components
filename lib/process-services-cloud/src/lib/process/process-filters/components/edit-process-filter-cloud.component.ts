@@ -142,6 +142,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     private onDestroy$ = new Subject<boolean>();
     isLoading: boolean = false;
     private filterChangeSub: Subscription;
+    private appNameChangeSub: Subscription;
 
     currentAppVersions$ = new BehaviorSubject([]);
     runningApps$ = new BehaviorSubject([]);
@@ -245,9 +246,13 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     onAppNameChange() {
+        if (this.appNameChangeSub) {
+            this.appNameChangeSub.unsubscribe();
+            this.appNameChangeSub = null;
+        }
         const appNameController = this.editProcessFilterForm?.get('appName');
         if (appNameController) {
-            appNameController.valueChanges.subscribe((appName) => {
+            this.appNameChangeSub = appNameController.valueChanges.subscribe((appName) => {
                 this.fetchAppVersionsAndProcessDefinitions(appName);
             });
         }
