@@ -99,7 +99,7 @@ export class ActivitiContentService {
         const currentSideId = siteId ? siteId : this.sitesService.getSiteNameFromNodePath(node);
         const params: RelatedContentRepresentation = {
             source: accountId,
-            mimeType: node.content.mimeType,
+            mimeType: node?.content?.mimeType,
             sourceId: node.id + ';' + node.properties['cm:versionLabel'] + '@' + currentSideId,
             name: node.name,
             link: node.isLink
