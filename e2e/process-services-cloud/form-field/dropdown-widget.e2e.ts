@@ -63,7 +63,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await apiService.login(testUser.username, testUser.password);
 
         const processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownOptionsProcess, simpleApp);
 
         await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
@@ -87,7 +87,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await appListCloudComponent.goToApp(simpleApp);
     });
 
-    it('[C290069] Should be able to read rest service dropdown options, save and complete the task form', async () => {
+    it('[C309878] Should be able to select a dropdown option, save and complete the task form', async () => {
         await taskFilter.clickTaskFilter('my-tasks');
         await taskList.getDataTable().waitTillContentLoaded();
 
@@ -97,15 +97,15 @@ describe('Form Field Component - Dropdown Widget', () => {
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
-        await taskFormCloudComponent.formFields().checkWidgetIsVisible('Dropdown097maj');
-        await dropdown.selectOption('Clementine Bauch', 'dropdown-cloud-widget mat-select');
+        await taskFormCloudComponent.formFields().checkWidgetIsVisible('DropdownOptions');
+        await dropdown.selectOption('option2', 'dropdown-cloud-widget mat-select');
 
-        await expect(await dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
+        await expect(await dropdown.getSelectedOptionText('DropdownOptions')).toBe('option2');
 
         await taskFormCloudComponent.checkSaveButtonIsDisplayed();
         await taskFormCloudComponent.clickSaveButton();
 
-        await expect(await dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
+        await expect(await dropdown.getSelectedOptionText('DropdownOptions')).toBe('option2');
 
         await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
         await taskFormCloudComponent.clickCompleteButton();
@@ -122,9 +122,9 @@ describe('Form Field Component - Dropdown Widget', () => {
         await taskList.selectRow(task.entry.name);
 
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
-        await taskFormCloudComponent.formFields().checkWidgetIsVisible('Dropdown097maj');
+        await taskFormCloudComponent.formFields().checkWidgetIsVisible('DropdownOptions');
 
-        await expect(await dropdown.getSelectedOptionText('Dropdown097maj')).toBe('Clementine Bauch');
+        await expect(await dropdown.getSelectedOptionText('DropdownOptions')).toBe('option2');
 
         await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
     });

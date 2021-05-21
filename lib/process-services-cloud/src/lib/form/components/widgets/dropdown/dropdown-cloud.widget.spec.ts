@@ -146,25 +146,41 @@ describe('DropdownCloudWidgetComponent', () => {
                 });
             }));
 
-            it('should load data from restUrl and populate options', async(() => {
+            it('should load data from restUrl and populate options', async () => {
+                const jsonDataSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(fakeOptionList));
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
                     type: 'dropdown-cloud',
-                    readOnly: 'true',
+                    readOnly: 'false',
                     restUrl: 'fake-rest-url',
                     optionType: 'rest',
                     restIdProperty: 'name'
                 });
-                const jsonDataSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(fakeOptionList));
-                const optOne = fixture.debugElement.queryAll(By.css('[id="mat-option-1"]'));
+
                 widget.ngOnInit();
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(jsonDataSpy).toHaveBeenCalled();
-                    expect(optOne).not.toBeNull();
-                });
-            }));
+                await fixture.whenStable();
+
+                const dropdown = fixture.debugElement.query(By.css('mat-select'));
+                dropdown.nativeElement.click();
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const optOne = fixture.debugElement.queryAll(By.css('[id="option_1"]'));
+                const optTwo = fixture.debugElement.queryAll(By.css('[id="option_2"]'));
+                const optThree = fixture.debugElement.queryAll(By.css('[id="option_3"]'));
+                const allOptions = fixture.debugElement.queryAll(By.css('mat-option'));
+
+                expect(jsonDataSpy).toHaveBeenCalled();
+                expect(allOptions.length).toEqual(3);
+                expect(optOne.length).toBe(1);
+                expect(optTwo.length).toBe(1);
+                expect(optThree.length).toBe(1);
+                expect(optOne[0].nativeElement.innerText).toEqual('option_1');
+                expect(optTwo[0].nativeElement.innerText).toEqual('option_2');
+                expect(optThree[0].nativeElement.innerText).toEqual('option_3');
+            });
 
             it('should preselect dropdown widget value when Json (rest call) passed', (done) => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {

@@ -28,7 +28,8 @@ import {
     TaskFormCloudComponent,
     TaskHeaderCloudPage,
     TasksService,
-    FormCloudService
+    FormCloudService,
+    Logger
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
@@ -36,6 +37,7 @@ import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 describe('Task form cloud component', () => {
 
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
+    const candidateBaseAppProcesses = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const simpleAppProcess = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes;
     const simpleAppForm = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms;
@@ -72,66 +74,69 @@ describe('Task form cloud component', () => {
     let dateTimerTaskId, dateTimerTask, dateTimerChangedTaskId, dateTimerChangedTask, dropdownOptionsTask;
 
     beforeAll(async () => {
-        await apiService.loginWithProfile('hrUser');
+        try {
+            await apiService.loginWithProfile('hrUser');
+            createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
 
-        createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
+            assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
+            await tasksService.claimTask(assigneeTask.entry.id, candidateBaseApp);
 
-        assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
-        await tasksService.claimTask(assigneeTask.entry.id, candidateBaseApp);
+            const formToTestValidationsKey = await formCloudService.getIdByFormName(candidateBaseApp,
+                    browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
 
-        const formToTestValidationsKey = await formCloudService.getIdByFormName(candidateBaseApp,
-            browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
+            formValidationsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(), candidateBaseApp, formToTestValidationsKey);
+            await tasksService.claimTask(formValidationsTask.entry.id, candidateBaseApp);
 
-        formValidationsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(), candidateBaseApp, formToTestValidationsKey);
-        await tasksService.claimTask(formValidationsTask.entry.id, candidateBaseApp);
+            toBeCompletedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
+            await tasksService.claimTask(toBeCompletedTask.entry.id, candidateBaseApp);
 
-        toBeCompletedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
-        await tasksService.claimTask(toBeCompletedTask.entry.id, candidateBaseApp);
+            completedTask = await tasksService.createStandaloneTask(assignedTaskName, candidateBaseApp);
+            await tasksService.claimTask(completedTask.entry.id, candidateBaseApp);
+            await tasksService.createAndCompleteTask(completedTaskName, candidateBaseApp);
 
-        completedTask = await tasksService.createStandaloneTask(assignedTaskName, candidateBaseApp);
-        await tasksService.claimTask(completedTask.entry.id, candidateBaseApp);
-        await tasksService.createAndCompleteTask(completedTaskName, candidateBaseApp);
+            let processDefinition = await processDefinitionService
+                    .getProcessDefinitionByName(candidateBaseAppProcesses.candidateUserProcess, candidateBaseApp);
 
-        let processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
+            const candidateUsersProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-        const candidateUsersProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+            const processInstanceTasks = await queryService.getProcessInstanceTasks(candidateUsersProcessInstance.entry.id, candidateBaseApp);
+            candidateUsersTask = processInstanceTasks.list.entries[0];
+            await tasksService.claimTask(candidateUsersTask.entry.id, candidateBaseApp);
 
-        const processInstanceTasks = await queryService.getProcessInstanceTasks(candidateUsersProcessInstance.entry.id, candidateBaseApp);
-        candidateUsersTask = processInstanceTasks.list.entries[0];
-        await tasksService.claimTask(candidateUsersTask.entry.id, candidateBaseApp);
+            processDefinition = await processDefinitionService
+                    .getProcessDefinitionByName(candidateBaseAppProcesses.candidateUserProcess, candidateBaseApp);
 
-        processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(simpleAppProcess.dropdownrestprocess, simpleApp);
+            const formProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+            const formTasks = await queryService.getProcessInstanceTasks(formProcess.entry.id, candidateBaseApp);
+            formTaskId = formTasks.list.entries[0].entry.id;
 
-        const formProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-        const formTasks = await queryService.getProcessInstanceTasks(formProcess.entry.id, simpleApp);
-        formTaskId = formTasks.list.entries[0].entry.id;
+            const dropdownOptionsId = await formCloudService.getIdByFormName(simpleApp, simpleAppForm.dropdownWithOptions.name);
+            dropdownOptionsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
+                simpleApp, dropdownOptionsId);
+            await tasksService.claimTask(dropdownOptionsTask.entry.id, simpleApp);
 
-        const dropdownOptionsId = await formCloudService.getIdByFormName(simpleApp, simpleAppForm.dropdownWithOptions.name);
-        dropdownOptionsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
-            simpleApp, dropdownOptionsId);
-        await tasksService.claimTask(dropdownOptionsTask.entry.id, simpleApp);
+            const timerProcessDefinition = await processDefinitionService
+                .getProcessDefinitionByName(simpleAppProcess.intermediateDateProcessVarTimer, simpleApp);
+            const dateTimerProcess = await processInstancesService.createProcessInstance(timerProcessDefinition.entry.key, simpleApp);
+            dateTimerTask = await queryService.getProcessInstanceTasks(dateTimerProcess.entry.id, simpleApp);
+            dateTimerTaskId = dateTimerTask.list.entries[0].entry.id;
 
-        const timerProcessDefinition = await processDefinitionService
-            .getProcessDefinitionByName(simpleAppProcess.intermediateDateProcessVarTimer, simpleApp);
-        const dateTimerProcess = await processInstancesService.createProcessInstance(timerProcessDefinition.entry.key, simpleApp);
-        dateTimerTask = await queryService.getProcessInstanceTasks(dateTimerProcess.entry.id, simpleApp);
-        dateTimerTaskId = dateTimerTask.list.entries[0].entry.id;
+            const timerChangedProcessDefinition = await processDefinitionService
+                .getProcessDefinitionByName(simpleAppProcess.intermediateDateProcessVarTimer, simpleApp);
+            const dateTimerChangedProcess = await processInstancesService.createProcessInstance(timerChangedProcessDefinition.entry.key, simpleApp);
+            dateTimerChangedTask = await queryService.getProcessInstanceTasks(dateTimerChangedProcess.entry.id, simpleApp);
+            dateTimerChangedTaskId = dateTimerChangedTask.list.entries[0].entry.id;
 
-        const timerChangedProcessDefinition = await processDefinitionService
-            .getProcessDefinitionByName(simpleAppProcess.intermediateDateProcessVarTimer, simpleApp);
-        const dateTimerChangedProcess = await processInstancesService.createProcessInstance(timerChangedProcessDefinition.entry.key, simpleApp);
-        dateTimerChangedTask = await queryService.getProcessInstanceTasks(dateTimerChangedProcess.entry.id, simpleApp);
-        dateTimerChangedTaskId = dateTimerChangedTask.list.entries[0].entry.id;
+            /* cspell: disable-next-line */
+            const assigneeProcessDefinition = await processDefinitionService.getProcessDefinitionByName(simpleAppProcess.calledprocess, simpleApp);
+            const assigneeProcess = await processInstancesService.createProcessInstance(assigneeProcessDefinition.entry.key, simpleApp);
+            assigneeReleaseTask = await queryService.getProcessInstanceTasks(assigneeProcess.entry.id, simpleApp);
+            assigneeTaskId = assigneeReleaseTask.list.entries[0].entry.id;
 
-        /* cspell: disable-next-line */
-        const assigneeProcessDefinition = await processDefinitionService.getProcessDefinitionByName(simpleAppProcess.calledprocess, simpleApp);
-        const assigneeProcess = await processInstancesService.createProcessInstance(assigneeProcessDefinition.entry.key, simpleApp);
-        assigneeReleaseTask = await queryService.getProcessInstanceTasks(assigneeProcess.entry.id, simpleApp);
-        assigneeTaskId = assigneeReleaseTask.list.entries[0].entry.id;
-
-        await loginSSOPage.loginWithProfile('hrUser');
+            await loginSSOPage.loginWithProfile('hrUser');
+        } catch (error) {
+            Logger.error('Error in beforeAll: ', error);
+        }
 
     }, 5 * 60 * 1000);
 
@@ -146,7 +151,7 @@ describe('Task form cloud component', () => {
     });
 
     it('[C310366] Should refresh buttons and form after an action is complete', async () => {
-        await appListCloudComponent.goToApp(simpleApp);
+        await appListCloudComponent.goToApp(candidateBaseApp);
         await taskFilter.clickTaskFilter(myTasksFilter);
         await taskList.getDataTable().waitTillContentLoaded();
 

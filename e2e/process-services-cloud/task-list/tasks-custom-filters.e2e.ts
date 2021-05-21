@@ -169,7 +169,7 @@ describe('Task filters cloud', () => {
 
             beforeEach(async () => {
                 const processDefinition = await processDefinitionService
-                    .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+                    .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.candidateUsersGroup, simpleApp);
 
                 const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
                 taskAssigned = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
