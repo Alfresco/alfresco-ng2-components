@@ -28,5 +28,9 @@
         &__thumb:hover {
             box-shadow: 0 0 5px 0 $black-87-opacity;
         }
+
+        &__thumb--selected {
+            border: 2px solid mat-color($alfresco-ecm-blue, A200);
+        }
     }
 }
