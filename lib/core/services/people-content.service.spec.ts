@@ -18,14 +18,13 @@
 import { fakeEcmUser, fakeEcmUserList, createNewPersonMock, getFakeUserWithContentAdminCapability } from '../mock/ecm-user.service.mock';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { PeopleContentService } from './people-content.service';
+import { PeopleContentService, PeopleContentQueryResponse } from './people-content.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
 import { LogService } from './log.service';
 import { of } from 'rxjs';
-import { EcmUserModel } from '../models/ecm-user.model';
 
 describe('PeopleContentService', () => {
 
@@ -74,11 +73,15 @@ describe('PeopleContentService', () => {
 
     it('should be able to list people', (done) => {
         spyOn(service.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
-        service.listPeople().subscribe((people: EcmUserModel[]) => {
+        service.listPeople().subscribe((response: PeopleContentQueryResponse) => {
+            const people = response.entries, pagination = response.pagination;
             expect(people).toBeDefined();
-            expect(people.length).toEqual(2);
             expect(people[0].id).toEqual('fake-id');
             expect(people[1].id).toEqual('another-fake-id');
+            expect(pagination.count).toEqual(2);
+            expect(pagination.totalItems).toEqual(2);
+            expect(pagination.hasMoreItems).toBeFalsy();
+            expect(pagination.skipCount).toEqual(0);
             done();
         });
     });
