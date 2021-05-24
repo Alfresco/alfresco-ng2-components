@@ -17,11 +17,11 @@
 
 import { Node, SitePaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
-import { NodeActionsEnum } from '../document-list/models/node-actions.enum';
+import { NodeAction } from '../document-list/models/node-action.enum';
 
 export interface ContentNodeSelectorComponentData {
     title: string;
-    actionName?: NodeActionsEnum;
+    actionName?: NodeAction;
     currentFolderId: string;
     dropdownHideMyFiles?: boolean;
     restrictRootToCurrentFolderId?: boolean;

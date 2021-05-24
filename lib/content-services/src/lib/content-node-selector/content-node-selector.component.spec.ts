@@ -30,7 +30,7 @@ import { ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
-import { NodeActionsEnum } from '../document-list/models/node-actions.enum';
+import { NodeAction } from '../document-list/models/node-action.enum';
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
@@ -41,7 +41,7 @@ describe('ContentNodeSelectorComponent', () => {
     beforeEach(() => {
         data = {
             title: 'Choose along citizen...',
-            actionName: NodeActionsEnum.CHOOSE,
+            actionName: NodeAction.CHOOSE,
             select: new EventEmitter<Node>(),
             rowFilter: (shareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
             imageResolver: () => 'piccolo',
@@ -449,19 +449,19 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should show the counter depending on the action', () => {
-            component.action = NodeActionsEnum.ATTACH;
+            component.action = NodeAction.ATTACH;
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).not.toBe(null);
 
-            component.action = NodeActionsEnum.CHOOSE;
+            component.action = NodeAction.CHOOSE;
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).not.toBe(null);
 
-            component.action = NodeActionsEnum.COPY;
+            component.action = NodeAction.COPY;
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
 
-            component.action = NodeActionsEnum.MOVE;
+            component.action = NodeAction.MOVE;
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
         });

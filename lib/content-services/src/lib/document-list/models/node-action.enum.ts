@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export enum NodeActionsEnum {
+export enum NodeAction {
     ATTACH = 'ATTACH',
     CHOOSE = 'CHOOSE',
     COPY = 'COPY',
