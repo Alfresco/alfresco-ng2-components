@@ -32,6 +32,7 @@ export interface FilterProps {
 
 export class EditProcessFilterCloudComponentPage {
 
+    rootElement = element.all(by.css('adf-cloud-edit-process-filter')).first();
     customiseFilter = element(by.id('adf-edit-process-filter-sub-title-id'));
     saveButton = element(by.css('button[data-automation-id="adf-filter-action-save"]'));
     saveAsButton = element(by.css('button[data-automation-id="adf-filter-action-saveAs"]'));
@@ -43,8 +44,8 @@ export class EditProcessFilterCloudComponentPage {
     private locatorSortDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-sort']`));
     private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`));
     private locatorProcessDefinitionNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`));
-    private expansionPanelExtended = element.all(by.css('mat-expansion-panel-header.mat-expanded')).first();
-    private content = element.all(by.css('div.mat-expansion-panel-content[style*="visible"]')).first();
+    private expansionPanelExtended = this.rootElement.element(by.css('mat-expansion-panel-header.mat-expanded'));
+    private content = this.rootElement.element(by.css('div.mat-expansion-panel-content[style*="visible"]'));
 
     appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
     statusDropdown = new DropdownPage(this.locatorStatusDropdown);
