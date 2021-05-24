@@ -212,7 +212,7 @@ describe('Task Header cloud component', () => {
     });
 
     it('[C309698] Should validate the Priority field', async () => {
-        await editTaskFilter.expandFilter();
+        await editTaskFilter.openFilter();
         await editTaskFilter.setStatusFilterDropDown('All');
         await editTaskFilter.clearAssignee();
 

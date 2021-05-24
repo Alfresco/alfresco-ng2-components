@@ -243,7 +243,7 @@ describe('Process list cloud', () => {
 
         it('[C297697] The value of the filter should be preserved when saving it', async () => {
             await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
-            await editProcessFilter.expandFilter();
+            await editProcessFilter.openFilter();
             await editProcessFilter.setProcessInstanceId(completedProcess.entry.id);
 
             await editProcessFilter.saveAs('New');
@@ -253,13 +253,13 @@ describe('Process list cloud', () => {
             await processList.checkContentIsDisplayedById(completedProcess.entry.id);
             await expect(await processList.getDataTable().numberOfRows()).toBe(1);
 
-            await editProcessFilter.expandFilter();
+            await editProcessFilter.openFilter();
 
             await expect(await editProcessFilter.getProcessInstanceId()).toEqual(completedProcess.entry.id);
         });
 
         it('[C297646] Should display the filter dropdown fine , after switching between saved filters', async () => {
-            await editProcessFilter.expandFilter();
+            await editProcessFilter.openFilter();
             noOfApps = await editProcessFilter.getNumberOfAppNameOptions();
 
             await expect(await editProcessFilter.checkAppNamesAreUnique()).toBe(true);
@@ -277,7 +277,7 @@ describe('Process list cloud', () => {
             await editProcessFilter.saveAs('SavedFilter');
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('SavedFilter');
 
-            await editProcessFilter.expandFilter();
+            await editProcessFilter.openFilter();
             await expect(await editProcessFilter.getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
 
             await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.RUNNING);
@@ -289,7 +289,7 @@ describe('Process list cloud', () => {
             await editProcessFilter.saveAs('SwitchFilter');
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('SwitchFilter');
 
-            await editProcessFilter.expandFilter();
+            await editProcessFilter.openFilter();
             await expect(await editProcessFilter.getProcessInstanceId()).toEqual(switchProcessInstance.entry.id);
             await expect(await editProcessFilter.getNumberOfAppNameOptions()).toBe(noOfApps);
             await expect(await editProcessFilter.checkAppNamesAreUnique()).toBe(true);

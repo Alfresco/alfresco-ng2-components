@@ -76,17 +76,12 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async openFilter(): Promise<void> {
-        await BrowserActions.click(this.customiseFilter);
-        await browser.driver.sleep(1000);
-    }
-
-    async expandFilter(): Promise<void> {
         await this.isFilterDisplayed();
         await BrowserActions.click(this.customiseFilter);
         await this.checkHeaderIsExpanded();
     }
 
-    async collapseFilter(): Promise<void> {
+    async closeFilter(): Promise<void> {
         await BrowserActions.click(this.customiseFilter);
         await this.checkHeaderIsCollapsed();
     }

@@ -110,7 +110,7 @@ describe('Start Task', () => {
         await startTask.addName(unassignedTaskName);
         await startTask.clickStartButton();
 
-        await editTaskFilter.expandFilter();
+        await editTaskFilter.openFilter();
         await editTaskFilter.clearAssignee();
         await editTaskFilter.setStatusFilterDropDown('Created');
         await taskList.getDataTable().waitForTableBody();
@@ -130,7 +130,7 @@ describe('Start Task', () => {
         await startTask.checkStartButtonIsEnabled();
         await startTask.clickStartButton();
 
-        await editTaskFilter.expandFilter();
+        await editTaskFilter.openFilter();
         await editTaskFilter.setStatusFilterDropDown('Created');
         await editTaskFilter.clearAssignee();
         await taskList.checkContentIsDisplayedByName(unassignedTaskName);
@@ -212,7 +212,7 @@ describe('Start Task', () => {
         await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
         await startTask.clickStartButton();
 
-        await editTaskFilter.expandFilter();
+        await editTaskFilter.openFilter();
         await editTaskFilter.clearAssignee();
         await editTaskFilter.setStatusFilterDropDown('All');
 

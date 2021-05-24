@@ -112,7 +112,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290045] Should display only tasks with Assigned status when Assigned is selected from status dropdown', async () => {
-            await editTaskFilter.expandFilter();
+            await editTaskFilter.openFilter();
             await editTaskFilter.setStatusFilterDropDown('Assigned');
 
             await taskList.checkContentIsDisplayedByName(assignedTaskName);
@@ -122,7 +122,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290061] Should display only tasks with Completed status when Completed is selected from status dropdown', async () => {
-            await editTaskFilter.expandFilter();
+            await editTaskFilter.openFilter();
             await editTaskFilter.setStatusFilterDropDown('Completed');
 
             await taskList.checkContentIsDisplayedByName(completedTaskName);
@@ -132,7 +132,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290139] Should display only tasks with all statuses when All is selected from status dropdown', async () => {
-            await editTaskFilter.expandFilter();
+            await editTaskFilter.openFilter();
             await editTaskFilter.clearAssignee();
             await editTaskFilter.setStatusFilterDropDown('All');
 
@@ -143,7 +143,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290060] Should display only tasks with Created status when Created is selected from status dropdown', async () => {
-            await editTaskFilter.expandFilter();
+            await editTaskFilter.openFilter();
             await editTaskFilter.clearAssignee();
             await editTaskFilter.setStatusFilterDropDown('Created');
 
@@ -154,7 +154,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290155] Should display only tasks with Cancelled status when Cancelled is selected from status dropdown', async () => {
-            await editTaskFilter.expandFilter();
+            await editTaskFilter.openFilter();
             await editTaskFilter.clearAssignee();
             await editTaskFilter.setStatusFilterDropDown('Cancelled');
 
@@ -177,7 +177,7 @@ describe('Task filters cloud', () => {
             });
 
             it('[C317658] Should display only tasks with Suspended status when SUSPENDED is selected from status dropdown', async () => {
-                await editTaskFilter.expandFilter();
+                await editTaskFilter.openFilter();
                 await editTaskFilter.clearAssignee();
                 await editTaskFilter.setStatusFilterDropDown('Suspended');
                 await taskList.checkContentIsDisplayedByName(taskAssigned.list.entries[0].entry.name);

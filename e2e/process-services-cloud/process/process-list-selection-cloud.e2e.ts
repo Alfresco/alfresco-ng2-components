@@ -100,7 +100,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickAppButton();
             await processFilter.isProcessFiltersListVisible();
             await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-            await editProcessFilter.expandFilter();
+            await editProcessFilter.openFilter();
             await editProcessFilter.setInitiator(`${testUser.firstName} ${testUser.lastName}`);
             await processList.getDataTable().waitTillContentLoaded();
             await processList.selectRowById(processInstances[0]);

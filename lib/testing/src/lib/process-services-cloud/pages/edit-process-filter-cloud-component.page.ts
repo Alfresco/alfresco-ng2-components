@@ -69,7 +69,7 @@ export class EditProcessFilterCloudComponentPage {
         await browser.driver.sleep(5000);
     }
 
-    async expandFilter(): Promise<void> {
+    async openFilter(): Promise<void> {
         await this.isFilterDisplayed();
         await BrowserActions.click(this.customiseFilter);
         await this.checkHeaderIsExpanded();
@@ -80,7 +80,7 @@ export class EditProcessFilterCloudComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.content);
     }
 
-    async collapseFilter(): Promise<void> {
+    async closeFilter(): Promise<void> {
         await BrowserActions.click(this.customiseFilter);
         await this.checkHeaderIsCollapsed();
     }
@@ -234,13 +234,13 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async setFilter(props: FilterProps): Promise<void> {
-        await this.expandFilter();
+        await this.openFilter();
         if (props.name) { await this.setProcessName(props.name); }
         if (props.status) { await this.setStatusFilterDropDown(props.status); }
         if (props.sort) { await this.setSortFilterDropDown(props.sort);     }
         if (props.order) { await this.setOrderFilterDropDown(props.order);   }
         if (props.initiator) { await this.setInitiator(props.initiator);   }
         if (props.processName) { await this.setProcessName(props.processName);   }
-        await this.openFilter();
+        await this.closeFilter();
     }
 }

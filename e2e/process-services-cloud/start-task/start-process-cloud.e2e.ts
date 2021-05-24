@@ -111,7 +111,7 @@ describe('Start Process', () => {
         await processFilter.clickOnProcessFilters();
 
         await processFilter.clickRunningProcessesFilter();
-        await editProcessFilter.expandFilter();
+        await editProcessFilter.openFilter();
         await editProcessFilter.setProcessName(processName);
         await expect(await processFilter.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
         await processList.checkContentIsDisplayedByName(processName);

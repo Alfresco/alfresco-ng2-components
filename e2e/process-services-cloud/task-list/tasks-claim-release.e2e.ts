@@ -261,18 +261,18 @@ describe('Task claim/release', () => {
     }
 
     async function setStatusTaskFilter(status: StatusType, processInstanceId: string) {
-        await editTaskFilter.expandFilter();
+        await editTaskFilter.openFilter();
         await editTaskFilter.clearAssignee();
         await editTaskFilter.setStatusFilterDropDown(status);
 
         await editTaskFilter.setProcessInstanceId(processInstanceId);
-        await editTaskFilter.collapseFilter();
+        await editTaskFilter.closeFilter();
     }
 
     async function setStatusStandaloneTaskFilter(status: StatusType) {
-        await editTaskFilter.expandFilter();
+        await editTaskFilter.openFilter();
         await editTaskFilter.clearAssignee();
         await editTaskFilter.setStatusFilterDropDown(status);
-        await editTaskFilter.collapseFilter();
+        await editTaskFilter.closeFilter();
     }
 });
