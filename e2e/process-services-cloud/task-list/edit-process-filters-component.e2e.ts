@@ -160,7 +160,7 @@ describe('Edit process filters cloud', () => {
         await editProcessFilter.closeFilter();
     });
 
-    it('[C291811] Save button of process filter dialog should be disabled when process name is empty', async () => {
+    it('[C291811] Save button of process filter dialog should be disabled when process name is empty ', async () => {
         await editProcessFilter.setSortFilterDropDown('Id');
         await editProcessFilter.clickSaveAsButton();
 
