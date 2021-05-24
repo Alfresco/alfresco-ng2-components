@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Observable, Subject, from } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import {
   Component,
   OnInit,
@@ -33,8 +33,8 @@ import {
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
-import { debounceTime, mergeMap, takeUntil } from 'rxjs/operators';
+import { AlfrescoApiService, SitesService } from '@alfresco/adf-core';
+import { debounceTime, finalize, mergeMap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'adf-library-dialog',
@@ -70,9 +70,11 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
       disabled: false
     }
   ];
+  disableCreateButton = false;
 
   constructor(
     private alfrescoApiService: AlfrescoApiService,
+    private sitesService: SitesService,
     private formBuilder: FormBuilder,
     private dialog: MatDialogRef<LibraryDialogComponent>
   ) {}
@@ -152,7 +154,8 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.create().subscribe(
+    this.disableCreateButton = true;
+    this.create().pipe(finalize(() => this.disableCreateButton = false)).subscribe(
       (node: SiteEntry) => {
         this.success.emit(node);
         dialog.close(node);
@@ -174,7 +177,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
       visibility
     };
 
-    return from(this.alfrescoApiService.sitesApi.createSite(siteBody));
+    return this.sitesService.createSite(siteBody);
   }
 
   private sanitize(input: string) {
@@ -219,7 +222,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  private async findLibraryByTitle(libraryTitle: string): Promise<SitePaging> {
+  private findLibraryByTitle(libraryTitle: string): Promise<SitePaging> {
     return this.alfrescoApiService
       .getInstance()
       .core.queriesApi.findSites(libraryTitle, {
@@ -267,9 +270,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
 
       return new Promise((resolve) => {
         timer = setTimeout(() => {
-          return from(
-            this.alfrescoApiService.sitesApi.getSite(control.value)
-          ).subscribe(
+          return this.sitesService.getSite(control.value).subscribe(
             () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
             () => resolve(null)
           );

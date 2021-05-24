@@ -87,7 +87,7 @@
     color="primary"
     mat-button
     (click)="submit()"
-    [disabled]="!form.valid"
+    [disabled]="!form.valid || disableCreateButton"
     data-automation-id="create-library-id"
   >
     {{ 'LIBRARY.DIALOG.CREATE' | translate }}

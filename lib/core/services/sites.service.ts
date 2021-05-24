@@ -20,7 +20,10 @@ import { from, Observable, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import {
     MinimalNode,
-    SiteEntry, SiteGroupEntry, SiteGroupPaging,
+    SiteBodyCreate,
+    SiteEntry,
+    SiteGroupEntry,
+    SiteGroupPaging,
     SiteMemberEntry,
     SiteMemberPaging,
     SiteMembershipBodyCreate,
@@ -40,6 +43,18 @@ export class SitesService {
 
     constructor(private apiService: AlfrescoApiService) {
         this.sitesApi = new SitesApi(apiService.getInstance());
+    }
+
+    /**
+     * Create a site
+     * @param siteBody SiteBodyCreate to create site
+     * @returns site SiteEntry
+     */
+    createSite(siteBody: SiteBodyCreate): Observable<SiteEntry> {
+        return from(this.sitesApi.createSite(siteBody))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
     }
 
     /**
