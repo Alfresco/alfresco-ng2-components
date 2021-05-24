@@ -26,21 +26,21 @@
                     [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file.mimeType)" [alt]="mimeTypeIcon"
                     role="button" tabindex="0" />
             <span matLine id="{{'file-'+file?.id}}" role="button" tabindex="0" class="adf-file" (click)="onRowClicked(file)">{{file.name}}</span>
-            <button id="{{'file-'+file?.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu">
+            <button id="{{'file-'+file?.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu" *ngIf="!!file.content?.mimeType">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #fileActionMenu="matMenu" xPosition="before">
-                <button *ngIf="displayMenuOption('show')" id="{{'file-'+file?.id+'-show-file'}}"
+                <button *ngIf="displayMenuOption('show') && !!file.content?.mimeType" id="{{'file-'+file?.id+'-show-file'}}"
                         mat-menu-item (click)="onAttachFileClicked(file)">
                     <mat-icon>visibility</mat-icon>
                     <span>{{ 'FORM.FIELD.VIEW_FILE' | translate }}</span>
                 </button>
-                <button *ngIf="displayMenuOption('download')" id="{{'file-'+file?.id+'-download-file'}}"
+                <button *ngIf="displayMenuOption('download') && !!file.content?.mimeType" id="{{'file-'+file?.id+'-download-file'}}"
                         mat-menu-item (click)="downloadContent(file)">
                     <mat-icon>file_download</mat-icon>
                     <span>{{ 'FORM.FIELD.DOWNLOAD_FILE' | translate }}</span>
                 </button>
-                <button *ngIf="displayMenuOption('retrieveMetadata')" id="{{'file-'+file?.id+'-retrieve-file-metadata'}}"
+                <button *ngIf="displayMenuOption('retrieveMetadata') && !!file.content?.mimeType" id="{{'file-'+file?.id+'-retrieve-file-metadata'}}"
                         mat-menu-item (click)="contentModelFormFileHandler(file)">
                     <mat-icon class="mat-24">low_priority</mat-icon>
                     <span>{{ 'ADF_CLOUD_FORM_COMPONENT.RETRIEVE_METADATA' | translate }}</span>
