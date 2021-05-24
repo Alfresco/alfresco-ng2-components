@@ -66,12 +66,6 @@ export class EditProcessFilterCloudComponentPage {
     async openFilter(): Promise<void> {
         await this.isFilterDisplayed();
         await BrowserActions.click(this.customiseFilter);
-        await browser.driver.sleep(5000);
-    }
-
-    async openFilter(): Promise<void> {
-        await this.isFilterDisplayed();
-        await BrowserActions.click(this.customiseFilter);
         await this.checkHeaderIsExpanded();
     }
 

@@ -83,7 +83,7 @@ describe('Edit task filters and task list properties', () => {
         await tasksService.claimTask(notDisplayedTask.entry.id, candidateBaseApp);
 
         processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.candidateUsersGroup, simpleApp);
+            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
@@ -109,7 +109,7 @@ describe('Edit task filters and task list properties', () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
-            await editTaskFilter.expandFilter();
+            await editTaskFilter.openFilter();
             await taskFilter.checkTaskFilterIsDisplayed('my-tasks');
         });
 
