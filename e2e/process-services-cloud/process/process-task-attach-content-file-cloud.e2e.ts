@@ -124,7 +124,7 @@ describe('Process Task - Attach content file', () => {
         await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
         await editProcessFilter.expandFilter();
         await editProcessFilter.setProcessName('upload process');
-        await editProcessFilter.openFilter();
+        await editProcessFilter.collapseFilter();
         await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
 
         await processList.checkContentIsDisplayedById(processInstance.entry.id);
@@ -160,7 +160,7 @@ describe('Process Task - Attach content file', () => {
 
         await editProcessFilter.expandFilter();
         await editProcessFilter.setProcessName('upload process');
-        await editProcessFilter.openFilter();
+        await editProcessFilter.collapseFilter();
 
         await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.COMPLETED);
         await processList.checkContentIsDisplayedById(processInstance.entry.id);

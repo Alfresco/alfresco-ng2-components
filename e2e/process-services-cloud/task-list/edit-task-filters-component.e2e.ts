@@ -112,7 +112,7 @@ describe('Edit task filters cloud', () => {
 
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
-        await editTaskFilter.openFilter();
+        await editTaskFilter.collapseFilter();
     });
 
     it('[C306896] Delete Save and Save as actions should be displayed and disabled when clicking on default filter header', async () => {
@@ -132,7 +132,7 @@ describe('Edit task filters cloud', () => {
         await expect(await editTaskFilter.checkSaveButtonIsEnabled()).toEqual(false);
         await expect(await editTaskFilter.checkSaveAsButtonIsEnabled()).toEqual(false);
         await expect(await editTaskFilter.checkDeleteButtonIsEnabled()).toEqual(false);
-        await editTaskFilter.openFilter();
+        await editTaskFilter.collapseFilter();
     });
 
     it('[C586756] Delete, Save and Save as actions should be displayed and enabled when clicking on custom filter header', async () => {
@@ -295,7 +295,7 @@ describe('Edit task filters cloud', () => {
         await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate');
 
-        await editTaskFilter.openFilter();
+        await editTaskFilter.collapseFilter();
     });
 
     it('[C291801] Save button of task filter dialog should be disabled when task name is empty', async () => {

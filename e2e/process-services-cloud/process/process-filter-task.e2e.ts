@@ -113,7 +113,7 @@ describe('Process filters cloud', () => {
         await browser.navigate().back();
 
         await taskFilter.clickOnTaskFilters();
-        await editTaskFilter.openFilter();
+        await editTaskFilter.expandFilter();
         await taskList.checkContentIsDisplayedByName(taskAssigned[0].entry.name);
         await taskList.selectRow(taskAssigned[0].entry.name);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();

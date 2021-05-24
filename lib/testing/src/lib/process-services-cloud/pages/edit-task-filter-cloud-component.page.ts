@@ -50,6 +50,8 @@ export class EditTaskFilterCloudComponentPage {
     private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`));
     private locatorCompletedDateDropdown = element(by.css(`mat-select[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`));
     private locatorAssignmentDropdown = element(by.css(`.adf-task-assignment-filter`));
+    private expansionPanelExtended = element.all(by.css('mat-expansion-panel-header.mat-expanded')).first();
+    private content = element.all(by.css('div.mat-expansion-panel-content[style*="visible"]')).first();
 
     appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
     statusDropdown = new DropdownPage(this.locatorStatusDropdown);
@@ -84,11 +86,19 @@ export class EditTaskFilterCloudComponentPage {
         await this.checkHeaderIsExpanded();
     }
 
+    async collapseFilter(): Promise<void> {
+        await BrowserActions.click(this.customiseFilter);
+        await this.checkHeaderIsCollapsed();
+    }
+
     async checkHeaderIsExpanded(): Promise<void> {
-        const expansionPanelExtended = element.all(by.css('mat-expansion-panel-header.mat-expanded')).first();
-        await BrowserVisibility.waitUntilElementIsVisible(expansionPanelExtended);
-        const content = element.all(by.css('div.mat-expansion-panel-content[style*="visible"]')).first();
-        await BrowserVisibility.waitUntilElementIsVisible(content);
+        await BrowserVisibility.waitUntilElementIsVisible(this.expansionPanelExtended);
+        await BrowserVisibility.waitUntilElementIsVisible(this.content);
+    }
+
+    async checkHeaderIsCollapsed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.expansionPanelExtended, 1000);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.content, 1000);
     }
 
     async setStatusFilterDropDown(option: StatusType): Promise<void> {
