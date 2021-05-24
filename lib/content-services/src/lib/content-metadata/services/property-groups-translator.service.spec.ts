@@ -168,6 +168,25 @@ describe('PropertyGroupTranslatorService', () => {
             const cardViewProperty: CardViewTextItemModel = <CardViewTextItemModel> cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
         });
+
+        it('should not edit the protected fields', () => {
+            property.name = 'FAKE:NAME';
+            property.title = 'Fake Title';
+            property.dataType = 'd:text';
+            property.defaultValue = 'Fake value';
+            property.protected = true;
+            propertyGroups.push({
+                title: 'Fake Title',
+                properties: [property]
+            });
+
+            propertyValues = { 'FAKE:NAME': 'API Fake response' };
+
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
+            const cardViewProperty: CardViewTextItemModel = <CardViewTextItemModel> cardViewGroup[0].properties[0];
+            expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
+            expect(cardViewProperty.editable).toBe(false);
+        });
     });
 
     describe('Different types attributes', () => {
@@ -380,6 +399,27 @@ describe('PropertyGroupTranslatorService', () => {
             expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
             expect(cardViewProperty.value).toBe('default');
             expect(cardViewProperty.key).toBe('properties.fk:brendonstare');
+        });
+
+        it('should not edit the protected fields', () => {
+            const propertyBase = <PropertyBase> {
+                'id': 'fk:emperor',
+                'title': 'Emperor',
+                'description': 'is watching the dark emperor',
+                'dataType': 'd:text',
+                'isMultiValued': true,
+                'isMandatory': true,
+                'defaultValue': 'default',
+                'isMandatoryEnforced': true,
+                'isProtected': true
+            };
+
+            const cardViewProperty = service.translateProperty(propertyBase, null, true);
+
+            expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
+            expect(cardViewProperty.value).toBe('default');
+            expect(cardViewProperty.key).toBe('properties.fk:emperor');
+            expect(cardViewProperty.editable).toBe(false);
         });
     });
 });

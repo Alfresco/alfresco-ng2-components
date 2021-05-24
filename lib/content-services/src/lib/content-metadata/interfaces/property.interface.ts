@@ -24,4 +24,8 @@ export interface Property {
     mandatory: boolean;
     multiValued: boolean;
     editable?: boolean;
+    protected?: boolean;
+    enforced?: boolean;
+    indexed?: boolean;
+    url?: string;
 }
