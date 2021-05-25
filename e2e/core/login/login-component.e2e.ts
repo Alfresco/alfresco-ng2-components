@@ -27,12 +27,10 @@ import {
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { ProcessServicesPage } from '../../process-services/pages/process-services.page';
 import { LoginShellPage } from '../../core/pages/login-shell.page';
 
 describe('Login component', () => {
 
-    const processServicesPage = new ProcessServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const userInfoPage = new UserInfoPage();
     const contentServicesPage = new ContentServicesPage();
