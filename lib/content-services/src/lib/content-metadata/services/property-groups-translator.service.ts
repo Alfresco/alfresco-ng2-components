@@ -79,7 +79,7 @@ export class PropertyGroupTranslatorService {
             value: startValue ? startValue : property.defaultValue,
             key: `${prefix}${property.id}`,
             default: property.defaultValue,
-            editable: !!allowEditing ? allowEditing : false,
+            editable: property.isProtected ? false : allowEditing,
             constraints: property?.constraints
         };
 
@@ -107,7 +107,7 @@ export class PropertyGroupTranslatorService {
             value: propertyValue,
             key: `${prefix}${property.name}`,
             default: property.defaultValue,
-            editable: property.editable !== undefined ? property.editable : true,
+            editable: property.protected ? false : property.editable !== undefined ? property.editable : true,
             constraints: constraints
         };
 
