@@ -76,13 +76,13 @@
             </button>
             <mat-menu #fileActionMenu="matMenu" xPosition="before">
                 <button id="{{'file-'+file.id+'-show-file'}}"
-                    [disabled]="file.isExternal || !file.contentAvailable"
+                    [disabled]="file.isExternal || !file.contentAvailable || !file.mimeType"
                     mat-menu-item (click)="onAttachFileClicked(file)">
                     <mat-icon>visibility</mat-icon>
                     <span>{{ 'FORM.FIELD.VIEW_FILE' | translate }}</span>
                 </button>
                 <button id="{{'file-'+file.id+'-download-file'}}"
-                    [disabled]="file.isExternal"
+                    [disabled]="file.isExternal || !file.mimeType"
                     mat-menu-item (click)="downloadContent(file)">
                     <mat-icon>file_download</mat-icon>
                     <span>{{ 'FORM.FIELD.DOWNLOAD_FILE' | translate }}</span>

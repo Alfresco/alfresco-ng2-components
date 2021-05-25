@@ -33,6 +33,33 @@ export const fakeLocalPngResponse = {
     contentAvailable: true,
     link: false,
     mimeType: 'image/png',
+    content: {
+        mimeType: 'image/png'
+    },
+    simpleType: 'image',
+    previewStatus: 'queued',
+    thumbnailStatus: 'queued',
+    properties: {
+        'pfx:property_one': 'testValue',
+        'pfx:property_two': true
+    }
+};
+
+export const fakeLocalPhysicalRecordResponse = {
+    id: 1155,
+    nodeId: 1155,
+    name: 'a_png_file.png',
+    created: '2017-07-25T17:17:37.099Z',
+    createdBy: {
+        id: 1001,
+        firstName: 'Admin',
+        lastName: 'admin',
+        email: 'admin'
+    },
+    relatedContent: false,
+    contentAvailable: true,
+    link: false,
+    mimeType: null,
     simpleType: 'image',
     previewStatus: 'queued',
     thumbnailStatus: 'queued',

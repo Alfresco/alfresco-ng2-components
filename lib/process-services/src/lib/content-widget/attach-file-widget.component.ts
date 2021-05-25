@@ -256,7 +256,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         from(fileNodeList).pipe(
             mergeMap((node) =>
                 zip(
-                    of(node.content.mimeType),
+                    of(node?.content?.mimeType),
                     this.activitiContentService.applyAlfrescoNode(node, siteId, accountId),
                     of(node.isExternal)
                 )

@@ -59,7 +59,8 @@ import {
     processVariables,
     mockAllFileSourceWithRenamedFolderVariablePathType,
     allSourceParamsWithWrongRelativePath,
-    allSourceParamsWithRelativePath
+    allSourceParamsWithRelativePath,
+    fakeLocalPhysicalRecordResponse
 } from '../../../mocks/attach-file-cloud-widget.mock';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -509,6 +510,14 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             expect(fixture.debugElement.query(By.css('#file-1155-remove'))).toBeNull();
+        }));
+
+        it('should not show any action when the attached file is a physical record', async(() => {
+            createUploadWidgetField(new FormModel(), 'fill-test', [fakeLocalPhysicalRecordResponse], onlyLocalParams, null, null, true);
+            fixture.detectChanges();
+            const menuButton = fixture.debugElement.query(By.css('#file-1155-option-menu'));
+
+            expect(menuButton).toBeNull();
         }));
     });
 
