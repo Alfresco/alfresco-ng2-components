@@ -5,8 +5,7 @@
 
     .adf-txt-viewer {
         background-color: mat-color($background, background);
-        overflow: hidden;
-        overflow-y: scroll;
+        overflow: auto;
         height: 100%;
         width: 100%;
     }
