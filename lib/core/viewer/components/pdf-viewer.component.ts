@@ -237,11 +237,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         if (this.loadingTask) {
             try {
-                this.loadingTask.destroy();
+                setTimeout(() => {
+                    this.loadingTask.destroy();
+                    this.loadingTask = null;
+                }, 700);
             } catch {
             }
-
-            this.loadingTask = null;
         }
     }
 
