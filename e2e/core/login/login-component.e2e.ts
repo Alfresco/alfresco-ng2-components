@@ -27,12 +27,10 @@ import {
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { ProcessServicesPage } from '../../process-services/pages/process-services.page';
 import { LoginShellPage } from '../../core/pages/login-shell.page';
 
 describe('Login component', () => {
 
-    const processServicesPage = new ProcessServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const userInfoPage = new UserInfoPage();
     const contentServicesPage = new ContentServicesPage();
@@ -155,18 +153,6 @@ describe('Login component', () => {
         await loginPage.checkRegisterIsNotDisplayed();
     });
 
-    it('[C260049] Should be possible to login to Process Services with Content Services disabled', async () => {
-        await LocalStorageUtil.setStorageItem('providers', 'BPM');
-
-        await loginPage.goToLoginPage();
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.loginWithProfile('admin');
-        await navigationBarPage.navigateToProcessServicesPage();
-        await processServicesPage.checkApsContainer();
-        await navigationBarPage.navigateToContentServices();
-        await loginPage.waitForElements();
-    });
-
     it('[C260050] Should be possible to login to Content Services with Process Services disabled', async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
 
@@ -175,20 +161,6 @@ describe('Login component', () => {
         await loginPage.loginWithProfile('admin');
         await navigationBarPage.navigateToContentServices();
         await contentServicesPage.checkAcsContainer();
-    });
-
-    it('[C260051] Should be able to login to both Content Services and Process Services', async () => {
-        await LocalStorageUtil.setStorageItem('providers', 'ALL');
-
-        await loginPage.goToLoginPage();
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.loginWithProfile('admin');
-        await navigationBarPage.navigateToProcessServicesPage();
-        await processServicesPage.checkApsContainer();
-        await navigationBarPage.navigateToContentServices();
-        await contentServicesPage.checkAcsContainer();
-        await navigationBarPage.clickLoginButton();
-        await loginPage.waitForElements();
     });
 
     it('[C277754] Should the user be redirect to the login page when the Content Service session expire', async () => {
@@ -201,36 +173,6 @@ describe('Login component', () => {
         await loginPage.waitForElements();
 
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
-    });
-
-    it('[C279932] Should successRoute property change the landing page when the user Login', async () => {
-        await loginPage.goToLoginPage();
-        await loginPage.enableSuccessRouteSwitch();
-        await loginPage.enterSuccessRoute('activiti');
-        await loginPage.loginWithProfile('admin');
-        await processServicesPage.checkApsContainer();
-    });
-
-    it('[C279931] Should the user be redirect to the login page when the Process Service session expire', async () => {
-        await loginPage.goToLoginPage();
-        await loginPage.loginWithProfile('admin');
-        await browser.executeScript('window.localStorage.removeItem("ADF_ticket-BPM");');
-        await BrowserActions.getUrl(browser.baseUrl + '/activiti');
-        await loginPage.waitForElements();
-    });
-
-    it('[C279930] Should a user still be logged-in when open a new tab', async () => {
-        await loginPage.goToLoginPage();
-        await loginPage.loginWithProfile('admin');
-
-        await browser.executeScript("window.open('about: blank', '_blank');");
-
-        const handles = await browser.getAllWindowHandles();
-        await browser.switchTo().window(handles[1]);
-        await BrowserActions.getUrl(browser.baseUrl + '/activiti');
-        await processServicesPage.checkApsContainer();
-        await BrowserActions.getUrl(browser.baseUrl + '/files');
-        await contentServicesPage.checkAcsContainer();
     });
 
     it('[C279933] Should be possible change the login component logo when logoImageUrl is changed', async () => {
