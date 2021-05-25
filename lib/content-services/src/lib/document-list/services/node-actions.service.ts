@@ -23,6 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { DocumentListService } from './document-list.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
+import { NodeAction } from '../models/node-action.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -53,7 +54,7 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      */
     copyContent(contentEntry: Node, permission?: string): Subject<string> {
-        return this.doFileOperation('copy', 'content', contentEntry, permission);
+        return this.doFileOperation(NodeAction.COPY, 'content', contentEntry, permission);
     }
 
     /**
@@ -63,7 +64,7 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      */
     copyFolder(contentEntry: Node, permission?: string): Subject<string> {
-        return this.doFileOperation('copy', 'folder', contentEntry, permission);
+        return this.doFileOperation(NodeAction.COPY, 'folder', contentEntry, permission);
     }
 
     /**
@@ -73,7 +74,7 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      */
     moveContent(contentEntry: Node, permission?: string): Subject<string> {
-        return this.doFileOperation('move', 'content', contentEntry, permission);
+        return this.doFileOperation(NodeAction.MOVE, 'content', contentEntry, permission);
     }
 
     /**
@@ -83,7 +84,7 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      */
     moveFolder(contentEntry: Node, permission?: string): Subject<string> {
-        return this.doFileOperation('move', 'folder', contentEntry, permission);
+        return this.doFileOperation(NodeAction.MOVE, 'folder', contentEntry, permission);
     }
 
     /**
@@ -94,16 +95,16 @@ export class NodeActionsService {
      * @param contentEntry the contentEntry which has to have the action performed on
      * @param permission permission which is needed to apply the action
      */
-    private doFileOperation(action: string, type: string, contentEntry: Node, permission?: string): Subject<string> {
+    private doFileOperation(action: NodeAction.COPY | NodeAction.MOVE, type: 'content' | 'folder', contentEntry: Node, permission?: string): Subject<string> {
         const observable = new Subject<string>();
 
         this.contentDialogService
             .openCopyMoveDialog(action, contentEntry, permission)
             .subscribe((selections: Node[]) => {
                 const selection = selections[0];
-                this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, selection.id)
+                this.documentListService[`${action.toLowerCase()}Node`].call(this.documentListService, contentEntry.id, selection.id)
                     .subscribe(
-                    observable.next.bind(observable, `OPERATION.SUCCESS.${type.toUpperCase()}.${action.toUpperCase()}`),
+                    observable.next.bind(observable, `OPERATION.SUCCESS.${type.toUpperCase()}.${action}`),
                     observable.error.bind(observable)
                     );
             },

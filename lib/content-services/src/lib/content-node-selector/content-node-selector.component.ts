@@ -22,6 +22,7 @@ import { Node } from '@alfresco/js-api';
 
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { NodeEntryEvent } from '../document-list/components/node.event';
+import { NodeAction } from '../document-list/models/node-action.enum';
 
 @Component({
     selector: 'adf-content-node-selector',
@@ -31,7 +32,7 @@ import { NodeEntryEvent } from '../document-list/components/node.event';
 })
 export class ContentNodeSelectorComponent implements OnInit {
     title: string;
-    action: string;
+    action: NodeAction;
     buttonActionName: string;
     chosenNode: Node[];
     currentDirectoryId: string;
@@ -50,7 +51,7 @@ export class ContentNodeSelectorComponent implements OnInit {
                 private uploadService: UploadService,
                 private dialog: MatDialogRef<ContentNodeSelectorComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
-        this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
+        this.action = data.actionName ?? NodeAction.CHOOSE;
         this.buttonActionName = `NODE_SELECTOR.${this.action}`;
         this.title = data.title;
         this.currentDirectoryId = data.currentFolderId;
@@ -98,12 +99,12 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     updateTitle(siteTitle: string) {
-        if (this.action === 'CHOOSE' && siteTitle) {
+        if (this.action === NodeAction.CHOOSE && siteTitle) {
             this.title = this.getTitleTranslation(this.action, siteTitle);
         }
     }
 
-    getTitleTranslation(action: string, name: string): string {
+    getTitleTranslation(action: NodeAction, name: string): string {
         return this.translation.instant(`NODE_SELECTOR.${action}_ITEM`, { name: this.translation.instant(name) });
     }
 
@@ -112,7 +113,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     isCounterVisible(): boolean {
-        return this.action === 'ATTACH' || this.action === 'CHOOSE';
+        return this.action === NodeAction.ATTACH || this.action === NodeAction.CHOOSE;
     }
 
     isMultipleSelection(): boolean {

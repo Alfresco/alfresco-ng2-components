@@ -30,6 +30,7 @@ import { ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
+import { NodeAction } from '../document-list/models/node-action.enum';
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
@@ -40,7 +41,7 @@ describe('ContentNodeSelectorComponent', () => {
     beforeEach(() => {
         data = {
             title: 'Choose along citizen...',
-            actionName: 'choose',
+            actionName: NodeAction.CHOOSE,
             select: new EventEmitter<Node>(),
             rowFilter: (shareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
             imageResolver: () => 'piccolo',
@@ -448,19 +449,19 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should show the counter depending on the action', () => {
-            component.action = 'ATTACH';
+            component.action = NodeAction.ATTACH;
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).not.toBe(null);
 
-            component.action = 'CHOOSE';
+            component.action = NodeAction.CHOOSE;
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).not.toBe(null);
 
-            component.action = 'COPY';
+            component.action = NodeAction.COPY;
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
 
-            component.action = 'MOVE';
+            component.action = NodeAction.MOVE;
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
         });
