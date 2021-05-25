@@ -266,13 +266,13 @@ describe('Task claim/release', () => {
         await editTaskFilter.setStatusFilterDropDown(status);
 
         await editTaskFilter.setProcessInstanceId(processInstanceId);
-        await editTaskFilter.openFilter();
+        await editTaskFilter.closeFilter();
     }
 
     async function setStatusStandaloneTaskFilter(status: StatusType) {
         await editTaskFilter.openFilter();
         await editTaskFilter.clearAssignee();
         await editTaskFilter.setStatusFilterDropDown(status);
-        await editTaskFilter.openFilter();
+        await editTaskFilter.closeFilter();
     }
 });

@@ -174,7 +174,9 @@ describe('Process filters cloud', () => {
     it('[C306889] Should be able to see "No process found" when using an app with no processes in the appName field', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setAppNameDropDown('subprocessapp');
+        await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setInitiator(`${testUser.firstName} ${testUser.lastName}`);
+        await processList.getDataTable().waitTillContentLoaded();
 
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
@@ -191,9 +193,11 @@ describe('Process filters cloud', () => {
     it('[C311315] Should be able to filter by process definition id', async () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setProperty('processDefinitionId', processDefinition.entry.id);
+        await processList.getDataTable().waitTillContentLoaded();
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
         await editProcessFilter.setProperty('processDefinitionId', anotherProcessDefinition.entry.id);
+        await processList.getDataTable().waitTillContentLoaded();
         await processList.checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });
@@ -203,11 +207,13 @@ describe('Process filters cloud', () => {
         await editProcessFilter.setProperty('processDefinitionKey', processDefinition.entry.key);
         await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await processList.getDataTable().waitTillContentLoaded();
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
         await editProcessFilter.setProcessName(anotherProcessInstance.entry.name);
         await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProperty('processDefinitionKey', anotherProcessDefinition.entry.key);
+        await processList.getDataTable().waitTillContentLoaded();
         await processList.checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });

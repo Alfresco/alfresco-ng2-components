@@ -28,6 +28,7 @@ export type StatusType = 'All' | 'Created' | 'Assigned' | 'Cancelled' | 'Suspend
 
 export class EditTaskFilterCloudComponentPage {
 
+    rootElement = element.all(by.css('adf-cloud-edit-task-filter')).first();
     customiseFilter = element(by.id('adf-edit-task-filter-sub-title-id'));
     assignee = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
     priority = element(by.css('[data-automation-id="adf-cloud-edit-task-property-priority"]'));
@@ -50,6 +51,8 @@ export class EditTaskFilterCloudComponentPage {
     private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`));
     private locatorCompletedDateDropdown = element(by.css(`mat-select[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`));
     private locatorAssignmentDropdown = element(by.css(`.adf-task-assignment-filter`));
+    private expansionPanelExtended = this.rootElement.element(by.css('mat-expansion-panel-header.mat-expanded'));
+    private content = this.rootElement.element(by.css('div.mat-expansion-panel-content[style*="visible"]'));
 
     appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
     statusDropdown = new DropdownPage(this.locatorStatusDropdown);
@@ -74,21 +77,24 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async openFilter(): Promise<void> {
-        await BrowserActions.click(this.customiseFilter);
-        await browser.driver.sleep(1000);
-    }
-
-    async expandFilter(): Promise<void> {
         await this.isFilterDisplayed();
         await BrowserActions.click(this.customiseFilter);
         await this.checkHeaderIsExpanded();
     }
 
+    async closeFilter(): Promise<void> {
+        await BrowserActions.click(this.customiseFilter);
+        await this.checkHeaderIsCollapsed();
+    }
+
     async checkHeaderIsExpanded(): Promise<void> {
-        const expansionPanelExtended = element.all(by.css('mat-expansion-panel-header.mat-expanded')).first();
-        await BrowserVisibility.waitUntilElementIsVisible(expansionPanelExtended);
-        const content = element.all(by.css('div.mat-expansion-panel-content[style*="visible"]')).first();
-        await BrowserVisibility.waitUntilElementIsVisible(content);
+        await BrowserVisibility.waitUntilElementIsVisible(this.expansionPanelExtended);
+        await BrowserVisibility.waitUntilElementIsVisible(this.content);
+    }
+
+    async checkHeaderIsCollapsed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.expansionPanelExtended, 1000);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.content, 1000);
     }
 
     async setStatusFilterDropDown(option: StatusType): Promise<void> {

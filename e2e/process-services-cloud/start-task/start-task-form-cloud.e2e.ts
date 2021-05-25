@@ -264,8 +264,6 @@ describe('Start Task Form', () => {
             await editProcessFilter.openFilter();
             await editProcessFilter.setProcessName(startEventFormProcess);
 
-            await browser.sleep(1000);
-
             await processList.getDataTable().waitTillContentLoaded();
             await processList.checkContentIsDisplayedByName(startEventFormProcess);
 
