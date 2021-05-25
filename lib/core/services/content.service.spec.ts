@@ -168,5 +168,10 @@ describe('ContentService', () => {
             const permissionNode = new Node({ permissions: [] });
             expect(contentService.hasPermissions(permissionNode, '!Consumer')).toBeFalsy();
         });
+
+        it('should havePermission be true if inherited permissions is present and you have the permission for the request operation', () => {
+            const permissionNode = new Node({ permissions: { inherited: [{ name: 'manager' }, { name: 'collaborator' }, { name: 'consumer' }] } });
+            expect(contentService.hasPermissions(permissionNode, 'manager')).toBeTruthy();
+        });
     });
 });

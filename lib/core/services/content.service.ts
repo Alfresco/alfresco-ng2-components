@@ -157,11 +157,12 @@ export class ContentService {
     hasPermissions(node: Node, permission: PermissionsEnum | string): boolean {
         let hasPermissions = false;
 
-        if (node && node.permissions && node.permissions.locallySet) {
+        if (node?.permissions?.locallySet || node?.permissions?.inherited) {
+            const permissions = [ ...(node.permissions.locallySet || []), ...(node.permissions.inherited || []) ];
             if (permission && permission.startsWith('!')) {
-                hasPermissions = node.permissions.locallySet.find((currentPermission) => currentPermission.name === permission.replace('!', '')) ? false : true;
+                hasPermissions = permissions.find((currentPermission) => currentPermission.name === permission.replace('!', '')) ? false : true;
             } else {
-                hasPermissions = node.permissions.locallySet.find((currentPermission) => currentPermission.name === permission) ? true : false;
+                hasPermissions = permissions.find((currentPermission) => currentPermission.name === permission) ? true : false;
             }
 
         } else {
