@@ -42,6 +42,6 @@ export class IntegrationService {
     }
 
     async authenticateRepository(id: number, body: { username: string, password: string }): Promise<any> {
-        await this.requestApiHelper.post(`app/rest/integration/alfresco/${id}/account`,{ bodyParam:  body});
+        await this.requestApiHelper.post(`app/rest/integration/alfresco/${id}/account`, { bodyParam: body });
     }
 }
