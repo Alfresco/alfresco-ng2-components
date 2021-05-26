@@ -32,8 +32,7 @@ import { EcmUserModel } from '@alfresco/adf-core';
             </span>
         </div>
     `,
-    host: { class: 'adf-user-name-column adf-datatable-content-cell adf-expand-cell-5 adf-ellipsis-cell' },
-    styleUrls: [ './user-name-column.component.scss' ]
+    host: { class: 'adf-user-name-column adf-datatable-content-cell adf-expand-cell-5 adf-ellipsis-cell' }
 })
 export class UserNameColumnComponent implements OnInit {
     @Input()

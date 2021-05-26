@@ -17,7 +17,7 @@
 
 import moment from 'moment-es6';
 
-import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { Component, Inject, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -26,8 +26,8 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-node-lock',
-    styleUrls: ['./folder.dialog.scss'],
-    templateUrl: './node-lock.dialog.html'
+    templateUrl: './node-lock.dialog.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class NodeLockDialogComponent implements OnInit {
 

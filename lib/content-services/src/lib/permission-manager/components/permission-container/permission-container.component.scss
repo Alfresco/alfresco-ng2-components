@@ -1,36 +1,32 @@
-@mixin adf-permission-container-theme($theme) {
-    $adf-permission-list-width: 100% !default;
+.adf-datatable-permission {
+    display: flex;
+    min-width: 450px;
+    width: 100% !default;
 
-    .adf-datatable-permission {
-        display: flex;
-        min-width: 450px;
-        width: $adf-permission-list-width;
+    &.adf-datatable {
+        overflow: hidden;
 
-        &.adf-datatable {
-            overflow: hidden;
+        .adf-delete-permission-column {
+            min-width: 80px;
 
-            .adf-delete-permission-column {
-                min-width: 80px;
-
-                .adf-cell-value {
-                    width: 80px;
-                    padding-right: 10px;
-                    place-content: flex-end;
-                }
+            .adf-cell-value {
+                width: 80px;
+                padding-right: 10px;
+                place-content: flex-end;
             }
+        }
 
-            .adf-authorityId-column {
-                flex: 40%;
-            }
+        .adf-authorityId-column {
+            flex: 40%;
+        }
 
-            .adf-authority-icon-column {
-                min-width: 40px;
-            }
+        .adf-authority-icon-column {
+            min-width: 40px;
+        }
 
-            .adf-datatable-selected > svg {
-                width: 40px;
-                height: 40px;
-            }
+        .adf-datatable-selected > svg {
+            width: 40px;
+            height: 40px;
         }
     }
 }

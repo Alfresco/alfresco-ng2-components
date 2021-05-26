@@ -8,7 +8,6 @@
 @import '../upload/components/file-uploading-dialog.component';
 @import '../upload/components/upload-drag-area.component';
 
-@import '../search/components/search.component';
 @import '../search/components/search-control.component';
 @import '../search/components/search-sorting-picker/search-sorting-picker.component';
 @import '../search/components/search-filter/search-filter.component';
@@ -28,7 +27,6 @@
 @import '../version-manager/version-comparison.component';
 @import '../content-type/content-type-dialog.component';
 @import '../aspect-list/aspect-list.component';
-@import '../permission-manager/components/permission-container/permission-container.component';
 @import '../permission-manager/components/user-icon-column/user-icon-column.component';
 @import '../permission-manager/components/user-name-column/user-name-column.component';
 
@@ -43,14 +41,12 @@
     @include adf-upload-dialog-theme($theme);
     @include adf-upload-drag-area-theme($theme);
     @include adf-search-control-theme($theme);
-    @include adf-search-autocomplete-theme($theme);
     @include adf-search-sorting-picker-theme($theme);
     @include adf-filter-menu-theme($theme);
     @include adf-dialog-theme($theme);
     @include adf-content-node-selector-dialog-theme($theme);
     @include adf-content-metadata-module-theme($theme);
     @include adf-permission-list-theme($theme);
-    @include adf-permission-container-theme($theme);
     @include adf-user-icon-column-theme($theme);
     @include user-name-column-theme($theme);
     @include adf-add-permission-theme($theme);

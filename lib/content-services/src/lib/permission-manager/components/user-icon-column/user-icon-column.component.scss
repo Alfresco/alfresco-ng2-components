@@ -1,6 +1,5 @@
 @mixin adf-user-icon-column-theme($theme) {
     $primary: map-get($theme, primary);
-    $document-list-selection-color: mat-color($accent) !default;
 
     .adf {
         &-people-initial {
@@ -31,7 +30,7 @@
         &-people-select-icon {
             margin: 0 !important;
             svg {
-                fill: $document-list-selection-color;
+                fill: mat-color($accent) !default;
                 width: 40px;
                 height: 40px;
             }
