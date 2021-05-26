@@ -24,7 +24,6 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'adf-select-filter-input',
     templateUrl: './select-filter-input.component.html',
-    styleUrls: ['./select-filter-input.component.scss'],
     host: { 'class': 'adf-select-filter-input' },
     encapsulation: ViewEncapsulation.None
 })

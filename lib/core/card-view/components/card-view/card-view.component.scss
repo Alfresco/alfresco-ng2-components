@@ -1,7 +1,4 @@
-@import '~@angular/material/theming';
-
 @mixin adf-card-view-theme($theme) {
-    $primary: map-get($theme, primary);
     $foreground: map-get($theme, foreground);
 
     .adf-property-list {

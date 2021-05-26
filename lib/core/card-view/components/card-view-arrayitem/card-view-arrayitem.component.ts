@@ -22,8 +22,7 @@ import { BaseCardView } from '../base-card-view';
 
 @Component({
   selector: 'adf-card-view-arrayitem',
-  templateUrl: './card-view-arrayitem.component.html',
-  styleUrls: ['./card-view-arrayitem.component.scss']
+  templateUrl: './card-view-arrayitem.component.html'
 })
 export class CardViewArrayItemComponent extends BaseCardView<CardViewArrayItemModel> {
 

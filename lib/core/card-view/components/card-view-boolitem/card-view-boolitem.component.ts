@@ -23,8 +23,7 @@ import { BaseCardView } from '../base-card-view';
 
 @Component({
     selector: 'adf-card-view-boolitem',
-    templateUrl: './card-view-boolitem.component.html',
-    styleUrls: ['./card-view-boolitem.component.scss']
+    templateUrl: './card-view-boolitem.component.html'
 })
 
 export class CardViewBoolItemComponent extends BaseCardView<CardViewBoolItemModel> {

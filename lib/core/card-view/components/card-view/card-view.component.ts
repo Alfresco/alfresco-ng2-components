@@ -21,8 +21,7 @@ import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.comp
 
 @Component({
     selector: 'adf-card-view',
-    templateUrl: './card-view.component.html',
-    styleUrls: ['./card-view.component.scss']
+    templateUrl: './card-view.component.html'
 })
 export class CardViewComponent {
     /** (**required**) Items to show in the card view. */

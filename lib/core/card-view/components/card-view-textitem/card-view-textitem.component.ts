@@ -38,8 +38,7 @@ const templateTypes = {
 
 @Component({
     selector: 'adf-card-view-textitem',
-    templateUrl: './card-view-textitem.component.html',
-    styleUrls: ['./card-view-textitem.component.scss']
+    templateUrl: './card-view-textitem.component.html'
 })
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {
 

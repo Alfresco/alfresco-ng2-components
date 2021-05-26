@@ -1,8 +1,5 @@
-@import '~@angular/material/theming';
-
 @mixin adf-tooltip-card-directive($theme) {
     $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
 

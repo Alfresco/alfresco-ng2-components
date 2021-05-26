@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { Component, ContentChildren, QueryList, AfterContentInit, ViewEncapsulation } from '@angular/core';
 import { MatMenuItem } from '@angular/material/menu';
 
 @Component({
     selector: 'adf-buttons-action-menu',
     templateUrl: './buttons-menu.component.html',
-    styleUrls: ['./buttons-menu.component.scss']
+    styleUrls: ['./buttons-menu.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class ButtonsMenuComponent implements  AfterContentInit {

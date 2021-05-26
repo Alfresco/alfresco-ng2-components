@@ -31,7 +31,6 @@
 @import '../layout/components/sidenav-layout/sidenav-layout.component';
 @import '../templates/empty-content/empty-content.component';
 @import '../templates/error-content/error-content.component';
-@import '../buttons-menu/buttons-menu.component';
 @import '../login/components/login-dialog.component';
 @import '../login/components/login-dialog-panel.component';
 @import '../../core/clipboard/clipboard.component';
@@ -70,7 +69,6 @@
     @include adf-layout-container-theme($theme);
     @include adf-empty-content-theme($theme);
     @include adf-error-content-theme($theme);
-    @include adf-buttons-menu-theme($theme);
     @include adf-header-layout-theme($theme);
     @include adf-login-dialog-theme($theme);
     @include adf-login-dialog-panel-theme($theme);

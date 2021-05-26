@@ -24,8 +24,7 @@ import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-comments',
-    templateUrl: './comments.component.html',
-    styleUrls: ['./comments.component.scss']
+    templateUrl: './comments.component.html'
 })
 export class CommentsComponent implements OnChanges {
 

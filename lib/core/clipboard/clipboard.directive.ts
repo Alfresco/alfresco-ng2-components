@@ -78,10 +78,7 @@ export class ClipboardDirective {
 
 @Component({
     selector: 'adf-copy-content-tooltip',
-    template: `
-        <span class='adf-copy-tooltip'>{{ placeholder | translate }} </span>
-        `,
-    styleUrls: ['./clipboard.component.scss'],
+    template: `<span class='adf-copy-tooltip'>{{ placeholder | translate }} </span>`,
     encapsulation: ViewEncapsulation.None
 })
 export class ClipboardComponent implements OnInit {

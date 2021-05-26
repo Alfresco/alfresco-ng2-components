@@ -1,32 +1,29 @@
-@mixin adf-buttons-menu-theme($theme) {
+.adf-buttons-menu {
+    margin-right: 10px;
 
-    .adf-buttons-menu {
+    & div {
+        display: flex;
+    }
+
+    &-mobile {
         margin-right: 10px;
+    }
 
-        & div {
-            display: flex;
+    &-desktop {
+        display: flex;
+
+        button {
+            color: black;
+            padding: 0;
         }
 
-        &-mobile {
-            margin-right: 10px;
+        button > span {
+            display: none;
         }
 
-        &-desktop {
-            display: flex;
-
-            button {
-                color: black;
-                padding: 0;
-            }
-
-            button > span {
-                display: none;
-            }
-
-            button > mat-icon.mat-icon.material-icons {
-                color: black;
-                margin: 0 10px;
-            }
+        button > mat-icon.mat-icon.material-icons {
+            color: black;
+            margin: 0 10px;
         }
     }
 }
