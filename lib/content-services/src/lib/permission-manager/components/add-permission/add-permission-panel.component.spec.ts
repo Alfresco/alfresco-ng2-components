@@ -207,4 +207,41 @@ describe('AddPermissionPanelComponent', () => {
             expect(element.querySelector('#result_option_0 .mat-list-text').innerHTML).not.toEqual(element.querySelector('#result_option_1 .mat-list-text').innerHTML);
         });
     }));
+
+    it('should emit unique element in between multiple search', async(() => {
+        searchApiService = fixture.componentRef.injector.get(SearchService);
+        spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
+        let searchAttempt = 0;
+
+        component.select.subscribe((items) => {
+            searchAttempt++;
+            expect(items.length).toBe(1);
+            expect(items[0].entry.id).toBeDefined();
+            expect(items[0].entry.id).not.toBeNull();
+            expect(items[0].entry.id).toBe(fakeAuthorityListResult.list.entries[0].entry.id);
+        });
+
+        typeWordIntoSearchInput('a');
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let listElement: DebugElement = fixture.debugElement.query(By.css('#result_option_0'));
+            expect(listElement).not.toBeNull();
+            listElement.triggerEventHandler('click', {});
+
+            const clearButton = fixture.debugElement.query(By.css('#adf-permission-clear-input'));
+            expect(clearButton).not.toBeNull();
+            clearButton.triggerEventHandler('click', {});
+            fixture.detectChanges();
+
+            typeWordIntoSearchInput('abc');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                listElement = fixture.debugElement.query(By.css('#result_option_0'));
+                expect(listElement).not.toBeNull();
+                listElement.triggerEventHandler('click', {});
+                expect(searchAttempt).toBe(2);
+            });
+        });
+    }));
 });
