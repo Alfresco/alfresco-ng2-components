@@ -58,7 +58,6 @@ export const defaultValidation = () => true;
 
 @Component({
     selector: 'adf-content-node-selector-panel',
-    styleUrls: ['./content-node-selector-panel.component.scss'],
     templateUrl: './content-node-selector-panel.component.html',
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-content-node-selector-panel' },

@@ -1,7 +1,6 @@
 @mixin adf-content-node-selector-theme($theme) {
     $primary: map-get($theme, primary);
     $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
     $content-node-selector-thumbnail-width: 35px !default;
 
     .adf-search-results-label {
