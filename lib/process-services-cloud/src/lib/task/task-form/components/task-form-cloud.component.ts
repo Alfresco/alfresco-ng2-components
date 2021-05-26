@@ -28,8 +28,7 @@ import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/
 
 @Component({
     selector: 'adf-cloud-task-form',
-    templateUrl: './task-form-cloud.component.html',
-    styleUrls: ['./task-form-cloud.component.scss']
+    templateUrl: './task-form-cloud.component.html'
 })
 export class TaskFormCloudComponent implements OnInit, OnChanges {
 

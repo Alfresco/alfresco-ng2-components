@@ -1,8 +1,6 @@
 @import './../app/components/app-details-cloud.component';
-@import './../app/components/app-list-cloud.component';
 @import './../group/components/group-cloud.component';
 @import './../people/components/people-cloud.component.scss';
-@import './../process/process-list/components/process-list-cloud.component.scss';
 @import './../process/process-filters/components/edit-process-filter-cloud.component.scss';
 @import './../task/task-form/components/task-form-cloud.component';
 @import './../task/start-task/components/start-task-cloud.component.scss';
@@ -13,12 +11,10 @@
 
 
 @mixin adf-process-services-cloud-theme($theme) {
-    @include adf-cloud-app-list-theme($theme);
     @include adf-cloud-app-details-theme($theme);
     @include adf-cloud-task-filters-theme($theme);
     @include adf-cloud-edit-task-filters-theme($theme);
     @include adf-cloud-edit-process-filter-theme($theme);
-    @include adf-cloud-process-filters-theme($theme);
     @include adf-cloud-start-task-theme($theme);
     @include adf-cloud-people-theme($theme);
     @include adf-cloud-group-theme($theme);

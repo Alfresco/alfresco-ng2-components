@@ -39,7 +39,6 @@ import { ContentNodeSelectorPanelService } from '@alfresco/adf-content-services'
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',
     templateUrl: './attach-file-cloud-widget.component.html',
-    styleUrls: ['./attach-file-cloud-widget.component.scss'],
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',

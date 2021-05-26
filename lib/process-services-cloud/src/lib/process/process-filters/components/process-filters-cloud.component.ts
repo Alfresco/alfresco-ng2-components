@@ -25,8 +25,7 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-cloud-process-filters',
-    templateUrl: './process-filters-cloud.component.html',
-    styleUrls: ['process-filters-cloud.component.scss']
+    templateUrl: './process-filters-cloud.component.html'
 })
 export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
 

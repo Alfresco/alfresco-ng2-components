@@ -20,8 +20,7 @@ import { ApplicationInstanceModel, DEFAULT_APP_INSTANCE_ICON, DEFAULT_APP_INSTAN
 
 @Component({
   selector: 'adf-cloud-app-details',
-  templateUrl: './app-details-cloud.component.html',
-  styleUrls: ['./app-details-cloud.component.scss']
+  templateUrl: './app-details-cloud.component.html'
 })
 
 export class AppDetailsCloudComponent {

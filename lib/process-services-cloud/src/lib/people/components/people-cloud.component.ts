@@ -43,7 +43,6 @@ import { ComponentSelectionMode } from '../../types';
 @Component({
     selector: 'adf-cloud-people',
     templateUrl: './people-cloud.component.html',
-    styleUrls: ['./people-cloud.component.scss'],
     animations: [
         trigger('transitionMessages', [
             state('enter', style({ opacity: 1, transform: 'translateY(0%)' })),

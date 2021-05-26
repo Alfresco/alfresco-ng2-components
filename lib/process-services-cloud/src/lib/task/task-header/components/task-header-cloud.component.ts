@@ -37,8 +37,7 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 
 @Component({
     selector: 'adf-cloud-task-header',
-    templateUrl: './task-header-cloud.component.html',
-    styleUrls: ['./task-header-cloud.component.scss']
+    templateUrl: './task-header-cloud.component.html'
 })
 export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
 
