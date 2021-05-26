@@ -28,7 +28,6 @@
 @import '../version-manager/version-comparison.component';
 @import '../content-type/content-type-dialog.component';
 @import '../aspect-list/aspect-list.component';
-@import '../aspect-list/aspect-list-dialog.component';
 @import '../permission-manager/components/permission-container/permission-container.component';
 @import '../permission-manager/components/user-icon-column/user-icon-column.component';
 @import '../permission-manager/components/user-name-column/user-name-column.component';
@@ -63,5 +62,4 @@
     @include adf-version-comparison-theme($theme);
     @include adf-content-type-dialog-theme($theme);
     @include adf-aspect-list-theme($theme);
-    @include adf-aspect-list-dialog-theme($theme);
 }
