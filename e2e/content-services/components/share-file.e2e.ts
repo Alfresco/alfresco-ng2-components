@@ -32,13 +32,11 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ShareDialogPage } from '../../core/pages/dialog/share-dialog.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { SharedLinkEntry, SharedLinkPaging } from '@alfresco/js-api';
+import { SharedLinkEntry, SharedLinkPaging, SharedlinksApi } from '@alfresco/js-api';
 import { CustomSourcesPage } from '../../core/pages/custom-sources.page';
 
 describe('Share file', () => {
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
@@ -47,8 +45,14 @@ describe('Share file', () => {
     const customSourcesPage = new CustomSourcesPage();
     const viewerPage = new ViewerPage();
     const notificationHistoryPage = new NotificationHistoryPage();
+
     let acsUser: UserModel;
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
+    const sharedLinksApi = new SharedlinksApi(apiService.getInstance());
+
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
@@ -67,7 +71,7 @@ describe('Share file', () => {
 
         const apiCall = async () => {
             await apiService.login(acsUser.username, acsUser.password);
-            return apiService.getInstance().core.sharedlinksApi.findSharedLinks();
+            return sharedLinksApi.findSharedLinks();
         };
 
         return ApiUtil.waitForApi(apiCall, predicate, 10, 2000);

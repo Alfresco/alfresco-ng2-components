@@ -22,18 +22,18 @@ import {
     ProcessUtil,
     StringUtil, TaskUtil,
     UsersActions,
-    Widget
+    Widget,
+    FormUtil
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { FormModelActions } from '../../actions/APS/form-model.actions';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FiltersPage } from './../pages/filters.page';
 import { TaskDetailsPage } from './../pages/task-details.page';
 import { TasksListPage } from './../pages/tasks-list.page';
 import { TasksPage } from './../pages/tasks.page';
 import { AttachFormPage } from './../pages/attach-form.page';
-import { TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
+import { TaskActionsApi, TasksApi } from '@alfresco/js-api';
 
 describe('Task Details - Form', () => {
 
@@ -46,11 +46,13 @@ describe('Task Details - Form', () => {
     const widget = new Widget();
 
     const apiService = new ApiService();
-    const formActions = new FormModelActions(apiService);
+    const formActions = new FormUtil(apiService);
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const taskUtil = new TaskUtil(apiService);
     const modelsActions = new ModelsActions(apiService);
+    const taskActionsApi = new TaskActionsApi(apiService.getInstance());
+    const tasksApi = new TasksApi(apiService.getInstance());
 
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
 
@@ -85,8 +87,8 @@ describe('Task Details - Form', () => {
 
         otherAttachedForm = await modelsActions.createModel(otherAttachedFormModel);
 
-        await apiService.getInstance().activiti.taskApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
-        otherTask = await apiService.getInstance().activiti.taskApi.getTask(otherEmptyTask.id);
+        await taskActionsApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
+        otherTask = await tasksApi.getTask(otherEmptyTask.id);
 
         await loginPage.login(user.username, user.password);
     });
@@ -98,8 +100,8 @@ describe('Task Details - Form', () => {
 
     beforeEach(async () => {
         const emptyTask = await taskUtil.createStandaloneTask();
-        await apiService.getInstance().activiti.taskApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
-        task = await apiService.getInstance().activiti.taskApi.getTask(emptyTask.id);
+        await taskActionsApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
+        task = await tasksApi.getTask(emptyTask.id);
         await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
         await tasksListPage.checkTaskListIsLoaded();
         await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -189,7 +191,7 @@ describe('Task Details - Form', () => {
         beforeEach(async () => {
             newTask = await taskUtil.createStandaloneTask();
             const form = await formActions.getFormByName(app.visibilityProcess.formName);
-            await apiService.getInstance().activiti.taskApi.attachForm(newTask.id, { 'formId': form.id });
+            await taskActionsApi.attachForm(newTask.id, { 'formId': form.id });
 
             await browser.refresh();
             await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();

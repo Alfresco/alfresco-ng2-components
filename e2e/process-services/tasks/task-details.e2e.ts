@@ -27,7 +27,7 @@ import {
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { TasksPage } from './../pages/tasks.page';
 import { browser } from 'protractor';
-import { TaskRepresentation } from '@alfresco/js-api';
+import { TaskActionsApi, TaskFormsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
 import Task = require('../../models/APS/Task');
 import TaskModel = require('../../models/APS/TaskModel');
 import FormModel = require('../../models/APS/FormModel');
@@ -45,6 +45,9 @@ describe('Task Details component', () => {
     const apiService = new ApiService();
     const taskUtil = new TaskUtil(apiService);
     const modelsActions = new ModelsActions(apiService);
+    const tasksApi = new TasksApi(apiService.getInstance());
+    const taskActionsApi = new TaskActionsApi(apiService.getInstance());
+    const taskFormsApi = new TaskFormsApi(apiService.getInstance());
 
     let processUserModel, appModel;
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
@@ -87,7 +90,7 @@ describe('Task Details component', () => {
         await taskPage.createTask({ name: tasks[1], description: 'Description', formName: app.formName });
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
-        const allTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await tasksApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -103,7 +106,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getEndDate()).toEqual('');
         await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
-        const taskForm = await apiService.getInstance().activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
+        const taskForm = await taskFormsApi.getTaskForm(allTasks.data[0].id);
         formModel = new FormModel(taskForm);
 
         await taskPage.taskDetails().waitFormNameEqual(formModel.getName());
@@ -116,7 +119,7 @@ describe('Task Details component', () => {
         await taskPage.createTask({ name: tasks[1], description: 'Description', formName: app.formName });
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
-        const allTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await tasksApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -134,7 +137,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
         await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
-        const taskForm = await apiService.getInstance().activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
+        const taskForm = await taskFormsApi.getTaskForm(allTasks.data[0].id);
 
         formModel = new FormModel(taskForm);
 
@@ -150,7 +153,7 @@ describe('Task Details component', () => {
 
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
-        const allTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await tasksApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
 
@@ -167,7 +170,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
         await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
-        const taskForm = await apiService.getInstance().activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
+        const taskForm = await taskFormsApi.getTaskForm(allTasks.data[0].id);
 
         formModel = new FormModel(taskForm);
 
@@ -182,7 +185,7 @@ describe('Task Details component', () => {
 
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
-        const allTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await tasksApi.listTasks(new Task({ sort: 'created-desc' }));
         const taskModel = new TaskModel(allTasks.data[0]);
 
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -198,7 +201,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
         await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
-        const taskForm = await apiService.getInstance().activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
+        const taskForm = await taskFormsApi.getTaskForm(allTasks.data[0].id);
 
         formModel = new FormModel(taskForm);
 
@@ -224,7 +227,7 @@ describe('Task Details component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
         await taskPage.tasksListPage().selectRow(checklistName);
 
-        const allTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await tasksApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -261,7 +264,7 @@ describe('Task Details component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
         await taskPage.tasksListPage().selectRow(checklistName);
 
-        const allTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await tasksApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -292,7 +295,7 @@ describe('Task Details component', () => {
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().selectRow(taskName);
 
-        const getTaskResponse = await apiService.getInstance().activiti.taskApi.getTask(taskId.id);
+        const getTaskResponse = await tasksApi.getTask(taskId.id);
 
         const taskModel = new TaskModel(getTaskResponse);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -314,8 +317,8 @@ describe('Task Details component', () => {
         const form = await modelsActions.createModel(taskFormModel);
         const task = await taskUtil.createStandaloneTask(taskName);
 
-        await apiService.getInstance().activiti.taskApi.attachForm(task.id, { 'formId': form.id });
-        await apiService.getInstance().activiti.taskApi.completeTaskForm(task.id, { values: { label: null } });
+        await taskActionsApi.attachForm(task.id, { 'formId': form.id });
+        await taskActionsApi.taskApi.completeTaskForm(task.id, { values: { label: null } });
 
         await (await processServices.goToTaskApp()).clickTasksButton();
 

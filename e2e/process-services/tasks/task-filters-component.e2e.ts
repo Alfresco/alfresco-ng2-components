@@ -203,8 +203,7 @@ describe('Task', () => {
             await apiService.login(user.username, user.password);
             const applicationsService = new ApplicationsUtil(apiService);
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
-            const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
-            appId = appDefinitions.data.find((currentApp) => currentApp.modelId === importedApp.id).id;
+            appId = await applicationsService.getAppDefinitionId(importedApp.id);
 
             await loginPage.login(user.username, user.password);
         });

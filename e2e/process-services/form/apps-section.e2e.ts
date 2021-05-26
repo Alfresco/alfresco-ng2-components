@@ -21,6 +21,7 @@ import { ProcessServicesPage } from './../pages/process-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ModelsActions } from '../../actions/APS/models.actions';
 import CONSTANTS = require('../../util/constants');
+import { AppDefinitionsApi } from '@alfresco/js-api';
 
 describe('Modify applications', () => {
 
@@ -37,6 +38,7 @@ describe('Modify applications', () => {
     const apps = new ApplicationsUtil(apiService);
     const usersActions = new UsersActions(apiService);
     const applicationService = new ApplicationsUtil(apiService);
+    const appsApi = new AppDefinitionsApi(apiService.getInstance());
 
     let firstApp, appVersionToBeDeleted;
 
@@ -134,7 +136,7 @@ describe('Modify applications', () => {
             }, 'publish': true
         };
 
-        await apiService.getInstance().activiti.appsApi.updateAppDefinition(appVersionToBeDeleted.id, appDefinition);
+        await appsApi.updateAppDefinition(appVersionToBeDeleted.id, appDefinition);
 
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();

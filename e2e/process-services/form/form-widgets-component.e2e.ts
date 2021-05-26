@@ -28,6 +28,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 import FormDefinitionModel = require('../../models/APS/FormDefinitionModel');
+import { TaskFormsApi } from '@alfresco/js-api';
 
 const formInstance = new FormDefinitionModel();
 
@@ -40,6 +41,7 @@ describe('Form widgets', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const taskFormsApi = new TaskFormsApi(apiService.getInstance());
 
     const newTask = 'First task';
     let processUserModel;
@@ -76,7 +78,7 @@ describe('Form widgets', () => {
 
             const response = await taskPage.taskDetails().getId();
 
-            const formDefinition = await apiService.getInstance().activiti.taskFormsApi.getTaskForm(response);
+            const formDefinition = await taskFormsApi.getTaskForm(response);
             formInstance.setFields(formDefinition.fields);
             formInstance.setAllWidgets(formDefinition.fields);
         });

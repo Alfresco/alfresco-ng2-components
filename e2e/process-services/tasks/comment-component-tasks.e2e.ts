@@ -30,7 +30,7 @@ import { TasksPage } from './../pages/tasks.page';
 import { CommentsPage } from '../../core/pages/comments.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
-import { TaskRepresentation } from '@alfresco/js-api';
+import { ActivitiCommentsApi, TaskActionsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Comment component for Processes', () => {
@@ -46,6 +46,8 @@ describe('Comment component for Processes', () => {
     const usersActions = new UsersActions(apiService);
     const taskUtil = new TaskUtil(apiService);
     const modelsActions = new ModelsActions(apiService);
+    const activitiCommentsApi = new ActivitiCommentsApi(apiService.getInstance());
+    const taskActionsApi = new TaskActionsApi(apiService.getInstance());
 
     let user, appId, secondUser;
 
@@ -75,11 +77,11 @@ describe('Comment component for Processes', () => {
     });
 
     it('[C260237] Should not be able to add a comment on a completed task', async () => {
-        await taskUtil.createStandaloneTask(taskName.completed_task);
+        const newTask = await taskUtil.createStandaloneTask(taskName.completed_task);
 
         const taskId = newTask.id;
 
-        await apiService.getInstance().activiti.taskActionsApi.completeTask(taskId);
+        await taskActionsApi.completeTask(taskId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
@@ -92,13 +94,13 @@ describe('Comment component for Processes', () => {
     it('[C212864] Should be able to add multiple comments on a single task using different users', async () => {
         const newTask =  await taskUtil.createStandaloneTask(taskName.multiple_users);
 
-        await apiService.getInstance().activiti.taskApi.involveUser(newTask.id, { email: secondUser.email });
+        await taskActionsApi.involveUser(newTask.id, { email: secondUser.email });
 
         const taskComment = { message: 'Task Comment' };
         const secondTaskComment = { message: 'Second Task Comment' };
 
-        await apiService.getInstance().activiti.taskApi.addTaskComment(taskComment, newTask.id);
-        await apiService.getInstance().activiti.taskApi.addTaskComment(secondTaskComment, newTask.id);
+        await activitiCommentsApi.addTaskComment(taskComment, newTask.id);
+        await activitiCommentsApi.addTaskComment(secondTaskComment, newTask.id);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
@@ -106,7 +108,7 @@ describe('Comment component for Processes', () => {
         await taskPage.tasksListPage().selectRow(taskName.multiple_users);
         await taskPage.taskDetails().selectActivityTab();
 
-        const totalCommentsLatest = await apiService.getInstance().activiti.taskApi.getTaskComments(newTask.id, { 'latestFirst': true });
+        const totalCommentsLatest = await activitiCommentsApi.getTaskComments(newTask.id, { 'latestFirst': true });
 
         const thirdTaskComment = { message: 'Third Task Comment' };
 
@@ -127,7 +129,7 @@ describe('Comment component for Processes', () => {
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(secondUser.username, secondUser.password);
 
-        await apiService.getInstance().activiti.taskApi.addTaskComment(thirdTaskComment, newTask.id);
+        await activitiCommentsApi.addTaskComment(thirdTaskComment, newTask.id);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
@@ -135,7 +137,7 @@ describe('Comment component for Processes', () => {
         await taskPage.tasksListPage().selectRow(taskName.multiple_users);
         await taskPage.taskDetails().selectActivityTab();
 
-        const totalComments = await apiService.getInstance().activiti.taskApi.getTaskComments(newTask.id, { 'latestFirst': true });
+        const totalComments = await activitiCommentsApi.getTaskComments(newTask.id, { 'latestFirst': true });
 
         await commentsPage.checkUserIconIsDisplayed();
         await commentsPage.checkUserIconIsDisplayed();

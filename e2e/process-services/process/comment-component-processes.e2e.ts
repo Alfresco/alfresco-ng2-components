@@ -27,6 +27,7 @@ import {
 import { ProcessFiltersPage } from './../pages/process-filters.page';
 import { CommentsPage } from '../../core/pages/comments.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { ActivitiCommentsApi, TasksApi } from '@alfresco/js-api';
 
 describe('Comment component for Processes', () => {
 
@@ -41,6 +42,8 @@ describe('Comment component for Processes', () => {
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const modelsActions = new ModelsActions(apiService);
+    const commentsApi = new ActivitiCommentsApi(apiService.getInstance());
+    const taskApi = new TasksApi(apiService.getInstance());
 
     let user, appId, processInstanceId, addedComment;
     const processName = 'Comment APS';
@@ -68,14 +71,14 @@ describe('Comment component for Processes', () => {
     });
 
     it('[C260464] Should be able to add a comment on APS and check on ADF', async () => {
-        await apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({ message: 'HELLO' }, processInstanceId);
+        await commentsApi.addProcessInstanceComment({ message: 'HELLO' }, processInstanceId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName);
 
-        addedComment = await apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
+        addedComment = await commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
 
         await commentsPage.checkUserIconIsDisplayed();
 
@@ -86,34 +89,34 @@ describe('Comment component for Processes', () => {
     });
 
     it('[C260465] Should not be able to view process comment on included task', async () => {
-        await apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({ message: 'GOODBYE' }, processInstanceId);
+        await commentsApi.addProcessInstanceComment({ message: 'GOODBYE' }, processInstanceId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName);
 
-        const taskQuery = await apiService.getInstance().activiti.taskApi.listTasks({ processInstanceId: processInstanceId });
+        const taskQuery = await taskApi.listTasks({ processInstanceId: processInstanceId });
 
         const taskId = taskQuery.data[0].id;
 
-        const taskComments = await apiService.getInstance().activiti.commentsApi.getTaskComments(taskId, { 'latestFirst': true });
+        const taskComments = await commentsApi.getTaskComments(taskId, { 'latestFirst': true });
         await expect(taskComments.total).toEqual(0);
     });
 
     it('[C260466] Should be able to display comments from Task on the related Process', async () => {
-        const taskQuery = await apiService.getInstance().activiti.taskApi.listTasks({ processInstanceId: processInstanceId });
+        const taskQuery = await taskApi.listTasks({ processInstanceId: processInstanceId });
 
         const taskId = taskQuery.data[0].id;
 
-        await apiService.getInstance().activiti.taskApi.addTaskComment({ message: 'Task Comment' }, taskId);
+        await commentsApi.addTaskComment({ message: 'Task Comment' }, taskId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName);
 
-        const addedTaskComment = await apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
+        const addedTaskComment = await commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
 
         await commentsPage.checkUserIconIsDisplayed();
 

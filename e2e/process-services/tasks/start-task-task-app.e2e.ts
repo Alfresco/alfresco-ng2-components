@@ -15,7 +15,15 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginPage, StringUtil, TaskUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    LoginPage,
+    StringUtil,
+    TaskUtil,
+    UserModel,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -23,9 +31,6 @@ import { AttachmentListPage } from './../pages/attachment-list.page';
 import { ChecklistDialog } from './../pages/dialog/create-checklist-dialog.page';
 import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
 import { TasksPage } from './../pages/tasks.page';
-import * as fs from 'fs';
-import * as path from 'path';
-import { TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Start Task - Task App', () => {
@@ -40,6 +45,7 @@ describe('Start Task - Task App', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const taskUtil = new TaskUtil(apiService);
+    const applicationsUtil = new ApplicationsUtil(apiService);
 
     let processUserModel, assigneeUserModel;
     const formTextField = app.form_fields.form_fieldId;
@@ -63,12 +69,9 @@ describe('Start Task - Task App', () => {
 
         processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
 
-        const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
-        const file = fs.createReadStream(pathFile);
-
         await apiService.login(processUserModel.username, processUserModel.password);
 
-        await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
+        await applicationsUtil.importApplication(app.file_location);
 
         await taskUtil.createStandaloneTask(showHeaderTask);
 

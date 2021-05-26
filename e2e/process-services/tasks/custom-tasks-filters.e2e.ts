@@ -28,7 +28,7 @@ import {
 import { browser } from 'protractor';
 import { TaskListDemoPage } from './../pages/task-list-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { TaskRepresentation } from '@alfresco/js-api';
+import { TaskActionsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
 import moment = require('moment');
 
 describe('Start Task - Custom App', () => {
@@ -47,6 +47,8 @@ describe('Start Task - Custom App', () => {
     const applicationsService = new ApplicationsUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
     const taskUtil = new TaskUtil(apiService);
+    const taskActionsApi = new TaskActionsApi(apiService.getInstance());
+    const tasksApi = new TasksApi(apiService.getInstance());
 
     let processUserModel;
     let appRuntime, secondAppRuntime;
@@ -105,14 +107,14 @@ describe('Start Task - Custom App', () => {
         }
 
         for (let i = 0; i < 3; i++) {
-            completedTasks[i] = await apiService.getInstance().activiti.taskApi.taskUtil.createStandaloneTask((new TaskRepresentation({
+            completedTasks[i] = await tasksApi.createNewTask((new TaskRepresentation({
                 'name': completedTasksName[i],
                 'dueDate': DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ', new Date(), i + 2)
             }));
-            await apiService.getInstance().activiti.taskActionsApi.completeTask(completedTasks[i].id);
+            await taskActionsApi.completeTask(completedTasks[i].id);
         }
 
-        taskWithDueDate = await apiService.getInstance().activiti.taskApi.taskUtil.createStandaloneTask((new TaskRepresentation({
+        taskWithDueDate = await tasksApi.createNewTask((new TaskRepresentation({
             'name': paginationTasksName[0],
             'dueDate': currentDateStandardFormat
         }));

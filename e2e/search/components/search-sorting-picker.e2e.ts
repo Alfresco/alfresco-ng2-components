@@ -31,6 +31,7 @@ import { SearchFiltersPage } from '../pages/search-filters.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
 import { SearchConfiguration } from '../search.config';
+import { NodesApi } from '@alfresco/js-api';
 
 describe('Search Sorting Picker', () => {
 
@@ -58,6 +59,7 @@ describe('Search Sorting Picker', () => {
 
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const nodesApi = new NodesApi(apiService.getInstance());
 
     const search = '_png_file.png';
     let jsonFile;
@@ -234,7 +236,7 @@ describe('Search Sorting Picker', () => {
 
         for (let i = 0; i < (numberOfElements - 1); i++) {
             if (idList[i] && idList[i].trim() !== '') {
-                promises.push(apiService.getInstance().core.nodesApi.getNode(idList[i]));
+                promises.push(nodesApi.getNode(idList[i]));
             }
         }
         nodeList = await Promise.all(promises);

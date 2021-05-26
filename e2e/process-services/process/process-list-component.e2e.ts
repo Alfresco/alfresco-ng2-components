@@ -25,6 +25,7 @@ import {
 } from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from './../pages/process-list-demo.page';
 import { browser } from 'protractor';
+import { TaskFormsApi } from '@alfresco/js-api';
 
 describe('Process List Test', () => {
 
@@ -38,6 +39,7 @@ describe('Process List Test', () => {
     const applicationsUtil = new ApplicationsUtil(apiService);
     const usersActions = new UsersActions(apiService);
     const modelsActions = new ModelsActions(apiService);
+    const taskFormsApi = new TaskFormsApi(apiService.getInstance());
 
     let appDateModel, appUserWidgetModel, user;
 
@@ -82,8 +84,8 @@ describe('Process List Test', () => {
 
         const procWithUserWidgetTaskId = await processUtil.getProcessTaskId(completedProcWithUserWidget.id);
 
-        await apiService.getInstance().activiti.taskApi.completeTaskForm(procWithDateTaskId.id, { values: { label: null } });
-        await apiService.getInstance().activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.id, { values: { label: null } });
+        await taskFormsApi.completeTaskForm(procWithDateTaskId.id, { values: { label: null } });
+        await taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.id, { values: { label: null } });
 
         await loginPage.login(user.username, user.password);
    });

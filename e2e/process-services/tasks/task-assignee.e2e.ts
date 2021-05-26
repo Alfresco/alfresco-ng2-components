@@ -33,6 +33,7 @@ import { ProcessListPage } from './../pages/process-list.page';
 import { browser } from 'protractor';
 import { TasksPage } from './../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
+import { AdminGroupsApi } from '@alfresco/js-api';
 
 describe('Task Assignee', () => {
 
@@ -51,6 +52,7 @@ describe('Task Assignee', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const adminGroupsApi = new AdminGroupsApi(apiService.getInstance());
 
     describe('Candidate User Assignee', () => {
 
@@ -65,7 +67,7 @@ describe('Task Assignee', () => {
             }));
 
             try {// creates group if not available
-                await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
+                await adminGroupsApi.createNewGroup({
                     'name': app.candidateGroup,
                     'tenantId': user.tenantId,
                     'type': 1
@@ -132,21 +134,21 @@ describe('Task Assignee', () => {
             candidate1 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
             candidate2 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
 
-            const adminGroup = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup(
+            const adminGroup = await adminGroupsApi.createNewGroup(
                 { 'name': app.adminGroup, 'tenantId': user.tenantId }
             );
 
-            await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(adminGroup.id, user.id);
+            await adminGroupsApi.addGroupMember(adminGroup.id, user.id);
 
-            await apiService.getInstance().activiti.adminGroupsApi.addGroupCapabilities(adminGroup.id, { capabilities: app.adminCapabilities });
+            await adminGroupsApi.addGroupCapabilities(adminGroup.id, { capabilities: app.adminCapabilities });
 
-            const candidateGroup = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup(
+            const candidateGroup = await adminGroupsApi.createNewGroup(
                 { 'name': app.candidateGroup, 'tenantId': user.tenantId, 'type': 1 }
             );
 
-            await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate1.id);
-            await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate2.id);
-            await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, user.id);
+            await adminGroupsApi.addGroupMember(candidateGroup.id, candidate1.id);
+            await adminGroupsApi.addGroupMember(candidateGroup.id, candidate2.id);
+            await adminGroupsApi.addGroupMember(candidateGroup.id, user.id);
 
             try {// for creates user if not available
                 await usersActions.createUser(new UserModel({

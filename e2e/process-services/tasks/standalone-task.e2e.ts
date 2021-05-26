@@ -17,13 +17,14 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, LoginPage, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import * as fs from 'fs';
 import * as path from 'path';
 import CONSTANTS = require('../../util/constants');
 import Task = require('../../models/APS/Task');
+import { TaskActionsApi, TasksApi } from '@alfresco/js-api';
 
 describe('Start Task - Task App', () => {
 
@@ -39,6 +40,9 @@ describe('Start Task - Task App', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const applicationUtil = new ApplicationsUtil(apiService);
+    const tasksApi = new TasksApi(apiService.getInstance());
+    const taskActionsApi = new TaskActionsApi(apiService.getInstance());
 
     beforeAll(async () => {
 
@@ -46,12 +50,9 @@ describe('Start Task - Task App', () => {
 
         processUserModel = await usersActions.createUser();
 
-        const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
-        const file = fs.createReadStream(pathFile);
-
         await apiService.login(processUserModel.username, processUserModel.password);
 
-        await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
+        await applicationUtil.importApplication(app.file_location);
 
         await loginPage.login(processUserModel.username, processUserModel.password);
     });
@@ -123,8 +124,8 @@ describe('Start Task - Task App', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
         await taskPage.taskDetails().waitFormNameEqual(app.formName);
 
-        const listOfTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
-        await apiService.getInstance().activiti.taskApi.removeForm(listOfTasks.data[0].id);
+        const listOfTasks = tasksApi.listTasks(new Task({ sort: 'created-desc' }));
+        await taskActionsApi.removeForm(listOfTasks.data[0].id);
 
         await browser.refresh();
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);

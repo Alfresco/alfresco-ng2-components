@@ -15,7 +15,15 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, FileBrowserUtil, ApplicationsUtil, ApiService, UsersActions } from '@alfresco/adf-testing';
+import {
+    LoginPage,
+    BrowserActions,
+    FileBrowserUtil,
+    ApplicationsUtil,
+    ApiService,
+    UsersActions,
+    TasksService
+} from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import CONSTANTS = require('../../util/constants');
@@ -32,6 +40,7 @@ describe('Task Audit', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const tasksService = new TasksService(apiService);
 
     let processUserModel;
 
@@ -45,7 +54,7 @@ describe('Task Audit', () => {
         processUserModel = await usersActions.createUser();
 
         await apiService.login(processUserModel.username, processUserModel.password);
-        await apiService.getInstance().activiti.taskApi.taskUtil.createStandaloneTask((new TaskRepresentation({ name: taskTaskApp }));
+        await tasksService.createStandaloneTask(taskTaskApp);
         const applicationsService = new ApplicationsUtil(apiService);
         await applicationsService.importPublishDeployApp(app.file_path);
 

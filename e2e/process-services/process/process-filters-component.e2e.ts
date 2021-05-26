@@ -29,7 +29,7 @@ import { ProcessFiltersPage } from './../pages/process-filters.page';
 import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
 import { ProcessDetailsPage } from './../pages/process-details.page';
 import { ProcessListPage } from './../pages/process-list.page';
-import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
+import { RuntimeAppDefinitionsApi, UserFiltersApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { ProcessListDemoPage } from './../pages/process-list-demo.page';
 import CONSTANTS = require('../../util/constants');
@@ -51,6 +51,8 @@ describe('Process Filters Test', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const userFiltersApi = new UserFiltersApi(apiService.getInstance());
+    const appsApi = new RuntimeAppDefinitionsApi(apiService.getInstance());
 
     let appModel, user;
 
@@ -137,12 +139,12 @@ describe('Process Filters Test', () => {
 
     it('[C280407] Should be able to access the filters with URL', async () => {
         const defaultFiltersNumber = 3;
-        let deployedApp, processFilterUrl;
+        let processFilterUrl;
 
         const deployedAppId = applicationsService.getAppDefinitionId(appModel.id);
 
         processFilterUrl = browser.baseUrl + '/activiti/apps/' + deployedAppId + '/processes/';
-        const taskAppFilters = await apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
+        const taskAppFilters = await userFiltersApi.getUserProcessInstanceFilters({ appId: deployedAppId});
 
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
@@ -218,7 +220,7 @@ describe('Process Filters Test', () => {
 
     it('[C260384] Edit default filter', async () => {
         const runningFilter =  (await getFilter()).find(filter => filter.name === 'Running');
-        await apiService.getInstance().activiti.userFiltersApi
+        await userFiltersApi
             .updateUserProcessInstanceFilter(runningFilter.id, { ...runningFilter, name: 'Edited Running' });
 
         await processServicesPage.goToApp(app.title);
@@ -229,7 +231,7 @@ describe('Process Filters Test', () => {
 
     it('[C260385] Delete default filter', async () => {
         const allFilter =  (await getFilter()).find(filter => filter.name === 'All');
-        await apiService.getInstance().activiti.userFiltersApi.deleteUserProcessInstanceFilter(allFilter.id);
+        await userFiltersApi.deleteUserProcessInstanceFilter(allFilter.id);
 
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
@@ -237,10 +239,10 @@ describe('Process Filters Test', () => {
     });
 
     async function getFilter(): Promise<UserProcessInstanceFilterRepresentation[]> {
-        const apps = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
+        const apps = await appsApi.getAppDefinitions();
         const { id: appId = 0 } = apps.data.find((application) => application.name === appModel.name);
 
-        const filters = await apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId });
+        const filters = await userFiltersApi.getUserProcessInstanceFilters({ appId });
         return filters.data;
     }
 
