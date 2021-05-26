@@ -1,11 +1,3 @@
-@mixin selected {
-    color: #2196f3;
-}
-
-@mixin unselected {
-    color: #808080;
-}
-
 .adf-like-container {
     display: flex;
     overflow: hidden;
@@ -24,17 +16,17 @@
 
     .adf-like-select {
         cursor: pointer;
-        @include selected;
+        color: #2196f3;
         &:hover {
-            @include unselected;
+            color: #808080;
         }
     }
 
     .adf-like-grey {
         cursor: pointer;
-        @include unselected;
+        color: #808080;
         &:hover {
-            @include selected;
+            color: #2196f3;
         }
     }
 

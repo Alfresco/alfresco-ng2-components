@@ -21,8 +21,7 @@ import { ThumbnailService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-version-comparison',
-    templateUrl: './version-comparison.component.html',
-    styleUrls: ['./version-comparison.component.scss']
+    templateUrl: './version-comparison.component.html'
 })
 export class VersionComparisonComponent {
 

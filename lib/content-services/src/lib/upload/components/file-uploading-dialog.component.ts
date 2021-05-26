@@ -24,8 +24,7 @@ import { takeUntil, delay } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-file-uploading-dialog',
-    templateUrl: './file-uploading-dialog.component.html',
-    styleUrls: ['./file-uploading-dialog.component.scss']
+    templateUrl: './file-uploading-dialog.component.html'
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     /** Dialog direction. Can be 'ltr' or 'rtl. */

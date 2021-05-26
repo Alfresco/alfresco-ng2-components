@@ -30,7 +30,7 @@
         &-people-select-icon {
             margin: 0 !important;
             svg {
-                fill: mat-color($accent) !default;
+                fill: mat-color($accent);
                 width: 40px;
                 height: 40px;
             }

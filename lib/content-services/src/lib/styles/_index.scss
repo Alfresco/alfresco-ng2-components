@@ -23,7 +23,6 @@
 @import '../permission-manager/components/add-permission/add-permission.component';
 @import '../permission-manager/components/add-permission/add-permission-dialog.component';
 @import '../permission-manager/components/add-permission/add-permission-panel.component';
-@import '../tree-view/components/tree-view.component';
 @import '../version-manager/version-comparison.component';
 @import '../content-type/content-type-dialog.component';
 @import '../aspect-list/aspect-list.component';
@@ -52,7 +51,6 @@
     @include adf-add-permission-theme($theme);
     @include adf-add-permission-dialog-theme($theme);
     @include adf-add-permission-panel-theme($theme);
-    @include adf-tree-view-theme($theme);
     @include adf-search-filter-theme($theme);
     @include adf-search-chip-list-theme($theme);
     @include adf-version-comparison-theme($theme);
