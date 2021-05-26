@@ -30,6 +30,7 @@ import { SearchBarPage } from '../pages/search-bar.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { SearchConfiguration } from '../search.config';
 import { browser } from 'protractor';
+import { NodesApi } from '@alfresco/js-api';
 
 describe('Search Checklist Component', () => {
 
@@ -40,10 +41,11 @@ describe('Search Checklist Component', () => {
     const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new UserModel();
-    const apiService = new ApiService();
 
+    const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const nodesApi = new NodesApi(apiService.getInstance());
 
     const filterType = {
         folder: 'Folder',
@@ -66,11 +68,11 @@ describe('Search Checklist Component', () => {
 
         await apiService.login(acsUser.username, acsUser.password);
 
-        createdFolder = await apiService.getInstance().nodes.addNode('-my-', {
+        createdFolder = await nodesApi.createNode('-my-', {
             name: nodeNames.folder,
             nodeType: 'cm:folder'
         });
-        createdFile = await apiService.getInstance().nodes.addNode('-my-', {
+        createdFile = await nodesApi.createNode('-my-', {
             name: nodeNames.document,
             nodeType: 'cm:content'
         });

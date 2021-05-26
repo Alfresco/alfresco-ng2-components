@@ -30,7 +30,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
-import { SitesApi, SiteEntry } from '@alfresco/js-api';
+import { SitesApi, SiteEntry, CommentsApi } from '@alfresco/js-api';
 
 describe('Comment', () => {
 
@@ -39,7 +39,9 @@ describe('Comment', () => {
     const viewerPage: ViewerPage = new ViewerPage();
     const commentsPage: CommentsPage = new CommentsPage();
     const navigationBarPage = new NavigationBarPage();
+
     const apiService = new ApiService();
+    const commentsApi = new CommentsApi(apiService.getInstance());
 
     let userFullName, nodeId;
     let acsUser: UserModel;
@@ -93,7 +95,7 @@ describe('Comment', () => {
         });
 
         it('[C276947] Should be able to add a comment on ACS and view on ADF', async () => {
-            await apiService.getInstance().core.commentsApi.addComment(nodeId, { content: comments.test });
+            await commentsApi.createComment(nodeId, { content: comments.test });
 
             await viewerPage.viewFile(pngFileModel.name);
 

@@ -31,7 +31,7 @@ import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
-import { SitesApi } from '@alfresco/js-api';
+import { NodesApi, SitesApi } from '@alfresco/js-api';
 
 describe('Document List Component', () => {
 
@@ -40,9 +40,10 @@ describe('Document List Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
     const notificationHistoryPage = new NotificationHistoryPage();
+
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-
+    const nodesApi = new NodesApi(apiService.getInstance());
     const uploadActions = new UploadActions(apiService);
 
     let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFolder2, copyFolder, subFile,
@@ -89,7 +90,7 @@ describe('Document List Component', () => {
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, sourceFolder.entry.id);
         uploadedFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
-        await apiService.getInstance().core.nodesApi.updateNode(sourceFolder.entry.id,
+        await nodesApi.updateNode(sourceFolder.entry.id,
             {
                 permissions: {
                     locallySet: [{

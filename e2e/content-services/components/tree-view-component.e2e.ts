@@ -18,6 +18,7 @@
 import { ApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TreeViewPage } from './../pages/tree-view.page';
+import { NodesApi } from '@alfresco/js-api';
 
 describe('Tree View Component', () => {
 
@@ -28,8 +29,8 @@ describe('Tree View Component', () => {
     let acsUser: UserModel;
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-
     const uploadActions = new UploadActions(apiService);
+    const nodesApi = new NodesApi(apiService.getInstance());
 
     let treeFolder, secondTreeFolder, thirdTreeFolder;
 
@@ -48,19 +49,19 @@ describe('Tree View Component', () => {
 
         await apiService.login(acsUser.username, acsUser.password);
 
-        treeFolder = await apiService.getInstance().nodes.addNode(nodeNames.parentFolder, {
+        treeFolder = await nodesApi.createNode(nodeNames.parentFolder, {
             name: nodeNames.folder,
             nodeType: 'cm:folder'
         });
-        secondTreeFolder = await apiService.getInstance().nodes.addNode(nodeNames.parentFolder, {
+        secondTreeFolder = await nodesApi.createNode(nodeNames.parentFolder, {
             name: nodeNames.secondFolder,
             nodeType: 'cm:folder'
         });
-        thirdTreeFolder = await apiService.getInstance().nodes.addNode(secondTreeFolder.entry.id, {
+        thirdTreeFolder = await nodesApi.createNode(secondTreeFolder.entry.id, {
             name: nodeNames.thirdFolder,
             nodeType: 'cm:folder'
         });
-        await apiService.getInstance().nodes.addNode(thirdTreeFolder.entry.id, {
+        await nodesApi.createNode(thirdTreeFolder.entry.id, {
             name: nodeNames.document,
             nodeType: 'cm:content'
         });

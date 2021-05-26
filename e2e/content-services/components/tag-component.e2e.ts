@@ -27,6 +27,7 @@ import {
 import { TagPage } from '../../content-services/pages/tag.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
+import { TagsApi } from '@alfresco/js-api';
 
 describe('Tag component', () => {
 
@@ -37,6 +38,7 @@ describe('Tag component', () => {
     let acsUser: UserModel;
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const tagsApi = new TagsApi(apiService.getInstance());
 
     const uploadActions = new UploadActions(apiService);
     const pdfFileModel = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
@@ -73,7 +75,7 @@ describe('Tag component', () => {
 
         Object.assign(deleteFile, uploadedDeleteFile.entry);
 
-        await apiService.getInstance().core.tagsApi.addTag(nodeId, tags);
+        await tagsApi.createTagForNode(nodeId, tags);
 
         await loginPage.login(acsUser.username, acsUser.password);
         await navigationBarPage.clickTagButton();

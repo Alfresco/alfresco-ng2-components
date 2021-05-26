@@ -31,7 +31,7 @@ import { ShareDialogPage } from '../../core/pages/dialog/share-dialog.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
-import { SitesApi } from '@alfresco/js-api';
+import { SharedlinksApi, SitesApi } from '@alfresco/js-api';
 
 describe('Viewer', () => {
 
@@ -44,6 +44,7 @@ describe('Viewer', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
+    const sharedlinksApi = new SharedlinksApi(apiService);
 
     let site;
     const acsUser = new UserModel();
@@ -86,7 +87,7 @@ describe('Viewer', () => {
 
         wordFileUploaded = await uploadActions.uploadFile(wordFileInfo.location, wordFileInfo.name, '-my-');
 
-        pngFileShared = await apiService.getInstance().core.sharedlinksApi.addSharedLink({ 'nodeId': pngFileUploaded.entry.id });
+        pngFileShared = await sharedlinksApi.createSharedLink({ 'nodeId': pngFileUploaded.entry.id });
     });
 
     afterAll(async () => {

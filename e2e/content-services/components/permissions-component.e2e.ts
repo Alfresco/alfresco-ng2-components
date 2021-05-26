@@ -37,6 +37,7 @@ import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { NotificationDemoPage } from '../../core/pages/notification.page';
+import { GroupsApi } from '@alfresco/js-api';
 
 describe('Permissions Component', () => {
 
@@ -50,6 +51,7 @@ describe('Permissions Component', () => {
     const notificationPage = new NotificationDemoPage();
     const searchService = new SearchService(apiService);
     const permissionActions = new PermissionActions(apiService);
+    const groupsApi = new GroupsApi(apiService.getInstance());
 
     const contentList = contentServicesPage.getDocumentList();
     const viewerPage = new ViewerPage();
@@ -94,7 +96,7 @@ describe('Permissions Component', () => {
             await apiService.loginWithProfile('admin');
             await usersActions.createUser(fileOwnerUser);
             await usersActions.createUser(filePermissionUser);
-            await apiService.getInstance().core.groupsApi.createGroup(groupBody);
+            await groupsApi.createGroup(groupBody);
 
             await apiService.login(fileOwnerUser.username, fileOwnerUser.password);
             roleConsumerFolder = await uploadActions.createFolder(roleConsumerFolderModel.name, '-my-');

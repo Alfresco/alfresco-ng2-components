@@ -30,6 +30,7 @@ import { FolderDialogPage } from '../../core/pages/dialog/folder-dialog.page';
 import { browser, protractor } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
+import { NodesApi } from '@alfresco/js-api';
 
 describe('Edit folder directive', () => {
 
@@ -40,8 +41,10 @@ describe('Edit folder directive', () => {
     const anotherAcsUser = new UserModel();
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
+
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const nodesApi = new NodesApi(apiService.getInstance());
 
     const pdfFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -63,7 +66,7 @@ describe('Edit folder directive', () => {
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), editFolder.entry.id);
         filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
 
-        await apiService.getInstance().core.nodesApi.updateNode(editFolder.entry.id,
+        await nodesApi.updateNode(editFolder.entry.id,
 
             {
                 permissions: {

@@ -30,6 +30,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
+import { Core, CustomModelApi, NodesApi } from '@alfresco/js-api';
 
 describe('Aspect oriented config', () => {
 
@@ -43,7 +44,8 @@ describe('Aspect oriented config', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-    const usersActions = new NodesA(apiService);
+    const nodesApi = new NodesApi(apiService.getInstance());
+    const customModelApi = new CustomModelApi(apiService.getInstance());
 
     let acsUser: UserModel;
 
@@ -59,12 +61,12 @@ describe('Aspect oriented config', () => {
         await apiService.loginWithProfile('admin');
 
         try {
-            await apiService.getInstance().core.customModelApi.createCustomModel('ACTIVE', modelOneName, modelOneName, modelOneName, modelOneName);
+            await customModelApi.createCustomModel('ACTIVE', modelOneName, modelOneName, modelOneName, modelOneName);
         } catch (e) {
         }
 
         try {
-            await apiService.getInstance().core.customModelApi.createCustomAspect(modelOneName, emptyAspectName, null, emptyAspectName, emptyAspectName);
+            await customModelApi.createCustomAspect(modelOneName, emptyAspectName, null, emptyAspectName, emptyAspectName);
         } catch (e) {
         }
 
@@ -76,13 +78,13 @@ describe('Aspect oriented config', () => {
 
         await loginPage.login(acsUser.username, acsUser.password);
 
-        const aspects = await apiService.getInstance().core.nodesApi.getNode(uploadedFile.entry.id);
+        const aspects = await nodesApi.getNode(uploadedFile.entry.id);
 
         aspects.entry.aspectNames.push(modelOneName.concat(':', emptyAspectName));
 
         aspects.entry.aspectNames.push(defaultModel.concat(':', defaultEmptyPropertiesAspect));
 
-        await apiService.getInstance().core.nodesApi.updateNode(uploadedFile.entry.id, { aspectNames: aspects.entry.aspectNames });
+        await nodesApi.updateNode(uploadedFile.entry.id, { aspectNames: aspects.entry.aspectNames });
    });
 
     afterAll(async () => {

@@ -35,6 +35,7 @@ import { FileModel } from '../models/ACS/file.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { SearchConfiguration } from './search.config';
+import { NodesApi } from '@alfresco/js-api';
 
 describe('Search component - Search Bar', () => {
 
@@ -58,7 +59,7 @@ describe('Search component - Search Bar', () => {
     const acsUser = new UserModel();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-
+    const nodesApi = new NodesApi(apiService.getInstance());
     const uploadActions = new UploadActions(apiService);
 
     const filename = StringUtil.generateRandomString(16);
@@ -93,7 +94,7 @@ describe('Search component - Search Bar', () => {
         const firstFileUploaded = await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
-        fileHighlightUploaded = await apiService.getInstance().nodes.addNode('-my-', {
+        fileHighlightUploaded = await nodesApi.createNode('-my-', {
             'name': StringUtil.generateRandomString(16),
             'nodeType': 'cm:content',
             'properties': {
