@@ -32,8 +32,7 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'adf-task-form',
-  templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.scss']
+  templateUrl: './task-form.component.html'
 })
 export class TaskFormComponent implements OnInit {
 

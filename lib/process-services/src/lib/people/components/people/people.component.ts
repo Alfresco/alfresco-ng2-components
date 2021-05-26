@@ -24,8 +24,7 @@ import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-people',
-    templateUrl: './people.component.html',
-    styleUrls: ['./people.component.scss']
+    templateUrl: './people.component.html'
 })
 export class PeopleComponent {
 

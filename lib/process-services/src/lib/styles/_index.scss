@@ -1,6 +1,4 @@
 @import '../process-list/components/process-filters.component';
-@import '../attachment/process-attachment-list.component';
-@import '../attachment/task-attachment-list.component';
 @import '../process-comments/process-comments.component';
 @import '../people/people.module';
 @import '../task-list/components/start-task.component';
@@ -20,8 +18,6 @@
     @include adf-people-module-theme($theme);
     @include adf-task-list-filters-task-theme($theme);
     @include adf-task-list-header-theme($theme);
-    @include adf-process-attachment-list-theme($theme);
-    @include adf-task-attachment-list-theme($theme);
     @include adf-apps-theme($theme);
     @include adf-task-standalone-component-theme($theme);
     @include adf-attach-file-widget-dialog-component-theme($theme);

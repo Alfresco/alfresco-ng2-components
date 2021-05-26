@@ -1,9 +1,5 @@
-@mixin  adf-task-people-list-theme($theme) {
-
-    .adf-task-people-list {
-        .adf-datatable-list {
-            width: 100%;
-        }
+.adf-task-people-list {
+    .adf-datatable-list {
+        width: 100%;
     }
-
 }

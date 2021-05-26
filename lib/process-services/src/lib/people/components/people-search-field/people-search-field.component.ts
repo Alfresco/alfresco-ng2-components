@@ -26,7 +26,6 @@ import { getDisplayUser } from '../../helpers/get-display-user';
 @Component({
     selector: 'adf-people-search-field',
     templateUrl: './people-search-field.component.html',
-    styleUrls: ['./people-search-field.component.scss'],
     host: { 'class': 'adf-people-search-field' },
     encapsulation: ViewEncapsulation.None
 })

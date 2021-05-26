@@ -32,8 +32,7 @@ import { TaskDescriptionValidator } from '../validators/task-description.validat
 
 @Component({
     selector: 'adf-task-header',
-    templateUrl: './task-header.component.html',
-    styleUrls: ['./task-header.component.scss']
+    templateUrl: './task-header.component.html'
 })
 export class TaskHeaderComponent implements OnChanges, OnInit {
 

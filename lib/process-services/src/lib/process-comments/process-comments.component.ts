@@ -22,8 +22,7 @@ import { share, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-process-instance-comments',
-    templateUrl: './process-comments.component.html',
-    styleUrls: ['./process-comments.component.scss']
+    templateUrl: './process-comments.component.html'
 })
 export class ProcessCommentsComponent implements OnChanges, OnDestroy {
 
