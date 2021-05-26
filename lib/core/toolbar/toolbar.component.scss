@@ -1,5 +1,3 @@
-@import '~@angular/material/theming';
-
 @mixin adf-toolbar-theme($theme) {
     $foreground: map-get($theme, foreground);
     $adf-toolbar-height: 48px !default;

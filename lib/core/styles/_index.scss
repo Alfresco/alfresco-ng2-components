@@ -13,7 +13,6 @@
 @import '../info-drawer/info-drawer-layout.component';
 @import '../login/components/login.component';
 @import '../pagination/pagination.component';
-@import '../settings/host-settings.component';
 @import '../toolbar/toolbar.component';
 @import '../userinfo/components/user-info.component';
 @import '../viewer/components/viewer.component';
@@ -31,8 +30,6 @@
 @import '../layout/components/sidenav-layout/sidenav-layout.component';
 @import '../templates/empty-content/empty-content.component';
 @import '../templates/error-content/error-content.component';
-@import '../login/components/login-dialog.component';
-@import '../login/components/login-dialog-panel.component';
 @import '../../core/clipboard/clipboard.component';
 @import '../../core/search-text/search-text-input.component';
 @import './snackbar';
@@ -53,7 +50,6 @@
     @include adf-info-drawer-theme($theme);
     @include adf-login-theme($theme);
     @include adf-pagination-theme($theme);
-    @include adf-host-settings-theme($theme);
     @include adf-toolbar-theme($theme);
     @include adf-userinfo-theme($theme);
     @include adf-viewer-theme($theme);
@@ -70,8 +66,6 @@
     @include adf-empty-content-theme($theme);
     @include adf-error-content-theme($theme);
     @include adf-header-layout-theme($theme);
-    @include adf-login-dialog-theme($theme);
-    @include adf-login-dialog-panel-theme($theme);
     @include adf-sidenav-layout-theme($theme);
     @include adf-clipboard-theme($theme);
     @include adf-snackbar-theme($theme);

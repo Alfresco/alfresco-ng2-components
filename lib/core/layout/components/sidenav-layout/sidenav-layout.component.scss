@@ -1,6 +1,4 @@
 @mixin adf-sidenav-layout-theme($theme) {
-    $adf-sidenav-max: 300px !default;
-
     .adf-sidenav-layout {
 
         &-full-space {
@@ -27,7 +25,7 @@
         @include layout-bp(lt-sm) {
             .mat-drawer {
                 width: calc(-50px + 100vw) !important;
-                max-width: $adf-sidenav-max !important;
+                max-width: 300px !default !important;
             }
         }
 

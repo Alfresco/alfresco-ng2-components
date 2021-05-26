@@ -26,7 +26,6 @@ import { Pagination } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-notification-history',
-    styleUrls: ['notification-history.component.scss'],
     templateUrl: 'notification-history.component.html'
 })
 export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterViewInit {

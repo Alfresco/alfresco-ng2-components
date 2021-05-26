@@ -26,7 +26,6 @@ import { SearchTextStateEnum, SearchAnimationState, SearchAnimationDirection } f
 @Component({
     selector: 'adf-search-text-input',
     templateUrl: './search-text-input.component.html',
-    styleUrls: ['./search-text-input.component.scss'],
     animations: [searchAnimation],
     encapsulation: ViewEncapsulation.None,
     host: {

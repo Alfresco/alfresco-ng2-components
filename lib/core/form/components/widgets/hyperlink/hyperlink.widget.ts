@@ -25,7 +25,6 @@ import { FormFieldModel } from '../core';
 @Component({
     selector: 'hyperlink-widget',
     templateUrl: './hyperlink.widget.html',
-    styleUrls: ['./hyperlink.widget.scss'],
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',

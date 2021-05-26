@@ -21,7 +21,6 @@ import { FormService } from './../services/form.service';
 @Component({
     selector: 'adf-form-list',
     templateUrl: './form-list.component.html',
-    styleUrls: ['./form-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class FormListComponent implements OnChanges {
