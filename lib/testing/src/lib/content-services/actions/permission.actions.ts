@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
-import { NodeEntry, NodeBodyUpdate } from '@alfresco/js-api';
+import { NodeEntry, NodeBodyUpdate, NodesApi } from '@alfresco/js-api';
 import { ApiService } from '../../core/actions/api.service';
 
 export class PermissionActions {
     api: ApiService;
+    nodesApi: NodesApi;
 
     constructor(apiService: ApiService) {
         this.api = apiService;
+        this.nodesApi = new NodesApi(apiService.getInstance());
     }
 
     addRoleForUser(userName: string, role: string, nodeToUpdate: NodeEntry): Promise<NodeEntry> {
@@ -37,17 +39,17 @@ export class PermissionActions {
                 ]
             }
         };
-        return this.api.apiService.nodes.updateNode(nodeToUpdate.entry.id, payload);
+        return this.nodesApi.updateNode(nodeToUpdate.entry.id, payload);
     }
 
     disableInheritedPermissionsForNode(nodeId: string): Promise<NodeEntry> {
         const nodeBody = { permissions: { isInheritanceEnabled: false } };
-        return this.api.apiService.nodes.updateNode(nodeId, nodeBody, { include: ['permissions'] });
+        return this.nodesApi.updateNode(nodeId, nodeBody, { include: ['permissions'] });
     }
 
     enableInheritedPermissionsForNode(nodeId: string): Promise<NodeEntry> {
         const nodeBody = { permissions: { isInheritanceEnabled: true } };
-        return this.api.apiService.nodes.updateNode(nodeId, nodeBody, { include: ['permissions'] });
+        return this.nodesApi.updateNode(nodeId, nodeBody, { include: ['permissions'] });
     }
 
 }

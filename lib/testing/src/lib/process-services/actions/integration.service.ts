@@ -16,15 +16,18 @@
  */
 
 import { ApiService } from '../../core/actions/api.service';
+import { E2eRequestApiHelper } from '../../core/actions/e2e-request-api.helper';
 
 export class IntegrationService {
     api: ApiService;
+    requestApiHelper: E2eRequestApiHelper;
 
-    constructor(api: ApiService) {
-        this.api = api;
+    constructor(apiService: ApiService) {
+        this.api = apiService;
+        this.requestApiHelper = new E2eRequestApiHelper(apiService);
     }
 
-    addCSIntegration({ name, tenantId, host }): Promise<any> {
+    async addCSIntegration({ name, tenantId, host }): Promise<void> {
         const repository = {
             name,
             tenantId,
@@ -34,12 +37,11 @@ export class IntegrationService {
             version: '6.1.1',
             authenticationType: 'basic'
         };
-        return this.api.apiService.activiti.integrationAccountApi.apiClient.callApi('app/rest/integration/alfresco', 'POST',
-            {}, {}, {}, {}, repository, [], [], Object);
+
+        await this.requestApiHelper.post('app/rest/integration/alfresco', { bodyParam: repository });
     }
 
-    authenticateRepository(id: number, body: { username: string, password: string }): Promise<any> {
-        return this.api.apiService.activiti.integrationAccountApi.apiClient.callApi(`app/rest/integration/alfresco/${id}/account`, 'POST',
-            {}, {}, {}, body, {}, [], []);
+    async authenticateRepository(id: number, body: { username: string, password: string }): Promise<any> {
+        await this.requestApiHelper.post(`app/rest/integration/alfresco/${id}/account`,{ bodyParam:  body});
     }
 }

@@ -18,7 +18,7 @@
 import { Logger } from '../../core/utils/logger';
 import { browser } from 'protractor';
 import { ApiService } from '../../core/actions/api.service';
-import { AppDefinitionUpdateResultRepresentation } from '@alfresco/js-api';
+import { AppDefinitionsApi, RuntimeAppDefinitionsApi, AppDefinitionUpdateResultRepresentation } from '@alfresco/js-api';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -30,13 +30,17 @@ export class AppPublish {
 export class ApplicationsUtil {
 
     api: ApiService;
+    appsApi: RuntimeAppDefinitionsApi;
+    appDefinitionsApi: AppDefinitionsApi;
 
-    constructor(api: ApiService) {
-        this.api = api;
+    constructor(apiService: ApiService) {
+        this.api = apiService;
+        this.appsApi = new RuntimeAppDefinitionsApi(apiService.getInstance());
+        this.appDefinitionsApi = new AppDefinitionsApi(apiService.getInstance());
     }
 
     async getAppDefinitionId(appModelId: number): Promise<number> {
-        const appDefinitions = await this.api.getInstance().activiti.appsApi.getAppDefinitions();
+        const appDefinitions = await this.appsApi.getAppDefinitions();
         let appDefinitionId = -1;
 
         appDefinitions.data.forEach((appDefinition) => {
@@ -49,9 +53,9 @@ export class ApplicationsUtil {
     }
 
     async publishDeployApp(appId: number): Promise<AppDefinitionUpdateResultRepresentation> {
-        const publishApp = await this.api.getInstance().activiti.appsApi.publishAppDefinition(appId, new AppPublish());
+        const publishApp = await this.appDefinitionsApi.publishAppDefinition(appId, new AppPublish());
 
-        await this.api.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+        await this.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
         return publishApp;
     }
@@ -60,7 +64,7 @@ export class ApplicationsUtil {
         try {
             const appCreated = await this.importApplication(appFileLocation, option);
             const publishApp = await this.publishDeployApp(appCreated.id);
-            await this.api.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+            await this.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
             return appCreated;
         } catch (error) {
             Logger.error('Import Publish Deploy Application - Service error, Response: ', JSON.stringify(error));
@@ -71,11 +75,11 @@ export class ApplicationsUtil {
         const pathFile = path.join(browser.params.testConfig.main.rootPath + appFileLocation);
         const file = fs.createReadStream(pathFile);
 
-        const appCreated = await this.api.getInstance().activiti.appsApi.importNewAppDefinition(modelId, file);
+        const appCreated = await this.appDefinitionsApi.updateAppDefinition(modelId, file);
 
-        const publishApp = await this.api.getInstance().activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
+        const publishApp = await this.appDefinitionsApi.publishAppDefinition(appCreated.id, new AppPublish());
 
-        await this.api.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+        await this.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
         return appCreated;
     }
@@ -83,7 +87,7 @@ export class ApplicationsUtil {
     async importApplication(appFileLocation: string, options = {}): Promise<any> {
         try {
             const file = fs.createReadStream(appFileLocation);
-            return await this.api.getInstance().activiti.appsDefinitionApi.importAppDefinition(file, options);
+            return await this.appDefinitionsApi.importAppDefinition(file, options);
         } catch (error) {
             Logger.error('Import Application - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
@@ -91,7 +95,7 @@ export class ApplicationsUtil {
 
     async getAppDefinitionByName(appName: string): Promise<any> {
         try {
-            const appDefinitionsList = await this.api.getInstance().activiti.appsApi.getAppDefinitions();
+            const appDefinitionsList = await this.appsApi.getAppDefinitions();
             const appDefinition = appDefinitionsList.data.filter((currentApp) => {
                 return currentApp.name === appName;
             });

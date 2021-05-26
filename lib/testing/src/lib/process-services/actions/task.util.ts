@@ -17,19 +17,23 @@
 
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../core/actions/api.service';
-import { TaskRepresentation } from '@alfresco/js-api';
+import { TaskFormsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
 
 export class TaskUtil {
 
     api: ApiService;
+    tasksApi: TasksApi;
+    taskFormsApi: TaskFormsApi;
 
-    constructor(api: ApiService) {
-        this.api = api;
+    constructor(apiService: ApiService) {
+        this.api = apiService;
+        this.tasksApi = new TasksApi(apiService.getInstance());
+        this.taskFormsApi = new TaskFormsApi(apiService.getInstance());
     }
 
     async createStandaloneTask(taskName: string): Promise<any> {
         try {
-            return this.api.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskName }));
+            return this.tasksApi.createNewTask(new TaskRepresentation({ name: taskName }));
         } catch (error) {
             Logger.error('Create Standalone Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
@@ -37,7 +41,7 @@ export class TaskUtil {
 
     async completeTaskForm(taskInstance: string): Promise<any> {
         try {
-            return this.api.getInstance().activiti.taskApi.completeTaskForm(taskInstance, { values: { label: null } });
+            return this.taskFormsApi.completeTaskForm(taskInstance, { values: { label: null } });
         } catch (error) {
             Logger.error('Complete Task Form - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
@@ -45,7 +49,7 @@ export class TaskUtil {
 
     async deleteTask(taskInstance: string): Promise<any> {
         try {
-            return this.api.apiService.activiti.taskApi.deleteTask(taskInstance);
+            return this.tasksApi.deleteTask(taskInstance);
         } catch (error) {
             Logger.error('Delete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
