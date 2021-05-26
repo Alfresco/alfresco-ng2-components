@@ -19,9 +19,9 @@ import {
     ApiService,
     ApplicationsUtil,
     BrowserActions,
-    LoginPage,
+    LoginPage, ModelsActions,
     ProcessUtil,
-    StringUtil,
+    StringUtil, TaskUtil,
     UsersActions
 } from '@alfresco/adf-testing';
 import { ProcessServicesPage } from './../pages/process-services.page';
@@ -43,6 +43,8 @@ describe('Task Details component', () => {
     const taskPage = new TasksPage();
 
     const apiService = new ApiService();
+    const taskUtil = new TaskUtil(apiService);
+    const modelsActions = new ModelsActions(apiService);
 
     let processUserModel, appModel;
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
@@ -70,7 +72,7 @@ describe('Task Details component', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {
@@ -206,8 +208,7 @@ describe('Task Details component', () => {
     it('[C286708] Should display task details for subtask - Task App', async () => {
         const taskName = 'TaskAppSubtask';
         const checklistName = 'TaskAppChecklist';
-        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ 'name': taskName }));
-
+        await taskUtil.createStandaloneTask(taskName);
         await (await processServices.goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -279,7 +280,7 @@ describe('Task Details component', () => {
 
     it('[C286709] Should display task details for completed task - Task App', async () => {
         const taskName = 'TaskAppCompleted';
-        const taskId = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ 'name': taskName }));
+        const taskId = await taskUtil.createStandaloneTask(taskName);
         await (await processServices.goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -310,8 +311,9 @@ describe('Task Details component', () => {
 
     it('[C260321] Should not be able to edit a completed task\'s details', async () => {
         const taskName = 'TaskCompleted';
-        const form = await apiService.getInstance().activiti.modelsApi.createModel(taskFormModel);
-        const task = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ 'name': taskName }));
+        const form = await modelsActions.createModel(taskFormModel);
+        const task = await taskUtil.createStandaloneTask(taskName);
+
         await apiService.getInstance().activiti.taskApi.attachForm(task.id, { 'formId': form.id });
         await apiService.getInstance().activiti.taskApi.completeTaskForm(task.id, { values: { label: null } });
 

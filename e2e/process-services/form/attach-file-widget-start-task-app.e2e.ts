@@ -61,7 +61,7 @@ describe('Start Task - Task App', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await usersActions.deleteTenant(user.tenantId);
    });
 
     it('[C274690] Should be able to open a file attached to a start form', async () => {

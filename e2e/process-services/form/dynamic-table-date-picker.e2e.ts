@@ -20,7 +20,7 @@ import {
     ApplicationsUtil,
     DatePickerCalendarPage,
     DateUtil,
-    LoginPage,
+    LoginPage, ModelsActions,
     UsersActions,
     Widget
 } from '@alfresco/adf-testing';
@@ -37,8 +37,10 @@ describe('Dynamic Table', () => {
     const datePicker = new DatePickerCalendarPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
+
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const modelsActions = new ModelsActions(apiService);
 
     let user, tenantId, appId;
 
@@ -50,7 +52,7 @@ describe('Dynamic Table', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await usersActions.deleteTenant(tenantId);
    });
 
     describe('Date Picker', () => {
@@ -77,7 +79,7 @@ describe('Dynamic Table', () => {
 
         afterAll(async () => {
             await apiService.login(user.username, user.password);
-            await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+            await modelsActions.deleteModel(appId);
             await navigationBarPage.clickLogoutButton();
         });
 
@@ -140,7 +142,7 @@ describe('Dynamic Table', () => {
 
         afterAll(async () => {
             await apiService.login(user.username, user.password);
-            await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+            await modelsActions.deleteModel(appId);
         });
 
         beforeEach(async () => {

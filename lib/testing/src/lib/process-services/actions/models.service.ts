@@ -28,7 +28,7 @@ export class ModelsActions {
         this.modelsApi = new ModelsApi(api.getInstance());
     }
 
-    async deleteVersionModel(modelId) {
+    async deleteModel(modelId) :any{
         try {
             return await this.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
         } catch (error) {

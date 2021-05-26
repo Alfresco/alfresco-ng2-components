@@ -108,7 +108,7 @@ describe('Attach File - Content service', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await usersActions.deleteTenant(user.tenantId);
     });
 
     beforeEach(async () => {

@@ -39,7 +39,7 @@ describe('Attach Folder widget', () => {
     const navigationBarPage = new NavigationBarPage();
 
     let appModel;
-    let deployedApp, process;
+    let deployedAppId, process;
     let processUserModel;
 
     const apiService = new ApiService();
@@ -55,26 +55,24 @@ describe('Attach Folder widget', () => {
         await apiService.login(processUserModel.username, processUserModel.password);
         appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
-        deployedApp = appDefinitions.data.find((currentApp) => {
-            return currentApp.modelId === appModel.id;
-        });
+        deployedAppId = applicationsService.getAppDefinitionId(appModel.id);
+
         process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.login(processUserModel.username, processUserModel.password);
    });
 
     beforeEach(async () => {
         await navigationBarPage.clickHomeButton();
-        await (new ProcessServicesPage()).goToAppByAppId(deployedApp.id);
+        await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+        await processUtil.cancelProcessInstance(process.id);
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
    });
 
     it('[C276745] Should be possible to set visibility properties for Attach Folder Widget', async () => {

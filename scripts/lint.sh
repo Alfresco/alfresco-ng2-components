@@ -9,7 +9,6 @@ if grep "envalfresco" . -R --exclude-dir={node_modules,.history,.idea,scripts,di
 fi
 
 nx affected:lint --parallel --all --maxParallel=9 && \
-npm run lint-e2e && \
 npm run stylelint && \
 npm run spellcheck && \
 npm run license-checker && \

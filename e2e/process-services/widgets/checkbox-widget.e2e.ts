@@ -38,7 +38,7 @@ describe('Checkbox Widget', () => {
 
     let processUserModel;
     let appModel;
-    let deployedApp, process;
+    let deployedAppId, process;
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
@@ -52,24 +52,22 @@ describe('Checkbox Widget', () => {
         await apiService.login(processUserModel.username, processUserModel.password);
         appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
-        deployedApp = appDefinitions.data.find((currentApp) => {
-            return currentApp.modelId === appModel.id;
-        });
+        deployedAppId = applicationsService.getAppDefinitionId(appModel.id);
+
         process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.login(processUserModel.username, processUserModel.password);
    });
 
     beforeEach(async () => {
-        await (new ProcessServicesPage()).goToAppByAppId(deployedApp.id);
+        await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+        await processUtil.cancelProcessInstance(process.id);
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
    });
 
     it('[C268554] Should be able to set general settings for Checkbox widget ', async () => {

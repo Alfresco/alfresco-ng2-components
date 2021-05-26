@@ -20,7 +20,7 @@ import {
     ApplicationsUtil,
     LoginPage,
     PaginationPage,
-    StringUtil,
+    StringUtil, TaskUtil,
     UsersActions
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
@@ -40,6 +40,7 @@ describe('Task List Pagination - Sorting', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const taskUtil = new TaskUtil(apiService);
 
     const nrOfTasks = 20;
     let processUserModel;
@@ -65,7 +66,7 @@ describe('Task List Pagination - Sorting', () => {
         await applicationsService.importPublishDeployApp(app.file_path);
 
         for (let i = 0; i < nrOfTasks; i++) {
-            await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskNames[i] }));
+            await taskUtil.createStandaloneTask(taskNames[0]);
         }
 
         await loginPage.login(processUserModel.username, processUserModel.password);

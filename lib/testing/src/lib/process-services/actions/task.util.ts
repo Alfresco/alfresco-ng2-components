@@ -18,6 +18,7 @@
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../core/actions/api.service';
 import { TaskFormsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
+import { StringUtil } from '../../core/utils/string.util';
 
 export class TaskUtil {
 
@@ -31,7 +32,7 @@ export class TaskUtil {
         this.taskFormsApi = new TaskFormsApi(apiService.getInstance());
     }
 
-    async createStandaloneTask(taskName: string): Promise<any> {
+    async createStandaloneTask(taskName: string = StringUtil.generateRandomString()): Promise<any> {
         try {
             return this.tasksApi.createNewTask(new TaskRepresentation({ name: taskName }));
         } catch (error) {

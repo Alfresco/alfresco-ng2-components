@@ -63,7 +63,7 @@ describe('Form Component', () => {
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
 
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await usersActions.deleteTenant(tenantId);
     });
 
     it('[C286505] Should be able to display errors under the Error Log section', async () => {

@@ -85,9 +85,9 @@ describe('Attachment list action menu for processes', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+        await modelsActions.deleteModel(appId);
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await usersActions.deleteTenant(tenantId);
     });
 
     it('[C260228] Should be able to access options of a file attached to an active process', async () => {

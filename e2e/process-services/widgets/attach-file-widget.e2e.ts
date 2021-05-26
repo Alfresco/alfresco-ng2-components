@@ -80,7 +80,7 @@ describe('Attach widget - File', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
     });
 
     it('[C268067] Should be able to preview, download and remove attached files from an active form', async () => {

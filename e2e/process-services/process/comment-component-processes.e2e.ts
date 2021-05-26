@@ -16,7 +16,14 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    LoginPage,
+    ModelsActions,
+    ProcessUtil,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from './../pages/process-filters.page';
 import { CommentsPage } from '../../core/pages/comments.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -33,6 +40,7 @@ describe('Comment component for Processes', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const modelsActions = new ModelsActions(apiService);
 
     let user, appId, processInstanceId, addedComment;
     const processName = 'Comment APS';
@@ -54,9 +62,9 @@ describe('Comment component for Processes', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+        await modelsActions.deleteModel(appId);
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await usersActions.deleteTenant(user.tenantId);
     });
 
     it('[C260464] Should be able to add a comment on APS and check on ADF', async () => {

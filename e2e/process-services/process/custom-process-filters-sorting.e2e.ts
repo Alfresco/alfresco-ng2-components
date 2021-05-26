@@ -17,7 +17,14 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    LoginPage,
+    ModelsActions,
+    ProcessUtil,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessFiltersPage } from './../pages/process-filters.page';
 import { FiltersPage } from './../pages/filters.page';
@@ -33,6 +40,7 @@ describe('Sorting for process filters', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const modelsActions = new ModelsActions(apiService);
 
     let tenantId, appId, user, processesQuery;
     let importedApp;
@@ -66,9 +74,9 @@ describe('Sorting for process filters', () => {
 
     afterEach(async () => {
         try {
-            await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+            await modelsActions.deleteModel(appId);
             await apiService.loginWithProfile('admin');
-            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+            await usersActions.deleteTenant(tenantId);
         } catch (e) {
         }
 

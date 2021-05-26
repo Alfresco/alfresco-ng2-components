@@ -21,7 +21,7 @@ import {
     ApplicationsUtil, BrowserActions,
     FileBrowserUtil,
     LocalStorageUtil,
-    LoginPage,
+    LoginPage, ModelsActions,
     ProcessInstanceTasksPage,
     SelectAppsDialog,
     StartProcessPage,
@@ -63,6 +63,8 @@ describe('Start Process Component', () => {
 
     const apiService = new ApiService();
     const apiServiceUserTwo = new ApiService();
+    const modelsActions = new ModelsActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     let procUserModel: UserModel;
     let secondProcUserModel: UserModel;
@@ -99,10 +101,10 @@ describe('Start Process Component', () => {
 
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
-            await apiServiceUserTwo.getInstance().activiti.modelsApi.deleteModel(appCreated.id);
-            await apiServiceUserTwo.getInstance().activiti.modelsApi.deleteModel(simpleAppCreated.id);
-            await apiServiceUserTwo.getInstance().activiti.modelsApi.deleteModel(dateFormAppCreated.id);
-            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(procUserModel.tenantId);
+            await modelsActions.deleteModel(appCreated.id);
+            await modelsActions.deleteModel(simpleAppCreated.id);
+            await modelsActions.deleteModel(dateFormAppCreated.id);
+            await usersActions.deleteTenant(procUserModel.tenantId);
         });
 
         describe(' Once logged with user without apps', () => {

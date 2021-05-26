@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, StringUtil, TaskUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -39,6 +39,7 @@ describe('Start Task - Task App', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const taskUtil = new TaskUtil(apiService);
 
     let processUserModel, assigneeUserModel;
     const formTextField = app.form_fields.form_fieldId;
@@ -69,7 +70,7 @@ describe('Start Task - Task App', () => {
 
         await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
 
-        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: showHeaderTask }));
+        await taskUtil.createStandaloneTask(showHeaderTask);
 
         await loginPage.login(processUserModel.username, processUserModel.password);
     });

@@ -45,7 +45,7 @@ describe('Analytics Smoke Test', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(procUserModel.tenantId);
+        await usersActions.deleteTenant(procUserModel.tenantId);
     });
 
     it('[C260346] Should be able to change title of a report', async () => {

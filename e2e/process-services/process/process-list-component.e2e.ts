@@ -19,7 +19,7 @@ import {
     ApiService,
     ApplicationsUtil,
     BrowserActions,
-    LoginPage,
+    LoginPage, ModelsActions,
     ProcessUtil,
     UsersActions
 } from '@alfresco/adf-testing';
@@ -37,6 +37,7 @@ describe('Process List Test', () => {
     const apiService = new ApiService();
     const applicationsUtil = new ApplicationsUtil(apiService);
     const usersActions = new UsersActions(apiService);
+    const modelsActions = new ModelsActions(apiService);
 
     let appDateModel, appUserWidgetModel, user;
 
@@ -88,12 +89,12 @@ describe('Process List Test', () => {
    });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appDateModel.id);
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appUserWidgetModel.id);
+        await modelsActions.deleteModel(appDateModel.id);
+        await modelsActions.deleteModel(appUserWidgetModel.id);
 
         await apiService.loginWithProfile('admin');
 
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await usersActions.deleteTenant(user.tenantId);
    });
 
     beforeEach(async () => {

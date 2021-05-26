@@ -29,7 +29,7 @@ describe('Amount Widget', () => {
     const widget = new Widget();
 
     let appModel;
-    let deployedApp, process;
+    let deployedAppId, process;
     let processUserModel;
 
     const apiService = new ApiService();
@@ -45,16 +45,14 @@ describe('Amount Widget', () => {
         await apiService.login(processUserModel.username, processUserModel.password);
         appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
-        deployedApp = appDefinitions.data.find((currentApp) => {
-            return currentApp.modelId === appModel.id;
-        });
+        deployedAppId = applicationsService.getAppDefinitionId(appModel.id);
+
         process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.login(processUserModel.username, processUserModel.password);
    });
 
     beforeEach(async() => {
-        const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
+        const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${appModel.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
         await taskPage.tasksListPage().checkTaskListIsLoaded();
 
@@ -63,9 +61,9 @@ describe('Amount Widget', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+        await processUtil.cancelProcessInstance(process.id);
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
    });
 
     it('[C274703] Should be possible to set general, advance and visibility properties for Amount Widget', async () => {

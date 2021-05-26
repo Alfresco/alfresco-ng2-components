@@ -17,7 +17,15 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, ApplicationsUtil, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    LoginPage,
+    ModelsActions,
+    TaskUtil,
+    UserModel,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { CommentsPage } from '../../core/pages/comments.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -36,6 +44,8 @@ describe('Comment component for Processes', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const taskUtil = new TaskUtil(apiService);
+    const modelsActions = new ModelsActions(apiService);
 
     let user, appId, secondUser;
 
@@ -59,13 +69,13 @@ describe('Comment component for Processes', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+        await modelsActions.deleteModel(appId);
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await usersActions.deleteTenant(user.tenantId);
     });
 
     it('[C260237] Should not be able to add a comment on a completed task', async () => {
-        const newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskName.completed_task }));
+        await taskUtil.createStandaloneTask(taskName.completed_task);
 
         const taskId = newTask.id;
 
@@ -80,7 +90,7 @@ describe('Comment component for Processes', () => {
     });
 
     it('[C212864] Should be able to add multiple comments on a single task using different users', async () => {
-        const newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskName.multiple_users }));
+        const newTask =  await taskUtil.createStandaloneTask(taskName.multiple_users);
 
         await apiService.getInstance().activiti.taskApi.involveUser(newTask.id, { email: secondUser.email });
 

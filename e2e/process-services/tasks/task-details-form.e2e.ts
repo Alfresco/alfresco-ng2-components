@@ -18,9 +18,9 @@
 import {
     ApiService,
     ApplicationsUtil,
-    LoginPage,
+    LoginPage, ModelsActions,
     ProcessUtil,
-    StringUtil,
+    StringUtil, TaskUtil,
     UsersActions,
     Widget
 } from '@alfresco/adf-testing';
@@ -49,6 +49,8 @@ describe('Task Details - Form', () => {
     const formActions = new FormModelActions(apiService);
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const taskUtil = new TaskUtil(apiService);
+    const modelsActions = new ModelsActions(apiService);
 
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
 
@@ -76,11 +78,12 @@ describe('Task Details - Form', () => {
         user = await usersActions.createUser();
         await apiService.login(user.username, user.password);
 
-        attachedForm = await apiService.getInstance().activiti.modelsApi.createModel(attachedFormModel);
-        newForm = await apiService.getInstance().activiti.modelsApi.createModel(newFormModel);
+        attachedForm = await modelsActions.createModel(attachedFormModel);
+        newForm = await modelsActions.createModel(newFormModel);
 
-        const otherEmptyTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
-        otherAttachedForm = await apiService.getInstance().activiti.modelsApi.createModel(otherAttachedFormModel);
+        const otherEmptyTask = await taskUtil.createStandaloneTask();
+
+        otherAttachedForm = await modelsActions.createModel(otherAttachedFormModel);
 
         await apiService.getInstance().activiti.taskApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
         otherTask = await apiService.getInstance().activiti.taskApi.getTask(otherEmptyTask.id);
@@ -90,11 +93,11 @@ describe('Task Details - Form', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await usersActions.deleteTenant(user.tenantId);
     });
 
     beforeEach(async () => {
-        const emptyTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
+        const emptyTask = await taskUtil.createStandaloneTask();
         await apiService.getInstance().activiti.taskApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
         task = await apiService.getInstance().activiti.taskApi.getTask(emptyTask.id);
         await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
@@ -184,7 +187,7 @@ describe('Task Details - Form', () => {
         });
 
         beforeEach(async () => {
-            newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
+            newTask = await taskUtil.createStandaloneTask();
             const form = await formActions.getFormByName(app.visibilityProcess.formName);
             await apiService.getInstance().activiti.taskApi.attachForm(newTask.id, { 'formId': form.id });
 

@@ -19,7 +19,14 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 import { browser } from 'protractor';
-import { UserProfileApi, AdminUsersApi, AdminTenantsApi, PeopleApi, ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
+import {
+    UserProfileApi,
+    AdminUsersApi,
+    AdminTenantsApi,
+    PeopleApi,
+    ImageUploadRepresentation,
+    UserRepresentation
+} from '@alfresco/js-api';
 import { IdentityService } from './identity/identity.service';
 import { UserModel } from '../models/user.model';
 import { ApiService } from './api.service';
@@ -39,8 +46,8 @@ export class UsersActions {
         this.api = apiService;
         this.peopleApi = new PeopleApi(apiService.getInstance());
         this.adminTenantsApi = new AdminTenantsApi(apiService.getInstance());
-        this.adminUsersApi = new  AdminUsersApi(apiService.getInstance());
-        this.userProfileApi = new  UserProfileApi(apiService.getInstance());
+        this.adminUsersApi = new AdminUsersApi(apiService.getInstance());
+        this.userProfileApi = new UserProfileApi(apiService.getInstance());
         if (this.api.apiService.isOauthConfiguration()) {
             this.identityService = new IdentityService(this.api);
         }
@@ -147,5 +154,9 @@ export class UsersActions {
         const file = fs.createReadStream(pathFile);
 
         return this.userProfileApi.uploadProfilePicture(file);
+    }
+
+    async deleteTenant(tenantId: number) {
+        await this.adminTenantsApi.deleteTenant(tenantId);
     }
 }

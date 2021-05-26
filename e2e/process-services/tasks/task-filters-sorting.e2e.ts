@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginPage, UserFiltersUtil, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { TasksPage } from './../pages/tasks.page';
@@ -39,6 +39,7 @@ describe('Task Filters Sorting', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const userFiltersUtil = new UserFiltersUtil(apiService);
 
     let user;
     let appId;
@@ -57,9 +58,9 @@ describe('Task Filters Sorting', () => {
 
         await apiService.login(user.username, user.password);
         const applicationsService = new ApplicationsUtil(apiService);
-        const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
-        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
-        appId = appDefinitions.data.find((currentApp) => currentApp.modelId === importedApp.id).id;
+
+        const appModel = await applicationsService.importPublishDeployApp(app.file_path);
+        appId = applicationsService.getAppDefinitionId(appModel.id);
 
         await loginPage.login(user.username, user.password);
         await navigationBarPage.navigateToProcessServicesPage();
@@ -82,7 +83,7 @@ describe('Task Filters Sorting', () => {
 
     afterAll( async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await usersActions.deleteTenant(user.tenantId);
     });
 
     it('[C277254] Should display tasks under new filter from newest to oldest when they are completed', async () => {
@@ -92,7 +93,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'created-desc', state: 'completed', assignment: 'involved' }
         });
-        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -109,7 +110,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'created-asc', state: 'completed', assignment: 'involved' }
         });
-        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -126,7 +127,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'due-desc', state: 'completed', assignment: 'involved' }
         });
-        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -143,7 +144,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'due-asc', state: 'completed', assignment: 'involved' }
         });
-        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -160,7 +161,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'created-desc', state: 'open', assignment: 'involved' }
         });
-        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -177,7 +178,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'created-asc', state: 'open', assignment: 'involved' }
         });
-        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -194,7 +195,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'due-desc', state: 'open', assignment: 'involved' }
         });
-        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -211,7 +212,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'due-asc', state: 'open', assignment: 'involved' }
         });
-        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();

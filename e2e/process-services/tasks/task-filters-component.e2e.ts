@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-import { ApiService, ApplicationsUtil, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    LoginPage, ModelsActions,
+    UserFiltersUtil,
+    UserModel,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { TasksPage } from './../pages/tasks.page';
@@ -43,6 +50,7 @@ describe('Task', () => {
 
         const apiService = new ApiService();
         const usersActions = new UsersActions(apiService);
+        const modelsActions = new ModelsActions(apiService);
 
         let appId: number, user: UserModel;
 
@@ -62,9 +70,9 @@ describe('Task', () => {
         });
 
         afterEach(async () => {
-            await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+            await modelsActions.deleteModel(appId);
             await apiService.loginWithProfile('admin');
-            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+            await usersActions.deleteTenant(user.tenantId);
             await navigationBarPage.clickLogoutButton();
         });
 
@@ -177,7 +185,10 @@ describe('Task', () => {
         const processServiceTabBarPage = new ProcessServiceTabBarPage();
         const appSettingsToggles = new AppSettingsTogglesPage();
         const taskFiltersDemoPage = new TaskFiltersDemoPage();
+
         const apiService = new ApiService();
+        const userFiltersApi = new UserFiltersUtil(apiService);
+        const usersActions = new UsersActions(apiService);
 
         let user;
         let appId: number;
@@ -200,7 +211,7 @@ describe('Task', () => {
 
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
-            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+            await usersActions.deleteTenant(user.tenantId);
         });
 
         beforeEach(async () => {
@@ -216,11 +227,11 @@ describe('Task', () => {
                 icon: 'glyphicon-filter',
                 filter: { sort: 'created-desc', state: 'completed', assignment: 'involved' }
             });
-            const { id } = await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
+            const { id } = await userFiltersApi.createUserTaskFilter(newFilter);
 
             await browser.refresh();
             await taskFiltersDemoPage.customTaskFilter('New Task Filter').checkTaskFilterIsDisplayed();
-            await apiService.getInstance().activiti.userFiltersApi.deleteUserTaskFilter(id);
+            await userFiltersApi.deleteUserTaskFilter(id);
         });
 
         it('[C286447] Should display the task filter icon when a custom filter is added', async () => {
@@ -230,7 +241,7 @@ describe('Task', () => {
                 icon: 'glyphicon-cloud',
                 filter: { sort: 'created-desc', state: 'completed', assignment: 'involved' }
             });
-            const { id } = await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
+            const { id } = await this.userFiltersApi.createUserTaskFilter(newFilter);
 
             await browser.refresh();
             await processServiceTabBarPage.clickSettingsButton();
@@ -240,7 +251,7 @@ describe('Task', () => {
 
             await taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').checkTaskFilterIsDisplayed();
             await expect(await taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').getTaskFilterIcon()).toEqual('cloud');
-            await apiService.getInstance().activiti.userFiltersApi.deleteUserTaskFilter(id);
+            await this.userFiltersApi.deleteUserTaskFilter(id);
         });
 
         it('[C286449] Should display task filter icons only when showIcon property is set on true', async () => {

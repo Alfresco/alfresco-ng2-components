@@ -65,7 +65,7 @@ describe('Form widgets - People ', () => {
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
 
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {

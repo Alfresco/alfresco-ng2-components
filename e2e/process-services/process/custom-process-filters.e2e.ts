@@ -59,7 +59,7 @@ describe('New Process Filters', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await usersActions.deleteTenant(tenantId);
     });
 
     it('[C279965] Should be able to view default filters on ADF', async () => {

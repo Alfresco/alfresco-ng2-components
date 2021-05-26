@@ -139,12 +139,9 @@ describe('Process Filters Test', () => {
         const defaultFiltersNumber = 3;
         let deployedApp, processFilterUrl;
 
-        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
-        deployedApp = appDefinitions.data.find((currentApp) => {
-            return currentApp.modelId === appModel.id;
-        });
+        const deployedAppId = applicationsService.getAppDefinitionId(appModel.id);
 
-        processFilterUrl = browser.baseUrl + '/activiti/apps/' + deployedApp.id + '/processes/';
+        processFilterUrl = browser.baseUrl + '/activiti/apps/' + deployedAppId + '/processes/';
         const taskAppFilters = await apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
 
         await processServicesPage.goToApp(app.title);
@@ -242,6 +239,7 @@ describe('Process Filters Test', () => {
     async function getFilter(): Promise<UserProcessInstanceFilterRepresentation[]> {
         const apps = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
         const { id: appId = 0 } = apps.data.find((application) => application.name === appModel.name);
+
         const filters = await apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId });
         return filters.data;
     }

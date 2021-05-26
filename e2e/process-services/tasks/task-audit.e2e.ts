@@ -45,7 +45,7 @@ describe('Task Audit', () => {
         processUserModel = await usersActions.createUser();
 
         await apiService.login(processUserModel.username, processUserModel.password);
-        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskTaskApp }));
+        await apiService.getInstance().activiti.taskApi.taskUtil.createStandaloneTask((new TaskRepresentation({ name: taskTaskApp }));
         const applicationsService = new ApplicationsUtil(apiService);
         await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -54,7 +54,7 @@ describe('Task Audit', () => {
 
     afterAll( async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {

@@ -38,6 +38,14 @@ export class UserFiltersUtil {
         }
     }
 
+    async createUserTaskFilter(userTaskFilterRepresentation: UserTaskFilterRepresentation): Promise<any> {
+        try {
+            return this.userFiltersApi.createUserTaskFilter(userTaskFilterRepresentation);
+        } catch (error) {
+            Logger.error('Create Task Filter - Service error, Response: ', error);
+        }
+    }
+
     async orderUserTaskFilters(filtersIdOrder: number[], appId?: number): Promise<any> {
         try {
             return this.userFiltersApi.orderUserTaskFilters(new UserFilterOrderRepresentation({appId: appId, order: filtersIdOrder}));

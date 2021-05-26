@@ -20,7 +20,7 @@ import {
     ApiService,
     ApplicationsUtil,
     FileBrowserUtil,
-    LoginPage,
+    LoginPage, ModelsActions,
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
@@ -45,6 +45,7 @@ describe('Attachment list action menu for tasks', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const modelsActions = new ModelsActions(apiService);
 
     const pngFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
@@ -74,9 +75,9 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+        await modelsActions.deleteModel(appId);
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await usersActions.deleteTenant(tenantId);
     });
 
     it('[C277311] Should be able to View /Download /Remove from Attachment List on an active task', async () => {
@@ -166,7 +167,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C260234] Should be able to attache a file on a task on APS and check on ADF', async () => {
-        const newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: 'SHARE KNOWLEDGE' }));
+        const newTask = await apiService.getInstance().activiti.taskApi.taskUtil.createStandaloneTask((new TaskRepresentation({ name: 'SHARE KNOWLEDGE' }));
         const newTaskId = newTask.id;
         const filePath = path.join(browser.params.testConfig.main.rootPath + pngFile.location);
         const file = fs.createReadStream(filePath);

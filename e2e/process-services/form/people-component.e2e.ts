@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, TaskUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
@@ -36,6 +36,7 @@ describe('People component', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const taskUtil = new TaskUtil(apiService);
 
     let processUserModel, assigneeUserModel, secondAssigneeUserModel;
     const peopleTitle = 'People this task is shared with ';
@@ -56,11 +57,11 @@ describe('People component', () => {
 
         await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
 
-        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[0] }));
-        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[1] }));
-        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[2] }));
-        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[3] }));
-        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[4] }));
+        await taskUtil.createStandaloneTask(tasks[0]);
+        await taskUtil.createStandaloneTask(tasks[1]);
+        await taskUtil.createStandaloneTask(tasks[2]);
+        await taskUtil.createStandaloneTask(tasks[3]);
+        await taskUtil.createStandaloneTask(tasks[4]);
     });
 
     beforeEach(async () => {

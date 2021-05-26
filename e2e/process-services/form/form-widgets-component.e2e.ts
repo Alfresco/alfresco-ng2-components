@@ -85,7 +85,7 @@ describe('Form widgets', () => {
             await new NavigationBarPage().clickLogoutButton();
             await apiService.loginWithProfile('admin');
 
-            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+            await usersActions.deleteTenant(processUserModel.tenantId);
             await apiService.getInstance().logout();
         });
 
@@ -219,9 +219,9 @@ describe('Form widgets', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+            await processUtil.cancelProcessInstance(process.id);
             await apiService.loginWithProfile('admin');
-            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+            await usersActions.deleteTenant(processUserModel.tenantId);
         });
 
         it('[C260405] Value fields configured with process variables', async () => {
