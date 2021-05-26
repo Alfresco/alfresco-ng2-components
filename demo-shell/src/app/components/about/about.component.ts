@@ -27,7 +27,7 @@ import { AppConfigService } from '@alfresco/adf-core';
 @Component({
     selector: 'app-about-page',
     templateUrl: './about.component.html',
-    styleUrls: ['about.component.scss']
+    styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
     url = `https://github.com/Alfresco/${name}/commits/${commit}`;

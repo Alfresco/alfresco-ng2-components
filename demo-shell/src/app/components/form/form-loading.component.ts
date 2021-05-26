@@ -29,8 +29,8 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-form-loading',
-    templateUrl: 'form-loading.component.html',
-    styleUrls: ['form-loading.component.scss'],
+    templateUrl: './form-loading.component.html',
+    styleUrls: ['./form-loading.component.scss'],
     providers: [{ provide: FormService, useClass: FakeFormService }]
 })
 export class FormLoadingComponent implements OnInit, OnDestroy {

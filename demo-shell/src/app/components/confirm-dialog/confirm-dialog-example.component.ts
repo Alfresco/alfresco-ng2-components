@@ -21,8 +21,7 @@ import { ConfirmDialogComponent } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'app-confirm-dialog-example',
-    templateUrl: 'confirm-dialog-example.component.html',
-    styleUrls: ['confirm-dialog-example.component.scss']
+    templateUrl: './confirm-dialog-example.component.html'
 })
 export class ConfirmDialogExampleComponent {
 

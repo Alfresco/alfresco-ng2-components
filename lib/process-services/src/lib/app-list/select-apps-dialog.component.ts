@@ -21,7 +21,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'adf-select-apps-dialog',
-    templateUrl: 'select-apps-dialog.component.html'
+    templateUrl: './select-apps-dialog.component.html'
 })
 export class SelectAppsDialogComponent {
 

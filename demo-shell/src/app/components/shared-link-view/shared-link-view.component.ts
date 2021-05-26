@@ -20,8 +20,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-shared-link-view',
-    templateUrl: 'shared-link-view.component.html',
-    styleUrls: [ 'shared-link-view.component.scss' ],
+    templateUrl: './shared-link-view.component.html',
+    styleUrls: [ './shared-link-view.component.scss' ],
     encapsulation: ViewEncapsulation.None,
     // tslint:disable-next-line:use-host-property-decorator
     host: { 'class': 'app-shared-link-view' }

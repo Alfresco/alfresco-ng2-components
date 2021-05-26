@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'adf-viewer-unknown-format',
-    templateUrl: 'unknown-format.component.html'
+    templateUrl: './unknown-format.component.html'
 })
 export class UnknownFormatComponent {
 }

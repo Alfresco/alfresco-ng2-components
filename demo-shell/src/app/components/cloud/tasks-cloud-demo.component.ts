@@ -24,8 +24,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    templateUrl: 'tasks-cloud-demo.component.html',
-    styleUrls: ['tasks-cloud-demo.component.scss']
+    templateUrl: './tasks-cloud-demo.component.html'
 })
 export class TasksCloudDemoComponent implements OnInit, OnDestroy {
 

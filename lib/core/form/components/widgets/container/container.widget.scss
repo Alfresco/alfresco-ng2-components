@@ -62,7 +62,7 @@
             padding-right: 3px;
         }
 
-        @media screen and ($mat-small) {
+        @media screen and (max-width: 959px) {
             .adf-grid-list-item {
                 flex: 1 0 100%;
             }

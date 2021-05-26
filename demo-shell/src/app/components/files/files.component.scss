@@ -3,7 +3,7 @@
         margin: 10px !important;
     }
 
-    @media screen and ($mat-xsmall) {
+    @media screen and (max-width: 599px) {
         .app-container {
             margin: 0;
         }

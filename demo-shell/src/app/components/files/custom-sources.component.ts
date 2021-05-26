@@ -20,7 +20,7 @@ import { DocumentListComponent } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'app-custom-sources',
-    templateUrl: 'custom-sources.component.html'
+    templateUrl: './custom-sources.component.html'
 })
 export class CustomSourcesComponent {
 

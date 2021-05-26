@@ -40,7 +40,7 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
  */
 @Component({
     selector: 'adf-webscript-get',
-    templateUrl: 'webscript.component.html'
+    templateUrl: './webscript.component.html'
 })
 export class WebscriptComponent implements OnChanges {
 

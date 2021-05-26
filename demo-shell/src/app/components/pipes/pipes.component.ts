@@ -21,7 +21,7 @@ import { AppConfigService } from '@alfresco/adf-core';
 @Component({
     selector: 'app-pipes-page',
     templateUrl: './pipes.component.html',
-    styleUrls: ['pipes.component.scss']
+    styleUrls: ['./pipes.component.scss']
 })
 export class PipesComponent {
 

@@ -18,7 +18,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-    templateUrl: 'overlay-viewer.component.html'
+    templateUrl: './overlay-viewer.component.html'
 })
 export class OverlayViewerComponent {
 

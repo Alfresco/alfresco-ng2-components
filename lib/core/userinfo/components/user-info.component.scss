@@ -16,7 +16,7 @@
         &-userinfo-name {
             padding: 0 5px;
 
-            @media screen and ($mat-small) {
+            @media screen and (max-width: 959px) {
                 display: none;
             }
         }
@@ -100,7 +100,7 @@
             display: flex;
             justify-content: space-between;
 
-            @media screen and ($mat-xsmall) {
+            @media screen and (max-width: 599px) {
                 padding: 10px;
             }
         }

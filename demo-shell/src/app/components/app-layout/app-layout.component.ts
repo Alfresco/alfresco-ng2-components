@@ -22,8 +22,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    templateUrl: 'app-layout.component.html',
-    styleUrls: ['app-layout.component.scss'],
+    templateUrl: './app-layout.component.html',
     host: {
         'class': 'app-layout'
     },

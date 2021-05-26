@@ -20,7 +20,7 @@ import { LogService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-webscript',
-    templateUrl: 'webscript.component.html'
+    templateUrl: './webscript.component.html'
 })
 export class WebscriptComponent {
 

@@ -20,8 +20,8 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-expandable-menu',
-    templateUrl: 'aspect-list-sample.component.html',
-    styleUrls: ['aspect-list-sample.component.scss']
+    templateUrl: './aspect-list-sample.component.html',
+    styleUrls: ['./aspect-list-sample.component.scss']
 })
 export class AspectListSampleComponent {
 

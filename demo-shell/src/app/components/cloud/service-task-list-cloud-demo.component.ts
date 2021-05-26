@@ -23,7 +23,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    templateUrl: 'service-task-list-cloud-demo.component.html'
+    templateUrl: './service-task-list-cloud-demo.component.html'
 })
 export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
 

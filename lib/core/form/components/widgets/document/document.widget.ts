@@ -21,7 +21,7 @@ import { WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'adf-form-document-widget',
-    templateUrl: 'document.widget.html',
+    templateUrl: './document.widget.html',
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',

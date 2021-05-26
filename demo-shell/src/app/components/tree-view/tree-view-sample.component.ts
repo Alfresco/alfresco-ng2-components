@@ -19,8 +19,8 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-tree-view',
-    templateUrl: 'tree-view-sample.component.html',
-    styleUrls: ['tree-view-sample.component.scss']
+    templateUrl: './tree-view-sample.component.html',
+    styleUrls: ['./tree-view-sample.component.scss']
 })
 export class TreeViewSampleComponent {
 

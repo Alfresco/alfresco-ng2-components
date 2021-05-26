@@ -24,8 +24,8 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-form',
-    templateUrl: 'form.component.html',
-    styleUrls: ['form.component.scss'],
+    templateUrl: './form.component.html',
+    styleUrls: ['./form.component.scss'],
     providers: [
         { provide: FormService, useClass: InMemoryFormService },
         { provide: FormRenderingService, useClass: ProcessFormRenderingService }
