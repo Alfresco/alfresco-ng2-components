@@ -15,12 +15,22 @@
  * limitations under the License.
  */
 
-export * from './identity/public-api';
-export * from './api.service';
-export * from './rest.api.service';
-export * from './drop.actions';
-export * from './users.actions';
-export * from './api';
-export * from './api.util';
-export * from './e2e-request-api.helper';
-export * from './search.service';
+import { NodeEntry, NodesApi, AlfrescoApi } from '@alfresco/js-api';
+import { Logger } from '../../core/utils/logger';
+
+export class NodesActions {
+
+    nodesApi: NodesApi;
+
+    constructor(alfrescoApi: AlfrescoApi) {
+        this.nodesApi = new NodesApi(alfrescoApi);
+    }
+
+    async getNodeByPath(relativePath: string = '/'): Promise<NodeEntry | any> {
+        try {
+          return await this.nodesApi.getNode('-my-', { relativePath });
+        } catch (error) {
+            Logger.error(`Error GET Node by path`);
+        }
+      }
+}

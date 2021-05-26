@@ -16,5 +16,6 @@
  */
 
 export * from './upload.actions';
+export * from './nodes.actions';
 export * from './permission.actions';
 export * from './model.actions';
