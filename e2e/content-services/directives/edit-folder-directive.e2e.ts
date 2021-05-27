@@ -154,7 +154,7 @@ describe('Edit folder directive', () => {
 
         await editFolderDialog.addFolderName('a*"<>\\/?:|');
         await expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t contain these characters * " < > \\ / ? : |');
-        await editFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await expect(await editFolderDialog.checkCreateUpdateBtnIsEnabled()).toEqual(false);
 
         await editFolderDialog.addFolderName('a.a');
         await editFolderDialog.checkValidationMessageIsNotDisplayed();
@@ -162,11 +162,11 @@ describe('Edit folder directive', () => {
 
         await editFolderDialog.addFolderName('a.');
         await expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t end with a period .');
-        await editFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await expect(await editFolderDialog.checkCreateUpdateBtnIsEnabled()).toEqual(false);
 
         await BrowserActions.clearSendKeys(editFolderDialog.getFolderNameField(), protractor.Key.SPACE);
         await expect(await editFolderDialog.getValidationMessage()).toBe('Folder name can\'t contain only spaces');
-        await editFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await expect(await editFolderDialog.checkCreateUpdateBtnIsEnabled()).toEqual(false);
 
         await editFolderDialog.addFolderName(editFolder.entry.name);
         await editFolderDialog.addFolderDescription('a*"<>\\/?:|');
