@@ -123,7 +123,7 @@ export class BrowserActions {
 
         const present = await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         if (present) {
-            return elementFinder.getAttribute('value');
+            return browser.executeScript(`return arguments[0].value`, elementFinder);
         } else {
             Logger.error(`Get Input value ${elementFinder.locator().toString()} not present`);
             return '';
