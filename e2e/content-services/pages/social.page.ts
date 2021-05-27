@@ -16,7 +16,7 @@
  */
 
 import { by, element } from 'protractor';
-import { BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
+import { BrowserActions } from '@alfresco/adf-testing';
 
 export class SocialPage {
 
