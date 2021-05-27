@@ -34,8 +34,7 @@ export class GroupCloudComponentPage {
     }
 
     async getGroupsFieldContent(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.groupCloudSearch);
-        return this.groupCloudSearch.getAttribute('value');
+        return BrowserActions.getInputValue(this.groupCloudSearch);
     }
 
     async selectGroupFromList(name: string): Promise<void> {

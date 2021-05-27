@@ -16,7 +16,15 @@
  */
 
 import { FileModel } from '../../models/ACS/file.model';
-import { ApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    BrowserActions,
+    LoginPage,
+    StringUtil,
+    UploadActions,
+    UserModel,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { TagPage } from '../../content-services/pages/tag.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
@@ -87,7 +95,7 @@ describe('Tag component', () => {
         await tagPage.newTagInput.typeText('a');
 
         await expect(await tagPage.addTagButtonIsEnabled()).toEqual(false);
-        await expect(await tagPage.newTagInput.getAttribute('value')).toEqual('a');
+        await expect(await BrowserActions.getInputValue(this.newTagInput)).toEqual('a');
     });
 
     it('[C268151] Should be possible to add a new tag to a Node', async () => {

@@ -209,7 +209,7 @@ export class ViewerPage {
 
     async checkCurrentThumbnailIsSelected(): Promise<void> {
         const selectedThumbnail = element(by.css('adf-pdf-thumb.adf-pdf-thumbnails__thumb.adf-pdf-thumbnails__thumb--selected > img'));
-        const pageNumber = await this.pageSelectorInput.getAttribute('value');
+        const pageNumber = await BrowserActions.getInputValue(this.pageSelectorInput)
 
         await expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));
     }
@@ -298,8 +298,7 @@ export class ViewerPage {
     }
 
     async checkPageSelectorInputIsDisplayed(checkNumber): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorInput);
-        await expect(await this.pageSelectorInput.getAttribute('value')).toEqual(checkNumber);
+        await expect(await BrowserActions.getInputValue(this.pageSelectorInput)).toEqual(checkNumber);
     }
 
     async checkImgContainerIsDisplayed(): Promise<void> {

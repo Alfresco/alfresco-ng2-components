@@ -40,7 +40,7 @@ export class NumberRangeFilterPage {
     }
 
     async getFromNumber(): Promise<string> {
-        return this.filter.element(this.fromInput).getAttribute('value');
+        return BrowserActions.getInputValue(this.filter.element(this.fromInput));
     }
 
     async putFromNumber(value): Promise<void> {
@@ -75,7 +75,7 @@ export class NumberRangeFilterPage {
     }
 
     async getToNumber(): Promise<string> {
-        return this.filter.element(this.toInput).getAttribute('value');
+        return BrowserActions.getInputValue(this.filter.element(this.toInput));
     }
 
     async putToNumber(value): Promise<void> {

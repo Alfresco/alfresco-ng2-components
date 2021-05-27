@@ -61,7 +61,7 @@ export class FolderDialogPage {
     }
 
     async getFolderName(): Promise<string> {
-        return this.folderNameField.getAttribute('value');
+        return BrowserActions.getInputValue(this.folderNameField);
     }
 
     async getValidationMessage(): Promise<string> {

@@ -34,7 +34,7 @@ export class TagPage {
     confirmTag = TestElement.byCss('#adf-tag-node-send');
 
     getNodeId(): Promise<string> {
-        return new TestElement(this.insertNodeIdElement).getAttribute('value');
+        return BrowserActions.getInputValue(this.insertNodeIdElement);
     }
 
     async insertNodeId(nodeId) {

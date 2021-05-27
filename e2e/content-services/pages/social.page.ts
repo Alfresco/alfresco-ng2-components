@@ -23,8 +23,7 @@ export class SocialPage {
     nodeIdField = element(by.css(`input[id="nodeId"]`));
 
     async getNodeIdFieldValue(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.nodeIdField);
-        return this.nodeIdField.getAttribute('value');
+        return BrowserActions.getInputValue(this.nodeIdField);
     }
 
     async writeCustomNodeId(nodeId: string): Promise<void> {

@@ -57,8 +57,7 @@ export class PeopleCloudComponentPage {
     }
 
     async getAssignee(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudSearch);
-        return this.peopleCloudSearch.getAttribute('value');
+        return BrowserActions.getInputValue(this.peopleCloudSearch);
     }
 
     async getChipAssignee(): Promise<string> {
@@ -106,8 +105,7 @@ export class PeopleCloudComponentPage {
     }
 
     async getAssigneeFieldContent(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
-        return this.assigneeField.getAttribute('value');
+        return BrowserActions.getInputValue(this.assigneeField);
     }
 
     getFieldLabel(fieldId: string): Promise<string> {

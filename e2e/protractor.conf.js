@@ -300,6 +300,7 @@ exports.config = {
 
         } catch (error) {
             Logger.error(`====== Demo shell not able to start ======`);
+            Logger.error(error);
             process.exit();
         }
     },

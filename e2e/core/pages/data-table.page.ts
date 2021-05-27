@@ -189,7 +189,6 @@ export class DataTablePage {
     }
 
     async getClipboardInputText(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.pasteClipboardInput);
-        return this.pasteClipboardInput.getAttribute('value');
+        return BrowserActions.getInputValue(this.pasteClipboardInput);
     }
 }

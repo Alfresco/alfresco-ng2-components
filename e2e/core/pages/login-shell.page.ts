@@ -148,7 +148,7 @@ export class LoginShellPage {
     }
 
     async getShownPassword(): Promise<string> {
-        return this.txtPassword.getAttribute('value');
+        return BrowserActions.getInputValue(this.txtPassword);
     }
 
     async checkPasswordIsHidden(): Promise<void> {

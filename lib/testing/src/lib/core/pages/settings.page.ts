@@ -65,11 +65,11 @@ export class SettingsPage {
     }
 
     async getBpmHostUrl() {
-        return this.bpmText.getAttribute('value');
+        return BrowserActions.getInputValue(this.bpmText);
     }
 
     async getEcmHostUrl() {
-        return this.ecmText.getAttribute('value');
+        return BrowserActions.getInputValue(this.ecmText);
     }
 
     async setProviderEcmBpm() {

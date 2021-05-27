@@ -90,7 +90,7 @@ export class DynamicTableWidgetPage {
         await BrowserActions.closeMenuAndDialogs();
         await this.columnDateTime.sendKeys(randomText);
         await this.columnDateTime.sendKeys(protractor.Key.ENTER);
-        return this.columnDateTime.getAttribute('value');
+        return BrowserActions.getInputValue(this.columnDateTime);
     }
 
     async addRandomStringOnDate(randomText: string): Promise<void> {
