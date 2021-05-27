@@ -137,6 +137,7 @@ exports.config = {
         shardTestFiles: true,
 
         chromeOptions: {
+            w3c : false,
             prefs: {
                 'credentials_enable_service': false,
                 'download': {
