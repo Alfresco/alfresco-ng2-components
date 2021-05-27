@@ -35,7 +35,7 @@ export class DatePickerCalendarPage {
         const afterDate = DateUtil.formatDate('DD-MM-YY', date, 1);
         const afterCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`));
         if (await afterCalendar.isPresent()) {
-            const aria = await BrowserActions.getAttribute(afterCalendar,'aria-disabled');
+            const aria = await BrowserActions.getAttribute(afterCalendar, 'aria-disabled');
             await expect(aria).toBe('true');
         }
         const isEnabled = await this.nextMonthButton.isEnabled();
@@ -46,7 +46,7 @@ export class DatePickerCalendarPage {
         const beforeDate = DateUtil.formatDate('DD-MM-YY', date, -1);
         const beforeCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`));
         if (await beforeCalendar.isPresent()) {
-            const aria = await BrowserActions.getAttribute(beforeCalendar,'aria-disabled');
+            const aria = await BrowserActions.getAttribute(beforeCalendar, 'aria-disabled');
             await expect(aria).toBe('true');
         }
         const isEnabled = await this.previousMonthButton.isEnabled();

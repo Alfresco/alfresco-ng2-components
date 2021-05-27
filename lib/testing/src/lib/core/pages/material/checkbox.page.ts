@@ -21,14 +21,14 @@ import { BrowserActions } from '../../utils/browser-actions';
 export class CheckboxPage {
 
     static async uncheck(el: ElementFinder) {
-        const classList = await BrowserActions.getAttribute(el,'class');
+        const classList = await BrowserActions.getAttribute(el, 'class');
         if (classList && classList.indexOf('mat-checked') > -1) {
             await BrowserActions.click(el);
         }
     }
 
     static async check(el: ElementFinder) {
-        const classList = await BrowserActions.getAttribute(el,'class');
+        const classList = await BrowserActions.getAttribute(el, 'class');
         if (classList && classList.indexOf('mat-checked') === -1) {
             await BrowserActions.click(el);
         }

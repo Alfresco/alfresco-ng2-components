@@ -239,11 +239,11 @@ export class ViewerPage {
     }
 
     async getLastButtonTitle(): Promise<string> {
-        return BrowserActions.getAttribute(this.lastButton, 'title')
+        return BrowserActions.getAttribute(this.lastButton, 'title');
     }
 
     async getMoreActionsMenuTitle(): Promise<string> {
-        return BrowserActions.getAttribute(this.moreActionsMenu, 'title')
+        return BrowserActions.getAttribute(this.moreActionsMenu, 'title');
     }
 
     async checkDownloadButtonIsDisplayed(): Promise<void> {

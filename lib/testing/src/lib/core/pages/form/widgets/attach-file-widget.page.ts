@@ -80,19 +80,19 @@ export class AttachFileWidgetPage {
         const widget = await this.formFields.getWidget(fieldId);
         const fileAttached = await widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', fileName));
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
-        const id = await BrowserActions.getAttribute(fileAttached,'id');
+        const id = await BrowserActions.getAttribute(fileAttached, 'id');
         const optionMenu = widget.element(by.css(`button[id='${id}-option-menu']`));
         await BrowserActions.click(optionMenu);
     }
 
-    async checkAttachFileOptionsActiveForm(): Promise <void> {
+    async checkAttachFileOptionsActiveForm(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.attachedFileOptions);
         await BrowserVisibility.waitUntilElementIsVisible(this.viewFileOptionButton);
         await BrowserVisibility.waitUntilElementIsVisible(this.downloadFileOptionButton);
         await this.removeFileOptionButton.waitVisible();
     }
 
-    async checkAttachFileOptionsCompletedForm(): Promise <void> {
+    async checkAttachFileOptionsCompletedForm(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.attachedFileOptions);
         await BrowserVisibility.waitUntilElementIsVisible(this.viewFileOptionButton);
         await BrowserVisibility.waitUntilElementIsVisible(this.downloadFileOptionButton);

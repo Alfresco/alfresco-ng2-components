@@ -66,7 +66,7 @@ export class AttachFileWidgetCloudPage {
 
     async getFileId(name: string): Promise<string> {
         const fileAttached = this.widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
-        return BrowserActions.getAttribute(fileAttached,'id');
+        return BrowserActions.getAttribute(fileAttached, 'id');
     }
 
     async clickActionMenu(fileName: string, actionName: string): Promise<void> {
