@@ -146,10 +146,6 @@ export class ContentServicesPage {
         await BrowserActions.click(this.deleteNodesButton);
     }
 
-    async checkToolbarDeleteIsDisabled(): Promise<void> {
-        await BrowserActions.checkIsDisabled(this.deleteNodesButton);
-    }
-
     async metadataContent(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.metadataAction);
@@ -452,7 +448,7 @@ export class ContentServicesPage {
     }
 
     async getSingleFileButtonTooltip(): Promise<string> {
-        return BrowserActions.getAttribute(this.uploadFileButton, 'title');
+        return BrowserActions.getAttribute(this.uploadFileButtonInput, 'title');
     }
 
     async getMultipleFileButtonTooltip(): Promise<string> {

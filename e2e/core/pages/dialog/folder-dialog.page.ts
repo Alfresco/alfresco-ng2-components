@@ -45,7 +45,7 @@ export class FolderDialogPage {
     }
 
     async checkCreateUpdateBtnIsDisabled(): Promise<void> {
-        await BrowserActions.checkIsDisabled(this.createUpdateButton);
+        expect(await this.createUpdateButton.isEnabled()).toEqual(false);
     }
 
     async clickOnCancelButton(): Promise<void> {

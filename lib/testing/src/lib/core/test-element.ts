@@ -138,6 +138,12 @@ export class TestElement {
     async isEnabled(): Promise<boolean> {
         return this.elementFinder.isEnabled();
     }
+    /**
+     * Query whether the DOM element represented by this instance is disabled.
+     */
+    async isDisabled(): Promise<boolean> {
+        return !(await this.elementFinder.isEnabled());
+    }
 
     /**
      * Test whether this element is currently displayed.

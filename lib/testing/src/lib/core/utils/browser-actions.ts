@@ -93,7 +93,7 @@ export class BrowserActions {
 
     static async getAttribute(elementFinder: ElementFinder, attribute: string): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        return browser.executeScript(`return arguments[0].getAttribute(arguments[1])`, elementFinder, attribute);
+        return browser.executeScript(`return arguments[0].getAttribute(arguments[1])`, elementFinder, attribute) || '';
     }
 
     static async getText(elementFinder: ElementFinder): Promise<string> {
@@ -182,13 +182,6 @@ export class BrowserActions {
         } catch (e) {
             Logger.info(`Set value different from the input`);
         }
-    }
-
-    static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {
-        Logger.info(`Check is disabled locator:${elementFinder.locator().toString()}`);
-
-        const valueCheck = await BrowserActions.getAttribute(elementFinder, 'disabled');
-        await expect(valueCheck).toEqual('true');
     }
 
     static async rightClick(elementFinder: ElementFinder): Promise<void> {
