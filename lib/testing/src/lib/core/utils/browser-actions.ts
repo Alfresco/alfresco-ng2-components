@@ -145,10 +145,12 @@ export class BrowserActions {
         await elementFinder.click();
         await elementFinder.sendKeys(protractor.Key.END);
 
-        const value = await elementFinder.getAttribute('value');
-        for (let i = value.length; i >= 0; i--) {
-            await elementFinder.sendKeys(protractor.Key.BACK_SPACE);
-            await browser.sleep(sleepTime);
+        const value: string = await browser.executeScript(`return arguments[0].value`, elementFinder);
+        if (value) {
+            for (let i = value.length; i >= 0; i--) {
+                await elementFinder.sendKeys(protractor.Key.BACK_SPACE);
+                await browser.sleep(sleepTime);
+            }
         }
     }
 

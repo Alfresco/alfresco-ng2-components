@@ -209,7 +209,7 @@ export class ViewerPage {
 
     async checkCurrentThumbnailIsSelected(): Promise<void> {
         const selectedThumbnail = element(by.css('adf-pdf-thumb.adf-pdf-thumbnails__thumb.adf-pdf-thumbnails__thumb--selected > img'));
-        const pageNumber = await BrowserActions.getInputValue(this.pageSelectorInput)
+        const pageNumber = await BrowserActions.getInputValue(this.pageSelectorInput);
 
         await expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));
     }
