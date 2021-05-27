@@ -361,7 +361,7 @@ export class ProcessFilterCloudService {
         ];
     }
 
-    fetchRunningApplications(status: string, role: string) {
+    fetchRunningApplications(status: string, role: string): Observable<DropdownOption[]> {
         return this.appsProcessCloudService.getDeployedApplicationsByStatus(status, role).pipe(
                     map((response: any[]) => {
                         const applications: DropdownOption[] = [];
@@ -371,11 +371,12 @@ export class ProcessFilterCloudService {
                             });
                         }
                         return applications;
-                    })
+                    }),
+                    catchError((err) => this.handleProcessError(err))
                 );
     }
 
-    fetchApplicationVersions(appName: string) {
+    fetchApplicationVersions(appName: string): Observable<DropdownOption[]> {
         return this.processCloudService.getApplicationVersions(appName).pipe(
                     map((response: ApplicationVersionModel[]) => {
                         const appVersions: DropdownOption[] = [];
@@ -385,22 +386,24 @@ export class ProcessFilterCloudService {
                             });
                         }
                         return appVersions;
-                    })
+                    }),
+                    catchError((err) => this.handleProcessError(err))
                 );
     }
 
-    fetchProcessDefinitions(appName: string) {
+    fetchProcessDefinitions(appName: string): Observable<DropdownOption[]> {
         const allProcessDefinitionNamesOption: DropdownOption = { label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL', value: '' };
         return this.processCloudService.getProcessDefinitions(appName).pipe(
-                map((response: any[]) => {
-                    const processDefinitions: DropdownOption[] = [];
-                    if (response?.length) {
-                        response.forEach(res => {
-                            processDefinitions.push( { label: res.name, value: res.name });
-                        });
-                    }
-                    return [ allProcessDefinitionNamesOption, ...processDefinitions];
-                })
-            );
+                    map((response: any[]) => {
+                        const processDefinitions: DropdownOption[] = [];
+                        if (response?.length) {
+                            response.forEach(res => {
+                                processDefinitions.push( { label: res.name, value: res.name });
+                            });
+                        }
+                        return [ allProcessDefinitionNamesOption, ...processDefinitions];
+                    }),
+                    catchError((err) => this.handleProcessError(err))
+                );
     }
 }

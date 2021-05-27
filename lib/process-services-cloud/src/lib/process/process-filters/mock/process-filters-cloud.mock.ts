@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
+import { ApplicationVersionModel } from '../../../models/application-version.model';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
-import { DateCloudFilterType } from '../../../../..';
+import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 
 export const fakeProcessCloudFilters = [
     {
@@ -75,33 +76,35 @@ export const mockProcessFilters = [
     })
 ];
 
-export const fakeProcessFilter: ProcessFilterCloudModel = new ProcessFilterCloudModel({
-    name: 'MOCK_PROCESS_NAME_1',
-    id: '1',
-    key: 'all-mock-process',
-    icon: 'adjust',
-    appName: 'mock-appName',
-    sort: 'startDate',
-    status: 'MOCK_ALL',
-    order: 'DESC',
-    index: 2,
-    processName: 'process-name',
-    processDefinitionName: 'process-def-name',
-    processInstanceId: 'processinstanceid',
-    initiator: 'mockuser',
-    processDefinitionId: 'processDefid',
-    processDefinitionKey: 'processDefKey',
-    lastModified: null,
-    lastModifiedTo: null,
-    lastModifiedFrom: null,
-    completedDateType: DateCloudFilterType.NO_DATE,
-    startedDateType: DateCloudFilterType.NO_DATE,
-    _completedFrom: null,
-    _completedTo: null,
-    startedDate: null,
-    _startFrom: null,
-    _startTo: null
-});
+export const fakeProcessFilter: ProcessFilterCloudModel = new ProcessFilterCloudModel(
+    {
+        name: 'MOCK_PROCESS_NAME_1',
+        id: '1',
+        key: 'all-mock-process',
+        icon: 'adjust',
+        appName: 'mock-appName',
+        sort: 'startDate',
+        status: 'MOCK_ALL',
+        order: 'DESC',
+        index: 2,
+        processName: 'process-name',
+        processDefinitionName: 'process-def-name',
+        processInstanceId: 'processinstanceid',
+        initiator: 'mockuser',
+        processDefinitionId: 'processDefid',
+        processDefinitionKey: 'processDefKey',
+        lastModified: null,
+        lastModifiedTo: null,
+        lastModifiedFrom: null,
+        completedDateType: DateCloudFilterType.NO_DATE,
+        startedDateType: DateCloudFilterType.NO_DATE,
+        _completedFrom: null,
+        _completedTo: null,
+        startedDate: null,
+        _startFrom: null,
+        _startTo: null
+    }
+);
 
 export const fakeProcessCloudFilterEntries = {
     list: {
@@ -167,3 +170,39 @@ export const fakeProcessCloudFilterWithDifferentEntries = {
         }
     }
 };
+
+export const mockAppVersionOptions = [
+    { label: 'mock-version-1-name', value: 'mock-version-1-name' },
+    { label: 'mock-version-2-name', value: 'mock-version-2-name' }
+];
+
+export const mockProcessDefinitionOptions = [
+    { label: 'process-def-one-name', value: 'process-def-one-name' },
+    { label: 'process-def-two-name', value: 'process-def-two-name' }
+];
+
+export const mockAppVersion1: ApplicationVersionModel = {
+    entry: {
+        id: 'mock-version-1-id',
+        name: 'mock-version-1-name',
+        version: '1'
+    }
+};
+
+export const mockAppVersion2: ApplicationVersionModel = {
+    entry: {
+        id: 'mock-version-2-id',
+        name: 'mock-version-2-name',
+        version: '2'
+    }
+};
+
+export const mockProcessDefinitionList = [
+    { id: 'process-deff-one-id', name: 'process-def-one-name' },
+    { id: 'process-deff-two-id', name: 'process-deff-two-name' }
+];
+
+export const mockRunningAppsList = [
+    { id: 'app-one-id', name: 'app-one-name' },
+    { id: 'app-two-id', name: 'app-two-name' }
+];

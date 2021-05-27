@@ -23,7 +23,19 @@ import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.ser
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { fakeEmptyProcessCloudFilterEntries, fakeProcessCloudFilterEntries, fakeProcessCloudFilters, fakeProcessCloudFilterWithDifferentEntries, fakeProcessFilter } from '../mock/process-filters-cloud.mock';
+import { ProcessCloudService } from '../../services/process-cloud.service';
+import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
+import {
+    fakeEmptyProcessCloudFilterEntries,
+    fakeProcessCloudFilterEntries,
+    fakeProcessCloudFilters,
+    fakeProcessCloudFilterWithDifferentEntries,
+    fakeProcessFilter,
+    mockAppVersion1,
+    mockAppVersion2,
+    mockProcessDefinitionList,
+    mockRunningAppsList
+} from '../mock/process-filters-cloud.mock';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;
@@ -32,6 +44,10 @@ describe('ProcessFilterCloudService', () => {
     let updatePreferenceSpy: jasmine.Spy;
     let createPreferenceSpy: jasmine.Spy;
     let getCurrentUserInfoSpy: jasmine.Spy;
+
+    let getProcessDefinitionsSpy: jasmine.Spy;
+    let getApplicationVersionsSpy: jasmine.Spy;
+    let getDeployedApplicationsByStatusSpy: jasmine.Spy;
 
     const identityUserMock = {
         username: 'mock-username',
@@ -55,12 +71,18 @@ describe('ProcessFilterCloudService', () => {
 
         const preferenceCloudService = service.preferenceService;
         const identityUserService = TestBed.inject(IdentityUserService);
+        const appsProcessCloudService = TestBed.inject(AppsProcessCloudService);
+        const processCloudService = TestBed.inject(ProcessCloudService);
 
         createPreferenceSpy = spyOn(preferenceCloudService, 'createPreference').and.returnValue(of(fakeProcessCloudFilters));
         updatePreferenceSpy = spyOn(preferenceCloudService, 'updatePreference').and.returnValue(of(fakeProcessCloudFilters));
         getPreferenceByKeySpy = spyOn(preferenceCloudService, 'getPreferenceByKey').and.returnValue(of(fakeProcessCloudFilters));
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of(fakeProcessCloudFilterEntries));
         getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
+
+        getProcessDefinitionsSpy = spyOn(processCloudService, 'getProcessDefinitions').and.returnValue(of(mockProcessDefinitionList));
+        getApplicationVersionsSpy = spyOn(processCloudService, 'getApplicationVersions').and.returnValue(of([mockAppVersion1, mockAppVersion2]));
+        getDeployedApplicationsByStatusSpy = spyOn(appsProcessCloudService, 'getDeployedApplicationsByStatus').and.returnValue(of(mockRunningAppsList));
     }));
 
     it('should create processfilter key by using appName and the username', (done) => {
@@ -215,5 +237,34 @@ describe('ProcessFilterCloudService', () => {
 
         expect(service.isDefaultFilter(defaultFilterName)).toBe(true);
         expect(service.isDefaultFilter(fakeFilterName)).toBe(false);
+    });
+
+    it('should be able to fetch running apps', (done) => {
+        service.fetchRunningApplications('status', 'role').subscribe((res: any) => {
+            expect(res.length).toBe(2);
+            expect(res[0].label).toBe('app-one-name');
+            expect(res[0].value).toBe('app-one-name');
+            done();
+        });
+        expect(getDeployedApplicationsByStatusSpy).toHaveBeenCalled();
+    });
+
+    it('should be able to fetch app versions based on appName and return ', (done) => {
+        service.fetchApplicationVersions('mockAppName').subscribe((res: any) => {
+            expect(res.length).toBe(2);
+            expect(res[0].label).toBe('1');
+            expect(res[1].value).toBe('2');
+            done();
+        });
+        expect(getApplicationVersionsSpy).toHaveBeenCalled();
+    });
+
+    it('should be able to fetch process definitions based on given appName', (done) => {
+        service.fetchProcessDefinitions('mockAppName').subscribe((res: any) => {
+            expect(res[0].label).toBe('ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL');
+            expect(res[1].label).toBe('process-def-one-name');
+            done();
+        });
+        expect(getProcessDefinitionsSpy).toHaveBeenCalled();
     });
 });
