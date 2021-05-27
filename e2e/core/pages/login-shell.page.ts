@@ -97,8 +97,7 @@ export class LoginShellPage {
     }
 
     async checkLoginImgURL(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.logoImg);
-        return this.logoImg.getAttribute('src');
+        return BrowserActions.getAttribute(this.logoImg, 'src');
     }
 
     async checkUsernameInactive(): Promise<void> {

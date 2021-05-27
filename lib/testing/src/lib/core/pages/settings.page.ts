@@ -190,7 +190,7 @@ export class SettingsPage {
     async setSilentLogin(enableToggle) {
         await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
 
-        const isChecked = (await this.silentLoginToggleElement.getAttribute('class')).includes('mat-checked');
+        const isChecked = (await BrowserActions.getAttribute(this.silentLoginToggleElement, 'class')).includes('mat-checked');
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
             await BrowserActions.click(this.silentLoginToggleLabel);
@@ -200,7 +200,7 @@ export class SettingsPage {
     async setImplicitFlow(enableToggle) {
         await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
 
-        const isChecked = (await this.implicitFlowElement.getAttribute('class')).includes('mat-checked');
+        const isChecked = (await BrowserActions.getAttribute(this.implicitFlowElement, 'class')).includes('mat-checked');
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
             await BrowserActions.click(this.implicitFlowLabel);
@@ -244,11 +244,12 @@ export class SettingsPage {
 
     async checkBasicAuthRadioIsSelected() {
         const radioButton = this.getBasicAuthRadioButton();
-        await expect(await radioButton.getAttribute('class')).toContain('mat-radio-checked');
+
+        await expect(await BrowserActions.getAttribute(radioButton, 'class')).toContain('mat-radio-checked');
     }
 
     async checkSsoRadioIsNotSelected() {
         const radioButton = this.getSsoRadioButton();
-        await expect(await radioButton.getAttribute('class')).not.toContain('mat-radio-checked');
+        await expect(await BrowserActions.getAttribute(radioButton, 'class')).not.toContain('mat-radio-checked');
     }
 }

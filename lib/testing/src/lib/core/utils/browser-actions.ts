@@ -91,6 +91,11 @@ export class BrowserActions {
         return browser.get(url, timeout);
     }
 
+    static async getAttribute(elementFinder: ElementFinder, attribute: string): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+        return await browser.executeScript(`return arguments[0].getAttribute(arguments[1])`, elementFinder, attribute);
+    }
+
     static async getText(elementFinder: ElementFinder): Promise<string> {
         Logger.info(`Get Text ${elementFinder.locator().toString()}`);
 
@@ -182,8 +187,7 @@ export class BrowserActions {
     static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {
         Logger.info(`Check is disabled locator:${elementFinder.locator().toString()}`);
 
-        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        const valueCheck = await elementFinder.getAttribute('disabled');
+        const valueCheck = await BrowserActions.getAttribute(elementFinder,'disabled');
         await expect(valueCheck).toEqual('true');
     }
 

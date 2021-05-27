@@ -17,21 +17,18 @@
 
 import { ElementFinder } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
-import { BrowserVisibility } from '../../utils/browser-visibility';
 
 export class CheckboxPage {
 
     static async uncheck(el: ElementFinder) {
-        await BrowserVisibility.waitUntilElementIsVisible(el);
-        const classList = await el.getAttribute('class');
+        const classList = await BrowserActions.getAttribute(el,'class');
         if (classList && classList.indexOf('mat-checked') > -1) {
             await BrowserActions.click(el);
         }
     }
 
     static async check(el: ElementFinder) {
-        await BrowserVisibility.waitUntilElementIsVisible(el);
-        const classList = await el.getAttribute('class');
+        const classList = await BrowserActions.getAttribute(el,'class');
         if (classList && classList.indexOf('mat-checked') === -1) {
             await BrowserActions.click(el);
         }

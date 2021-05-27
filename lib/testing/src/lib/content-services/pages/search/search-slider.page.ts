@@ -31,15 +31,15 @@ export class SearchSliderPage {
     }
 
     async getMaxValue() {
-        return this.filter.element(this.slider).getAttribute('aria-valuemax');
+        return BrowserActions.getAttribute(this.filter.element(this.slider), 'aria-valuemax');
     }
 
     async getMinValue() {
-        return this.filter.element(this.slider).getAttribute('aria-valuemin');
+        return BrowserActions.getAttribute(this.filter.element(this.slider), 'aria-valuemin');
     }
 
     async getValue() {
-        return this.filter.element(this.slider).getAttribute('aria-valuenow');
+        return BrowserActions.getAttribute(this.filter.element(this.slider), 'aria-valuenow');
     }
 
     async setValue(value: number): Promise<void> {

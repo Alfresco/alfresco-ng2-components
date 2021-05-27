@@ -134,7 +134,7 @@ export class MetadataViewPage {
     }
 
     async getEditIconTooltip(): Promise<string> {
-        return this.editIcon.getAttribute('title');
+        return BrowserActions.getAttribute(this.editIcon, 'title');
     }
 
     async editPropertyIconIsDisplayed(propertyName: string) {
@@ -176,7 +176,7 @@ export class MetadataViewPage {
 
     async getPropertyIconTooltip(propertyName: string): Promise<string> {
         const editPropertyIcon = element(by.css('[data-automation-id="header-' + propertyName + '"] .adf-textitem-edit-icon'));
-        return editPropertyIcon.getAttribute('title');
+        return BrowserActions.getAttribute(editPropertyIcon, 'title');
     }
 
     async clickMetadataGroup(groupName: string): Promise<void> {
@@ -196,14 +196,12 @@ export class MetadataViewPage {
 
     async checkMetadataGroupIsExpand(groupName: string): Promise<void> {
         const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
-        await BrowserVisibility.waitUntilElementIsVisible(group);
-        await expect(await group.getAttribute('class')).toContain('mat-expanded');
+        await expect(await BrowserActions.getAttribute(group, 'class')).toContain('mat-expanded');
     }
 
     async checkMetadataGroupIsNotExpand(groupName: string): Promise<void> {
         const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
-        await BrowserVisibility.waitUntilElementIsPresent(group);
-        await expect(await group.getAttribute('class')).not.toContain('mat-expanded');
+        await expect(await BrowserActions.getAttribute(group, 'class')).not.toContain('mat-expanded');
     }
 
     async getMetadataGroupTitle(groupName: string): Promise<string> {

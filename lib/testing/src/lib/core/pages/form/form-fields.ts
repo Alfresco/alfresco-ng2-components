@@ -88,7 +88,7 @@ export class FormFields {
     async getFieldPlaceHolder(fieldId: string, locator = 'input'): Promise<string> {
         const placeHolderLocator = element(by.css(`${locator}#${fieldId}`));
         await BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
-        return placeHolderLocator.getAttribute('data-placeholder');
+        return BrowserActions.getAttribute(placeHolderLocator,'data-placeholder');
     }
 
     async checkFieldValue(locator, field, val): Promise<void> {

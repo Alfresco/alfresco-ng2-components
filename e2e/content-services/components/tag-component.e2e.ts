@@ -88,7 +88,6 @@ describe('Tag component', () => {
 
     it('[C260374] Should NOT be possible to add a new tag without Node ID', async () => {
         await expect(await tagPage.getNodeId()).toEqual('');
-        await expect(await tagPage.newTagInput.getAttribute('data-placeholder')).toEqual('New Tag');
         await expect(await tagPage.addTagButtonIsEnabled()).toEqual(false);
         await tagPage.tagListRow.waitNotVisible();
         await tagPage.tagListByNodeIdRow.waitNotVisible();

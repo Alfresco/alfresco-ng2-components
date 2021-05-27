@@ -216,7 +216,7 @@ export class DataTableComponentPage {
     }
 
     async getTooltip(columnName: string, columnValue: string): Promise<string> {
-        return this.getCellElementByValue(columnName, columnValue).getAttribute('title');
+        return BrowserActions.getAttribute(this.getCellElementByValue(columnName, columnValue),'title');
     }
 
     async rightClickOnRowByIndex(index: number): Promise<void> {
@@ -295,7 +295,8 @@ export class DataTableComponentPage {
     async sortByColumn(sortOrder: string, titleColumn: string): Promise<void> {
         const locator: Locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(element(locator));
-        const result = await element(locator).getAttribute('class');
+        const result = await BrowserActions.getAttribute(element(locator),'class');
+
         if (sortOrder.toLocaleLowerCase() === 'asc') {
             if (!result.includes('sorted-asc')) {
                 if (result.includes('sorted-desc') || result.includes('sortable')) {

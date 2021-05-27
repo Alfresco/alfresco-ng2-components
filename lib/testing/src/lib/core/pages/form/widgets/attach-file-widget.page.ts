@@ -80,7 +80,7 @@ export class AttachFileWidgetPage {
         const widget = await this.formFields.getWidget(fieldId);
         const fileAttached = await widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', fileName));
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
-        const id = await fileAttached.getAttribute('id');
+        const id = await BrowserActions.getAttribute(fileAttached,'id');
         const optionMenu = widget.element(by.css(`button[id='${id}-option-menu']`));
         await BrowserActions.click(optionMenu);
     }

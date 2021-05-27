@@ -58,8 +58,7 @@ export class StartTaskDialogPage {
     }
 
     async getAssignee(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.assignee);
-        return this.assignee.getAttribute('data-placeholder');
+        return BrowserActions.getAttribute(this.assignee, 'data-placeholder');
     }
 
     async selectForm(form): Promise<void> {

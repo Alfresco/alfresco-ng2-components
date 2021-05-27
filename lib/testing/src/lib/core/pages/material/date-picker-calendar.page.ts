@@ -28,14 +28,14 @@ export class DatePickerCalendarPage {
     todayDate = element(by.css('.mat-calendar-body-today'));
 
     async getSelectedDate(): Promise<string> {
-        return element(by.css('td[class*="mat-calendar-body-active"]')).getAttribute('aria-label');
+        return BrowserActions.getAttribute(element(by.css('td[class*="mat-calendar-body-active"]')), 'aria-label');
     }
 
     async checkDatesAfterDateAreDisabled(date): Promise<void> {
         const afterDate = DateUtil.formatDate('DD-MM-YY', date, 1);
         const afterCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`));
         if (await afterCalendar.isPresent()) {
-            const aria = await afterCalendar.getAttribute('aria-disabled');
+            const aria = await BrowserActions.getAttribute(afterCalendar,'aria-disabled');
             await expect(aria).toBe('true');
         }
         const isEnabled = await this.nextMonthButton.isEnabled();
@@ -46,7 +46,7 @@ export class DatePickerCalendarPage {
         const beforeDate = DateUtil.formatDate('DD-MM-YY', date, -1);
         const beforeCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`));
         if (await beforeCalendar.isPresent()) {
-            const aria = await beforeCalendar.getAttribute('aria-disabled');
+            const aria = await BrowserActions.getAttribute(beforeCalendar,'aria-disabled');
             await expect(aria).toBe('true');
         }
         const isEnabled = await this.previousMonthButton.isEnabled();
@@ -79,5 +79,5 @@ export class DatePickerCalendarPage {
         await BrowserActions.click(startDayElement);
         await BrowserActions.click(endDayElement);
         await this.checkDatePickerIsNotDisplayed();
-      }
+    }
 }

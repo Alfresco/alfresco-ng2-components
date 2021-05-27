@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../form-fields';
-import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
+import { BrowserActions } from '../../../utils/public-api';
 import { Locator, by, element } from 'protractor';
 
 export class CheckboxWidgetPage {
@@ -43,12 +43,8 @@ export class CheckboxWidgetPage {
     }
 
     async isCheckboxChecked(fieldId: string): Promise<boolean> {
-        let isChecked: boolean = false;
         const checkboxWidget = await (await this.formFields.getWidget(fieldId)).element(this.checkboxLocator);
-        await BrowserVisibility.waitUntilElementIsVisible(checkboxWidget);
-        await checkboxWidget.getAttribute('class').then((attributeValue) => {
-            isChecked = attributeValue.includes('mat-checkbox-checked');
-        });
-        return isChecked;
+        const attributeValue =  await BrowserActions.getAttribute(checkboxWidget, 'class');
+        return attributeValue.includes('mat-checkbox-checked');
     }
 }

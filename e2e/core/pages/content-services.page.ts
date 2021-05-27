@@ -427,8 +427,7 @@ export class ContentServicesPage {
     }
 
     async getActiveBreadcrumb(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.activeBreadcrumb);
-        return this.activeBreadcrumb.getAttribute('title');
+        return BrowserActions.getAttribute(this.activeBreadcrumb, 'title');
     }
 
     async uploadFile(fileLocation): Promise<void> {
@@ -453,18 +452,15 @@ export class ContentServicesPage {
     }
 
     async getSingleFileButtonTooltip(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFileButton);
-        return this.uploadFileButtonInput.getAttribute('title');
+        return BrowserActions.getAttribute(this.uploadFileButton, 'title');
     }
 
     async getMultipleFileButtonTooltip(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
-        return this.uploadMultipleFileButton.getAttribute('title');
+        return BrowserActions.getAttribute(this.uploadMultipleFileButton, 'title');
     }
 
     async getFolderButtonTooltip(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFolderButton);
-        return this.uploadFolderButton.getAttribute('title');
+        return BrowserActions.getAttribute(this.uploadFolderButton, 'title');
     }
 
     async checkUploadButton(): Promise<void> {
@@ -560,8 +556,7 @@ export class ContentServicesPage {
     }
 
     async checkEmptyFolderImageUrlToContain(url): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.emptyFolderImage);
-        await expect(await this.emptyFolderImage.getAttribute('src')).toContain(url);
+        await expect(await BrowserActions.getAttribute(this.emptyFolderImage, 'src')).toContain(url);
     }
 
     async checkEmptyRecentFileIsDisplayed(): Promise<void> {
@@ -570,8 +565,7 @@ export class ContentServicesPage {
 
     async getRowIconImageUrl(fileName): Promise<string> {
         const iconRow = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`));
-        await BrowserVisibility.waitUntilElementIsVisible(iconRow);
-        return iconRow.getAttribute('src');
+        return BrowserActions.getAttribute(iconRow, 'src');
     }
 
     async checkGridViewButtonIsVisible(): Promise<void> {
@@ -594,7 +588,7 @@ export class ContentServicesPage {
 
     async getDocumentCardIconForElement(elementName): Promise<string> {
         const elementIcon = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"] img`));
-        return elementIcon.getAttribute('src');
+        return BrowserActions.getAttribute(elementIcon, 'src');
     }
 
     async checkDocumentCardPropertyIsShowed(elementName, propertyName): Promise<void> {
