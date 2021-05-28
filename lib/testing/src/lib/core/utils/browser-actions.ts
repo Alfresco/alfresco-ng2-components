@@ -93,7 +93,7 @@ export class BrowserActions {
 
     static async getAttribute(elementFinder: ElementFinder, attribute: string): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        return browser.executeScript(`return arguments[0].getAttribute(arguments[1])`, elementFinder, attribute) || '';
+        return browser.executeScript(`return arguments[0].getAttribute(arguments[1]) || ''`, elementFinder, attribute);
     }
 
     static async getText(elementFinder: ElementFinder): Promise<string> {
