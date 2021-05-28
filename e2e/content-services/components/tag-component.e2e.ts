@@ -86,17 +86,6 @@ describe('Tag component', () => {
         await uploadActions.deleteFileOrFolder(pdfUploadedFile.entry.id);
     });
 
-    it('[C260374] Should NOT be possible to add a new tag without Node ID', async () => {
-        await expect(await tagPage.getNodeId()).toEqual('');
-        await expect(await tagPage.addTagButtonIsEnabled()).toEqual(false);
-        await tagPage.tagListRow.waitNotVisible();
-        await tagPage.tagListByNodeIdRow.waitNotVisible();
-        await tagPage.newTagInput.typeText('a');
-
-        await expect(await tagPage.addTagButtonIsEnabled()).toEqual(false);
-        await expect(await BrowserActions.getInputValue(this.newTagInput)).toEqual('a');
-    });
-
     it('[C268151] Should be possible to add a new tag to a Node', async () => {
         await tagPage.insertNodeId(pdfFileModel.id);
         await tagPage.addTag(tagList[0]);
