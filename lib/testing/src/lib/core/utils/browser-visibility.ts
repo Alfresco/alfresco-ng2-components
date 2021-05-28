@@ -93,8 +93,8 @@ export class BrowserVisibility {
         return browser.wait(BrowserVisibility.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, `Element doesn\'t have a value ${elementValue} ${elementToCheck.locator()}`);
     }
 
-    private static textToBePresentInElementValue(elementFinder, text) {
-        let hasText = async () => {
+    private static textToBePresentInElementValue(elementFinder: ElementFinder, text: string) {
+        const hasText = async () => {
             return browser.executeScript(`return arguments[0].value`, elementFinder).then((actualText: string) => {
                 return actualText.indexOf(text) > -1;
             }, falseIfMissing);
