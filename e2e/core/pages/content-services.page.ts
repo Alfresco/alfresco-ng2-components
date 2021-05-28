@@ -452,14 +452,17 @@ export class ContentServicesPage {
     }
 
     async getSingleFileButtonTooltip(): Promise<string> {
-        return BrowserActions.getAttribute(this.uploadFileButton, 'title');
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFileButton);
+        return BrowserActions.getAttribute(this.uploadFileButtonInput, 'title');
     }
 
     async getMultipleFileButtonTooltip(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
         return BrowserActions.getAttribute(this.uploadMultipleFileButton, 'title');
     }
 
     async getFolderButtonTooltip(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFolderButton);
         return BrowserActions.getAttribute(this.uploadFolderButton, 'title');
     }
 
