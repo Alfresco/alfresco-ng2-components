@@ -72,16 +72,10 @@ export class UnClaimTaskCloudDirective implements OnInit {
     @HostListener('click')
     async onClick() {
         try {
-            await this.unclaimTask();
+            await this.taskListService.unclaimTask(this.appName, this.taskId).toPromise();
+            this.success.emit(this.taskId);
         } catch (error) {
             this.error.emit(error);
         }
-    }
-
-    private async unclaimTask() {
-        await this.taskListService.unclaimTask(this.appName, this.taskId).subscribe(
-            () => {
-                this.success.emit(this.taskId);
-            });
     }
 }

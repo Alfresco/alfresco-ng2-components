@@ -9,7 +9,8 @@
                 (taskClaimed)="onClaimTask()"
                 (taskCompleted)="onTaskCompleted()"
                 (taskUnclaimed)="onUnclaimTask()"
-                (formSaved)="onFormSaved()">
+                (formSaved)="onFormSaved()"
+                (error)="onError($event)">
             </adf-cloud-task-form>
         </div>
         <adf-cloud-task-header fxFlex

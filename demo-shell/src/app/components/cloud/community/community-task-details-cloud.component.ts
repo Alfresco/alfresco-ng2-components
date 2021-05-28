@@ -64,4 +64,13 @@ export class CommunityTaskDetailsCloudDemoComponent {
     onFormSaved() {
         this.notificationService.openSnackMessage('Task has been saved successfully');
     }
+
+    onError({ message: error }: Error) {
+        let errorMessage;
+        try {
+            errorMessage = JSON.parse(error).message || JSON.parse(error).entry?.message;
+            errorMessage = JSON.parse(errorMessage).message;
+        } catch {}
+        this.notificationService.showError(errorMessage || error);
+    }
 }

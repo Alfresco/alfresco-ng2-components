@@ -18,7 +18,7 @@ import { Component, ViewChild, ContentChildren } from '@angular/core';
 import { CompleteTaskDirective } from './complete-task.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import { TaskCloudService } from '../services/task-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
@@ -28,7 +28,7 @@ describe('CompleteTaskDirective', () => {
 
     @Component({
         selector:  'adf-cloud-test-component',
-        template: `<button adf-cloud-complete-task [taskId]='taskMock' [appName]='appNameMock' (success)="onCompleteTask($event)"></button>`
+        template: `<button adf-cloud-complete-task [taskId]='taskMock' [appName]='appNameMock' (success)="onCompleteTask($event)" (error)="onError($event)"></button>`
     })
     class TestComponent {
 
@@ -40,6 +40,10 @@ describe('CompleteTaskDirective', () => {
 
         onCompleteTask(event: any) {
             return event;
+        }
+
+        onError(error: Error) {
+            return error;
         }
     }
 
@@ -67,6 +71,16 @@ describe('CompleteTaskDirective', () => {
         const button = fixture.nativeElement.querySelector('button');
         button.click();
         expect(taskCloudService.completeTask).toHaveBeenCalled();
+    });
+
+    it('should emit error on api fail',  async () => {
+        spyOn(taskCloudService, 'completeTask').and.returnValue(throwError({ message: 'process key not found' }));
+        spyOn(fixture.componentInstance, 'onError').and.callThrough();
+        const button = fixture.nativeElement.querySelector('button');
+        button.click();
+        await fixture.whenStable();
+        expect(taskCloudService.completeTask).toHaveBeenCalled();
+        expect(fixture.componentInstance.onError).toHaveBeenCalled();
     });
 });
 

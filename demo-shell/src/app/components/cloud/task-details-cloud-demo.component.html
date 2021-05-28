@@ -9,7 +9,8 @@
                 (cancelClick)="goBack()"
                 (taskCompleted)="onTaskCompleted()"
                 (formContentClicked)="onFormContentClicked($event)"
-                (formSaved)="onFormSaved()">
+                (formSaved)="onFormSaved()"
+                (error)="onError($event)">
             </adf-cloud-task-form>
         </div>
         <adf-cloud-task-header #taskHeader fxFlex

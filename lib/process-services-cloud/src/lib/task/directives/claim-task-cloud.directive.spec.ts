@@ -18,7 +18,7 @@ import { Component, ContentChildren, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { TaskCloudService } from '../services/task-cloud.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ClaimTaskCloudDirective } from './claim-task-cloud.directive';
 import { taskClaimCloudMock } from '../task-header/mocks/fake-claim-task.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
@@ -28,7 +28,7 @@ describe('ClaimTaskCloudDirective', () => {
 
     @Component({
         selector:  'adf-cloud-claim-test-component',
-        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameMock"></button>'
+        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameMock" (error)="onError($event)"></button>'
     })
     class TestComponent {
 
@@ -37,6 +37,10 @@ describe('ClaimTaskCloudDirective', () => {
 
         @ViewChild(ClaimTaskCloudDirective, { static: false })
         claimTaskDirective: ClaimTaskCloudDirective;
+
+        onError(error: Error) {
+            return error;
+        }
     }
 
     let fixture: ComponentFixture<TestComponent>;
@@ -63,6 +67,16 @@ describe('ClaimTaskCloudDirective', () => {
         const button = fixture.nativeElement.querySelector('button');
         button.click();
         expect(taskCloudService.claimTask).toHaveBeenCalled();
+    });
+
+    it('should emit error on api fail', async () => {
+        spyOn(taskCloudService, 'claimTask').and.returnValue(throwError({ message: 'task key not found' }));
+        spyOn(fixture.componentInstance, 'onError').and.callThrough();
+        const button = fixture.nativeElement.querySelector('button');
+        button.click();
+        await fixture.whenStable();
+        expect(taskCloudService.claimTask).toHaveBeenCalled();
+        expect(fixture.componentInstance.onError).toHaveBeenCalled();
     });
 });
 
