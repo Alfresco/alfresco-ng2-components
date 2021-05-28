@@ -37,7 +37,7 @@ export class DateRangeFilterPage {
     }
 
     async getFromDate(): Promise<string> {
-        return this.filter.element(this.fromField).getAttribute('value');
+        return BrowserActions.getInputValue(this.filter.element(this.fromField));
     }
 
     async putFromDate(date): Promise<void> {
@@ -91,7 +91,7 @@ export class DateRangeFilterPage {
     }
 
     async getToDate(): Promise<string> {
-        return this.filter.element(this.toField).getAttribute('value');
+        return BrowserActions.getInputValue(this.filter.element(this.toField));
     }
 
     async putToDate(date): Promise<void> {

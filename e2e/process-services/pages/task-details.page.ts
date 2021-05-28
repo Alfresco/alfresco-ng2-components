@@ -205,8 +205,7 @@ export class TaskDetailsPage {
     }
 
     async getDescriptionPlaceholder(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.descriptionField);
-        return this.descriptionField.getAttribute('data-placeholder');
+        return BrowserActions.getAttribute(this.descriptionField, 'data-placeholder');
     }
 
     getDueDate(): Promise<string> {
@@ -349,8 +348,7 @@ export class TaskDetailsPage {
     }
 
     async getInvolvePeoplePlaceholder(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.addPeopleField);
-        return this.addPeopleField.getAttribute('data-placeholder');
+        return BrowserActions.getAttribute(this.addPeopleField, 'data-placeholder');
     }
 
     async checkCancelButtonIsEnabled(): Promise<void> {

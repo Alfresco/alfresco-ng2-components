@@ -61,8 +61,7 @@ export class ShareDialogPage {
     }
 
     async getShareLink(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.shareLink);
-        return this.shareLink.getAttribute('value');
+        return BrowserActions.getInputValue(this.shareLink);
     }
 
     async clickCloseButton(): Promise<void> {
@@ -111,7 +110,7 @@ export class ShareDialogPage {
     }
 
     async getExpirationDate(): Promise<string> {
-        return this.expirationDateInput.getAttribute('value');
+        return BrowserActions.getInputValue(this.expirationDateInput);
     }
 
     async expirationDateInputHasValue(value): Promise<void> {

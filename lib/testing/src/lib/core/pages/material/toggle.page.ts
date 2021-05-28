@@ -16,14 +16,12 @@
  */
 
 import { by, ElementFinder } from 'protractor';
-import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
 
 export class TogglePage {
 
     async enableToggle(toggle: ElementFinder): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(toggle);
-        const check = await toggle.getAttribute('class');
+        const check = await BrowserActions.getAttribute(toggle, 'class');
         if (check.indexOf('mat-checked') < 0) {
             const elem = toggle.all(by.css('input')).first();
             await BrowserActions.clickScript(elem);
@@ -31,8 +29,7 @@ export class TogglePage {
     }
 
     async disableToggle(toggle: ElementFinder): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(toggle);
-        const check = await toggle.getAttribute('class');
+        const check = await BrowserActions.getAttribute(toggle, 'class');
         if (check.indexOf('mat-checked') >= 0) {
             const elem = toggle.all(by.css('input')).first();
             await BrowserActions.clickScript(elem);

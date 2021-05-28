@@ -16,7 +16,13 @@
  */
 
 import { by, element } from 'protractor';
-import { BrowserVisibility, BrowserActions, CardTextItemPage, DropdownPage, CardBooleanItemPage } from '@alfresco/adf-testing';
+import {
+    BrowserVisibility,
+    BrowserActions,
+    CardTextItemPage,
+    DropdownPage,
+    CardBooleanItemPage
+} from '@alfresco/adf-testing';
 
 export class CardViewComponentPage {
 
@@ -163,12 +169,10 @@ export class CardViewComponentPage {
     }
 
     async disableEdit(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.editableSwitch);
-
-        const check = await this.editableSwitch.getAttribute('class');
+        const check = await BrowserActions.getAttribute(this.editableSwitch, 'class');
         if (check.indexOf('mat-checked') > -1) {
             await BrowserActions.click(this.editableSwitch);
-            await expect(await this.editableSwitch.getAttribute('class')).not.toContain('mat-checked');
+            await expect(await BrowserActions.getAttribute(this.editableSwitch, 'class')).not.toContain('mat-checked');
         }
     }
 
@@ -193,9 +197,7 @@ export class CardViewComponentPage {
     }
 
     async enableClearDate(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.clearDateSwitch);
-
-        const switchClass = await this.clearDateSwitch.getAttribute('class');
+        const switchClass = await BrowserActions.getAttribute(this.editableSwitch, 'class');
         if (switchClass.indexOf('mat-checked') === -1) {
             await this.clearDateSwitch.click();
             const clearDateChecked = element(by.css('mat-slide-toggle[id="app-toggle-clear-date"][class*="mat-checked"]'));
@@ -204,9 +206,7 @@ export class CardViewComponentPage {
     }
 
     async enableNoneOption(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.noneOptionSwitch);
-
-        const switchClass = await this.noneOptionSwitch.getAttribute('class');
+        const switchClass = await BrowserActions.getAttribute(this.noneOptionSwitch, 'class');
         if (switchClass.indexOf('mat-checked') === -1) {
             await this.noneOptionSwitch.click();
             const noneOptionChecked = element(by.css('mat-slide-toggle[id="app-toggle-none-option"][class*="mat-checked"]'));
@@ -215,13 +215,13 @@ export class CardViewComponentPage {
     }
 
     async isErrorNotDisplayed(): Promise<boolean> {
-         const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
-         try {
+        const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
+        try {
             await BrowserVisibility.waitUntilElementIsNotVisible(errorElement);
             return true;
-            } catch {
+        } catch {
             return false;
-            }
+        }
     }
 
     async getClickableValue(): Promise<string> {
@@ -246,7 +246,7 @@ export class CardViewComponentPage {
     }
 
     async clearIntField(): Promise<void> {
-         await this.intField.clear();
+        await this.intField.clear();
     }
 
 }

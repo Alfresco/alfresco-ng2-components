@@ -166,8 +166,7 @@ export class EditProcessFilterCloudComponentPage {
 
     async getProperty(property: string): Promise<string> {
         const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
-        await BrowserVisibility.waitUntilElementIsVisible(locator);
-        return locator.getAttribute('value');
+        return BrowserActions.getInputValue(locator);
     }
 
     async setProperty(property: string, option: string): Promise<void> {

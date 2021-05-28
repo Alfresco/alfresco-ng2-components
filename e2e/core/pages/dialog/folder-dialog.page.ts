@@ -44,10 +44,6 @@ export class FolderDialogPage {
         await BrowserActions.click(this.createUpdateButton);
     }
 
-    async checkCreateUpdateBtnIsDisabled(): Promise<void> {
-        await BrowserActions.checkIsDisabled(this.createUpdateButton);
-    }
-
     async clickOnCancelButton(): Promise<void> {
         await BrowserActions.click(this.cancelButton);
     }
@@ -61,7 +57,7 @@ export class FolderDialogPage {
     }
 
     async getFolderName(): Promise<string> {
-        return this.folderNameField.getAttribute('value');
+        return BrowserActions.getInputValue(this.folderNameField);
     }
 
     async getValidationMessage(): Promise<string> {
@@ -80,8 +76,8 @@ export class FolderDialogPage {
         return this.folderDescriptionField;
     }
 
-    async checkCreateUpdateBtnIsEnabled(): Promise<void> {
-        await this.createUpdateButton.isEnabled();
+    async checkCreateUpdateBtnIsEnabled(): Promise<boolean> {
+        return this.createUpdateButton.isEnabled();
     }
 
     async checkCancelBtnIsEnabled(): Promise<void> {

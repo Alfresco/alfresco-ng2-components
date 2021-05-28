@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, BrowserActions,
     DataTableComponentPage,
     LocalStorageUtil,
     LoginPage,
@@ -127,7 +127,7 @@ describe('Search Slider Filter', () => {
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
-            const currentSize = await currentResult.getAttribute('title');
+            const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
 
             if (currentSize && currentSize.trim() !== '') {
                 await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
@@ -141,7 +141,7 @@ describe('Search Slider Filter', () => {
 
         const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of resultsSize) {
-            const currentSize = await currentResult.getAttribute('title');
+            const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
 
             if (currentSize && currentSize.trim() !== '') {
                 await expect(parseInt(currentSize, 10) >= 5000).toBe(true);

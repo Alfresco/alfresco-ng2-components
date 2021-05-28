@@ -52,8 +52,7 @@ export class StartProcessPage {
     }
 
     async getDefaultName(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.defaultProcessName);
-        return this.defaultProcessName.getAttribute('value');
+        return BrowserActions.getInputValue(this.defaultProcessName);
     }
 
     async deleteDefaultName() {
@@ -105,8 +104,7 @@ export class StartProcessPage {
     }
 
     async getProcessDefinitionValue(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processDefinition);
-        return this.processDefinition.getAttribute('value');
+        return BrowserActions.getInputValue(this.processDefinition);
     }
 
     async clickCancelProcessButton(): Promise<void> {
@@ -139,9 +137,7 @@ export class StartProcessPage {
     }
 
     async checkSelectProcessPlaceholderIsDisplayed(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processDefinition);
-        const processPlaceholder = await this.processDefinition.getAttribute('value');
-        return processPlaceholder;
+        return BrowserActions.getInputValue(this.processDefinition);
     }
 
     async checkValidationErrorIsDisplayed(error: string, elementRef = 'mat-error'): Promise<void> {

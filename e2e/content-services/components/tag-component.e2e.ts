@@ -16,7 +16,14 @@
  */
 
 import { FileModel } from '../../models/ACS/file.model';
-import { ApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    LoginPage,
+    StringUtil,
+    UploadActions,
+    UserModel,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { TagPage } from '../../content-services/pages/tag.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
@@ -76,18 +83,6 @@ describe('Tag component', () => {
         await navigationBarPage.clickLogoutButton();
         await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(pdfUploadedFile.entry.id);
-    });
-
-    it('[C260374] Should NOT be possible to add a new tag without Node ID', async () => {
-        await expect(await tagPage.getNodeId()).toEqual('');
-        await expect(await tagPage.newTagInput.getAttribute('data-placeholder')).toEqual('New Tag');
-        await expect(await tagPage.addTagButtonIsEnabled()).toEqual(false);
-        await tagPage.tagListRow.waitNotVisible();
-        await tagPage.tagListByNodeIdRow.waitNotVisible();
-        await tagPage.newTagInput.typeText('a');
-
-        await expect(await tagPage.addTagButtonIsEnabled()).toEqual(false);
-        await expect(await tagPage.newTagInput.getAttribute('value')).toEqual('a');
     });
 
     it('[C268151] Should be possible to add a new tag to a Node', async () => {

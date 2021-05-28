@@ -30,8 +30,7 @@ export class TreeViewPage {
     }
 
     async getNodeId(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.nodeIdInput);
-        return this.nodeIdInput.getAttribute('value');
+        return BrowserActions.getInputValue(this.nodeIdInput);
     }
 
     async clickNode(nodeName: string): Promise<void> {

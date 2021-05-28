@@ -38,8 +38,7 @@ export class EditJsonDialog {
     }
 
     async getDialogContent(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.dialogContent);
-        return this.dialogContent.getAttribute('value');
+        return BrowserActions.getInputValue(this.dialogContent);
     }
 
 }

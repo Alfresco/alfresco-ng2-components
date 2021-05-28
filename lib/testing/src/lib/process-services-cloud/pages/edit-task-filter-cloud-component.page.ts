@@ -251,7 +251,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async getId(): Promise<string> {
-        return this.id.getAttribute('value');
+        return BrowserActions.getInputValue(this.id);
     }
 
     async setTaskName(option: string): Promise<void> {
@@ -259,7 +259,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async getTaskName(): Promise<string> {
-        return this.taskName.getAttribute('value');
+        return BrowserActions.getInputValue(this.taskName);
     }
 
     async setProcessDefinitionId(option: string): Promise<void> {
@@ -267,7 +267,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async getProcessDefinitionId(): Promise<string> {
-        return this.processDefinitionId.getAttribute('value');
+        return BrowserActions.getInputValue(this.processDefinitionId);
     }
 
     async setProcessInstanceId(option: string): Promise<void> {
@@ -284,7 +284,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async getProcessInstanceId(): Promise<string> {
-        return this.processInstanceId.getAttribute('value');
+        return BrowserActions.getInputValue(this.processInstanceId);
     }
 
 }

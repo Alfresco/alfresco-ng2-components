@@ -97,8 +97,7 @@ export class LoginShellPage {
     }
 
     async checkLoginImgURL(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.logoImg);
-        return this.logoImg.getAttribute('src');
+        return BrowserActions.getAttribute(this.logoImg, 'src');
     }
 
     async checkUsernameInactive(): Promise<void> {
@@ -148,7 +147,7 @@ export class LoginShellPage {
     }
 
     async getShownPassword(): Promise<string> {
-        return this.txtPassword.getAttribute('value');
+        return BrowserActions.getInputValue(this.txtPassword);
     }
 
     async checkPasswordIsHidden(): Promise<void> {

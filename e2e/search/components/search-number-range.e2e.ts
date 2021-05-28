@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, BrowserActions,
     DataTableComponentPage,
     DateUtil,
     LocalStorageUtil,
@@ -176,7 +176,7 @@ describe('Search Number Range Filter', () => {
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
-            const currentSize = await currentResult.getAttribute('title');
+            const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
 
             if (currentSize && currentSize.trim() !== '') {
                 await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
@@ -206,7 +206,7 @@ describe('Search Number Range Filter', () => {
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
-            const currentSize = await currentResult.getAttribute('title');
+            const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
                 await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
             }
@@ -220,7 +220,7 @@ describe('Search Number Range Filter', () => {
 
         const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of resultsSize) {
-            const currentSize = await currentResult.getAttribute('title');
+            const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
                 await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
             }
@@ -228,7 +228,7 @@ describe('Search Number Range Filter', () => {
 
         const resultsDisplay = await dataTable.geCellElementDetail('Display name') as ElementFinder[];
         for (const currentResult of resultsDisplay) {
-            const name = await currentResult.getAttribute('title');
+            const name = await BrowserActions.getAttribute(currentResult, 'title');
             if (name && name.trim() !== '') {
                 await expect(/z*/i.test(name)).toBe(true);
             }
@@ -266,7 +266,7 @@ describe('Search Number Range Filter', () => {
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
-            const currentSize = await currentResult.getAttribute('title');
+            const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
                 await expect(currentSize === '0').toBe(true);
             }
@@ -305,7 +305,7 @@ describe('Search Number Range Filter', () => {
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
-            const currentSize = await currentResult.getAttribute('title');
+            const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
                 await expect(parseInt(currentSize, 10) <= 1000).toBe(true);
             }
@@ -318,7 +318,7 @@ describe('Search Number Range Filter', () => {
 
         const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of resultsSize) {
-            const currentSize = await currentResult.getAttribute('title');
+            const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
                 await expect(parseInt(currentSize, 10) >= 1000).toBe(true);
             }
@@ -409,7 +409,7 @@ describe('Search Number Range Filter', () => {
 
             const results = await dataTable.geCellElementDetail('Created') as ElementFinder[];
             for (const currentResult of results) {
-                const currentDate = await currentResult.getAttribute('title');
+                const currentDate = await BrowserActions.getAttribute(currentResult, 'title');
                 const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
 
                 await expect(currentDateFormatted.getFullYear() <= toYear).toBe(true);

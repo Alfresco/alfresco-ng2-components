@@ -170,7 +170,7 @@ describe('Delete Directive', () => {
             await contentServicesPage.chooseSelectionMode('None');
             await contentListPage.selectRow(txtFileModel.name);
             await contentListPage.dataTable.checkRowIsNotSelected('Display name', txtFileModel.name);
-            await contentServicesPage.checkToolbarDeleteIsDisabled();
+            await expect(await contentServicesPage.checkToolbarDeleteIsDisabled()).toEqual(true);
 
             await contentServicesPage.chooseSelectionMode('Single');
             await contentListPage.selectRow(txtFileModel.name);
@@ -278,16 +278,16 @@ describe('Delete Directive', () => {
         it('[C216426] Delete file without delete permissions', async () => {
             await contentListPage.selectRowWithKeyboard(filePdf.entry.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', filePdf.entry.name);
-            await contentServicesPage.checkToolbarDeleteIsDisabled();
+            await expect(await contentServicesPage.checkToolbarDeleteIsDisabled()).toEqual(true);
             await contentListPage.selectRowWithKeyboard(folderB.entry.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', folderB.entry.name);
-            await contentServicesPage.checkToolbarDeleteIsDisabled();
+            await expect(await contentServicesPage.checkToolbarDeleteIsDisabled()).toEqual(true);
             await contentListPage.selectRowWithKeyboard(folderA.entry.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', folderA.entry.name);
-            await contentServicesPage.checkToolbarDeleteIsDisabled();
+            await expect(await contentServicesPage.checkToolbarDeleteIsDisabled()).toEqual(true);
             await contentListPage.selectRowWithKeyboard(fileTxt.entry.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', fileTxt.entry.name);
-            await contentServicesPage.checkToolbarDeleteIsDisabled();
+            await expect(await contentServicesPage.checkToolbarDeleteIsDisabled()).toEqual(true);
         });
     });
 });

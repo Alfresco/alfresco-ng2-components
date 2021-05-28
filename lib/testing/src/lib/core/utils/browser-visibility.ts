@@ -17,6 +17,7 @@
 
 import { browser, by, element, ElementFinder, protractor, until } from 'protractor';
 import { Logger } from './logger';
+import { falseIfMissing } from 'protractor/built/util';
 
 export class BrowserVisibility {
 
@@ -89,7 +90,16 @@ export class BrowserVisibility {
     static async waitUntilElementHasValue(elementToCheck: ElementFinder, elementValue, waitTimeout: number = BrowserVisibility.DEFAULT_TIMEOUT): Promise<any> {
         Logger.info(`Wait Until Element has value ${elementToCheck.locator().toString()} for ${waitTimeout}`);
 
-        return browser.wait(protractor.ExpectedConditions.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, `Element doesn\'t have a value ${elementValue} ${elementToCheck.locator()}`);
+        return browser.wait(BrowserVisibility.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, `Element doesn\'t have a value ${elementValue} ${elementToCheck.locator()}`);
+    }
+
+    private static textToBePresentInElementValue(elementFinder: ElementFinder, text: string) {
+        const hasText = async () => {
+            return browser.executeScript(`return arguments[0].value`, elementFinder).then((actualText: string) => {
+                return actualText.indexOf(text) > -1;
+            }, falseIfMissing);
+        };
+        return protractor.ExpectedConditions.and(protractor.ExpectedConditions.presenceOf(elementFinder), hasText);
     }
 
     /*

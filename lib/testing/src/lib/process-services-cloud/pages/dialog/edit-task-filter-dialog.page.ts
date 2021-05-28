@@ -51,8 +51,7 @@ export class EditTaskFilterDialogPage {
     }
 
     async getFilterName(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filterNameInput);
-        return this.filterNameInput.getAttribute('value');
+        return BrowserActions.getInputValue(this.filterNameInput);
     }
 
     async setFilterName(filterName: string): Promise<void> {

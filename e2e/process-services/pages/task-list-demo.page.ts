@@ -55,8 +55,7 @@ export class TaskListDemoPage {
     }
 
     async getAppId(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.appId);
-        return this.appId.getAttribute('value');
+        return BrowserActions.getInputValue(this.appId);
     }
 
     async typeTaskId(input: string): Promise<void> {
@@ -64,8 +63,7 @@ export class TaskListDemoPage {
     }
 
     async getTaskId(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.taskId);
-        return this.taskId.getAttribute('value');
+        return BrowserActions.getInputValue(this.taskId);
     }
 
     async typeTaskName(input: string): Promise<void> {
@@ -73,8 +71,7 @@ export class TaskListDemoPage {
     }
 
     async getTaskName(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.taskName);
-        return this.taskName.getAttribute('value');
+        return BrowserActions.getInputValue(this.taskName);
     }
 
     async typeItemsPerPage(input: number): Promise<void> {
@@ -87,8 +84,7 @@ export class TaskListDemoPage {
     }
 
     async getProcessDefinitionId(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processInstanceId);
-        return this.processInstanceId.getAttribute('value');
+        return BrowserActions.getInputValue(this.processInstanceId);
     }
 
     async typeProcessInstanceId(input: string): Promise<void> {
@@ -96,8 +92,7 @@ export class TaskListDemoPage {
     }
 
     async getProcessInstanceId(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processInstanceId);
-        return this.processInstanceId.getAttribute('value');
+        return BrowserActions.getInputValue(this.processInstanceId);
     }
 
     async getItemsPerPageFieldErrorMessage(): Promise<string> {
@@ -111,8 +106,7 @@ export class TaskListDemoPage {
     }
 
     async getPage(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.page);
-        return this.page.getAttribute('value');
+        return BrowserActions.getInputValue(this.page);
     }
 
     async getPageFieldErrorMessage(): Promise<string> {

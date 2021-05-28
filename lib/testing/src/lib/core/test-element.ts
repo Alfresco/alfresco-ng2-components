@@ -138,6 +138,12 @@ export class TestElement {
     async isEnabled(): Promise<boolean> {
         return this.elementFinder.isEnabled();
     }
+    /**
+     * Query whether the DOM element represented by this instance is disabled.
+     */
+    async isDisabled(): Promise<boolean> {
+        return !(await this.elementFinder.isEnabled());
+    }
 
     /**
      * Test whether this element is currently displayed.
@@ -153,11 +159,10 @@ export class TestElement {
 
     /**
      * Query for the value of the given attribute of the element.
-     * @param name The name of the attribute to query.
+     * @param attributeName The name of the attribute to query.
      */
-    async getAttribute(name: string): Promise<string> {
-        await this.waitVisible();
-        return this.elementFinder.getAttribute(name);
+    async getAttribute(attributeName: string): Promise<string> {
+        return BrowserActions.getAttribute(this.elementFinder, attributeName);
     }
 
     /**

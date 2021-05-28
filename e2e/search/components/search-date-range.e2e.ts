@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-import { DataTableComponentPage, DatePickerCalendarPage, DateUtil, LocalStorageUtil, LoginPage } from '@alfresco/adf-testing';
+import {
+    BrowserActions,
+    DataTableComponentPage,
+    DatePickerCalendarPage,
+    DateUtil,
+    LocalStorageUtil,
+    LoginPage
+} from '@alfresco/adf-testing';
 import { browser, ElementFinder } from 'protractor';
 import { SearchBarPage } from '../pages/search-bar.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -124,7 +131,7 @@ describe('Search Date Range Filter', () => {
 
         const results = await dataTable.geCellElementDetail('Created') as ElementFinder[];
         for (const currentResult of results) {
-            const currentDate = await currentResult.getAttribute('title');
+            const currentDate = await BrowserActions.getAttribute(currentResult, 'title');
             const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
 
             await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);

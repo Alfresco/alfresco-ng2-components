@@ -77,7 +77,7 @@ describe('Create folder directive', () => {
         const folderName = 'NotEnableFolder';
         await contentServicesPage.clickOnCreateNewFolder();
 
-        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await expect(await createFolderDialog.checkCreateUpdateBtnIsEnabled()).toEqual(false);
 
         await createFolderDialog.addFolderName(folderName);
 
@@ -129,20 +129,20 @@ describe('Create folder directive', () => {
         await contentServicesPage.clickOnCreateNewFolder();
 
         await createFolderDialog.addFolderName('*');
-        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await expect(await createFolderDialog.checkCreateUpdateBtnIsEnabled()).toEqual(false);
         await createFolderDialog.addFolderName('<');
-        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await expect(await createFolderDialog.checkCreateUpdateBtnIsEnabled()).toEqual(false);
         await createFolderDialog.addFolderName('>');
-        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await expect(await createFolderDialog.checkCreateUpdateBtnIsEnabled()).toEqual(false);
         await createFolderDialog.addFolderName('\\');
-        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await expect(await createFolderDialog.checkCreateUpdateBtnIsEnabled()).toEqual(false);
         await createFolderDialog.addFolderName('/');
-        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await expect(await createFolderDialog.checkCreateUpdateBtnIsEnabled()).toEqual(false);
         await createFolderDialog.addFolderName('?');
-        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await expect(await createFolderDialog.checkCreateUpdateBtnIsEnabled()).toEqual(false);
         await createFolderDialog.addFolderName(':');
-        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await expect(await createFolderDialog.checkCreateUpdateBtnIsEnabled()).toEqual(false);
         await createFolderDialog.addFolderName('|');
-        await createFolderDialog.checkCreateUpdateBtnIsDisabled();
+        await expect(await createFolderDialog.checkCreateUpdateBtnIsEnabled()).toEqual(false);
     });
 });

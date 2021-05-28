@@ -105,8 +105,7 @@ export class PeopleGroupCloudComponentPage {
     }
 
     async getPreselectValidationStatus(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.preselectValidationStatus);
-        return this.preselectValidationStatus.getAttribute('aria-checked');
+        return BrowserActions.getAttribute(this.preselectValidationStatus, 'aria-checked');
     }
 
     async clickPeopleFilerByApp(): Promise<void> {

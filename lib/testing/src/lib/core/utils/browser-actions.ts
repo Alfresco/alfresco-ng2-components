@@ -91,6 +91,12 @@ export class BrowserActions {
         return browser.get(url, timeout);
     }
 
+    static async getAttribute(elementFinder: ElementFinder, attribute: string): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
+        const attributeValue: string = await browser.executeScript(`return arguments[0].getAttribute(arguments[1])`, elementFinder, attribute);
+        return attributeValue || '';
+    }
+
     static async getText(elementFinder: ElementFinder): Promise<string> {
         Logger.info(`Get Text ${elementFinder.locator().toString()}`);
 
@@ -123,7 +129,7 @@ export class BrowserActions {
 
         const present = await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         if (present) {
-            return elementFinder.getAttribute('value');
+            return browser.executeScript(`return arguments[0].value`, elementFinder);
         } else {
             Logger.error(`Get Input value ${elementFinder.locator().toString()} not present`);
             return '';
@@ -145,10 +151,12 @@ export class BrowserActions {
         await elementFinder.click();
         await elementFinder.sendKeys(protractor.Key.END);
 
-        const value = await elementFinder.getAttribute('value');
-        for (let i = value.length; i >= 0; i--) {
-            await elementFinder.sendKeys(protractor.Key.BACK_SPACE);
-            await browser.sleep(sleepTime);
+        const value: string = await browser.executeScript(`return arguments[0].value`, elementFinder);
+        if (value) {
+            for (let i = value.length; i >= 0; i--) {
+                await elementFinder.sendKeys(protractor.Key.BACK_SPACE);
+                await browser.sleep(sleepTime);
+            }
         }
     }
 
@@ -175,14 +183,6 @@ export class BrowserActions {
         } catch (e) {
             Logger.info(`Set value different from the input`);
         }
-    }
-
-    static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {
-        Logger.info(`Check is disabled locator:${elementFinder.locator().toString()}`);
-
-        await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-        const valueCheck = await elementFinder.getAttribute('disabled');
-        await expect(valueCheck).toEqual('true');
     }
 
     static async rightClick(elementFinder: ElementFinder): Promise<void> {

@@ -153,11 +153,11 @@ export class ViewerPage {
     }
 
     async getCanvasWidth(): Promise<string> {
-        return this.canvasLayer.getAttribute(`width`);
+        return BrowserActions.getAttribute(this.canvasLayer, `width`);
     }
 
     async getCanvasHeight(): Promise<string> {
-        return this.canvasLayer.getAttribute(`height`);
+        return BrowserActions.getAttribute(this.canvasLayer, `height`);
     }
 
     async getDisplayedFileName(): Promise<string> {
@@ -204,14 +204,14 @@ export class ViewerPage {
 
     async checkAllThumbnailsDisplayed(nbPages): Promise<void> {
         const defaultThumbnailHeight = 143;
-        await expect(await this.thumbnailsContent.getAttribute('style')).toEqual('height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);');
+        await expect(await BrowserActions.getAttribute(this.thumbnailsContent, 'style')).toEqual('height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);');
     }
 
     async checkCurrentThumbnailIsSelected(): Promise<void> {
         const selectedThumbnail = element(by.css('adf-pdf-thumb.adf-pdf-thumbnails__thumb.adf-pdf-thumbnails__thumb--selected > img'));
-        const pageNumber = await this.pageSelectorInput.getAttribute('value');
+        const pageNumber = await BrowserActions.getInputValue(this.pageSelectorInput);
 
-        await expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));
+        await expect('Page ' + pageNumber).toEqual(await BrowserActions.getAttribute(selectedThumbnail, 'title'));
     }
 
     async checkThumbnailsCloseIsDisplayed(): Promise<void> {
@@ -239,11 +239,11 @@ export class ViewerPage {
     }
 
     async getLastButtonTitle(): Promise<string> {
-        return this.lastButton.getAttribute('title');
+        return BrowserActions.getAttribute(this.lastButton, 'title');
     }
 
     async getMoreActionsMenuTitle(): Promise<string> {
-        return this.moreActionsMenu.getAttribute('title');
+        return BrowserActions.getAttribute(this.moreActionsMenu, 'title');
     }
 
     async checkDownloadButtonIsDisplayed(): Promise<void> {
@@ -298,8 +298,7 @@ export class ViewerPage {
     }
 
     async checkPageSelectorInputIsDisplayed(checkNumber): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorInput);
-        await expect(await this.pageSelectorInput.getAttribute('value')).toEqual(checkNumber);
+        await expect(await BrowserActions.getInputValue(this.pageSelectorInput)).toEqual(checkNumber);
     }
 
     async checkImgContainerIsDisplayed(): Promise<void> {
@@ -355,7 +354,7 @@ export class ViewerPage {
     }
 
     async checkRotation(text): Promise<void> {
-        const rotation = await this.imgContainer.getAttribute('style');
+        const rotation = await BrowserActions.getAttribute(this.imgContainer, 'style');
         await expect(rotation).toEqual(text);
     }
 
