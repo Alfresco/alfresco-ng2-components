@@ -18,7 +18,6 @@
 import { FileModel } from '../../models/ACS/file.model';
 import {
     ApiService,
-    BrowserActions,
     LoginPage,
     StringUtil,
     UploadActions,
