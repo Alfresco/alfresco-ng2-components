@@ -90,7 +90,7 @@
     "@ngx-translate/core": "^13.0.0",
     "adf-tslint-rules": "0.0.7",
     "apollo-angular": "^2.3.0",
-    "chart.js": "2.9.4",
+    "chart.js": "3.3.1",
     "classlist.js": "1.1.20150312",
     "cropperjs": "1.5.11",
     "custom-event-polyfill": "^1.0.7",
