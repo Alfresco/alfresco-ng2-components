@@ -17,6 +17,7 @@
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../core/actions/api.service';
 import { ModelsApi } from '@alfresco/js-api';
+import { ResultListDataRepresentationModelRepresentation } from '@alfresco/js-api/typings/src/api/activiti-rest-api/model/resultListDataRepresentationModelRepresentation';
 
 export class ModelsActions {
 
@@ -28,7 +29,7 @@ export class ModelsActions {
         this.modelsApi = new ModelsApi(api.getInstance());
     }
 
-    async deleteModel(modelId): any {
+    async deleteModel(modelId): Promise<any> {
         try {
             return await this.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp: true });
         } catch (error) {
@@ -36,7 +37,7 @@ export class ModelsActions {
         }
     }
 
-    async deleteEntireModel(modelId) {
+    async deleteEntireModel(modelId): Promise<any> {
         try {
             return await this.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp: true });
         } catch (error) {
@@ -44,7 +45,7 @@ export class ModelsActions {
         }
     }
 
-    async getModels(opts: any) {
+    async getModels(opts: any): Promise<ResultListDataRepresentationModelRepresentation> {
         const options = opts || {};
         let models;
         try {
