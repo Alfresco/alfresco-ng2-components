@@ -31,15 +31,6 @@ export class FormUtil {
         }
     }
 
-    async getFormByName(name: string): Promise<FormRepresentation> {
-        // @ts-ignore
-        const forms: any = await this.editorApi.getForms();
-
-        return forms.data.find((currentForm) => {
-            return currentForm.name === name;
-        });
-    }
-
     static async setForm(value: string): Promise<void> {
         await browser.executeScript(
             'window.adf.setFormInEditor(`' + value + '`);'
@@ -50,5 +41,14 @@ export class FormUtil {
         await browser.executeScript(
             'window.adf.setCloudFormInEditor(`' + value + '`);'
         );
+    }
+
+    async getFormByName(name: string): Promise<FormRepresentation> {
+        // @ts-ignore
+        const forms: any = await this.editorApi.getForms();
+
+        return forms.data.find((currentForm) => {
+            return currentForm.name === name;
+        });
     }
 }

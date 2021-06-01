@@ -65,7 +65,6 @@ describe('Start Process Component', () => {
     const apiService = new ApiService();
     const apiServiceUserTwo = new ApiService();
     const modelsActions = new ModelsActions(apiService);
-    const usersActions = new UsersActions(apiService);
     const processApi = new ProcessInstancesApi(apiService.getInstance());
 
     let procUserModel: UserModel;

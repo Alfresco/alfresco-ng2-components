@@ -196,7 +196,6 @@ describe('Task', () => {
         const app = browser.params.resources.Files.APP_WITH_PROCESSES;
 
         beforeAll(async () => {
-            const usersActions = new UsersActions(apiService);
             await apiService.loginWithProfile('admin');
             user = await usersActions.createUser();
 
