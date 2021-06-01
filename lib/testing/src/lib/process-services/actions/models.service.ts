@@ -28,9 +28,9 @@ export class ModelsActions {
         this.modelsApi = new ModelsApi(api.getInstance());
     }
 
-    async deleteModel(modelId) :any{
+    async deleteModel(modelId): any {
         try {
-            return await this.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
+            return await this.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp: true });
         } catch (error) {
             Logger.error('Delete Model Version - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
@@ -38,7 +38,7 @@ export class ModelsActions {
 
     async deleteEntireModel(modelId) {
         try {
-            return await this.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
+            return await this.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp: true });
         } catch (error) {
             Logger.error('Delete Model - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
