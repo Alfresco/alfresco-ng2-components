@@ -89,7 +89,7 @@
     "@mat-datetimepicker/moment": "^5.1.1",
     "@ngx-translate/core": "^13.0.0",
     "adf-tslint-rules": "0.0.7",
-    "apollo-angular": "^2.3.0",
+    "apollo-angular": "^2.6.0",
     "chart.js": "2.9.4",
     "classlist.js": "1.1.20150312",
     "cropperjs": "1.5.11",
@@ -105,7 +105,7 @@
     "snyk": "^1.618.0",
     "subscriptions-transport-ws": "^0.9.18",
     "tslib": "^2.0.3",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1002.2",
@@ -125,7 +125,7 @@
     "ajv-cli": "^4.2.0",
     "codelyzer": "^6.0.1",
     "commander": "6.2.1",
-    "concurrently": "^6.0.0",
+    "concurrently": "^6.2.0",
     "cspell": "^5.5.1",
     "css-loader": "^5.2.6",
     "dotenv": "^8.2.0",
