@@ -24,11 +24,28 @@
         }
 
         .adf-upload-dialog-container {
-            height: 456px;
+            height: 380px;
         }
 
         .adf-toolbar-title {
             place-items: center;
+        }
+
+        .adf-content-node-selector-local-upload-content {
+            height: 368px;
+
+            adf-upload-drag-area {
+                adf-empty-list {
+                    .adf-empty-folder-drag-drop {
+                        min-height:46px;
+                        font-size: 40px;
+                    }
+                    .adf-empty-folder-image {
+                        height: 100px;
+                        width: 460px;
+                    }
+                }
+            }
         }
     }
 
