@@ -49,9 +49,7 @@
     "postbuild:ci": "node ./scripts/app-config-replace.js",
     "06": "echo -------------------------------------------- Clean ----------------------------------------------",
     "06s": "",
-    "clean": "rimraf dist node_modules lib/dist",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "clean": "rimraf dist node_modules lib/dist"
   },
   "repository": {
     "type": "git",
@@ -102,7 +100,6 @@
     "pdfjs-dist": "2.5.207",
     "raphael": "2.3.0",
     "rxjs": "^6.6.3",
-    "snyk": "^1.618.0",
     "subscriptions-transport-ws": "^0.9.18",
     "tslib": "^2.0.3",
     "zone.js": "~0.10.2"
@@ -215,6 +212,5 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "snyk": true
+  }
 }
