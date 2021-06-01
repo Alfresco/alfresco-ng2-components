@@ -18,7 +18,7 @@ import { Component, ContentChildren, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { TaskCloudService } from '../services/task-cloud.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { UnClaimTaskCloudDirective } from './unclaim-task-cloud.directive';
 import { taskClaimCloudMock } from '../task-header/mocks/fake-claim-task.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
@@ -28,7 +28,7 @@ describe('UnClaimTaskCloudDirective', () => {
 
     @Component({
         selector:  'adf-cloud-test-component',
-        template: '<button adf-cloud-unclaim-task [taskId]="taskIdMock" [appName]="appName"></button>'
+        template: '<button adf-cloud-unclaim-task [taskId]="taskIdMock" [appName]="appName" (error)="onError($event)"></button>'
     })
     class TestComponent {
 
@@ -37,6 +37,10 @@ describe('UnClaimTaskCloudDirective', () => {
 
         @ContentChildren(UnClaimTaskCloudDirective)
         unclaimTaskDirective: UnClaimTaskCloudDirective;
+
+        onError(error: Error) {
+            return error;
+        }
     }
 
     let fixture: ComponentFixture<TestComponent>;
@@ -63,6 +67,17 @@ describe('UnClaimTaskCloudDirective', () => {
         const button = fixture.nativeElement.querySelector('button');
         button.click();
         expect(taskCloudService.unclaimTask).toHaveBeenCalled();
+    });
+
+    it('should emit error on api fail', async () => {
+        const error = { message: 'task key not found' };
+        spyOn(taskCloudService, 'unclaimTask').and.returnValue(throwError(error));
+        spyOn(fixture.componentInstance, 'onError').and.callThrough();
+        const button = fixture.nativeElement.querySelector('button');
+        button.click();
+        await fixture.whenStable();
+        expect(taskCloudService.unclaimTask).toHaveBeenCalled();
+        expect(fixture.componentInstance.onError).toHaveBeenCalledWith(error);
     });
 });
 
