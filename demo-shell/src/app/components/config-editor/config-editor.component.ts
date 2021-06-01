@@ -27,7 +27,7 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-config-editor',
-    templateUrl: 'config-editor.component.html',
+    templateUrl: './config-editor.component.html',
     styleUrls: ['./config-editor.component.scss']
 })
 export class ConfigEditorComponent implements OnDestroy {

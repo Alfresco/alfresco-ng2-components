@@ -25,8 +25,7 @@ import { IconModel } from '../../app-list/icon.model';
 
 @Component({
     selector: 'adf-task-filters',
-    templateUrl: './task-filters.component.html',
-    styleUrls: ['task-filters.component.scss']
+    templateUrl: './task-filters.component.html'
 })
 export class TaskFiltersComponent implements OnInit, OnChanges {
 

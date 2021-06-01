@@ -25,8 +25,7 @@ import { ServiceTaskFilterCloudService } from '../services/service-task-filter-c
 
 @Component({
     selector: 'adf-cloud-service-task-filters',
-    templateUrl: './base-task-filters-cloud.component.html',
-    styleUrls: ['base-task-filters-cloud.component.scss']
+    templateUrl: './base-task-filters-cloud.component.html'
 })
 export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
 

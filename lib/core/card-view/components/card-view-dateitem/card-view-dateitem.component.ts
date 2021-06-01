@@ -41,8 +41,7 @@ import { TranslationService } from '../../../services/translation.service';
         { provide: MAT_DATETIME_FORMATS, useValue: MAT_MOMENT_DATETIME_FORMATS }
     ],
     selector: 'adf-card-view-dateitem',
-    templateUrl: './card-view-dateitem.component.html',
-    styleUrls: ['./card-view-dateitem.component.scss']
+    templateUrl: './card-view-dateitem.component.html'
 })
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnDestroy {
 

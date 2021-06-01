@@ -34,8 +34,8 @@ import {
 } from '../../../cloud/custom-form-components/custom-editor.component';
 
 @Component({
-    templateUrl: 'cloud-form-demo.component.html',
-    styleUrls: ['cloud-form-demo.component.scss'],
+    templateUrl: './cloud-form-demo.component.html',
+    styleUrls: ['./cloud-form-demo.component.scss'],
     providers: [
         { provide: FormRenderingService, useClass: CloudFormRenderingService }
     ]

@@ -24,7 +24,6 @@ import { RoleModel } from '../../models/role.model';
 @Component({
     selector: 'adf-add-permission',
     templateUrl: './add-permission.component.html',
-    styleUrls: ['./add-permission.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 /*

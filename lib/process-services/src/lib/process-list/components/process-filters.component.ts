@@ -25,8 +25,7 @@ import { IconModel } from '../../app-list/icon.model';
 
 @Component({
     selector: 'adf-process-instance-filters',
-    templateUrl: './process-filters.component.html',
-    styleUrls: ['process-filters.component.scss']
+    templateUrl: './process-filters.component.html'
 })
 export class ProcessFiltersComponent implements OnInit, OnChanges {
 

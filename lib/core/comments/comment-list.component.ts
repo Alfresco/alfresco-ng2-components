@@ -26,7 +26,6 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'adf-comment-list',
     templateUrl: './comment-list.component.html',
-    styleUrls: ['./comment-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 

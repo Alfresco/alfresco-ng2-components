@@ -29,7 +29,7 @@ import { ENTER } from '@angular/cdk/keycodes';
     host: {
         'class': 'adf-host-settings'
     },
-    styleUrls: ['host-settings.component.scss'],
+    styleUrls: ['./host-settings.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class HostSettingsComponent implements OnInit {

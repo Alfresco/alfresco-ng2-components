@@ -34,7 +34,6 @@ import { NodePermissionService } from '../../services/node-permission.service';
             <mat-icon class="adf-people-select-icon adf-datatable-selected" svgIcon="selected"></mat-icon>
         </div>
     `,
-    styleUrls: ['./user-icon-column.component.scss'],
     host: { class: 'adf-user-icon-column adf-datatable-content-cell' }
 })
 export class UserIconColumnComponent implements OnInit {

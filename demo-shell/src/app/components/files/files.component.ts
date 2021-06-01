@@ -54,7 +54,6 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
 @Component({
     selector: 'app-files-component',
     templateUrl: './files.component.html',
-    styleUrls: ['./files.component.scss'],
     providers: [
         { provide: FormRenderingService, useClass: ProcessFormRenderingService }
     ]

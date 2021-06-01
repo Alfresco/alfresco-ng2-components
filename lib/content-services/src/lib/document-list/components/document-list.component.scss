@@ -154,7 +154,7 @@
             word-break: break-all;
             white-space: pre-line;
 
-            @media screen and ($mat-xsmall) {
+            @media screen and (max-width: 599px) {
                 font-size: 48px;
             }
         }
@@ -176,7 +176,7 @@
             object-fit: contain;
             margin-top: 17px;
 
-            @media screen and ($mat-xsmall) {
+            @media screen and (max-width: 599px) {
                 width: 250px;
             }
         }

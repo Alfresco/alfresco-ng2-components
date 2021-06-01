@@ -27,8 +27,7 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 
 @Component({
     selector: 'adf-cloud-task-filters',
-    templateUrl: './base-task-filters-cloud.component.html',
-    styleUrls: ['base-task-filters-cloud.component.scss']
+    templateUrl: './base-task-filters-cloud.component.html'
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
 

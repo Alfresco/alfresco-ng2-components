@@ -24,7 +24,6 @@ import { MemberModel } from '../../models/member.model';
 @Component({
     selector: 'adf-add-permission-dialog',
     templateUrl: './add-permission-dialog.component.html',
-    styleUrls: ['./add-permission-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class AddPermissionDialogComponent {

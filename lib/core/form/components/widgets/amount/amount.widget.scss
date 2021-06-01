@@ -1,5 +1,3 @@
-@import '../form';
-
 @mixin adf-amount-widget-theme($theme) {
     $foreground: map-get($theme, foreground);
 

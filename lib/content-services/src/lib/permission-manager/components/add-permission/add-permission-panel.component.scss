@@ -1,9 +1,6 @@
 @mixin adf-add-permission-panel-theme($theme) {
-
-    $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
     $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
     $mat-menu-border-radius: 2px !default;
     $search-result-height: calc(100% - 75px);
 

@@ -23,8 +23,8 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-form-list',
-    templateUrl: 'form-list.component.html',
-    styleUrls: ['form-list.component.scss']
+    templateUrl: './form-list.component.html',
+    styleUrls: ['./form-list.component.scss']
 })
 export class FormListComponent implements OnInit, OnDestroy {
 

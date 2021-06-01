@@ -43,7 +43,6 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'adf-analytics-report-parameters',
     templateUrl: './analytics-report-parameters.component.html',
-    styleUrls: ['./analytics-report-parameters.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterContentChecked {

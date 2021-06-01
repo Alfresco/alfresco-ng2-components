@@ -38,7 +38,6 @@ import { TaskPriorityOption } from '../../models/task.model';
 @Component({
     selector: 'adf-cloud-start-task',
     templateUrl: './start-task-cloud.component.html',
-    styleUrls: ['./start-task-cloud.component.scss'],
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],

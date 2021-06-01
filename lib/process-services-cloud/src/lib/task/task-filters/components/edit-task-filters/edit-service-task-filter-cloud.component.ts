@@ -32,8 +32,7 @@ import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-ta
 
 @Component({
     selector: 'adf-cloud-edit-service-task-filter',
-    templateUrl: './base-edit-task-filter-cloud.component.html',
-    styleUrls: ['./base-edit-task-filter-cloud.component.scss']
+    templateUrl: './base-edit-task-filter-cloud.component.html'
 })
 export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<ServiceTaskFilterCloudModel> {
     constructor(

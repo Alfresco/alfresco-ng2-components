@@ -1,15 +1,13 @@
-@import '~@angular/material/theming';
-
 @mixin adf-default-class-theme($theme) {
 
     .adf-hide-small {
-        @media screen and ($mat-small) {
+        @media screen and (max-width: 959px) {
             display: none !important;
         }
     }
 
     .adf-hide-xsmall {
-        @media screen and ($mat-xsmall) {
+        @media screen and (max-width: 599px) {
             display: none !important;
         }
     }

@@ -1,5 +1,3 @@
-@import '~@angular/material/theming';
-
 @mixin  adf-header-layout-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -54,7 +52,7 @@
             padding: 0;
         }
 
-        @media screen and ($mat-xsmall) {
+        @media screen and (max-width: 599px) {
             .adf-app-logo,
             .adf-app-title {
                 display: none;

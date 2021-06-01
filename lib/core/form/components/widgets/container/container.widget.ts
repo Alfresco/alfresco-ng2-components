@@ -26,7 +26,6 @@ import { ContainerWidgetComponentModel } from './container.widget.model';
 @Component({
     selector: 'container-widget',
     templateUrl: './container.widget.html',
-    styleUrls: ['./container.widget.scss'],
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',

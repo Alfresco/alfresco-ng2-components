@@ -20,8 +20,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'adf-file-uploading-list-row',
-    templateUrl: './file-uploading-list-row.component.html',
-    styleUrls: ['./file-uploading-list-row.component.scss']
+    templateUrl: './file-uploading-list-row.component.html'
 })
 export class FileUploadingListRowComponent {
     @Input()

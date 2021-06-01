@@ -24,7 +24,6 @@ import { CloudFormRenderingService } from '@alfresco/adf-process-services-cloud'
 
 @Component({
     templateUrl: './start-process-cloud-demo.component.html',
-    styleUrls: ['./start-process-cloud-demo.component.scss'],
     providers: [
         { provide: FormRenderingService, useClass: CloudFormRenderingService }
     ]

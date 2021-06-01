@@ -34,7 +34,6 @@ import { ContentLinkModel, FormService, WidgetVisibilityService, FormOutcomeMode
 @Component({
     selector: 'adf-start-form',
     templateUrl: './start-form.component.html',
-    styleUrls: ['./start-form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class StartFormComponent extends FormComponent implements OnChanges, OnInit, OnDestroy {

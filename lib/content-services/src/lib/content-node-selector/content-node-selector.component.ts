@@ -27,7 +27,6 @@ import { NodeAction } from '../document-list/models/node-action.enum';
 @Component({
     selector: 'adf-content-node-selector',
     templateUrl: './content-node-selector.component.html',
-    styleUrls: ['./content-node-selector.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorComponent implements OnInit {

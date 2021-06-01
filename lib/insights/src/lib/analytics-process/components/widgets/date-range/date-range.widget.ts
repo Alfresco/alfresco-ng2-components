@@ -32,7 +32,6 @@ import { takeUntil } from 'rxjs/operators';
     providers: [
         {provide: DateAdapter, useClass: MomentDateAdapter},
         {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
-    styleUrls: ['./date-range.widget.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class DateRangeWidgetComponent implements OnInit, OnDestroy {

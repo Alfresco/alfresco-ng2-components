@@ -36,7 +36,6 @@ import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
 @Component({
     selector: 'adf-content-metadata',
     templateUrl: './content-metadata.component.html',
-    styleUrls: ['./content-metadata.component.scss'],
     host: { 'class': 'adf-content-metadata' },
     encapsulation: ViewEncapsulation.None
 })

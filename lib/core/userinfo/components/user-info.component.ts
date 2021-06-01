@@ -28,7 +28,6 @@ import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/
 
 @Component({
     selector: 'adf-userinfo',
-    styleUrls: ['./user-info.component.scss'],
     templateUrl: './user-info.component.html',
     encapsulation: ViewEncapsulation.None
 })

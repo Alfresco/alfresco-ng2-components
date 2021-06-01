@@ -24,8 +24,7 @@ import { share, takeUntil, finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-apps',
-    templateUrl: 'apps-list.component.html',
-    styleUrls: ['./apps-list.component.scss']
+    templateUrl: './apps-list.component.html'
 })
 export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
 

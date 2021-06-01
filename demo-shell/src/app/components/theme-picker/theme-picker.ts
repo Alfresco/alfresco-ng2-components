@@ -28,8 +28,8 @@ import { DocsSiteTheme, ThemeStorage } from './theme-storage/theme-storage';
 
 @Component({
     selector: 'app-theme-picker',
-    templateUrl: 'theme-picker.html',
-    styleUrls: ['theme-picker.css'],
+    templateUrl: './theme-picker.html',
+    styleUrls: ['./theme-picker.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {'aria-hidden': 'true'}
 })

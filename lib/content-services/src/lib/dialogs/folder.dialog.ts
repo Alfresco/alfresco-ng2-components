@@ -17,7 +17,7 @@
 
 import { Observable } from 'rxjs';
 
-import { Component, Inject, OnInit, Optional, EventEmitter, Output } from '@angular/core';
+import { Component, Inject, OnInit, Optional, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -28,8 +28,8 @@ import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './fo
 
 @Component({
     selector: 'adf-folder-dialog',
-    styleUrls: ['./folder.dialog.scss'],
-    templateUrl: './folder.dialog.html'
+    templateUrl: './folder.dialog.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class FolderDialogComponent implements OnInit {
 

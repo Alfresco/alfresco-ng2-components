@@ -1,44 +1,40 @@
-@mixin adf-host-settings-theme($theme) {
+.adf-host-settings {
+    display: flex;
+    min-height: 100%;
+    align-items: center;
 
-    .adf-host-settings {
-        display: flex;
-        min-height: 100%;
-        align-items: center;
-
-        .adf-authentication-type {
-            margin-bottom: 20px;
-            margin-top: 10px;
-        }
-
-        .adf-setting-container {
-            width: 800px;
-            display: table;
-            margin: 0 auto;
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-
-        .adf-setting-card-padding {
-            width: 50%;
-            display: table-cell;
-            vertical-align: middle;
-            margin: 0;
-        }
-
-        .adf-settings-link-icon {
-            position: relative;
-            top: 6px;
-            margin-right: 10px;
-        }
-
-        .adf-settings-actions {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .adf-full-width {
-            width: 100%;
-        }
+    .adf-authentication-type {
+        margin-bottom: 20px;
+        margin-top: 10px;
     }
 
+    .adf-setting-container {
+        width: 800px;
+        display: table;
+        margin: 0 auto;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    .adf-setting-card-padding {
+        width: 50%;
+        display: table-cell;
+        vertical-align: middle;
+        margin: 0;
+    }
+
+    .adf-settings-link-icon {
+        position: relative;
+        top: 6px;
+        margin-right: 10px;
+    }
+
+    .adf-settings-actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .adf-full-width {
+        width: 100%;
+    }
 }

@@ -20,7 +20,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-tooltip-card-component',
-    styleUrls: ['./tooltip-card.component.scss'],
     templateUrl: './tooltip-card.component.html',
     animations: [
         trigger('tooltip', [

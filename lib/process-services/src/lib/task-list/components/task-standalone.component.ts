@@ -20,7 +20,6 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
 @Component({
     selector: 'adf-task-standalone',
     templateUrl: './task-standalone.component.html',
-    styleUrls: ['./task-standalone.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 

@@ -21,7 +21,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'app-cloud-breadcrumbs',
     templateUrl: './cloud-breadcrumb-component.html',
-    styleUrls: ['cloud-breadcrumb-component.scss']
+    styleUrls: ['./cloud-breadcrumb-component.scss']
 })
 export class CloudBreadcrumbsComponent implements OnInit {
     appName: string;

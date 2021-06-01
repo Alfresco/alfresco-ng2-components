@@ -24,8 +24,8 @@ import { NodeEntry } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-tree-view-list',
-    templateUrl: 'tree-view.component.html',
-    styleUrls: ['tree-view.component.scss']
+    templateUrl: './tree-view.component.html',
+    styleUrls: ['./tree-view.component.scss']
 })
 
 export class TreeViewComponent implements OnChanges {

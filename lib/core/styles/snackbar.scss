@@ -1,5 +1,3 @@
-@import '~@angular/material/theming';
-
 @mixin adf-snackbar-theme($theme) {
     $warn: map-get($theme, warn);
     $accent: map-get($theme, accent);

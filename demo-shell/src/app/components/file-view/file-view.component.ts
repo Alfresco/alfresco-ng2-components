@@ -23,8 +23,8 @@ import { PreviewService } from '../../services/preview.service';
 
 @Component({
     selector: 'app-file-view',
-    templateUrl: 'file-view.component.html',
-    styleUrls: ['file-view.component.scss'],
+    templateUrl: './file-view.component.html',
+    styleUrls: ['./file-view.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class FileViewComponent implements OnInit {

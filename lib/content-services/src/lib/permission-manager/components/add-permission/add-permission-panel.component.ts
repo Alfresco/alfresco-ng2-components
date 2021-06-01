@@ -26,7 +26,6 @@ import { SearchComponent } from '../../../search/components/search.component';
 @Component({
     selector: 'adf-add-permission-panel',
     templateUrl: './add-permission-panel.component.html',
-    styleUrls: ['./add-permission-panel.component.scss'],
     encapsulation: ViewEncapsulation.None,
     providers: [
         { provide: SearchConfigurationService, useClass: SearchPermissionConfigurationService },

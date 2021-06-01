@@ -40,7 +40,6 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'adf-sidenav-layout',
     templateUrl: './sidenav-layout.component.html',
-    styleUrls: ['./sidenav-layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-sidenav-layout' }
 })

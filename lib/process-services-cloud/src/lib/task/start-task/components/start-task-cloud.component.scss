@@ -1,6 +1,4 @@
 @mixin adf-cloud-start-task-theme($theme) {
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
     $foreground: map-get($theme, foreground);
     $header-border: 1px solid mat-color($foreground, divider);

@@ -2,7 +2,7 @@
     $primary: map-get($theme, primary);
     $minimumAppWidth: 320px;
 
-    @media screen and ($mat-xsmall) {
+    @media screen and (max-width: 599px) {
         app-search-bar {
             width: 150px;
         }
@@ -46,13 +46,13 @@
         }
     }
 
-    @media screen and ($mat-small) {
+    @media screen and (max-width: 959px) {
         .app-menu {
             padding-top: 0;
         }
     }
 
-    @media screen and ($mat-xsmall) {}
+    @media screen and (max-width: 599px) {}
 
     mat-sidenav-content > div {
         display: flex;

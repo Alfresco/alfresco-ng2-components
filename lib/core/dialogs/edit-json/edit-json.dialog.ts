@@ -25,8 +25,8 @@ export interface EditJsonDialogSettings {
 }
 
 @Component({
-    templateUrl: 'edit-json.dialog.html',
-    styleUrls: ['edit-json.dialog.scss'],
+    templateUrl: './edit-json.dialog.html',
+    styleUrls: ['./edit-json.dialog.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-edit-json-dialog' }
 })

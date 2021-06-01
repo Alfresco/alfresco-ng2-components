@@ -21,8 +21,7 @@ import { NotificationService } from '@alfresco/adf-core';
 import { CloudLayoutService } from './services/cloud-layout.service';
 
 @Component({
-    templateUrl: './start-task-cloud-demo.component.html',
-    styleUrls: ['./start-task-cloud-demo.component.scss']
+    templateUrl: './start-task-cloud-demo.component.html'
 })
 export class StartTaskCloudDemoComponent implements OnInit {
 

@@ -1,9 +1,5 @@
-@import '~@angular/material/theming';
-
 @mixin adf-form-container-widget-theme($theme) {
     $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $warn: map-get($theme, warn);
 
     .adf-hidden {
         display: none;
@@ -66,7 +62,7 @@
             padding-right: 3px;
         }
 
-        @media screen and ($mat-small) {
+        @media screen and (max-width: 959px) {
             .adf-grid-list-item {
                 flex: 1 0 100%;
             }

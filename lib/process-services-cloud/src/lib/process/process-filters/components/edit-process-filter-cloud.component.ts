@@ -38,8 +38,7 @@ export interface DropdownOption {
 
 @Component({
     selector: 'adf-cloud-edit-process-filter',
-    templateUrl: './edit-process-filter-cloud.component.html',
-    styleUrls: ['./edit-process-filter-cloud.component.scss']
+    templateUrl: './edit-process-filter-cloud.component.html'
 })
 export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDestroy {
 

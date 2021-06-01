@@ -24,8 +24,7 @@ import { BaseCardView } from '../base-card-view';
 
 @Component({
     selector: 'adf-card-view-boolitem',
-    templateUrl: './card-view-keyvaluepairsitem.component.html',
-    styleUrls: ['./card-view-keyvaluepairsitem.component.scss']
+    templateUrl: './card-view-keyvaluepairsitem.component.html'
 })
 
 export class CardViewKeyValuePairsItemComponent extends BaseCardView<CardViewKeyValuePairsItemModel> implements OnChanges {

@@ -24,7 +24,7 @@ import { ProcessFilterCloudModel } from '@alfresco/adf-process-services-cloud';
 @Component({
     selector: 'app-cloud-filters-demo',
     templateUrl: './cloud-filters-demo.component.html',
-    styleUrls: ['cloud-filters-demo.component.scss'],
+    styleUrls: ['./cloud-filters-demo.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class CloudFiltersDemoComponent implements OnInit {

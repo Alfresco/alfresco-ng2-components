@@ -65,7 +65,6 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-document-list',
-    styleUrls: ['./document-list.component.scss'],
     templateUrl: './document-list.component.html',
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-document-list' }

@@ -1,10 +1,5 @@
-@import '~@angular/material/theming';
-
 @mixin adf-userinfo-theme($theme) {
     $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $warn: map-get($theme, warn);
-    $foreground: map-get($theme, foreground);
 
     .adf {
 
@@ -21,7 +16,7 @@
         &-userinfo-name {
             padding: 0 5px;
 
-            @media screen and ($mat-small) {
+            @media screen and (max-width: 959px) {
                 display: none;
             }
         }
@@ -105,7 +100,7 @@
             display: flex;
             justify-content: space-between;
 
-            @media screen and ($mat-xsmall) {
+            @media screen and (max-width: 599px) {
                 padding: 10px;
             }
         }

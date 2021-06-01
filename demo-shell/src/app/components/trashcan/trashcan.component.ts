@@ -24,8 +24,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    templateUrl: './trashcan.component.html',
-    styleUrls: ['trashcan.component.scss']
+    templateUrl: './trashcan.component.html'
 })
 export class TrashcanComponent implements OnInit, OnDestroy {
     @ViewChild('documentList', { static: true })

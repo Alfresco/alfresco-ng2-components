@@ -1,8 +1,6 @@
 @mixin adf-search-control-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
     $mat-menu-border-radius: 2px !default;
     $mat-menu-overlay-min-width: 112px !default;   // 56 * 2
     $mat-menu-overlay-max-width: 280px !default;   // 56 * 5
@@ -29,7 +27,7 @@
             background-color: mat-color($background, card);
             border-radius: $mat-menu-border-radius;
 
-            @media screen and ($mat-small) {
+            @media screen and (max-width: 959px) {
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
