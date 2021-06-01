@@ -152,16 +152,20 @@ export class ContentService {
      * Checks if the user has permission on that node
      * @param node Node to check permissions
      * @param permission Required permission type
+     * @param userId Optional current user id will be taken by default
      * @returns True if the user has the required permissions, false otherwise
      */
-    hasPermissions(node: Node, permission: PermissionsEnum | string): boolean {
+    hasPermissions(node: Node, permission: PermissionsEnum | string, userId?: string): boolean {
         let hasPermissions = false;
+        userId = userId ?? this.authService.getEcmUsername();
 
-        if (node && node.permissions && node.permissions.locallySet) {
+        const permissions = [ ...(node.permissions?.locallySet || []), ...(node.permissions?.inherited || []) ]
+             .filter((currentPermission) => currentPermission.authorityId === userId);
+        if (permissions.length) {
             if (permission && permission.startsWith('!')) {
-                hasPermissions = node.permissions.locallySet.find((currentPermission) => currentPermission.name === permission.replace('!', '')) ? false : true;
+                hasPermissions = permissions.find((currentPermission) => currentPermission.name === permission.replace('!', '')) ? false : true;
             } else {
-                hasPermissions = node.permissions.locallySet.find((currentPermission) => currentPermission.name === permission) ? true : false;
+                hasPermissions = permissions.find((currentPermission) => currentPermission.name === permission) ? true : false;
             }
 
         } else {
