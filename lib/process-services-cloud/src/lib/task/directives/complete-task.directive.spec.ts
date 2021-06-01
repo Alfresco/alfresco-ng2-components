@@ -74,13 +74,14 @@ describe('CompleteTaskDirective', () => {
     });
 
     it('should emit error on api fail',  async () => {
-        spyOn(taskCloudService, 'completeTask').and.returnValue(throwError({ message: 'process key not found' }));
+        const error = { message: 'process key not found' };
+        spyOn(taskCloudService, 'completeTask').and.returnValue(throwError(error));
         spyOn(fixture.componentInstance, 'onError').and.callThrough();
         const button = fixture.nativeElement.querySelector('button');
         button.click();
         await fixture.whenStable();
         expect(taskCloudService.completeTask).toHaveBeenCalled();
-        expect(fixture.componentInstance.onError).toHaveBeenCalled();
+        expect(fixture.componentInstance.onError).toHaveBeenCalledWith(error);
     });
 });
 
