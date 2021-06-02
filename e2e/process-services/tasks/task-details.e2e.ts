@@ -27,7 +27,7 @@ import {
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { TasksPage } from './../pages/tasks.page';
 import { browser } from 'protractor';
-import { TaskActionsApi, TaskFormsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
+import { TaskActionsApi, TaskFormsApi, TasksApi } from '@alfresco/js-api';
 import Task = require('../../models/APS/Task');
 import TaskModel = require('../../models/APS/TaskModel');
 import FormModel = require('../../models/APS/FormModel');
@@ -45,6 +45,7 @@ describe('Task Details component', () => {
     const apiService = new ApiService();
     const taskUtil = new TaskUtil(apiService);
     const modelsActions = new ModelsActions(apiService);
+    const usersActions = new UsersActions(apiService);
     const tasksApi = new TasksApi(apiService.getInstance());
     const taskActionsApi = new TaskActionsApi(apiService.getInstance());
     const taskFormsApi = new TaskFormsApi(apiService.getInstance());
@@ -314,11 +315,11 @@ describe('Task Details component', () => {
 
     it('[C260321] Should not be able to edit a completed task\'s details', async () => {
         const taskName = 'TaskCompleted';
-        const form = await modelsActions.createModel(taskFormModel);
+        const form = await modelsActions.modelsApi.createModel(taskFormModel);
         const task = await taskUtil.createStandaloneTask(taskName);
 
         await taskActionsApi.attachForm(task.id, { 'formId': form.id });
-        await taskActionsApi.taskApi.completeTaskForm(task.id, { values: { label: null } });
+        await taskFormsApi.completeTaskForm(task.id, { values: { label: null } });
 
         await (await processServices.goToTaskApp()).clickTasksButton();
 

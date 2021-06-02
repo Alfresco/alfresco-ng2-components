@@ -26,7 +26,6 @@ import {
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksPage } from './../pages/tasks.page';
-import { TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Task List Pagination - Sorting', () => {

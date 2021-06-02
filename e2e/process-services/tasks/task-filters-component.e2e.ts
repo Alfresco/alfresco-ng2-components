@@ -239,7 +239,7 @@ describe('Task', () => {
                 icon: 'glyphicon-cloud',
                 filter: { sort: 'created-desc', state: 'completed', assignment: 'involved' }
             });
-            const { id } = await this.userFiltersApi.createUserTaskFilter(newFilter);
+            const { id } = await userFiltersApi.createUserTaskFilter(newFilter);
 
             await browser.refresh();
             await processServiceTabBarPage.clickSettingsButton();

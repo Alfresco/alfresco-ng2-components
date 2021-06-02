@@ -21,9 +21,6 @@ import { ProcessServicesPage } from './../pages/process-services.page';
 import { ChecklistDialog } from './../pages/dialog/create-checklist-dialog.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
-import * as fs from 'fs';
-import * as path from 'path';
-import { TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Checklist component', () => {

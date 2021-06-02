@@ -30,7 +30,6 @@ import { AttachmentListPage } from './../pages/attachment-list.page';
 import * as fs from 'fs';
 import * as path from 'path';
 import { FileModel } from '../../models/ACS/file.model';
-import { ContentApi, TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Attachment list action menu for tasks', () => {

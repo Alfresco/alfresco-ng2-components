@@ -22,13 +22,12 @@ import {
     ApplicationsUtil,
     ApiService,
     UsersActions,
-    TasksService
+    TaskUtil
 } from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
-import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task Audit', () => {
 
@@ -40,7 +39,7 @@ describe('Task Audit', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-    const tasksService = new TasksService(apiService);
+    const taskUtil = new TaskUtil(apiService);
 
     let processUserModel;
 
@@ -54,7 +53,7 @@ describe('Task Audit', () => {
         processUserModel = await usersActions.createUser();
 
         await apiService.login(processUserModel.username, processUserModel.password);
-        await tasksService.createStandaloneTask(taskTaskApp);
+        await taskUtil.createStandaloneTask(taskTaskApp);
         const applicationsService = new ApplicationsUtil(apiService);
         await applicationsService.importPublishDeployApp(app.file_path);
 

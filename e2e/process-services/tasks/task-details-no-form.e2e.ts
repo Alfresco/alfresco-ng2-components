@@ -27,10 +27,12 @@ describe('Task Details - No form', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
+    const taskPage = new TasksPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     let processUserModel;
-    const taskPage = new TasksPage();
     const noFormMessage = 'No forms attached';
     let importedApp;
 

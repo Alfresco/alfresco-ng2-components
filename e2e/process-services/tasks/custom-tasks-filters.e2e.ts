@@ -107,14 +107,14 @@ describe('Start Task - Custom App', () => {
         }
 
         for (let i = 0; i < 3; i++) {
-            completedTasks[i] = await tasksApi.createNewTask((new TaskRepresentation({
+            completedTasks[i] = await tasksApi.createNewTask(new TaskRepresentation({
                 'name': completedTasksName[i],
                 'dueDate': DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ', new Date(), i + 2)
             }));
             await taskActionsApi.completeTask(completedTasks[i].id);
         }
 
-        taskWithDueDate = await tasksApi.createNewTask((new TaskRepresentation({
+        taskWithDueDate = await tasksApi.createNewTask(new TaskRepresentation({
             'name': paginationTasksName[0],
             'dueDate': currentDateStandardFormat
         }));

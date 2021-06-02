@@ -20,11 +20,10 @@ import { browser } from 'protractor';
 import { ApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import * as fs from 'fs';
-import * as path from 'path';
 import CONSTANTS = require('../../util/constants');
 import Task = require('../../models/APS/Task');
 import { TaskActionsApi, TasksApi } from '@alfresco/js-api';
+import { ResultListDataRepresentationTaskRepresentation } from '@alfresco/js-api/typings/src/api/activiti-rest-api/model/resultListDataRepresentationTaskRepresentation';
 
 describe('Start Task - Task App', () => {
 
@@ -124,7 +123,7 @@ describe('Start Task - Task App', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
         await taskPage.taskDetails().waitFormNameEqual(app.formName);
 
-        const listOfTasks = tasksApi.listTasks(new Task({ sort: 'created-desc' }));
+        const listOfTasks = await tasksApi.listTasks(new Task({ sort: 'created-desc' }));
         await taskActionsApi.removeForm(listOfTasks.data[0].id);
 
         await browser.refresh();

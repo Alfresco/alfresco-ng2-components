@@ -29,7 +29,6 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { AttachFormPage } from './../pages/attach-form.page';
 import { TasksPage } from './../pages/tasks.page';
 import { TaskDetailsPage } from './../pages/task-details.page';
-import { TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Attach Form Component', () => {

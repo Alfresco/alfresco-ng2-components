@@ -22,7 +22,8 @@ import {
     LoginPage,
     ProcessUtil,
     UsersActions,
-    ViewerPage
+    ViewerPage,
+    ModelsActions
 } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from './../pages/process-filters.page';
 import { ProcessDetailsPage } from './../pages/process-details.page';
@@ -45,6 +46,7 @@ describe('Attachment list action menu for processes', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const modelsActions = new ModelsActions(apiService);
 
     const pngFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,

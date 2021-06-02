@@ -80,12 +80,12 @@ describe('Task Details - Form', () => {
         user = await usersActions.createUser();
         await apiService.login(user.username, user.password);
 
-        attachedForm = await modelsActions.createModel(attachedFormModel);
-        newForm = await modelsActions.createModel(newFormModel);
+        attachedForm = await modelsActions.modelsApi.createModel(attachedFormModel);
+        newForm = await modelsActions.modelsApi.createModel(newFormModel);
 
         const otherEmptyTask = await taskUtil.createStandaloneTask();
 
-        otherAttachedForm = await modelsActions.createModel(otherAttachedFormModel);
+        otherAttachedForm = await modelsActions.modelsApi.createModel(otherAttachedFormModel);
 
         await taskActionsApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
         otherTask = await tasksApi.getTask(otherEmptyTask.id);

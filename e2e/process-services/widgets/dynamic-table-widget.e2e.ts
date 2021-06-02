@@ -31,6 +31,8 @@ import { ProcessServicesPage } from '../pages/process-services.page';
 
 describe('Dynamic Table widget ', () => {
 
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
+
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
@@ -39,14 +41,13 @@ describe('Dynamic Table widget ', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const processUtil = new ProcessUtil(apiService);
 
     let processUserModel;
     let appModel;
     let deployedAppId, process;
 
     describe('with Date Time Widget App', () => {
-
-        const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');
@@ -57,7 +58,7 @@ describe('Dynamic Table widget ', () => {
 
             deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
-            process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
+            process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
             await loginPage.login(processUserModel.username, processUserModel.password);
         });
 
@@ -107,7 +108,7 @@ describe('Dynamic Table widget ', () => {
 
             deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
-            process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
+            process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
             await loginPage.login(processUserModel.username, processUserModel.password);
         });
 
@@ -163,7 +164,7 @@ describe('Dynamic Table widget ', () => {
 
             deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
-            process = await new ProcessUtil(apiService).startProcessByDefinitionName(application.name, app.CUSTOM_VALIDATOR.processName);
+            process = await processUtil.startProcessByDefinitionName(application.name, app.CUSTOM_VALIDATOR.processName);
         });
 
         afterAll(async () => {

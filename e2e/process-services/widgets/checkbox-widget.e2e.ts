@@ -43,6 +43,7 @@ describe('Checkbox Widget', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const processUtil = new ProcessUtil(apiService);
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -54,7 +55,7 @@ describe('Checkbox Widget', () => {
 
         deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
-        process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
+        process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.login(processUserModel.username, processUserModel.password);
    });
 

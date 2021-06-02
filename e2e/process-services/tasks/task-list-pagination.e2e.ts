@@ -35,7 +35,9 @@ describe('Task List Pagination', () => {
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     let processUserModel: UserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;

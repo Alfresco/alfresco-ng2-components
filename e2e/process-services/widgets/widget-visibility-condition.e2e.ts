@@ -63,6 +63,7 @@ describe('Process-Services - Visibility conditions', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const processUtil = new ProcessUtil(apiService);
 
     let appModel;
     let deployedAppId, process;
@@ -78,7 +79,7 @@ describe('Process-Services - Visibility conditions', () => {
 
        deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
-       process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
+       process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
        await loginPage.login(processUserModel.username, processUserModel.password);
     });
 

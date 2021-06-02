@@ -42,6 +42,7 @@ describe('Form widgets', () => {
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const taskFormsApi = new TaskFormsApi(apiService.getInstance());
+    const processUtil = new ProcessUtil(apiService);
 
     const newTask = 'First task';
     let processUserModel;
@@ -208,7 +209,6 @@ describe('Form widgets', () => {
             await apiService.login(processUserModel.username, processUserModel.password);
             appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-            const processUtil = new ProcessUtil(apiService);
             process = await processUtil.startProcessOfApp(appModel.name);
             await loginPage.login(processUserModel.username, processUserModel.password);
         });
