@@ -404,8 +404,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    openSnackMessageError(message: string) {
-        this.notificationService.showError(message);
+    openSnackMessageError(error: any) {
+        this.notificationService.showError(error.value || error);
     }
 
     openSnackMessageInfo(message: string) {

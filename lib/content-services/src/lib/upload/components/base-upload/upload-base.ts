@@ -126,14 +126,15 @@ export abstract class UploadBase implements OnInit, OnDestroy {
             const event = new UploadFilesEvent(
                 [...filteredFiles],
                 this.uploadService,
-                this.success
+                this.success,
+                this.error
             );
             this.beginUpload.emit(event);
 
             if (!event.defaultPrevented) {
                 if (filteredFiles.length > 0) {
                     this.uploadService.addToQueue(...filteredFiles);
-                    this.uploadService.uploadFilesInTheQueue(this.success);
+                    this.uploadService.uploadFilesInTheQueue(this.success, this.error);
                 }
             }
         });
