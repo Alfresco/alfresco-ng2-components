@@ -55,7 +55,7 @@ describe('Attach Folder widget', () => {
         await apiService.login(processUserModel.username, processUserModel.password);
         appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-        deployedAppId = applicationsService.getAppDefinitionId(appModel.id);
+        deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
         process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.login(processUserModel.username, processUserModel.password);

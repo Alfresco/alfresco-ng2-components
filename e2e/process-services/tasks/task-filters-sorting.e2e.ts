@@ -60,7 +60,7 @@ describe('Task Filters Sorting', () => {
         const applicationsService = new ApplicationsUtil(apiService);
 
         const appModel = await applicationsService.importPublishDeployApp(app.file_path);
-        appId = applicationsService.getAppDefinitionId(appModel.id);
+        appId = await applicationsService.getAppDefinitionId(appModel.id);
 
         await loginPage.login(user.username, user.password);
         await navigationBarPage.navigateToProcessServicesPage();

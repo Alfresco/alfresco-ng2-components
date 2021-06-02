@@ -55,7 +55,7 @@ describe('Dynamic Table widget ', () => {
             await apiService.login(processUserModel.username, processUserModel.password);
             appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-            deployedAppId = applicationsService.getAppDefinitionId(appModel.id);
+            deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
             process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
             await loginPage.login(processUserModel.username, processUserModel.password);
@@ -105,7 +105,7 @@ describe('Dynamic Table widget ', () => {
             await apiService.login(processUserModel.username, processUserModel.password);
             appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-            deployedAppId = applicationsService.getAppDefinitionId(appModel.id);
+            deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
             process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
             await loginPage.login(processUserModel.username, processUserModel.password);
@@ -161,7 +161,7 @@ describe('Dynamic Table widget ', () => {
             await apiService.login(processUserModel.username, processUserModel.password);
             const application = await applicationsService.importPublishDeployApp(app.file_path);
 
-            deployedAppId = applicationsService.getAppDefinitionId(appModel.id);
+            deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
             process = await new ProcessUtil(apiService).startProcessByDefinitionName(application.name, app.CUSTOM_VALIDATOR.processName);
         });

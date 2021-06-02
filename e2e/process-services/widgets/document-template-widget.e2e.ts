@@ -54,7 +54,7 @@ describe('Document Template widget', () => {
        await apiService.login(processUserModel.username, processUserModel.password);
        appModel = await applicationsService.importPublishDeployApp( app.file_path);
 
-       deployedAppId = applicationsService.getAppDefinitionId(appModel.id);
+       deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
        process = await new ProcessUtil(apiService).startProcessOfApp(appModel.name);
        await loginPage.login(processUserModel.username, processUserModel.password);

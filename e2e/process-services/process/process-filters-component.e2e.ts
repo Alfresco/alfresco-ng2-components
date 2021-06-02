@@ -141,10 +141,10 @@ describe('Process Filters Test', () => {
         const defaultFiltersNumber = 3;
         let processFilterUrl;
 
-        const deployedAppId = applicationsService.getAppDefinitionId(appModel.id);
+        const deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
         processFilterUrl = browser.baseUrl + '/activiti/apps/' + deployedAppId + '/processes/';
-        const taskAppFilters = await userFiltersApi.getUserProcessInstanceFilters({ appId: deployedAppId});
+        const taskAppFilters = await userFiltersApi.getUserProcessInstanceFilters({ appId: deployedAppId });
 
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
@@ -193,7 +193,7 @@ describe('Process Filters Test', () => {
         await processListDemoPage.checkProcessIsDisplayed(processTitle.one);
         await processFiltersPage.checkFilterIsHighlighted(processFilter.running);
         await processDetailsPage.propertiesList.waitVisible();
-        await checkProcessInfoDrawer({  name: processTitle.one });
+        await checkProcessInfoDrawer({ name: processTitle.one });
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
@@ -219,7 +219,7 @@ describe('Process Filters Test', () => {
     });
 
     it('[C260384] Edit default filter', async () => {
-        const runningFilter =  (await getFilter()).find(filter => filter.name === 'Running');
+        const runningFilter = (await getFilter()).find(filter => filter.name === 'Running');
         await userFiltersApi
             .updateUserProcessInstanceFilter(runningFilter.id, { ...runningFilter, name: 'Edited Running' });
 
@@ -230,7 +230,7 @@ describe('Process Filters Test', () => {
     });
 
     it('[C260385] Delete default filter', async () => {
-        const allFilter =  (await getFilter()).find(filter => filter.name === 'All');
+        const allFilter = (await getFilter()).find(filter => filter.name === 'All');
         await userFiltersApi.deleteUserProcessInstanceFilter(allFilter.id);
 
         await processServicesPage.goToApp(app.title);
