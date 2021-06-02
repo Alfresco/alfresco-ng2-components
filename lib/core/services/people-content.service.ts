@@ -19,12 +19,22 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
-import { PersonEntry, PeopleApi, PersonBodyCreate } from '@alfresco/js-api';
+import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
 
 export enum ContentGroups {
     ALFRESCO_ADMINISTRATORS = 'ALFRESCO_ADMINISTRATORS'
+}
+
+export interface PeopleContentQueryResponse {
+    pagination: Pagination;
+    entries: EcmUserModel[];
+}
+
+export interface PeopleContentQueryRequestModel {
+    skipCount: number;
+    maxItems: number;
 }
 
 @Injectable({
@@ -65,18 +75,17 @@ export class PeopleContentService {
 
     /**
      * Gets a list of people.
-     * @param opts Optional parameters supported by JS-API
-     * @returns Array of people
+     * @param requestQuery maxItems and skipCount parameters supported by JS-API
+     * @returns Response containing pagination and list of entries
      */
-    listPeople(options?): Observable<EcmUserModel[]> {
-        const promise = this.peopleApi.listPeople(options);
+    listPeople(requestQuery?: PeopleContentQueryRequestModel): Observable<PeopleContentQueryResponse> {
+        const promise = this.peopleApi.listPeople(requestQuery);
         return from(promise).pipe(
             map(response => {
-                const people: EcmUserModel[] = [];
-                response.list.entries.forEach((person: PersonEntry) => {
-                    people.push(<EcmUserModel> person?.entry);
-                });
-                return people;
+                return {
+                    pagination: response.list.pagination,
+                    entries: response.list.entries.map((person: PersonEntry) => <EcmUserModel> person.entry)
+                };
             }),
             catchError((err) => this.handleError(err))
         );
