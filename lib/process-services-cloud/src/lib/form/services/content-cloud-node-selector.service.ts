@@ -16,19 +16,21 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
-import { Observable, Subject, throwError } from 'rxjs';
-
+import { BehaviorSubject, Observable, Subject, Subscription, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class ContentCloudNodeSelectorService {
 
+ showErrorNotification$ = new BehaviorSubject(false);
+
   constructor(
     private apiService: AlfrescoApiService,
+    private notificationService: NotificationService,
     private dialog: MatDialog) {
   }
 
@@ -56,7 +58,10 @@ export class ContentCloudNodeSelectorService {
     async fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
         const relativePathNodeEntry: any = await this.apiService.getInstance().node
         .getNode(alias, opts)
-        .catch((err) => this.handleError(err));
+        .catch((err) => {
+          this.showErrorNotification$.next(true);
+          return this.handleError(err);
+        });
         return relativePathNodeEntry?.entry?.id;
     }
 
@@ -68,7 +73,16 @@ export class ContentCloudNodeSelectorService {
     }
 
   private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
-    this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
+    const contentNodeDialog = this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
+
+    contentNodeDialog.afterOpened().subscribe(() => {
+        const showErrorNotifySubscription: Subscription = this.showErrorNotification$.subscribe((showErrorNotification: boolean) => {
+                if (showErrorNotification) {
+                    this.notificationService.showWarning('Need a better message');
+                }
+            });
+        showErrorNotifySubscription.unsubscribe();
+    });
   }
 
   close() {
