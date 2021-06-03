@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { SearchService, SearchConfigurationService } from '@alfresco/adf-core';
+import { SearchConfigurationService, SearchService } from '@alfresco/adf-core';
 import { NodeEntry } from '@alfresco/js-api';
-import { Component, ViewEncapsulation, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { SearchPermissionConfigurationService } from './search-config-permission.service';
 import { SearchComponent } from '../../../search/components/search.component';
+import { MatSelectionList } from '@angular/material/list';
 
 @Component({
     selector: 'adf-add-permission-panel',
@@ -37,9 +38,12 @@ export class AddPermissionPanelComponent {
     @ViewChild('search', { static: true })
     search: SearchComponent;
 
+    @ViewChild(MatSelectionList, { static: false })
+    matSelectionList: MatSelectionList;
+
     /** Emitted when a permission list item is selected. */
     @Output()
-    select: EventEmitter<any> = new EventEmitter();
+    select: EventEmitter<NodeEntry[]> = new EventEmitter();
 
     searchInput: FormControl = new FormControl();
     searchedWord = '';
@@ -55,6 +59,9 @@ export class AddPermissionPanelComponent {
             debounceTime(this.debounceSearch)
         )
         .subscribe((searchValue) => {
+            const selectionOptions = this.matSelectionList.selectedOptions.selected.map(option => option.value);
+            this.selectedItems.push(...selectionOptions);
+            this.matSelectionList.deselectAll();
             this.searchedWord = searchValue;
             if (!searchValue) {
                 this.search.resetResults();
@@ -62,24 +69,17 @@ export class AddPermissionPanelComponent {
         });
     }
 
-    elementClicked(item: NodeEntry) {
-        if (this.isAlreadySelected(item)) {
-            this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
-        } else {
-            this.selectedItems.push(item);
-        }
-        this.select.emit(this.selectedItems);
-    }
-
-    selectAll(items: NodeEntry[]) {
-        if (items?.length > 0) {
-            this.selectedItems = items;
-            this.select.emit(this.selectedItems);
-        }
-    }
-
-    private isAlreadySelected(item: NodeEntry): boolean {
-        return this.selectedItems.indexOf(item) >= 0;
+    onSelectionChange() {
+        const currentSelection = this.matSelectionList.selectedOptions.selected.map(option => option.value);
+        const uniqueSelection = [ ...currentSelection, ...this.selectedItems ]
+            .reduce((uniquesElements, currentElement) => {
+            const isExist = uniquesElements.find(uniqueElement => uniqueElement.entry.id === currentElement.entry.id);
+            if (!isExist) {
+                uniquesElements.push(currentElement);
+            }
+            return uniquesElements;
+            }, []);
+        this.select.emit(uniqueSelection);
     }
 
     clearSearch() {

@@ -34,11 +34,13 @@
             class="adf-permission-result-list"
             [class.adf-permission-result-list-search]="searchedWord.length === 0">
     <ng-template let-data>
-        <mat-selection-list class="adf-permission-result-list-elements" (keydown.control.a)="selectAll( data?.list?.entries)">
+        <mat-selection-list class="adf-permission-result-list-elements" (keydown.control.a)="onSelectionChange()"
+                            (selectionChange)="onSelectionChange()">
             <mat-list-option id="adf-add-permission-group-everyone"
                              class="adf-list-option-item"
                              #eveyone
-                             (click)="elementClicked(EVERYONE)">
+                             disableRipple
+                             [value]="EVERYONE">
                 <adf-user-icon-column [node]="EVERYONE" id="add-group-icon" [selected]="eveyone.selected"></adf-user-icon-column>
                 <p class="adf-result-name">
                     {{'PERMISSION_MANAGER.ADD-PERMISSION.EVERYONE' | translate}}
@@ -46,7 +48,8 @@
             </mat-list-option>
 
             <mat-list-option *ngFor="let item of data?.list?.entries; let idx = index"
-                             (click)="elementClicked(item)"
+                             disableRipple
+                             [value]="item"
                              class="adf-list-option-item"
                              id="result_option_{{idx}}"
                              #option>
