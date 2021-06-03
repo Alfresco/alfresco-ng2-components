@@ -144,9 +144,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     private filterChangeSub: Subscription;
     private appNameChangeSub: Subscription;
 
-    currentAppVersions$ = new BehaviorSubject([]);
-    runningApps$ = new BehaviorSubject([]);
-    currentAppProcessDefinitions$ = new BehaviorSubject([]);
+    private currentAppVersions$ = new BehaviorSubject([]);
+    private runningApps$ = new BehaviorSubject([]);
+    private currentAppProcessDefinitions$ = new BehaviorSubject([]);
 
     constructor(
         private formBuilder: FormBuilder,
@@ -657,7 +657,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 type: 'select',
                 key: 'appName',
                 value: filterModel.appName || '',
-                options: this.runningApps$.asObservable()
+                options$: this.runningApps$.asObservable()
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_VERSION',
@@ -670,7 +670,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 type: 'multi-select',
                 key: 'appVersionMultiple',
                 value: appVersionMultiple,
-                options: this.currentAppVersions$.asObservable()
+                options$: this.currentAppVersions$.asObservable()
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',
@@ -689,14 +689,14 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 type: 'select',
                 key: 'processDefinitionName',
                 value: filterModel.processDefinitionName || '',
-                options: this.currentAppProcessDefinitions$.asObservable()
+                options$: this.currentAppProcessDefinitions$.asObservable()
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
                 value: filterModel.status || this.status[0].value,
-                options: of(this.status)
+                options$: of(this.status)
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_ID',
@@ -715,14 +715,14 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 type: 'select',
                 key: 'sort',
                 value: filterModel.sort || this.createSortProperties[0].value,
-                options: of(this.createSortProperties)
+                options$: of(this.createSortProperties)
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
                 value: filterModel.order || this.directions[0].value,
-                options: of(this.directions)
+                options$: of(this.directions)
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COMPLETED_DATE',

@@ -24,6 +24,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from './date-range-filter.service';
 import moment from 'moment-es6';
+import { of } from 'rxjs';
 
 describe('DateRangeFilterComponent', () => {
     let component: DateRangeFilterComponent;
@@ -47,7 +48,7 @@ describe('DateRangeFilterComponent', () => {
             label: 'mock-filter',
             value: null,
             type: 'dateRange',
-            options: null
+            options$: of([])
         };
         fixture.detectChanges();
     });

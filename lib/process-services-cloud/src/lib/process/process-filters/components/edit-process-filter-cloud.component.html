@@ -30,7 +30,7 @@
                                 [formControlName]="processFilterProperty.key"
                                 [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
                                 <mat-option
-                                    *ngFor="let propertyOption of processFilterProperty.options | async"
+                                    *ngFor="let propertyOption of processFilterProperty.options$ | async"
                                     [value]="propertyOption.value"
                                     [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key"
                                 >{{ propertyOption.label | translate }}</mat-option>
@@ -42,7 +42,7 @@
                                 [formControlName]="processFilterProperty.key"
                                 [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"
                                 [multiple]="true">
-                                <mat-option *ngFor="let propertyOption of processFilterProperty.options | async" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key">
+                                <mat-option *ngFor="let propertyOption of processFilterProperty.options$ | async" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key">
                                     {{ propertyOption.label | translate }}
                                 </mat-option>
                             </mat-select>

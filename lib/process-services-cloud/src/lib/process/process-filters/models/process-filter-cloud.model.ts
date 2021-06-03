@@ -192,7 +192,7 @@ export interface ProcessFilterProperties {
     value?: any;
     key?: string;
     attributes?: { [key: string]: string; };
-    options?: Observable<any[]>;
+    options$?: Observable<any[]>;
     dateFilterOptions?: DateCloudFilterType[];
     selectionMode?: ComponentSelectionMode;
 }
