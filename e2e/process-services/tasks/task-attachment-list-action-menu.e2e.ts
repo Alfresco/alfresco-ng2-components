@@ -31,6 +31,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
+import { Activiti } from '@alfresco/js-api';
+import ContentApi = Activiti.ContentApi;
 
 describe('Attachment list action menu for tasks', () => {
 
@@ -46,6 +48,8 @@ describe('Attachment list action menu for tasks', () => {
     const usersActions = new UsersActions(apiService);
     const modelsActions = new ModelsActions(apiService);
     const taskUtil = new TaskUtil(apiService);
+    const contentApi = new ContentApi();
+    contentApi.init(apiService.getInstance());
 
     const pngFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
@@ -172,7 +176,7 @@ describe('Attachment list action menu for tasks', () => {
         const filePath = path.join(browser.params.testConfig.main.rootPath + pngFile.location);
         const file = fs.createReadStream(filePath);
 
-        relatedContent = await apiService.getInstance().activiti.contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });
+        relatedContent = await contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });
         relatedContentId = relatedContent.id;
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
@@ -182,7 +186,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await attachmentListPage.checkFileIsAttached(pngFile.name);
 
-        await apiService.getInstance().activiti.contentApi.deleteContent(relatedContentId);
+        await contentApi.deleteContent(relatedContentId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 

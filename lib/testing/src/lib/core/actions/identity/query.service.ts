@@ -220,7 +220,7 @@ export class QueryService {
                 const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
                 return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
             } catch (error) {
-                Logger.error('Get Process Instance Id - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+                Logger.error('Get Process Instance Id - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
             }
         };
 
@@ -246,7 +246,7 @@ export class QueryService {
                 const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
                 return data.list.entries ?? null;
             } catch (error) {
-                Logger.error('Get Process Instances - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+                Logger.error('Get Process Instances - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
             }
         };
 

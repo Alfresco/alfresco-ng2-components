@@ -29,7 +29,6 @@ import {
 import { TasksPage } from './../pages/tasks.page';
 import { CommentsPage } from '../../core/pages/comments.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-
 import { ActivitiCommentsApi, TaskActionsApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 

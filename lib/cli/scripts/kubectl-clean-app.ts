@@ -88,7 +88,7 @@ async function deleteDescriptor(args: ConfigArgs, apiService: any, name: string)
     try {
         return await apiService.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam, contentTypes, accepts);
     } catch (error) {
-        logger.error(`Not possible to delete the descriptor ${name} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
+        logger.error(`Not possible to delete the descriptor ${name} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error?.response?.text)}`);
     }
 }
 
@@ -106,7 +106,7 @@ async function deleteProject(args: ConfigArgs, apiService: any, projectId: strin
     try {
         return await apiService.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam, contentTypes, accepts);
     } catch (error) {
-        logger.error(`Not possible to delete the project ${projectId} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
+        logger.error(`Not possible to delete the project ${projectId} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error?.response?.text)}`);
     }
 }
 
@@ -164,7 +164,7 @@ async function undeployApplication(args: ConfigArgs, apiService: any, name: stri
     try {
         return await apiService.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam, contentTypes, accepts);
     } catch (error) {
-        logger.error(`Not possible to undeploy the applications ${name} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
+        logger.error(`Not possible to undeploy the applications ${name} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error?.response?.text)}`);
     }
 }
 

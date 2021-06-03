@@ -89,19 +89,18 @@ export class ApplicationsUtil {
             const file = fs.createReadStream(appFileLocation);
             return await this.appDefinitionsApi.importAppDefinition(file, options);
         } catch (error) {
-            Logger.error('Import Application - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Import Application - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
         }
     }
 
     async getAppDefinitionByName(appName: string): Promise<any> {
         try {
             const appDefinitionsList = await this.appsApi.getAppDefinitions();
-            const appDefinition = appDefinitionsList.data.filter((currentApp) => {
+            return appDefinitionsList.data.filter((currentApp) => {
                 return currentApp.name === appName;
             });
-            return appDefinition;
         } catch (error) {
-            Logger.error('Get AppDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Get AppDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
         }
     }
 

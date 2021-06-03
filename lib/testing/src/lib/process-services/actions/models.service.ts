@@ -33,7 +33,7 @@ export class ModelsActions {
         try {
             return await this.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp: true });
         } catch (error) {
-            Logger.error('Delete Model Version - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Delete Model Version - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
         }
     }
 
@@ -41,7 +41,7 @@ export class ModelsActions {
         try {
             return await this.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp: true });
         } catch (error) {
-            Logger.error('Delete Model - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Delete Model - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
         }
     }
 
@@ -51,7 +51,7 @@ export class ModelsActions {
         try {
             models = await this.modelsApi.getModels(options);
         } catch (error) {
-            Logger.error('Get Models - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Get Models - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
         }
         return models;
     }

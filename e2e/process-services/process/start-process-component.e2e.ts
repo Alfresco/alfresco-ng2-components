@@ -40,7 +40,7 @@ import { ProcessServicesPage } from './../pages/process-services.page';
 import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
-import { Process, ProcessInstancesApi } from '@alfresco/js-api';
+import { ProcessInstancesApi } from '@alfresco/js-api';
 
 describe('Start Process Component', () => {
 
@@ -65,6 +65,7 @@ describe('Start Process Component', () => {
     const apiService = new ApiService();
     const apiServiceUserTwo = new ApiService();
     const modelsActions = new ModelsActions(apiService);
+    const usersActions = new UsersActions(apiService);
     const processApi = new ProcessInstancesApi(apiService.getInstance());
 
     let procUserModel: UserModel;

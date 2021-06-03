@@ -48,6 +48,7 @@ describe('Info Drawer', () => {
     const apiService = new ApiService();
     const applicationsService = new ApplicationsUtil(apiService);
     const modelsActions = new ModelsActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     const firstComment = 'comm1';
 

@@ -249,7 +249,7 @@ describe('Task', () => {
 
             await taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').checkTaskFilterIsDisplayed();
             await expect(await taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').getTaskFilterIcon()).toEqual('cloud');
-            await this.userFiltersApi.deleteUserTaskFilter(id);
+            await userFiltersApi.deleteUserTaskFilter(id);
         });
 
         it('[C286449] Should display task filter icons only when showIcon property is set on true', async () => {

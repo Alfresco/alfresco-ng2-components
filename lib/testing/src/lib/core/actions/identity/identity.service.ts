@@ -69,7 +69,7 @@ export class IdentityService {
 
             return this.api.performIdentityOperation(path, method, queryParams, postBody);
         } catch (error) {
-            Logger.error('Create User - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Create User - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
         }
     }
 

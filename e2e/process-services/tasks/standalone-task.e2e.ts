@@ -23,7 +23,6 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 import Task = require('../../models/APS/Task');
 import { TaskActionsApi, TasksApi } from '@alfresco/js-api';
-import { ResultListDataRepresentationTaskRepresentation } from '@alfresco/js-api/typings/src/api/activiti-rest-api/model/resultListDataRepresentationTaskRepresentation';
 
 describe('Start Task - Task App', () => {
 
