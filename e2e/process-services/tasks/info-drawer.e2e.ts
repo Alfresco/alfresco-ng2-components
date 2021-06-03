@@ -74,8 +74,6 @@ describe('Info Drawer', () => {
     let processUserModel;
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.loginWithProfile('admin');
 
         const assigneeUserModel = await usersActions.createUser();

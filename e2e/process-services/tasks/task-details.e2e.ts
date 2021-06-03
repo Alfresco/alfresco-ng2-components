@@ -63,8 +63,6 @@ describe('Task Details component', () => {
     };
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.loginWithProfile('admin');
         processUserModel = await usersActions.createUser();
 

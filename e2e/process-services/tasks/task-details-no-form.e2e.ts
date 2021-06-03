@@ -37,8 +37,6 @@ describe('Task Details - No form', () => {
     let importedApp;
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.loginWithProfile('admin');
         processUserModel = await usersActions.createUser();
 

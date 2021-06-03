@@ -89,7 +89,6 @@ describe('Start Process Component', () => {
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');
 
-            const usersActions = new UsersActions(apiService);
             procUserModel = await usersActions.createUser();
             secondProcUserModel = await usersActions.createUser(new UserModel({ tenantId: procUserModel.tenantId }));
 
@@ -490,11 +489,11 @@ describe('Start Process Component', () => {
                 hostBpm: browser.params.testConfig.appConfig.bpmHost
             });
 
-            const usersActions = new UsersActions(apiServiceAll);
+            const usersActionsAll = new UsersActions(apiServiceAll);
 
             await apiServiceAll.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
 
-            processUserModel = await usersActions.createUser();
+            processUserModel = await usersActionsAll.createUser();
 
             const alfrescoJsBPMAdminUser = new ApiService({ hostBpm: browser.params.testConfig.appConfig.bpmHost });
 

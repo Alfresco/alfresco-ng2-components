@@ -31,8 +31,6 @@ import { ProcessServicesPage } from '../pages/process-services.page';
 
 describe('Dynamic Table widget ', () => {
 
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
-
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
@@ -48,6 +46,7 @@ describe('Dynamic Table widget ', () => {
     let deployedAppId, process;
 
     describe('with Date Time Widget App', () => {
+        const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');
@@ -196,7 +195,7 @@ describe('Dynamic Table widget ', () => {
 
             await widget.dynamicTable().setDatatableInput('id', app.CUSTOM_VALIDATOR.FIELD.ID);
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Field \'Number\' is required.' );
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Field \'Number\' is required.');
 
             await widget.dynamicTable().setDatatableInput('12', app.CUSTOM_VALIDATOR.FIELD.NUM);
             await widget.dynamicTable().clickSaveButton();
