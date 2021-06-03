@@ -96,7 +96,7 @@ export class ApplicationsUtil {
     async getAppDefinitionByName(appName: string): Promise<any> {
         try {
             const appDefinitionsList = await this.appsApi.getAppDefinitions();
-            return appDefinitionsList.data.filter((currentApp) => {
+            return appDefinitionsList.data.find((currentApp) => {
                 return currentApp.name === appName;
             });
         } catch (error) {
