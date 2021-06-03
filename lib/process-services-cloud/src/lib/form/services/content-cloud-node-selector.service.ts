@@ -20,13 +20,13 @@ import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
-import { BehaviorSubject, Observable, Subject, Subscription, throwError } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class ContentCloudNodeSelectorService {
 
- showErrorNotification$ = new BehaviorSubject(false);
+ showErrorNotification = false;
 
   constructor(
     private apiService: AlfrescoApiService,
@@ -59,7 +59,7 @@ export class ContentCloudNodeSelectorService {
         const relativePathNodeEntry: any = await this.apiService.getInstance().node
         .getNode(alias, opts)
         .catch((err) => {
-          this.showErrorNotification$.next(true);
+          this.showErrorNotification = true;
           return this.handleError(err);
         });
         return relativePathNodeEntry?.entry?.id;
@@ -76,12 +76,13 @@ export class ContentCloudNodeSelectorService {
     const contentNodeDialog = this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
 
     contentNodeDialog.afterOpened().subscribe(() => {
-        const showErrorNotifySubscription: Subscription = this.showErrorNotification$.subscribe((showErrorNotification: boolean) => {
-                if (showErrorNotification) {
-                    this.notificationService.showWarning('Need a better message');
-                }
-            });
-        showErrorNotifySubscription.unsubscribe();
+        if (this.showErrorNotification) {
+            this.notificationService.showWarning('ADF_CLOUD_TASK_FORM.ERROR.INCORRECT_DESTINATION_FOLDER_PATH');
+        }
+    });
+
+    contentNodeDialog.afterClosed().subscribe(() => {
+        this.showErrorNotification = false;
     });
   }
 
