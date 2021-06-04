@@ -47,6 +47,12 @@ export class AttachFileWidgetPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(fileItem);
     }
 
+    async checkNoFileIsAttachedToWidgets(fieldIds: string[]): Promise<void> {
+        for (const fieldId of fieldIds) {
+            await this.checkNoFileIsAttached(fieldId);
+        }
+    }
+
     async checkFileIsAttached(fieldId: string, name: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
         const fileAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
