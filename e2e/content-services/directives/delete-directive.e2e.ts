@@ -269,6 +269,7 @@ describe('Delete Directive', () => {
 
         afterAll(async () => {
             try {
+                await apiService.login(acsUser.username, acsUser.password);
                 const sitesApi = new SitesApi(apiService.getInstance());
                 await sitesApi.deleteSite(createdSite.entry.id, { permanent: true });
             } catch (error) {}
