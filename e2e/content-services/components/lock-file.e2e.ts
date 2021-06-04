@@ -74,7 +74,7 @@ describe('Lock File', () => {
             visibility: 'PRIVATE'
         });
 
-        const resultNode = await nodesApi.getNodeChildren(site.entry.guid);
+        const resultNode = await nodesApi.listNodeChildren(site.entry.guid);
 
         documentLibrary = resultNode.list.entries[0].entry.id;
 

@@ -30,7 +30,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
-import { Core, CustomModelApi, NodesApi } from '@alfresco/js-api';
+import { CustomModelApi, NodesApi } from '@alfresco/js-api';
 
 describe('Aspect oriented config', () => {
 

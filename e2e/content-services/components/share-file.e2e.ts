@@ -71,7 +71,7 @@ describe('Share file', () => {
 
         const apiCall = async () => {
             await apiService.login(acsUser.username, acsUser.password);
-            return sharedLinksApi.findSharedLinks();
+            return sharedLinksApi.listSharedLinks();
         };
 
         return ApiUtil.waitForApi(apiCall, predicate, 10, 2000);
