@@ -16,81 +16,93 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction } from '@alfresco/adf-content-services';
-import { Node } from '@alfresco/js-api';
-import { Observable, Subject, throwError } from 'rxjs';
+import { Node, NodeEntry } from '@alfresco/js-api';
+import { from, Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ContentCloudNodeSelectorService {
 
- showErrorNotification = false;
+    showErrorNotification = false;
 
-  constructor(
-    private apiService: AlfrescoApiService,
-    private notificationService: NotificationService,
-    private dialog: MatDialog) {
-  }
+    constructor(
+        private apiService: AlfrescoApiService,
+        private logService: LogService,
+        private notificationService: NotificationService,
+        private dialog: MatDialog) {
+    }
 
-  openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {
-    const select = new Subject<Node[]>();
-    select.subscribe({
-      complete: this.close.bind(this)
-    });
-    const data = <ContentNodeSelectorComponentData> {
-      title: 'Select a file',
-      actionName: NodeAction.ATTACH,
-      currentFolderId,
-      restrictRootToCurrentFolderId,
-      select,
-      selectionMode,
-      isSelectionValid: (entry: Node) => entry.isFile,
-      showFilesInResult: true,
-      showDropdownSiteList: false,
-      showLocalUploadButton: isAllFileSources
-  };
-    this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '66%');
-    return select;
-  }
-
-    async fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
-        const relativePathNodeEntry: any = await this.apiService.getInstance().node
-        .getNode(alias, opts)
-        .catch((err) => {
-          this.showErrorNotification = true;
-          return this.handleError(err);
+    openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {
+        const select = new Subject<Node[]>();
+        select.subscribe({
+            complete: this.close.bind(this)
         });
-        return relativePathNodeEntry?.entry?.id;
+        const data = <ContentNodeSelectorComponentData> {
+            title: 'Select a file',
+            actionName: NodeAction.ATTACH,
+            currentFolderId,
+            restrictRootToCurrentFolderId,
+            select,
+            selectionMode,
+            isSelectionValid: (entry: Node) => entry.isFile,
+            showFilesInResult: true,
+            showDropdownSiteList: false,
+            showLocalUploadButton: isAllFileSources
+        };
+        this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '66%');
+        return select;
     }
 
-    async fetchAliasNodeId(alias: string): Promise<string> {
-        const aliasNodeEntry: any = await this.apiService.getInstance().node
-        .getNode(alias)
-        .catch((err) => this.handleError(err));
-        return aliasNodeEntry?.entry?.id;
+    fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
+        return from(this.apiService.nodesApi.getNode(alias, opts)).pipe(
+            map((relativePathNodeEntry: NodeEntry) => {
+                return relativePathNodeEntry?.entry?.id;
+            }),
+            catchError((error) => {
+                this.showErrorNotification = true;
+                this.handleError(error);
+                return of(null);
+            })
+        ).toPromise();
     }
 
-  private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
-    const contentNodeDialog = this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
+    fetchAliasNodeId(alias: string): Promise<string> {
+        return from(this.apiService.nodesApi.getNode(alias)).pipe(
+            map((aliasNodeEntry: NodeEntry) => {
+                return aliasNodeEntry?.entry?.id;
+            }),
+            catchError((error) => {
+                this.handleError(error);
+                return of(null);
+            })
+        ).toPromise();
+    }
 
-    contentNodeDialog.afterOpened().subscribe(() => {
-        if (this.showErrorNotification) {
-            this.notificationService.showWarning('ADF_CLOUD_TASK_FORM.ERROR.INCORRECT_DESTINATION_FOLDER_PATH');
-        }
-    });
+    private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
+        const contentNodeDialog = this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
 
-    contentNodeDialog.afterClosed().subscribe(() => {
-        this.showErrorNotification = false;
-    });
-  }
+        contentNodeDialog.afterOpened().subscribe(() => {
+            if (this.showErrorNotification) {
+                this.notificationService.showWarning('ADF_CLOUD_TASK_FORM.ERROR.INCORRECT_DESTINATION_FOLDER_PATH');
+            }
+        });
 
-  close() {
-    this.dialog.closeAll();
-  }
+        contentNodeDialog.afterClosed().subscribe(() => {
+            this.showErrorNotification = false;
+        });
+    }
 
-  private handleError(error: any): Observable<any> {
-    return throwError(error || 'Server error');
-  }
+    close() {
+        this.dialog.closeAll();
+    }
+
+    private handleError(error: any): Observable<any> {
+        this.logService.error(error);
+        return throwError(error || 'Server error');
+    }
 }
