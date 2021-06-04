@@ -49,4 +49,6 @@ export interface SearchConfiguration {
         defaults: SearchSortingDefinition[];
     };
     highlight?: RequestHighlight;
+    name?: string;
+    default?: boolean;
 }

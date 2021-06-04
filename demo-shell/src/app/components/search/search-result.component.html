@@ -9,6 +9,15 @@
         <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
         <div class="app-search-results__sorting">
             <adf-search-sorting-picker></adf-search-sorting-picker>
+
+            <mat-form-field appearance="fill" *ngIf="searchForms">
+                <mat-label>Search forms</mat-label>
+                <mat-select name="Search form" [(ngModel)]="selectedForm" (selectionChange)="updateSearchForm()">
+                    <mat-option *ngFor="let forms of searchForms" [value]="forms.index">
+                        {{forms.name | translate}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
         <app-files-component
             [showHeader]="false"

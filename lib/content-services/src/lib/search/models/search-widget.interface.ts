@@ -16,7 +16,7 @@
  */
 
 import { SearchWidgetSettings } from './search-widget-settings.interface';
-import { SearchQueryBuilderService } from './search-query-builder.service';
+import { SearchQueryBuilderService } from '../search-query-builder.service';
 
 export interface SearchWidget {
     id: string;

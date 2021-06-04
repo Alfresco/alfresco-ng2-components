@@ -38,6 +38,10 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     isLoading = true;
 
     sorting = ['name', 'asc'];
+    selectedValue: string;
+
+    searchForms: any[];
+    selectedForm: number;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -55,6 +59,8 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.queryBuilder.resetToDefaults();
 
+        this.searchForms = this.queryBuilder.getSearchConfigurationDetails();
+        this.selectedForm = this.searchForms?.find(form => form.default)?.index;
         this.sorting = this.getSorting();
 
         this.queryBuilder.updated
@@ -135,5 +141,9 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         }
 
         return ['name', 'asc'];
+    }
+
+    updateSearchForm() {
+       this.queryBuilder.updateSelectedConfiguration(this.selectedForm);
     }
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchCategory } from '../search/search-category.interface';
+import { SearchCategory } from '../search/models/search-category.interface';
 
 export const mockContentModelTextProperty = {
     name: 'name',

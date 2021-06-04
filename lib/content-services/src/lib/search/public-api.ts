@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-export * from './facet-field-bucket.interface';
-export * from './facet-field.interface';
-export * from './facet-query.interface';
-export * from './filter-query.interface';
-export * from './filter-search.interface';
-export * from './search-category.interface';
-export * from './search-widget-settings.interface';
-export * from './search-widget.interface';
-export * from './search-configuration.interface';
+export * from './models/facet-field-bucket.interface';
+export * from './models/facet-field.interface';
+export * from './models/facet-query.interface';
+export * from './models/filter-query.interface';
+export * from './models/filter-search.interface';
+export * from './models/search-category.interface';
+export * from './models/search-widget-settings.interface';
+export * from './models/search-widget.interface';
+export * from './models/search-configuration.interface';
 export * from './search-query-builder.service';
-export * from './search-range.interface';
+export * from './models/search-range.interface';
 export * from './search-query-service.token';
 export * from './search-header-query-builder.service';
 

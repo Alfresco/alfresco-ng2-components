@@ -18,10 +18,10 @@
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { MatRadioChange } from '@angular/material/radio';
 
-import { SearchWidget } from '../../search-widget.interface';
-import { SearchWidgetSettings } from '../../search-widget-settings.interface';
+import { SearchWidget } from '../../models/search-widget.interface';
+import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
-import { SearchFilterList } from '../search-filter/models/search-filter-list.model';
+import { SearchFilterList } from '../../models/search-filter-list.model';
 
 export interface SearchRadioOption {
     name: string;

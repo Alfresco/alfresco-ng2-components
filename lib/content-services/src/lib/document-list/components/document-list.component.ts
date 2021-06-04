@@ -57,7 +57,7 @@ import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
-import { FilterSearch } from './../../search/filter-search.interface';
+import { FilterSearch } from './../../search/models/filter-search.interface';
 import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';

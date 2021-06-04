@@ -16,8 +16,8 @@
  */
 
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { SearchWidget } from '../../search-widget.interface';
-import { SearchWidgetSettings } from '../../search-widget-settings.interface';
+import { SearchWidget } from '../../models/search-widget.interface';
+import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 
 @Component({

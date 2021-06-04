@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { SearchCategory } from '../search/search-category.interface';
+import { SearchCategory } from '../search/models/search-category.interface';
 
 @Injectable({
     providedIn: 'root'

@@ -19,8 +19,8 @@ import { OnInit, Component, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
-import { SearchWidget } from '../../search-widget.interface';
-import { SearchWidgetSettings } from '../../search-widget-settings.interface';
+import { SearchWidget } from '../../models/search-widget.interface';
+import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { Moment } from 'moment';

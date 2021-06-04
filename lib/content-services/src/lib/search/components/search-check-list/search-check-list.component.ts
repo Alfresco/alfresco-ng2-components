@@ -17,10 +17,10 @@
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { SearchWidget } from '../../search-widget.interface';
-import { SearchWidgetSettings } from '../../search-widget-settings.interface';
+import { SearchWidget } from '../../models/search-widget.interface';
+import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
-import { SearchFilterList } from '../search-filter/models/search-filter-list.model';
+import { SearchFilterList } from '../../models/search-filter-list.model';
 
 export interface SearchListOption {
     name: string;
