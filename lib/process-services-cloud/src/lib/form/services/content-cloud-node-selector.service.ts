@@ -28,7 +28,7 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class ContentCloudNodeSelectorService {
 
-    showErrorNotification = false;
+    sourceNodeNotFound = false;
 
     constructor(
         private apiService: AlfrescoApiService,
@@ -61,10 +61,10 @@ export class ContentCloudNodeSelectorService {
     fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
         return from(this.apiService.nodesApi.getNode(alias, opts)).pipe(
             map((relativePathNodeEntry: NodeEntry) => {
-                return relativePathNodeEntry?.entry?.id;
+                return relativePathNodeEntry.entry.id;
             }),
             catchError((error) => {
-                this.showErrorNotification = true;
+                this.sourceNodeNotFound = true;
                 this.handleError(error);
                 return of(null);
             })
@@ -74,7 +74,7 @@ export class ContentCloudNodeSelectorService {
     fetchAliasNodeId(alias: string): Promise<string> {
         return from(this.apiService.nodesApi.getNode(alias)).pipe(
             map((aliasNodeEntry: NodeEntry) => {
-                return aliasNodeEntry?.entry?.id;
+                return aliasNodeEntry.entry.id;
             }),
             catchError((error) => {
                 this.handleError(error);
@@ -87,13 +87,13 @@ export class ContentCloudNodeSelectorService {
         const contentNodeDialog = this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
 
         contentNodeDialog.afterOpened().subscribe(() => {
-            if (this.showErrorNotification) {
+            if (this.sourceNodeNotFound) {
                 this.notificationService.showWarning('ADF_CLOUD_TASK_FORM.ERROR.INCORRECT_DESTINATION_FOLDER_PATH');
             }
         });
 
         contentNodeDialog.afterClosed().subscribe(() => {
-            this.showErrorNotification = false;
+            this.sourceNodeNotFound = false;
         });
     }
 

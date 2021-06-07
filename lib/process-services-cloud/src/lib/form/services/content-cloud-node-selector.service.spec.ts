@@ -75,7 +75,7 @@ describe('ContentCloudNodeSelectorService', () => {
         const relativePathNodeEntry = await service.fetchNodeIdFromRelativePath('mock-alias', { relativePath: 'mock-relativePath' });
         service.openUploadFileDialog('nodeId', 'single', true, true).subscribe(() => {
             expect(openDialogSpy).toHaveBeenCalled();
-            expect(service.showErrorNotification).toBe(true);
+            expect(service.sourceNodeNotFound).toBe(true);
             expect(showWarningSpy).toHaveBeenCalledWith('success');
             expect(relativePathNodeEntry).toBeNull();
         });
@@ -86,7 +86,7 @@ describe('ContentCloudNodeSelectorService', () => {
         service.openUploadFileDialog('nodeId', 'single', true, true);
 
         expect(openDialogSpy).toHaveBeenCalled();
-        expect(service.showErrorNotification).toBe(false);
+        expect(service.sourceNodeNotFound).toBe(false);
         expect(showWarningSpy).not.toHaveBeenCalled();
     });
 
