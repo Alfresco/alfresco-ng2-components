@@ -31,6 +31,7 @@ export class StartProcessPage {
     cancelProcessButton = element(by.id('cancel_process'));
     formStartProcessButton = element(by.css('button[data-automation-id="adf-form-start process"]'));
     startProcessButton = element(by.css('button[data-automation-id="btn-start"]'));
+    startProcessButtonDisabled = element(by.css('button[data-automation-id="btn-start"][disabled]'));
     noProcess = element(by.css('.adf-empty-content__title'));
     processDefinition = element(by.css('input[id="processDefinitionName"]'));
     processDefinitionOptionsPanel = element(by.css('div[class*="mat-autocomplete-panel"]'));
@@ -122,6 +123,11 @@ export class StartProcessPage {
     async isStartFormProcessButtonEnabled() {
         await BrowserVisibility.waitUntilElementIsVisible(this.formStartProcessButton);
         return this.formStartProcessButton.isEnabled();
+    }
+
+    async isStartProcessButtonEnabled() {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.startProcessButtonDisabled);
+        return await this.startProcessButton.isEnabled();
     }
 
     async checkStartProcessButtonIsEnabled() {
