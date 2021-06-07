@@ -18,7 +18,12 @@
 import { Logger } from '../../core/utils/logger';
 import { browser } from 'protractor';
 import { ApiService } from '../../core/actions/api.service';
-import { AppDefinitionsApi, RuntimeAppDefinitionsApi, AppDefinitionUpdateResultRepresentation } from '@alfresco/js-api';
+import {
+    AppDefinitionRepresentation,
+    AppDefinitionsApi,
+    RuntimeAppDefinitionsApi,
+    AppDefinitionUpdateResultRepresentation
+} from '@alfresco/js-api';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -60,7 +65,7 @@ export class ApplicationsUtil {
         return publishApp;
     }
 
-    async importPublishDeployApp(appFileLocation: string, option = {}) {
+    async importPublishDeployApp(appFileLocation: string, option = {}): Promise<any> {
         try {
             const appCreated = await this.importApplication(appFileLocation, option);
             const publishApp = await this.publishDeployApp(appCreated.id);
@@ -68,10 +73,11 @@ export class ApplicationsUtil {
             return appCreated;
         } catch (error) {
             Logger.error('Import Publish Deploy Application - Service error, Response: ', JSON.stringify(error));
+            return {};
         }
     }
 
-    async importNewVersionAppDefinitionPublishDeployApp(appFileLocation: string, modelId: number) {
+    async importNewVersionAppDefinitionPublishDeployApp(appFileLocation: string, modelId: number): Promise<any> {
         const pathFile = path.join(browser.params.testConfig.main.rootPath + appFileLocation);
         const file = fs.createReadStream(pathFile);
 
@@ -84,16 +90,17 @@ export class ApplicationsUtil {
         return appCreated;
     }
 
-    async importApplication(appFileLocation: string, options = {}): Promise<any> {
+    async importApplication(appFileLocation: string, options = {}): Promise<AppDefinitionRepresentation> {
         try {
             const file = fs.createReadStream(appFileLocation);
             return await this.appDefinitionsApi.importAppDefinition(file, options);
         } catch (error) {
             Logger.error('Import Application - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
+            return {};
         }
     }
 
-    async getAppDefinitionByName(appName: string): Promise<any> {
+    async getAppDefinitionByName(appName: string): Promise<AppDefinitionRepresentation> {
         try {
             const appDefinitionsList = await this.appsApi.getAppDefinitions();
             return appDefinitionsList.data.find((currentApp) => {
@@ -101,6 +108,7 @@ export class ApplicationsUtil {
             });
         } catch (error) {
             Logger.error('Get AppDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
+            return {};
         }
     }
 

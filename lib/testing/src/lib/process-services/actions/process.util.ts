@@ -70,7 +70,7 @@ export class ProcessUtil {
     async startProcessOfApp(appName: string, processName?: string): Promise<any> {
         try {
             const appDefinition = await new ApplicationsUtil(this.api).getAppDefinitionByName(appName);
-            const processDefinitionList = await this.processDefinitionsApi.getProcessDefinitions({ deploymentId: appDefinition[0].deploymentId });
+            const processDefinitionList = await this.processDefinitionsApi.getProcessDefinitions({ deploymentId: appDefinition.deploymentId });
             const startProcessOptions: any = { processDefinitionId: processDefinitionList.data[0].id, name: processName ? processName : StringUtil.generateRandomString(5).toLowerCase() };
             return this.processInstancesApi.startNewProcessInstance(startProcessOptions);
         } catch (error) {
