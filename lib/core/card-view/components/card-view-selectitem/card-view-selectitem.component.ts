@@ -98,7 +98,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     showNoneOption() {
-        return this.displayNoneOption;
+        return this.displayNoneOption && this.property.key !== 'nodeType';
     }
 
     get showProperty(): boolean {
