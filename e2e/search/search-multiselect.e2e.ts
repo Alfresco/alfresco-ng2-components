@@ -35,7 +35,6 @@ describe('Search Component - Multi-Select Facet', () => {
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
-    const sitesApi = new SitesApi(apiService.getInstance());
 
     let site, userOption;
 
