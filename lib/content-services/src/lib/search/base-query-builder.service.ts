@@ -54,6 +54,7 @@ export abstract class BaseQueryBuilderService {
     sorting: SearchSortingDefinition[] = [];
     sortingOptions: SearchSortingDefinition[] = [];
     private scope: RequestScope;
+    private selectedConfiguration: number;
 
     protected userFacetBuckets: { [key: string]: FacetFieldBucket[] } = {};
 
@@ -88,6 +89,11 @@ export abstract class BaseQueryBuilderService {
 
     public getDefaultConfiguration(): SearchConfiguration | undefined {
         const configurations = this.loadConfiguration();
+
+        if (this.selectedConfiguration >= 0) {
+            return configurations[this.selectedConfiguration];
+        }
+
         if (Array.isArray(configurations)) {
             return configurations.find((configuration) => configuration.default);
         }
@@ -97,6 +103,7 @@ export abstract class BaseQueryBuilderService {
     public updateSelectedConfiguration(index: number): void {
         const currentConfig = this.loadConfiguration();
         if (Array.isArray(currentConfig) && currentConfig[index] !== undefined) {
+            this.selectedConfiguration = index;
             this.resetSearchOptions();
             this.setUpSearchConfiguration(currentConfig[index]);
             this.update();
