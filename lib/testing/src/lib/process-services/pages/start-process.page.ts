@@ -130,10 +130,6 @@ export class StartProcessPage {
         return await this.startProcessButton.isEnabled();
     }
 
-    async checkStartProcessButtonIsEnabled() {
-        await expect(await this.startProcessButton.isEnabled()).toBe(true);
-    }
-
     async checkStartProcessButtonIsDisabled() {
         await expect(await this.startProcessButton.isEnabled()).toBe(false);
     }

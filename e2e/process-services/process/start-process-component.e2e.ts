@@ -190,8 +190,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
 
                 await expect(await startProcessPage.getDefaultName()).toEqual('My Default Name');
-
-                await startProcessPage.checkStartProcessButtonIsEnabled();
+                await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
             });
 
             it('[C260449] Should be possible to start a process with start event', async () => {
@@ -237,7 +236,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkProcessOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.checkProcessOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
                 await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await startProcessPage.checkStartProcessButtonIsEnabled();
+                await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
             });
 
             it('[C286508] Should display only one option when typing an existent process definition', async () => {
@@ -249,7 +248,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkProcessOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.checkProcessOptionIsNotDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
                 await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await startProcessPage.checkStartProcessButtonIsEnabled();
+                await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
             });
 
             it('[C286509] Should select automatically the processDefinition when the app contains only one', async () => {
@@ -258,7 +257,7 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
                 await expect(await startProcessPage.getProcessDefinitionValue()).toBe(simpleApp.title);
-                await startProcessPage.checkStartProcessButtonIsEnabled();
+                await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
             });
 
             it('[C286511] Should be able to type the process definition and start a process', async () => {
@@ -269,7 +268,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.typeProcessDefinition(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.enterProcessName('Type');
-                await startProcessPage.checkStartProcessButtonIsEnabled();
+                await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
                 await expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.clickStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
@@ -441,7 +440,7 @@ describe('Start Process Component', () => {
 
                 await startProcessPage.enterProcessName(processName255Characters);
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await startProcessPage.checkStartProcessButtonIsEnabled();
+                await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
 
                 await startProcessPage.enterProcessName(processNameBiggerThen255Characters);
                 await startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);

@@ -77,7 +77,7 @@ describe('Start Process', () => {
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
 
         await startProcessPage.checkValidationErrorIsDisplayed(requiredError);
-        await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+        await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(false);
 
         await BrowserActions.closeMenuAndDialogs();
         await startProcessPage.clickCancelProcessButton();
@@ -90,11 +90,11 @@ describe('Start Process', () => {
         await startProcessPage.selectFirstOptionFromProcessDropdown();
 
         await startProcessPage.enterProcessName(processName255Characters);
-        await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
+        await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
 
         await startProcessPage.enterProcessName(processNameBiggerThen255Characters);
         await startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
-        await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
+        await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(false);
     });
 
     it('[C291860] Should be able to start a process', async () => {
@@ -105,8 +105,7 @@ describe('Start Process', () => {
 
         await startProcessPage.clearField(startProcessPage.processNameInput);
         await startProcessPage.enterProcessName(processName);
-        await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
-        await browser.sleep(400);
+        await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
         await startProcessPage.clickStartProcessButton();
         await processFilter.clickOnProcessFilters();
 
