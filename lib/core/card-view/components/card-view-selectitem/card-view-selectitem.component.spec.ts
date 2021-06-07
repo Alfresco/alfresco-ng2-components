@@ -47,6 +47,14 @@ describe('CardViewSelectItemComponent', () => {
         key: 'key',
         editable: true
     };
+    const mockNodeTypes = [{ key: 'type1', label: 'Type 1' }, { key: 'type2', label: 'Type 2' }];
+    const mockNodeTypeProps = {
+        label: 'Select node type',
+        value: 'node type',
+        options$: of(mockNodeTypes),
+        key: 'nodeType',
+        editable: true
+    }
 
     setupTestBed({
         imports: [
@@ -158,6 +166,24 @@ describe('CardViewSelectItemComponent', () => {
             const noneElement: HTMLElement = overlayContainer.getContainerElement().querySelector('mat-option');
             expect(noneElement).toBeDefined();
             expect(noneElement.innerText).toEqual('CORE.CARDVIEW.NONE');
+        });
+
+        it('should not display None option in the nodeType select', () => {
+            component.property = new CardViewSelectItemModel({
+                ...mockNodeTypeProps,
+                editable: true
+            });
+            component.editable = true;
+            component.displayNoneOption = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            const selectBox = fixture.debugElement.query(By.css('.mat-select-trigger'));
+            selectBox.triggerEventHandler('click', {});
+
+            fixture.detectChanges();
+            const optionsElement = Array.from(overlayContainer.getContainerElement().querySelectorAll('mat-option'));
+            expect(optionsElement.length).toEqual(2);
         });
 
         it('should render select box if editable property is TRUE', () => {
