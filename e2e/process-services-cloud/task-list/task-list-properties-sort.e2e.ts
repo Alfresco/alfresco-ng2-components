@@ -123,10 +123,9 @@ describe('Edit task filters and task list properties', () => {
         }));
     }, 5 * 60 * 1000);
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        done();
     });
 
     describe('Edit task filters and task list properties - sort properties', () => {

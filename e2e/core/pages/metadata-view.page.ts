@@ -250,7 +250,7 @@ export class MetadataViewPage {
     async changeContentType(option: string, attempt = 0, maxAttempt = 3): Promise<boolean> {
         const nodeType = TestElement.byCss('div[data-automation-id="header-nodeType"] .mat-select-trigger');
         if (attempt > maxAttempt) {
-            console.error(`content type select option not found. check acs version may be lesser than 7.0.0`);
+            Logger.error(`content type select option not found. check acs version may be lesser than 7.0.0`);
             return false;
         }
         try {

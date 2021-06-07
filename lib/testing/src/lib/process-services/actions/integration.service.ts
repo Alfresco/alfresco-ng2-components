@@ -17,6 +17,7 @@
 
 import { ApiService } from '../../core/actions/api.service';
 import { E2eRequestApiHelper } from '../../core/actions/e2e-request-api.helper';
+import { Logger } from '../../core/utils/logger';
 
 export class IntegrationService {
     api: ApiService;
@@ -38,10 +39,14 @@ export class IntegrationService {
             authenticationType: 'basic'
         };
 
-        await this.requestApiHelper.post('app/rest/integration/alfresco', { bodyParam: repository });
+        try {
+            await this.requestApiHelper.post('activiti-app/app/rest/integration/alfresco', { bodyParam: repository });
+        } catch (e) {
+            Logger.error(e);
+        }
     }
 
     async authenticateRepository(id: number, body: { username: string, password: string }): Promise<any> {
-        await this.requestApiHelper.post(`app/rest/integration/alfresco/${id}/account`, { bodyParam: body });
+        await this.requestApiHelper.post(`activiti-app/app/rest/integration/alfresco/${id}/account`, { bodyParam: body });
     }
 }

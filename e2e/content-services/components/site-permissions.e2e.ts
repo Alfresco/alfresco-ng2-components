@@ -18,7 +18,7 @@
 import { PermissionsPage } from '../../content-services/pages/permissions.page';
 import {
     ApiService,
-    BrowserActions,
+    BrowserActions, Logger,
     LoginPage,
     NotificationHistoryPage, SearchService,
     StringUtil,
@@ -160,7 +160,7 @@ describe('Permissions Component', () => {
             try {
                 await searchService.isUserSearchable(consumerUser);
             } catch (e) {
-                console.error(`*****\n Failed to sync user \n*****`);
+                Logger.error(`*****\n Failed to sync user \n*****`);
             }
             await browser.sleep(browser.params.testConfig.timeouts.index_search);
         } catch (error) {

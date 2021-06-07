@@ -20,7 +20,7 @@ import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import {
     ApiService,
-    BrowserActions,
+    BrowserActions, Logger,
     LoginPage,
     NotificationHistoryPage,
     PermissionActions,
@@ -121,7 +121,7 @@ describe('Permissions Component', () => {
             try {
                 await searchService.isUserSearchable(filePermissionUser);
             } catch (e) {
-                console.error(`*****\n Failed to sync user \n*****`);
+                Logger.error(`*****\n Failed to sync user \n*****`);
             }
             await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
         } catch (e) {
