@@ -32,7 +32,8 @@ export class UploadFilesEvent {
     constructor(
         public files: Array<FileModel>,
         private uploadService: UploadService,
-        private callback: EventEmitter<any>
+        private successEmitter: EventEmitter<any>,
+        private errorEmitter: EventEmitter<any>
     ) {}
 
     pauseUpload() {
@@ -42,7 +43,7 @@ export class UploadFilesEvent {
     resumeUpload() {
         if (this.files && this.files.length > 0) {
             this.uploadService.addToQueue(...this.files);
-            this.uploadService.uploadFilesInTheQueue(this.callback);
+            this.uploadService.uploadFilesInTheQueue(this.successEmitter, this.errorEmitter);
         }
     }
 }

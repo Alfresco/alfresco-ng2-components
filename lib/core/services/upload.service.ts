@@ -166,9 +166,10 @@ export class UploadService {
 
     /**
      * Finds all the files in the queue that are not yet uploaded and uploads them into the directory folder.
-     * @param emitter Emitter to invoke on file status change
+     * @param successEmitter Emitter to invoke on file success status change
+     * @param errorEmitter Emitter to invoke on file error status change
      */
-    uploadFilesInTheQueue(emitter?: EventEmitter<any>): void {
+    uploadFilesInTheQueue(successEmitter?: EventEmitter<any>, errorEmitter?: EventEmitter<any>): void {
         if (!this.activeTask) {
             const file = this.queue.find(
                 (currentFile) => currentFile.status === FileUploadStatus.Pending
@@ -176,13 +177,13 @@ export class UploadService {
             if (file) {
                 this.onUploadStarting(file);
 
-                const promise = this.beginUpload(file, emitter);
+                const promise = this.beginUpload(file, successEmitter, errorEmitter);
                 this.activeTask = promise;
                 this.cache[file.name] = promise;
 
                 const next = () => {
                     this.activeTask = null;
-                    setTimeout(() => this.uploadFilesInTheQueue(emitter), 100);
+                    setTimeout(() => this.uploadFilesInTheQueue(successEmitter, errorEmitter), 100);
                 };
 
                 promise.next = next;
@@ -270,7 +271,7 @@ export class UploadService {
         }
     }
 
-    private beginUpload(file: FileModel, emitter: EventEmitter<any>): any {
+    private beginUpload(file: FileModel, successEmitter?: EventEmitter<any>, errorEmitter?: EventEmitter<any>): any {
         const promise = this.getUploadPromise(file);
         promise
             .on('progress', (progress: FileUploadProgress) => {
@@ -278,14 +279,14 @@ export class UploadService {
             })
             .on('abort', () => {
                 this.onUploadAborted(file);
-                if (emitter) {
-                    emitter.emit({ value: 'File aborted' });
+                if (successEmitter) {
+                    successEmitter.emit({ value: 'File aborted' });
                 }
             })
             .on('error', (err) => {
                 this.onUploadError(file, err);
-                if (emitter) {
-                    emitter.emit({ value: 'Error file uploaded' });
+                if (errorEmitter) {
+                    errorEmitter.emit({ value: 'Error file uploaded' });
                 }
             })
             .on('success', (data) => {
@@ -296,13 +297,13 @@ export class UploadService {
                     } else {
                         this.deleteAbortedNodeVersion(data.entry.id, data.entry.properties['cm:versionLabel']);
                     }
-                    if (emitter) {
-                        emitter.emit({ value: 'File deleted' });
+                    if (successEmitter) {
+                        successEmitter.emit({ value: 'File deleted' });
                     }
                 } else {
                     this.onUploadComplete(file, data);
-                    if (emitter) {
-                        emitter.emit({ value: data });
+                    if (successEmitter) {
+                        successEmitter.emit({ value: data });
                     }
                 }
             })

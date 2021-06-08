@@ -20,6 +20,7 @@ import { FileModel, UploadService, setupTestBed } from '@alfresco/adf-core';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { mockUploadSuccessPromise, mockUploadErrorPromise } from '../../mock/upload.service.mock';
 
 function getFakeShareDataRow(allowableOperations = ['delete', 'update', 'create']) {
     return {
@@ -222,6 +223,7 @@ describe('UploadDragAreaComponent', () => {
         it('should only upload those files whose fileTypes are in acceptedFilesType', async(() => {
             spyOn(uploadService, 'uploadFilesInTheQueue');
             component.success = null;
+            component.error = null;
             component.acceptedFilesType = '.jpg,.pdf';
             fixture.detectChanges();
             const files: File[] = [
@@ -231,7 +233,7 @@ describe('UploadDragAreaComponent', () => {
             ];
             component.onFilesDropped(files);
             fixture.whenStable().then(() => {
-                expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
+                expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null, null);
                 const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
                 expect(filesCalledWith.length).toBe(2, 'Files should contain two elements');
                 expect(filesCalledWith[0].name).toBe('phobos.jpg');
@@ -242,12 +244,13 @@ describe('UploadDragAreaComponent', () => {
         it('should upload a file if fileType is in acceptedFilesType', async(() => {
             spyOn(uploadService, 'uploadFilesInTheQueue');
             component.success = null;
+            component.error = null;
             component.acceptedFilesType = '.png';
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
                 component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { type: 'image/png' })]);
-                expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
+                expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null, null);
             });
         }));
 
@@ -281,23 +284,25 @@ describe('UploadDragAreaComponent', () => {
 
         it('should not upload a file if fileType is not in acceptedFilesType', async(() => {
             component.success = null;
+            component.error = null;
             component.acceptedFilesType = '.pdf';
             fixture.detectChanges();
             spyOn(uploadService, 'uploadFilesInTheQueue');
 
             fixture.whenStable().then(() => {
                 component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { type: 'image/png' })]);
-                expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalledWith(null);
+                expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalledWith(null, null);
             });
         }));
 
         it('should upload a file with a custom root folder ID when dropped', async(() => {
             component.success = null;
+            component.error = null;
             fixture.detectChanges();
             spyOn(uploadService, 'uploadFilesInTheQueue');
 
             component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { type: 'image/png' })]);
-            expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
+            expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null, null);
         }));
 
         it('should upload a file when user has create permission on target folder', async(() => {
@@ -418,6 +423,68 @@ describe('UploadDragAreaComponent', () => {
         it('should raise an error if upload a file goes wrong', (done) => {
             spyOn(uploadService, 'getUploadPromise').and.callThrough();
 
+            const fakeItem = {
+                fullPath: '/folder-fake/file-fake.png',
+                isDirectory: false,
+                isFile: true,
+                relativeFolder: '/',
+                name: 'file-fake.png',
+                file: (callbackFile) => {
+                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                    callbackFile(fileFake);
+                }
+            };
+
+            fixture.detectChanges();
+
+            component.error.subscribe((error) => {
+                expect(error).not.toBeNull();
+                done();
+            });
+
+            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+                detail: {
+                    data: getFakeShareDataRow(),
+                    files: [fakeItem]
+                }
+            });
+
+            component.onUploadFiles(fakeCustomEvent);
+        });
+
+        it('should emit success if successful of upload a file', (done) => {
+            spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadSuccessPromise);
+            const fakeItem = {
+                fullPath: '/folder-fake/file-fake.png',
+                isDirectory: false,
+                isFile: true,
+                relativeFolder: '/',
+                name: 'file-fake.png',
+                file: (callbackFile) => {
+                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                    callbackFile(fileFake);
+                }
+            };
+
+            fixture.detectChanges();
+
+            component.success.subscribe((success) => {
+                expect(success).not.toBeNull();
+                done();
+            });
+
+            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+                detail: {
+                    data: getFakeShareDataRow(),
+                    files: [fakeItem]
+                }
+            });
+
+            component.onUploadFiles(fakeCustomEvent);
+        });
+
+        it('should emit error if upload errored', (done) => {
+            spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadErrorPromise);
             const fakeItem = {
                 fullPath: '/folder-fake/file-fake.png',
                 isDirectory: false,

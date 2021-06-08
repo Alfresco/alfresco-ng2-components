@@ -195,7 +195,7 @@ describe('UploadService', () => {
             <FileUploadOptions> { parentId: '-root-' }
         );
         service.addToQueue(fileFake);
-        service.uploadFilesInTheQueue(emitter);
+        service.uploadFilesInTheQueue(null, emitter);
         expect(jasmine.Ajax.requests.mostRecent().url)
             .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
 
