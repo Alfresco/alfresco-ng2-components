@@ -34,8 +34,7 @@ export class ContentCloudNodeSelectorService {
         private apiService: AlfrescoApiService,
         private logService: LogService,
         private notificationService: NotificationService,
-        private dialog: MatDialog) {
-    }
+        private dialog: MatDialog) {}
 
     openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {
         const select = new Subject<Node[]>();
@@ -85,13 +84,11 @@ export class ContentCloudNodeSelectorService {
 
     private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
         const contentNodeDialog = this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
-
         contentNodeDialog.afterOpened().subscribe(() => {
             if (this.sourceNodeNotFound) {
                 this.notificationService.showWarning('ADF_CLOUD_TASK_FORM.ERROR.INCORRECT_DESTINATION_FOLDER_PATH');
             }
         });
-
         contentNodeDialog.afterClosed().subscribe(() => {
             this.sourceNodeNotFound = false;
         });
