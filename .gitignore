@@ -27,3 +27,4 @@ out-tsc
 !/.protractor-smartrunner/
 /reports/
 e2e-result-*
+licenses.txt

@@ -33,6 +33,7 @@ import {
     SitesApi
 } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
+import { LogService } from './log.service';
 
 @Injectable({
     providedIn: 'root'
@@ -305,7 +306,7 @@ export class SitesService {
     }
 
     private handleError(error: any): Observable<never> {
-        console.error(error);
+        LogService.error(error);
         return throwError(error || 'Server error');
     }
 }

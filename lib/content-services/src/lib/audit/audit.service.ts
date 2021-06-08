@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { AlfrescoApiService } from '../../../../core/services';
+import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { AuditApi, AuditAppPaging, AuditAppEntry, AuditApp, AuditBodyUpdate, AuditEntryPaging, AuditEntryEntry } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 
@@ -111,7 +111,7 @@ export class AuditService {
     }
 
     private handleError(error: any): any {
-        console.error(error);
+        LogService.error(error);
         return throwError(error || 'Server error');
     }
 }
