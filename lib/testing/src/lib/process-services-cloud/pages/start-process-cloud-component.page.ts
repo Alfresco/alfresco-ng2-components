@@ -95,7 +95,7 @@ export class StartProcessCloudPage {
         try {
             await BrowserVisibility.waitUntilElementIsVisible(this.startProcessButtonDisabled);
             return true;
-        } catch(error) {
+        } catch (error) {
             return false;
         }
     }
