@@ -26,7 +26,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class RatingService {
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
     }
 
     /**
@@ -74,7 +74,7 @@ export class RatingService {
     }
 
     private handleError(error: any): any {
-        LogService.error(error);
+        this.logService.error(error);
         return throwError(error || 'Server error');
     }
 }
