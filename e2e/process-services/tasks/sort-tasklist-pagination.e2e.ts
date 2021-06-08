@@ -65,11 +65,11 @@ describe('Task List Pagination - Sorting', () => {
         await applicationsService.importPublishDeployApp(app.file_path);
 
         for (let i = 0; i < nrOfTasks; i++) {
-            await taskUtil.createStandaloneTask(taskNames[0]);
+            await taskUtil.createStandaloneTask(taskNames[i]);
         }
 
         await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+    });
 
     it('[C260308] Should be possible to sort tasks by name', async () => {
         await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
@@ -79,13 +79,12 @@ describe('Task List Pagination - Sorting', () => {
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().sortByName('ASC');
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
-        await taskPage.filtersPage().getAllRowsNameColumn().then(async (list) => {
-            await expect(JSON.stringify(list) === JSON.stringify(taskNames)).toEqual(true);
-        });
+        const listAsc = await taskPage.filtersPage().getAllRowsNameColumn();
+        await expect(JSON.stringify(listAsc) === JSON.stringify(taskNames)).toEqual(true);
         await taskPage.filtersPage().sortByName('DESC');
-        await taskPage.filtersPage().getAllRowsNameColumn().then(async (list) => {
-            taskNames.reverse();
-            await expect(JSON.stringify(list) === JSON.stringify(taskNames)).toEqual(true);
-        });
+        const listDesc = await taskPage.filtersPage().getAllRowsNameColumn();
+
+        taskNames.reverse();
+        await expect(JSON.stringify(listDesc) === JSON.stringify(taskNames)).toEqual(true);
     });
 });

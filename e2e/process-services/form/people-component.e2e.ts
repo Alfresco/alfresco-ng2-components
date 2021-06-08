@@ -50,7 +50,7 @@ describe('People component', () => {
 
         await apiService.login(processUserModel.username, processUserModel.password);
 
-        await applicationUtil.importApplication(app.file_location);
+        await applicationUtil.importApplication(app.file_path);
 
         await taskUtil.createStandaloneTask(tasks[0]);
         await taskUtil.createStandaloneTask(tasks[1]);

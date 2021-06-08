@@ -42,7 +42,6 @@ describe('Dynamic Table widget ', () => {
     const processUtil = new ProcessUtil(apiService);
 
     let processUserModel;
-    let appModel;
     let deployedAppId, process;
 
     describe('with Date Time Widget App', () => {
@@ -53,7 +52,7 @@ describe('Dynamic Table widget ', () => {
             processUserModel = await usersActions.createUser();
 
             await apiService.login(processUserModel.username, processUserModel.password);
-            appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
+            const appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
             deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
@@ -103,7 +102,7 @@ describe('Dynamic Table widget ', () => {
             processUserModel = await usersActions.createUser();
 
             await apiService.login(processUserModel.username, processUserModel.password);
-            appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
+            const appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
             deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
@@ -159,11 +158,11 @@ describe('Dynamic Table widget ', () => {
             processUserModel = await usersActions.createUser();
 
             await apiService.login(processUserModel.username, processUserModel.password);
-            const application = await applicationsService.importPublishDeployApp(app.file_path);
+            const appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
             deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
-            process = await processUtil.startProcessByDefinitionName(application.name, app.CUSTOM_VALIDATOR.processName);
+            process = await processUtil.startProcessByDefinitionName(appModel.name, app.CUSTOM_VALIDATOR.processName);
         });
 
         afterAll(async () => {

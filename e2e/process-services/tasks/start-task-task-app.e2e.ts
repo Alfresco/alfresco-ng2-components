@@ -71,7 +71,7 @@ describe('Start Task - Task App', () => {
 
         await apiService.login(processUserModel.username, processUserModel.password);
 
-        await applicationsUtil.importApplication(app.file_location);
+        await applicationsUtil.importApplication(app.file_path);
 
         await taskUtil.createStandaloneTask(showHeaderTask);
 
