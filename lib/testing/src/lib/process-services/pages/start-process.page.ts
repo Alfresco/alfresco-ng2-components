@@ -127,7 +127,7 @@ export class StartProcessPage {
 
     async isStartProcessButtonEnabled() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.startProcessButtonDisabled);
-        return await this.startProcessButton.isEnabled();
+        return this.startProcessButton.isEnabled();
     }
 
     async checkStartProcessButtonIsDisabled() {
