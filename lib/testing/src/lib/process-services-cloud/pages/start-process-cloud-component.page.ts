@@ -28,6 +28,7 @@ export class StartProcessCloudPage {
     cancelProcessButton = element(by.id('cancel_process'));
     formStartProcessButton = element(by.css('button[data-automation-id="adf-form-start process"]'));
     startProcessButton = element(by.css('button[data-automation-id="btn-start"]'));
+    startProcessButtonDisabled = element(by.css('button[data-automation-id="btn-start"][disabled]'));
     noProcess = element(by.id('no-process-message'));
     processDefinition = element(by.css('input[id="processDefinitionName"]'));
     processDefinitionOptionsPanel = element(by.css('div[class*="processDefinitionOptions"]'));
@@ -83,10 +84,19 @@ export class StartProcessCloudPage {
         await BrowserActions.click(this.cancelProcessButton);
     }
 
-    async checkStartProcessButtonIsEnabled(): Promise<boolean> {
-        await browser.sleep(2000); // waiting for API response
+    async isStartProcessButtonEnabled(): Promise<boolean> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.startProcessButtonDisabled);
         await BrowserVisibility.waitUntilElementIsVisible(this.startProcessButton);
         return this.startProcessButton.isEnabled();
+    }
+
+    async isStartProcessButtonDisabled(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.startProcessButtonDisabled);
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 
     async clickStartProcessButton(): Promise<void> {
@@ -111,7 +121,8 @@ export class StartProcessCloudPage {
     async startProcessWithProcessDefinition(processName: string, processDefinition: string) {
         await this.selectFromProcessDropdown(processDefinition);
         await this.enterProcessName(processName);
-        await this.checkStartProcessButtonIsEnabled();
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.startProcessButtonDisabled);
+        await BrowserVisibility.waitUntilElementIsVisible(this.startProcessButton);
         await this.clickStartProcessButton();
     }
 
