@@ -77,7 +77,7 @@ describe('Start Process', () => {
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
 
         await startProcessPage.checkValidationErrorIsDisplayed(requiredError);
-        await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(false);
+        await expect(await startProcessPage.isStartProcessButtonDisabled()).toEqual(true);
 
         await BrowserActions.closeMenuAndDialogs();
         await startProcessPage.clickCancelProcessButton();
@@ -94,7 +94,7 @@ describe('Start Process', () => {
 
         await startProcessPage.enterProcessName(processNameBiggerThen255Characters);
         await startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
-        await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(false);
+        await expect(await startProcessPage.isStartProcessButtonDisabled()).toEqual(true);
     });
 
     it('[C291860] Should be able to start a process', async () => {

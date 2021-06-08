@@ -241,17 +241,17 @@ describe('Start Task Form', () => {
 
         it('[C311277] Should be able to start a process with a start event form - form validation', async () => {
             await expect(await widget.textWidget().getErrorMessage('FirstName')).toContain('Enter no more than 10 characters');
-            await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(false);
+            await expect(await startProcessPage.isStartProcessButtonDisabled()).toEqual(true);
 
             await widget.textWidget().setValue('FirstName', 'Sam');
             await expect(await widget.textWidget().getErrorMessage('FirstName')).toContain('Enter at least 5 characters');
-            await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(false);
+            await expect(await startProcessPage.isStartProcessButtonDisabled()).toEqual(true);
             await widget.numberWidget().setFieldValue('Number07vyx9', 9);
             await expect(await widget.numberWidget().getErrorMessage('Number07vyx9')).toContain('Can\'t be less than 10');
-            await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(false);
+            await expect(await startProcessPage.isStartProcessButtonDisabled()).toEqual(true);
             await widget.numberWidget().setFieldValue('Number07vyx9', 99999);
             await expect(await widget.numberWidget().getErrorMessage('Number07vyx9')).toContain('Can\'t be greater than 1,000');
-            await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(false);
+            await expect(await startProcessPage.isStartProcessButtonDisabled()).toEqual(true);
         });
 
         it('[C311277] Should be able to start a process with a start event form - claim and complete the process', async () => {
