@@ -112,7 +112,8 @@ export class StartProcessCloudPage {
     async startProcessWithProcessDefinition(processName: string, processDefinition: string) {
         await this.selectFromProcessDropdown(processDefinition);
         await this.enterProcessName(processName);
-        await this.checkStartProcessButtonIsEnabled();
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.startProcessButtonDisabled);
+        await BrowserVisibility.waitUntilElementIsVisible(this.startProcessButton);
         await this.clickStartProcessButton();
     }
 
