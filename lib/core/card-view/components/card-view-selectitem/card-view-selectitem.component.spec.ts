@@ -171,10 +171,12 @@ describe('CardViewSelectItemComponent', () => {
         it('should not display None option in the nodeType select', () => {
             component.property = new CardViewSelectItemModel({
                 ...mockNodeTypeProps,
-                editable: true
+                editable: true,
+                displayNoneOption: false
             });
             component.editable = true;
             component.displayNoneOption = true;
+
             component.ngOnChanges();
             fixture.detectChanges();
 

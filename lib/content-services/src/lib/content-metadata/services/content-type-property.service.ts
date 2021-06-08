@@ -85,6 +85,7 @@ export class ContentTypePropertiesService {
             value: currentValue,
             key: 'nodeType',
             editable: true,
+            displayNoneOption: false,
             options$: options$
         });
 

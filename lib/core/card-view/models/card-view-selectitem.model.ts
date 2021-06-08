@@ -24,6 +24,9 @@ import { switchMap } from 'rxjs/operators';
 
 export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'select';
+
+    displayNoneOption: boolean;
+
     options$: Observable<CardViewSelectItemOption<T>[]>;
 
     valueFetch$: Observable<string> = null;
@@ -38,6 +41,8 @@ export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements
                 const option = options.find((o) => o.key === this.value?.toString());
                 return of(option ? option.label : '');
         }));
+
+        this.displayNoneOption = cardViewSelectItemProperties.displayNoneOption ?? true;
     }
 
     get displayValue() {
