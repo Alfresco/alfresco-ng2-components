@@ -42,7 +42,7 @@ export class SitesService {
 
     sitesApi: SitesApi;
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
         this.sitesApi = new SitesApi(apiService.getInstance());
     }
 
@@ -306,7 +306,7 @@ export class SitesService {
     }
 
     private handleError(error: any): Observable<never> {
-        LogService.error(error);
+        this.logService.error(error);
         return throwError(error || 'Server error');
     }
 }
