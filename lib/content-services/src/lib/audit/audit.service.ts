@@ -28,8 +28,7 @@ export class AuditService {
 
     auditApi: AuditApi;
 
-    constructor(
-        private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
         this.auditApi = new AuditApi(this.apiService.getInstance());
     }
 
@@ -111,7 +110,7 @@ export class AuditService {
     }
 
     private handleError(error: any): any {
-        LogService.error(error);
+        this.logService.error(error);
         return throwError(error || 'Server error');
     }
 }
