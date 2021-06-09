@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, BpmUserService } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, BpmUserService, BpmUserModel } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import {
     completedTaskDetailsMock,
@@ -42,7 +42,7 @@ describe('TaskHeaderComponent', () => {
     let userBpmService: BpmUserService;
     let appConfigService: AppConfigService;
 
-    const fakeBpmAssignedUser = {
+    const fakeBpmAssignedUser = new BpmUserModel({
         id: 1001,
         apps: [],
         capabilities: 'fake-capability',
@@ -54,7 +54,7 @@ describe('TaskHeaderComponent', () => {
         lastName: 'Adams',
         fullname: 'Wilbur Adams',
         groups: []
-    };
+    });
 
     setupTestBed({
         imports: [
@@ -252,7 +252,7 @@ describe('TaskHeaderComponent', () => {
     }));
 
     it('should emit claim event when task is claimed', (done) => {
-        spyOn(service, 'claimTask').and.returnValue(of({}));
+        spyOn(service, 'claimTask').and.returnValue(of(null));
         component.taskDetails = claimableTaskDetailsMock;
 
         component.claim.subscribe((taskId) => {
@@ -268,7 +268,7 @@ describe('TaskHeaderComponent', () => {
     });
 
     it('should emit unclaim event when task is unclaimed', (done) => {
-        spyOn(service, 'unclaimTask').and.returnValue(of({}));
+        spyOn(service, 'unclaimTask').and.returnValue(of(null));
         component.taskDetails = claimedTaskDetailsMock;
 
         component.unclaim.subscribe((taskId: string) => {

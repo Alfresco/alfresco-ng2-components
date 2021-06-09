@@ -38,7 +38,7 @@ describe('StartTaskCloudComponent', () => {
     let createNewTaskSpy: jasmine.Spy;
     let alfrescoApiService: AlfrescoApiService;
 
-    const mock = {
+    const mock: any = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(taskDetailsMock)
         },
@@ -68,7 +68,7 @@ describe('StartTaskCloudComponent', () => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         formDefinitionSelectorCloudService = TestBed.inject(FormDefinitionSelectorCloudService);
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
-        createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock));
+        createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock as any));
         spyOn(identityService, 'getCurrentUserInfo').and.returnValue(mockUser);
         spyOn(formDefinitionSelectorCloudService, 'getForms').and.returnValue(of([]));
         fixture.detectChanges();

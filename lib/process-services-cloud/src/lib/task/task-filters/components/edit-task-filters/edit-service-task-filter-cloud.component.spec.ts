@@ -34,6 +34,7 @@ import { fakeServiceFilter } from '../../mock/task-filters-cloud.mock';
 import { TranslateModule } from '@ngx-translate/core';
 import { EditServiceTaskFilterCloudComponent } from './edit-service-task-filter-cloud.component';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
+import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
 
 describe('EditServiceTaskFilterCloudComponent', () => {
     let component: EditServiceTaskFilterCloudComponent;
@@ -71,7 +72,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
                 icon: 'icon',
                 name: 'fake-name'
             })
-        });
+        } as any);
         getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(of(fakeServiceFilter));
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         fixture.detectChanges();
@@ -94,7 +95,9 @@ describe('EditServiceTaskFilterCloudComponent', () => {
     });
 
     it('should fetch process definitions when processDefinitionName filter property is set', async(() => {
-        const processSpy = spyOn(taskService, 'getProcessDefinitions').and.returnValue(of([{ id: 'fake-id', name: 'fake-name' }]));
+        const processSpy = spyOn(taskService, 'getProcessDefinitions').and.returnValue(of([
+            new ProcessDefinitionCloud({ id: 'fake-id', name: 'fake-name' })
+        ]));
         fixture.detectChanges();
         component.filterProperties = ['processDefinitionName'];
         fixture.detectChanges();
@@ -602,7 +605,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
 
         it('should emit save event and save the filter on click save button', async(() => {
             component.toggleFilterActions = true;
-            spyOn(service, 'updateFilter').and.returnValue(of({}));
+            spyOn(service, 'updateFilter').and.returnValue(of(null));
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -625,7 +628,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
 
         it('should emit delete event and delete the filter on click of delete button', async(() => {
             component.toggleFilterActions = true;
-            spyOn(service, 'deleteFilter').and.returnValue(of({}));
+            spyOn(service, 'deleteFilter').and.returnValue(of(null));
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -645,7 +648,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
 
         it('should emit saveAs event and add filter on click saveAs button', async(() => {
             component.toggleFilterActions = true;
-            spyOn(service, 'addFilter').and.returnValue(of({}));
+            spyOn(service, 'addFilter').and.returnValue(of(null));
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();

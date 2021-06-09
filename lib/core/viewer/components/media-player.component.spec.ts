@@ -22,7 +22,7 @@ import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlfrescoApiService } from '../../services';
-import { NodeEntry } from '@alfresco/js-api';
+import { NodeEntry, RenditionPaging } from '@alfresco/js-api';
 
 describe('Test Media player component ', () => {
 
@@ -52,13 +52,13 @@ describe('Test Media player component ', () => {
 
         it('should generate tracks for media file when webvtt rendition exists', fakeAsync(() => {
             const fakeRenditionUrl = 'http://fake.rendition.url';
-            spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
+            spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValue(
                 Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } }))
             );
-            spyOn(alfrescoApiService.renditionsApi, 'getRenditions').and.returnValues(
-                { list: { entries: [{ entry: { id: 'webvtt', status: 'CREATED' } }] } }
+            spyOn(alfrescoApiService.renditionsApi, 'getRenditions').and.returnValue(
+                Promise.resolve(new RenditionPaging({ list: { entries: [{ entry: { id: 'webvtt', status: 'CREATED' } }] } }))
             );
-            spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValues('http://iam-fake.url');
+            spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValue('http://iam-fake.url');
             spyOn(alfrescoApiService.contentApi, 'getRenditionUrl').and.returnValue(fakeRenditionUrl);
 
             component.ngOnChanges(change);
@@ -68,15 +68,15 @@ describe('Test Media player component ', () => {
         }));
 
         it('should not generate tracks for media file when webvtt rendition is not created', fakeAsync(() => {
-            spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
+            spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValue(
                 Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } }))
             );
 
-            spyOn(alfrescoApiService.renditionsApi, 'getRenditions').and.returnValues(
-                { list: { entries: [{ entry: { id: 'webvtt', status: 'NOT_CREATED' } }] } }
+            spyOn(alfrescoApiService.renditionsApi, 'getRenditions').and.returnValue(
+                Promise.resolve(new RenditionPaging({ list: { entries: [{ entry: { id: 'webvtt', status: 'NOT_CREATED' } }] } }))
             );
 
-            spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValues('http://iam-fake.url');
+            spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValue('http://iam-fake.url');
 
             component.ngOnChanges(change);
             tick();
@@ -85,15 +85,15 @@ describe('Test Media player component ', () => {
         }));
 
         it('should not generate tracks for media file when webvtt rendition does not exist', fakeAsync(() => {
-            spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
+            spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValue(
                 Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } }))
             );
 
-            spyOn(alfrescoApiService.renditionsApi, 'getRenditions').and.returnValues(
-                { list: { entries: [] } }
+            spyOn(alfrescoApiService.renditionsApi, 'getRenditions').and.returnValue(
+                Promise.resolve(new RenditionPaging({ list: { entries: [] } }))
             );
 
-            spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValues('http://iam-fake.url');
+            spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValue('http://iam-fake.url');
 
             component.ngOnChanges(change);
             tick();

@@ -115,7 +115,7 @@ describe('SearchFilterContainerComponent', () => {
 
     it('should emit filterChange after the Apply button is clicked', async (done) => {
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
+        spyOn(queryBuilder, 'buildQuery').and.returnValue(null);
         component.filterChange.subscribe(() => {
             done();
         });
@@ -147,7 +147,7 @@ describe('SearchFilterContainerComponent', () => {
 
     it('should emit filterChange after the Clear button is clicked', async (done) => {
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
+        spyOn(queryBuilder, 'buildQuery').and.returnValue(null);
         component.filterChange.subscribe(() => {
             done();
         });
@@ -164,7 +164,7 @@ describe('SearchFilterContainerComponent', () => {
     });
 
     it('should emit filterChange after the Enter key is pressed', async (done) => {
-        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
+        spyOn(queryBuilder, 'buildQuery').and.returnValue(null);
         component.filterChange.subscribe(() => {
             done();
         });

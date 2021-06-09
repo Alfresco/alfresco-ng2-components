@@ -28,7 +28,8 @@ import {
     BpmUserService,
     CommentProcessService, LogService, AuthenticationService,
     UserProcessModel,
-    PeopleProcessService
+    PeopleProcessService,
+    CommentModel
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import {
@@ -43,7 +44,14 @@ import { TaskDetailsComponent } from './task-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-const fakeUser: UserProcessModel = new UserProcessModel({
+const fakeUser = new UserProcessModel({
+    id: 'fake-id',
+    firstName: 'fake-name',
+    lastName: 'fake-last',
+    email: 'fake@mail.com'
+});
+
+const fakeTaskAssignResponse = new TaskDetailsModel({
     id: 'fake-id',
     firstName: 'fake-name',
     lastName: 'fake-last',
@@ -76,7 +84,7 @@ describe('TaskDetailsComponent', () => {
         logService = TestBed.inject(LogService);
 
         const userService: BpmUserService = TestBed.inject(BpmUserService);
-        spyOn(userService, 'getCurrentUserInfo').and.returnValue(of({}));
+        spyOn(userService, 'getCurrentUserInfo').and.returnValue(of(null));
 
         service = TestBed.inject(TaskListService);
         spyOn(service, 'getTaskChecklist').and.returnValue(of(noDataMock));
@@ -89,16 +97,16 @@ describe('TaskDetailsComponent', () => {
         spyOn(formService, 'getTask').and.returnValue(of(taskDetailsMock));
 
         getTasksSpy = spyOn(service, 'getTasks').and.returnValue(of(tasksMock));
-        assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(of(fakeUser));
+        assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(of(fakeTaskAssignResponse));
         commentProcessService = TestBed.inject(CommentProcessService);
 
         authService = TestBed.inject(AuthenticationService);
         spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email' }));
 
         spyOn(commentProcessService, 'getTaskComments').and.returnValue(of([
-            { message: 'Test1', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } },
-            { message: 'Test2', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } },
-            { message: 'Test3', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } }
+            new CommentModel({ message: 'Test1', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } }),
+            new CommentModel({ message: 'Test2', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } }),
+            new CommentModel({ message: 'Test3', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } })
         ]));
 
         fixture = TestBed.createComponent(TaskDetailsComponent);

@@ -77,7 +77,7 @@ describe('VersionListComponent', () => {
             afterClosed() {
                 return of(false);
             }
-        });
+        } as any);
 
         component.deleteVersion('1');
 
@@ -91,7 +91,7 @@ describe('VersionListComponent', () => {
             afterClosed() {
                 return of(true);
             }
-        });
+        } as any);
 
         spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
 
@@ -108,7 +108,7 @@ describe('VersionListComponent', () => {
             afterClosed() {
                 return of(false);
             }
-        });
+        } as any);
 
         spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
 
@@ -157,7 +157,7 @@ describe('VersionListComponent', () => {
         it('should show the versions after loading', (done) => {
             fixture.detectChanges();
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callFake(() => {
-                return Promise.resolve({
+                return Promise.resolve(new VersionPaging({
                     list: {
                         entries: [
                             {
@@ -165,7 +165,7 @@ describe('VersionListComponent', () => {
                             }
                         ]
                     }
-                });
+                }));
             });
 
             component.ngOnChanges();
@@ -186,7 +186,7 @@ describe('VersionListComponent', () => {
         it('should NOT show the versions comments if input property is set not to show them', (done) => {
             spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
                 .callFake(() => Promise.resolve(
-                    {
+                    new VersionPaging({
                         list: {
                             entries: [
                                 {
@@ -194,7 +194,7 @@ describe('VersionListComponent', () => {
                                 }
                             ]
                         }
-                    }
+                    })
                 ));
 
             component.showComments = false;
@@ -219,7 +219,7 @@ describe('VersionListComponent', () => {
                     versionComment: 'test-version-comment'
                 }
             };
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({ list: { entries: [versionEntry] } }));
+            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve(new VersionPaging({ list: { entries: [versionEntry] } })));
             spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValue('the/download/url');
 
             fixture.detectChanges();
@@ -329,7 +329,7 @@ describe('VersionListComponent', () => {
 
             const spyOnListVersionHistory = spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
                 .callFake(() => Promise.resolve({ list: { entries: versionTest } }));
-            spyOn(alfrescoApiService.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve());
+            spyOn(alfrescoApiService.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve(null));
 
             component.restore(versionId);
             fixture.detectChanges();

@@ -93,7 +93,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should submit updated values if form is valid', () => {
-            spyOn(nodesApi, 'updateNode').and.returnValue(of({}));
+            spyOn(nodesApi, 'updateNode').and.returnValue(of(null));
 
             component.form.controls['name'].setValue('folder-name-update');
             component.form.controls['title'].setValue('folder-title-update');
@@ -114,7 +114,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should call dialog to close with form data when submit is successfully', () => {
-            const folder = {
+            const folder: any = {
                 data: 'folder-data'
             };
 
@@ -126,7 +126,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should emit success output event with folder when submit is successful', async(() => {
-                const folder = { data: 'folder-data' };
+                const folder: any = { data: 'folder-data' };
                 let expectedNode = null;
 
                 spyOn(nodesApi, 'updateNode').and.returnValue(of(folder));
@@ -191,7 +191,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should submit updated values if form is valid', () => {
-            spyOn(nodesApi, 'createFolder').and.returnValue(of({}));
+            spyOn(nodesApi, 'createFolder').and.returnValue(of(null));
 
             component.form.controls['name'].setValue('folder-name-update');
             component.form.controls['title'].setValue('folder-title-update');
@@ -213,7 +213,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should submit updated values if form is valid (with custom nodeType)', () => {
-                spyOn(nodesApi, 'createFolder').and.returnValue(of({}));
+                spyOn(nodesApi, 'createFolder').and.returnValue(of(null));
 
                 component.form.controls['name'].setValue('folder-name-update');
                 component.form.controls['title'].setValue('folder-title-update');
@@ -236,7 +236,7 @@ describe('FolderDialogComponent', () => {
          });
 
         it('should call dialog to close with form data when submit is successfully', () => {
-            const folder = {
+            const folder: any = {
                 data: 'folder-data'
             };
 

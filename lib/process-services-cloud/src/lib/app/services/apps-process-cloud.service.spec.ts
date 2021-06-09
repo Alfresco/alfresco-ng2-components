@@ -30,7 +30,7 @@ describe('AppsProcessCloudService', () => {
     let appConfigService: AppConfigService;
     let apiService: AlfrescoApiService;
 
-    const apiMock = {
+    const apiMock: any = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve({list : { entries: [ {entry: fakeApplicationInstance[0]}, {entry: fakeApplicationInstance[1]}] }})
         },

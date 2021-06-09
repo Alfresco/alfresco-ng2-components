@@ -26,7 +26,7 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
     let service: ServiceTaskListCloudService;
     let alfrescoApiService: AlfrescoApiService;
 
-    function returnCallQueryParameters() {
+    function returnCallQueryParameters(): any {
         return {
             oauth2Auth: {
                 callCustomApi: (_queryUrl, _operation, _context, queryParams) => {
@@ -40,7 +40,7 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
         };
     }
 
-    function returnCallUrl() {
+    function returnCallUrl(): any {
         return {
             oauth2Auth: {
                 callCustomApi: (queryUrl) => {

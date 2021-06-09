@@ -53,7 +53,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { Node } from '@alfresco/js-api';
 
-const mockOauth2Auth = {
+const mockOauth2Auth: any = {
     oauth2Auth: {
         callCustomApi: () => Promise.resolve()
     },
@@ -310,7 +310,7 @@ describe('FormCloudComponent', () => {
         spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
         spyOn(formCloudService, 'getTask').and.callFake((currentTaskId) => {
             return new Observable((observer) => {
-                observer.next({ formRepresentation: { taskId: currentTaskId } });
+                observer.next({ formRepresentation: { taskId: currentTaskId } } as any);
                 observer.complete();
             });
         });
@@ -357,7 +357,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should refresh visibility when the form is loaded', () => {
-        spyOn(formCloudService, 'getForm').and.returnValue(of({ formRepresentation: {} }));
+        spyOn(formCloudService, 'getForm').and.returnValue(of({ formRepresentation: {} } as any));
         const formId = '123';
         const appName = 'test-app';
 

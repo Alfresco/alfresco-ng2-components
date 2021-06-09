@@ -33,7 +33,7 @@ describe('PreferenceService', () => {
     state: 404, stateText: 'Not Found'
   };
 
-  function apiMock(mockResponse) {
+  function apiMock(mockResponse): any {
     return {
       oauth2Auth: {
         callCustomApi: () => {
@@ -47,7 +47,7 @@ describe('PreferenceService', () => {
     };
   }
 
-  const apiErrorMock = {
+  const apiErrorMock: any = {
     oauth2Auth: {
       callCustomApi: () => Promise.reject(errorResponse)
     },

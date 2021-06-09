@@ -45,7 +45,7 @@ describe('AttachFileWidgetDialogService', () => {
             componentInstance: {
                 error: new Subject<any>()
             }
-        });
+        } as any);
     });
 
     it('should be able to open the dialog when node has permission', () => {

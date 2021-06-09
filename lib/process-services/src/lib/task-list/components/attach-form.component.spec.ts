@@ -137,7 +137,7 @@ describe('AttachFormComponent', () => {
         component.taskId = 1;
         component.attachFormControl.setValue(10);
         component.formKey = 12;
-        spyOn(taskService, 'deleteForm').and.returnValue(of({}));
+        spyOn(taskService, 'deleteForm').and.returnValue(of(null));
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {

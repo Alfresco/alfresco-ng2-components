@@ -25,7 +25,7 @@ import { AspectListDialogComponentData } from './aspect-list-dialog-data.interfa
 import { NodesApiService } from 'core';
 import { AspectListService } from './aspect-list.service';
 import { delay } from 'rxjs/operators';
-import { AspectEntry } from '@alfresco/js-api';
+import { AspectEntry, MinimalNode } from '@alfresco/js-api';
 
 const aspectListMock: AspectEntry[] = [{
     entry: {
@@ -274,7 +274,7 @@ describe('AspectListDialogComponent', () => {
             spyOn(aspectListService, 'getAspects').and.returnValue(of([...aspectListMock, ...customAspectListMock]));
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
             spyOn(aspectListService, 'getCustomAspects').and.returnValue(of(customAspectListMock));
-            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'cst:customAspect'] }).pipe(delay(0)));
+            spyOn(nodeService, 'getNode').and.returnValue(of(new MinimalNode({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'cst:customAspect'] })).pipe(delay(0)));
             fixture = TestBed.createComponent(AspectListDialogComponent);
             fixture.componentInstance.data.select = new Subject<string[]>();
             fixture.detectChanges();

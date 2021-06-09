@@ -233,7 +233,7 @@ describe('Form service', () => {
                 activiti: {
                     processApi: processApiSpy
                 }
-            });
+            } as any);
             processApiSpy.getProcessDefinitionStartForm.and.returnValue(Promise.resolve({ id: '1' }));
 
             service.getStartFormDefinition('myprocess:1').subscribe(() => {

@@ -22,6 +22,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { VersionCompatibilityService } from '../services/version-compatibility.service';
+import { VersionModel } from '../models/product-version.model';
 
 @Component({
     template: `
@@ -51,12 +52,12 @@ describe('VersionCompatibilityDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let versionCompatibilityService: VersionCompatibilityService;
 
-    const acsResponceMock = {
+    const acsResponceMock = new VersionModel({
         display: '7.0.1',
         major: '7',
         minor: '0',
         patch: '1'
-    };
+    });
 
     setupTestBed({
         imports: [

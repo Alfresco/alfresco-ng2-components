@@ -53,11 +53,12 @@ import { DocumentListService } from './../services/document-list.service';
 import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { NodeEntry } from '@alfresco/js-api';
+import { FavoritePaging, NodeEntry } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { DocumentListModule } from '../document-list.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ShareDataRow } from '../data/share-data-row.model';
+import { DocumentLoaderNode } from '../models/document-folder.model';
 
 describe('DocumentList', () => {
 
@@ -100,23 +101,15 @@ describe('DocumentList', () => {
         thumbnailService = TestBed.inject(ThumbnailService);
         contentService = TestBed.inject(ContentService);
 
-        spyFolder = spyOn(documentListService, 'getFolder').and.callFake(() => {
-            return Promise.resolve({ list: {} });
-        });
-
-        spyFolderNode = spyOn(documentListService, 'getFolderNode').and.callFake(() => {
-            return Promise.resolve({ entry: {} });
-        });
-
-        spyOn(apiService.nodesApi, 'getNode').and.callFake(() => {
-            return Promise.resolve({ entry: {} });
-        });
+        spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: {} }));
+        spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: {} })))
+        spyOn(apiService.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: {} })));
 
         documentList.ngOnInit();
         documentList.currentFolderId = 'no-node';
 
         spyGetSites = spyOn(customResourcesService.sitesApi, 'listSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
-        spyFavorite = spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve({ list: { entries: [] } }));
+        spyFavorite = spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve(new FavoritePaging({ list: { entries: [] } })));
     });
 
     afterEach(() => {
@@ -871,7 +864,7 @@ describe('DocumentList', () => {
     it('should display folder content on click', () => {
         const node = new FolderNode('<display name>');
 
-        spyOn(documentList, 'loadFolder').and.returnValue(Promise.resolve(true));
+        spyOn(documentList, 'loadFolder').and.stub();
 
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         documentList.onNodeClick(node);
@@ -1236,7 +1229,7 @@ describe('DocumentList', () => {
     });
 
     it('should load folder by ID on init', async () => {
-        spyOn(documentList, 'loadFolder').and.returnValue(Promise.resolve());
+        spyOn(documentList, 'loadFolder').and.stub();
 
         fixture.detectChanges();
 
@@ -1328,7 +1321,7 @@ describe('DocumentList', () => {
 
     it('should allow to perform navigation for virtual sources', () => {
         spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() => {
-            return of({ currentNode: {}, children: { list: { pagination: {} } } });
+            return of(new DocumentLoaderNode(null, { list: { pagination: {} } }));
         });
 
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];

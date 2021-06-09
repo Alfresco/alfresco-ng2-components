@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
-import { from } from 'rxjs';
+import { from, of } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
@@ -33,8 +33,6 @@ describe('ProcessFiltersComponent', () => {
     let fixture: ComponentFixture<ProcessFiltersComponent>;
     let processFilterService: ProcessFilterService;
     let appsProcessService: AppsProcessService;
-    let fakeGlobalFilterPromise;
-    let mockErrorFilterPromise;
 
     setupTestBed({
         imports: [
@@ -47,7 +45,6 @@ describe('ProcessFiltersComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ProcessFiltersComponent);
         filterList = fixture.componentInstance;
-        fakeGlobalFilterPromise = Promise.resolve(fakeProcessFilters);
         processFilterService = TestBed.inject(ProcessFilterService);
         appsProcessService = TestBed.inject(AppsProcessService);
     });
@@ -57,7 +54,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should return the filter task list', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
@@ -76,7 +73,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should select the Running process filter', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
@@ -93,7 +90,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should emit the selected filter based on the filterParam input', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         filterList.filterParam = new FilterProcessRepresentationModel({ id: 10 });
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
@@ -123,7 +120,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should reset selection when filterParam is a filter that does not exist', async () => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
 
         const nonExistingFilterParam = { name: 'non-existing-filter' };
         const appId = '1';
@@ -141,7 +138,7 @@ describe('ProcessFiltersComponent', () => {
 
     it('should return the filter task list, filtered By Name', (done) => {
         spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(from(Promise.resolve({ id: 1 })));
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
 
         const change = new SimpleChange(null, 'test', true);
         filterList.ngOnChanges({ 'appName': change });
@@ -157,7 +154,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        mockErrorFilterPromise = Promise.reject({
+        const mockErrorFilterPromise = Promise.reject({
             error: 'wrong request'
         });
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(mockErrorFilterPromise));
@@ -175,6 +172,9 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
+        const mockErrorFilterPromise = Promise.reject({
+            error: 'wrong request'
+        });
         spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(from(mockErrorFilterPromise));
 
         const appId = 'fake-app';
@@ -196,7 +196,7 @@ describe('ProcessFiltersComponent', () => {
             filter: { state: 'open', assignment: 'fake-involved' }
         });
 
-        filterList.filterClicked.subscribe((filter: FilterProcessRepresentationModel) => {
+        filterList.filterClicked.subscribe((filter) => {
             expect(filter).toBeDefined();
             expect(filter).toEqual(currentFilter);
             expect(filterList.currentFilter).toEqual(currentFilter);
@@ -247,7 +247,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should select the filter passed as input by id', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
 
         filterList.filterParam = new FilterProcessRepresentationModel({ id: 20 });
 
@@ -267,7 +267,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should select the filter passed as input by name', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
 
         filterList.filterParam = new FilterProcessRepresentationModel({ name: 'FakeAll' });
 
@@ -287,7 +287,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should attach specific icon for each filter if hasIcon is true', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         filterList.showIcon = true;
         const change = new SimpleChange(undefined, 1, true);
         filterList.ngOnChanges({ 'appId': change });
@@ -305,7 +305,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should not attach icons for each filter if hasIcon is false', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         filterList.showIcon = false;
         const change = new SimpleChange(undefined, 1, true);
         filterList.ngOnChanges({ 'appId': change });

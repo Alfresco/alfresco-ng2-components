@@ -72,7 +72,7 @@ describe('NodeFavoriteDirective', () => {
         });
 
         it('should reset favorites if selection is empty', fakeAsync(() => {
-            spyOn(alfrescoApiService.getInstance().core.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve());
+            spyOn(alfrescoApiService.getInstance().core.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve(null));
 
             const selection = [
                 { entry: { id: '1', name: 'name1' } }
@@ -97,7 +97,7 @@ describe('NodeFavoriteDirective', () => {
 
         beforeEach(() => {
             favoritesApiSpy = spyOn(alfrescoApiService.getInstance().core.favoritesApi, 'getFavorite')
-                .and.returnValue(Promise.resolve());
+                .and.returnValue(Promise.resolve(null));
         });
 
         it('should check each selected node if it is a favorite', fakeAsync(() => {
@@ -341,7 +341,7 @@ describe('NodeFavoriteDirective', () => {
         }));
 
         it('should process node as favorite', fakeAsync(() => {
-            spyOn(alfrescoApiService.getInstance().core.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve());
+            spyOn(alfrescoApiService.getInstance().core.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve(null));
 
             const selection = [
                 { entry: { id: '1', name: 'name1' } }

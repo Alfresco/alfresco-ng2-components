@@ -41,7 +41,7 @@ describe('NodeDownloadDirective', () => {
     let apiService: AlfrescoApiService;
     let contentService;
     let dialogSpy;
-    const mockOauth2Auth = {
+    const mockOauth2Auth: any = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve()
         },
@@ -159,7 +159,7 @@ describe('NodeDownloadDirective', () => {
     });
 
     it('should create link element to download file node', () => {
-        const dummyLinkElement = {
+        const dummyLinkElement: any = {
             download: null,
             href: null,
             click: () => null,

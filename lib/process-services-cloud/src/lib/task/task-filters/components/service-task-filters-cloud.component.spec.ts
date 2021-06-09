@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
-import { from, Observable } from 'rxjs';
+import { from, of } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { By } from '@angular/platform-browser';
@@ -32,16 +32,6 @@ import { ServiceTaskFiltersCloudComponent } from './service-task-filters-cloud.c
 describe('ServiceTaskFiltersCloudComponent', () => {
 
     let serviceTaskFilterCloudService: ServiceTaskFilterCloudService;
-
-    const fakeGlobalFilterObservable =
-        new Observable(function(observer) {
-            observer.next(fakeGlobalServiceFilters);
-            observer.complete();
-        });
-
-    const fakeGlobalFilterPromise = new Promise(function (resolve) {
-        resolve(fakeGlobalServiceFilters);
-    });
 
     const mockErrorFilterList = {
         error: 'wrong request'
@@ -71,7 +61,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     });
 
     it('should attach specific icon for each filter if hasIcon is true', async(() => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({'appName': change});
         fixture.detectChanges();
@@ -88,7 +78,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     }));
 
     it('should not attach icons for each filter if hasIcon is false', (done) => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
 
         component.showIcons = false;
         const change = new SimpleChange(undefined, 'my-app-1', true);
@@ -104,7 +94,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     });
 
     it('should display the filters', async(() => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({'appName': change});
         fixture.detectChanges();
@@ -134,7 +124,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     });
 
     it('should return the filter task list', (done) => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
         component.ngOnChanges({ 'appName': change });
@@ -148,7 +138,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     });
 
     it('should return the filter task list, filtered By Name', (done) => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
         component.ngOnChanges({ 'appName': change });
@@ -164,7 +154,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     });
 
     it('should select the first filter as default', async(() => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
@@ -181,7 +171,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     }));
 
     it('should select the task filter based on the input by name param', async(() => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
 
         component.filterParam = { name: 'FakeMyServiceTasks1' };
         const appName = 'my-app-1';
@@ -199,7 +189,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     }));
 
     it('should select the default task filter if filter input does not exist', async(() => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
 
         component.filterParam = { name: 'UnexistableFilter' };
 
@@ -218,7 +208,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     }));
 
     it('should select the task filter based on the input by index param', async(() => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
 
         component.filterParam = { index: 2 };
 
@@ -237,7 +227,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     }));
 
     it('should select the task filter based on the input by id param', async(() => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
 
         component.filterParam = { id: '12' };
         const appName = 'my-app-1';
@@ -255,7 +245,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     }));
 
     it('should emit the selected filter based on the filterParam input', async () => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
         spyOn(component.filterSelected, 'emit');
 
         const filterParam = { id: '10' };
@@ -269,7 +259,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     });
 
     it('should filterClicked emit when a filter is clicked from the UI', async () => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
         spyOn(component.filterClicked, 'emit');
 
         fixture.detectChanges();
@@ -285,7 +275,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     });
 
     it('should reset the filter when the param is undefined', async(() => {
-        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
+        spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
         spyOn(component, 'selectFilterAndEmit');
         component.currentFilter = null;
 

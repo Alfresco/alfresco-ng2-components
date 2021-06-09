@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { Node } from '@alfresco/js-api';
+import { Node, NodeEntry } from '@alfresco/js-api';
 import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
@@ -59,7 +59,7 @@ describe('NodeActionsService', () => {
     });
 
     it('should be able to copy content', async(() => {
-        spyOn(documentListService, 'copyNode').and.returnValue(of('FAKE-OK'));
+        spyOn(documentListService, 'copyNode').and.returnValue(of(new NodeEntry()));
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
         service.copyContent(fakeNode, 'allowed').subscribe((value) => {
@@ -68,7 +68,7 @@ describe('NodeActionsService', () => {
     }));
 
     it('should be able to move content', async(() => {
-        spyOn(documentListService, 'moveNode').and.returnValue(of('FAKE-OK'));
+        spyOn(documentListService, 'moveNode').and.returnValue(of(new NodeEntry()));
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
         service.moveContent(fakeNode, 'allowed').subscribe((value) => {
@@ -77,7 +77,7 @@ describe('NodeActionsService', () => {
     }));
 
     it('should be able to move folder', async(() => {
-        spyOn(documentListService, 'moveNode').and.returnValue(of('FAKE-OK'));
+        spyOn(documentListService, 'moveNode').and.returnValue(of(new NodeEntry()));
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
         service.moveFolder(fakeNode, 'allowed').subscribe((value) => {
@@ -86,7 +86,7 @@ describe('NodeActionsService', () => {
     }));
 
     it('should be able to copy folder', async(() => {
-        spyOn(documentListService, 'copyNode').and.returnValue(of('FAKE-OK'));
+        spyOn(documentListService, 'copyNode').and.returnValue(of(new NodeEntry()));
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
         service.copyFolder(fakeNode, 'allowed').subscribe((value) => {

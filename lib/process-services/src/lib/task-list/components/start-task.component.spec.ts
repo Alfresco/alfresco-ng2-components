@@ -88,12 +88,12 @@ describe('StartTaskComponent', () => {
 
         beforeEach(() => {
             createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(
-                {
+                new TaskDetailsModel({
                     id: 91,
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                }
+                })
             ));
         });
 
@@ -145,12 +145,12 @@ describe('StartTaskComponent', () => {
     describe('attach form', () => {
         beforeEach(() => {
             spyOn(service, 'createNewTask').and.returnValue(of(
-                {
+                new TaskDetailsModel({
                     id: 91,
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                }
+                })
             ));
         });
 
@@ -208,12 +208,12 @@ describe('StartTaskComponent', () => {
     describe('assign user', () => {
         beforeEach(() => {
             spyOn(service, 'createNewTask').and.returnValue(of(
-                {
+                new TaskDetailsModel({
                     id: 91,
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                }
+                })
             ));
             spyOn(service, 'attachFormToATask').and.returnValue(of(
                 {
@@ -224,12 +224,12 @@ describe('StartTaskComponent', () => {
                 }
             ));
             spyOn(service, 'assignTaskByUserId').and.returnValue(of(
-                {
+                new TaskDetailsModel({
                     id: 91,
                     name: 'fakeName',
                     formKey: 1204,
                     assignee: testUser
-                }
+                })
             ));
         });
 
@@ -288,14 +288,8 @@ describe('StartTaskComponent', () => {
     });
 
     it('should not attach a form when a form id is not selected', () => {
-        const attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue([]);
-        spyOn(service, 'createNewTask').and.callFake(
-            function() {
-                return new Observable((observer) => {
-                    observer.next({ id: 'task-id'});
-                    observer.complete();
-                });
-            });
+        const attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue(of([]));
+        spyOn(service, 'createNewTask').and.returnValue(of(new TaskDetailsModel({ id: 'task-id'})));
         component.taskForm.controls['name'].setValue('fakeName');
         fixture.detectChanges();
         const createTaskButton = <HTMLElement> element.querySelector('#button-start');

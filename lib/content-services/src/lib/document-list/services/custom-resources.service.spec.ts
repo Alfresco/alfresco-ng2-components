@@ -19,6 +19,7 @@ import { CustomResourcesService } from './custom-resources.service';
 import { PaginationModel } from '@alfresco/adf-core';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { FavoritePaging } from '@alfresco/js-api';
 
 describe('CustomResourcesService', () => {
     let customResourcesService: CustomResourcesService;
@@ -33,7 +34,7 @@ describe('CustomResourcesService', () => {
 
     describe('loadFavorites', () => {
         it('should return a list of items with default properties when target properties does not exist', (done) => {
-            spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve({
+            spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve(new FavoritePaging({
                 list: {
                     entries: [
                         {
@@ -48,7 +49,7 @@ describe('CustomResourcesService', () => {
                         }
                     ]
                 }
-            }));
+            })));
             const pagination: PaginationModel = {
                 maxItems: 100,
                 skipCount: 0
@@ -72,7 +73,7 @@ describe('CustomResourcesService', () => {
         });
 
         it('should return a list of items with merged properties when target properties exist', (done) => {
-            spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve({
+            spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve(new FavoritePaging({
                 list: {
                     entries: [
                         {
@@ -90,7 +91,7 @@ describe('CustomResourcesService', () => {
                         }
                     ]
                 }
-            }));
+            })));
             const pagination: PaginationModel = {
                 maxItems: 100,
                 skipCount: 0

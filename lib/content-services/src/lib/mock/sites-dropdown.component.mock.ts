@@ -171,7 +171,7 @@ export function getFakeSitePagingLastPage(): SitePaging {
 }
 
 export function getFakeSitePagingWithMembers() {
-    return {
+    return new SitePaging({
         'list': {
             'entries': [{
                 'entry': {
@@ -289,5 +289,5 @@ export function getFakeSitePagingWithMembers() {
             }
             ]
         }
-    };
+    });
 }

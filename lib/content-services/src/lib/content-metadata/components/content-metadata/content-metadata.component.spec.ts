@@ -310,9 +310,7 @@ describe('ContentMetadataComponent', () => {
             const expectedProperties = [];
             component.expanded = true;
             fixture.detectChanges();
-            spyOn(contentMetadataService, 'getGroupedProperties').and.callFake(() => {
-                return of([{ properties: expectedProperties }]);
-            });
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: expectedProperties } as any]));
             spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
@@ -328,7 +326,7 @@ describe('ContentMetadataComponent', () => {
             component.expanded = true;
             component.displayEmpty = false;
             fixture.detectChanges();
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [] }]));
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [] } as any]));
             spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
@@ -343,7 +341,7 @@ describe('ContentMetadataComponent', () => {
         it('should hide card views group when the grouped properties are empty', async(() => {
             component.expanded = true;
             fixture.detectChanges();
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [] }]));
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [] } as any]));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -367,7 +365,7 @@ describe('ContentMetadataComponent', () => {
                     label: 'To'
                 }]
             };
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [cardViewGroup] }]));
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [cardViewGroup] } as any]));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 

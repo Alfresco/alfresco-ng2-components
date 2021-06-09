@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { BpmUserModel } from '../models';
+
 export let fakeBpmUserNoImage = {
     apps: [],
     capabilities: 'fake-capability',
@@ -37,7 +39,7 @@ export let fakeBpmUserNoImage = {
     type: 'fake-type'
 };
 
-export let fakeBpmUser = {
+export let fakeBpmUser = new BpmUserModel({
     apps: [],
     capabilities: null,
     company: 'fake-company',
@@ -57,7 +59,7 @@ export let fakeBpmUser = {
     tenantName: 'fake-tenant-name',
     tenantPictureId: 'fake-tenant-picture-id',
     type: 'fake-type'
-};
+});
 
 export let fakeBpmEditedUser = {
     apps: [],

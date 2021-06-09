@@ -25,7 +25,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
-import { of, throwError, Observable } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { OauthConfigModel } from '../../models/oauth-config.model';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
@@ -177,12 +177,7 @@ describe('LoginComponent', () => {
 
     it('should update user preferences upon login', async(() => {
         spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
-        spyOn(alfrescoApiService.getInstance(), 'login').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.resolve());
 
         component.success.subscribe(() => {
             expect(userPreferences.setStoragePrefix).toHaveBeenCalledWith('fake-username');
@@ -202,10 +197,7 @@ describe('LoginComponent', () => {
         });
 
         it('should be changed to the "checking key" after a login attempt', () => {
-            spyOn(authService, 'login').and.returnValue({
-                subscribe: () => {
-                }
-            });
+            spyOn(authService, 'login').and.stub();
 
             loginWithCredentials('fake-username', 'fake-password');
 
@@ -247,10 +239,7 @@ describe('LoginComponent', () => {
         });
 
         it('should be taken into consideration during login attempt', () => {
-            spyOn(authService, 'login').and.returnValue({
-                subscribe: () => {
-                }
-            });
+            spyOn(authService, 'login').and.stub();
             component.rememberMe = false;
 
             loginWithCredentials('fake-username', 'fake-password');
@@ -409,12 +398,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return error with a wrong username', (done) => {
-            spyOn(alfrescoApiService.getInstance(), 'login').and.callFake(() => {
-                return new Observable((observer) => {
-                    observer.next();
-                    observer.error();
-                });
-            });
+            spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.reject());
 
             component.error.subscribe(() => {
                 fixture.detectChanges();
@@ -429,12 +413,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return error with a wrong password', (done) => {
-            spyOn(alfrescoApiService.getInstance(), 'login').and.callFake(() => {
-                return new Observable((observer) => {
-                    observer.next();
-                    observer.error();
-                });
-            });
+            spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.reject());
 
             component.error.subscribe(() => {
                 fixture.detectChanges();
@@ -450,12 +429,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return error with a wrong username and password', (done) => {
-            spyOn(alfrescoApiService.getInstance(), 'login').and.callFake(() => {
-                return new Observable((observer) => {
-                    observer.next();
-                    observer.error();
-                });
-            });
+            spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.reject());
 
             component.error.subscribe(() => {
                 fixture.detectChanges();
@@ -623,12 +597,7 @@ describe('LoginComponent', () => {
     });
 
     it('should emit only the username and not the password as part of the executeSubmit', async(() => {
-        spyOn(alfrescoApiService.getInstance(), 'login').and.callFake(() => {
-            return new Observable((observer) => {
-                observer.next();
-                observer.complete();
-            });
-        });
+        spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.resolve());
 
         component.executeSubmit.subscribe((res) => {
             fixture.detectChanges();
@@ -668,7 +637,7 @@ describe('LoginComponent', () => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
                 appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true, silentLogin: true };
 
-                spyOn(component, 'redirectToImplicitLogin').and.returnValue(Promise.resolve({}));
+                spyOn(component, 'redirectToImplicitLogin').and.stub();
 
                 component.ngOnInit();
                 fixture.detectChanges();

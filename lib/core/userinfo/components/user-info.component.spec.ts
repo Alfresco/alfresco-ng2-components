@@ -105,7 +105,7 @@ describe('User info component', () => {
         contentService = TestBed.inject(ContentService);
         identityUserService = TestBed.inject(IdentityUserService);
 
-        spyOn(window, 'requestAnimationFrame').and.returnValue(true);
+        spyOn(window, 'requestAnimationFrame').and.returnValue(1);
         spyOn(bpmUserService, 'getCurrentUserProfileImage').and.returnValue('app/rest/admin/profile-picture');
         spyOn(contentService, 'getContentUrl').and.returnValue('alfresco-logo.svg');
     }));
@@ -175,37 +175,36 @@ describe('User info component', () => {
             });
 
             it('should show the username when showName attribute is true', async () => {
-
                 await fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(component.showName).toBeTruthy();
                     expect(element.querySelector('#adf-userinfo-ecm-name-display')).not.toBeNull();
                 });
+            });
 
-                it('should hide the username when showName attribute is false', async () => {
-                    component.showName = false;
+            it('should hide the username when showName attribute is false', async () => {
+                component.showName = false;
 
-                    await fixture.whenStable();
-                    fixture.detectChanges();
-                    expect(element.querySelector('#adf-userinfo-ecm-name-display')).toBeNull();
-                });
+                await fixture.whenStable();
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-userinfo-ecm-name-display')).toBeNull();
+            });
 
-                it('should have the defined class to show the name on the right side', async () => {
-                    fixture.detectChanges();
+            it('should have the defined class to show the name on the right side', async () => {
+                fixture.detectChanges();
 
-                    await fixture.whenStable();
-                    fixture.detectChanges();
-                    expect(element.querySelector('#userinfo_container').classList).toContain('adf-userinfo-name-right');
-                });
+                await fixture.whenStable();
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container').classList).toContain('adf-userinfo-name-right');
+            });
 
-                it('should not have the defined class to show the name on the left side', async () => {
-                    component.namePosition = 'left';
-                    fixture.detectChanges();
+            it('should not have the defined class to show the name on the left side', async () => {
+                component.namePosition = 'left';
+                fixture.detectChanges();
 
-                    await fixture.whenStable();
-                    fixture.detectChanges();
-                    expect(element.querySelector('#userinfo_container').classList).not.toContain('adf-userinfo-name-right');
-                });
+                await fixture.whenStable();
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container').classList).not.toContain('adf-userinfo-name-right');
             });
 
             describe('and has image', () => {

@@ -110,7 +110,7 @@ const fakeMinimalNode: Node = <Node> {
     }
 };
 
-const fakePngUpload = {
+const fakePngUpload: any = {
     'id': 1166,
     'name': 'fake-png.png',
     'created': '2017-07-25T17:17:37.099Z',
@@ -125,7 +125,7 @@ const fakePngUpload = {
     'thumbnailStatus': 'queued'
 };
 
-const fakePngAnswer = {
+const fakePngAnswer: any = {
     'id': 1155,
     'name': 'a_png_file.png',
     'created': '2017-07-25T17:17:37.099Z',

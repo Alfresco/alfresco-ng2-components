@@ -563,7 +563,7 @@ describe('CardViewTextItemComponent', () => {
             });
         }));
 
-        it('should reset erros when exiting editable mode', fakeAsync((done) => {
+        it('should reset erros when exiting editable mode', fakeAsync(() => {
             let errorMessage: string;
             const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
             component.property.isValid = () => false;
@@ -584,7 +584,6 @@ describe('CardViewTextItemComponent', () => {
                     errorMessage = fixture.debugElement.nativeElement.querySelector('.adf-textitem-editable-error');
                     expect(errorMessage).toBe(null);
                     expect(component.errors).toEqual([]);
-                    done();
                 });
             });
         }));
@@ -620,7 +619,7 @@ describe('CardViewTextItemComponent', () => {
             inputField.nativeElement.click();
         }));
 
-        it('should trigger an update event on the CardViewUpdateService [integration]', fakeAsync((done) => {
+        it('should trigger an update event on the CardViewUpdateService [integration]', (done) => {
             component.property.isValid = () => true;
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             const expectedText = 'changed text';
@@ -639,7 +638,7 @@ describe('CardViewTextItemComponent', () => {
 
                 updateTextField(component.property.key, expectedText);
             });
-        }));
+        });
 
         it('should update the value using the updateItem$ subject', (async () => {
             component.property.isValid = () => true;
@@ -664,7 +663,7 @@ describe('CardViewTextItemComponent', () => {
 
         }));
 
-        it('should update multiline input the value on input updated', fakeAsync((done) => {
+        it('should update multiline input the value on input updated', (done) => {
             component.property.isValid = () => true;
             component.property.multiline = true;
             const expectedText = 'changed text';
@@ -693,7 +692,7 @@ describe('CardViewTextItemComponent', () => {
                     expect(component.property.value).toBe(expectedText);
                 });
             });
-        }));
+        });
     });
 
     describe('number', () => {
@@ -729,7 +728,7 @@ describe('CardViewTextItemComponent', () => {
             });
         }));
 
-        it('should show validation error for empty string', fakeAsync((done) => {
+        it('should show validation error for empty string', (done) => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
 
@@ -743,7 +742,7 @@ describe('CardViewTextItemComponent', () => {
                     done();
                 });
             });
-        }));
+        });
 
         it('should show validation error for float number', fakeAsync((done) => {
             fixture.detectChanges();
@@ -793,7 +792,7 @@ describe('CardViewTextItemComponent', () => {
             });
         }));
 
-        it('should update input the value on input updated', fakeAsync((done) => {
+        it('should update input the value on input updated', (done) => {
             const expectedNumber = 2020;
             spyOn(component, 'update').and.callThrough();
             fixture.detectChanges();
@@ -817,7 +816,7 @@ describe('CardViewTextItemComponent', () => {
                     expect(component.property.value).toBe(expectedNumber.toString());
                 });
             });
-        }));
+        });
     });
 
     describe('float', () => {
@@ -870,7 +869,7 @@ describe('CardViewTextItemComponent', () => {
             });
         }));
 
-        it('should update input the value on input updated', fakeAsync((done) => {
+        it('should update input the value on input updated', (done) => {
             const expectedNumber = 88.44;
             spyOn(component, 'update').and.callThrough();
             fixture.detectChanges();
@@ -894,7 +893,7 @@ describe('CardViewTextItemComponent', () => {
                     expect(component.property.value).toBe(expectedNumber.toString());
                 });
             });
-        }));
+        });
     });
 
     function updateTextField(key, value) {

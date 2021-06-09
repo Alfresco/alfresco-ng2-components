@@ -84,7 +84,7 @@ describe('SearchControlComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        searchServiceSpy = spyOn(searchService, 'search').and.returnValue(of(''));
+        searchServiceSpy = spyOn(searchService, 'search').and.returnValue(of(null));
         fixture.detectChanges();
     });
 

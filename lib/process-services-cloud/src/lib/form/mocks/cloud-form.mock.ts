@@ -759,7 +759,7 @@ export const emptyFormRepresentationJSON = {
     'version': 0
 };
 
-export const conditionalUploadWidgetsMock = {
+export const conditionalUploadWidgetsMock: any = {
     'formRepresentation': {
         'id': 'form-fb7858f7-5cf6-4afe-b462-c15a5dc0c34c',
         'name': 'AttachVisibility',
@@ -847,7 +847,7 @@ export const conditionalUploadWidgetsMock = {
     }
 };
 
-export const multilingualForm = {
+export const multilingualForm: any = {
     'formRepresentation': {
         'id': 'form-2aaaf20e-43d3-46bf-89be-859d5f512dd2',
         'name': 'multilingualform',

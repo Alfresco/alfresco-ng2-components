@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging, UserInfo } from '@alfresco/js-api';
+import { MinimalNode, Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging, UserInfo } from '@alfresco/js-api';
 import { AppConfigService, FileModel, FileUploadStatus, NodesApiService, setupTestBed, SitesService, UploadService, FileUploadCompleteEvent, DataRow, ThumbnailService, ContentService, DataColumn } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
@@ -105,7 +105,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             searchQueryBuilderService = component.queryBuilderService;
             component.queryBuilderService.resetToDefaults();
 
-            spyOn(nodeService,  'getNode').and.returnValue(of({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } }));
+            spyOn(nodeService,  'getNode').and.returnValue(of(new MinimalNode({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } })));
             searchSpy = spyOn(searchQueryBuilderService, 'execute');
             const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
             spyOn(sitesService, 'getSite').and.returnValue(of(fakeSite));
@@ -124,12 +124,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
-                spyOn(sitesService, 'getSites').and.returnValue(of({
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({
                     list: {
                         entries: [<SiteEntry> { entry: { guid: 'namek', id: 'namek' } },
                             <SiteEntry> { entry: { guid: 'blog', id: 'blog' } }]
                     }
-                }));
+                })));
 
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
@@ -229,7 +229,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
-                spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
 
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
@@ -338,7 +338,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
         describe('Site selection', () => {
 
             beforeEach(() => {
-                spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
                 component.currentFolderId = 'fake-starting-folder';
             });
 
@@ -380,15 +380,15 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.isSelectionValid = (node: Node) => node.isFile;
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
-                spyOn(documentListService, 'getFolder').and.returnValue(of({
+                spyOn(documentListService, 'getFolder').and.returnValue(of(new NodePaging({
                     list: {
                         pagination: {},
                         entries: [],
                         source: {}
                     }
-                }));
+                })));
 
-                spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
 
                 customResourcesService = TestBed.inject(CustomResourcesService);
                 getCorrespondingNodeIdsSpy = spyOn(customResourcesService, 'getCorrespondingNodeIds').and
@@ -1034,7 +1034,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 const rows = [<DataRow> {}, <DataRow> {}];
                 component.documentList.data = new ShareDataTableAdapter(thumbnailService, contentService, schema);
                 spyOn(component.documentList.data, 'getRows').and.returnValue(rows);
-                spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
             });
 
             it('should the selection become the currently navigated folder when the folder loads (Acts as destination for cases like copy action)', () => {

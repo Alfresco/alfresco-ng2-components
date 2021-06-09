@@ -76,7 +76,7 @@ describe('ShareDialogComponent', () => {
             }
         };
 
-        spyOn(nodesApiService, 'updateNode').and.returnValue(of({}));
+        spyOn(nodesApiService, 'updateNode').and.returnValue(of(null));
     });
 
     afterEach(() => {
@@ -158,7 +158,7 @@ describe('ShareDialogComponent', () => {
     });
 
     it('should open a confirmation dialog when unshare button is triggered', () => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(false) });
+        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(false) } as any);
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
@@ -179,7 +179,7 @@ describe('ShareDialogComponent', () => {
     });
 
     it('should unshare file when confirmation dialog returns true', fakeAsync(() => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(true) });
+        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(true) } as any);
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
@@ -199,7 +199,7 @@ describe('ShareDialogComponent', () => {
     }));
 
     it('should not unshare file when confirmation dialog returns false', fakeAsync(() => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(false) });
+        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(false) } as any);
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
@@ -313,7 +313,7 @@ describe('ShareDialogComponent', () => {
 
     describe('datetimepicker type', () => {
         beforeEach(() => {
-            spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({}));
+            spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of(null));
             node.entry.allowableOperations = ['update'];
             component.data = {
                 node,
@@ -324,7 +324,7 @@ describe('ShareDialogComponent', () => {
         it('it should update node with input date and end of day time when type is `date`', fakeAsync(() => {
             const dateTimePickerType = 'date';
             const date = moment('2525-01-01 13:00:00');
-            spyOn(appConfigService, 'get').and.callFake(() => dateTimePickerType);
+            spyOn(appConfigService, 'get').and.callFake(() => dateTimePickerType as any);
 
             fixture.detectChanges();
             fixture.nativeElement.querySelector('mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')

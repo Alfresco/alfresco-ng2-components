@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export const taskCompleteCloudMock = {
+export const taskCompleteCloudMock: any = {
     'entry': {
         'appName': 'simple-app',
         'appVersion': '',

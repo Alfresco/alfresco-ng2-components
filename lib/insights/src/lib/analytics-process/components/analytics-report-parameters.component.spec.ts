@@ -342,7 +342,7 @@ describe('AnalyticsReportParametersComponent', () => {
         it('Should load the task list when a process definition is selected', () => {
             component.successReportParams.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(res.length).toEqual(2);
+                expect(res['length']).toEqual(2);
                 expect(res[0].id).toEqual('Fake task name 1');
                 expect(res[0].name).toEqual('Fake task name 1');
                 expect(res[1].id).toEqual('Fake task name 2');

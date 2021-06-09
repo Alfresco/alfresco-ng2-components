@@ -33,23 +33,6 @@ describe('TaskFiltersComponent', () => {
     let taskListService: TaskListService;
     let taskFilterService: TaskFilterService;
     let appsProcessService: AppsProcessService;
-
-    const fakeGlobalFilterPromise = new Promise(function (resolve) {
-        resolve(fakeTaskFilters);
-    });
-
-    const fakeGlobalEmptyFilter = {
-        message: 'invalid data'
-    };
-
-    const fakeGlobalEmptyFilterPromise = new Promise(function (resolve) {
-        resolve(fakeGlobalEmptyFilter);
-    });
-
-    const mockErrorFilterList = {
-        error: 'wrong request'
-    };
-
     let component: TaskFiltersComponent;
     let fixture: ComponentFixture<TaskFiltersComponent>;
 
@@ -73,6 +56,9 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
+        const mockErrorFilterList = {
+            error: 'wrong request'
+        };
         const mockErrorFilterPromise = Promise.reject(mockErrorFilterList);
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(mockErrorFilterPromise));
 
@@ -87,7 +73,7 @@ describe('TaskFiltersComponent', () => {
    });
 
     it('should return the filter task list', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
         component.ngOnChanges({ 'appId': change });
@@ -107,7 +93,7 @@ describe('TaskFiltersComponent', () => {
 
     it('Should call the API to create the default task filters when no task filters exist', async () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of([]));
-        const filtersMock = [{ name: 'default-task-filter-1'}, { name: 'default-task-filter-2'}];
+        const filtersMock: any[] = [{ name: 'default-task-filter-1'}, { name: 'default-task-filter-2'}];
         const createDefaultFiltersSpy = spyOn(taskFilterService, 'createDefaultFilters').and.returnValue(of(filtersMock));
         const appId = '2';
         const change = new SimpleChange(null, appId, true);
@@ -124,7 +110,7 @@ describe('TaskFiltersComponent', () => {
         });
 
         spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(from(fakeDeployedApplicationsPromise));
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
 
         const change = new SimpleChange(null, 'test', true);
         component.ngOnChanges({ 'appName': change });
@@ -140,7 +126,10 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should be able to fetch and select the default if the input filter is not valid', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalEmptyFilterPromise));
+        const fakeGlobalEmptyFilter: any = {
+            message: 'invalid data'
+        };
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeGlobalEmptyFilter));
         spyOn(component, 'createFiltersByAppId').and.stub();
 
         const appId = '1';
@@ -155,7 +144,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should select the task filter based on the input by name param', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
 
         component.filterParam = new FilterParamsModel({ name: 'FakeMyTasks1' });
         const appId = '1';
@@ -173,7 +162,7 @@ describe('TaskFiltersComponent', () => {
    });
 
     it('should select the task filter based on the input by index param', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
 
         component.filterParam = new FilterParamsModel({ index: 2 });
 
@@ -192,7 +181,7 @@ describe('TaskFiltersComponent', () => {
    });
 
     it('should select the task filter based on the input by id param', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
 
         component.filterParam = new FilterParamsModel({ id: 10 });
 
@@ -321,7 +310,7 @@ describe('TaskFiltersComponent', () => {
     }));
 
     it('should attach specific icon for each filter if showIcon is true', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
         component.showIcon = true;
         const change = new SimpleChange(undefined, 1, true);
         component.ngOnChanges({ 'appId': change });
@@ -339,7 +328,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should not attach icons for each filter if showIcon is false', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
         component.showIcon = false;
         const change = new SimpleChange(undefined, 1, true);
         component.ngOnChanges({ 'appId': change });
@@ -353,7 +342,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should reset selection when filterParam is a filter that does not exist', async () => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
         component.currentFilter = fakeTaskFilters[0];
         component.filterParam = new FilterRepresentationModel( {name: 'non-existing-filter'});
         const appId = '1';
@@ -368,7 +357,7 @@ describe('TaskFiltersComponent', () => {
 
         it('Should be able to display default task filters', async  () => {
             spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of([]));
-            const defaultTaskFiltersMock = [
+            const defaultTaskFiltersMock: any = [
                 { name: 'default-my-filter' },
                 { name: 'default-involved-filter' },
                 { name: 'default-completed-filter' }

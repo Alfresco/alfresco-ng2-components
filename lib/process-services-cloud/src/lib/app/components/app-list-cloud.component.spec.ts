@@ -34,7 +34,7 @@ describe('AppListCloudComponent', () => {
     let getAppsSpy: jasmine.Spy;
     let alfrescoApiService: AlfrescoApiService;
 
-    const mock = {
+    const mock: any = {
             oauth2Auth: {
                 callCustomApi: () => Promise.resolve(fakeApplicationInstance)
             },

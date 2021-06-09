@@ -58,7 +58,7 @@ export const aboutAPSMockDetails = {
     minorVersion: '10'
  };
 
-export const mockModules = {
+export const mockModules: any = {
        edition: 'Enterprise',
        version: {
           major: '6',

@@ -90,7 +90,7 @@ describe('ExtensionLoaderService', () => {
                 return of(pluginConfig3);
             }
 
-            return of({});
+            return of(null);
         });
     });
 

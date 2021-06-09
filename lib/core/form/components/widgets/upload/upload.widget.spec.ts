@@ -28,8 +28,9 @@ import { UploadWidgetComponent } from './upload.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { RelatedContentRepresentation } from '@alfresco/js-api';
 
-const fakePngAnswer = {
+const fakePngAnswer = new RelatedContentRepresentation({
     'id': 1155,
     'name': 'a_png_file.png',
     'created': '2017-07-25T17:17:37.099Z',
@@ -41,7 +42,7 @@ const fakePngAnswer = {
     'simpleType': 'image',
     'previewStatus': 'queued',
     'thumbnailStatus': 'queued'
-};
+});
 
 const fakeJpgAnswer = {
     'id': 1156,
@@ -211,7 +212,7 @@ describe('UploadWidgetComponent', () => {
                     return of(fakeJpgAnswer);
                 }
 
-                return of();
+                return of(null);
             });
 
             uploadWidgetComponent.field.params.multiple = true;
@@ -241,7 +242,7 @@ describe('UploadWidgetComponent', () => {
                     return of(fakeJpgAnswer);
                 }
 
-                return of();
+                return of(null);
             });
 
             uploadWidgetComponent.field.params.multiple = true;

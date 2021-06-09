@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export const taskClaimCloudMock = {
+export const taskClaimCloudMock: any = {
     'entry': {
         'appName': 'simple-app',
         'appVersion': '',

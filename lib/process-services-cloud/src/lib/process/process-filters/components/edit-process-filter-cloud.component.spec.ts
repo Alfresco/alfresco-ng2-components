@@ -39,6 +39,7 @@ import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { ApplicationVersionModel } from '../../../models/application-version.model';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
+import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
@@ -64,7 +65,7 @@ describe('EditProcessFilterCloudComponent', () => {
         sort: 'id'
     });
 
-    const mock = {
+    const mock: any = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(fakeApplicationInstance)
         },
@@ -103,7 +104,7 @@ describe('EditProcessFilterCloudComponent', () => {
                     name: 'fake-name'
                 });
             }
-        });
+        } as any);
         getProcessFilterByIdSpy = spyOn(service, 'getFilterById').and.returnValue(of(fakeFilter));
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
@@ -535,7 +536,7 @@ describe('EditProcessFilterCloudComponent', () => {
     });
 
     it('should fetch process definitions when processDefinitionName filter property is set', async(() => {
-        const processSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of([{ id: 'fake-id', name: 'fake-name' }]));
+        const processSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of([new ProcessDefinitionCloud({ id: 'fake-id', name: 'fake-name' })]));
         fixture.detectChanges();
         component.filterProperties = ['processDefinitionName'];
         fixture.detectChanges();
@@ -640,7 +641,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
         it('should emit save event and save the filter on click save button', async(() => {
             component.toggleFilterActions = true;
-            const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(of(fakeFilter));
+            const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(of([fakeFilter]));
             const saveSpy: jasmine.Spy = spyOn(component.action, 'emit');
 
             fixture.detectChanges();
@@ -663,7 +664,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
         it('should emit delete event and delete the filter on click of delete button', (done) => {
             component.toggleFilterActions = true;
-            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of({}));
+            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of(null));
             const deleteSpy = spyOn(component.action, 'emit');
             fixture.detectChanges();
 
@@ -910,7 +911,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
         it('should not call restore default filters service on deletion first filter', (done) => {
             component.toggleFilterActions = true;
-            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of([{ name: 'mock-filter-name'}]));
+            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of([new ProcessFilterCloudModel({ name: 'mock-filter-name'})]));
             const restoreFiltersSpy = spyOn(component, 'restoreDefaultProcessFilters').and.returnValue(of([]));
             const deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
