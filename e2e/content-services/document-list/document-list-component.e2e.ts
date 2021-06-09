@@ -264,20 +264,6 @@ describe('Document List Component', () => {
             await contentServicesPage.checkContentIsDisplayed(testFile.name);
         });
 
-        it('[C261997] Should be able to clean Recent Files history', async () => {
-            await apiService.loginWithProfile('admin');
-            const cleanUser = await usersActions.createUser();
-
-            await loginPage.login(cleanUser.username, cleanUser.password);
-            await contentServicesPage.clickOnContentServices();
-            await contentServicesPage.checkRecentFileToBeShowed();
-            const icon = await contentServicesPage.getRecentFileIcon();
-            await expect(icon).toBe('history');
-            await contentServicesPage.expandRecentFiles();
-            await contentServicesPage.checkEmptyRecentFileIsDisplayed();
-            await contentServicesPage.closeRecentFiles();
-        });
-
         it('[C279970] Should display Islocked field for folders', async () => {
             const folderNameA = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
             const folderNameB = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;

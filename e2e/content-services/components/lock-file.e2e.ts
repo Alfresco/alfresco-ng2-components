@@ -57,6 +57,11 @@ describe('Lock File', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_path
     });
 
+    const pngFileToLockAdmin = new FileModel({
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_path
+    });
+
     let site, documentLibrary;
 
     beforeAll(async () => {
@@ -267,7 +272,7 @@ describe('Lock File', () => {
 
         beforeEach(async () => {
             await apiService.login(adminUser.username, adminUser.password);
-            pngFileToBeLocked = await uploadActions.uploadFile(pngFileToLock.location, pngFileToLock.name, documentLibrary);
+            pngFileToBeLocked = await uploadActions.uploadFile(pngFileToLockAdmin.location, pngFileToLockAdmin.name, documentLibrary);
             pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
             await loginPage.login(adminUser.username, adminUser.password);
             await navigationBarPage.openContentServicesFolder(documentLibrary);
@@ -321,7 +326,7 @@ describe('Lock File', () => {
         });
 
         it('[C286617] Owner of the locked file should be able to delete if Allow owner to modify is checked', async () => {
-            await contentServices.lockContent(pngFileToLock.name);
+            await contentServices.lockContent(pngFileToLockAdmin.name);
 
             await lockFilePage.lockFileCheckboxText.waitVisible();
             await lockFilePage.lockFileCheckbox.click();
