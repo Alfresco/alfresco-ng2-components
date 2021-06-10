@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed, LogService } from '@alfresco/adf-core';
-import { of, throwError, Observable } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { TaskListService } from '../services/tasklist.service';
 import { StartTaskComponent } from './start-task.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
@@ -64,10 +64,7 @@ describe('StartTaskComponent', () => {
         service = TestBed.inject(TaskListService);
         logService = TestBed.inject(LogService);
 
-        getFormListSpy = spyOn(service, 'getFormList').and.returnValue(new Observable((observer) => {
-            observer.next(fakeForms$);
-            observer.complete();
-        }));
+        getFormListSpy = spyOn(service, 'getFormList').and.returnValue(of(fakeForms$));
 
         fixture.detectChanges();
     }));
@@ -88,12 +85,12 @@ describe('StartTaskComponent', () => {
 
         beforeEach(() => {
             createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(
-                new TaskDetailsModel({
+                {
                     id: 91,
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                })
+                } as any
             ));
         });
 
@@ -145,12 +142,12 @@ describe('StartTaskComponent', () => {
     describe('attach form', () => {
         beforeEach(() => {
             spyOn(service, 'createNewTask').and.returnValue(of(
-                new TaskDetailsModel({
+                {
                     id: 91,
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                })
+                } as any
             ));
         });
 
@@ -208,12 +205,12 @@ describe('StartTaskComponent', () => {
     describe('assign user', () => {
         beforeEach(() => {
             spyOn(service, 'createNewTask').and.returnValue(of(
-                new TaskDetailsModel({
+                {
                     id: 91,
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                })
+                } as any
             ));
             spyOn(service, 'attachFormToATask').and.returnValue(of(
                 {
@@ -224,12 +221,12 @@ describe('StartTaskComponent', () => {
                 }
             ));
             spyOn(service, 'assignTaskByUserId').and.returnValue(of(
-                new TaskDetailsModel({
+                {
                     id: 91,
                     name: 'fakeName',
                     formKey: 1204,
                     assignee: testUser
-                })
+                } as any
             ));
         });
 

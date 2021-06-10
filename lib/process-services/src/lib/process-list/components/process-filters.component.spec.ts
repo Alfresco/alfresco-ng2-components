@@ -53,11 +53,10 @@ describe('ProcessFiltersComponent', () => {
         fixture.destroy();
     });
 
-    it('should return the filter task list', (done) => {
+    it('should return the filter task list', async (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
-        filterList.ngOnChanges({ 'appId': change });
 
         filterList.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -69,16 +68,21 @@ describe('ProcessFiltersComponent', () => {
             done();
         });
 
-        fixture.detectChanges();
-    });
+        spyOn(filterList, 'getFiltersByAppId').and.callThrough();
 
-    it('should select the Running process filter', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
-        const appId = '1';
-        const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
-        expect(filterList.currentFilter).toBeUndefined();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(filterList.getFiltersByAppId).toHaveBeenCalled();
+    });
+
+    it('should select the Running process filter', async (done) => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
+
+        const appId = '1';
+        const change = new SimpleChange(null, appId, true);
 
         filterList.success.subscribe(() => {
             filterList.selectRunningFilter();
@@ -86,24 +90,26 @@ describe('ProcessFiltersComponent', () => {
             done();
         });
 
+        filterList.ngOnChanges({ 'appId': change });
+
         fixture.detectChanges();
+        await fixture.whenStable();
     });
 
-    it('should emit the selected filter based on the filterParam input', (done) => {
+    it('should emit the selected filter based on the filterParam input', async (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
         filterList.filterParam = new FilterProcessRepresentationModel({ id: 10 });
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
-        filterList.ngOnChanges({ 'appId': change });
-
-        expect(filterList.currentFilter).toBeUndefined();
 
         filterList.filterSelected.subscribe((filter) => {
             expect(filter.name).toEqual('FakeCompleted');
             done();
         });
 
+        filterList.ngOnChanges({ 'appId': change });
         fixture.detectChanges();
+        await fixture.whenStable();
     });
 
     it('should filterClicked emit when a filter is clicked from the UI', async  () => {
