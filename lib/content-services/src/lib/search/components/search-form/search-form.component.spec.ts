@@ -86,6 +86,6 @@ describe('SearchFormComponent', () => {
         await fixture.whenStable();
         fixture.detectChanges();
         const field = fixture.debugElement.query(By.css('.mat-form-field'));
-        expect(field).not.toBeDefined('search form displayed for empty configuration');
+        expect(field).toEqual(null, 'search form displayed for empty configuration');
     });
 });

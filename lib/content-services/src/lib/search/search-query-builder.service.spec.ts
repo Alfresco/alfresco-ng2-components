@@ -695,7 +695,7 @@ describe('SearchQueryBuilder', () => {
                   },
                   {
                       categories: [
-                          <any> { id: 'mouse', enabled: true },
+                          <any> { id: 'mouse', enabled: true }
                       ],
                       filterQueries: [
                           { query: 'query1' },

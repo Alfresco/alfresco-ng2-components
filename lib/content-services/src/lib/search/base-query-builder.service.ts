@@ -136,7 +136,7 @@ export abstract class BaseQueryBuilderService {
                 index,
                 name: configuration.name || 'SEARCH.UNKNOWN_FORM',
                 default: configuration.default || false,
-                selected: this.selectedConfiguration != undefined ? index === this.selectedConfiguration : configuration.default
+                selected: this.selectedConfiguration !== undefined ? index === this.selectedConfiguration : configuration.default
            }));
         }
         return [];
