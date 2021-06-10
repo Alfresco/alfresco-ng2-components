@@ -634,9 +634,14 @@ describe('EditProcessFilterCloudComponent', () => {
 
         beforeEach(() => {
             const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdChange });
             getProcessFilterByIdSpy.and.returnValue(of(fakeFilter));
+
+            component.ngOnChanges({ 'id': processFilterIdChange });
             fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
         });
 
         it('should emit save event and save the filter on click save button', async(() => {
@@ -662,30 +667,33 @@ describe('EditProcessFilterCloudComponent', () => {
             });
         }));
 
-        it('should emit delete event and delete the filter on click of delete button', (done) => {
+        it('should emit delete event and delete the filter on click of delete button', async () => {
             component.toggleFilterActions = true;
-            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of(null));
+            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of({} as any));
             const deleteSpy = spyOn(component.action, 'emit');
+
             fixture.detectChanges();
+            await fixture.whenStable();
 
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
+
             fixture.detectChanges();
+            await fixture.whenStable();
+
             const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
             stateElement.click();
+
             fixture.detectChanges();
+            await fixture.whenStable();
+
             const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
             deleteButton.click();
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(deleteFilterSpy).toHaveBeenCalled();
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(deleteSpy).toHaveBeenCalled();
-                    done();
-                });
+            await fixture.whenStable();
 
-            });
+            expect(deleteFilterSpy).toHaveBeenCalled();
+            expect(deleteSpy).toHaveBeenCalled();
         });
 
         it('should emit saveAs event and add filter on click saveAs button', async(() => {
