@@ -101,7 +101,7 @@ describe('Viewer', () => {
             for (const image of uploadedImages) {
                 if (image.entry.name !== '.DS_Store') {
                     await contentServicesPage.doubleClickRow(image.entry.name);
-                    await viewerPage.checkImgViewerIsDisplayed();
+                    await viewerPage.waitTillContentLoaded();
                     await viewerPage.clickCloseButton();
                 }
             }
@@ -109,7 +109,7 @@ describe('Viewer', () => {
             for (const item of uploadedImgRenditionFolderInfo) {
                 if (item.entry.name !== '.DS_Store') {
                     await contentServicesPage.doubleClickRow(item.entry.name);
-                    await viewerPage.checkFileIsLoaded();
+                    await viewerPage.waitTillContentLoaded();
                     await viewerPage.clickCloseButton();
                 }
             }

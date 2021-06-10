@@ -67,6 +67,7 @@ describe('Viewer', () => {
     beforeEach(async () => {
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.doubleClickRow(txtFileUploaded.entry.name);
+        await viewerPage.waitTillContentLoaded();
     });
 
     afterEach(async () => {
@@ -99,6 +100,7 @@ describe('Viewer', () => {
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
         await versionManagePage.closeVersionDialog();
         await contentServicesPage.doubleClickRow(txtFileUploaded.entry.name);
+        await viewerPage.waitTillContentLoaded();
         await viewerPage.clickInfoButton();
         await viewerPage.clickOnTab('Versions');
         await versionManagePage.viewFileVersion('1.0');

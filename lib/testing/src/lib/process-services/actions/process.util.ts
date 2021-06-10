@@ -26,18 +26,20 @@ export class ProcessUtil {
     api: ApiService;
     processInstancesApi: ProcessInstancesApi;
     processDefinitionsApi: ProcessDefinitionsApi;
+    applicationsUtil: ApplicationsUtil;
     tasksApi: TasksApi;
 
     constructor(apiService: ApiService) {
         this.api = apiService;
         this.processInstancesApi = new ProcessInstancesApi(apiService.getInstance());
         this.processDefinitionsApi = new ProcessDefinitionsApi(apiService.getInstance());
+        this.applicationsUtil = new ApplicationsUtil(apiService);
         this.tasksApi = new TasksApi(apiService.getInstance());
     }
 
     async startProcessByDefinitionName(appName: string, processDefinitionName: string, processName?: string): Promise<any> {
         try {
-            const appDefinition = await new ApplicationsUtil(this.api).getAppDefinitionByName(appName);
+            const appDefinition = await this.applicationsUtil.getAppDefinitionByName(appName);
 
             const processDefinition = await this.getProcessDefinitionByName(appDefinition.deploymentId, processDefinitionName);
 
@@ -51,7 +53,7 @@ export class ProcessUtil {
 
     async startProcessByDefinitionNameWithFormValues(appName: string, processDefinitionName: string, values: any, processName?: string): Promise<any> {
         try {
-            const appDefinition = await new ApplicationsUtil(this.api).getAppDefinitionByName(appName);
+            const appDefinition = await this.applicationsUtil.getAppDefinitionByName(appName);
 
             const processDefinition = await this.getProcessDefinitionByName(appDefinition.deploymentId, processDefinitionName);
 
@@ -69,7 +71,7 @@ export class ProcessUtil {
 
     async startProcessOfApp(appName: string, processName?: string): Promise<any> {
         try {
-            const appDefinition = await new ApplicationsUtil(this.api).getAppDefinitionByName(appName);
+            const appDefinition = await this.applicationsUtil.getAppDefinitionByName(appName);
             const processDefinitionList = await this.processDefinitionsApi.getProcessDefinitions({ deploymentId: appDefinition.deploymentId });
             const startProcessOptions: any = { processDefinitionId: processDefinitionList.data[0].id, name: processName ? processName : StringUtil.generateRandomString(5).toLowerCase() };
             return this.processInstancesApi.startNewProcessInstance(startProcessOptions);
