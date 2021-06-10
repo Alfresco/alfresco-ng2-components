@@ -29,7 +29,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 
-fdescribe('CardViewTextItemComponent', () => {
+describe('CardViewTextItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
