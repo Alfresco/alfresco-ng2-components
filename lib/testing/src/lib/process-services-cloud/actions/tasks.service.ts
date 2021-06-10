@@ -38,7 +38,7 @@ export class TasksService {
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
-                Logger.error('Create Task - Service error, Response: ', JSON.stringify(error.response.text));
+                Logger.error('Create Task - Service error, Response: ', JSON.stringify(error?.response?.text));
             });
     }
 
@@ -56,7 +56,7 @@ export class TasksService {
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
-                Logger.error('Create standalone Task - Service error, Response: ', JSON.stringify(error.response.text));
+                Logger.error('Create standalone Task - Service error, Response: ', JSON.stringify(error?.response?.text));
             });
     }
 
@@ -68,7 +68,7 @@ export class TasksService {
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
-                Logger.error('Complete Task - Service error, Response: ', JSON.stringify(error.response.text));
+                Logger.error('Complete Task - Service error, Response: ', JSON.stringify(error?.response?.text));
             });
     }
 
@@ -81,7 +81,7 @@ export class TasksService {
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
-                Logger.error('claim Task - Service error, Response: ', JSON.stringify(error.response.text));
+                Logger.error('claim Task - Service error, Response: ', JSON.stringify(error?.response?.text));
             });
     }
 
@@ -94,7 +94,7 @@ export class TasksService {
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
-                Logger.error('delete Task - Service error, Response: ', JSON.stringify(error.response.text));
+                Logger.error('delete Task - Service error, Response: ', JSON.stringify(error?.response?.text));
             });
     }
 
@@ -114,7 +114,7 @@ export class TasksService {
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
-                Logger.error('Get Task - Service error, Response: ', JSON.stringify(error.response.text));
+                Logger.error('Get Task - Service error, Response: ', JSON.stringify(error?.response?.text));
             });
     }
 
@@ -126,7 +126,7 @@ export class TasksService {
 
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
-                Logger.error('Get Task Id Service error, Response: ', JSON.stringify(error.response.text));
+                Logger.error('Get Task Id Service error, Response: ', JSON.stringify(error?.response?.text));
             });
         return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
     }
@@ -140,7 +140,7 @@ export class TasksService {
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
-                Logger.error('Create sub Task - Service error, Response: ', JSON.stringify(error.response.text));
+                Logger.error('Create sub Task - Service error, Response: ', JSON.stringify(error?.response?.text));
             });
     }
 

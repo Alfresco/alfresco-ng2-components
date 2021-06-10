@@ -41,9 +41,10 @@ describe('Radio Buttons Widget', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const processUtil = new ProcessUtil(apiService);
 
     let appModel;
-    let deployedApp, process;
+    let appId, process;
     let processUserModel;
 
     beforeAll(async () => {
@@ -53,28 +54,24 @@ describe('Radio Buttons Widget', () => {
 
        await apiService.login(processUserModel.username, processUserModel.password);
        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
+       appId = await applicationsService.getAppDefinitionId(appModel.id);
 
-       const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
-       deployedApp = appDefinitions.data.find((currentApp) => {
-            return currentApp.modelId === appModel.id;
-        });
-
-       process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
+       process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
        await loginPage.login(processUserModel.username, processUserModel.password);
    });
 
     beforeEach(async () => {
         await navigationBarPage.clickHomeButton();
-        await (new ProcessServicesPage()).goToAppByAppId(deployedApp.id);
+        await (new ProcessServicesPage()).goToAppByAppId(appId);
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+        await processUtil.cancelProcessInstance(process.id);
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
    });
 
     it('[C277316] Should display empty radio buttons when no preselection is configured', async () => {

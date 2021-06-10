@@ -20,6 +20,7 @@ import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
+import { AdminGroupsApi } from '@alfresco/js-api';
 
 describe('People and Group widget', () => {
 
@@ -33,6 +34,7 @@ describe('People and Group widget', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const adminGroupsApi = new AdminGroupsApi(apiService.getInstance());
 
     let user: UserModel;
 
@@ -129,16 +131,16 @@ describe('People and Group widget', () => {
             tenantId: tenantId, firstName: app.subGroupUser.firstName, lastName: app.subGroupUser.lastName
         }));
 
-        const group = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
+        const group = await adminGroupsApi.createNewGroup({
             name: app.group.name,
             tenantId,
             type: 1
         });
 
-        await Promise.all(userCreated.map((userToAddGroup: UserModel) => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(group.id, userToAddGroup.id)));
+        await Promise.all(userCreated.map((userToAddGroup: UserModel) => adminGroupsApi.addGroupMember(group.id, userToAddGroup.id)));
 
         const subgroups: any[] = await Promise.all(getSubGroupsName().map((name) =>
-            apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
+            adminGroupsApi.createNewGroup({
                 name,
                 tenantId,
                 type: 1,
@@ -146,7 +148,7 @@ describe('People and Group widget', () => {
             })
         ));
 
-        await Promise.all(subgroups.map((subgroup) => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(subgroup.id, subgroupUser.id)));
+        await Promise.all(subgroups.map((subgroup) => adminGroupsApi.addGroupMember(subgroup.id, subgroupUser.id)));
 
     }
 

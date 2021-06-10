@@ -134,7 +134,9 @@ describe('Content Services Viewer', () => {
 
     describe('Usual type files', () => {
         it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', async () => {
-            await viewerPage.viewFile(pdfFile.name);
+            await contentServicesPage.doubleClickRow(pdfFile.name);
+            await viewerPage.waitTillContentLoaded();
+
             await viewerPage.checkZoomInButtonIsDisplayed();
 
             await viewerPage.checkFileContent('1', pdfFile.firstPageText);
@@ -156,7 +158,9 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C260040] Should be able to change pages and zoom when .pdf file is open', async () => {
-            await viewerPage.viewFile(pdfFile.name);
+            await contentServicesPage.doubleClickRow(pdfFile.name);
+            await viewerPage.waitTillContentLoaded();
+
             await viewerPage.checkZoomInButtonIsDisplayed();
 
             await viewerPage.checkFileContent('1', pdfFile.firstPageText);
@@ -190,7 +194,9 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C260042] Should be able to download, open full-screen and Info container from the Viewer', async () => {
-            await viewerPage.viewFile(jpgFile.name);
+            await contentServicesPage.doubleClickRow(jpgFile.name);
+            await viewerPage.waitTillContentLoaded();
+
             await viewerPage.checkZoomInButtonIsDisplayed();
 
             await viewerPage.checkImgContainerIsDisplayed();
@@ -207,7 +213,9 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C260052] Should display image, toolbar and pagination when opening a .jpg file', async () => {
-            await viewerPage.viewFile(jpgFile.name);
+            await contentServicesPage.doubleClickRow(jpgFile.name);
+            await viewerPage.waitTillContentLoaded();
+
             await viewerPage.checkZoomInButtonIsDisplayed();
 
             await viewerPage.checkImgContainerIsDisplayed();
@@ -227,7 +235,9 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C260483] Should be able to zoom and rotate image when .jpg file is open', async () => {
-            await viewerPage.viewFile(jpgFile.name);
+            await contentServicesPage.doubleClickRow(jpgFile.name);
+            await viewerPage.waitTillContentLoaded();
+
             await viewerPage.checkZoomInButtonIsDisplayed();
 
             await viewerPage.checkPercentageIsDisplayed();
@@ -244,7 +254,8 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C279922] Should display first page, toolbar and pagination when opening a .ppt file', async () => {
-            await viewerPage.viewFile(pptFile.name);
+            await contentServicesPage.doubleClickRow(pptFile.name);
+            await viewerPage.waitTillContentLoaded();
             await viewerPage.checkZoomInButtonIsDisplayed();
 
             await viewerPage.checkFileContent('1', pptFile.firstPageText);
@@ -264,7 +275,9 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C291903] Should display the buttons in order in the adf viewer toolbar', async () => {
-            await viewerPage.viewFile(pdfFile.name);
+            await contentServicesPage.doubleClickRow(pdfFile.name);
+            await viewerPage.waitTillContentLoaded();
+
             await viewerPage.checkLeftSideBarIsNotDisplayed();
             await viewerPage.clickLeftSidebarButton();
             await viewerPage.checkLeftSideBarIsDisplayed();
@@ -275,7 +288,9 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C260053] Should display first page, toolbar and pagination when opening a .docx file', async () => {
-            await viewerPage.viewFile(docxFile.name);
+            await contentServicesPage.doubleClickRow(docxFile.name);
+            await viewerPage.waitTillContentLoaded();
+
             await viewerPage.checkZoomInButtonIsDisplayed();
 
             await viewerPage.checkFileContent('1', docxFile.firstPageText);
@@ -295,7 +310,8 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C260054] Should display Preview could not be loaded and viewer toolbar when opening an unsupported file', async () => {
-            await viewerPage.viewFile(unsupportedFile.name);
+            await contentServicesPage.doubleClickRow(unsupportedFile.name);
+            await viewerPage.waitTillContentLoaded();
 
             await viewerPage.checkCloseButtonIsDisplayed();
             await viewerPage.checkFileNameIsDisplayed(unsupportedFile.name);
@@ -311,7 +327,8 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C260056] Should display video and viewer toolbar when opening a media file', async () => {
-            await viewerPage.viewFile(mp4File.name);
+            await contentServicesPage.doubleClickRow(mp4File.name);
+            await viewerPage.waitTillContentLoaded();
 
             await viewerPage.checkMediaPlayerContainerIsDisplayed();
             await viewerPage.checkCloseButtonIsDisplayed();
@@ -327,7 +344,8 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C261123] Should be able to preview all pages and navigate to a page when using thumbnails', async () => {
-            await viewerPage.viewFile(pdfFile.name);
+            await contentServicesPage.doubleClickRow(pdfFile.name);
+            await viewerPage.waitTillContentLoaded();
 
             await viewerPage.checkZoomInButtonIsDisplayed();
             await viewerPage.checkFileContent('1', pdfFile.firstPageText);
@@ -357,7 +375,9 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C268105] Should display current thumbnail when getting to the page following the last visible thumbnail', async () => {
-            await viewerPage.viewFile(pdfFile.name);
+            await contentServicesPage.doubleClickRow(pdfFile.name);
+            await viewerPage.waitTillContentLoaded();
+
             await viewerPage.checkZoomInButtonIsDisplayed();
 
             await viewerPage.checkFileContent('1', pdfFile.firstPageText);
@@ -385,7 +405,8 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C268901] Should need a password when opening a protected file', async () => {
-            await viewerPage.viewFile(protectedFile.name);
+            await contentServicesPage.doubleClickRow(protectedFile.name);
+            await viewerPage.waitTillContentLoaded();
 
             await viewerPage.checkZoomInButtonIsDisplayed();
             await viewerPage.checkPasswordDialogIsDisplayed();
@@ -404,7 +425,9 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C307985] Should close the viewer when password dialog is cancelled', async () => {
-            await viewerPage.viewFile(protectedFile.name);
+            await contentServicesPage.doubleClickRow(protectedFile.name);
+            await viewerPage.waitTillContentLoaded();
+
             await viewerPage.checkPasswordDialogIsDisplayed();
             await viewerPage.clickClosePasswordDialog();
             await contentServicesPage.checkContentIsDisplayed(protectedFile.name);
@@ -429,7 +452,9 @@ describe('Content Services Viewer', () => {
     });
 
     async function uploadNewVersion(originalFileName: string, newVersionLocation: string): Promise<void> {
-        await viewerPage.viewFile(originalFileName);
+        await contentServicesPage.doubleClickRow(originalFileName);
+        await viewerPage.waitTillContentLoaded();
+
         await viewerPage.clickCloseButton();
         await contentServicesPage.versionManagerContent(originalFileName);
         await versionManagePage.showNewVersionButton.click();
@@ -440,14 +465,17 @@ describe('Content Services Viewer', () => {
     }
 
     async function previewUnsupportedFile(unsupportedFileName: string): Promise<void> {
-        await viewerPage.viewFile(unsupportedFileName);
+        await contentServicesPage.doubleClickRow(unsupportedFileName);
+        await viewerPage.waitTillContentLoaded();
         await viewerPage.checkUnknownFormatIsDisplayed();
         await expect(await viewerPage.getUnknownFormatMessage()).toBe('Couldn\'t load preview. Unknown format.');
         await viewerPage.clickCloseButton();
     }
 
     async function changeFileNameInViewer(fileName: string, newName: string): Promise<void> {
-        await viewerPage.viewFile(fileName);
+        await contentServicesPage.doubleClickRow(fileName);
+        await viewerPage.waitTillContentLoaded();
+
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await viewerPage.clickOnTab('Properties');

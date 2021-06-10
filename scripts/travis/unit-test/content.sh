@@ -10,7 +10,7 @@ echo "================== AFFECTED_LIBS  ${AFFECTED_LIBS} ==================="
 
 echo "================== content-services unit ==================="
 
-if [[ $AFFECTED_LIBS =~ "content-services" ||  "${TRAVIS_EVENT_TYPE}" == "push" ]];
+if [[ $AFFECTED_LIBS =~ "content-services" ||  "${TRAVIS_EVENT_TYPE}" == "cron" ]];
 then
     ng test content-services --watch=false || exit 1;
 fi;

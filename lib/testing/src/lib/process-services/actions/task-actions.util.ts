@@ -17,18 +17,21 @@
 
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../core/actions/api.service';
+import { TaskActionsApi } from '@alfresco/js-api';
 
 export class TaskActionsUtil {
 
     api: ApiService;
+    taskActionsApi: TaskActionsApi;
 
-    constructor(api: ApiService) {
-        this.api = api;
+    constructor(apiService: ApiService) {
+        this.api = apiService;
+        this.taskActionsApi = new TaskActionsApi(apiService.getInstance());
     }
 
     async claimTask(taskInstance: string): Promise<any> {
         try {
-            return this.api.apiService.activiti.taskActionsApi.claimTask(taskInstance);
+            return this.taskActionsApi.claimTask(taskInstance);
         } catch (error) {
             Logger.error('Claim a Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
@@ -36,7 +39,7 @@ export class TaskActionsUtil {
 
     async unclaimTask(taskInstance: string): Promise<any> {
         try {
-            return this.api.apiService.activiti.taskActionsApi.unclaimTask(taskInstance);
+            return this.taskActionsApi.unclaimTask(taskInstance);
         } catch (error) {
             Logger.error('Unclaim a Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
@@ -44,7 +47,7 @@ export class TaskActionsUtil {
 
     async completeTask(taskInstance: string): Promise<any> {
         try {
-            return this.api.apiService.activiti.taskActionsApi.completeTask(taskInstance);
+            return this.taskActionsApi.completeTask(taskInstance);
         } catch (error) {
             Logger.error('Complete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }

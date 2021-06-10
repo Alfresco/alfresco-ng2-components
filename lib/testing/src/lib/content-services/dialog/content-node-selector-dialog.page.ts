@@ -181,7 +181,7 @@ export class ContentNodeSelectorDialogPage {
         try {
             await this.contentListPage().dataTablePage().checkRowContentIsDisplayed(name);
         } catch (e) {
-            console.error(`failed to get search result :: ${name}`);
+            Logger.error(`failed to get search result :: ${name}`);
         }
         await this.clickContentNodeSelectorResult(name);
     }

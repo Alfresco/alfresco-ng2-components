@@ -16,13 +16,21 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    LoginPage,
+    ModelsActions,
+    ProcessUtil,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
 import { ProcessListPage } from './../pages/process-list.page';
 import { ProcessDetailsPage } from './../pages/process-details.page';
 import moment = require('moment');
+import { ProcessInstancesApi } from '@alfresco/js-api';
 
 describe('Process Instance Details', () => {
 
@@ -38,6 +46,8 @@ describe('Process Instance Details', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const modelsActions = new ModelsActions(apiService);
+    const processApi = new ProcessInstancesApi(apiService.getInstance());
 
     let appModel, process, user;
     const PROCESS_DATE_FORMAT = 'll';
@@ -60,13 +70,13 @@ describe('Process Instance Details', () => {
         await processServiceTabBarPage.clickProcessButton();
         await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
-        process = await apiService.getInstance().activiti.processApi.getProcessInstance(processModel.id);
+        process = await processApi.getProcessInstance(processModel.id);
    });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appModel.id);
+        await modelsActions.deleteModel(appModel.id);
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await usersActions.deleteTenant(user.tenantId);
    });
 
     it('[C307031] Should display the created date in the default format', async () => {

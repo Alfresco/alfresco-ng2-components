@@ -27,16 +27,16 @@ describe('Task Details - No form', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
+    const taskPage = new TasksPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     let processUserModel;
-    const taskPage = new TasksPage();
     const noFormMessage = 'No forms attached';
     let importedApp;
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.loginWithProfile('admin');
         processUserModel = await usersActions.createUser();
 
@@ -49,7 +49,7 @@ describe('Task Details - No form', () => {
 
     afterAll( async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
     });
 
     it('[C289311] Should attach form and complete buttons to be displayed when no form is attached', async () => {

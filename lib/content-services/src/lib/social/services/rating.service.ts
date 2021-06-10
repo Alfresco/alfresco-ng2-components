@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { RatingEntry, RatingBody } from '@alfresco/js-api';
 import { from, throwError, Observable } from 'rxjs';
@@ -26,7 +26,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class RatingService {
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
     }
 
     /**
@@ -74,7 +74,7 @@ export class RatingService {
     }
 
     private handleError(error: any): any {
-        console.error(error);
+        this.logService.error(error);
         return throwError(error || 'Server error');
     }
 }

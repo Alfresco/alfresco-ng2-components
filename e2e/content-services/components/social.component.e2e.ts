@@ -28,6 +28,7 @@ import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { SocialPage } from '../../content-services/pages/social.page';
 import { browser } from 'protractor';
+import { NodesApi } from '@alfresco/js-api';
 
 describe('Social component', () => {
 
@@ -43,6 +44,7 @@ describe('Social component', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
+    const nodesApi = new NodesApi(apiService.getInstance());
 
     const blueLikeColor = ('rgba(33, 150, 243, 1)');
     const greyLikeColor = ('rgba(128, 128, 128, 1)');
@@ -67,7 +69,7 @@ describe('Social component', () => {
 
         emptyFile = await uploadActions.uploadFile(emptyFileModel.location, emptyFileModel.name, '-my-');
 
-        await apiService.getInstance().core.nodesApi.updateNode(emptyFile.entry.id,
+        await nodesApi.updateNode(emptyFile.entry.id,
 
             {
                 permissions: {

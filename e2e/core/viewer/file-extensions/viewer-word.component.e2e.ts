@@ -95,7 +95,7 @@ describe('Viewer', () => {
             for (const currentFile of uploadedWords) {
                 if (currentFile.entry.name !== '.DS_Store') {
                     await contentServicesPage.doubleClickRow(currentFile.entry.name);
-                    await viewerPage.checkFileIsLoaded();
+                    await viewerPage.waitTillContentLoaded();
                     await viewerPage.clickCloseButton();
                 }
             }

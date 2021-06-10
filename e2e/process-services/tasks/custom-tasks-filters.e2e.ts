@@ -22,14 +22,13 @@ import {
     DateUtil,
     LoginPage,
     PaginationPage,
-    ProcessUtil,
+    ProcessUtil, TaskUtil,
     UsersActions
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { AppsRuntimeActions } from '../../actions/APS/apps-runtime.actions';
 import { TaskListDemoPage } from './../pages/task-list-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { TaskRepresentation } from '@alfresco/js-api';
+import { TaskActionsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
 import moment = require('moment');
 
 describe('Start Task - Custom App', () => {
@@ -43,10 +42,13 @@ describe('Start Task - Custom App', () => {
     const paginationPage = new PaginationPage();
 
     const apiService = new ApiService();
-    const appsRuntime = new AppsRuntimeActions(apiService);
+    const appsRuntime = new ApplicationsUtil(apiService);
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
+    const taskUtil = new TaskUtil(apiService);
+    const taskActionsApi = new TaskActionsApi(apiService.getInstance());
+    const tasksApi = new TasksApi(apiService.getInstance());
 
     let processUserModel;
     let appRuntime, secondAppRuntime;
@@ -89,11 +91,11 @@ describe('Start Task - Custom App', () => {
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-        appRuntime = await appsRuntime.getRuntimeAppByName(app.title);
+        appRuntime = await appsRuntime.getAppDefinitionByName(app.title);
 
         await applicationsService.importPublishDeployApp(secondApp.file_path);
 
-        secondAppRuntime = await appsRuntime.getRuntimeAppByName(secondApp.title);
+        secondAppRuntime = await appsRuntime.getAppDefinitionByName(secondApp.title);
 
         processDefinitionId = await processUtil.startProcessOfApp(appModel.name);
         await processUtil.startProcessOfApp(appModel.name);
@@ -101,18 +103,18 @@ describe('Start Task - Custom App', () => {
         await processUtil.startProcessOfApp(appModel.name);
 
         for (let i = 1; i < paginationTasksName.length; i++) {
-            await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ 'name': paginationTasksName[i] }));
+            await taskUtil.createStandaloneTask(paginationTasksName[i]);
         }
 
         for (let i = 0; i < 3; i++) {
-            completedTasks[i] = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({
+            completedTasks[i] = await tasksApi.createNewTask(new TaskRepresentation({
                 'name': completedTasksName[i],
                 'dueDate': DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ', new Date(), i + 2)
             }));
-            await apiService.getInstance().activiti.taskActionsApi.completeTask(completedTasks[i].id);
+            await taskActionsApi.completeTask(completedTasks[i].id);
         }
 
-        taskWithDueDate = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({
+        taskWithDueDate = await tasksApi.createNewTask(new TaskRepresentation({
             'name': paginationTasksName[0],
             'dueDate': currentDateStandardFormat
         }));

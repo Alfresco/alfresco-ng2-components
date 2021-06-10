@@ -39,6 +39,7 @@ describe('Document List Component - Properties', () => {
     });
 
     describe('Allow drop files property', () => {
+
         beforeEach(async () => {
             await apiService.loginWithProfile('admin');
 
@@ -49,6 +50,9 @@ describe('Document List Component - Properties', () => {
             subFolder = await uploadActions.createFolder('subFolder', parentFolder.entry.id);
 
             await loginPage.login(acsUser.username, acsUser.password);
+
+            await navigationBar.navigateToContentServices();
+            await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });
 
         afterEach(async () => {
@@ -59,9 +63,6 @@ describe('Document List Component - Properties', () => {
         });
 
         it('[C299154] Should disallow upload content on a folder row if allowDropFiles is false', async () => {
-            await navigationBar.navigateToContentServices();
-            await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-
             await contentServicesPage.openFolder(parentFolder.entry.name);
             await contentServicesPage.disableDropFilesInAFolder();
             await browser.sleep(1000);
@@ -75,9 +76,6 @@ describe('Document List Component - Properties', () => {
         });
 
         it('[C91319] Should allow upload content on a folder row if allowDropFiles is true', async () => {
-            await navigationBar.navigateToContentServices();
-            await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-
             await contentServicesPage.openFolder(parentFolder.entry.name);
             await contentServicesPage.enableDropFilesInAFolder();
             await browser.sleep(1000);

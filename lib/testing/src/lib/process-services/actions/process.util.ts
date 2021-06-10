@@ -19,25 +19,33 @@ import { ApplicationsUtil } from './applications.util';
 import { Logger } from '../../core/utils/logger';
 import { StringUtil } from '../../core/utils/string.util';
 import { ApiService } from '../../core/actions/api.service';
-import { TaskRepresentation } from '@alfresco/js-api';
+import { TasksApi, ProcessInstancesApi, TaskRepresentation, ProcessDefinitionsApi } from '@alfresco/js-api';
 
 export class ProcessUtil {
 
     api: ApiService;
+    processInstancesApi: ProcessInstancesApi;
+    processDefinitionsApi: ProcessDefinitionsApi;
+    applicationsUtil: ApplicationsUtil;
+    tasksApi: TasksApi;
 
-    constructor(api: ApiService) {
-        this.api = api;
+    constructor(apiService: ApiService) {
+        this.api = apiService;
+        this.processInstancesApi = new ProcessInstancesApi(apiService.getInstance());
+        this.processDefinitionsApi = new ProcessDefinitionsApi(apiService.getInstance());
+        this.applicationsUtil = new ApplicationsUtil(apiService);
+        this.tasksApi = new TasksApi(apiService.getInstance());
     }
 
     async startProcessByDefinitionName(appName: string, processDefinitionName: string, processName?: string): Promise<any> {
         try {
-            const appDefinition = await new ApplicationsUtil(this.api).getAppDefinitionByName(appName);
+            const appDefinition = await this.applicationsUtil.getAppDefinitionByName(appName);
 
             const processDefinition = await this.getProcessDefinitionByName(appDefinition.deploymentId, processDefinitionName);
 
             const startProcessOptions: any = { processDefinitionId: processDefinition.id, name: processName ? processName : processDefinitionName + StringUtil.generateRandomString(5).toLowerCase() };
 
-            return this.api.apiService.activiti.processApi.startNewProcessInstance(startProcessOptions);
+            return this.processInstancesApi.startNewProcessInstance(startProcessOptions);
         } catch (error) {
             Logger.error('Start Process - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
@@ -45,7 +53,7 @@ export class ProcessUtil {
 
     async startProcessByDefinitionNameWithFormValues(appName: string, processDefinitionName: string, values: any, processName?: string): Promise<any> {
         try {
-            const appDefinition = await new ApplicationsUtil(this.api).getAppDefinitionByName(appName);
+            const appDefinition = await this.applicationsUtil.getAppDefinitionByName(appName);
 
             const processDefinition = await this.getProcessDefinitionByName(appDefinition.deploymentId, processDefinitionName);
 
@@ -55,7 +63,7 @@ export class ProcessUtil {
                 values
             };
 
-            return this.api.apiService.activiti.processApi.startNewProcessInstance(startProcessOptions);
+            return this.processInstancesApi.startNewProcessInstance(startProcessOptions);
         } catch (error) {
             Logger.error('Start Process - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
@@ -63,10 +71,10 @@ export class ProcessUtil {
 
     async startProcessOfApp(appName: string, processName?: string): Promise<any> {
         try {
-            const appDefinition = await new ApplicationsUtil(this.api).getAppDefinitionByName(appName);
-            const processDefinitionList = await this.api.apiService.activiti.processApi.getProcessDefinitions({ deploymentId: appDefinition[0].deploymentId });
+            const appDefinition = await this.applicationsUtil.getAppDefinitionByName(appName);
+            const processDefinitionList = await this.processDefinitionsApi.getProcessDefinitions({ deploymentId: appDefinition.deploymentId });
             const startProcessOptions: any = { processDefinitionId: processDefinitionList.data[0].id, name: processName ? processName : StringUtil.generateRandomString(5).toLowerCase() };
-            return this.api.apiService.activiti.processApi.startNewProcessInstance(startProcessOptions);
+            return this.processInstancesApi.startNewProcessInstance(startProcessOptions);
         } catch (error) {
             Logger.error('Start Process - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
@@ -74,7 +82,7 @@ export class ProcessUtil {
 
     async cancelProcessInstance(processInstance: string): Promise<any> {
         try {
-            return this.api.apiService.activiti.processApi.deleteProcessInstance(processInstance);
+            return this.processInstancesApi.deleteProcessInstance(processInstance);
         } catch (error) {
             Logger.error('Cancel Process - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
@@ -82,7 +90,7 @@ export class ProcessUtil {
 
     async getProcessDefinitionByName(deploymentId: string, processName: string): Promise<any> {
         try {
-            const processDefinitionList = await this.api.apiService.activiti.processApi.getProcessDefinitions({ deploymentId: deploymentId });
+            const processDefinitionList = await this.processDefinitionsApi.getProcessDefinitions({ deploymentId: deploymentId });
             const chosenProcess = processDefinitionList.data.find( (processDefinition) => {
                 return processDefinition.name === processName;
             });
@@ -94,14 +102,14 @@ export class ProcessUtil {
 
     async getProcessInstanceByName(processInstanceName: string, processInstanceStatus?: string, maxNumberOfResults?: number): Promise<any> {
         try {
-            return await this.api.apiService.activiti.processApi.filterProcessInstances({filter: {name: processInstanceName, state: processInstanceStatus}, size: maxNumberOfResults});
+            return await this.processInstancesApi.filterProcessInstances({filter: {name: processInstanceName, state: processInstanceStatus}, size: maxNumberOfResults});
         } catch (error) {
             Logger.error('List process instances using a filter - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 
     async getProcessTaskId(processId: string): Promise<TaskRepresentation> {
-        const taskList = await this.api.apiService.activiti.taskApi.listTasks({});
+        const taskList = await this.tasksApi.listTasks({});
         let wantedtask;
 
         taskList.data.forEach((task) => {

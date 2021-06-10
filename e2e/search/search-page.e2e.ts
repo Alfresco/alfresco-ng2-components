@@ -82,7 +82,7 @@ describe('Search component - Search Page', () => {
 
         await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');
 
-        await apiService.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await uploadActions.createEmptyFiles(adminFileNames, newFolderModelUploaded.entry.id);
 

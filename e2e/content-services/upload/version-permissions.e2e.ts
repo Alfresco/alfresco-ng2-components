@@ -31,7 +31,7 @@ import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
-import { SitesApi } from '@alfresco/js-api';
+import { NodesApi, SitesApi } from '@alfresco/js-api';
 
 describe('Version component permissions', () => {
 
@@ -52,6 +52,7 @@ describe('Version component permissions', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const nodesApi = new NodesApi(apiService.getInstance());
 
     const newVersionFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
@@ -114,7 +115,7 @@ describe('Version component permissions', () => {
         const lockFileUploaded = await uploadActions.uploadFile(lockFileModel.location, lockFileModel.name, site.entry.guid);
         Object.assign(lockFileModel, lockFileUploaded.entry);
 
-        await apiService.getInstance().nodes.lockNode(lockFileModel.id, {
+        await nodesApi.lockNode(lockFileModel.id, {
                 type: 'FULL',
                 lifetime: 'PERSISTENT'
             });
@@ -150,7 +151,7 @@ describe('Version component permissions', () => {
 
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
-            await apiService.getInstance().nodes.deleteNode(sameCreatorFile.id);
+            await nodesApi.deleteNode(sameCreatorFile.id);
             await navigationBarPage.clickLogoutButton();
         });
 
@@ -222,7 +223,7 @@ describe('Version component permissions', () => {
 
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
-            await apiService.getInstance().nodes.deleteNode(sameCreatorFile.id);
+            await nodesApi.deleteNode(sameCreatorFile.id);
             await navigationBarPage.clickLogoutButton();
         });
 
@@ -277,7 +278,7 @@ describe('Version component permissions', () => {
 
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
-            await apiService.getInstance().nodes.deleteNode(sameCreatorFile.id);
+            await nodesApi.deleteNode(sameCreatorFile.id);
             await navigationBarPage.clickLogoutButton();
         });
 

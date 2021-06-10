@@ -29,7 +29,7 @@ import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { LockFilePage } from '../../content-services/pages/lock-file.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { NodeEntry, SitesApi } from '@alfresco/js-api';
+import { NodeEntry, NodesApi, SitesApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Lock File', () => {
@@ -45,6 +45,7 @@ describe('Lock File', () => {
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
     const waitActions = new WaitActions(apiService);
+    const nodesApi = new NodesApi(apiService.getInstance());
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -54,6 +55,11 @@ describe('Lock File', () => {
     const pngFileToLock = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_path
+    });
+
+    const pngFileToLockAdmin = new FileModel({
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_path
     });
 
     let site, documentLibrary;
@@ -73,7 +79,7 @@ describe('Lock File', () => {
             visibility: 'PRIVATE'
         });
 
-        const resultNode = await apiService.getInstance().core.nodesApi.getNodeChildren(site.entry.guid);
+        const resultNode = await nodesApi.listNodeChildren(site.entry.guid);
 
         documentLibrary = resultNode.list.entries[0].entry.id;
 
@@ -111,7 +117,7 @@ describe('Lock File', () => {
         afterEach(async () => {
             await apiService.login(adminUser.username, adminUser.password);
             try {
-                await apiService.getInstance().core.nodesApi.unlockNode(pngUploadedFile.entry.id);
+                await nodesApi.unlockNode(pngUploadedFile.entry.id);
                 await waitActions.nodeIsUnlock(pngUploadedFile.entry.id);
             } catch (e) {
             }
@@ -120,7 +126,7 @@ describe('Lock File', () => {
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
             try {
-                await apiService.getInstance().core.nodesApi.unlockNode(pngLockedUploadedFile.entry.id);
+                await nodesApi.unlockNode(pngLockedUploadedFile.entry.id);
             } catch (e) {
             }
             try {
@@ -194,7 +200,7 @@ describe('Lock File', () => {
             await apiService.login(adminUser.username, adminUser.password);
 
             try {
-                await apiService.getInstance().core.nodesApi.unlockNode(pngUploadedFile.entry.id);
+                await nodesApi.unlockNode(pngUploadedFile.entry.id);
                 await uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
             } catch (error) {
             }
@@ -209,7 +215,7 @@ describe('Lock File', () => {
             await lockFilePage.saveButton.click();
 
             try {
-                await apiService.getInstance().core.nodesApi.deleteNode(pngUploadedFile.entry.id);
+                await nodesApi.deleteNode(pngUploadedFile.entry.id);
             } catch (error) {
                 await expect(error.status).toEqual(409);
             }
@@ -223,7 +229,7 @@ describe('Lock File', () => {
             await lockFilePage.saveButton.click();
 
             try {
-                await apiService.getInstance().core.nodesApi.updateNode(pngUploadedFile.entry.id, { name: 'My new name' });
+                await nodesApi.updateNode(pngUploadedFile.entry.id, { name: 'My new name' });
 
             } catch (error) {
                 await expect(error.status).toEqual(409);
@@ -238,7 +244,7 @@ describe('Lock File', () => {
             await lockFilePage.saveButton.click();
 
             try {
-                await apiService.getInstance().core.nodesApi.moveNode(pngUploadedFile.entry.id, { targetParentId: '-my-' });
+                await nodesApi.moveNode(pngUploadedFile.entry.id, { targetParentId: '-my-' });
 
             } catch (error) {
                 await expect(error.status).toEqual(409);
@@ -253,7 +259,7 @@ describe('Lock File', () => {
             await lockFilePage.saveButton.click();
 
             try {
-                await apiService.getInstance().core.nodesApi.updateNodeContent(pngUploadedFile.entry.id, 'NEW FILE CONTENT');
+                await nodesApi.updateNodeContent(pngUploadedFile.entry.id, 'NEW FILE CONTENT');
             } catch (error) {
                 await expect(error.status).toEqual(409);
             }
@@ -266,7 +272,7 @@ describe('Lock File', () => {
 
         beforeEach(async () => {
             await apiService.login(adminUser.username, adminUser.password);
-            pngFileToBeLocked = await uploadActions.uploadFile(pngFileToLock.location, pngFileToLock.name, documentLibrary);
+            pngFileToBeLocked = await uploadActions.uploadFile(pngFileToLockAdmin.location, pngFileToLockAdmin.name, documentLibrary);
             pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
             await loginPage.login(adminUser.username, adminUser.password);
             await navigationBarPage.openContentServicesFolder(documentLibrary);
@@ -294,7 +300,7 @@ describe('Lock File', () => {
             try {
                 await apiService.login(adminUser.username, adminUser.password);
 
-                const response = await apiService.getInstance().core.nodesApi.updateNodeContent(pngUploadedFile.entry.id, 'NEW FILE CONTENT');
+                const response = await nodesApi.updateNodeContent(pngUploadedFile.entry.id, 'NEW FILE CONTENT');
                 await expect(response.entry.modifiedAt.getTime()).toBeGreaterThan(response.entry.createdAt.getTime());
             } catch (error) {
             }
@@ -310,9 +316,9 @@ describe('Lock File', () => {
 
             try {
                 await apiService.login(adminUser.username, adminUser.password);
-                await apiService.getInstance().core.nodesApi.moveNode(pngUploadedFile.entry.id, { targetParentId: '-my-' });
+                await nodesApi.moveNode(pngUploadedFile.entry.id, { targetParentId: '-my-' });
 
-                const movedFile = await apiService.getInstance().core.nodesApi.getNode(pngUploadedFile.entry.id);
+                const movedFile = await nodesApi.getNode(pngUploadedFile.entry.id);
 
                 await expect(movedFile.entry.parentId).not.toEqual(documentLibrary);
             } catch (error) {
@@ -320,7 +326,7 @@ describe('Lock File', () => {
         });
 
         it('[C286617] Owner of the locked file should be able to delete if Allow owner to modify is checked', async () => {
-            await contentServices.lockContent(pngFileToLock.name);
+            await contentServices.lockContent(pngFileToLockAdmin.name);
 
             await lockFilePage.lockFileCheckboxText.waitVisible();
             await lockFilePage.lockFileCheckbox.click();
@@ -340,7 +346,7 @@ describe('Lock File', () => {
             await lockFilePage.saveButton.click();
 
             try {
-                const response = await apiService.getInstance().core.nodesApi.updateNode(pngUploadedFile.entry.id, { name: 'My new name' });
+                const response = await nodesApi.updateNode(pngUploadedFile.entry.id, { name: 'My new name' });
                 await expect(response.entry.name).toEqual('My new name');
             } catch (error) {
             }

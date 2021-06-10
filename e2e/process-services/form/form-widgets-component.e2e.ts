@@ -28,6 +28,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 import FormDefinitionModel = require('../../models/APS/FormDefinitionModel');
+import { TaskFormsApi } from '@alfresco/js-api';
 
 const formInstance = new FormDefinitionModel();
 
@@ -40,6 +41,8 @@ describe('Form widgets', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const taskFormsApi = new TaskFormsApi(apiService.getInstance());
+    const processUtil = new ProcessUtil(apiService);
 
     const newTask = 'First task';
     let processUserModel;
@@ -76,7 +79,7 @@ describe('Form widgets', () => {
 
             const response = await taskPage.taskDetails().getId();
 
-            const formDefinition = await apiService.getInstance().activiti.taskFormsApi.getTaskForm(response);
+            const formDefinition = await taskFormsApi.getTaskForm(response);
             formInstance.setFields(formDefinition.fields);
             formInstance.setAllWidgets(formDefinition.fields);
         });
@@ -85,7 +88,7 @@ describe('Form widgets', () => {
             await new NavigationBarPage().clickLogoutButton();
             await apiService.loginWithProfile('admin');
 
-            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+            await usersActions.deleteTenant(processUserModel.tenantId);
             await apiService.getInstance().logout();
         });
 
@@ -206,7 +209,6 @@ describe('Form widgets', () => {
             await apiService.login(processUserModel.username, processUserModel.password);
             appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-            const processUtil = new ProcessUtil(apiService);
             process = await processUtil.startProcessOfApp(appModel.name);
             await loginPage.login(processUserModel.username, processUserModel.password);
         });
@@ -219,9 +221,9 @@ describe('Form widgets', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+            await processUtil.cancelProcessInstance(process.id);
             await apiService.loginWithProfile('admin');
-            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+            await usersActions.deleteTenant(processUserModel.tenantId);
         });
 
         it('[C260405] Value fields configured with process variables', async () => {

@@ -24,7 +24,8 @@ import {
     UploadActions,
     UserModel,
     UsersActions,
-    ViewerPage
+    ViewerPage,
+    Logger
 } from '@alfresco/adf-testing';
 import { CustomModel, CustomType } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
@@ -94,7 +95,7 @@ describe('content type', () => {
             await modelActions.deactivateCustomModel(model.name);
             await modelActions.deleteCustomModel(model.name);
         } catch (e) {
-            console.error('failed to delete the model', e);
+            Logger.error('failed to delete the model {e}');
         }
     });
 

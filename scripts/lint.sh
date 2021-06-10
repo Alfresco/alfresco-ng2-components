@@ -8,9 +8,15 @@ if grep "envalfresco" . -R --exclude-dir={node_modules,.history,.idea,scripts,di
     exit 1
 fi
 
-nx affected:lint --parallel --all --maxParallel=9 && \
-npm run lint-e2e && \
-npm run stylelint && \
-npm run spellcheck && \
-npm run license-checker && \
+echo "Lint"
+nx affected:lint --parallel --all --maxParallel=9
+
+echo "Style Lint"
+npm run stylelint
+
+echo "Spell check"
+npm run spellcheck
+
+echo "License check"
+npm run license-checker
 npm run validate-config

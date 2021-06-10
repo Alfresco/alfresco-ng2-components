@@ -15,15 +15,12 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginPage, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginPage, TaskUtil, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { ChecklistDialog } from './../pages/dialog/create-checklist-dialog.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
-import * as fs from 'fs';
-import * as path from 'path';
-import { TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Checklist component', () => {
@@ -38,6 +35,8 @@ describe('Checklist component', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const applicationService = new ApplicationsUtil(apiService);
+    const taskUtil = new TaskUtil(apiService);
 
     let processUserModel;
 
@@ -51,15 +50,12 @@ describe('Checklist component', () => {
 
         processUserModel = await usersActions.createUser();
 
-        const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
-        const file = fs.createReadStream(pathFile);
+        await applicationService.importPublishDeployApp(app.file_path);
 
         await apiService.login(processUserModel.username, processUserModel.password);
 
-        await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
-
         for (let i = 0; i < tasks.length; i++) {
-            await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[i] }));
+            await taskUtil.createStandaloneTask(tasks[i]);
         }
 
         await loginPage.login(processUserModel.username, processUserModel.password);

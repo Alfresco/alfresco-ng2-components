@@ -27,7 +27,7 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { NodeEntry, SitesApi } from '@alfresco/js-api';
+import { NodeEntry, NodesApi, SharedlinksApi, SitesApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { ShareDialogPage } from '../../core/pages/dialog/share-dialog.page';
@@ -47,6 +47,8 @@ describe('Unshare file', () => {
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const nodesApi = new NodesApi(apiService.getInstance());
+    const sharedlinksApi = new SharedlinksApi(apiService.getInstance());
 
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
     let acsUser: UserModel;
@@ -82,13 +84,13 @@ describe('Unshare file', () => {
         shareFilesSite = await sitesApi.createSite(site);
 
         const docLibId = (await sitesApi.listSiteContainers(siteName)).list.entries[0].entry.id;
-        const testFile1Id = (await apiService.getInstance().core.nodesApi.addNode(docLibId, nodeBody)).entry.id;
+        const testFile1Id = (await nodesApi.createNode(docLibId, nodeBody)).entry.id;
         await sitesApi.createSiteMembership(siteName, {
             id: acsUser.username,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await apiService.getInstance().core.nodesApi.updateNode(testFile1Id, {
+        await nodesApi.updateNode(testFile1Id, {
             permissions: {
                 isInheritanceEnabled: false,
                 locallySet: [
@@ -99,7 +101,7 @@ describe('Unshare file', () => {
                 ]
             }
         });
-        await apiService.getInstance().core.sharedlinksApi.addSharedLink({ nodeId: testFile1Id });
+        await sharedlinksApi.createSharedLink({ nodeId: testFile1Id });
     });
 
     afterAll(async () => {

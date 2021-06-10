@@ -15,12 +15,19 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, FileBrowserUtil, ApplicationsUtil, ApiService, UsersActions } from '@alfresco/adf-testing';
+import {
+    LoginPage,
+    BrowserActions,
+    FileBrowserUtil,
+    ApplicationsUtil,
+    ApiService,
+    UsersActions,
+    TaskUtil
+} from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
-import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task Audit', () => {
 
@@ -32,6 +39,7 @@ describe('Task Audit', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const taskUtil = new TaskUtil(apiService);
 
     let processUserModel;
 
@@ -45,7 +53,7 @@ describe('Task Audit', () => {
         processUserModel = await usersActions.createUser();
 
         await apiService.login(processUserModel.username, processUserModel.password);
-        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskTaskApp }));
+        await taskUtil.createStandaloneTask(taskTaskApp);
         const applicationsService = new ApplicationsUtil(apiService);
         await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -54,7 +62,7 @@ describe('Task Audit', () => {
 
     afterAll( async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {

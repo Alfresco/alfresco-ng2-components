@@ -21,7 +21,7 @@ import {
     ApplicationsUtil, BrowserActions,
     FileBrowserUtil,
     LocalStorageUtil,
-    LoginPage,
+    LoginPage, ModelsActions,
     ProcessInstanceTasksPage,
     SelectAppsDialog,
     StartProcessPage,
@@ -40,6 +40,7 @@ import { ProcessServicesPage } from './../pages/process-services.page';
 import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
+import { ProcessInstancesApi } from '@alfresco/js-api';
 
 describe('Start Process Component', () => {
 
@@ -63,6 +64,9 @@ describe('Start Process Component', () => {
 
     const apiService = new ApiService();
     const apiServiceUserTwo = new ApiService();
+    const modelsActions = new ModelsActions(apiService);
+    const usersActions = new UsersActions(apiService);
+    const processApi = new ProcessInstancesApi(apiService.getInstance());
 
     let procUserModel: UserModel;
     let secondProcUserModel: UserModel;
@@ -85,7 +89,6 @@ describe('Start Process Component', () => {
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');
 
-            const usersActions = new UsersActions(apiService);
             procUserModel = await usersActions.createUser();
             secondProcUserModel = await usersActions.createUser(new UserModel({ tenantId: procUserModel.tenantId }));
 
@@ -99,10 +102,10 @@ describe('Start Process Component', () => {
 
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
-            await apiServiceUserTwo.getInstance().activiti.modelsApi.deleteModel(appCreated.id);
-            await apiServiceUserTwo.getInstance().activiti.modelsApi.deleteModel(simpleAppCreated.id);
-            await apiServiceUserTwo.getInstance().activiti.modelsApi.deleteModel(dateFormAppCreated.id);
-            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(procUserModel.tenantId);
+            await modelsActions.deleteModel(appCreated.id);
+            await modelsActions.deleteModel(simpleAppCreated.id);
+            await modelsActions.deleteModel(dateFormAppCreated.id);
+            await usersActions.deleteTenant(procUserModel.tenantId);
         });
 
         describe(' Once logged with user without apps', () => {
@@ -205,7 +208,7 @@ describe('Start Process Component', () => {
                 await processDetailsPage.checkProcessHeaderDetailsAreVisible();
 
                 const processId = await processDetailsPage.getId();
-                const response = await apiService.getInstance().activiti.processApi.getProcessInstance(processId);
+                const response = await processApi.getProcessInstance(processId);
 
                 await expect(await processDetailsPage.getProcessStatus()).toEqual(CONSTANTS.PROCESS_STATUS.RUNNING);
                 await expect(await processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);
@@ -485,11 +488,11 @@ describe('Start Process Component', () => {
                 hostBpm: browser.params.testConfig.appConfig.bpmHost
             });
 
-            const usersActions = new UsersActions(apiServiceAll);
+            const usersActionsAll = new UsersActions(apiServiceAll);
 
             await apiServiceAll.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
 
-            processUserModel = await usersActions.createUser();
+            processUserModel = await usersActionsAll.createUser();
 
             const alfrescoJsBPMAdminUser = new ApiService({ hostBpm: browser.params.testConfig.appConfig.bpmHost });
 

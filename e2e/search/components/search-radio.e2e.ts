@@ -31,6 +31,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { SearchBarPage } from '../pages/search-bar.page';
 import { SearchConfiguration } from '../search.config';
 import { browser } from 'protractor';
+import { NodesApi } from '@alfresco/js-api';
 
 describe('Search Radio Component', () => {
 
@@ -42,7 +43,7 @@ describe('Search Radio Component', () => {
 
     const acsUser = new UserModel();
     const apiService = new ApiService();
-
+    const nodesApi = new NodesApi(apiService.getInstance());
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 
@@ -68,11 +69,11 @@ describe('Search Radio Component', () => {
         await usersActions.createUser(acsUser);
         await apiService.login(acsUser.username, acsUser.password);
 
-        createdFolder = await apiService.getInstance().nodes.addNode('-my-', {
+        createdFolder = await nodesApi.createNode('-my-', {
             name: nodeNames.folder,
             nodeType: 'cm:folder'
         });
-        createdFile = await apiService.getInstance().nodes.addNode('-my-', {
+        createdFile = await nodesApi.createNode('-my-', {
             name: nodeNames.document,
             nodeType: 'cm:content'
         });

@@ -97,9 +97,9 @@ async function handleLoginError(loginError) {
     checkEnvReachable(loginError);
     loginAttempts++;
     if (MAX_ATTEMPTS === loginAttempts) {
-        if (loginError && loginError.response && loginError.response.text) {
+        if (loginError && loginError.response && loginError?.response?.text) {
             try {
-                const parsedJson = JSON.parse(loginError.response.text);
+                const parsedJson = JSON.parse(loginError?.response?.text);
                 if (typeof parsedJson === 'object' && parsedJson.error) {
                     const { stackTrace, ...errorWithoutDeprecatedProperty } = parsedJson.error;
                     logger.error(errorWithoutDeprecatedProperty);
@@ -208,9 +208,9 @@ async function getFilesCount(): Promise<number> {
 
 function handleError(error) {
     logger.error(`    ${red}Error encountered${reset}`);
-    if (error && error.response && error.response.text) {
+    if (error && error.response && error?.response?.text) {
         try {
-            const parsedJson = JSON.parse(error.response.text);
+            const parsedJson = JSON.parse(error?.response?.text);
             if (typeof parsedJson === 'object' && parsedJson.error) {
                 const { stackTrace, ...errorWithoutDeprecatedProperty } = parsedJson.error;
                 logger.error(errorWithoutDeprecatedProperty);

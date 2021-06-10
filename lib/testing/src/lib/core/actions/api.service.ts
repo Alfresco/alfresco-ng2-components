@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
+import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { Logger } from '../utils/logger';
 

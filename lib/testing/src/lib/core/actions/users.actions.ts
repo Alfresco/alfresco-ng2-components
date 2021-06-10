@@ -19,7 +19,14 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 import { browser } from 'protractor';
-import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
+import {
+    UserProfileApi,
+    AdminUsersApi,
+    AdminTenantsApi,
+    PeopleApi,
+    ImageUploadRepresentation,
+    UserRepresentation
+} from '@alfresco/js-api';
 import { IdentityService } from './identity/identity.service';
 import { UserModel } from '../models/user.model';
 import { ApiService } from './api.service';
@@ -30,9 +37,17 @@ export class UsersActions {
 
     api: ApiService;
     identityService: IdentityService;
+    peopleApi: PeopleApi;
+    adminTenantsApi: AdminTenantsApi;
+    adminUsersApi: AdminUsersApi;
+    userProfileApi: UserProfileApi;
 
-    constructor(alfrescoApi: ApiService) {
-        this.api = alfrescoApi;
+    constructor(apiService: ApiService) {
+        this.api = apiService;
+        this.peopleApi = new PeopleApi(apiService.getInstance());
+        this.adminTenantsApi = new AdminTenantsApi(apiService.getInstance());
+        this.adminUsersApi = new AdminUsersApi(apiService.getInstance());
+        this.userProfileApi = new UserProfileApi(apiService.getInstance());
         if (this.api.apiService.isOauthConfiguration()) {
             this.identityService = new IdentityService(this.api);
         }
@@ -48,7 +63,7 @@ export class UsersActions {
         try {
             if (this.api.apiService.isEcmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
                 Logger.log(`Create user ECM ${user.email}`);
-                await this.api.apiService.core.peopleApi.addPerson({
+                await this.peopleApi.createPerson({
                     id: user.username,
                     email: user.email,
                     firstName: user.firstName,
@@ -108,7 +123,7 @@ export class UsersActions {
     }
 
     async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
-        const newTenant = await this.api.apiService.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.adminTenantsApi.createTenant(new Tenant());
 
         const user = new UserModel({
             tenantId: newTenant.id,
@@ -118,7 +133,7 @@ export class UsersActions {
             password
         });
 
-        return this.api.apiService.activiti.adminUsersApi.createNewUser(user.getAPSModel());
+        return this.adminUsersApi.createNewUser(user.getAPSModel());
     }
 
     async createApsUser(tenantId?: number, email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
@@ -131,13 +146,17 @@ export class UsersActions {
             password
         });
 
-        return this.api.apiService.activiti.adminUsersApi.createNewUser(user.getAPSModel());
+        return this.adminUsersApi.createNewUser(user.getAPSModel());
     }
 
     async changeProfilePictureAps(fileLocation: string): Promise<ImageUploadRepresentation> {
         const pathFile = path.join(browser.params.testConfig.main.rootPath + fileLocation);
         const file = fs.createReadStream(pathFile);
 
-        return this.api.apiService.activiti.profileApi.uploadProfilePicture(file);
+        return this.userProfileApi.uploadProfilePicture(file);
+    }
+
+    async deleteTenant(tenantId: number) {
+        await this.adminTenantsApi.deleteTenant(tenantId);
     }
 }

@@ -18,7 +18,7 @@
 import { PermissionsPage } from '../../content-services/pages/permissions.page';
 import {
     ApiService,
-    BrowserActions,
+    BrowserActions, Logger,
     LoginPage,
     NotificationHistoryPage, SearchService,
     StringUtil,
@@ -35,7 +35,7 @@ import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { VersionManagePage } from '../../core/pages/version-manager.page';
 import CONSTANTS = require('../../util/constants');
-import { SitesApi } from '@alfresco/js-api';
+import { NodesApi, SitesApi } from '@alfresco/js-api';
 import { NotificationDemoPage } from '../../core/pages/notification.page';
 
 describe('Permissions Component', () => {
@@ -43,6 +43,7 @@ describe('Permissions Component', () => {
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
     const searchService = new SearchService(apiService);
+    const nodesApi = new NodesApi(apiService.getInstance());
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
@@ -142,7 +143,7 @@ describe('Permissions Component', () => {
             siteFolder = await uploadActions.createFolder(folderName, publicSite.entry.guid);
             privateSiteFile = await uploadActions.uploadFile(fileModel.location, 'privateSite' + fileModel.name, privateSite.entry.guid);
 
-            await apiService.getInstance().core.nodesApi.updateNode(privateSiteFile.entry.id,
+            await nodesApi.updateNode(privateSiteFile.entry.id,
                 {
                     permissions: {
                         locallySet: [{
@@ -159,7 +160,7 @@ describe('Permissions Component', () => {
             try {
                 await searchService.isUserSearchable(consumerUser);
             } catch (e) {
-                console.error(`*****\n Failed to sync user \n*****`);
+                Logger.error(`*****\n Failed to sync user \n*****`);
             }
             await browser.sleep(browser.params.testConfig.timeouts.index_search);
         } catch (error) {

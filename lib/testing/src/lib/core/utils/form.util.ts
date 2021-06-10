@@ -16,8 +16,20 @@
  */
 
 import { browser } from 'protractor';
+import { ApiService } from '../actions/api.service';
+import { FormModelsApi, FormRepresentation } from '@alfresco/js-api';
 
 export class FormUtil {
+
+    api: ApiService;
+    editorApi: FormModelsApi;
+
+    constructor(apiService?: ApiService) {
+        if (apiService) {
+            this.api = apiService;
+            this.editorApi = new FormModelsApi(apiService.getInstance());
+        }
+    }
 
     static async setForm(value: string): Promise<void> {
         await browser.executeScript(
@@ -29,5 +41,14 @@ export class FormUtil {
         await browser.executeScript(
             'window.adf.setCloudFormInEditor(`' + value + '`);'
         );
+    }
+
+    async getFormByName(name: string): Promise<FormRepresentation> {
+        // @ts-ignore
+        const forms: any = await this.editorApi.getForms();
+
+        return forms.data.find((currentForm) => {
+            return currentForm.name === name;
+        });
     }
 }

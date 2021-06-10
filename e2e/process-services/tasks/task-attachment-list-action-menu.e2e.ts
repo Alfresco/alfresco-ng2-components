@@ -20,7 +20,7 @@ import {
     ApiService,
     ApplicationsUtil,
     FileBrowserUtil,
-    LoginPage,
+    LoginPage, ModelsActions, TaskUtil,
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
@@ -30,8 +30,9 @@ import { AttachmentListPage } from './../pages/attachment-list.page';
 import * as fs from 'fs';
 import * as path from 'path';
 import { FileModel } from '../../models/ACS/file.model';
-import { TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
+import { Activiti } from '@alfresco/js-api';
+import ContentApi = Activiti.ContentApi;
 
 describe('Attachment list action menu for tasks', () => {
 
@@ -45,6 +46,10 @@ describe('Attachment list action menu for tasks', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const modelsActions = new ModelsActions(apiService);
+    const taskUtil = new TaskUtil(apiService);
+    const contentApi = new ContentApi();
+    contentApi.init(apiService.getInstance());
 
     const pngFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
@@ -74,9 +79,9 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+        await modelsActions.deleteModel(appId);
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await usersActions.deleteTenant(tenantId);
     });
 
     it('[C277311] Should be able to View /Download /Remove from Attachment List on an active task', async () => {
@@ -166,12 +171,12 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C260234] Should be able to attache a file on a task on APS and check on ADF', async () => {
-        const newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: 'SHARE KNOWLEDGE' }));
+        const newTask = await taskUtil.createStandaloneTask('SHARE KNOWLEDGE');
         const newTaskId = newTask.id;
         const filePath = path.join(browser.params.testConfig.main.rootPath + pngFile.location);
         const file = fs.createReadStream(filePath);
 
-        relatedContent = await apiService.getInstance().activiti.contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });
+        relatedContent = await contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });
         relatedContentId = relatedContent.id;
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
@@ -181,7 +186,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await attachmentListPage.checkFileIsAttached(pngFile.name);
 
-        await apiService.getInstance().activiti.contentApi.deleteContent(relatedContentId);
+        await contentApi.deleteContent(relatedContentId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 

@@ -21,7 +21,7 @@ import {
     BrowserActions,
     BrowserVisibility,
     LocalStorageUtil,
-    LoginPage,
+    LoginPage, ModelsActions,
     StringUtil,
     UserModel,
     UsersActions
@@ -47,6 +47,8 @@ describe('Info Drawer', () => {
 
     const apiService = new ApiService();
     const applicationsService = new ApplicationsUtil(apiService);
+    const modelsActions = new ModelsActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     const firstComment = 'comm1';
 
@@ -72,8 +74,6 @@ describe('Info Drawer', () => {
     let processUserModel;
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.loginWithProfile('admin');
 
         const assigneeUserModel = await usersActions.createUser();
@@ -89,9 +89,9 @@ describe('Info Drawer', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appCreated.id);
+        await modelsActions.deleteModel(appCreated.id);
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NodeEntry } from '@alfresco/js-api';
+import { NodeEntry, NodesApi } from '@alfresco/js-api';
 import { ApiService } from '../actions/api.service';
 import { ApiUtil } from '../actions/api.util';
 import { Logger } from './logger';
@@ -24,8 +24,10 @@ export class WaitActions {
 
     DELAY_API_CALL = 5000;
     apiService: ApiService;
+    nodesApi: NodesApi;
 
     constructor(apiService: ApiService) {
+        this.nodesApi = new NodesApi(apiService.getInstance());
         this.apiService = apiService;
     }
 
@@ -38,7 +40,7 @@ export class WaitActions {
         const apiCall = async () => {
 
             try {
-                return this.apiService.getInstance().core.nodesApi.getNode(nodeId);
+                return this.nodesApi.getNode(nodeId);
             } catch (error) {
                 Logger.error('Node not present');
                 return null;
@@ -57,7 +59,7 @@ export class WaitActions {
         const apiCall = async () => {
 
             try {
-                return this.apiService.getInstance().core.nodesApi.getNode(nodeId);
+                return this.nodesApi.getNode(nodeId);
             } catch (error) {
                 Logger.error('Node not present');
                 return null;

@@ -16,38 +16,42 @@
  */
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../core/actions/api.service';
+import { ModelsApi } from '@alfresco/js-api';
+import { ResultListDataRepresentationModelRepresentation } from '@alfresco/js-api/typings/src/api/activiti-rest-api/model/resultListDataRepresentationModelRepresentation';
 
 export class ModelsActions {
 
     api: ApiService;
+    modelsApi: ModelsApi;
 
     constructor(api: ApiService) {
         this.api = api;
+        this.modelsApi = new ModelsApi(api.getInstance());
     }
 
-    async deleteVersionModel(modelId) {
+    async deleteModel(modelId): Promise<any> {
         try {
-            return await this.api.apiService.activiti.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
+            return await this.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp: true });
         } catch (error) {
-            Logger.error('Delete Model Version - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Delete Model Version - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
         }
     }
 
-    async deleteEntireModel(modelId) {
+    async deleteEntireModel(modelId): Promise<any> {
         try {
-            return await this.api.apiService.activiti.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
+            return await this.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp: true });
         } catch (error) {
-            Logger.error('Delete Model - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Delete Model - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
         }
     }
 
-    async getModels(opts: any) {
+    async getModels(opts: any): Promise<ResultListDataRepresentationModelRepresentation> {
         const options = opts || {};
         let models;
         try {
-            models = await this.api.apiService.activiti.modelsApi.getModels(options);
+            models = await this.modelsApi.getModels(options);
         } catch (error) {
-            Logger.error('Get Models - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Get Models - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
         }
         return models;
     }

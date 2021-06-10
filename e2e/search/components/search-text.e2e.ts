@@ -33,6 +33,7 @@ import { SearchFiltersPage } from '../pages/search-filters.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 import { SearchConfiguration } from '../search.config';
+import { NodesApi } from '@alfresco/js-api';
 
 describe('Search component - Text widget', () => {
 
@@ -45,6 +46,7 @@ describe('Search component - Text widget', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const nodesApi = new NodesApi(apiService.getInstance());
 
     const acsUser = new UserModel();
     const newFolderModel = new FolderModel({ 'description': 'newDescription' });
@@ -56,7 +58,7 @@ describe('Search component - Text widget', () => {
 
         await apiService.login(acsUser.username, acsUser.password);
 
-        await apiService.getInstance().nodes.addNode('-my-', {
+        await nodesApi.createNode('-my-', {
             'name': newFolderModel.name,
             'nodeType': 'cm:folder',
             'properties':

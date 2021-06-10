@@ -97,10 +97,9 @@ describe('Edit task filters and task list properties', () => {
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify(taskFilterConfiguration));
     }, 5 * 60 * 1000);
 
-    afterAll(async (done) => {
+    afterAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-        done();
     });
 
     describe('Edit task filters and task list properties - filter properties', () => {

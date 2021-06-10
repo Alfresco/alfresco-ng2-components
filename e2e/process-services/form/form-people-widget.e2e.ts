@@ -29,6 +29,7 @@ import { TaskDetailsPage } from './../pages/task-details.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
 import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
+import { TaskFormsApi } from '@alfresco/js-api';
 
 describe('Form widgets - People ', () => {
 
@@ -44,6 +45,7 @@ describe('Form widgets - People ', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const taskFormsApi = new TaskFormsApi(apiService.getInstance());
 
     let processUserModel;
     let appModel;
@@ -65,7 +67,7 @@ describe('Form widgets - People ', () => {
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
 
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {
@@ -83,7 +85,7 @@ describe('Form widgets - People ', () => {
         await processDetailsPage.activeTask.click();
 
         const taskId = await taskDetails.getId();
-        const taskForm: any = await apiService.getInstance().activiti.taskApi.getTaskForm(taskId);
+        const taskForm: any = await taskFormsApi.getTaskForm(taskId);
         const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
         await expect(userEmail).toEqual(processUserModel.email);
     });
@@ -103,7 +105,7 @@ describe('Form widgets - People ', () => {
         await processDetailsPage.completedTask.click();
 
         const taskId = await taskDetails.getId();
-        const taskForm: any = await apiService.getInstance().activiti.taskApi.getTaskForm(taskId);
+        const taskForm: any = await taskFormsApi.getTaskForm(taskId);
         const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
         await expect(userEmail).toEqual(processUserModel.email);
     });

@@ -74,41 +74,36 @@ describe('Attach File - Content service', () => {
     const csIntegrations = ['adf dev', 'adf master'];
     let user: UserModel;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
-        try {
-                await apiService.loginWithProfile('admin');
-                user = await usersActions.createUser();
+        await apiService.loginWithProfile('admin');
+        user = await usersActions.createUser();
 
-                await apiServiceExternal.loginWithProfile('admin');
-                await usersActionsExternal.createUser(user);
+        await apiServiceExternal.loginWithProfile('admin');
+        await usersActionsExternal.createUser(user);
 
-                await integrationService.addCSIntegration({
-                    tenantId: user.tenantId,
-                    name: csIntegrations[0],
-                    host: browser.params.testConfig.appConfig.ecmHost
-                });
-                await integrationService.addCSIntegration({
-                    tenantId: user.tenantId,
-                    name: csIntegrations[1],
-                    host: browser.params.testConfig.adf_external_acs.host
-                });
+        await integrationService.addCSIntegration({
+            tenantId: user.tenantId,
+            name: csIntegrations[0],
+            host: browser.params.testConfig.appConfig.ecmHost
+        });
+        await integrationService.addCSIntegration({
+            tenantId: user.tenantId,
+            name: csIntegrations[1],
+            host: browser.params.testConfig.adf_external_acs.host
+        });
 
-                await apiService.login(user.username, user.password);
-                await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, '-my-');
-                await applicationService.importPublishDeployApp(app.file_path);
+        await apiService.login(user.username, user.password);
+        await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, '-my-');
+        await applicationService.importPublishDeployApp(app.file_path);
 
-                await searchService.isSearchable(pdfFileTwo.name);
-                await searchService.isSearchable(externalFile);
-        } catch (error) {
-            console.error('Preconditions failed check if the external env is up and running');
-        }
-        done();
+        await searchService.isSearchable(pdfFileTwo.name);
+        await searchService.isSearchable(externalFile);
     });
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await usersActions.deleteTenant(user.tenantId);
     });
 
     beforeEach(async () => {

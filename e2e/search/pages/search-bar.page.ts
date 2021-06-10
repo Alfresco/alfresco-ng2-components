@@ -16,13 +16,13 @@
  */
 
 import { Locator, browser, by, element, ElementFinder, protractor } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, TestElement } from '@alfresco/adf-testing';
 
 export class SearchBarPage {
 
     searchIcon = element(by.css(`button[class*='adf-search-button']`));
     searchBar = element(by.css(`adf-search-control input`));
-    searchBarExpanded = element(by.css(`adf-search-control mat-form-field[class*="mat-focused"] input`));
+    searchBarExpanded: TestElement = TestElement.byCss(`adf-search-control mat-form-field[class*="mat-focused"] input`);
     noResultMessage = element(by.css(`p[class*='adf-search-fixed-text']`));
     rowsAuthor: Locator = by.css(`.mat-list-text p[class*='adf-search-fixed-text']`);
     completeName: Locator = by.css(`h4[class*='adf-search-fixed-text']`);
@@ -48,7 +48,7 @@ export class SearchBarPage {
     }
 
     async checkSearchBarIsNotVisible(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.searchBarExpanded);
+        await this.searchBarExpanded.waitNotVisible();
     }
 
     async checkNoResultMessageIsDisplayed(): Promise<void> {
@@ -61,12 +61,12 @@ export class SearchBarPage {
 
     async enterText(text: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
-        await this.searchBar.sendKeys(text);
+        await BrowserActions.clearSendKeys(this.searchBar, text);
     }
 
     async enterTextAndPressEnter(text: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
-        await this.searchBar.sendKeys(text);
+        await BrowserActions.clearSendKeys(this.searchBar, text);
         await this.searchBar.sendKeys(protractor.Key.ENTER);
     }
 

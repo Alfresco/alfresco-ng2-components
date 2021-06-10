@@ -35,6 +35,7 @@ import { FileModel } from '../models/ACS/file.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { SearchConfiguration } from './search.config';
+import { NodesApi } from '@alfresco/js-api';
 
 describe('Search component - Search Bar', () => {
 
@@ -58,7 +59,7 @@ describe('Search component - Search Bar', () => {
     const acsUser = new UserModel();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-
+    const nodesApi = new NodesApi(apiService.getInstance());
     const uploadActions = new UploadActions(apiService);
 
     const filename = StringUtil.generateRandomString(16);
@@ -93,7 +94,7 @@ describe('Search component - Search Bar', () => {
         const firstFileUploaded = await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
-        fileHighlightUploaded = await apiService.getInstance().nodes.addNode('-my-', {
+        fileHighlightUploaded = await nodesApi.createNode('-my-', {
             'name': StringUtil.generateRandomString(16),
             'nodeType': 'cm:content',
             'properties': {
@@ -126,11 +127,8 @@ describe('Search component - Search Bar', () => {
     });
 
     it('[C272798] Search bar should be visible', async () => {
-        await searchBarPage.checkSearchBarIsNotVisible();
-        await searchBarPage.checkSearchIconIsVisible();
+        await openSearchBar();
 
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.checkSearchBarIsVisible();
         await searchBarPage.checkSearchIconIsVisible();
 
         await BrowserActions.closeMenuAndDialogs();
@@ -140,14 +138,14 @@ describe('Search component - Search Bar', () => {
     });
 
     it('[C272799] Should be possible to hide search bar after input', async () => {
-        await searchBarPage.checkSearchIconIsVisible();
-        await searchBarPage.clickOnSearchIcon();
+        await openSearchBar();
+
         await searchBarPage.enterText(firstFolderModel.shortName);
     });
 
     it('[C260255] Should display message when searching for an inexistent file', async () => {
-        await searchBarPage.checkSearchBarIsNotVisible();
-        await searchBarPage.clickOnSearchIcon();
+        await openSearchBar();
+
         await searchBarPage.checkNoResultMessageIsNotDisplayed();
         await searchBarPage.enterText(search.inactive.name);
         await searchResultPage.dataTable.waitTillContentLoaded();
@@ -156,8 +154,7 @@ describe('Search component - Search Bar', () => {
     });
 
     it('[C260256] Should display file/folder in search suggestion when typing first characters', async () => {
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.checkSearchBarIsVisible();
+        await openSearchBar();
         await searchBarPage.enterText(firstFolderModel.shortName);
 
         await searchBarPage.resultTableContainsRow(firstFolderModel.name);
@@ -179,8 +176,8 @@ describe('Search component - Search Bar', () => {
     });
 
     it('[C272800] Should display file/folder in search suggestion when typing name', async () => {
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.checkSearchBarIsVisible();
+        await openSearchBar();
+
         await searchBarPage.enterText(firstFolderModel.name);
 
         await searchBarPage.resultTableContainsRow(firstFolderModel.name);
@@ -203,8 +200,8 @@ describe('Search component - Search Bar', () => {
     });
 
     it('[C260257] Should display content when clicking on folder from search suggestions', async () => {
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.checkSearchBarIsVisible();
+        await openSearchBar();
+
         await searchBarPage.enterText(firstFolderModel.shortName);
 
         await searchBarPage.resultTableContainsRow(firstFolderModel.name);
@@ -227,9 +224,8 @@ describe('Search component - Search Bar', () => {
     });
 
     it('[C272801] Should display message when searching for non-existent folder', async () => {
-        await searchBarPage.checkSearchIconIsVisible();
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.checkSearchBarIsVisible();
+        await openSearchBar();
+
         await searchBarPage.enterTextAndPressEnter(search.inactive.name);
         await searchResultPage.dataTable.waitTillContentLoaded();
 
@@ -237,9 +233,8 @@ describe('Search component - Search Bar', () => {
     });
 
     it('[C272802] Should be able to find an existent folder in search results', async () => {
-        await searchBarPage.checkSearchIconIsVisible();
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.checkSearchBarIsVisible();
+        await openSearchBar();
+
         await searchBarPage.enterTextAndPressEnter(firstFolderModel.name);
         await searchResultPage.dataTable.waitTillContentLoaded();
 
@@ -247,28 +242,17 @@ describe('Search component - Search Bar', () => {
     });
 
     it('[C260258] Should be able to find an existent file in search results', async () => {
-        await searchBarPage.checkSearchIconIsVisible();
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.checkSearchBarIsVisible();
+        await openSearchBar();
+
         await searchBarPage.enterTextAndPressEnter(firstFileModel.name);
         await searchResultPage.dataTable.waitTillContentLoaded();
 
         await searchResultPage.checkContentIsDisplayed(firstFileModel.name);
     });
 
-    it('[C91321] Should be able to use down arrow key when navigating throw suggestions', async () => {
-        await searchBarPage.checkSearchIconIsVisible();
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.checkSearchBarIsVisible();
-        await searchBarPage.enterText(secondFolder.shortName);
-        await searchBarPage.pressDownArrowAndEnter();
-        await searchResultPage.dataTable.waitTillContentLoaded();
-
-        await expect(await contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
-    });
-
     it('[C290137] Should be able to search by \'%\'', async () => {
-        await searchBarPage.clickOnSearchIcon();
+        await openSearchBar();
+
         await searchBarPage.enterTextAndPressEnter('%');
         await searchResultPage.dataTable.waitTillContentLoaded();
     });
@@ -281,9 +265,8 @@ describe('Search component - Search Bar', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(searchConfiguration));
 
-            await searchBarPage.checkSearchIconIsVisible();
-            await searchBarPage.clickOnSearchIcon();
-            await searchBarPage.checkSearchBarIsVisible();
+            await openSearchBar();
+
             await searchBarPage.enterTextAndPressEnter(term);
             await searchResultPage.dataTable.waitTillContentLoaded();
 
@@ -295,4 +278,14 @@ describe('Search component - Search Bar', () => {
             await expect(text.includes(`(${term})`)).toBe(true);
         });
     });
+
+    async function openSearchBar(): Promise<void> {
+        if (await searchBarPage.searchBarExpanded.isDisplayed()) {
+            await searchBarPage.clearText();
+            await searchBarPage.checkSearchBarIsNotVisible();
+        }
+
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.checkSearchBarIsVisible();
+    }
 });

@@ -20,6 +20,7 @@ import { ProcessFiltersPage } from './../pages/process-filters.page';
 import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
 import { AppSettingsTogglesPage } from './../pages/dialog/app-settings-toggles.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { UserFiltersApi } from '@alfresco/js-api';
 
 describe('New Process Filters', () => {
 
@@ -31,6 +32,7 @@ describe('New Process Filters', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const userFiltersApi = new UserFiltersApi(apiService.getInstance());
 
     let tenantId, user, filterId, customProcessFilter;
 
@@ -59,7 +61,7 @@ describe('New Process Filters', () => {
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await usersActions.deleteTenant(tenantId);
     });
 
     it('[C279965] Should be able to view default filters on ADF', async () => {
@@ -71,7 +73,7 @@ describe('New Process Filters', () => {
     });
 
     it('[C260473] Should be able to create a new filter on APS and display it on ADF', async () => {
-        customProcessFilter = await apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter({
+        customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
             'appId': null,
             'name': processFilter.new_filter,
             'icon': 'glyphicon-random',
@@ -86,7 +88,7 @@ describe('New Process Filters', () => {
     });
 
     it('[C286450] Should display the process filter icon when a custom filter is added', async () => {
-        customProcessFilter = await apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter({
+        customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
             'appId': null,
             'name': processFilter.new_icon,
             'icon': 'glyphicon-cloud',
@@ -108,7 +110,7 @@ describe('New Process Filters', () => {
     });
 
     it('[C260474] Should be able to edit a filter on APS and check it on ADF', async () => {
-        await apiService.getInstance().activiti.userFiltersApi.updateUserProcessInstanceFilter(filterId, {
+        await userFiltersApi.updateUserProcessInstanceFilter(filterId, {
             'appId': null,
             'name': processFilter.edited,
             'icon': 'glyphicon-random',
@@ -121,7 +123,7 @@ describe('New Process Filters', () => {
     });
 
     it('[C286451] Should display changes on a process filter when this filter icon is edited', async () => {
-        customProcessFilter = await apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter({
+        customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
             'appId': null,
             'name': processFilter.edit_icon,
             'icon': 'glyphicon-random',
@@ -134,7 +136,7 @@ describe('New Process Filters', () => {
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
 
-        await apiService.getInstance().activiti.userFiltersApi.updateUserProcessInstanceFilter(filterId, {
+        await userFiltersApi.updateUserProcessInstanceFilter(filterId, {
             'appId': null,
             'name': processFilter.edit_icon,
             'icon': 'glyphicon-cloud',
@@ -166,7 +168,7 @@ describe('New Process Filters', () => {
     });
 
     it('[C260475] Should be able to delete a filter on APS and check it on ADF', async () => {
-        customProcessFilter = await apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter({
+        customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
             'appId': null,
             'name': processFilter.deleted,
             'icon': 'glyphicon-random',
@@ -175,7 +177,7 @@ describe('New Process Filters', () => {
 
         filterId = customProcessFilter.id;
 
-        await apiService.getInstance().activiti.userFiltersApi.deleteUserProcessInstanceFilter(filterId);
+        await userFiltersApi.deleteUserProcessInstanceFilter(filterId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 

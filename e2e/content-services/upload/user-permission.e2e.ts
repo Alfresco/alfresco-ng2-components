@@ -60,6 +60,7 @@ describe('Upload - User permission', () => {
     });
 
     beforeEach(async () => {
+        await apiService.loginWithProfile('admin');
         const sitesApi = new SitesApi(apiService.getInstance());
 
         consumerSite = await sitesApi.createSite({

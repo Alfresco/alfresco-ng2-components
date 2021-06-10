@@ -35,7 +35,9 @@ describe('Task List Pagination', () => {
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     let processUserModel: UserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -56,8 +58,6 @@ describe('Task List Pagination', () => {
     };
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.loginWithProfile('admin');
         processUserModel = await usersActions.createUser();
 
@@ -74,7 +74,7 @@ describe('Task List Pagination', () => {
 
     afterAll( async () => {
         await apiService.loginWithProfile('admin');
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await usersActions.deleteTenant(processUserModel.tenantId);
     });
 
     it('[C260301] Should display default pagination', async () => {
