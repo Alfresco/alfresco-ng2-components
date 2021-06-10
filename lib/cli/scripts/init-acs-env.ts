@@ -34,8 +34,9 @@ async function main() {
 }
 
 async function initializeDefaultFiles() {
-    const parentFolder = await createFolder();
+    const parentFolder = await createFolder('e2e-test-data', '-my-');
     const parentFolderId = parentFolder.entry.id;
+
     for (let j = 0; j < ACS_DEFAULT.files.length; j++) {
         const fileInfo = ACS_DEFAULT.files[j];
         switch (fileInfo.action) {
@@ -61,23 +62,26 @@ async function initializeDefaultFiles() {
     }
 }
 
-async function createFolder(name: string = 'e2e-test-data', parentId: string = '-my-') {
+async function createFolder(folderName: string, parentId: string) {
         let createdFolder: any;
         const body = {
-            name,
+            name: folderName,
             nodeType: 'cm:folder'
-        }
+        };
         try {
-            createdFolder = await new NodesApi(alfrescoJsApi).createNode(parentId, body);
-            
-            logger.info(`Folder ${name} was created`);
+            createdFolder = await new NodesApi(alfrescoJsApi).createNode(parentId, body, {overwrite: true});
+
+            logger.info(`Folder ${folderName} was created`);
         } catch (err) {
-            logger.error(`Failed to create folder with error: `, err.stack);
+            if (err.status === 409) {
+                const relativePath = `/${folderName}`;
+                createdFolder = await new NodesApi(alfrescoJsApi).getNode('-my-', { relativePath });
+             }
         }
         return createdFolder;
 }
 
-async function uploadFile(fileName:string, fileDestination?:string) {
+async function uploadFile(fileName: string, fileDestination?: string) {
     const filePath = `../resources/content/${fileName}`;
     const file = fs.createReadStream(path.join(__dirname, filePath));
     let uploadedFile: any;
