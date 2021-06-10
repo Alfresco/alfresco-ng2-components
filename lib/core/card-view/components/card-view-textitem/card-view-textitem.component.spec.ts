@@ -29,7 +29,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 
-describe('CardViewTextItemComponent', () => {
+fdescribe('CardViewTextItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
@@ -62,6 +62,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: false
             });
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
         });
 
         it('should render the label and value', async () => {
@@ -256,6 +257,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: false
             });
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
         });
 
         it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', (done) => {
@@ -468,6 +470,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: true
             });
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
         });
 
         it('should call the isValid method with the edited value', fakeAsync((done) => {
@@ -710,6 +713,7 @@ describe('CardViewTextItemComponent', () => {
             component.editable = true;
             component.property.validators.push(new CardViewItemIntValidator());
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
         });
 
         it('should show validation error when string passed', fakeAsync((done) => {
@@ -728,7 +732,7 @@ describe('CardViewTextItemComponent', () => {
             });
         }));
 
-        it('should show validation error for empty string', (done) => {
+        it('should show validation error for empty string', fakeAsync((done) => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
 
@@ -742,7 +746,7 @@ describe('CardViewTextItemComponent', () => {
                     done();
                 });
             });
-        });
+        }));
 
         it('should show validation error for float number', fakeAsync((done) => {
             fixture.detectChanges();
@@ -829,12 +833,13 @@ describe('CardViewTextItemComponent', () => {
                 label: 'Text label',
                 value: floatValue,
                 key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
+                default: 1,
                 editable: true
             });
             component.editable = true;
             component.property.validators.push(new CardViewItemFloatValidator());
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
         });
 
         it('should show validation error when string passed', fakeAsync((done) => {
@@ -853,7 +858,7 @@ describe('CardViewTextItemComponent', () => {
             });
         }));
 
-        it('should show validation error for empty string', fakeAsync((done) => {
+        it('should show validation error for empty string (float)', fakeAsync((done) => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
 

@@ -110,7 +110,7 @@ describe('UploadDirective', () => {
     it('should raise upload-files event on files drop', (done) => {
         directive.enabled = true;
         const event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
-        spyOn(directive, 'getDataTransfer').and.returnValue(null);
+        spyOn(directive, 'getDataTransfer').and.returnValue({} as any);
         spyOn(directive, 'getFilesDropped').and.returnValue(Promise.resolve([
             <FileInfo> {},
             <FileInfo> {}
@@ -127,7 +127,7 @@ describe('UploadDirective', () => {
             <FileInfo> {}
         ];
         const event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
-        spyOn(directive, 'getDataTransfer').and.returnValue(null);
+        spyOn(directive, 'getDataTransfer').and.returnValue({} as any);
         spyOn(directive, 'getFilesDropped').and.returnValue(Promise.resolve(files));
 
         spyOn(nativeElement, 'dispatchEvent').and.callFake((e) => {
