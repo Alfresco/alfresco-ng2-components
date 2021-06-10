@@ -22,7 +22,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
     FormService, WidgetVisibilityService, NodeService, ContainerModel, fakeForm,
     setupTestBed,
-    NodeMetadata} from '@alfresco/adf-core';
+    NodeMetadata } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { ProcessFormRenderingService } from './process-form-rendering.service';
 import { ProcessTestingModule } from '../testing/process.testing.module';

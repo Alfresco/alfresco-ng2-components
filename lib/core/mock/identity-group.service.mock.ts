@@ -114,5 +114,5 @@ export const mockIdentityRoles = [
 
 export const clientRoles: IdentityRoleModel[] = [
     new IdentityRoleModel({ name: 'MOCK-ADMIN-ROLE' }),
-    new IdentityRoleModel({ name: 'MOCK-USER-ROLE' }),
+    new IdentityRoleModel({ name: 'MOCK-USER-ROLE' })
 ];

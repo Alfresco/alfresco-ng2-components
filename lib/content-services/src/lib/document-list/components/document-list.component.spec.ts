@@ -102,7 +102,7 @@ describe('DocumentList', () => {
         contentService = TestBed.inject(ContentService);
 
         spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: {} }));
-        spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: {} })))
+        spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: {} })));
         spyOn(apiService.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: {} })));
 
         documentList.ngOnInit();

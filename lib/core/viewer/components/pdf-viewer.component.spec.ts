@@ -117,7 +117,7 @@ class BlobTestComponent {
 
 }
 
-xdescribe('Test PdfViewer component', () => {
+describe('Test PdfViewer component', () => {
 
     let component: PdfViewerComponent;
     let fixture: ComponentFixture<PdfViewerComponent>;
