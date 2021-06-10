@@ -40,7 +40,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     const loginSsoPage = new LoginPage();
     const viewerPage = new ViewerPage();
 
-    const apiService = new ApiService, createApiService({ authType: 'OAUTH' });
+    const apiService = createApiService({ authType: 'OAUTH' });
     const uploadActions = new UploadActions(apiService);
     const identityService = new IdentityService(apiService);
     const usersActions = new UsersActions(apiService);

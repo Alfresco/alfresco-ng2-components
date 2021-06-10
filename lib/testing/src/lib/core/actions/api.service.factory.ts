@@ -19,9 +19,15 @@ import { AlfrescoApiConfig } from '@alfresco/js-api';
 import { ApiService } from './api.service';
 import { browser } from 'protractor';
 
-export function createApiService() {
+export function createApiService(appConfigOverride: Partial<AlfrescoApiConfig> = {}) {
     return new ApiService({
-        appConfig: new AlfrescoApiConfig(browser.params.testConfig.appConfig),
+        appConfig: new AlfrescoApiConfig({
+            ...browser.params.testConfig.appConfig,
+            // Legacy debt...
+            hostEcm: browser.params.testConfig.appConfig.ecmHost,
+            hostBpm: browser.params.testConfig.appConfig.bpmHost,
+            ...appConfigOverride
+        }),
         users: browser.params.testConfig.users
     });
 }

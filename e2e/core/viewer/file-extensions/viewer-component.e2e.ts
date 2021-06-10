@@ -39,7 +39,7 @@ describe('Viewer', () => {
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService, createApiService({ authType: 'ECM', provider: 'ECM' });
+    const apiService = createApiService({ provider: 'ECM', authType: 'BASIC' });
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 

@@ -482,7 +482,7 @@ describe('Start Process Component', () => {
         });
 
         beforeAll(async () => {
-            const apiServiceAll = new ApiService, createApiService({
+            const apiServiceAll = createApiService({
                 provider: 'ALL',
                 hostEcm: browser.params.testConfig.appConfig.ecmHost,
                 hostBpm: browser.params.testConfig.appConfig.bpmHost
@@ -494,7 +494,7 @@ describe('Start Process Component', () => {
 
             processUserModel = await usersActionsAll.createUser();
 
-            const alfrescoJsBPMAdminUser = new ApiService, createApiService({ hostBpm: browser.params.testConfig.appConfig.bpmHost });
+            const alfrescoJsBPMAdminUser = createApiService({ hostBpm: browser.params.testConfig.appConfig.bpmHost });
 
             await alfrescoJsBPMAdminUser.login(processUserModel.username, processUserModel.password);
 

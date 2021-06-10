@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, createApiService, DataTableComponentPage, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, DataTableComponentPage, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { DataTablePage } from '../../core/pages/data-table.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
