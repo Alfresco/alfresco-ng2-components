@@ -34,7 +34,7 @@
     "copyright": "© 2016 - 2021 Alfresco Software, Inc. All Rights Reserved."
   },
   "notifications": true,
-  "search": {
+  "search": [{
     "filterWithContains": true,
     "app:fields": [
       "cm:name",
@@ -365,8 +365,269 @@
           "postfix": ")"
         }
       ]
-    }
+    },
+    "name": "SEARCH_FORMS.ALL",
+    "default": true
   },
+    {
+      "filterWithContains": true,
+      "app:fields": [
+        "cm:name",
+        "cm:title",
+        "cm:description",
+        "ia:whatEvent",
+        "ia:descriptionEvent",
+        "lnk:title",
+        "lnk:description",
+        "TEXT",
+        "TAG"
+      ],
+      "include": [
+        "path",
+        "allowableOperations",
+        "properties"
+      ],
+      "sorting": {
+        "options": [
+          {
+            "key": "name",
+            "label": "Name",
+            "type": "FIELD",
+            "field": "cm:name",
+            "ascending": true
+          },
+          {
+            "key": "content.sizeInBytes",
+            "label": "Size",
+            "type": "FIELD",
+            "field": "content.size",
+            "ascending": true
+          },
+          {
+            "key": "createdByUser",
+            "label": "Author",
+            "type": "FIELD",
+            "field": "cm:creator",
+            "ascending": true
+          },
+          {
+            "key": "createdAt",
+            "label": "Created",
+            "type": "FIELD",
+            "field": "cm:created",
+            "ascending": true
+          },
+          {
+            "key": "score",
+            "label": "Relevance",
+            "type": "SCORE",
+            "field": "score",
+            "ascending": false
+          }
+        ],
+        "defaults": [
+          {
+            "key": "score",
+            "type": "FIELD",
+            "field": "score",
+            "ascending": false
+          }
+        ]
+      },
+      "resetButton": true,
+      "filterQueries": [
+        { "query": "+TYPE:'cm:content' AND +ASPECT:'rma:record'" },
+        {
+          "query": "TYPE:'cm:folder' OR TYPE:'cm:content'"
+        },
+        {
+          "query": "NOT cm:creator:System"
+        }
+      ],
+      "facetFields": {
+        "expanded": true,
+        "fields": [
+          {
+            "field": "content.mimetype",
+            "mincount": 1,
+            "label": "SEARCH.FACET_FIELDS.TYPE"
+          },
+          {
+            "field": "content.size",
+            "mincount": 1,
+            "label": "SEARCH.FACET_FIELDS.SIZE"
+          },
+          {
+            "field": "creator",
+            "mincount": 1,
+            "label": "SEARCH.FACET_FIELDS.CREATOR"
+          },
+          {
+            "field": "modifier",
+            "mincount": 1,
+            "label": "SEARCH.FACET_FIELDS.MODIFIER"
+          },
+          {
+            "field": "created",
+            "mincount": 1,
+            "label": "SEARCH.FACET_FIELDS.CREATED"
+          }
+        ]
+      },
+      "facetQueries": {
+        "label": "SEARCH.FACET_QUERIES.MY_FACET_QUERIES",
+        "pageSize": 5,
+        "expanded": true,
+        "mincount": 1,
+        "queries": [
+          {
+            "query": "created:2019",
+            "label": "SEARCH.FACET_QUERIES.CREATED_THIS_YEAR"
+          },
+          {
+            "query": "content.mimetype:text/html",
+            "label": "SEARCH.FACET_QUERIES.MIMETYPE",
+            "group": "Type facet queries"
+          },
+          {
+            "query": "content.size:[0 TO 10240]",
+            "label": "SEARCH.FACET_QUERIES.XTRASMALL",
+            "group": "Size facet queries"
+          },
+          {
+            "query": "content.size:[10240 TO 102400]",
+            "label": "SEARCH.FACET_QUERIES.SMALL",
+            "group": "Size facet queries"
+          },
+          {
+            "query": "content.size:[102400 TO 1048576]",
+            "label": "SEARCH.FACET_QUERIES.MEDIUM",
+            "group": "Size facet queries"
+          },
+          {
+            "query": "content.size:[1048576 TO 16777216]",
+            "label": "SEARCH.FACET_QUERIES.LARGE",
+            "group": "Size facet queries"
+          },
+          {
+            "query": "content.size:[16777216 TO 134217728]",
+            "label": "SEARCH.FACET_QUERIES.XTRALARGE",
+            "group": "Size facet queries"
+          },
+          {
+            "query": "content.size:[134217728 TO MAX]",
+            "label": "SEARCH.FACET_QUERIES.XXTRALARGE",
+            "group": "Size facet queries"
+          }
+        ]
+      },
+      "facetIntervals": {
+        "expanded": true,
+        "intervals": [
+          {
+            "label": "The Created",
+            "field": "cm:created",
+            "sets": [
+              {
+                "label": "lastYear",
+                "start": "2018",
+                "end": "2019",
+                "endInclusive": false
+              },
+              {
+                "label": "currentYear",
+                "start": "NOW/YEAR",
+                "end": "NOW/YEAR+1YEAR"
+              },
+              {
+                "label": "earlier",
+                "start": "*",
+                "end": "2018",
+                "endInclusive": false
+              }
+            ]
+          },
+          {
+            "label": "TheModified",
+            "field": "cm:modified",
+            "sets": [
+              {
+                "label": "2017",
+                "start": "2017",
+                "end": "2018",
+                "endInclusive": false
+              },
+              {
+                "label": "2017-2018",
+                "start": "2017",
+                "end": "2018",
+                "endInclusive": true
+              },
+              {
+                "label": "currentYear",
+                "start": "NOW/YEAR",
+                "end": "NOW/YEAR+1YEAR"
+              },
+              {
+                "label": "earlierThan2017",
+                "start": "*",
+                "end": "2017",
+                "endInclusive": false
+              }
+            ]
+          }
+        ]
+      },
+      "categories": [
+        {
+          "id": "queryType",
+          "name": "Type",
+          "enabled": true,
+          "component": {
+            "selector": "radio",
+            "settings": {
+              "field": null,
+              "pageSize": 5,
+              "options": [
+                {
+                  "name": "APP.SEARCH.RADIO.NONE",
+                  "value": "",
+                  "default": true
+                },
+                {
+                  "name": "APP.SEARCH.RADIO.ALL",
+                  "value": "TYPE:'cm:folder' OR TYPE:'cm:content'"
+                },
+                {
+                  "name": "APP.SEARCH.RADIO.FOLDER",
+                  "value": "TYPE:'cm:folder'"
+                },
+                {
+                  "name": "APP.SEARCH.RADIO.DOCUMENT",
+                  "value": "TYPE:'cm:content'"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "highlight": {
+        "prefix": " ",
+        "postfix": " ",
+        "mergeContiguous": true,
+        "fields": [
+          {
+            "field": "cm:title"
+          },
+          {
+            "field": "description",
+            "prefix": "(",
+            "postfix": ")"
+          }
+        ]
+      },
+      "name": "SEARCH_FORMS.RECORD_MANAGEMENT"
+    }],
   "search-headers": {
     "filterWithContains": true,
     "app:fields": [

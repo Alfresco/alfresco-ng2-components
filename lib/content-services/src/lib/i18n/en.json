@@ -290,6 +290,8 @@
         }
       }
     },
+    "FORMS": "Search Forms",
+    "UNKNOWN_FORM": "Unknown Configuration",
     "SEARCH_HEADER" : {
       "TITLE":"Filter",
       "TYPE": "Type",

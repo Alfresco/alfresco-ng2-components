@@ -670,8 +670,15 @@ describe('SearchQueryBuilder', () => {
         expect(queryBody.scope).toEqual(mockScope);
     });
 
+    it('should return empty if array of search config not found', () => {
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
+        const forms = builder.getSearchConfigurationDetails();
+        expect(forms).toEqual([]);
+    });
+
     describe('Multiple search configuration', () => {
         let configs: SearchConfiguration[];
+        let builder: SearchQueryBuilderService;
         beforeEach(() => {
               configs = [
                   {
@@ -688,17 +695,26 @@ describe('SearchQueryBuilder', () => {
                   },
                   {
                       categories: [
-                          <any> { id: 'cat1', enabled: true }
+                          <any> { id: 'mouse', enabled: true },
+                      ],
+                      filterQueries: [
+                          { query: 'query1' },
+                          { query: 'query2' }
                       ],
                       name: 'config2',
                       default: false
+                  },
+                  {
+                      categories: [
+                          <any> { id: 'cat_and_mouse', enabled: true }
+                      ],
+                      default: false
                   }
               ];
+              builder = new SearchQueryBuilderService(buildConfig(configs), null);
         });
 
         it('should pick the default configuration from list', () => {
-            const builder = new SearchQueryBuilderService(buildConfig(configs), null);
-
             builder.categories = [];
             builder.filterQueries = [];
 
@@ -713,37 +729,31 @@ describe('SearchQueryBuilder', () => {
         });
 
         it('should list available search form names', () => {
-            const builder = new SearchQueryBuilderService(buildConfig(configs), null);
-
             const forms = builder.getSearchConfigurationDetails();
 
             expect(forms).toEqual([
-                { index: 0,  name: 'config1', default: true },
-                { index: 1,  name: 'config2', default: false }
+                { index: 0,  name: 'config1', default: true, selected: true },
+                { index: 1,  name: 'config2', default: false, selected: false },
+                { index: 2,  name: 'SEARCH.UNKNOWN_FORM', default: false, selected: false }
             ]);
         });
 
         it('should allow the user switch the form', () => {
-            const builder = new SearchQueryBuilderService(buildConfig(configs), null);
             builder.updateSelectedConfiguration(1);
 
             expect(builder.categories.length).toBe(1);
-            expect(builder.filterQueries.length).toBe(0);
+            expect(builder.filterQueries.length).toBe(2);
         });
 
-        it('should reset to defaults', () => {
-            const builder = new SearchQueryBuilderService(buildConfig(configs), null);
+        it('should keep the selected configuration value', () => {
+            builder.updateSelectedConfiguration(1);
+            const forms = builder.getSearchConfigurationDetails();
 
-            builder.categories = [];
-            builder.filterQueries = [];
-
-            expect(builder.categories.length).toBe(0);
-            expect(builder.filterQueries.length).toBe(0);
-
-            builder.resetToDefaults();
-
-            expect(builder.categories.length).toBe(2);
-            expect(builder.filterQueries.length).toBe(2);
+            expect(forms).toEqual([
+                { index: 0,  name: 'config1', default: true, selected: false },
+                { index: 1,  name: 'config2', default: false, selected: true },
+                { index: 2,  name: 'SEARCH.UNKNOWN_FORM', default: false, selected: false }
+            ]);
         });
     });
 });

@@ -349,5 +349,9 @@
       "PROCESS_ID": "Process Instance ID",
       "ACTION_TYPE": "Action Type"
     }
+  },
+  "SEARCH_FORMS": {
+    "ALL": "All",
+    "RECORD_MANAGEMENT": "Record Management"
   }
 }

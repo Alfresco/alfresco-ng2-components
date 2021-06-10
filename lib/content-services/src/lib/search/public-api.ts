@@ -26,6 +26,8 @@ export * from './models/search-widget.interface';
 export * from './models/search-configuration.interface';
 export * from './search-query-builder.service';
 export * from './models/search-range.interface';
+export * from './models/search-form.interface';
+
 export * from './search-query-service.token';
 export * from './search-header-query-builder.service';
 
@@ -49,5 +51,6 @@ export * from './components/search-sorting-picker/search-sorting-picker.componen
 export * from './components/search-text/search-text.component';
 export * from './components/search-widget-container/search-widget-container.component';
 export * from './components/search-datetime-range/search-datetime-range.component';
+export * from './components/search-form/search-form.component';
 
 export * from './search.module';

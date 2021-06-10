@@ -1,0 +1,8 @@
+<mat-form-field floatLabel="always" *ngIf="searchForms.length">
+    <mat-label>{{ 'SEARCH.FORMS' | translate }}</mat-label>
+    <mat-select [(value)]="selected" (selectionChange)="onSelectionChange($event.value)">
+        <mat-option *ngFor="let form of searchForms" [value]="form.index">
+            {{form.name | translate}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
