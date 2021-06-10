@@ -34,7 +34,8 @@ async function main() {
 }
 
 async function initializeDefaultFiles() {
-    const parentFolder = await createFolder('e2e-test-data', '-my-');
+    const e2eFolder = ACS_DEFAULT.e2eFolder;
+    const parentFolder = await createFolder(e2eFolder.name, '-my-');
     const parentFolderId = parentFolder.entry.id;
 
     for (let j = 0; j < ACS_DEFAULT.files.length; j++) {
