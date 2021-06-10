@@ -75,10 +75,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
                     this.selectFilterAndEmit(this.filterParam);
                 }
 
-                if (!this.currentFilter && this.filters.length > 0) {
-                    this.currentFilter = this.filters[0];
-                }
-
+                this.ensureFilterSelected();
                 this.success.emit(res);
             },
             (err: any) => {
@@ -106,8 +103,14 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
     public selectFilterAndEmit(newParamFilter: FilterParamsModel) {
         if (newParamFilter) {
             this.selectFilter(newParamFilter);
-        } else {
-            this.currentFilter = undefined;
+        }
+
+        this.ensureFilterSelected();
+    }
+
+    private ensureFilterSelected() {
+        if (!this.currentFilter && this.filters.length > 0) {
+            this.currentFilter = this.filters[0];
         }
     }
 

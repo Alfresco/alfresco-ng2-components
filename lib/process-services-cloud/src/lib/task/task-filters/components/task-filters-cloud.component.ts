@@ -153,12 +153,19 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     public selectFilterAndEmit(newParamFilter: FilterParamsModel) {
         if (newParamFilter) {
             this.selectFilter(newParamFilter);
+
             if (this.currentFilter) {
                 this.resetFilterCounter(this.currentFilter.key);
                 this.filterSelected.emit(this.currentFilter);
             }
-        } else {
-            this.currentFilter = undefined;
+        }
+
+        this.ensureFilterSelected();
+    }
+
+    private ensureFilterSelected() {
+        if (!this.currentFilter && this.filters.length > 0) {
+            this.currentFilter = this.filters[0];
         }
     }
 

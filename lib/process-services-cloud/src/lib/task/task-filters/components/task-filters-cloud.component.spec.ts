@@ -16,9 +16,9 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
-import { from, of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
@@ -30,15 +30,8 @@ import { fakeGlobalFilter, taskNotifications } from '../mock/task-filters-cloud.
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskFiltersCloudComponent', () => {
-
     let taskFilterService: TaskFilterCloudService;
     let appConfigService: AppConfigService;
-
-    const mockErrorFilterList = {
-        error: 'wrong request'
-    };
-
-    const mockErrorFilterPromise = Promise.reject(mockErrorFilterList);
 
     let component: TaskFiltersCloudComponent;
     let fixture: ComponentFixture<TaskFiltersCloudComponent>;
@@ -72,54 +65,64 @@ describe('TaskFiltersCloudComponent', () => {
         fixture.destroy();
     });
 
-    it('should attach specific icon for each filter if hasIcon is true', async(() => {
+    it('should attach specific icon for each filter if hasIcon is true', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({ 'appName': change });
-        fixture.detectChanges();
-        component.showIcons = true;
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(component.filters.length).toBe(3);
-            const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
-            expect(filters.length).toBe(3);
-            expect(filters[0].innerText).toContain('adjust');
-            expect(filters[1].innerText).toContain('done');
-            expect(filters[2].innerText).toContain('inbox');
-        });
-    }));
 
-    it('should not attach icons for each filter if hasIcon is false', (done) => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        component.showIcons = true;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.filters.length).toBe(3);
+
+        const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
+        expect(filters.length).toBe(3);
+        expect(filters[0].innerText).toContain('adjust');
+        expect(filters[1].innerText).toContain('done');
+        expect(filters[2].innerText).toContain('inbox');
+    });
+
+    it('should not attach icons for each filter if hasIcon is false', async () => {
         component.showIcons = false;
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({ 'appName': change });
-        fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-            expect(filters.length).toBe(0);
-            done();
-        });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
+        expect(filters.length).toBe(0);
     });
 
-    it('should display the filters', async(() => {
+    it('should display the filters', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({ 'appName': change });
+
         fixture.detectChanges();
+        await fixture.whenStable();
+
         component.showIcons = true;
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const filters = fixture.debugElement.queryAll(By.css('.adf-task-filters__entry'));
-            expect(component.filters.length).toBe(3);
-            expect(filters.length).toBe(3);
-            expect(filters[0].nativeElement.innerText).toContain('FakeInvolvedTasks');
-            expect(filters[1].nativeElement.innerText).toContain('FakeMyTasks1');
-            expect(filters[2].nativeElement.innerText).toContain('FakeMyTasks2');
-        });
-    }));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const filters = fixture.debugElement.queryAll(By.css('.adf-task-filters__entry'));
+        expect(component.filters.length).toBe(3);
+        expect(filters.length).toBe(3);
+        expect(filters[0].nativeElement.innerText).toContain('FakeInvolvedTasks');
+        expect(filters[1].nativeElement.innerText).toContain('FakeMyTasks1');
+        expect(filters[2].nativeElement.innerText).toContain('FakeMyTasks2');
+    });
 
     it('should emit an error with a bad response', (done) => {
-        getTaskListFiltersSpy.and.returnValue(from(mockErrorFilterPromise));
+        const mockErrorFilterList = {
+            error: 'wrong request'
+        };
+        getTaskListFiltersSpy.and.returnValue(throwError(mockErrorFilterList));
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
@@ -132,38 +135,32 @@ describe('TaskFiltersCloudComponent', () => {
         component.ngOnChanges({ 'appName': change });
     });
 
-    it('should return the filter task list', async (done) => {
+    it('should return the filter task list', async () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.filters).toBeDefined();
-            expect(component.filters.length).toEqual(3);
-            done();
-        });
-
         component.ngOnChanges({ 'appName': change });
+
         fixture.detectChanges();
         await fixture.whenStable();
+
+        expect(component.filters).toBeDefined();
+        expect(component.filters.length).toEqual(3);
     });
 
-    it('should return the filter task list, filtered By Name', async (done) => {
+    it('should return the filter task list, filtered By Name', async () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.filters).toBeDefined();
-            expect(component.filters[0].name).toEqual('FakeInvolvedTasks');
-            expect(component.filters[1].name).toEqual('FakeMyTasks1');
-            expect(component.filters[2].name).toEqual('FakeMyTasks2');
-            done();
-        });
-
         component.ngOnChanges({ 'appName': change });
+
         fixture.detectChanges();
         await fixture.whenStable();
+
+        expect(component.filters).toBeDefined();
+        expect(component.filters[0].name).toEqual('FakeInvolvedTasks');
+        expect(component.filters[1].name).toEqual('FakeMyTasks1');
+        expect(component.filters[2].name).toEqual('FakeMyTasks2');
     });
 
     it('should select the first cloud task filter as default', async () => {
@@ -207,38 +204,36 @@ describe('TaskFiltersCloudComponent', () => {
         expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
     });
 
-    it('should select the task filter based on the input by index param', async(() => {
+    it('should select the task filter based on the input by index param', async () => {
         component.filterParam = { index: 2 };
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeMyTasks2');
-        });
-
         component.ngOnChanges({ 'appName': change });
-        fixture.detectChanges();
-    }));
 
-    it('should select the task filter based on the input by id param', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.currentFilter).toBeDefined();
+        expect(component.currentFilter.name).toEqual('FakeMyTasks2');
+    });
+
+    it('should select the task filter based on the input by id param', async () => {
         component.filterParam = { id: '12' };
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeMyTasks2');
-        });
-
         component.ngOnChanges({ 'appName': change });
-        fixture.detectChanges();
-    }));
 
-    it('should emit the selected filter based on the filterParam input', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.currentFilter).toBeDefined();
+        expect(component.currentFilter.name).toEqual('FakeMyTasks2');
+    });
+
+    it('should emit the selected filter based on the filterParam input', async () => {
         spyOn(component.filterSelected, 'emit');
 
         const filterParam = { id: '10' };
@@ -246,10 +241,12 @@ describe('TaskFiltersCloudComponent', () => {
         component.filterParam = filterParam;
 
         component.ngOnChanges({ 'filterParam': change });
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(component.filterSelected.emit).toHaveBeenCalledWith(fakeGlobalFilter[0]);
-    }));
+    });
 
     it('should filterClicked emit when a filter is clicked from the UI', async () => {
         spyOn(component.filterClicked, 'emit');
@@ -308,9 +305,7 @@ describe('TaskFiltersCloudComponent', () => {
         const change = new SimpleChange(null, { key: fakeGlobalFilter[2].key }, true);
         component.ngOnChanges({ 'filterParam': change });
 
-        fixture.whenStable().then(() => {
-            expect(component.currentFilter.key).toEqual(fakeGlobalFilter[2].key);
-        });
+        expect(component.currentFilter.key).toEqual(fakeGlobalFilter[2].key);
     });
 
     it('should change current filter when filterParam (index) changes', () => {
@@ -321,9 +316,7 @@ describe('TaskFiltersCloudComponent', () => {
         const change = new SimpleChange(null, { index: position }, true);
         component.ngOnChanges({ 'filterParam': change });
 
-        fixture.whenStable().then(() => {
-            expect(component.currentFilter.name).toEqual(fakeGlobalFilter[position].name);
-        });
+        expect(component.currentFilter.name).toEqual(fakeGlobalFilter[position].name);
     });
 
     it('should reload filters by app name on binding changes', () => {
@@ -345,19 +338,23 @@ describe('TaskFiltersCloudComponent', () => {
         expect(component.currentFilter).toBe(fakeGlobalFilter[0]);
     });
 
-    it('should display filter counter if property set to true', async(() => {
+    it('should display filter counter if property set to true', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({ 'appName': change });
+
         fixture.detectChanges();
+        await fixture.whenStable();
+
         component.showIcons = true;
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const filterCounters = fixture.debugElement.queryAll(By.css('.adf-filter-action-button__counter'));
-            expect(component.filters.length).toBe(3);
-            expect(filterCounters.length).toBe(1);
-            expect(filterCounters[0].nativeElement.innerText).toContain('11');
-        });
-    }));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const filterCounters = fixture.debugElement.queryAll(By.css('.adf-filter-action-button__counter'));
+        expect(component.filters.length).toBe(3);
+        expect(filterCounters.length).toBe(1);
+        expect(filterCounters[0].nativeElement.innerText).toContain('11');
+    });
 
     it('should update filter counter when notification received', fakeAsync(() => {
         spyOn(appConfigService, 'get').and.returnValue(true);
