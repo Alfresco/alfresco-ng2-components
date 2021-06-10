@@ -81,7 +81,7 @@ async function createFolder(folderName: string, parentId: string) {
         return createdFolder;
 }
 
-async function uploadFile(fileName: string, fileDestination?: string) {
+async function uploadFile(fileName: string, fileDestination: string) {
     const filePath = `../resources/content/${fileName}`;
     const file = fs.createReadStream(path.join(__dirname, filePath));
     let uploadedFile: any;
