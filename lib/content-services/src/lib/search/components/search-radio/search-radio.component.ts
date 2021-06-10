@@ -67,9 +67,11 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         const initialValue = this.getSelectedValue();
 
         if (initialValue !== null) {
-            this.setValue(initialValue);
+            this.value = initialValue;
+            this.context.queryFragments[this.id] = initialValue;
         } else if (this.startValue !== null) {
-            this.setValue(initialValue);
+            this.value = initialValue;
+            this.context.queryFragments[this.id] = initialValue;
         }
     }
 
