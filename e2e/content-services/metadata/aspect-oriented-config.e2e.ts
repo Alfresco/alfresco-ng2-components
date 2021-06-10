@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     CheckboxPage,
     LocalStorageUtil,
     LoginPage,
@@ -42,7 +42,7 @@ describe('Aspect oriented config', () => {
     const modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
     const defaultModel = 'cm', defaultEmptyPropertiesAspect = 'taggable', aspectName = 'Taggable';
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const nodesApi = new NodesApi(apiService.getInstance());
     const customModelApi = new CustomModelApi(apiService.getInstance());

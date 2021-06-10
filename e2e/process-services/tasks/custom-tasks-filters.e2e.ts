@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     ApplicationsUtil,
     ArrayUtil,
     DateUtil,
@@ -41,7 +41,7 @@ describe('Start Task - Custom App', () => {
     const taskListSinglePage = new TaskListDemoPage();
     const paginationPage = new PaginationPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const appsRuntime = new ApplicationsUtil(apiService);
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);

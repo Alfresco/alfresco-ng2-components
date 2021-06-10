@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     ApplicationsUtil,
     ContentNodeSelectorDialogPage,
     IntegrationService,
@@ -37,7 +37,7 @@ import CONSTANTS = require('../../util/constants');
 describe('Attach Folder', () => {
     const app = browser.params.resources.Files.WIDGET_CHECK_APP;
 
-    const apiService = new ApiService({ provider: 'ALL' });
+    const apiService = new ApiService, createApiService({ provider: 'ALL' });
     const searchService = new SearchService(apiService);
     const integrationService = new IntegrationService(apiService);
     const applicationService = new ApplicationsUtil(apiService);

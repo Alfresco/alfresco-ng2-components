@@ -20,7 +20,7 @@ import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
 
 import {
-    ApiService,
+    ApiService, createApiService,
     BrowserActions,
     LocalStorageUtil,
     LoginPage,
@@ -44,7 +44,7 @@ describe('Search component - Text widget', () => {
     const searchBarPage = new SearchBarPage();
     const searchResultPage = new SearchResultsPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const nodesApi = new NodesApi(apiService.getInstance());
 

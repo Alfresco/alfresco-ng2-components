@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     ApplicationsUtil,
     FileBrowserUtil,
     LoginPage,
@@ -43,7 +43,7 @@ describe('Attachment list action menu for processes', () => {
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const modelsActions = new ModelsActions(apiService);

@@ -19,7 +19,7 @@ import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import {
-    ApiService,
+    ApiService, createApiService,
     FileBrowserUtil,
     IdentityService,
     LoginPage,
@@ -40,7 +40,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     const loginSsoPage = new LoginPage();
     const viewerPage = new ViewerPage();
 
-    const apiService = new ApiService({ authType: 'OAUTH' });
+    const apiService = new ApiService, createApiService({ authType: 'OAUTH' });
     const uploadActions = new UploadActions(apiService);
     const identityService = new IdentityService(apiService);
     const usersActions = new UsersActions(apiService);

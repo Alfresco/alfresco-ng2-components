@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     ApplicationsUtil,
     DatePickerCalendarPage,
     DateUtil,
@@ -38,7 +38,7 @@ describe('Dynamic Table', () => {
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const modelsActions = new ModelsActions(apiService);
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, createApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { SearchBarPage } from './pages/search-bar.page';
 import { SearchResultsPage } from './pages/search-results.page';
@@ -32,7 +32,7 @@ describe('Search Component - Multi-Select Facet', () => {
     const searchFiltersPage = new SearchFiltersPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 

@@ -17,7 +17,7 @@
 
 import CONSTANTS = require('../../util/constants');
 import {
-    ApiService,
+    ApiService, createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
@@ -53,7 +53,7 @@ describe('Task Header cloud component', () => {
     const peopleCloudComponentPage = new PeopleCloudComponentPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
     const tasksService = new TasksService(apiService);

@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 import {
-    ApiService, LocalStorageUtil,
+    ApiService, createApiService, LocalStorageUtil,
     LoginPage,
     StringUtil,
     UploadActions,
@@ -39,7 +39,7 @@ describe('Viewer', () => {
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService({ authType: 'ECM', provider: 'ECM' });
+    const apiService = new ApiService, createApiService({ authType: 'ECM', provider: 'ECM' });
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 

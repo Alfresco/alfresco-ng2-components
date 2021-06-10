@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     BrowserActions,
     LocalStorageUtil,
     LoginPage,
@@ -42,7 +42,7 @@ describe('Search Radio Component', () => {
     const searchResults = new SearchResultsPage();
 
     const acsUser = new UserModel();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const nodesApi = new NodesApi(apiService.getInstance());
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);

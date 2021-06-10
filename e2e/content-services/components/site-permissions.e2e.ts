@@ -17,7 +17,7 @@
 
 import { PermissionsPage } from '../../content-services/pages/permissions.page';
 import {
-    ApiService,
+    ApiService, createApiService,
     BrowserActions, Logger,
     LoginPage,
     NotificationHistoryPage, SearchService,
@@ -40,7 +40,7 @@ import { NotificationDemoPage } from '../../core/pages/notification.page';
 
 describe('Permissions Component', () => {
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const uploadActions = new UploadActions(apiService);
     const searchService = new SearchService(apiService);
     const nodesApi = new NodesApi(apiService.getInstance());

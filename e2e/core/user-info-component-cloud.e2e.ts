@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginPage, SettingsPage, UserInfoPage, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, createApiService, LoginPage, SettingsPage, UserInfoPage, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('User Info - SSO', () => {
@@ -24,7 +24,7 @@ describe('User Info - SSO', () => {
     const loginSSOPage = new LoginPage();
     const userInfoPage = new UserInfoPage();
 
-    const apiService = new ApiService({ authType: 'OAUTH', provider: 'ECM' });
+    const apiService = new ApiService, createApiService({ authType: 'OAUTH', provider: 'ECM' });
     const usersActions = new UsersActions(apiService);
 
     let identityUser;

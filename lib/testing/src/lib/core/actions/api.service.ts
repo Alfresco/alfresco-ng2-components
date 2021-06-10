@@ -16,66 +16,24 @@
  */
 
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
-import { browser } from 'protractor';
 import { Logger } from '../utils/logger';
 
+export interface ApiServiceConfig {
+    appConfig: AlfrescoApiConfig;
+    users: {
+        [key: string]: {
+            username: string;
+            password: string;
+        };
+    };
+}
 export class ApiService {
 
     apiService: AlfrescoApi;
 
-    config: AlfrescoApiConfig = new AlfrescoApiConfig({
-        authType: 'OAUTH',
-        oauth2: {
-            scope: 'openid',
-            secret: '',
-            implicitFlow: false,
-            silentLogin: false,
-            redirectUri: '/',
-            redirectUriLogout: '/logout'
-        }
-
-    });
-
-    constructor(clientIdOrAppConfig?: AlfrescoApiConfig | string, host?: string, hostSso?: string, provider?: string) {
-
-        if (browser.params.testConfig && browser.params.testConfig.appConfig) {
-            Logger.log('Get Config ApiService from browser params');
-
-            this.config = { ...browser.params.testConfig.appConfig };
-            this.config.hostEcm = browser.params.testConfig.appConfig.ecmHost;
-            this.config.hostBpm = browser.params.testConfig.appConfig.bpmHost;
-        }
-
-        if (clientIdOrAppConfig && typeof clientIdOrAppConfig !== 'string') {
-            Logger.log('overwrite ApiService config param');
-
-            this.config = { ...this.config, ...clientIdOrAppConfig };
-
-            this.config.hostEcm = clientIdOrAppConfig.hostEcm ? clientIdOrAppConfig.hostEcm : this.config.hostEcm;
-            this.config.hostBpm = clientIdOrAppConfig.hostBpm ? clientIdOrAppConfig.hostBpm : this.config.hostBpm;
-        } else if (clientIdOrAppConfig && typeof clientIdOrAppConfig === 'string') {
-            this.config.oauth2.clientId = clientIdOrAppConfig;
-        }
-
-        if (hostSso) {
-            Logger.log('overwrite ApiService hostSso param');
-
-            this.config.oauth2.host = hostSso;
-        }
-
-        if (host) {
-            this.config.hostBpm = host;
-            this.config.hostEcm = host;
-        }
-
-        if (provider) {
-            this.config.provider = provider;
-        }
-
-        this.config.oauth2.implicitFlow = false;
-
+    constructor(private config: ApiServiceConfig) {
         Logger.log('Api Service configuration' + JSON.stringify(this.config));
-        this.apiService = new AlfrescoApi(this.config);
+        this.apiService = new AlfrescoApi(this.config.appConfig);
     }
 
     getInstance(): AlfrescoApi {
@@ -91,7 +49,7 @@ export class ApiService {
      * Example: loginWithProfile('admin')
      */
     async loginWithProfile(profileName: string): Promise<void> {
-        const profile = browser.params.testConfig.users[profileName];
+        const profile = this.config.users[profileName];
         if (profile) {
             Logger.log(`try to login with ${profile.username} on HOST: ${this.apiService.config.hostEcm} AUTHTYPE: ${this.apiService.config.authType} PROVIDER: ${this.apiService.config.provider}`);
             try {
@@ -105,9 +63,10 @@ export class ApiService {
         }
     }
 
+    /** @deprecated */
     async performBpmOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            const uri = this.config.hostBpm + path;
+            const uri = this.config.appConfig.hostBpm + path;
             const pathParams = {}, formParams = {};
             const contentTypes = ['application/json'];
             const accepts = ['application/json'];
@@ -123,10 +82,11 @@ export class ApiService {
         });
     }
 
+    /** @deprecated */
     async performIdentityOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         return new Promise((resolve, reject) => {
 
-            const uri = this.config.oauth2.host.replace('/realms', '/admin/realms') + path;
+            const uri = this.config.appConfig.oauth2.host.replace('/realms', '/admin/realms') + path;
             const pathParams = {}, formParams = {};
             const contentTypes = ['application/json'];
             const accepts = ['application/json'];
@@ -142,9 +102,10 @@ export class ApiService {
         });
     }
 
+    /** @deprecated */
     async performECMOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            const uri = this.config.hostEcm + path;
+            const uri = this.config.appConfig.hostEcm + path;
             const pathParams = {}, formParams = {};
             const contentTypes = ['application/json'];
             const accepts = ['application/json'];

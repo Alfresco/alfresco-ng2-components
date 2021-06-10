@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, BrowserActions, LoginPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, createApiService, BrowserActions, LoginPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { CreateLibraryDialogPage } from '../../core/pages/dialog/create-library-dialog.page';
 import { CustomSourcesPage } from '../../core/pages/custom-sources.page';
@@ -29,7 +29,7 @@ describe('Create library directive', () => {
     const createLibraryDialog = new CreateLibraryDialogPage();
     const customSourcesPage = new CustomSourcesPage();
     const navigationBarPage = new NavigationBarPage();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     const visibility = {

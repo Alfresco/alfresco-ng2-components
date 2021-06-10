@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     LocalStorageUtil,
     LoginPage,
     StringUtil,
@@ -42,7 +42,7 @@ describe('Search Checklist Component', () => {
 
     const acsUser = new UserModel();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
     const nodesApi = new NodesApi(apiService.getInstance());

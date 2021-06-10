@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     ApplicationsUtil,
     LoginPage,
     PaginationPage,
@@ -36,7 +36,7 @@ describe('Task List Pagination - Sorting', () => {
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const taskUtil = new TaskUtil(apiService);

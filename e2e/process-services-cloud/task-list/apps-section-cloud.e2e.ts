@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, Application, AppListCloudPage, IdentityService, LocalStorageUtil, LoginPage } from '@alfresco/adf-testing';
+import { ApiService, createApiService, Application, AppListCloudPage, IdentityService, LocalStorageUtil, LoginPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
@@ -27,7 +27,7 @@ describe('Applications list', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudPage = new AppListCloudPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const applicationsService = new Application(apiService);
     const identityService = new IdentityService(apiService);
 

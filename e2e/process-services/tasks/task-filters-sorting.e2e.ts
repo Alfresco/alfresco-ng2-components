@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, ApplicationsUtil, LoginPage, UserFiltersUtil, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, createApiService, ApplicationsUtil, LoginPage, UserFiltersUtil, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { TasksPage } from './../pages/tasks.page';
@@ -37,7 +37,7 @@ describe('Task Filters Sorting', () => {
     const taskDetailsPage = new TaskDetailsPage();
     const taskFiltersDemoPage = new TaskFiltersDemoPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const userFiltersUtil = new UserFiltersUtil(apiService);
 

@@ -18,7 +18,7 @@
 import { browser } from 'protractor';
 
 import {
-    ApiService,
+    ApiService, createApiService,
     BrowserActions,
     LocalStorageUtil,
     LoginPage,
@@ -57,7 +57,7 @@ describe('Search component - Search Bar', () => {
     const viewerPage = new ViewerPage();
 
     const acsUser = new UserModel();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const nodesApi = new NodesApi(apiService.getInstance());
     const uploadActions = new UploadActions(apiService);

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Api } from './api';
 import { ApiService } from './api.service';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { AlfrescoApi } from '@alfresco/js-api';
 
 export interface E2eRequestApiHelperOptions {
     pathParams?: { [key: string]: any };
@@ -49,15 +48,8 @@ export class E2eRequestApiHelper {
 
     api: AlfrescoApi;
 
-    // @ts-ignore
-    constructor(private backend: Api | ApiService) {
-        if (backend.constructor === Api) {
-            // @ts-ignore
-            this.api = backend.api;
-        } else {
-            // @ts-ignore
-            this.api = backend.apiService;
-        }
+    constructor(backend: ApiService) {
+        this.api = backend.apiService;
     }
 
     private buildUrl(endPoint: string): string {

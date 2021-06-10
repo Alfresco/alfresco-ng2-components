@@ -21,7 +21,6 @@ export * from './process.services';
 export * from './message-events.service';
 export * from './form-cloud.service';
 export * from './tasks.service';
-export * from './modeling-api';
 export * from './application';
 export * from './descriptor';
 export * from './project';

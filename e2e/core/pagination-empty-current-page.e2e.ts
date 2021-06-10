@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     ArrayUtil,
     LoginPage,
     PaginationPage,
@@ -38,7 +38,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
     const paginationPage = new PaginationPage();
 
     const viewerPage = new ViewerPage();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     const acsUser = new UserModel();

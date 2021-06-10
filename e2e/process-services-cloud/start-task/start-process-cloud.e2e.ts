@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, BrowserActions, GroupIdentityService, IdentityService, LoginPage, StartProcessCloudPage, StringUtil } from '@alfresco/adf-testing';
+import { ApiService, createApiService, AppListCloudPage, BrowserActions, GroupIdentityService, IdentityService, LoginPage, StartProcessCloudPage, StringUtil } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
 import { ProcessCloudDemoPage } from './../pages/process-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -34,7 +34,7 @@ describe('Start Process', () => {
 
     const startProcessPage = new StartProcessCloudPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
 

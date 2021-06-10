@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     ApplicationsUtil,
     LoginPage,
     StartProcessPage,
@@ -43,7 +43,7 @@ describe('Form widgets - People ', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const widget = new Widget();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const taskFormsApi = new TaskFormsApi(apiService.getInstance());
 

@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 import {
-    ApiService,
+    ApiService, createApiService,
     LoginPage,
     StringUtil,
     UploadActions,
@@ -43,7 +43,7 @@ describe('Viewer', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_path
     });
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 

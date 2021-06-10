@@ -21,7 +21,7 @@ import { SearchResultsPage } from './pages/search-results.page';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import {
-    ApiService,
+    ApiService, createApiService,
     BrowserActions,
     DocumentListPage,
     LocalStorageUtil,
@@ -46,7 +46,7 @@ describe('Search Filters', () => {
     const searchResults = new SearchResultsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 

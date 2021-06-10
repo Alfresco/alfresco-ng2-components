@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService, AppListCloudPage, GroupIdentityService, IdentityService,
+    ApiService, createApiService, AppListCloudPage, GroupIdentityService, IdentityService,
     LoginPage, NotificationHistoryPage, ProcessCloudWidgetPage, ProcessDefinitionsService,
     ProcessInstancesService, QueryService, TaskFormCloudComponent, TaskHeaderCloudPage,
     TasksService
@@ -40,7 +40,7 @@ describe('Form Field Component - Dropdown Widget', () => {
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const widget = new ProcessCloudWidgetPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
     const processDefinitionService = new ProcessDefinitionsService(apiService);

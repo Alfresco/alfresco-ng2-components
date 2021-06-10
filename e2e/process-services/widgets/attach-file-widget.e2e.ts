@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     ApplicationsUtil,
     FileBrowserUtil,
     LoginPage,
@@ -46,7 +46,7 @@ describe('Attach widget - File', () => {
     const tasksListPage = new TasksListPage();
     const filtersPage = new FiltersPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, createApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NotificationDemoPage } from '../core/pages/notification.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
@@ -25,7 +25,7 @@ describe('Notifications Component', () => {
     const loginPage = new LoginPage();
     const notificationPage = new NotificationDemoPage();
     const navigationBarPage = new NavigationBarPage();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     let acsUser: UserModel;

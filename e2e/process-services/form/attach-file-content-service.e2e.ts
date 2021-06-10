@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     ApplicationsUtil,
     ContentNodeSelectorDialogPage,
     ExternalNodeSelectorDialogPage,
@@ -46,14 +46,14 @@ describe('Attach File - Content service', () => {
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
     const externalNodeSelector = new ExternalNodeSelectorDialogPage();
 
-    const apiServiceExternal = new ApiService({
+    const apiServiceExternal = new ApiService, createApiService({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf_external_acs.host,
         authType: 'BASIC'
     });
     const usersActionsExternal = new UsersActions(apiServiceExternal);
 
-    const apiService = new ApiService({ provider: 'ALL' });
+    const apiService = new ApiService, createApiService({ provider: 'ALL' });
     const integrationService = new IntegrationService(apiService);
     const applicationService = new ApplicationsUtil(apiService);
     const searchService = new SearchService(apiService);

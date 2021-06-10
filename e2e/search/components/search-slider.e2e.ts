@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService, BrowserActions,
+    ApiService, createApiService, BrowserActions,
     DataTableComponentPage,
     LocalStorageUtil,
     LoginPage,
@@ -50,7 +50,7 @@ describe('Search Slider Filter', () => {
     });
 
     let file2Bytes;
-    const apiService = new ApiService();
+    const apiService = createApiService();
 
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);

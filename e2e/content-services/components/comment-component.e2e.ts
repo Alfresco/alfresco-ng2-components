@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     LoginPage,
     StringUtil,
     UploadActions,
@@ -40,7 +40,7 @@ describe('Comment', () => {
     const commentsPage: CommentsPage = new CommentsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const commentsApi = new CommentsApi(apiService.getInstance());
 
     let userFullName, nodeId;

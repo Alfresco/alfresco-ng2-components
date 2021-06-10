@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService, BrowserActions,
+    ApiService, createApiService, BrowserActions,
     DataTableComponentPage,
     DateUtil,
     LocalStorageUtil,
@@ -56,7 +56,7 @@ describe('Search Number Range Filter', () => {
     });
 
     let file2Bytes, file0Bytes;
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);

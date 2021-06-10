@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 import {
     StringUtil, TasksService,
     ProcessDefinitionsService, ProcessInstancesService,
-    LoginPage, ApiService,
+    LoginPage, ApiService, createApiService,
     AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService, DateUtil
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -42,7 +42,7 @@ describe('Edit task filters and task list properties', () => {
     const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
     const taskList = tasksCloudDemoPage.taskListCloudComponent();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
     const tasksService = new TasksService(apiService);

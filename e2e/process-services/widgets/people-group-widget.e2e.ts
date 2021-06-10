@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, ApplicationsUtil, LoginPage, UserModel, UsersActions, Widget } from '@alfresco/adf-testing';
+import { ApiService, createApiService, ApplicationsUtil, LoginPage, UserModel, UsersActions, Widget } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -31,7 +31,7 @@ describe('People and Group widget', () => {
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const adminGroupsApi = new AdminGroupsApi(apiService.getInstance());

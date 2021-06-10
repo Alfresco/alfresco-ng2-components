@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     LoginPage,
     StringUtil,
     UploadActions,
@@ -36,7 +36,7 @@ describe('Viewer', () => {
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
 

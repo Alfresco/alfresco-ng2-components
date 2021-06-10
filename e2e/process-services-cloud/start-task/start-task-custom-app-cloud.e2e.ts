@@ -26,7 +26,7 @@ import {
     StartTasksCloudPage,
     PeopleCloudComponentPage,
     TasksService,
-    ApiService,
+    ApiService, createApiService,
     IdentityService,
     GroupIdentityService
 } from '@alfresco/adf-testing';
@@ -48,7 +48,7 @@ describe('Start Task', () => {
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
 

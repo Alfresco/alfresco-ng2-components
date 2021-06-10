@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
@@ -44,7 +44,7 @@ describe('Process filters cloud', () => {
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const editProcessFilterCloudComponentPage = new EditProcessFilterCloudComponentPage();
 
-        const apiService = new ApiService();
+        const apiService = createApiService();
         const identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);
         const processDefinitionService = new ProcessDefinitionsService(apiService);

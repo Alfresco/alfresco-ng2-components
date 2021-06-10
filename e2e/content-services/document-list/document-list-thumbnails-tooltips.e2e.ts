@@ -17,7 +17,7 @@
 
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
-import { ApiService, LoginPage, StringUtil, UploadActions, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, createApiService, LoginPage, StringUtil, UploadActions, UsersActions } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
@@ -26,7 +26,7 @@ describe('Document List Component', () => {
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     let uploadedFolder, uploadedFolderExtra;
-    const apiService = new ApiService();
+    const apiService = createApiService();
 
     const uploadActions = new UploadActions(apiService);
     let acsUser = null;

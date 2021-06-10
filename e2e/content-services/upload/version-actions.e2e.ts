@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     BrowserActions,
     BrowserVisibility,
     FileBrowserUtil,
@@ -40,7 +40,7 @@ describe('Version component actions', () => {
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const viewerPage = new ViewerPage();
 

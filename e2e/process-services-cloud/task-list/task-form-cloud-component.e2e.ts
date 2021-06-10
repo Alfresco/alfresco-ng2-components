@@ -17,7 +17,7 @@
 
 import { browser, protractor } from 'protractor';
 import {
-    ApiService,
+    ApiService, createApiService,
     AppListCloudPage,
     LoginPage,
     ProcessCloudWidgetPage,
@@ -55,7 +55,7 @@ describe('Task form cloud component', () => {
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const widget = new ProcessCloudWidgetPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const tasksService = new TasksService(apiService);
     const queryService = new QueryService(apiService);
     const processDefinitionService = new ProcessDefinitionsService(apiService);

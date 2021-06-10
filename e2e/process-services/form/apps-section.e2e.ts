@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ModelsActions, ApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
+import { ModelsActions, ApiService, createApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
@@ -32,7 +32,7 @@ describe('Modify applications', () => {
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const modelActions = new ModelsActions(apiService);
     const apps = new ApplicationsUtil(apiService);
     const usersActions = new UsersActions(apiService);

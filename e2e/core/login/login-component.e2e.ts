@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     BrowserActions,
     ErrorPage,
     LocalStorageUtil,
@@ -47,7 +47,7 @@ describe('Login component', () => {
         required: 'Required'
     };
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {

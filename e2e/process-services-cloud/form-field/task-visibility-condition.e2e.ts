@@ -20,7 +20,7 @@ import {
     AppListCloudPage,
     IdentityService,
     GroupIdentityService,
-    ApiService,
+    ApiService, createApiService,
     StringUtil,
     StartTasksCloudPage,
     TaskFormCloudComponent,
@@ -53,7 +53,7 @@ describe('Task cloud visibility', async () => {
     const loginSSOPage = new LoginPage();
     const widget = new ProcessCloudWidgetPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
 

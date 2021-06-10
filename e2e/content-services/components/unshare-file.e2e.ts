@@ -17,7 +17,7 @@
 
 import CONSTANTS = require('../../util/constants');
 import {
-    ApiService,
+    ApiService, createApiService,
     BrowserActions,
     ErrorPage,
     LoginPage,
@@ -44,7 +44,7 @@ describe('Unshare file', () => {
     const navigationBarPage = new NavigationBarPage();
     const shareDialog = new ShareDialogPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
     const nodesApi = new NodesApi(apiService.getInstance());

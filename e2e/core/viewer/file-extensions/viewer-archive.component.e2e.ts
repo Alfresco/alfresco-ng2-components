@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 import {
-    ApiService,
+    ApiService, createApiService,
     LoginPage,
     StringUtil,
     UploadActions,
@@ -40,7 +40,7 @@ describe('Viewer', () => {
 
     let site;
     const acsUser = new UserModel();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);

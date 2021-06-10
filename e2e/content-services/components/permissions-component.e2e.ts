@@ -19,7 +19,7 @@ import { PermissionsPage } from '../../content-services/pages/permissions.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import {
-    ApiService,
+    ApiService, createApiService,
     BrowserActions, Logger,
     LoginPage,
     NotificationHistoryPage,
@@ -41,7 +41,7 @@ import { GroupsApi } from '@alfresco/js-api';
 
 describe('Permissions Component', () => {
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const permissionsPage = new PermissionsPage();

@@ -17,7 +17,7 @@
 
 import { browser, by, element } from 'protractor';
 import {
-    ApiService,
+    ApiService, createApiService,
     LoginPage,
     NotificationHistoryPage,
     StringUtil,
@@ -50,7 +50,7 @@ describe('Version component permissions', () => {
     const managerUser = new UserModel();
     const fileCreatorUser = new UserModel();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const nodesApi = new NodesApi(apiService.getInstance());
 

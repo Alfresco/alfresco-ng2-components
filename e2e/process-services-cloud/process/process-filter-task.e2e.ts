@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     AppListCloudPage,
     LocalStorageUtil,
     LoginPage,
@@ -64,7 +64,7 @@ describe('Process filters cloud', () => {
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const processDefinitionService = new ProcessDefinitionsService(apiService);
     const processInstancesService = new ProcessInstancesService(apiService);
     const queryService = new QueryService(apiService);

@@ -17,7 +17,7 @@
 
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
-import { ApiService, LoginPage, StringUtil, UploadActions, UsersActions, ViewerPage } from '@alfresco/adf-testing';
+import { ApiService, createApiService, LoginPage, StringUtil, UploadActions, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import moment from 'moment-es6';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -30,7 +30,7 @@ describe('Document List Component', () => {
     const navigationBarPage = new NavigationBarPage();
 
     const contentServicesPage = new ContentServicesPage();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);

@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     ApplicationsUtil,
     LoginPage,
     StringUtil,
@@ -42,7 +42,7 @@ describe('Start Task - Task App', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const taskUtil = new TaskUtil(apiService);
     const applicationsUtil = new ApplicationsUtil(apiService);

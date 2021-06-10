@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, createApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { AnalyticsPage } from '../process-services/pages/analytics.page';
 import { ProcessServicesPage } from '../process-services/pages/process-services.page';
@@ -32,7 +32,7 @@ describe('Analytics Smoke Test', () => {
     const reportTitle = 'New Title';
     let procUserModel: UserModel;
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {

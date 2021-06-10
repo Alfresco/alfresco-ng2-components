@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, createApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TreeViewPage } from './../pages/tree-view.page';
 import { NodesApi } from '@alfresco/js-api';
@@ -27,7 +27,7 @@ describe('Tree View Component', () => {
     const treeViewPage = new TreeViewPage();
 
     let acsUser: UserModel;
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
     const nodesApi = new NodesApi(apiService.getInstance());

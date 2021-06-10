@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     LikePage,
     LoginPage,
     RatePage,
@@ -41,7 +41,7 @@ describe('Social component', () => {
     const componentVisitor = new UserModel();
     const secondComponentVisitor = new UserModel();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
     const nodesApi = new NodesApi(apiService.getInstance());

@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 import {
     LoginPage,
     TasksService,
-    ApiService,
+    ApiService, createApiService,
     AppListCloudPage,
     StringUtil,
     IdentityService,
@@ -42,7 +42,7 @@ describe('Task filters cloud', () => {
         const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
         const taskList = tasksCloudDemoPage.taskListCloudComponent();
 
-        const apiService = new ApiService();
+        const apiService = createApiService();
         const queryService = new QueryService(apiService);
         const identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);

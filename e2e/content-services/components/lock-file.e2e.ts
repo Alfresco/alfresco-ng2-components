@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     LoginPage,
     StringUtil,
     UploadActions,
@@ -41,7 +41,7 @@ describe('Lock File', () => {
 
     const adminUser = new UserModel();
     const managerUser = new UserModel();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
     const waitActions = new WaitActions(apiService);

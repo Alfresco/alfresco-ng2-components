@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     ApplicationsUtil,
     BrowserActions,
     LoginPage, ModelsActions,
@@ -42,7 +42,7 @@ describe('Task Details component', () => {
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const taskUtil = new TaskUtil(apiService);
     const modelsActions = new ModelsActions(apiService);
     const usersActions = new UsersActions(apiService);

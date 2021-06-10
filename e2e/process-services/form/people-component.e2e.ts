@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, ApplicationsUtil, LoginPage, TaskUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, createApiService, ApplicationsUtil, LoginPage, TaskUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
@@ -31,7 +31,7 @@ describe('People component', () => {
     const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const taskUtil = new TaskUtil(apiService);
     const applicationUtil = new ApplicationsUtil(apiService);

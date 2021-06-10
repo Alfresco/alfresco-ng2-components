@@ -16,7 +16,7 @@
  */
 
 import {
-    ApiService,
+    ApiService, createApiService,
     ApplicationsUtil,
     BrowserActions,
     LoginPage, ModelsActions,
@@ -35,7 +35,7 @@ describe('Process List Test', () => {
     const loginPage = new LoginPage();
     const processListDemoPage = new ProcessListDemoPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const applicationsUtil = new ApplicationsUtil(apiService);
     const usersActions = new UsersActions(apiService);
     const modelsActions = new ModelsActions(apiService);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, createApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../core/pages/dialog/upload-toggles.page';
@@ -30,7 +30,7 @@ describe('Upload component', () => {
     const uploadToggles = new UploadTogglesPage();
     const loginPage = new LoginPage();
     const versionManagePage = new VersionManagePage();
-    const apiService = new ApiService();
+    const apiService = createApiService();
 
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
