@@ -166,55 +166,45 @@ describe('TaskFiltersCloudComponent', () => {
         await fixture.whenStable();
     });
 
-    it('should select the first filter as default', async (done) => {
+    it('should select the first cloud task filter as default', async () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
-
-        component.filterSelected.subscribe(() => {
-            expect(component.currentFilter).toBeDefined('current filder not found');
-            expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
-            done();
-        });
 
         component.ngOnChanges({ 'appName': change });
         fixture.detectChanges();
         await fixture.whenStable();
+
+        expect(component.filters.length).toBe(fakeGlobalFilter.length);
+        expect(component.currentFilter).toBeDefined('current filter not found');
+        expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
     });
 
-    it('should select the task filter based on the input by name param', async(() => {
+    it('should select the task filter based on the input by name param', async () => {
         component.filterParam = { name: 'FakeMyTasks1' };
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeMyTasks1');
-        });
-
         component.ngOnChanges({ 'appName': change });
         fixture.detectChanges();
-    }));
+        await fixture.whenStable();
 
-    it('should select the default task filter if filter input does not exist', async (done) => {
+        expect(component.currentFilter).toBeDefined();
+        expect(component.currentFilter.name).toEqual('FakeMyTasks1');
+    });
+
+    it('should select the default task filter if filter input does not exist', async () => {
         component.filterParam = { name: 'UnexistableFilter' };
-        component.filters = fakeGlobalFilter;
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        spyOn(component, 'selectFilter').and.callThrough();
-
-        component.filterSelected.subscribe(() => {
-            expect(component.selectFilter).toHaveBeenCalled();
-            expect(component.currentFilter).toBeDefined('current filter not found');
-            expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
-            done();
-        });
-
         component.ngOnChanges({ 'appName': change });
+
         fixture.detectChanges();
         await fixture.whenStable();
+
+        expect(component.currentFilter).toBeDefined('current filter not found');
+        expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
     });
 
     it('should select the task filter based on the input by index param', async(() => {
@@ -276,8 +266,7 @@ describe('TaskFiltersCloudComponent', () => {
         expect(component.filterClicked.emit).toHaveBeenCalledWith(fakeGlobalFilter[0]);
     });
 
-    it('should reset the filter when the param is undefined', async(() => {
-        spyOn(component, 'selectFilterAndEmit');
+    it('should reset the filter when the param is undefined', async () => {
         component.currentFilter = null;
 
         const filterName = undefined;
@@ -285,9 +274,10 @@ describe('TaskFiltersCloudComponent', () => {
         component.ngOnChanges({ 'filterParam': change });
 
         fixture.detectChanges();
-        expect(component.selectFilterAndEmit).toHaveBeenCalledWith(undefined);
-        expect(component.currentFilter).toEqual(undefined);
-    }));
+        await fixture.whenStable();
+
+        expect(component.currentFilter).toEqual(fakeGlobalFilter[0]);
+    });
 
     it('should reload filters by appName on binding changes', () => {
         spyOn(component, 'getFilters').and.stub();

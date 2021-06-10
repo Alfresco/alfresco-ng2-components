@@ -51,28 +51,28 @@ export const fakeProcessCloudFilters = [
     }
 ];
 
-export const mockProcessFilters = [
-    new ProcessFilterCloudModel({
+export const mockProcessFilters: any[] = [
+    {
         name: 'FakeAllProcesses',
         key: 'FakeAllProcesses',
         icon: 'adjust',
         id: '10',
         status: ''
-    }),
-    new ProcessFilterCloudModel({
+    },
+    {
         name: 'FakeRunningProcesses',
         key: 'FakeRunningProcesses',
         icon: 'inbox',
         id: '11',
         status: 'RUNNING'
-    }),
-    new ProcessFilterCloudModel({
+    },
+    {
         name: 'FakeCompletedProcesses',
         key: 'completed-processes',
         icon: 'done',
         id: '12',
         status: 'COMPLETED'
-    })
+    }
 ];
 
 export const fakeProcessFilter: ProcessFilterCloudModel = new ProcessFilterCloudModel({

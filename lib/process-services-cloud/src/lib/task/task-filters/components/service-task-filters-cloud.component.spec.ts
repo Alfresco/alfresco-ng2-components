@@ -60,6 +60,10 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         serviceTaskFilterCloudService = TestBed.inject(ServiceTaskFilterCloudService);
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should attach specific icon for each filter if hasIcon is true', async(() => {
         spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
         const change = new SimpleChange(undefined, 'my-app-1', true);
@@ -159,22 +163,20 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         await fixture.whenStable();
     });
 
-    it('should select the first filter as default', async(() => {
+    it('should select the first service task filter as default', async () => {
         spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        fixture.detectChanges();
         component.ngOnChanges({ 'appName': change });
 
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeServiceTasks');
-        });
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    }));
+        expect(component.currentFilter).toBeDefined();
+        expect(component.currentFilter.name).toEqual('FakeServiceTasks');
+    });
 
     it('should select the task filter based on the input by name param', async(() => {
         spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
@@ -194,7 +196,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
     }));
 
-    it('should select the default task filter if filter input does not exist', async (done) => {
+    it('should select the default task filter if filter input does not exist', async () => {
         spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
 
         component.filterParam = { name: 'UnexistableFilter' };
@@ -202,15 +204,13 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        component.filterSelected.subscribe(() => {
-            expect(component.currentFilter).toBeDefined('current filter not found');
-            expect(component.currentFilter.name).toEqual('FakeServiceTasks');
-            done();
-        });
-
         component.ngOnChanges({ 'appName': change });
+
         fixture.detectChanges();
         await fixture.whenStable();
+
+        expect(component.currentFilter).toBeDefined('current filter not found');
+        expect(component.currentFilter.name).toEqual('FakeServiceTasks');
     });
 
     it('should select the task filter based on the input by index param', async (done) => {
@@ -283,9 +283,8 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         expect(component.filterClicked.emit).toHaveBeenCalledWith(fakeGlobalServiceFilters[0]);
     });
 
-    it('should reset the filter when the param is undefined', async(() => {
+    it('should reset the filter when the param is undefined', async () => {
         spyOn(serviceTaskFilterCloudService, 'getTaskListFilters').and.returnValue(of(fakeGlobalServiceFilters));
-        spyOn(component, 'selectFilterAndEmit');
         component.currentFilter = null;
 
         const filterName = undefined;
@@ -293,9 +292,10 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         component.ngOnChanges({ 'filterParam': change });
 
         fixture.detectChanges();
-        expect(component.selectFilterAndEmit).toHaveBeenCalledWith(undefined);
-        expect(component.currentFilter).toEqual(undefined);
-    }));
+        await fixture.whenStable();
+
+        expect(component.currentFilter).toBe(fakeGlobalServiceFilters[0]);
+    });
 
     it('should reload filters by appName on binding changes', () => {
         spyOn(component, 'getFilters').and.stub();

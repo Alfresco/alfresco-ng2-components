@@ -30,15 +30,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { mockProcessFilters } from '../mock/process-filters-cloud.mock';
 
 describe('ProcessFiltersCloudComponent', () => {
-
     let processFilterService: ProcessFilterCloudService;
-
-    const mockErrorFilterList = {
-        error: 'wrong request'
-    };
-
     let component: ProcessFiltersCloudComponent;
     let fixture: ComponentFixture<ProcessFiltersCloudComponent>;
+    let getProcessFiltersSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [
@@ -56,6 +51,7 @@ describe('ProcessFiltersCloudComponent', () => {
         component = fixture.componentInstance;
 
         processFilterService = TestBed.inject(ProcessFilterCloudService);
+        getProcessFiltersSpy = spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
     });
 
     afterEach(() => {
@@ -63,7 +59,6 @@ describe('ProcessFiltersCloudComponent', () => {
     });
 
     it('should attach specific icon for each filter if hasIcon is true', async(() => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({'appName': change});
         fixture.detectChanges();
@@ -80,8 +75,6 @@ describe('ProcessFiltersCloudComponent', () => {
     }));
 
     it('should not attach icons for each filter if hasIcon is false', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
-
         component.showIcons = false;
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({'appName': change});
@@ -96,7 +89,6 @@ describe('ProcessFiltersCloudComponent', () => {
     });
 
     it('should display the filters', async(() => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({'appName': change});
         fixture.detectChanges();
@@ -113,7 +105,10 @@ describe('ProcessFiltersCloudComponent', () => {
     }));
 
     it('should emit an error with a bad response', async (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(throwError(mockErrorFilterList));
+        const mockErrorFilterList = {
+            error: 'wrong request'
+        };
+        getProcessFiltersSpy.and.returnValue(throwError(mockErrorFilterList));
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
@@ -128,44 +123,33 @@ describe('ProcessFiltersCloudComponent', () => {
         await fixture.whenStable();
     });
 
-    it('should emit success with the filters when filters are loaded', async (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
+    it('should emit success with the filters when filters are loaded', async () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
-
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.filters).toBeDefined();
-            expect(component.filters[0].name).toEqual('FakeAllProcesses');
-            expect(component.filters[1].name).toEqual('FakeRunningProcesses');
-            expect(component.filters[2].name).toEqual('FakeCompletedProcesses');
-            done();
-        });
 
         component.ngOnChanges({ 'appName': change });
         fixture.detectChanges();
         await fixture.whenStable();
+
+        expect(component.filters).toBeDefined();
+        expect(component.filters[0].name).toEqual('FakeAllProcesses');
+        expect(component.filters[1].name).toEqual('FakeRunningProcesses');
+        expect(component.filters[2].name).toEqual('FakeCompletedProcesses');
     });
 
-    it('should select the first filter as default', async(() => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
-
+    it('should select the first process cloud filter as default', async () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        fixture.detectChanges();
         component.ngOnChanges({ 'appName': change });
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        component.success.subscribe(() => {
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeAllProcesses');
-        });
-
-    }));
+        expect(component.currentFilter).toBeDefined();
+        expect(component.currentFilter.name).toEqual('FakeAllProcesses');
+    });
 
     it('should select the filter based on the input by name param', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
-
         component.filterParam = { name: 'FakeRunningProcesses' };
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
@@ -182,8 +166,6 @@ describe('ProcessFiltersCloudComponent', () => {
    });
 
     it('should select the filter based on the input by key param', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
-
         component.filterParam = { key: 'completed-processes' };
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
@@ -201,8 +183,6 @@ describe('ProcessFiltersCloudComponent', () => {
    });
 
     it('should select the filter based on the input by index param', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
-
         component.filterParam = { index: 2 };
 
         const appName = 'my-app-1';
@@ -220,8 +200,6 @@ describe('ProcessFiltersCloudComponent', () => {
    });
 
     it('should select the filter based on the input by id param', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
-
         component.filterParam = { id: '12' };
 
         const appName = 'my-app-1';
@@ -239,8 +217,6 @@ describe('ProcessFiltersCloudComponent', () => {
     });
 
     it('should filterClicked emit when a filter is clicked from the UI', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
-
         component.filterParam = { id: '10' };
 
         const appName = 'my-app-1';
@@ -267,7 +243,7 @@ describe('ProcessFiltersCloudComponent', () => {
         fixture.detectChanges();
 
         expect(component.selectFilterAndEmit).toHaveBeenCalled();
-        expect(component.currentFilter).not.toBeDefined();
+        expect(component.currentFilter).toBe(mockProcessFilters[0]);
     });
 
     it('should reload filters by appName on binding changes', () => {
