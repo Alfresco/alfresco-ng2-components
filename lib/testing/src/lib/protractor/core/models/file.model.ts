@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { StringUtil } from '../utils/string.util';
+import { StringUtil } from '../../../shared/utils/string.util';
 
 export class FileModel {
 

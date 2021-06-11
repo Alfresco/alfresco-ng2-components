@@ -16,3 +16,4 @@
  */
 
 export * from './api/public-api';
+export * from './utils/public-api';

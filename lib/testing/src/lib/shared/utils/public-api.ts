@@ -15,13 +15,5 @@
  * limitations under the License.
  */
 
-export * from './browser-visibility';
-export * from './browser-actions';
-export * from './array.util';
-export * from './protractor.util';
-export * from './local-storage.util';
-export * from './file-browser.util';
-export * from './form.util';
-export * from './date-util';
-export * from './wait-actions';
 export * from './logger';
+export * from './string.util';

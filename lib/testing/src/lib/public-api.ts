@@ -16,4 +16,4 @@
  */
 
 export * from './protractor/public-api';
-export * from './shared/public-api';
+export * from './shared';

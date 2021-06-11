@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { infoColor, logColor, warnColor, errorColor, logLevels, LogLevelsEnum } from '../../../shared/logger';
+import { infoColor, logColor, warnColor, errorColor, logLevels, LogLevelsEnum } from '../../../shared/utils/logger';
 import { browser } from 'protractor';
 
 /* tslint:disable:no-console */

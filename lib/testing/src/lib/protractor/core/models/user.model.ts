@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { StringUtil } from '../utils/string.util';
+import { StringUtil } from '../../../shared/utils/string.util';
 import { browser } from 'protractor';
 import { UserRepresentation } from '@alfresco/js-api';
 

@@ -22,7 +22,7 @@
  * @class util.Resources
  */
 var path = require('path');
-const ACTIVITI_CLOUD_APPS = require('@alfresco/adf-testing');
+const ACTIVITI_CLOUD_APPS = require('../../lib/testing/src/lib/protractor/process-services-cloud/resources/resources.json');
 
 exports.ACTIVITI_CLOUD_APPS = ACTIVITI_CLOUD_APPS;
 

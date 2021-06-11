@@ -16,7 +16,7 @@
  */
 
 import { ApiService } from '../../../../shared/api/api.service';
-import { StringUtil } from '../../utils/string.util';
+import { StringUtil } from '../../../../shared/utils/string.util';
 import { ApiUtil } from '../../../../shared/api/api.util';
 import { Logger } from '../../utils/logger';
 import { browser } from 'protractor';

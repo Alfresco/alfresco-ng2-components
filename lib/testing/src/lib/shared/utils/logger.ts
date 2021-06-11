@@ -41,7 +41,7 @@ export let logLevels: { level: LogLevelsEnum, name: LOG_LEVEL }[] = [
 ];
 
 /* tslint:disable:no-console */
-export class Logger {
+export class GenericLogger {
 
     private level: LogLevelsEnum;
 

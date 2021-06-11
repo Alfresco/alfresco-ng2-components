@@ -18,7 +18,7 @@
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../../shared/api/api.service';
 import { TaskFormsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
-import { StringUtil } from '../../core/utils/string.util';
+import { StringUtil } from '../../../shared/utils/string.util';
 
 export class TaskUtil {
 

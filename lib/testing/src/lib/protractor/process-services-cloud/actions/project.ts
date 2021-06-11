@@ -20,7 +20,7 @@ import { NodeEntry, ResultSetPaging } from '@alfresco/js-api';
 import { ApiUtil } from '../../../shared/api/api.util';
 import { E2eRequestApiHelper, E2eRequestApiHelperOptions } from '../../../shared/api/e2e-request-api.helper';
 import * as fs from 'fs';
-import { StringUtil } from '../../core/utils/string.util';
+import { StringUtil } from '../../../shared/utils/string.util';
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../../shared/api/api.service';
 

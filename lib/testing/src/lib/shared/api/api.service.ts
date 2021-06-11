@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
-import { Logger, LOG_LEVEL } from '../logger';
+import { GenericLogger, LOG_LEVEL } from '../utils/logger';
 
 export interface ApiServiceConfig {
     appConfig: AlfrescoApiConfig;
@@ -30,10 +30,10 @@ export interface ApiServiceConfig {
 export class ApiService {
 
     apiService: AlfrescoApi;
-    logger: Logger;
+    logger: GenericLogger;
 
     constructor(private config: ApiServiceConfig, logLevel: LOG_LEVEL = 'ERROR') {
-        this.logger = new Logger(logLevel);
+        this.logger = new GenericLogger(logLevel);
         this.logger.log('Api Service configuration' + JSON.stringify(this.config));
         this.apiService = new AlfrescoApi(this.config.appConfig);
     }

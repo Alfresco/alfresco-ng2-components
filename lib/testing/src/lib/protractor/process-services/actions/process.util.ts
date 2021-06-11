@@ -17,7 +17,7 @@
 
 import { ApplicationsUtil } from './applications.util';
 import { Logger } from '../../core/utils/logger';
-import { StringUtil } from '../../core/utils/string.util';
+import { StringUtil } from '../../../shared/utils/string.util';
 import { ApiService } from '../../../shared/api/api.service';
 import { TasksApi, ProcessInstancesApi, TaskRepresentation, ProcessDefinitionsApi } from '@alfresco/js-api';
 

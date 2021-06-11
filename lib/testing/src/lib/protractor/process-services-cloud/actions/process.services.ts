@@ -21,7 +21,7 @@ import { ProcessDefinitionsService } from './process-definitions.service';
 import { ProcessInstancesService } from './process-instances.service';
 import { QueryService } from '../../core/actions/identity/query.service';
 import { TasksService } from './tasks.service';
-import { StringUtil } from '../../core/utils/string.util';
+import { StringUtil } from '../../../shared/utils/string.util';
 import { Logger } from '../../core/utils/logger';
 
 export class ProcessServices {
