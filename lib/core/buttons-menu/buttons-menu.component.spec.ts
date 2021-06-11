@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MaterialModule } from '../material.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { setupTestBed } from '../testing/setup-test-bed';
@@ -55,7 +55,7 @@ describe('ButtonsMenuComponent', () => {
 
     describe('When Buttons are injected', () => {
 
-        let fixture;
+        let fixture: ComponentFixture<CustomContainerComponent>;
         let component: CustomContainerComponent;
         let element: HTMLElement;
 
@@ -81,31 +81,34 @@ describe('ButtonsMenuComponent', () => {
 
         afterEach(() => {
             fixture.destroy();
-            TestBed.resetTestingModule();
         });
 
-        it('should render buttons menu when at least one button is declared', async(() => {
+        it('should render buttons menu when at least one button is declared', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const buttonsMenuElement = element.querySelector('#adf-buttons-menu');
-                expect(buttonsMenuElement).toBeDefined();
-            });
-        }));
+            await fixture.whenStable();
 
-        it('should trigger event when a specific button is clicked', async(() => {
+            const buttonsMenuElement = element.querySelector('#adf-buttons-menu');
+            expect(buttonsMenuElement).toBeDefined();
+        });
+
+        it('should trigger event when a specific button is clicked', async () => {
             expect(component.value).toBeUndefined();
+
             fixture.detectChanges();
+            await fixture.whenStable();
+
             const button = element.querySelector('button');
             button.click();
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(component.value).toBe(1);
-            });
-        }));
+            await fixture.whenStable();
+
+            expect(component.value).toBe(1);
+        });
     });
 
     describe('When no buttons are injected', () => {
-        let fixture;
+        let fixture: ComponentFixture<CustomEmptyContainerComponent>;
         let element: HTMLElement;
 
         setupTestBed({
@@ -132,12 +135,12 @@ describe('ButtonsMenuComponent', () => {
             TestBed.resetTestingModule();
         });
 
-        it('should hide buttons menu if buttons input is empty', async(() => {
+        it('should hide buttons menu if buttons input is empty', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const buttonsMenuElement = element.querySelector('#adf-buttons-menu');
-                expect(buttonsMenuElement).toBeNull();
-            });
-        }));
+            await fixture.whenStable();
+
+            const buttonsMenuElement = element.querySelector('#adf-buttons-menu');
+            expect(buttonsMenuElement).toBeNull();
+        });
     });
 });

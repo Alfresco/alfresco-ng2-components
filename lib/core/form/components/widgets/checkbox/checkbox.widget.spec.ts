@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
@@ -54,6 +54,8 @@ describe('CheckboxWidgetComponent', () => {
         element = fixture.nativeElement;
     });
 
+    afterEach(() => fixture.destroy());
+
     describe('when template is ready', () => {
 
         beforeEach(() => {
@@ -67,14 +69,14 @@ describe('CheckboxWidgetComponent', () => {
             });
         });
 
-        it('should be marked as invalid when required', async(() => {
+        it('should be marked as invalid when required', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('.adf-invalid')).not.toBeNull();
-            });
-        }));
+            await fixture.whenStable();
 
-        it('should be checked if boolean true is passed', async(() => {
+            expect(element.querySelector('.adf-invalid')).not.toBeNull();
+        });
+
+        it('should be checked if boolean true is passed', fakeAsync(() => {
             widget.field.value = true;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -84,26 +86,26 @@ describe('CheckboxWidgetComponent', () => {
             });
         }));
 
-        it('should not be checked if false is passed', async(() => {
+        it('should not be checked if false is passed', async () => {
             widget.field.value = false;
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
-                expect(checkbox.getAttribute('aria-checked')).toBe('false');
-            });
-        }));
 
-        it('should display tooltip when tooltip is set', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
+            expect(checkbox.getAttribute('aria-checked')).toBe('false');
+        });
+
+        it('should display tooltip when tooltip is set', async () => {
             widget.field.tooltip = 'checkbox widget';
 
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const checkbox = fixture.debugElement.nativeElement.querySelector('#check-id');
-                const tooltip = checkbox.getAttribute('ng-reflect-message');
+            await fixture.whenStable();
 
-                expect(tooltip).toEqual(widget.field.tooltip);
-            });
-        }));
+            const checkbox = fixture.debugElement.nativeElement.querySelector('#check-id');
+            const tooltip = checkbox.getAttribute('ng-reflect-message');
+
+            expect(tooltip).toEqual(widget.field.tooltip);
+        });
     });
 });

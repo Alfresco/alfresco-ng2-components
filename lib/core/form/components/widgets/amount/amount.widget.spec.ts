@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel } from './../core/form-field.model';
 import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
@@ -147,7 +147,7 @@ describe('AmountWidgetComponent - rendering', () => {
         expect(errorWidget.textContent).toBe('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
     });
 
-    it('should display tooltip when tooltip is set', async(() => {
+    it('should display tooltip when tooltip is set', async () => {
         widget.field = new FormFieldModel(new FormModel(), {
             id: 'TestAmount1',
             name: 'Test Amount',
@@ -168,11 +168,13 @@ describe('AmountWidgetComponent - rendering', () => {
         });
 
         fixture.detectChanges();
+        await fixture.whenStable();
+
         const ammountElement: any = fixture.nativeElement.querySelector('#TestAmount1');
         const tooltip = ammountElement.getAttribute('ng-reflect-message');
 
         expect(tooltip).toEqual(widget.field.tooltip);
-    }));
+    });
 });
 
 describe('AmountWidgetComponent settings', () => {

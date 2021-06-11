@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import moment from 'moment-es6';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
@@ -105,7 +105,7 @@ describe('DateWidgetComponent', () => {
             TestBed.resetTestingModule();
         });
 
-        it('should show visible date widget', async(() => {
+        it('should show visible date widget', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -115,16 +115,17 @@ describe('DateWidgetComponent', () => {
             });
             widget.field.isVisible = true;
             widget.ngOnInit();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('#date-field-id')).toBeDefined();
-                expect(element.querySelector('#date-field-id')).not.toBeNull();
-                const dateElement: any = element.querySelector('#date-field-id');
-                expect(dateElement.value).toContain('9-9-9999');
-            });
-        }));
 
-        it('should show the correct format type', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#date-field-id')).toBeDefined();
+            expect(element.querySelector('#date-field-id')).not.toBeNull();
+            const dateElement: any = element.querySelector('#date-field-id');
+            expect(dateElement.value).toContain('9-9-9999');
+        });
+
+        it('should show the correct format type', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -135,17 +136,17 @@ describe('DateWidgetComponent', () => {
             widget.field.isVisible = true;
             widget.field.dateDisplayFormat = 'MM-DD-YYYY';
             widget.ngOnInit();
-            fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    expect(element.querySelector('#date-field-id')).toBeDefined();
-                    expect(element.querySelector('#date-field-id')).not.toBeNull();
-                    const dateElement: any = element.querySelector('#date-field-id');
-                    expect(dateElement.value).toContain('12-30-9999');
-                });
-        }));
 
-        it('should disable date button when is readonly', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#date-field-id')).toBeDefined();
+            expect(element.querySelector('#date-field-id')).not.toBeNull();
+            const dateElement: any = element.querySelector('#date-field-id');
+            expect(dateElement.value).toContain('12-30-9999');
+        });
+
+        it('should disable date button when is readonly', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -155,7 +156,9 @@ describe('DateWidgetComponent', () => {
             });
             widget.field.isVisible = true;
             widget.field.readOnly = false;
+
             fixture.detectChanges();
+            await fixture.whenStable();
 
             let dateButton = <HTMLButtonElement> element.querySelector('button');
             expect(dateButton.disabled).toBeFalsy();
@@ -165,9 +168,9 @@ describe('DateWidgetComponent', () => {
 
             dateButton = <HTMLButtonElement> element.querySelector('button');
             expect(dateButton.disabled).toBeTruthy();
-        }));
+        });
 
-        it('should set isValid to false when the value is not a correct date value', async(() => {
+        it('should set isValid to false when the value is not a correct date value', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -177,9 +180,11 @@ describe('DateWidgetComponent', () => {
             });
             widget.field.isVisible = true;
             widget.field.readOnly = false;
+
             fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(widget.field.isValid).toBeFalsy();
-        }));
+        });
     });
 });

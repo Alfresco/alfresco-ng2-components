@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { UserProcessModel } from '../../../../models';
 import { Observable, of } from 'rxjs';
@@ -83,28 +83,23 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
-    it('should init value from the field', async(() => {
+    it('should init value from the field', async () => {
         widget.field.value = new UserProcessModel({
             id: 'people-id',
             firstName: 'John',
             lastName: 'Doe'
         });
 
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(
-            new Observable((observer) => {
-                observer.next(null);
-                observer.complete();
-            })
-        );
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(of(null));
 
         widget.ngOnInit();
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
-        });
-    }));
+        await fixture.whenStable();
 
-    it('should show the readonly value when the form is readonly', async(() => {
+        expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
+    });
+
+    it('should show the readonly value when the form is readonly', async () => {
         widget.field.value = new UserProcessModel({
             id: 'people-id',
             firstName: 'John',
@@ -113,20 +108,15 @@ describe('PeopleWidgetComponent', () => {
         widget.field.readOnly = true;
         widget.field.form.readOnly = true;
 
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(
-            new Observable((observer) => {
-                observer.next(null);
-                observer.complete();
-            })
-        );
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(of(null));
 
         widget.ngOnInit();
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
-            expect((element.querySelector('input') as HTMLInputElement).disabled).toBeTruthy();
-        });
-    }));
+        await fixture.whenStable();
+
+        expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
+        expect((element.querySelector('input') as HTMLInputElement).disabled).toBeTruthy();
+    });
 
     it('should require form field to setup values on init', () => {
         widget.field.value = null;
@@ -175,7 +165,7 @@ describe('PeopleWidgetComponent', () => {
             { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test' },
             { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2' }];
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             spyOn(formService, 'getWorkflowUsers').and.returnValue(new Observable((observer) => {
                 observer.next(fakeUserResult);
                 observer.complete();
@@ -188,7 +178,7 @@ describe('PeopleWidgetComponent', () => {
             });
             fixture.detectChanges();
             element = fixture.nativeElement;
-        }));
+        });
 
         afterAll(() => {
             if (fixture) {
@@ -201,32 +191,33 @@ describe('PeopleWidgetComponent', () => {
             expect(element.querySelector('#people-widget-content')).not.toBeNull();
         });
 
-        it('should show an error message if the user is invalid', async(() => {
+        it('should show an error message if the user is invalid', async () => {
             const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'K';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
             peopleHTMLElement.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('.adf-error-text')).not.toBeNull();
-                expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
-            });
-        }));
 
-        it('should show the people if the typed result match', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-error-text')).not.toBeNull();
+            expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+        });
+
+        it('should show the people if the typed result match', async () => {
             const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'T';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
             peopleHTMLElement.dispatchEvent(new Event('input'));
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
-                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-1'))).not.toBeNull();
-            });
-        }));
+            await fixture.whenStable();
+
+            expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
+            expect(fixture.debugElement.query(By.css('#adf-people-widget-user-1'))).not.toBeNull();
+        });
 
         it('should hide result list if input is empty', () => {
             const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
@@ -241,19 +232,22 @@ describe('PeopleWidgetComponent', () => {
             });
         });
 
-        it('should display two options if we tap one letter', async(() => {
+        it('should display two options if we tap one letter', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
             const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = 'T';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
             peopleHTMLElement.dispatchEvent(new Event('input'));
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
-                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-1'))).not.toBeNull();
-            });
-        }));
+            await fixture.whenStable();
+
+            expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
+            expect(fixture.debugElement.query(By.css('#adf-people-widget-user-1'))).not.toBeNull();
+        });
 
         it('should emit peopleSelected if option is valid', async () => {
             const selectEmitSpy = spyOn(widget.peopleSelected, 'emit');
@@ -262,21 +256,23 @@ describe('PeopleWidgetComponent', () => {
             peopleHTMLElement.value = 'Test01 Test01';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
             peopleHTMLElement.dispatchEvent(new Event('input'));
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(selectEmitSpy).toHaveBeenCalledWith(1001);
-            });
+            await fixture.whenStable();
+
+            expect(selectEmitSpy).toHaveBeenCalledWith(1001);
         });
 
-        it('should display tooltip when tooltip is set', async(() => {
+        it('should display tooltip when tooltip is set', async () => {
             widget.field.tooltip = 'people widget';
 
             fixture.detectChanges();
+            await fixture.whenStable();
+
             const radioButtonsElement: any = element.querySelector('#people-id');
             const tooltip = radioButtonsElement.getAttribute('ng-reflect-message');
 
             expect(tooltip).toEqual(widget.field.tooltip);
-        }));
+        });
     });
 });

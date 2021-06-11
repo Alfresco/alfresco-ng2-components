@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { ContainerModel } from '../core/container.model';
@@ -150,12 +150,12 @@ describe('RadioButtonsWidgetComponent', () => {
                 name: 'opt-name-2'
             }];
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             fixture = TestBed.createComponent(RadioButtonsWidgetComponent);
             radioButtonWidget = fixture.componentInstance;
             element = fixture.nativeElement;
             stubFormService = fixture.debugElement.injector.get(FormService);
-        }));
+        });
 
         it('should show radio buttons as text when is readonly', async () => {
             radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
@@ -230,7 +230,7 @@ describe('RadioButtonsWidgetComponent', () => {
             expect(radioButtonWidget.field.isValid).toBe(true);
         });
 
-        it('should display tooltip when tooltip is set', async(() => {
+        it('should display tooltip when tooltip is set', async () => {
             radioButtonWidget.field = new FormFieldModel(new FormModel(), {
                 id: 'radio-id',
                 name: 'radio-name-label',
@@ -244,15 +244,17 @@ describe('RadioButtonsWidgetComponent', () => {
             });
 
             fixture.detectChanges();
+            await fixture.whenStable();
+
             const radioButtonsElement: any = element.querySelector('#radio-id-opt-1');
             const tooltip = radioButtonsElement.getAttribute('ng-reflect-message');
 
             expect(tooltip).toEqual(radioButtonWidget.field.tooltip);
-        }));
+        });
 
         describe('and radioButton is populated via taskId', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 spyOn(stubFormService, 'getRestFieldValues').and.returnValue(of(restOption));
                 radioButtonWidget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }), {
                     id: 'radio-id',
@@ -264,17 +266,17 @@ describe('RadioButtonsWidgetComponent', () => {
                 const fakeContainer = new ContainerModel(radioButtonWidget.field);
                 radioButtonWidget.field.form.fields.push(fakeContainer);
                 fixture.detectChanges();
-            }));
+            });
 
-            it('should show radio buttons', async(() => {
+            it('should show radio buttons', () => {
                 expect(element.querySelector('#radio-id')).toBeDefined();
                 expect(element.querySelector('#radio-id-opt-1-input')).not.toBeNull();
                 expect(element.querySelector('#radio-id-opt-1')).not.toBeNull();
                 expect(element.querySelector('#radio-id-opt-2-input')).not.toBeNull();
                 expect(element.querySelector('#radio-id-opt-2')).not.toBeNull();
-            }));
+            });
 
-            it('should trigger field changed event on click', async(() => {
+            it('should trigger field changed event on click', fakeAsync(() => {
                 const option: HTMLElement = <HTMLElement> element.querySelector('#radio-id-opt-1-input');
                 expect(element.querySelector('#radio-id')).not.toBeNull();
                 expect(option).not.toBeNull();
@@ -287,35 +289,35 @@ describe('RadioButtonsWidgetComponent', () => {
 
             describe('and radioButton is readonly', () => {
 
-                beforeEach(async(() => {
+                beforeEach(() => {
                     radioButtonWidget.field.readOnly = true;
                     fixture.detectChanges();
-                }));
+                });
 
-                it('should show radio buttons disabled', async(() => {
+                it('should show radio buttons disabled', () => {
                     expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-1"]')).toBeDefined();
                     expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-1"]')).not.toBeNull();
                     expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-2"]')).toBeDefined();
                     expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-2"]')).not.toBeNull();
-                }));
+                });
 
                 describe('and a value is selected', () => {
 
-                    beforeEach(async(() => {
+                    beforeEach(() => {
                         radioButtonWidget.field.value = restOption[0].id;
                         fixture.detectChanges();
-                    }));
+                    });
 
-                    it('should check the selected value', async(() => {
+                    it('should check the selected value', () => {
                         expect(element.querySelector('.mat-radio-checked')).toBe(element.querySelector('mat-radio-button[ng-reflect-id="radio-id-opt-1"]'));
-                    }));
+                    });
                 });
             });
         });
 
         describe('and radioButton is populated via processDefinitionId', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 radioButtonWidget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'proc-id' }), {
                     id: 'radio-id',
                     name: 'radio-name',
@@ -325,15 +327,15 @@ describe('RadioButtonsWidgetComponent', () => {
                 spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(of(restOption));
                 radioButtonWidget.field.isVisible = true;
                 fixture.detectChanges();
-            }));
+            });
 
-            it('should show visible radio buttons', async(() => {
+            it('should show visible radio buttons', () => {
                 expect(element.querySelector('#radio-id')).toBeDefined();
                 expect(element.querySelector('#radio-id-opt-1-input')).not.toBeNull();
                 expect(element.querySelector('#radio-id-opt-1')).not.toBeNull();
                 expect(element.querySelector('#radio-id-opt-2-input')).not.toBeNull();
                 expect(element.querySelector('#radio-id-opt-2')).not.toBeNull();
-            }));
+            });
         });
     });
 });

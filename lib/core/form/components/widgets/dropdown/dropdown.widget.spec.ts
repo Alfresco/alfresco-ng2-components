@@ -132,28 +132,33 @@ describe('DropdownWidgetComponent', () => {
             });
         }));
 
-        it('should be able to display label with asterix', async(() => {
+        it('should be able to display label with asterix', async () => {
             const label = 'MyLabel123';
             widget.field.name = label;
+
             fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(element.querySelector('label').innerText).toBe(label + '*');
-        }));
+        });
 
-        it('should be invalid if no default option', async(() => {
+        it('should be invalid if no default option', async () => {
             fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(element.querySelector('.adf-invalid')).toBeDefined();
             expect(element.querySelector('.adf-invalid')).not.toBeNull();
-        }));
+        });
 
-        it('should be valid if default option', async(() => {
+        it('should be valid if default option', async () => {
             widget.field.options = fakeOptionList;
             widget.field.value = fakeOptionList[0].id;
+
             fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(element.querySelector('.adf-invalid')).toBeNull();
-        }));
+        });
     });
 
     describe('when template is ready', () => {
@@ -177,7 +182,7 @@ describe('DropdownWidgetComponent', () => {
                 fixture.detectChanges();
             }));
 
-            it('should show visible dropdown widget', async(() => {
+            it('should show visible dropdown widget', async () => {
                 expect(element.querySelector('#dropdown-id')).toBeDefined();
                 expect(element.querySelector('#dropdown-id')).not.toBeNull();
 
@@ -190,36 +195,35 @@ describe('DropdownWidgetComponent', () => {
                 expect(optOne).not.toBeNull();
                 expect(optTwo).not.toBeNull();
                 expect(optThree).not.toBeNull();
-            }));
+            });
 
-            it('should select the default value when an option is chosen as default', async(() => {
+            it('should select the default value when an option is chosen as default', async () => {
                 widget.field.value = 'option_2';
                 widget.ngOnInit();
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        const dropDownElement: any = element.querySelector('#dropdown-id');
-                        expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
-                        expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
-                    });
-            }));
 
-            it('should select the empty value when no default is chosen', async(() => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const dropDownElement: any = element.querySelector('#dropdown-id');
+                expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
+                expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
+            });
+
+            it('should select the empty value when no default is chosen', async () => {
                 widget.field.value = 'empty';
                 widget.ngOnInit();
+
                 fixture.detectChanges();
+                await fixture.whenStable();
 
                 openSelect();
 
                 fixture.detectChanges();
+                await fixture.whenStable();
 
-                fixture.whenStable()
-                    .then(() => {
-                        const dropDownElement: any = element.querySelector('#dropdown-id');
-                        expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
-                    });
-            }));
-
+                const dropDownElement: any = element.querySelector('#dropdown-id');
+                expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
+            });
         });
 
         describe('and dropdown is populated via processDefinitionId', () => {
@@ -241,7 +245,7 @@ describe('DropdownWidgetComponent', () => {
                 fixture.detectChanges();
             }));
 
-            it('should show visible dropdown widget', async(() => {
+            it('should show visible dropdown widget', () => {
                 expect(element.querySelector('#dropdown-id')).toBeDefined();
                 expect(element.querySelector('#dropdown-id')).not.toBeNull();
 
@@ -254,37 +258,37 @@ describe('DropdownWidgetComponent', () => {
                 expect(optOne).not.toBeNull();
                 expect(optTwo).not.toBeNull();
                 expect(optThree).not.toBeNull();
-            }));
+            });
 
-            it('should select the default value when an option is chosen as default', async(() => {
+            it('should select the default value when an option is chosen as default', async () => {
                 widget.field.value = 'option_2';
                 widget.ngOnInit();
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        const dropDownElement: any = element.querySelector('#dropdown-id');
-                        expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
-                        expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
-                    });
-            }));
 
-            it('should select the empty value when no default is chosen', async(() => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const dropDownElement: any = element.querySelector('#dropdown-id');
+                expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
+                expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
+            });
+
+            it('should select the empty value when no default is chosen', async () => {
                 widget.field.value = 'empty';
                 widget.ngOnInit();
+
                 fixture.detectChanges();
+                await fixture.whenStable();
 
                 openSelect();
 
                 fixture.detectChanges();
+                await fixture.whenStable();
 
-                fixture.whenStable()
-                    .then(() => {
-                        const dropDownElement: any = element.querySelector('#dropdown-id');
-                        expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
-                    });
-            }));
+                const dropDownElement: any = element.querySelector('#dropdown-id');
+                expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
+            });
 
-            it('should be disabled when the field is readonly', async(() => {
+            it('should be disabled when the field is readonly', async () => {
                 widget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
@@ -294,15 +298,14 @@ describe('DropdownWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        const dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
-                        expect(dropDownElement).not.toBeNull();
-                        expect(dropDownElement.getAttribute('aria-disabled')).toBe('true');
-                    });
-            }));
+                await fixture.whenStable();
 
-            it('should show the option value when the field is readonly', async(() => {
+                const dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
+                expect(dropDownElement).not.toBeNull();
+                expect(dropDownElement.getAttribute('aria-disabled')).toBe('true');
+            });
+
+            it('should show the option value when the field is readonly', async () => {
                 widget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
@@ -315,16 +318,14 @@ describe('DropdownWidgetComponent', () => {
                 openSelect();
 
                 fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        fixture.detectChanges();
-                        const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                        expect(options.length).toBe(1);
+                await fixture.whenStable();
 
-                        const option = options[0].nativeElement;
-                        expect(option.innerText).toEqual('FakeValue');
-                    });
-            }));
+                const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                expect(options.length).toBe(1);
+
+                const option = options[0].nativeElement;
+                expect(option.innerText).toEqual('FakeValue');
+            });
         });
     });
 });

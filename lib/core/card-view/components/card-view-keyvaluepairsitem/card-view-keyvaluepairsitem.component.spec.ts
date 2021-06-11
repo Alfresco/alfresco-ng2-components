@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view-keyvaluepairs.model';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
@@ -28,7 +28,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewKeyValuePairsItemComponent>;
     let component: CardViewKeyValuePairsItemComponent;
-    let cardViewUpdateService;
+    let cardViewUpdateService: CardViewUpdateService;
     const mockEmptyData = [{ name: '', value: '' }];
     const mockData = [{ name: 'test-name', value: 'test-value' }];
 
@@ -125,7 +125,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             expect(component.property.value.length).toBe(0);
         });
 
-        it('should update property on input blur', async(() => {
+        it('should update property on input blur', fakeAsync(() => {
             spyOn(cardViewUpdateService, 'update');
             component.ngOnChanges();
             fixture.detectChanges();
@@ -153,7 +153,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             });
         }));
 
-        it('should not update property if at least one input is empty on blur', async(() => {
+        it('should not update property if at least one input is empty on blur', fakeAsync(() => {
             spyOn(cardViewUpdateService, 'update');
             component.ngOnChanges();
             fixture.detectChanges();

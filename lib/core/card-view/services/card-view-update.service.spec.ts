@@ -16,7 +16,7 @@
  */
 
 import { MinimalNode } from '@alfresco/js-api';
-import { async, TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 import { CardViewUpdateService, transformKeyToObject } from './card-view-update.service';
 
@@ -63,7 +63,7 @@ describe('CardViewUpdateService', () => {
             cardViewUpdateService = TestBed.inject(CardViewUpdateService);
         });
 
-        it('should send updated message with proper parameters', async(() => {
+        it('should send updated message with proper parameters', fakeAsync(() => {
 
             cardViewUpdateService.itemUpdated$.subscribe(
                 ( { target, changed } ) => {
@@ -74,7 +74,7 @@ describe('CardViewUpdateService', () => {
             cardViewUpdateService.update(property, 'changed-property-value');
         }));
 
-        it('should send clicked message with proper parameters', async(() => {
+        it('should send clicked message with proper parameters', fakeAsync(() => {
 
             cardViewUpdateService.itemClicked$.subscribe(
                 ( { target } ) => {
@@ -84,7 +84,7 @@ describe('CardViewUpdateService', () => {
             cardViewUpdateService.clicked(property);
         }));
 
-        it('should send updated node when aspect changed', async(() => {
+        it('should send updated node when aspect changed', fakeAsync(() => {
             const fakeNode: MinimalNode = <MinimalNode> { id: 'Bigfoot'};
             cardViewUpdateService.updatedAspect$.subscribe((node: MinimalNode) => {
                 expect(node.id).toBe('Bigfoot');

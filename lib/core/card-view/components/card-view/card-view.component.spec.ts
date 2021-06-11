@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
@@ -45,21 +45,20 @@ describe('CardViewComponent', () => {
         fixture.destroy();
     });
 
-    it('should render the label and value', async(() => {
+    it('should render the label and value', async () => {
         component.properties = [new CardViewTextItemModel({ label: 'My label', value: 'My value', key: 'some key' })];
+
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
+        await fixture.whenStable();
 
-            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-            expect(labelValue).not.toBeNull();
-            expect(labelValue.nativeElement.innerText).toBe('My label');
+        const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+        expect(labelValue).not.toBeNull();
+        expect(labelValue.nativeElement.innerText).toBe('My label');
 
-            const value = fixture.debugElement.query(By.css('.adf-property-value'));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.value).toBe('My value');
-        });
-    }));
+        const value = fixture.debugElement.query(By.css('.adf-property-value'));
+        expect(value).not.toBeNull();
+        expect(value.nativeElement.value).toBe('My value');
+    });
 
     it('should pass through editable property to the items', () => {
         component.editable = true;
@@ -76,28 +75,27 @@ describe('CardViewComponent', () => {
         expect(datePicker).not.toBeNull('Datepicker should be in DOM');
     });
 
-    it('should render the date in the correct format', async(() => {
+    it('should render the date in the correct format', async () => {
         component.properties = [new CardViewDateItemModel({
             label: 'My date label',
             value: '2017-06-14',
             key: 'some key',
             format: 'short'
         })];
+
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
+        await fixture.whenStable();
 
-            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-            expect(labelValue).not.toBeNull();
-            expect(labelValue.nativeElement.innerText).toBe('My date label');
+        const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+        expect(labelValue).not.toBeNull();
+        expect(labelValue.nativeElement.innerText).toBe('My date label');
 
-            const value = fixture.debugElement.query(By.css('.adf-property-value'));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText).toBe('6/14/17, 12:00 AM');
-        });
-    }));
+        const value = fixture.debugElement.query(By.css('.adf-property-value'));
+        expect(value).not.toBeNull();
+        expect(value.nativeElement.innerText).toBe('6/14/17, 12:00 AM');
+    });
 
-    it('should render the default value if the value is empty, not editable and displayEmpty is true', async(() => {
+    it('should render the default value if the value is empty, not editable and displayEmpty is true', async () => {
         component.properties = [new CardViewTextItemModel({
             label: 'My default label',
             value: null,
@@ -107,22 +105,20 @@ describe('CardViewComponent', () => {
         })];
         component.editable = true;
         component.displayEmpty = true;
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
+        const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+        expect(labelValue).not.toBeNull();
+        expect(labelValue.nativeElement.innerText).toBe('My default label');
 
-            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-            expect(labelValue).not.toBeNull();
-            expect(labelValue.nativeElement.innerText).toBe('My default label');
+        const value = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-some-key"]'));
+        expect(value).not.toBeNull();
+        expect(value.nativeElement.value).toBe('default value');
+    });
 
-            const value = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-some-key"]'));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.value).toBe('default value');
-        });
-    }));
-
-    it('should render the default value if the value is empty and is editable', async(() => {
+    it('should render the default value if the value is empty and is editable', async () => {
         component.properties = [new CardViewTextItemModel({
             label: 'My default label',
             value: null,
@@ -132,18 +128,16 @@ describe('CardViewComponent', () => {
         })];
         component.editable = true;
         component.displayEmpty = false;
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
+        const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+        expect(labelValue).not.toBeNull();
+        expect(labelValue.nativeElement.innerText).toBe('My default label');
 
-            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-            expect(labelValue).not.toBeNull();
-            expect(labelValue.nativeElement.innerText).toBe('My default label');
-
-            const value = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-some-key"]'));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.value).toBe('default value');
-        });
-    }));
+        const value = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-some-key"]'));
+        expect(value).not.toBeNull();
+        expect(value.nativeElement.value).toBe('default value');
+    });
 });

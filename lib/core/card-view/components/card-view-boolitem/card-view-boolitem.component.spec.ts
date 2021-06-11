@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { setupTestBed } from '../../../testing/setup-test-bed';
@@ -68,7 +68,7 @@ describe('CardViewBoolItemComponent', () => {
             expect(value).not.toBeNull();
         });
 
-        it('should NOT render the label and value if the property is NOT editable and doesn\'t have a proper boolean value set', () => {
+        it('should NOT render the label and value if the property is NOT editable and has no proper boolean value set', () => {
             component.editable = true;
             component.property.value = undefined;
             component.property.editable = false;
@@ -189,15 +189,16 @@ describe('CardViewBoolItemComponent', () => {
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, true);
         });
 
-        it('should update the property value after a changed', async(() => {
+        it('should update the property value after a changed', async () => {
             component.property.value = true;
 
             component.changed(<MatCheckboxChange> { checked: false });
 
-            fixture.whenStable().then(() => {
-                expect(component.property.value).toBe(false);
-            });
-        }));
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(component.property.value).toBe(false);
+        });
 
         it('should trigger an update event on the CardViewUpdateService [integration]', (done) => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);

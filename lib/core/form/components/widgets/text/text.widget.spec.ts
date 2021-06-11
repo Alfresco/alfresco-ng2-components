@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
@@ -203,7 +203,7 @@ describe('TextWidgetComponent', () => {
                 expect(widget.field.isValid).toBe(false);
             });
 
-            it('should display tooltip when tooltip is set', async(() => {
+            it('should display tooltip when tooltip is set', async () => {
                 widget.field = new FormFieldModel(new FormModel(), {
                     id: 'text-id',
                     name: 'text-name',
@@ -213,11 +213,13 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
+                await fixture.whenStable();
+
                 const textElement: any = element.querySelector('#text-id');
                 const tooltip = textElement.getAttribute('ng-reflect-message');
 
                 expect(tooltip).toEqual(widget.field.tooltip);
-            }));
+            });
         });
 
         describe('and no mask is configured on text element', () => {
@@ -237,7 +239,7 @@ describe('TextWidgetComponent', () => {
                 inputElement = element.querySelector<HTMLInputElement>('#text-id');
             });
 
-            it('should be disabled on readonly forms', async(() => {
+            it('should be disabled on readonly forms', fakeAsync(() => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(inputElement).toBeDefined();
@@ -286,7 +288,7 @@ describe('TextWidgetComponent', () => {
                 expect(label.innerText).toBe('simple placeholder');
             });
 
-            it('should prevent text to be written if is not allowed by the mask on keyUp event', async(() => {
+            it('should prevent text to be written if is not allowed by the mask on keyUp event', async () => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = 'F';
@@ -294,31 +296,32 @@ describe('TextWidgetComponent', () => {
                 const event: any = new Event('keyup');
                 event.keyCode = '70';
                 inputElement.dispatchEvent(event);
+
                 fixture.detectChanges();
+                await fixture.whenStable();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    inputElement = element.querySelector<HTMLInputElement>('#text-id');
-                    expect(inputElement.value).toBe('');
-                });
-            }));
+                inputElement = element.querySelector<HTMLInputElement>('#text-id');
+                expect(inputElement.value).toBe('');
+            });
 
-            it('should prevent text to be written if is not allowed by the mask on input event', async(() => {
+            it('should prevent text to be written if is not allowed by the mask on input event', async () => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = 'F';
                 widget.field.value = 'F';
                 inputElement.dispatchEvent(new Event('input'));
+
                 fixture.detectChanges();
+                await fixture.whenStable();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    inputElement = element.querySelector<HTMLInputElement>('#text-id');
-                    expect(inputElement.value).toBe('');
-                });
-            }));
+                inputElement = element.querySelector<HTMLInputElement>('#text-id');
+                expect(inputElement.value).toBe('');
+            });
 
-            it('should allow masked configured value on keyUp event', async(() => {
+            it('should allow masked configured value on keyUp event', async () => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = '1';
@@ -327,14 +330,17 @@ describe('TextWidgetComponent', () => {
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const textEle = element.querySelector<HTMLInputElement>('#text-id');
-                    expect(textEle.value).toBe('1');
-                });
-            }));
+                fixture.detectChanges();
+                await fixture.whenStable();
 
-            it('should auto-fill masked configured value on keyUp event', async(() => {
+                const textEle = element.querySelector<HTMLInputElement>('#text-id');
+                expect(textEle.value).toBe('1');
+            });
+
+            it('should auto-fill masked configured value on keyUp event', async () => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = '12345678';
@@ -343,12 +349,12 @@ describe('TextWidgetComponent', () => {
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const textEle = element.querySelector<HTMLInputElement>('#text-id');
-                    expect(textEle.value).toBe('12-345,67%');
-                });
-            }));
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const textEle = element.querySelector<HTMLInputElement>('#text-id');
+                expect(textEle.value).toBe('12-345,67%');
+            });
         });
 
         describe('when the mask is reversed ', () => {
@@ -374,7 +380,10 @@ describe('TextWidgetComponent', () => {
                 TestBed.resetTestingModule();
             });
 
-            it('should be able to apply the mask reversed', async(() => {
+            it('should be able to apply the mask reversed', async () => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = '1234';
@@ -383,12 +392,12 @@ describe('TextWidgetComponent', () => {
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const textEle = element.querySelector<HTMLInputElement>('#text-id');
-                    expect(textEle.value).toBe('12,34%');
-                });
-            }));
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const textEle = element.querySelector<HTMLInputElement>('#text-id');
+                expect(textEle.value).toBe('12,34%');
+            });
         });
 
         describe('and a mask placeholder is configured', () => {

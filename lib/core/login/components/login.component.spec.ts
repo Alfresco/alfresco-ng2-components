@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
@@ -67,7 +67,7 @@ describe('LoginComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         fixture = TestBed.createComponent(LoginComponent);
 
         element = fixture.nativeElement;
@@ -93,7 +93,7 @@ describe('LoginComponent', () => {
         fixture.destroy();
     });
 
-    function loginWithCredentials(username, password) {
+    function loginWithCredentials(username: string, password: string) {
         usernameInput.value = username;
         passwordInput.value = password;
 
@@ -175,7 +175,7 @@ describe('LoginComponent', () => {
         expect(router.navigateByUrl).toHaveBeenCalledWith('some-route');
     });
 
-    it('should update user preferences upon login', async(() => {
+    it('should update user preferences upon login', fakeAsync(() => {
         spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
         spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.resolve());
 
@@ -465,7 +465,7 @@ describe('LoginComponent', () => {
             loginWithCredentials('fake-username-CORS-error', 'fake-password');
         });
 
-        it('should return CSRF error when server CSRF error occurs', async(() => {
+        it('should return CSRF error when server CSRF error occurs', fakeAsync(() => {
             spyOn(authService, 'login')
                 .and.returnValue(throwError({ message: 'ERROR: Invalid CSRF-token', status: 403 }));
 
@@ -480,7 +480,7 @@ describe('LoginComponent', () => {
             loginWithCredentials('fake-username-CSRF-error', 'fake-password');
         }));
 
-        it('should return ECM read-only error when error occurs', async(() => {
+        it('should return ECM read-only error when error occurs', fakeAsync(() => {
             spyOn(authService, 'login')
                 .and.returnValue(
                 throwError(
@@ -544,7 +544,7 @@ describe('LoginComponent', () => {
         loginWithCredentials('fake-username', 'fake-password');
    });
 
-    it('should emit success event after the login has succeeded and discard password', async(() => {
+    it('should emit success event after the login has succeeded and discard password', fakeAsync(() => {
         spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
 
         component.success.subscribe((event) => {
@@ -559,7 +559,7 @@ describe('LoginComponent', () => {
         loginWithCredentials('fake-username', 'fake-password');
     }));
 
-    it('should emit error event after the login has failed', async(() => {
+    it('should emit error event after the login has failed', fakeAsync(() => {
         spyOn(authService, 'login').and.returnValue(throwError('Fake server error'));
 
         component.error.subscribe((error) => {
@@ -596,7 +596,7 @@ describe('LoginComponent', () => {
         expect(element.querySelector('#password').type).toEqual('password');
     });
 
-    it('should emit only the username and not the password as part of the executeSubmit', async(() => {
+    it('should emit only the username and not the password as part of the executeSubmit', fakeAsync(() => {
         spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.resolve());
 
         component.executeSubmit.subscribe((res) => {
@@ -620,11 +620,9 @@ describe('LoginComponent', () => {
                 alfrescoApiService.reset();
             });
 
-            it('should not show login username and password if SSO implicit flow is active', async(() => {
+            it('should not show login username and password if SSO implicit flow is active', fakeAsync(() => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
                 component.ngOnInit();
-                fixture.detectChanges();
-
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -633,7 +631,7 @@ describe('LoginComponent', () => {
                 });
             }));
 
-            it('should not render the implicitFlow button in case silentLogin is enabled', async(() => {
+            it('should not render the implicitFlow button in case silentLogin is enabled', fakeAsync(() => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
                 appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true, silentLogin: true };
 
@@ -649,7 +647,7 @@ describe('LoginComponent', () => {
 
             }));
 
-            it('should render the implicitFlow button in case silentLogin is disabled', async(() => {
+            it('should render the implicitFlow button in case silentLogin is disabled', fakeAsync(() => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
 
                 component.ngOnInit();
@@ -661,7 +659,7 @@ describe('LoginComponent', () => {
 
             }));
 
-            it('should not show the login base auth button', async(() => {
+            it('should not show the login base auth button', fakeAsync(() => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
 
                 component.ngOnInit();
@@ -672,7 +670,7 @@ describe('LoginComponent', () => {
                 });
             }));
 
-            it('should show the login SSO button', async(() => {
+            it('should show the login SSO button', fakeAsync(() => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
 
                 component.ngOnInit();

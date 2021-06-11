@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, discardPeriodicTasks, fakeAsync, tick, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { SearchTextInputComponent } from './search-text-input.component';
 import { DebugElement } from '@angular/core';
@@ -55,12 +55,17 @@ describe('SearchTextInputComponent', () => {
 
     describe('component rendering', () => {
 
-        it('should display a search input field when specified', async(() => {
+        it('should display a search input field when specified', async () => {
             fixture.detectChanges();
+            await fixture.whenStable();
+
             component.inputType = 'search';
+
             fixture.detectChanges();
+            await fixture.whenStable();
+
             expect(element.querySelectorAll('input[type="search"]').length).toBe(1);
-        }));
+        });
     });
 
     describe('expandable option false', () => {
@@ -246,10 +251,13 @@ describe('SearchTextInputComponent', () => {
             discardPeriodicTasks();
         }));
 
-        it('should set browser autocomplete to on when configured', async(() => {
+        it('should set browser autocomplete to on when configured', async () => {
             component.autocomplete = true;
+
             fixture.detectChanges();
+            await fixture.whenStable();
+
             expect(element.querySelector('#adf-control-input').getAttribute('autocomplete')).toBe('on');
-        }));
+        });
     });
 });
