@@ -16,8 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import {
-    ApiService, createApiService,
+import { createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,

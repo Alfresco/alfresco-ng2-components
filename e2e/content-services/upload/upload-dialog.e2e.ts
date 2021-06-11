@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, createApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../core/pages/dialog/upload-toggles.page';

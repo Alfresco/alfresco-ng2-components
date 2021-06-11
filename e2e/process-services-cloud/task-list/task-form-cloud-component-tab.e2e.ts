@@ -18,8 +18,7 @@
 import { browser } from 'protractor';
 import {
     AppListCloudPage,
-    StringUtil,
-    ApiService, createApiService,
+    StringUtil, createApiService,
     LoginPage,
     TasksService,
     ProcessDefinitionsService,

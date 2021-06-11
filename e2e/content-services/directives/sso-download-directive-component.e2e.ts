@@ -18,8 +18,7 @@
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import {
-    ApiService, createApiService,
+import { createApiService,
     FileBrowserUtil,
     IdentityService,
     LoginPage,

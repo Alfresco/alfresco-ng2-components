@@ -16,8 +16,7 @@
  */
 
 import CONSTANTS = require('../../util/constants');
-import {
-    ApiService, createApiService,
+import { createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,

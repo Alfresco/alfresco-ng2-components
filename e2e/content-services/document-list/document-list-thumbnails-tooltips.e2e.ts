@@ -17,7 +17,7 @@
 
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
-import { ApiService, createApiService, LoginPage, StringUtil, UploadActions, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, StringUtil, UploadActions, UsersActions } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 

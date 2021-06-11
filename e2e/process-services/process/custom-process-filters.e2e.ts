@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, createApiService, LoginPage, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from './../pages/process-filters.page';
 import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
 import { AppSettingsTogglesPage } from './../pages/dialog/app-settings-toggles.page';

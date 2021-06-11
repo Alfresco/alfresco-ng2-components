@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, createApiService, FormPage, LoginPage, UsersActions, Widget } from '@alfresco/adf-testing';
+import { createApiService, FormPage, LoginPage, UsersActions, Widget } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Form Component', () => {

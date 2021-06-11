@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, createApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NotificationDemoPage } from '../core/pages/notification.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';

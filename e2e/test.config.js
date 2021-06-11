@@ -61,8 +61,6 @@ const appConfig = {
     }
 };
 
-console.log(appConfig);
-
 if (LOG) {
     console.log('======= test.config.js hostBPM ====== ');
     console.log('hostBPM : ' + HOST_ECM);

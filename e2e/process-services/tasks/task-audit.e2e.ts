@@ -19,8 +19,7 @@ import {
     LoginPage,
     BrowserActions,
     FileBrowserUtil,
-    ApplicationsUtil,
-    ApiService, createApiService,
+    ApplicationsUtil, createApiService,
     UsersActions,
     TaskUtil
 } from '@alfresco/adf-testing';

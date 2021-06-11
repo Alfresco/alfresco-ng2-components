@@ -19,8 +19,7 @@ import { browser } from 'protractor';
 
 import { FolderModel } from '../../models/ACS/folder.model';
 
-import {
-    ApiService, createApiService,
+import { createApiService,
     BrowserActions,
     LocalStorageUtil,
     LoginPage,

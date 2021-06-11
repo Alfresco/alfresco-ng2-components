@@ -19,15 +19,25 @@ import { AlfrescoApiConfig } from '@alfresco/js-api';
 import { ApiService } from './api.service';
 import { browser } from 'protractor';
 
-export function createApiService(appConfigOverride: Partial<AlfrescoApiConfig> = {}) {
+export function createApiService(
+    /** @deprecated */
+    appConfigOverride: Partial<AlfrescoApiConfig> = {}
+) {
+    const patchedAppConfig = {
+        ...browser.params.testConfig.appConfig,
+        oauth2: {
+            ...browser.params.testConfig.appConfig.oauth2,
+            // For some reason protractor e2es must have this value hardcoded
+            implicitFlow: false
+        },
+        // Legacy debt...
+        hostEcm: browser.params.testConfig.appConfig.ecmHost,
+        hostBpm: browser.params.testConfig.appConfig.bpmHost,
+        ...appConfigOverride
+    };
+
     return new ApiService({
-        appConfig: new AlfrescoApiConfig({
-            ...browser.params.testConfig.appConfig,
-            // Legacy debt...
-            hostEcm: browser.params.testConfig.appConfig.ecmHost,
-            hostBpm: browser.params.testConfig.appConfig.bpmHost,
-            ...appConfigOverride
-        }),
+        appConfig: new AlfrescoApiConfig(patchedAppConfig),
         users: browser.params.testConfig.users
     });
 }

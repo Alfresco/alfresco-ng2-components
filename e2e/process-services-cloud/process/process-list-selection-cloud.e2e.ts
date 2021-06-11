@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, createApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginPage, ProcessDefinitionsService, ProcessInstancesService, LocalStorageUtil } from '@alfresco/adf-testing';
+import { createApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginPage, ProcessDefinitionsService, ProcessInstancesService, LocalStorageUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from './../pages/process-cloud-demo.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';

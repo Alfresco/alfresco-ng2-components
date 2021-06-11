@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService, createApiService, AppListCloudPage, GroupIdentityService, IdentityService,
+import { createApiService, AppListCloudPage, GroupIdentityService, IdentityService,
     LoginPage, NotificationHistoryPage, ProcessCloudWidgetPage, ProcessDefinitionsService,
     ProcessInstancesService, QueryService, TaskFormCloudComponent, TaskHeaderCloudPage,
     TasksService

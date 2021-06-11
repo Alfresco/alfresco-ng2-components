@@ -16,8 +16,7 @@
  */
 
 import { FileModel } from '../../models/ACS/file.model';
-import {
-    ApiService, createApiService,
+import { createApiService,
     LoginPage,
     StringUtil,
     UploadActions,

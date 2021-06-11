@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService, createApiService, UsersActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, createApiService, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';

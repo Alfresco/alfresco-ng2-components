@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService, createApiService, BrowserActions,
+import { createApiService, BrowserActions,
     DataTableComponentPage,
     DateUtil,
     LocalStorageUtil,

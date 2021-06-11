@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, createApiService, ApplicationsUtil, LoginPage, StartProcessPage, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, StartProcessPage, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { ProcessFiltersPage } from './../pages/process-filters.page';

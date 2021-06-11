@@ -25,8 +25,7 @@ import {
     GroupCloudComponentPage,
     StartTasksCloudPage,
     PeopleCloudComponentPage,
-    TasksService,
-    ApiService, createApiService,
+    TasksService, createApiService,
     IdentityService,
     GroupIdentityService
 } from '@alfresco/adf-testing';

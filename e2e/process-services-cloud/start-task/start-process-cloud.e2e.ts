@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, createApiService, AppListCloudPage, BrowserActions, GroupIdentityService, IdentityService, LoginPage, StartProcessCloudPage, StringUtil } from '@alfresco/adf-testing';
+import { createApiService, AppListCloudPage, BrowserActions, GroupIdentityService, IdentityService, LoginPage, StartProcessCloudPage, StringUtil } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
 import { ProcessCloudDemoPage } from './../pages/process-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';

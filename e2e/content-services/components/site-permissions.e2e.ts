@@ -16,8 +16,7 @@
  */
 
 import { PermissionsPage } from '../../content-services/pages/permissions.page';
-import {
-    ApiService, createApiService,
+import { createApiService,
     BrowserActions, Logger,
     LoginPage,
     NotificationHistoryPage, SearchService,

@@ -20,8 +20,7 @@ import { SearchFiltersPage } from './pages/search-filters.page';
 import { SearchResultsPage } from './pages/search-results.page';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
-import {
-    ApiService, createApiService,
+import { createApiService,
     BrowserActions,
     DocumentListPage,
     LocalStorageUtil,

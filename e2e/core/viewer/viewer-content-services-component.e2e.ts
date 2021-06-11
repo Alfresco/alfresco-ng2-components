@@ -16,8 +16,7 @@
  */
 
 import { browser, by, element, protractor } from 'protractor';
-import {
-    ApiService, createApiService,
+import { createApiService,
     BrowserActions,
     LoginPage,
     UploadActions,

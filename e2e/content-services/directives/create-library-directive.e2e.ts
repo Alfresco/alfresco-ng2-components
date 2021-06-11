@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, createApiService, BrowserActions, LoginPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, BrowserActions, LoginPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { CreateLibraryDialogPage } from '../../core/pages/dialog/create-library-dialog.page';
 import { CustomSourcesPage } from '../../core/pages/custom-sources.page';

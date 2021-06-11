@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ModelsActions, ApiService, createApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
+import { ModelsActions, createApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');

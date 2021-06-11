@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, createApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TreeViewPage } from './../pages/tree-view.page';
 import { NodesApi } from '@alfresco/js-api';

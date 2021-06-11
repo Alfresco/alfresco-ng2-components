@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, createApiService, ApplicationsUtil, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 
 import { FileModel } from '../../models/ACS/file.model';

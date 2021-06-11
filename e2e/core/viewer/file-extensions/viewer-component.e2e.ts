@@ -16,8 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import {
-    ApiService, createApiService, LocalStorageUtil,
+import { createApiService, LocalStorageUtil,
     LoginPage,
     StringUtil,
     UploadActions,

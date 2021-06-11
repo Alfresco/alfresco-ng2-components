@@ -16,8 +16,7 @@
  */
 
 import { by, element } from 'protractor';
-import {
-    ApiService, createApiService,
+import { createApiService,
     BreadcrumbPage,
     BreadcrumbDropdownPage,
     ContentNodeSelectorDialogPage,

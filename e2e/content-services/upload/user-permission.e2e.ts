@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, createApiService, LoginPage, NotificationHistoryPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, NotificationHistoryPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';

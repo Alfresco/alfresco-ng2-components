@@ -21,8 +21,7 @@ import { NodeEntry } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TrashcanPage } from '../../core/pages/trashcan.page';
-import {
-    ApiService, createApiService,
+import { createApiService,
     BreadcrumbPage,
     LoginPage,
     NotificationHistoryPage,

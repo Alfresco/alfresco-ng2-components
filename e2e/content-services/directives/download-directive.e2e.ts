@@ -17,8 +17,7 @@
 
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
-import {
-    ApiService, createApiService,
+import { createApiService,
     BrowserVisibility,
     FileBrowserUtil,
     LoginPage,

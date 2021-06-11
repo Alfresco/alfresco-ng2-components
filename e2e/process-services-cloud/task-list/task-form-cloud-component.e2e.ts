@@ -16,8 +16,7 @@
  */
 
 import { browser, protractor } from 'protractor';
-import {
-    ApiService, createApiService,
+import { createApiService,
     AppListCloudPage,
     LoginPage,
     ProcessCloudWidgetPage,

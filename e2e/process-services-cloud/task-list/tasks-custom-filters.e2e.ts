@@ -23,8 +23,7 @@ import {
     QueryService,
     ProcessDefinitionsService,
     ProcessInstancesService,
-    LoginPage,
-    ApiService, createApiService,
+    LoginPage, createApiService,
     IdentityService,
     GroupIdentityService,
     AppListCloudPage, TaskListCloudComponentPage

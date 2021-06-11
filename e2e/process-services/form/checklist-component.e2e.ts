@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, createApiService, ApplicationsUtil, LoginPage, TaskUtil, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, TaskUtil, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { ChecklistDialog } from './../pages/dialog/create-checklist-dialog.page';

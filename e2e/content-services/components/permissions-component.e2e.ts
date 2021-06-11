@@ -18,8 +18,7 @@
 import { PermissionsPage } from '../../content-services/pages/permissions.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
-import {
-    ApiService, createApiService,
+import { createApiService,
     BrowserActions, Logger,
     LoginPage,
     NotificationHistoryPage,

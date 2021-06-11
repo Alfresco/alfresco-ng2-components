@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService, createApiService,
+import { createApiService,
     ApplicationsUtil,
     BrowserActions,
     LoginPage, ModelsActions,

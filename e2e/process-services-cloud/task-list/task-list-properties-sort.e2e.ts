@@ -18,7 +18,7 @@
 import { browser } from 'protractor';
 import {
     StringUtil, TasksService,
-    LoginPage, ApiService, createApiService,
+    LoginPage, createApiService,
     AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
