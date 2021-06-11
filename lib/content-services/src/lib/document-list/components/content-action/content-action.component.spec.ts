@@ -16,10 +16,10 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, EventEmitter } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { ContentService, setupTestBed } from '@alfresco/adf-core';
 import { FileNode } from '../../../mock';
-import { ContentActionHandler, ContentActionModel } from './../../models/content-action.model';
+import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
 import { NodeActionsService } from './../../services/node-actions.service';
@@ -30,7 +30,6 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContentAction', () => {
-
     let documentList: DocumentListComponent;
     let actionList: ContentActionListComponent;
     let documentActions: DocumentActionsService;
@@ -229,16 +228,14 @@ describe('ContentAction', () => {
     });
 
     it('should find document action handler via service', () => {
-        const handler = <ContentActionHandler> function () {
-        };
+        const handler = () => {};
         const action = new ContentActionComponent(actionList, documentActions, null);
         spyOn(documentActions, 'getHandler').and.returnValue(handler);
         expect(action.getSystemHandler('document', 'name')).toBe(handler);
     });
 
     it('should find folder action handler via service', () => {
-        const handler = <ContentActionHandler> function () {
-        };
+        const handler = () => {};
         const action = new ContentActionComponent(actionList, null, folderActions);
         spyOn(folderActions, 'getHandler').and.returnValue(handler);
         expect(action.getSystemHandler('folder', 'name')).toBe(handler);
@@ -255,20 +252,21 @@ describe('ContentAction', () => {
         expect(documentActions.getHandler).not.toHaveBeenCalled();
    });
 
-    it('should wire model with custom event handler', async(() => {
+    it('should wire model with custom event handler', (done) => {
         const action = new ContentActionComponent(actionList, documentActions, folderActions);
         const file = new FileNode();
 
         const handler = new EventEmitter();
         handler.subscribe((e) => {
             expect(e.value).toBe(file);
+            done();
         });
 
         action.execute = handler;
 
         action.ngOnInit();
         documentList.actions[0].execute(file);
-    }));
+    });
 
     it('should allow registering model without handler', () => {
         const action = new ContentActionComponent(actionList, documentActions, folderActions);

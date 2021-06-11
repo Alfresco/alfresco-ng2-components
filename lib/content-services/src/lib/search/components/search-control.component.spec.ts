@@ -16,7 +16,7 @@
  */
 
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     AuthenticationService,
@@ -90,7 +90,6 @@ describe('SearchControlComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     function typeWordIntoSearchInput(word: string): void {
@@ -151,18 +150,22 @@ describe('SearchControlComponent', () => {
 
     describe('component rendering', () => {
 
-        it('should display a text input field by default', async(() => {
+        it('should display a text input field by default', async () => {
             fixture.detectChanges();
+            await fixture.whenStable();
+
             expect(element.querySelectorAll('#adf-control-input').length).toBe(1);
             expect(element.querySelector('#adf-control-input')).toBeDefined();
             expect(element.querySelector('#adf-control-input')).not.toBeNull();
-        }));
+        });
 
-        it('should set browser autocomplete to off by default', async(() => {
+        it('should set browser autocomplete to off by default', async () => {
             fixture.detectChanges();
+            await fixture.whenStable();
+
             const attr = element.querySelector('#adf-control-input').getAttribute('autocomplete');
             expect(attr).toBe('off');
-        }));
+        });
    });
 
     describe('autocomplete list', () => {

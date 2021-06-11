@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { FolderDialogComponent } from './folder.dialog';
@@ -25,7 +25,6 @@ import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('FolderDialogComponent', () => {
-
     let fixture: ComponentFixture<FolderDialogComponent>;
     let component: FolderDialogComponent;
     let nodesApi: NodesApiService;
@@ -77,10 +76,10 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should have the proper title', () => {
-                const title = fixture.debugElement.query(By.css('[mat-dialog-title]'));
-                expect(title === null).toBe(false);
-                expect(title.nativeElement.innerText.trim()).toBe('CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE');
-            });
+            const title = fixture.debugElement.query(By.css('[mat-dialog-title]'));
+            expect(title === null).toBe(false);
+            expect(title.nativeElement.innerText.trim()).toBe('CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE');
+        });
 
         it('should update form input', () => {
             component.form.controls['name'].setValue('folder-name-update');
@@ -125,19 +124,20 @@ describe('FolderDialogComponent', () => {
             expect(dialogRef.close).toHaveBeenCalledWith(folder);
         });
 
-        it('should emit success output event with folder when submit is successful', async(() => {
-                const folder: any = { data: 'folder-data' };
-                let expectedNode = null;
+        it('should emit success output event with folder when submit is successful', async () => {
+            const folder: any = { data: 'folder-data' };
+            let expectedNode = null;
 
-                spyOn(nodesApi, 'updateNode').and.returnValue(of(folder));
+            spyOn(nodesApi, 'updateNode').and.returnValue(of(folder));
 
-                component.success.subscribe((node) => { expectedNode = node; });
-                component.submit();
+            component.success.subscribe((node) => { expectedNode = node; });
+            component.submit();
 
-                fixture.whenStable().then(() => {
-                    expect(expectedNode).toBe(folder);
-                });
-            }));
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(expectedNode).toBe(folder);
+        });
 
         it('should not submit if form is invalid', () => {
             spyOn(nodesApi, 'updateNode');
@@ -213,27 +213,27 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should submit updated values if form is valid (with custom nodeType)', () => {
-                spyOn(nodesApi, 'createFolder').and.returnValue(of(null));
+            spyOn(nodesApi, 'createFolder').and.returnValue(of(null));
 
-                component.form.controls['name'].setValue('folder-name-update');
-                component.form.controls['title'].setValue('folder-title-update');
-                component.form.controls['description'].setValue('folder-description-update');
-                component.nodeType = 'cm:sushi';
+            component.form.controls['name'].setValue('folder-name-update');
+            component.form.controls['title'].setValue('folder-title-update');
+            component.form.controls['description'].setValue('folder-description-update');
+            component.nodeType = 'cm:sushi';
 
-                component.submit();
+            component.submit();
 
-                expect(nodesApi.createFolder).toHaveBeenCalledWith(
-                    'parentNodeId',
-                    {
-                        name: 'folder-name-update',
-                        properties: {
-                            'cm:title': 'folder-title-update',
-                            'cm:description': 'folder-description-update'
-                        },
-                        nodeType: 'cm:sushi'
-                    }
-                );
-         });
+            expect(nodesApi.createFolder).toHaveBeenCalledWith(
+                'parentNodeId',
+                {
+                    name: 'folder-name-update',
+                    properties: {
+                        'cm:title': 'folder-title-update',
+                        'cm:description': 'folder-description-update'
+                    },
+                    nodeType: 'cm:sushi'
+                }
+            );
+        });
 
         it('should call dialog to close with form data when submit is successfully', () => {
             const folder: any = {

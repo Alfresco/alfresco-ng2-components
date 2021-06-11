@@ -19,10 +19,10 @@ import { SearchFilterComponent } from './search-filter.component';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { AppConfigService, SearchService, setupTestBed, TranslationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
-import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
-import { FacetField } from '../../models/facet-field.interface';
-import { SearchFilterList } from '../../models/search-filter-list.model';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FacetFieldBucket } from '../../facet-field-bucket.interface';
+import { FacetField } from '../../facet-field.interface';
+import { SearchFilterList } from './models/search-filter-list.model';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import {
@@ -714,74 +714,85 @@ describe('SearchFilterComponent', () => {
 
     describe('widgets', () => {
 
-        it('should have expandable categories', async(() => {
+        it('should have expandable categories', async () => {
             fixture.detectChanges();
+            await fixture.whenStable();
+
             queryBuilder.categories = expandableCategories;
 
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
-                expect(panels.length).toBe(1);
+            await fixture.whenStable();
 
-                const element: HTMLElement = panels[0].nativeElement;
+            const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
+            expect(panels.length).toBe(1);
 
-                (element.childNodes[0] as HTMLElement).click();
-                fixture.detectChanges();
-                expect(element.classList.contains('mat-expanded')).toBeTruthy();
+            const element: HTMLElement = panels[0].nativeElement;
 
-                (element.childNodes[0] as HTMLElement).click();
-                fixture.detectChanges();
-                expect(element.classList.contains('mat-expanded')).toEqual(false);
-            });
-        }));
+            (element.childNodes[0] as HTMLElement).click();
 
-        it('should not show the disabled widget', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.classList.contains('mat-expanded')).toBeTruthy();
+
+            (element.childNodes[0] as HTMLElement).click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.classList.contains('mat-expanded')).toEqual(false);
+        });
+
+        it('should not show the disabled widget', async () => {
             appConfigService.config.search = { categories: disabledCategories };
             queryBuilder.resetToDefaults();
 
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
-                expect(panels.length).toBe(0);
-            });
-        }));
+            await fixture.whenStable();
 
-        it('should show the widget in expanded mode', async(() => {
+            const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
+            expect(panels.length).toBe(0);
+        });
+
+        it('should show the widget in expanded mode', async () => {
             appConfigService.config.search = { categories: expandedCategories };
             queryBuilder.resetToDefaults();
 
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
-                expect(panels.length).toBe(1);
+            await fixture.whenStable();
 
-                const title = fixture.debugElement.query(By.css('.mat-expansion-panel-header-title'));
-                expect(title.nativeElement.innerText.trim()).toBe('Type');
+            const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
+            expect(panels.length).toBe(1);
 
-                const element: HTMLElement = panels[0].nativeElement;
-                expect(element.classList.contains('mat-expanded')).toBeTruthy();
+            const title = fixture.debugElement.query(By.css('.mat-expansion-panel-header-title'));
+            expect(title.nativeElement.innerText.trim()).toBe('Type');
 
-                (element.childNodes[0] as HTMLElement).click();
-                fixture.detectChanges();
-                expect(element.classList.contains('mat-expanded')).toEqual(false);
-            });
-        }));
+            const element: HTMLElement = panels[0].nativeElement;
+            expect(element.classList.contains('mat-expanded')).toBeTruthy();
 
-        it('should show the widgets only if configured', async(() => {
+            (element.childNodes[0] as HTMLElement).click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.classList.contains('mat-expanded')).toEqual(false);
+        });
+
+        it('should show the widgets only if configured', async () => {
             appConfigService.config.search = { categories: simpleCategories };
             queryBuilder.resetToDefaults();
 
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
-                expect(panels.length).toBe(2);
+            await fixture.whenStable();
 
-                const titleElements = fixture.debugElement.queryAll(By.css('.mat-expansion-panel-header-title'));
-                expect(titleElements.map(title => title.nativeElement.innerText.trim())).toEqual(['Name', 'Type']);
-            });
-        }));
+            const panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
+            expect(panels.length).toBe(2);
 
-        it('should be update the search query when name changed', async( async () => {
+            const titleElements = fixture.debugElement.queryAll(By.css('.mat-expansion-panel-header-title'));
+            expect(titleElements.map(title => title.nativeElement.innerText.trim())).toEqual(['Name', 'Type']);
+        });
+
+        it('should be update the search query when name changed', async () => {
             spyOn(queryBuilder, 'update').and.stub();
             appConfigService.config.search = searchFilter;
             queryBuilder.resetToDefaults();
@@ -800,7 +811,7 @@ describe('SearchFilterComponent', () => {
 
             panels = fixture.debugElement.queryAll(By.css('.mat-expansion-panel'));
             expect(panels.length).toBe(8);
-        }));
+        });
 
         it('should add a panel only for the response buckets that are present in the response', async () => {
             appConfigService.config.search = searchFilter;

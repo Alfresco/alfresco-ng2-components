@@ -18,7 +18,7 @@
 import { SearchTextComponent } from './search-text.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('SearchTextComponent', () => {
@@ -97,24 +97,22 @@ describe('SearchTextComponent', () => {
         expect(component.context.queryFragments[component.id]).toBe('');
     });
 
-    it('should show the custom/default name', async(() => {
+    it('should show the custom/default name', async () => {
         component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(component.value).toEqual('secret.pdf');
-            const input = fixture.debugElement.nativeElement.querySelector('.mat-form-field-infix input');
-            expect(input.value).toEqual('secret.pdf');
-        });
-    }));
+        await fixture.whenStable();
+        expect(component.value).toEqual('secret.pdf');
+        const input = fixture.debugElement.nativeElement.querySelector('.mat-form-field-infix input');
+        expect(input.value).toEqual('secret.pdf');
+    });
 
-    it('should be able to reset by clicking clear button',  async(() => {
+    it('should be able to reset by clicking clear button',  async () => {
         component.context.queryFragments[component.id] = "cm:name:'secret.pdf'";
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const clearElement = fixture.debugElement.nativeElement.querySelector('button');
-            clearElement.click();
-            expect(component.value).toBe('');
-            expect(component.context.queryFragments[component.id]).toBe('');
-        });
-    }));
+        await fixture.whenStable();
+        const clearElement = fixture.debugElement.nativeElement.querySelector('button');
+        clearElement.click();
+        expect(component.value).toBe('');
+        expect(component.context.queryFragments[component.id]).toBe('');
+    });
 });

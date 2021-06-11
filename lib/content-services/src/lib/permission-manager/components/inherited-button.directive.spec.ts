@@ -16,7 +16,7 @@
  */
 
 import { SimpleInheritedPermissionTestComponent } from '../../mock/inherited-permission.component.mock';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -43,20 +43,22 @@ describe('InheritPermissionDirective', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(SimpleInheritedPermissionTestComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         nodeService = TestBed.inject(NodesApiService);
-    }));
+    });
 
-    it('should be able to render the simple component', async(() => {
+    it('should be able to render the simple component', async () => {
         fixture.detectChanges();
+        await fixture.whenStable();
+
         expect(element.querySelector('#sample-button-permission')).not.toBeNull();
         expect(element.querySelector('#update-notification')).toBeNull();
-    }));
+    });
 
-    it('should be able to add inherited permission', async(() => {
+    it('should be able to add inherited permission', async () => {
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeNoInherit));
         spyOn(nodeService, 'updateNode').and.callFake((_, nodeBody) => {
             if (nodeBody.permissions?.isInheritanceEnabled) {
@@ -66,17 +68,20 @@ describe('InheritPermissionDirective', () => {
             }
         });
         fixture.detectChanges();
+        await fixture.whenStable();
+
         const buttonPermission: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#sample-button-permission');
         expect(buttonPermission).not.toBeNull();
         expect(element.querySelector('#update-notification')).toBeNull();
         buttonPermission.click();
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(element.querySelector('#update-notification')).not.toBeNull();
-        });
-    }));
 
-    it('should be able to remove inherited permission', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(element.querySelector('#update-notification')).not.toBeNull();
+    });
+
+    it('should be able to remove inherited permission', async () => {
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithInherit));
         spyOn(nodeService, 'updateNode').and.callFake((_, nodeBody) => {
             if (nodeBody.permissions?.isInheritanceEnabled) {
@@ -86,29 +91,37 @@ describe('InheritPermissionDirective', () => {
             }
         });
         component.updatedNode = true;
+
         fixture.detectChanges();
+        await fixture.whenStable();
+
         const buttonPermission: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#sample-button-permission');
         expect(buttonPermission).not.toBeNull();
         expect(element.querySelector('#update-notification')).not.toBeNull();
         buttonPermission.click();
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(element.querySelector('#update-notification')).toBeNull();
-        });
-    }));
 
-    it('should not update the node when node has no permission', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(element.querySelector('#update-notification')).toBeNull();
+    });
+
+    it('should not update the node when node has no permission', async () => {
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithInheritNoPermission));
         const spyUpdateNode = spyOn(nodeService, 'updateNode');
         component.updatedNode = true;
+
         fixture.detectChanges();
+        await fixture.whenStable();
+
         const buttonPermission: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#sample-button-permission');
         expect(buttonPermission).not.toBeNull();
         expect(element.querySelector('#update-notification')).not.toBeNull();
         buttonPermission.click();
+
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(spyUpdateNode).not.toHaveBeenCalled();
-        });
-    }));
+        await fixture.whenStable();
+
+        expect(spyUpdateNode).not.toHaveBeenCalled();
+    });
 });

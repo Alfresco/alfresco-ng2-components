@@ -56,7 +56,7 @@ export class DocumentListService implements DocumentListLoader {
      * @param targetParentId The id of the folder where the node will be copied
      * @returns NodeEntry for the copied node
      */
-    copyNode(nodeId: string, targetParentId: string) {
+    copyNode(nodeId: string, targetParentId: string): Observable<NodeEntry> {
         return from(this.apiService.getInstance().nodes.copyNode(nodeId, { targetParentId })).pipe(
             catchError((err) => this.handleError(err))
         );

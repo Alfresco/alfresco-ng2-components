@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MinimalNode, Node } from '@alfresco/js-api';
@@ -98,17 +98,18 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Folder', () => {
-        it('should show the folder node', () => {
+        it('should show the folder node', (done) => {
             component.expanded = false;
             fixture.detectChanges();
-
-            component.ngOnChanges({ node: new SimpleChange(node, folderNode, false) });
 
             component.basicProperties$.subscribe(() => {
                 fixture.detectChanges();
                 const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
                 expect(basicPropertiesComponent.properties).toBeDefined();
+                done();
             });
+
+            component.ngOnChanges({ node: new SimpleChange(node, folderNode, false) });
         });
     });
 
@@ -138,10 +139,8 @@ describe('ContentMetadataComponent', () => {
         it('should save changedProperties on save click', fakeAsync(async () => {
             component.editable = true;
             const property = <CardViewBaseItemModel> { key: 'properties.property-key', value: 'original-value' };
-            const expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
-            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
-                return of(expectedNode);
-            });
+            const expectedNode = { ...node, name: 'some-modified-value' };
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
 
             updateService.update(property, 'updated-value');
             tick(600);
@@ -156,7 +155,7 @@ describe('ContentMetadataComponent', () => {
             expect(nodesApiService.updateNode).toHaveBeenCalled();
         }));
 
-        it('should throw error on unsuccessful save', fakeAsync(async (done) => {
+        it('should throw error on unsuccessful save', fakeAsync((done) => {
             const logService: LogService = TestBed.inject(LogService);
             component.editable = true;
             const property = <CardViewBaseItemModel> { key: 'properties.property-key', value: 'original-value' };
@@ -171,25 +170,22 @@ describe('ContentMetadataComponent', () => {
                 done();
             });
 
-            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
-                return throwError(new Error('My bad'));
-            });
+            spyOn(nodesApiService, 'updateNode').and.returnValue(throwError(new Error('My bad')));
 
             fixture.detectChanges();
-            await fixture.whenStable();
-            const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
-            saveButton.nativeElement.click();
-            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
+                saveButton.nativeElement.click();
+                fixture.detectChanges();
+            });
         }));
 
         it('should open the confirm dialog when content type is changed', fakeAsync(() => {
             component.editable = true;
             const property = <CardViewBaseItemModel> { key: 'nodeType', value: 'ft:sbiruli' };
-            const expectedNode = Object.assign({}, node, { nodeType: 'ft:sbiruli' });
+            const expectedNode = { ...node, nodeType: 'ft:sbiruli' };
             spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
-            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
-                return of(expectedNode);
-            });
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
 
             updateService.update(property, 'ft:poppoli');
             tick(600);
@@ -211,9 +207,7 @@ describe('ContentMetadataComponent', () => {
             const expectedNode = Object.assign({}, node, { nodeType: 'ft:sbiruli' });
             spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
             spyOn(updateService, 'updateNodeAspect');
-            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
-                return of(expectedNode);
-            });
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
 
             updateService.update(property, 'ft:poppoli');
             tick(600);
@@ -235,9 +229,7 @@ describe('ContentMetadataComponent', () => {
             component.hasMetadataChanged = true;
             component.editable = true;
             const expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
-            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
-                return of(expectedNode);
-            });
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -251,10 +243,10 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Properties loading', () => {
-        let expectedNode;
+        let expectedNode: MinimalNode;
 
         beforeEach(() => {
-            expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
+            expectedNode = { ...node, name: 'some-modified-value' };
             fixture.detectChanges();
         });
 
@@ -267,36 +259,37 @@ describe('ContentMetadataComponent', () => {
             expect(contentMetadataService.getBasicProperties).toHaveBeenCalledWith(expectedNode);
         });
 
-        it('should pass through the loaded basic properties to the card view', async(() => {
+        it('should pass through the loaded basic properties to the card view', async () => {
             const expectedProperties = [];
             component.expanded = false;
-            fixture.detectChanges();
-            spyOn(contentMetadataService, 'getBasicProperties').and.callFake(() => {
-                return of(expectedProperties);
-            });
+
+            spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of(expectedProperties));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
-            component.basicProperties$.subscribe(() => {
-                fixture.detectChanges();
-                const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
-                expect(basicPropertiesComponent.properties.length).toBe(expectedProperties.length);
-            });
-        }));
-
-        it('should pass through the displayEmpty to the card view of basic properties', async(() => {
-            component.displayEmpty = false;
             fixture.detectChanges();
+            await fixture.whenStable();
+
+            const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
+            expect(basicPropertiesComponent.properties.length).toBe(expectedProperties.length);
+        });
+
+        it('should pass through the displayEmpty to the card view of basic properties', async () => {
+            component.displayEmpty = false;
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
             spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of([]));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
-            component.basicProperties$.subscribe(() => {
-                fixture.detectChanges();
-                const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
-                expect(basicPropertiesComponent.displayEmpty).toBe(false);
-            });
-        }));
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const basicPropertiesComponent = fixture.debugElement.query(By.directive(CardViewComponent)).componentInstance;
+            expect(basicPropertiesComponent.displayEmpty).toBe(false);
+        });
 
         it('should load the group properties on node change', () => {
             spyOn(contentMetadataService, 'getGroupedProperties');
@@ -306,55 +299,55 @@ describe('ContentMetadataComponent', () => {
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
         });
 
-        it('should pass through the loaded group properties to the card view', async(() => {
+        it('should pass through the loaded group properties to the card view', async () => {
             const expectedProperties = [];
             component.expanded = true;
-            fixture.detectChanges();
+
             spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: expectedProperties } as any]));
             spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
-            component.basicProperties$.subscribe(() => {
-                fixture.detectChanges();
-                const firstGroupedPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container adf-card-view')).componentInstance;
-                expect(firstGroupedPropertiesComponent.properties).toBe(expectedProperties);
-            });
-        }));
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-        it('should pass through the displayEmpty to the card view of grouped properties', async(() => {
+            const firstGroupedPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container adf-card-view')).componentInstance;
+            expect(firstGroupedPropertiesComponent.properties).toBe(expectedProperties);
+        });
+
+        it('should pass through the displayEmpty to the card view of grouped properties', async () => {
             component.expanded = true;
             component.displayEmpty = false;
-            fixture.detectChanges();
+
             spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [] } as any]));
             spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
-            component.basicProperties$.subscribe(() => {
-                fixture.detectChanges();
-                const basicPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container adf-card-view')).componentInstance;
-                expect(basicPropertiesComponent.displayEmpty).toBe(false);
-            });
-        }));
-
-        it('should hide card views group when the grouped properties are empty', async(() => {
-            component.expanded = true;
             fixture.detectChanges();
+            await fixture.whenStable();
+
+            const basicPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container adf-card-view')).componentInstance;
+            expect(basicPropertiesComponent.displayEmpty).toBe(false);
+        });
+
+        it('should hide card views group when the grouped properties are empty', async () => {
+            component.expanded = true;
+
             spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [] } as any]));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
-            component.basicProperties$.subscribe(() => {
-                fixture.detectChanges();
-                const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container mat-expansion-panel'));
-                expect(basicPropertiesGroup).toBeNull();
-            });
-        }));
-
-        it('should display card views group when there is at least one property that is not empty', async(() => {
-            component.expanded = true;
             fixture.detectChanges();
+            await fixture.whenStable();
+
+            const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container mat-expansion-panel'));
+            expect(basicPropertiesGroup).toBeNull();
+        });
+
+        it('should display card views group when there is at least one property that is not empty', async () => {
+            component.expanded = true;
+
             const cardViewGroup = {
                 title: 'Group 1', properties: [{
                     data: null,
@@ -369,12 +362,12 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
-            component.basicProperties$.subscribe(() => {
-                fixture.detectChanges();
-                const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container mat-expansion-panel'));
-                expect(basicPropertiesGroup).toBeDefined();
-            });
-        }));
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container mat-expansion-panel'));
+            expect(basicPropertiesGroup).toBeDefined();
+        });
     });
 
     describe('Properties displaying', () => {
@@ -400,20 +393,22 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Expand the panel', () => {
-        let expectedNode;
+        let expectedNode: MinimalNode;
 
         beforeEach(() => {
-            expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
+            expectedNode = { ...node, name: 'some-modified-value' };
             spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of(mockGroupProperties));
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
         });
 
-        it('should open and update drawer with expand section dynamically', async(() => {
+        it('should open and update drawer with expand section dynamically', async () => {
             component.displayAspect = 'EXIF';
             component.expanded = true;
             component.displayEmpty = true;
 
             fixture.detectChanges();
+            await fixture.whenStable()
+
             let defaultProp = queryDom(fixture);
             let exifProp = queryDom(fixture, 'EXIF');
             let customProp = queryDom(fixture, 'CUSTOM');
@@ -422,7 +417,10 @@ describe('ContentMetadataComponent', () => {
             expect(customProp.componentInstance.expanded).toBeFalsy();
 
             component.displayAspect = 'CUSTOM';
+
             fixture.detectChanges();
+            await fixture.whenStable()
+
             defaultProp = queryDom(fixture);
             exifProp = queryDom(fixture, 'EXIF');
             customProp = queryDom(fixture, 'CUSTOM');
@@ -431,29 +429,33 @@ describe('ContentMetadataComponent', () => {
             expect(customProp.componentInstance.expanded).toBeTruthy();
 
             component.displayAspect = 'Properties';
+
             fixture.detectChanges();
+            await fixture.whenStable()
+
             defaultProp = queryDom(fixture);
             exifProp = queryDom(fixture, 'EXIF');
             customProp = queryDom(fixture, 'CUSTOM');
             expect(defaultProp.componentInstance.expanded).toBeTruthy();
             expect(exifProp.componentInstance.expanded).toBeFalsy();
             expect(customProp.componentInstance.expanded).toBeFalsy();
-        }));
+        });
 
-        it('should not expand anything if input is wrong', async(() => {
+        it('should not expand anything if input is wrong', async () => {
             component.displayAspect = 'XXXX';
             component.expanded = true;
             component.displayEmpty = true;
 
             fixture.detectChanges();
+            await fixture.whenStable();
+
             const defaultProp = queryDom(fixture);
             const exifProp = queryDom(fixture, 'EXIF');
             const customProp = queryDom(fixture, 'CUSTOM');
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
             expect(exifProp.componentInstance.expanded).toBeFalsy();
             expect(customProp.componentInstance.expanded).toBeFalsy();
-
-        }));
+        });
     });
 
     describe('events', () => {
