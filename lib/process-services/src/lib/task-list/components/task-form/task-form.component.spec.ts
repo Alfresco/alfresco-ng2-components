@@ -663,7 +663,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('should emit taskClaimed when task is claimed', (done) => {
-            spyOn(taskListService, 'claimTask').and.returnValue(of({}));
+            spyOn(taskListService, 'claimTask').and.returnValue(of(null));
             getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsMock));
 
             component.taskId = 'mock-task-id';
@@ -700,7 +700,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('should emit taskUnClaimed when task is unclaimed', (done) => {
-            spyOn(taskListService, 'unclaimTask').and.returnValue(of({}));
+            spyOn(taskListService, 'unclaimTask').and.returnValue(of(null));
             getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsMock.assignee));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
 

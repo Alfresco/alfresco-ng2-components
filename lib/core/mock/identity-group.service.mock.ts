@@ -50,7 +50,7 @@ export const roleMappingMock = [
     { id: 'role-id-1', name: 'role-name-1' }, { id: 'role-id-2', name: 'role-name-2' }
 ];
 
-export const roleMappingApi = {
+export const roleMappingApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve(roleMappingMock);
@@ -58,7 +58,7 @@ export const roleMappingApi = {
     }
 };
 
-export const noRoleMappingApi = {
+export const noRoleMappingApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve([]);
@@ -66,7 +66,7 @@ export const noRoleMappingApi = {
     }
 };
 
-export const groupsMockApi = {
+export const groupsMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve(mockIdentityGroups);
@@ -74,7 +74,7 @@ export const groupsMockApi = {
     }
 };
 
-export const createGroupMappingApi = {
+export const createGroupMappingApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();
@@ -82,7 +82,7 @@ export const createGroupMappingApi = {
     }
 };
 
-export const updateGroupMappingApi = {
+export const updateGroupMappingApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();
@@ -90,7 +90,7 @@ export const updateGroupMappingApi = {
     }
 };
 
-export const deleteGroupMappingApi = {
+export const deleteGroupMappingApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();
@@ -98,7 +98,7 @@ export const deleteGroupMappingApi = {
     }
 };
 
-export const applicationDetailsMockApi = {
+export const applicationDetailsMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve([mockApplicationDetails]);
@@ -112,4 +112,7 @@ export const mockIdentityRoles = [
     new IdentityRoleModel({id: 'mock-role-id', name: 'MOCK-ROLE-1'})
 ];
 
-export const clientRoles = [ 'MOCK-ADMIN-ROLE', 'MOCK-USER-ROLE'];
+export const clientRoles: IdentityRoleModel[] = [
+    new IdentityRoleModel({ name: 'MOCK-ADMIN-ROLE' }),
+    new IdentityRoleModel({ name: 'MOCK-USER-ROLE' })
+];

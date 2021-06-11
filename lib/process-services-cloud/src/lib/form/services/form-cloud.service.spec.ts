@@ -56,7 +56,7 @@ describe('Form Cloud service', () => {
                 return false;
             },
             reply: jasmine.createSpy('reply')
-        });
+        } as any);
     });
 
     describe('Form tests', () => {
@@ -195,8 +195,11 @@ describe('Form Cloud service', () => {
         it('should fetch task form flattened', (done) => {
             spyOn(service, 'getTask').and.returnValue(of(responseBody.entry));
             spyOn(service, 'getForm').and.returnValue(of({
-                formRepresentation: {name: 'task-form',  formDefinition: {} }
-            }));
+                formRepresentation: {
+                    name: 'task-form',
+                    formDefinition: {}
+                }
+            } as any));
 
             service.getTaskForm(appName, taskId).subscribe((result) => {
                 expect(result).toBeDefined();

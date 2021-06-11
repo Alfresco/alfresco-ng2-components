@@ -62,6 +62,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: false
             });
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
         });
 
         it('should render the label and value', async () => {
@@ -256,6 +257,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: false
             });
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
         });
 
         it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', (done) => {
@@ -468,6 +470,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: true
             });
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
         });
 
         it('should call the isValid method with the edited value', fakeAsync((done) => {
@@ -563,7 +566,7 @@ describe('CardViewTextItemComponent', () => {
             });
         }));
 
-        it('should reset erros when exiting editable mode', fakeAsync((done) => {
+        it('should reset erros when exiting editable mode', fakeAsync(() => {
             let errorMessage: string;
             const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
             component.property.isValid = () => false;
@@ -584,7 +587,6 @@ describe('CardViewTextItemComponent', () => {
                     errorMessage = fixture.debugElement.nativeElement.querySelector('.adf-textitem-editable-error');
                     expect(errorMessage).toBe(null);
                     expect(component.errors).toEqual([]);
-                    done();
                 });
             });
         }));
@@ -620,7 +622,7 @@ describe('CardViewTextItemComponent', () => {
             inputField.nativeElement.click();
         }));
 
-        it('should trigger an update event on the CardViewUpdateService [integration]', fakeAsync((done) => {
+        it('should trigger an update event on the CardViewUpdateService [integration]', (done) => {
             component.property.isValid = () => true;
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             const expectedText = 'changed text';
@@ -639,7 +641,7 @@ describe('CardViewTextItemComponent', () => {
 
                 updateTextField(component.property.key, expectedText);
             });
-        }));
+        });
 
         it('should update the value using the updateItem$ subject', (async () => {
             component.property.isValid = () => true;
@@ -664,7 +666,7 @@ describe('CardViewTextItemComponent', () => {
 
         }));
 
-        it('should update multiline input the value on input updated', fakeAsync((done) => {
+        it('should update multiline input the value on input updated', (done) => {
             component.property.isValid = () => true;
             component.property.multiline = true;
             const expectedText = 'changed text';
@@ -693,7 +695,7 @@ describe('CardViewTextItemComponent', () => {
                     expect(component.property.value).toBe(expectedText);
                 });
             });
-        }));
+        });
     });
 
     describe('number', () => {
@@ -711,6 +713,7 @@ describe('CardViewTextItemComponent', () => {
             component.editable = true;
             component.property.validators.push(new CardViewItemIntValidator());
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
         });
 
         it('should show validation error when string passed', fakeAsync((done) => {
@@ -793,7 +796,7 @@ describe('CardViewTextItemComponent', () => {
             });
         }));
 
-        it('should update input the value on input updated', fakeAsync((done) => {
+        it('should update input the value on input updated', (done) => {
             const expectedNumber = 2020;
             spyOn(component, 'update').and.callThrough();
             fixture.detectChanges();
@@ -817,7 +820,7 @@ describe('CardViewTextItemComponent', () => {
                     expect(component.property.value).toBe(expectedNumber.toString());
                 });
             });
-        }));
+        });
     });
 
     describe('float', () => {
@@ -830,12 +833,13 @@ describe('CardViewTextItemComponent', () => {
                 label: 'Text label',
                 value: floatValue,
                 key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
+                default: 1,
                 editable: true
             });
             component.editable = true;
             component.property.validators.push(new CardViewItemFloatValidator());
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            fixture.detectChanges();
         });
 
         it('should show validation error when string passed', fakeAsync((done) => {
@@ -854,7 +858,7 @@ describe('CardViewTextItemComponent', () => {
             });
         }));
 
-        it('should show validation error for empty string', fakeAsync((done) => {
+        it('should show validation error for empty string (float)', fakeAsync((done) => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
 
@@ -870,7 +874,7 @@ describe('CardViewTextItemComponent', () => {
             });
         }));
 
-        it('should update input the value on input updated', fakeAsync((done) => {
+        it('should update input the value on input updated', (done) => {
             const expectedNumber = 88.44;
             spyOn(component, 'update').and.callThrough();
             fixture.detectChanges();
@@ -894,7 +898,7 @@ describe('CardViewTextItemComponent', () => {
                     expect(component.property.value).toBe(expectedNumber.toString());
                 });
             });
-        }));
+        });
     });
 
     function updateTextField(key, value) {

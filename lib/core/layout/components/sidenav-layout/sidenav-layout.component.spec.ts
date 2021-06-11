@@ -228,13 +228,13 @@ describe('SidenavLayoutComponent', () => {
 
 describe('Template transclusion', () => {
 
-    let fixture: ComponentFixture<any>,
-        mediaMatcher: MediaMatcher;
-    const mediaQueryList = {
+    let fixture: ComponentFixture<any>;
+    let mediaMatcher: MediaMatcher;
+    const mediaQueryList: any = {
             matches: false,
             addListener: () => {},
             removeListener: () => {}
-        };
+    };
 
     setupTestBed({
         imports: [

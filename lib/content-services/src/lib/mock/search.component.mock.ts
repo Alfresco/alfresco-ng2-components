@@ -17,7 +17,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { SearchComponent } from '../search/components/search.component';
-import { QueryBody } from '@alfresco/js-api';
+import { QueryBody, ResultSetPaging } from '@alfresco/js-api';
 
 const entryItem = {
     entry: {
@@ -53,21 +53,21 @@ const entryDifferentItem = {
     }
 };
 
-export let result = {
+export let result = new ResultSetPaging({
     list: {
         entries: [
             entryItem
         ]
     }
-};
+});
 
-export let differentResult = {
+export let differentResult = new ResultSetPaging({
     list: {
         entries: [
             entryDifferentItem
         ]
     }
-};
+});
 
 export let results = {
     list: {

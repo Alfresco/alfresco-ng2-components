@@ -90,7 +90,7 @@ describe('ContentNodeDialogService', () => {
             componentInstance: {
                 error: new Subject<any>()
             }
-        });
+        } as any);
     });
 
     it('should not open the lock node dialog if have no permission', () => {

@@ -19,7 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
-import { Node } from '@alfresco/js-api';
+import { Node, VersionPaging } from '@alfresco/js-api';
 import { VersionManagerComponent } from './version-manager.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -59,7 +59,7 @@ describe('VersionManagerComponent', () => {
 
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         spyOnListVersionHistory = spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
-            .callFake(() => Promise.resolve({ list: { entries: [ versionEntry ] }}));
+            .callFake(() => Promise.resolve(new VersionPaging({ list: { entries: [ versionEntry ] }})));
     });
 
     it('should load the versions for a given node', () => {

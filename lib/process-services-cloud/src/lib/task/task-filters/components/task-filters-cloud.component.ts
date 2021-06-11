@@ -79,8 +79,16 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
             (res: TaskFilterCloudModel[]) => {
                 this.resetFilter();
-                this.filters = Object.assign([], res);
-                this.selectFilterAndEmit(this.filterParam);
+                this.filters = res || [];
+
+                if (this.filterParam) {
+                    this.selectFilterAndEmit(this.filterParam);
+                }
+
+                if (!this.currentFilter && this.filters.length > 0) {
+                    this.currentFilter = this.filters[0];
+                }
+
                 this.updateFilterCounters();
                 this.success.emit(res);
             },
@@ -145,12 +153,19 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     public selectFilterAndEmit(newParamFilter: FilterParamsModel) {
         if (newParamFilter) {
             this.selectFilter(newParamFilter);
+
             if (this.currentFilter) {
                 this.resetFilterCounter(this.currentFilter.key);
                 this.filterSelected.emit(this.currentFilter);
             }
-        } else {
-            this.currentFilter = undefined;
+        }
+
+        this.ensureFilterSelected();
+    }
+
+    private ensureFilterSelected() {
+        if (!this.currentFilter && this.filters.length > 0) {
+            this.currentFilter = this.filters[0];
         }
     }
 

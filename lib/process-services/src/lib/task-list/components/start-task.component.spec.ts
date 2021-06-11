@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed, LogService } from '@alfresco/adf-core';
-import { of, throwError, Observable } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { TaskListService } from '../services/tasklist.service';
 import { StartTaskComponent } from './start-task.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
@@ -64,10 +64,7 @@ describe('StartTaskComponent', () => {
         service = TestBed.inject(TaskListService);
         logService = TestBed.inject(LogService);
 
-        getFormListSpy = spyOn(service, 'getFormList').and.returnValue(new Observable((observer) => {
-            observer.next(fakeForms$);
-            observer.complete();
-        }));
+        getFormListSpy = spyOn(service, 'getFormList').and.returnValue(of(fakeForms$));
 
         fixture.detectChanges();
     }));
@@ -93,7 +90,7 @@ describe('StartTaskComponent', () => {
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                }
+                } as any
             ));
         });
 
@@ -150,7 +147,7 @@ describe('StartTaskComponent', () => {
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                }
+                } as any
             ));
         });
 
@@ -213,7 +210,7 @@ describe('StartTaskComponent', () => {
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                }
+                } as any
             ));
             spyOn(service, 'attachFormToATask').and.returnValue(of(
                 {
@@ -229,7 +226,7 @@ describe('StartTaskComponent', () => {
                     name: 'fakeName',
                     formKey: 1204,
                     assignee: testUser
-                }
+                } as any
             ));
         });
 
@@ -288,14 +285,8 @@ describe('StartTaskComponent', () => {
     });
 
     it('should not attach a form when a form id is not selected', () => {
-        const attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue([]);
-        spyOn(service, 'createNewTask').and.callFake(
-            function() {
-                return new Observable((observer) => {
-                    observer.next({ id: 'task-id'});
-                    observer.complete();
-                });
-            });
+        const attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue(of([]));
+        spyOn(service, 'createNewTask').and.returnValue(of(new TaskDetailsModel({ id: 'task-id'})));
         component.taskForm.controls['name'].setValue('fakeName');
         fixture.detectChanges();
         const createTaskButton = <HTMLElement> element.querySelector('#button-start');

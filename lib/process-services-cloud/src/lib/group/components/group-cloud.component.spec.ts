@@ -40,7 +40,7 @@ describe('GroupCloudComponent', () => {
     let alfrescoApiService: AlfrescoApiService;
     let findGroupsByNameSpy: jasmine.Spy;
 
-    const mock = {
+    const mock: any = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(mockIdentityGroups)
         },
@@ -648,7 +648,7 @@ describe('GroupCloudComponent', () => {
         describe('Preselected groups and validation enabled', () => {
 
             it('should check validation only for the first group and emit warning when group is invalid - single mode', (done) => {
-                spyOn(identityGroupService, 'findGroupsByName').and.returnValue(Promise.resolve([]));
+                spyOn(identityGroupService, 'findGroupsByName').and.returnValue(of([]));
 
                 const expectedWarning = {
                     message: 'INVALID_PRESELECTED_GROUPS',
@@ -671,7 +671,7 @@ describe('GroupCloudComponent', () => {
             });
 
             it('should check validation for all the groups and emit warning - multiple mode', (done) => {
-                spyOn(identityGroupService, 'findGroupsByName').and.returnValue(Promise.resolve(undefined));
+                spyOn(identityGroupService, 'findGroupsByName').and.returnValue(of(undefined));
 
                 const expectedWarning = {
                     message: 'INVALID_PRESELECTED_GROUPS',

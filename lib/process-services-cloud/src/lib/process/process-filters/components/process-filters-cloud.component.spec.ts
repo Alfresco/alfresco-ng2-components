@@ -16,9 +16,9 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
-import { from, Observable } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
 import { By } from '@angular/platform-browser';
@@ -30,27 +30,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { mockProcessFilters } from '../mock/process-filters-cloud.mock';
 
 describe('ProcessFiltersCloudComponent', () => {
-
     let processFilterService: ProcessFilterCloudService;
-
-    const fakeGlobalFilterObservable =
-        new Observable(function(observer) {
-            observer.next(mockProcessFilters);
-            observer.complete();
-        });
-
-    const fakeGlobalFilterPromise = new Promise(function (resolve) {
-        resolve(mockProcessFilters);
-    });
-
-    const mockErrorFilterList = {
-        error: 'wrong request'
-    };
-
-    const mockErrorFilterPromise = Promise.reject(mockErrorFilterList);
-
     let component: ProcessFiltersCloudComponent;
     let fixture: ComponentFixture<ProcessFiltersCloudComponent>;
+    let getProcessFiltersSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [
@@ -68,198 +51,183 @@ describe('ProcessFiltersCloudComponent', () => {
         component = fixture.componentInstance;
 
         processFilterService = TestBed.inject(ProcessFilterCloudService);
+        getProcessFiltersSpy = spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(mockProcessFilters));
     });
 
-    it('should attach specific icon for each filter if hasIcon is true', async(() => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should attach specific icon for each filter if hasIcon is true', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({'appName': change});
+
         fixture.detectChanges();
+        await fixture.whenStable();
+
         component.showIcons = true;
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(component.filters.length).toBe(3);
-            const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
-            expect(filters.length).toBe(3);
-            expect(filters[0].innerText).toContain('adjust');
-            expect(filters[1].innerText).toContain('inbox');
-            expect(filters[2].innerText).toContain('done');
-        });
-    }));
 
-    it('should not attach icons for each filter if hasIcon is false', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        fixture.detectChanges();
+        await fixture.whenStable();
 
+        expect(component.filters.length).toBe(3);
+        const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
+        expect(filters.length).toBe(3);
+        expect(filters[0].innerText).toContain('adjust');
+        expect(filters[1].innerText).toContain('inbox');
+        expect(filters[2].innerText).toContain('done');
+    });
+
+    it('should not attach icons for each filter if hasIcon is false', async () => {
         component.showIcons = false;
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({'appName': change});
-        fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
-            expect(filters.length).toBe(0);
-            done();
-        });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
+        expect(filters.length).toBe(0);
     });
 
-    it('should display the filters', async(() => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
+    it('should display the filters', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
         component.ngOnChanges({'appName': change});
+
         fixture.detectChanges();
+        await fixture.whenStable();
+
         component.showIcons = true;
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const filters = fixture.debugElement.queryAll(By.css('.adf-filters__entry'));
-            expect(component.filters.length).toBe(3);
-            expect(filters.length).toBe(3);
-            expect(filters[0].nativeElement.innerText).toContain('FakeAllProcesses');
-            expect(filters[1].nativeElement.innerText).toContain('FakeRunningProcesses');
-            expect(filters[2].nativeElement.innerText).toContain('FakeCompletedProcesses');
-        });
-    }));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const filters = fixture.debugElement.queryAll(By.css('.adf-filters__entry'));
+        expect(component.filters.length).toBe(3);
+        expect(filters.length).toBe(3);
+        expect(filters[0].nativeElement.innerText).toContain('FakeAllProcesses');
+        expect(filters[1].nativeElement.innerText).toContain('FakeRunningProcesses');
+        expect(filters[2].nativeElement.innerText).toContain('FakeCompletedProcesses');
+    });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(mockErrorFilterPromise));
+        const mockErrorFilterList = {
+            error: 'wrong request'
+        };
+        getProcessFiltersSpy.and.returnValue(throwError(mockErrorFilterList));
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
-        component.ngOnChanges({'appName': change});
 
         component.error.subscribe((err) => {
             expect(err).toBeDefined();
             done();
         });
-    });
 
-    it('should emit success with the filters when filters are loaded', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
-        const appName = 'my-app-1';
-        const change = new SimpleChange(null, appName, true);
-        component.ngOnChanges({ 'appName': change });
-
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.filters).toBeDefined();
-            expect(component.filters[0].name).toEqual('FakeAllProcesses');
-            expect(component.filters[1].name).toEqual('FakeRunningProcesses');
-            expect(component.filters[2].name).toEqual('FakeCompletedProcesses');
-            done();
-        });
-    });
-
-    it('should select the first filter as default', async(() => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
-
-        const appName = 'my-app-1';
-        const change = new SimpleChange(null, appName, true);
-
+        component.ngOnChanges({'appName': change});
         fixture.detectChanges();
+    });
+
+    it('should emit success with the filters when filters are loaded', async () => {
+        const appName = 'my-app-1';
+        const change = new SimpleChange(null, appName, true);
+
         component.ngOnChanges({ 'appName': change });
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeAllProcesses');
-        });
+        expect(component.filters).toBeDefined();
+        expect(component.filters[0].name).toEqual('FakeAllProcesses');
+        expect(component.filters[1].name).toEqual('FakeRunningProcesses');
+        expect(component.filters[2].name).toEqual('FakeCompletedProcesses');
+    });
 
-    }));
+    it('should select the first process cloud filter as default', async () => {
+        const appName = 'my-app-1';
+        const change = new SimpleChange(null, appName, true);
 
-    it('should select the filter based on the input by name param', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
+        component.ngOnChanges({ 'appName': change });
+        fixture.detectChanges();
+        await fixture.whenStable();
 
+        expect(component.currentFilter).toBeDefined();
+        expect(component.currentFilter.name).toEqual('FakeAllProcesses');
+    });
+
+    it('should select the filter based on the input by name param', async () => {
         component.filterParam = { name: 'FakeRunningProcesses' };
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        component.filterSelected.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeRunningProcesses');
-            done();
-        });
+        component.ngOnChanges({ 'appName': change });
 
         fixture.detectChanges();
-        component.ngOnChanges({ 'appName': change });
+        await fixture.whenStable();
+
+        expect(component.currentFilter).toBeDefined();
+        expect(component.currentFilter.name).toEqual('FakeRunningProcesses');
    });
 
-    it('should select the filter based on the input by key param', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
-
+    it('should select the filter based on the input by key param', async () => {
         component.filterParam = { key: 'completed-processes' };
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        fixture.detectChanges();
-
-        component.filterSelected.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
-            done();
-        });
-
         component.ngOnChanges({ 'appName': change });
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.currentFilter).toBeDefined();
+        expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
    });
 
-    it('should select the filter based on the input by index param', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
-
+    it('should select the filter based on the input by index param', async () => {
         component.filterParam = { index: 2 };
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
-        fixture.detectChanges();
-
-        component.filterSelected.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
-            done();
-        });
 
         component.ngOnChanges({ 'appName': change });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.currentFilter).toBeDefined();
+        expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
    });
 
-    it('should select the filter based on the input by id param', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
-
+    it('should select the filter based on the input by id param', async () => {
         component.filterParam = { id: '12' };
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
-        fixture.detectChanges();
-
-        component.filterSelected.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
-            done();
-        });
 
         component.ngOnChanges({ 'appName': change });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.currentFilter).toBeDefined();
+        expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
     });
 
-    it('should filterClicked emit when a filter is clicked from the UI', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
-
+    it('should filterClicked emit when a filter is clicked from the UI', async () => {
         component.filterParam = { id: '10' };
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
         component.ngOnChanges({ 'appName': change });
-        fixture.detectChanges();
 
-        component.filterClicked.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeAllProcesses');
-            done();
-        });
+        fixture.detectChanges();
+        await fixture.whenStable();
 
         const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${mockProcessFilters[0].key}_filter"]`);
         filterButton.click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.currentFilter).toBeDefined();
+        expect(component.currentFilter.name).toEqual('FakeAllProcesses');
     });
 
     it('should not emit a filter click event on binding changes', () => {
@@ -270,7 +238,7 @@ describe('ProcessFiltersCloudComponent', () => {
         fixture.detectChanges();
 
         expect(component.selectFilterAndEmit).toHaveBeenCalled();
-        expect(component.currentFilter).not.toBeDefined();
+        expect(component.currentFilter).toBe(mockProcessFilters[0]);
     });
 
     it('should reload filters by appName on binding changes', () => {

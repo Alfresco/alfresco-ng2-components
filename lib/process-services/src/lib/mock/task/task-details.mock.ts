@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { UserRepresentation } from '@alfresco/js-api';
 import { TaskDetailsModel } from '../../task-list/models/task-details.model';
 
 export let standaloneTaskWithForm = new TaskDetailsModel({
@@ -938,7 +939,7 @@ export const involvedGroupTaskForm = {
     managerOfCandidateGroup: false
 };
 
-export const fakeUser = {
+export const fakeUser = new UserRepresentation({
     id: 1001,
     email: 'fake-email@gmail.com',
     firstName: 'fake',
@@ -972,4 +973,4 @@ export const fakeUser = {
     apps: [],
     tenantPictureId: null,
     tenantName: 'abc'
-};
+});

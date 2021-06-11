@@ -18,8 +18,8 @@
 import { assignedTaskDetailsCloudMock } from '../../task-header/mocks/task-details-cloud.mock';
 import { TaskFilterCloudModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
 
-export const fakeGlobalFilter = [
-    new TaskFilterCloudModel({
+export const fakeGlobalFilter: any[] = [
+    {
         name: 'FakeInvolvedTasks',
         key: 'fake-involved-tasks',
         icon: 'adjust',
@@ -27,8 +27,8 @@ export const fakeGlobalFilter = [
         status: 'ASSIGNED',
         assignee: 'AssignedTaskUser',
         showCounter: true
-    }),
-    new TaskFilterCloudModel({
+    },
+    {
         name: 'FakeMyTasks1',
         key: 'fake-my-tast1',
         icon: 'done',
@@ -36,18 +36,18 @@ export const fakeGlobalFilter = [
         status: 'open',
         assignee: 'fake-assignee',
         showCounter: false
-    }),
-    new TaskFilterCloudModel({
+    },
+    {
         name: 'FakeMyTasks2',
         key: 'fake-my-tast2',
         icon: 'inbox',
         id: '12',
         status: 'open',
         assignee: 'fake-assignee'
-    })
+    }
 ];
 
-export const fakeGlobalServiceFilters = [
+export const fakeGlobalServiceFilters: ServiceTaskFilterCloudModel[] = [
     {
         name: 'FakeServiceTasks',
         key: 'fake-involved-tasks',

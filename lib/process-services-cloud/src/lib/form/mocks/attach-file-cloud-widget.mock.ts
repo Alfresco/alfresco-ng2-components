@@ -227,11 +227,11 @@ export const expectedValues = {
     pfx_property_two: true
 };
 
-export const mockNodeId = new Promise(function(resolve) {
+export const mockNodeId = new Promise<string>(function(resolve) {
     resolve('mock-node-id');
 });
 
-export const mockNodeIdBasedOnStringVariableValue = new Promise(function(resolve) {
+export const mockNodeIdBasedOnStringVariableValue = new Promise<string>(function(resolve) {
     resolve('mock-string-value-node-id');
 });
 

@@ -40,7 +40,7 @@ describe('PeopleCloudComponent', () => {
     let alfrescoApiService: AlfrescoApiService;
     let findUsersByNameSpy: jasmine.Spy;
 
-    const mock = {
+    const mock: any = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve(mockUsers)
         },
@@ -740,7 +740,7 @@ describe('PeopleCloudComponent', () => {
     describe('Preselected users and validation enabled', () => {
 
         it('should check validation only for the first user and emit warning when user is invalid - single mode', (done) => {
-            spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve([]));
+            spyOn(identityService, 'findUserById').and.returnValue(of([]));
             const expectedWarning = {
                 message: 'INVALID_PRESELECTED_USERS',
                 users: [{
@@ -762,7 +762,7 @@ describe('PeopleCloudComponent', () => {
         });
 
         it('should skip warnings if validation disabled', () => {
-            spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve([]));
+            spyOn(identityService, 'findUserById').and.returnValue(of([]));
             spyOn(component, 'compare').and.returnValue(false);
 
             let warnings = 0;
@@ -779,7 +779,7 @@ describe('PeopleCloudComponent', () => {
         });
 
         it('should check validation for all the users and emit warning - multiple mode', (done) => {
-            spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve(undefined));
+            spyOn(identityService, 'findUserById').and.returnValue(of(undefined));
 
             const expectedWarning = {
                 message: 'INVALID_PRESELECTED_USERS',

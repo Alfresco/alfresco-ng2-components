@@ -70,7 +70,7 @@ export const mockGroups = [
     <IdentityGroupModel> { id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] }
 ];
 
-export const queryUsersMockApi = {
+export const queryUsersMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve(mockIdentityUsers);
@@ -78,7 +78,7 @@ export const queryUsersMockApi = {
     }
 };
 
-export const createUserMockApi = {
+export const createUserMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();
@@ -86,7 +86,7 @@ export const createUserMockApi = {
     }
 };
 
-export const updateUserMockApi = {
+export const updateUserMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();
@@ -94,7 +94,7 @@ export const updateUserMockApi = {
     }
 };
 
-export const deleteUserMockApi = {
+export const deleteUserMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();
@@ -102,7 +102,7 @@ export const deleteUserMockApi = {
     }
 };
 
-export const getInvolvedGroupsMockApi = {
+export const getInvolvedGroupsMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve(mockGroups);
@@ -110,7 +110,7 @@ export const getInvolvedGroupsMockApi = {
     }
 };
 
-export const joinGroupMockApi = {
+export const joinGroupMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();
@@ -118,7 +118,7 @@ export const joinGroupMockApi = {
     }
 };
 
-export const leaveGroupMockApi = {
+export const leaveGroupMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();
@@ -126,7 +126,7 @@ export const leaveGroupMockApi = {
     }
 };
 
-export const getAvailableRolesMockApi = {
+export const getAvailableRolesMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve(mockAvailableRoles);
@@ -134,7 +134,7 @@ export const getAvailableRolesMockApi = {
     }
 };
 
-export const getAssignedRolesMockApi = {
+export const getAssignedRolesMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve(mockAssignedRoles);
@@ -142,7 +142,7 @@ export const getAssignedRolesMockApi = {
     }
 };
 
-export const getEffectiveRolesMockApi = {
+export const getEffectiveRolesMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve(mockEffectiveRoles);
@@ -150,7 +150,7 @@ export const getEffectiveRolesMockApi = {
     }
 };
 
-export const assignRolesMockApi = {
+export const assignRolesMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();
@@ -158,7 +158,7 @@ export const assignRolesMockApi = {
     }
 };
 
-export const removeRolesMockApi = {
+export const removeRolesMockApi: any = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();

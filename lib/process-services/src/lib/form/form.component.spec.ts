@@ -21,7 +21,8 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
     FormService, WidgetVisibilityService, NodeService, ContainerModel, fakeForm,
-    setupTestBed } from '@alfresco/adf-core';
+    setupTestBed,
+    NodeMetadata } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { ProcessFormRenderingService } from './process-form-rendering.service';
 import { ProcessTestingModule } from '../testing/process.testing.module';
@@ -235,7 +236,7 @@ describe('FormComponent', () => {
             });
         });
 
-        spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(of({}));
+        spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(of(null));
         spyOn(formService, 'getTask').and.callFake((currentTaskId) => {
             return new Observable((observer) => {
                 observer.next({ taskId: currentTaskId, processDefinitionId: '10201' });
@@ -258,7 +259,7 @@ describe('FormComponent', () => {
             });
         });
 
-        spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(of({}));
+        spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(of(null));
         spyOn(formService, 'getTask').and.callFake((currentTaskId) => {
             return new Observable((observer) => {
                 observer.next({ taskId: currentTaskId, processDefinitionId: 'null' });
@@ -758,10 +759,7 @@ describe('FormComponent', () => {
     it('should load form for ecm node', () => {
         const metadata = {};
         spyOn(nodeService, 'getNodeMetadata').and.returnValue(
-            new Observable((observer) => {
-                observer.next({ metadata: metadata });
-                observer.complete();
-            })
+            of(new NodeMetadata(metadata, null))
         );
         spyOn(formComponent, 'loadFormFromActiviti').and.stub();
 

@@ -25,7 +25,7 @@ import { setupTestBed, AuthenticationService, SitesService, AlfrescoApiService, 
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { Node, SiteEntry, NodeEntry } from '@alfresco/js-api';
+import { Node, SiteEntry, NodeEntry, SitePaging } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('AttachFileWidgetDialogComponent', () => {
@@ -76,10 +76,10 @@ describe('AttachFileWidgetDialogComponent', () => {
 
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
         spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
-        spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } }));
+        spyOn(nodeService, 'getNode').and.returnValue(of(new Node({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } })));
 
         spyOn(siteService, 'getSite').and.returnValue(of(fakeSite));
-        spyOn(siteService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
+        spyOn(siteService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
         spyOn(widget, 'isLoggedIn').and.callFake(() => {
             return isLogged;
         });
@@ -203,7 +203,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         it('should close the dialog immediately if user already loggedIn', () => {
             isLogged = true;
             fixture.detectChanges();
-            spyOn(apiService, 'getInstance').and.returnValue({ isLoggedIn: () => true });
+            spyOn(apiService, 'getInstance').and.returnValue({ isLoggedIn: () => true } as any);
             widget.updateExternalHost();
             expect(matDialogRef.close).toHaveBeenCalled();
         });

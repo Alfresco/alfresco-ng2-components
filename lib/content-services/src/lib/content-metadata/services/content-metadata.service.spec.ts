@@ -103,7 +103,7 @@ describe('ContentMetaDataService', () => {
             modifiedByUser: {displayName: 'test-user-modified'},
             properties: []
         };
-        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type'}));
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type'} as any));
 
         service.getContentTypeProperty(fakeNode).subscribe(
             (res: any) => {
@@ -130,9 +130,7 @@ describe('ContentMetaDataService', () => {
             const fakeNode: Node = <Node> { name: 'Node', id: 'fake-id', isFile: true, aspectNames: ['exif:exif'] } ;
             setConfig('default', { 'exif:exif': '*' });
 
-            spyOn(classesApi, 'getClass').and.callFake(() => {
-                return of(exifResponse);
-            });
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
 
             service.getGroupedProperties(fakeNode).subscribe(
                 (res) => {
@@ -150,9 +148,7 @@ describe('ContentMetaDataService', () => {
             const fakeNode: Node = <Node> { name: 'Node', id: 'fake-id', isFile: true, aspectNames: ['exif:exif'] } ;
             setConfig('default', { 'exif:exif': '*', 'rma:record': '*' });
 
-            spyOn(classesApi, 'getClass').and.callFake(() => {
-                return of(exifResponse);
-            });
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
 
             service.getGroupedProperties(fakeNode).subscribe(
                 (res) => {
@@ -187,9 +183,7 @@ describe('ContentMetaDataService', () => {
             ];
 
             setConfig('custom', customLayoutOrientedScheme);
-            spyOn(classesApi, 'getClass').and.callFake(() => {
-                return of(contentResponse);
-            });
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
 
             service.getGroupedProperties(fakeNode, 'custom').subscribe(
                 (res) => {
@@ -232,9 +226,7 @@ describe('ContentMetaDataService', () => {
             ];
 
             setConfig('custom', customLayoutOrientedScheme);
-            spyOn(classesApi, 'getClass').and.callFake(() => {
-                return of(contentResponse);
-            });
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
 
             service.getGroupedProperties(fakeNode, 'custom').subscribe(
                 (res) => {
@@ -268,9 +260,7 @@ describe('ContentMetaDataService', () => {
             ];
 
             setConfig('custom', customLayoutOrientedScheme);
-            spyOn(classesApi, 'getClass').and.callFake(() => {
-                return of(contentResponse);
-            });
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
 
             service.getGroupedProperties(fakeNode, 'custom').subscribe(
                 (res) => {

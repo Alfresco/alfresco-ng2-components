@@ -42,10 +42,10 @@ describe('ChecklistComponent', () => {
 
     beforeEach(async(() => {
         service = TestBed.inject(TaskListService);
-        spyOn(service, 'getTaskChecklist').and.returnValue(of([{
+        spyOn(service, 'getTaskChecklist').and.returnValue(of([new TaskDetailsModel({
             id: 'fake-check-changed-id',
             name: 'fake-check-changed-name'
-        }]));
+        })]));
 
         fixture = TestBed.createComponent(ChecklistComponent);
         checklistComponent = fixture.componentInstance;
@@ -177,9 +177,9 @@ describe('ChecklistComponent', () => {
         });
 
         it('should add checklist', async(() => {
-            spyOn(service, 'addTask').and.returnValue(of({
+            spyOn(service, 'addTask').and.returnValue(of(new TaskDetailsModel({
                 id: 'fake-check-added-id', name: 'fake-check-added-name'
-            }));
+            })));
 
             showChecklistDialog.click();
             const addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
@@ -193,7 +193,7 @@ describe('ChecklistComponent', () => {
         }));
 
         it('should remove a checklist element', async(() => {
-            spyOn(service, 'deleteTask').and.returnValue(of(''));
+            spyOn(service, 'deleteTask').and.returnValue(of(null));
 
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(new TaskDetailsModel({
@@ -213,7 +213,7 @@ describe('ChecklistComponent', () => {
         }));
 
         it('should send an event when the checklist is deleted', async(() => {
-            spyOn(service, 'deleteTask').and.returnValue(of(''));
+            spyOn(service, 'deleteTask').and.returnValue(of(null));
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(new TaskDetailsModel({
                 id: 'fake-check-id',
@@ -273,7 +273,7 @@ describe('ChecklistComponent', () => {
         }));
 
         it('should emit checklist task created event when the checklist is successfully added', (done) => {
-            spyOn(service, 'addTask').and.returnValue(of({ id: 'fake-check-added-id', name: 'fake-check-added-name' }));
+            spyOn(service, 'addTask').and.returnValue(of(new TaskDetailsModel({ id: 'fake-check-added-id', name: 'fake-check-added-name' })));
 
             const disposableCreated = checklistComponent.checklistTaskCreated.subscribe((taskAdded: TaskDetailsModel) => {
                 fixture.detectChanges();

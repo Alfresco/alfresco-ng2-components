@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { MinimalNode } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlfrescoApiService, CardViewUpdateService, NodesApiService, setupTestBed } from 'core';
@@ -48,7 +49,7 @@ describe('NodeAspectService', () => {
 
     it('should open the aspect list dialog', () => {
         spyOn(aspectListService, 'openAspectListDialog').and.returnValue(of([]));
-        spyOn(nodeApiService, 'updateNode').and.returnValue(of({}));
+        spyOn(nodeApiService, 'updateNode').and.returnValue(of(null));
         nodeAspectService.updateNodeAspects('fake-node-id');
         expect(aspectListService.openAspectListDialog).toHaveBeenCalledWith('fake-node-id');
     });
@@ -56,7 +57,7 @@ describe('NodeAspectService', () => {
     it('should update the node when the aspect dialog apply the changes', () => {
         const expectedParameters = { aspectNames: ['a', 'b', 'c'] };
         spyOn(aspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
-        spyOn(nodeApiService, 'updateNode').and.returnValue(of({}));
+        spyOn(nodeApiService, 'updateNode').and.returnValue(of(null));
         nodeAspectService.updateNodeAspects('fake-node-id');
         expect(nodeApiService.updateNode).toHaveBeenCalledWith('fake-node-id', expectedParameters);
     });
@@ -67,7 +68,7 @@ describe('NodeAspectService', () => {
             expect(nodeUpdated.aspectNames).toEqual(['a', 'b', 'c']);
             done();
         });
-        const fakeNode = { id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] };
+        const fakeNode = new MinimalNode({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
         spyOn(aspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));
         nodeAspectService.updateNodeAspects('fake-node-id');
@@ -79,7 +80,7 @@ describe('NodeAspectService', () => {
             expect(nodeUpdated.aspectNames).toEqual(['a', 'b', 'c']);
             done();
         });
-        const fakeNode = { id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] };
+        const fakeNode = new MinimalNode({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
         spyOn(aspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));
         nodeAspectService.updateNodeAspects('fake-node-id');

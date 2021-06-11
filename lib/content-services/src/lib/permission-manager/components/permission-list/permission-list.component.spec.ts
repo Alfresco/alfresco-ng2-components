@@ -34,6 +34,7 @@ import {
     fakeSiteRoles
 } from '../../../mock/permission-list.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { MinimalNode } from '@alfresco/js-api';
 
 describe('PermissionListComponent', () => {
 
@@ -221,7 +222,7 @@ describe('PermissionListComponent', () => {
         });
 
         it('should update the role when another value is chosen',  async () => {
-            spyOn(nodeService, 'updateNode').and.returnValue(of({id: 'fake-uwpdated-node'}));
+            spyOn(nodeService, 'updateNode').and.returnValue(of(new MinimalNode({id: 'fake-uwpdated-node'})));
             searchQuerySpy.and.returnValue(of(fakeEmptyResponse));
             component.ngOnInit();
 
@@ -242,7 +243,7 @@ describe('PermissionListComponent', () => {
         });
 
         it('should delete the person',  async () => {
-            spyOn(nodeService, 'updateNode').and.returnValue(of({id: 'fake-uwpdated-node'}));
+            spyOn(nodeService, 'updateNode').and.returnValue(of(new MinimalNode({id: 'fake-uwpdated-node'})));
             searchQuerySpy.and.returnValue(of(fakeEmptyResponse));
             component.ngOnInit();
             await fixture.detectChanges();

@@ -53,7 +53,7 @@ describe('NodePermissionDialogService', () => {
             componentInstance: {
                 error: new Subject<any>()
             }
-        });
+        } as any);
     });
 
     describe('when node has permission to update permissions', () => {
@@ -70,8 +70,8 @@ describe('NodePermissionDialogService', () => {
         });
 
         it('should return the updated node', (done) => {
-            spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(of({id : 'fake-node-updated'}));
-            spyOn(service, 'openAddPermissionDialog').and.returnValue(of({}));
+            spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(of(new Node({id : 'fake-node-updated'})));
+            spyOn(service, 'openAddPermissionDialog').and.returnValue(of(null));
             spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({ node: fakePermissionNode, roles: [] }));
             service.updateNodePermissionByDialog('fake-node-id', 'fake-title').subscribe((node) => {
                 expect(node.id).toBe('fake-node-updated');
@@ -81,7 +81,7 @@ describe('NodePermissionDialogService', () => {
 
         it('should throw an error if the update of the node fails', (done) => {
             spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(throwError({error : 'error'}));
-            spyOn(service, 'openAddPermissionDialog').and.returnValue(of({}));
+            spyOn(service, 'openAddPermissionDialog').and.returnValue(of(null));
             spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({ node: fakePermissionNode, roles: [] }));
             service.updateNodePermissionByDialog('fake-node-id', 'fake-title').subscribe(() => {
                 throwError('This call should fail');

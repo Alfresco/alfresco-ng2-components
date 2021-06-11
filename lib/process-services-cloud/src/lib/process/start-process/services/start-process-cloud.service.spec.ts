@@ -28,7 +28,7 @@ describe('StartProcessCloudService', () => {
     let service: StartProcessCloudService;
     let alfrescoApiService: AlfrescoApiService;
 
-    const mock = {
+    const mock: any = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve({
                 entry: {
@@ -86,7 +86,7 @@ describe('StartProcessCloudService', () => {
     });
 
     it('should be able to get all the process definitions', (done) => {
-        spyOn(service, 'getProcessDefinitions').and.returnValue(of([{ id: 'fake-id', name: 'fake-name' }]));
+        spyOn(service, 'getProcessDefinitions').and.returnValue(of([new ProcessDefinitionCloud({ id: 'fake-id', name: 'fake-name' })]));
         service.getProcessDefinitions('appName1')
             .subscribe(
                 (res: ProcessDefinitionCloud[]) => {

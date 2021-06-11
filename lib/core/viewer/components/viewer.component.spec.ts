@@ -293,7 +293,7 @@ describe('ViewerComponent', () => {
             const displayName = 'the-name';
             const nodeDetails = { name: displayName, id: '12' };
             const contentUrl = '/content/url/path';
-            const alfrescoApiInstanceMock = {
+            const alfrescoApiInstanceMock: any = {
                 nodes: {
                     getNodeInfo: () => Promise.resolve(nodeDetails),
                     getNode: () => Promise.resolve({ id: 'fake-node', entry: { content: {} } })
@@ -687,7 +687,7 @@ describe('ViewerComponent', () => {
                 const node = new NodeEntry({ entry: { name: displayName, id: '12', content: { mimeType: 'txt' } } });
                 const nodeDetails = { name: displayName, id: '12', content: { mimeType: 'txt' } };
                 const contentUrl = '/content/url/path';
-                const alfrescoApiInstanceMock = {
+                const alfrescoApiInstanceMock: any = {
                     nodes: {
                         getNodeInfo: () => Promise.resolve(nodeDetails),
                         getNode: () => Promise.resolve(node)
@@ -1066,7 +1066,7 @@ describe('ViewerComponent', () => {
             const displayName = 'the-name';
             const nodeDetails = new NodeEntry({ entry: { name: displayName, id: '12', content: { mimeType: 'txt' } } });
             const contentUrl = '/content/url/path';
-            const alfrescoApiInstanceMock = {
+            const alfrescoApiInstanceMock: any = {
                 nodes: {
                     getNode: () => Promise.resolve(nodeDetails)
                 },

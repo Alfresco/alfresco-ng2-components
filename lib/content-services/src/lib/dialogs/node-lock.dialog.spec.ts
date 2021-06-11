@@ -99,7 +99,7 @@ describe('NodeLockDialogComponent', () => {
         });
 
         it('should submit the form and lock the node', () => {
-            spyOn(alfrescoApi.nodesApi, 'lockNode').and.returnValue(Promise.resolve({}));
+            spyOn(alfrescoApi.nodesApi, 'lockNode').and.returnValue(Promise.resolve(null));
 
             component.submit();
 
@@ -114,7 +114,7 @@ describe('NodeLockDialogComponent', () => {
         });
 
         it('should submit the form and unlock the node', () => {
-            spyOn(alfrescoApi.nodesApi, 'unlockNode').and.returnValue(Promise.resolve({}));
+            spyOn(alfrescoApi.nodesApi, 'unlockNode').and.returnValue(Promise.resolve(null));
 
             component.form.controls['isLocked'].setValue(false);
             component.submit();
@@ -123,7 +123,7 @@ describe('NodeLockDialogComponent', () => {
         });
 
         it('should call dialog to close with form data when submit is successfully', fakeAsync(() => {
-            const node = { entry: {} };
+            const node: any = { entry: {} };
             spyOn(alfrescoApi.nodesApi, 'lockNode').and.returnValue(Promise.resolve(node));
 
             component.submit();

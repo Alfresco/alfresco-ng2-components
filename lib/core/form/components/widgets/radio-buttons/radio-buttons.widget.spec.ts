@@ -129,7 +129,7 @@ describe('RadioButtonsWidgetComponent', () => {
     });
 
     it('should update the field value when an option is selected', () => {
-        spyOn(widget, 'onFieldChanged').and.returnValue(of({}));
+        spyOn(widget, 'onFieldChanged').and.stub();
         widget.onOptionClick('fake-opt');
 
         expect(widget.field.value).toEqual('fake-opt');

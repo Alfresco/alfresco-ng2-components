@@ -32,7 +32,7 @@ describe('Task Cloud Service', () => {
     let identityUserService: IdentityUserService;
     let translateService: TranslationService;
 
-    function returnFakeTaskCompleteResults() {
+    function returnFakeTaskCompleteResults(): any {
         return {
             oauth2Auth: {
                 callCustomApi : () => {
@@ -45,7 +45,7 @@ describe('Task Cloud Service', () => {
         };
     }
 
-    function returnFakeTaskCompleteResultsError() {
+    function returnFakeTaskCompleteResultsError(): any {
         return {
             oauth2Auth: {
                 callCustomApi : () => {
@@ -58,7 +58,7 @@ describe('Task Cloud Service', () => {
         };
     }
 
-    function returnFakeTaskDetailsResults() {
+    function returnFakeTaskDetailsResults(): any {
         return {
             oauth2Auth: {
                 callCustomApi : () => {
@@ -71,7 +71,7 @@ describe('Task Cloud Service', () => {
         };
     }
 
-    function returnFakeCandidateUsersResults() {
+    function returnFakeCandidateUsersResults(): any {
         return {
             oauth2Auth: {
                 callCustomApi : () => {
@@ -84,7 +84,7 @@ describe('Task Cloud Service', () => {
         };
     }
 
-    function returnFakeCandidateGroupResults() {
+    function returnFakeCandidateGroupResults(): any {
         return {
             oauth2Auth: {
                 callCustomApi : () => {

@@ -24,6 +24,7 @@ import { CommentContentService } from '../services/comment-content.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { CommentModel } from '../models/comment.model';
 
 describe('CommentsComponent', () => {
 
@@ -51,28 +52,28 @@ describe('CommentsComponent', () => {
         commentProcessService = fixture.debugElement.injector.get(CommentProcessService);
         commentContentService = fixture.debugElement.injector.get(CommentContentService);
 
-        addContentCommentSpy = spyOn(commentContentService, 'addNodeComment').and.returnValue(of({
+        addContentCommentSpy = spyOn(commentContentService, 'addNodeComment').and.returnValue(of(new CommentModel({
             id: 123,
             message: 'Test Comment',
             createdBy: {id: '999'}
-        }));
+        })));
 
         getContentCommentsSpy = spyOn(commentContentService, 'getNodeComments').and.returnValue(of([
-            {message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
-            {message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
-            {message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}
+            new CommentModel({message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}),
+            new CommentModel({message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}),
+            new CommentModel({message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}})
         ]));
 
         getProcessCommentsSpy = spyOn(commentProcessService, 'getTaskComments').and.returnValue(of([
-            {message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
-            {message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}},
-            {message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}
+            new CommentModel({message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}),
+            new CommentModel({message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}}),
+            new CommentModel({message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'}})
         ]));
-        addProcessCommentSpy = spyOn(commentProcessService, 'addTaskComment').and.returnValue(of({
+        addProcessCommentSpy = spyOn(commentProcessService, 'addTaskComment').and.returnValue(of(new CommentModel({
             id: 123,
             message: 'Test Comment',
             createdBy: {id: '999'}
-        }));
+        })));
     });
 
     afterEach(() => {

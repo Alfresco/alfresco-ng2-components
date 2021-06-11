@@ -124,7 +124,7 @@ describe('AspectListService', () => {
                 componentInstance: {
                     error: new Subject<any>()
                 }
-            });
+            } as any);
             spyOnDialogClose = spyOn(materialDialog, 'closeAll');
         });
 

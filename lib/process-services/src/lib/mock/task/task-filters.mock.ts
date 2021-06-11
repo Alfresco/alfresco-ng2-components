@@ -15,17 +15,15 @@
  * limitations under the License.
  */
 
-import { AppDefinitionRepresentationModel, FilterRepresentationModel } from '../../task-list/models/filter.model';
+import { FilterRepresentationModel } from '../../task-list/models/filter.model';
 
-export let fakeFiltersResponse = {
+export let fakeFiltersResponse: any = {
     size: 2, total: 2, start: 0,
     data: [
-        new AppDefinitionRepresentationModel(
-            {
-                id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
-                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' }
-            }
-        ),
+        {
+            id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
+            filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' }
+        },
         {
             id: 2, name: 'FakeMyTasks', recent: false, icon: 'glyphicon-align-left',
             filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee' }

@@ -22,11 +22,11 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { SystemPropertiesRepresentation } from '@alfresco/js-api';
+import { DiscoveryEntry, SystemPropertiesRepresentation } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 
-const fakeEcmDiscoveryResponse: any = {
+const fakeEcmDiscoveryResponse = new DiscoveryEntry({
     entry: {
         repository: {
             edition: 'FAKE',
@@ -79,7 +79,7 @@ const fakeEcmDiscoveryResponse: any = {
             ]
         }
     }
-};
+});
 
 const fakeBPMDiscoveryResponse: any = {
     revisionVersion: '2',
@@ -89,7 +89,7 @@ const fakeBPMDiscoveryResponse: any = {
     minorVersion: '6'
 };
 
-const fakeBPMDiscoverySystemPropertyResponse: any = {
+const fakeBPMDiscoverySystemPropertyResponse = new SystemPropertiesRepresentation({
     allowInvolveByEmail: true,
     disableJavaScriptEventsInFormEditor: false,
     logoutDisabled: false,
@@ -99,7 +99,7 @@ const fakeBPMDiscoverySystemPropertyResponse: any = {
         clientId: 'fakeClient',
         useBrowserLogout: true
     }
-};
+});
 
 describe('Discovery Api Service', () => {
     let service: DiscoveryApiService;
@@ -119,7 +119,7 @@ describe('Discovery Api Service', () => {
         describe('For ECM', () => {
             it('Should retrieve the info about the product for ECM', done => {
                 spyOn(apiService.getInstance().discovery.discoveryApi, 'getRepositoryInformation')
-                    .and.returnValue(of(fakeEcmDiscoveryResponse));
+                    .and.returnValue(Promise.resolve(fakeEcmDiscoveryResponse));
 
                 service.getEcmProductInfo()
                     .subscribe((data: EcmProductVersionModel) => {
@@ -137,7 +137,7 @@ describe('Discovery Api Service', () => {
 
             it('getEcmProductInfo catch errors call', done => {
                 spyOn(apiService.getInstance().discovery.discoveryApi, 'getRepositoryInformation')
-                    .and.returnValue(throwError({ status: 403 }));
+                    .and.returnValue(Promise.reject({ status: 403 }));
 
                 service.getEcmProductInfo().subscribe(
                     () => {},
@@ -151,7 +151,7 @@ describe('Discovery Api Service', () => {
         describe('For BPM', () => {
             it('Should retrieve the info about the product for BPM', done => {
                 spyOn(apiService.getInstance().activiti.aboutApi, 'getAppVersion')
-                    .and.returnValue(of(fakeBPMDiscoveryResponse));
+                    .and.returnValue(Promise.resolve(fakeBPMDiscoveryResponse));
 
                 service.getBpmProductInfo().subscribe((data: BpmProductVersionModel) => {
                         expect(data).not.toBeNull();
@@ -164,7 +164,7 @@ describe('Discovery Api Service', () => {
 
             it('getBpmProductInfo catch errors call', done => {
                 spyOn(apiService.getInstance().activiti.aboutApi, 'getAppVersion')
-                    .and.returnValue(throwError({ status: 403 }));
+                    .and.returnValue(Promise.reject({ status: 403 }));
 
                 service.getBpmProductInfo().subscribe(
                     () => {},
@@ -176,7 +176,7 @@ describe('Discovery Api Service', () => {
 
             it('Should retrieve the system properties for BPM', done => {
                 spyOn(apiService.getInstance().activiti.systemPropertiesApi, 'getProperties')
-                    .and.returnValue(of(fakeBPMDiscoverySystemPropertyResponse));
+                    .and.returnValue(Promise.resolve(fakeBPMDiscoverySystemPropertyResponse));
 
                 service.getBPMSystemProperties().subscribe((data: SystemPropertiesRepresentation) => {
                         expect(data).not.toBeNull();
@@ -196,7 +196,7 @@ describe('Discovery Api Service', () => {
                     apiService.getInstance().activiti.systemPropertiesApi,
                     'getProperties'
                 ).and.returnValue(
-                    throwError({
+                    Promise.reject({
                         error: {
                             response: {
                                 statusCode: 404,

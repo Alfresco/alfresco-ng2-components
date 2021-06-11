@@ -25,10 +25,10 @@ import { Apollo } from 'apollo-angular';
 describe('NotificationCloudService', () => {
     let service: NotificationCloudService;
     let apollo: Apollo;
-    let apolloCreateSpy;
-    let apolloSubscribeSpy;
+    let apolloCreateSpy: jasmine.Spy;
+    let apolloSubscribeSpy: jasmine.Spy;
     let apiService: AlfrescoApiService;
-    const useMock = {
+    const useMock: any = {
         subscribe() {}
     };
 
@@ -43,7 +43,7 @@ describe('NotificationCloudService', () => {
         }
     `;
 
-    const apiServiceMock = {
+    const apiServiceMock: any = {
         oauth2Auth: {
             token: '1234567'
         },

@@ -127,7 +127,7 @@ describe('AspectListComponent', () => {
         });
 
         it('should show the loading spinner when result is loading', () => {
-            const delayReusult = of([]).pipe(delay(0));
+            const delayReusult = of(null).pipe(delay(0));
             spyOn(nodeService, 'getNode').and.returnValue(delayReusult);
             spyOn(aspectListService, 'getAspects').and.returnValue(delayReusult);
             fixture.detectChanges();
@@ -147,7 +147,7 @@ describe('AspectListComponent', () => {
             spyOn(aspectListService, 'getCustomAspects').and.returnValue(of(customAspectListMock));
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
             nodeService = TestBed.inject(NodesApiService);
-            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] }));
+            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] } as any));
             component.nodeId = 'fake-node-id';
             fixture.detectChanges();
         });

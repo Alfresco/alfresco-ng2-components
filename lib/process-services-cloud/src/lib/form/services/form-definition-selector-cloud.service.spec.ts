@@ -76,7 +76,7 @@ describe('Form Definition Selector Cloud Service', () => {
                 return false;
             },
             reply: jasmine.createSpy('reply')
-        });
+        } as any);
     });
 
     it('should fetch all the forms when getForms is called', (done) => {

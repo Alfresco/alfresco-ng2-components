@@ -125,7 +125,7 @@ describe('ProcessInstanceListComponent', () => {
         component.state = 'open';
         fixture.detectChanges();
         tick();
-        expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstance);
+        expect(emitSpy).toHaveBeenCalledWith(jasmine.objectContaining(fakeProcessInstance));
     }));
 
     it('should return the process instances list in original order when datalist passed non-existent columns', async(() => {
@@ -207,7 +207,7 @@ describe('ProcessInstanceListComponent', () => {
         const emitSpy = spyOn(component.success, 'emit');
         component.reload();
         tick();
-        expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstance);
+        expect(emitSpy).toHaveBeenCalledWith(jasmine.objectContaining(fakeProcessInstance));
     }));
 
     it('should reload processes when reload() is called', (done) => {

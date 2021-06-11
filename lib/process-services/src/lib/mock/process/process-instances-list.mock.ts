@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-export let fakeProcessInstance = {
+import { ProcessListModel } from '../../process-list/models/process-list.model';
+
+export let fakeProcessInstance = new ProcessListModel({
     size: 2,
     total: 2,
     start: 0,
@@ -81,7 +83,7 @@ export let fakeProcessInstance = {
             ]
         }
     ]
-};
+});
 
 export let fakeProcessInstancesWithNoName = {
     size: 2,
@@ -123,12 +125,12 @@ export let fakeProcessInstancesWithNoName = {
     ]
 };
 
-export let fakeProcessInstancesEmpty = {
+export let fakeProcessInstancesEmpty = new ProcessListModel({
     size: 0,
     total: 0,
     start: 0,
     data: []
-};
+});
 
 export let fakeProcessCustomSchema = [
     {

@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-export const fakeGlobalTask = {
+import { TaskListModel } from '../../task-list/models/task-list.model';
+
+export const fakeGlobalTask = new TaskListModel({
     size: 2,
     start: 0,
     total: 2,
@@ -74,7 +76,7 @@ export const fakeGlobalTask = {
             endDate: null
         }
     ]
-};
+});
 
 export let fakeCustomSchema = [
     {
@@ -124,7 +126,7 @@ export let fakeEmptyTask = {
     data: []
 };
 
-export const paginatedTask = {
+export const paginatedTask = new TaskListModel({
     'size': 5,
     'total': 9,
     'start': 0,
@@ -284,4 +286,4 @@ export const paginatedTask = {
         'memberOfCandidateUsers': false,
         'managerOfCandidateGroup': false
     }]
-};
+});

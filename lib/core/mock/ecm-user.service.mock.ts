@@ -16,7 +16,8 @@
  */
 
 import { EcmCompanyModel } from '../models/ecm-company.model';
-import { PersonEntry, Person } from '@alfresco/js-api';
+import { PersonEntry, Person, PersonPaging } from '@alfresco/js-api';
+import { EcmUserModel } from '../models';
 
 export const fakeEcmCompany: EcmCompanyModel = {
     organization: 'company-fake-name',
@@ -29,7 +30,7 @@ export const fakeEcmCompany: EcmCompanyModel = {
     email: 'fakeCompany@fake.com'
 };
 
-export const fakeEcmUser = {
+export const fakeEcmUser = new EcmUserModel({
     id: 'fake-id',
     firstName: 'fake-ecm-first-name',
     lastName: 'fake-ecm-last-name',
@@ -48,7 +49,7 @@ export const fakeEcmUser = {
     userStatus: 'active',
     enabled: true,
     emailNotificationsEnabled: true
-};
+});
 
 export const fakeEcmUser2 = {
     id: 'another-fake-id',
@@ -103,7 +104,7 @@ export const fakeEcmEditedUser = {
     emailNotificationsEnabled: true
 };
 
-export const fakeEcmUserList = {
+export const fakeEcmUserList = new PersonPaging({
     list: {
         pagination: {
             count: 2,
@@ -121,7 +122,7 @@ export const fakeEcmUserList = {
             }
         ]
     }
-};
+});
 
 export const createNewPersonMock = {
     id: 'fake-id',

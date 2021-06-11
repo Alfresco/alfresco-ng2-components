@@ -49,7 +49,7 @@ describe('TaskHeaderCloudComponent', () => {
     const mockCandidateUsers = ['mockuser1', 'mockuser2', 'mockuser3'];
     const mockCandidateGroups = ['mockgroup1', 'mockgroup2', 'mockgroup3'];
 
-    const mock = {
+    const mock: any = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve({})
         },

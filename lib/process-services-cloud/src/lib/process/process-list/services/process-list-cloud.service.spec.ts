@@ -24,7 +24,7 @@ describe('ProcessListCloudService', () => {
     let service: ProcessListCloudService;
     let alfrescoApiService: AlfrescoApiService;
 
-    function returnCallQueryParameters() {
+    function returnCallQueryParameters(): any {
         return {
             oauth2Auth: {
                 callCustomApi: (_queryUrl, _operation, _context, queryParams) => {
@@ -37,7 +37,7 @@ describe('ProcessListCloudService', () => {
         };
     }
 
-    function returnCallUrl() {
+    function returnCallUrl(): any {
         return {
             oauth2Auth: {
                 callCustomApi: (queryUrl) => {

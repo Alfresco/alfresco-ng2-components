@@ -22,7 +22,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTypeService } from '../../content-type';
 import { of } from 'rxjs';
-import { Node } from '@alfresco/js-api';
+import { Node, TypeEntry } from '@alfresco/js-api';
 
 describe('ContentTypePropertyService', () => {
 
@@ -83,40 +83,35 @@ describe('ContentTypePropertyService', () => {
         }
     };
 
-    const mockSelectOptions = {
-        'list':
+    const mockSelectOptions: TypeEntry[] = [
         {
-            'pagination': { 'count': 1, 'hasMoreItems': false, 'totalItems': 1, 'skipCount': 0, 'maxItems': 100 },
-            'entries': [
-                {
-                    'entry': {
-                        'isArchive': true,
-                        'includedInSupertypeQuery': true,
-                        'isContainer': false,
-                        'model': {
-                            'id': 'e2e:test',
-                            'author': 'E2e Automation User',
-                            'description': 'Custom type e2e model',
-                            'namespaceUri': 'http://www.customModel.com/whatever',
-                            'namespacePrefix': 'e2e'
-                        },
-                        'id': 'e2e:test',
-                        'title': 'Test type',
-                        'properties': [{
-                            'id': 'cm:name',
-                            'title': 'Name',
-                            'description': 'Name',
-                            'dataType': 'd:text',
-                            'isMultiValued': false,
-                            'isMandatory': true,
-                            'isMandatoryEnforced': true,
-                            'isProtected': false
-                        }],
-                        'parentId': 'cm:content'
-                    }
-                }]
+            'entry': {
+                'isArchive': true,
+                'includedInSupertypeQuery': true,
+                'isContainer': false,
+                'model': {
+                    'id': 'e2e:test',
+                    'author': 'E2e Automation User',
+                    'description': 'Custom type e2e model',
+                    'namespaceUri': 'http://www.customModel.com/whatever',
+                    'namespacePrefix': 'e2e'
+                },
+                'id': 'e2e:test',
+                'title': 'Test type',
+                'properties': [{
+                    'id': 'cm:name',
+                    'title': 'Name',
+                    'description': 'Name',
+                    'dataType': 'd:text',
+                    'isMultiValued': false,
+                    'isMandatory': true,
+                    'isMandatoryEnforced': true,
+                    'isProtected': false
+                }],
+                'parentId': 'cm:content'
+            }
         }
-    };
+    ];
 
     setupTestBed({
         imports: [

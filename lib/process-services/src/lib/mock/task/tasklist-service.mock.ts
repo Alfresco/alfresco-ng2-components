@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { TaskListModel } from '../../task-list/models/task-list.model';
 import { fakeAppFilter } from './task-filters.mock';
 
 export let fakeApps = {
@@ -35,7 +36,7 @@ export let fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstNa
 
 export let fakeUser2 = { id: 1001, email: 'some-one@somegroup.com', firstName: 'some', lastName: 'one' };
 
-export let fakeTaskList = {
+export let fakeTaskList = new TaskListModel({
     size: 1, total: 1, start: 0,
     data: [
         {
@@ -44,7 +45,7 @@ export let fakeTaskList = {
             created: '2016-07-15T11:19:17.440+0000'
         }
     ]
-};
+});
 
 export let fakeTaskListDifferentProcessDefinitionKey = {
     size: 2, total: 1, start: 0,
@@ -188,16 +189,16 @@ export let fakeTaskCompleted2 = {
         endDate: '2016-11-03T15:25:42.749+0000'
     };
 
-export let fakeOpenTaskList = {
+export let fakeOpenTaskList = new TaskListModel({
     size: 2,
     total: 2,
     start: 0,
     data: [fakeTaskOpen1, fakeTaskOpen2]
-};
+});
 
-export let fakeCompletedTaskList = {
+export let fakeCompletedTaskList = new TaskListModel({
     size: 2,
     total: 2,
     start: 0,
     data: [fakeTaskCompleted1, fakeTaskCompleted2]
-};
+});

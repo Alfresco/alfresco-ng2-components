@@ -24,6 +24,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { SiteEntry } from '@alfresco/js-api';
 
 describe('LibraryDialogComponent', () => {
     let fixture: ComponentFixture<LibraryDialogComponent>;
@@ -128,7 +129,7 @@ describe('LibraryDialogComponent', () => {
     it('should create site when form is valid', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         spyOn(sitesService, 'createSite').and.returnValue(
-            of({entry: {id: 'fake-id'}}).pipe(delay(100))
+            of({entry: {id: 'fake-id'}} as SiteEntry).pipe(delay(100))
         );
         spyOn(sitesService, 'getSite').and.callFake(() => {
             return throwError('error');
@@ -163,9 +164,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should not create site when form is invalid', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        spyOn(sitesService, 'createSite').and.returnValue(
-            Promise.resolve({})
-        );
+        spyOn(sitesService, 'createSite').and.returnValue(of(null));
         spyOn(sitesService, 'getSite').and.returnValue(of(null));
 
         fixture.detectChanges();

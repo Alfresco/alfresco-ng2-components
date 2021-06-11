@@ -57,7 +57,7 @@ describe('UnclaimTaskDirective', () => {
     });
 
     it('Should be able to call unclaim task service', () => {
-        const claimTaskSpy = spyOn(taskListService, 'unclaimTask').and.returnValue(of({}));
+        const claimTaskSpy = spyOn(taskListService, 'unclaimTask').and.returnValue(of(null));
 
         const button = fixture.nativeElement.querySelector('button');
         button.click();
@@ -66,7 +66,7 @@ describe('UnclaimTaskDirective', () => {
     });
 
     it('Should be able to catch success event on click of unclaim button', async() => {
-        spyOn(taskListService, 'unclaimTask').and.returnValue(of({}));
+        spyOn(taskListService, 'unclaimTask').and.returnValue(of(null));
         const unclaimSpy = spyOn(fixture.componentInstance.unclaim, 'emit');
 
         const button = fixture.nativeElement.querySelector('button');

@@ -38,7 +38,7 @@ describe('NodesApiService', () => {
             }
         }
     };
-    const mockSpy = {
+    const mockSpy: any = {
         core: {
             nodesApi: {
                 getNode: jasmine.createSpy('getNode'),

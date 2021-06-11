@@ -69,8 +69,13 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
         this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
             (res: ServiceTaskFilterCloudModel[]) => {
                 this.resetFilter();
-                this.filters = Object.assign([], res);
-                this.selectFilterAndEmit(this.filterParam);
+                this.filters = res || [];
+
+                if (this.filterParam) {
+                    this.selectFilterAndEmit(this.filterParam);
+                }
+
+                this.ensureFilterSelected();
                 this.success.emit(res);
             },
             (err: any) => {
@@ -88,15 +93,24 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
                 (paramFilter.name &&
                     (paramFilter.name.toLocaleLowerCase() === this.translationService.instant(filter.name).toLocaleLowerCase())
                 ));
+
+            if (this.currentFilter) {
+                this.filterSelected.emit(this.currentFilter);
+            }
         }
     }
 
     public selectFilterAndEmit(newParamFilter: FilterParamsModel) {
         if (newParamFilter) {
             this.selectFilter(newParamFilter);
-            this.filterSelected.emit(this.currentFilter);
-        } else {
-            this.currentFilter = undefined;
+        }
+
+        this.ensureFilterSelected();
+    }
+
+    private ensureFilterSelected() {
+        if (!this.currentFilter && this.filters.length > 0) {
+            this.currentFilter = this.filters[0];
         }
     }
 

@@ -19,7 +19,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { Node, NodeEntry } from '@alfresco/js-api';
+import { Node, NodeEntry, SitePaging } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { SitesService, ContentService, UploadService, FileModel, FileUploadEvent } from '@alfresco/adf-core';
 import { of } from 'rxjs';
@@ -77,7 +77,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         spyOn(documentListService, 'getFolder').and.callThrough();
         spyOn(documentListService, 'getFolderNode').and.callThrough();
-        spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
+        spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
 
         fixture = TestBed.createComponent(ContentNodeSelectorComponent);
         component = fixture.componentInstance;

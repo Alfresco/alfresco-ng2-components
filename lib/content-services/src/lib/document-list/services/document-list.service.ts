@@ -69,7 +69,7 @@ export class DocumentListService implements DocumentListLoader {
      * @param targetParentId The id of the folder where the node will be moved
      * @returns NodeEntry for the moved node
      */
-    moveNode(nodeId: string, targetParentId: string) {
+    moveNode(nodeId: string, targetParentId: string): Observable<NodeEntry> {
         return from(this.apiService.getInstance().nodes.moveNode(nodeId, { targetParentId })).pipe(
             catchError((err) => this.handleError(err))
         );

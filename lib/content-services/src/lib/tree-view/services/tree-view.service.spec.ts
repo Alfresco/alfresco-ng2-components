@@ -22,20 +22,21 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { of } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { NodePaging } from '@alfresco/js-api';
 
 describe('TreeViewService', () => {
 
     let service: TreeViewService;
     let nodeService: NodesApiService;
 
-    const fakeNodeList = { list: { entries: [
+    const fakeNodeList = new NodePaging({ list: { entries: [
             { entry: { id: 'fake-node-id', name: 'fake-node-name', isFolder: true } }
-        ] } };
+        ] } });
 
-    const fakeMixedNodeList = { list: { entries: [
+    const fakeMixedNodeList = new NodePaging({ list: { entries: [
         { entry: { id: 'fake-node-id', name: 'fake-node-name', isFolder: true } },
         { entry: { id: 'fake-file-id', name: 'fake-file-name', isFolder: false } }
-    ] } };
+    ] } });
 
     setupTestBed({
         imports: [
