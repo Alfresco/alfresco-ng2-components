@@ -15,4 +15,7 @@
  * limitations under the License.
  */
 
-export * from './lib/public-api';
+export * from './core/public-api';
+export * from './content-services/public-api';
+export * from './process-services/public-api';
+export * from './process-services-cloud/public-api';

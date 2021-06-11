@@ -15,4 +15,5 @@
  * limitations under the License.
  */
 
-export * from './lib/public-api';
+export * from './protractor/public-api';
+export * from './shared/public-api';

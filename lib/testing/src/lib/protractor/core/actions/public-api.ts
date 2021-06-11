@@ -15,4 +15,8 @@
  * limitations under the License.
  */
 
-export * from './lib/public-api';
+export * from './identity/public-api';
+export * from './api.service.factory';
+export * from './drop.actions';
+export * from './users.actions';
+export * from './search.service';

@@ -22,7 +22,7 @@
  * @class util.Resources
  */
 var path = require('path');
-const ACTIVITI_CLOUD_APPS = require('../../lib/testing/src/lib/process-services-cloud/resources/resources.json');
+const ACTIVITI_CLOUD_APPS = require('@alfresco/adf-testing');
 
 exports.ACTIVITI_CLOUD_APPS = ACTIVITI_CLOUD_APPS;
 

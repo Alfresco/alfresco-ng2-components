@@ -15,4 +15,6 @@
  * limitations under the License.
  */
 
-export * from './lib/public-api';
+export * from './api.service';
+export * from './api.util';
+export * from './e2e-request-api.helper';

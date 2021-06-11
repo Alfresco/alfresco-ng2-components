@@ -168,7 +168,6 @@ else
 
         npm run postbuild:ci  || exit 1
 
-        ./node_modules/.bin/tsc -p "./e2e/tsconfig.e2e.json"
         npm run lite-server-e2e>/dev/null & $DEBUG_OPTION ./node_modules/protractor/bin/protractor ./e2e/protractor.conf.js || exit 1
      else
         echo "====== Run without lite-server  ====="
