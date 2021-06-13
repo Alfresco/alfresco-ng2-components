@@ -101,7 +101,7 @@
     "raphael": "2.3.0",
     "rxjs": "^6.6.3",
     "subscriptions-transport-ws": "^0.9.18",
-    "tslib": "^2.0.3",
+    "tslib": "^2.3.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
