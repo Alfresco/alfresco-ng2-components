@@ -209,37 +209,43 @@ export const ACTIVITI_APPS: any = {
         }
     ]
 };
+
 export const ACS_DEFAULT: any = {
     files : [
         {
-            name: 'share_profile_pic.png',
+            name: 'e2e_share_profile_pic.png',
             destination: '-my-',
             action: 'UPLOAD'
         },
         {
-            name: 'share_profile_pic.jpg',
+            name: 'e2e_share_profile_pic.jpg',
             destination: '-my-',
             action: 'UPLOAD'
         },
         {
-            name: 'lock.png',
+            name: 'e2e_lock.png',
             destination: '-my-',
             action: 'LOCK'
         },
         {
-            name: 'second_lock.png',
+            name: 'e2e_second_lock.png',
             destination: '-my-',
             action: 'LOCK'
         },
         {
-            name: 'share_file.jpg',
+            name: 'e2e_share_file.jpg',
             destination: '-my-',
             action: 'SHARE'
         },
         {
-            name: 'favorite_file.jpg',
+            name: 'e2e_favorite_file.jpg',
             destination: '-my-',
             action: 'FAVORITE'
         }
-    ]
+    ],
+
+    e2eFolder:
+        {
+            name: 'e2e-test-data'
+        }
 };

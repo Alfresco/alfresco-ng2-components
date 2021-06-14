@@ -4,7 +4,7 @@ let program = require('commander');
 let fs = require ('fs');
 const path = require('path');
 import { logger } from './logger';
-const { SharedlinksApi, FavoritesApi } = require('@alfresco/js-api');
+const { SharedlinksApi, FavoritesApi, NodesApi } = require('@alfresco/js-api');
 let MAX_RETRY = 10;
 let counter = 0;
 let TIMEOUT = 6000;
@@ -34,32 +34,55 @@ async function main() {
 }
 
 async function initializeDefaultFiles() {
+    const e2eFolder = ACS_DEFAULT.e2eFolder;
+    const parentFolder = await createFolder(e2eFolder.name, '-my-');
+    const parentFolderId = parentFolder.entry.id;
+
     for (let j = 0; j < ACS_DEFAULT.files.length; j++) {
         const fileInfo = ACS_DEFAULT.files[j];
         switch (fileInfo.action) {
             case 'UPLOAD':
-                await uploadFile(fileInfo.name, fileInfo.destination);
+                await uploadFile(fileInfo.name, parentFolderId);
                 break;
             case 'LOCK':
-                const fileToLock = await uploadFile(fileInfo.name, fileInfo.destination);
+                const fileToLock = await uploadFile(fileInfo.name, parentFolderId);
                 await lockFile(fileToLock.entry.id);
                 break;
             case 'SHARE':
-                const fileToShare = await uploadFile(fileInfo.name, fileInfo.destination);
+                const fileToShare = await uploadFile(fileInfo.name, parentFolderId);
                 await shareFile(fileToShare.entry.id);
                 break;
             case 'FAVORITE':
-                const fileToFav = await uploadFile(fileInfo.name, fileInfo.destination);
+                const fileToFav = await uploadFile(fileInfo.name, parentFolderId);
                 await favoriteFile(fileToFav.entry.id);
                 break;
             default:
-                logger.error('No action found for file ', fileInfo.name);
+                logger.error('No action found for file ', fileInfo.name, parentFolderId);
                 break;
         }
     }
 }
 
-async function uploadFile(fileName, fileDestination) {
+async function createFolder(folderName: string, parentId: string) {
+        let createdFolder: any;
+        const body = {
+            name: folderName,
+            nodeType: 'cm:folder'
+        };
+        try {
+            createdFolder = await new NodesApi(alfrescoJsApi).createNode(parentId, body, {overwrite: true});
+
+            logger.info(`Folder ${folderName} was created`);
+        } catch (err) {
+            if (err.status === 409) {
+                const relativePath = `/${folderName}`;
+                createdFolder = await new NodesApi(alfrescoJsApi).getNode('-my-', { relativePath });
+             }
+        }
+        return createdFolder;
+}
+
+async function uploadFile(fileName: string, fileDestination: string) {
     const filePath = `../resources/content/${fileName}`;
     const file = fs.createReadStream(path.join(__dirname, filePath));
     let uploadedFile: any;
