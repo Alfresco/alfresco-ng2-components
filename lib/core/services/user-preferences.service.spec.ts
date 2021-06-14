@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
@@ -177,7 +177,7 @@ describe('UserPreferencesService', () => {
 
     describe('with language config', () => {
 
-        it('should store default textOrientation based on language', async(() => {
+        it('should store default textOrientation based on language', () => {
             appConfig.config.languages = [
                 {
                     key: 'fake-locale-config'
@@ -187,9 +187,9 @@ describe('UserPreferencesService', () => {
             alfrescoApiService.initialize();
             const textOrientation = preferences.getPropertyKey('textOrientation');
             expect(storage.getItem(textOrientation)).toBe('ltr');
-        }));
+        });
 
-        it('should store textOrientation based on language config direction', async(() => {
+        it('should store textOrientation based on language config direction', () => {
             appConfig.config.languages = [
                 {
                     key: 'fake-locale-config',
@@ -200,9 +200,9 @@ describe('UserPreferencesService', () => {
             alfrescoApiService.initialize();
             const textOrientation = preferences.getPropertyKey('textOrientation');
             expect(storage.getItem(textOrientation)).toBe('rtl');
-        }));
+        });
 
-        it('should not store textOrientation based on language ', async(() => {
+        it('should not store textOrientation based on language ', () => {
             appConfig.config.languages = [
                 {
                     key: 'fake-locale-browser'
@@ -212,7 +212,7 @@ describe('UserPreferencesService', () => {
 
             const textOrientation = preferences.getPropertyKey('textOrientation');
             expect(storage.getItem(textOrientation)).toBe(null);
-        }));
+        });
 
         it('should default to browser locale for textOrientation when locale is not defined in configuration', (done) => {
             appConfig.config.languages = [

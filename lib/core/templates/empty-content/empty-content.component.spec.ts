@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -58,16 +58,16 @@ describe('EmptyContentComponent', () => {
         translateService = TestBed.inject(TranslateService);
     });
 
-    it('should render custom title', async(() => {
+    it('should render custom title', async () => {
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const title = fixture.debugElement.query(By.css('.adf-empty-content__title'));
-            expect(title).toBeDefined('title element not found');
-            expect(title.nativeElement.textContent).toContain('CUSTOM_TITLE', 'incorrect title value');
-        });
-    }));
+        await fixture.whenStable();
 
-    it('should translate title and subtitle', async(() => {
+        const title = fixture.debugElement.query(By.css('.adf-empty-content__title'));
+        expect(title).toBeDefined('title element not found');
+        expect(title.nativeElement.textContent).toContain('CUSTOM_TITLE', 'incorrect title value');
+    });
+
+    it('should translate title and subtitle', async () => {
         spyOn(translateService, 'get').and.callFake((key: string) => {
             switch (key) {
                 case 'CUSTOM_TITLE':
@@ -80,17 +80,17 @@ describe('EmptyContentComponent', () => {
         });
 
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const title = fixture.debugElement.query(By.css('.adf-empty-content__title'));
-            const subtitle = fixture.debugElement.query(By.css('.adf-empty-content__subtitle'));
+        await fixture.whenStable();
 
-            expect(title).toBeDefined('title element not found');
-            expect(title.nativeElement.textContent).toContain('ENG_CUSTOM_TITLE', 'incorrect title value');
+        const title = fixture.debugElement.query(By.css('.adf-empty-content__title'));
+        const subtitle = fixture.debugElement.query(By.css('.adf-empty-content__subtitle'));
 
-            expect(subtitle).toBeDefined('subtitle element not found');
-            expect(subtitle.nativeElement.textContent).toContain('ENG_CUSTOM_SUBTITLE', 'incorrect subtitle value');
-        });
-    }));
+        expect(title).toBeDefined('title element not found');
+        expect(title.nativeElement.textContent).toContain('ENG_CUSTOM_TITLE', 'incorrect title value');
+
+        expect(subtitle).toBeDefined('subtitle element not found');
+        expect(subtitle.nativeElement.textContent).toContain('ENG_CUSTOM_SUBTITLE', 'incorrect subtitle value');
+    });
 
     it('should render multiple subtitle elements', () => {
         const subTitles = fixture.debugElement.queryAll(By.css('.adf-empty-content__text'));

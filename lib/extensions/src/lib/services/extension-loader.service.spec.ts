@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ExtensionConfig } from '../config/extension.config';
 import { ExtensionLoaderService } from './extension-loader.service';
@@ -94,28 +94,31 @@ describe('ExtensionLoaderService', () => {
         });
     });
 
-    it('should load default registered app extensions when no custom $references defined', async(() => {
+    it('should load default registered app extensions when no custom $references defined', (done) => {
         extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins', ['test.extension.1.json']).then((config: ExtensionConfig) => {
             const pluginsReference = config.$references.map((entry: ExtensionConfig) => entry.$name);
             expect(pluginsReference).toEqual(['test.extension.1']);
+            done();
         });
-    }));
+    });
 
-    it('should ignore default registered app extension if defined in $ignoreReferenceList', async(() => {
+    it('should ignore default registered app extension if defined in $ignoreReferenceList', (done) => {
         appExtensionsConfig.$ignoreReferenceList = ['test.extension.1.json'];
 
         extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins', ['test.extension.1.json']).then((config: ExtensionConfig) => {
             const pluginsReference = config.$references.map((entry: ExtensionConfig) => entry.$name);
             expect(pluginsReference).toEqual([]);
+            done();
         });
-    }));
+    });
 
-    it('should load only extensions defined by $references', async(() => {
+    it('should load only extensions defined by $references', (done) => {
         appExtensionsConfig.$references = ['test.extension.1.json'];
 
         extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins', ['test.extension.2.json, test.extension.3.json']).then((config: ExtensionConfig) => {
             const pluginsReference = config.$references.map((entry: ExtensionConfig) => entry.$name);
             expect(pluginsReference).toEqual(['test.extension.1']);
+            done();
         });
-    }));
+    });
 });
