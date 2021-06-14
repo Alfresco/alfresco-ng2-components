@@ -1,6 +1,6 @@
 ---
 Title: Search Form component
-Added: v4.6.0
+Added: v4.5.0
 Status: Active
 Last reviewed: 2021-06-11
 ---

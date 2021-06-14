@@ -42,7 +42,7 @@ import { SearchForm } from './models/search-form.interface';
 })
 export abstract class BaseQueryBuilderService {
 
-    /*  Stream that emits the search configuration whenever the user switches */
+    /*  Stream that emits the search configuration whenever the user change the search forms */
     configUpdated = new Subject<SearchConfiguration>();
 
     /*  Stream that emits the query before search whenever user search  */
