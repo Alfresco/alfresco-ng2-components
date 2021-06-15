@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed, IdentityUserService, AlfrescoApiService, IdentityUserModel } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from './start-task-cloud.component';
 import { of, throwError } from 'rxjs';
@@ -58,7 +58,7 @@ describe('StartTaskCloudComponent', () => {
         schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     });
 
-    beforeEach(async (() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(StartTaskCloudComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -72,53 +72,62 @@ describe('StartTaskCloudComponent', () => {
         spyOn(identityService, 'getCurrentUserInfo').and.returnValue(mockUser);
         spyOn(formDefinitionSelectorCloudService, 'getForms').and.returnValue(of([]));
         fixture.detectChanges();
-    }));
+    });
 
     describe('create task', () => {
 
-        it('should create new task when start button is clicked', async(() => {
+        it('should create new task when start button is clicked', async () => {
             const successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(createNewTaskSpy).toHaveBeenCalled();
-                expect(successSpy).toHaveBeenCalled();
-            });
-        }));
 
-        it('should send on success event when the task is started', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(createNewTaskSpy).toHaveBeenCalled();
+            expect(successSpy).toHaveBeenCalled();
+        });
+
+        it('should send on success event when the task is started', async () => {
             const successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
             component.assigneeName = 'fake-assignee';
-            fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
-            createTaskButton.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(successSpy).toHaveBeenCalledWith(taskDetailsMock);
-            });
-        }));
 
-        it('should send on success event when only name is given', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
+            createTaskButton.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(successSpy).toHaveBeenCalledWith(taskDetailsMock);
+        });
+
+        it('should send on success event when only name is given', async () => {
             const successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
+
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            await fixture.whenStable();
+
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(successSpy).toHaveBeenCalled();
-            });
-        }));
+            await fixture.whenStable();
+
+            expect(successSpy).toHaveBeenCalled();
+        });
 
         it('should not emit success event when data not present', () => {
             const successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('');
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(createNewTaskSpy).not.toHaveBeenCalled();
             expect(successSpy).not.toHaveBeenCalled();
@@ -128,10 +137,10 @@ describe('StartTaskCloudComponent', () => {
             component.taskForm.controls['name'].setValue('fakeName');
             component.appName = 'fakeAppName';
             fixture.detectChanges();
-            const assigneeInput = <HTMLElement> element.querySelector('input.adf-cloud-input');
+            const assigneeInput = element.querySelector<HTMLElement>('input.adf-cloud-input');
             assigneeInput.nodeValue = 'a';
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -145,7 +154,7 @@ describe('StartTaskCloudComponent', () => {
             component.taskForm.controls['name'].setValue('fakeName');
             component.appName = 'fakeAppName';
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -200,10 +209,10 @@ describe('StartTaskCloudComponent', () => {
         createNewTaskSpy.and.returnValue(throwError({}));
         component.appName = 'fakeAppName';
         fixture.detectChanges();
-        const assigneeInput = <HTMLElement> element.querySelector('input.adf-cloud-input');
+        const assigneeInput = element.querySelector<HTMLElement>('input.adf-cloud-input');
         assigneeInput.nodeValue = 'a';
         fixture.detectChanges();
-        const createTaskButton = <HTMLElement> element.querySelector('#button-start');
+        const createTaskButton = element.querySelector<HTMLElement>('#button-start');
         createTaskButton.click();
         fixture.detectChanges();
         expect(errorSpy).toHaveBeenCalled();

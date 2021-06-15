@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EmptyListComponent } from './empty-list.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('EmptyListComponentComponent', () => {
-    let component: EmptyListComponent;
     let fixture: ComponentFixture<EmptyListComponent>;
 
     setupTestBed({
@@ -34,22 +33,16 @@ describe('EmptyListComponentComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(EmptyListComponent);
-        component = fixture.componentInstance;
     });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    it('should be defined', () => {
-        expect(component).toBeDefined();
-    });
-
-    it('should render the input values', async(() => {
+    it('should render the input values', async () => {
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('.adf-empty-list_template')).toBeDefined();
-        });
-    }));
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('.adf-empty-list_template')).toBeDefined();
+    });
 });

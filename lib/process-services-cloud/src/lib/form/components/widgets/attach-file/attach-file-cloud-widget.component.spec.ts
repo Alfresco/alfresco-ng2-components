@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
@@ -114,7 +114,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         downloadService = TestBed.inject(DownloadService);
         fixture = TestBed.createComponent(AttachFileCloudWidgetComponent);
         widget = fixture.componentInstance;
@@ -130,29 +130,28 @@ describe('AttachFileCloudWidgetComponent', () => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
         openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeMinimalNode]));
-    }));
+    });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    it('should show up as simple upload when is configured for only local files', async(() => {
+    it('should show up as simple upload when is configured for only local files', async () => {
         createUploadWidgetField(new FormModel(), 'simple-upload-button', [], allSourceParams);
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        fixture.whenStable().then(() => {
-            expect(element.querySelector('#simple-upload-button')).not.toBeNull();
-        });
-    }));
+        expect(element.querySelector('#simple-upload-button')).not.toBeNull();
+    });
 
-    it('should show up as content upload when is configured with content', async(() => {
+    it('should show up as content upload when is configured with content', async () => {
         createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], contentSourceParam);
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        fixture.whenStable().then(() => {
-            expect(element.querySelector('.adf-attach-widget__menu-upload')).not.toBeNull();
-        });
-    }));
+        expect(element.querySelector('.adf-attach-widget__menu-upload')).not.toBeNull();
+    });
+
     it('should be able to attach files coming from content selector', async () => {
         createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], contentSourceParam);
         fixture.detectChanges();
@@ -183,14 +182,13 @@ describe('AttachFileCloudWidgetComponent', () => {
         expect(fileIcon).not.toBeNull();
     });
 
-    it('should display file list when field has value', async(() => {
+    it('should display file list when field has value', async () => {
         createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [fakeLocalPngResponse], onlyLocalParams);
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        fixture.whenStable().then(() => {
-            expect(element.querySelector('#file-1155-icon')).not.toBeNull();
-        });
-    }));
+        expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+    });
 
     it('should be able to set label property for Attach File widget', () => {
         createUploadWidgetField(new FormModel(), 'attach-file', [], onlyLocalParams, false, 'Label', true);
@@ -469,56 +467,68 @@ describe('AttachFileCloudWidgetComponent', () => {
                 expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', false, true);
             });
 
-            it('should display tooltip when tooltip is set', async(() => {
+            it('should display tooltip when tooltip is set', async () => {
                 createUploadWidgetField(new FormModel(), 'attach-file-attach', [], onlyLocalParams);
 
                 fixture.detectChanges();
-                const attachElement: any = element.querySelector('#attach-file-attach');
+                await fixture.whenStable();
+
+                const attachElement = element.querySelector('#attach-file-attach');
                 const tooltip = attachElement.getAttribute('ng-reflect-message');
 
                 expect(tooltip).toEqual(widget.field.tooltip);
-            }));
+            });
         });
     });
 
     describe('when is readonly', () => {
 
-        it('should show empty list message when there are no file', async(() => {
+        it('should show empty list message when there are no file', async () => {
             createUploadWidgetField(new FormModel(), 'empty-test', [], onlyLocalParams, null, null, true);
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('#adf-attach-empty-list-empty-test')).not.toBeNull();
-            });
-        }));
 
-        it('should not show empty list message when there are files', async(() => {
-            createUploadWidgetField(new FormModel(), 'fill-test', [fakeLocalPngResponse], onlyLocalParams, null, null, true);
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('#adf-attach-empty-list-fill-test')).toBeNull();
-            });
-        }));
+            await fixture.whenStable();
 
-        it('should not show remove button when there are files attached', async(() => {
+            expect(element.querySelector('#adf-attach-empty-list-empty-test')).not.toBeNull();
+        });
+
+        it('should not show empty list message when there are files', async () => {
             createUploadWidgetField(new FormModel(), 'fill-test', [fakeLocalPngResponse], onlyLocalParams, null, null, true);
+
             fixture.detectChanges();
-            const menuButton: HTMLButtonElement = <HTMLButtonElement> (
+            await fixture.whenStable();
+
+            expect(element.querySelector('#adf-attach-empty-list-fill-test')).toBeNull();
+        });
+
+        it('should not show remove button when there are files attached', async () => {
+            createUploadWidgetField(new FormModel(), 'fill-test', [fakeLocalPngResponse], onlyLocalParams, null, null, true);
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const menuButton = <HTMLButtonElement> (
                 fixture.debugElement.query(By.css('#file-1155-option-menu'))
                     .nativeElement
             );
             menuButton.click();
+
             fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(fixture.debugElement.query(By.css('#file-1155-remove'))).toBeNull();
-        }));
+        });
 
-        it('should not show any action when the attached file is a physical record', async(() => {
+        it('should not show any action when the attached file is a physical record', async () => {
             createUploadWidgetField(new FormModel(), 'fill-test', [fakeLocalPhysicalRecordResponse], onlyLocalParams, null, null, true);
+
             fixture.detectChanges();
+            await fixture.whenStable();
+
             const menuButton = fixture.debugElement.query(By.css('#file-1155-option-menu'));
 
             expect(menuButton).toBeNull();
-        }));
+        });
     });
 
     describe('when a file is uploaded', () => {
@@ -532,9 +542,12 @@ describe('AttachFileCloudWidgetComponent', () => {
             });
             widget.field.id = 'attach-file-alfresco';
             widget.field.params = <FormFieldMetadata> menuTestSourceParam;
+
             fixture.detectChanges();
             await fixture.whenStable();
+
             clickOnAttachFileWidget('attach-file-alfresco');
+
             fixture.detectChanges();
             await fixture.whenStable();
         });

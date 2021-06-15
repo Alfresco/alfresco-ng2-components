@@ -16,7 +16,7 @@
  */
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { async, TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { AppConfigService } from './app-config.service';
 import { AppConfigModule } from './app-config.module';
 import { ExtensionConfig, ExtensionService } from '@alfresco/adf-extensions';
@@ -111,14 +111,14 @@ describe('AppConfigService', () => {
         done();
     });
 
-    it('should stream only the selected attribute changes when using select', async(() => {
+    it('should stream only the selected attribute changes when using select',  fakeAsync(() => {
         appConfigService.config.testProp = true;
         appConfigService.select('testProp').subscribe((property) => {
             expect(property).toBeTruthy();
         });
     }));
 
-    it('should stream the page size value when is set', async(() => {
+    it('should stream the page size value when is set', fakeAsync(() => {
         appConfigService.config.testProp = true;
         appConfigService.onLoad.subscribe((config) => {
             expect(config.testProp).toBeTruthy();

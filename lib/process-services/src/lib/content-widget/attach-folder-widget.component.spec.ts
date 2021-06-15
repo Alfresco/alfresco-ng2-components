@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AttachFolderWidgetComponent } from './attach-folder-widget.component';
 import {
@@ -61,20 +61,16 @@ describe('AttachFolderWidgetComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(AttachFolderWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         contentNodeDialogService = TestBed.inject(ContentNodeDialogService);
         nodeService = TestBed.inject(NodesApiService);
-    }));
+    });
 
     afterEach(() => {
         fixture.destroy();
-    });
-
-    it('should be able to create the widget', () => {
-        expect(widget).not.toBeNull();
     });
 
     it('should be rendered correctly', () => {
@@ -89,7 +85,7 @@ describe('AttachFolderWidgetComponent', () => {
         expect(element.querySelector('#folder-fake-widget-button')).not.toBeNull();
     });
 
-    it('should show the folder selected by content node', async(() => {
+    it('should show the folder selected by content node', async () => {
         spyOn(contentNodeDialogService, 'openFolderBrowseDialogBySite').and.returnValue(of([fakeMinimalNode]));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
@@ -98,14 +94,17 @@ describe('AttachFolderWidgetComponent', () => {
             value: null
         });
         fixture.detectChanges();
-        fixture.debugElement.query(By.css('#folder-fake-widget-button')).nativeElement.click();
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(element.querySelector('#folder-fake-widget')).not.toBeNull();
-        });
-    }));
+        await fixture.whenStable();
 
-    it('should show the folder selected by content node opening on a configured folder', async(() => {
+        fixture.debugElement.query(By.css('#folder-fake-widget-button')).nativeElement.click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(element.querySelector('#folder-fake-widget')).not.toBeNull();
+    });
+
+    it('should show the folder selected by content node opening on a configured folder', async () => {
         spyOn(contentNodeDialogService, 'openFolderBrowseDialogByFolderId').and.returnValue(of([fakeMinimalNode]));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
@@ -114,15 +113,19 @@ describe('AttachFolderWidgetComponent', () => {
             value: null,
             params: definedSourceParams
         });
+
         fixture.detectChanges();
+        await fixture.whenStable();
+
         fixture.debugElement.query(By.css('#folder-fake-widget-button')).nativeElement.click();
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(element.querySelector('#folder-fake-widget')).not.toBeNull();
-        });
-    }));
 
-    it('should retrieve the node information on init', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(element.querySelector('#folder-fake-widget')).not.toBeNull();
+    });
+
+    it('should retrieve the node information on init', async () => {
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeMinimalNode));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
@@ -130,14 +133,15 @@ describe('AttachFolderWidgetComponent', () => {
             id: 'fake-widget',
             value: 'fake-pippo-baudo-id'
         });
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(element.querySelector('#folder-fake-widget')).not.toBeNull();
-            expect(element.querySelector('#folder-fake-widget-button')).toBeNull();
-        });
-    }));
 
-    it('should remove the folder via the remove button', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(element.querySelector('#folder-fake-widget')).not.toBeNull();
+        expect(element.querySelector('#folder-fake-widget-button')).toBeNull();
+    });
+
+    it('should remove the folder via the remove button', async () => {
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeMinimalNode));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
@@ -145,13 +149,17 @@ describe('AttachFolderWidgetComponent', () => {
             id: 'fake-widget',
             value: 'fake-pippo-baudo-id'
         });
+
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(element.querySelector('#folder-fake-widget')).not.toBeNull();
-            expect(element.querySelector('#folder-fake-widget-button')).toBeNull();
-            fixture.debugElement.query(By.css('#folder-fake-widget-remove')).nativeElement.click();
-            fixture.detectChanges();
-            expect(element.querySelector('#folder-fake-widget')).toBeNull();
-        });
-    }));
+        await fixture.whenStable();
+
+        expect(element.querySelector('#folder-fake-widget')).not.toBeNull();
+        expect(element.querySelector('#folder-fake-widget-button')).toBeNull();
+        fixture.debugElement.query(By.css('#folder-fake-widget-remove')).nativeElement.click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(element.querySelector('#folder-fake-widget')).toBeNull();
+    });
 });

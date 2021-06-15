@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { Subject, of } from 'rxjs';
@@ -80,33 +80,34 @@ describe('FolderEditDirective', () => {
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
     });
 
-    it('should not emit folderEdit event when input value is undefined', () => {
+    it('should not emit folderEdit event when input value is undefined', async () => {
         spyOn(dialogRefMock, 'afterClosed').and.returnValue(of(null));
         spyOn(contentService.folderEdit, 'next');
 
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        fixture.whenStable().then(() => {
-            element.nativeElement.click();
-            expect(contentService.folderEdit.next).not.toHaveBeenCalled();
-        });
+        element.nativeElement.click();
+        expect(contentService.folderEdit.next).not.toHaveBeenCalled();
     });
 
-    it('should emit success event with node if the folder creation was successful', async(() => {
-        const testNode = <Node> {};
+    it('should emit success event with node if the folder creation was successful', async () => {
         fixture.detectChanges();
+        const testNode = <Node> {};
 
         element.triggerEventHandler('click', event);
         dialogRefMock.componentInstance.success.next(testNode);
 
-        fixture.whenStable().then(() => {
-            expect(fixture.componentInstance.successParameter).toBe(testNode);
-        });
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(fixture.componentInstance.successParameter).toBe(testNode);
+    });
 
-    it('should open the dialog with the proper title', async(() => {
+    it('should open the dialog with the proper title', async () => {
         fixture.detectChanges();
         element.triggerEventHandler('click', event);
+
+        await fixture.whenStable();
 
         expect(dialog.open).toHaveBeenCalledWith(jasmine.any(Function), {
             data: {
@@ -115,5 +116,5 @@ describe('FolderEditDirective', () => {
             },
             width: jasmine.any(String)
         });
-    }));
+    });
 });

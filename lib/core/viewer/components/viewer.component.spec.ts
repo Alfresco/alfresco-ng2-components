@@ -18,7 +18,7 @@
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AlfrescoApiService, RenditionsService } from '../../services';
 
 import { throwError } from 'rxjs';
@@ -715,7 +715,7 @@ describe('ViewerComponent', () => {
                 });
             });
 
-            it('should emit `showViewerChange` event on close', async(() => {
+            it('should emit `showViewerChange` event on close', async () => {
 
                 spyOn(component.showViewerChange, 'emit');
 
@@ -723,11 +723,10 @@ describe('ViewerComponent', () => {
                 button.click();
 
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(component.showViewerChange.emit).toHaveBeenCalled();
-                });
-            }));
+                await fixture.whenStable();
+
+                expect(component.showViewerChange.emit).toHaveBeenCalled();
+            });
 
             it('should not render close viewer button if it is a shared link', (done) => {
                 spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')

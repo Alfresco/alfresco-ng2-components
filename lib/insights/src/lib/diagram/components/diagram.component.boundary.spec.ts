@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import * as boundaryEventMock from '../../mock/diagram/diagram-boundary.mock';
 import { DiagramComponent } from './diagram.component';
@@ -43,9 +43,7 @@ describe('Diagrams boundary', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         fixture.detectChanges();
-    });
 
-    beforeEach(() => {
         jasmine.Ajax.install();
         component.processInstanceId = '38399';
         component.processDefinitionId = 'fakeprocess:24:38399';
@@ -53,7 +51,6 @@ describe('Diagrams boundary', () => {
     });
 
     afterEach(() => {
-        component.success.unsubscribe();
         fixture.destroy();
         jasmine.Ajax.uninstall();
     });
@@ -68,7 +65,7 @@ describe('Diagrams boundary', () => {
 
     describe('Diagrams component Boundary events with process instance id: ', () => {
 
-        it('Should render the Boundary time event', async(() => {
+        it('Should render the Boundary time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -90,14 +87,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryTimeEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Boundary time event', async(() => {
+        it('Should render the Active Boundary time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -123,14 +121,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryTimeEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Boundary time event', async(() => {
+        it('Should render the Completed Boundary time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -156,14 +155,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryTimeEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Boundary error event', async(() => {
+        it('Should render the Boundary error event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -185,14 +185,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryErrorEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Boundary error event', async(() => {
+        it('Should render the Active Boundary error event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -218,14 +219,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryErrorEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Boundary error event', async(() => {
+        it('Should render the Completed Boundary error event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -251,14 +253,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryErrorEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Boundary signal event', async(() => {
+        it('Should render the Boundary signal event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -280,14 +283,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundarySignalEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Boundary signal event', async(() => {
+        it('Should render the Active Boundary signal event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -313,14 +317,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundarySignalEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Boundary signal event', async(() => {
+        it('Should render the Completed Boundary signal event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -346,14 +351,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundarySignalEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Boundary signal message', async(() => {
+        it('Should render the Boundary signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -375,14 +381,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Boundary signal message', async(() => {
+        it('Should render the Active Boundary signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -408,14 +415,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Boundary signal message', async(() => {
+        it('Should render the Completed Boundary signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -441,14 +449,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Boundary signal message', async(() => {
+        it('Should render the Boundary signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -470,14 +479,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Boundary signal message', async(() => {
+        it('Should render the Active Boundary signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -503,14 +513,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Boundary signal message', async(() => {
+        it('Should render the Completed Boundary signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -536,17 +547,18 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
     });
 
     describe('Diagrams component Boundary events: ', () => {
 
-        it('Should render the Boundary time event', async(() => {
+        it('Should render the Boundary time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -568,14 +580,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryTimeEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Boundary error event', async(() => {
+        it('Should render the Boundary error event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -597,14 +610,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryErrorEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Boundary signal event', async(() => {
+        it('Should render the Boundary signal event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -626,14 +640,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundarySignalEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Boundary signal message', async(() => {
+        it('Should render the Boundary signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -655,14 +670,15 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Boundary signal message', async(() => {
+        it('Should render the Boundary signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -684,11 +700,12 @@ describe('Diagrams boundary', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
             ajaxReply(resp);
-        }));
+        });
     });
 });

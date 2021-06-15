@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { ErrorContentComponent } from './error-content.component';
 import { TranslationService } from '../../services/translation.service';
@@ -40,7 +40,6 @@ describe('ErrorContentComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     describe(' with an undefined error', () => {
@@ -55,56 +54,57 @@ describe('ErrorContentComponent', () => {
             ]
         });
 
-        it('should create error component', async(() => {
+        it('should render error code', async () => {
             fixture.detectChanges();
-            expect(errorContentComponent).toBeTruthy();
-        }));
+            await fixture.whenStable();
 
-        it('should render error code', async(() => {
-            fixture.detectChanges();
             const errorContentElement = element.querySelector('.adf-error-content-code');
             expect(errorContentElement).not.toBeNull();
             expect(errorContentElement).toBeDefined();
-        }));
+        });
 
-        it('should render error title', async(() => {
+        it('should render error title', async () => {
             fixture.detectChanges();
+            await fixture.whenStable();
+
             const errorContentElement = element.querySelector('.adf-error-content-title');
             expect(errorContentElement).not.toBeNull();
             expect(errorContentElement).toBeDefined();
-        }));
+        });
 
-        it('should render error description', async(() => {
+        it('should render error description', async () => {
             fixture.detectChanges();
+            await fixture.whenStable();
+
             const errorContentElement = element.querySelector('.adf-error-content-description');
             expect(errorContentElement).not.toBeNull();
             expect(errorContentElement).toBeDefined();
-        }));
+        });
 
-        it('should render error description', async(() => {
+        it('should render error description', async () => {
             fixture.detectChanges();
+            await fixture.whenStable();
+
             const errorContentElement = element.querySelector('.adf-error-content-description');
             expect(errorContentElement).not.toBeNull();
             expect(errorContentElement).toBeDefined();
-        }));
+        });
 
-        it('should hide secondary button if this one has no value', async(() => {
-            spyOn(translateService, 'instant').and.callFake(() => {
-                return '';
-            });
+        it('should hide secondary button if this one has no value', async () => {
+            spyOn(translateService, 'instant').and.returnValue('');
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const errorContentElement = element.querySelector('.adf-error-content-description-link');
-                expect(errorContentElement).toBeNull();
-            });
-        }));
+            await fixture.whenStable();
 
-        it('should navigate to the default error UNKNOWN if it does not find the error', async(() => {
+            const errorContentElement = element.querySelector('.adf-error-content-description-link');
+            expect(errorContentElement).toBeNull();
+        });
+
+        it('should navigate to the default error UNKNOWN if it does not find the error', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(errorContentComponent.errorCode).toBe('UNKNOWN');
-            });
-        }));
+            await fixture.whenStable();
+
+            expect(errorContentComponent.errorCode).toBe('UNKNOWN');
+        });
     });
 
     describe(' with a specific error', () => {
@@ -119,12 +119,12 @@ describe('ErrorContentComponent', () => {
             ]
         });
 
-        it('should navigate to an error given by the route params', async(() => {
+        it('should navigate to an error given by the route params', async () => {
             spyOn(translateService, 'instant').and.returnValue(of('404'));
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(errorContentComponent.errorCodeTranslated).toBe('404');
-            });
-        }));
+            await fixture.whenStable();
+
+            expect(errorContentComponent.errorCodeTranslated).toBe('404');
+        });
     });
 });

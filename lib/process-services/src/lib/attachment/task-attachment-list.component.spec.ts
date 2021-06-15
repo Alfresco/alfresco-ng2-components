@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
@@ -137,15 +137,12 @@ describe('TaskAttachmentList', () => {
         expect(getTaskRelatedContentSpy).not.toHaveBeenCalled();
     });
 
-    it('should display attachments when the task has attachments', (done) => {
+    it('should display attachments when the task has attachments', async () => {
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            expect(fixture.debugElement.queryAll(By.css('.adf-datatable-body > .adf-datatable-row')).length).toBe(2);
-            done();
-        });
+        await fixture.whenStable();
+        expect(fixture.debugElement.queryAll(By.css('.adf-datatable-body > .adf-datatable-row')).length).toBe(2);
     });
 
     it('emit document when a user wants to view the document', () => {
@@ -160,7 +157,7 @@ describe('TaskAttachmentList', () => {
         expect(getFileRawContentSpy).toHaveBeenCalled();
     });
 
-    it('should show the empty default message when has no custom template', async(() => {
+    it('should show the empty default message when has no custom template', async () => {
         getTaskRelatedContentSpy.and.returnValue(of({
             'size': 0,
             'total': 0,
@@ -171,49 +168,52 @@ describe('TaskAttachmentList', () => {
         component.ngOnChanges({ 'taskId': change });
         component.hasCustomTemplate = false;
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('.adf-custom-empty-template')).toBeNull();
-            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
-        });
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    it('should display all actions if attachments are not read only', async(() => {
+        expect(fixture.nativeElement.querySelector('.adf-custom-empty-template')).toBeNull();
+        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
+    });
+
+    it('should display all actions if attachments are not read only', async () => {
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         fixture.detectChanges();
+        await fixture.whenStable();
 
         const actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
         actionButton.click();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
-            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
-            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
-            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
-            expect(actionMenu).toBe(3);
-        });
-    }));
 
-    it('should not display remove action if attachments are read only', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+        expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
+        expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
+        expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
+        expect(actionMenu).toBe(3);
+    });
+
+    it('should not display remove action if attachments are read only', async () => {
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         component.disabled = true;
         fixture.detectChanges();
+        await fixture.whenStable();
 
         const actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
         actionButton.click();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
-            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
-            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
-            expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
-            expect(actionMenu).toBe(2);
-        });
-    }));
 
-    it('should show the empty list component when the attachments list is empty', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+        expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
+        expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
+        expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
+        expect(actionMenu).toBe(2);
+    });
+
+    it('should show the empty list component when the attachments list is empty', async () => {
         getTaskRelatedContentSpy.and.returnValue(of({
             'size': 0,
             'total': 0,
@@ -222,14 +222,14 @@ describe('TaskAttachmentList', () => {
         }));
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
-        });
-    }));
 
-    it('should show the empty list component when the attachments list is empty for completed task', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
+    });
+
+    it('should show the empty list component when the attachments list is empty for completed task', async () => {
         getTaskRelatedContentSpy.and.returnValue(of({
             'size': 0,
             'total': 0,
@@ -244,19 +244,18 @@ describe('TaskAttachmentList', () => {
             fixture.detectChanges();
             expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
         });
-    }));
+    });
 
-    it('should not show the empty list component when the attachments list is not empty for completed task', (done) => {
+    it('should not show the empty list component when the attachments list is not empty for completed task', async () => {
         getTaskRelatedContentSpy.and.returnValue(of(mockAttachment));
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         component.disabled = true;
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]')).toBeNull();
-            done();
-        });
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]')).toBeNull();
     });
 
     it('loading should be false by default', () => {
@@ -265,28 +264,25 @@ describe('TaskAttachmentList', () => {
 
     describe('change detection', () => {
 
-        let change;
-        let nullChange;
+        let change: SimpleChange;
+        let nullChange: SimpleChange;
 
         beforeEach(() => {
             change = new SimpleChange('123', '456', true);
             nullChange = new SimpleChange('123', null, true);
         });
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             component.taskId = '123';
-            fixture.whenStable().then(() => {
-                getTaskRelatedContentSpy.calls.reset();
-            });
-        }));
+            fixture.whenStable();
+        });
 
-        it('should fetch new attachments when taskId changed', (done) => {
+        it('should fetch new attachments when taskId changed', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                component.ngOnChanges({ 'taskId': change });
-                expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456', 'true');
-                done();
-            });
+            await fixture.whenStable();
+
+            component.ngOnChanges({ 'taskId': change });
+            expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456', 'true');
         });
 
         it('should NOT fetch new attachments when empty change set made', () => {
@@ -302,18 +298,17 @@ describe('TaskAttachmentList', () => {
 
     describe('Delete attachments', () => {
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             component.taskId = '123';
             fixture.whenStable();
-        }));
-
-        it('should display a dialog to the user when the Add button clicked', () => {
-            expect(true).toBe(true);
         });
 
-        it('delete content by contentId', () => {
+        it('delete content by contentId', async () => {
             component.deleteAttachmentById(5);
+
             fixture.detectChanges();
+            await fixture.whenStable();
+
             expect(deleteContentSpy).toHaveBeenCalled();
         });
    });
@@ -352,12 +347,12 @@ describe('Custom CustomEmptyTemplateComponent', () => {
         fixture.destroy();
     });
 
-    it('should render the custom template', async(() => {
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
-            expect(title.length).toBe(1);
-            expect(title[0].nativeElement.innerText).toBe('Custom header');
-        });
-    }));
+    it('should render the custom template', async () => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
+        expect(title.length).toBe(1);
+        expect(title[0].nativeElement.innerText).toBe('Custom header');
+    });
 });

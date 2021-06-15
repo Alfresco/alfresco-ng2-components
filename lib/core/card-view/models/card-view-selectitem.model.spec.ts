@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async } from '@angular/core/testing';
+import { fakeAsync } from '@angular/core/testing';
 import { CardViewSelectItemModel } from './card-view-selectitem.model';
 import { CardViewSelectItemProperties } from '../interfaces/card-view.interfaces';
 import { of } from 'rxjs';
@@ -35,7 +35,7 @@ describe('CardViewSelectItemModel', () => {
     });
 
     describe('displayValue', () => {
-        it('should return the value if it is present', async(() => {
+        it('should return the value if it is present', fakeAsync(() => {
             const itemModel = new CardViewSelectItemModel(properties);
 
             itemModel.displayValue.subscribe((value) => {

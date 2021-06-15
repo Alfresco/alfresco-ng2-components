@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
@@ -136,52 +136,55 @@ describe('ProcessAttachmentListComponent', () => {
         expect(getProcessRelatedContentSpy).not.toHaveBeenCalled();
     });
 
-    it('should display attachments when the process has attachments', async(() => {
+    it('should display attachments when the process has attachments', async () => {
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
         fixture.detectChanges();
+        await fixture.whenStable();
+        expect(fixture.debugElement.queryAll(By.css('.adf-datatable-body > .adf-datatable-row')).length).toBe(2);
+    });
 
-        fixture.whenStable().then(() => {
-            expect(fixture.debugElement.queryAll(By.css('.adf-datatable-body > .adf-datatable-row')).length).toBe(2);
-        });
-    }));
-
-    it('should display all actions if attachments are not read only', async(() => {
+    it('should display all actions if attachments are not read only', async () => {
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
         fixture.detectChanges();
+        await fixture.whenStable();
+
         const actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
         actionButton.click();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
-            expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
-            expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
-            expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
-            expect(actionMenu).toBe(3);
-        });
-    }));
 
-    it('should not display remove action if attachments are read only', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+        expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
+        expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
+        expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
+        expect(actionMenu).toBe(3);
+    });
+
+    it('should not display remove action if attachments are read only', async () => {
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
         component.disabled = true;
 
         fixture.detectChanges();
+        await fixture.whenStable();
+
         const actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
         actionButton.click();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
-            expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
-            expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
-            expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
-            expect(actionMenu).toBe(2);
-        });
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    it('should show the empty list component when the attachments list is empty', async(() => {
+        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+        expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
+        expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
+        expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
+        expect(actionMenu).toBe(2);
+    });
+
+    it('should show the empty list component when the attachments list is empty', async () => {
         getProcessRelatedContentSpy.and.returnValue(of({
             'size': 0,
             'total': 0,
@@ -190,31 +193,12 @@ describe('ProcessAttachmentListComponent', () => {
         }));
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({'processInstanceId': change});
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
-        });
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
+    });
 
-    it('should not show the empty list drag and drop component when is disabled', async(() => {
-        getProcessRelatedContentSpy.and.returnValue(of({
-            'size': 0,
-            'total': 0,
-            'start': 0,
-            'data': []
-        }));
-        const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'processInstanceId': change});
-        component.disabled = true;
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list .adf-empty-list-drag_drop')).toBeNull();
-            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
-        });
-    }));
-
-    it('should show the empty list component when the attachments list is empty for completed process', async(() => {
+    it('should not show the empty list drag and drop component when is disabled', async () => {
         getProcessRelatedContentSpy.and.returnValue(of({
             'size': 0,
             'total': 0,
@@ -225,24 +209,40 @@ describe('ProcessAttachmentListComponent', () => {
         component.ngOnChanges({'processInstanceId': change});
         component.disabled = true;
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim())
-            .toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
-        });
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(fixture.nativeElement.querySelector('adf-empty-list .adf-empty-list-drag_drop')).toBeNull();
+        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
+    });
 
-    it('should not show the empty list component when the attachments list is not empty for completed process', async(() => {
+    it('should show the empty list component when the attachments list is empty for completed process', async () => {
+        getProcessRelatedContentSpy.and.returnValue(of({
+            'size': 0,
+            'total': 0,
+            'start': 0,
+            'data': []
+        }));
+        const change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({'processInstanceId': change});
+        component.disabled = true;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim())
+        .toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
+    });
+
+    it('should not show the empty list component when the attachments list is not empty for completed process', async () => {
         getProcessRelatedContentSpy.and.returnValue(of(mockAttachment));
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({'processInstanceId': change});
         component.disabled = true;
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]')).toBeNull();
-        });
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]')).toBeNull();
+    });
 
     it('should call getProcessRelatedContent with opt isRelatedContent=true', () => {
         getProcessRelatedContentSpy.and.returnValue(of(mockAttachment));
@@ -258,12 +258,11 @@ describe('ProcessAttachmentListComponent', () => {
         const change = new SimpleChange('123', '456', true);
         const nullChange = new SimpleChange('123', null, true);
 
-        beforeEach(async(() => {
+        beforeEach(async () => {
             component.processInstanceId = '123';
-            fixture.whenStable().then(() => {
-                getProcessRelatedContentSpy.calls.reset();
-            });
-        }));
+            await fixture.whenStable();
+            getProcessRelatedContentSpy.calls.reset();
+        });
 
         it('should fetch new attachments when processInstanceId changed', () => {
             component.ngOnChanges({ 'processInstanceId': change });
@@ -280,18 +279,6 @@ describe('ProcessAttachmentListComponent', () => {
             expect(getProcessRelatedContentSpy).not.toHaveBeenCalled();
         });
     });
-
-    describe('Delete attachments', () => {
-
-        beforeEach(async(() => {
-            component.processInstanceId = '123';
-            fixture.whenStable();
-        }));
-
-        it('should display a dialog to the user when the Add button clicked', () => {
-            expect(true).toBe(true);
-        });
-   });
 });
 
 @Component({
@@ -327,12 +314,12 @@ describe('Custom CustomEmptyTemplateComponent', () => {
         fixture.destroy();
     });
 
-    it('should render the custom template', async(() => {
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
-            expect(title.length).toBe(1);
-            expect(title[0].nativeElement.innerText).toBe('Custom header');
-        });
-    }));
+    it('should render the custom template', async () => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const title: any = fixture.debugElement.queryAll(By.css('[adf-empty-list-header]'));
+        expect(title.length).toBe(1);
+        expect(title[0].nativeElement.innerText).toBe('Custom header');
+    });
 });

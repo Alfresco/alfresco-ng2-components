@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { Subject, of } from 'rxjs';
@@ -112,19 +112,19 @@ describe('FolderCreateDirective', () => {
             });
         });
 
-        it('should emit success event with node if the folder creation was successful', async(() => {
+        it('should emit success event with node if the folder creation was successful', async () => {
             const testNode = <Node> {};
-            fixture.detectChanges();
 
             element.triggerEventHandler('click', event);
             dialogRefMock.componentInstance.success.next(testNode);
 
-            fixture.whenStable().then(() => {
-                expect(fixture.componentInstance.successParameter).toBe(testNode);
-            });
-        }));
+            fixture.whenStable();
+            await fixture.whenStable();
 
-        it('should open the dialog with the proper title and nodeType', async(() => {
+            expect(fixture.componentInstance.successParameter).toBe(testNode);
+        });
+
+        it('should open the dialog with the proper title and nodeType', () => {
             fixture.detectChanges();
             element.triggerEventHandler('click', event);
 
@@ -136,7 +136,7 @@ describe('FolderCreateDirective', () => {
                 },
                 width: jasmine.any(String)
             });
-        }));
+        });
     });
 
     describe('Without overrides', () => {
@@ -149,7 +149,7 @@ describe('FolderCreateDirective', () => {
             spyOn(dialog, 'open').and.returnValue(dialogRefMock);
         });
 
-        it('should open the dialog with the default title and nodeType', async(() => {
+        it('should open the dialog with the default title and nodeType', () => {
             fixture.detectChanges();
             element.triggerEventHandler('click', event);
 
@@ -161,6 +161,6 @@ describe('FolderCreateDirective', () => {
                 },
                 width: jasmine.any(String)
             });
-        }));
+        });
     });
 });

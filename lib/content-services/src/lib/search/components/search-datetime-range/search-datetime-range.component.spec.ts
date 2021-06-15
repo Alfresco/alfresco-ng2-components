@@ -17,7 +17,7 @@
 
 import { SearchDatetimeRangeComponent } from './search-datetime-range.component';
 import { setupTestBed } from '@alfresco/adf-core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -45,17 +45,20 @@ describe('SearchDatetimeRangeComponent', () => {
 
     afterEach(() => fixture.destroy());
 
-    it('should setup form elements on init', () => {
+    it('should setup form elements on init', async () => {
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(component.from).toBeDefined();
         expect(component.to).toBeDefined();
         expect(component.form).toBeDefined();
     });
 
-    it('should setup form control with formatted valid datetime on change', () => {
+    it('should setup form control with formatted valid datetime on change', async () => {
         component.settings = { field: 'cm:created', datetimeFormat: datetimeFormatFixture };
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
         const inputString = '20-feb-18 20:00';
         const momentFromInput = moment(inputString, datetimeFormatFixture);
@@ -67,9 +70,11 @@ describe('SearchDatetimeRangeComponent', () => {
         expect(component.from.value.toString()).toEqual(momentFromInput.toString());
     });
 
-    it('should NOT setup form control with invalid datetime on change', () => {
+    it('should NOT setup form control with invalid datetime on change', async () => {
         component.settings = { field: 'cm:created', datetimeFormat: datetimeFormatFixture };
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
         const inputString = '2017-10-16 20:f:00';
         const momentFromInput = moment(inputString, datetimeFormatFixture);
@@ -81,8 +86,10 @@ describe('SearchDatetimeRangeComponent', () => {
         expect(component.from.value.toString()).not.toEqual(momentFromInput.toString());
     });
 
-    it('should reset form', () => {
+    it('should reset form', async () => {
         fixture.detectChanges();
+        await fixture.whenStable();
+
         component.form.setValue({ from: fromDatetime, to: toDatetime });
 
         expect(component.from.value).toEqual(fromDatetime);
@@ -95,15 +102,17 @@ describe('SearchDatetimeRangeComponent', () => {
         expect(component.form.value).toEqual({ from: '', to: '' });
     });
 
-    it('should reset fromMaxDatetime on reset', () => {
+    it('should reset fromMaxDatetime on reset', async () => {
         fixture.detectChanges();
+        await fixture.whenStable();
+
         component.fromMaxDatetime = fromDatetime;
         component.reset();
 
         expect(component.fromMaxDatetime).toEqual(undefined);
     });
 
-    it('should update query builder on reset', () => {
+    it('should update query builder on reset', async () => {
         const context: any = {
             queryFragments: {
                 createdDatetimeRange: 'query'
@@ -118,13 +127,15 @@ describe('SearchDatetimeRangeComponent', () => {
         spyOn(context, 'update').and.stub();
 
         fixture.detectChanges();
+        await fixture.whenStable();
+
         component.reset();
 
         expect(context.queryFragments.createdDatetimeRange).toEqual('');
         expect(context.update).toHaveBeenCalled();
     });
 
-    it('should update the query in UTC format when values change', () => {
+    it('should update the query in UTC format when values change', async () => {
         const context: any = {
             queryFragments: {},
             update() {
@@ -138,6 +149,8 @@ describe('SearchDatetimeRangeComponent', () => {
         spyOn(context, 'update').and.stub();
 
         fixture.detectChanges();
+        await fixture.whenStable();
+
         component.apply({
             from: fromDatetime,
             to: toDatetime
@@ -149,7 +162,7 @@ describe('SearchDatetimeRangeComponent', () => {
         expect(context.update).toHaveBeenCalled();
     });
 
-    it('should be able to update the query in UTC format from a GMT format', () => {
+    it('should be able to update the query in UTC format from a GMT format', async () => {
         const context: any = {
             queryFragments: {},
             update() {
@@ -165,6 +178,8 @@ describe('SearchDatetimeRangeComponent', () => {
         spyOn(context, 'update').and.stub();
 
         fixture.detectChanges();
+        await fixture.whenStable();
+
         component.apply({
             from: fromInGmt,
             to: toInGmt
@@ -178,6 +193,8 @@ describe('SearchDatetimeRangeComponent', () => {
 
     it('should show datetime-format error when an invalid datetime is set', async () => {
         fixture.detectChanges();
+        await fixture.whenStable();
+
         component.onChangedHandler({ value: '10/14/2020 10:00:00 PM' }, component.from);
 
         fixture.detectChanges();
@@ -188,6 +205,8 @@ describe('SearchDatetimeRangeComponent', () => {
 
     it('should not show datetime-format error when valid found', async () => {
         fixture.detectChanges();
+        await fixture.whenStable();
+
         const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="datetime-range-from-input"]');
         input.value = '10/16/2017 9:00 PM';
         input.dispatchEvent(new Event('input'));
@@ -198,15 +217,18 @@ describe('SearchDatetimeRangeComponent', () => {
         expect(component.getFromValidationMessage()).toEqual('');
     });
 
-    it('should have no maximum datetime by default', async(() => {
+    it('should have no maximum datetime by default', async () => {
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(fixture.debugElement.nativeElement.querySelector('input[ng-reflect-max]')).toBeNull();
-    }));
+    });
 
     it('should be able to set a fixed maximum datetime', async () => {
         component.settings = { field: 'cm:created', datetimeFormat: datetimeFormatFixture, maxDatetime: maxDatetime };
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
         const inputs = fixture.debugElement.nativeElement.querySelectorAll('input[ng-reflect-max="Tue Mar 10 2020 20:00:00 GMT+0"]');
 

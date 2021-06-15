@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { CommentModel } from '../models/comment.model';
 import { fakeProcessComment, fakeTasksComment, fakeUser1 } from '../mock/comment-process-service.mock';
 import { CommentProcessService } from './comment-process.service';
@@ -65,37 +65,40 @@ describe('Comment ProcessService Service', () => {
                     .returnValue(Promise.resolve({data: [fakeProcessComment, fakeProcessComment]}));
             });
 
-            it('should return the correct number of comments', async(() => {
+            it('should return the correct number of comments', (done) => {
                 service.getProcessInstanceComments(processId).subscribe((tasks) => {
                     expect(tasks.length).toBe(2);
+                    done();
                 });
-            }));
+            });
 
-            it('should return the correct comment data', async(() => {
+            it('should return the correct comment data', (done) => {
                 service.getProcessInstanceComments(processId).subscribe((comments) => {
                     const comment: any = comments[0];
                     expect(comment.id).toBe(fakeProcessComment.id);
                     expect(comment.created).toBe(fakeProcessComment.created);
                     expect(comment.message).toBe(fakeProcessComment.message);
                     expect(comment.createdBy.id).toBe(fakeProcessComment.createdBy.id);
+                    done();
                 });
-            }));
+            });
 
             it('should call service to fetch process instance comments', () => {
                 service.getProcessInstanceComments(processId);
                 expect(getProcessInstanceComments).toHaveBeenCalledWith(processId);
             });
 
-            it('should return a default error if no data is returned by the API', async(() => {
+            it('should return a default error if no data is returned by the API', (done) => {
                 getProcessInstanceComments = getProcessInstanceComments.and.returnValue(Promise.reject(null));
                 service.getProcessInstanceComments(processId).subscribe(
                     () => {
                     },
                     (res) => {
                         expect(res).toBe('Server error');
+                        done();
                     }
                 );
-            }));
+            });
 
         });
 
@@ -117,25 +120,26 @@ describe('Comment ProcessService Service', () => {
                 }, processId);
             });
 
-            it('should return the created comment', async(() => {
+            it('should return the created comment', (done) => {
                 service.addProcessInstanceComment(processId, message).subscribe((comment) => {
                     expect(comment.id).toBe(fakeProcessComment.id);
                     expect(comment.created).toBe(fakeProcessComment.created);
                     expect(comment.message).toBe(fakeProcessComment.message);
                     expect(comment.createdBy).toBe(fakeProcessComment.createdBy);
+                    done();
                 });
-            }));
+            });
 
-            it('should return a default error if no data is returned by the API', async(() => {
+            it('should return a default error if no data is returned by the API', (done) => {
                 addProcessInstanceComment = addProcessInstanceComment.and.returnValue(Promise.reject(null));
                 service.addProcessInstanceComment(processId, message).subscribe(
-                    () => {
-                    },
+                    () => {},
                     (res) => {
                         expect(res).toBe('Server error');
+                        done();
                     }
                 );
-            }));
+            });
 
         });
    });

@@ -17,7 +17,7 @@
 
 import { setupTestBed } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddPermissionComponent } from './add-permission.component';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
@@ -61,27 +61,28 @@ describe('AddPermissionComponent', () => {
         expect(addButton.disabled).toBeTruthy();
     });
 
-    it('should enable the ADD button when a selection is sent', async(() => {
+    it('should enable the ADD button when a selection is sent', async () => {
         const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
         addPermissionPanelComponent.select.emit(fakeAuthorityResults);
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
-            expect(addButton.disabled).toBeFalsy();
-        });
-    }));
 
-    it('should NOT enable the ADD button when a selection is sent but the user does not have the permissions', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const addButton = element.querySelector<HTMLButtonElement>('#adf-add-permission-action-button');
+        expect(addButton.disabled).toBeFalsy();
+    });
+
+    it('should NOT enable the ADD button when a selection is sent but the user does not have the permissions', async () => {
         const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
         addPermissionPanelComponent.select.emit(fakeAuthorityResults);
         fixture.componentInstance.currentNode = new Node({id: 'fake-node-id'});
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
-            expect(addButton.disabled).toBeTruthy();
-        });
-    }));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const addButton = element.querySelector<HTMLButtonElement>('#adf-add-permission-action-button');
+        expect(addButton.disabled).toBeTruthy();
+    });
 
     it('should emit a success event when the node is updated', async (done) => {
         fixture.componentInstance.selectedItems = fakeAuthorityResults;
@@ -92,8 +93,10 @@ describe('AddPermissionComponent', () => {
             done();
         });
 
-        await fixture.detectChanges();
-        const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const addButton = element.querySelector<HTMLButtonElement>('#adf-add-permission-action-button');
         addButton.click();
     });
 
@@ -116,8 +119,10 @@ describe('AddPermissionComponent', () => {
             done();
         });
 
-        await fixture.detectChanges();
-        const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const addButton = element.querySelector<HTMLButtonElement>('#adf-add-permission-action-button');
         addButton.click();
     });
 });

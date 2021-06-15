@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of, throwError, Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ProcessInstanceListComponent } from './process-list.component';
@@ -57,7 +57,7 @@ describe('ProcessInstanceListComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(ProcessInstanceListComponent);
         component = fixture.componentInstance;
         appConfig = TestBed.inject(AppConfigService);
@@ -67,7 +67,7 @@ describe('ProcessInstanceListComponent', () => {
         appConfig.config['adf-process-list'] = {
             'presets': fakeProcessColumnSchema
         };
-    }));
+    });
 
     it('should display loading spinner', () => {
         component.isLoading = true;
@@ -128,7 +128,7 @@ describe('ProcessInstanceListComponent', () => {
         expect(emitSpy).toHaveBeenCalledWith(jasmine.objectContaining(fakeProcessInstance));
     }));
 
-    it('should return the process instances list in original order when datalist passed non-existent columns', async(() => {
+    it('should return the process instances list in original order when datalist passed non-existent columns', (done) => {
         component.data = new ObjectDataTableAdapter(
             [],
             [
@@ -144,20 +144,22 @@ describe('ProcessInstanceListComponent', () => {
             expect(component.rows.length).toEqual(2);
             expect(component.rows[0]['name']).toEqual('Process 773443333');
             expect(component.rows[1]['name']).toEqual('Process 382927392');
+            done();
         });
         fixture.detectChanges();
-    }));
+    });
 
-    it('should return a default name if no name is specified on the process', async(() => {
+    it('should return a default name if no name is specified on the process', (done) => {
         getProcessInstancesSpy = getProcessInstancesSpy.and.returnValue(of(fakeProcessInstancesWithNoName));
         component.appId = 1;
         component.state = 'open';
         component.success.subscribe(() => {
             expect(component.rows[0]['name']).toEqual('Fake Process Name - Nov 9, 2017, 12:36:14 PM');
             expect(component.rows[1]['name']).toEqual('Fake Process Name - Nov 9, 2017, 12:37:25 PM');
+            done();
         });
         fixture.detectChanges();
-    }));
+    });
 
     it('should return a currentId null when the processList is empty', () => {
         component.selectFirst();
@@ -263,7 +265,7 @@ describe('ProcessInstanceListComponent', () => {
         component.onRowKeyUp(keyEvent);
     });
 
-    it('should NOT emit row click event on every other key', async(() => {
+    it('should NOT emit row click event on every other key', async () => {
         let triggered = false;
         const keyEvent = new CustomEvent('Keyboard event', { detail: {
             keyboardEvent: { key: 'Space' },
@@ -273,12 +275,13 @@ describe('ProcessInstanceListComponent', () => {
         component.rowClick.subscribe(() => triggered = true);
         component.onRowKeyUp(keyEvent);
 
-        fixture.whenStable().then(() => {
-            expect(triggered).toBeFalsy();
-        });
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    it('should show custom resolved value in the column', async(() => {
+        expect(triggered).toBeFalsy();
+    });
+
+    it('should show custom resolved value in the column', async () => {
         appConfig.config['adf-process-list'] = {
             'presets': {
                 'fakeProcessCustomSchema': [
@@ -294,13 +297,13 @@ describe('ProcessInstanceListComponent', () => {
         component.resolverFn = resolverfn;
         component.reload();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const customColumn = fixture.debugElement.queryAll(By.css('[title="Variables"] adf-datatable-cell'));
-            expect(customColumn[0].nativeElement.innerText).toEqual('initiator - fake-user-1');
-            expect(customColumn[1].nativeElement.innerText).toEqual('initiator - fake-user-2');
-        });
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const customColumn = fixture.debugElement.queryAll(By.css('[title="Variables"] adf-datatable-cell'));
+        expect(customColumn[0].nativeElement.innerText).toEqual('initiator - fake-user-1');
+        expect(customColumn[1].nativeElement.innerText).toEqual('initiator - fake-user-2');
+    });
 
     describe('component changes', () => {
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import * as diagramsActivitiesMock from '../../mock/diagram/diagram-activities.mock';
 import { DiagramComponent } from './diagram.component';
@@ -69,7 +69,7 @@ describe('Diagrams activities', () => {
 
     describe('Diagrams component Activities: ', () => {
 
-        it('Should render the User Task', async(() => {
+        it('Should render the User Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -87,14 +87,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.userTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Manual Task', async(() => {
+        it('Should render the Manual Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -112,14 +113,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.manualTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Service Task', async(() => {
+        it('Should render the Service Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -135,14 +137,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.serviceTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Service Camel Task', async(() => {
+        it('Should render the Service Camel Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -160,14 +163,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.camelTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Service Mule Task', async(() => {
+        it('Should render the Service Mule Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -181,14 +185,15 @@ describe('Diagrams activities', () => {
 
                     const iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
                     expect(iconTask).not.toBeNull();
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.muleTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Service Alfresco Publish Task', async(() => {
+        it('Should render the Service Alfresco Publish Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -207,14 +212,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.alfrescoPublishTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Service Google Drive Publish Task', async(() => {
+        it('Should render the Service Google Drive Publish Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -233,14 +239,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.googleDrivePublishTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Rest Call Task', async(() => {
+        it('Should render the Rest Call Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -259,14 +266,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.restCallTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Service Box Publish Task', async(() => {
+        it('Should render the Service Box Publish Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -285,14 +293,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.boxPublishTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Receive Task', async(() => {
+        it('Should render the Receive Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -310,14 +319,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.receiveTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Script Task', async(() => {
+        it('Should render the Script Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -335,14 +345,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.scriptTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Business Rule Task', async(() => {
+        it('Should render the Business Rule Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -360,17 +371,18 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.businessRuleTask] };
             ajaxReply(resp);
-        }));
+        });
    });
 
     describe('Diagrams component Activities with process instance id: ', () => {
 
-        it('Should render the User Task', async(() => {
+        it('Should render the User Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -388,14 +400,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.userTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active User Task', async(() => {
+        it('Should render the Active User Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -413,14 +426,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.userTaskActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed User Task', async(() => {
+        it('Should render the Completed User Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -438,14 +452,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.userTaskCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Manual Task', async(() => {
+        it('Should render the Manual Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -463,14 +478,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.manualTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Manual Task', async(() => {
+        it('Should render the Active Manual Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -488,14 +504,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.manualTaskActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Manual Task', async(() => {
+        it('Should render the Completed Manual Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -513,14 +530,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.manualTaskCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Service Task', async(() => {
+        it('Should render the Service Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -538,14 +556,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.serviceTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Service Task', async(() => {
+        it('Should render the Active Service Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -563,14 +582,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.serviceTaskActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Service Task', async(() => {
+        it('Should render the Completed Service Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -588,14 +608,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.serviceTaskCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Service Camel Task', async(() => {
+        it('Should render the Service Camel Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -613,14 +634,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.camelTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Service Camel Task', async(() => {
+        it('Should render the Active Service Camel Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -638,14 +660,16 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.camelTaskActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Service Camel Task', async(() => {
+        it('Should render the Completed Service Camel Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -663,14 +687,16 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.camelTaskCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Service Mule Task', async(() => {
+        it('Should render the Service Mule Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -684,14 +710,15 @@ describe('Diagrams activities', () => {
 
                     const iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
                     expect(iconTask).not.toBeNull();
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.muleTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Service Mule Task', async(() => {
+        it('Should render the Active Service Mule Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -705,14 +732,15 @@ describe('Diagrams activities', () => {
 
                     const iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
                     expect(iconTask).not.toBeNull();
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.muleTaskActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Service Mule Task', async(() => {
+        it('Should render the Completed Service Mule Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -726,14 +754,15 @@ describe('Diagrams activities', () => {
 
                     const iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
                     expect(iconTask).not.toBeNull();
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.muleTaskCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Service Alfresco Publish Task', async(() => {
+        it('Should render the Service Alfresco Publish Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -752,14 +781,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.alfrescoPublishTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Service Alfresco Publish Task', async(() => {
+        it('Should render the Active Service Alfresco Publish Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -778,14 +808,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.alfrescoPublishTaskActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Service Alfresco Publish Task', async(() => {
+        it('Should render the Completed Service Alfresco Publish Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -804,14 +835,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.alfrescoPublishTaskCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Service Google Drive Publish Task', async(() => {
+        it('Should render the Service Google Drive Publish Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -830,14 +862,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.googleDrivePublishTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Service Google Drive Publish Task', async(() => {
+        it('Should render the Active Service Google Drive Publish Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -856,14 +889,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.googleDrivePublishTaskActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Service Google Drive Publish Task', async(() => {
+        it('Should render the Completed Service Google Drive Publish Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -882,14 +916,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.googleDrivePublishTaskCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Rest Call Task', async(() => {
+        it('Should render the Rest Call Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -908,14 +943,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.restCallTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Rest Call Task', async(() => {
+        it('Should render the Active Rest Call Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -934,14 +970,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.restCallTaskActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Rest Call Task', async(() => {
+        it('Should render the Completed Rest Call Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -960,14 +997,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.restCallTaskCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Service Box Publish Task', async(() => {
+        it('Should render the Service Box Publish Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -986,14 +1024,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.boxPublishTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Service Box Publish Task', async(() => {
+        it('Should render the Active Service Box Publish Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -1012,14 +1051,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.boxPublishTaskActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Service Box Publish Task', async(() => {
+        it('Should render the Completed Service Box Publish Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -1038,14 +1078,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.boxPublishTaskCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Receive Task', async(() => {
+        it('Should render the Receive Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -1063,14 +1104,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.receiveTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Receive Task', async(() => {
+        it('Should render the Active Receive Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -1088,14 +1130,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.receiveTaskActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Receive Task', async(() => {
+        it('Should render the Completed Receive Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -1113,14 +1156,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.receiveTaskCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Script Task', async(() => {
+        it('Should render the Script Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -1138,14 +1182,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.scriptTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Script Task', async(() => {
+        it('Should render the Active Script Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -1163,14 +1208,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.scriptTaskActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Script Task', async(() => {
+        it('Should render the Completed Script Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -1188,14 +1234,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.scriptTaskCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Business Rule Task', async(() => {
+        it('Should render the Business Rule Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -1213,14 +1260,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.businessRuleTask] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Business Rule Task', async(() => {
+        it('Should render the Active Business Rule Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -1238,14 +1286,15 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.businessRuleTaskActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Business Rule Task', async(() => {
+        it('Should render the Completed Business Rule Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -1263,11 +1312,12 @@ describe('Diagrams activities', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].name);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsActivitiesMock.businessRuleTaskCompleted] };
             ajaxReply(resp);
-        }));
+        });
    });
 });

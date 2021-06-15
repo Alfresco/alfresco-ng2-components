@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import * as intermediateCatchingMock from '../../mock/diagram/diagram-intermediate.mock';
 import { DiagramComponent } from './diagram.component';
@@ -68,7 +68,7 @@ describe('Diagrams Catching', () => {
 
     describe('Diagrams component Intermediate Catching events: ', () => {
 
-        it('Should render the Intermediate catching time event', async(() => {
+        it('Should render the Intermediate catching time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -90,14 +90,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Intermediate catching error event', async(() => {
+        it('Should render the Intermediate catching error event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -119,14 +120,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Intermediate catching signal event', async(() => {
+        it('Should render the Intermediate catching signal event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -148,14 +150,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Intermediate catching signal message', async(() => {
+        it('Should render the Intermediate catching signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -177,17 +180,18 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEvent] };
             ajaxReply(resp);
-        }));
+        });
     });
 
     describe('Diagrams component Intermediate Catching events with process instance id: ', () => {
 
-        it('Should render the Intermediate catching time event', async(() => {
+        it('Should render the Intermediate catching time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -209,14 +213,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Intermediate catching time event', async(() => {
+        it('Should render the Active Intermediate catching time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -242,14 +247,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Intermediate catching time event', async(() => {
+        it('Should render the Completed Intermediate catching time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -275,14 +281,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingTimeEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Intermediate catching error event', async(() => {
+        it('Should render the Intermediate catching error event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -304,14 +311,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Intermediate catching error event', async(() => {
+        it('Should render the Active Intermediate catching error event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -337,14 +345,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Intermediate catching error event', async(() => {
+        it('Should render the Completed Intermediate catching error event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -370,14 +379,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingErrorEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Intermediate catching signal event', async(() => {
+        it('Should render the Intermediate catching signal event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -399,14 +409,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Intermediate Active catching signal event', async(() => {
+        it('Should render the Intermediate Active catching signal event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -432,14 +443,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Intermediate catching signal event', async(() => {
+        it('Should render the Completed Intermediate catching signal event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -465,14 +477,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingSignalEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Intermediate catching signal message', async(() => {
+        it('Should render the Intermediate catching signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -494,14 +507,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Intermediate catching signal message', async(() => {
+        it('Should render the Active Intermediate catching signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -527,14 +541,15 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Intermediate catching signal message', async(() => {
+        it('Should render the Completed Intermediate catching signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -560,11 +575,12 @@ describe('Diagrams Catching', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [intermediateCatchingMock.intermediateCatchingMessageEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
     });
 });

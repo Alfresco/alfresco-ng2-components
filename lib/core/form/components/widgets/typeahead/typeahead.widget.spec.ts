@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 
 import { By } from '@angular/platform-browser';
@@ -234,11 +234,11 @@ describe('TypeaheadWidgetComponent', () => {
             name: 'Fake Name 2'
         }, { id: '3', name: 'Fake Name 3' }];
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             fixture = TestBed.createComponent(TypeaheadWidgetComponent);
             typeaheadWidgetComponent = fixture.componentInstance;
             element = fixture.nativeElement;
-        }));
+        });
 
         afterEach(() => {
             fixture.destroy();
@@ -247,7 +247,7 @@ describe('TypeaheadWidgetComponent', () => {
 
         describe ('and typeahead is in readonly mode', () => {
 
-            it('should show typeahead value with input disabled', async(() => {
+            it('should show typeahead value with input disabled', async () => {
                 typeaheadWidgetComponent.field = new FormFieldModel(
                     new FormModel({ processVariables: [{ name: 'typeahead-id_LABEL', value: 'FakeProcessValue' }] }), {
                     id: 'typeahead-id',
@@ -255,15 +255,15 @@ describe('TypeaheadWidgetComponent', () => {
                     type: 'readonly',
                     params: { field: { id: 'typeahead-id', name: 'typeahead-name', type: 'typeahead' } }
                 });
+
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const readonlyInput: HTMLInputElement = <HTMLInputElement> element.querySelector('#typeahead-id');
-                    expect(readonlyInput.disabled).toBeTruthy();
-                    expect(readonlyInput).not.toBeNull();
-                    expect(readonlyInput.value).toBe('FakeProcessValue');
-                });
-            }));
+                await fixture.whenStable();
+
+                const readonlyInput = element.querySelector<HTMLInputElement>('#typeahead-id');
+                expect(readonlyInput.disabled).toBeTruthy();
+                expect(readonlyInput).not.toBeNull();
+                expect(readonlyInput.value).toBe('FakeProcessValue');
+            });
 
             afterEach(() => {
                 fixture.destroy();
@@ -273,7 +273,7 @@ describe('TypeaheadWidgetComponent', () => {
 
         describe('and typeahead is populated via taskId', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
                 spyOn(stubFormService, 'getRestFieldValues').and.returnValue(of(fakeOptionList));
                 typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
@@ -285,73 +285,73 @@ describe('TypeaheadWidgetComponent', () => {
                 });
                 typeaheadWidgetComponent.field.isVisible = true;
                 fixture.detectChanges();
-            }));
+            });
 
-            it('should show visible typeahead widget', async(() => {
+            it('should show visible typeahead widget', () => {
                 expect(element.querySelector('#typeahead-id')).toBeDefined();
                 expect(element.querySelector('#typeahead-id')).not.toBeNull();
-            }));
+            });
 
-            it('should show typeahead options', async(() => {
+            it('should show typeahead options', async () => {
                 const typeaheadElement = fixture.debugElement.query(By.css('#typeahead-id'));
-                const typeaheadHTMLElement: HTMLInputElement = <HTMLInputElement> typeaheadElement.nativeElement;
+                const typeaheadHTMLElement = <HTMLInputElement> typeaheadElement.nativeElement;
                 typeaheadHTMLElement.focus();
                 typeaheadWidgetComponent.value = 'F';
                 typeaheadHTMLElement.value = 'F';
                 typeaheadHTMLElement.dispatchEvent(new Event('keyup'));
                 typeaheadHTMLElement.dispatchEvent(new Event('input'));
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-0"] span'))).not.toBeNull();
-                    expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-1"] span'))).not.toBeNull();
-                    expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-2"] span'))).not.toBeNull();
-                });
-            }));
 
-            it('should hide the option when the value is empty', async(() => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-0"] span'))).not.toBeNull();
+                expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-1"] span'))).not.toBeNull();
+                expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-2"] span'))).not.toBeNull();
+            });
+
+            it('should hide the option when the value is empty', async () => {
                 const typeaheadElement = fixture.debugElement.query(By.css('#typeahead-id'));
-                const typeaheadHTMLElement: HTMLInputElement = <HTMLInputElement> typeaheadElement.nativeElement;
+                const typeaheadHTMLElement = <HTMLInputElement> typeaheadElement.nativeElement;
                 typeaheadHTMLElement.focus();
                 typeaheadWidgetComponent.value = 'F';
                 typeaheadHTMLElement.value = 'F';
                 typeaheadHTMLElement.dispatchEvent(new Event('keyup'));
                 typeaheadHTMLElement.dispatchEvent(new Event('input'));
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-0"] span'))).not.toBeNull();
-                    typeaheadHTMLElement.focus();
-                    typeaheadWidgetComponent.value = '';
-                    typeaheadHTMLElement.dispatchEvent(new Event('keyup'));
-                    typeaheadHTMLElement.dispatchEvent(new Event('input'));
-                    fixture.detectChanges();
-                    fixture.whenStable().then(() => {
-                        fixture.detectChanges();
-                        expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-0"] span'))).toBeNull();
-                    });
-                });
-            }));
 
-            it('should show error message when the value is not valid', async(() => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-0"] span'))).not.toBeNull();
+                typeaheadHTMLElement.focus();
+                typeaheadWidgetComponent.value = '';
+                typeaheadHTMLElement.dispatchEvent(new Event('keyup'));
+                typeaheadHTMLElement.dispatchEvent(new Event('input'));
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-0"] span'))).toBeNull();
+            });
+
+            it('should show error message when the value is not valid', async () => {
                 typeaheadWidgetComponent.value = 'Fake Name';
                 typeaheadWidgetComponent.field.value = 'Fake Name';
                 typeaheadWidgetComponent.field.options = fakeOptionList;
                 expect(element.querySelector('.adf-error-text')).toBeNull();
                 const keyboardEvent = new KeyboardEvent('keypress');
                 typeaheadWidgetComponent.onKeyUp(keyboardEvent);
+
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('.adf-error-text')).not.toBeNull();
-                    expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
-                });
-            }));
+                await fixture.whenStable();
+
+                expect(element.querySelector('.adf-error-text')).not.toBeNull();
+                expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
+            });
         });
 
         describe('and typeahead is populated via processDefinitionId', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
                 spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(of(fakeOptionList));
                 typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
@@ -363,24 +363,25 @@ describe('TypeaheadWidgetComponent', () => {
                 typeaheadWidgetComponent.field.emptyOption = { id: 'empty', name: 'Choose one...' };
                 typeaheadWidgetComponent.field.isVisible = true;
                 fixture.detectChanges();
-            }));
+            });
 
-            it('should show visible typeahead widget', async(() => {
+            it('should show visible typeahead widget', () => {
                 expect(element.querySelector('#typeahead-id')).toBeDefined();
                 expect(element.querySelector('#typeahead-id')).not.toBeNull();
-            }));
+            });
 
-            it('should show typeahead options', async(() => {
+            it('should show typeahead options', async () => {
                 const keyboardEvent = new KeyboardEvent('keypress');
                 typeaheadWidgetComponent.value = 'F';
                 typeaheadWidgetComponent.onKeyUp(keyboardEvent);
+
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(fixture.debugElement.queryAll(By.css('[id="adf-typeahed-widget-user-0"] span'))).toBeDefined();
-                    expect(fixture.debugElement.queryAll(By.css('[id="adf-typeahed-widget-user-1"] span'))).toBeDefined();
-                    expect(fixture.debugElement.queryAll(By.css('[id="adf-typeahed-widget-user-2"] span'))).toBeDefined();
-                });
-            }));
+                await fixture.whenStable();
+
+                expect(fixture.debugElement.queryAll(By.css('[id="adf-typeahed-widget-user-0"] span'))).toBeDefined();
+                expect(fixture.debugElement.queryAll(By.css('[id="adf-typeahed-widget-user-1"] span'))).toBeDefined();
+                expect(fixture.debugElement.queryAll(By.css('[id="adf-typeahed-widget-user-2"] span'))).toBeDefined();
+            });
         });
     });
 });

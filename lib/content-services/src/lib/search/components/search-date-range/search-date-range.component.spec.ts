@@ -18,7 +18,7 @@
 import { SearchDateRangeComponent } from './search-date-range.component';
 import { MomentDateAdapter, setupTestBed } from '@alfresco/adf-core';
 import { DateAdapter } from '@angular/material/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -195,11 +195,12 @@ describe('SearchDateRangeComponent', () => {
         expect(component.getFromValidationMessage()).toEqual('');
     });
 
-    it('should have no maximum date by default', async(() => {
+    it('should have no maximum date by default', async () => {
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(fixture.debugElement.nativeElement.querySelector('input[ng-reflect-max]')).toBeNull();
-    }));
+    });
 
     it('should be able to set a fixed maximum date', async () => {
         component.settings = { field: 'cm:created', dateFormat: dateFormatFixture, maxDate: maxDate };

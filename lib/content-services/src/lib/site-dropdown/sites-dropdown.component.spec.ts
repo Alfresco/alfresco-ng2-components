@@ -16,7 +16,7 @@
  */
 
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
 import { SitesService, setupTestBed } from '@alfresco/adf-core';
@@ -68,36 +68,35 @@ describe('DropdownSitesComponent', () => {
 
         describe('Infinite Loading', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 siteService = TestBed.inject(SitesService);
                 fixture = TestBed.createComponent(DropdownSitesComponent);
                 debug = fixture.debugElement;
                 element = fixture.nativeElement;
                 component = fixture.componentInstance;
                 spyOn(siteService, 'getSites').and.returnValue(of(getFakeSitePaging()));
-            }));
+            });
 
-            it('Should show loading item if there are more itemes', async(() => {
+            it('Should show loading item if there are more itemes', async () => {
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('[data-automation-id="site-loading"]')).toBeDefined();
-                });
-            }));
+                await fixture.whenStable();
 
-            it('Should not show loading item if there are more itemes', async(() => {
+                expect(element.querySelector('[data-automation-id="site-loading"]')).toBeDefined();
+            });
+
+            it('Should not show loading item if there are more itemes', async () => {
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('[data-automation-id="site-loading"]')).toBeNull();
-                });
-            }));
+                await fixture.whenStable();
+
+                fixture.detectChanges();
+                expect(element.querySelector('[data-automation-id="site-loading"]')).toBeNull();
+            });
 
         });
 
         describe('Sites', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 siteService = TestBed.inject(SitesService);
                 spyOn(siteService, 'getSites').and.returnValue(of(getFakeSitePagingNoMoreItems()));
 
@@ -105,108 +104,113 @@ describe('DropdownSitesComponent', () => {
                 debug = fixture.debugElement;
                 element = fixture.nativeElement;
                 component = fixture.componentInstance;
-            }));
+            });
 
             function openSelectBox() {
                 const selectBox = debug.query(By.css(('[data-automation-id="site-my-files-option"] .mat-select-trigger')));
                 selectBox.triggerEventHandler('click', null);
             }
 
-            it('Dropdown sites should be rendered', async(() => {
+            it('Dropdown sites should be rendered', async () => {
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#site-dropdown-container')).toBeDefined();
-                    expect(element.querySelector('#site-dropdown')).toBeDefined();
-                    expect(element.querySelector('#site-dropdown-container')).not.toBeNull();
-                    expect(element.querySelector('#site-dropdown')).not.toBeNull();
-                });
-            }));
+                await fixture.whenStable();
 
-            it('should show the "My files" option by default', async(() => {
+                expect(element.querySelector('#site-dropdown-container')).toBeDefined();
+                expect(element.querySelector('#site-dropdown')).toBeDefined();
+                expect(element.querySelector('#site-dropdown-container')).not.toBeNull();
+                expect(element.querySelector('#site-dropdown')).not.toBeNull();
+            });
+
+            it('should show the "My files" option by default', async () => {
                 component.hideMyFiles = false;
+
                 fixture.detectChanges();
+                await fixture.whenStable();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
-                    fixture.detectChanges();
-                    const options: any = debug.queryAll(By.css('mat-option'));
-                    expect(options[0].nativeElement.innerText).toContain('DROPDOWN.MY_FILES_OPTION');
-                });
-            }));
+                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
 
-            it('should hide the "My files" option if the developer desires that way', async(() => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const options: any = debug.queryAll(By.css('mat-option'));
+                expect(options[0].nativeElement.innerText).toContain('DROPDOWN.MY_FILES_OPTION');
+            });
+
+            it('should hide the "My files" option if the developer desires that way', async () => {
                 component.hideMyFiles = true;
-                fixture.detectChanges();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
-                    fixture.detectChanges();
-                    const options: any = debug.queryAll(By.css('mat-option'));
-                    expect(options[0].nativeElement.innerText).not.toContain('DROPDOWN.MY_FILES_OPTION');
-                });
-            }));
-
-            it('should show the default placeholder label by default', async(() => {
                 fixture.detectChanges();
+                await fixture.whenStable();
+
+                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const options: any = debug.queryAll(By.css('mat-option'));
+                expect(options[0].nativeElement.innerText).not.toContain('DROPDOWN.MY_FILES_OPTION');
+            });
+
+            it('should show the default placeholder label by default', async () => {
+                fixture.detectChanges();
+                await fixture.whenStable();
 
                 openSelectBox();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(fixture.nativeElement.innerText.trim()).toContain('DROPDOWN.PLACEHOLDER_LABEL');
-                });
-            }));
-
-            it('should show custom placeholder label when the \'placeholder\' input property is given a value', async(() => {
                 fixture.detectChanges();
+                await fixture.whenStable();
 
+                expect(fixture.nativeElement.innerText.trim()).toContain('DROPDOWN.PLACEHOLDER_LABEL');
+            });
+
+            it('should show custom placeholder label when the "placeholder" input property is given a value', async () => {
                 component.placeholder = 'NODE_SELECTOR.SELECT_LOCATION';
+
                 fixture.detectChanges();
+                await fixture.whenStable();
 
                 openSelectBox();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(fixture.nativeElement.innerText.trim()).toContain('NODE_SELECTOR.SELECT_LOCATION');
-                });
-            }));
+                fixture.detectChanges();
+                await fixture.whenStable();
 
-            it('should load custom sites when the \'siteList\' input property is given a value', async(() => {
+                expect(fixture.nativeElement.innerText.trim()).toContain('NODE_SELECTOR.SELECT_LOCATION');
+            });
+
+            it('should load custom sites when the "siteList" input property is given a value', async () => {
                 component.siteList = customSiteList;
 
                 fixture.detectChanges();
+                await fixture.whenStable();
 
                 openSelectBox();
 
-                let options: any = [];
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    options = debug.queryAll(By.css('mat-option'));
-                    options[0].triggerEventHandler('click', null);
-                    fixture.detectChanges();
-                });
-
-                component.change.subscribe(() => {
-                    expect(options[0].nativeElement.innerText).toContain('PERSONAL_FILES');
-                    expect(options[1].nativeElement.innerText).toContain('FILE_LIBRARIES');
-                });
-            }));
-
-            it('should load sites by default', async(() => {
                 fixture.detectChanges();
+                await fixture.whenStable();
 
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
-                    fixture.detectChanges();
-                    const options: any = debug.queryAll(By.css('mat-option'));
-                    expect(options[1].nativeElement.innerText).toContain('fake-test-site');
-                    expect(options[2].nativeElement.innerText).toContain('fake-test-2');
-                });
-            }));
+                let options = debug.queryAll(By.css('mat-option'));
+                options[0].triggerEventHandler('click', null);
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(options[0].nativeElement.innerText).toContain('PERSONAL_FILES');
+                expect(options[1].nativeElement.innerText).toContain('FILE_LIBRARIES');
+            });
+
+            it('should load sites by default', async () => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const options: any = debug.queryAll(By.css('mat-option'));
+                expect(options[1].nativeElement.innerText).toContain('fake-test-site');
+                expect(options[2].nativeElement.innerText).toContain('fake-test-2');
+            });
 
             it('should raise an event when a site is selected', (done) => {
                 fixture.detectChanges();
@@ -226,26 +230,25 @@ describe('DropdownSitesComponent', () => {
                 });
             });
 
-            it('should be possible to select the default value', (done) => {
+            it('should be possible to select the default value', async () => {
                 component.value = 'swsdp';
-                fixture.detectChanges();
 
-                fixture.whenStable().then(() => {
-                    expect(component.selected.entry.title).toBe('fake-test-2');
-                    done();
-                });
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(component.selected.entry.title).toBe('fake-test-2');
             });
         });
 
         describe('Default value', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 siteService = TestBed.inject(SitesService);
                 spyOn(siteService, 'getSites').and.returnValues(of(getFakeSitePagingFirstPage()), of(getFakeSitePagingLastPage()));
 
                 fixture = TestBed.createComponent(DropdownSitesComponent);
                 component = fixture.componentInstance;
-            }));
+            });
 
             it('should load new sites if default value is not in the first page', (done) => {
                 component.value = 'fake-test-4';
@@ -271,7 +274,7 @@ describe('DropdownSitesComponent', () => {
 
         describe('Sites with members', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 siteService = TestBed.inject(SitesService);
                 spyOn(siteService, 'getSites').and.returnValue(of(getFakeSitePagingWithMembers()));
 
@@ -279,18 +282,17 @@ describe('DropdownSitesComponent', () => {
                 debug = fixture.debugElement;
                 element = fixture.nativeElement;
                 component = fixture.componentInstance;
-            }));
+            });
 
-            afterEach(async(() => {
+            afterEach(() => {
                 fixture.destroy();
-                TestBed.resetTestingModule();
-            }));
+            });
 
             describe('No relations', () => {
 
-                beforeEach(async(() => {
+                beforeEach(() => {
                     component.relations = Relations.Members;
-                }));
+                });
 
                 it('should show only sites which logged user is member of when member relation is set', (done) => {
                     spyOn(siteService, 'getEcmCurrentLoggedUserName').and.returnValue('test');
@@ -312,9 +314,9 @@ describe('DropdownSitesComponent', () => {
             });
 
             describe('No relations', () => {
-                beforeEach(async(() => {
+                beforeEach(() => {
                     component.relations = [];
-                }));
+                });
 
                 it('should show all the sites if no relation is set', (done) => {
                     spyOn(siteService, 'getEcmCurrentLoggedUserName').and.returnValue('test');

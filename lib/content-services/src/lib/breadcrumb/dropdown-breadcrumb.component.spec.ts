@@ -16,7 +16,7 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
@@ -42,16 +42,16 @@ describe('DropdownBreadcrumb', () => {
         providers: [{ provide: DocumentListService, useValue: documentListService }]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
         component = fixture.componentInstance;
         documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
         documentListService = TestBed.inject(DocumentListService);
-    }));
+    });
 
-    afterEach(async(() => {
+    afterEach(() => {
         fixture.destroy();
-    }));
+    });
 
     function openSelect() {
         const folderIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="dropdown-breadcrumb-trigger"]');

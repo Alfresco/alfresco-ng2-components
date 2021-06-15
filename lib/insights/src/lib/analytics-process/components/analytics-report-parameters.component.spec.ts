@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import * as analyticParamsMock from '../../mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
@@ -408,7 +408,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
         describe('When the form is rendered correctly', () => {
 
-            beforeEach(async(() => {
+            beforeEach(async () => {
                 const reportId = 1;
                 const change = new SimpleChange(null, reportId, true);
                 component.ngOnChanges({'reportId': change});
@@ -420,20 +420,19 @@ describe('AnalyticsReportParametersComponent', () => {
                     responseText: analyticParamsMock.reportDefParamStatus
                 });
 
-                fixture.whenStable().then(() => {
-                    component.toggleParameters();
-                    fixture.detectChanges();
-                });
-            }));
+                await fixture.whenStable();
+                component.toggleParameters();
+                fixture.detectChanges();
+            });
 
             it('Should be able to change the report title', (done) => {
                 spyOn(service, 'updateReport').and.returnValue(of(analyticParamsMock.reportDefParamStatus));
 
-                const title: HTMLElement = element.querySelector('h4');
+                const title = element.querySelector<HTMLElement>('h4');
                 title.click();
                 fixture.detectChanges();
 
-                const reportName: HTMLInputElement = <HTMLInputElement> element.querySelector('#reportName');
+                const reportName = element.querySelector<HTMLInputElement>('#reportName');
                 expect(reportName).not.toBeNull();
 
                 reportName.focus();
@@ -444,31 +443,31 @@ describe('AnalyticsReportParametersComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    const titleChanged: HTMLElement = element.querySelector('h4');
+                    const titleChanged = element.querySelector<HTMLElement>('h4');
                     expect(titleChanged.textContent.trim()).toEqual('FAKE_TEST_NAME');
                     done();
                 });
             });
 
-            it('should render adf-buttons-menu component', async(() => {
+            it('should render adf-buttons-menu component', async () => {
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    const buttonsMenuComponent = element.querySelector('adf-buttons-action-menu');
-                    expect(buttonsMenuComponent).not.toBeNull();
-                    expect(buttonsMenuComponent).toBeDefined();
-                });
-            }));
+                await fixture.whenStable();
 
-            it('should render delete button', async(() => {
+                const buttonsMenuComponent = element.querySelector('adf-buttons-action-menu');
+                expect(buttonsMenuComponent).not.toBeNull();
+                expect(buttonsMenuComponent).toBeDefined();
+            });
+
+            it('should render delete button', async () => {
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    const buttonsMenuComponent = element.querySelector('#delete-button');
-                    expect(buttonsMenuComponent).not.toBeNull();
-                    expect(buttonsMenuComponent).toBeDefined();
-                });
-            }));
+                await fixture.whenStable();
 
-            it('Should raise an event for report deleted', async(() => {
+                const buttonsMenuComponent = element.querySelector('#delete-button');
+                expect(buttonsMenuComponent).not.toBeNull();
+                expect(buttonsMenuComponent).toBeDefined();
+            });
+
+            it('Should raise an event for report deleted', fakeAsync(() => {
                 fixture.detectChanges();
                 spyOn(component, 'deleteReport');
                 const deleteButton = fixture.debugElement.nativeElement.querySelector('#delete-button');
@@ -481,7 +480,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 expect(component.deleteReport).toHaveBeenCalled();
             }));
 
-            it('Should hide export button if the form is not valid', async(() => {
+            it('Should hide export button if the form is not valid', fakeAsync(() => {
                 validForm = true;
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -501,7 +500,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             }));
 
-            it('Should hide save button if the form is not valid', async(() => {
+            it('Should hide save button if the form is not valid', fakeAsync(() => {
                 validForm = true;
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -520,7 +519,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 });
             }));
 
-            it('Should show export and save button when the form became valid', async(() => {
+            it('Should show export and save button when the form became valid', fakeAsync(() => {
                 validForm = false;
                 fixture.detectChanges();
                 let saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');

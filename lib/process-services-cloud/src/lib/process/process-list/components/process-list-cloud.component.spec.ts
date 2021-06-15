@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     AppConfigService,
@@ -419,7 +419,7 @@ describe('ProcessListCloudComponent', () => {
             fixtureEmpty.destroy();
         });
 
-        it('should render the custom template', async((done) => {
+        it('should render the custom template', fakeAsync((done) => {
             const emptyList = {list: {entries: []}};
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
             component.success.subscribe(() => {

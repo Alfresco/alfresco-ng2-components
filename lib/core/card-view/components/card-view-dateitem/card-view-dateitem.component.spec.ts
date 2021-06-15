@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import moment from 'moment-es6';
@@ -209,7 +209,7 @@ describe('CardViewDateItemComponent', () => {
         component.onDateChanged({ value: expectedDate });
     });
 
-    it('should update the property value after a successful update attempt', async(() => {
+    it('should update the property value after a successful update attempt', fakeAsync(() => {
         component.editable = true;
         component.property.editable = true;
         component.property.value = null;
@@ -271,7 +271,7 @@ describe('CardViewDateItemComponent', () => {
             expect(datePickerClearToggle).toBeNull('Clean Icon should not be in DOM');
         });
 
-        it('should remove the property value after a successful clear attempt', async(() => {
+        it('should remove the property value after a successful clear attempt', fakeAsync(() => {
             component.editable = true;
             component.property.editable = true;
             component.property.value = 'Jul 10 2017';
@@ -286,7 +286,7 @@ describe('CardViewDateItemComponent', () => {
             );
         }));
 
-        it('should remove the property default value after a successful clear attempt', async(() => {
+        it('should remove the property default value after a successful clear attempt', fakeAsync(() => {
             component.editable = true;
             component.property.editable = true;
             component.property.default = 'Jul 10 2017';
@@ -301,7 +301,7 @@ describe('CardViewDateItemComponent', () => {
             );
         }));
 
-        it('should remove actual and default value after a successful clear attempt', async(() => {
+        it('should remove actual and default value after a successful clear attempt', fakeAsync(() => {
             component.editable = true;
             component.property.editable = true;
             component.property.default = 'Jul 10 2017';

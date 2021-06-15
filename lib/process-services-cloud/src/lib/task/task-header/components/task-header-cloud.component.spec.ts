@@ -18,7 +18,7 @@
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { setupTestBed, AppConfigService, AlfrescoApiService, CardViewArrayItem } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -186,23 +186,21 @@ describe('TaskHeaderCloudComponent', () => {
             done();
         });
 
-        it('should roll back task description on error', async(async () => {
+        it('should roll back task description on error', fakeAsync(() => {
             spyOn(taskCloudService, 'updateTask').and.returnValue(throwError('fake'));
             fixture.detectChanges();
 
-            await fixture.whenStable();
-            fixture.detectChanges();
             let description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
             expect(description.nativeElement.value.trim()).toEqual('This is the description');
             const inputEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
             inputEl.nativeElement.value = 'updated description';
             inputEl.nativeElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
-            description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
-            expect(description.nativeElement.value.trim()).toEqual('This is the description');
-            expect(taskCloudService.updateTask).toHaveBeenCalled();
+            fixture.whenStable().then(() => {
+                description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
+                expect(description.nativeElement.value.trim()).toEqual('This is the description');
+                expect(taskCloudService.updateTask).toHaveBeenCalled();
+            });
         }));
 
         it('should show spinner before loading task details', () => {
@@ -523,22 +521,23 @@ describe('TaskHeaderCloudComponent', () => {
 
     describe('Task errors', () => {
 
-        it('should emit an error when task can not be found', async(() => {
+        it('should emit an error when task can not be found', (done) => {
             getTaskByIdSpy.and.returnValue(throwError('Task not found'));
 
             component.error.subscribe((error) => {
                 expect(error).toEqual('Task not found');
+                done();
             });
 
             component.appName = 'appName';
             component.taskId = 'taskId';
             component.ngOnChanges();
-        }));
+        });
 
-        it('should emit an error when app name and/or task id are not provided', async(() => {
-
+        it('should emit an error when app name and/or task id are not provided', (done) => {
             component.error.subscribe((error) => {
                 expect(error).toEqual('App Name and Task Id are mandatory');
+                done();
             });
 
             component.appName = '';
@@ -551,7 +550,7 @@ describe('TaskHeaderCloudComponent', () => {
             component.appName = '';
             component.taskId = 'taskId';
             component.ngOnChanges();
-        }));
+        });
 
         it('should call the loadTaskDetailsById when both app name and task id are provided', () => {
             spyOn(component, 'loadTaskDetailsById');

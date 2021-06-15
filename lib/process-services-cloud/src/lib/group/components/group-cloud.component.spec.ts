@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from './../../testing/process-service-cloud.testing.module';
@@ -74,24 +74,22 @@ describe('GroupCloudComponent', () => {
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
     });
 
-    it('should populate placeholder when title is present', async(() => {
+    it('should populate placeholder when title is present', async () => {
         component.title = 'TITLE_KEY';
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        const matLabel: HTMLInputElement = <HTMLInputElement> element.querySelector('#adf-group-cloud-title-id');
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(matLabel.textContent).toEqual('TITLE_KEY');
-        });
-    }));
+        const matLabel = element.querySelector<HTMLInputElement>('#adf-group-cloud-title-id');
+        expect(matLabel.textContent).toEqual('TITLE_KEY');
+    });
 
     describe('Search group', () => {
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             fixture.detectChanges();
             findGroupsByNameSpy = spyOn(identityGroupService, 'findGroupsByName').and.returnValue(of(mockIdentityGroups));
-        }));
+        });
 
         it('should list the groups as dropdown options if the search term has results', (done) => {
             const input = getElement<HTMLInputElement>('input');
@@ -228,7 +226,7 @@ describe('GroupCloudComponent', () => {
         let checkGroupHasAnyClientAppRoleSpy: jasmine.Spy;
         let checkGroupHasClientAppSpy: jasmine.Spy;
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             findGroupsByNameSpy = spyOn(identityGroupService, 'findGroupsByName').and.returnValue(of(mockIdentityGroups));
             checkGroupHasAnyClientAppRoleSpy = spyOn(identityGroupService, 'checkGroupHasAnyClientAppRole').and.returnValue(of(true));
             checkGroupHasClientAppSpy = spyOn(identityGroupService, 'checkGroupHasClientApp').and.returnValue(of(true));
@@ -237,9 +235,9 @@ describe('GroupCloudComponent', () => {
             component.appName = 'mock-app-name';
 
             fixture.detectChanges();
-        }));
+        });
 
-        it('should fetch the client ID if appName specified', async (() => {
+        it('should fetch the client ID if appName specified', async () => {
             const getClientIdByApplicationNameSpy = spyOn(identityGroupService, 'getClientIdByApplicationName').and.callThrough();
             component.appName = 'mock-app-name';
 
@@ -247,11 +245,10 @@ describe('GroupCloudComponent', () => {
             component.ngOnChanges({ 'appName': change });
 
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(getClientIdByApplicationNameSpy).toHaveBeenCalled();
-            });
-        }));
+            await fixture.whenStable();
+
+            expect(getClientIdByApplicationNameSpy).toHaveBeenCalled();
+        });
 
         it('should list groups who have access to the app when appName is specified', (done) => {
             const input = getElement<HTMLInputElement>('input');
@@ -423,12 +420,12 @@ describe('GroupCloudComponent', () => {
     describe('When roles defined', () => {
         let checkGroupHasRoleSpy: jasmine.Spy;
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             component.roles = ['mock-role-1', 'mock-role-2'];
             spyOn(identityGroupService, 'findGroupsByName').and.returnValue(of(mockIdentityGroups));
             checkGroupHasRoleSpy = spyOn(identityGroupService, 'checkGroupHasRole').and.returnValue(of(true));
             fixture.detectChanges();
-        }));
+        });
 
         it('should filter if groups has any specified role', (done) => {
             fixture.detectChanges();
@@ -487,12 +484,12 @@ describe('GroupCloudComponent', () => {
     describe('Single Mode with pre-selected groups', () => {
         const changes = new SimpleChange(null, mockIdentityGroups, false);
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             component.mode = 'single';
             component.preSelectGroups = <any> mockIdentityGroups;
             component.ngOnChanges({ 'preSelectGroups': changes });
             fixture.detectChanges();
-        }));
+        });
 
         it('should show only one mat chip with the first preSelectedGroup', () => {
             const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
@@ -504,12 +501,12 @@ describe('GroupCloudComponent', () => {
     describe('Multiple Mode with pre-selected groups', () => {
         const change = new SimpleChange(null, mockIdentityGroups, false);
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             component.mode = 'multiple';
             component.preSelectGroups = <any> mockIdentityGroups;
             component.ngOnChanges({ 'preSelectGroups': change });
             fixture.detectChanges();
-        }));
+        });
 
         it('should render all preselected groups', () => {
             component.mode = 'multiple';

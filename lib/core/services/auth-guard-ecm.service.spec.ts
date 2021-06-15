@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardEcm } from './auth-guard-ecm.service';
 import { AuthenticationService } from './authentication.service';
@@ -51,31 +51,31 @@ describe('AuthGuardService ECM', () => {
         appConfigService.config.oauth2 = {};
     });
 
-    it('if the alfresco js api is logged in should canActivate be true', async(async() => {
+    it('if the alfresco js api is logged in should canActivate be true', async() => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
         expect(await authGuard.canActivate(null, route)).toBeTruthy();
-    }));
+    });
 
-    it('if the alfresco js api is configured with withCredentials true should canActivate be true', async(async() => {
+    it('if the alfresco js api is configured with withCredentials true should canActivate be true', async() => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
         appConfigService.config.auth.withCredentials = true;
 
         const route: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
         expect(await authGuard.canActivate(null, route)).toBeTruthy();
-    }));
+    });
 
-    it('if the alfresco js api is NOT logged in should canActivate be false', async(async() => {
+    it('if the alfresco js api is NOT logged in should canActivate be false', async() => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(router, 'navigateByUrl').and.stub();
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
-    }));
+    });
 
-    it('if the alfresco js api is NOT logged in should trigger a redirect event', async(async() => {
+    it('if the alfresco js api is NOT logged in should trigger a redirect event', async() => {
         appConfigService.config.loginRoute = 'login';
 
         spyOn(router, 'navigateByUrl');
@@ -84,9 +84,9 @@ describe('AuthGuardService ECM', () => {
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/login?redirectUrl=some-url'));
-    }));
+    });
 
-    it('should redirect url if the alfresco js api is NOT logged in and isOAuthWithoutSilentLogin', async(async() => {
+    it('should redirect url if the alfresco js api is NOT logged in and isOAuthWithoutSilentLogin', async() => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
@@ -95,9 +95,9 @@ describe('AuthGuardService ECM', () => {
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
-    }));
+    });
 
-    it('should redirect url if the alfresco js api is NOT logged in and isOAuth with silentLogin', async(async() => {
+    it('should redirect url if the alfresco js api is NOT logged in and isOAuth with silentLogin', async() => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         spyOn(authService, 'isPublicUrl').and.returnValue(false);
@@ -116,9 +116,9 @@ describe('AuthGuardService ECM', () => {
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
         expect(authService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
-    }));
+    });
 
-    it('should not redirect url if NOT logged in and isOAuth but no silentLogin configured', async(async() => {
+    it('should not redirect url if NOT logged in and isOAuth but no silentLogin configured', async() => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
@@ -127,9 +127,9 @@ describe('AuthGuardService ECM', () => {
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
-    }));
+    });
 
-    it('should set redirect navigation commands', async(() => {
+    it('should set redirect navigation commands', () => {
         spyOn(authService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
@@ -140,9 +140,9 @@ describe('AuthGuardService ECM', () => {
             provider: 'ECM', url: 'some-url'
         });
         expect(authService.getRedirect()).toEqual('some-url');
-    }));
+    });
 
-    it('should set redirect navigation commands with query params', async(() => {
+    it('should set redirect navigation commands with query params', () => {
         spyOn(authService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url;q=123' };
@@ -153,9 +153,9 @@ describe('AuthGuardService ECM', () => {
             provider: 'ECM', url: 'some-url;q=123'
         });
         expect(authService.getRedirect()).toEqual('some-url;q=123');
-    }));
+    });
 
-    it('should set redirect navigation commands with query params', async(() => {
+    it('should set redirect navigation commands with query params', () => {
         spyOn(authService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: '/' };
@@ -166,9 +166,9 @@ describe('AuthGuardService ECM', () => {
             provider: 'ECM', url: '/'
         });
         expect(authService.getRedirect()).toEqual('/');
-    }));
+    });
 
-    it('should get redirect url from config if there is one configured', async(() => {
+    it('should get redirect url from config if there is one configured', () => {
         appConfigService.config.loginRoute = 'fakeLoginRoute';
         spyOn(authService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
@@ -180,7 +180,7 @@ describe('AuthGuardService ECM', () => {
             provider: 'ECM', url: 'some-url'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
-    }));
+    });
 
     it('should to close the material dialog if is redirect to the login', () => {
         const materialDialog = TestBed.inject(MatDialog);

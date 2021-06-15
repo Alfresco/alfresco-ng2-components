@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LikeComponent } from './like.component';
 import { setupTestBed } from '@alfresco/adf-core';
 
@@ -38,7 +38,7 @@ describe('Like component', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         service = TestBed.inject(RatingService);
 
         spyOn(service, 'getRating').and.returnValue(of({
@@ -54,17 +54,16 @@ describe('Like component', () => {
         component.nodeId = 'test-id';
         component.ngOnChanges();
         fixture.detectChanges();
-    }));
+    });
 
-    it('should load the likes by default on onChanges', async(() => {
+    it('should load the likes by default on onChanges', async () => {
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('#adf-like-counter').innerHTML).toBe('2');
-        });
-    }));
+        expect(element.querySelector('#adf-like-counter').innerHTML).toBe('2');
+    });
 
-    it('should increase the number of likes when clicked', async(() => {
+    it('should increase the number of likes when clicked', async () => {
         spyOn(service, 'postRating').and.returnValue(of({
             entry: {
                 id: 'likes',
@@ -75,13 +74,13 @@ describe('Like component', () => {
         const likeButton: any = element.querySelector('#adf-like-test-id');
         likeButton.click();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('#adf-like-counter').innerHTML).toBe('3');
-        });
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    it('should decrease the number of likes when clicked and is already liked', async(() => {
+        expect(element.querySelector('#adf-like-counter').innerHTML).toBe('3');
+    });
+
+    it('should decrease the number of likes when clicked and is already liked', async () => {
         spyOn(service, 'deleteRating').and.returnValue(of(''));
 
         component.isLike = true;
@@ -89,10 +88,9 @@ describe('Like component', () => {
         const likeButton: any = element.querySelector('#adf-like-test-id');
         likeButton.click();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('#adf-like-counter').innerHTML).toBe('1');
-        });
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    }));
+        expect(element.querySelector('#adf-like-counter').innerHTML).toBe('1');
+    });
 });

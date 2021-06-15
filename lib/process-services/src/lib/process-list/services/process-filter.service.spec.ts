@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { mockError, fakeProcessFiltersResponse } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
@@ -95,14 +95,6 @@ describe('Process filter', () => {
                     }
                 );
             });
-
-            it('should return the non-empty filter list that is returned by the API', async(() => {
-                service.getProcessFilters(null).subscribe(
-                    (res) => {
-                        expect(res.length).toBe(1);
-                    }
-                );
-            }));
 
             it('should return the default filters', (done) => {
                 service.createDefaultFilters(1234).subscribe((res: FilterProcessRepresentationModel []) => {
@@ -185,16 +177,17 @@ describe('Process filter', () => {
                 });
             });
 
-            it('should pass on any error that is returned by the API', async(() => {
+            it('should pass on any error that is returned by the API', (done) => {
                 getFilters = getFilters.and.returnValue(Promise.reject(mockError));
 
                 service.getProcessFilters(null).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe(mockError);
+                        done();
                     }
                 );
-            }));
+            });
 
         });
 
@@ -213,32 +206,35 @@ describe('Process filter', () => {
                 expect(createFilter).toHaveBeenCalledWith(filter);
             });
 
-            it('should return the created filter', async(() => {
-                service.addProcessFilter(filter).subscribe((createdFilter: FilterProcessRepresentationModel) => {
+            it('should return the created filter', (done) => {
+                service.addProcessFilter(filter).subscribe((createdFilter) => {
                     expect(createdFilter).toBe(filter);
+                    done();
                 });
-            }));
+            });
 
-            it('should pass on any error that is returned by the API', async(() => {
+            it('should pass on any error that is returned by the API', (done) => {
                 createFilter = createFilter.and.returnValue(Promise.reject(mockError));
 
                 service.addProcessFilter(filter).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe(mockError);
+                        done();
                     }
                 );
-            }));
+            });
 
-            it('should return a default error if no data is returned by the API', async(() => {
+            it('should return a default error if no data is returned by the API', (done) => {
                 createFilter = createFilter.and.returnValue(Promise.reject(null));
                 service.addProcessFilter(filter).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe('Server error');
+                        done();
                     }
                 );
-            }));
+            });
 
         });
     });

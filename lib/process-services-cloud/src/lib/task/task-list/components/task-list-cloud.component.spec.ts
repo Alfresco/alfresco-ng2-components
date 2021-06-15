@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, EcmUserModel } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
@@ -420,7 +420,7 @@ describe('TaskListCloudComponent', () => {
             expect(componentCustom.taskList.columns.length).toEqual(3);
         });
 
-        it('it should show copy tooltip when key is present in data-colunn', async(() => {
+        it('it should show copy tooltip when key is present in data-colunn', fakeAsync(() => {
             copyFixture.detectChanges();
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             copyFixture.whenStable().then(() => {
@@ -535,7 +535,7 @@ describe('TaskListCloudComponent', () => {
 
         // TODO: highly unstable test
         // tslint:disable-next-line:ban
-        xit('should show tooltip if config copyContent flag is true', async(() => {
+        xit('should show tooltip if config copyContent flag is true', fakeAsync(() => {
             taskSpy.and.returnValue(of(fakeGlobalTask));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 

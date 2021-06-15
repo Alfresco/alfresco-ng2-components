@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import * as flowsMock from '../../mock/diagram/diagram-flows.mock';
 import { DiagramComponent } from './diagram.component';
@@ -43,9 +43,7 @@ describe('Diagrams flows', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         fixture.detectChanges();
-    });
 
-    beforeEach(() => {
         jasmine.Ajax.install();
         component.processInstanceId = '38399';
         component.processDefinitionId = 'fakeprocess:24:38399';
@@ -68,7 +66,7 @@ describe('Diagrams flows', () => {
 
     describe('Diagrams component Flows with process instance id: ', () => {
 
-        it('Should render the flow', async(() => {
+        it('Should render the flow', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -79,17 +77,18 @@ describe('Diagrams flows', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.flows[0].id);
                     expect(tooltip.textContent).toContain(res.flows[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { flows: [flowsMock.flow] };
             ajaxReply(resp);
-        }));
+        });
     });
 
     describe('Diagrams component Flows: ', () => {
 
-        it('Should render the flow', async(() => {
+        it('Should render the flow', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -100,11 +99,12 @@ describe('Diagrams flows', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.flows[0].id);
                     expect(tooltip.textContent).toContain(res.flows[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { flows: [flowsMock.flow] };
             ajaxReply(resp);
-        }));
+        });
     });
 });

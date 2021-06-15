@@ -16,9 +16,11 @@
  */
 
 import { Inject, AfterViewInit, Directive, EventEmitter, OnDestroy, Output } from '@angular/core';
-import { MatSelect, SELECT_ITEM_HEIGHT_EM } from '@angular/material/select';
+import { MatSelect } from '@angular/material/select';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+const SELECT_ITEM_HEIGHT_EM = 3;
 
 @Directive({
     selector: '[adf-infinite-select-scroll]'

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { TreeViewComponent } from './tree-view.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -76,13 +76,12 @@ describe('TreeViewComponent', () => {
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
-        ],
-        declarations: []
+        ]
     });
 
     describe('When there is a nodeId', () => {
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             treeService = TestBed.inject(TreeViewService);
             fixture = TestBed.createComponent(TreeViewComponent);
             element = fixture.nativeElement;
@@ -92,44 +91,50 @@ describe('TreeViewComponent', () => {
             const changeNodeId = new SimpleChange(null, '9999999', true);
             component.ngOnChanges({ 'nodeId': changeNodeId });
             fixture.detectChanges();
-        }));
+        });
 
         afterEach(() => {
             fixture.destroy();
         });
 
-        it('should show the folder', async(() => {
-            expect(element.querySelector('#fake-node-name-tree-child-node')).not.toBeNull();
-        }));
+        it('should show the folder', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-        it('should show the subfolders when the folder is clicked', async(() => {
-            const rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
+            expect(element.querySelector('#fake-node-name-tree-child-node')).not.toBeNull();
+        });
+
+        it('should show the subfolders when the folder is clicked', async () => {
+            const rootFolderButton = element.querySelector<HTMLButtonElement>('#button-fake-node-name');
             expect(rootFolderButton).not.toBeNull();
             rootFolderButton.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('#fake-child-name-tree-child-node')).not.toBeNull();
-                expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
-            });
-        }));
 
-        it('should show only the correct subfolders when the nodeId is changed', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#fake-child-name-tree-child-node')).not.toBeNull();
+            expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
+        });
+
+        it('should show only the correct subfolders when the nodeId is changed', async () => {
             component.nodeId = 'fake-second-id';
             const changeNodeId = new SimpleChange('9999999', 'fake-second-id', true);
             component.ngOnChanges({ 'nodeId': changeNodeId });
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-next-child-name');
-                expect(rootFolderButton).not.toBeNull();
-                rootFolderButton.click();
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(element.querySelector('#fake-child-name-tree-child-node')).not.toBeNull();
-                    expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
-                    expect(element.querySelectorAll('mat-tree-node').length).toBe(4);
-                });
-            });
-        }));
+            await fixture.whenStable();
+
+            const rootFolderButton = element.querySelector<HTMLButtonElement>('#button-fake-next-child-name');
+            expect(rootFolderButton).not.toBeNull();
+            rootFolderButton.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#fake-child-name-tree-child-node')).not.toBeNull();
+            expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
+            expect(element.querySelectorAll('mat-tree-node').length).toBe(4);
+        });
 
         it('should throw a nodeClicked event when a node is clicked', (done) => {
             component.nodeClicked.subscribe((nodeClicked: NodeEntry) => {
@@ -139,100 +144,105 @@ describe('TreeViewComponent', () => {
                 expect(nodeClicked.entry.id).toBe('fake-node-id');
                 done();
             });
-            const rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
+            const rootFolderButton = element.querySelector<HTMLButtonElement>('#button-fake-node-name');
             expect(rootFolderButton).not.toBeNull();
             rootFolderButton.click();
         });
 
-        it('should change the icon of the opened folders', async(() => {
-            const rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
+        it('should change the icon of the opened folders', async () => {
+            const rootFolderButton = element.querySelector<HTMLButtonElement>('#button-fake-node-name');
             expect(rootFolderButton).not.toBeNull();
             expect(element.querySelector('#button-fake-node-name .mat-icon').textContent.trim()).toBe('folder');
             rootFolderButton.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('#button-fake-node-name .mat-icon').textContent.trim()).toBe('folder_open');
-            });
-        }));
 
-        it('should show the subfolders of a subfolder if there are any', async(() => {
-            const rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#button-fake-node-name .mat-icon').textContent.trim()).toBe('folder_open');
+        });
+
+        it('should show the subfolders of a subfolder if there are any', async () => {
+            const rootFolderButton = element.querySelector<HTMLButtonElement>('#button-fake-node-name');
             expect(rootFolderButton).not.toBeNull();
             rootFolderButton.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
-                const childButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-second-name');
-                expect(childButton).not.toBeNull();
-                childButton.click();
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(element.querySelector('#fake-next-child-name-tree-child-node')).not.toBeNull();
-                    expect(element.querySelector('#fake-next-second-name-tree-child-node')).not.toBeNull();
-                });
-            });
-        }));
 
-        it('should hide the subfolders when clicked again', async(() => {
-            const rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
+            const childButton = element.querySelector<HTMLButtonElement>('#button-fake-second-name');
+            expect(childButton).not.toBeNull();
+            childButton.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#fake-next-child-name-tree-child-node')).not.toBeNull();
+            expect(element.querySelector('#fake-next-second-name-tree-child-node')).not.toBeNull();
+        });
+
+        it('should hide the subfolders when clicked again', async () => {
+            const rootFolderButton = element.querySelector<HTMLButtonElement>('#button-fake-node-name');
             expect(rootFolderButton).not.toBeNull();
             rootFolderButton.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('#fake-child-name-tree-child-node')).not.toBeNull();
-                expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
-                rootFolderButton.click();
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(element.querySelector('#button-fake-node-name .mat-icon').textContent.trim()).toBe('folder');
-                    expect(element.querySelector('#fake-child-name-tree-child-node')).toBeNull();
-                    expect(element.querySelector('#fake-second-name-tree-child-node')).toBeNull();
-                });
-            });
-        }));
 
-        it('should show the subfolders when the label is clicked', async(() => {
-            const rootLabel: HTMLButtonElement = <HTMLButtonElement> element.querySelector('.adf-tree-view-label');
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#fake-child-name-tree-child-node')).not.toBeNull();
+            expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
+            rootFolderButton.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#button-fake-node-name .mat-icon').textContent.trim()).toBe('folder');
+            expect(element.querySelector('#fake-child-name-tree-child-node')).toBeNull();
+            expect(element.querySelector('#fake-second-name-tree-child-node')).toBeNull();
+        });
+
+        it('should show the subfolders when the label is clicked', async () => {
+            const rootLabel = element.querySelector<HTMLButtonElement>('.adf-tree-view-label');
             rootLabel.click();
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('#fake-child-name-tree-child-node')).not.toBeNull();
-                expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
-            });
-        }));
+            await fixture.whenStable();
+
+            expect(element.querySelector('#fake-child-name-tree-child-node')).not.toBeNull();
+            expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
+        });
     });
 
     describe('When no nodeId is given', () => {
 
         let emptyElement: HTMLElement;
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             fixture = TestBed.createComponent(TreeViewComponent);
             emptyElement = fixture.nativeElement;
-        }));
+        });
 
         afterEach(() => {
             fixture.destroy();
         });
 
-        it('should show an error message when no nodeId is provided', async(() => {
+        it('should show an error message when no nodeId is provided', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(emptyElement.querySelector('#adf-tree-view-missing-node')).toBeDefined();
-                expect(emptyElement.querySelector('#adf-tree-view-missing-node')).not.toBeNull();
-            });
-        }));
+            await fixture.whenStable();
+
+            expect(emptyElement.querySelector('#adf-tree-view-missing-node')).toBeDefined();
+            expect(emptyElement.querySelector('#adf-tree-view-missing-node')).not.toBeNull();
+        });
     });
 
     describe('When invalid nodeId is given', () => {
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             fixture = TestBed.createComponent(TreeViewComponent);
             treeService = TestBed.inject(TreeViewService);
-            spyOn(treeService, 'getTreeNodes').and.callFake(() => throwError('Invalid Node Id'));
+            spyOn(treeService, 'getTreeNodes').and.returnValue(throwError('Invalid Node Id'));
             fixture.componentInstance.nodeId = 'Poopoovic';
-        }));
+        });
 
         afterEach(() => {
             fixture.destroy();

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { Node, NodeEntry } from '@alfresco/js-api';
 import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
@@ -58,7 +58,7 @@ describe('NodeActionsService', () => {
         contentDialogService = TestBed.inject(ContentNodeDialogService);
     });
 
-    it('should be able to copy content', async(() => {
+    it('should be able to copy content', fakeAsync(() => {
         spyOn(documentListService, 'copyNode').and.returnValue(of(new NodeEntry()));
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
@@ -67,7 +67,7 @@ describe('NodeActionsService', () => {
         });
     }));
 
-    it('should be able to move content', async(() => {
+    it('should be able to move content', fakeAsync(() => {
         spyOn(documentListService, 'moveNode').and.returnValue(of(new NodeEntry()));
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
@@ -76,7 +76,7 @@ describe('NodeActionsService', () => {
         });
     }));
 
-    it('should be able to move folder', async(() => {
+    it('should be able to move folder', fakeAsync(() => {
         spyOn(documentListService, 'moveNode').and.returnValue(of(new NodeEntry()));
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
@@ -85,7 +85,7 @@ describe('NodeActionsService', () => {
         });
     }));
 
-    it('should be able to copy folder', async(() => {
+    it('should be able to copy folder', fakeAsync(() => {
         spyOn(documentListService, 'copyNode').and.returnValue(of(new NodeEntry()));
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 
@@ -94,7 +94,7 @@ describe('NodeActionsService', () => {
         });
     }));
 
-    it('should be able to propagate the dialog error', async(() => {
+    it('should be able to propagate the dialog error', fakeAsync(() => {
         spyOn(documentListService, 'copyNode').and.returnValue(throwError('FAKE-KO'));
         spyOn(contentDialogService, 'openCopyMoveDialog').and.returnValue(of([fakeNode]));
 

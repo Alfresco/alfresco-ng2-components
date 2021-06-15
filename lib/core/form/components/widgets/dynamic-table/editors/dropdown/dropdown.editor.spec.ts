@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable, of, throwError } from 'rxjs';
 import { FormService } from './../../../../../services/form.service';
@@ -195,11 +195,11 @@ describe('DropdownEditorComponent', () => {
             fixture.detectChanges();
         }
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             fixture = TestBed.createComponent(DropdownEditorComponent);
             dropDownEditorComponent = fixture.componentInstance;
             element = fixture.nativeElement;
-        }));
+        });
 
         afterEach(() => {
             fixture.destroy();
@@ -207,7 +207,7 @@ describe('DropdownEditorComponent', () => {
 
         describe('and dropdown is populated via taskId', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
                 spyOn(stubFormService, 'getRestFieldValuesColumn').and.returnValue(of(fakeOptionList));
                 row = <DynamicTableRow> {value: {dropdown: 'one'}};
@@ -235,9 +235,9 @@ describe('DropdownEditorComponent', () => {
                 });
                 dropDownEditorComponent.table.field.isVisible = true;
                 fixture.detectChanges();
-            }));
+            });
 
-            it('should show visible dropdown widget', async(() => {
+            it('should show visible dropdown widget', () => {
                 expect(element.querySelector('#column-id')).toBeDefined();
                 expect(element.querySelector('#column-id')).not.toBeNull();
 
@@ -250,12 +250,12 @@ describe('DropdownEditorComponent', () => {
                 expect(optOne).not.toBeNull();
                 expect(optTwo).not.toBeNull();
                 expect(optThree).not.toBeNull();
-            }));
+            });
         });
 
         describe('and dropdown is populated via processDefinitionId', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 stubFormService = fixture.debugElement.injector.get(FormService);
                 spyOn(stubFormService, 'getRestFieldValuesColumnByProcessId').and.returnValue(of(fakeOptionList));
                 row = <DynamicTableRow> {value: {dropdown: 'one'}};
@@ -283,9 +283,9 @@ describe('DropdownEditorComponent', () => {
                 });
                 dropDownEditorComponent.table.field.isVisible = true;
                 fixture.detectChanges();
-            }));
+            });
 
-            it('should show visible dropdown widget', async(() => {
+            it('should show visible dropdown widget', () => {
                 expect(element.querySelector('#column-id')).toBeDefined();
                 expect(element.querySelector('#column-id')).not.toBeNull();
 
@@ -298,8 +298,7 @@ describe('DropdownEditorComponent', () => {
                 expect(optOne).not.toBeNull();
                 expect(optTwo).not.toBeNull();
                 expect(optThree).not.toBeNull();
-            }));
-
+            });
         });
    });
 });

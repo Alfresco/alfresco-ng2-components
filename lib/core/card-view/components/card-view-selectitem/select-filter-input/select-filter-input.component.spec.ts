@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -46,29 +46,33 @@ describe('SelectFilterInputComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should focus input on initialization', async(() => {
+    it('should focus input on initialization', async () => {
         spyOn(component.selectFilterInput.nativeElement, 'focus');
         matSelect.openedChange.next(true);
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(component.selectFilterInput.nativeElement.focus).toHaveBeenCalled();
-    }));
+    });
 
-    it('should clear search term on close', async(() => {
+    it('should clear search term on close', async () => {
         component.onModelChange('some-search-term');
         expect(component.term).toBe('some-search-term');
 
         matSelect.openedChange.next(false);
 
         fixture.detectChanges();
-        expect(component.term).toBe('');
-    }));
+        await fixture.whenStable();
 
-    it('should emit event when value changes', async(() => {
+        expect(component.term).toBe('');
+    });
+
+    it('should emit event when value changes', async () => {
         spyOn(component.change, 'next');
         component.onModelChange('some-search-term');
         expect(component.change.next).toHaveBeenCalledWith('some-search-term');
-    }));
+    });
 
     it('should reset value on reset() event', () => {
         component.onModelChange('some-search-term');

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import * as diagramsGatewaysMock from '../../mock/diagram/diagram-gateways.mock';
 import { DiagramComponent } from './diagram.component';
@@ -68,7 +68,7 @@ describe('Diagrams gateways', () => {
 
     describe('Diagrams component Gateways: ', () => {
 
-        it('Should render the Exclusive Gateway', async(() => {
+        it('Should render the Exclusive Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -82,14 +82,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.exclusiveGateway] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Inclusive Gateway', async(() => {
+        it('Should render the Inclusive Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -103,14 +104,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.inclusiveGateway] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Parallel Gateway', async(() => {
+        it('Should render the Parallel Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -124,14 +126,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.parallelGateway] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Event Gateway', async(() => {
+        it('Should render the Event Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -155,17 +158,18 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.eventGateway] };
             ajaxReply(resp);
-        }));
+        });
     });
 
     describe('Diagrams component Gateways with process instance id: ', () => {
 
-        it('Should render the Exclusive Gateway', async(() => {
+        it('Should render the Exclusive Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -179,14 +183,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.exclusiveGateway] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Exclusive Gateway', async(() => {
+        it('Should render the Active Exclusive Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -200,14 +205,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.exclusiveGatewayActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Exclusive Gateway', async(() => {
+        it('Should render the Completed Exclusive Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -221,14 +227,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.exclusiveGatewayCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Inclusive Gateway', async(() => {
+        it('Should render the Inclusive Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -242,14 +249,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.inclusiveGateway] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Inclusive Gateway', async(() => {
+        it('Should render the Active Inclusive Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -263,14 +271,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.inclusiveGatewayActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Inclusive Gateway', async(() => {
+        it('Should render the Completed Inclusive Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -284,14 +293,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.inclusiveGatewayCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Parallel Gateway', async(() => {
+        it('Should render the Parallel Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -305,14 +315,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.parallelGateway] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Parallel Gateway', async(() => {
+        it('Should render the Active Parallel Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -326,14 +337,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.parallelGatewayActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Parallel Gateway', async(() => {
+        it('Should render the Completed Parallel Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -347,14 +359,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.parallelGatewayCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Event Gateway', async(() => {
+        it('Should render the Event Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -378,14 +391,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.eventGateway] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Event Gateway', async(() => {
+        it('Should render the Active Event Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -409,14 +423,15 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.eventGatewayActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Event Gateway', async(() => {
+        it('Should render the Completed Event Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -440,11 +455,12 @@ describe('Diagrams gateways', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsGatewaysMock.eventGatewayCompleted] };
             ajaxReply(resp);
-        }));
+        });
     });
 });

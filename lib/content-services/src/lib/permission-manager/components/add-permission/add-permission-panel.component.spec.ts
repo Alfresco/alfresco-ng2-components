@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
 import { SearchService, setupTestBed } from '@alfresco/adf-core';
@@ -42,9 +42,12 @@ describe('AddPermissionPanelComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AddPermissionPanelComponent);
+        searchApiService = fixture.componentRef.injector.get(SearchService);
+
         debugElement = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
+
         fixture.detectChanges();
     });
 
@@ -64,8 +67,7 @@ describe('AddPermissionPanelComponent', () => {
         expect(element.querySelector('#searchInput')).not.toBeNull();
     });
 
-    it('should show search results when user types something', async(() => {
-        searchApiService = fixture.componentRef.injector.get(SearchService);
+    it('should show search results when user types something', fakeAsync(() => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();
         expect(element.querySelector('#searchInput')).not.toBeNull();
@@ -78,8 +80,7 @@ describe('AddPermissionPanelComponent', () => {
         });
     }));
 
-    it('should emit a select event with the selected items when an item is clicked', async(() => {
-        searchApiService = fixture.componentRef.injector.get(SearchService);
+    it('should emit a select event with the selected items when an item is clicked', fakeAsync(() => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         component.select.subscribe((items) => {
             expect(items).not.toBeNull();
@@ -98,8 +99,7 @@ describe('AddPermissionPanelComponent', () => {
         });
     }));
 
-    it('should show the icon related on the nodeType', async(() => {
-        searchApiService = fixture.componentRef.injector.get(SearchService);
+    it('should show the icon related on the nodeType', fakeAsync(() => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();
         expect(element.querySelector('#searchInput')).not.toBeNull();
@@ -115,8 +115,7 @@ describe('AddPermissionPanelComponent', () => {
         });
     }));
 
-    it('should clear the search when user delete the search input field', async(() => {
-        searchApiService = fixture.componentRef.injector.get(SearchService);
+    it('should clear the search when user delete the search input field', fakeAsync(() => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();
         expect(element.querySelector('#searchInput')).not.toBeNull();
@@ -136,8 +135,7 @@ describe('AddPermissionPanelComponent', () => {
         });
     }));
 
-    it('should remove element from selection when is clicked and already selected', async(() => {
-        searchApiService = fixture.componentRef.injector.get(SearchService);
+    it('should remove element from selection when is clicked and already selected', fakeAsync(() => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         component.selectedItems.push(fakeAuthorityListResult.list.entries[0]);
         component.select.subscribe((items) => {
@@ -156,8 +154,7 @@ describe('AddPermissionPanelComponent', () => {
         });
     }));
 
-    it('should always show as extra result the everyone group', async(() => {
-        searchApiService = fixture.componentRef.injector.get(SearchService);
+    it('should always show as extra result the everyone group', fakeAsync(() => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         component.selectedItems.push(fakeAuthorityListResult.list.entries[0]);
 
@@ -175,8 +172,7 @@ describe('AddPermissionPanelComponent', () => {
         });
     }));
 
-    it('should show everyone group when search return no result', async(() => {
-        searchApiService = fixture.componentRef.injector.get(SearchService);
+    it('should show everyone group when search return no result', fakeAsync(() => {
         spyOn(searchApiService, 'search').and.returnValue(of({ list: { entries: [] } }));
         component.selectedItems.push(fakeAuthorityListResult.list.entries[0]);
 
@@ -190,8 +186,7 @@ describe('AddPermissionPanelComponent', () => {
         });
     }));
 
-    it('should show first and last name of users', async(() => {
-        searchApiService = fixture.componentRef.injector.get(SearchService);
+    it('should show first and last name of users', fakeAsync(() => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeNameListResult));
         component.selectedItems.push(fakeNameListResult.list.entries[0]);
         component.selectedItems.push(fakeNameListResult.list.entries[1]);
@@ -208,8 +203,7 @@ describe('AddPermissionPanelComponent', () => {
         });
     }));
 
-    it('should emit unique element in between multiple search', async(() => {
-        searchApiService = fixture.componentRef.injector.get(SearchService);
+    it('should emit unique element in between multiple search', fakeAsync(() => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         let searchAttempt = 0;
 

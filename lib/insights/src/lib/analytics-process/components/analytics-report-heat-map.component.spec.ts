@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
@@ -69,50 +69,48 @@ describe('AnalyticsReportHeatMapComponent', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('should render the dropdown with the metric options', async(() => {
+        it('should render the dropdown with the metric options', async () => {
             component.report = { totalCountsPercentages: { 'sid-fake-id': 10, 'fake-start-event': 30 } };
 
-            component.success.subscribe(() => {
-                fixture.whenStable().then(() => {
-                    const dropDown: any = element.querySelector('#select-metrics');
-                    expect(dropDown).toBeDefined();
-                    expect(dropDown.length).toEqual(3);
-                    expect(dropDown[0].innerHTML).toEqual('Number of times a step is executed');
-                    expect(dropDown[1].innerHTML).toEqual('Total time spent in a process step');
-                    expect(dropDown[2].innerHTML).toEqual('Average time spent in a process step');
-                });
-            });
             fixture.detectChanges();
-        }));
+            await fixture.whenStable();
 
-        it('should return false when no metrics are defined in the report', async(() => {
+            const dropDown: any = element.querySelector('#select-metrics');
+            expect(dropDown).toBeDefined();
+            expect(dropDown.length).toEqual(3);
+            expect(dropDown[0].innerHTML).toEqual('Number of times a step is executed');
+            expect(dropDown[1].innerHTML).toEqual('Total time spent in a process step');
+            expect(dropDown[2].innerHTML).toEqual('Average time spent in a process step');
+        });
+
+        it('should return false when no metrics are defined in the report', () => {
             component.report = {};
             expect(component.hasMetric()).toBeFalsy();
-        }));
+        });
 
-        it('should return true when the metrics are defined in the report', async(() => {
+        it('should return true when the metrics are defined in the report', () => {
             expect(component.hasMetric()).toBeTruthy();
-        }));
+        });
 
-        it('should change the currentMetric width totalCount', async(() => {
+        it('should change the currentMetric width totalCount', () => {
             const field = { value: 'totalCount' };
             component.onMetricChanges(field);
             expect(component.currentMetric).toEqual(totalCountValues);
             expect(component.currentMetricColors).toEqual(totalCountPercent);
-        }));
+        });
 
-        it('should change the currentMetric width totalTime', async(() => {
+        it('should change the currentMetric width totalTime', () => {
             const field = { value: 'totalTime' };
             component.onMetricChanges(field);
             expect(component.currentMetric).toEqual(totalTimeValues);
             expect(component.currentMetricColors).toEqual(totalTimePercent);
-        }));
+        });
 
-        it('should change the currentMetric width avgTime', async(() => {
+        it('should change the currentMetric width avgTime', () => {
             const field = { value: 'avgTime' };
             component.onMetricChanges(field);
             expect(component.currentMetric).toEqual(avgTimeValues);
             expect(component.currentMetricColors).toEqual(avgTimePercentages);
-        }));
+        });
    });
 });

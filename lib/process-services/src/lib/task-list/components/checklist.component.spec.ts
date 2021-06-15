@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { ChecklistComponent } from './checklist.component';
 import { setupTestBed } from '@alfresco/adf-core';
@@ -40,7 +40,7 @@ describe('ChecklistComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         service = TestBed.inject(TaskListService);
         spyOn(service, 'getTaskChecklist').and.returnValue(of([new TaskDetailsModel({
             id: 'fake-check-changed-id',
@@ -52,7 +52,7 @@ describe('ChecklistComponent', () => {
         element = fixture.nativeElement;
 
         fixture.detectChanges();
-    }));
+    });
 
     it('should show checklist component title', () => {
         expect(element.querySelector('[data-automation-id=checklist-label]')).toBeDefined();
@@ -176,7 +176,7 @@ describe('ChecklistComponent', () => {
             expect(element.querySelector('#remove-fake-completed-id')).toBeNull();
         });
 
-        it('should add checklist', async(() => {
+        it('should add checklist', async () => {
             spyOn(service, 'addTask').and.returnValue(of(new TaskDetailsModel({
                 id: 'fake-check-added-id', name: 'fake-check-added-name'
             })));
@@ -185,14 +185,14 @@ describe('ChecklistComponent', () => {
             const addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
             addButtonDialog.click();
 
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#check-fake-check-added-id')).not.toBeNull();
-                expect(element.querySelector('#check-fake-check-added-id').textContent).toContain('fake-check-added-name');
-            });
-        }));
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-        it('should remove a checklist element', async(() => {
+            expect(element.querySelector('#check-fake-check-added-id')).not.toBeNull();
+            expect(element.querySelector('#check-fake-check-added-id').textContent).toContain('fake-check-added-name');
+        });
+
+        it('should remove a checklist element', async () => {
             spyOn(service, 'deleteTask').and.returnValue(of(null));
 
             checklistComponent.taskId = 'new-fake-task-id';
@@ -200,19 +200,22 @@ describe('ChecklistComponent', () => {
                 id: 'fake-check-id',
                 name: 'fake-check-name'
             }));
+
             fixture.detectChanges();
+            await fixture.whenStable();
+
             const checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
             expect(checklistElementRemove).toBeDefined();
             expect(checklistElementRemove).not.toBeNull();
             checklistElementRemove.click();
 
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#fake-check-id')).toBeNull();
-            });
-        }));
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-        it('should send an event when the checklist is deleted', async(() => {
+            expect(element.querySelector('#fake-check-id')).toBeNull();
+        });
+
+        it('should send an event when the checklist is deleted', async () => {
             spyOn(service, 'deleteTask').and.returnValue(of(null));
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(new TaskDetailsModel({
@@ -221,20 +224,18 @@ describe('ChecklistComponent', () => {
             }));
 
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(checklistComponent.checklist.length).toBe(1);
-                const checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
-                expect(checklistElementRemove).toBeDefined();
-                expect(checklistElementRemove).not.toBeNull();
-                checklistElementRemove.click();
+            await fixture.whenStable();
 
-                expect(checklistComponent.checklist.length).toBe(0);
-            });
-        }));
+            expect(checklistComponent.checklist.length).toBe(1);
+            const checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
+            expect(checklistElementRemove).toBeDefined();
+            expect(checklistElementRemove).not.toBeNull();
+            checklistElementRemove.click();
 
-        it('should show load task checklist on change', async(() => {
+            expect(checklistComponent.checklist.length).toBe(0);
+        });
 
+        it('should show load task checklist on change', async () => {
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(new TaskDetailsModel({
                 id: 'fake-check-id',
@@ -246,31 +247,35 @@ describe('ChecklistComponent', () => {
                 taskId: change
             });
 
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#check-fake-check-changed-id')).not.toBeNull();
-                expect(element.querySelector('#check-fake-check-changed-id').textContent).toContain('fake-check-changed-name');
-            });
-        }));
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-        it('should show empty checklist when task id is null', async(() => {
+            expect(element.querySelector('#check-fake-check-changed-id')).not.toBeNull();
+            expect(element.querySelector('#check-fake-check-changed-id').textContent).toContain('fake-check-changed-name');
+        });
+
+        it('should show empty checklist when task id is null', async () => {
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(new TaskDetailsModel({
                 id: 'fake-check-id',
                 name: 'fake-check-name'
             }));
+
             fixture.detectChanges();
+            await fixture.whenStable();
+
             checklistComponent.taskId = null;
             const change = new SimpleChange(null, 'new-fake-task-id', true);
             checklistComponent.ngOnChanges({
                 taskId: change
             });
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#checklist-none-message')).not.toBeNull();
-                expect(element.querySelector('#checklist-none-message').textContent).toContain('ADF_TASK_LIST.DETAILS.CHECKLIST.NONE');
-            });
-        }));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#checklist-none-message')).not.toBeNull();
+            expect(element.querySelector('#checklist-none-message').textContent).toContain('ADF_TASK_LIST.DETAILS.CHECKLIST.NONE');
+        });
 
         it('should emit checklist task created event when the checklist is successfully added', (done) => {
             spyOn(service, 'addTask').and.returnValue(of(new TaskDetailsModel({ id: 'fake-check-added-id', name: 'fake-check-added-name' })));

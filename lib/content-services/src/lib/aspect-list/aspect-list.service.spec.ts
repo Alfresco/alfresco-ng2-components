@@ -16,7 +16,7 @@
  */
 
 import { AspectEntry, AspectPaging } from '@alfresco/js-api';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlfrescoApiService, AppConfigService, LogService, setupTestBed } from 'core';
@@ -163,34 +163,37 @@ describe('AspectListService', () => {
             service = TestBed.inject(AspectListService);
         });
 
-        it('should get the list of only available aspects', async(() => {
+        it('should get the list of only available aspects', (done) => {
             aspectTypesApi.listAspects.and.returnValues(of(listAspectResp), of(customListAspectResp));
             service.getAspects().subscribe((list) => {
                 expect(list.length).toBe(2);
                 expect(list[0].entry.id).toBe('frs:AspectOne');
                 expect(list[1].entry.id).toBe('frs:AspectCustom');
+                done();
             });
-        }));
+        });
 
-        it('should return a value when the standard aspect call fails', async(() => {
+        it('should return a value when the standard aspect call fails', (done) => {
             spyOn(logService, 'error').and.stub();
             aspectTypesApi.listAspects.and.returnValues(throwError('Insert Coin'), of(customListAspectResp));
             service.getAspects().subscribe((list) => {
                 expect(list.length).toBe(1);
                 expect(list[0].entry.id).toBe('frs:AspectCustom');
                 expect(logService.error).toHaveBeenCalled();
+                done();
             });
-        }));
+        });
 
-        it('should return a value when the custom aspect call fails', async(() => {
+        it('should return a value when the custom aspect call fails', (done) => {
             spyOn(logService, 'error').and.stub();
             aspectTypesApi.listAspects.and.returnValues(of(listAspectResp), throwError('Insert Coin'));
             service.getAspects().subscribe((list) => {
                 expect(list.length).toBe(1);
                 expect(list[0].entry.id).toBe('frs:AspectOne');
                 expect(logService.error).toHaveBeenCalled();
+                done();
             });
-        }));
+        });
     });
 
 });

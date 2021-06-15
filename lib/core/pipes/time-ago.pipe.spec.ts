@@ -16,7 +16,7 @@
  */
 
 import { TimeAgoPipe } from './time-ago.pipe';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../services/user-preferences.service';
 import { setupTestBed } from '../testing/setup-test-bed';
@@ -36,11 +36,11 @@ describe('TimeAgoPipe', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
         pipe = new TimeAgoPipe(userPreferences, TestBed.inject(AppConfigService));
-    }));
+    });
 
     it('should return time difference for a given date', () => {
         const date = new Date();
@@ -59,11 +59,11 @@ describe('TimeAgoPipe', () => {
 
     describe('When a locale is given', () => {
 
-        it('should return a localised message', async(() => {
+        it('should return a localised message', () => {
             const date = new Date();
             const transformedDate  = pipe.transform(date, 'de');
             /* cspell:disable-next-line */
             expect(transformedDate).toBe('vor ein paar Sekunden');
-        }));
+        });
     });
 });

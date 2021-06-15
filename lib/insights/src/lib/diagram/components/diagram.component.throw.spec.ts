@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import * as throwEventMock from '../../mock/diagram/diagram-throw.mock';
 import { DiagramComponent } from './diagram.component';
@@ -38,7 +38,7 @@ describe('Diagrams throw', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         jasmine.Ajax.install();
 
         fixture = TestBed.createComponent(DiagramComponent);
@@ -49,10 +49,9 @@ describe('Diagrams throw', () => {
         component.metricPercentages = { startEvent: 0 };
 
         fixture.detectChanges();
-    }));
+    });
 
     afterEach(() => {
-        component.success.unsubscribe();
         fixture.destroy();
         jasmine.Ajax.uninstall();
     });
@@ -67,7 +66,7 @@ describe('Diagrams throw', () => {
 
     describe('Diagrams component Throw events with process instance id: ', () => {
 
-        it('Should render the Throw time event', async(() => {
+        it('Should render the Throw time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -85,14 +84,15 @@ describe('Diagrams throw', () => {
                     const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwTimeEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Throw time event', async(() => {
+        it('Should render the Active Throw time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -114,14 +114,15 @@ describe('Diagrams throw', () => {
                     const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwTimeEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Throw time event', async(() => {
+        it('Should render the Completed Throw time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -143,14 +144,15 @@ describe('Diagrams throw', () => {
                     const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwTimeEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Throw error event', async(() => {
+        it('Should render the Throw error event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -172,14 +174,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwErrorEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Throw error event', async(() => {
+        it('Should render the Active Throw error event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -205,14 +208,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwErrorEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Throw error event', async(() => {
+        it('Should render the Completed Throw error event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -238,14 +242,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwErrorEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Throw signal event', async(() => {
+        it('Should render the Throw signal event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -267,14 +272,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwSignalEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Throw signal event', async(() => {
+        it('Should render the Active Throw signal event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -300,14 +306,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwSignalEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Throw signal event', async(() => {
+        it('Should render the Completed Throw signal event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -333,14 +340,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwSignalEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Throw signal message', async(() => {
+        it('Should render the Throw signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -362,14 +370,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Throw signal message', async(() => {
+        it('Should render the Active Throw signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -395,14 +404,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Throw signal message', async(() => {
+        it('Should render the Completed Throw signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -428,14 +438,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Throw signal message', async(() => {
+        it('Should render the Throw signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -457,14 +468,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Throw signal message', async(() => {
+        it('Should render the Active Throw signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -490,14 +502,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Throw signal message', async(() => {
+        it('Should render the Completed Throw signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -523,17 +536,18 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
     });
 
     describe('Diagrams component Throw events: ', () => {
 
-        it('Should render the Throw time event', async(() => {
+        it('Should render the Throw time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -551,14 +565,15 @@ describe('Diagrams throw', () => {
                     const iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwTimeEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Throw error event', async(() => {
+        it('Should render the Throw error event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -580,14 +595,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwErrorEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Throw signal event', async(() => {
+        it('Should render the Throw signal event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -609,14 +625,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwSignalEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Throw signal message', async(() => {
+        it('Should render the Throw signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -638,14 +655,15 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Throw signal message', async(() => {
+        it('Should render the Throw signal message', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -667,11 +685,12 @@ describe('Diagrams throw', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [throwEventMock.throwMessageEvent] };
             ajaxReply(resp);
-        }));
+        });
     });
 });

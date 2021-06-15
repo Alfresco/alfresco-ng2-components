@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LogService } from '../../../../services';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from './../core/index';
@@ -338,7 +338,7 @@ describe('DynamicTableWidgetComponent', () => {
             TestBed.resetTestingModule();
         });
 
-        it('should select a row when press space bar', async(() => {
+        it('should select a row when press space bar', async () => {
             const rowElement = element.querySelector('#fake-dynamic-table-row-0');
 
             expect(element.querySelector('#dynamic-table-fake-dynamic-table')).not.toBeNull();
@@ -348,15 +348,15 @@ describe('DynamicTableWidgetComponent', () => {
             const event: any = new Event('keyup');
             event.keyCode = 32;
             rowElement.dispatchEvent(event);
+
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            fixture.whenStable().then(() => {
-                const selectedRow = element.querySelector('#fake-dynamic-table-row-0');
-                expect(selectedRow.className).toContain('adf-dynamic-table-widget__row-selected');
-            });
-        }));
+            const selectedRow = element.querySelector('#fake-dynamic-table-row-0');
+            expect(selectedRow.className).toContain('adf-dynamic-table-widget__row-selected');
+        });
 
-        it('should focus on add button when a new row is saved', async(() => {
+        it('should focus on add button when a new row is saved', async () => {
             const addNewRowButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#fake-dynamic-table-add-row');
 
             expect(element.querySelector('#dynamic-table-fake-dynamic-table')).not.toBeNull();
@@ -364,11 +364,11 @@ describe('DynamicTableWidgetComponent', () => {
 
             widget.addNewRow();
             widget.onSaveChanges();
-            fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
-                expect(document.activeElement.id).toBe('fake-dynamic-table-add-row');
-            });
-        }));
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(document.activeElement.id).toBe('fake-dynamic-table-add-row');
+        });
     });
 });
