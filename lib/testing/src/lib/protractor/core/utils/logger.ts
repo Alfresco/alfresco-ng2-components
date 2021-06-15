@@ -15,47 +15,10 @@
  * limitations under the License.
  */
 
-import { infoColor, logColor, warnColor, errorColor, logLevels, LogLevelsEnum } from '../../../shared/utils/logger';
+import { GenericLogger } from '../../../shared/utils/logger';
 import { browser } from 'protractor';
 
-/* tslint:disable:no-console */
-export class Logger {
-    static info(...messages: string[]): void {
-        if (browser.params.testConfig && Logger.getLogLevelByName(browser.params.testConfig.appConfig.log) >= LogLevelsEnum.INFO) {
-            console.log(infoColor, messages.join(''));
-        }
-    }
-
-    static log(...messages: string[]): void {
-        if (browser.params.testConfig && Logger.getLogLevelByName(browser.params.testConfig.appConfig.log) >= LogLevelsEnum.TRACE) {
-            console.log(logColor, messages.join(''));
-        }
-    }
-
-    static warn(...messages: string[]): void {
-        if (browser.params.testConfig && Logger.getLogLevelByName(browser.params.testConfig.appConfig.log) >= LogLevelsEnum.WARN) {
-            console.log(warnColor, messages.join(''));
-        }
-    }
-
-    static error(...messages: string[]): void {
-        console.log(errorColor, messages.join(''));
-    }
-
-    private static getLogLevelByName(name: string): LogLevelsEnum {
-        if (name) {
-            const log = logLevels.find((currentLog) => {
-                return currentLog.name === name;
-            });
-
-            if (log && log.level) {
-                return log.level;
-            } else {
-                console.error(errorColor, 'Log level not correctly set, use one of the following values TRACE|DEBUG|INFO|WARN|ERROR|SILENT');
-                return LogLevelsEnum.ERROR;
-            }
-        } else {
-            return LogLevelsEnum.ERROR;
-        }
-    }
-}
+// This was previously a static class, that is why we need this constant starting with uppercase
+// Otherwise, feel free to update everywhere in the codebase, where we were using it :)
+/* tslint:disable:variable-name */
+export const Logger = new GenericLogger(browser?.params?.testConfig?.appConfig?.log);

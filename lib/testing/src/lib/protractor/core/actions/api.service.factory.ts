@@ -17,6 +17,7 @@
 
 import { AlfrescoApiConfig } from '@alfresco/js-api';
 import { ApiService } from '../../../shared/api/api.service';
+import { Logger } from '../utils/logger';
 import { browser } from 'protractor';
 
 export function createApiService(
@@ -36,8 +37,11 @@ export function createApiService(
         ...appConfigOverride
     };
 
-    return new ApiService({
-        appConfig: new AlfrescoApiConfig(patchedAppConfig),
-        users: browser.params.testConfig.users
-    }, browser?.params?.testConfig?.appConfig?.log);
+    return new ApiService(
+        {
+            appConfig: new AlfrescoApiConfig(patchedAppConfig),
+            users: browser.params.testConfig.users
+        },
+        Logger
+    );
 }

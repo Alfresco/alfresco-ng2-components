@@ -40,8 +40,15 @@ export let logLevels: { level: LogLevelsEnum, name: LOG_LEVEL }[] = [
     { level: LogLevelsEnum.SILENT, name: 'SILENT' }
 ];
 
+export interface LoggerLike {
+    info(...messages: string[]): void;
+    log(...messages: string[]): void;
+    warn(...messages: string[]): void;
+    error(...messages: string[]): void;
+}
+
 /* tslint:disable:no-console */
-export class GenericLogger {
+export class GenericLogger implements LoggerLike {
 
     private level: LogLevelsEnum;
 
