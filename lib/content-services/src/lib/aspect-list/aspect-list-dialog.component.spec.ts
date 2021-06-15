@@ -305,17 +305,23 @@ describe('AspectListDialogComponent', () => {
         });
 
         it('Should apply button be disabled by default', async () => {
-            await fixture.detectChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
             const applyButton = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-apply');
             expect(applyButton.disabled).toBe(true);
         });
 
         it('Should apply button get enabled when the aspect list gets updated', async () => {
-            await fixture.detectChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
             const applyButton = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-apply');
 
             fixture.nativeElement.querySelector('#aspect-list-dialog-actions-clear').click();
-            await fixture.detectChanges();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(applyButton.disabled).toBe(false);
         });

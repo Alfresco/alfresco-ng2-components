@@ -16,7 +16,7 @@
  */
 
 import { NodesApiService, SearchService, setupTestBed } from '@alfresco/adf-core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
@@ -78,7 +78,10 @@ describe('PermissionListComponent', () => {
         component.nodeId = 'fake-node-id';
         getNodeSpy.and.returnValue(of(fakeNodeWithoutPermissions));
         component.ngOnInit();
-        await fixture.detectChanges();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
         expect(element.querySelector('.adf-permission-container')).not.toBeNull();
         expect(element.querySelector('[data-automation-id="adf-locally-set-permission"]')).not.toBeNull();
     });
@@ -87,7 +90,9 @@ describe('PermissionListComponent', () => {
         component.nodeId = 'fake-node-id';
         getNodeSpy.and.returnValue(throwError(null));
         component.ngOnInit();
-        await fixture.detectChanges();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(element.querySelector('.adf-no-permission__template')).not.toBeNull();
         expect(element.querySelector('.adf-no-permission__template p').textContent).toContain('PERMISSION_MANAGER.ERROR.NOT-FOUND');
@@ -101,7 +106,7 @@ describe('PermissionListComponent', () => {
 
         expect(element.querySelectorAll('[data-automation-id="adf-locally-set-permission"] .adf-datatable-row').length).toBe(2);
 
-        const showButton: HTMLButtonElement = element.querySelector('[data-automation-id="permission-info-button"]');
+        const showButton = element.querySelector<HTMLButtonElement>('[data-automation-id="permission-info-button"]');
         showButton.click();
         fixture.detectChanges();
 
@@ -112,7 +117,9 @@ describe('PermissionListComponent', () => {
         it('should show inherited details',  async() => {
             getNodeSpy.and.returnValue(of(fakeNodeInheritedOnly));
             component.ngOnInit();
-            await fixture.detectChanges();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(element.querySelector('.adf-inherit-container .mat-checked')).toBeDefined();
             expect(element.querySelector('.adf-inherit-container h3').textContent.trim())
@@ -121,10 +128,11 @@ describe('PermissionListComponent', () => {
                 .toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
         });
 
-        it('should toggle the inherited button',  async() => {
+        it('should toggle the inherited button',  fakeAsync(() => {
             getNodeSpy.and.returnValue(of(fakeNodeInheritedOnly));
             component.ngOnInit();
-            await fixture.detectChanges();
+
+            fixture.detectChanges();
 
             expect(element.querySelector('.adf-inherit-container .mat-checked')).toBeDefined();
             expect(element.querySelector('.adf-inherit-container h3').textContent.trim())
@@ -136,19 +144,22 @@ describe('PermissionListComponent', () => {
 
             const slider = fixture.debugElement.query(By.css('mat-slide-toggle'));
             slider.triggerEventHandler('change', { source: { checked: false } });
-            await fixture.detectChanges();
+
+            fixture.detectChanges();
 
             expect(element.querySelector('.adf-inherit-container .mat-checked')).toBe(null);
             expect(element.querySelector('.adf-inherit-container h3').textContent.trim())
                 .toBe('PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.OFF');
             expect(element.querySelector('span[title="total"]').textContent.trim())
                 .toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
-        });
+        }));
 
         it('should not toggle inherited button for read only users',  async () => {
             getNodeSpy.and.returnValue(of(fakeReadOnlyNodeInherited));
             component.ngOnInit();
-            await fixture.detectChanges();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(element.querySelector('.adf-inherit-container .mat-checked')).toBeDefined();
             expect(element.querySelector('.adf-inherit-container h3').textContent.trim())
@@ -160,7 +171,9 @@ describe('PermissionListComponent', () => {
 
             const slider = fixture.debugElement.query(By.css('mat-slide-toggle'));
             slider.triggerEventHandler('change', { source: { checked: false } });
-            await fixture.detectChanges();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(element.querySelector('.adf-inherit-container .mat-checked')).toBeDefined();
             expect(element.querySelector('.adf-inherit-container h3').textContent.trim())
@@ -182,7 +195,9 @@ describe('PermissionListComponent', () => {
             searchQuerySpy.and.returnValue(of(fakeSiteNodeResponse));
             component.ngOnInit();
 
-            await fixture.detectChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
             expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
             expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
         });
@@ -191,7 +206,9 @@ describe('PermissionListComponent', () => {
             searchQuerySpy.and.returnValue(of(fakeSiteNodeResponse));
             component.ngOnInit();
 
-            await fixture.detectChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
             expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
             expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
 
@@ -199,7 +216,7 @@ describe('PermissionListComponent', () => {
             selectBox.triggerEventHandler('click', null);
             fixture.detectChanges();
 
-            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+            const options = fixture.debugElement.queryAll(By.css('mat-option'));
             expect(options).not.toBeNull();
             expect(options.length).toBe(4);
             expect(options[0].nativeElement.innerText).toContain('ADF.ROLES.SITECOLLABORATOR');
@@ -212,12 +229,14 @@ describe('PermissionListComponent', () => {
             getNodeSpy.and.returnValue(of(fakeNodeLocalSiteManager));
             component.ngOnInit();
 
-            await fixture.detectChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
             expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_site_testsite_SiteManager');
             expect(element.querySelector('#adf-select-role-permission').textContent).toContain('ADF.ROLES.SITEMANAGER');
-            const deleteButton: HTMLButtonElement = element.querySelector('[data-automation-id="adf-delete-permission-button-GROUP_site_testsite_SiteManager"]');
+            const deleteButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-delete-permission-button-GROUP_site_testsite_SiteManager"]');
             expect(deleteButton.disabled).toBe(true);
-            const otherDeleteButton: HTMLButtonElement = element.querySelector('[data-automation-id="adf-delete-permission-button-superadminuser"]');
+            const otherDeleteButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-delete-permission-button-superadminuser"]');
             expect(otherDeleteButton.disabled).toBe(false);
         });
 
@@ -226,7 +245,8 @@ describe('PermissionListComponent', () => {
             searchQuerySpy.and.returnValue(of(fakeEmptyResponse));
             component.ngOnInit();
 
-            await fixture.detectChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
             expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
@@ -234,7 +254,7 @@ describe('PermissionListComponent', () => {
             const selectBox = fixture.debugElement.query(By.css(('[id="adf-select-role-permission"] .mat-select-trigger')));
             selectBox.triggerEventHandler('click', null);
             fixture.detectChanges();
-            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+            const options = fixture.debugElement.queryAll(By.css('mat-option'));
             expect(options).not.toBeNull();
             expect(options.length).toBe(5);
             options[3].triggerEventHandler('click', {});
@@ -246,12 +266,14 @@ describe('PermissionListComponent', () => {
             spyOn(nodeService, 'updateNode').and.returnValue(of(new MinimalNode({id: 'fake-uwpdated-node'})));
             searchQuerySpy.and.returnValue(of(fakeEmptyResponse));
             component.ngOnInit();
-            await fixture.detectChanges();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
             expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
 
-            const deleteButton: HTMLButtonElement = element.querySelector('[data-automation-id="adf-delete-permission-button-GROUP_EVERYONE"]');
+            const deleteButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-delete-permission-button-GROUP_EVERYONE"]');
             deleteButton.click();
             fixture.detectChanges();
 

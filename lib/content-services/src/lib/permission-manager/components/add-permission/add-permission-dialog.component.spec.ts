@@ -89,37 +89,45 @@ describe('AddPermissionDialog', () => {
     });
 
     it('should close the dialog when close button is clicked', () => {
-        const closeButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('[data-automation-id="add-permission-dialog-close-button"]');
+        const closeButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-close-button"]');
         expect(closeButton).not.toBeNull();
         closeButton.click();
         expect(dialogRef.close).toHaveBeenCalled();
     });
 
     it('should disable the confirm button when no selection is applied', () => {
-        const confirmButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('[data-automation-id="add-permission-dialog-confirm-button"]');
+        const confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
         expect(confirmButton.disabled).toBeTruthy();
     });
 
     it('should enable the button when a selection is done', async() => {
         const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
         addPermissionPanelComponent.select.emit(fakeAuthorityResults);
-        let confirmButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('[data-automation-id="add-permission-dialog-confirm-button"]');
+        let confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
         expect(confirmButton.disabled).toBeTruthy();
-        await fixture.detectChanges();
-        confirmButton = <HTMLButtonElement> element.querySelector('[data-automation-id="add-permission-dialog-confirm-button"]');
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
         expect(confirmButton.disabled).toBe(false);
     });
 
     it('should update the role after selection', async (done) => {
         spyOn(component, 'onMemberUpdate').and.callThrough();
         const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
-        let confirmButton = <HTMLButtonElement> element.querySelector('[data-automation-id="add-permission-dialog-confirm-button"]');
+        let confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
         expect(confirmButton.disabled).toBe(true);
         addPermissionPanelComponent.select.emit([fakeAuthorityResults[0]]);
-        await fixture.detectChanges();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
         expect(confirmButton.disabled).toBe(false);
         confirmButton.click();
-        await fixture.detectChanges();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
 
         const selectBox = fixture.debugElement.query(By.css(('[id="adf-select-role-permission"] .mat-select-trigger')));
         selectBox.triggerEventHandler('click', null);
@@ -129,7 +137,10 @@ describe('AddPermissionDialog', () => {
         expect(options).not.toBeNull();
         expect(options.length).toBe(2);
         options[0].triggerEventHandler('click', {});
-        await fixture.detectChanges();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
         expect(component.onMemberUpdate).toHaveBeenCalled();
 
         data.confirm.subscribe((selection) => {
@@ -137,7 +148,7 @@ describe('AddPermissionDialog', () => {
             done();
         });
 
-        confirmButton = <HTMLButtonElement> element.querySelector('[data-automation-id="add-permission-dialog-confirm-button"]');
+        confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
         expect(confirmButton.disabled).toBe(false);
         confirmButton.click();
     });
@@ -145,30 +156,40 @@ describe('AddPermissionDialog', () => {
     it('should update all the user role on header column update', async () => {
         spyOn(component, 'onBulkUpdate').and.callThrough();
         const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
-        let confirmButton = <HTMLButtonElement> element.querySelector('[data-automation-id="add-permission-dialog-confirm-button"]');
+        let confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
         expect(confirmButton.disabled).toBe(true);
         addPermissionPanelComponent.select.emit(fakeAuthorityResults);
-        await fixture.detectChanges();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
         expect(confirmButton.disabled).toBe(false);
         confirmButton.click();
-        await fixture.detectChanges();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
 
         const selectBox = fixture.debugElement.query(By.css(('[id="adf-bulk-select-role-permission"] .mat-select-trigger')));
         selectBox.triggerEventHandler('click', null);
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
         const options = fixture.debugElement.queryAll(By.css('mat-option'));
         expect(options).not.toBeNull();
         expect(options.length).toBe(2);
         options[0].triggerEventHandler('click', {});
-        await fixture.detectChanges();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
         expect(component.onBulkUpdate).toHaveBeenCalled();
 
         data.confirm.subscribe((selection) => {
             expect(selection.length).toBe(3);
         });
 
-        confirmButton = <HTMLButtonElement> element.querySelector('[data-automation-id="add-permission-dialog-confirm-button"]');
+        confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
         expect(confirmButton.disabled).toBe(false);
         confirmButton.click();
     });
@@ -177,31 +198,42 @@ describe('AddPermissionDialog', () => {
         spyOn(component, 'onMemberUpdate').and.callThrough();
         spyOn(component, 'onMemberDelete').and.callThrough();
         const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
-        let confirmButton = <HTMLButtonElement> element.querySelector('[data-automation-id="add-permission-dialog-confirm-button"]');
+        let confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
         expect(confirmButton.disabled).toBe(true);
         addPermissionPanelComponent.select.emit(fakeAuthorityResults);
-        await fixture.detectChanges();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
         expect(confirmButton.disabled).toBe(false);
         confirmButton.click();
-        await fixture.detectChanges();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
 
         const selectBox = fixture.debugElement.query(By.css(('[id="adf-select-role-permission"] .mat-select-trigger')));
         selectBox.triggerEventHandler('click', null);
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
         const options = fixture.debugElement.queryAll(By.css('mat-option'));
         expect(options).not.toBeNull();
         expect(options.length).toBe(2);
         options[0].triggerEventHandler('click', {});
-        await fixture.detectChanges();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
         expect(component.onMemberUpdate).toHaveBeenCalled();
 
-        confirmButton = <HTMLButtonElement> element.querySelector('[data-automation-id="add-permission-dialog-confirm-button"]');
+        confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
         expect(confirmButton.disabled).toBe(true);
         const deleteButton = element.querySelectorAll('[data-automation-id="adf-delete-permission-button"]') as any;
         deleteButton[1].click();
         deleteButton[2].click();
-        await fixture.detectChanges();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(confirmButton.disabled).toBe(false);
         expect(component.onMemberDelete).toHaveBeenCalled();
@@ -220,8 +252,9 @@ describe('AddPermissionDialog', () => {
             expect(fakeAuthorityResults[0].entry.id).toBe(selection[0].authorityId);
         });
 
-        await fixture.detectChanges();
-        const confirmButton = <HTMLButtonElement> element.querySelector('[data-automation-id="add-permission-dialog-confirm-button"]');
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const confirmButton = element.querySelector<HTMLButtonElement>('[data-automation-id="add-permission-dialog-confirm-button"]');
         confirmButton.click();
     });
 });
