@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { setupTestBed } from '@alfresco/adf-core';
@@ -70,7 +70,7 @@ describe('ProcessFilterDialogCloudComponent', () => {
         expect(titleElement.textContent).toEqual(' ADF_CLOUD_EDIT_PROCESS_FILTER.DIALOG.TITLE ');
     });
 
-    it('should enable save button if form is valid', async(() => {
+    it('should enable save button if form is valid', async () => {
         fixture.detectChanges();
         const saveButton = fixture.debugElement.nativeElement.querySelector(
             '#adf-save-button-id'
@@ -80,48 +80,52 @@ describe('ProcessFilterDialogCloudComponent', () => {
         );
         inputElement.value = 'My custom Name';
         inputElement.dispatchEvent(new Event('input'));
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(saveButton).toBeDefined();
-            expect(saveButton.disabled).toBeFalsy();
-        });
-    }));
 
-    it('should disable save button if form is not valid', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(saveButton).toBeDefined();
+        expect(saveButton.disabled).toBeFalsy();
+    });
+
+    it('should disable save button if form is not valid', async () => {
         fixture.detectChanges();
         const inputElement = fixture.debugElement.nativeElement.querySelector(
             '#adf-filter-name-id'
         );
         inputElement.value = '';
         inputElement.dispatchEvent(new Event('input'));
-        fixture.whenStable().then(() => {
-            const saveButton = fixture.debugElement.nativeElement.querySelector(
-                '#adf-save-button-id'
-            );
-            fixture.detectChanges();
-            expect(saveButton).toBeDefined();
-            expect(saveButton.disabled).toBe(true);
-        });
-    }));
 
-    it('should able to close dialog on click of save button if form is valid', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const saveButton = fixture.debugElement.nativeElement.querySelector(
+            '#adf-save-button-id'
+        );
+        expect(saveButton).toBeDefined();
+        expect(saveButton.disabled).toBe(true);
+    });
+
+    it('should able to close dialog on click of save button if form is valid', async () => {
         fixture.detectChanges();
         const inputElement = fixture.debugElement.nativeElement.querySelector(
             '#adf-filter-name-id'
         );
         inputElement.value = 'My custom Name';
         inputElement.dispatchEvent(new Event('input'));
-        fixture.whenStable().then(() => {
-            const saveButton = fixture.debugElement.nativeElement.querySelector(
-                '#adf-save-button-id'
-            );
-            fixture.detectChanges();
-            saveButton.click();
-            expect(saveButton).toBeDefined();
-            expect(saveButton.disabled).toBeFalsy();
-            expect(component.dialogRef.close).toHaveBeenCalled();
-        });
-    }));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const saveButton = fixture.debugElement.nativeElement.querySelector(
+            '#adf-save-button-id'
+        );
+        expect(saveButton).toBeDefined();
+        expect(saveButton.disabled).toBeFalsy();
+
+        saveButton.click();
+        expect(component.dialogRef.close).toHaveBeenCalled();
+    });
 
     it('should able close dialog on click of cancel button', () => {
         component.data = { data: { name: '' } };

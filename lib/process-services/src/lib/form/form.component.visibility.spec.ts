@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { of } from 'rxjs';
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { formDefinitionDropdownField, formDefinitionTwoTextFields,
@@ -55,7 +55,6 @@ describe('FormComponent UI and visibility', () => {
 
     afterEach(() => {
         fixture.destroy();
-        TestBed.resetTestingModule();
     });
 
     describe('Validation icon', () => {
@@ -116,37 +115,37 @@ describe('FormComponent UI and visibility', () => {
             expect(lastNameEl).toBeDefined();
         });
 
-        it('should display dropdown field', async(() => {
+        it('should display dropdown field', async () => {
             spyOn(service, 'getTask').and.returnValue(of({}));
             spyOn(service, 'getTaskForm').and.returnValue(of(formDefinitionDropdownField));
 
             const change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ 'taskId': change });
             fixture.detectChanges();
+            await fixture.whenStable();
 
             openSelect();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            fixture.whenStable().then(() => {
-                const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+            const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
 
-                const optOne = options[1];
-                const optTwo = options[2];
-                const optThree = options[3];
+            const optOne = options[1];
+            const optTwo = options[2];
+            const optThree = options[3];
 
-                expect(optOne.nativeElement.innerText.trim()).toEqual('united kingdom');
-                expect(optTwo.nativeElement.innerText.trim()).toEqual('italy');
-                expect(optThree.nativeElement.innerText.trim()).toEqual('france');
+            expect(optOne.nativeElement.innerText.trim()).toEqual('united kingdom');
+            expect(optTwo.nativeElement.innerText.trim()).toEqual('italy');
+            expect(optThree.nativeElement.innerText.trim()).toEqual('france');
 
-                optTwo.nativeElement.click();
+            optTwo.nativeElement.click();
 
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    const dropdown = fixture.debugElement.queryAll(By.css('#country'));
-                    expect(dropdown[0].nativeElement.innerText.trim()).toEqual('italy');
-                });
-            });
-        }));
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const dropdown = fixture.debugElement.queryAll(By.css('#country'));
+            expect(dropdown[0].nativeElement.innerText.trim()).toEqual('italy');
+        });
 
         describe('Visibility conditions', () => {
 
@@ -209,7 +208,7 @@ describe('FormComponent UI and visibility', () => {
         });
 
         describe('Readonly Form', () => {
-            it('should display two text fields readonly', async(() => {
+            it('should display two text fields readonly', async () => {
                 spyOn(service, 'getTask').and.returnValue(of({}));
                 spyOn(service, 'getTaskForm').and.returnValue(of(formReadonlyTwoTextFields));
 
@@ -217,14 +216,14 @@ describe('FormComponent UI and visibility', () => {
                 component.ngOnChanges({ 'taskId': change });
 
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    const firstNameEl = fixture.debugElement.query(By.css('#firstname'));
-                    expect(firstNameEl.nativeElement.value).toEqual('fakeFirstName');
+                await fixture.whenStable();
 
-                    const lastNameEl = fixture.debugElement.query(By.css('#lastname'));
-                    expect(lastNameEl.nativeElement.value).toEqual('fakeLastName');
-                });
-            }));
+                const firstNameEl = fixture.debugElement.query(By.css('#firstname'));
+                expect(firstNameEl.nativeElement.value).toEqual('fakeFirstName');
+
+                const lastNameEl = fixture.debugElement.query(By.css('#lastname'));
+                expect(lastNameEl.nativeElement.value).toEqual('fakeLastName');
+            });
         });
     });
 });

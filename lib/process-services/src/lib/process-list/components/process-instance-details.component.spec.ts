@@ -16,7 +16,7 @@
  */
 
 import { DebugElement, NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
@@ -75,55 +75,59 @@ describe('ProcessInstanceDetailsComponent', () => {
         expect(fixture.nativeElement.innerText).toBe('ADF_PROCESS_LIST.DETAILS.MESSAGES.NONE');
     });
 
-    it('should display a header when the processInstanceId is provided', async(() => {
+    it('should display a header when the processInstanceId is provided', async () => {
         fixture.detectChanges();
         component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
-            expect(headerEl).not.toBeNull();
-            expect(headerEl.nativeElement.innerText).toBe('Process 123');
-        });
-    }));
 
-    it('should display default details when the process instance has no name', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
+        expect(headerEl).not.toBeNull();
+        expect(headerEl.nativeElement.innerText).toBe('Process 123');
+    });
+
+    it('should display default details when the process instance has no name', async () => {
         fixture.detectChanges();
         getProcessSpy.and.returnValue(of(exampleProcessNoName));
         fixture.detectChanges();
         component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
-            expect(headerEl).not.toBeNull();
-            expect(headerEl.nativeElement.innerText).toBe('My Process - Nov 10, 2016, 3:37:30 AM');
-        });
-    }));
 
-    it('should enable diagram button if the process is running', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
+        expect(headerEl).not.toBeNull();
+        expect(headerEl.nativeElement.innerText).toBe('My Process - Nov 10, 2016, 3:37:30 AM');
+    });
+
+    it('should enable diagram button if the process is running', async () => {
         fixture.detectChanges();
         getProcessSpy.and.returnValue(of(mockRunningProcess));
         fixture.detectChanges();
         component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const diagramButton = fixture.debugElement.query(By.css('#show-diagram-button'));
-            expect(diagramButton).not.toBeNull();
-            expect(diagramButton.nativeElement.disabled).toBe(false);
-        });
-    }));
 
-    it('should disable diagram button if the process is running', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const diagramButton = fixture.debugElement.query(By.css('#show-diagram-button'));
+        expect(diagramButton).not.toBeNull();
+        expect(diagramButton.nativeElement.disabled).toBe(false);
+    });
+
+    it('should disable diagram button if the process is running', async () => {
         fixture.detectChanges();
         getProcessSpy.and.returnValue(of(processEnded));
         fixture.detectChanges();
         component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const diagramButton = fixture.debugElement.query(By.css('#show-diagram-button'));
-            expect(diagramButton).not.toBeNull();
-            expect(diagramButton.nativeElement.disabled).toBe(true);
-        });
-    }));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const diagramButton = fixture.debugElement.query(By.css('#show-diagram-button'));
+        expect(diagramButton).not.toBeNull();
+        expect(diagramButton.nativeElement.disabled).toBe(true);
+    });
 
     describe('change detection', () => {
 
@@ -136,46 +140,53 @@ describe('ProcessInstanceDetailsComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should fetch new process details when processInstanceId changed', async(() => {
+        it('should fetch new process details when processInstanceId changed', async () => {
             fixture.detectChanges();
             component.ngOnChanges({ 'processInstanceId': change });
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(getProcessSpy).toHaveBeenCalledWith('456');
-            });
-        }));
 
-        it('should NOT fetch new process details when empty changeset made', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(getProcessSpy).toHaveBeenCalledWith('456');
+        });
+
+        it('should NOT fetch new process details when empty changeset made', async () => {
             fixture.detectChanges();
             component.ngOnChanges({});
-            fixture.whenStable().then(() => {
-                expect(getProcessSpy).not.toHaveBeenCalled();
-            });
-        }));
 
-        it('should NOT fetch new process details when processInstanceId changed to null', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(getProcessSpy).not.toHaveBeenCalled();
+        });
+
+        it('should NOT fetch new process details when processInstanceId changed to null', async () => {
             fixture.detectChanges();
             component.ngOnChanges({ 'processInstanceId': nullChange });
-            fixture.whenStable().then(() => {
-                expect(getProcessSpy).not.toHaveBeenCalled();
-            });
-        }));
 
-        it('should set a placeholder message when processInstanceId changed to null', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(getProcessSpy).not.toHaveBeenCalled();
+        });
+
+        it('should set a placeholder message when processInstanceId changed to null', async () => {
             component.ngOnChanges({ 'processInstanceId': nullChange });
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.innerText).toBe('ADF_PROCESS_LIST.DETAILS.MESSAGES.NONE');
-            });
-        }));
 
-        it('should display cancel button if process is running', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(fixture.nativeElement.innerText).toBe('ADF_PROCESS_LIST.DETAILS.MESSAGES.NONE');
+        });
+
+        it('should display cancel button if process is running', async () => {
             component.ngOnChanges({ 'processInstanceId': change });
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const buttonEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] button'));
-                expect(buttonEl).not.toBeNull();
-            });
-        }));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const buttonEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] button'));
+            expect(buttonEl).not.toBeNull();
+        });
     });
 });

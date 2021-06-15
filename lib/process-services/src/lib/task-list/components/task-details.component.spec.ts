@@ -16,7 +16,7 @@
  */
 
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import {
@@ -130,14 +130,15 @@ describe('TaskDetailsComponent', () => {
         expect(getTaskDetailsSpy).not.toHaveBeenCalled();
     });
 
-    it('should send a claim task event when a task is claimed', async(() => {
+    it('should send a claim task event when a task is claimed', (done) => {
         component.claimedTask.subscribe((taskId) => {
             expect(taskId).toBe('FAKE-TASK-CLAIM');
+            done();
         });
         component.onClaimAction('FAKE-TASK-CLAIM');
-    }));
+    });
 
-    it('should send a unclaim task event when a task is unclaimed', async(() => {
+    it('should send a unclaim task event when a task is unclaimed', fakeAsync(() => {
         component.claimedTask.subscribe((taskId) => {
             expect(taskId).toBe('FAKE-TASK-UNCLAIM');
         });
@@ -149,13 +150,13 @@ describe('TaskDetailsComponent', () => {
         expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
     });
 
-    it('should display a form when the task has an associated form', async(() => {
+    it('should display a form when the task has an associated form', fakeAsync(() => {
         component.taskId = '123';
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('adf-form'))).not.toBeNull();
     }));
 
-    it('should display a form in readonly when the task has an associated form and readOnlyForm is true', async(() => {
+    it('should display a form in readonly when the task has an associated form and readOnlyForm is true', fakeAsync(() => {
         component.readOnlyForm = true;
         component.taskId = '123';
         fixture.detectChanges();
@@ -163,7 +164,7 @@ describe('TaskDetailsComponent', () => {
         expect(fixture.debugElement.query(By.css('.adf-readonly-form'))).not.toBeNull();
     }));
 
-    it('should not display a form when the task does not have an associated form', async(() => {
+    it('should not display a form when the task does not have an associated form', fakeAsync(() => {
         component.taskId = '123';
         taskDetailsMock.formKey = undefined;
         fixture.detectChanges();
@@ -173,7 +174,7 @@ describe('TaskDetailsComponent', () => {
         });
     }));
 
-    it('should display the claim message when the task is not assigned', async(() => {
+    it('should display the claim message when the task is not assigned', fakeAsync(() => {
         component.taskDetails = taskDetailsWithOutAssigneeMock;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -183,7 +184,7 @@ describe('TaskDetailsComponent', () => {
         });
     }));
 
-    it('should not display the claim message when the task is assigned', async(() => {
+    it('should not display the claim message when the task is assigned', fakeAsync(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const claimMessage = fixture.nativeElement.querySelector('#claim-message-id');
@@ -201,20 +202,17 @@ describe('TaskDetailsComponent', () => {
             nullChange = new SimpleChange('123', null, true);
         });
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             component.taskId = '123';
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                getTaskDetailsSpy.calls.reset();
-            });
-        }));
+        });
 
         it('should fetch new task details when taskId changed', () => {
             component.ngOnChanges({ 'taskId': change });
             expect(getTaskDetailsSpy).toHaveBeenCalledWith('456');
         });
 
-        it('should NOT fetch new task details when empty changeset made', async(() => {
+        it('should NOT fetch new task details when empty changeset made', fakeAsync(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 component.ngOnChanges({});
@@ -222,7 +220,7 @@ describe('TaskDetailsComponent', () => {
             });
         }));
 
-        it('should NOT fetch new task details when taskId changed to null', async(() => {
+        it('should NOT fetch new task details when taskId changed to null', fakeAsync(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 component.ngOnChanges({ 'taskId': nullChange });
@@ -239,11 +237,10 @@ describe('TaskDetailsComponent', () => {
 
     describe('Form events', () => {
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             component.taskId = '123';
             fixture.detectChanges();
-            fixture.whenStable();
-        }));
+        });
 
         afterEach(() => {
             const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
@@ -451,7 +448,7 @@ describe('TaskDetailsComponent', () => {
             component.searchUser('fake-search-word');
         });
 
-        it('should log error message when search fails', async(() => {
+        it('should log error message when search fails', fakeAsync(() => {
             spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(throwError(''));
 
             component.peopleSearch.subscribe(() => {

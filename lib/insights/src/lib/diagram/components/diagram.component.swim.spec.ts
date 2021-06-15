@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import * as swimLanesMock from '../../mock/diagram/diagram-swimlanes.mock';
 import { DiagramComponent } from './diagram.component';
@@ -68,7 +68,7 @@ describe('Diagrams swim', () => {
 
     describe('Diagrams component Swim lane: ', () => {
 
-        it('Should render the Pool', async(() => {
+        it('Should render the Pool', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -79,14 +79,15 @@ describe('Diagrams swim', () => {
                     const shapeText: any = element.querySelector('diagram-pool > raphael-text');
                     expect(shapeText).not.toBeNull();
                     expect(shapeText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Activiti');
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { pools: [swimLanesMock.pool] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Pool with Lanes', async(() => {
+        it('Should render the Pool with Lanes', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -100,17 +101,18 @@ describe('Diagrams swim', () => {
                     const shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
                     expect(shapeText).not.toBeNull();
                     expect(shapeText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Backend');
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { pools: [swimLanesMock.poolLanes] };
             ajaxReply(resp);
-        }));
+        });
     });
 
     describe('Diagrams component Swim lane with process instance id: ', () => {
 
-        it('Should render the Pool', async(() => {
+        it('Should render the Pool', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -121,14 +123,15 @@ describe('Diagrams swim', () => {
                     const shapeText: any = element.querySelector('diagram-pool > raphael-text');
                     expect(shapeText).not.toBeNull();
                     expect(shapeText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Activiti');
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { pools: [swimLanesMock.pool] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Pool with Lanes', async(() => {
+        it('Should render the Pool with Lanes', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -142,11 +145,12 @@ describe('Diagrams swim', () => {
                     const shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
                     expect(shapeText).not.toBeNull();
                     expect(shapeText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Backend');
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { pools: [swimLanesMock.poolLanes] };
             ajaxReply(resp);
-        }));
+        });
     });
 });

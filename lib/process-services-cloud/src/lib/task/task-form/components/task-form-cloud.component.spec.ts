@@ -18,7 +18,7 @@
 import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IdentityUserService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
@@ -75,183 +75,193 @@ describe('TaskFormCloudComponent', () => {
 
     describe('Complete button', () => {
 
-        it('should show complete button when status is ASSIGNED', async(() => {
+        it('should show complete button when status is ASSIGNED', async () => {
             component.appName = 'app1';
             component.taskId = 'task1';
 
             component.loadTask();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
-                expect(completeBtn.nativeElement).toBeDefined();
-            });
-        }));
 
-        it('should not show complete button when status is ASSIGNED but assigned to a different person', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
+            expect(completeBtn.nativeElement).toBeDefined();
+        });
+
+        it('should not show complete button when status is ASSIGNED but assigned to a different person', async () => {
             component.appName = 'app1';
             component.taskId = 'task1';
 
             getCurrentUserSpy.and.returnValue({});
 
             component.loadTask();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
-                expect(completeBtn).toBeNull();
-            });
-        }));
 
-        it('should not show complete button when showCompleteButton=false', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
+            expect(completeBtn).toBeNull();
+        });
+
+        it('should not show complete button when showCompleteButton=false', async () => {
             component.appName = 'app1';
             component.taskId = 'task1';
             component.showCompleteButton = false;
 
             component.loadTask();
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
-                expect(completeBtn).toBeNull();
-            });
-        }));
+            await fixture.whenStable();
+
+            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
+            expect(completeBtn).toBeNull();
+        });
     });
 
     describe('Claim/Unclaim buttons', () => {
 
-        it('should not show release button for standalone task', async(() => {
+        it('should not show release button for standalone task', async () => {
             component.taskId = 'task1';
             component.loadTask();
-            fixture.detectChanges();
             getTaskSpy.and.returnValue(of(taskDetails));
 
-            fixture.whenStable().then(() => {
-                const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-                expect(unclaimBtn).toBeNull();
-            });
-        }));
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-        it('should show release button when task has candidate users and is assigned to one of these users', async(() => {
+            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
+            expect(unclaimBtn).toBeNull();
+        });
+
+        it('should show release button when task has candidate users and is assigned to one of these users', async () => {
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
 
             component.appName = 'app1';
             component.taskId = 'task1';
 
             component.loadTask();
+
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            fixture.whenStable().then(() => {
-                const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-                expect(unclaimBtn).not.toBeNull();
-            });
-        }));
+            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
+            expect(unclaimBtn).not.toBeNull();
+        });
 
-        it('should not show unclaim button when status is ASSIGNED but assigned to different person', async(() => {
+        it('should not show unclaim button when status is ASSIGNED but assigned to different person', async () => {
             component.appName = 'app1';
             component.taskId = 'task1';
 
             getCurrentUserSpy.and.returnValue({});
 
             component.loadTask();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-                expect(unclaimBtn).toBeNull();
-            });
-        }));
 
-        it('should not show unclaim button when status is not ASSIGNED', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
+            expect(unclaimBtn).toBeNull();
+        });
+
+        it('should not show unclaim button when status is not ASSIGNED', async () => {
             component.appName = 'app1';
             component.taskId = 'task1';
             taskDetails.status = undefined;
             getTaskSpy.and.returnValue(of(taskDetails));
 
             component.loadTask();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-                expect(unclaimBtn).toBeNull();
-            });
-        }));
 
-        it('should show claim button when status is CREATED', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
+            expect(unclaimBtn).toBeNull();
+        });
+
+        it('should show claim button when status is CREATED', async () => {
             component.appName = 'app1';
             component.taskId = 'task1';
             taskDetails.status = 'CREATED';
             getTaskSpy.and.returnValue(of(taskDetails));
 
             component.loadTask();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
-                expect(claimBtn.nativeElement).toBeDefined();
-            });
-        }));
 
-        it('should not show claim button when status is not CREATED', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
+            expect(claimBtn.nativeElement).toBeDefined();
+        });
+
+        it('should not show claim button when status is not CREATED', async () => {
             component.appName = 'app1';
             component.taskId = 'task1';
             taskDetails.status = undefined;
             getTaskSpy.and.returnValue(of(taskDetails));
 
             component.loadTask();
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
-                expect(claimBtn).toBeNull();
-            });
-        }));
+            await fixture.whenStable();
+
+            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
+            expect(claimBtn).toBeNull();
+        });
     });
 
     describe('Cancel button', () => {
 
-        it('should show cancel button by default', async(() => {
+        it('should show cancel button by default', async () => {
             component.appName = 'app1';
             component.taskId = 'task1';
 
             component.loadTask();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
-                expect(cancelBtn.nativeElement).toBeDefined();
-            });
-        }));
 
-        it('should not show cancel button when showCancelButton=false', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
+            expect(cancelBtn.nativeElement).toBeDefined();
+        });
+
+        it('should not show cancel button when showCancelButton=false', async () => {
             component.appName = 'app1';
             component.taskId = 'task1';
             component.showCancelButton = false;
 
             component.loadTask();
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
-                expect(cancelBtn).toBeNull();
-            });
-        }));
+            await fixture.whenStable();
+
+            const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
+            expect(cancelBtn).toBeNull();
+        });
     });
 
     describe('Inputs', () => {
 
-        it('should not show complete/claim/unclaim buttons when readOnly=true', async(() => {
+        it('should not show complete/claim/unclaim buttons when readOnly=true', async () => {
             component.appName = 'app1';
             component.taskId = 'task1';
             component.readOnly = true;
 
             component.loadTask();
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
-                expect(completeBtn).toBeNull();
+            await fixture.whenStable();
 
-                const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
-                expect(claimBtn).toBeNull();
+            const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
+            expect(completeBtn).toBeNull();
 
-                const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-                expect(unclaimBtn).toBeNull();
+            const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
+            expect(claimBtn).toBeNull();
 
-                const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
-                expect(cancelBtn.nativeElement).toBeDefined();
-            });
-        }));
+            const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
+            expect(unclaimBtn).toBeNull();
+
+            const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
+            expect(cancelBtn.nativeElement).toBeDefined();
+        });
 
         it('should load data when appName changes', () => {
             component.taskId = 'task1';

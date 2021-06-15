@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { setupTestBed, IdentityUserService, TranslationService, AlfrescoApiService } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
@@ -34,6 +34,7 @@ describe('Task Cloud Service', () => {
 
     function returnFakeTaskCompleteResults(): any {
         return {
+            reply: () => {},
             oauth2Auth: {
                 callCustomApi : () => {
                     return Promise.resolve(taskCompleteCloudMock);
@@ -47,6 +48,7 @@ describe('Task Cloud Service', () => {
 
     function returnFakeTaskCompleteResultsError(): any {
         return {
+            reply: () => {},
             oauth2Auth: {
                 callCustomApi : () => {
                     return Promise.reject(taskCompleteCloudMock);
@@ -60,6 +62,7 @@ describe('Task Cloud Service', () => {
 
     function returnFakeTaskDetailsResults(): any {
         return {
+            reply: () => {},
             oauth2Auth: {
                 callCustomApi : () => {
                     return Promise.resolve(fakeTaskDetailsCloud);
@@ -73,6 +76,7 @@ describe('Task Cloud Service', () => {
 
     function returnFakeCandidateUsersResults(): any {
         return {
+            reply: () => {},
             oauth2Auth: {
                 callCustomApi : () => {
                     return Promise.resolve(['mockuser1', 'mockuser2', 'mockuser3']);
@@ -86,6 +90,7 @@ describe('Task Cloud Service', () => {
 
     function returnFakeCandidateGroupResults(): any {
         return {
+            reply: () => {},
             oauth2Auth: {
                 callCustomApi : () => {
                     return Promise.resolve(['mockgroup1', 'mockgroup2', 'mockgroup3']);
@@ -104,15 +109,14 @@ describe('Task Cloud Service', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         alfrescoApiMock = TestBed.inject(AlfrescoApiService);
         identityUserService = TestBed.inject(IdentityUserService);
         translateService = TestBed.inject(TranslationService);
         service = TestBed.inject(TaskCloudService);
         spyOn(translateService, 'instant').and.callFake((key) => key ? `${key}_translated` : null);
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(cloudMockUser);
-
-    }));
+    });
 
     it('should complete a task', (done) => {
         const appName = 'simple-app';
@@ -132,11 +136,13 @@ describe('Task Cloud Service', () => {
         const appName = 'simple-app';
         const taskId = '68d54a8f';
 
-        service.completeTask(appName, taskId).toPromise().then(() => {
-        }, (error) => {
-            expect(error).toBeDefined();
-            done();
-        });
+        service.completeTask(appName, taskId).subscribe(
+            () => {},
+            (err) => {
+                expect(err).toBeDefined();
+                done();
+            }
+        );
     });
 
     it('should canCompleteTask', () => {
@@ -159,7 +165,7 @@ describe('Task Cloud Service', () => {
         expect(isAssigneePropertyClickable).toEqual(true);
     });
 
-    it('should complete task with owner as null', async(() => {
+    it('should complete task with owner as null', (done) => {
         const appName = 'simple-app';
         const taskId = '68d54a8f';
         const canCompleteTaskResult = service.canCompleteTask(emptyOwnerTaskDetailsCloudMock);
@@ -171,8 +177,9 @@ describe('Task Cloud Service', () => {
             expect(res).not.toBeNull();
             expect(res.entry.appName).toBe('simple-app');
             expect(res.entry.id).toBe('68d54a8f');
+            done();
         });
-    }));
+    });
 
     it('should return the task details when claiming a task', (done) => {
         const appName = 'taskp-app';

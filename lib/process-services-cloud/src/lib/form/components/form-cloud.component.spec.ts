@@ -1085,7 +1085,7 @@ describe('FormCloudWithCustomOutComesComponent', () => {
         fixture.destroy();
     });
 
-    it('should be able to inject custom outcomes and click on custom outcomes', async(() => {
+    it('should be able to inject custom outcomes and click on custom outcomes', async () => {
         fixture.detectChanges();
 
         const onCustomButtonOneSpy = spyOn(customComponent, 'onCustomButtonOneClick').and.callThrough();
@@ -1096,11 +1096,12 @@ describe('FormCloudWithCustomOutComesComponent', () => {
 
         buttonOneBtn.nativeElement.click();
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(onCustomButtonOneSpy).toHaveBeenCalled();
         expect(buttonOneBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-1');
         expect(buttonTwoBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-2');
-    }));
+    });
 });
 
 describe('retrieve metadata on submit', () => {

@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 
@@ -81,7 +81,7 @@ describe('AppListCloudComponent', () => {
         expect(component.isGrid()).toBe(true);
     });
 
-    it('Should fetch deployed apps', async(() => {
+    it('Should fetch deployed apps', (done) => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             component.apps$.subscribe((response: any[]) => {
@@ -95,10 +95,10 @@ describe('AppListCloudComponent', () => {
                 expect(response[1].status).toEqual('Pending');
                 expect(response[1].icon).toEqual('favorite_border');
                 expect(response[1].theme).toEqual('theme-2');
+                done();
             });
         });
-        expect(getAppsSpy).toHaveBeenCalled();
-    }));
+    });
 
     it('should display default adf-empty-content template when response empty', () => {
         getAppsSpy.and.returnValue(of([]));
@@ -115,7 +115,7 @@ describe('AppListCloudComponent', () => {
         expect(getAppsSpy).toHaveBeenCalled();
     });
 
-    it('should display default no permissions template when response returns exception', () => {
+    it('should display default no permissions template when response returns exception', (done) => {
         getAppsSpy.and.returnValue(throwError({}));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -128,6 +128,7 @@ describe('AppListCloudComponent', () => {
             expect(errorTitle.innerText).toBe('ADF_CLOUD_TASK_LIST.APPS.ERROR.TITLE');
             expect(errorSubtitle.innerText).toBe('ADF_CLOUD_TASK_LIST.APPS.ERROR.SUBTITLE');
             expect(getAppsSpy).toHaveBeenCalled();
+            done();
         });
    });
 
@@ -219,12 +220,12 @@ describe('AppListCloudComponent', () => {
             customFixture.destroy();
         });
 
-        it('should render the custom empty template', async(() => {
+        it('should render the custom empty template', async () => {
             customFixture.detectChanges();
-            customFixture.whenStable().then(() => {
-                const title: any =  customFixture.nativeElement.querySelector('#custom-id');
-                expect(title.innerText).toBe('No Apps Found');
-            });
-        }));
+            await customFixture.whenStable();
+
+            const title: any =  customFixture.nativeElement.querySelector('#custom-id');
+            expect(title.innerText).toBe('No Apps Found');
+        });
     });
 });

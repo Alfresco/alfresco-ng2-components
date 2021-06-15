@@ -16,7 +16,7 @@
  */
 
 import { DebugElement, Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
@@ -78,14 +78,15 @@ describe('AppsListComponent', () => {
         expect(component.loading).toBeFalsy();
     });
 
-    it('should show the loading spinner when the apps are loading', async(() => {
+    it('should show the loading spinner when the apps are loading', async () => {
         component.loading = true;
+
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
+        await fixture.whenStable();
+
         const loadingSpinner = fixture.nativeElement.querySelector('mat-progress-spinner');
         expect(loadingSpinner).toBeDefined();
-        });
-    }));
+    });
 
     it('should show the apps filtered by defaultAppId', () => {
         component.filtersAppId = [{defaultAppId: 'fake-app-1'}];
@@ -267,13 +268,13 @@ describe('AppsListComponent', () => {
             customFixture.destroy();
         });
 
-        it('should render the custom no-apps template', async(() => {
+        it('should render the custom no-apps template', async () => {
             customFixture.detectChanges();
-            customFixture.whenStable().then(() => {
-                const title: any = customFixture.debugElement.queryAll(By.css('#custom-id'));
-                expect(title.length).toBe(1);
-                expect(title[0].nativeElement.innerText).toBe('No Apps');
-            });
-        }));
+            await customFixture.whenStable();
+
+            const title: any = customFixture.debugElement.queryAll(By.css('#custom-id'));
+            expect(title.length).toBe(1);
+            expect(title[0].nativeElement.innerText).toBe('No Apps');
+        });
     });
 });

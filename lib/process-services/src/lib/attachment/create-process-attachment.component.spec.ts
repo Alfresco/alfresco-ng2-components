@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
@@ -81,11 +81,12 @@ describe('CreateProcessAttachmentComponent', () => {
         expect(component.processInstanceId).toBe('123');
     });
 
-    it('should emit content created event when the file is uploaded', async(() => {
+    it('should emit content created event when the file is uploaded', (done) => {
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.id).toBe(9999);
+            done();
         });
 
         component.onFileUpload(customEvent);
@@ -95,9 +96,9 @@ describe('CreateProcessAttachmentComponent', () => {
             contentType: 'application/json',
             responseText: JSON.stringify(fakeUploadResponse)
         });
-    }));
+    });
 
-    it('should allow user to upload files via button', async(() => {
+    it('should allow user to upload files via button', (done) => {
         const buttonUpload: HTMLElement = <HTMLElement> element.querySelector('#add_new_process_content_button');
         expect(buttonUpload).toBeDefined();
         expect(buttonUpload).not.toBeNull();
@@ -106,6 +107,7 @@ describe('CreateProcessAttachmentComponent', () => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.id).toBe(9999);
+            done();
         });
 
         const dropEvent = new CustomEvent('upload-files', customEvent);
@@ -117,5 +119,5 @@ describe('CreateProcessAttachmentComponent', () => {
             contentType: 'application/json',
             responseText: JSON.stringify(fakeUploadResponse)
         });
-    }));
+    });
 });

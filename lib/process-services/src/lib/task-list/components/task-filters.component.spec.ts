@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { from, of } from 'rxjs';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
@@ -303,7 +303,7 @@ describe('TaskFiltersComponent', () => {
         expect(component.getFiltersByAppId).toHaveBeenCalled();
     });
 
-    it('should not change the current filter if no filter with taskid is found', async(() => {
+    it('should not change the current filter if no filter with taskid is found', () => {
         const filter = new FilterRepresentationModel({
             name: 'FakeMyTasks',
             filter: { state: 'open', assignment: 'fake-assignee' }
@@ -314,7 +314,7 @@ describe('TaskFiltersComponent', () => {
         component.selectFilterWithTask('111');
 
         expect(component.currentFilter).toBe(filter);
-    }));
+    });
 
     it('should attach specific icon for each filter if showIcon is true', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));

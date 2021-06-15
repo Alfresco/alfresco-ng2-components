@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 
 import { CommentProcessService, setupTestBed } from '@alfresco/adf-core';
@@ -72,64 +72,65 @@ describe('ProcessCommentsComponent', () => {
         expect(getCommentsSpy).not.toHaveBeenCalled();
     });
 
-    it('should display comments when the process has comments', async(() => {
+    it('should display comments when the process has comments', async () => {
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelectorAll('#comment-message').length).toBe(3);
-            expect(fixture.nativeElement.querySelector('#comment-message:empty')).toBeNull();
-        });
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    it('should display comments count when the process has comments', async(() => {
+        expect(fixture.nativeElement.querySelectorAll('#comment-message').length).toBe(3);
+        expect(fixture.nativeElement.querySelector('#comment-message:empty')).toBeNull();
+    });
+
+    it('should display comments count when the process has comments', async () => {
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const element = fixture.nativeElement.querySelector('#comment-header');
-            expect(element.innerText).toBe('ADF_PROCESS_LIST.DETAILS.COMMENTS.HEADER');
-        });
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    it('should not display comments when the process has no comments', async(() => {
+        const element = fixture.nativeElement.querySelector('#comment-header');
+        expect(element.innerText).toBe('ADF_PROCESS_LIST.DETAILS.COMMENTS.HEADER');
+    });
+
+    it('should not display comments when the process has no comments', async () => {
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
         getCommentsSpy.and.returnValue(of([]));
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('#comment-container')).toBeNull();
-        });
-    }));
 
-    it('should not display comments input by default', async(() => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('#comment-container')).toBeNull();
+    });
+
+    it('should not display comments input by default', async () => {
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('#comment-input')).toBeNull();
-        });
-    }));
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    it('should not display comments input when the process is readonly', async(() => {
+        expect(fixture.nativeElement.querySelector('#comment-input')).toBeNull();
+    });
+
+    it('should not display comments input when the process is readonly', async () => {
         component.readOnly = true;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('#comment-input')).toBeNull();
-        });
-    }));
 
-    it('should display comments input when the process isn\'t readonly', async(() => {
-        component.readOnly = false;
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('#comment-input')).not.toBeNull();
-        });
-    }));
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('#comment-input')).toBeNull();
+    });
+
+    it('should display comments input when the process isn\'t readonly', async () => {
+        component.readOnly = false;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('#comment-input')).not.toBeNull();
+    });
 });

@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, EcmUserModel } from '@alfresco/adf-core';
 import { ServiceTaskListCloudComponent } from './service-task-list-cloud.component';
@@ -362,7 +362,7 @@ describe('ServiceTaskListCloudComponent', () => {
         let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
         let componentCustom: CustomTaskListComponent;
         let customCopyComponent: CustomCopyContentTaskListComponent;
-        let element: any;
+        let element: HTMLElement;
         let copyFixture: ComponentFixture<CustomCopyContentTaskListComponent>;
 
         setupTestBed({
@@ -399,12 +399,12 @@ describe('ServiceTaskListCloudComponent', () => {
             expect(componentCustom.taskList.columns.length).toEqual(2);
         });
 
-        it('it should show copy tooltip when key is present in data-colunn', async(() => {
+        it('it should show copy tooltip when key is present in data-colunn', fakeAsync(() => {
             copyFixture.detectChanges();
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             copyFixture.whenStable().then(() => {
                 copyFixture.detectChanges();
-                const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]');
+                const spanHTMLElement = <HTMLInputElement> element.querySelector('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]');
                 spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                 copyFixture.detectChanges();
                 expect(copyFixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
@@ -434,7 +434,7 @@ describe('ServiceTaskListCloudComponent', () => {
 
     describe('Copy cell content directive from app.config specifications', () => {
 
-        let element: any;
+        let element: HTMLElement;
         let taskSpy: jasmine.Spy;
 
         setupTestBed({
@@ -478,14 +478,14 @@ describe('ServiceTaskListCloudComponent', () => {
             fixture.destroy();
         });
 
-        it('shoud show tooltip if config copyContent flag is true', async(() => {
+        it('shoud show tooltip if config copyContent flag is true', fakeAsync(() => {
             taskSpy.and.returnValue(of(fakeServiceTask));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
             component.success.subscribe(() => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]');
+                    const spanHTMLElement = element.querySelector<HTMLInputElement>('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]');
                     spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                     fixture.detectChanges();
                     expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
@@ -498,13 +498,13 @@ describe('ServiceTaskListCloudComponent', () => {
             component.ngAfterContentInit();
         }));
 
-        it('shoud not show tooltip if config copyContent flag is true', async(() => {
+        it('shoud not show tooltip if config copyContent flag is true', fakeAsync(() => {
             taskSpy.and.returnValue(of(fakeServiceTask));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             component.success.subscribe(() => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="serviceTaskName"]');
+                    const spanHTMLElement = element.querySelector<HTMLInputElement>('span[title="serviceTaskName"]');
                     spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                     fixture.detectChanges();
                     expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();

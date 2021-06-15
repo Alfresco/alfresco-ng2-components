@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import * as structuralMock from '../../mock/diagram/diagram-structural.mock';
 import { DiagramComponent } from './diagram.component';
@@ -68,7 +68,7 @@ describe('Diagrams structural', () => {
 
     describe('Diagrams component Structural: ', () => {
 
-        it('Should render the Subprocess', async(() => {
+        it('Should render the Subprocess', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -79,14 +79,15 @@ describe('Diagrams structural', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [structuralMock.subProcess] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Event Subprocess', async(() => {
+        it('Should render the Event Subprocess', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -97,17 +98,18 @@ describe('Diagrams structural', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [structuralMock.eventSubProcess] };
             ajaxReply(resp);
-        }));
+        });
     });
 
     describe('Diagrams component Structural with process instance id: ', () => {
 
-        it('Should render the Subprocess', async(() => {
+        it('Should render the Subprocess', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -118,14 +120,15 @@ describe('Diagrams structural', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [structuralMock.subProcess] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Subprocess', async(() => {
+        it('Should render the Active Subprocess', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -136,14 +139,15 @@ describe('Diagrams structural', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [structuralMock.subProcessActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Subprocess', async(() => {
+        it('Should render the Completed Subprocess', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -154,14 +158,15 @@ describe('Diagrams structural', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [structuralMock.subProcessCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Event Subprocess', async(() => {
+        it('Should render the Event Subprocess', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -172,14 +177,15 @@ describe('Diagrams structural', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [structuralMock.eventSubProcess] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Event Subprocess', async(() => {
+        it('Should render the Active Event Subprocess', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -190,14 +196,15 @@ describe('Diagrams structural', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [structuralMock.eventSubProcessActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Event Subprocess', async(() => {
+        it('Should render the Completed Event Subprocess', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -208,11 +215,12 @@ describe('Diagrams structural', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [structuralMock.eventSubProcessCompleted] };
             ajaxReply(resp);
-        }));
+        });
     });
 });

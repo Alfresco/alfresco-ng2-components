@@ -16,7 +16,7 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import {
     startFormDateWidgetMock, startFormDropdownDefinitionMock,
@@ -306,59 +306,57 @@ describe('StartFormComponent', () => {
             });
         });
 
-        it('should display start form with fields ', async(() => {
+        it('should display start form with fields ', async () => {
             getStartFormSpy.and.returnValue(of(startMockForm));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const formFieldsWidget = fixture.debugElement.nativeElement.querySelector('form-field');
-                const inputElement = fixture.debugElement.nativeElement.querySelector('.adf-input');
-                const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.mat-form-field-infix > .adf-label');
-                const dateElement = fixture.debugElement.nativeElement.querySelector('#billdate');
-                const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-form-field-infix> .adf-label');
-                const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
-                const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
-                expect(formFieldsWidget).toBeDefined();
-                expect(inputElement).toBeDefined();
-                expect(dateElement).toBeDefined();
-                expect(selectElement).toBeDefined();
-                translate.get(inputLabelElement.textContent).subscribe( (value) => {
-                    expect(value).toBe('ClientName*');
-                });
-                translate.get(dateLabelElement.innerText).subscribe( (value) => {
-                    expect(value).toBe('BillDate (D-M-YYYY)');
-                });
-                translate.get(selectLabelElement.innerText).subscribe( (value) => {
-                    expect(value).toBe('ClaimType');
-                });
-            });
-        }));
 
-        it('should refresh start form on click of refresh button  ', async(() => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const formFieldsWidget = fixture.debugElement.nativeElement.querySelector('form-field');
+            const inputElement = fixture.debugElement.nativeElement.querySelector('.adf-input');
+            const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.mat-form-field-infix > .adf-label');
+            const dateElement = fixture.debugElement.nativeElement.querySelector('#billdate');
+            const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-form-field-infix> .adf-label');
+            const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
+            const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
+
+            expect(formFieldsWidget).toBeDefined();
+            expect(inputElement).toBeDefined();
+            expect(dateElement).toBeDefined();
+            expect(selectElement).toBeDefined();
+
+            expect(translate.instant(inputLabelElement.textContent)).toBe('ClientName*');
+            expect(translate.instant(dateLabelElement.innerText)).toBe('BillDate (D-M-YYYY)');
+            expect(translate.instant(selectLabelElement.innerText)).toBe('ClaimType');
+        });
+
+        it('should refresh start form on click of refresh button', async () => {
             getStartFormSpy.and.returnValue(of(startMockForm));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const refreshElement = fixture.debugElement.nativeElement.querySelector('.mat-card-actions>button');
-                refreshElement.click();
-                fixture.detectChanges();
-                /* cspell:disable-next-line */
-                const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
-                const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
-                expect(refreshElement).toBeDefined();
-                expect(selectElement).toBeDefined();
-                translate.get(selectLabelElement.innerText).subscribe( (value) => {
-                    expect(value).toBe('ClaimType');
-                });
-            });
-        }));
+            await fixture.whenStable();
 
-        it('should define custom-tabs ', async(() => {
+            const refreshElement = fixture.debugElement.nativeElement.querySelector('.mat-card-actions>button');
+            refreshElement.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            /* cspell:disable-next-line */
+            const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
+            const selectLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget > .adf-label');
+            expect(refreshElement).toBeDefined();
+            expect(selectElement).toBeDefined();
+            expect(translate.instant(selectLabelElement.innerText)).toBe('ClaimType');
+        });
+
+        it('should define custom-tabs ', fakeAsync(() => {
             getStartFormSpy.and.returnValue(of(startMockFormWithTab));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
@@ -376,7 +374,7 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should define title and [custom-action-buttons]', async(() => {
+        it('should define title and [custom-action-buttons]', fakeAsync(() => {
             getStartFormSpy.and.returnValue(of(startMockFormWithTab));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;

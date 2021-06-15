@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { LogService, setupTestBed, UserProcessModel } from '@alfresco/adf-core';
 import { PeopleComponent } from './people.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
@@ -23,14 +23,14 @@ import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
-const fakeUser: UserProcessModel = new UserProcessModel({
+const fakeUser = new UserProcessModel({
     id: 'fake-id',
     firstName: 'fake-name',
     lastName: 'fake-last',
     email: 'fake@mail.com'
 });
 
-const fakeSecondUser: UserProcessModel = new UserProcessModel({
+const fakeSecondUser = new UserProcessModel({
     id: 'fake-involve-id',
     firstName: 'fake-involve-name',
     lastName: 'fake-involve-last',
@@ -52,7 +52,7 @@ describe('PeopleComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         logService = TestBed.inject(LogService);
         fixture = TestBed.createComponent(PeopleComponent);
         activitiPeopleComponent = fixture.componentInstance;
@@ -61,24 +61,26 @@ describe('PeopleComponent', () => {
         activitiPeopleComponent.people = [];
         activitiPeopleComponent.readOnly = true;
         fixture.detectChanges();
-    }));
+    });
 
-    it('should show people component title', async(() => {
+    afterEach(() => fixture.destroy());
+
+    it('should show people component title', async () => {
         activitiPeopleComponent.people = [...userArray];
-        fixture.detectChanges();
-        fixture.whenStable()
-            .then(() => {
-                expect(element.querySelector('#people-title')).toBeDefined();
-                expect(element.querySelector('#people-title')).not.toBeNull();
-            });
-    }));
 
-    it('should show no people involved message', () => {
-        fixture.whenStable()
-            .then(() => {
-                expect(element.querySelector('#no-people-label')).not.toBeNull();
-                expect(element.querySelector('#no-people-label').textContent).toContain('ADF_TASK_LIST.DETAILS.PEOPLE.NONE');
-            });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(element.querySelector('#people-title')).toBeDefined();
+        expect(element.querySelector('#people-title')).not.toBeNull();
+    });
+
+    it('should show no people involved message', async () => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(element.querySelector('#no-people-label')).not.toBeNull();
+        expect(element.querySelector('#no-people-label').textContent).toContain('ADF_TASK_LIST.DETAILS.PEOPLE.NONE');
     });
 
     describe('when there are involved people', () => {
@@ -97,16 +99,16 @@ describe('PeopleComponent', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('should show people involved', async(() => {
-            fixture.whenStable()
-                .then(() => {
-                    const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
-                    expect(gatewayElement).not.toBeNull();
-                    expect(gatewayElement.children.length).toBe(2);
-                });
-        }));
+        it('should show people involved', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-        it('should remove people involved', async(() => {
+            const gatewayElement = element.querySelector('#assignment-people-list .adf-datatable-body');
+            expect(gatewayElement).not.toBeNull();
+            expect(gatewayElement.children.length).toBe(2);
+        });
+
+        it('should remove people involved', fakeAsync(() => {
             activitiPeopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
@@ -120,7 +122,7 @@ describe('PeopleComponent', () => {
                 });
         }));
 
-        it('should involve people', async(() => {
+        it('should involve people', fakeAsync(() => {
             activitiPeopleComponent.involveUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
@@ -189,7 +191,7 @@ describe('PeopleComponent', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('should log error message when search fails', async(() => {
+        it('should log error message when search fails', fakeAsync(() => {
             activitiPeopleComponent.peopleSearch$.subscribe(() => {
                 expect(logService.error).toHaveBeenCalledWith('Could not load users');
             });
@@ -199,7 +201,7 @@ describe('PeopleComponent', () => {
             });
         }));
 
-        it('should not remove user if remove involved user fail', async(() => {
+        it('should not remove user if remove involved user fail', fakeAsync(() => {
             activitiPeopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
@@ -213,7 +215,7 @@ describe('PeopleComponent', () => {
                 });
         }));
 
-        it('should not involve user if involve user fail', async(() => {
+        it('should not involve user if involve user fail', fakeAsync(() => {
             activitiPeopleComponent.involveUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403

@@ -16,7 +16,7 @@
  */
 
 import { PeopleCloudComponent } from './people-cloud.component';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     IdentityUserService,
     AlfrescoApiService,
@@ -78,36 +78,33 @@ describe('PeopleCloudComponent', () => {
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
     });
 
-    it('should populate placeholder when title is present', async(() => {
+    it('should populate placeholder when title is present', async () => {
         component.title = 'TITLE_KEY';
         fixture.detectChanges();
 
         const matLabel = getElement<HTMLInputElement>('#adf-people-cloud-title-id');
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(matLabel.textContent).toEqual('TITLE_KEY');
-        });
-    }));
+        await fixture.whenStable();
+        expect(matLabel.textContent).toEqual('TITLE_KEY');
+    });
 
-    it('should not populate placeholder when title is not present', async(() => {
+    it('should not populate placeholder when title is not present', async () => {
         fixture.detectChanges();
 
         const matLabel = getElement<HTMLInputElement>('#adf-people-cloud-title-id');
 
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(matLabel.textContent).toEqual('');
-        });
-    }));
+        await fixture.whenStable();
+
+        expect(matLabel.textContent).toEqual('');
+    });
 
     describe('Search user', () => {
-        beforeEach(async(() => {
+        beforeEach(() => {
             fixture.detectChanges();
             element = fixture.nativeElement;
             findUsersByNameSpy = spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
-        }));
+        });
 
         it('should list the users as dropdown options if the search term has results', (done) => {
             const input = getElement<HTMLInputElement>('input');
@@ -337,7 +334,7 @@ describe('PeopleCloudComponent', () => {
         let checkUserHasAccessSpy: jasmine.Spy;
         let checkUserHasAnyClientAppRoleSpy: jasmine.Spy;
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             findUsersByNameSpy = spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
             checkUserHasAccessSpy = spyOn(identityService, 'checkUserHasClientApp').and.returnValue(of(true));
             checkUserHasAnyClientAppRoleSpy = spyOn(identityService, 'checkUserHasAnyClientAppRole').and.returnValue(of(true));
@@ -346,9 +343,9 @@ describe('PeopleCloudComponent', () => {
             component.appName = 'mock-app-name';
             fixture.detectChanges();
             element = fixture.nativeElement;
-        }));
+        });
 
-        it('should fetch the client ID if appName specified', async (() => {
+        it('should fetch the client ID if appName specified', async () => {
             const getClientIdByApplicationNameSpy = spyOn(identityService, 'getClientIdByApplicationName').and.callThrough();
             component.appName = 'mock-app-name';
 
@@ -356,11 +353,10 @@ describe('PeopleCloudComponent', () => {
             component.ngOnChanges({ 'appName': change });
 
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(getClientIdByApplicationNameSpy).toHaveBeenCalled();
-            });
-        }));
+            await fixture.whenStable();
+
+            expect(getClientIdByApplicationNameSpy).toHaveBeenCalled();
+        });
 
         it('should list users who have access to the app when appName is specified', (done) => {
             const input = getElement<HTMLInputElement>('input');
@@ -529,13 +525,13 @@ describe('PeopleCloudComponent', () => {
     describe('When roles defined', () => {
         let checkUserHasRoleSpy: jasmine.Spy;
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             component.roles = ['mock-role-1', 'mock-role-2'];
             spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
             checkUserHasRoleSpy = spyOn(identityService, 'checkUserHasRole').and.returnValue(of(true));
             fixture.detectChanges();
             element = fixture.nativeElement;
-        }));
+        });
 
         it('should filter users if users has any specified role', (done) => {
             fixture.detectChanges();
@@ -594,14 +590,14 @@ describe('PeopleCloudComponent', () => {
     describe('Single Mode with Pre-selected users', () => {
         const changes = new SimpleChange(null, mockPreselectedUsers, false);
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             component.mode = 'single';
             component.preSelectUsers = <any> mockPreselectedUsers;
             component.ngOnChanges({ 'preSelectUsers': changes });
 
             fixture.detectChanges();
             element = fixture.nativeElement;
-        }));
+        });
 
         it('should show only one mat chip with the first preSelectedUser', (done) => {
             fixture.whenStable().then(() => {

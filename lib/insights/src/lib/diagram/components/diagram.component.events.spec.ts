@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import * as diagramsEventsMock from '../../mock/diagram/diagram-events.mock';
 import { DiagramComponent } from './diagram.component';
@@ -68,7 +68,7 @@ describe('Diagrams events', () => {
 
     describe('Diagrams component Events: ', () => {
 
-        it('Should render the Start Event', async(() => {
+        it('Should render the Start Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -78,14 +78,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Start Timer Event', async(() => {
+        it('Should render the Start Timer Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -99,15 +100,16 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
 
             const resp = { elements: [diagramsEventsMock.startTimeEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Start Signal Event', async(() => {
+        it('Should render the Start Signal Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -121,14 +123,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startSignalEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Start Message Event', async(() => {
+        it('Should render the Start Message Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -142,14 +145,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startMessageEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Start Error Event', async(() => {
+        it('Should render the Start Error Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -163,14 +167,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startErrorEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the End Event', async(() => {
+        it('Should render the End Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -180,14 +185,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the End Error Event', async(() => {
+        it('Should render the End Error Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -201,17 +207,18 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endErrorEvent] };
             ajaxReply(resp);
-        }));
+        });
     });
 
     describe('Diagrams component Events with process instance id: ', () => {
 
-        it('Should render the Start Event', async(() => {
+        it('Should render the Start Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -221,14 +228,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Start Event', async(() => {
+        it('Should render the Active Start Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -238,14 +246,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Start Event', async(() => {
+        it('Should render the Completed Start Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -255,14 +264,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Start Timer Event', async(() => {
+        it('Should render the Start Timer Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -276,15 +286,16 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startTimeEvent] };
 
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Start Timer Event', async(() => {
+        it('Should render the Active Start Timer Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -298,15 +309,16 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startTimeEventActive] };
 
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Start Timer Event', async(() => {
+        it('Should render the Completed Start Timer Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -320,15 +332,16 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startTimeEventCompleted] };
 
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Start Signal Event', async(() => {
+        it('Should render the Start Signal Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -342,14 +355,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startSignalEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Start Signal Event', async(() => {
+        it('Should render the Active Start Signal Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -363,14 +377,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startSignalEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Start Signal Event', async(() => {
+        it('Should render the Completed Start Signal Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -384,14 +399,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startSignalEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Start Message Event', async(() => {
+        it('Should render the Start Message Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -405,14 +421,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startMessageEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Start Message Event', async(() => {
+        it('Should render the Active Start Message Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -426,14 +443,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startMessageEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Start Message Event', async(() => {
+        it('Should render the Completed Start Message Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -447,14 +465,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startMessageEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Start Error Event', async(() => {
+        it('Should render the Start Error Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -468,14 +487,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startErrorEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active Start Error Event', async(() => {
+        it('Should render the Active Start Error Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -489,14 +509,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startErrorEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed Start Error Event', async(() => {
+        it('Should render the Completed Start Error Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -510,14 +531,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.startErrorEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the End Event', async(() => {
+        it('Should render the End Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -527,14 +549,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active End Event', async(() => {
+        it('Should render the Active End Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -544,14 +567,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed End Event', async(() => {
+        it('Should render the Completed End Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -561,14 +585,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the End Error Event', async(() => {
+        it('Should render the End Error Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -582,14 +607,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endErrorEvent] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Active End Error Event', async(() => {
+        it('Should render the Active End Error Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -603,14 +629,15 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endErrorEventActive] };
             ajaxReply(resp);
-        }));
+        });
 
-        it('Should render the Completed End Error Event', async(() => {
+        it('Should render the Completed End Error Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -624,11 +651,12 @@ describe('Diagrams events', () => {
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
+                    done();
                 });
             });
             component.ngOnChanges();
             const resp = { elements: [diagramsEventsMock.endErrorEventCompleted] };
             ajaxReply(resp);
-        }));
+        });
     });
 });

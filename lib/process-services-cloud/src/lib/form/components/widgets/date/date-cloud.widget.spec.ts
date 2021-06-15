@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateCloudWidgetComponent } from './date-cloud.widget';
 import { setupTestBed, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import moment from 'moment-es6';
@@ -36,11 +36,11 @@ describe('DateWidgetComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(DateCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-    }));
+    });
 
     it('should setup min value for date picker', () => {
         const minValue = '1982-03-13';
@@ -103,7 +103,7 @@ describe('DateWidgetComponent', () => {
             TestBed.resetTestingModule();
         });
 
-        it('should show visible date widget', async(() => {
+        it('should show visible date widget', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -114,15 +114,14 @@ describe('DateWidgetComponent', () => {
             widget.field.isVisible = true;
             widget.ngOnInit();
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('#date-field-id')).toBeDefined();
-                expect(element.querySelector('#date-field-id')).not.toBeNull();
-                const dateElement: any = element.querySelector('#date-field-id');
-                expect(dateElement.value).toContain('9-9-9999');
-            });
-        }));
+            await fixture.whenStable();
+            expect(element.querySelector('#date-field-id')).toBeDefined();
+            expect(element.querySelector('#date-field-id')).not.toBeNull();
+            const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
+            expect(dateElement.value).toContain('9-9-9999');
+        });
 
-        it('should show the correct format type', async(() => {
+        it('should show the correct format type', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -134,16 +133,14 @@ describe('DateWidgetComponent', () => {
             widget.field.dateDisplayFormat = 'YYYY-DD-MM';
             widget.ngOnInit();
             fixture.detectChanges();
-            fixture.whenStable()
-                .then(() => {
-                    expect(element.querySelector('#date-field-id')).toBeDefined();
-                    expect(element.querySelector('#date-field-id')).not.toBeNull();
-                    const dateElement: any = element.querySelector('#date-field-id');
-                    expect(dateElement.value).toContain('9999-30-12');
-                });
-        }));
+            await fixture.whenStable();
+            expect(element.querySelector('#date-field-id')).toBeDefined();
+            expect(element.querySelector('#date-field-id')).not.toBeNull();
+            const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
+            expect(dateElement.value).toContain('9999-30-12');
+        });
 
-        it('should disable date button when is readonly', async(() => {
+        it('should disable date button when is readonly', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -154,18 +151,20 @@ describe('DateWidgetComponent', () => {
             widget.field.isVisible = true;
             widget.field.readOnly = false;
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            let dateButton = <HTMLButtonElement> element.querySelector('button');
+            let dateButton = element.querySelector<HTMLButtonElement>('button');
             expect(dateButton.disabled).toBeFalsy();
 
             widget.field.readOnly = true;
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            dateButton = <HTMLButtonElement> element.querySelector('button');
+            dateButton = element.querySelector<HTMLButtonElement> ('button');
             expect(dateButton.disabled).toBeTruthy();
-        }));
+        });
 
-        it('should set isValid to false when the value is not a correct date value', async(() => {
+        it('should set isValid to false when the value is not a correct date value', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -175,12 +174,14 @@ describe('DateWidgetComponent', () => {
             });
             widget.field.isVisible = true;
             widget.field.readOnly = false;
+
             fixture.detectChanges();
+            await fixture.whenStable();
 
             expect(widget.field.isValid).toBeFalsy();
-        }));
+        });
 
-        it('should display tooltip when tooltip is set', async(() => {
+        it('should display tooltip when tooltip is set', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -191,11 +192,13 @@ describe('DateWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            const dateElement: any = element.querySelector('#date-field-id');
+            await fixture.whenStable();
+
+            const dateElement = element.querySelector('#date-field-id');
             const tooltip = dateElement.getAttribute('ng-reflect-message');
 
             expect(tooltip).toEqual(widget.field.tooltip);
-        }));
+        });
     });
 
     it('should display always the json value', () => {

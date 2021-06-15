@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
@@ -58,7 +58,7 @@ describe('DropdownCloudWidgetComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(DropdownCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -68,11 +68,11 @@ describe('DropdownCloudWidgetComponent', () => {
         formCloudService = TestBed.inject(FormCloudService);
 
         widget.field = new FormFieldModel(new FormModel());
-    }));
+    });
 
     afterEach(() => fixture.destroy());
 
-    it('should require field with restUrl', async(() => {
+    it('should require field with restUrl', () => {
         spyOn(formService, 'getRestFieldValues').and.stub();
 
         widget.field = null;
@@ -82,13 +82,13 @@ describe('DropdownCloudWidgetComponent', () => {
         widget.field = new FormFieldModel(null, { restUrl: null });
         widget.ngOnInit();
         expect(formService.getRestFieldValues).not.toHaveBeenCalled();
-    }));
+    });
 
     describe('when template is ready', () => {
 
         describe('and dropdown is populated', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(formService, 'getRestFieldValues').and.callFake(() => {
                     return of(fakeOptionList);
@@ -103,21 +103,21 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
                 widget.field.isVisible = true;
                 fixture.detectChanges();
-            }));
+            });
 
-            it('should select the default value when an option is chosen as default', async(() => {
+            it('should select the default value when an option is chosen as default', async () => {
                 widget.field.value = 'option_2';
                 widget.ngOnInit();
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        const dropDownElement: any = element.querySelector('#dropdown-id');
-                        expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
-                        expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
-                    });
-            }));
 
-            it('should select the empty value when no default is chosen', async(() => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const dropDownElement: any = element.querySelector('#dropdown-id');
+                expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
+                expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
+            });
+
+            it('should select the empty value when no default is chosen', async () => {
                 widget.field.value = 'empty';
                 widget.ngOnInit();
                 fixture.detectChanges();
@@ -125,26 +125,25 @@ describe('DropdownCloudWidgetComponent', () => {
                 openSelect('#dropdown-id');
 
                 fixture.detectChanges();
+                await fixture.whenStable();
 
-                fixture.whenStable()
-                    .then(() => {
-                        const dropDownElement: any = element.querySelector('#dropdown-id');
-                        expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
-                    });
-            }));
+                const dropDownElement = element.querySelector('#dropdown-id');
+                expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
+            });
 
-            it('should display tooltip when tooltip is set', async(() => {
+            it('should display tooltip when tooltip is set', async () => {
                 widget.field.tooltip = 'dropdown widget';
 
                 widget.ngOnInit();
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    const dropDownElement: any = element.querySelector('#dropdown-id');
-                    const tooltip = dropDownElement.getAttribute('ng-reflect-message');
 
-                    expect(tooltip).toEqual(widget.field.tooltip);
-                });
-            }));
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const dropDownElement: any = element.querySelector('#dropdown-id');
+                const tooltip = dropDownElement.getAttribute('ng-reflect-message');
+
+                expect(tooltip).toEqual(widget.field.tooltip);
+            });
 
             it('should load data from restUrl and populate options', async () => {
                 const jsonDataSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(fakeOptionList));

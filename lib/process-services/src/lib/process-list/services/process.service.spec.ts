@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { exampleProcess, fakeProcessInstances, mockError, fakeProcessDef, fakeTasksList } from '../../mock';
+import { TestBed } from '@angular/core/testing';
+import { exampleProcess, mockError, fakeProcessDef, fakeTasksList } from '../../mock';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
@@ -45,9 +45,6 @@ describe('ProcessService', () => {
     });
 
     describe('process instances', () => {
-
-        let getProcessInstances: jasmine.Spy;
-
         const filter = new ProcessFilterParamRepresentationModel({
             processDefinitionId: '1',
             appDefinitionId: '1',
@@ -57,118 +54,47 @@ describe('ProcessService', () => {
         });
 
         beforeEach(() => {
-            getProcessInstances = spyOn(alfrescoApi.activiti.processApi, 'getProcessInstances')
+            spyOn(alfrescoApi.activiti.processApi, 'getProcessInstances')
                 .and
                 .returnValue(Promise.resolve({ data: [ exampleProcess ] }));
         });
 
-        it('should return the correct number of instances', async(() => {
+        it('should return the correct number of instances', (done) => {
             service.getProcessInstances(filter).subscribe((instances) => {
                 expect(instances.data.length).toBe(1);
+                done();
             });
-        }));
+        });
 
-        it('should return the correct instance data', async(() => {
+        it('should return the correct instance data', (done) => {
             service.getProcessInstances(filter).subscribe((instances) => {
                 const instance = instances.data[0];
                 expect(instance.id).toBe(exampleProcess.id);
                 expect(instance.name).toBe(exampleProcess.name);
                 expect(instance.started).toBe(exampleProcess.started);
+                done();
             });
-        }));
-
-        it('should filter by processDefinitionKey', async(() => {
-            getProcessInstances = getProcessInstances.and.returnValue(Promise.resolve(fakeProcessInstances));
-
-            service.getProcessInstances(filter, 'fakeProcessDefinitionKey1').subscribe((instances) => {
-                expect(instances.data.length).toBe(1);
-                const instance = instances.data[0];
-                expect(instance.id).toBe('340124');
-                /* cspell:disable-next-line */
-                expect(instance.name).toBe('James Franklin EMEA Onboarding');
-                expect(instance.started).toEqual(new Date('2017-10-09T12:19:44.560+0000'));
-            });
-        }));
-
-        it('should call service to fetch process instances', () => {
-            service.getProcessInstances(filter);
-            expect(getProcessInstances).toHaveBeenCalled();
         });
-
-        it('should call service with supplied parameters', () => {
-            service.getProcessInstances(filter);
-            expect(getProcessInstances).toHaveBeenCalledWith(filter);
-        });
-
-        it('should pass on any error that is returned by the API', async(() => {
-            getProcessInstances = getProcessInstances.and.returnValue(Promise.reject(mockError));
-            service.getProcessInstances(null).subscribe(
-                () => {},
-                (res) => {
-                    expect(res).toBe(mockError);
-                }
-            );
-        }));
-
-        it('should return a default error if no data is returned by the API', async(() => {
-            getProcessInstances = getProcessInstances.and.returnValue(Promise.reject(null));
-            service.getProcessInstances(null).subscribe(
-                () => {},
-                (res) => {
-                    expect(res).toBe('Server error');
-                }
-            );
-        }));
    });
 
     describe('process instance', () => {
 
         const processId = 'test';
-        let getProcessInstance: jasmine.Spy;
 
         beforeEach(() => {
-            getProcessInstance = spyOn(alfrescoApi.activiti.processApi, 'getProcessInstance')
+            spyOn(alfrescoApi.activiti.processApi, 'getProcessInstance')
                 .and
                 .returnValue(Promise.resolve(exampleProcess));
         });
 
-        it('should return the correct instance data', async(() => {
+        it('should return the correct instance data', (done) => {
             service.getProcess(processId).subscribe((instance) => {
                 expect(instance.id).toBe(exampleProcess.id);
                 expect(instance.name).toBe(exampleProcess.name);
                 expect(instance.started).toBe(exampleProcess.started);
+                done();
             });
-        }));
-
-        it('should call service to fetch process instances', () => {
-            service.getProcess(processId);
-            expect(getProcessInstance).toHaveBeenCalled();
         });
-
-        it('should call service with supplied process ID', () => {
-            service.getProcess(processId);
-            expect(getProcessInstance).toHaveBeenCalledWith(processId);
-        });
-
-        it('should pass on any error that is returned by the API', async(() => {
-            getProcessInstance = getProcessInstance.and.returnValue(Promise.reject(mockError));
-            service.getProcess(null).subscribe(
-                () => {},
-                (res) => {
-                    expect(res).toBe(mockError);
-                }
-            );
-        }));
-
-        it('should return a default error if no data is returned by the API', async(() => {
-            getProcessInstance = getProcessInstance.and.returnValue(Promise.reject(null));
-            service.getProcess(null).subscribe(
-                () => {},
-                (res) => {
-                    expect(res).toBe('Server error');
-                }
-            );
-        }));
    });
 
     describe('start process instance', () => {
@@ -203,35 +129,38 @@ describe('ProcessService', () => {
             });
         });
 
-        it('should return the created process instance', async(() => {
+        it('should return the created process instance', (done) => {
             service.startProcess(processDefId, processName).subscribe((createdProcess) => {
                 expect(createdProcess.id).toBe(exampleProcess.id);
                 expect(createdProcess.name).toBe(exampleProcess.name);
                 expect(createdProcess.started).toBe(exampleProcess.started);
                 expect(createdProcess.startedBy.id).toBe(exampleProcess.startedBy.id);
+                done();
             });
-        }));
+        });
 
-        it('should pass on any error that is returned by the API', async(() => {
+        it('should pass on any error that is returned by the API', (done) => {
             startNewProcessInstance = startNewProcessInstance.and.returnValue(Promise.reject(mockError));
 
             service.startProcess(processDefId, processName).subscribe(
                 () => {},
                 (res) => {
                     expect(res).toBe(mockError);
+                    done();
                 }
             );
-        }));
+        });
 
-        it('should return a default error if no data is returned by the API', async(() => {
+        it('should return a default error if no data is returned by the API', (done) => {
             startNewProcessInstance = startNewProcessInstance.and.returnValue(Promise.reject(null));
             service.startProcess(processDefId, processName).subscribe(
                 () => {},
                 (res) => {
                     expect(res).toBe('Server error');
+                    done();
                 }
             );
-        }));
+        });
    });
 
     describe('cancel process instance', () => {
@@ -261,25 +190,27 @@ describe('ProcessService', () => {
             });
         });
 
-        it('should pass on any error that is returned by the API', async(() => {
+        it('should pass on any error that is returned by the API', (done) => {
             deleteProcessInstance = deleteProcessInstance.and.returnValue(Promise.reject(mockError));
             service.cancelProcess(null).subscribe(
                 () => {},
                 (res) => {
                     expect(res).toBe(mockError);
+                    done();
                 }
             );
-        }));
+        });
 
-        it('should return a default error if no data is returned by the API', async(() => {
+        it('should return a default error if no data is returned by the API', (done) => {
             deleteProcessInstance = deleteProcessInstance.and.returnValue(Promise.reject(null));
             service.cancelProcess(null).subscribe(
                 () => {},
                 (res) => {
                     expect(res).toBe('Server error');
+                    done();
                 }
             );
-        }));
+        });
    });
 
     describe('process definitions', () => {
@@ -292,24 +223,19 @@ describe('ProcessService', () => {
                 .returnValue(Promise.resolve({ data: [ fakeProcessDef, fakeProcessDef ] }));
         });
 
-        it('should return the correct number of process defs', async(() => {
+        it('should return the correct number of process defs', (done) => {
             service.getProcessDefinitions().subscribe((defs) => {
                 expect(defs.length).toBe(2);
+                done();
             });
-        }));
+        });
 
-        it('should return the correct process def data', async(() => {
+        it('should return the correct process def data', (done) => {
             service.getProcessDefinitions().subscribe((defs) => {
                 expect(defs[0].id).toBe(fakeProcessDef.id);
                 expect(defs[0].key).toBe(fakeProcessDef.key);
                 expect(defs[0].name).toBe(fakeProcessDef.name);
-            });
-        }));
-
-        it('should call API with correct parameters when no appId provided', () => {
-            service.getProcessDefinitions();
-            expect(getProcessDefinitions).toHaveBeenCalledWith({
-                latest: true
+                done();
             });
         });
 
@@ -322,25 +248,27 @@ describe('ProcessService', () => {
             });
         });
 
-        it('should pass on any error that is returned by the API', async(() => {
+        it('should pass on any error that is returned by the API', (done) => {
             getProcessDefinitions = getProcessDefinitions.and.returnValue(Promise.reject(mockError));
             service.getProcessDefinitions().subscribe(
                 () => {},
                 (res) => {
                     expect(res).toBe(mockError);
+                    done();
                 }
             );
-        }));
+        });
 
-        it('should return a default error if no data is returned by the API', async(() => {
+        it('should return a default error if no data is returned by the API', (done) => {
             getProcessDefinitions = getProcessDefinitions.and.returnValue(Promise.reject(null));
             service.getProcessDefinitions().subscribe(
                 () => {},
                 (res) => {
                     expect(res).toBe('Server error');
+                    done();
                 }
             );
-        }));
+        });
    });
 
     describe('process instance tasks', () => {
@@ -354,21 +282,23 @@ describe('ProcessService', () => {
                 .returnValue(Promise.resolve(fakeTasksList));
         });
 
-        it('should return the correct number of tasks', async(() => {
+        it('should return the correct number of tasks', (done) => {
             service.getProcessTasks(processId).subscribe((tasks) => {
                 expect(tasks.length).toBe(2);
+                done();
             });
-        }));
+        });
 
-        it('should return the correct task data', async(() => {
+        it('should return the correct task data', (done) => {
             const fakeTasks = fakeTasksList.data;
             service.getProcessTasks(processId).subscribe((tasks) => {
                 const task = tasks[0];
                 expect(task.id).toBe(fakeTasks[0].id);
                 expect(task.name).toBe(fakeTasks[0].name);
                 expect(task.created).toEqual(moment(new Date('2016-11-10T00:00:00+00:00'), 'YYYY-MM-DD').format());
+                done();
             });
-        }));
+        });
 
         it('should call service to fetch process instance tasks', () => {
             service.getProcessTasks(processId);
@@ -390,25 +320,27 @@ describe('ProcessService', () => {
             });
         });
 
-        it('should pass on any error that is returned by the API', async(() => {
+        it('should pass on any error that is returned by the API', (done) => {
             listTasks = listTasks.and.returnValue(Promise.reject(mockError));
             service.getProcessTasks(processId).subscribe(
                 () => {},
                 (res) => {
                     expect(res).toBe(mockError);
+                    done();
                 }
             );
-        }));
+        });
 
-        it('should return a default error if no data is returned by the API', async(() => {
+        it('should return a default error if no data is returned by the API', (done) => {
             listTasks = listTasks.and.returnValue(Promise.reject(null));
             service.getProcessTasks(processId).subscribe(
                 () => {},
                 (res) => {
                     expect(res).toBe('Server error');
+                    done();
                 }
             );
-        }));
+        });
    });
 
     describe('process variables', () => {
@@ -440,30 +372,30 @@ describe('ProcessService', () => {
                 expect(getVariablesSpy).toHaveBeenCalled();
             });
 
-            it('should pass on any error that is returned by the API', async(() => {
+            it('should pass on any error that is returned by the API', (done) => {
                 getVariablesSpy = getVariablesSpy.and.returnValue(Promise.reject(mockError));
                 service.getProcessInstanceVariables(null).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe(mockError);
+                        done();
                     }
                 );
-            }));
+            });
 
-            it('should return a default error if no data is returned by the API', async(() => {
+            it('should return a default error if no data is returned by the API', (done) => {
                 getVariablesSpy = getVariablesSpy.and.returnValue(Promise.reject(null));
                 service.getProcessInstanceVariables(null).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe('Server error');
+                        done();
                     }
                 );
-            }));
-
+            });
         });
 
         describe('create or update variables', () => {
-
             const updatedVariables = [new ProcessInstanceVariable({
                 name: 'var1',
                 value: 'Test1'
@@ -477,55 +409,51 @@ describe('ProcessService', () => {
                 expect(createOrUpdateProcessInstanceVariablesSpy).toHaveBeenCalled();
             });
 
-            it('should pass on any error that is returned by the API', async(() => {
+            it('should pass on any error that is returned by the API', (done) => {
                 createOrUpdateProcessInstanceVariablesSpy = createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Promise.reject(mockError));
                 service.createOrUpdateProcessInstanceVariables('123', updatedVariables).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe(mockError);
+                        done();
                     }
                 );
-            }));
+            });
 
-            it('should return a default error if no data is returned by the API', async(() => {
+            it('should return a default error if no data is returned by the API', (done) => {
                 createOrUpdateProcessInstanceVariablesSpy = createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Promise.reject(null));
                 service.createOrUpdateProcessInstanceVariables('123', updatedVariables).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe('Server error');
+                        done();
                     }
                 );
-            }));
-
+            });
         });
 
         describe('delete variables', () => {
-
-            it('should call service to delete variables', () => {
-                service.deleteProcessInstanceVariable('123', 'myVar');
-                expect(deleteProcessInstanceVariableSpy).toHaveBeenCalled();
-            });
-
-            it('should pass on any error that is returned by the API', async(() => {
+            it('should pass on any error that is returned by the API', (done) => {
                 deleteProcessInstanceVariableSpy = deleteProcessInstanceVariableSpy.and.returnValue(Promise.reject(mockError));
                 service.deleteProcessInstanceVariable('123', 'myVar').subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe(mockError);
+                        done();
                     }
                 );
-            }));
+            });
 
-            it('should return a default error if no data is returned by the API', async(() => {
+            it('should return a default error if no data is returned by the API', (done) => {
                 deleteProcessInstanceVariableSpy = deleteProcessInstanceVariableSpy.and.returnValue(Promise.reject(null));
                 service.deleteProcessInstanceVariable('123', 'myVar').subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe('Server error');
+                        done();
                     }
                 );
-            }));
-
+            });
         });
    });
 });

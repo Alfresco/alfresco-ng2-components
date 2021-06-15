@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess } from '../../mock';
@@ -184,18 +184,18 @@ describe('ProcessInstanceHeaderComponent', () => {
             expect(propertyList[1].innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.END_DATE');
         });
 
-        it('should show all the default properties if there is no configuration', async(() => {
+        it('should show all the default properties if there is no configuration', async () => {
             appConfigService.config['adf-process-instance-header'] = {};
             component.ngOnChanges();
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const propertyList = fixture.nativeElement.querySelectorAll('.adf-property-list .adf-property');
-                expect(propertyList).toBeDefined();
-                expect(propertyList).not.toBeNull();
-                expect(propertyList.length).toBe(component.properties.length);
-                expect(propertyList[0].innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.STATUS');
-                expect(propertyList[2].innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.CATEGORY');
-            });
-        }));
+            await fixture.whenStable();
+
+            const propertyList = fixture.nativeElement.querySelectorAll('.adf-property-list .adf-property');
+            expect(propertyList).toBeDefined();
+            expect(propertyList).not.toBeNull();
+            expect(propertyList.length).toBe(component.properties.length);
+            expect(propertyList[0].innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.STATUS');
+            expect(propertyList[2].innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.CATEGORY');
+        });
    });
 });
