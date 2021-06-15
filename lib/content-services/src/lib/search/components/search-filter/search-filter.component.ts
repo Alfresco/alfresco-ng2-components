@@ -19,9 +19,9 @@ import { Component, ViewEncapsulation, OnInit, OnDestroy, Inject, Input } from '
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { TranslationService, SearchService } from '@alfresco/adf-core';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
-import { FacetFieldBucket } from '../../facet-field-bucket.interface';
-import { FacetField } from '../../facet-field.interface';
-import { SearchFilterList } from './models/search-filter-list.model';
+import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
+import { FacetField } from '../../models/facet-field.interface';
+import { SearchFilterList } from '../../models/search-filter-list.model';
 import { takeUntil } from 'rxjs/operators';
 import { GenericBucket, GenericFacetResponse, ResultSetContext, ResultSetPaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';

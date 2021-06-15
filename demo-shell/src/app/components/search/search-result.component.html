@@ -9,6 +9,8 @@
         <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
         <div class="app-search-results__sorting">
             <adf-search-sorting-picker></adf-search-sorting-picker>
+
+            <adf-search-form (formChange)="onFormChange($event)"></adf-search-form>
         </div>
         <app-files-component
             [showHeader]="false"

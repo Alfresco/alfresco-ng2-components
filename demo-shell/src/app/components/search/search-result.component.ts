@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Pagination, ResultSetPaging } from '@alfresco/js-api';
-import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
-import { UserPreferencesService, SearchService, AppConfigService } from '@alfresco/adf-core';
-import { Subject } from 'rxjs';
+import { SearchForm, SearchQueryBuilderService } from '@alfresco/adf-content-services';
+import { SearchService, UserPreferencesService } from '@alfresco/adf-core';
+import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -38,14 +38,24 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     isLoading = true;
 
     sorting = ['name', 'asc'];
+    searchForms: SearchForm[];
 
     private onDestroy$ = new Subject<boolean>();
 
     constructor(public router: Router,
-                private config: AppConfigService,
                 private preferences: UserPreferencesService,
                 private queryBuilder: SearchQueryBuilderService,
-                @Optional() private route: ActivatedRoute) {
+                private route: ActivatedRoute) {
+        combineLatest([this.route.params, this.queryBuilder.configUpdated])
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(([params, searchConfig]) => {
+                this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
+                const query = this.formatSearchQuery(this.searchedWord, searchConfig['app:fields']);
+                if (query) {
+                    this.queryBuilder.userQuery = query;
+                }
+        });
+
         queryBuilder.paging = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0
@@ -76,10 +86,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
-                const query = this.formatSearchQuery(this.searchedWord);
-
-                if (query) {
-                    this.queryBuilder.userQuery = query;
+                if (this.searchedWord) {
                     this.queryBuilder.update();
                 } else {
                     this.queryBuilder.userQuery = null;
@@ -94,15 +101,11 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         }
     }
 
-    private formatSearchQuery(userInput: string) {
+    private formatSearchQuery(userInput: string, fields =  ['cm:name']) {
         if (!userInput) {
             return null;
         }
-
-        const fields = this.config.get<string[]>('search.app:fields', ['cm:name']);
-        const query = fields.map((field) => `${field}:"${userInput}*"`).join(' OR ');
-
-        return query;
+        return fields.map((field) => `${field}:"${userInput}*"`).join(' OR ');
     }
 
     ngOnDestroy() {
@@ -135,5 +138,9 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         }
 
         return ['name', 'asc'];
+    }
+
+    onFormChange(form: SearchForm) {
+        this.queryBuilder.updateSelectedConfiguration(form.index);
     }
 }

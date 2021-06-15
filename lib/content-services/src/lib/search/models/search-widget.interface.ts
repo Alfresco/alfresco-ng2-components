@@ -14,4 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './src/public-api';
+
+import { SearchWidgetSettings } from './search-widget-settings.interface';
+import { SearchQueryBuilderService } from '../search-query-builder.service';
+
+export interface SearchWidget {
+    id: string;
+    settings?: SearchWidgetSettings;
+    context?: SearchQueryBuilderService;
+    isActive?: boolean;
+    startValue: any;
+    reset();
+    submitValues();
+    hasValidValue();
+    getCurrentValue();
+    setValue(value: any);
+}

@@ -91,8 +91,8 @@ describe('SearchRadioComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const optionElements = fixture.debugElement.query(By.css('mat-radio-button'));
-        optionElements.triggerEventHandler('change', { checked: true });
+        const optionElements = fixture.debugElement.query(By.css('mat-radio-group'));
+        optionElements.triggerEventHandler('change', { value: sizeOptions[0].value });
         fixture.detectChanges();
 
         expect(component.context.update).toHaveBeenCalled();

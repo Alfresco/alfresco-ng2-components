@@ -15,18 +15,9 @@
  * limitations under the License.
  */
 
-import { SearchWidgetSettings } from './search-widget-settings.interface';
-import { SearchQueryBuilderService } from './search-query-builder.service';
-
-export interface SearchWidget {
-    id: string;
-    settings?: SearchWidgetSettings;
-    context?: SearchQueryBuilderService;
-    isActive?: boolean;
-    startValue: any;
-    reset();
-    submitValues();
-    hasValidValue();
-    getCurrentValue();
-    setValue(value: any);
+export interface SearchForm {
+    index: number;
+    name: string;
+    default: boolean;
+    selected: boolean;
 }

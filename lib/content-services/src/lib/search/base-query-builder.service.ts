@@ -27,24 +27,31 @@ import {
     RequestHighlight,
     RequestScope
 } from '@alfresco/js-api';
-import { SearchCategory } from './search-category.interface';
-import { FilterQuery } from './filter-query.interface';
-import { SearchRange } from './search-range.interface';
-import { SearchConfiguration } from './search-configuration.interface';
-import { FacetQuery } from './facet-query.interface';
-import { SearchSortingDefinition } from './search-sorting-definition.interface';
-import { FacetField } from './facet-field.interface';
-import { FacetFieldBucket } from './facet-field-bucket.interface';
+import { SearchCategory } from './models/search-category.interface';
+import { FilterQuery } from './models/filter-query.interface';
+import { SearchRange } from './models/search-range.interface';
+import { SearchConfiguration } from './models/search-configuration.interface';
+import { FacetQuery } from './models/facet-query.interface';
+import { SearchSortingDefinition } from './models/search-sorting-definition.interface';
+import { FacetField } from './models/facet-field.interface';
+import { FacetFieldBucket } from './models/facet-field-bucket.interface';
+import { SearchForm } from './models/search-form.interface';
 
 @Injectable({
     providedIn: 'root'
 })
 export abstract class BaseQueryBuilderService {
 
-    private _userQuery = '';
+    /*  Stream that emits the search configuration whenever the user change the search forms */
+    configUpdated = new Subject<SearchConfiguration>();
 
+    /*  Stream that emits the query before search whenever user search  */
     updated = new Subject<QueryBody>();
+
+    /*  Stream that emits the results whenever user search  */
     executed = new Subject<ResultSetPaging>();
+
+    /*  Stream that emits the error whenever user search  */
     error = new Subject();
 
     categories: SearchCategory[] = [];
@@ -54,6 +61,8 @@ export abstract class BaseQueryBuilderService {
     sorting: SearchSortingDefinition[] = [];
     sortingOptions: SearchSortingDefinition[] = [];
     private scope: RequestScope;
+    private selectedConfiguration: number;
+    private _userQuery = '';
 
     protected userFacetBuckets: { [key: string]: FacetFieldBucket[] } = {};
 
@@ -77,13 +86,60 @@ export abstract class BaseQueryBuilderService {
         this.resetToDefaults();
     }
 
-    public abstract loadConfiguration(): SearchConfiguration;
+    public abstract loadConfiguration(): SearchConfiguration | SearchConfiguration[];
 
     public abstract isFilterServiceActive(): boolean;
 
     public resetToDefaults() {
-        const currentConfig = this.loadConfiguration();
+        const currentConfig = this.getDefaultConfiguration();
+        this.configUpdated.next(currentConfig);
         this.setUpSearchConfiguration(currentConfig);
+    }
+
+    public getDefaultConfiguration(): SearchConfiguration | undefined {
+        const configurations = this.loadConfiguration();
+
+        if (this.selectedConfiguration >= 0) {
+            return configurations[this.selectedConfiguration];
+        }
+
+        if (Array.isArray(configurations)) {
+            return configurations.find((configuration) => configuration.default);
+        }
+        return configurations;
+    }
+
+    public updateSelectedConfiguration(index: number): void {
+        const currentConfig = this.loadConfiguration();
+        if (Array.isArray(currentConfig) && currentConfig[index] !== undefined) {
+            this.configUpdated.next(currentConfig[index]);
+            this.selectedConfiguration = index;
+            this.resetSearchOptions();
+            this.setUpSearchConfiguration(currentConfig[index]);
+            this.update();
+        }
+    }
+
+    private resetSearchOptions(): void {
+        this.categories = [];
+        this.queryFragments = {};
+        this.filterQueries = [];
+        this.sorting = [];
+        this.sortingOptions = [];
+        this.scope = null;
+    }
+
+    public getSearchConfigurationDetails(): SearchForm[] {
+        const configurations = this.loadConfiguration();
+        if (Array.isArray(configurations)) {
+            return configurations.map((configuration, index) => ({
+                index,
+                name: configuration.name || 'SEARCH.UNKNOWN_FORM',
+                default: configuration.default || false,
+                selected: this.selectedConfiguration !== undefined ? index === this.selectedConfiguration : configuration.default
+           }));
+        }
+        return [];
     }
 
     private setUpSearchConfiguration(currentConfiguration: SearchConfiguration) {

@@ -40,6 +40,7 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from './search-query-service.token';
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { SearchFilterContainerComponent } from './components/search-filter-container/search-filter-container.component';
 import { SearchDatetimeRangeComponent } from './components/search-datetime-range/search-datetime-range.component';
+import { SearchFormComponent } from './components/search-form/search-form.component';
 
 @NgModule({
     imports: [
@@ -65,7 +66,8 @@ import { SearchDatetimeRangeComponent } from './components/search-datetime-range
         SearchDateRangeComponent,
         SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
-        SearchFilterContainerComponent
+        SearchFilterContainerComponent,
+        SearchFormComponent
     ],
     exports: [
         SearchComponent,
@@ -83,7 +85,8 @@ import { SearchDatetimeRangeComponent } from './components/search-datetime-range
         SearchDateRangeComponent,
         SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
-        SearchFilterContainerComponent
+        SearchFilterContainerComponent,
+        SearchFormComponent
     ],
     providers: [
         { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService },

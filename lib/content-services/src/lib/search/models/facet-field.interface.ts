@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchFilterList } from './components/search-filter/models/search-filter-list.model';
+import { SearchFilterList } from './search-filter-list.model';
 import { FacetFieldBucket } from './facet-field-bucket.interface';
 
 export interface FacetField {

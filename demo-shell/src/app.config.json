@@ -34,7 +34,7 @@
     "copyright": "© 2016 - 2021 Alfresco Software, Inc. All Rights Reserved."
   },
   "notifications": true,
-  "search": {
+  "search": [{
     "filterWithContains": true,
     "app:fields": [
       "cm:name",
@@ -365,8 +365,10 @@
           "postfix": ")"
         }
       ]
-    }
-  },
+    },
+    "name": "SEARCH_FORMS.ALL",
+    "default": true
+  }],
   "search-headers": {
     "filterWithContains": true,
     "app:fields": [

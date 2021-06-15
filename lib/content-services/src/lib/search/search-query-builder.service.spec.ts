@@ -16,9 +16,9 @@
  */
 
 import { SearchQueryBuilderService } from './search-query-builder.service';
-import { SearchConfiguration } from './search-configuration.interface';
+import { SearchConfiguration } from './models/search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
-import { FacetField } from './facet-field.interface';
+import { FacetField } from './models/facet-field.interface';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
@@ -668,5 +668,92 @@ describe('SearchQueryBuilder', () => {
         const queryBody = builder.buildQuery();
 
         expect(queryBody.scope).toEqual(mockScope);
+    });
+
+    it('should return empty if array of search config not found', () => {
+        const builder = new SearchQueryBuilderService(buildConfig({}), null);
+        const forms = builder.getSearchConfigurationDetails();
+        expect(forms).toEqual([]);
+    });
+
+    describe('Multiple search configuration', () => {
+        let configs: SearchConfiguration[];
+        let builder: SearchQueryBuilderService;
+        beforeEach(() => {
+              configs = [
+                  {
+                      categories: [
+                          <any> { id: 'cat1', enabled: true },
+                          <any> { id: 'cat2', enabled: true }
+                      ],
+                      filterQueries: [
+                          { query: 'query1' },
+                          { query: 'query2' }
+                      ],
+                      name: 'config1',
+                      default: true
+                  },
+                  {
+                      categories: [
+                          <any> { id: 'mouse', enabled: true }
+                      ],
+                      filterQueries: [
+                          { query: 'query1' },
+                          { query: 'query2' }
+                      ],
+                      name: 'config2',
+                      default: false
+                  },
+                  {
+                      categories: [
+                          <any> { id: 'cat_and_mouse', enabled: true }
+                      ],
+                      default: false
+                  }
+              ];
+              builder = new SearchQueryBuilderService(buildConfig(configs), null);
+        });
+
+        it('should pick the default configuration from list', () => {
+            builder.categories = [];
+            builder.filterQueries = [];
+
+            expect(builder.categories.length).toBe(0);
+            expect(builder.filterQueries.length).toBe(0);
+
+            builder.resetToDefaults();
+
+            expect(builder.categories.length).toBe(2);
+            expect(builder.categories.length).toBe(2);
+            expect(builder.filterQueries.length).toBe(2);
+        });
+
+        it('should list available search form names', () => {
+            const forms = builder.getSearchConfigurationDetails();
+
+            expect(forms).toEqual([
+                { index: 0,  name: 'config1', default: true, selected: true },
+                { index: 1,  name: 'config2', default: false, selected: false },
+                { index: 2,  name: 'SEARCH.UNKNOWN_FORM', default: false, selected: false }
+            ]);
+        });
+
+        it('should allow the user switch the form', () => {
+            builder.updateSelectedConfiguration(1);
+
+            expect(builder.categories.length).toBe(1);
+            expect(builder.filterQueries.length).toBe(2);
+        });
+
+        it('should keep the selected configuration value', () => {
+            builder.updateSelectedConfiguration(1);
+            const forms = builder.getSearchConfigurationDetails();
+
+            expect(forms).toEqual([
+                { index: 0,  name: 'config1', default: true, selected: false },
+                { index: 1,  name: 'config2', default: false, selected: true },
+                { index: 2,  name: 'SEARCH.UNKNOWN_FORM', default: false, selected: false }
+            ]);
+        });
     });
 });

@@ -25,7 +25,7 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { By } from '@angular/platform-browser';
 import { SearchFilterContainerComponent } from './search-filter-container.component';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { SearchCategory } from '../../search-category.interface';
+import { SearchCategory } from '../../models/search-category.interface';
 
 const mockCategory: SearchCategory = {
     'id': 'queryName',

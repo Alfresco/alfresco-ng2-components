@@ -17,14 +17,14 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, NodesApiService, DataSorting } from '@alfresco/adf-core';
-import { SearchConfiguration } from './search-configuration.interface';
+import { SearchConfiguration } from './models/search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
-import { SearchCategory } from './search-category.interface';
+import { SearchCategory } from './models/search-category.interface';
 import { MinimalNode, QueryBody } from '@alfresco/js-api';
 import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { SearchSortingDefinition } from './search-sorting-definition.interface';
-import { FilterSearch } from './filter-search.interface';
+import { SearchSortingDefinition } from './models/search-sorting-definition.interface';
+import { FilterSearch } from './models/filter-search.interface';
 
 @Injectable({
     providedIn: 'root'
