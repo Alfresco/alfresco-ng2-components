@@ -19,7 +19,7 @@ import { Directive, Input, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { DownloadZipDialogComponent } from '../dialogs/download-zip/download-zip.dialog';
-import { NodeEntry, VersionEntry } from '@alfresco/js-api';
+import { ContentApi, NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { DownloadService } from '../services/download.service';
 
 /**
@@ -44,10 +44,13 @@ export class NodeDownloadDirective {
         this.downloadNodes(this.nodes);
     }
 
+    private contentApi: ContentApi;
+
     constructor(
         private apiService: AlfrescoApiService,
         private downloadService: DownloadService,
         private dialog: MatDialog) {
+        this.contentApi = new ContentApi(this.apiService.getInstance());
     }
 
     /**
@@ -101,16 +104,15 @@ export class NodeDownloadDirective {
 
     private downloadFile(node: NodeEntry) {
         if (node && node.entry) {
-            const contentApi = this.apiService.getInstance().content;
             // nodeId for Shared node
             const id = (<any> node.entry).nodeId || node.entry.id;
 
             let url, fileName;
             if (this.version) {
-                url = contentApi.getVersionContentUrl(id, this.version.entry.id, true);
+                url = this.contentApi.getVersionContentUrl(id, this.version.entry.id, true);
                 fileName = this.version.entry.name;
             } else {
-                url = contentApi.getContentUrl(id, true);
+                url = this.contentApi.getContentUrl(id, true);
                 fileName = node.entry.name;
             }
 

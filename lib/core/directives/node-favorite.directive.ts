@@ -48,7 +48,7 @@ export class NodeFavoriteDirective implements OnChanges {
     private favoritesApi: FavoritesApi;
 
     constructor(private alfrescoApiService: AlfrescoApiService) {
-        this.favoritesApi = new FavoritesApi(alfrescoApiService.getInstance());
+        this.favoritesApi = new FavoritesApi(this.alfrescoApiService.getInstance());
     }
 
     ngOnChanges(changes) {
