@@ -21,15 +21,18 @@ import { CommentModel } from '../models/comment.model';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LogService } from '../services/log.service';
 import { map, catchError } from 'rxjs/operators';
-import { CommentEntry } from '@alfresco/js-api';
+import { ActivitiCommentsApi, CommentEntry, CommentsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CommentContentService {
 
+    commentsApi: CommentsApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.commentsApi = new CommentsApi(this.apiService.getInstance());
     }
 
     /**
@@ -39,7 +42,7 @@ export class CommentContentService {
      * @returns Details of the comment added
      */
     addNodeComment(nodeId: string, message: string): Observable<CommentModel> {
-        return from(this.apiService.getInstance().core.commentsApi.addComment(nodeId, {content: message}))
+        return from(this.commentsApi.createComment(nodeId, {content: message}))
             .pipe(
                 map((response: CommentEntry) => {
                     return new CommentModel({
@@ -59,7 +62,7 @@ export class CommentContentService {
      * @returns Details for each comment
      */
     getNodeComments(nodeId: string): Observable<CommentModel[]> {
-        return from(this.apiService.getInstance().core.commentsApi.getComments(nodeId))
+        return from(this.commentsApi.listComments(nodeId))
             .pipe(
                 map((response) => {
                     const comments: CommentModel[] = [];

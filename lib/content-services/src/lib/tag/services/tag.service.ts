@@ -19,7 +19,7 @@ import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { TagBody,  TagPaging, TagEntry } from '@alfresco/js-api';
+import { TagBody, TagPaging, TagEntry, TagsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -27,12 +27,15 @@ import { TagBody,  TagPaging, TagEntry } from '@alfresco/js-api';
 // tslint:disable-next-line: directive-class-suffix
 export class TagService {
 
+    private tagsApi: TagsApi;
+
     /** Emitted when tag information is updated. */
     @Output()
     refresh = new EventEmitter();
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.tagsApi = new TagsApi(this.apiService.getInstance());
     }
 
     /**
@@ -41,7 +44,7 @@ export class TagService {
      * @returns TagPaging object (defined in JS-API) containing the tags
      */
     getTagsByNodeId(nodeId: string): Observable<TagPaging> {
-        return from(this.apiService.getInstance().core.tagsApi.getNodeTags(nodeId)).pipe(
+        return from(this.tagsApi.listTagsForNode(nodeId)).pipe(
             catchError((err) => this.handleError(err))
         );
     }
@@ -52,7 +55,7 @@ export class TagService {
      * @returns TagPaging object (defined in JS-API) containing the tags
      */
     getAllTheTags(opts?: any): Observable<TagPaging> {
-        return from(this.apiService.getInstance().core.tagsApi.getTags(opts))
+        return from(this.tagsApi.listTags(opts))
             .pipe(catchError((err) => this.handleError(err)));
     }
 
@@ -66,7 +69,7 @@ export class TagService {
         const tagBody = new TagBody();
         tagBody.tag = tagName;
 
-        const observableAdd = from(this.apiService.getInstance().core.tagsApi.addTag(nodeId, [tagBody]));
+        const observableAdd = from(this.tagsApi.createTagForNode(nodeId, [tagBody]));
 
         observableAdd.subscribe((tagEntry: TagEntry) => {
             this.refresh.emit(tagEntry);
@@ -84,7 +87,7 @@ export class TagService {
      * @returns Null object when the operation completes
      */
     removeTag(nodeId: string, tag: string): Observable<any> {
-        const observableRemove = from(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag));
+        const observableRemove = from(this.tagsApi.deleteTagFromNode(nodeId, tag));
 
         observableRemove.subscribe((data) => {
             this.refresh.emit(data);

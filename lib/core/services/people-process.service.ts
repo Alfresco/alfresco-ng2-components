@@ -21,14 +21,20 @@ import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { catchError, map } from 'rxjs/operators';
+import { TaskActionsApi, UsersApi, ResultListDataRepresentationLightUserRepresentation } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PeopleProcessService {
 
-    constructor(private alfrescoJsApi: AlfrescoApiService,
+    taskActionsApi: TaskActionsApi;
+    userApi: UsersApi;
+
+    constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.taskActionsApi = new TaskActionsApi(apiService.getInstance())
+        this.userApi = new UsersApi(apiService.getInstance())
     }
 
     /**
@@ -62,7 +68,7 @@ export class PeopleProcessService {
      * @returns Empty response when the update completes
      */
     involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]> {
-        const node = {userId: idToInvolve};
+        const node = { userId: idToInvolve };
         return from(this.involveUserToTaskApi(taskId, node))
             .pipe(
                 catchError((err) => this.handleError(err))
@@ -76,27 +82,27 @@ export class PeopleProcessService {
      * @returns Empty response when the update completes
      */
     removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]> {
-        const node = {userId: idToRemove};
+        const node = { userId: idToRemove };
         return from(this.removeInvolvedUserFromTaskApi(taskId, node))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
     }
 
-    private getWorkflowUserApi(options: any) {
-        return this.alfrescoJsApi.getInstance().activiti.usersWorkflowApi.getUsers(options);
+    private getWorkflowUserApi(options: any): Promise<ResultListDataRepresentationLightUserRepresentation> {
+        return this.userApi.getUsers(options);
     }
 
     private involveUserToTaskApi(taskId: string, node: any) {
-        return this.alfrescoJsApi.getInstance().activiti.taskActionsApi.involveUser(taskId, node);
+        return this.taskActionsApi.involveUser(taskId, node);
     }
 
     private removeInvolvedUserFromTaskApi(taskId: string, node: any) {
-        return this.alfrescoJsApi.getInstance().activiti.taskActionsApi.removeInvolvedUser(taskId, node);
+        return this.taskActionsApi.removeInvolvedUser(taskId, node);
     }
 
     private getUserProfileImageApi(userId: string): string {
-        return this.alfrescoJsApi.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
+        return this.userApi.getUserProfilePictureUrl(userId);
     }
 
     /**
