@@ -33,8 +33,8 @@ export class NodesApiService {
 
     constructor(private apiService: AlfrescoApiService,
                 private preferences: UserPreferencesService) {
-        this.nodesApi = new NodesApi(apiService.getInstance())
-        this.trashcanApi = new TrashcanApi(apiService.getInstance())
+        this.nodesApi = new NodesApi(this.apiService.getInstance())
+        this.trashcanApi = new TrashcanApi(this.apiService.getInstance())
     }
 
 

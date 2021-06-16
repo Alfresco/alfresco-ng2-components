@@ -21,6 +21,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { FormModel } from '../components/widgets/core/form.model';
 import { map, catchError } from 'rxjs/operators';
+import { CustomModelApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -31,8 +32,11 @@ export class EcmModelService {
     public static MODEL_NAME: string = 'activitiFormsModel';
     public static TYPE_MODEL: string = 'cm:folder';
 
+    private customModelApi: CustomModelApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.customModelApi = new CustomModelApi(this.apiService.getInstance());
     }
 
     public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
@@ -128,7 +132,7 @@ export class EcmModelService {
     }
 
     public activeEcmModel(modelName: string): Observable<any> {
-        return from(this.apiService.getInstance().core.customModelApi.activateCustomModel(modelName))
+        return from(this.customModelApi.activateCustomModel(modelName))
             .pipe(
                 map(this.toJson),
                 catchError((err) => this.handleError(err))
@@ -136,7 +140,7 @@ export class EcmModelService {
     }
 
     public createEcmModel(modelName: string, nameSpace: string): Observable<any> {
-        return from(this.apiService.getInstance().core.customModelApi.createCustomModel('DRAFT', '', modelName, modelName, nameSpace))
+        return from(this.customModelApi.createCustomModel('DRAFT', '', modelName, modelName, nameSpace))
             .pipe(
                 map(this.toJson),
                 catchError((err) => this.handleError(err))
@@ -144,7 +148,7 @@ export class EcmModelService {
     }
 
     public getEcmModels(): Observable<any> {
-        return from(this.apiService.getInstance().core.customModelApi.getAllCustomModel())
+        return from(this.customModelApi.getAllCustomModel())
             .pipe(
                 map(this.toJson),
                 catchError((err) => this.handleError(err))
@@ -152,7 +156,7 @@ export class EcmModelService {
     }
 
     public getEcmType(modelName: string): Observable<any> {
-        return from(this.apiService.getInstance().core.customModelApi.getAllCustomType(modelName))
+        return from(this.customModelApi.getAllCustomType(modelName))
             .pipe(
                 map(this.toJson),
                 catchError((err) => this.handleError(err))
@@ -162,7 +166,7 @@ export class EcmModelService {
     public createEcmType(typeName: string, modelName: string, parentType: string): Observable<any> {
         const name = this.cleanNameType(typeName);
 
-        return from(this.apiService.getInstance().core.customModelApi.createCustomType(modelName, name, parentType, typeName, ''))
+        return from(this.customModelApi.createCustomType(modelName, name, parentType, typeName, ''))
             .pipe(
                 map(this.toJson),
                 catchError((err) => this.handleError(err))
@@ -189,7 +193,7 @@ export class EcmModelService {
             }
         }
 
-        return from(this.apiService.getInstance().core.customModelApi.addPropertyToType(modelName, name, properties))
+        return from(this.customModelApi.addPropertyToType(modelName, name, properties))
             .pipe(
                 map(this.toJson),
                 catchError((err) => this.handleError(err))

@@ -22,11 +22,12 @@ import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { RedirectionModel } from '../models/redirection.model';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { UserRepresentation } from '@alfresco/js-api';
+import { Activiti, UserRepresentation } from '@alfresco/js-api';
 import { map, catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from './jwt-helper.service';
 import { StorageService } from './storage.service';
+import ProfileApi = Activiti.ProfileApi;
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
@@ -48,12 +49,15 @@ export class AuthenticationService {
      */
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
+    private profileApi: ProfileApi;
+
     constructor(
         private appConfig: AppConfigService,
         private storageService: StorageService,
         private alfrescoApi: AlfrescoApiService,
         private cookie: CookieService,
         private logService: LogService) {
+        this.profileApi = new ProfileApi(alfrescoApi.getInstance());
         this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
             this.alfrescoApi.getInstance().reply('logged-in', () => this.onLogin.next());
         });
@@ -295,7 +299,7 @@ export class AuthenticationService {
      * @returns User information
      */
     getBpmLoggedUser(): Observable<UserRepresentation> {
-        return from(this.alfrescoApi.getInstance().activiti.profileApi.getProfile());
+        return from(this.profileApi.getProfile());
     }
 
     private hasValidRedirection(provider: string): boolean {

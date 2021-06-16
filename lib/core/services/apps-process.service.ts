@@ -31,6 +31,7 @@ export class AppsProcessService {
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.appsApi = new RuntimeAppDefinitionsApi(this.apiService.getInstance());
     }
 
     /**

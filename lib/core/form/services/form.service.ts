@@ -31,10 +31,19 @@ import {
 import { EcmModelService } from './ecm-model.service';
 import { map, catchError, switchMap, combineAll, defaultIfEmpty } from 'rxjs/operators';
 import {
-    Activiti,
     CompleteFormRepresentation,
-    SaveFormRepresentation
+    ModelsApi,
+    ProcessInstanceVariablesApi,
+    SaveFormRepresentation,
+    TasksApi,
+    TaskFormsApi,
+    ProcessInstancesApi,
+    FormModelsApi,
+    ProcessDefinitionsApi,
+    UsersApi,
+    ActivitiGroupsApi
 } from '@alfresco/js-api';
+
 
 @Injectable({
     providedIn: 'root'
@@ -43,6 +52,16 @@ export class FormService {
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
+
+    taskApi: TasksApi;
+    taskFormsApi: TaskFormsApi;
+    modelsApi: ModelsApi;
+    editorApi: FormModelsApi;
+    processDefinitionsApi: ProcessDefinitionsApi;
+    processInstancesApi: ProcessInstancesApi;
+    processInstanceVariablesApi: ProcessInstanceVariablesApi;
+    groupsApi: ActivitiGroupsApi;
+    usersApi: UsersApi;
 
     formLoaded = new Subject<FormEvent>();
     formDataRefreshed = new Subject<FormEvent>();
@@ -65,34 +84,15 @@ export class FormService {
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,
                 protected logService: LogService) {
-    }
 
-    private get taskApi(): Activiti.TaskApi {
-        return this.apiService.getInstance().activiti.taskApi;
-    }
-
-    private get modelsApi(): Activiti.ModelsApi {
-        return this.apiService.getInstance().activiti.modelsApi;
-    }
-
-    private get editorApi(): Activiti.EditorApi {
-        return this.apiService.getInstance().activiti.editorApi;
-    }
-
-    private get processApi(): Activiti.ProcessApi {
-        return this.apiService.getInstance().activiti.processApi;
-    }
-
-    private get processInstanceVariablesApi(): Activiti.ProcessInstanceVariablesApi {
-        return this.apiService.getInstance().activiti.processInstanceVariablesApi;
-    }
-
-    private get usersWorkflowApi(): Activiti.UsersWorkflowApi {
-        return this.apiService.getInstance().activiti.usersWorkflowApi;
-    }
-
-    private get groupsApi(): Activiti.GroupsApi {
-        return this.apiService.getInstance().activiti.groupsApi;
+        this.taskApi = new TasksApi(this.apiService.getInstance());
+        this.modelsApi = new ModelsApi(this.apiService.getInstance());
+        this.editorApi = new FormModelsApi(this.apiService.getInstance());
+        this.processDefinitionsApi = new ProcessDefinitionsApi(this.apiService.getInstance());
+        this.processInstanceVariablesApi = new ProcessInstanceVariablesApi(this.apiService.getInstance());
+        this.processInstancesApi = new ProcessInstancesApi(this.apiService.getInstance());
+        this.usersApi = new UsersApi(this.apiService.getInstance());
+        this.groupsApi = new ActivitiGroupsApi(this.apiService.getInstance());
     }
 
     /**
@@ -100,6 +100,7 @@ export class FormService {
      * @param json JSON to create the form
      * @param data Values for the form fields
      * @param readOnly Should the form fields be read-only?
+     * @param fixedSpace
      * @returns Form model created from input data
      */
     parseForm(json: any, data?: FormValues, readOnly: boolean = false, fixedSpace?: boolean): FormModel {
@@ -216,7 +217,7 @@ export class FormService {
      * @returns List of process definitions
      */
     getProcessDefinitions(): Observable<any> {
-        return from(this.processApi.getProcessDefinitions({}))
+        return from(this.processDefinitionsApi.getProcessDefinitions({}))
             .pipe(
                 map(this.toJsonArray),
                 catchError((err) => this.handleError(err))
@@ -270,7 +271,7 @@ export class FormService {
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
         const saveFormRepresentation = <SaveFormRepresentation> { values: formValues };
 
-        return from(this.taskApi.saveTaskForm(taskId, saveFormRepresentation))
+        return from(this.taskFormsApi.saveTaskForm(taskId, saveFormRepresentation))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -289,7 +290,7 @@ export class FormService {
             completeFormRepresentation.outcome = outcome;
         }
 
-        return from(this.taskApi.completeTaskForm(taskId, completeFormRepresentation))
+        return from(this.taskFormsApi.completeTaskForm(taskId, completeFormRepresentation))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -301,7 +302,7 @@ export class FormService {
      * @returns Form definition
      */
     getTaskForm(taskId: string): Observable<any> {
-        return from(this.taskApi.getTaskForm(taskId))
+        return from(this.taskFormsApi.getTaskForm(taskId))
             .pipe(
                 map(this.toJson),
                 catchError((err) => this.handleError(err))
@@ -346,7 +347,7 @@ export class FormService {
      * @returns Form definition
      */
     getStartFormInstance(processId: string): Observable<any> {
-        return from(this.processApi.getProcessInstanceStartForm(processId))
+        return from(this.processInstancesApi.getProcessInstanceStartForm(processId))
             .pipe(
                 map(this.toJson),
                 catchError((err) => this.handleError(err))
@@ -359,7 +360,7 @@ export class FormService {
      * @returns Process instance
      */
     getProcessInstance(processId: string): Observable<any> {
-        return from(this.processApi.getProcessInstance(processId))
+        return from(this.processInstancesApi.getProcessInstance(processId))
             .pipe(
                 map(this.toJson),
                 catchError((err) => this.handleError(err))
@@ -372,7 +373,7 @@ export class FormService {
      * @returns Form definition
      */
     getStartFormDefinition(processId: string): Observable<any> {
-        return from(this.processApi.getProcessDefinitionStartForm(processId))
+        return from(this.processDefinitionsApi.getProcessDefinitionStartForm(processId))
             .pipe(
                 map(this.toJson),
                 catchError((err) => this.handleError(err))
@@ -386,7 +387,7 @@ export class FormService {
      * @returns Field values
      */
     getRestFieldValues(taskId: string, field: string): Observable<any> {
-        return from(this.taskApi.getRestFieldValues(taskId, field))
+        return from(this.taskFormsApi.getRestFieldValues(taskId, field))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -399,7 +400,7 @@ export class FormService {
      * @returns Field values
      */
     getRestFieldValuesByProcessId(processDefinitionId: string, field: string): Observable<any> {
-        return from(this.processApi.getRestFieldValues(processDefinitionId, field))
+        return from(this.processDefinitionsApi.getRestFieldValues(processDefinitionId, field))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -413,7 +414,7 @@ export class FormService {
      * @returns Field values
      */
     getRestFieldValuesColumnByProcessId(processDefinitionId: string, field: string, column?: string): Observable<any> {
-        return from(this.processApi.getRestTableFieldValues(processDefinitionId, field, column))
+        return from(this.processDefinitionsApi.getRestTableFieldValues(processDefinitionId, field, column))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -427,7 +428,7 @@ export class FormService {
      * @returns Field values
      */
     getRestFieldValuesColumn(taskId: string, field: string, column?: string): Observable<any> {
-        return from(this.taskApi.getRestFieldValuesColumn(taskId, field, column))
+        return from(this.taskFormsApi.getRestFieldColumnValues(taskId, field, column))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -439,7 +440,7 @@ export class FormService {
      * @returns URL string
      */
     getUserProfileImageApi(userId: string): string {
-        return this.apiService.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
+        return this.usersApi.getUserProfilePictureUrl(userId);
     }
 
     /**
@@ -453,7 +454,7 @@ export class FormService {
         if (groupId) {
             option.groupId = groupId;
         }
-        return from(this.usersWorkflowApi.getUsers(option))
+        return from(this.usersApi.getUsers(option))
             .pipe(
                 switchMap(response => <UserProcessModel[]> response.data || []),
                 map((user) => {

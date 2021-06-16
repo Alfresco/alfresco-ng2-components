@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NodeEntry, DownloadEntry, DownloadBodyCreate, DownloadsApi } from '@alfresco/js-api';
+import { DownloadEntry, DownloadBodyCreate, DownloadsApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { LogService } from './log.service';

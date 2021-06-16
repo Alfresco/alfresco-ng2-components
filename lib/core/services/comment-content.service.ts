@@ -21,7 +21,7 @@ import { CommentModel } from '../models/comment.model';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LogService } from '../services/log.service';
 import { map, catchError } from 'rxjs/operators';
-import { ActivitiCommentsApi, CommentEntry, CommentsApi } from '@alfresco/js-api';
+import { CommentEntry, CommentsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
