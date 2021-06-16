@@ -20,7 +20,7 @@ import { from, Observable, throwError, Subject } from 'rxjs';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
-import { Activiti, SystemPropertiesRepresentation } from '@alfresco/js-api';
+import { AboutApi, DiscoveryApi, SystemPropertiesApi, SystemPropertiesRepresentation } from '@alfresco/js-api';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({
@@ -33,9 +33,17 @@ export class DiscoveryApiService {
      */
     ecmProductInfo$ = new Subject<EcmProductVersionModel>();
 
+    private discoveryApi: DiscoveryApi;
+    private aboutApi: AboutApi;
+    private systemPropertiesApi: SystemPropertiesApi;
+
     constructor(
         private apiService: AlfrescoApiService,
         private authenticationService: AuthenticationService) {
+
+        this.discoveryApi = new DiscoveryApi(apiService.getInstance());
+        this.aboutApi = new AboutApi(apiService.getInstance());
+        this.systemPropertiesApi = new SystemPropertiesApi(apiService.getInstance());
 
         this.authenticationService.onLogin
             .pipe(
@@ -51,7 +59,7 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     public getEcmProductInfo(): Observable<EcmProductVersionModel> {
-        return from(this.apiService.getInstance().discovery.discoveryApi.getRepositoryInformation())
+        return from(this.discoveryApi.getRepositoryInformation())
             .pipe(
                 map((res) => new EcmProductVersionModel(res)),
                 catchError((err) => throwError(err))
@@ -63,16 +71,13 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     public getBpmProductInfo(): Observable<BpmProductVersionModel> {
-        return from(this.apiService.getInstance().activiti.aboutApi.getAppVersion())
+        return from(this.aboutApi.getAppVersion())
             .pipe(
                 map((res) => new BpmProductVersionModel(res)),
                 catchError((err) => throwError(err))
             );
     }
 
-    private get systemPropertiesApi(): Activiti.SystemPropertiesApi {
-        return this.apiService.getInstance().activiti.systemPropertiesApi;
-    }
 
     public getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
         return from(this.systemPropertiesApi.getProperties())

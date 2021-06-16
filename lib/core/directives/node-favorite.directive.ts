@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { FavoriteBody, NodeEntry, SharedLinkEntry, Node, SharedLink } from '@alfresco/js-api';
+import { FavoriteBody, NodeEntry, SharedLinkEntry, Node, SharedLink, FavoritesApi } from '@alfresco/js-api';
 import { Observable, from, forkJoin, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
@@ -45,7 +45,10 @@ export class NodeFavoriteDirective implements OnChanges {
         this.toggleFavorite();
     }
 
+    private favoritesApi: FavoritesApi;
+
     constructor(private alfrescoApiService: AlfrescoApiService) {
+        this.favoritesApi = new FavoritesApi(alfrescoApiService.getInstance());
     }
 
     ngOnChanges(changes) {
@@ -70,7 +73,7 @@ export class NodeFavoriteDirective implements OnChanges {
                 // shared files have nodeId
                 const id = (<SharedLinkEntry> selected).entry.nodeId || selected.entry.id;
 
-                return from(this.alfrescoApiService.favoritesApi.removeFavoriteSite('-me-', id));
+                return from(this.favoritesApi.deleteFavorite('-me-', id));
             });
 
             forkJoin(batch).subscribe(
@@ -86,7 +89,7 @@ export class NodeFavoriteDirective implements OnChanges {
             const notFavorite = this.favorites.filter((node) => !node.entry.isFavorite);
             const body: FavoriteBody[] = notFavorite.map((node) => this.createFavoriteBody(node));
 
-            from(this.alfrescoApiService.favoritesApi.addFavorite('-me-', <any> body))
+            from(this.favoritesApi.createFavorite('-me-', <any> body))
                 .subscribe(
                     () => {
                         notFavorite.map((selected) => selected.entry.isFavorite = true);
@@ -133,9 +136,9 @@ export class NodeFavoriteDirective implements OnChanges {
 
         // ACS 5.x and 6.x without 'isFavorite' include
         const { name, isFile, isFolder } = <Node> node;
-        const id =  (<SharedLink> node).nodeId || node.id;
+        const id = (<SharedLink> node).nodeId || node.id;
 
-        const promise = this.alfrescoApiService.favoritesApi.getFavorite('-me-', id);
+        const promise = this.favoritesApi.getFavorite('-me-', id);
 
         return from(promise).pipe(
             map(() => ({
