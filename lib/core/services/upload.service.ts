@@ -54,27 +54,13 @@ export class UploadService {
 
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadStarting: Subject<FileUploadEvent> = new Subject<
-        FileUploadEvent
-    >();
-    fileUploadCancelled: Subject<FileUploadEvent> = new Subject<
-        FileUploadEvent
-    >();
-    fileUploadProgress: Subject<FileUploadEvent> = new Subject<
-        FileUploadEvent
-    >();
-    fileUploadAborted: Subject<FileUploadEvent> = new Subject<
-        FileUploadEvent
-    >();
-    fileUploadError: Subject<FileUploadErrorEvent> = new Subject<
-        FileUploadErrorEvent
-    >();
-    fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<
-        FileUploadCompleteEvent
-    >();
-    fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<
-        FileUploadDeleteEvent
-    >();
+    fileUploadStarting: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadCancelled: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadProgress: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadAborted: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadError: Subject<FileUploadErrorEvent> = new Subject<FileUploadErrorEvent>();
+    fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
+    fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
     fileDeleted: Subject<string> = new Subject<string>();
 
     uploadApi: UploadApi;
@@ -264,15 +250,15 @@ export class UploadService {
         }
 
         if (file.id) {
-            return this.nodesApi.updateNodeContent(file.id, file.file, opts);
+            return this.nodesApi.updateNodeContent(file.id, <any> file.file, opts);
         } else {
             return this.uploadApi.uploadFile(
-                    file.file,
-                    file.options.path,
-                    file.options.parentId,
-                    file.options,
-                    opts
-                );
+                file.file,
+                file.options.path,
+                file.options.parentId,
+                file.options,
+                opts
+            );
         }
     }
 
@@ -312,7 +298,8 @@ export class UploadService {
                     }
                 }
             })
-            .catch(() => {});
+            .catch(() => {
+            });
 
         return promise;
     }
