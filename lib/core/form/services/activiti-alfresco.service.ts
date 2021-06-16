@@ -20,10 +20,10 @@ import { LogService } from '../../services/log.service';
 import { SitesService } from '../../services/sites.service';
 import { Injectable } from '@angular/core';
 import {
-    ContentApi,
     IntegrationAlfrescoOnPremiseApi,
     MinimalNode,
-    RelatedContentRepresentation
+    RelatedContentRepresentation,
+    ActivitiContentApi
 } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { ExternalContent } from '../components/widgets/core/external-content';
@@ -39,14 +39,14 @@ export class ActivitiContentService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
-    contentApi: ContentApi;
+    contentApi: ActivitiContentApi;
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private sitesService: SitesService) {
 
         this.integrationAlfrescoOnPremiseApi = new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
-        this.contentApi = new ContentApi(this.apiService.getInstance());
+        this.contentApi = new ActivitiContentApi(this.apiService.getInstance());
     }
 
     /**
@@ -111,7 +111,7 @@ export class ActivitiContentService {
             name: node.name,
             link: node.isLink
         };
-        return from(this.apiService.activiti.contentApi.createTemporaryRelatedContent(params))
+        return from(this.contentApi.createTemporaryRelatedContent(params))
             .pipe(
                 map(this.toJson),
                 catchError((err) => this.handleError(err))
