@@ -90,7 +90,7 @@
     "apollo-angular": "^2.6.0",
     "chart.js": "2.9.4",
     "classlist.js": "1.1.20150312",
-    "cropperjs": "1.5.11",
+    "cropperjs": "1.5.12",
     "custom-event-polyfill": "^1.0.7",
     "minimatch": "^3.0.4",
     "minimatch-browser": "1.0.0",
