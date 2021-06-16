@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppDefinitionRepresentation } from '@alfresco/js-api';
+import { RuntimeAppDefinitionsApi, AppDefinitionRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
@@ -27,6 +27,8 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class AppsProcessService {
 
+    appsApi: RuntimeAppDefinitionsApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
     }
@@ -36,7 +38,7 @@ export class AppsProcessService {
      * @returns The list of deployed apps
      */
     getDeployedApplications(): Observable<AppDefinitionRepresentation[]> {
-        return from(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
+        return from(this.appsApi.getAppDefinitions())
             .pipe(
                 map((response: any) => <AppDefinitionRepresentation[]> response.data),
                 catchError((err) => this.handleError(err))
@@ -49,7 +51,7 @@ export class AppsProcessService {
      * @returns The list of deployed apps
      */
     getDeployedApplicationsByName(name: string): Observable<AppDefinitionRepresentation> {
-        return from(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
+        return from(this.appsApi.getAppDefinitions())
             .pipe(
                 map((response: any) => <AppDefinitionRepresentation> response.data.find((app) => app.name === name)),
                 catchError((err) => this.handleError(err))
@@ -62,7 +64,7 @@ export class AppsProcessService {
      * @returns Details of the app
      */
     getApplicationDetailsById(appId: number): Observable<AppDefinitionRepresentation> {
-        return from(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
+        return from(this.appsApi.getAppDefinitions())
             .pipe(
                 map((response: any) => response.data.find((app) => app.id === appId)),
                 catchError((err) => this.handleError(err))

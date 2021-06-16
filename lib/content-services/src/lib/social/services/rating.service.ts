@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { RatingEntry, RatingBody } from '@alfresco/js-api';
+import { RatingEntry, RatingBody, RatingsApi } from '@alfresco/js-api';
 import { from, throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -26,7 +26,10 @@ import { catchError } from 'rxjs/operators';
 })
 export class RatingService {
 
+    ratingsApi: RatingsApi;
+
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {
+        this.ratingsApi = new RatingsApi(this.apiService.getInstance());
     }
 
     /**
@@ -36,7 +39,7 @@ export class RatingService {
      * @returns The rating value
      */
     getRating(nodeId: string, ratingType: any): Observable<RatingEntry | {}> {
-        return from(this.apiService.getInstance().core.ratingsApi.getRating(nodeId, ratingType))
+        return from(this.ratingsApi.getRating(nodeId, ratingType))
             .pipe(
                 catchError(this.handleError)
             );
@@ -54,7 +57,7 @@ export class RatingService {
             'id': ratingType,
             'myRating': vote
         });
-        return from(this.apiService.getInstance().core.ratingsApi.rate(nodeId, ratingBody))
+        return from(this.ratingsApi.rate(nodeId, ratingBody))
             .pipe(
                 catchError(this.handleError)
             );
@@ -67,7 +70,7 @@ export class RatingService {
      * @returns Null response indicating that the operation is complete
      */
     deleteRating(nodeId: string, ratingType: any): Observable<any> {
-        return from(this.apiService.getInstance().core.ratingsApi.removeRating(nodeId, ratingType))
+        return from(this.ratingsApi.deleteRating(nodeId, ratingType))
             .pipe(
                 catchError(this.handleError)
             );

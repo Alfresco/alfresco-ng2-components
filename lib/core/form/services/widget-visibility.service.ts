@@ -30,17 +30,20 @@ import {
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { map, catchError } from 'rxjs/operators';
+import { TaskFormsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WidgetVisibilityService {
 
+    private taskFormsApi : TaskFormsApi;
     private processVarList: TaskProcessVariableModel[];
     private form: FormModel;
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.taskFormsApi = new TaskFormsApi(this.apiService.getInstance());
     }
 
     public refreshVisibility(form: FormModel, processVarList?: TaskProcessVariableModel[]) {
@@ -319,7 +322,7 @@ export class WidgetVisibilityService {
     }
 
     getTaskProcessVariable(taskId: string): Observable<TaskProcessVariableModel[]> {
-        return from(this.apiService.getInstance().activiti.taskFormsApi.getTaskFormVariables(taskId))
+        return from(this.taskFormsApi.getTaskFormVariables(taskId))
             .pipe(
                 map((res) => {
                     const jsonRes = this.toJson(res);

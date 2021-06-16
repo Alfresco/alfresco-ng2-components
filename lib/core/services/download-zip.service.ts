@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NodeEntry, DownloadEntry, DownloadBodyCreate } from '@alfresco/js-api';
+import { NodeEntry, DownloadEntry, DownloadBodyCreate, DownloadsApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { LogService } from './log.service';
@@ -27,8 +27,11 @@ import { catchError } from 'rxjs/operators';
 })
 export class DownloadZipService {
 
+    downloadsApi: DownloadsApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.downloadsApi = new DownloadsApi(this.apiService.getInstance());
     }
 
     /**
@@ -37,28 +40,9 @@ export class DownloadZipService {
      * @returns Status object for the download
      */
     createDownload(payload: DownloadBodyCreate): Observable<DownloadEntry> {
-        return from(this.apiService.getInstance().core.downloadsApi.createDownload(payload)).pipe(
+        return from(this.downloadsApi.createDownload(payload)).pipe(
             catchError((err) => this.handleError(err))
         );
-    }
-
-    /**
-     * Gets a content URL for the given node.
-     * @param nodeId Node to get URL for.
-     * @param attachment Toggles whether to retrieve content as an attachment for download
-     * @returns URL string
-     */
-    getContentUrl(nodeId: string, attachment?: boolean): string {
-        return this.apiService.getInstance().content.getContentUrl(nodeId, attachment);
-    }
-
-    /**
-     * Gets a Node via its node ID.
-     * @param nodeId ID of the target node
-     * @returns Details of the node
-     */
-    getNode(nodeId: string): Observable<NodeEntry> {
-        return from(this.apiService.getInstance().core.nodesApi.getNode(nodeId));
     }
 
     /**
@@ -67,7 +51,7 @@ export class DownloadZipService {
      * @returns Status object for the download
      */
     getDownload(downloadId: string): Observable<DownloadEntry> {
-        return from(this.apiService.getInstance().core.downloadsApi.getDownload(downloadId));
+        return from(this.downloadsApi.getDownload(downloadId));
     }
 
     /**
@@ -75,7 +59,7 @@ export class DownloadZipService {
      * @param downloadId ID of the target download node
      */
     cancelDownload(downloadId: string) {
-        this.apiService.getInstance().core.downloadsApi.cancelDownload(downloadId);
+        this.downloadsApi.cancelDownload(downloadId);
     }
 
     private handleError(error: any) {
