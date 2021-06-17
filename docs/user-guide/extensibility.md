@@ -101,7 +101,7 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 
 ## Form Extensibility for APS/AAE
 -   [Form Extensibility for APS Stencil](./aps-extensions.md)
--   [Form Extensibility for AAE Form Widget](./aae-extensions.md)
+-   [Form Extensibility for AAE Form Widget](./extensibility.md)
 
 ## See Also
 
