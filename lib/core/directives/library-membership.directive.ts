@@ -21,7 +21,6 @@ import {
     SiteMembershipRequestBody,
     SiteMemberEntry,
     SiteMembershipRequestEntry,
-    PeopleApi,
     SitesApi
 } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable } from 'rxjs';
@@ -49,7 +48,6 @@ export class LibraryMembershipDirective implements OnChanges {
 
     isJoinRequested: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    private peopleApi: PeopleApi;
     private sitesApi: SitesApi;
 
     /** Site for which to toggle the membership request. */
@@ -77,7 +75,6 @@ export class LibraryMembershipDirective implements OnChanges {
         private sitesService: SitesService,
         private versionCompatibilityService: VersionCompatibilityService
     ) {
-        this.peopleApi = new PeopleApi(this.alfrescoApiService.getInstance());
         this.sitesApi = new SitesApi(this.alfrescoApiService.getInstance());
     }
 
