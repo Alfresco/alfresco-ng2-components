@@ -28,15 +28,14 @@ import { NodeMetadata } from '../models/node-metadata.model';
 })
 export class NodesApiService {
 
-    nodesApi : NodesApi;
-    trashcanApi : TrashcanApi;
+    nodesApi: NodesApi;
+    trashcanApi: TrashcanApi;
 
     constructor(private apiService: AlfrescoApiService,
                 private preferences: UserPreferencesService) {
-        this.nodesApi = new NodesApi(this.apiService.getInstance())
-        this.trashcanApi = new TrashcanApi(this.apiService.getInstance())
+        this.nodesApi = new NodesApi(this.apiService.getInstance());
+        this.trashcanApi = new TrashcanApi(this.apiService.getInstance());
     }
-
 
     private getEntryFromEntity(entity: NodeEntry) {
         return entity.entry;
@@ -50,7 +49,7 @@ export class NodesApiService {
      */
     getNode(nodeId: string, options: any = {}): Observable<MinimalNode> {
         const defaults = {
-            include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
+            include: ['path', 'properties', 'allowableOperations', 'permissions']
         };
         const queryOptions = Object.assign(defaults, options);
 
@@ -70,7 +69,7 @@ export class NodesApiService {
         const defaults = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
-            include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
+            include: ['path', 'properties', 'allowableOperations', 'permissions']
         };
         const queryOptions = Object.assign(defaults, options);
 
@@ -114,12 +113,12 @@ export class NodesApiService {
      */
     updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNode> {
         const defaults = {
-            include: [ 'path', 'properties', 'allowableOperations', 'permissions', 'definition' ]
+            include: ['path', 'properties', 'allowableOperations', 'permissions', 'definition']
         };
         const queryOptions = Object.assign(defaults, options);
 
         return from(this.nodesApi.updateNode(nodeId, nodeBody, queryOptions)).pipe(
-             map(this.getEntryFromEntity),
+            map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
         );
     }

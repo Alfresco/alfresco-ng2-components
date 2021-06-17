@@ -30,6 +30,8 @@ import { catchError, map } from 'rxjs/operators';
 export class NodeFavoriteDirective implements OnChanges {
     favorites: any[] = [];
 
+    private favoritesApi: FavoritesApi;
+
     /** Array of nodes to toggle as favorites. */
     @Input('adf-node-favorite')
     selection: NodeEntry[] = [];
@@ -44,8 +46,6 @@ export class NodeFavoriteDirective implements OnChanges {
     onClick() {
         this.toggleFavorite();
     }
-
-    private favoritesApi: FavoritesApi;
 
     constructor(private alfrescoApiService: AlfrescoApiService) {
         this.favoritesApi = new FavoritesApi(this.alfrescoApiService.getInstance());

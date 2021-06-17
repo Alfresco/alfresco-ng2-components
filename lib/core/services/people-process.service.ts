@@ -33,8 +33,8 @@ export class PeopleProcessService {
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.taskActionsApi = new TaskActionsApi(this.apiService.getInstance())
-        this.userApi = new UsersApi(this.apiService.getInstance())
+        this.taskActionsApi = new TaskActionsApi(this.apiService.getInstance());
+        this.userApi = new UsersApi(this.apiService.getInstance());
     }
 
     /**

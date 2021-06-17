@@ -37,7 +37,7 @@ import { TaskFormsApi } from '@alfresco/js-api';
 })
 export class WidgetVisibilityService {
 
-    private taskFormsApi : TaskFormsApi;
+    private taskFormsApi: TaskFormsApi;
     private processVarList: TaskProcessVariableModel[];
     private form: FormModel;
 

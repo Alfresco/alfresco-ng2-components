@@ -30,8 +30,8 @@ export class RenditionsService {
     contentApi: ContentApi;
 
     constructor(private apiService: AlfrescoApiService) {
-        this.renditionsApi = new RenditionsApi(this.apiService.getInstance())
-        this.contentApi = new ContentApi(this.apiService.getInstance())
+        this.renditionsApi = new RenditionsApi(this.apiService.getInstance());
+        this.contentApi = new ContentApi(this.apiService.getInstance());
     }
 
     /**

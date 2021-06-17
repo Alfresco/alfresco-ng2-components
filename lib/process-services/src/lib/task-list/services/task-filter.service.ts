@@ -20,14 +20,18 @@ import { Injectable } from '@angular/core';
 import { Observable, forkJoin, from, throwError } from 'rxjs';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { map, catchError } from 'rxjs/operators';
+import { UserFiltersApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskFilterService {
 
+    private userFiltersApi: UserFiltersApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.userFiltersApi = new UserFiltersApi(this.apiService.getInstance());
     }
 
     /**
@@ -60,13 +64,29 @@ export class TaskFilterService {
                     const filters: FilterRepresentationModel[] = [];
                     res.forEach((filter) => {
                         if (filter.name === involvedTasksFilter.name) {
-                            filters.push(new FilterRepresentationModel({ ...filter, filter: involvedTasksFilter.filter, appId }));
+                            filters.push(new FilterRepresentationModel({
+                                ...filter,
+                                filter: involvedTasksFilter.filter,
+                                appId
+                            }));
                         } else if (filter.name === myTasksFilter.name) {
-                            filters.push(new FilterRepresentationModel({ ...filter, filter: myTasksFilter.filter, appId }));
+                            filters.push(new FilterRepresentationModel({
+                                ...filter,
+                                filter: myTasksFilter.filter,
+                                appId
+                            }));
                         } else if (filter.name === queuedTasksFilter.name) {
-                            filters.push(new FilterRepresentationModel({ ...filter, filter: queuedTasksFilter.filter, appId }));
+                            filters.push(new FilterRepresentationModel({
+                                ...filter,
+                                filter: queuedTasksFilter.filter,
+                                appId
+                            }));
                         } else if (filter.name === completedTasksFilter.name) {
-                            filters.push(new FilterRepresentationModel({ ...filter, filter: completedTasksFilter.filter, appId }));
+                            filters.push(new FilterRepresentationModel({
+                                ...filter,
+                                filter: completedTasksFilter.filter,
+                                appId
+                            }));
                         }
                     });
                     observer.next(filters);
@@ -130,7 +150,7 @@ export class TaskFilterService {
      * @returns Details of task filter just added
      */
     addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
-        return from(this.apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(filter))
+        return from(this.userFiltersApi.createUserTaskFilter(filter))
             .pipe(
                 map((response: FilterRepresentationModel) => {
                     return response;
@@ -146,9 +166,9 @@ export class TaskFilterService {
      */
     callApiTaskFilters(appId?: number): Promise<any> {
         if (appId) {
-            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
+            return this.userFiltersApi.getUserTaskFilters({ appId: appId });
         } else {
-            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters();
+            return this.userFiltersApi.getUserTaskFilters();
         }
     }
 
@@ -164,7 +184,7 @@ export class TaskFilterService {
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-inbox',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'assignee'},
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'assignee' },
             index
         });
     }
@@ -181,7 +201,7 @@ export class TaskFilterService {
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-align-left',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'involved'},
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'involved' },
             index
         });
     }
@@ -198,7 +218,7 @@ export class TaskFilterService {
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-record',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'candidate'},
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'candidate' },
             index
         });
     }
@@ -215,7 +235,7 @@ export class TaskFilterService {
             'appId': appId,
             'recent': true,
             'icon': 'glyphicon-ok-sign',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved'},
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved' },
             index
         });
     }

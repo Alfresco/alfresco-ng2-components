@@ -44,7 +44,6 @@ import {
     ActivitiGroupsApi
 } from '@alfresco/js-api';
 
-
 @Injectable({
     providedIn: 'root'
 })

@@ -62,13 +62,13 @@ export class NodeDeleteDirective implements OnChanges {
     @Output()
     delete: EventEmitter<any> = new EventEmitter();
 
+    private trashcanApi: TrashcanApi;
+    private nodesApi: NodesApi;
+
     @HostListener('click')
     onClick() {
         this.process(this.selection);
     }
-
-    private trashcanApi: TrashcanApi;
-    private nodesApi: NodesApi;
 
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private translation: TranslationService,
