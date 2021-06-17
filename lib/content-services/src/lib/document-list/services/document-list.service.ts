@@ -20,7 +20,7 @@ import {
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
-import { NodeEntry, NodePaging } from '@alfresco/js-api';
+import { NodeEntry, NodePaging, NodesApi } from '@alfresco/js-api';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { Observable, from, throwError, forkJoin } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -34,10 +34,13 @@ export class DocumentListService implements DocumentListLoader {
 
     static ROOT_ID = '-root-';
 
+    nodes: NodesApi;
+
     constructor(private contentService: ContentService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private customResourcesService: CustomResourcesService) {
+        this.nodes = new NodesApi(this.apiService.getInstance());
     }
 
     /**
@@ -46,7 +49,7 @@ export class DocumentListService implements DocumentListLoader {
      * @returns Empty response when the operation is complete
      */
     deleteNode(nodeId: string): Observable<any> {
-        return from(this.apiService.getInstance().nodes.deleteNode(nodeId));
+        return from(this.nodes.deleteNode(nodeId));
     }
 
     /**
@@ -57,7 +60,7 @@ export class DocumentListService implements DocumentListLoader {
      * @returns NodeEntry for the copied node
      */
     copyNode(nodeId: string, targetParentId: string): Observable<NodeEntry> {
-        return from(this.apiService.getInstance().nodes.copyNode(nodeId, { targetParentId })).pipe(
+        return from(this.nodes.copyNodee(nodeId, { targetParentId })).pipe(
             catchError((err) => this.handleError(err))
         );
     }
@@ -70,7 +73,7 @@ export class DocumentListService implements DocumentListLoader {
      * @returns NodeEntry for the moved node
      */
     moveNode(nodeId: string, targetParentId: string): Observable<NodeEntry> {
-        return from(this.apiService.getInstance().nodes.moveNode(nodeId, { targetParentId })).pipe(
+        return from(this.nodes.moveNode(nodeId, { targetParentId })).pipe(
             catchError((err) => this.handleError(err))
         );
     }
@@ -115,7 +118,7 @@ export class DocumentListService implements DocumentListLoader {
             }
         }
 
-        return from(this.apiService.getInstance().nodes.getNodeChildren(rootNodeId, params)).pipe(
+        return from(this.nodes.listNodeChildren(rootNodeId, params)).pipe(
             catchError((err) => this.handleError(err))
         );
     }
@@ -153,7 +156,7 @@ export class DocumentListService implements DocumentListLoader {
             include: includeFieldsRequest
         };
 
-        return from(this.apiService.getInstance().nodes.getNode(nodeId, opts)).pipe(
+        return from(this.nodes.getNode(nodeId, opts)).pipe(
             catchError((err) => this.handleError(err))
         );
     }

@@ -31,6 +31,8 @@ import { DownloadService } from '../services/download.service';
 })
 export class NodeDownloadDirective {
 
+    private contentApi: ContentApi;
+
     /** Nodes to download. */
     @Input('adfNodeDownload')
     nodes: NodeEntry | NodeEntry[];
@@ -43,8 +45,6 @@ export class NodeDownloadDirective {
     onClick() {
         this.downloadNodes(this.nodes);
     }
-
-    private contentApi: ContentApi;
 
     constructor(
         private apiService: AlfrescoApiService,

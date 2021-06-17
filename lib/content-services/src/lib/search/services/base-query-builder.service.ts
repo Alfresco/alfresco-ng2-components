@@ -25,7 +25,7 @@ import {
     RequestSortDefinitionInner,
     ResultSetPaging,
     RequestHighlight,
-    RequestScope
+    RequestScope, SearchApi
 } from '@alfresco/js-api';
 import { SearchCategory } from '../models/search-category.interface';
 import { FilterQuery } from '../models/filter-query.interface';
@@ -85,7 +85,10 @@ export abstract class BaseQueryBuilderService {
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
+    searchApi: SearchApi;
+
     constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
+        this.searchApi = new SearchApi(this.alfrescoApiService.getInstance());
         this.resetToDefaults();
     }
 
@@ -284,7 +287,7 @@ export abstract class BaseQueryBuilderService {
         try {
             const query = queryBody ? queryBody : this.buildQuery();
             if (query) {
-                const resultSetPaging: ResultSetPaging = await this.alfrescoApiService.getInstance().search.searchApi.search(query);
+                const resultSetPaging: ResultSetPaging = await this.searchApi.search(query);
                 this.executed.next(resultSetPaging);
             }
         } catch (error) {

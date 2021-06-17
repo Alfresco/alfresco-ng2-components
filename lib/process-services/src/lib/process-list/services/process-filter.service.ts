@@ -20,14 +20,17 @@ import { Injectable } from '@angular/core';
 import { Observable, from, forkJoin, throwError } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { map, catchError } from 'rxjs/operators';
-import { ResultListDataRepresentationUserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
+import { ResultListDataRepresentationUserProcessInstanceFilterRepresentation, UserFiltersApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProcessFilterService {
 
+    private userFiltersApi: UserFiltersApi;
+
     constructor(private alfrescoApiService: AlfrescoApiService) {
+        this.userFiltersApi = new UserFiltersApi(this.alfrescoApiService.getInstance());
     }
 
     /**
@@ -181,7 +184,7 @@ export class ProcessFilterService {
      * @returns The filter just added
      */
     addProcessFilter(filter: FilterProcessRepresentationModel): Observable<FilterProcessRepresentationModel> {
-        return from(this.alfrescoApiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter(filter))
+        return from(this.userFiltersApi.createUserProcessInstanceFilter(filter))
             .pipe(
                 map((response: FilterProcessRepresentationModel) => {
                     return response;
@@ -197,9 +200,9 @@ export class ProcessFilterService {
      */
     callApiProcessFilters(appId?: number): Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation> {
         if (appId) {
-            return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: appId });
+            return this.userFiltersApi.getUserProcessInstanceFilters({ appId: appId });
         } else {
-            return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters();
+            return this.userFiltersApi.getUserProcessInstanceFilters();
         }
     }
 
