@@ -5,7 +5,7 @@
                 [property]="property"
                 [editable]="editable"
                 [displayEmpty]="displayEmpty"
-                [displayNoneOption]="displayNoneOption"
+                [displayNoneOption]="displayNoneOption !== null && displayNoneOption !== undefined ? displayNoneOption : property?.displayNoneOption"
                 [displayClearAction]="displayClearAction"
                 [copyToClipboardAction]="copyToClipboardAction"
                 [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
