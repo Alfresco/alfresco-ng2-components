@@ -41,10 +41,10 @@ export class TaskListService {
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.modelsApi = new ModelsApi(apiService.getInstance());
-        this.taskActionsApi = new TaskActionsApi(apiService.getInstance());
-        this.tasksApi = new TasksApi(apiService.getInstance());
-        this.checklistsApi = new ChecklistsApi(apiService.getInstance());
+        this.modelsApi = new ModelsApi(this.apiService.getInstance());
+        this.taskActionsApi = new TaskActionsApi(this.apiService.getInstance());
+        this.tasksApi = new TasksApi(this.apiService.getInstance());
+        this.checklistsApi = new ChecklistsApi(this.apiService.getInstance());
     }
 
     /**
