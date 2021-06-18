@@ -353,7 +353,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService,
                 private lockService: LockService) {
-        this.nodesApi = new NodesApi(alfrescoApiService.getInstance());
+        this.nodesApi = new NodesApi(this.alfrescoApiService.getInstance());
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))

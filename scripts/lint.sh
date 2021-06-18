@@ -12,11 +12,11 @@ echo "Lint"
 nx affected:lint --parallel --all --maxParallel=9 || exit 1
 
 echo "Style Lint"
-npm run stylelint  || exit 1
+npm run stylelint || exit 1
 
 echo "Spell check"
-npm run spellcheck  || exit 1
+npm run spellcheck || exit 1
 
 echo "License check"
-npm run license-checker  || exit 1
-npm run validate-config  || exit 1
+npm run license-checker || exit 1
+npm run validate-config || exit 1
