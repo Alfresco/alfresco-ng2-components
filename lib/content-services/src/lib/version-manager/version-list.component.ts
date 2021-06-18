@@ -73,9 +73,9 @@ export class VersionListComponent implements OnChanges {
     constructor(private alfrescoApi: AlfrescoApiService,
                 private contentService: ContentService,
                 private dialog: MatDialog) {
-        this.versionsApi = new VersionsApi(this.alfrescoApi.getInstace());
-        this.nodesApi = new NodesApi(this.alfrescoApi.getInstace());
-        this.contentApi = new ContentApi(this.alfrescoApi.getInstace());
+        this.versionsApi = new VersionsApi(this.alfrescoApi.getInstance());
+        this.nodesApi = new NodesApi(this.alfrescoApi.getInstance());
+        this.contentApi = new ContentApi(this.alfrescoApi.getInstance());
     }
 
     ngOnChanges() {
