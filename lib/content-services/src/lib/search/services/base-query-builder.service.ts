@@ -305,7 +305,7 @@ export abstract class BaseQueryBuilderService {
     }
 
     search(queryBody: QueryBody): Observable<ResultSetPaging> {
-        const promise = this.alfrescoApiService.searchApi.search(queryBody);
+        const promise = this.searchApi.search(queryBody);
 
         promise.then((resultSetPaging) => {
             this.executed.next(resultSetPaging);

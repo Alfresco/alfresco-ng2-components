@@ -16,19 +16,24 @@
  */
 
 import { Injectable } from '@angular/core';
-import { GroupEntry } from '@alfresco/js-api';
+import { GroupEntry, GroupsApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GroupService {
+
+    groupsApi: GroupsApi;
+
     constructor(
         private alfrescoApiService: AlfrescoApiService
-    ) {}
+    ) {
+        this.groupsApi = new GroupsApi(this.alfrescoApiService.getInstance());
+    }
 
     async listAllGroupMembershipsForPerson(personId: string, opts?: any, accumulator = []): Promise<GroupEntry[]> {
-        const groupsPaginated = await this.alfrescoApiService.groupsApi.listGroupMembershipsForPerson(personId, opts);
+        const groupsPaginated = await this.groupsApi.listGroupMembershipsForPerson(personId, opts);
         accumulator = [...accumulator, ...groupsPaginated.list.entries];
         if (groupsPaginated.list.pagination.hasMoreItems) {
             const skip = groupsPaginated.list.pagination.skipCount + groupsPaginated.list.pagination.count;

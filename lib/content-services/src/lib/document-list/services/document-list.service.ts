@@ -60,7 +60,7 @@ export class DocumentListService implements DocumentListLoader {
      * @returns NodeEntry for the copied node
      */
     copyNode(nodeId: string, targetParentId: string): Observable<NodeEntry> {
-        return from(this.nodes.copyNodee(nodeId, { targetParentId })).pipe(
+        return from(this.nodes.copyNode(nodeId, { targetParentId })).pipe(
             catchError((err) => this.handleError(err))
         );
     }
