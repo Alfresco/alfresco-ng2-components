@@ -21,7 +21,7 @@ import { Component, Inject, OnInit, Optional, ViewEncapsulation } from '@angular
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { NodeBodyLock, Node, NodeEntry } from '@alfresco/js-api';
+import { NodeBodyLock, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Component({
@@ -35,6 +35,8 @@ export class NodeLockDialogComponent implements OnInit {
     node: Node = null;
     nodeName: string;
 
+    private nodesApi: NodesApi;
+
     constructor(
         private formBuilder: FormBuilder,
         public dialog: MatDialogRef<NodeLockDialogComponent>,
@@ -43,6 +45,7 @@ export class NodeLockDialogComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA)
         public data: any
     ) {
+        this.nodesApi = new NodesApi(this.alfrescoApi.getInstance());
     }
 
     ngOnInit() {
@@ -75,13 +78,13 @@ export class NodeLockDialogComponent implements OnInit {
     }
 
     private toggleLock(): Promise<NodeEntry> {
-        const { alfrescoApi: { nodesApi }, data: { node } } = this;
+        const { data: { node } } = this;
 
         if (this.form.value.isLocked) {
-            return nodesApi.lockNode(node.id, this.nodeBodyLock);
+            return this.nodesApi.lockNode(node.id, this.nodeBodyLock);
         }
 
-        return nodesApi.unlockNode(node.id);
+        return this.nodesApi.unlockNode(node.id);
     }
 
     submit(): void {

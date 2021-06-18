@@ -17,7 +17,7 @@
 
 import { Directive, Input, HostListener, OnChanges, NgZone, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NodeEntry, Node } from '@alfresco/js-api';
+import { NodeEntry, Node, NodesApi } from '@alfresco/js-api';
 
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { Observable, from, Subject } from 'rxjs';
@@ -43,11 +43,13 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
     baseShareUrl: string;
 
     private onDestroy$ = new Subject<boolean>();
+    private nodesApi = new NodesApi();
 
     constructor(
         private dialog: MatDialog,
         private zone: NgZone,
         private alfrescoApiService: AlfrescoApiService) {
+        this.nodesApi = new NodesApi(this.alfrescoApiService.getInstance());
     }
 
     ngOnDestroy() {
@@ -61,8 +63,8 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
             const nodeId = nodeEntry.entry['nodeId'] || nodeEntry.entry['guid'];
 
             if (nodeId) {
-                this.getNodeInfo(nodeId).subscribe((entry) => {
-                  this.openShareLinkDialog({ entry });
+                this.getNodeInfo(nodeId).subscribe((node) => {
+                    this.openShareLinkDialog(node);
                 });
             } else {
                 this.openShareLinkDialog(nodeEntry);
@@ -70,13 +72,13 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
         }
     }
 
-    private getNodeInfo(nodeId: string): Observable<Node> {
+    private getNodeInfo(nodeId: string): Observable<NodeEntry> {
         const options = {
-          include: ['allowableOperations']
+            include: ['allowableOperations']
         };
 
-        return from(this.alfrescoApiService.nodesApi.getNodeInfo(nodeId, options));
-      }
+        return from(this.nodesApi.getNode(nodeId, options));
+    }
 
     private openShareLinkDialog(node: NodeEntry) {
         this.dialog.open(ShareDialogComponent, {

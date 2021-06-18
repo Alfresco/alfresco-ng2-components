@@ -57,7 +57,7 @@ export class RatingService {
             'id': ratingType,
             'myRating': vote
         });
-        return from(this.ratingsApi.rate(nodeId, ratingBody))
+        return from(this.ratingsApi.createRating(nodeId, ratingBody))
             .pipe(
                 catchError(this.handleError)
             );

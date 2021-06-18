@@ -80,7 +80,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         private formBuilder: FormBuilder,
         private dialog: MatDialogRef<LibraryDialogComponent>
     ) {
-        this.queriesApi = new QueriesApi(alfrescoApiService.getInstance());
+        this.queriesApi = new QueriesApi(this.alfrescoApiService.getInstance());
     }
 
     ngOnInit() {
