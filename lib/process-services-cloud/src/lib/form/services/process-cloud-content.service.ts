@@ -40,8 +40,8 @@ export class ProcessCloudContentService {
         public contentService: ContentService,
         private downloadService: DownloadService
     ) {
-        this.uploadApi = new UploadApi(this.apiService.getInstance())
-        this.authenticationApi = new AuthenticationApi(this.apiService.getInstance())
+        this.uploadApi = new UploadApi(this.apiService.getInstance());
+        this.authenticationApi = new AuthenticationApi(this.apiService.getInstance());
     }
 
     createTemporaryRawRelatedContent(
