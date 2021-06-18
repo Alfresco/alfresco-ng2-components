@@ -18,21 +18,26 @@
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
-import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction } from '@alfresco/adf-content-services';
-import { Node } from '@alfresco/js-api';
+import {
+    ContentNodeSelectorComponent,
+    ContentNodeSelectorComponentData,
+    NodeAction
+} from '@alfresco/adf-content-services';
+import { Node, NodesApi } from '@alfresco/js-api';
 import { Observable, Subject, throwError } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ContentCloudNodeSelectorService {
 
-    sourceNodeNotFound = false;
+    nodesApi: NodesApi;
 
     constructor(
         private apiService: AlfrescoApiService,
         private notificationService: NotificationService,
         private dialog: MatDialog) {
+        this.nodesApi = new NodesApi(this.apiService.getInstance());
     }
 
     openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {
@@ -55,7 +60,7 @@ export class ContentCloudNodeSelectorService {
     }
 
     async fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
-        const relativePathNodeEntry: any = await this.apiService.nodesApi
+        const relativePathNodeEntry: any = await this.nodesApi
         .getNode(alias, opts)
         .catch((err) => {
             this.sourceNodeNotFound = true;
@@ -65,9 +70,9 @@ export class ContentCloudNodeSelectorService {
     }
 
     async fetchAliasNodeId(alias: string): Promise<string> {
-        const aliasNodeEntry: any = await this.apiService.nodesApi
-        .getNode(alias)
-        .catch((err) => this.handleError(err));
+        const aliasNodeEntry: any = await this.nodesApi
+            .getNode(alias)
+            .catch((err) => this.handleError(err));
         return aliasNodeEntry?.entry?.id;
     }
 

@@ -19,23 +19,27 @@ import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { ModelJsonBpmnApi } from '@alfresco/js-api';
 
 @Injectable({ providedIn: 'root' })
 export class DiagramsService {
 
+    private modelJsonBpmnApi: ModelJsonBpmnApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.modelJsonBpmnApi = new ModelJsonBpmnApi(this.apiService.getInstance());
     }
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
-        return from(this.apiService.getInstance().activiti.modelJsonBpmnApi.getModelJSON(processDefinitionId))
+        return from(this.modelJsonBpmnApi.getModelJSON(processDefinitionId))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
     }
 
     getRunningProcessDefinitionModel(processInstanceId: string): Observable<any> {
-        return from(this.apiService.getInstance().activiti.modelJsonBpmnApi.getModelJSONForProcessDefinition(processInstanceId))
+        return from(this.modelJsonBpmnApi.getModelJSONForProcessDefinition(processInstanceId))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
