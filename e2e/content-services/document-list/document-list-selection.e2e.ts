@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginPage, PaginationPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, PaginationPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
@@ -36,7 +36,7 @@ describe('Document List - Selection', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
     const displayColumnName = 'Display name';
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {

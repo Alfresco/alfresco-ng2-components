@@ -14,4 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/** @deprecated */
+// TODO: We need to split adf-testing into smaller chunks
 export * from './src/public-api';

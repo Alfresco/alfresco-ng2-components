@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     LoginPage,
     ProcessUtil,
@@ -49,7 +48,7 @@ describe('Task Assignee', () => {
     const processDetailsPage = new ProcessDetailsPage();
     const taskPage = new TasksPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const adminGroupsApi = new AdminGroupsApi(apiService.getInstance());

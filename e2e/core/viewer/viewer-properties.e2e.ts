@@ -16,8 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import {
-    ApiService,
+import { createApiService,
     DataTableComponentPage,
     LoginPage,
     UploadActions,
@@ -47,7 +46,7 @@ describe('Viewer', () => {
         'name': 'fileForOverlay.png',
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
 

@@ -19,8 +19,7 @@ import {
     LoginPage,
     BrowserActions,
     FileBrowserUtil,
-    ApplicationsUtil,
-    ApiService,
+    ApplicationsUtil, createApiService,
     UsersActions,
     TaskUtil
 } from '@alfresco/adf-testing';
@@ -37,7 +36,7 @@ describe('Task Audit', () => {
     const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const taskUtil = new TaskUtil(apiService);
 

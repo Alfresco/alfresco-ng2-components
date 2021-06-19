@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     LocalStorageUtil,
     LoginPage,
     SearchSortingPickerPage,
@@ -55,7 +54,7 @@ describe('Search Sorting Picker', () => {
     };
 
     let pngA, pngD;
-    const apiService = new ApiService();
+    const apiService = createApiService();
 
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);

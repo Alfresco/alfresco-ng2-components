@@ -17,8 +17,7 @@
 
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
-import {
-    ApiService,
+import { createApiService,
     BrowserActions,
     LoginPage,
     PaginationPage,
@@ -46,7 +45,7 @@ describe('Delete Directive', () => {
     const acsUser = new UserModel();
     const secondAcsUser = new UserModel();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const uploadActions = new UploadActions(apiService);
     const permissionActions = new PermissionActions(apiService);
     const usersActions = new UsersActions(apiService);

@@ -17,8 +17,7 @@
 
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
-import {
-    ApiService,
+import { createApiService,
     BrowserVisibility,
     FileBrowserUtil,
     LoginPage,
@@ -64,7 +63,7 @@ describe('Version component actions', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 

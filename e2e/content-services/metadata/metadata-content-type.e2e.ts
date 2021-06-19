@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     BrowserActions,
     LoginPage,
     ModelActions,
@@ -35,7 +34,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 
 describe('content type', () => {
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const modelActions = new ModelActions(apiService);
     const uploadActions = new UploadActions(apiService);

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     LoginPage,
     ProcessUtil,
@@ -42,7 +41,7 @@ describe('Attach Folder widget', () => {
     let deployedAppId, process;
     let processUserModel;
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const processUtil = new ProcessUtil(apiService);
     const applicationsService = new ApplicationsUtil(apiService);

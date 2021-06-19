@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     LoginPage, ModelsActions,
     UserFiltersUtil,
@@ -48,7 +47,7 @@ describe('Task', () => {
         const taskDetailsPage = new TaskDetailsPage();
         const taskFiltersDemoPage = new TaskFiltersDemoPage();
 
-        const apiService = new ApiService();
+        const apiService = createApiService();
         const usersActions = new UsersActions(apiService);
         const modelsActions = new ModelsActions(apiService);
 
@@ -186,7 +185,7 @@ describe('Task', () => {
         const appSettingsToggles = new AppSettingsTogglesPage();
         const taskFiltersDemoPage = new TaskFiltersDemoPage();
 
-        const apiService = new ApiService();
+        const apiService = createApiService();
         const userFiltersApi = new UserFiltersUtil(apiService);
         const usersActions = new UsersActions(apiService);
 

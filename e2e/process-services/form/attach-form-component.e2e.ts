@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     FormFields,
     LoginPage,
@@ -41,7 +40,7 @@ describe('Attach Form Component', () => {
     const formFields = new FormFields();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationService = new ApplicationsUtil(apiService);
     const taskUtil = new TaskUtil(apiService);

@@ -16,8 +16,7 @@
  */
 
 import { FileModel } from '../../models/ACS/file.model';
-import {
-    ApiService,
+import { createApiService,
     LoginPage,
     StringUtil,
     UploadActions,
@@ -36,7 +35,7 @@ describe('Tag component', () => {
     const navigationBarPage = new NavigationBarPage();
 
     let acsUser: UserModel;
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const tagsApi = new TagsApi(apiService.getInstance());
 

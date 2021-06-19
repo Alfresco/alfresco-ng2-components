@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
@@ -40,7 +39,7 @@ describe('Edit process filters cloud', () => {
     const editProcessFilter = processCloudDemoPage.editProcessFilterCloudComponent();
     const processFilter = processCloudDemoPage.processFilterCloudComponent;
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
 

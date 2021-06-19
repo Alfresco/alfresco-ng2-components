@@ -16,8 +16,7 @@
  */
 
 import { browser, by, element } from 'protractor';
-import {
-    ApiService,
+import { createApiService,
     DropActions,
     LocalStorageUtil,
     LoginPage,
@@ -38,7 +37,7 @@ describe('Upload component - Excluded Files', () => {
     const uploadToggles = new UploadTogglesPage();
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     let acsUser: UserModel;

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
@@ -40,7 +39,7 @@ describe('Task list cloud - selection', () => {
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
 
-        const apiService = new ApiService();
+        const apiService = createApiService();
         const identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);
         const tasksService = new TasksService(apiService);

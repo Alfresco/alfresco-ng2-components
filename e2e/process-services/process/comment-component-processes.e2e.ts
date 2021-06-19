@@ -16,8 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     LoginPage,
     ModelsActions,
@@ -38,7 +37,7 @@ describe('Comment component for Processes', () => {
     const commentsPage = new CommentsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const modelsActions = new ModelsActions(apiService);

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     GroupCloudComponentPage,
     GroupIdentityService,
     IdentityService,
@@ -38,7 +37,7 @@ describe('People Groups Cloud Component', () => {
         const peopleCloudComponent = new PeopleCloudComponentPage();
         const groupCloudComponentPage = new GroupCloudComponentPage();
 
-        const apiService = new ApiService();
+        const apiService = createApiService();
         const identityService = new IdentityService(apiService);
         const rolesService = new RolesService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);

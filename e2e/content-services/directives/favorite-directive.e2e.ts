@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ContentNodeSelectorDialogPage,
     LoginPage,
     StringUtil,
@@ -42,7 +41,7 @@ describe('Favorite directive', () => {
     const trashcanPage = new TrashcanPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     const pdfFile = new FileModel({

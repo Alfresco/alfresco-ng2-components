@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     LocalStorageUtil,
     LoginPage,
     StringUtil,
@@ -36,7 +35,7 @@ describe('Enable infinite scrolling', () => {
     const infinitePaginationPage = new InfinitePaginationPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     const acsUser = new UserModel();

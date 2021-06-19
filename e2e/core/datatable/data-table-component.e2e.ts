@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     DropActions,
     LoginPage,
     NotificationHistoryPage,
@@ -42,7 +41,7 @@ describe('Datatable component', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {

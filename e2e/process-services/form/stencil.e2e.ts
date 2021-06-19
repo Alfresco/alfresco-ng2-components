@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     LoginPage,
     StartProcessPage,
@@ -47,7 +46,7 @@ describe('Stencil', () => {
     const processDetailsPage = new ProcessDetailsPage();
     const processFiltersPage = new ProcessFiltersPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     let user: UserModel;

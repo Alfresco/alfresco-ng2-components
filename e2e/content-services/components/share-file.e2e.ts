@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ApiUtil,
     BrowserActions,
     LocalStorageUtil,
@@ -48,7 +47,7 @@ describe('Share file', () => {
 
     let acsUser: UserModel;
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
     const sharedLinksApi = new SharedlinksApi(apiService.getInstance());

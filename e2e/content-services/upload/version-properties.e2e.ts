@@ -16,8 +16,7 @@
  */
 
 import { browser, by, element } from 'protractor';
-import {
-    ApiService,
+import { createApiService,
     BrowserVisibility,
     LoginPage,
     UploadActions,
@@ -37,7 +36,7 @@ describe('Version Properties', () => {
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     let acsUser: UserModel;

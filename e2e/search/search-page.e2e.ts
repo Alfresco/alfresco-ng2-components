@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 
 import { SearchBarPage } from './pages/search-bar.page';
 import { ContentServicesPage } from '../core/pages/content-services.page';
@@ -46,7 +46,7 @@ describe('Search component - Search Page', () => {
     const searchResultPage = new SearchResultsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 

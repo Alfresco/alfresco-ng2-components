@@ -16,8 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import {
-    ApiService,
+import { createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
@@ -52,7 +51,7 @@ describe('Task claim/release', () => {
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const processDefinitionService = new ProcessDefinitionsService(apiService);
     const processInstancesService = new ProcessInstancesService(apiService);
     const identityService = new IdentityService(apiService);

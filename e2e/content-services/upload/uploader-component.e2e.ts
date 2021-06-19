@@ -17,8 +17,7 @@
 
 import { browser, by, element } from 'protractor';
 
-import {
-    ApiService,
+import { createApiService,
     DropActions,
     LoginPage,
     StringUtil,
@@ -40,7 +39,7 @@ describe('Upload component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
 

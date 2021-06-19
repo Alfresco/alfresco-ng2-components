@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
@@ -47,7 +46,7 @@ describe('Form Field Component - JSON Widget', () => {
     const editJsonDialog = new EditJsonDialog();
     const widget = new ProcessCloudWidgetPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
     const tasksService = new TasksService(apiService);

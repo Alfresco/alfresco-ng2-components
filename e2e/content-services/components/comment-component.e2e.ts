@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     LoginPage,
     StringUtil,
     UploadActions,
@@ -40,7 +39,7 @@ describe('Comment', () => {
     const commentsPage: CommentsPage = new CommentsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const commentsApi = new CommentsApi(apiService.getInstance());
 
     let userFullName, nodeId;

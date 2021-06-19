@@ -21,8 +21,7 @@ import { NodeEntry } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TrashcanPage } from '../../core/pages/trashcan.page';
-import {
-    ApiService,
+import { createApiService,
     BreadcrumbPage,
     LoginPage,
     NotificationHistoryPage,
@@ -44,7 +43,7 @@ describe('Restore content directive', () => {
     const breadCrumbPage = new BreadcrumbPage();
     const notificationHistoryPage = new NotificationHistoryPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const waitActions = new WaitActions(apiService);
 

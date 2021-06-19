@@ -16,8 +16,7 @@
  */
 
 import CONSTANTS = require('../../util/constants');
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil, BrowserActions,
     FileBrowserUtil,
     LocalStorageUtil,
@@ -62,8 +61,8 @@ describe('Start Process Component', () => {
     const selectAppsDialog = new SelectAppsDialog();
     const widget = new Widget();
 
-    const apiService = new ApiService();
-    const apiServiceUserTwo = new ApiService();
+    const apiService = createApiService();
+    const apiServiceUserTwo = createApiService();
     const modelsActions = new ModelsActions(apiService);
     const usersActions = new UsersActions(apiService);
     const processApi = new ProcessInstancesApi(apiService.getInstance());
@@ -482,7 +481,7 @@ describe('Start Process Component', () => {
         });
 
         beforeAll(async () => {
-            const apiServiceAll = new ApiService({
+            const apiServiceAll = createApiService({
                 provider: 'ALL',
                 hostEcm: browser.params.testConfig.appConfig.ecmHost,
                 hostBpm: browser.params.testConfig.appConfig.bpmHost
@@ -494,7 +493,7 @@ describe('Start Process Component', () => {
 
             processUserModel = await usersActionsAll.createUser();
 
-            const alfrescoJsBPMAdminUser = new ApiService({ hostBpm: browser.params.testConfig.appConfig.bpmHost });
+            const alfrescoJsBPMAdminUser = createApiService({ hostBpm: browser.params.testConfig.appConfig.bpmHost });
 
             await alfrescoJsBPMAdminUser.login(processUserModel.username, processUserModel.password);
 

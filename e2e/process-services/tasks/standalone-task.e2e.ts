@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
@@ -35,7 +35,7 @@ describe('Start Task - Task App', () => {
     let processUserModel;
     const noFormMessage = 'No forms attached';
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationUtil = new ApplicationsUtil(apiService);
     const tasksApi = new TasksApi(apiService.getInstance());

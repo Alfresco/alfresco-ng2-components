@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     BrowserActions,
     LoginPage,
     NotificationHistoryPage,
@@ -42,7 +41,7 @@ describe('Edit folder directive', () => {
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const nodesApi = new NodesApi(apiService.getInstance());
 

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ArrayUtil,
     FileBrowserUtil,
     LocalStorageUtil,
@@ -62,7 +61,7 @@ describe('Document List - Pagination', () => {
     const folderThreeModel = new FolderModel({ name: 'folderThree' });
     const numberOfSubFolders = 6;
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
 

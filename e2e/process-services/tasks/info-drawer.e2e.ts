@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     BrowserActions,
     BrowserVisibility,
@@ -45,7 +44,7 @@ describe('Info Drawer', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processFiltersPage = new ProcessFiltersPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const applicationsService = new ApplicationsUtil(apiService);
     const modelsActions = new ModelsActions(apiService);
     const usersActions = new UsersActions(apiService);

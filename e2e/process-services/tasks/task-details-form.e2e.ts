@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     LoginPage, ModelsActions,
     ProcessUtil,
@@ -47,7 +46,7 @@ describe('Task Details - Form', () => {
     const filtersPage = new FiltersPage();
     const widget = new Widget();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const formActions = new FormUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
     const usersActions = new UsersActions(apiService);

@@ -16,8 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     FileBrowserUtil,
     LoginPage, ModelsActions, TaskUtil,
@@ -44,7 +43,7 @@ describe('Attachment list action menu for tasks', () => {
     const attachmentListPage = new AttachmentListPage();
     const viewerPage = new ViewerPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const modelsActions = new ModelsActions(apiService);
     const taskUtil = new TaskUtil(apiService);

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     BrowserActions,
     LoginPage,
@@ -48,7 +47,7 @@ describe('Process Filters Test', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processDetailsPage = new ProcessDetailsPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const userFiltersApi = new UserFiltersApi(apiService.getInstance());

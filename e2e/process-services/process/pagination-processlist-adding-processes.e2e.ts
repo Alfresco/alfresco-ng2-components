@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     LoginPage,
     PaginationPage,
@@ -37,7 +36,7 @@ describe('Process List - Pagination when adding processes', () => {
     const processFiltersPage = new ProcessFiltersPage();
     const processDetailsPage = new ProcessDetailsPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const processUtil = new ProcessUtil(apiService);
     const applicationsService = new ApplicationsUtil(apiService);

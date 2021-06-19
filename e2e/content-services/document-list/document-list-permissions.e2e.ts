@@ -18,7 +18,7 @@
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { ApiService, BrowserActions, ErrorPage, LoginPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, BrowserActions, ErrorPage, LoginPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
 import { SitesApi } from '@alfresco/js-api';
 
 describe('Document List Component', () => {
@@ -27,7 +27,7 @@ describe('Document List Component', () => {
     const contentServicesPage = new ContentServicesPage();
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     let privateSite;

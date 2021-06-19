@@ -18,8 +18,7 @@
 import { browser } from 'protractor';
 import {
     AppListCloudPage,
-    StringUtil,
-    ApiService,
+    StringUtil, createApiService,
     LoginPage,
     TasksService,
     ProcessDefinitionsService,
@@ -51,8 +50,8 @@ describe('Task form cloud component', () => {
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
-    const apiService = new ApiService();
-    const apiServiceHrUser = new ApiService();
+    const apiService = createApiService();
+    const apiServiceHrUser = createApiService();
 
     const visibilityConditionTasks = [];
 

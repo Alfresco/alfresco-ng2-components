@@ -16,8 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import {
-    ApiService,
+import { createApiService,
     AppListCloudPage,
     ContentNodeSelectorDialogPage,
     GroupIdentityService,
@@ -56,7 +55,7 @@ describe('Process Task - Attach content file', () => {
     const processCloudWidget = new ProcessCloudWidgetPage();
     const contentNodeSelectorDialog = new ContentNodeSelectorDialogPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const uploadActions = new UploadActions(apiService);
     const processDefinitionService = new ProcessDefinitionsService(apiService);
     const processInstancesService = new ProcessInstancesService(apiService);

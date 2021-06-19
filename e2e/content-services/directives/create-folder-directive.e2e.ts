@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     LoginPage,
     NotificationHistoryPage,
     StringUtil,
@@ -38,7 +37,7 @@ describe('Create folder directive', () => {
     const metadataViewPage = new MetadataViewPage();
     let acsUser: UserModel;
     const navigationBarPage = new NavigationBarPage();
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {

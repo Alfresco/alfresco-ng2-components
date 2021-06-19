@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginPage, ProcessDefinitionsService, ProcessHeaderCloudPage, ProcessInstancesService, QueryService, StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
+import { createApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginPage, ProcessDefinitionsService, ProcessHeaderCloudPage, ProcessInstancesService, QueryService, StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from './../pages/process-cloud-demo.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
@@ -48,7 +48,7 @@ describe('Process Header cloud component', () => {
         const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
 
-        const apiService = new ApiService();
+        const apiService = createApiService();
         const identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);
         const processDefinitionService = new ProcessDefinitionsService(apiService);

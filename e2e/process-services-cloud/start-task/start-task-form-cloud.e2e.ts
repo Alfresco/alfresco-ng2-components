@@ -23,8 +23,7 @@ import {
     AppListCloudPage,
     BreadcrumbDropdownPage,
     StringUtil,
-    StartTasksCloudPage,
-    ApiService,
+    StartTasksCloudPage, createApiService,
     IdentityService,
     GroupIdentityService,
     TaskFormCloudComponent,
@@ -72,7 +71,7 @@ describe('Start Task Form', () => {
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const processHeaderCloud = new ProcessHeaderCloudPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const uploadActions = new UploadActions(apiService);
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);

@@ -17,8 +17,7 @@
 
 import { browser } from 'protractor';
 
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     LoginPage,
     ModelsActions,
@@ -39,7 +38,7 @@ describe('Sorting for process filters', () => {
     const processFiltersPage = new ProcessFiltersPage();
     const filtersPage = new FiltersPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const modelsActions = new ModelsActions(apiService);
     const userFiltersApi = new UserFiltersApi(apiService.getInstance());

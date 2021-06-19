@@ -16,8 +16,7 @@
  */
 
 import { by, element } from 'protractor';
-import {
-    ApiService,
+import { createApiService,
     BreadcrumbPage,
     BreadcrumbDropdownPage,
     ContentNodeSelectorDialogPage,
@@ -44,7 +43,7 @@ describe('Document List Component - Actions', () => {
     const breadCrumbPage = new BreadcrumbPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService, UsersActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, createApiService, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
@@ -32,7 +32,7 @@ describe('Amount Widget', () => {
     let deployedAppId, process;
     let processUserModel;
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const applicationsService = new ApplicationsUtil(apiService);
     const usersActions = new UsersActions(apiService);
     const processUtil = new ProcessUtil(apiService);

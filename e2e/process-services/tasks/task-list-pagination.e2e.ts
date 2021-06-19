@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
+import { createApiService,
     ApplicationsUtil,
     LoginPage,
     PaginationPage,
@@ -36,7 +35,7 @@ describe('Task List Pagination', () => {
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
 
-    const apiService = new ApiService();
+    const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
     let processUserModel: UserModel;

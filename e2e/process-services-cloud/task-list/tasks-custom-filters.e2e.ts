@@ -23,8 +23,7 @@ import {
     QueryService,
     ProcessDefinitionsService,
     ProcessInstancesService,
-    LoginPage,
-    ApiService,
+    LoginPage, createApiService,
     IdentityService,
     GroupIdentityService,
     AppListCloudPage, TaskListCloudComponentPage
@@ -46,7 +45,7 @@ describe('Task filters cloud', () => {
         const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
         const taskList = new TaskListCloudComponentPage();
 
-        const apiService = new ApiService();
+        const apiService = createApiService();
         const identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);
         const tasksService = new TasksService(apiService);
