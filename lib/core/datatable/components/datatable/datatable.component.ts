@@ -103,6 +103,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     actionsPosition: string = 'right'; // left|right
 
+    /** Toggles whether the actions dropdown should only be visible if the row is hovered over or the dropdown menu is open. */
+    @Input()
+    actionsVisibleOnHover: boolean = false;
+
     /** Fallback image for rows where the thumbnail is missing. */
     @Input()
     fallbackThumbnail: string;

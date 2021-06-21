@@ -149,6 +149,10 @@
                 top: 4px;
             }
 
+            .adf-datatable-row:not(:hover) .adf-datatable-hide-actions-without-hover {
+                display: none;
+            }
+
             .adf-image-table-cell {
                 margin: 8px;
                 padding: 4px;
@@ -437,6 +441,10 @@
         .adf-datatable__actions-cell, .adf-datatable-cell--image {
             max-width: $data-table-thumbnail-width;
             display: flex;
+        }
+
+        .adf-datatable-row:not(:hover) .adf-datatable-hide-actions-without-hover {
+            display: none;
         }
 
         .adf-datatable-cell--image {

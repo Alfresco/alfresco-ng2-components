@@ -72,7 +72,8 @@
                 [attr.data-automation-id]="'datatable-row-' + idx">
                 <!-- Actions (left) -->
                 <div *ngIf="actions && actionsPosition === 'left'" role="gridcell" class="adf-datatable-cell">
-                    <button mat-icon-button [matMenuTriggerFor]="menu"
+                    <button mat-icon-button [matMenuTriggerFor]="menu" #matMenuTrigger="matMenuTrigger"
+                            [ngClass]="{'adf-datatable-hide-actions-without-hover': actionsVisibleOnHover && !matMenuTrigger.menuOpen}"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_left_' + idx"
                             [attr.data-automation-id]="'action_menu_' + idx">
@@ -209,7 +210,8 @@
                 <div *ngIf="actions && actionsPosition === 'right'"
                      role="gridcell"
                      class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie">
-                    <button mat-icon-button [matMenuTriggerFor]="menu"
+                    <button mat-icon-button [matMenuTriggerFor]="menu" #matMenuTrigger="matMenuTrigger"
+                            [ngClass]="{'adf-datatable-hide-actions-without-hover': actionsVisibleOnHover && !matMenuTrigger.menuOpen}"
                             [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ROW_OPTION_BUTTON' | translate"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_right_' + idx"
