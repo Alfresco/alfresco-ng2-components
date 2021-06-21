@@ -41,7 +41,6 @@ describe('NodeRestoreDirective', () => {
     let element: DebugElement;
     let component: TestComponent;
     let trashcanApi;
-    let coreApi;
     let directiveInstance;
     let restoreNodeSpy: any;
     let translationService: TranslationService;
@@ -65,7 +64,7 @@ describe('NodeRestoreDirective', () => {
         trashcanApi = directiveInstance['trashcanApi'];
 
         restoreNodeSpy = spyOn(trashcanApi, 'restoreNode').and.returnValue(Promise.resolve());
-        spyOn(coreApi.nodesApi, 'getDeletedNodes').and.returnValue(Promise.resolve({
+        spyOn(trashcanApi, 'getDeletedNodes').and.returnValue(Promise.resolve({
             list: { entries: [] }
         }));
 
