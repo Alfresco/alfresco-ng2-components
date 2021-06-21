@@ -63,9 +63,9 @@ export class UploadService {
     fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
     fileDeleted: Subject<string> = new Subject<string>();
 
-    uploadApi: UploadApi;
-    nodesApi: NodesApi;
-    versionsApi: VersionsApi;
+    private uploadApi: UploadApi;
+    private nodesApi: NodesApi;
+    private versionsApi: VersionsApi;
 
     constructor(
         protected apiService: AlfrescoApiService,

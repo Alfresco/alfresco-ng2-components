@@ -27,7 +27,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class FavoritesApiService {
 
-    favoritesApi: FavoritesApi;
+    private favoritesApi: FavoritesApi;
 
     static remapEntry({ entry }: any): any {
         entry.properties = {

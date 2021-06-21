@@ -28,8 +28,8 @@ import { NodeMetadata } from '../models/node-metadata.model';
 })
 export class NodesApiService {
 
-    nodesApi: NodesApi;
-    trashcanApi: TrashcanApi;
+    private nodesApi: NodesApi;
+    private trashcanApi: TrashcanApi;
 
     constructor(private apiService: AlfrescoApiService,
                 private preferences: UserPreferencesService) {

@@ -21,8 +21,7 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { map, catchError } from 'rxjs/operators';
-import { Activiti, UserRepresentation } from '@alfresco/js-api';
-import ProfileApi = Activiti.ProfileApi;
+import { UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 
 /**
  *
@@ -34,11 +33,11 @@ import ProfileApi = Activiti.ProfileApi;
 })
 export class BpmUserService {
 
-    profileApi: ProfileApi;
+    private profileApi: UserProfileApi;
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.profileApi = new ProfileApi(this.apiService.getInstance());
+        this.profileApi = new UserProfileApi(this.apiService.getInstance());
     }
 
     /**

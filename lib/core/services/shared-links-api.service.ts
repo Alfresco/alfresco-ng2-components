@@ -28,7 +28,7 @@ import { catchError } from 'rxjs/operators';
 export class SharedLinksApiService {
 
     error = new Subject<{ statusCode: number, message: string }>();
-    sharedLinksApi: SharedlinksApi;
+    private sharedLinksApi: SharedlinksApi;
 
     constructor(private apiService: AlfrescoApiService,
                 private preferences: UserPreferencesService) {
