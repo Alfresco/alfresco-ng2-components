@@ -26,8 +26,8 @@ import { concatMap, switchMap, takeWhile, map } from 'rxjs/operators';
 })
 export class RenditionsService {
 
-    renditionsApi: RenditionsApi;
-    contentApi: ContentApi;
+    private renditionsApi: RenditionsApi;
+    private contentApi: ContentApi;
 
     constructor(private apiService: AlfrescoApiService) {
         this.renditionsApi = new RenditionsApi(this.apiService.getInstance());

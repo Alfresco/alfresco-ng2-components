@@ -20,7 +20,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DownloadEntry, MinimalNode } from '@alfresco/js-api';
 import { LogService } from '../../services/log.service';
 import { DownloadZipService } from '../../services/download-zip.service';
-import { ContentService, NodesApiService } from '../../services';
+import { ContentService } from '../../services/content.service';
+import { NodesApiService } from '../../services/nodes-api.service';
 
 @Component({
     selector: 'adf-download-zip-dialog',

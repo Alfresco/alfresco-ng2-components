@@ -38,8 +38,8 @@ export class ContentService {
     folderCreate: Subject<MinimalNode> = new Subject<MinimalNode>();
     folderEdit: Subject<MinimalNode> = new Subject<MinimalNode>();
 
-    contentApi: ContentApi;
-    nodesApi: NodesApi;
+    private contentApi: ContentApi;
+    private nodesApi: NodesApi;
 
     constructor(public authService: AuthenticationService,
                 public apiService: AlfrescoApiService,
@@ -144,9 +144,9 @@ export class ContentService {
             .filter((currentPermission) => currentPermission.authorityId === userId);
         if (permissions.length) {
             if (permission && permission.startsWith('!')) {
-                hasPermissions = permissions.find((currentPermission) => currentPermission.name === permission.replace('!', '')) ? false : true;
+                hasPermissions = !permissions.find((currentPermission) => currentPermission.name === permission.replace('!', ''));
             } else {
-                hasPermissions = permissions.find((currentPermission) => currentPermission.name === permission) ? true : false;
+                hasPermissions = !!permissions.find((currentPermission) => currentPermission.name === permission);
             }
 
         } else {
@@ -174,9 +174,9 @@ export class ContentService {
 
         if (node && node.allowableOperations) {
             if (allowableOperation && allowableOperation.startsWith('!')) {
-                hasAllowableOperations = node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation.replace('!', '')) ? false : true;
+                hasAllowableOperations = !node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation.replace('!', ''));
             } else {
-                hasAllowableOperations = node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation) ? true : false;
+                hasAllowableOperations = !!node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation);
             }
 
         } else {

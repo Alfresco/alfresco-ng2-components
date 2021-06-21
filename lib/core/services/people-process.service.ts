@@ -28,8 +28,8 @@ import { TaskActionsApi, UsersApi, ResultListDataRepresentationLightUserRepresen
 })
 export class PeopleProcessService {
 
-    taskActionsApi: TaskActionsApi;
-    userApi: UsersApi;
+    private taskActionsApi: TaskActionsApi;
+    private userApi: UsersApi;
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
