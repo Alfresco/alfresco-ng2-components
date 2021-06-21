@@ -47,7 +47,6 @@ describe('SearchFilterContainerComponent', () => {
     let fixture: ComponentFixture<SearchFilterContainerComponent>;
     let component: SearchFilterContainerComponent;
     let queryBuilder: SearchHeaderQueryBuilderService;
-    let alfrescoApiService: AlfrescoApiService;
 
     const searchMock: any = {
         dataLoaded: new Subject()
@@ -68,7 +67,6 @@ describe('SearchFilterContainerComponent', () => {
         fixture = TestBed.createComponent(SearchFilterContainerComponent);
         component = fixture.componentInstance;
         queryBuilder = fixture.componentInstance['searchFilterQueryBuilder'];
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         component.col = {key: '123', type: 'text'};
         spyOn(queryBuilder, 'getCategoryForColumn').and.returnValue(mockCategory);
         fixture.detectChanges();
@@ -114,7 +112,7 @@ describe('SearchFilterContainerComponent', () => {
     });
 
     it('should emit filterChange after the Apply button is clicked', async (done) => {
-        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
+        spyOn(component['searchApi'], 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue(null);
         component.filterChange.subscribe(() => {
             done();
@@ -146,7 +144,7 @@ describe('SearchFilterContainerComponent', () => {
     });
 
     it('should emit filterChange after the Clear button is clicked', async (done) => {
-        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
+        spyOn(component['searchApi'], 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue(null);
         component.filterChange.subscribe(() => {
             done();

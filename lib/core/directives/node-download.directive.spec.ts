@@ -65,7 +65,7 @@ describe('NodeDownloadDirective', () => {
         element = fixture.debugElement.query(By.directive(NodeDownloadDirective));
         dialog = TestBed.inject(MatDialog);
         apiService = TestBed.inject(AlfrescoApiService);
-        contentService = apiService.getInstance().content;
+        contentService = component['contentApi'];
         dialogSpy = spyOn(dialog, 'open');
     });
 

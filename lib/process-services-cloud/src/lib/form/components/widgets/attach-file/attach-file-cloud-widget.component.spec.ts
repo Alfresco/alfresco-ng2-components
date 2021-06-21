@@ -29,7 +29,6 @@ import {
     FormService,
     DownloadService,
     AppConfigService,
-    AlfrescoApiService,
     UploadWidgetContentLinkModel
 } from '@alfresco/adf-core';
 import {
@@ -79,7 +78,6 @@ describe('AttachFileCloudWidgetComponent', () => {
     let processCloudContentService: ProcessCloudContentService;
     let formService: FormService;
     let downloadService: DownloadService;
-    let alfrescoApiService: AlfrescoApiService;
     let contentNodeSelectorPanelService: ContentNodeSelectorPanelService;
     let apiServiceSpy: jasmine.Spy;
     let contentModelFormFileHandlerSpy: jasmine.Spy;
@@ -127,7 +125,6 @@ describe('AttachFileCloudWidgetComponent', () => {
             AppConfigService
         );
         formService = TestBed.inject(FormService);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
         openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeMinimalNode]));
     });
@@ -533,7 +530,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     describe('when a file is uploaded', () => {
         beforeEach(async () => {
-            apiServiceSpy = spyOn(alfrescoApiService.getInstance().node, 'getNode').and.returnValue(new Promise(resolve => resolve({entry: fakeNodeWithProperties})));
+            apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(new Promise(resolve => resolve({entry: fakeNodeWithProperties})));
             spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(new Promise(resolve => resolve('fake-properties')));
             openUploadFileDialogSpy.and.returnValue(of([fakeNodeWithProperties]));
             widget.field = new FormFieldModel(new FormModel(), {
@@ -700,7 +697,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     describe('contentModelFormFileHandler', () => {
         beforeEach(async () => {
-            apiServiceSpy = spyOn(alfrescoApiService.getInstance().node, 'getNode').and.returnValue(new Promise(resolve => resolve({ entry: fakeNodeWithProperties })));
+            apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(new Promise(resolve => resolve({ entry: fakeNodeWithProperties })));
             contentModelFormFileHandlerSpy = spyOn(widget, 'contentModelFormFileHandler').and.callThrough();
             updateFormSpy = spyOn(formService.updateFormValuesRequested, 'next');
             contentClickedSpy = spyOn(formService.formContentClicked, 'next');

@@ -118,7 +118,7 @@ describe('Discovery Api Service', () => {
 
         describe('For ECM', () => {
             it('Should retrieve the info about the product for ECM', done => {
-                spyOn(apiService.getInstance().discovery.discoveryApi, 'getRepositoryInformation')
+                spyOn(service['discoveryApi'], 'getRepositoryInformation')
                     .and.returnValue(Promise.resolve(fakeEcmDiscoveryResponse));
 
                 service.getEcmProductInfo()
@@ -136,7 +136,7 @@ describe('Discovery Api Service', () => {
             });
 
             it('getEcmProductInfo catch errors call', done => {
-                spyOn(apiService.getInstance().discovery.discoveryApi, 'getRepositoryInformation')
+                spyOn(service['discoveryApi'], 'getRepositoryInformation')
                     .and.returnValue(Promise.reject({ status: 403 }));
 
                 service.getEcmProductInfo().subscribe(
@@ -150,7 +150,7 @@ describe('Discovery Api Service', () => {
 
         describe('For BPM', () => {
             it('Should retrieve the info about the product for BPM', done => {
-                spyOn(apiService.getInstance().activiti.aboutApi, 'getAppVersion')
+                spyOn(service['aboutApi'], 'getAppVersion')
                     .and.returnValue(Promise.resolve(fakeBPMDiscoveryResponse));
 
                 service.getBpmProductInfo().subscribe((data: BpmProductVersionModel) => {
@@ -163,7 +163,7 @@ describe('Discovery Api Service', () => {
             });
 
             it('getBpmProductInfo catch errors call', done => {
-                spyOn(apiService.getInstance().activiti.aboutApi, 'getAppVersion')
+                spyOn(service['aboutApi'], 'getAppVersion')
                     .and.returnValue(Promise.reject({ status: 403 }));
 
                 service.getBpmProductInfo().subscribe(
@@ -175,7 +175,7 @@ describe('Discovery Api Service', () => {
             });
 
             it('Should retrieve the system properties for BPM', done => {
-                spyOn(apiService.getInstance().activiti.systemPropertiesApi, 'getProperties')
+                spyOn(service['systemPropertiesApi'], 'getProperties')
                     .and.returnValue(Promise.resolve(fakeBPMDiscoverySystemPropertyResponse));
 
                 service.getBPMSystemProperties().subscribe((data: SystemPropertiesRepresentation) => {
@@ -193,7 +193,7 @@ describe('Discovery Api Service', () => {
 
             it('Should retrieve the system properties for BPM', done => {
                 spyOn(
-                    apiService.getInstance().activiti.systemPropertiesApi,
+                    service['systemPropertiesApi'],
                     'getProperties'
                 ).and.returnValue(
                     Promise.reject({

@@ -21,7 +21,6 @@ import { FileModel, FileUploadOptions, FileUploadStatus } from '../models/file.m
 import { AppConfigModule } from '../app-config/app-config.module';
 import { UploadService } from './upload.service';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AlfrescoApiService } from './alfresco-api.service';
 
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
@@ -35,7 +34,6 @@ declare let jasmine: any;
 
 describe('UploadService', () => {
     let service: UploadService;
-    let alfrescoApiService: AlfrescoApiService;
     const mockProductInfo = new BehaviorSubject<EcmProductVersionModel>(null);
 
     setupTestBed({
@@ -75,7 +73,6 @@ describe('UploadService', () => {
         };
 
         service = TestBed.inject(UploadService);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         service.queue = [];
         service.activeTask = null;
         jasmine.Ajax.install();
@@ -309,7 +306,7 @@ describe('UploadService', () => {
     });
 
     it('If newVersion is set, name should be a param', () => {
-        const uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
+        const uploadFileSpy = spyOn(service['uploadApi'], 'uploadFile').and.callThrough();
 
         const emitter = new EventEmitter();
 
@@ -359,7 +356,7 @@ describe('UploadService', () => {
     });
 
     it('should append to the request the extra upload options', () => {
-        const uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
+        const uploadFileSpy = spyOn(service['uploadApi'], 'uploadFile').and.callThrough();
         const emitter = new EventEmitter();
 
         const filesFake = new FileModel(
@@ -477,7 +474,7 @@ describe('UploadService', () => {
     it('Should not pass rendition if it is disabled', () => {
         mockProductInfo.next({ status: { isThumbnailGenerationEnabled: false } } as EcmProductVersionModel);
 
-        const uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
+        const uploadFileSpy = spyOn(service['uploadApi'], 'uploadFile').and.callThrough();
         const emitter = new EventEmitter();
 
         const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 }, {

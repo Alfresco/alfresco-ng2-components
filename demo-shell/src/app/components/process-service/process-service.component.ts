@@ -31,7 +31,8 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import {
     Pagination,
-    UserProcessInstanceFilterRepresentation
+    UserProcessInstanceFilterRepresentation,
+    ScriptFilesApi
 } from '@alfresco/js-api';
 import {
     FORM_FIELD_VALIDATORS, FormRenderingService, FormService,
@@ -167,6 +168,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     ];
 
     private onDestroy$ = new Subject<boolean>();
+    private scriptFileApi: ScriptFilesApi;
 
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
@@ -181,6 +183,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private notificationService: NotificationService,
                 private preferenceService: UserPreferencesService) {
 
+        this.scriptFileApi = new ScriptFilesApi(this.apiService.getInstance());
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
         this.defaultTaskName = this.appConfig.get<string>('adf-start-task.name');
@@ -488,7 +491,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     loadStencilScriptsInPageFromProcessService() {
-        this.apiService.getInstance().activiti.scriptFileApi.getControllers().then((response) => {
+        this.scriptFileApi.getControllers().then((response) => {
             if (response) {
                 const stencilScript = document.createElement('script');
                 stencilScript.type = 'text/javascript';

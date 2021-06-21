@@ -28,7 +28,6 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 describe('LibraryMembershipDirective', () => {
     let alfrescoApiService: AlfrescoApiService;
     let directive: LibraryMembershipDirective;
-    let peopleApi: any;
     let sitesService: SitesService;
     let addMembershipSpy: jasmine.Spy;
     let getMembershipSpy: jasmine.Spy;
@@ -64,7 +63,6 @@ describe('LibraryMembershipDirective', () => {
 
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         sitesService = TestBed.inject(SitesService);
-        peopleApi = alfrescoApiService.getInstance().core.peopleApi;
         directive = new LibraryMembershipDirective(alfrescoApiService, sitesService, {
             ecmProductInfo$: new Subject(),
             isVersionSupported: () => mockSupportedVersion
@@ -73,7 +71,7 @@ describe('LibraryMembershipDirective', () => {
 
     describe('markMembershipRequest', () => {
         beforeEach(() => {
-            getMembershipSpy = spyOn(peopleApi, 'getSiteMembershipRequest').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
+            getMembershipSpy = spyOn(directive['sitesApi'], 'listSiteMemberships').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
         });
 
         it('should not check membership requests if no entry is selected', fakeAsync(() => {
@@ -114,9 +112,9 @@ describe('LibraryMembershipDirective', () => {
     describe('toggleMembershipRequest', () => {
         beforeEach(() => {
             mockSupportedVersion = false;
-            getMembershipSpy = spyOn(peopleApi, 'getSiteMembershipRequest').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
-            addMembershipSpy = spyOn(peopleApi, 'addSiteMembershipRequest').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
-            deleteMembershipSpy = spyOn(peopleApi, 'removeSiteMembershipRequest').and.returnValue(Promise.resolve({}));
+            getMembershipSpy = spyOn(directive['sitesApi'], 'listSiteMembershipRequestsForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
+            addMembershipSpy = spyOn(directive['sitesApi'], 'createSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
+            deleteMembershipSpy = spyOn(directive['sitesApi'], 'deleteSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({}));
         });
 
         it('should do nothing if there is no selected library ', fakeAsync(() => {

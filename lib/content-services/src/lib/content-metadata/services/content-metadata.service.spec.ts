@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService, setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { ClassesApi, Node } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { ContentMetadataService } from './content-metadata.service';
@@ -67,8 +67,7 @@ describe('ContentMetaDataService', () => {
     beforeEach(() => {
         service = TestBed.inject(ContentMetadataService);
         contentPropertyService = TestBed.inject(ContentTypePropertiesService);
-        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
-        classesApi = alfrescoApiService.classesApi;
+        classesApi = service['classesApi'];
         appConfig = TestBed.inject(AppConfigService);
     });
 
