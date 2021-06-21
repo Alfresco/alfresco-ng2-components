@@ -20,15 +20,15 @@
             </mat-radio-group>
             <mat-form-field *ngIf="!isPeopleAppNameSelected()" class="app-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ["ACTIVITI_ADMIN", "ACTIVITI_USER"]</mat-label>
-                <input matInput (input)="setPeopleRoles($event.target?.value)" data-automation-id="app-people-roles-input" />
+                <input matInput (input)="setPeopleRoles($any($event).target?.value)" data-automation-id="app-people-roles-input" />
             </mat-form-field>
             <mat-form-field *ngIf="isPeopleAppNameSelected()" class="app-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.APP_NAME' | translate }}</mat-label>
-                <input matInput (input)="setPeopleAppName($event.target?.value)" data-automation-id="app-people-app-input" />
+                <input matInput (input)="setPeopleAppName($any($event).target?.value)" data-automation-id="app-people-app-input" />
             </mat-form-field>
             <mat-form-field class="app-preselect-value-full">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.PRESELECTED_VALUE' | translate }} {{ DEFAULT_PEOPLE_PLACEHOLDER }}</mat-label>
-                <input matInput (input)="setPeoplePreselectValue($event.target?.value)"  data-automation-id="app-people-preselect-input" />
+                <input matInput (input)="setPeoplePreselectValue($any($event).target?.value)"  data-automation-id="app-people-preselect-input" />
             </mat-form-field>
             <mat-checkbox class="app-preselect-value" (change)="onChangePeopleValidation($event)">{{
                 'PEOPLE_GROUPS_CLOUD.PRESELECT_VALIDATION' | translate }}</mat-checkbox>
@@ -92,19 +92,19 @@
             <mat-form-field *ngIf="!isGroupAppNameSelected()" class="app-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ["ACTIVITI_ADMIN", "ACTIVITI_USER"]</mat-label>
                 <input matInput
-                    (input)="setGroupRoles($event.target?.value)"
+                    (input)="setGroupRoles($any($event).target?.value)"
                     data-automation-id="app-group-roles-input"/>
             </mat-form-field>
             <mat-form-field *ngIf="isGroupAppNameSelected()" class="app-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.APP_NAME' | translate }}</mat-label>
                 <input matInput
-                    (input)="setGroupAppName($event.target?.value)"
+                    (input)="setGroupAppName($any($event).target?.value)"
                     data-automation-id="app-group-app-input"/>
             </mat-form-field>
             <mat-form-field class="app-preselect-value-full">
                 <mat-label>Preselect: {{ DEFAULT_GROUP_PLACEHOLDER }}</mat-label>
                 <input matInput
-                    (input)="setGroupsPreselectValue($event.target?.value)"
+                    (input)="setGroupsPreselectValue($any($event).target?.value)"
                     data-automation-id="app-group-preselect-input" />
             </mat-form-field>
             <mat-checkbox class="app-preselect-value" (change)="onChangeGroupValidation($event)">
