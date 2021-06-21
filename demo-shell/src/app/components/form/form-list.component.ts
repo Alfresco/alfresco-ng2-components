@@ -60,7 +60,7 @@ export class FormListComponent implements OnInit, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    onRowDblClick(event: CustomEvent) {
+    onRowDblClick(event: CustomEvent<any>) {
         const rowForm = event.detail.value.obj;
 
         this.formService.getFormDefinitionById(rowForm.id).subscribe((formModel) => {

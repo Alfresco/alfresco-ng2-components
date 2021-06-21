@@ -148,31 +148,35 @@ export class ProcessListDemoComponent implements OnInit, OnDestroy {
         return ended ? 'Completed' : 'Active';
     }
 
-    get processAppId(): AbstractControl {
-        return this.processListForm.get('processAppId');
+    private getControl<T extends AbstractControl>(key: string): T {
+        return this.processListForm.get(key) as T;
     }
 
-    get processDefinitionId(): AbstractControl {
-        return this.processListForm.get('processDefinitionId');
+    get processAppId(): FormControl {
+        return this.getControl<FormControl>('processAppId');
     }
 
-    get processInstanceId(): AbstractControl {
-        return this.processListForm.get('processInstanceId');
+    get processDefinitionId(): FormControl {
+        return this.getControl<FormControl>('processDefinitionId');
     }
 
-    get processState(): AbstractControl {
-        return this.processListForm.get('processState');
+    get processInstanceId(): FormControl {
+        return this.getControl<FormControl>('processInstanceId');
     }
 
-    get processSort(): AbstractControl {
-        return this.processListForm.get('processSort');
+    get processState(): FormControl {
+        return this.getControl<FormControl>('processState');
     }
 
-    get processSize(): AbstractControl {
-        return this.processListForm.get('processSize');
+    get processSort(): FormControl {
+        return this.getControl<FormControl>('processSort');
     }
 
-    get processPage(): AbstractControl {
-        return this.processListForm.get('processPage');
+    get processSize(): FormControl {
+        return this.getControl<FormControl>('processSize');
+    }
+
+    get processPage(): FormControl {
+        return this.getControl<FormControl>('processPage');
     }
 }
