@@ -368,7 +368,7 @@ describe('ViewerComponent', () => {
    });
 
     it('should change display name every time node changes', fakeAsync(() => {
-        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
+        spyOn(component['nodesApi'], 'getNode').and.returnValues(
             Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } })),
             Promise.resolve(new NodeEntry({ entry: { name: 'file2', content: {} } }))
         );
@@ -392,10 +392,10 @@ describe('ViewerComponent', () => {
     }));
 
     it('should append version of the file to the file content URL', fakeAsync(() => {
-        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValue(
+        spyOn(component['nodesApi'], 'getNode').and.returnValue(
             Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {}, properties: { 'cm:versionLabel' : '10'} } }))
         );
-        spyOn(alfrescoApiService.versionsApi, 'getVersion').and.returnValue(Promise.resolve(undefined));
+        spyOn(component['versionsApi'], 'getVersion').and.returnValue(Promise.resolve(undefined));
 
         component.nodeId = 'id1';
         component.urlFile = null;
@@ -412,11 +412,11 @@ describe('ViewerComponent', () => {
     }));
 
     it('should change display name every time node\`s version changes', fakeAsync(() => {
-        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValue(
+        spyOn(component['nodesApi'], 'getNode').and.returnValue(
             Promise.resolve(new NodeEntry({ entry: { name: 'node1', content: {} } }))
         );
 
-        spyOn(alfrescoApiService.versionsApi, 'getVersion').and.returnValues(
+        spyOn(component['versionsApi'], 'getVersion').and.returnValues(
             Promise.resolve(new VersionEntry({ entry: { name: 'file1', content: {} } })),
             Promise.resolve(new VersionEntry({ entry: { name: 'file2', content: {} } }))
         );
@@ -441,10 +441,10 @@ describe('ViewerComponent', () => {
     }));
 
     it('should update node only if node name changed', fakeAsync(() => {
-        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
+        spyOn(component['nodesApi'], 'getNode').and.returnValues(
             Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } }))
         );
-        spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValues('http://iam-fake.url');
+        spyOn(component['contentApi'], 'getContentUrl').and.returnValues('http://iam-fake.url');
         spyOn(component, 'getViewerTypeByExtension').and.returnValue('pdf');
 
         component.urlFile = null;
@@ -729,7 +729,7 @@ describe('ViewerComponent', () => {
             });
 
             it('should not render close viewer button if it is a shared link', (done) => {
-                spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')
+                spyOn(component['sharedlinksApi'], 'getSharedLink')
                     .and.returnValue(Promise.reject({}));
 
                 component.sharedLinkId = 'the-Shared-Link-id';
@@ -886,7 +886,7 @@ describe('ViewerComponent', () => {
         describe('error handling', () => {
 
             it('should show unknown view when node file not found', (done) => {
-                spyOn(alfrescoApiService.getInstance().nodes, 'getNode')
+                spyOn(component['nodesApi'], 'getNode')
                     .and.returnValue(Promise.reject({}));
 
                 component.nodeId = 'the-node-id-of-the-file-to-preview';
@@ -902,7 +902,7 @@ describe('ViewerComponent', () => {
             });
 
             it('should show unknown view when sharedLink file not found', (done) => {
-                spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')
+                spyOn(component['sharedlinksApi'], 'getSharedLink')
                     .and.returnValue(Promise.reject({}));
 
                 component.sharedLinkId = 'the-Shared-Link-id';
@@ -919,7 +919,7 @@ describe('ViewerComponent', () => {
             });
 
             it('should raise an event when the shared link is invalid', (done) => {
-                spyOn(alfrescoApiService.getInstance().core.sharedlinksApi, 'getSharedLink')
+                spyOn(component['sharedlinksApi'], 'getSharedLink')
                     .and.returnValue(Promise.reject({}));
 
                 component.invalidSharedLink.subscribe(() => {

@@ -314,7 +314,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[BPM] should be able to retrieve current logged in user', (done) => {
-            spyOn(apiService.getInstance().activiti.profileApi, 'getProfile').and.returnValue(
+            spyOn(authService['profileApi'], 'getProfile').and.returnValue(
                 Promise.resolve((<UserRepresentation> {
                     email: 'fake-email'
                 })));

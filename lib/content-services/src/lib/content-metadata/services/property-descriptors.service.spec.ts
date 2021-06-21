@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { PropertyDescriptorsService } from './property-descriptors.service';
-import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ClassesApi } from '@alfresco/js-api';
 import { PropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -37,8 +37,7 @@ describe('PropertyDescriptorLoaderService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(PropertyDescriptorsService);
-        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
-        classesApi = alfrescoApiService.classesApi;
+        classesApi = service['classesApi'];
     });
 
     it('should load the groups passed by paramter', () => {

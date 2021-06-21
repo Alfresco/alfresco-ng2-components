@@ -18,7 +18,6 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeRestoreDirective } from './node-restore.directive';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { TranslationService } from '../services/translation.service';
@@ -41,8 +40,7 @@ describe('NodeRestoreDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let element: DebugElement;
     let component: TestComponent;
-    let alfrescoService: AlfrescoApiService;
-    let nodesService;
+    let trashcanApi;
     let coreApi;
     let directiveInstance;
     let restoreNodeSpy: any;
@@ -64,11 +62,9 @@ describe('NodeRestoreDirective', () => {
         element = fixture.debugElement.query(By.directive(NodeRestoreDirective));
         directiveInstance = element.injector.get(NodeRestoreDirective);
 
-        alfrescoService = TestBed.inject(AlfrescoApiService);
-        nodesService = alfrescoService.getInstance().nodes;
-        coreApi = alfrescoService.getInstance().core;
+        trashcanApi = directiveInstance['trashcanApi'];
 
-        restoreNodeSpy = spyOn(nodesService, 'restoreNode').and.returnValue(Promise.resolve());
+        restoreNodeSpy = spyOn(trashcanApi, 'restoreNode').and.returnValue(Promise.resolve());
         spyOn(coreApi.nodesApi, 'getDeletedNodes').and.returnValue(Promise.resolve({
             list: { entries: [] }
         }));
@@ -83,7 +79,7 @@ describe('NodeRestoreDirective', () => {
         fixture.detectChanges();
         element.triggerEventHandler('click', null);
 
-        expect(nodesService.restoreNode).not.toHaveBeenCalled();
+        expect(trashcanApi.restoreNode).not.toHaveBeenCalled();
     });
 
     it('should not restore nodes when selection has nodes without path', (done) => {
@@ -93,7 +89,7 @@ describe('NodeRestoreDirective', () => {
         fixture.whenStable().then(() => {
             element.triggerEventHandler('click', null);
 
-            expect(nodesService.restoreNode).not.toHaveBeenCalled();
+            expect(trashcanApi.restoreNode).not.toHaveBeenCalled();
             done();
         });
     });
@@ -104,7 +100,7 @@ describe('NodeRestoreDirective', () => {
         fixture.detectChanges();
         element.triggerEventHandler('click', null);
         fixture.whenStable().then(() => {
-            expect(nodesService.restoreNode).toHaveBeenCalled();
+            expect(trashcanApi.restoreNode).toHaveBeenCalled();
             done();
         });
     });

@@ -58,7 +58,7 @@ describe('VersionManagerComponent', () => {
         component.node = node;
 
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
-        spyOnListVersionHistory = spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+        spyOnListVersionHistory = spyOn(component['versionsApi'], 'listVersionHistory').and
             .callFake(() => Promise.resolve(new VersionPaging({ list: { entries: [ versionEntry ] }})));
     });
 

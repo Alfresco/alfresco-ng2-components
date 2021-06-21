@@ -18,7 +18,6 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
@@ -84,8 +83,6 @@ describe('NodeDeleteDirective', () => {
     let elementWithPermanentDelete: DebugElement;
     let component: TestComponent;
     let componentWithPermanentDelete: TestDeletePermanentComponent;
-    let alfrescoApi: AlfrescoApiService;
-    let nodeApi;
     let deleteNodeSpy: any;
     let purgeDeletedNodeSpy: any;
     let disposableDelete: any;
@@ -103,11 +100,6 @@ describe('NodeDeleteDirective', () => {
     });
 
     beforeEach(() => {
-        alfrescoApi = TestBed.inject(AlfrescoApiService);
-        nodeApi = alfrescoApi.nodesApi;
-        deleteNodeSpy = spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
-        purgeDeletedNodeSpy = spyOn(nodeApi, 'purgeDeletedNode').and.returnValue(Promise.resolve());
-
         fixture = TestBed.createComponent(TestComponent);
         fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
         fixtureWithPermanentComponent = TestBed.createComponent(TestDeletePermanentComponent);
@@ -117,6 +109,10 @@ describe('NodeDeleteDirective', () => {
 
         element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
         elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
+
+        deleteNodeSpy = spyOn(element['nodesApi'], 'deleteNode').and.returnValue(Promise.resolve());
+        purgeDeletedNodeSpy = spyOn(element['nodesApi'], 'purgeDeletedNode').and.returnValue(Promise.resolve());
+
     });
 
     afterEach(() => {

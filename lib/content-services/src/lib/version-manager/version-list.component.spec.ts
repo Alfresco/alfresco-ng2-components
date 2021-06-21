@@ -19,17 +19,16 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { VersionListComponent } from './version-list.component';
-import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { Node, VersionPaging, VersionEntry } from '@alfresco/js-api';
+import { Node, VersionPaging, VersionEntry, NodeEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
     let fixture: ComponentFixture<VersionListComponent>;
-    let alfrescoApiService: AlfrescoApiService;
     let dialog: MatDialog;
 
     const nodeId = 'test-id';
@@ -59,14 +58,13 @@ describe('VersionListComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(VersionListComponent);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
 
         component = fixture.componentInstance;
         component.node = <Node> { id: nodeId, allowableOperations: ['update'] };
 
         spyOn(component, 'downloadContent').and.stub();
-        spyOn(alfrescoApiService.nodesApi, 'getNodeInfo').and.returnValue(Promise.resolve(<Node> { id: 'nodeInfoId' }));
+        spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.resolve(<NodeEntry> { entry: { id: 'nodeInfoId' } }));
     });
 
     it('should raise confirmation dialog on delete', () => {
@@ -93,12 +91,12 @@ describe('VersionListComponent', () => {
             }
         } as any);
 
-        spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
+        spyOn(component['versionsApi'], 'deleteVersion').and.returnValue(Promise.resolve(true));
 
         component.deleteVersion(versionId);
 
         expect(dialog.open).toHaveBeenCalled();
-        expect(alfrescoApiService.versionsApi.deleteVersion).toHaveBeenCalledWith(nodeId, versionId);
+        expect(component['versionsApi'].deleteVersion).toHaveBeenCalledWith(nodeId, versionId);
     });
 
     it('should not delete version if user rejects', () => {
@@ -110,12 +108,12 @@ describe('VersionListComponent', () => {
             }
         } as any);
 
-        spyOn(alfrescoApiService.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
+        spyOn(component['versionsApi'], 'deleteVersion').and.returnValue(Promise.resolve(true));
 
         component.deleteVersion(versionId);
 
         expect(dialog.open).toHaveBeenCalled();
-        expect(alfrescoApiService.versionsApi.deleteVersion).not.toHaveBeenCalled();
+        expect(component['versionsApi'].deleteVersion).not.toHaveBeenCalled();
     });
 
     it('should reload and raise deleted event', (done) => {
@@ -131,7 +129,7 @@ describe('VersionListComponent', () => {
     describe('Version history fetching', () => {
 
         it('should use loading bar', () => {
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+            spyOn(component['versionsApi'], 'listVersionHistory').and
                 .callFake(() => Promise.resolve({ list: { entries: versionTest } }));
 
             let loadingProgressBar = fixture.debugElement.query(By.css('[data-automation-id="version-history-loading-bar"]'));
@@ -145,18 +143,18 @@ describe('VersionListComponent', () => {
         });
 
         it('should load the versions for a given id', () => {
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+            spyOn(component['versionsApi'], 'listVersionHistory').and
                 .callFake(() => Promise.resolve({ list: { entries: versionTest } }));
 
             component.ngOnChanges();
             fixture.detectChanges();
 
-            expect(alfrescoApiService.versionsApi.listVersionHistory).toHaveBeenCalledWith(nodeId);
+            expect(component['versionsApi'].listVersionHistory).toHaveBeenCalledWith(nodeId);
         });
 
         it('should show the versions after loading', (done) => {
             fixture.detectChanges();
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callFake(() => {
+            spyOn(component['versionsApi'], 'listVersionHistory').and.callFake(() => {
                 return Promise.resolve(new VersionPaging({
                     list: {
                         entries: [
@@ -184,7 +182,7 @@ describe('VersionListComponent', () => {
         });
 
         it('should NOT show the versions comments if input property is set not to show them', (done) => {
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+            spyOn(component['versionsApi'], 'listVersionHistory').and
                 .callFake(() => Promise.resolve(
                     new VersionPaging({
                         list: {
@@ -219,13 +217,13 @@ describe('VersionListComponent', () => {
                     versionComment: 'test-version-comment'
                 }
             };
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve(new VersionPaging({ list: { entries: [versionEntry] } })));
-            spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValue('the/download/url');
+            spyOn(component['versionsApi'], 'listVersionHistory').and.returnValue(Promise.resolve(new VersionPaging({ list: { entries: [versionEntry] } })));
+            spyOn(component['contentApi'], 'getContentUrl').and.returnValue('the/download/url');
 
             fixture.detectChanges();
 
             component.downloadVersion('1.0');
-            expect(alfrescoApiService.contentApi.getContentUrl).toHaveBeenCalledWith(nodeId, true);
+            expect(component['contentApi'].getContentUrl).toHaveBeenCalledWith(nodeId, true);
         });
 
         it('should be able to view a version', () => {
@@ -243,9 +241,9 @@ describe('VersionListComponent', () => {
                     versionComment: 'test-version-comment'
                 }
             };
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+            spyOn(component['versionsApi'], 'listVersionHistory').and
                 .callFake(() => Promise.resolve(new VersionPaging({ list: { entries: [versionEntry] } })));
-            const spyOnDownload = spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.stub();
+            const spyOnDownload = spyOn(component['contentApi'], 'getContentUrl').and.stub();
 
             component.allowDownload = false;
             fixture.detectChanges();
@@ -253,32 +251,22 @@ describe('VersionListComponent', () => {
             component.downloadVersion('1.0');
             expect(spyOnDownload).not.toHaveBeenCalled();
         });
-   });
+    });
 
     describe('Version restoring', () => {
 
-        it('should reload and raise version-restored DOM event', (done) => {
-            spyOn(component, 'loadVersionHistory').and.stub();
-            component.restored.subscribe(() => {
-                expect(component.loadVersionHistory).toHaveBeenCalled();
-                done();
-            });
-            fixture.detectChanges();
-            component.onVersionRestored({});
-        });
-
         it('should restore version only when restore allowed', () => {
             component.node.allowableOperations = [];
-            spyOn(alfrescoApiService.versionsApi, 'revertVersion').and.stub();
+            spyOn(component['versionsApi'], 'revertVersion').and.stub();
             component.restore('1');
-            expect(alfrescoApiService.versionsApi.revertVersion).not.toHaveBeenCalled();
+            expect(component['versionsApi'].revertVersion).not.toHaveBeenCalled();
         });
 
         it('should load the versions for a given id', () => {
             fixture.detectChanges();
             component.versions = versionTest;
 
-            const spyOnRevertVersion = spyOn(alfrescoApiService.versionsApi, 'revertVersion').and
+            const spyOnRevertVersion = spyOn(component['versionsApi'], 'revertVersion').and
                 .callFake(() => Promise.resolve(new VersionEntry(
                     { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
 
@@ -290,29 +278,29 @@ describe('VersionListComponent', () => {
         it('should get node info after restoring the node', fakeAsync(() => {
             fixture.detectChanges();
             component.versions = versionTest;
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory')
+            spyOn(component['versionsApi'], 'listVersionHistory')
                 .and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
 
-            spyOn(alfrescoApiService.versionsApi, 'revertVersion')
+            spyOn(component['versionsApi'], 'revertVersion')
                 .and.callFake(() => Promise.resolve(new VersionEntry(
-                    { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
+                { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
 
             component.restore(versionId);
             fixture.detectChanges();
             tick();
 
-            expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalled();
+            expect(component['nodesApi'].getNode).toHaveBeenCalled();
         }));
 
         it('should emit with node info data', fakeAsync(() => {
             fixture.detectChanges();
             component.versions = versionTest;
-            spyOn(alfrescoApiService.versionsApi, 'listVersionHistory')
+            spyOn(component['versionsApi'], 'listVersionHistory')
                 .and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
 
-            spyOn(alfrescoApiService.versionsApi, 'revertVersion')
+            spyOn(component['versionsApi'], 'revertVersion')
                 .and.callFake(() => Promise.resolve(new VersionEntry(
-                    { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
+                { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
 
             spyOn(component.restored, 'emit');
 
@@ -327,9 +315,9 @@ describe('VersionListComponent', () => {
             fixture.detectChanges();
             component.versions = versionTest;
 
-            const spyOnListVersionHistory = spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and
+            const spyOnListVersionHistory = spyOn(component['versionsApi'], 'listVersionHistory').and
                 .callFake(() => Promise.resolve({ list: { entries: versionTest } }));
-            spyOn(alfrescoApiService.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve(null));
+            spyOn(component['versionsApi'], 'revertVersion').and.callFake(() => Promise.resolve(null));
 
             component.restore(versionId);
             fixture.detectChanges();
@@ -346,7 +334,7 @@ describe('VersionListComponent', () => {
             beforeEach(() => {
                 fixture.detectChanges();
                 component.node = new Node({ id: nodeId });
-                spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callFake(() => {
+                spyOn(component['versionsApi'], 'listVersionHistory').and.callFake(() => {
                     return Promise.resolve(new VersionPaging({
                         list: {
                             entries: [
@@ -395,7 +383,7 @@ describe('VersionListComponent', () => {
             beforeEach(() => {
                 fixture.detectChanges();
                 component.node = <Node> { id: nodeId };
-                spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callFake(() => {
+                spyOn(component['versionsApi'], 'listVersionHistory').and.callFake(() => {
                     return Promise.resolve(new VersionPaging({
                         list: {
                             entries: [
@@ -445,7 +433,7 @@ describe('VersionListComponent', () => {
             beforeEach(() => {
                 fixture.detectChanges();
                 component.node = <Node> { id: nodeId, allowableOperations: ['update', 'delete'] };
-                spyOn(alfrescoApiService.versionsApi, 'listVersionHistory').and.callFake(() => {
+                spyOn(component['versionsApi'], 'listVersionHistory').and.callFake(() => {
                     return Promise.resolve(new VersionPaging({
                         list: {
                             entries: [
