@@ -48,7 +48,7 @@ export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
 
     filterId;
     multiselect: boolean;
-    selectedRows: string[] = [];
+    selectedRows: any[] = [];
     testingMode: boolean;
     selectionMode: string;
     taskDetailsRedirection: boolean;

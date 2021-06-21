@@ -37,15 +37,15 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /** Emitted when a filter is being clicked from the UI. */
     @Output()
-    filterClicked: EventEmitter<UserProcessInstanceFilterRepresentation> = new EventEmitter<UserProcessInstanceFilterRepresentation>();
+    filterClicked = new EventEmitter<UserProcessInstanceFilterRepresentation>();
 
     /** Emitted when the list of filters has been successfully loaded from the server. */
     @Output()
-    success: EventEmitter<ProcessInstanceFilterRepresentation[]> = new EventEmitter<ProcessInstanceFilterRepresentation[]>();
+    success = new EventEmitter<ProcessInstanceFilterRepresentation[]>();
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /** Display filters available to the current user for the application with the specified ID. */
     @Input()
@@ -61,7 +61,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
-    filterSelected: EventEmitter<UserProcessInstanceFilterRepresentation> = new EventEmitter<UserProcessInstanceFilterRepresentation>();
+    filterSelected = new EventEmitter<UserProcessInstanceFilterRepresentation>();
 
     filter$: Observable<ProcessInstanceFilterRepresentation>;
 

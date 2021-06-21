@@ -1,8 +1,8 @@
 <h1>DataTable Drag and Drop Demo</h1>
 <div data-automation-id="datatable"
     (header-dragover)="onDragOver($event)"
-    (header-drop)="onDrop($event)"
+    (header-drop)="onDrop($any($event))"
     (cell-dragover)="onDragOver($event)"
-    (cell-drop)="onDrop($event)">
+    (cell-drop)="onDrop($any($event))">
     <adf-datatable [data]="data"></adf-datatable>
 </div>

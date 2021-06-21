@@ -11,8 +11,8 @@
             [selectionMode]="selectionMode"
             [contextMenu]="showContextMenu"
             (showRowContextMenu)="onShowRowContextMenu($event)"
-            (row-select)="onRowSelect($event)"
-            (row-unselect)="onRowUnselect($event)"
+            (row-select)="onRowSelect($any($event))"
+            (row-unselect)="onRowUnselect($any($event))"
             (rowClick)="onRowClick($event)"
             (row-keyup)="onRowKeyUp($event)">
             <adf-loading-content-template>

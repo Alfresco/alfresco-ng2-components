@@ -21,7 +21,7 @@
     (rowClick)="onNodeClick($event.value?.node)"
     (rowDblClick)="onNodeDblClick($event.value?.node)"
     (row-select)="onNodeSelect($event.detail)"
-    (row-unselect)="onNodeUnselect($event.detail)"
+    (row-unselect)="onNodeUnselect($any($event).detail)"
     (sorting-changed)="onSortingChanged($event)"
     [class.adf-datatable-gallery-thumbnails]="data.thumbnails">
 
