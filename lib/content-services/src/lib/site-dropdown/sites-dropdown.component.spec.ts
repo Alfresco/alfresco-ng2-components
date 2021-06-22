@@ -188,7 +188,7 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                let options = debug.queryAll(By.css('mat-option'));
+                const options = debug.queryAll(By.css('mat-option'));
                 options[0].triggerEventHandler('click', null);
 
                 fixture.detectChanges();

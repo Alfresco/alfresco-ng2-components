@@ -135,7 +135,7 @@ describe('CommentsComponent', () => {
         getProcessCommentsSpy.and.returnValue(of([]));
 
         fixture.detectChanges();
-        await fixture.whenStable()
+        await fixture.whenStable();
 
         expect(fixture.nativeElement.querySelector('#comment-container')).toBeNull();
     });
@@ -145,7 +145,7 @@ describe('CommentsComponent', () => {
         component.ngOnChanges({'taskId': change});
 
         fixture.detectChanges();
-        await fixture.whenStable()
+        await fixture.whenStable();
 
         expect(fixture.nativeElement.querySelector('#comment-input')).not.toBeNull();
     });
@@ -154,7 +154,7 @@ describe('CommentsComponent', () => {
         component.readOnly = true;
 
         fixture.detectChanges();
-        await fixture.whenStable()
+        await fixture.whenStable();
 
         expect(fixture.nativeElement.querySelector('#comment-input')).toBeNull();
     });
