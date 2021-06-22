@@ -16,17 +16,15 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { searchMockApi, mockError, fakeSearch } from '../mock/search.service.mock';
+import { mockError, fakeSearch } from '../mock/search.service.mock';
 import { SearchService } from './search.service';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('SearchService', () => {
+fdescribe('SearchService', () => {
 
     let service: SearchService;
-    let apiService: AlfrescoApiService;
 
     setupTestBed({
         imports: [
@@ -37,16 +35,14 @@ describe('SearchService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(SearchService);
-        apiService = TestBed.inject(AlfrescoApiService);
-        spyOn(apiService, 'getInstance').and.returnValue(searchMockApi);
     });
 
     it('should call search API with no additional options', (done) => {
         const searchTerm = 'searchTerm63688';
-        spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
+        spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
         service.getNodeQueryResults(searchTerm).subscribe(
             () => {
-                expect(searchMockApi.core.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, undefined);
+                expect(service.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, undefined);
                 done();
             }
         );
@@ -58,10 +54,10 @@ describe('SearchService', () => {
             rootNodeId: '-root-',
             nodeType: 'cm:content'
         };
-        spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
+        spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
         service.getNodeQueryResults(searchTerm, options).subscribe(
             () => {
-                expect(searchMockApi.core.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, options);
+                expect(service.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, options);
                 done();
             }
         );
@@ -78,7 +74,7 @@ describe('SearchService', () => {
     });
 
     it('should notify errors returned from the API', (done) => {
-        spyOn(searchMockApi.core.queriesApi, 'findNodes').and.returnValue(Promise.reject(mockError));
+        spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.reject(mockError));
         service.getNodeQueryResults('').subscribe(
             () => {},
             (res: any) => {

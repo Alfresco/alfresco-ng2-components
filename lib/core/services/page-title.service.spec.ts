@@ -24,7 +24,7 @@ import { Title } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../testing';
 
-fdescribe('PageTitleService', () => {
+xdescribe('PageTitleService', () => {
 
     let titleService: Title;
     let translationService: TranslationService;

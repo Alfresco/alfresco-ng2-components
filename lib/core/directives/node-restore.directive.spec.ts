@@ -63,8 +63,8 @@ describe('NodeRestoreDirective', () => {
 
         trashcanApi = directiveInstance['trashcanApi'];
 
-        restoreNodeSpy = spyOn(trashcanApi, 'restoreNode').and.returnValue(Promise.resolve());
-        spyOn(trashcanApi, 'getDeletedNodes').and.returnValue(Promise.resolve({
+        restoreNodeSpy = spyOn(trashcanApi, 'restoreDeletedNode').and.returnValue(Promise.resolve());
+        spyOn(trashcanApi, 'listDeletedNodes').and.returnValue(Promise.resolve({
             list: { entries: [] }
         }));
 
@@ -78,7 +78,7 @@ describe('NodeRestoreDirective', () => {
         fixture.detectChanges();
         element.triggerEventHandler('click', null);
 
-        expect(trashcanApi.restoreNode).not.toHaveBeenCalled();
+        expect(trashcanApi.restoreDeletedNode).not.toHaveBeenCalled();
     });
 
     it('should not restore nodes when selection has nodes without path', (done) => {
@@ -88,7 +88,7 @@ describe('NodeRestoreDirective', () => {
         fixture.whenStable().then(() => {
             element.triggerEventHandler('click', null);
 
-            expect(trashcanApi.restoreNode).not.toHaveBeenCalled();
+            expect(trashcanApi.restoreDeletedNode).not.toHaveBeenCalled();
             done();
         });
     });
@@ -99,7 +99,7 @@ describe('NodeRestoreDirective', () => {
         fixture.detectChanges();
         element.triggerEventHandler('click', null);
         fixture.whenStable().then(() => {
-            expect(trashcanApi.restoreNode).toHaveBeenCalled();
+            expect(trashcanApi.restoreDeletedNode).toHaveBeenCalled();
             done();
         });
     });
