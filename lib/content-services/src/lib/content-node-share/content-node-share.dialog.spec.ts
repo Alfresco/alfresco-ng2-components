@@ -266,7 +266,7 @@ describe('ShareDialogComponent', () => {
         ).toBe('');
     });
 
-    it('should not allow expiration date action when node has no update permission', () => {
+    it('should not allow expiration date action when node has no update permission', async () => {
         node.entry.properties['qshare:sharedId'] = 'sharedId';
         node.entry.allowableOperations = [];
 
@@ -276,6 +276,7 @@ describe('ShareDialogComponent', () => {
         };
 
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(fixture.nativeElement.querySelector('input[formcontrolname="time"]').disabled).toBe(true);
         expect(fixture.nativeElement.querySelector('.mat-slide-toggle[data-automation-id="adf-expire-toggle"]')

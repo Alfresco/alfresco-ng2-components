@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentService, UploadService, setupTestBed } from '@alfresco/adf-core';
+import { ContentService, UploadService, setupTestBed, FileUploadErrorEvent } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { UploadButtonComponent } from './upload-button.component';
 import { NodeEntry } from '@alfresco/js-api';
@@ -377,8 +377,8 @@ describe('UploadButtonComponent', () => {
 
             spyOn(contentService, 'getNode').and.returnValue(throwError('error'));
 
-            component.error.subscribe((value) => {
-                expect(value).toBe('FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR');
+            component.error.subscribe((value: FileUploadErrorEvent) => {
+                expect(value.error).toBe('FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR');
                 done();
             });
 
