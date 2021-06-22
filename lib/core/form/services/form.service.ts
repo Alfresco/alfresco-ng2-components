@@ -92,6 +92,7 @@ export class FormService {
         this.processInstancesApi = new ProcessInstancesApi(this.apiService.getInstance());
         this.usersApi = new UsersApi(this.apiService.getInstance());
         this.groupsApi = new ActivitiGroupsApi(this.apiService.getInstance());
+        this.taskFormsApi = new TaskFormsApi(this.apiService.getInstance());
     }
 
     /**

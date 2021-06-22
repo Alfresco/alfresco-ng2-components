@@ -30,11 +30,13 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { CoreTestingModule } from '../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlfrescoApiService } from '../../../../services';
 
 describe('RadioButtonsWidgetComponent', () => {
 
     let formService: FormService;
     let widget: RadioButtonsWidgetComponent;
+    let alfrescoApiService: AlfrescoApiService;
 
     setupTestBed({
         imports: [
@@ -47,7 +49,9 @@ describe('RadioButtonsWidgetComponent', () => {
     });
 
     beforeEach(() => {
-        formService = new FormService(null, null, null);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+
+        formService = new FormService(null, alfrescoApiService, null);
         widget = new RadioButtonsWidgetComponent(formService, null);
         widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
     });

@@ -28,6 +28,7 @@ import { DropdownEditorComponent } from './dropdown.editor';
 import { setupTestBed } from '../../../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlfrescoApiService } from '../../../../../../services';
 
 describe('DropdownEditorComponent', () => {
 
@@ -37,6 +38,7 @@ describe('DropdownEditorComponent', () => {
     let table: DynamicTableModel;
     let column: DynamicTableColumn;
     let row: DynamicTableRow;
+    let alfrescoApiService: AlfrescoApiService;
 
     setupTestBed({
         imports: [
@@ -46,7 +48,8 @@ describe('DropdownEditorComponent', () => {
     });
 
     beforeEach(() => {
-        formService = new FormService(null, null, null);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        formService = new FormService(null, alfrescoApiService, null);
 
         row = <DynamicTableRow> {value: {dropdown: 'one'}};
         column = <DynamicTableColumn> {

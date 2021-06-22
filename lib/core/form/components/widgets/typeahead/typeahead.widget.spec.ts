@@ -28,12 +28,14 @@ import { TypeaheadWidgetComponent } from './typeahead.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { AlfrescoApiService } from '../../../../services';
 
 describe('TypeaheadWidgetComponent', () => {
 
     let formService: FormService;
     let widget: TypeaheadWidgetComponent;
     let translationService: TranslateService;
+    let alfrescoApiService: AlfrescoApiService;
 
     setupTestBed({
         imports: [
@@ -43,11 +45,12 @@ describe('TypeaheadWidgetComponent', () => {
     });
 
     beforeEach(() => {
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         translationService = TestBed.inject(TranslateService);
         spyOn(translationService, 'instant').and.callFake((key) => { return key; });
         spyOn(translationService, 'get').and.callFake((key) => { return of(key); });
 
-        formService = new FormService(null, null, null);
+        formService = new FormService(null, alfrescoApiService, null);
         widget = new TypeaheadWidgetComponent(formService, null);
         widget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }));
         widget.field.restUrl = 'whateverURL';

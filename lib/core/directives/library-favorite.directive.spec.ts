@@ -54,39 +54,39 @@ describe('LibraryFavoriteDirective', () => {
     });
 
     it('should not check for favorite if no selection exists', () => {
-        spyOn(component['favoritesApi'], 'getFavoriteSite');
+        spyOn(component.directive['favoritesApi'], 'getFavoriteSite');
         fixture.detectChanges();
 
-        expect(component['favoritesApi'].getFavoriteSite).not.toHaveBeenCalled();
+        expect(component.directive['favoritesApi'].getFavoriteSite).not.toHaveBeenCalled();
     });
 
     it('should mark selection as favorite', async () => {
-        spyOn(component['favoritesApi'], 'getFavoriteSite').and.returnValue(Promise.resolve(null));
+        spyOn(component.directive['favoritesApi'], 'getFavoriteSite').and.returnValue(Promise.resolve(null));
 
         delete selection.isFavorite;
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component['favoritesApi'].getFavoriteSite).toHaveBeenCalled();
+        expect(component.directive['favoritesApi'].getFavoriteSite).toHaveBeenCalled();
         expect(component.directive.isFavorite()).toBe(true);
     });
 
     it('should mark selection not favorite', async () => {
-        spyOn(component['favoritesApi'], 'getFavoriteSite').and.returnValue(Promise.reject());
+        spyOn(component.directive['favoritesApi'], 'getFavoriteSite').and.returnValue(Promise.reject());
 
         delete selection.isFavorite;
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component['favoritesApi'].getFavoriteSite).toHaveBeenCalled();
+        expect(component.directive['favoritesApi'].getFavoriteSite).toHaveBeenCalled();
         expect(component.directive.isFavorite()).toBe(false);
     });
 
     it('should call addFavorite() on click event when selection is not a favorite', async () => {
-        spyOn(component['favoritesApi'], 'getFavoriteSite').and.returnValue(Promise.reject());
-        spyOn(component['favoritesApi'], 'createFavorite').and.returnValue(Promise.resolve(null));
+        spyOn(component.directive['favoritesApi'], 'getFavoriteSite').and.returnValue(Promise.reject());
+        spyOn(component.directive['favoritesApi'], 'createFavorite').and.returnValue(Promise.resolve(null));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -95,12 +95,12 @@ describe('LibraryFavoriteDirective', () => {
 
         fixture.nativeElement.querySelector('button').dispatchEvent(new MouseEvent('click'));
         fixture.detectChanges();
-        expect(component['favoritesApi'].createFavorite).toHaveBeenCalled();
+        expect(component.directive['favoritesApi'].createFavorite).toHaveBeenCalled();
     });
 
     it('should call removeFavoriteSite() on click event when selection is favorite', async () => {
-        spyOn(component['favoritesApi'], 'getFavoriteSite').and.returnValue(Promise.resolve(null));
-        spyOn(component['favoritesApi'], 'deleteFavorite').and.returnValue(Promise.resolve());
+        spyOn(component.directive['favoritesApi'], 'getFavoriteSite').and.returnValue(Promise.resolve(null));
+        spyOn(component.directive['favoritesApi'], 'deleteFavorite').and.returnValue(Promise.resolve());
 
         selection.isFavorite = true;
 
@@ -114,6 +114,6 @@ describe('LibraryFavoriteDirective', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component['favoritesApi'].deleteFavorite).toHaveBeenCalled();
+        expect(component.directive['favoritesApi'].deleteFavorite).toHaveBeenCalled();
     });
 });

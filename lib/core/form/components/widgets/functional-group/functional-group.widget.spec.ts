@@ -22,14 +22,19 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { GroupModel } from '../core/group.model';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
+import { AlfrescoApiService } from '../../../../services';
+import { TestBed } from '@angular/core/testing';
 
 describe('FunctionalGroupWidgetComponent', () => {
     let formService: FormService;
     let elementRef: ElementRef;
     let widget: FunctionalGroupWidgetComponent;
+    let alfrescoApiService: AlfrescoApiService;
 
     beforeEach(() => {
-        formService = new FormService(null, null, null);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+
+        formService = new FormService(null, alfrescoApiService, null);
         elementRef = new ElementRef(null);
         widget = new FunctionalGroupWidgetComponent(formService, elementRef);
         widget.field = new FormFieldModel(new FormModel());
