@@ -46,8 +46,8 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
 
     /** Object defining mask and "reversed" status. */
     @Input('textMask') inputMask: {
-        mask: '',
-        isReversed: false
+        mask: string,
+        isReversed: boolean
     };
 
     private translationMask = {
