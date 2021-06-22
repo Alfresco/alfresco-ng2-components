@@ -20,6 +20,7 @@ import { WidgetComponent, IdentityGroupModel, FormService } from '@alfresco/adf-
 import { FormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { ComponentSelectionMode } from '../../../../types';
 
 /* tslint:disable:component-selector  */
 
@@ -45,7 +46,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
 
     typeId = 'GroupCloudWidgetComponent';
     roles: string[];
-    mode: string;
+    mode: ComponentSelectionMode;
     title: string;
     preSelectGroup: IdentityGroupModel[];
     search: FormControl;
@@ -57,7 +58,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
     ngOnInit() {
         if (this.field) {
             this.roles = this.field.roles;
-            this.mode = this.field.optionType;
+            this.mode = this.field.optionType as ComponentSelectionMode;
             this.title = this.field.placeholder;
             this.preSelectGroup = this.field.value ? this.field.value : [];
         }

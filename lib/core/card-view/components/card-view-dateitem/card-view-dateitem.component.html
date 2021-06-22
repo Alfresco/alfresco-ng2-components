@@ -87,7 +87,7 @@
 
             <mat-datetimepicker #datetimePicker
                                 [type]="property.type"
-                                timeInterval="5"
+                                [timeInterval]="5"
                                 [attr.data-automation-id]="'datepicker-' + property.key"
                                 [startAt]="valueDate">
             </mat-datetimepicker>

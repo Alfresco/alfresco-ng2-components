@@ -19,9 +19,12 @@ export class Chart {
     id: string;
     type: string;
     icon: string;
+    title?: string;
 
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
+        this.title = obj.title;
+
         if (obj && obj.type) {
             this.type = this.convertType(obj.type);
             this.icon = this.getIconType(this.type);
@@ -88,5 +91,21 @@ export class Chart {
                 break;
         }
         return typeIcon;
+    }
+
+    hasData(): boolean {
+        return false;
+    }
+
+    hasDatasets(): boolean {
+        return false;
+    }
+
+    hasDetailsTable(): boolean {
+        return false;
+    }
+
+    hasZeroValues(): boolean {
+        return false;
     }
 }

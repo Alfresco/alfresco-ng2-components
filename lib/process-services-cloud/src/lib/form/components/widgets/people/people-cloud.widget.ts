@@ -20,6 +20,7 @@ import { WidgetComponent, IdentityUserModel, FormService } from '@alfresco/adf-c
 import { FormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { ComponentSelectionMode } from '../../../../types';
 
 /* tslint:disable:component-selector  */
 
@@ -46,7 +47,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     typeId = 'PeopleCloudWidgetComponent';
     appName: string;
     roles: string[];
-    mode: string;
+    mode: ComponentSelectionMode;
     title: string;
     preSelectUsers: IdentityUserModel[];
     search: FormControl;
@@ -58,7 +59,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     ngOnInit() {
         if (this.field) {
             this.roles = this.field.roles;
-            this.mode = this.field.optionType;
+            this.mode = this.field.optionType as ComponentSelectionMode;
             this.title = this.field.placeholder;
             this.preSelectUsers = this.field.value ? this.field.value : [];
         }

@@ -11,7 +11,6 @@
             [attr.aria-label]="(isDialogMinimized ?
                 'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MAXIMIZE':
                 'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MINIMIZE') | translate"
-            color="secondary"
             [disabled]="isConfirmation"
             [attr.aria-expanded]="!isDialogMinimized"
             (click)="toggleMinimized()">

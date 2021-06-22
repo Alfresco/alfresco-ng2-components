@@ -23,7 +23,7 @@
             <mat-option
                 *ngFor="let node of previousNodes;"
                 (click)="onRoutePathClick(node, $event)"
-                (onSelectionChange)="onRoutePathClick(node, $event)"
+                (onSelectionChange)="onRouteClick(node)"
                 class="adf-dropdown-breadcrumb-path-option"
                 data-automation-class="dropdown-breadcrumb-path-option"
                 [disabled]="readOnly">

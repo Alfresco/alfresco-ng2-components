@@ -19,7 +19,6 @@ import moment from 'moment-es6';
 import { Chart } from './chart.model';
 
 export class BarChart extends Chart {
-    title: string;
     titleKey: string;
     labels: any = [];
     datasets: any[] = [];
@@ -45,7 +44,6 @@ export class BarChart extends Chart {
 
     constructor(obj?: any) {
         super(obj);
-        this.title = obj && obj.title || null;
         this.titleKey = obj && obj.titleKey || null;
         this.xAxisType = obj && obj.xAxisType || null;
         this.yAxisType = obj && obj.yAxisType || null;

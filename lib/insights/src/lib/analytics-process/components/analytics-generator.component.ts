@@ -82,7 +82,7 @@ export class AnalyticsGeneratorComponent implements OnChanges {
             reportParamQuery = {};
         }
         this.analyticsService.getReportsByParams(reportId, reportParamQuery).subscribe(
-            (res: Chart[]) => {
+            (res) => {
                 this.reports = res;
                 if (this.reports) {
                     this.selectFirstReport();

@@ -18,14 +18,12 @@
 import { Chart } from './chart.model';
 
 export class PieChart extends Chart {
-    title: string;
     titleKey: string;
     labels: string[] = [];
     data: string[] = [];
 
     constructor(obj?: any) {
         super(obj);
-        this.title = obj && obj.title || null;
         this.titleKey = obj && obj.titleKey || null;
         if (obj.values) {
             obj.values.forEach((value: any) => {

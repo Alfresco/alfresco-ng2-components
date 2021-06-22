@@ -37,8 +37,8 @@
                 <mat-form-field fxFlex>
                     <input
                         matInput
-                        (keyup)="onDateChanged($event.srcElement.value)"
-                        (dateInput)="onDateChanged($event.value)"
+                        (keyup)="onDateChanged($any($event).srcElement.value)"
+                        (dateInput)="onDateChanged($any($event).value)"
                         [matDatepicker]="taskDatePicker"
                         placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
                         id="date_id">

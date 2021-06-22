@@ -113,7 +113,7 @@ export abstract class BaseTaskListCloudComponent extends DataTableSchema impleme
     selectedInstances: any[];
     formattedSorting: any[];
     private defaultSorting = { key: 'startDate', direction: 'desc' };
-    boundReplacePriorityValues: Function;
+    boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
     private onDestroy$ = new Subject<boolean>();
 

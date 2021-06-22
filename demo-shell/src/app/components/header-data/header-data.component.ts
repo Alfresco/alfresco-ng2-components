@@ -16,6 +16,7 @@
  */
 
 import { Component } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 import { HeaderDataService } from './header-data.service';
 
 @Component({
@@ -34,7 +35,7 @@ export class HeaderDataComponent {
         this.headerService.hideMenuButton();
     }
 
-    changeColor(color: string) {
+    changeColor(color: ThemePalette) {
         this.headerService.changeColor(color);
     }
 

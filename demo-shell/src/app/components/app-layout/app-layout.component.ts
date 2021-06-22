@@ -20,6 +20,7 @@ import { UserPreferencesService, AppConfigService, AlfrescoApiService, UserPrefe
 import { HeaderDataService } from '../header-data/header-data.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
     templateUrl: './app-layout.component.html',
@@ -99,7 +100,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     showMenu = true;
 
     enableRedirect = true;
-    color = 'primary';
+    color: ThemePalette = 'primary';
     title = 'APP_LAYOUT.APP_NAME';
     logo: string;
     redirectUrl: string | any[] = ['/home'];

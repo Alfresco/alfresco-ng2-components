@@ -75,7 +75,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.appConfig.get<string>(AppConfigValues.BASESHAREURL) ||
         this.appConfig.get<string>(AppConfigValues.ECMHOST)) + '/preview/s/';
 
-    toolbarColor: ThemePalette = 'primary';
+    toolbarColor: ThemePalette;
 
     selectionModes = [
         { value: 'none', viewValue: 'None' },

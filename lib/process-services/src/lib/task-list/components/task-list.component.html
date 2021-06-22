@@ -13,8 +13,8 @@
             (showRowContextMenu)="onShowRowContextMenu($event)"
             (row-select)="onRowSelect($any($event))"
             (row-unselect)="onRowUnselect($any($event))"
-            (rowClick)="onRowClick($event)"
-            (row-keyup)="onRowKeyUp($event)">
+            (rowClick)="onRowClick($any($event))"
+            (row-keyup)="onRowKeyUp($any($event))">
             <adf-loading-content-template>
                 <ng-template>
                     <!--Add your custom loading template here-->

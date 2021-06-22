@@ -18,7 +18,7 @@
 import { Component, Input, ViewChild, OnDestroy, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { StorageService } from '../../services/storage.service';
@@ -38,11 +38,11 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
 
     /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */
     @Input()
-    menuPositionX: string = 'after';
+    menuPositionX: MenuPositionX = 'after';
 
     /** Custom choice for opening the menu at the bottom. Can be `above` or `below`. */
     @Input()
-    menuPositionY: string = 'below';
+    menuPositionY: MenuPositionY = 'below';
 
     /** Maximum number of notifications to display. The rest will remain hidden until load more is clicked */
     @Input()
