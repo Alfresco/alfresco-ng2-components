@@ -97,7 +97,7 @@
                     <adf-checklist #activitiChecklist
                                    [readOnly]="internalReadOnlyForm"
                                    [taskId]="taskDetails.id"
-                                   [assignee]="taskDetails?.assignee?.id"
+                                   [assignee]="$any(taskDetails)?.assignee?.id"
                                    (checklistTaskCreated)="onChecklistTaskCreated($event)"
                                    (checklistTaskDeleted)="onChecklistTaskDeleted($event)">
                     </adf-checklist>
