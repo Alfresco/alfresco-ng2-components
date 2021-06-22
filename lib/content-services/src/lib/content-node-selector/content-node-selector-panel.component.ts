@@ -37,7 +37,8 @@ import {
     FileUploadCompleteEvent,
     FileUploadDeleteEvent,
     AppConfigService,
-    DataSorting
+    DataSorting,
+    ShowHeaderMode
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, QueryBody, RequestScope } from '@alfresco/js-api';
@@ -252,6 +253,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     breadcrumbFolderTitle: string | null = null;
     startSiteGuid: string | null = null;
     hasValidQuery: boolean = false;
+    showHeader = ShowHeaderMode.Never;
 
     @ViewChild(InfinitePaginationComponent, { static: true })
     infinitePaginationComponent: InfinitePaginationComponent;
