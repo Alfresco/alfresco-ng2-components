@@ -21,7 +21,7 @@ import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@an
 import { Node } from '@alfresco/js-api';
 import { Observable, from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { WidgetComponent, LogService, FormService, ThumbnailService, ContentLinkModel, NotificationService } from '@alfresco/adf-core';
+import { WidgetComponent, LogService, FormService, ThumbnailService, NotificationService } from '@alfresco/adf-core';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { FileSourceTypes, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 
@@ -137,17 +137,17 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         }
     }
 
-    get uploadedFiles(): Node[] {
+    get uploadedFiles(): any[] {
         const result = this.field.value || this.field.form.values[this.field.id];
         return result || [];
     }
 
-    private removeElementFromList(file: Node) {
+    private removeElementFromList(file: any) {
         const filteredValues = this.uploadedFiles.filter(value => value.id !== file.id);
         this.resetFormValues(filteredValues);
     }
 
-    private resetFormValues(values: Node[]) {
+    private resetFormValues(values: any[]) {
         if (values && values.length > 0) {
             this.field.value = values;
             this.field.form.values[this.field.id] = values;
@@ -159,7 +159,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         }
     }
 
-    fileClicked(file: ContentLinkModel): void {
+    fileClicked(file: any): void {
         this.formService.formContentClicked.next(file);
     }
 

@@ -23,7 +23,7 @@
                 check_circle
             </mat-icon>
             <img mat-list-icon class="adf-attach-widget__icon" *ngIf="!selectedNode || file.id !== selectedNode.id" [id]="'file-'+file?.id+'-icon'" (click)="onRowClicked(file)"
-                    [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file.mimeType)" [alt]="mimeTypeIcon"
+                    [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file['mimeType'])" [alt]="mimeTypeIcon"
                     role="button" tabindex="0" />
             <span matLine id="{{'file-'+file?.id}}" role="button" tabindex="0" class="adf-file" (click)="onRowClicked(file)">{{file.name}}</span>
             <button id="{{'file-'+file?.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu" *ngIf="!!file.content?.mimeType">
