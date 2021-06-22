@@ -208,7 +208,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     preselectNodes: boolean;
     warnOnMultipleUploads = false;
     thumbnails = false;
-
+    noHeaderMode = ShowHeaderMode.Never;
     enableCustomPermissionMessage = false;
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;

@@ -93,7 +93,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
     expandedSidenav = false;
 
-    position = 'start';
+    position: 'start' | 'end' = 'start';
     direction = 'ltr';
 
     hideSidenav = false;

@@ -60,7 +60,7 @@ export class VersionManagerDialogAdapterComponent {
         this.close();
     }
 
-    hideVersionComparison(isCancelled: boolean | Node) {
+    hideVersionComparison(isCancelled: any) {
         if (isCancelled) {
             this.showVersionComparison = false;
             this.newFileVersion = null;

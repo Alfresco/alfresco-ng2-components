@@ -3,7 +3,7 @@
     class="adf-task-people-list"
     [rows]="users"
     [actions]="hasActions()"
-    [showHeader]="'never'"
+    [showHeader]="showHeader"
     (rowClick)="selectUser($event)"
     (rowDblClick)="selectUser($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"

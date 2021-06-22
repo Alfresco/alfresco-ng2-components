@@ -19,7 +19,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Pagination, ResultSetPaging } from '@alfresco/js-api';
 import { SearchForm, SearchQueryBuilderService } from '@alfresco/adf-content-services';
-import { SearchService, UserPreferencesService } from '@alfresco/adf-core';
+import { SearchService, ShowHeaderMode, UserPreferencesService } from '@alfresco/adf-core';
 import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -39,6 +39,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
 
     sorting = ['name', 'asc'];
     searchForms: SearchForm[];
+    showHeader = ShowHeaderMode.Always;
 
     private onDestroy$ = new Subject<boolean>();
 

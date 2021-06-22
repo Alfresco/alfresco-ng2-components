@@ -13,14 +13,14 @@
             <adf-search-form (formChange)="onFormChange($event)"></adf-search-form>
         </div>
         <app-files-component
-            [showHeader]="'always'"
+            [showHeader]="showHeader"
             [sorting]="sorting"
             [sortingMode]="'server'"
             [showRecentFiles]="false"
             [showSitePicker]="false"
             [showSettingsPanel]="false"
             [currentFolderId]="null"
-            [nodeResult]="data"
+            [nodeResult]="$any(data)"
             [disableDragArea]="true"
             [pagination]="pagination"
             [searchTerm]="searchedWord"
