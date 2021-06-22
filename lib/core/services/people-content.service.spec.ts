@@ -94,6 +94,15 @@ describe('PeopleContentService', () => {
         });
     });
 
+    it('should search for users with search term and pagination info', (done) => {
+        const findPeopleSpy = spyOn(service.queriesApi, 'findPeople').and.returnValue(Promise.resolve({ ...fakeEcmUserList }));
+
+        service.findPeople('fake-term', { skipCount: 5, maxItems: 10 }).subscribe(() => {
+            expect(findPeopleSpy).toHaveBeenCalledWith('fake-term', { skipCount: 5, maxItems: 10 });
+            done();
+        });
+    });
+
     it('should be able to create new person', (done) => {
         spyOn(service.peopleApi, 'createPerson').and.returnValue(Promise.resolve(new PersonEntry({ entry: fakeEcmUser })));
         service.createPerson(createNewPersonMock).subscribe((person) => {
