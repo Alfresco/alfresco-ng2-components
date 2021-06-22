@@ -88,7 +88,7 @@ export class DataTableDnDComponent implements OnInit {
         this.data.setSorting(new DataSorting('id', 'asc'));
     }
 
-    onDragOver(event: CustomEvent) {
+    onDragOver(event: Event) {
         event.preventDefault();
     }
 

@@ -14,7 +14,7 @@
             <adf-datatable [rows]="selectedMembers"
                            class="adf-datatable-permission"
                            selectionMode="none"
-                           stickyHeader="true"
+                           [stickyHeader]="true"
                            data-automation-id="adf-user-role-selection-table"
                            *ngIf="selectedMembers.length">
                 <data-columns>
@@ -56,7 +56,7 @@
                         </adf-data-column-header>
                     </data-column>
 
-                    <data-column class="adf-datatable-cell adf-delete-permission-column" key="" sortable="false">
+                    <data-column class="adf-datatable-cell adf-delete-permission-column" key="" [sortable]="false">
                         <ng-template let-entry="$implicit">
                             <button mat-icon-button
                                     class="adf-add-member-action"

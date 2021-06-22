@@ -16,6 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
     selector: 'adf-layout-header',
@@ -40,7 +41,7 @@ export class HeaderLayoutComponent implements OnInit {
      * Background color for the header. It can be any hex color code or one
      * of the Material theme colors: 'primary', 'accent' or 'warn'.
      */
-    @Input() color: string;
+    @Input() color: ThemePalette;
 
     /**
      * Toggles whether the sidenav button will be displayed in the header

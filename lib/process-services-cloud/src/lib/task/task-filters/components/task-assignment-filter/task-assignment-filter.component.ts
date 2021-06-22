@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { IdentityGroupModel, IdentityUserModel, IdentityUserService } from '@alfresco/adf-core';
 import { AssignmentType, TaskFilterProperties } from '../../models/filter-cloud.model';
 
@@ -37,7 +37,7 @@ export class TaskAssignmentFilterCloudComponent implements OnInit {
 
     assignmentType: AssignmentType;
     candidateGroups: IdentityGroupModel[] = [];
-    groupForm: AbstractControl = new FormControl('');
+    groupForm = new FormControl('');
     assignmentTypeList = {
         unassigned: AssignmentType.UNASSIGNED,
         currentUser: AssignmentType.CURRENT_USER,

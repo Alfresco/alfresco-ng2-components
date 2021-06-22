@@ -141,14 +141,14 @@ export class SearchControlComponent implements OnDestroy {
         }
     }
 
-    onFocus($event): void {
-        this.focusSubject.next($event);
+    onFocus(event: FocusEvent): void {
+        this.focusSubject.next(event);
     }
 
-    onBlur($event): void {
-        const nextElement: any = this.getNextElementSibling(<Element> $event.target);
-        if (!nextElement && !this.isListElement($event)) {
-            this.focusSubject.next($event);
+    onBlur(event: FocusEvent): void {
+        const nextElement: any = this.getNextElementSibling(<Element> event.target);
+        if (!nextElement && !this.isListElement(event)) {
+            this.focusSubject.next(event);
         }
     }
 
@@ -159,15 +159,15 @@ export class SearchControlComponent implements OnDestroy {
         }
     }
 
-    onRowArrowDown($event: KeyboardEvent): void {
-        const nextElement: any = this.getNextElementSibling(<Element> $event.target);
+    onRowArrowDown(event: Event): void {
+        const nextElement: any = this.getNextElementSibling(<Element> event.target);
         if (nextElement) {
             nextElement.focus();
         }
     }
 
-    onRowArrowUp($event: KeyboardEvent): void {
-        const previousElement: any = this.getPreviousElementSibling(<Element> $event.target);
+    onRowArrowUp(event: Event): void {
+        const previousElement: any = this.getPreviousElementSibling(<Element> event.target);
         if (previousElement) {
             previousElement.focus();
         } else {
@@ -181,8 +181,8 @@ export class SearchControlComponent implements OnDestroy {
         }
     }
 
-    private isListElement($event: any): boolean {
-        return $event.relatedTarget && $event.relatedTarget.children[0] && $event.relatedTarget.children[0].className === 'mat-list-item-content';
+    private isListElement(event: any): boolean {
+        return event.relatedTarget && event.relatedTarget.children[0] && event.relatedTarget.children[0].className === 'mat-list-item-content';
     }
 
     private getNextElementSibling(node: Element): Element {

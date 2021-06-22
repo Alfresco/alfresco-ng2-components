@@ -181,7 +181,7 @@ export class AnalyticsService {
             );
     }
 
-    getReportsByParams(reportId: string, paramsQuery: any): Observable<any> {
+    getReportsByParams(reportId: string, paramsQuery: any): Observable<Chart[]> {
         return from(this.apiService.getInstance().activiti.reportApi.getReportsByParams(reportId, paramsQuery))
             .pipe(
                 map((res: any) => {

@@ -1,7 +1,7 @@
 <div [adf-file-draggable]="isDroppable()" class="adf-upload-border"
      (filesDropped)="onFilesDropped($event)"
      (folderEntityDropped)="onFolderEntityDropped($event)"
-     (upload-files)="onUploadFiles($event)"
+     (upload-files)="onUploadFiles($any($event))"
      dropzone="" webkitdropzone="*" #droparea>
     <ng-content></ng-content>
 </div>

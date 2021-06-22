@@ -293,7 +293,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
      * Emit the event rowClick passing the current task id when pressed the Enter key on the selected row
      * @param event
      */
-    onRowKeyUp(event: CustomEvent) {
+    onRowKeyUp(event: CustomEvent<any>) {
         if (event.detail.keyboardEvent.key === 'Enter') {
             event.preventDefault();
 

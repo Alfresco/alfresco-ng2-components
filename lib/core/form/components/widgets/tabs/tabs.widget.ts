@@ -31,11 +31,11 @@ export class TabsWidgetComponent implements AfterContentChecked {
     tabs: TabModel[] = [];
 
     @Output()
-    formTabChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
+    formTabChanged = new EventEmitter<FormFieldModel>();
 
     visibleTabs: TabModel[] = [];
 
-    hasTabs() {
+    hasTabs(): boolean {
         return this.tabs && this.tabs.length > 0;
     }
 

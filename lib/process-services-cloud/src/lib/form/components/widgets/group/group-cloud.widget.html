@@ -10,8 +10,8 @@
                          (changedGroups)="onChangedGroup($event)"
                          [preSelectGroups]="preSelectGroup"
                          [matTooltip]="field.tooltip"
-                         matTooltipPosition="above"
-                         matTooltipShowDelay="1000">
+                         [matTooltipPosition]="'above'"
+                         [matTooltipShowDelay]="1000">
         </adf-cloud-group>
         <error-widget [error]="field.validationSummary"></error-widget>
         <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()"

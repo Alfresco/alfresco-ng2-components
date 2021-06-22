@@ -1,7 +1,7 @@
 <adf-datatable class="adf-datatable-permission"
                id="adf-permission-display-container"
                [rows]="permissions"
-               stickyHeader="true"
+               [stickyHeader]="true"
                [selectionMode]="selectionMode">
 
     <data-columns>
@@ -32,7 +32,7 @@
             class="adf-ellipsis-cell adf-expand-cell-4"
             title="PERMISSION_MANAGER.PERMISSION_DISPLAY.ROLE"
             key="name"
-            sortable="false">
+            [sortable]="false">
             <ng-template let-entry="$implicit">
                 <adf-user-role-column [readonly]="entry.row.obj.readonly || isReadOnly"
                                       [placeholder]="entry.data.getValue(entry.row, entry.col)"

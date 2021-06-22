@@ -30,7 +30,7 @@ export class AnalyticsGeneratorComponent implements OnChanges {
 
     /** reportId. */
     @Input()
-    reportId: number;
+    reportId: string;
 
     /** reportParamQuery. */
     @Input()
@@ -71,7 +71,7 @@ export class AnalyticsGeneratorComponent implements OnChanges {
 
     ngOnChanges() {
         if (this.reportId && this.reportParamQuery) {
-            this.generateReport(`${this.reportId}`, this.reportParamQuery);
+            this.generateReport(this.reportId, this.reportParamQuery);
         } else {
             this.reset();
         }
@@ -82,7 +82,7 @@ export class AnalyticsGeneratorComponent implements OnChanges {
             reportParamQuery = {};
         }
         this.analyticsService.getReportsByParams(reportId, reportParamQuery).subscribe(
-            (res: Chart[]) => {
+            (res) => {
                 this.reports = res;
                 if (this.reports) {
                     this.selectFirstReport();

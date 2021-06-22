@@ -14,7 +14,7 @@
                 locationFormat="/files"
                 [display]="'gallery'"
                 [preselectNodes]="selectedNodes"
-                [showHeader]="false"
+                [showHeader]="noHeaderMode"
                 [maxItems]="5"
                 (preview)="showFile($event)"
                 selectionMode="null">
@@ -117,7 +117,7 @@
                     <button mat-icon-button
                             data-automation-id="delete-toolbar-button"
                             adf-check-allowable-operation="delete"
-                            permanent=true
+                            [permanent]="true"
                             [adf-nodes]="documentList.selection"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}"
                             (delete)="onDeleteActionSuccess($event)"
@@ -156,7 +156,7 @@
                 </button>
 
                 <mat-menu #themePicker="matMenu">
-                    <button mat-menu-item (click)="toolbarColor = 'default'">Default</button>
+                    <button mat-menu-item (click)="toolbarColor = null">Default</button>
                     <button mat-menu-item (click)="toolbarColor = 'primary'">Primary</button>
                     <button mat-menu-item (click)="toolbarColor = 'accent'">Accent</button>
                     <button mat-menu-item (click)="toolbarColor = 'warn'">Warn</button>
@@ -239,7 +239,7 @@
                 (preview)="showFile($event)"
                 (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)"
-                (name-click)="documentList.onNodeDblClick($event.detail?.node)"
+                (name-click)="documentList.onNodeDblClick($any($event).detail?.node)"
                 (filterSelection)="onFilterSelected($event)">
 
                 <adf-custom-no-permission-template *ngIf="enableCustomPermissionMessage">
@@ -648,7 +648,7 @@
         <form class="example-form">
             <mat-form-field *ngIf="preselectNodes" class="adf-preselect-nodes-input">
                 <input matInput
-                (input)="setPreselectNodes($event.target?.value)"
+                (input)="setPreselectNodes($any($event).target?.value)"
                 placeholder="NodeEntry[] => [{ entry: { isFile: true, id: 'node-id' }}, { entry: { isFile: true, id: 'node-id' }} ]">
             </mat-form-field>
         </form>

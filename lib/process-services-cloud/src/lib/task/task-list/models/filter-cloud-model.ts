@@ -26,11 +26,11 @@ export class TaskQueryCloudRequestModel {
     createdFrom?: string;
     createdTo?: string;
     description?: string;
-    dueDate?: null;
-    lastModifiedFrom?: null;
-    lastModifiedTo?: null;
-    dueDateFrom?: null;
-    dueDateTo?: null;
+    dueDate?: any;
+    lastModifiedFrom?: any;
+    lastModifiedTo?: any;
+    dueDateFrom?: any;
+    dueDateTo?: any;
     id?: string;
     name?: string;
     owner?: string;

@@ -1,4 +1,4 @@
-<adf-form-list [forms]="formList" (row-dblclick)="onRowDblClick($event)">
+<adf-form-list [forms]="formList" (row-dblclick)="onRowDblClick($any($event))">
 </adf-form-list>
 <div class="app-form-container" *ngIf="!isEmptyForm()">
     <adf-form #adfForm [form]="form" [data]="restoredData" [showValidationIcon]="showValidationIcon">

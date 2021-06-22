@@ -19,9 +19,26 @@ export class Chart {
     id: string;
     type: string;
     icon: string;
+    title?: string;
+    titleKey?: string;
+    labels?: string[] = [];
+    data?: any[] = [];
+    datasets?: any[] = [];
+    detailsTable?: any;
+    showDetails = false;
+    options?: any;
 
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
+        this.title = obj.title;
+        this.titleKey = obj.titleKey;
+        this.labels = obj.labels || [];
+        this.data = obj.data || [];
+        this.datasets = obj.datasets || [];
+        this.detailsTable = obj.detailsTable;
+        this.showDetails = !!obj.showDetails;
+        this.options = obj.options;
+
         if (obj && obj.type) {
             this.type = this.convertType(obj.type);
             this.icon = this.getIconType(this.type);
@@ -88,5 +105,33 @@ export class Chart {
                 break;
         }
         return typeIcon;
+    }
+
+    hasData(): boolean {
+        return this.data && this.data.length > 0;
+    }
+
+    hasDatasets(): boolean {
+        return this.datasets && this.datasets.length > 0;
+    }
+
+    hasDetailsTable(): boolean {
+        return !!this.detailsTable;
+    }
+
+    hasZeroValues(): boolean {
+        let isZeroValues = false;
+
+        if (this.hasData()) {
+            isZeroValues = true;
+
+            this.data.forEach((value) => {
+                if (value.toString() !== '0') {
+                    isZeroValues = false;
+                }
+            });
+        }
+
+        return isZeroValues;
     }
 }

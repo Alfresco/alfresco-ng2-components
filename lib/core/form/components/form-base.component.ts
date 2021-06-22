@@ -17,6 +17,7 @@
 
 import { FormOutcomeModel, FormFieldValidator, FormFieldModel, FormOutcomeEvent, FormModel } from './widgets';
 import { EventEmitter, Input, Output, Directive } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 
 @Directive()
 // tslint:disable-next-line: directive-class-suffix
@@ -26,7 +27,7 @@ export abstract class FormBaseComponent {
     static COMPLETE_OUTCOME_ID: string = '$complete';
     static START_PROCESS_OUTCOME_ID: string = '$startProcess';
     static CUSTOM_OUTCOME_ID: string = '$custom';
-    static COMPLETE_BUTTON_COLOR: string = 'primary';
+    static COMPLETE_BUTTON_COLOR: ThemePalette = 'primary';
     static COMPLETE_OUTCOME_NAME: string = 'COMPLETE';
 
     /** Path of the folder where the metadata will be stored. */
@@ -111,8 +112,8 @@ export abstract class FormBaseComponent {
         return titleEnabled;
     }
 
-    getColorForOutcome(outcomeName: string): string {
-        return outcomeName === FormBaseComponent.COMPLETE_OUTCOME_NAME ? FormBaseComponent.COMPLETE_BUTTON_COLOR : '';
+    getColorForOutcome(outcomeName: string): ThemePalette {
+        return outcomeName === FormBaseComponent.COMPLETE_OUTCOME_NAME ? FormBaseComponent.COMPLETE_BUTTON_COLOR : null;
     }
 
     isOutcomeButtonEnabled(outcome: FormOutcomeModel): boolean {

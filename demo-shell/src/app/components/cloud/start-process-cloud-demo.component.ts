@@ -32,7 +32,7 @@ export class StartProcessCloudDemoComponent implements OnInit {
 
     appName;
     processName: string;
-    formValues: string;
+    formValues: any;
     variables: any;
 
     constructor(private appConfig: AppConfigService,

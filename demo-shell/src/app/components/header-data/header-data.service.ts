@@ -16,6 +16,7 @@
  */
 
 import { Injectable, Output, EventEmitter } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 
 @Injectable({
     providedIn: 'root'
@@ -26,12 +27,12 @@ export class HeaderDataService {
     show = true;
 
     @Output() hideMenu = new EventEmitter<boolean>();
-    @Output() color = new EventEmitter<string>();
+    @Output() color = new EventEmitter<ThemePalette>();
     @Output() title = new EventEmitter<string>();
     @Output() logo = new EventEmitter<string>();
     @Output() redirectUrl = new EventEmitter<string | any[]>();
     @Output() tooltip = new EventEmitter<string>();
-    @Output() position = new EventEmitter<string>();
+    @Output() position = new EventEmitter<'start' | 'end'>();
     @Output() hideSidenav = new EventEmitter<boolean>();
 
     hideMenuButton() {
@@ -39,7 +40,7 @@ export class HeaderDataService {
         this.hideMenu.emit(this.show);
     }
 
-    changeColor(color: string) {
+    changeColor(color: ThemePalette) {
         this.color.emit(color);
     }
 
@@ -60,7 +61,7 @@ export class HeaderDataService {
         this.tooltip.emit(tooltip);
     }
 
-    changePosition(position: string) {
+    changePosition(position: 'start' | 'end') {
         this.position.emit(position);
     }
 

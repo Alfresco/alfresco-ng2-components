@@ -130,7 +130,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** Toggles the header */
     @Input()
-    showHeader: string = ShowHeaderMode.Data;
+    showHeader = ShowHeaderMode.Data;
 
     /** User interaction for folder navigation or file preview.
      * Valid values are "click" and "dblclick". Default value: "dblclick"
@@ -207,7 +207,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * docs for more details and usage examples.
      */
     @Input()
-    rowStyle: string;
+    rowStyle: { [key: string]: any; };
 
     /** The CSS class to apply to every row */
     @Input()

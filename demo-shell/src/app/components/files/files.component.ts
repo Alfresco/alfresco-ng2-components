@@ -48,6 +48,7 @@ import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.compon
 import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { takeUntil, debounceTime, scan } from 'rxjs/operators';
+import { ThemePalette } from '@angular/material/core';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -74,7 +75,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.appConfig.get<string>(AppConfigValues.BASESHAREURL) ||
         this.appConfig.get<string>(AppConfigValues.ECMHOST)) + '/preview/s/';
 
-    toolbarColor = 'default';
+    toolbarColor: ThemePalette;
 
     selectionModes = [
         { value: 'none', viewValue: 'None' },
@@ -94,7 +95,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     sorting = ['name', 'ASC'];
 
     @Input()
-    sortingMode = 'server';
+    sortingMode: 'server' | 'client' = 'server';
 
     @Input()
     showRecentFiles = true;
@@ -106,7 +107,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showSettingsPanel = true;
 
     @Input()
-    showHeader: string = ShowHeaderMode.Always;
+    showHeader = ShowHeaderMode.Always;
 
     @Input()
     selectionMode = 'multiple';
@@ -207,7 +208,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     preselectNodes: boolean;
     warnOnMultipleUploads = false;
     thumbnails = false;
-
+    noHeaderMode = ShowHeaderMode.Never;
     enableCustomPermissionMessage = false;
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;

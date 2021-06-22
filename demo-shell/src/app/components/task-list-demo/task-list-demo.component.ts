@@ -194,59 +194,63 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
         return this.taskListForm && this.taskListForm.dirty && this.taskListForm.valid;
     }
 
-    get taskAppId(): AbstractControl {
-        return this.taskListForm.get('taskAppId');
+    private getControl<T extends AbstractControl>(key: string): T {
+        return this.taskListForm.get(key) as T;
     }
 
-    get taskId(): AbstractControl {
-        return this.taskListForm.get('taskId');
+    get taskAppId(): FormControl {
+        return this.getControl<FormControl>('taskAppId');
     }
 
-    get taskProcessDefinitionId(): AbstractControl {
-        return this.taskListForm.get('taskProcessDefinitionId');
+    get taskId(): FormControl {
+        return this.getControl<FormControl>('taskId');
     }
 
-    get taskProcessInstanceId(): AbstractControl {
-        return this.taskListForm.get('taskProcessInstanceId');
+    get taskProcessDefinitionId(): FormControl {
+        return this.getControl<FormControl>('taskProcessDefinitionId');
     }
 
-    get taskName(): AbstractControl {
-        return this.taskListForm.get('taskName');
+    get taskProcessInstanceId(): FormControl {
+        return this.getControl<FormControl>('taskProcessInstanceId');
     }
 
-    get taskAssignment(): AbstractControl {
-        return this.taskListForm.get('taskAssignment');
+    get taskName(): FormControl {
+        return this.getControl<FormControl>('taskName');
     }
 
-    get taskState(): AbstractControl {
-        return this.taskListForm.get('taskState');
+    get taskAssignment(): FormControl {
+        return this.getControl<FormControl>('taskAssignment');
     }
 
-    get taskSort(): AbstractControl {
-        return this.taskListForm.get('taskSort');
+    get taskState(): FormControl {
+        return this.getControl<FormControl>('taskState');
     }
 
-    get taskIncludeProcessInstance(): AbstractControl {
-        return this.taskListForm.get('taskIncludeProcessInstance');
+    get taskSort(): FormControl {
+        return this.getControl<FormControl>('taskSort');
     }
 
-    get taskStart(): AbstractControl {
-        return this.taskListForm.get('taskStart');
+    get taskIncludeProcessInstance(): FormControl {
+        return this.getControl<FormControl>('taskIncludeProcessInstance');
     }
 
-    get taskSize(): AbstractControl {
-        return this.taskListForm.get('taskSize');
+    get taskStart(): FormControl {
+        return this.getControl<FormControl>('taskStart');
     }
 
-    get taskPage(): AbstractControl {
-        return this.taskListForm.get('taskPage');
+    get taskSize(): FormControl {
+        return this.getControl<FormControl>('taskSize');
     }
 
-    get taskDueAfter(): AbstractControl {
-        return this.taskListForm.get('taskDueAfter');
+    get taskPage(): FormControl {
+        return this.getControl<FormControl>('taskPage');
     }
 
-    get taskDueBefore(): AbstractControl {
-        return this.taskListForm.get('taskDueBefore');
+    get taskDueAfter(): FormControl {
+        return this.getControl<FormControl>('taskDueAfter');
+    }
+
+    get taskDueBefore(): FormControl {
+        return this.getControl<FormControl>('taskDueBefore');
     }
 }

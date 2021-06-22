@@ -18,15 +18,10 @@
 import { Chart } from './chart.model';
 
 export class LineChart extends Chart {
-    title: string;
-    titleKey: string;
-    labels: string[] = [];
     datasets: any[] = [];
 
     constructor(obj?: any) {
         super(obj);
-        this.title = obj && obj.title || null;
-        this.titleKey = obj && obj.titleKey || null;
         this.labels = obj && obj.columnNames.slice(1, obj.columnNames.length);
 
         obj.rows.forEach((value: any) => {

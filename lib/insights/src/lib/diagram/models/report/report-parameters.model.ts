@@ -22,10 +22,13 @@ export class ReportParametersModel {
     name: string;
     definition: ReportDefinitionModel;
     created: string;
+    description?: string;
 
     constructor(obj?: any) {
         this.id = obj && obj.id;
         this.name = obj && obj.name || null;
+        this.description = obj.description;
+
         if (obj && obj.definition) {
             this.definition = new ReportDefinitionModel(JSON.parse(obj.definition));
         }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataTableComponent, DataCellEvent, DataColumnListComponent, UserProcessModel } from '@alfresco/adf-core';
+import { DataTableComponent, DataCellEvent, DataColumnListComponent, UserProcessModel, ShowHeaderMode } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 
@@ -50,6 +50,7 @@ export class PeopleListComponent implements AfterContentInit {
     clickAction = new EventEmitter<UserEventModel>();
 
     user: UserProcessModel;
+    showHeader = ShowHeaderMode.Never;
 
     ngAfterContentInit() {
         this.peopleDataTable.columnList = this.columnList;

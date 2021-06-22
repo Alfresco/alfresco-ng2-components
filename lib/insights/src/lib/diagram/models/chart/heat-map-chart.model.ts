@@ -21,7 +21,6 @@ export class HeatMapChart extends Chart {
     avgTimePercentages: string;
     avgTimeValues: string;
     processDefinitionId: string;
-    titleKey: string;
     totalCountValues: string;
     totalCountsPercentages: string;
     totalTimePercentages: string;
@@ -33,7 +32,6 @@ export class HeatMapChart extends Chart {
         this.avgTimeValues = obj && obj.avgTimeValues || null;
         this.processDefinitionId = obj && obj.processDefinitionId || null;
         this.totalCountValues = obj && obj.totalCountValues || null;
-        this.titleKey = obj && obj.titleKey || null;
         this.totalCountsPercentages = obj && obj.totalCountsPercentages || null;
         this.totalTimePercentages = obj && obj.totalTimePercentages || null;
         this.totalTimeValues = obj && obj.totalTimeValues || null;

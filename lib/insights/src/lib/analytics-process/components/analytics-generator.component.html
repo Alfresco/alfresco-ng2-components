@@ -20,7 +20,7 @@
                         <canvas baseChart *ngIf="!report.hasZeroValues()" class="adf-chart"
                                 [data]="report.data"
                                 [labels]="report.labels"
-                                [chartType]="report.type">
+                                [chartType]="'pie'">
                         </canvas>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                             [datasets]="report.datasets"
                             [labels]="report.labels"
                             [options]="report.options"
-                            [chartType]="report.type">
+                            [chartType]="'bar'">
                     </canvas>
                 </div>
             </div>

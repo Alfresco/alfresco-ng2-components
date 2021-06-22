@@ -11,7 +11,6 @@
             [attr.aria-label]="(isDialogMinimized ?
                 'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MAXIMIZE':
                 'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MINIMIZE') | translate"
-            color="secondary"
             [disabled]="isConfirmation"
             [attr.aria-expanded]="!isDialogMinimized"
             (click)="toggleMinimized()">
@@ -108,7 +107,6 @@
         <button
             id="adf-upload-dialog-cancel"
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.CONFIRMATION.CANCEL' | translate"
-            color="secondary"
             mat-button
             (click)="cancelAllUploads()"
         >{{ 'ADF_FILE_UPLOAD.CONFIRMATION.BUTTON.CANCEL' | translate }}</button>

@@ -18,7 +18,7 @@
 import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter, OnInit } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { VersionListComponent } from './version-list.component';
-import { ContentService, AlfrescoApiService } from '@alfresco/adf-core';
+import { ContentService, AlfrescoApiService, FileUploadErrorEvent } from '@alfresco/adf-core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -65,19 +65,19 @@ export class VersionManagerComponent implements OnInit {
 
     /** Emitted when a file is uploaded successfully. */
     @Output()
-    uploadSuccess: EventEmitter<Node> = new EventEmitter<Node>();
+    uploadSuccess = new EventEmitter<Node>();
 
     /** Emitted when an error occurs during upload. */
     @Output()
-    uploadError: EventEmitter<Node> = new EventEmitter<Node>();
+    uploadError = new EventEmitter<FileUploadErrorEvent>();
 
     /** Emitted when an cancelling during upload. */
     @Output()
-    uploadCancel: EventEmitter<boolean> = new EventEmitter<boolean>();
+    uploadCancel = new EventEmitter<boolean>();
 
     /** Emitted when viewing a version. */
     @Output()
-    viewVersion: EventEmitter<string> = new EventEmitter<string>();
+    viewVersion = new EventEmitter<string>();
 
     @ViewChild('versionList', { static: true })
     versionListComponent: VersionListComponent;
@@ -110,7 +110,7 @@ export class VersionManagerComponent implements OnInit {
         this.uploadState = 'close';
     }
 
-    onUploadError(event: any) {
+    onUploadError(event: FileUploadErrorEvent) {
         this.uploadError.emit(event);
     }
 

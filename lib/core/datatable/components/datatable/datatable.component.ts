@@ -121,7 +121,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
      * docs for more details and usage examples.
      */
     @Input()
-    rowStyle: string;
+    rowStyle: { [key: string]: any; };
 
     /** The CSS class to apply to every row. */
     @Input()
@@ -129,7 +129,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     /** Toggles the header. */
     @Input()
-    showHeader: string = ShowHeaderMode.Data;
+    showHeader = ShowHeaderMode.Data;
 
     /** Toggles the sticky header mode. */
     @Input()

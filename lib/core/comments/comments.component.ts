@@ -164,7 +164,7 @@ export class CommentsComponent implements OnChanges {
         }
     }
 
-    clear(event: KeyboardEvent): void {
+    clear(event: Event): void {
         event.stopPropagation();
         this.message = '';
     }

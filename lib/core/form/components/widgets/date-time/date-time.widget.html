@@ -9,7 +9,7 @@
                [disabled]="field.readOnly"
                [min]="minDate"
                [max]="maxDate"
-               (focusout)="onDateChanged($event.srcElement.value)"
+               (focusout)="onDateChanged($any($event).srcElement.value)"
                (dateChange)="onDateChanged($event)"
                [placeholder]="field.placeholder"
                [matTooltip]="field.tooltip"
@@ -19,5 +19,5 @@
     </mat-form-field>
     <error-widget [error]="field.validationSummary"></error-widget>
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
-    <mat-datetimepicker #datetimePicker type="datetime" openOnFocus="true" timeInterval="5"></mat-datetimepicker>
+    <mat-datetimepicker #datetimePicker type="datetime" [openOnFocus]="true" [timeInterval]="5"></mat-datetimepicker>
 </div>

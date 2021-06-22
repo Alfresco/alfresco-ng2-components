@@ -113,10 +113,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @Input()
     appId: number = null;
 
-    filterSelected: object = null;
+    filterSelected: any = null;
 
     @Output()
-    changePageSize: EventEmitter<Pagination> = new EventEmitter();
+    changePageSize = new EventEmitter<Pagination>();
 
     selectFirstReport = false;
     multiSelectTask = false;

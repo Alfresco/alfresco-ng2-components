@@ -75,20 +75,20 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
      * Otherwise, no check will be done.
      */
     @Input()
-    validate: Boolean = false;
+    validate = false;
 
     /** Show the info in readonly mode
      */
     @Input()
-    readOnly: boolean = false;
+    readOnly = false;
 
     /** FormControl to list of group */
     @Input()
-    groupChipsCtrl: FormControl = new FormControl({ value: '', disabled: false });
+    groupChipsCtrl = new FormControl({ value: '', disabled: false });
 
     /** FormControl to search the group */
     @Input()
-    searchGroupsControl: FormControl = new FormControl({ value: '', disabled: false });
+    searchGroupsControl = new FormControl({ value: '', disabled: false });
 
     /** Role names of the groups to be listed. */
     @Input()

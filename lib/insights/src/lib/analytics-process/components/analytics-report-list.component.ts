@@ -45,7 +45,7 @@ export class AnalyticsReportListComponent implements OnInit {
 
     /** report Click. */
     @Output()
-    reportClick: EventEmitter<ReportParametersModel> = new EventEmitter<ReportParametersModel>();
+    reportClick = new EventEmitter<ReportParametersModel>();
 
     /** success. */
     @Output()
@@ -56,7 +56,7 @@ export class AnalyticsReportListComponent implements OnInit {
     error = new EventEmitter();
 
     private reportObserver: Observer<any>;
-    report$: Observable<any>;
+    report$: Observable<ReportParametersModel>;
 
     currentReport: any;
 
@@ -74,7 +74,7 @@ export class AnalyticsReportListComponent implements OnInit {
     }
 
     initObserver() {
-        this.report$.subscribe((report: ReportParametersModel) => {
+        this.report$.subscribe((report) => {
             this.reports.push(report);
         });
     }

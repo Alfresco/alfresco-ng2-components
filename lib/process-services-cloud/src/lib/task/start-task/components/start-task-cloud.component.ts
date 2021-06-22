@@ -19,7 +19,7 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { Observable, Subject } from 'rxjs';
-import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import {
     MOMENT_DATE_FORMATS, MomentDateAdapter,
     LogService,
@@ -102,8 +102,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     priorities: TaskPriorityOption[];
 
-    private assigneeForm: AbstractControl = new FormControl('');
-    private groupForm: AbstractControl = new FormControl('');
+    private assigneeForm = new FormControl('');
+    private groupForm = new FormControl('');
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private taskService: TaskCloudService,
@@ -228,19 +228,19 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         return isValid ? null : { 'whitespace': true };
     }
 
-    get nameController(): AbstractControl {
-        return this.taskForm.get('name');
+    get nameController(): FormControl {
+        return this.taskForm.get('name') as FormControl;
     }
 
-    get priorityController(): AbstractControl {
-        return this.taskForm.get('priority');
+    get priorityController(): FormControl {
+        return this.taskForm.get('priority') as FormControl;
     }
 
-    get assigneeFormControl(): AbstractControl {
+    get assigneeFormControl(): FormControl {
         return this.assigneeForm;
     }
 
-    get candidateUserFormControl(): AbstractControl {
+    get candidateUserFormControl(): FormControl {
         return this.groupForm;
     }
 

@@ -46,8 +46,8 @@
                (dateChange)="onDateChanged($event)">
 
         <mat-datetimepicker #datetimePicker
-                            [type]="property.type"
-                            timeInterval="5"
+                            [type]="$any(property).type"
+                            [timeInterval]="5"
                             [attr.data-automation-id]="'datepicker-' + property.key"
                             [startAt]="valueDate">
         </mat-datetimepicker>
@@ -60,8 +60,8 @@
          class="adf-property-field adf-dateitem-chip-list-container adf-dateitem-editable">
         <mat-chip-list #chipList
                        class="adf-textitem-chip-list">
-            <mat-chip *ngFor="let propertyValue of property.displayValue let idx = index"
-                      [removable]="isEditable"
+            <mat-chip *ngFor="let propertyValue of property.displayValue; let idx = index"
+                      [removable]="isEditable()"
                       (removed)="removeValueFromList(idx)">
                 {{ propertyValue }}
                 <mat-icon *ngIf="isEditable()"
@@ -86,8 +86,8 @@
             </mat-datetimepicker-toggle>
 
             <mat-datetimepicker #datetimePicker
-                                [type]="property.type"
-                                timeInterval="5"
+                                [type]="$any(property).type"
+                                [timeInterval]="5"
                                 [attr.data-automation-id]="'datepicker-' + property.key"
                                 [startAt]="valueDate">
             </mat-datetimepicker>

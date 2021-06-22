@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { Validators, FormGroup, FormBuilder, AbstractControl, FormControl } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { StorageService } from '../services/storage.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -136,7 +136,7 @@ export class HostSettingsComponent implements OnInit {
         }
     }
 
-    private createOAuthFormGroup(): AbstractControl {
+    private createOAuthFormGroup(): FormGroup {
         const oauth = <OauthConfigModel> this.appConfig.get(AppConfigValues.OAUTHCONFIG, {});
 
         return this.formBuilder.group({
@@ -152,15 +152,15 @@ export class HostSettingsComponent implements OnInit {
         });
     }
 
-    private createBPMFormControl(): AbstractControl {
+    private createBPMFormControl(): FormControl {
         return new FormControl(this.appConfig.get<string>(AppConfigValues.BPMHOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
     }
 
-    private createIdentityFormControl(): AbstractControl {
+    private createIdentityFormControl(): FormControl {
         return new FormControl(this.appConfig.get<string>(AppConfigValues.IDENTITY_HOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
     }
 
-    private createECMFormControl(): AbstractControl {
+    private createECMFormControl(): FormControl {
         return new FormControl(this.appConfig.get<string>(AppConfigValues.ECMHOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
     }
 
@@ -230,60 +230,60 @@ export class HostSettingsComponent implements OnInit {
         return this.form.get('authType').value === 'OAUTH';
     }
 
-    get providersControl(): AbstractControl {
-        return this.form.get('providersControl');
+    get providersControl(): FormControl {
+        return this.form.get('providersControl') as FormControl;
     }
 
-    get bpmHost(): AbstractControl {
-        return this.form.get('bpmHost');
+    get bpmHost(): FormControl {
+        return this.form.get('bpmHost') as FormControl;
     }
 
-    get ecmHost(): AbstractControl {
-        return this.form.get('ecmHost');
+    get ecmHost(): FormControl {
+        return this.form.get('ecmHost') as FormControl;
     }
 
-    get host(): AbstractControl {
-        return this.oauthConfig.get('host');
+    get host(): FormControl {
+        return this.oauthConfig.get('host') as FormControl;
     }
 
-    get identityHost(): AbstractControl {
-        return this.form.get('identityHost');
+    get identityHost(): FormControl {
+        return this.form.get('identityHost') as FormControl;
     }
 
-    get clientId(): AbstractControl {
-        return this.oauthConfig.get('clientId');
+    get clientId(): FormControl {
+        return this.oauthConfig.get('clientId') as FormControl;
     }
 
-    get scope(): AbstractControl {
-        return this.oauthConfig.get('scope');
+    get scope(): FormControl {
+        return this.oauthConfig.get('scope') as FormControl;
     }
 
-    get secretId(): AbstractControl {
-        return this.oauthConfig.get('secretId');
+    get secretId(): FormControl {
+        return this.oauthConfig.get('secretId') as FormControl;
     }
 
-    get implicitFlow(): AbstractControl {
-        return this.oauthConfig.get('implicitFlow');
+    get implicitFlow(): FormControl {
+        return this.oauthConfig.get('implicitFlow') as FormControl;
     }
 
-    get silentLogin(): AbstractControl {
-        return this.oauthConfig.get('silentLogin');
+    get silentLogin(): FormControl {
+        return this.oauthConfig.get('silentLogin') as FormControl;
     }
 
-    get redirectUri(): AbstractControl {
-        return this.oauthConfig.get('redirectUri');
+    get redirectUri(): FormControl {
+        return this.oauthConfig.get('redirectUri') as FormControl;
     }
 
-    get publicUrls(): AbstractControl {
-        return this.oauthConfig.get('publicUrls');
+    get publicUrls(): FormControl {
+        return this.oauthConfig.get('publicUrls') as FormControl;
     }
 
-    get redirectUriLogout(): AbstractControl {
-        return this.oauthConfig.get('redirectUriLogout');
+    get redirectUriLogout(): FormControl {
+        return this.oauthConfig.get('redirectUriLogout') as FormControl;
     }
 
-    get oauthConfig(): AbstractControl {
-        return this.form.get('oauthConfig');
+    get oauthConfig(): FormControl {
+        return this.form.get('oauthConfig') as FormControl;
     }
 
 }

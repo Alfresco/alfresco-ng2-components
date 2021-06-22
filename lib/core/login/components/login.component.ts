@@ -335,7 +335,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     /**
      * Display and hide the password value.
      */
-    toggleShowPassword(event: MouseEvent | KeyboardEvent) {
+    toggleShowPassword(event: Event) {
         event.stopPropagation();
         this.isPasswordShow = !this.isPasswordShow;
     }

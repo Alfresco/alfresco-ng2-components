@@ -47,7 +47,7 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
 
     filterId;
     multiselect: boolean;
-    selectedRows: string[] = [];
+    selectedRows: any[] = [];
     actionMenu: boolean;
     contextMenu: boolean;
     actions: any[] = [];

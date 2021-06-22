@@ -17,7 +17,7 @@
 
 import { Component, Input, ViewEncapsulation, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { ContentService, FileUploadEvent, UploadService } from '@alfresco/adf-core';
+import { ContentService, FileUploadErrorEvent, FileUploadEvent, UploadService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -58,7 +58,7 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
 
     /** Emitted when an error occurs. */
     @Output()
-    error = new EventEmitter();
+    error = new EventEmitter<FileUploadErrorEvent>();
 
     /** Emitted when an cancelling during upload. */
     @Output()
@@ -114,7 +114,7 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
         this.success.emit(event);
     }
 
-    onError(event: any) {
+    onError(event: FileUploadErrorEvent) {
         this.disabled = false;
         this.error.emit(event);
     }

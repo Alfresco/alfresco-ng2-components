@@ -37,7 +37,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
     @Input() expandedSidenav = true;
 
     /** The side that the drawer is attached to 'start' | 'end' page */
-    @Input() position = 'start';
+    @Input() position: 'start' | 'end' = 'start';
 
     /** Layout text orientation 'ltr' | 'rtl' */
     @Input() direction: Direction = 'ltr';

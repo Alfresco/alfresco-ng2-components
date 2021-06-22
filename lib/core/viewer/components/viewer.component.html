@@ -9,10 +9,7 @@
          cdkTrapFocusAutoCapture>
         <ng-content select="adf-viewer-toolbar"></ng-content>
         <ng-container *ngIf="showToolbar && !toolbar">
-            <adf-toolbar color="default"
-                         id="adf-viewer-toolbar"
-                         class="adf-viewer-toolbar">
-
+            <adf-toolbar id="adf-viewer-toolbar" class="adf-viewer-toolbar">
                 <adf-toolbar-title>
 
                     <ng-container *ngIf="allowLeftSidebar">
@@ -21,7 +18,7 @@
                                 [attr.aria-label]="'ADF_VIEWER.ACTIONS.INFO' | translate"
                                 title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                                 data-automation-id="adf-toolbar-left-sidebar"
-                                [color]="showLeftSidebar ? 'accent' : 'default'"
+                                [color]="showLeftSidebar ? 'accent' : null"
                                 (click)="toggleLeftSidebar()">
                             <mat-icon>info_outline</mat-icon>
                         </button>
@@ -122,7 +119,7 @@
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.INFO' | translate"
                             title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                             data-automation-id="adf-toolbar-sidebar"
-                            [color]="showRightSidebar ? 'accent' : 'default'"
+                            [color]="showRightSidebar ? 'accent' : null"
                             (click)="toggleSidebar()">
                         <mat-icon>info_outline</mat-icon>
                     </button>

@@ -155,5 +155,4 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     update() {
         this.cardViewUpdateService.update(<CardViewDateItemModel> { ...this.property }, this.property.value);
     }
-
 }
