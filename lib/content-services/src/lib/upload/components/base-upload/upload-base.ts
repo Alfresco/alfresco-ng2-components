@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FileModel, FileInfo, UploadService, TranslationService } from '@alfresco/adf-core';
+import { FileModel, FileInfo, UploadService, TranslationService, FileUploadErrorEvent } from '@alfresco/adf-core';
 import { EventEmitter, Input, Output, OnInit, OnDestroy, NgZone, Directive } from '@angular/core';
 import { Subject } from 'rxjs';
 import { UploadFilesEvent } from '../upload-files.event';
@@ -67,7 +67,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
 
     /** Emitted when an error occurs. */
     @Output()
-    error = new EventEmitter();
+    error = new EventEmitter<FileUploadErrorEvent>();
 
     /** Emitted when the upload begins. */
     @Output()

@@ -402,4 +402,36 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     isFormValid() {
         return this.reportForm && this.reportForm.dirty && this.reportForm.valid;
     }
+
+    get taskGroup(): FormGroup {
+        return this.reportForm.controls.taskGroup as FormGroup;
+    }
+
+    get processDefGroup(): FormGroup {
+        return this.reportForm.controls.processDefGroup as FormGroup;
+    }
+
+    get dateIntervalGroup(): FormGroup {
+        return this.reportForm.controls.dateIntervalGroup as FormGroup;
+    }
+
+    get dateRange(): FormGroup {
+        return this.reportForm.controls.dateRange as FormGroup;
+    }
+
+    get statusGroup(): FormGroup {
+        return this.reportForm.controls.statusGroup as FormGroup;
+    }
+
+    get typeFilteringGroup(): FormGroup {
+        return this.reportForm.controls.typeFilteringGroup as FormGroup;
+    }
+
+    get durationGroup(): FormGroup {
+        return this.reportForm.controls.durationGroup as FormGroup;
+    }
+
+    get processInstanceGroup(): FormGroup {
+        return this.reportForm.controls.processInstanceGroup as FormGroup;
+    }
 }

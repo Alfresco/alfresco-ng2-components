@@ -99,8 +99,8 @@ export class ContentNodeSelectorComponent {
         return this.thumbnailService.getMimeTypeIcon('video/quicktime');
     }
 
-    onNodeSelect(node: MinimalNodeEntryEntity) {
-        this.validSelection = !!node;
+    onNodeSelect(selection: Node[]) {
+        this.validSelection = !!selection;
     }
 
     customIsValidFunction(entry: MinimalNodeEntryEntity): boolean {

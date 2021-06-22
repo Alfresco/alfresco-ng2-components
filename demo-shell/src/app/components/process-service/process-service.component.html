@@ -53,7 +53,7 @@
                         (rowClick)="onTaskRowClick($event)"
                         (success)="onSuccessTaskList()"
                         (row-click)="onRowClick($event)"
-                        (row-dblclick)="onTaskRowDblClick($event)"
+                        (row-dblclick)="onTaskRowDblClick($any($event))"
                         [multiselect]="multiSelectTask"
                         #taskList>
                         <!-- Custom column definition demo -->
@@ -168,7 +168,7 @@
                         [showContextMenu]="processContextMenu"
                         (showRowContextMenu)="onShowProcessRowContextMenu($event)"
                         (rowClick)="onProcessRowClick($event)"
-                        (row-dblclick)="onProcessRowDblClick($event)"
+                        (row-dblclick)="onProcessRowDblClick($any($event))"
                         [multiselect]="multiSelectProcess"
                         (success)="onSuccessProcessList()">
                         <!-- Custom column definition demo -->

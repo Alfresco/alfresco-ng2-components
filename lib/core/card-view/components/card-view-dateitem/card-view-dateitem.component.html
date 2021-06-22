@@ -61,7 +61,7 @@
         <mat-chip-list #chipList
                        class="adf-textitem-chip-list">
             <mat-chip *ngFor="let propertyValue of property.displayValue let idx = index"
-                      [removable]="isEditable"
+                      [removable]="isEditable()"
                       (removed)="removeValueFromList(idx)">
                 {{ propertyValue }}
                 <mat-icon *ngIf="isEditable()"

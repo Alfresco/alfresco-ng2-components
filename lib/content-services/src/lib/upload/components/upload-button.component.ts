@@ -138,9 +138,9 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
                 (res) => this.permissionValue.next(this.nodeHasPermission(res.entry, AllowableOperationsEnum.CREATE)),
                 (error: { error: Error }) => {
                     if (error && error.error) {
-                        this.error.emit(error.error.message);
+                        this.error.emit({ error: error.error.message } as any);
                     } else {
-                        this.error.emit('FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR');
+                        this.error.emit({ error: 'FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR'} as any);
                     }
                 }
             );

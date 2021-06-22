@@ -212,23 +212,23 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /** Emitted when the user has chosen an item. */
     @Output()
-    select: EventEmitter<Node[]> = new EventEmitter<Node[]>();
+    select = new EventEmitter<Node[]>();
 
     /** Emitted when the navigation changes. */
     @Output()
-    navigationChange: EventEmitter<NodeEntryEvent> = new EventEmitter<NodeEntryEvent>();
+    navigationChange = new EventEmitter<NodeEntryEvent>();
 
     /** Emitted when the select site changes. */
     @Output()
-    siteChange: EventEmitter<string> = new EventEmitter<string>();
+    siteChange = new EventEmitter<string>();
 
     /** Emitted when search is running. */
     @Output()
-    showingSearch: EventEmitter<boolean> = new EventEmitter<boolean>();
+    showingSearch = new EventEmitter<boolean>();
 
     /** Emitted when current folder loaded. */
     @Output()
-    currentFolder: EventEmitter<Node> = new EventEmitter<Node>();
+    currentFolder = new EventEmitter<Node>();
 
     /** Emitted when folder loaded. */
     @Output()

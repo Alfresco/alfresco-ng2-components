@@ -60,7 +60,7 @@
                                         [attr.data-automation-id]="taskFilterProperty.key">
                             <mat-label>{{taskFilterProperty.label | translate}}</mat-label>
                             <input matInput
-                                   (keyup)="onDateChanged($event.srcElement.value, taskFilterProperty)"
+                                   (keyup)="onDateChanged($any($event).srcElement.value, taskFilterProperty)"
                                    (dateChange)="onDateChanged($event.value, taskFilterProperty)"
                                    [matDatepicker]="dateController"
                                    placeholder="{{taskFilterProperty.label | translate}}"

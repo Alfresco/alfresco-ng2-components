@@ -12,11 +12,11 @@
         (showRowActionsMenu)="onShowRowActionsMenu($event)"
         (showRowContextMenu)="onShowRowContextMenu($event)"
         (executeRowAction)="onExecuteRowAction($event)"
-        (rowClick)="onRowClick($event)"
-        (row-select)="onRowSelect($event)"
-        (row-unselect)="onRowUnselect($event)"
-        (row-keyup)="onRowKeyUp($event)"
-        (sorting-changed)="onSortingChanged($event)">
+        (rowClick)="onRowClick($any($event))"
+        (row-select)="onRowSelect($any($event))"
+        (row-unselect)="onRowUnselect($any($event))"
+        (row-keyup)="onRowKeyUp($any($event))"
+        (sorting-changed)="onSortingChanged($any($event))">
         <adf-loading-content-template>
             <ng-template>
                 <mat-progress-spinner

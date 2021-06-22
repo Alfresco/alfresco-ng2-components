@@ -56,7 +56,7 @@ export class SelectFilterInputComponent implements OnDestroy {
             });
     }
 
-    reset(event?: KeyboardEvent) {
+    reset(event?: Event) {
         if (event) {
             event.stopPropagation();
         }

@@ -20,6 +20,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PreviewService } from '../../services/preview.service';
+import { FileUploadErrorEvent } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './version-manager-dialog-adapter.component.html',
@@ -45,8 +46,9 @@ export class VersionManagerDialogAdapterComponent {
         this.allowDownload = data.hasOwnProperty('allowDownload') ? data.allowDownload : this.allowDownload;
     }
 
-    uploadError(errorMessage: string) {
-        this.snackBar.open(errorMessage, '', {duration: 4000});
+    uploadError(event: FileUploadErrorEvent) {
+        const errorMessage = event.error;
+        this.snackBar.open(errorMessage, '', { duration: 4000 });
     }
 
     close() {

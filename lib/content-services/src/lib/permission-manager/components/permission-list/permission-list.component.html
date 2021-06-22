@@ -7,7 +7,7 @@
 
     <ng-container *ngIf="permissionList.error$ | async">
         <div class="adf-no-permission__template" id="adf-permission-manager-error">
-            <mat-icon [color]="'error'">error</mat-icon>
+            <mat-icon color="warn">error</mat-icon>
             <p class="adf-no-permission__template--text">{{ 'PERMISSION_MANAGER.ERROR.NOT-FOUND'| translate }}</p>
         </div>
     </ng-container>
@@ -95,8 +95,8 @@
                 (update)="updatePermission($event)"
                 (delete)="deletePermission($event)"
                 (updateAll)="updateAllPermission($event)"
-                (row-select)="onSelect($event.detail.selection)"
-                (row-unselect)="onSelect($event.detail.selection)"
+                (row-select)="onSelect($any($event).detail.selection)"
+                (row-unselect)="onSelect($any($event).detail.selection)"
                 [roles]="model.roles">
             </adf-permission-container>
 

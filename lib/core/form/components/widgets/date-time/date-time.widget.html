@@ -9,7 +9,7 @@
                [disabled]="field.readOnly"
                [min]="minDate"
                [max]="maxDate"
-               (focusout)="onDateChanged($event.srcElement.value)"
+               (focusout)="onDateChanged($any($event).srcElement.value)"
                (dateChange)="onDateChanged($event)"
                [placeholder]="field.placeholder"
                [matTooltip]="field.tooltip"

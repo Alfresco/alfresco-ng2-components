@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
-import { Node, PermissionElement } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { PermissionDisplayModel } from '../../models/permission.model';
 import { RoleModel } from '../../models/role.model';
 
@@ -55,7 +55,7 @@ export class PermissionContainerComponent implements OnChanges {
 
     /** Emitted when the permission is updated. */
     @Output()
-    delete = new EventEmitter<PermissionElement>();
+    delete = new EventEmitter<PermissionDisplayModel>();
 
     /** Emitted when an error occurs. */
     @Output()
