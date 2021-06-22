@@ -87,11 +87,11 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     /** Filter the processes. Display only process with lastModifiedTo equal to the supplied date. */
     @Input()
-    lastModifiedFrom: string = '';
+    lastModifiedFrom: Date;
 
     /** Filter the processes. Display only process with lastModifiedTo equal to the supplied date. */
     @Input()
-    lastModifiedTo: string = '';
+    lastModifiedTo: Date;
 
     /** Filter the processes. Display only process with startedDate greater then the supplied date. */
     @Input()
