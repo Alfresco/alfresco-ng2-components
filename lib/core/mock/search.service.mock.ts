@@ -55,13 +55,7 @@ export let mockError = {
 };
 
 export let searchMockApi: any = {
-    core: {
-        queriesApi: {
-            findNodes: () => Promise.resolve(fakeSearch)
-        }
-    },
-    isEcmLoggedIn() {
-        return false;
-    },
-    reply: () => ''
+
+    findNodes: () => Promise.resolve(fakeSearch)
+
 };

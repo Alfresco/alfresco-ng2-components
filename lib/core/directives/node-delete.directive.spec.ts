@@ -84,8 +84,9 @@ describe('NodeDeleteDirective', () => {
     let component: TestComponent;
     let componentWithPermanentDelete: TestDeletePermanentComponent;
     let deleteNodeSpy: any;
-    let purgeDeletedNodeSpy: any;
     let disposableDelete: any;
+    let deleteNodePermanentSpy: any;
+    let purgeDeletedNodePermanentSpy: any;
 
     setupTestBed({
         imports: [
@@ -110,8 +111,10 @@ describe('NodeDeleteDirective', () => {
         element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
         elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
 
-        deleteNodeSpy = spyOn(element['nodesApi'], 'deleteNode').and.returnValue(Promise.resolve());
-        purgeDeletedNodeSpy = spyOn(element['nodesApi'], 'purgeDeletedNode').and.returnValue(Promise.resolve());
+        deleteNodeSpy = spyOn(component.deleteDirective['nodesApi'], 'deleteNode').and.returnValue(Promise.resolve());
+
+        deleteNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective['nodesApi'], 'deleteNode').and.returnValue(Promise.resolve());
+        purgeDeletedNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective['trashcanApi'], 'deleteDeletedNode').and.returnValue(Promise.resolve());
 
     });
 
@@ -353,7 +356,7 @@ describe('NodeDeleteDirective', () => {
                 elementWithPermanentDelete.nativeElement.click();
 
                 fixture.whenStable().then(() => {
-                    expect(deleteNodeSpy).toHaveBeenCalledWith('1', { permanent: true });
+                    expect(deleteNodePermanentSpy).toHaveBeenCalledWith('1', { permanent: true });
                     done();
                 });
             });
@@ -370,7 +373,7 @@ describe('NodeDeleteDirective', () => {
                 elementWithPermanentDelete.nativeElement.click();
 
                 fixture.whenStable().then(() => {
-                    expect(purgeDeletedNodeSpy).toHaveBeenCalledWith('1');
+                    expect(purgeDeletedNodePermanentSpy).toHaveBeenCalledWith('1');
                     done();
                 });
             });
