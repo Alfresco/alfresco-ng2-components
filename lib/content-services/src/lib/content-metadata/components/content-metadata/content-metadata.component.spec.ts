@@ -407,7 +407,7 @@ describe('ContentMetadataComponent', () => {
             component.displayEmpty = true;
 
             fixture.detectChanges();
-            await fixture.whenStable()
+            await fixture.whenStable();
 
             let defaultProp = queryDom(fixture);
             let exifProp = queryDom(fixture, 'EXIF');
@@ -419,7 +419,7 @@ describe('ContentMetadataComponent', () => {
             component.displayAspect = 'CUSTOM';
 
             fixture.detectChanges();
-            await fixture.whenStable()
+            await fixture.whenStable();
 
             defaultProp = queryDom(fixture);
             exifProp = queryDom(fixture, 'EXIF');
@@ -431,7 +431,7 @@ describe('ContentMetadataComponent', () => {
             component.displayAspect = 'Properties';
 
             fixture.detectChanges();
-            await fixture.whenStable()
+            await fixture.whenStable();
 
             defaultProp = queryDom(fixture);
             exifProp = queryDom(fixture, 'EXIF');
