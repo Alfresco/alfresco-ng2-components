@@ -18,13 +18,9 @@
 import { Chart } from './chart.model';
 
 export class PieChart extends Chart {
-    titleKey: string;
-    labels: string[] = [];
-    data: string[] = [];
-
     constructor(obj?: any) {
         super(obj);
-        this.titleKey = obj && obj.titleKey || null;
+
         if (obj.values) {
             obj.values.forEach((value: any) => {
                 this.add(value.key, value.y);
@@ -35,22 +31,5 @@ export class PieChart extends Chart {
     add(label: string, data: string) {
         this.labels.push(label);
         this.data.push(data);
-    }
-
-    hasData(): boolean {
-        return this.data && this.data.length > 0 ? true : false;
-    }
-
-    hasZeroValues(): boolean {
-        let isZeroValues: boolean = false;
-        if (this.hasData()) {
-            isZeroValues = true;
-            this.data.forEach((value) => {
-                if (value.toString() !== '0') {
-                    isZeroValues = false;
-                }
-            });
-        }
-        return isZeroValues;
     }
 }

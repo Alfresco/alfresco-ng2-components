@@ -18,17 +18,11 @@
 import { TableChart } from './table-chart.model';
 
 export class DetailsTableChart extends TableChart {
-    detailsTable: any;
-    showDetails: boolean = false;
-
     constructor(obj?: any) {
         super(obj);
+
         if (obj.detailTables) {
             this.detailsTable = new TableChart(obj.detailTables[0]);
         }
-    }
-
-    hasDetailsTable(): boolean {
-        return !!this.detailsTable;
     }
 }

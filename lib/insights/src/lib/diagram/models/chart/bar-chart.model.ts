@@ -19,10 +19,6 @@ import moment from 'moment-es6';
 import { Chart } from './chart.model';
 
 export class BarChart extends Chart {
-    titleKey: string;
-    labels: any = [];
-    datasets: any[] = [];
-    data: any[] = [];
     xAxisType: string;
     yAxisType: string;
     options: any = {
@@ -44,7 +40,6 @@ export class BarChart extends Chart {
 
     constructor(obj?: any) {
         super(obj);
-        this.titleKey = obj && obj.titleKey || null;
         this.xAxisType = obj && obj.xAxisType || null;
         this.yAxisType = obj && obj.yAxisType || null;
         this.options.scales.xAxes[0].ticks.callback = this.xAxisTickFormatFunction(this.xAxisType);
@@ -98,8 +93,4 @@ export class BarChart extends Chart {
             return value;
         };
     };
-
-    hasDatasets(): boolean {
-        return this.datasets && this.datasets.length > 0;
-    }
 }

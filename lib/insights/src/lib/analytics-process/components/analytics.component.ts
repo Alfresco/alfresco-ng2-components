@@ -33,7 +33,7 @@ export class AnalyticsComponent implements OnChanges {
 
     /** reportId. */
     @Input()
-    reportId: number;
+    reportId: string;
 
     /** hideParameters. */
     @Input()

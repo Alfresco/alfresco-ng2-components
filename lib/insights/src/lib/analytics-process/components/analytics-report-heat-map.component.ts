@@ -91,4 +91,8 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
             this.report.avgTimePercentages);
     }
 
+    get metricGroup(): FormGroup {
+        return this.metricForm.controls.metricGroup as FormGroup;
+    }
+
 }
