@@ -41,9 +41,9 @@ export class DiscoveryApiService {
         private apiService: AlfrescoApiService,
         private authenticationService: AuthenticationService) {
 
-        this.discoveryApi = new DiscoveryApi(apiService.getInstance());
-        this.aboutApi = new AboutApi(apiService.getInstance());
-        this.systemPropertiesApi = new SystemPropertiesApi(apiService.getInstance());
+        this.discoveryApi = new DiscoveryApi(this.apiService.getInstance());
+        this.aboutApi = new AboutApi(this.apiService.getInstance());
+        this.systemPropertiesApi = new SystemPropertiesApi(this.apiService.getInstance());
 
         this.authenticationService.onLogin
             .pipe(
