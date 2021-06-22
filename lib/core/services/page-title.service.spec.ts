@@ -21,10 +21,10 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { PageTitleService } from './page-title.service';
 import { TranslationService } from './translation.service';
 import { Title } from '@angular/platform-browser';
-import { CoreModule } from '../core.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { CoreTestingModule } from '../testing';
 
-describe('PageTitleService', () => {
+fdescribe('PageTitleService', () => {
 
     let titleService: Title;
     let translationService: TranslationService;
@@ -35,7 +35,7 @@ describe('PageTitleService', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 
