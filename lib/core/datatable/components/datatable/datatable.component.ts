@@ -22,6 +22,7 @@ import {
 } from '@angular/core';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { Subscription, Observable, Observer } from 'rxjs';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumn } from '../../data/data-column.model';
@@ -678,6 +679,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         } else {
             this.executeRowAction.emit(new DataRowActionEvent(row, action));
         }
+    }
+
+    getHideActionsWithoutHoverClass(actionsMenuTrigger: MatMenuTrigger) {
+        return { 'adf-datatable-hide-actions-without-hover': this.actionsVisibleOnHover && !actionsMenuTrigger.menuOpen };
     }
 
     rowAllowsDrop(row: DataRow): boolean {
