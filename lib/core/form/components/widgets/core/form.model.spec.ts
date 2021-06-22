@@ -27,12 +27,17 @@ import { TabModel } from './tab.model';
 import { fakeMetadataForm, fakeViewerForm } from 'process-services-cloud/src/lib/form/mocks/cloud-form.mock';
 import { Node } from '@alfresco/js-api';
 import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
+import { AlfrescoApiService } from '../../../../services';
+import { TestBed } from '@angular/core/testing';
 
 describe('FormModel', () => {
     let formService: FormService;
+    let alfrescoApiService: AlfrescoApiService;
 
     beforeEach(() => {
-        formService = new FormService(null, null, null);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+
+        formService = new FormService(null, alfrescoApiService, null);
     });
 
     it('should store original json', () => {

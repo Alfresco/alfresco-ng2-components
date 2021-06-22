@@ -63,7 +63,9 @@ import { VersionCompatibilityService } from '../services/version-compatibility.s
         }
     ],
     exports: [
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        CoreModule,
+        TranslateModule
     ]
 })
 export class CoreTestingModule {}
