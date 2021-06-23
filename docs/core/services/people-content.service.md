@@ -34,11 +34,6 @@ Gets information about a Content Services user.
     -   _requestQuery:_ [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts)  - (Optional) maxItems and skipCount used for pagination
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>` - Array of people
 
--   **findPeople**(searchTerm: string, requestQuery?: [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts#32)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>`<br/>
-    Gets a list of people.
-    -   _searchTerm:_ `string` - The term to search for
-    -   _requestQuery:_ [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts)  - (Optional) maxItems and skipCount used for pagination
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>` - Array of people
 ## Details
 
 The class returned by `getPerson` and `getCurrentPerson` is detailed
