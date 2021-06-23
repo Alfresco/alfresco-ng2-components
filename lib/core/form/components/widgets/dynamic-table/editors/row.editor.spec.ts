@@ -24,11 +24,20 @@ import { DynamicTableModel } from './../dynamic-table.widget.model';
 import { RowEditorComponent } from './row.editor';
 import { AlfrescoApiService } from '../../../../../services';
 import { TestBed } from '@angular/core/testing';
+import { CoreTestingModule, setupTestBed } from '../../../../../testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RowEditorComponent', () => {
 
     let component: RowEditorComponent;
     let alfrescoApiService: AlfrescoApiService;
+
+    setupTestBed({
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
+    });
 
     beforeEach(() => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
