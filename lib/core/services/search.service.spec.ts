@@ -22,7 +22,7 @@ import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-fdescribe('SearchService', () => {
+describe('SearchService', () => {
 
     let service: SearchService;
 
@@ -64,6 +64,7 @@ fdescribe('SearchService', () => {
     });
 
     it('should return search results returned from the API', (done) => {
+        spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
         service.getNodeQueryResults('').subscribe(
             (res: any) => {
                 expect(res).toBeDefined();
