@@ -71,7 +71,7 @@ describe('LibraryMembershipDirective', () => {
 
     describe('markMembershipRequest', () => {
         beforeEach(() => {
-            getMembershipSpy = spyOn(directive['sitesApi'], 'listSiteMemberships').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
+            getMembershipSpy = spyOn(directive['sitesApi'], 'getSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
         });
 
         it('should not check membership requests if no entry is selected', fakeAsync(() => {
@@ -112,7 +112,7 @@ describe('LibraryMembershipDirective', () => {
     describe('toggleMembershipRequest', () => {
         beforeEach(() => {
             mockSupportedVersion = false;
-            getMembershipSpy = spyOn(directive['sitesApi'], 'listSiteMembershipRequestsForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
+            getMembershipSpy = spyOn(directive['sitesApi'], 'getSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
             addMembershipSpy = spyOn(directive['sitesApi'], 'createSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
             deleteMembershipSpy = spyOn(directive['sitesApi'], 'deleteSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({}));
         });

@@ -29,10 +29,21 @@ import { Node } from '@alfresco/js-api';
 import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
 import { AlfrescoApiService } from '../../../../services';
 import { TestBed } from '@angular/core/testing';
+import { CoreTestingModule, setupTestBed } from '../../../../testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { CoreModule } from '../../../../core.module';
 
 describe('FormModel', () => {
     let formService: FormService;
     let alfrescoApiService: AlfrescoApiService;
+
+    setupTestBed({
+        imports: [
+            TranslateModule.forRoot(),
+            CoreModule.forRoot(),
+            CoreTestingModule
+        ]
+    });
 
     beforeEach(() => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
