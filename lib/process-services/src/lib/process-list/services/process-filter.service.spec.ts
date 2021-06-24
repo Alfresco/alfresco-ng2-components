@@ -19,15 +19,13 @@ import { TestBed } from '@angular/core/testing';
 import { mockError, fakeProcessFiltersResponse } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
-import { AlfrescoApiService, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
 describe('Process filter', () => {
 
     let service: ProcessFilterService;
-    let apiService: AlfrescoApiService;
-    let alfrescoApi: any;
 
     setupTestBed({
         imports: [
@@ -36,9 +34,7 @@ describe('Process filter', () => {
     });
 
     beforeEach(() => {
-        apiService = TestBed.inject(AlfrescoApiService);
         service = TestBed.inject(ProcessFilterService);
-        alfrescoApi = apiService.getInstance();
     });
 
     describe('filters', () => {
@@ -47,7 +43,7 @@ describe('Process filter', () => {
         let createFilter: jasmine.Spy;
 
         beforeEach(() => {
-            getFilters = spyOn(alfrescoApi.activiti.userFiltersApi, 'getUserProcessInstanceFilters')
+            getFilters = spyOn(service['userFiltersApi'], 'getUserProcessInstanceFilters')
                 .and
                 .returnValue(Promise.resolve(fakeProcessFiltersResponse));
 
@@ -67,7 +63,7 @@ describe('Process filter', () => {
 
             it('should call the API with the correct appId when specified', () => {
                 service.getProcessFilters(226);
-                expect(getFilters).toHaveBeenCalledWith({appId: 226});
+                expect(getFilters).toHaveBeenCalledWith({ appId: 226 });
             });
 
             it('should return the task filter by id', (done) => {
@@ -181,7 +177,8 @@ describe('Process filter', () => {
                 getFilters = getFilters.and.returnValue(Promise.reject(mockError));
 
                 service.getProcessFilters(null).subscribe(
-                    () => {},
+                    () => {
+                    },
                     (res) => {
                         expect(res).toBe(mockError);
                         done();
@@ -194,9 +191,9 @@ describe('Process filter', () => {
         describe('add filter', () => {
 
             beforeEach(() => {
-                createFilter = spyOn(alfrescoApi.activiti.userFiltersApi, 'createUserProcessInstanceFilter')
-                .and
-                .callFake((processfilter: FilterProcessRepresentationModel) => Promise.resolve(processfilter));
+                createFilter = spyOn(service['userFiltersApi'], 'createUserProcessInstanceFilter')
+                    .and
+                    .callFake((processfilter: FilterProcessRepresentationModel) => Promise.resolve(processfilter));
             });
 
             const filter = fakeProcessFiltersResponse.data[0];
@@ -217,7 +214,8 @@ describe('Process filter', () => {
                 createFilter = createFilter.and.returnValue(Promise.reject(mockError));
 
                 service.addProcessFilter(filter).subscribe(
-                    () => {},
+                    () => {
+                    },
                     (res) => {
                         expect(res).toBe(mockError);
                         done();
@@ -228,7 +226,8 @@ describe('Process filter', () => {
             it('should return a default error if no data is returned by the API', (done) => {
                 createFilter = createFilter.and.returnValue(Promise.reject(null));
                 service.addProcessFilter(filter).subscribe(
-                    () => {},
+                    () => {
+                    },
                     (res) => {
                         expect(res).toBe('Server error');
                         done();
