@@ -38,7 +38,7 @@
             border-color: mat-color($accent);
         }
 
-        &-menu+* .mat-menu-panel {
+        &-menu + *.mat-menu-panel {
             box-shadow: 0 0 24px $menu-shadow-color;
             border-radius: 6px;
 

@@ -19,8 +19,6 @@ import { SearchFilterComponent } from './search-filter.component';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { AppConfigService, SearchService, TranslationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
-import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
-import { FacetField } from '../../models/facet-field.interface';
 import { SearchFilterList } from '../../models/search-filter-list.model';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -41,7 +39,6 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { SearchFacetFieldComponent } from '../search-facet-field/search-facet-field.component';
-import { SearchFilterList } from '../../models/search-filter-list.model';
 
 describe('SearchFilterComponent', () => {
     let fixture: ComponentFixture<SearchFilterComponent>;

@@ -42,7 +42,7 @@ import { SearchFilterContainerComponent } from './components/search-filter-conta
 import { SearchDatetimeRangeComponent } from './components/search-datetime-range/search-datetime-range.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
 import { SearchFilterChipsComponent } from './components/search-filter-chips/search-filter-chips.component';
-import { SearchFilterMenuComponent } from './components/search-filter-chips/search-filter-menu/search-filter-menu.component';
+import { SearchFilterMenuCardComponent } from './components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.component';
 import { SearchFacetFieldComponent } from './components/search-facet-field/search-facet-field.component';
 import { SearchWidgetChipComponent } from './components/search-filter-chips/search-widget-chip/search-widget-chip.component';
 import { SearchFacetChipComponent } from './components/search-filter-chips/search-facet-chip/search-facet-chip.component';
@@ -74,7 +74,7 @@ import { SearchFacetChipComponent } from './components/search-filter-chips/searc
         SearchFilterContainerComponent,
         SearchFormComponent,
         SearchFilterChipsComponent,
-        SearchFilterMenuComponent,
+        SearchFilterMenuCardComponent,
         SearchFacetFieldComponent,
         SearchWidgetChipComponent,
         SearchFacetChipComponent
@@ -98,7 +98,7 @@ import { SearchFacetChipComponent } from './components/search-filter-chips/searc
         SearchFilterContainerComponent,
         SearchFormComponent,
         SearchFilterChipsComponent,
-        SearchFilterMenuComponent,
+        SearchFilterMenuCardComponent,
         SearchFacetFieldComponent
     ],
     providers: [

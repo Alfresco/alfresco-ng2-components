@@ -22,7 +22,7 @@
                 color: unset;
             }
 
-            &.mat-standard-chip:after {
+            &.mat-standard-chip::after {
                 background: $unselected-background;
                 color: unset;
             }
@@ -32,7 +32,7 @@
             }
         }
 
-        &.toggle-chip {
+        &.adf-search-toggle-chip {
             background: $selected-chip-background;
             border: 2px solid  mat-color($accent);
 
@@ -41,19 +41,19 @@
             }
         }
 
-        .search-filter-placeholder {
+        .adf-search-filter-placeholder {
             flex: 1 1 auto;
             white-space: nowrap;
             color: $chip-placeholder;
         }
 
-        .search-filter-ellipsis {
+        .adf-search-filter-ellipsis {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
-        .search-filter-value {
+        .adf-search-filter-value {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -64,7 +64,7 @@
             padding-left: 5px;
         }
 
-        &-menu+* .cdk-overlay-pane > div.mat-menu-panel {
+        &-menu + *.cdk-overlay-pane > div.mat-menu-panel {
             min-width: 320px;
             box-shadow: 0 0 24px $menu-shadow-color;
             border-radius: 12px;

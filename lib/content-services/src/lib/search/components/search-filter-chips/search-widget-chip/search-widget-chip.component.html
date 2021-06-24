@@ -1,16 +1,16 @@
 <mat-chip [attr.data-automation-id]="'search-filter-chip-' + category.name"
           disableRipple
           class="adf-search-filter-chip"
-          [class.toggle-chip]="(widget.getDisplayValue() | async) || menuTrigger.menuOpen"
+          [class.adf-search-toggle-chip]="(widget.getDisplayValue() | async) || menuTrigger.menuOpen"
           [matMenuTriggerFor]="menu"
           (onMenuOpen)="onMenuOpen()"
           [attr.title]="widget.getDisplayValue() | async"
           #menuTrigger="matMenuTrigger">
-    <span class="search-filter-placeholder">
-        <span class="search-filter-ellipsis">{{ category.name | translate }}</span>
+    <span class="adf-search-filter-placeholder">
+        <span class="adf-search-filter-ellipsis">{{ category.name | translate }}</span>
         <ng-container *ngIf="widget.getDisplayValue() | async">:</ng-container>
     </span>
-    <span class="search-filter-value" *ngIf="widget.getDisplayValue() | async as displayValue">
+    <span class="adf-search-filter-value" *ngIf="widget.getDisplayValue() | async as displayValue">
         &nbsp;{{ displayValue | translate }}
     </span>
     <mat-icon>keyboard_arrow_down</mat-icon>
@@ -18,9 +18,9 @@
 
 <mat-menu #menu="matMenu" backdropClass="adf-search-filter-chip-menu" (closed)="onClosed()">
     <div #menuContainer [attr.data-automation-id]="'search-field-' + category.name">
-        <adf-search-filter-menu (click)="$event.stopPropagation()"
-                                (keydown.tab)="$event.stopPropagation();"
-                                (close)="menuTrigger.closeMenu()">
+        <adf-search-filter-menu-card (click)="$event.stopPropagation()"
+                                     (keydown.tab)="$event.stopPropagation();"
+                                     (close)="menuTrigger.closeMenu()">
 
             <ng-container ngProjectAs="filter-title">
                 {{ category.name | translate }} <ng-container *ngIf="category.component.settings.unit">({{category.component.settings.unit}})</ng-container>
@@ -34,7 +34,7 @@
                 </adf-search-widget-container>
             </ng-container>
 
-            <ng-container ngProjectAs="filter-actions" (click)="menuTrigger.closeMenu()">
+            <ng-container ngProjectAs="filter-actions">
                 <button mat-flat-button color="accent" (click)="widget.resetInnerWidget()" id="cancel-filter-button">
                     {{ 'SEARCH.FILTER.BUTTONS.REMOVE' | translate }}
                 </button>
@@ -42,6 +42,6 @@
                     {{ 'SEARCH.FILTER.BUTTONS.APPLY' | translate }}
                 </button>
             </ng-container>
-        </adf-search-filter-menu>
+        </adf-search-filter-menu-card>
     </div>
 </mat-menu>

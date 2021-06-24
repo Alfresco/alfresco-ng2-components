@@ -1,10 +1,10 @@
 <div class="adf-search-filter-facet">
     <div class="adf-facet-result-filter">
-        <div class="facet-search-container">
-            <button mat-icon-button class="facet-search-icon" tabindex="-1">
+        <div class="adf-facet-search-container">
+            <button mat-icon-button class="adf-facet-search-icon" tabindex="-1">
                 <mat-icon>search</mat-icon>
             </button>
-            <mat-form-field class="facet-search-field" floatLabel="never">
+            <mat-form-field class="adf-facet-search-field" floatLabel="never">
                 <input matInput placeholder="{{ 'SEARCH.FILTER.ACTIONS.SEARCH' | translate }}"
                        [attr.data-automation-id]="'facet-result-filter-'+field.label" [(ngModel)]="field.buckets.filterText">
                 <button *ngIf="field.buckets.filterText" mat-button matSuffix mat-icon-button

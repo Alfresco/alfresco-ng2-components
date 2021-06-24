@@ -18,11 +18,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'adf-search-filter-menu',
-  templateUrl: './search-filter-menu.component.html',
-  styleUrls: ['./search-filter-menu.component.scss']
+  selector: 'adf-search-filter-menu-card',
+  templateUrl: './search-filter-menu-card.component.html',
+  styleUrls: ['./search-filter-menu-card.component.scss']
 })
-export class SearchFilterMenuComponent {
+export class SearchFilterMenuCardComponent {
     @Output()
     close = new EventEmitter();
 

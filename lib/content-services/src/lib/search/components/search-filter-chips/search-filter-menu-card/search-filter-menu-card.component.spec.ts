@@ -16,14 +16,14 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SearchFilterMenuComponent } from './search-filter-menu.component';
+import { SearchFilterMenuCardComponent } from './search-filter-menu-card.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { setupTestBed } from '@alfresco/adf-core';
 
 describe('SearchFilterMenuComponent', () => {
-  let component: SearchFilterMenuComponent;
-  let fixture: ComponentFixture<SearchFilterMenuComponent>;
+  let component: SearchFilterMenuCardComponent;
+  let fixture: ComponentFixture<SearchFilterMenuCardComponent>;
 
   setupTestBed({
         imports: [
@@ -33,7 +33,7 @@ describe('SearchFilterMenuComponent', () => {
     });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchFilterMenuComponent);
+    fixture = TestBed.createComponent(SearchFilterMenuCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

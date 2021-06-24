@@ -34,13 +34,13 @@
         .adf-facet-result-filter {
             padding-bottom: 16px;
 
-            .facet-search-container {
+            .adf-facet-search-container {
                 border-radius: 6px;
                 background: rgba(33, 33, 33, 0.03);
                 display: flex;
                 height: 32px;
 
-                .facet-search-icon {
+                .adf-facet-search-icon {
                     width: 27px;
                     margin-top: -4px;
                     .mat-icon {
@@ -48,7 +48,7 @@
                     }
                 }
 
-                .facet-search-field  {
+                .adf-facet-search-field {
                     padding: 2px;
                     flex: 1;
                     margin-top: -16px;

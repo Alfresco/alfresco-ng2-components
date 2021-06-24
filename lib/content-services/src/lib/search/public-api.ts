@@ -54,7 +54,7 @@ export * from './components/search-datetime-range/search-datetime-range.componen
 export * from './components/search-form/search-form.component';
 export * from './services/search-facet-filters.service';
 export * from './components/search-filter-chips/search-filter-chips.component';
-export * from './components/search-filter-chips/search-filter-menu/search-filter-menu.component';
+export * from './components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.component';
 export * from './components/search-facet-field/search-facet-field.component';
 
 export * from './search.module';
