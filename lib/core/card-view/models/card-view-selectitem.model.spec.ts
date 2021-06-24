@@ -40,7 +40,15 @@ describe('CardViewSelectItemModel', () => {
 
             itemModel.displayValue.subscribe((value) => {
                 expect(value).toBe(mockData[1].label);
+                expect(itemModel.displayNoneOption).toBe(false);
             });
+        }));
+
+        it('should return the value if it is present', fakeAsync(() => {
+            properties.displayNoneOption = true;
+            const itemModel = new CardViewSelectItemModel(properties);
+
+            expect(itemModel.displayNoneOption).toBe(true);
         }));
     });
 });

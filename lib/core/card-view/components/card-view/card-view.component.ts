@@ -38,7 +38,7 @@ export class CardViewComponent {
 
     /** Toggles whether or not to display none option. */
     @Input()
-    displayNoneOption: boolean;
+    displayNoneOption: boolean = true;
 
     /** Toggles whether or not to display clear action. */
     @Input()

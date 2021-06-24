@@ -60,6 +60,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     ngOnInit() {
+        console.log
         this.getOptions()
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((options: CardViewSelectItemOption<string>[]) => {

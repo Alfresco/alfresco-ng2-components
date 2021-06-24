@@ -23,6 +23,9 @@ import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewComponent } from './card-view.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { CardViewSelectItemModel } from 'core/card-view/models/card-view-selectitem.model';
+import { of } from 'rxjs';
+import { CardViewSelectItemOption } from 'core/card-view/interfaces/card-view-selectitem-properties.interface';
 
 describe('CardViewComponent', () => {
 
@@ -139,5 +142,90 @@ describe('CardViewComponent', () => {
         const value = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-some-key"]'));
         expect(value).not.toBeNull();
         expect(value.nativeElement.value).toBe('default value');
+    });
+
+    it('should render the select element with the None option when not set in the properties', async () => {
+        const options: CardViewSelectItemOption<string>[] = [{'label' : 'Option 1', 'key': '1'}, {'label' : 'Option 2', 'key': '2'}];
+        component.properties = [new CardViewSelectItemModel({
+            label: 'My default label',
+            value: '1',
+            default: 'default value',
+            key: 'some-key',
+            editable: true,
+            options$: of(options)
+        })];
+        component.editable = true;
+        component.displayEmpty = false;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const labelValue = fixture.debugElement.query(By.css('adf-card-view-selectitem .mat-select-trigger'));
+        labelValue.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const currentOptions = document.querySelectorAll('mat-option');
+        expect(currentOptions.length).toBe(3);
+        expect(currentOptions[0].innerHTML).toContain('CORE.CARDVIEW.NONE');
+        expect(currentOptions[1].innerHTML).toContain(options[0].label);
+        expect(currentOptions[2].innerHTML).toContain(options[1].label);
+    });
+
+    it('should render the select element with the None option when set true in the properties', async () => {
+        const options: CardViewSelectItemOption<string>[] = [{'label' : 'Option 1', 'key': '1'}, {'label' : 'Option 2', 'key': '2'}];
+        component.properties = [new CardViewSelectItemModel({
+            label: 'My default label',
+            value: '1',
+            default: 'default value',
+            key: 'some-key',
+            editable: true,
+            displayNoneOption: true,
+            options$: of(options)
+        })];
+        component.editable = true;
+        component.displayEmpty = false;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const labelValue = fixture.debugElement.query(By.css('adf-card-view-selectitem .mat-select-trigger'));
+        labelValue.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const currentOptions = document.querySelectorAll('mat-option');
+        expect(currentOptions.length).toBe(3);
+        expect(currentOptions[0].innerHTML).toContain('CORE.CARDVIEW.NONE');
+        expect(currentOptions[1].innerHTML).toContain(options[0].label);
+        expect(currentOptions[2].innerHTML).toContain(options[1].label);
+    });
+
+    it('should not render the select element with the None option when set false in the properties', async () => {
+        const options: CardViewSelectItemOption<string>[] = [{'label' : 'Option 1', 'key': '1'}, {'label' : 'Option 2', 'key': '2'}];
+        component.properties = [new CardViewSelectItemModel({
+            label: 'My default label',
+            value: '1',
+            default: 'default value',
+            key: 'some-key',
+            editable: true,
+            displayNoneOption: false,
+            options$: of(options)
+        })];
+        component.editable = true;
+        component.displayEmpty = false;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const labelValue = fixture.debugElement.query(By.css('adf-card-view-selectitem .mat-select-trigger'));
+        labelValue.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const currentOptions = document.querySelectorAll('mat-option');
+        expect(currentOptions.length).toBe(2);
+        expect(currentOptions[0].innerHTML).toContain(options[0].label);
+        expect(currentOptions[1].innerHTML).toContain(options[1].label);
     });
 });
