@@ -40,15 +40,22 @@ describe('CardViewSelectItemModel', () => {
 
             itemModel.displayValue.subscribe((value) => {
                 expect(value).toBe(mockData[1].label);
-                expect(itemModel.displayNoneOption).toBe(false);
+                expect(itemModel.displayNoneOption).toBe(true);
             });
         }));
 
-        it('should return the value if it is present', fakeAsync(() => {
+        it('should set true for none option when passed through the properties', fakeAsync(() => {
             properties.displayNoneOption = true;
             const itemModel = new CardViewSelectItemModel(properties);
 
             expect(itemModel.displayNoneOption).toBe(true);
+        }));
+
+        it('should set false for none option when passed through the properties', fakeAsync(() => {
+            properties.displayNoneOption = false;
+            const itemModel = new CardViewSelectItemModel(properties);
+
+            expect(itemModel.displayNoneOption).toBe(false);
         }));
     });
 });
