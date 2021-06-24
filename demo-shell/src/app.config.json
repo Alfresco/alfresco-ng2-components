@@ -183,11 +183,7 @@
           "label": "SEARCH.FACET_QUERIES.XXTRALARGE",
           "group": "Size facet queries"
         }
-      ],
-      "settings": {
-        "hideDefaultAction": true,
-        "allowUpdateOnChange": false
-      }
+      ]
     },
     "facetIntervals": {
       "expanded": true,
@@ -242,11 +238,7 @@
               "end": "2017",
               "endInclusive": false
             }
-          ],
-          "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true
-          }
+          ]
         }
       ]
     },
@@ -259,8 +251,6 @@
         "component": {
           "selector": "text",
           "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true,
             "pattern": "cm:name:'(.*?)'",
             "field": "cm:name",
             "placeholder": "Enter the name"
@@ -274,8 +264,6 @@
         "component": {
           "selector": "check-list",
           "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true,
             "pageSize": 5,
             "operator": "OR",
             "options": [
@@ -298,9 +286,6 @@
         "component": {
           "selector": "slider",
           "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true,
-            "unit": "Bytes",
             "field": "cm:content.size",
             "min": 0,
             "max": 18,
@@ -311,14 +296,11 @@
       },
       {
         "id": "contentSizeRange",
-        "name": "Content Size",
+        "name": "Content Size (range)",
         "enabled": true,
         "component": {
           "selector": "number-range",
           "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true,
-            "unit": "Bytes",
             "field": "cm:content.size",
             "format": "[{FROM} TO {TO}]"
           }
@@ -326,13 +308,11 @@
       },
       {
         "id": "createdDateRange",
-        "name": "Created Date",
+        "name": "Created Date (range)",
         "enabled": true,
         "component": {
           "selector": "date-range",
           "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true,
             "field": "cm:created",
             "dateFormat": "DD-MMM-YY",
             "maxDate": "today"
@@ -346,8 +326,6 @@
         "component": {
           "selector": "radio",
           "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true,
             "field": null,
             "pageSize": 5,
             "options": [
@@ -388,508 +366,8 @@
         }
       ]
     },
-    "name": "Pending claims"
-  },
-    {
-      "filterWithContains": true,
-      "aca:fields": ["cm:name", "cm:title", "cm:description", "TEXT", "TAG"],
-      "include": ["path", "allowableOperations", "properties"],
-      "sorting": {
-        "options": [
-          {
-            "key": "score",
-            "label": "SEARCH.SORT.RELEVANCE",
-            "type": "SCORE",
-            "field": "score",
-            "ascending": false
-          },
-          {
-            "key": "name",
-            "label": "SEARCH.SORT.FILENAME",
-            "type": "FIELD",
-            "field": "cm:name",
-            "ascending": true
-          },
-          {
-            "key": "title",
-            "label": "SEARCH.SORT.TITLE",
-            "type": "FIELD",
-            "field": "cm:title",
-            "ascending": true
-          },
-          {
-            "key": "modified",
-            "label": "SEARCH.SORT.MODIFIED_DATE",
-            "type": "FIELD",
-            "field": "cm:modified",
-            "ascending": true
-          },
-          {
-            "key": "modifier",
-            "label": "SEARCH.SORT.MODIFIER",
-            "type": "FIELD",
-            "field": "cm:modifier",
-            "ascending": true
-          },
-          {
-            "key": "created",
-            "label": "SEARCH.SORT.CREATE_DATE",
-            "type": "FIELD",
-            "field": "cm:created",
-            "ascending": true
-          },
-          {
-            "key": "content.sizeInBytes",
-            "label": "SEARCH.SORT.SIZE",
-            "type": "FIELD",
-            "field": "content.size",
-            "ascending": true
-          },
-          {
-            "key": "content.mimetype",
-            "label": "SEARCH.SORT.TYPE",
-            "type": "FIELD",
-            "field": "content.mimetype",
-            "ascending": true
-          }
-        ],
-        "defaults": [
-          {
-            "key": "score",
-            "type": "SCORE",
-            "field": "score",
-            "ascending": false
-          }
-        ]
-      },
-      "aca:triggeredOnChange": false,
-      "resetButton": true,
-      "filterQueries": [
-        { "query": "+TYPE:'cm:folder' OR +TYPE:'cm:content'" },
-        {
-          "query": "-TYPE:'cm:thumbnail' AND -TYPE:'cm:failedThumbnail' AND -TYPE:'cm:rating'"
-        },
-        { "query": "-cm:creator:System AND -QNAME:comment" },
-        {
-          "query": "-TYPE:'st:site' AND -ASPECT:'st:siteContainer' AND -ASPECT:'sys:hidden'"
-        },
-        {
-          "query": "-TYPE:'dl:dataList' AND -TYPE:'dl:todoList' AND -TYPE:'dl:issue'"
-        },
-        { "query": "-TYPE:'fm:topic' AND -TYPE:'fm:post'" },
-        { "query": "-TYPE:'lnk:link'" },
-        { "query": "-PNAME:'0/wiki'" }
-      ],
-      "facetFields": {
-        "expanded": true,
-        "fields": [
-          {
-            "mincount": 1,
-            "field": "content.mimetype",
-            "label": "SEARCH.FACET_FIELDS.FILE_TYPE",
-            "settings": {
-              "allowUpdateOnChange": false,
-              "hideDefaultAction": true
-            }          },
-          {
-            "mincount": 1,
-            "field": "creator",
-            "label": "SEARCH.FACET_FIELDS.CREATOR",
-            "settings": {
-              "allowUpdateOnChange": false,
-              "hideDefaultAction": true
-            }
-          },
-          {
-            "mincount": 1,
-            "field": "modifier",
-            "label": "SEARCH.FACET_FIELDS.MODIFIER",
-            "settings": {
-              "allowUpdateOnChange": false,
-              "hideDefaultAction": true
-            }},
-          {
-            "mincount": 1,
-            "field": "SITE",
-            "label": "SEARCH.FACET_FIELDS.LOCATION",
-            "settings": {
-              "allowUpdateOnChange": false,
-              "hideDefaultAction": true
-            }
-          }
-        ]
-      },
-      "facetQueries": {
-        "label": "SEARCH.CATEGORIES.MODIFIED_DATE",
-        "expanded": true,
-        "queries": [
-          {
-            "label": "SEARCH.FACET_QUERIES.TODAY",
-            "query": "cm:modified:[TODAY to TODAY]"
-          },
-          {
-            "label": "SEARCH.FACET_QUERIES.THIS_WEEK",
-            "query": "cm:modified:[NOW/DAY-7DAYS TO NOW/DAY+1DAY]"
-          },
-          {
-            "label": "SEARCH.FACET_QUERIES.THIS_MONTH",
-            "query": "cm:modified:[NOW/DAY-1MONTH TO NOW/DAY+1DAY]"
-          },
-          {
-            "label": "SEARCH.FACET_QUERIES.LAST_6_MONTHS",
-            "query": "cm:modified:[NOW/DAY-6MONTHS TO NOW/DAY+1DAY]"
-          },
-          {
-            "label": "SEARCH.FACET_QUERIES.THIS_YEAR",
-            "query": "cm:modified:[NOW/DAY-1YEAR TO NOW/DAY+1DAY]"
-          }
-        ],
-        "settings": {
-          "allowUpdateOnChange": false,
-          "hideDefaultAction": true
-        }
-      },
-      "categories": [
-        {
-          "id": "size",
-          "name": "SEARCH.CATEGORIES.SIZE",
-          "enabled": true,
-          "component": {
-            "selector": "check-list",
-            "settings": {
-                "allowUpdateOnChange": false,
-                "hideDefaultAction": true,
-              "options": [
-                {
-                  "name": "SEARCH.CATEGORIES.SIZE_OPTIONS.SMALL",
-                  "value": "content.size:[0 TO 1048576>"
-                },
-                {
-                  "name": "SEARCH.CATEGORIES.SIZE_OPTIONS.MEDIUM",
-                  "value": "content.size:[1048576 TO 52428800]"
-                },
-                {
-                  "name": "SEARCH.CATEGORIES.SIZE_OPTIONS.LARGE",
-                  "value": "content.size:<52428800 TO 524288000]"
-                },
-                {
-                  "name": "SEARCH.CATEGORIES.SIZE_OPTIONS.HUGE",
-                  "value": "content.size:<524288000 TO MAX]"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "id": "createdDateRange",
-          "name": "SEARCH.CATEGORIES.CREATED_DATE",
-          "enabled": true,
-          "component": {
-            "selector": "date-range",
-            "settings": {
-                "allowUpdateOnChange": false,
-                "hideDefaultAction": true,
-                "field": "cm:created",
-              "dateFormat": "DD-MMM-YY",
-              "maxDate": "today"
-            }
-          }
-        }
-      ],
-      "name": "Payouts",
-      "default": true
-    },
-    {
-    "filterWithContains": true,
-    "app:fields": [
-      "cm:name",
-      "cm:title",
-      "cm:description",
-      "ia:whatEvent",
-      "ia:descriptionEvent",
-      "lnk:title",
-      "lnk:description",
-      "TEXT",
-      "TAG"
-    ],
-    "include": [
-      "path",
-      "allowableOperations",
-      "properties"
-    ],
-    "sorting": {
-      "options": [
-        {
-          "key": "name",
-          "label": "Name",
-          "type": "FIELD",
-          "field": "cm:name",
-          "ascending": true
-        },
-        {
-          "key": "content.sizeInBytes",
-          "label": "Size",
-          "type": "FIELD",
-          "field": "content.size",
-          "ascending": true
-        },
-        {
-          "key": "createdByUser",
-          "label": "Author",
-          "type": "FIELD",
-          "field": "cm:creator",
-          "ascending": true
-        },
-        {
-          "key": "createdAt",
-          "label": "Created",
-          "type": "FIELD",
-          "field": "cm:created",
-          "ascending": true
-        },
-        {
-          "key": "score",
-          "label": "Relevance",
-          "type": "SCORE",
-          "field": "score",
-          "ascending": false
-        }
-      ],
-      "defaults": [
-        {
-          "key": "score",
-          "type": "FIELD",
-          "field": "score",
-          "ascending": false
-        }
-      ]
-    },
-    "resetButton": true,
-    "filterQueries": [
-      {
-        "query": "TYPE:'cm:folder'"
-      },
-      {
-        "query": "NOT cm:creator:System"
-      }
-    ],
-    "facetFields": {
-      "expanded": true,
-      "fields": [
-        {
-          "field": "content.mimetype",
-          "mincount": 1,
-          "label": "Field Type",
-          "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true
-          }
-        },
-        {
-          "field": "content.size",
-          "mincount": 1,
-          "label": "Field Size",
-          "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true
-          }
-        },
-        {
-          "field": "creator",
-          "mincount": 1,
-          "label": "Field created",
-          "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true
-          }
-        },
-        {
-          "field": "modifier",
-          "mincount": 1,
-          "label": "Field Modifier",
-          "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true
-          }
-        },
-        {
-          "field": "created",
-          "mincount": 1,
-          "label": "Field Creted",
-          "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true
-          }
-        }
-      ]
-    },
-    "facetQueries": {
-      "label": "SEARCH.FACET_QUERIES.MY_FACET_QUERIES",
-      "pageSize": 5,
-      "expanded": true,
-      "mincount": 1,
-      "queries": [
-        {
-          "query": "created:2019",
-          "label": "SEARCH.FACET_QUERIES.CREATED_THIS_YEAR"
-        },
-        {
-          "query": "content.mimetype:text/html",
-          "label": "SEARCH.FACET_QUERIES.MIMETYPE",
-          "group": "Type facet queries"
-        },
-        {
-          "query": "content.size:[0 TO 10240]",
-          "label": "SEARCH.FACET_QUERIES.XTRASMALL",
-          "group": "Size facet queries"
-        },
-        {
-          "query": "content.size:[10240 TO 102400]",
-          "label": "SEARCH.FACET_QUERIES.SMALL",
-          "group": "Size facet queries"
-        },
-        {
-          "query": "content.size:[102400 TO 1048576]",
-          "label": "SEARCH.FACET_QUERIES.MEDIUM",
-          "group": "Size facet queries"
-        },
-        {
-          "query": "content.size:[1048576 TO 16777216]",
-          "label": "SEARCH.FACET_QUERIES.LARGE",
-          "group": "Size facet queries"
-        },
-        {
-          "query": "content.size:[16777216 TO 134217728]",
-          "label": "SEARCH.FACET_QUERIES.XTRALARGE",
-          "group": "Size facet queries"
-        },
-        {
-          "query": "content.size:[134217728 TO MAX]",
-          "label": "SEARCH.FACET_QUERIES.XXTRALARGE",
-          "group": "Size facet queries"
-        }
-      ],
-      "settings": {
-        "allowUpdateOnChange": false,
-        "hideDefaultAction": true
-      }
-    },
-    "facetIntervals": {
-      "expanded": true,
-      "intervals": [
-        {
-          "label": "The Created",
-          "field": "cm:created",
-          "sets": [
-            {
-              "label": "lastYear",
-              "start": "2018",
-              "end": "2019",
-              "endInclusive": false
-            },
-            {
-              "label": "currentYear",
-              "start": "NOW/YEAR",
-              "end": "NOW/YEAR+1YEAR"
-            },
-            {
-              "label": "earlier",
-              "start": "*",
-              "end": "2018",
-              "endInclusive": false
-            }
-          ],
-          "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true
-          }
-        },
-        {
-          "label": "TheModified",
-          "field": "cm:modified",
-          "sets": [
-            {
-              "label": "2017",
-              "start": "2017",
-              "end": "2018",
-              "endInclusive": false
-            },
-            {
-              "label": "2017-2018",
-              "start": "2017",
-              "end": "2018",
-              "endInclusive": true
-            },
-            {
-              "label": "currentYear",
-              "start": "NOW/YEAR",
-              "end": "NOW/YEAR+1YEAR"
-            },
-            {
-              "label": "earlierThan2017",
-              "start": "*",
-              "end": "2017",
-              "endInclusive": false
-            }
-          ],
-          "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true
-          }
-        }
-      ]
-    },
-    "categories": [
-      {
-        "id": "queryType",
-        "name": "Type",
-        "enabled": true,
-        "component": {
-          "selector": "radio",
-          "settings": {
-            "allowUpdateOnChange": false,
-            "hideDefaultAction": true,
-            "field": null,
-            "pageSize": 5,
-            "options": [
-              {
-                "name": "APP.SEARCH.RADIO.NONE",
-                "value": "",
-                "default": true
-              },
-              {
-                "name": "APP.SEARCH.RADIO.ALL",
-                "value": "TYPE:'cm:folder' OR TYPE:'cm:content'"
-              },
-              {
-                "name": "APP.SEARCH.RADIO.FOLDER",
-                "value": "TYPE:'cm:folder'"
-              },
-              {
-                "name": "APP.SEARCH.RADIO.DOCUMENT",
-                "value": "TYPE:'cm:content'"
-              }
-            ]
-          }
-        }
-      }
-    ],
-    "highlight": {
-      "prefix": " ",
-      "postfix": " ",
-      "mergeContiguous": true,
-      "fields": [
-        {
-          "field": "cm:title"
-        },
-        {
-          "field": "description",
-          "prefix": "(",
-          "postfix": ")"
-        }
-      ]
-    },
-    "name": "New Application"
+    "name": "SEARCH_FORMS.ALL",
+    "default": true
   }],
   "search-headers": {
     "filterWithContains": true,
