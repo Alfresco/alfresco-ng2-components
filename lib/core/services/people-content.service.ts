@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
-import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination, QueriesApi } from '@alfresco/js-api';
+import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
 
@@ -45,16 +45,11 @@ export class PeopleContentService {
     hasCheckedIsContentAdmin: boolean = false;
 
     private _peopleApi: PeopleApi;
-    private _queriesApi: QueriesApi;
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
 
     get peopleApi() {
         return this._peopleApi || (this._peopleApi = new PeopleApi(this.apiService.getInstance()));
-    }
-
-    get queriesApi() {
-        return this._queriesApi || (this._queriesApi = new QueriesApi(this.apiService.getInstance()));
     }
 
     /**
@@ -85,25 +80,6 @@ export class PeopleContentService {
      */
     listPeople(requestQuery?: PeopleContentQueryRequestModel): Observable<PeopleContentQueryResponse> {
         const promise = this.peopleApi.listPeople(requestQuery);
-        return from(promise).pipe(
-            map(response => {
-                return {
-                    pagination: response.list.pagination,
-                    entries: response.list.entries.map((person: PersonEntry) => <EcmUserModel> person.entry)
-                };
-            }),
-            catchError((err) => this.handleError(err))
-        );
-    }
-
-    /**
-     * Gets a list of people that match the given search criteria.
-     * @param searchTerm The term to search for
-     * @param requestQuery maxItems and skipCount parameters supported by JS-API
-     * @returns Response containing pagination and list of entries
-     */
-    findPeople(searchTerm: string, requestQuery?: PeopleContentQueryRequestModel): Observable<PeopleContentQueryResponse> {
-        const promise = this.queriesApi.findPeople(searchTerm, { ...requestQuery });
         return from(promise).pipe(
             map(response => {
                 return {
