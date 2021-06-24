@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { SearchCategory } from '../search';
+
 export const expandableCategories = [
     {
         id: 'cat-1',
@@ -68,7 +70,7 @@ export const expandedCategories = [
     }
 ];
 
-export const simpleCategories = [
+export const simpleCategories: SearchCategory[] = [
     {
         id: 'queryName',
         name: 'Name',
@@ -76,7 +78,9 @@ export const simpleCategories = [
         enabled: true,
         component: {
             selector: 'text',
-            settings: {}
+            settings: {
+                field: ''
+            }
         }
     },
     {
@@ -87,7 +91,7 @@ export const simpleCategories = [
         component: {
             selector: 'check-list',
             settings: {
-                'field': null,
+                'field': 'check-list',
                 'pageSize': 5,
                 'options': [
                     { 'name': 'Folder', 'value': "TYPE:'cm:folder'" },
@@ -624,6 +628,7 @@ export const mockContentSizeResponseBucket = {
     };
 
 export function getMockSearchResultWithResponseBucket() {
-    mockSearchResult.list.context.facets[3].buckets.push(mockContentSizeResponseBucket);
-    return mockSearchResult;
+    const cloneResult = JSON.parse(JSON.stringify( mockSearchResult));
+    cloneResult.list.context.facets[3].buckets.push(mockContentSizeResponseBucket);
+    return cloneResult;
 }

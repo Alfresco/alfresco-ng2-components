@@ -15,30 +15,29 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { Component, EventEmitter, Inject, Output, ViewEncapsulation } from '@angular/core';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchForm } from '../../models/search-form.interface';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 
 @Component({
   selector: 'adf-search-form',
-  templateUrl: './search-form.component.html'
+  templateUrl: './search-form.component.html',
+  styleUrls: ['./search-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class SearchFormComponent implements OnInit {
+export class SearchFormComponent {
     @Output()
     formChange: EventEmitter<SearchForm> = new EventEmitter<SearchForm>();
 
-    selected: number;
-    searchForms: SearchForm[] = [];
-
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilder: SearchQueryBuilderService) {}
-
-    ngOnInit(): void {
-      this.searchForms = this.queryBuilder.getSearchConfigurationDetails();
-      this.selected = this.searchForms.find(form => form.selected)?.index;
+    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService) {
     }
 
-    onSelectionChange(index: number) {
-        this.formChange.emit(this.searchForms[index]);
+    onSelectionChange(form: SearchForm) {
+        this.formChange.emit(form);
+    }
+
+    getSelected(forms: SearchForm[]): string {
+        return forms.find((form) => form.selected)?.name;
     }
 }

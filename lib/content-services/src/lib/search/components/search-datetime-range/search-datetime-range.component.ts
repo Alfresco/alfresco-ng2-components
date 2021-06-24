@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { OnInit, Component, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { Moment } from 'moment';
 import { Subject } from 'rxjs';
@@ -64,6 +64,8 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     fromMaxDatetime: any;
     isActive = false;
     startValue: any;
+    enableChangeUpdate: boolean;
+    displayValue$: Subject<string> = new Subject<string>();
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -119,6 +121,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         });
 
         this.setFromMaxDatetime();
+        this.enableChangeUpdate = this.settings?.allowUpdateOnChange ?? true;
     }
 
     ngOnDestroy() {
@@ -134,6 +137,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
             const end = moment.utc(model.to).endOf('minute').format();
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
+            this.updateDisplayValue();
             this.context.update();
         }
     }
@@ -149,8 +153,16 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     getCurrentValue(): DatetimeRangeValue {
         return {
             from: this.dateAdapter.format(this.form.value.from, this.datetimePickerFormat),
-            to: this.dateAdapter.format(this.form.value.from, this.datetimePickerFormat)
+            to: this.dateAdapter.format(this.form.value.to, this.datetimePickerFormat)
         };
+    }
+
+    updateDisplayValue(): void {
+        if (this.form.invalid || this.form.pristine) {
+            this.displayValue$.next('');
+        } else {
+            this.displayValue$.next(`${this.dateAdapter.format(this.form.value.from, this.datetimePickerFormat)} - ${this.dateAdapter.format(this.form.value.to, this.datetimePickerFormat)}`);
+        }
     }
 
     setValue(parsedDate: string) {
@@ -166,7 +178,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         this.submitValues();
     }
 
-    reset() {
+    clear() {
         this.isActive = false;
         this.form.reset({
             from: '',
@@ -174,9 +186,24 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         });
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
-            this.context.update();
+        }
+
+        if (this.id && this.context && this.enableChangeUpdate) {
+            this.updateDisplayValue();
+            this.updateQuery();
         }
         this.setFromMaxDatetime();
+    }
+
+    reset() {
+        this.clear();
+        this.updateQuery();
+    }
+
+    private updateQuery() {
+        if (this.id && this.context) {
+            this.context.update();
+        }
     }
 
     onChangedHandler(event: any, formControl: FormControl) {

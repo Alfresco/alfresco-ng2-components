@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+
+// Background palette for light themes.
+$mat-light-theme-background: (
+    status-bar: map_get($mat-grey, 300),
+    app-bar:    map_get($mat-grey, 100),
+    background: map_get($mat-grey, 50),
+    hover:      rgba(black, 0.04), // TODO(kara): check style with Material Design UX
+    card:       white,
+    dialog:     white,
+    disabled-button: rgba(black, 0.12),
+    raised-button: white,
+    focused-button: $dark-focused,
+    selected-button: map_get($mat-grey, 300),
+    selected-disabled-button: map_get($mat-grey, 400),
+    disabled-button-toggle: map_get($mat-grey, 200),
+    unselected-chip: #21212108,
+    disabled-list-option: map_get($mat-grey, 200),
+    tooltip: map_get($mat-grey, 700),
+);
+

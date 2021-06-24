@@ -16,10 +16,9 @@
  */
 
 import { Component } from '@angular/core';
-import { setupTestBed } from '@alfresco/adf-core';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SelectedBucket } from '../search-filter/search-filter.component';
+import { SearchFacetFiltersService, SelectedBucket } from '../../services/search-facet-filters.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -43,20 +42,21 @@ class TestComponent {
 describe('SearchChipListComponent', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
-
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        declarations: [
-            TestComponent
-        ]
-    });
+    let searchFacetFiltersService: SearchFacetFiltersService;
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            declarations: [
+                TestComponent
+            ]
+        });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
+        searchFacetFiltersService = TestBed.inject(SearchFacetFiltersService);
     });
 
     it('should display clear button only when entries present', () => {
@@ -65,7 +65,7 @@ describe('SearchChipListComponent', () => {
         let clearButton = fixture.debugElement.query(By.css(`[data-automation-id="reset-filter"]`));
         expect(clearButton).toBeNull();
 
-        component.searchFilter.selectedBuckets = [{
+        searchFacetFiltersService.selectedBuckets = [{
             bucket: {
                 count: 1,
                 label: 'test',
@@ -79,7 +79,7 @@ describe('SearchChipListComponent', () => {
     });
 
     it('should reflect changes in the search filter', () => {
-        const selectedBuckets = component.searchFilter.selectedBuckets;
+        const selectedBuckets = searchFacetFiltersService.selectedBuckets;
         fixture.detectChanges();
 
         let chips = fixture.debugElement.queryAll(By.css(`[data-automation-id="chip-list-entry"]`));
@@ -100,9 +100,9 @@ describe('SearchChipListComponent', () => {
     });
 
     it('should remove the entry upon remove button click', async () => {
-        spyOn(component.searchFilter, 'unselectFacetBucket').and.callThrough();
+        spyOn(searchFacetFiltersService, 'unselectFacetBucket').and.callThrough();
 
-        component.searchFilter.selectedBuckets = [
+        searchFacetFiltersService.selectedBuckets = [
             {
                 bucket: {
                     count: 1,
@@ -119,15 +119,15 @@ describe('SearchChipListComponent', () => {
         chips[0].nativeElement.click();
 
         await fixture.whenStable();
-        expect(component.searchFilter.unselectFacetBucket).toHaveBeenCalled();
+        expect(searchFacetFiltersService.unselectFacetBucket).toHaveBeenCalled();
     });
 
     it('should remove items from the search filter on clear button click', () => {
-        spyOn(component.searchFilter, 'unselectFacetBucket').and.stub();
+        spyOn(searchFacetFiltersService, 'unselectFacetBucket').and.stub();
 
         const selectedBucket1: any = { field: { id: 1 }, bucket: {label: 'bucket1'} };
         const selectedBucket2: any = { field: { id: 2 }, bucket: {label: 'bucket2'} };
-        component.searchFilter.selectedBuckets = [selectedBucket1, selectedBucket2];
+        searchFacetFiltersService.selectedBuckets = [selectedBucket1, selectedBucket2];
 
         fixture.detectChanges();
 
@@ -137,14 +137,14 @@ describe('SearchChipListComponent', () => {
         closeButtons[0].click();
         fixture.detectChanges();
 
-        expect(component.searchFilter.unselectFacetBucket).toHaveBeenCalledWith(selectedBucket1.field, selectedBucket1.bucket);
+        expect(searchFacetFiltersService.unselectFacetBucket).toHaveBeenCalledWith(selectedBucket1.field, selectedBucket1.bucket);
     });
 
     it('should disable clear mode via input properties', () => {
         spyOn(component.searchFilter, 'unselectFacetBucket').and.callThrough();
 
         component.allowClear = false;
-        component.searchFilter.selectedBuckets = [
+        searchFacetFiltersService.selectedBuckets = [
             {
                 bucket: {
                     count: 1,

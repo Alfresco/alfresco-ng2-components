@@ -11,6 +11,8 @@
 
 @import '~@angular/material/theming';
 
+@import './mat-overrides';
+
 @include mat-core($alfresco-typography);
 
 $primary: mat-palette($alfresco-accent-orange);

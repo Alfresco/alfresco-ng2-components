@@ -16,7 +16,7 @@
  */
 
 import { SearchSortingPickerComponent } from './search-sorting-picker.component';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { AppConfigService } from '@alfresco/adf-core';
 import { SearchConfiguration } from '../../models/search-configuration.interface';
 import { TestBed } from '@angular/core/testing';

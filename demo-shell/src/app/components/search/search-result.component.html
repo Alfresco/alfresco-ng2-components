@@ -1,16 +1,19 @@
-<div class="app-search-results__facets">
-    <adf-search-chip-list [searchFilter]="searchFilter" [clearAll]="true"></adf-search-chip-list>
-</div>
-
 <div class="app-search-results">
-    <adf-search-filter class="app-search-settings" #searchFilter></adf-search-filter>
 
     <div class="app-search-results__content">
         <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
         <div class="app-search-results__sorting">
-            <adf-search-sorting-picker></adf-search-sorting-picker>
+<!--            <adf-search-sorting-picker></adf-search-sorting-picker>-->
 
-            <adf-search-form (formChange)="onFormChange($event)"></adf-search-form>
+            <div style="padding: 0 12px; flex: 1 1 auto">
+                <adf-search-filter-chips></adf-search-filter-chips>
+            </div>
+
+            <adf-toolbar-divider></adf-toolbar-divider>
+
+            <div style="padding: 0 12px">
+                <adf-search-form (formChange)="onFormChange($event)"></adf-search-form>
+            </div>
         </div>
         <app-files-component
             [showHeader]="showHeader"

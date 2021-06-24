@@ -31,5 +31,13 @@ export interface FacetField {
     currentPageSize?: number;
     checked?: boolean;
     type?: string;
+    settings?: FacetFieldSettings;
     [propName: string]: any;
+}
+
+export interface FacetFieldSettings {
+    /* allow the user to update search in every change */
+    allowUpdateOnChange?: boolean;
+    /* allow the user show/hide default search actions */
+    hideDefaultAction?: boolean;
 }

@@ -1,0 +1,49 @@
+<div class="adf-search-filter-facet">
+    <div class="adf-facet-result-filter">
+        <div class="facet-search-container">
+            <button mat-icon-button class="facet-search-icon" tabindex="-1">
+                <mat-icon>search</mat-icon>
+            </button>
+            <mat-form-field class="facet-search-field" floatLabel="never">
+                <input matInput placeholder="{{ 'SEARCH.FILTER.ACTIONS.SEARCH' | translate }}"
+                       [attr.data-automation-id]="'facet-result-filter-'+field.label" [(ngModel)]="field.buckets.filterText">
+                <button *ngIf="field.buckets.filterText" mat-button matSuffix mat-icon-button
+                        (click)="field.buckets.filterText = ''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="adf-checklist">
+        <mat-checkbox *ngFor="let bucket of field.buckets" [checked]="bucket.checked"
+            [attr.data-automation-id]="'checkbox-'+field.label+'-'+(bucket.display || bucket.label)"
+            (change)="onToggleBucket($event, field, bucket)">
+            <div matTooltip="{{ bucket.display || bucket.label | translate }} {{ getBucketCountDisplay(bucket) }}"
+                matTooltipPosition="right" class="adf-facet-label">
+                {{ bucket.display || bucket.label | translate }} {{ getBucketCountDisplay(bucket) }}
+            </div>
+        </mat-checkbox>
+    </div>
+
+    <div class="adf-facet-buttons" *ngIf="field.buckets.fitsPage && !field.settings?.hideDefaultAction">
+        <button *ngIf="canResetSelectedBuckets(field)" mat-button color="primary" (click)="resetSelectedBuckets(field)">
+            {{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}
+        </button>
+    </div>
+
+    <div class="adf-facet-buttons" *ngIf="!field.buckets.fitsPage">
+        <button mat-icon-button *ngIf="canResetSelectedBuckets(field)"
+            title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}" (click)="resetSelectedBuckets(field)">
+            <mat-icon>clear</mat-icon>
+        </button>
+        <button mat-icon-button *ngIf="field.buckets.canShowLessItems" (click)="field.buckets.showLessItems()"
+            title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-LESS' | translate }}">
+            <mat-icon>keyboard_arrow_up</mat-icon>
+        </button>
+        <button mat-icon-button *ngIf="field.buckets.canShowMoreItems" (click)="field.buckets.showMoreItems()"
+            title="{{ 'SEARCH.FILTER.ACTIONS.SHOW-MORE' | translate }}">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+    </div>
+</div>

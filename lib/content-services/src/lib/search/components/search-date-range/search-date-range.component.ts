@@ -15,14 +15,19 @@
  * limitations under the License.
  */
 
-import { OnInit, Component, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MomentDateAdapter, MOMENT_DATE_FORMATS, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import {
+    MOMENT_DATE_FORMATS,
+    MomentDateAdapter,
+    UserPreferencesService,
+    UserPreferenceValues
+} from '@alfresco/adf-core';
 
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { Moment } from 'moment';
 import { Subject } from 'rxjs';
@@ -64,6 +69,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     fromMaxDate: any;
     isActive = false;
     startValue: any;
+    enableChangeUpdate: boolean;
+    displayValue$: Subject<string> = new Subject<string>();
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -126,6 +133,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         });
 
         this.setFromMaxDate();
+        this.enableChangeUpdate = this.settings?.allowUpdateOnChange ?? true;
     }
 
     ngOnDestroy() {
@@ -141,6 +149,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             const end = moment(model.to).endOf('day').format();
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
+
+            this.updateDisplayValue();
             this.context.update();
         }
     }
@@ -160,6 +170,14 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         };
     }
 
+    updateDisplayValue(): void {
+        if (this.form.invalid || this.form.pristine) {
+            this.displayValue$.next('');
+        } else {
+            this.displayValue$.next(`${this.dateAdapter.format(this.form.value.from, this.datePickerFormat)} - ${this.dateAdapter.format(this.form.value.to, this.datePickerFormat)}`);
+        }
+    }
+
     setValue(parsedDate: string) {
         const splitValue = parsedDate.split('||');
         const fromValue = this.dateAdapter.parse(splitValue[0], this.datePickerFormat);
@@ -172,18 +190,32 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         this.to.markAsTouched();
         this.submitValues();
     }
-
-    reset() {
+    clear() {
         this.isActive = false;
         this.form.reset({
             from: '',
             to: ''
         });
+
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
-            this.context.update();
+            if (this.enableChangeUpdate) {
+                this.updateQuery();
+            }
         }
         this.setFromMaxDate();
+    }
+
+    reset() {
+        this.clear();
+        this.updateQuery();
+    }
+
+    private updateQuery() {
+        if (this.id && this.context) {
+            this.updateDisplayValue();
+            this.context.update();
+        }
     }
 
     onChangedHandler(event: any, formControl: FormControl) {

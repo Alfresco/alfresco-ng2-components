@@ -29,7 +29,7 @@ import { CoreModule } from '@alfresco/adf-core';
 import { DocumentListModule } from '../document-list/document-list.module';
 import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
 import { UploadModule } from '../upload/upload.module';
-import { SearchQueryBuilderService } from '../search/search-query-builder.service';
+import { SearchQueryBuilderService } from '../search/services/search-query-builder.service';
 import { ContentDirectiveModule } from '../directives/content-directive.module';
 
 @NgModule({

@@ -16,11 +16,11 @@
  */
 
 import { SearchQueryBuilderService } from './search-query-builder.service';
-import { SearchConfiguration } from './models/search-configuration.interface';
+import { SearchConfiguration } from '../models/search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
-import { FacetField } from './models/facet-field.interface';
+import { FacetField } from '../models/facet-field.interface';
 import { TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../testing/content.testing.module';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('SearchQueryBuilder', () => {
 
@@ -670,10 +670,12 @@ describe('SearchQueryBuilder', () => {
         expect(queryBody.scope).toEqual(mockScope);
     });
 
-    it('should return empty if array of search config not found', () => {
-        const builder = new SearchQueryBuilderService(buildConfig({}), null);
-        const forms = builder.getSearchConfigurationDetails();
-        expect(forms).toEqual([]);
+    it('should return empty if array of search config not found', (done) => {
+        const builder = new SearchQueryBuilderService(buildConfig(null), null);
+        builder.searchForms.subscribe((forms) => {
+            expect(forms).toEqual([]);
+            done();
+        });
     });
 
     describe('Multiple search configuration', () => {
@@ -728,14 +730,15 @@ describe('SearchQueryBuilder', () => {
             expect(builder.filterQueries.length).toBe(2);
         });
 
-        it('should list available search form names', () => {
-            const forms = builder.getSearchConfigurationDetails();
-
-            expect(forms).toEqual([
-                { index: 0,  name: 'config1', default: true, selected: true },
-                { index: 1,  name: 'config2', default: false, selected: false },
-                { index: 2,  name: 'SEARCH.UNKNOWN_FORM', default: false, selected: false }
-            ]);
+        it('should list available search form names', (done) => {
+            builder.searchForms.subscribe((forms) => {
+                expect(forms).toEqual([
+                    { index: 0,  name: 'config1', default: true, selected: true },
+                    { index: 1,  name: 'config2', default: false, selected: false },
+                    { index: 2,  name: 'SEARCH.UNKNOWN_CONFIGURATION', default: false, selected: false }
+                ]);
+                done();
+            });
         });
 
         it('should allow the user switch the form', () => {
@@ -745,15 +748,16 @@ describe('SearchQueryBuilder', () => {
             expect(builder.filterQueries.length).toBe(2);
         });
 
-        it('should keep the selected configuration value', () => {
+        it('should keep the selected configuration value', (done) => {
             builder.updateSelectedConfiguration(1);
-            const forms = builder.getSearchConfigurationDetails();
-
-            expect(forms).toEqual([
-                { index: 0,  name: 'config1', default: true, selected: false },
-                { index: 1,  name: 'config2', default: false, selected: true },
-                { index: 2,  name: 'SEARCH.UNKNOWN_FORM', default: false, selected: false }
-            ]);
+            builder.searchForms.subscribe((forms) => {
+                expect(forms).toEqual([
+                    { index: 0, name: 'config1', default: true, selected: false },
+                    { index: 1, name: 'config2', default: false, selected: true },
+                    { index: 2, name: 'SEARCH.UNKNOWN_CONFIGURATION', default: false, selected: false }
+                ]);
+                done();
+            });
         });
     });
 });

@@ -499,6 +499,26 @@
         }
       ]
     },
+    "search-widget-setting": {
+      "description": "Search widget setting",
+      "type": "object",
+      "properties": {
+        "allowUpdateOnChange": {
+          "type": "boolean",
+          "default": true,
+          "description": "update search query with every user changes on widget"
+        },
+        "hideDefaultAction": {
+          "type": "boolean",
+          "default": false,
+          "description": "Hides the widget action i.e clear and submit"
+        },
+        "unit": {
+          "type": "string",
+          "description": "unit type of the widget value"
+        }
+      }
+    },
     "search-configuration": {
       "description": "Search configuration parameters",
       "type": "object",
@@ -589,6 +609,9 @@
                   },
                   "offset": {
                     "type": "integer"
+                  },
+                  "settings": {
+                    "$ref": "#/definitions/search-widget-setting"
                   }
                 }
               }
@@ -660,6 +683,9 @@
                   "mincount": {
                     "type": "number",
                     "description": "This specifies the minimum count required for a facet interval to be displayed. The default value is 1."
+                  },
+                  "settings": {
+                    "$ref": "#/definitions/search-widget-setting"
                   }
                 }
               }
@@ -716,6 +742,9 @@
                   }
                 }
               }
+            },
+            "settings": {
+              "$ref": "#/definitions/search-widget-setting"
             }
           }
         },
@@ -750,8 +779,7 @@
                     "type": "string"
                   },
                   "settings": {
-                    "description": "Component-specific settings",
-                    "type": "object"
+                    "$ref": "#/definitions/search-widget-setting"
                   }
                 }
               }

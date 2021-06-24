@@ -34,8 +34,8 @@
         </mat-error>
     </mat-form-field>
 
-    <div class="adf-facet-buttons adf-facet-buttons--topSpace">
-        <button mat-button color="primary" type="button" (click)="reset()" data-automation-id="date-range-clear-btn">
+    <div class="adf-facet-buttons adf-facet-buttons--topSpace" *ngIf="!settings?.hideDefaultAction">
+        <button mat-button color="primary" type="button" (click)="clear()" data-automation-id="date-range-clear-btn">
             {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
         </button>
         <button mat-button color="primary" type="submit" [disabled]="!form.valid" data-automation-id="date-range-apply-btn">

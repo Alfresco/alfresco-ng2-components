@@ -17,6 +17,7 @@
 
 import { Component, ViewEncapsulation, Input } from '@angular/core';
 import { SearchFilterComponent } from '../../components/search-filter/search-filter.component';
+import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 
 @Component({
     selector: 'adf-search-chip-list',
@@ -24,13 +25,16 @@ import { SearchFilterComponent } from '../../components/search-filter/search-fil
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-chip-list' }
 })
+/** @deprecated 3.2.0 */
 export class SearchChipListComponent {
 
-    /** Search filter to supply the data for the chips. */
+    /** @deprecated 4.5.0 Search filter to supply the data for the chips. */
     @Input()
     searchFilter: SearchFilterComponent;
 
     /** Flag used to enable the display of a clear-all-filters button. */
     @Input()
     clearAll: boolean = false;
+
+    constructor(public facetFiltersService: SearchFacetFiltersService) {}
 }

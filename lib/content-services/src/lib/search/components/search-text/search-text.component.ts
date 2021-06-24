@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'adf-search-text',
@@ -39,6 +40,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     startValue: string;
     isActive = false;
     enableChangeUpdate = true;
+    displayValue$: Subject<string> = new Subject<string>();
 
     ngOnInit() {
         if (this.context && this.settings && this.settings.pattern) {
@@ -59,9 +61,15 @@ export class SearchTextComponent implements SearchWidget, OnInit {
         }
     }
 
-    reset() {
+    clear() {
         this.isActive = false;
+        this.value = '';
+        if (this.enableChangeUpdate) {
+            this.updateQuery(null);
+        }
+    }
 
+    reset() {
         this.value = '';
         this.updateQuery(null);
     }
@@ -75,11 +83,11 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     }
 
     private updateQuery(value: string) {
+        this.displayValue$.next(value);
         if (this.context && this.settings && this.settings.field) {
             this.context.queryFragments[this.id] = value ? `${this.settings.field}:'${this.getSearchPrefix()}${value}${this.getSearchSuffix()}'` : '';
             this.context.update();
         }
-
     }
 
     submitValues() {
@@ -96,6 +104,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
 
     setValue(value: string) {
         this.value = value;
+        this.displayValue$.next(this.value);
         this.submitValues();
     }
 

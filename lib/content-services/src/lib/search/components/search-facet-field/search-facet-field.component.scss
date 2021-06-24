@@ -1,0 +1,88 @@
+@mixin adf-search-filter-field-theme($theme) {
+    $foreground: map-get($theme, foreground);
+
+    .adf-search-filter-facet {
+        .adf-checklist {
+            display: flex;
+            flex-direction: column;
+
+            .mat-checkbox-label {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 100%;
+            }
+
+            .mat-checkbox-layout {
+                width: 100%;
+            }
+
+            .adf-facet-label {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            .mat-checkbox {
+                margin: 5px;
+
+                &.mat-checkbox-checked .mat-checkbox-label {
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .adf-facet-result-filter {
+            padding-bottom: 16px;
+
+            .facet-search-container {
+                border-radius: 6px;
+                background: rgba(33, 33, 33, 0.03);
+                display: flex;
+                height: 32px;
+
+                .facet-search-icon {
+                    width: 27px;
+                    margin-top: -4px;
+                    .mat-icon {
+                        font-size: 15px;
+                    }
+                }
+
+                .facet-search-field  {
+                    padding: 2px;
+                    flex: 1;
+                    margin-top: -16px;
+                    font-size: 14px;
+                    line-height: 24px;
+                    letter-spacing: 0.25px;
+
+                    .mat-form-field-underline {
+                        display: none;
+                    }
+
+                    .mat-form-field-suffix {
+                        padding-right: 1px;
+                    }
+                }
+            }
+        }
+
+        .adf-facet-buttons {
+            text-align: right;
+
+            .mat-button {
+                text-transform: uppercase;
+            }
+
+            &--topSpace {
+                padding-top: 15px;
+            }
+        }
+
+        .mat-checkbox-label,
+        .mat-radio-label {
+            color: mat-color($foreground, text, 0.54);
+        }
+
+    }
+}

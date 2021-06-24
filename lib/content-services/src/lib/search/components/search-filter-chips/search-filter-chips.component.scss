@@ -1,0 +1,73 @@
+@mixin adf-search-filter-chips-theme($theme) {
+    $accent: map-get($theme, accent);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $unselected-background: mat-color($background, unselected-chip);
+    $unselected-foreground: mat-color($foreground, text);
+    $selected-chip-background:  mat-color($background, card);
+    $chip-placeholder: rgba(33, 35, 40, 0.6);
+    $menu-shadow-color: rgba(33, 35, 40, 0.06);
+
+    .adf-search-filter-chip {
+
+        &.mat-chip {
+            border: 2px solid transparent;
+            transition : border 500ms ease-in-out;
+            max-width: 320px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            background: $unselected-background;
+
+            &:focus {
+                color: unset;
+            }
+
+            &.mat-standard-chip:after {
+                background: $unselected-background;
+                color: unset;
+            }
+
+            &.mat-chip-list-wrapper {
+                margin: 4px 6px;
+            }
+        }
+
+        &.toggle-chip {
+            background: $selected-chip-background;
+            border: 2px solid  mat-color($accent);
+
+            &.mat-chip::after {
+                background: unset;
+            }
+        }
+
+        .search-filter-placeholder {
+            flex: 1 1 auto;
+            white-space: nowrap;
+            color: $chip-placeholder;
+        }
+
+        .search-filter-ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .search-filter-value {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .mat-icon {
+            padding-top: 5px;
+            padding-left: 5px;
+        }
+
+        &-menu+* .cdk-overlay-pane > div.mat-menu-panel {
+            min-width: 320px;
+            box-shadow: 0 0 24px $menu-shadow-color;
+            border-radius: 12px;
+        }
+    }
+}

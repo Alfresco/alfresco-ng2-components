@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { MatSliderChange } from '@angular/material/slider';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'adf-search-slider',
@@ -39,6 +40,8 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     min: number;
     max: number;
     thumbLabel = false;
+    enableChangeUpdate: boolean;
+    displayValue$: Subject<string> = new Subject<string>();
 
     /** The numeric value represented by the slider. */
     @Input()
@@ -59,10 +62,18 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
             }
 
             this.thumbLabel = this.settings['thumbLabel'] ? true : false;
+            this.enableChangeUpdate = this.settings.allowUpdateOnChange ?? true;
         }
 
         if (this.startValue) {
             this.setValue(this.startValue);
+        }
+    }
+
+    clear() {
+        this.value = this.min || 0;
+        if (this.enableChangeUpdate) {
+            this.updateQuery(null);
         }
     }
 
@@ -73,7 +84,9 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
 
     onChangedHandler(event: MatSliderChange) {
         this.value = event.value;
-        this.updateQuery(this.value);
+        if (this.enableChangeUpdate) {
+            this.updateQuery(this.value);
+        }
     }
 
     submitValues() {
@@ -94,6 +107,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     }
 
     private updateQuery(value: number | null) {
+        this.displayValue$.next( this.value ? `${this.value} ${this.settings.unit ?? ''}` : '' );
         if (this.id && this.context && this.settings && this.settings.field) {
             if (value === null) {
                 this.context.queryFragments[this.id] = '';

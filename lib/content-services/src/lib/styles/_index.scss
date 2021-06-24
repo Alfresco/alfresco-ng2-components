@@ -28,6 +28,9 @@
 @import '../aspect-list/aspect-list.component';
 @import '../permission-manager/components/user-icon-column/user-icon-column.component';
 @import '../permission-manager/components/user-name-column/user-name-column.component';
+@import '../search/components/search-filter-chips/search-filter-chips.component';
+@import '../search/components/search-facet-field/search-facet-field.component';
+@import '../search/components/search-form/search-form.component';
 
 @mixin adf-content-services-theme($theme) {
     @include adf-breadcrumb-theme($theme);
@@ -56,4 +59,7 @@
     @include adf-version-comparison-theme($theme);
     @include adf-content-type-dialog-theme($theme);
     @include adf-aspect-list-theme($theme);
+    @include adf-search-filter-chips-theme($theme);
+    @include adf-search-filter-field-theme($theme);
+    @include adf-search-forms-theme($theme);
 }
