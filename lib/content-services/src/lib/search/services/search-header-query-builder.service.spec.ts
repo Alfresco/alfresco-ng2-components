@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { SearchConfiguration } from '../models/search-configuration.interface';
-import { AppConfigService } from '@alfresco/adf-core';
+import { SearchConfiguration } from './models/search-configuration.interface';
+import { AppConfigService, CoreModule, setupTestBed } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from './search-header-query-builder.service';
 import { TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../testing/content.testing.module';
+import { ProcessTestingModule } from '../../../../process-services/src/lib/testing/process.testing.module';
 
 describe('SearchHeaderQueryBuilderService', () => {
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
-        });
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            ProcessTestingModule
+        ]
     });
 
     const buildConfig = (searchSettings): AppConfigService => {

@@ -112,7 +112,7 @@ describe('SearchFilterContainerComponent', () => {
     });
 
     it('should emit filterChange after the Apply button is clicked', async (done) => {
-        spyOn(component['searchApi'], 'search').and.returnValue(Promise.resolve(fakeNodePaging));
+        spyOn(component['searchFilterQueryBuilder']['searchApi'], 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue(null);
         component.filterChange.subscribe(() => {
             done();

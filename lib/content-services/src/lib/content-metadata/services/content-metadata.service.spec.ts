@@ -24,6 +24,7 @@ import { PropertyGroup } from '../interfaces/property-group.interface';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTypePropertiesService } from './content-type-property.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { PropertyDescriptorsService } from './property-descriptors.service';
 
 describe('ContentMetaDataService', () => {
 
@@ -67,7 +68,8 @@ describe('ContentMetaDataService', () => {
     beforeEach(() => {
         service = TestBed.inject(ContentMetadataService);
         contentPropertyService = TestBed.inject(ContentTypePropertiesService);
-        classesApi = service['classesApi'];
+        const propertyDescriptorsService = TestBed.inject(PropertyDescriptorsService);
+        classesApi = propertyDescriptorsService['classesApi'];
         appConfig = TestBed.inject(AppConfigService);
     });
 

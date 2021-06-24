@@ -77,9 +77,9 @@ export class UploadService {
                 this.isThumbnailGenerationEnabled = status.isThumbnailGenerationEnabled;
             });
 
-        this.uploadApi = new UploadApi(this.apiService.getInstance());
-        this.nodesApi = new NodesApi(this.apiService.getInstance());
-        this.versionsApi = new VersionsApi(this.apiService.getInstance());
+        this.uploadApi = new UploadApi(apiService.getInstance());
+        this.nodesApi = new NodesApi(apiService.getInstance());
+        this.versionsApi = new VersionsApi(apiService.getInstance());
     }
 
     /**
