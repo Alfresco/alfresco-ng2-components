@@ -19,7 +19,7 @@ import { LibraryDialogComponent } from './library.dialog';
 import { TestBed, fakeAsync, tick, flush, ComponentFixture, flushMicrotasks } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AlfrescoApiService, setupTestBed, SitesService } from '@alfresco/adf-core';
+import { setupTestBed, SitesService } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
@@ -30,7 +30,6 @@ describe('LibraryDialogComponent', () => {
     let fixture: ComponentFixture<LibraryDialogComponent>;
     let component: LibraryDialogComponent;
     let sitesService: SitesService;
-    let alfrescoApi;
     let findSitesSpy;
     const findSitesResponse = { list: { entries: [] } };
     const dialogRef = {
@@ -51,9 +50,8 @@ describe('LibraryDialogComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(LibraryDialogComponent);
         component = fixture.componentInstance;
-        alfrescoApi = TestBed.inject(AlfrescoApiService);
         sitesService = TestBed.inject(SitesService);
-        findSitesSpy = spyOn(alfrescoApi.getInstance().core.queriesApi, 'findSites');
+        findSitesSpy = spyOn(component['queriesApi'], 'findSites');
     });
 
     afterEach(() => {
