@@ -33,17 +33,9 @@ export class DiscoveryApiService {
      */
     ecmProductInfo$ = new Subject<EcmProductVersionModel>();
 
-    private discoveryApi: DiscoveryApi;
-    private aboutApi: AboutApi;
-    private systemPropertiesApi: SystemPropertiesApi;
-
     constructor(
         private apiService: AlfrescoApiService,
         private authenticationService: AuthenticationService) {
-
-        this.discoveryApi = new DiscoveryApi(this.apiService.getInstance());
-        this.aboutApi = new AboutApi(this.apiService.getInstance());
-        this.systemPropertiesApi = new SystemPropertiesApi(this.apiService.getInstance());
 
         this.authenticationService.onLogin
             .pipe(
@@ -59,7 +51,9 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     public getEcmProductInfo(): Observable<EcmProductVersionModel> {
-        return from(this.discoveryApi.getRepositoryInformation())
+        const discoveryApi = new DiscoveryApi(this.apiService.getInstance());
+
+        return from(discoveryApi.getRepositoryInformation())
             .pipe(
                 map((res) => new EcmProductVersionModel(res)),
                 catchError((err) => throwError(err))
@@ -71,7 +65,9 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     public getBpmProductInfo(): Observable<BpmProductVersionModel> {
-        return from(this.aboutApi.getAppVersion())
+        const aboutApi = new AboutApi(this.apiService.getInstance());
+
+        return from(aboutApi.getAppVersion())
             .pipe(
                 map((res) => new BpmProductVersionModel(res)),
                 catchError((err) => throwError(err))
@@ -79,7 +75,9 @@ export class DiscoveryApiService {
     }
 
     public getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
-        return from(this.systemPropertiesApi.getProperties())
+        const systemPropertiesApi = new SystemPropertiesApi(this.apiService.getInstance());
+
+        return from(systemPropertiesApi.getProperties())
             .pipe(
                 map((res) => {
                     if ('string' === typeof (res)) {
