@@ -85,7 +85,8 @@ export class ContentTypePropertiesService {
             value: currentValue,
             key: 'nodeType',
             editable: true,
-            options$: options$
+            options$: options$,
+            displayNoneOption: false
         });
 
         return contentTypeCard;

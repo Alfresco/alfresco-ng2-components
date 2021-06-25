@@ -163,6 +163,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     value: this.taskDetails.priority.toString(),
                     key: 'priority',
                     editable: true,
+                    displayNoneOption: false,
                     options$: of(this.taskCloudService.priorities)
                 }
             ),
