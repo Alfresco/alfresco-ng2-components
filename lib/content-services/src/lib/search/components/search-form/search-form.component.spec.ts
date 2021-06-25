@@ -59,8 +59,10 @@ describe('SearchFormComponent', () => {
     });
 
     it('should emit on form change', (done) => {
+        spyOn(queryBuilder, 'updateSelectedConfiguration').and.stub();
         component.formChange.subscribe((form) => {
             expect(form).toEqual(mockSearchForms[2]);
+            expect(queryBuilder.updateSelectedConfiguration).toHaveBeenCalled();
             done();
         });
 

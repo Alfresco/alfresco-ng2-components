@@ -34,6 +34,7 @@ export class SearchFormComponent {
     }
 
     onSelectionChange(form: SearchForm) {
+        this.queryBuilder.updateSelectedConfiguration(form.index);
         this.formChange.emit(form);
     }
 

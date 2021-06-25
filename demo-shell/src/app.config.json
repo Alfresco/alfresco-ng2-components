@@ -366,8 +366,258 @@
         }
       ]
     },
-    "name": "SEARCH_FORMS.ALL",
+    "name": "DEFAULT_SEARCH",
     "default": true
+  },
+  {
+    "filterWithContains": true,
+    "app:fields": [
+      "cm:name",
+      "cm:title",
+      "cm:description",
+      "ia:whatEvent",
+      "ia:descriptionEvent",
+      "lnk:title",
+      "lnk:description",
+      "TEXT",
+      "TAG"
+    ],
+    "include": [
+      "path",
+      "allowableOperations",
+      "properties"
+    ],
+    "sorting": {
+      "options": [
+        {
+          "key": "name",
+          "label": "Name",
+          "type": "FIELD",
+          "field": "cm:name",
+          "ascending": true
+        },
+        {
+          "key": "content.sizeInBytes",
+          "label": "Size",
+          "type": "FIELD",
+          "field": "content.size",
+          "ascending": true
+        },
+        {
+          "key": "createdByUser",
+          "label": "Author",
+          "type": "FIELD",
+          "field": "cm:creator",
+          "ascending": true
+        },
+        {
+          "key": "createdAt",
+          "label": "Created",
+          "type": "FIELD",
+          "field": "cm:created",
+          "ascending": true
+        },
+        {
+          "key": "score",
+          "label": "Relevance",
+          "type": "SCORE",
+          "field": "score",
+          "ascending": false
+        }
+      ],
+      "defaults": [
+        {
+          "key": "score",
+          "type": "FIELD",
+          "field": "score",
+          "ascending": false
+        }
+      ]
+    },
+    "resetButton": true,
+    "filterQueries": [
+      {
+        "query": "TYPE:'cm:folder'"
+      },
+      {
+        "query": "NOT cm:creator:System"
+      }
+    ],
+    "facetFields": {
+      "expanded": true,
+      "fields": [
+        {
+          "field": "content.size",
+          "mincount": 1,
+          "label": "Folder Size",
+          "settings": {
+            "allowUpdateOnChange": false,
+            "hideDefaultAction": true,
+            "unit": "Bytes"
+          }
+        },
+        {
+          "field": "creator",
+          "mincount": 1,
+          "label": "Field created",
+          "settings": {
+            "allowUpdateOnChange": false,
+            "hideDefaultAction": true
+          }
+        },
+        {
+          "field": "modifier",
+          "mincount": 1,
+          "label": "Folder Modifier",
+          "settings": {
+            "allowUpdateOnChange": false,
+            "hideDefaultAction": true
+          }
+        },
+        {
+          "field": "created",
+          "mincount": 1,
+          "label": "Folder Created",
+          "settings": {
+            "allowUpdateOnChange": false,
+            "hideDefaultAction": true
+          }
+        }
+      ]
+    },
+    "facetQueries": {
+      "label": "SEARCH.FACET_QUERIES.MY_FACET_QUERIES",
+      "pageSize": 5,
+      "expanded": true,
+      "mincount": 1,
+      "queries": [
+        {
+          "query": "created:2019",
+          "label": "SEARCH.FACET_QUERIES.CREATED_THIS_YEAR"
+        },
+        {
+          "query": "content.mimetype:text/html",
+          "label": "SEARCH.FACET_QUERIES.MIMETYPE",
+          "group": "Type facet queries"
+        },
+        {
+          "query": "content.size:[0 TO 10240]",
+          "label": "SEARCH.FACET_QUERIES.XTRASMALL",
+          "group": "Size facet queries"
+        },
+        {
+          "query": "content.size:[10240 TO 102400]",
+          "label": "SEARCH.FACET_QUERIES.SMALL",
+          "group": "Size facet queries"
+        },
+        {
+          "query": "content.size:[102400 TO 1048576]",
+          "label": "SEARCH.FACET_QUERIES.MEDIUM",
+          "group": "Size facet queries"
+        },
+        {
+          "query": "content.size:[1048576 TO 16777216]",
+          "label": "SEARCH.FACET_QUERIES.LARGE",
+          "group": "Size facet queries"
+        },
+        {
+          "query": "content.size:[16777216 TO 134217728]",
+          "label": "SEARCH.FACET_QUERIES.XTRALARGE",
+          "group": "Size facet queries"
+        },
+        {
+          "query": "content.size:[134217728 TO MAX]",
+          "label": "SEARCH.FACET_QUERIES.XXTRALARGE",
+          "group": "Size facet queries"
+        }
+      ],
+      "settings": {
+        "allowUpdateOnChange": false,
+        "hideDefaultAction": true
+      }
+    },
+    "facetIntervals": {
+      "expanded": true,
+      "intervals": [
+        {
+          "label": "The Created",
+          "field": "cm:created",
+          "sets": [
+            {
+              "label": "lastYear",
+              "start": "2018",
+              "end": "2019",
+              "endInclusive": false
+            },
+            {
+              "label": "currentYear",
+              "start": "NOW/YEAR",
+              "end": "NOW/YEAR+1YEAR"
+            },
+            {
+              "label": "earlier",
+              "start": "*",
+              "end": "2018",
+              "endInclusive": false
+            }
+          ],
+          "settings": {
+            "allowUpdateOnChange": false,
+            "hideDefaultAction": true
+          }
+        },
+        {
+          "label": "The Modified",
+          "field": "cm:modified",
+          "sets": [
+            {
+              "label": "2017",
+              "start": "2017",
+              "end": "2018",
+              "endInclusive": false
+            },
+            {
+              "label": "2017-2018",
+              "start": "2017",
+              "end": "2018",
+              "endInclusive": true
+            },
+            {
+              "label": "currentYear",
+              "start": "NOW/YEAR",
+              "end": "NOW/YEAR+1YEAR"
+            },
+            {
+              "label": "earlierThan2017",
+              "start": "*",
+              "end": "2017",
+              "endInclusive": false
+            }
+          ],
+          "settings": {
+            "allowUpdateOnChange": false,
+            "hideDefaultAction": true
+          }
+        }
+      ]
+    },
+    "categories": [],
+    "highlight": {
+      "prefix": " ",
+      "postfix": " ",
+      "mergeContiguous": true,
+      "fields": [
+        {
+          "field": "cm:title"
+        },
+        {
+          "field": "description",
+          "prefix": "(",
+          "postfix": ")"
+        }
+      ]
+    },
+    "name": "Folder"
   }],
   "search-headers": {
     "filterWithContains": true,

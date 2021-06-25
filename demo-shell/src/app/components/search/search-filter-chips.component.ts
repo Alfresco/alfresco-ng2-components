@@ -140,8 +140,4 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
 
         return ['name', 'asc'];
     }
-
-    onFormChange(form: SearchForm) {
-        this.queryBuilder.updateSelectedConfiguration(form.index);
-    }
 }

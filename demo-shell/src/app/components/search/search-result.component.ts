@@ -141,10 +141,6 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         return ['name', 'asc'];
     }
 
-    onFormChange(form: SearchForm) {
-        this.queryBuilder.updateSelectedConfiguration(form.index);
-    }
-
     switchLayout() {
         this.router.navigate(['search-filter-chips', { q: this.searchedWord }] );
     }
