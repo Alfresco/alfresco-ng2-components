@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchSortingDefinition } from '../../models/search-sorting-definition.interface';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 

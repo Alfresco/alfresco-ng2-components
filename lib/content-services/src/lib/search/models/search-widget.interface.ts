@@ -16,17 +16,23 @@
  */
 
 import { SearchWidgetSettings } from './search-widget-settings.interface';
-import { SearchQueryBuilderService } from '../search-query-builder.service';
+import { SearchQueryBuilderService } from '../services/search-query-builder.service';
+import { Subject } from 'rxjs';
 
 export interface SearchWidget {
     id: string;
+    /* optional field control options */
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     isActive?: boolean;
     startValue: any;
-    reset();
-    submitValues();
-    hasValidValue();
-    getCurrentValue();
+    /* stream emit value on changes */
+    displayValue$: Subject<string>;
+    /* reset the value and update the search */
+    reset(): void;
+    /* update the search with field value */
+    submitValues(): void;
+    hasValidValue(): boolean;
+    getCurrentValue(): any;
     setValue(value: any);
 }

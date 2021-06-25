@@ -16,20 +16,19 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SearchFormComponent } from './search-form.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
-import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchForm } from '../../models/search-form.interface';
 import { By } from '@angular/platform-browser';
 
 describe('SearchFormComponent', () => {
     let fixture: ComponentFixture<SearchFormComponent>;
     let component: SearchFormComponent;
-    let queryBuilder: SearchHeaderQueryBuilderService;
+    let queryBuilder: SearchQueryBuilderService;
     const mockSearchForms: SearchForm[] = [
         { default: false, index: 0, name: 'All', selected: false },
         { default: true, index: 1, name: 'First', selected: true },
@@ -42,50 +41,59 @@ describe('SearchFormComponent', () => {
             ContentTestingModule
         ],
         providers: [
-            { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService }
+            { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchQueryBuilderService }
         ]
     });
 
     beforeEach(() => {
     fixture = TestBed.createComponent(SearchFormComponent);
     component = fixture.componentInstance;
-    queryBuilder = TestBed.inject<SearchHeaderQueryBuilderService>(SEARCH_QUERY_SERVICE_TOKEN);
-    spyOn(queryBuilder, 'getSearchConfigurationDetails').and.returnValue(mockSearchForms);
+    queryBuilder = TestBed.inject<SearchQueryBuilderService>(SEARCH_QUERY_SERVICE_TOKEN);
+    queryBuilder.searchForms.next(mockSearchForms);
     fixture.detectChanges();
   });
 
-    it('should show search forms', async () => {
-        await fixture.whenStable();
-        fixture.detectChanges();
-        expect(component.selected).toBe(1);
-        const label = fixture.debugElement.query(By.css('.mat-form-field mat-label'));
-        expect(label.nativeElement.innerText).toContain('SEARCH.FORMS');
-        const selectValue = fixture.debugElement.query(By.css('.mat-select-value'));
-        expect(selectValue.nativeElement.innerText).toContain('First');
+    it('should show search forms', () => {
+        const title = fixture.debugElement.query(By.css('.adf-search-form-title'));
+        expect(title.nativeElement.innerText).toContain(mockSearchForms[1].name);
     });
 
-    it('should emit on form change', async (done) => {
+    it('should emit on form change', (done) => {
+        spyOn(queryBuilder, 'updateSelectedConfiguration').and.stub();
         component.formChange.subscribe((form) => {
             expect(form).toEqual(mockSearchForms[2]);
+            expect(queryBuilder.updateSelectedConfiguration).toHaveBeenCalled();
             done();
         });
 
-        await fixture.whenStable();
+        const button = fixture.debugElement.query(By.css('.adf-search-form')).nativeElement;
+        button.click();
         fixture.detectChanges();
 
-        const matSelect = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
-        matSelect.click();
-        fixture.detectChanges();
-
-        const matOption = fixture.debugElement.queryAll(By.css('.mat-option'))[2].nativeElement;
+        const matOption = fixture.debugElement.queryAll(By.css('.mat-menu-item'))[2].nativeElement;
         matOption.click();
     });
 
-    it('should not display search form if no form configured', async () => {
-        component.searchForms = [];
-        await fixture.whenStable();
+    it('should not show menu if only one config found', () => {
+        queryBuilder.searchForms.next([{ name: 'one', selected: true, default: true, index: 0 }]);
         fixture.detectChanges();
-        const field = fixture.debugElement.query(By.css('.mat-form-field'));
+
+        const button = fixture.debugElement.query(By.css('.adf-search-form')).nativeElement;
+        button.click();
+
+        const title = fixture.debugElement.query(By.css('.adf-search-form-title'));
+        expect(title.nativeElement.innerText).toContain('one');
+
+        fixture.detectChanges();
+        const matOption = fixture.debugElement.query(By.css('.mat-menu-item'));
+        expect(matOption).toBe(null, 'should not show mat menu');
+    });
+
+    it('should not display search form if no form configured', () => {
+        queryBuilder.searchForms.next([]);
+        fixture.detectChanges();
+
+        const field = fixture.debugElement.query(By.css('.adf-search-form-title'));
         expect(field).toEqual(null, 'search form displayed for empty configuration');
     });
 });

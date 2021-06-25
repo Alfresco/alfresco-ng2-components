@@ -49,6 +49,7 @@ Implements a text input [widget](../../../lib/testing/src/lib/core/pages/form/wi
 | searchSuffix | string | Text to append always in the search of a string|
 | searchPrefix | string | Text to prepend always in the search of a string|
 | allowUpdateOnChange | `boolean` | Enable/Disable the update fire event when text has been changed. By default is true.
+| hideDefaultAction | boolean | Show/hide the widget actions. By default is false.
 
 ## Details
 

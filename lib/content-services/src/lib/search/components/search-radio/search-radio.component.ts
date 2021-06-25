@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatRadioChange } from '@angular/material/radio';
 
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
+import { Subject } from 'rxjs';
 
 export interface SearchRadioOption {
     name: string;
@@ -48,6 +49,8 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     pageSize = 5;
     isActive = false;
     startValue: any;
+    enableChangeUpdate: boolean;
+    displayValue$: Subject<string> = new Subject<string>();
 
     constructor() {
         this.options = new SearchFilterList<SearchRadioOption>();
@@ -73,6 +76,8 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
             this.value = initialValue;
             this.context.queryFragments[this.id] = initialValue;
         }
+        this.enableChangeUpdate = this.settings.allowUpdateOnChange ?? true;
+        this.updateDisplayValue();
     }
 
     private getSelectedValue(): string {
@@ -90,8 +95,9 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     }
 
     submitValues() {
-        const currentValue = this.getSelectedValue();
-        this.setValue(currentValue);
+        this.setValue(this.value);
+        this.updateDisplayValue();
+        this.context.update();
     }
 
     hasValidValue() {
@@ -102,23 +108,43 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     setValue(newValue: string) {
         this.value = newValue;
         this.context.queryFragments[this.id] = newValue;
-        this.context.update();
+        if (this.enableChangeUpdate) {
+            this.updateDisplayValue();
+            this.context.update();
+        }
     }
 
     getCurrentValue() {
         return this.getSelectedValue();
     }
 
+    updateDisplayValue(): void {
+        const selectOptions = this.options.items.find(({ value}) => value === this.value);
+        if (selectOptions) {
+            this.displayValue$.next(selectOptions.name);
+        } else {
+            this.displayValue$.next('');
+        }
+    }
+
     changeHandler(event: MatRadioChange) {
         this.setValue(event.value);
     }
 
-    reset() {
+    clear() {
         this.isActive = false;
-
         const initialValue = this.getSelectedValue();
         if (initialValue !== null) {
             this.setValue(initialValue);
+        }
+    }
+
+    reset() {
+        const initialValue = this.getSelectedValue();
+        if (initialValue !== null) {
+            this.setValue(initialValue);
+            this.updateDisplayValue();
+            this.context.update();
         }
     }
 }

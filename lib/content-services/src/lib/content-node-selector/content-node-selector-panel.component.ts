@@ -50,7 +50,7 @@ import { CustomResourcesService } from '../document-list/services/custom-resourc
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { Subject } from 'rxjs';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../search/search-query-service.token';
-import { SearchQueryBuilderService } from '../search/search-query-builder.service';
+import { SearchQueryBuilderService } from '../search/services/search-query-builder.service';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 
 export type ValidationFunction = (entry: Node) => boolean;

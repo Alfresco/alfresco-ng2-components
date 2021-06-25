@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { OnInit, Component, ViewEncapsulation } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'adf-search-number-range',
@@ -48,6 +49,8 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
     startValue: any;
 
     validators: Validators;
+    enableChangeUpdate: boolean;
+    displayValue$: Subject<string> = new Subject<string>();
 
     ngOnInit(): void {
 
@@ -74,6 +77,9 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             from: this.from,
             to: this.to
         }, this.formValidator);
+
+        this.enableChangeUpdate = this.settings?.allowUpdateOnChange ?? true;
+        this.updateDisplayValue();
     }
 
     formValidator(formGroup: FormGroup) {
@@ -82,6 +88,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
 
     apply(model: { from: string, to: string }, isValid: boolean) {
         if (isValid && this.id && this.context && this.field) {
+            this.updateDisplayValue();
             this.isActive = true;
 
             const map = new Map<string, string>();
@@ -118,12 +125,21 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         return this.form.value;
     }
 
+    updateDisplayValue(): void {
+        if (this.form.invalid || this.form.pristine) {
+            this.displayValue$.next('');
+        } else {
+            this.displayValue$.next(`${this.form.value.from} - ${this.form.value.to} ${this.settings.unit ?? ''}`);
+        }
+    }
+
     setValue(value: any) {
         this.form['from'].setValue(value);
         this.form['to'].setValue(value);
+        this.updateDisplayValue();
     }
 
-    reset() {
+    clear() {
         this.isActive = false;
 
         this.form.reset({
@@ -133,6 +149,16 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
 
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
+            this.updateDisplayValue();
+            if (this.enableChangeUpdate) {
+                this.context.update();
+            }
+        }
+    }
+
+    reset() {
+        this.clear();
+        if (this.id && this.context) {
             this.context.update();
         }
     }

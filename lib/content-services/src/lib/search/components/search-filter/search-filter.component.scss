@@ -2,57 +2,6 @@
     $foreground: map-get($theme, foreground);
 
     .adf-search-filter {
-
-        .adf-checklist {
-            display: flex;
-            flex-direction: column;
-
-            .mat-checkbox-label {
-                text-overflow: ellipsis;
-                overflow: hidden;
-                width: 100%;
-            }
-
-            .mat-checkbox-layout {
-                width: 100%;
-            }
-
-            .adf-facet-label {
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-            }
-
-            .mat-checkbox {
-                margin: 5px;
-
-                &.mat-checkbox-checked .mat-checkbox-label {
-                    font-weight: bold;
-                }
-            }
-        }
-
-        .adf-facet-result-filter {
-            display: flex;
-            flex-direction: column;
-
-            & > * {
-                width: 100%;
-            }
-        }
-
-        .adf-facet-buttons {
-            text-align: right;
-
-            .mat-button {
-                text-transform: uppercase;
-            }
-
-            &--topSpace {
-                padding-top: 15px;
-            }
-        }
-
         .mat-expansion-panel-header-title {
             font-size: 14px;
             color: mat-color($foreground, text, 0.87);

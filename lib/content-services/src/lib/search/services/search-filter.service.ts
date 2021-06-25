@@ -16,13 +16,13 @@
  */
 
 import { Injectable, Type } from '@angular/core';
-import { SearchTextComponent } from '../search-text/search-text.component';
-import { SearchRadioComponent } from '../search-radio/search-radio.component';
-import { SearchSliderComponent } from '../search-slider/search-slider.component';
-import { SearchNumberRangeComponent } from '../search-number-range/search-number-range.component';
-import { SearchCheckListComponent } from '../search-check-list/search-check-list.component';
-import { SearchDateRangeComponent } from '../search-date-range/search-date-range.component';
-import { SearchDatetimeRangeComponent } from '../search-datetime-range/search-datetime-range.component';
+import { SearchTextComponent } from '../components/search-text/search-text.component';
+import { SearchRadioComponent } from '../components/search-radio/search-radio.component';
+import { SearchSliderComponent } from '../components/search-slider/search-slider.component';
+import { SearchNumberRangeComponent } from '../components/search-number-range/search-number-range.component';
+import { SearchCheckListComponent } from '../components/search-check-list/search-check-list.component';
+import { SearchDateRangeComponent } from '../components/search-date-range/search-date-range.component';
+import { SearchDatetimeRangeComponent } from '../components/search-datetime-range/search-datetime-range.component';
 
 @Injectable({
     providedIn: 'root'

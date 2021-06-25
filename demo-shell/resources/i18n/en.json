@@ -350,7 +350,5 @@
       "ACTION_TYPE": "Action Type"
     }
   },
-  "SEARCH_FORMS": {
-    "ALL": "All"
-  }
+  "DEFAULT_SEARCH": "Default"
 }

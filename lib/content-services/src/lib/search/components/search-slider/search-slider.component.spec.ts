@@ -74,14 +74,13 @@ describe('SearchSliderComponent', () => {
         component.context = context;
         component.id = 'contentSize';
         component.settings = { field: 'cm:content.size' };
+        fixture.detectChanges();
 
         component.onChangedHandler(<MatSliderChange> { value: 10 });
-        fixture.detectChanges();
         expect(context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 10]');
         expect(context.update).toHaveBeenCalled();
 
         component.onChangedHandler(<MatSliderChange> { value: 20 });
-        fixture.detectChanges();
         expect(context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 20]');
     });
 

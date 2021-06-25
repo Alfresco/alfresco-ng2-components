@@ -16,6 +16,6 @@
  */
 
 import { InjectionToken } from '@angular/core';
-import { BaseQueryBuilderService } from './base-query-builder.service';
+import { BaseQueryBuilderService } from './services/base-query-builder.service';
 
 export const SEARCH_QUERY_SERVICE_TOKEN = new InjectionToken<BaseQueryBuilderService>('QueryService');

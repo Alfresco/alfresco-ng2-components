@@ -17,6 +17,7 @@
 
 import { Component, ViewEncapsulation, Input } from '@angular/core';
 import { SearchFilterComponent } from '../../components/search-filter/search-filter.component';
+import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 
 @Component({
     selector: 'adf-search-chip-list',
@@ -26,11 +27,13 @@ import { SearchFilterComponent } from '../../components/search-filter/search-fil
 })
 export class SearchChipListComponent {
 
-    /** Search filter to supply the data for the chips. */
     @Input()
+    /** @deprecated This is not required since ADF 4.5.0 */
     searchFilter: SearchFilterComponent;
 
     /** Flag used to enable the display of a clear-all-filters button. */
     @Input()
     clearAll: boolean = false;
+
+    constructor(public facetFiltersService: SearchFacetFiltersService) {}
 }

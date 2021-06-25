@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { SearchConfiguration } from './models/search-configuration.interface';
+import { SearchConfiguration } from '../models/search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 
 @Injectable()

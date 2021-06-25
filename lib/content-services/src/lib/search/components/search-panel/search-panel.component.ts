@@ -17,7 +17,7 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContentNodeSelectorPanelService } from '../../../content-node-selector/content-node-selector-panel.service';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 
 @Component({

@@ -223,14 +223,17 @@
     },
     "FILTER": {
       "ACTIONS": {
+        "SEARCH": "Search",
         "CLEAR": "Clear",
         "APPLY": "Apply",
         "CLEAR-ALL": "Clear all",
         "SHOW-MORE": "Show more",
-        "SHOW-LESS": "Show less",
-        "FILTER-CATEGORY": "Filter category"
+        "SHOW-LESS": "Show less"
       },
       "BUTTONS": {
+        "CLOSE": "Close",
+        "REMOVE": "Remove",
+        "APPLY": "Apply",
         "CLEAR-ALL": {
           "LABEL": "Clear all",
           "TOOLTIP": "This will remove all selections"
@@ -290,8 +293,7 @@
         }
       }
     },
-    "FORMS": "Search Forms",
-    "UNKNOWN_FORM": "Unknown Configuration",
+    "UNKNOWN_CONFIGURATION": "Unknown Configuration",
     "SEARCH_HEADER" : {
       "TITLE":"Filter",
       "TYPE": "Type",

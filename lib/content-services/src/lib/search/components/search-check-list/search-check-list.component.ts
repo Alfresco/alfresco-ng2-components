@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
+import { TranslationService } from '@alfresco/adf-core';
+import { Subject } from 'rxjs';
 
 export interface SearchListOption {
     name: string;
@@ -46,8 +48,9 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     pageSize = 5;
     isActive = false;
     enableChangeUpdate = true;
+    displayValue$: Subject<string> = new Subject<string>();
 
-    constructor() {
+    constructor(private translationService: TranslationService) {
         this.options = new SearchFilterList<SearchListOption>();
     }
 
@@ -59,11 +62,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
             if (this.settings.options && this.settings.options.length > 0) {
                 this.options = new SearchFilterList(this.settings.options, this.pageSize);
             }
-
-            if (this.settings.allowUpdateOnChange !== undefined &&
-                this.settings.allowUpdateOnChange !== null) {
-                this.enableChangeUpdate = this.settings.allowUpdateOnChange;
-            }
+            this.enableChangeUpdate = this.settings.allowUpdateOnChange ?? true;
         }
 
         if (this.startValue) {
@@ -71,16 +70,40 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         }
     }
 
-    reset() {
+    clear() {
         this.isActive = false;
+        this.clearOptions();
+        if (this.id && this.context && this.enableChangeUpdate) {
+            this.updateDisplayValue();
+            this.context.update();
+        }
+    }
+
+    clearOptions() {
         this.options.items.forEach((opt) => {
             opt.checked = false;
         });
 
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
+        }
+    }
+
+    reset() {
+        this.isActive = false;
+        this.clearOptions();
+        if (this.id && this.context) {
+            this.updateDisplayValue();
             this.context.update();
         }
+    }
+
+    updateDisplayValue(): void {
+        const displayValue = this.options.items
+            .filter((option) => option.checked)
+            .map(({name}) => this.translationService.instant(name))
+            .join(', ');
+        this.displayValue$.next(displayValue);
     }
 
     changeHandler(event: MatCheckboxChange, option: any) {
@@ -118,6 +141,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         const query = checkedValues.join(` ${this.operator} `);
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = query;
+            this.updateDisplayValue();
             this.context.update();
         }
     }

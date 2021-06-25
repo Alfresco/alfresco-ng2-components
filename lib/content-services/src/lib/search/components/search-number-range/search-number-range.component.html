@@ -29,8 +29,8 @@
     </mat-form-field>
 
 
-    <div class="adf-facet-buttons">
-        <button mat-button color="primary" type="button" (click)="reset()" data-automation-id="number-range-btn-clear">
+    <div class="adf-facet-buttons" *ngIf="!settings?.hideDefaultAction">
+        <button mat-button color="primary" type="button" (click)="clear()" data-automation-id="number-range-btn-clear">
             {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
         </button>
         <button mat-button color="primary" type="submit" [disabled]="!form.valid" data-automation-id="number-range-btn-apply">

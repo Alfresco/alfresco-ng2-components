@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Subject, Observable, from } from 'rxjs';
+import { Subject, Observable, from, ReplaySubject } from 'rxjs';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import {
     QueryBody,
@@ -27,15 +27,15 @@ import {
     RequestHighlight,
     RequestScope
 } from '@alfresco/js-api';
-import { SearchCategory } from './models/search-category.interface';
-import { FilterQuery } from './models/filter-query.interface';
-import { SearchRange } from './models/search-range.interface';
-import { SearchConfiguration } from './models/search-configuration.interface';
-import { FacetQuery } from './models/facet-query.interface';
-import { SearchSortingDefinition } from './models/search-sorting-definition.interface';
-import { FacetField } from './models/facet-field.interface';
-import { FacetFieldBucket } from './models/facet-field-bucket.interface';
-import { SearchForm } from './models/search-form.interface';
+import { SearchCategory } from '../models/search-category.interface';
+import { FilterQuery } from '../models/filter-query.interface';
+import { SearchRange } from '../models/search-range.interface';
+import { SearchConfiguration } from '../models/search-configuration.interface';
+import { FacetQuery } from '../models/facet-query.interface';
+import { SearchSortingDefinition } from '../models/search-sorting-definition.interface';
+import { FacetField } from '../models/facet-field.interface';
+import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
+import { SearchForm } from '../models/search-form.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -53,6 +53,9 @@ export abstract class BaseQueryBuilderService {
 
     /*  Stream that emits the error whenever user search  */
     error = new Subject();
+
+    /*  Stream that emits search forms  */
+    searchForms = new ReplaySubject<SearchForm[]>(1);
 
     categories: SearchCategory[] = [];
     queryFragments: { [id: string]: string } = {};
@@ -92,14 +95,16 @@ export abstract class BaseQueryBuilderService {
 
     public resetToDefaults() {
         const currentConfig = this.getDefaultConfiguration();
+        this.resetSearchOptions();
         this.configUpdated.next(currentConfig);
+        this.searchForms.next(this.getSearchFormDetails());
         this.setUpSearchConfiguration(currentConfig);
     }
 
     public getDefaultConfiguration(): SearchConfiguration | undefined {
         const configurations = this.loadConfiguration();
 
-        if (this.selectedConfiguration >= 0) {
+        if (this.selectedConfiguration !== undefined) {
             return configurations[this.selectedConfiguration];
         }
 
@@ -112,8 +117,9 @@ export abstract class BaseQueryBuilderService {
     public updateSelectedConfiguration(index: number): void {
         const currentConfig = this.loadConfiguration();
         if (Array.isArray(currentConfig) && currentConfig[index] !== undefined) {
-            this.configUpdated.next(currentConfig[index]);
             this.selectedConfiguration = index;
+            this.configUpdated.next(currentConfig[index]);
+            this.searchForms.next(this.getSearchFormDetails());
             this.resetSearchOptions();
             this.setUpSearchConfiguration(currentConfig[index]);
             this.update();
@@ -126,18 +132,21 @@ export abstract class BaseQueryBuilderService {
         this.filterQueries = [];
         this.sorting = [];
         this.sortingOptions = [];
+        this.userFacetBuckets = {};
         this.scope = null;
     }
 
-    public getSearchConfigurationDetails(): SearchForm[] {
+    public getSearchFormDetails(): SearchForm[] {
         const configurations = this.loadConfiguration();
         if (Array.isArray(configurations)) {
             return configurations.map((configuration, index) => ({
                 index,
-                name: configuration.name || 'SEARCH.UNKNOWN_FORM',
+                name: configuration.name || 'SEARCH.UNKNOWN_CONFIGURATION',
                 default: configuration.default || false,
                 selected: this.selectedConfiguration !== undefined ? index === this.selectedConfiguration : configuration.default
            }));
+        } else if (!!configurations) {
+            return [{ index: 0, name: configurations.name || 'SEARCH.UNKNOWN_CONFIGURATION', default: true, selected: true }];
         }
         return [];
     }

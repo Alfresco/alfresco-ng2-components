@@ -15,10 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, ComponentRef, ComponentFactoryResolver, Inject, SimpleChanges, OnChanges } from '@angular/core';
-import { SearchFilterService } from '../search-filter/search-filter.service';
-import { BaseQueryBuilderService } from '../../base-query-builder.service';
+import {
+    Component,
+    Input,
+    ViewChild,
+    ViewContainerRef,
+    OnInit,
+    OnDestroy,
+    ComponentRef,
+    ComponentFactoryResolver,
+    Inject,
+    SimpleChanges,
+    OnChanges
+} from '@angular/core';
+import { SearchFilterService } from '../../services/search-filter.service';
+import { BaseQueryBuilderService } from '../../services/base-query-builder.service';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'adf-search-widget-container',
@@ -74,7 +87,7 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
     private setupWidget(ref: ComponentRef<any>) {
         if (ref && ref.instance) {
             ref.instance.id = this.id;
-            ref.instance.settings = { ...this.settings };
+            ref.instance.settings = {...this.settings};
             ref.instance.context = this.queryBuilder;
             if (this.value) {
                 ref.instance.isActive = true;
@@ -105,6 +118,13 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
 
     getCurrentValue() {
         return this.componentRef.instance.getCurrentValue();
+    }
+
+    getDisplayValue(): Observable<string> | null {
+        if (!this.componentRef?.instance) {
+            return null;
+        }
+        return this.componentRef.instance.displayValue$;
     }
 
     resetInnerWidget() {

@@ -139,4 +139,5 @@ export class DateRangeFilterPage {
     async checkClearButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
     }
+
 }

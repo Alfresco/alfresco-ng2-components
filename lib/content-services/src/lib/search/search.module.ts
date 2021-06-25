@@ -37,10 +37,16 @@ import { SearchCheckListComponent } from './components/search-check-list/search-
 import { SearchDateRangeComponent } from './components/search-date-range/search-date-range.component';
 import { SearchSortingPickerComponent } from './components/search-sorting-picker/search-sorting-picker.component';
 import { SEARCH_QUERY_SERVICE_TOKEN } from './search-query-service.token';
-import { SearchQueryBuilderService } from './search-query-builder.service';
+import { SearchQueryBuilderService } from './services/search-query-builder.service';
 import { SearchFilterContainerComponent } from './components/search-filter-container/search-filter-container.component';
 import { SearchDatetimeRangeComponent } from './components/search-datetime-range/search-datetime-range.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
+import { SearchFilterChipsComponent } from './components/search-filter-chips/search-filter-chips.component';
+import { SearchFilterMenuCardComponent } from './components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.component';
+import { SearchFacetFieldComponent } from './components/search-facet-field/search-facet-field.component';
+import { SearchWidgetChipComponent } from './components/search-filter-chips/search-widget-chip/search-widget-chip.component';
+import { SearchFacetChipComponent } from './components/search-filter-chips/search-facet-chip/search-facet-chip.component';
+import { ResetSearchDirective } from './components/reset-search.directive';
 
 @NgModule({
     imports: [
@@ -67,7 +73,13 @@ import { SearchFormComponent } from './components/search-form/search-form.compon
         SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
         SearchFilterContainerComponent,
-        SearchFormComponent
+        SearchFormComponent,
+        SearchFilterChipsComponent,
+        SearchFilterMenuCardComponent,
+        SearchFacetFieldComponent,
+        SearchWidgetChipComponent,
+        SearchFacetChipComponent,
+        ResetSearchDirective
     ],
     exports: [
         SearchComponent,
@@ -86,11 +98,14 @@ import { SearchFormComponent } from './components/search-form/search-form.compon
         SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
         SearchFilterContainerComponent,
-        SearchFormComponent
+        SearchFormComponent,
+        SearchFilterChipsComponent,
+        SearchFilterMenuCardComponent,
+        SearchFacetFieldComponent,
+        ResetSearchDirective
     ],
     providers: [
-        { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService },
-        SearchSortingPickerComponent
+        { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService }
     ]
 })
 export class SearchModule {}

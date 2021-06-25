@@ -1,0 +1,47 @@
+<mat-chip [attr.data-automation-id]="'search-filter-chip-' + category.name"
+          disableRipple
+          class="adf-search-filter-chip"
+          [class.adf-search-toggle-chip]="(widget.getDisplayValue() | async) || menuTrigger.menuOpen"
+          [matMenuTriggerFor]="menu"
+          (onMenuOpen)="onMenuOpen()"
+          [attr.title]="widget.getDisplayValue() | async"
+          #menuTrigger="matMenuTrigger">
+    <span class="adf-search-filter-placeholder">
+        <span class="adf-search-filter-ellipsis">{{ category.name | translate }}</span>
+        <ng-container *ngIf="widget.getDisplayValue() | async">:</ng-container>
+    </span>
+    <span class="adf-search-filter-ellipsis" *ngIf="widget.getDisplayValue() | async as displayValue">
+        &nbsp;{{ displayValue | translate }}
+    </span>
+    <mat-icon>keyboard_arrow_down</mat-icon>
+</mat-chip>
+
+<mat-menu #menu="matMenu" backdropClass="adf-search-filter-chip-menu" (closed)="onClosed()">
+    <div #menuContainer [attr.data-automation-id]="'search-field-' + category.name">
+        <adf-search-filter-menu-card (click)="$event.stopPropagation()"
+                                     (keydown.tab)="$event.stopPropagation();"
+                                     (close)="menuTrigger.closeMenu()">
+
+            <ng-container ngProjectAs="filter-title">
+                {{ category.name | translate }} <ng-container *ngIf="category.component.settings.unit">({{category.component.settings.unit}})</ng-container>
+            </ng-container>
+
+            <ng-container ngProjectAs="filter-content">
+                <adf-search-widget-container #widget
+                                             [id]="category.id"
+                                             [selector]="category.component.selector"
+                                             [settings]="category.component.settings">
+                </adf-search-widget-container>
+            </ng-container>
+
+            <ng-container ngProjectAs="filter-actions">
+                <button mat-flat-button class="adf-search-action-button" color="accent" (click)="onRemove()" id="cancel-filter-button">
+                    {{ 'SEARCH.FILTER.BUTTONS.REMOVE' | translate }}
+                </button>
+                <button mat-flat-button class="adf-search-action-button" color="primary" (click)="onApply()" id="apply-filter-button">
+                    {{ 'SEARCH.FILTER.BUTTONS.APPLY' | translate }}
+                </button>
+            </ng-container>
+        </adf-search-filter-menu-card>
+    </div>
+</mat-menu>

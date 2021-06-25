@@ -55,6 +55,7 @@ import { FilteredSearchComponent } from './components/files/filtered-search.comp
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
 import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
 import { AspectListSampleComponent } from './components/aspect-list-sample/aspect-list-sample.component';
+import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.AppLoginModule) },
@@ -323,6 +324,11 @@ export const appRoutes: Routes = [
             {
                 path: 'search',
                 component: SearchResultComponent,
+                canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'search-filter-chips',
+                component: SearchFilterChipsComponent,
                 canActivate: [AuthGuardEcm]
             },
             {

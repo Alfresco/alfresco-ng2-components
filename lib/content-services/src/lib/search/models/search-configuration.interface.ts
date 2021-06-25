@@ -17,7 +17,7 @@
 
 import { FilterQuery } from './filter-query.interface';
 import { FacetQuery } from './facet-query.interface';
-import { FacetField } from './facet-field.interface';
+import { FacetField, FacetFieldSettings } from './facet-field.interface';
 import { SearchCategory } from './search-category.interface';
 import { SearchSortingDefinition } from './search-sorting-definition.interface';
 import { RequestHighlight } from '@alfresco/js-api';
@@ -35,6 +35,7 @@ export interface SearchConfiguration {
         expanded?: boolean;
         mincount?: number;
         queries: FacetQuery[];
+        settings?: FacetFieldSettings;
     };
     facetFields?: {
         expanded?: boolean;

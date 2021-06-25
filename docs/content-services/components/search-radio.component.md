@@ -45,6 +45,8 @@ Implements a radio button list [widget](../../../lib/testing/src/lib/core/pages/
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | options | `array` | Array of objects with `name` and `value` properties. Each object defines a radio button, labelled with `name`, that adds the query fragment in `value` to the query when enabled. |
+| allowUpdateOnChange | `boolean` | Enable/Disable the update fire event when text has been changed. By default is true.
+| hideDefaultAction | `boolean` | Show/hide the widget actions. By default is false.
 
 ## Details
 

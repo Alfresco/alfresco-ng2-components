@@ -10,7 +10,9 @@
         <div class="app-search-results__sorting">
             <adf-search-sorting-picker></adf-search-sorting-picker>
 
-            <adf-search-form (formChange)="onFormChange($event)"></adf-search-form>
+            <div style="padding: 0 12px">
+                <button mat-stroked-button (click)="switchLayout()"> Switch to new layout </button>
+            </div>
         </div>
         <app-files-component
             [showHeader]="showHeader"
