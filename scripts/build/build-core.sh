@@ -22,6 +22,9 @@ echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/core/bundles/assets/adf-core/i18n
 cp -R ./lib/core/i18n/* ./lib/dist/core/bundles/assets/adf-core/i18n
 
+echo "====== Copy schema ======"
+cp -R ./lib/core/app-config/schema.json lib/dist/core/app.config.schema.json
+
 echo "====== Copy assets ======"
 cp -R ./lib/core/assets/* ./lib/dist/core/bundles/assets
 
