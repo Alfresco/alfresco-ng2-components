@@ -96,6 +96,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
 
     submitValues() {
         this.setValue(this.value);
+        this.updateDisplayValue();
         this.context.update();
     }
 
@@ -142,6 +143,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         const initialValue = this.getSelectedValue();
         if (initialValue !== null) {
             this.setValue(initialValue);
+            this.updateDisplayValue();
             this.context.update();
         }
     }

@@ -95,6 +95,7 @@ export abstract class BaseQueryBuilderService {
 
     public resetToDefaults() {
         const currentConfig = this.getDefaultConfiguration();
+        this.resetSearchOptions();
         this.configUpdated.next(currentConfig);
         this.searchForms.next(this.getSearchFormDetails());
         this.setUpSearchConfiguration(currentConfig);
@@ -131,6 +132,7 @@ export abstract class BaseQueryBuilderService {
         this.filterQueries = [];
         this.sorting = [];
         this.sortingOptions = [];
+        this.userFacetBuckets = {};
         this.scope = null;
     }
 

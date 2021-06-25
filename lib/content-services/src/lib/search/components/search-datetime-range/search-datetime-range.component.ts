@@ -189,7 +189,6 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         }
 
         if (this.id && this.context && this.enableChangeUpdate) {
-            this.updateDisplayValue();
             this.updateQuery();
         }
         this.setFromMaxDatetime();
@@ -202,6 +201,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
 
     private updateQuery() {
         if (this.id && this.context) {
+            this.updateDisplayValue();
             this.context.update();
         }
     }

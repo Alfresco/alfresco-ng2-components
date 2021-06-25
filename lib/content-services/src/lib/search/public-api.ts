@@ -56,5 +56,6 @@ export * from './services/search-facet-filters.service';
 export * from './components/search-filter-chips/search-filter-chips.component';
 export * from './components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.component';
 export * from './components/search-facet-field/search-facet-field.component';
+export * from './components/reset-search.directive';
 
 export * from './search.module';

@@ -25,11 +25,10 @@ import { SearchFacetFiltersService } from '../../services/search-facet-filters.s
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-chip-list' }
 })
-/** @deprecated 3.2.0 */
 export class SearchChipListComponent {
 
-    /** @deprecated 4.5.0 Search filter to supply the data for the chips. */
     @Input()
+    /** @deprecated This is not required since ADF 4.5.0 */
     searchFilter: SearchFilterComponent;
 
     /** Flag used to enable the display of a clear-all-filters button. */

@@ -24,12 +24,12 @@ import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-search-result-component',
-    templateUrl: './search-result.component.html',
-    styleUrls: ['./search-result.component.scss'],
+    selector: 'app-search-filter-chips',
+    templateUrl: './search-filter-chips.component.html',
+    styleUrls: [ './search-filter-chips.component.scss' ],
     providers: [SearchService]
 })
-export class SearchResultComponent implements OnInit, OnDestroy {
+export class SearchFilterChipsComponent implements OnInit, OnDestroy {
 
     queryParamName = 'q';
     searchedWord = '';
@@ -143,9 +143,5 @@ export class SearchResultComponent implements OnInit, OnDestroy {
 
     onFormChange(form: SearchForm) {
         this.queryBuilder.updateSelectedConfiguration(form.index);
-    }
-
-    switchLayout() {
-        this.router.navigate(['search-filter-chips', { q: this.searchedWord }] );
     }
 }

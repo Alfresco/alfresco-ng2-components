@@ -40,6 +40,7 @@ Implements a [search widget](../../../lib/content-services/src/lib/search/search
 | field | string | Field to apply the query to. Required value |
 | datetimeFormat | string | Datetime format. Datetime formats used by the datetime picker are [Moment.js](https://momentjs.com/docs/#/parsing/string-format/) instances, so you can use any datetime format supported by Moment. Default is 'DD/MM/YYYY HH:mm'. |
 | maxDatetime | string | A fixed datetime that will set the maximum searchable datetime. Default is no maximum. |
+| hideDefaultAction | boolean | Show/hide the widget actions. By default is false.
 
 ## Details
 

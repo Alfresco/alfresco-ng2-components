@@ -248,7 +248,7 @@ describe('SearchFilterChipsComponent', () => {
             const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
             expect(chips.length).toBe(2);
 
-            const titleElements = fixture.debugElement.queryAll(By.css('.search-filter-placeholder'));
+            const titleElements = fixture.debugElement.queryAll(By.css('.adf-search-filter-placeholder'));
             expect(titleElements.map(title => title.nativeElement.innerText.trim())).toEqual(['Name', 'Type']);
         });
 

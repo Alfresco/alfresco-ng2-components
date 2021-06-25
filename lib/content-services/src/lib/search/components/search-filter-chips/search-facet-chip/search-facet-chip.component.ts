@@ -18,6 +18,8 @@
 import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { FacetField } from '../../../models/facet-field.interface';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { SearchFacetFieldComponent } from '../../search-facet-field/search-facet-field.component';
 
 @Component({
   selector: 'adf-search-facet-chip',
@@ -30,6 +32,12 @@ export class SearchFacetChipComponent {
 
     @ViewChild('menuContainer', { static: false })
     menuContainer: ElementRef;
+
+    @ViewChild('menuTrigger', { static: false })
+    menuTrigger: MatMenuTrigger;
+
+    @ViewChild(SearchFacetFieldComponent, { static: false })
+    facetFieldComponent: SearchFacetFieldComponent;
 
     focusTrap: ConfigurableFocusTrap;
 
@@ -45,5 +53,15 @@ export class SearchFacetChipComponent {
     onClosed() {
         this.focusTrap.destroy();
         this.focusTrap = null;
+    }
+
+    onRemove() {
+        this.facetFieldComponent.reset();
+        this.menuTrigger.closeMenu();
+    }
+
+    onApply() {
+        this.facetFieldComponent.submitValues();
+        this.menuTrigger.closeMenu();
     }
 }

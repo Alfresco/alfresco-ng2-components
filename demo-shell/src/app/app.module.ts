@@ -114,6 +114,7 @@ import localeDa from '@angular/common/locales/da';
 import localeSv from '@angular/common/locales/sv';
 import { setupAppNotifications } from './services/app-notifications-factory';
 import { AppNotificationsService } from './services/app-notifications.service';
+import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -204,7 +205,8 @@ registerLocaleData(localeSv);
         CustomEditorComponent,
         CustomWidgetComponent,
         ProcessCloudLayoutComponent,
-        ServiceTaskListCloudDemoComponent
+        ServiceTaskListCloudDemoComponent,
+        SearchFilterChipsComponent
     ],
     providers: [
         {

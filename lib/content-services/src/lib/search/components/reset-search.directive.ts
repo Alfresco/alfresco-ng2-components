@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Directive, HostListener } from '@angular/core';
+import { SearchFacetFiltersService } from '../services/search-facet-filters.service';
 
-@Component({
-  selector: 'adf-search-filter-menu-card',
-  templateUrl: './search-filter-menu-card.component.html'
+@Directive({
+  selector: '[adf-reset-search]'
 })
-export class SearchFilterMenuCardComponent {
-    @Output()
-    close = new EventEmitter();
-
-    onClose() {
-        this.close.emit();
+export class ResetSearchDirective {
+    @HostListener('click')
+    onClick() {
+        this.filterService.reset();
     }
+
+    constructor(private filterService: SearchFacetFiltersService) { }
 }

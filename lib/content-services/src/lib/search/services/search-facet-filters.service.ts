@@ -34,7 +34,6 @@ export interface SelectedBucket {
 @Injectable({
     providedIn: 'root'
 })
-// TOdo: remove filename
 export class SearchFacetFiltersService implements OnDestroy {
 
     /** All facet field items to be displayed in the component. These are updated according to the response.
@@ -319,7 +318,7 @@ export class SearchFacetFiltersService implements OnDestroy {
         }
     }
 
-    /* update the search chip list component */
+    /* update adf-search-chip-list component view */
     updateSelectedBuckets() {
         if (this.responseFacets) {
             this.selectedBuckets = [];
@@ -363,8 +362,9 @@ export class SearchFacetFiltersService implements OnDestroy {
     }
 
     reset() {
-        this.resetAllSelectedBuckets();
-        this.resetQueryFragments();
-        this.responseFacets = null;
+        this.responseFacets = [];
+        this.selectedBuckets = [];
+        this.queryBuilder.resetToDefaults();
+        this.queryBuilder.update();
     }
 }

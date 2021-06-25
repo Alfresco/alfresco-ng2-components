@@ -46,6 +46,7 @@ import { SearchFilterMenuCardComponent } from './components/search-filter-chips/
 import { SearchFacetFieldComponent } from './components/search-facet-field/search-facet-field.component';
 import { SearchWidgetChipComponent } from './components/search-filter-chips/search-widget-chip/search-widget-chip.component';
 import { SearchFacetChipComponent } from './components/search-filter-chips/search-facet-chip/search-facet-chip.component';
+import { ResetSearchDirective } from './components/reset-search.directive';
 
 @NgModule({
     imports: [
@@ -77,7 +78,8 @@ import { SearchFacetChipComponent } from './components/search-filter-chips/searc
         SearchFilterMenuCardComponent,
         SearchFacetFieldComponent,
         SearchWidgetChipComponent,
-        SearchFacetChipComponent
+        SearchFacetChipComponent,
+        ResetSearchDirective
     ],
     exports: [
         SearchComponent,
@@ -99,7 +101,8 @@ import { SearchFacetChipComponent } from './components/search-filter-chips/searc
         SearchFormComponent,
         SearchFilterChipsComponent,
         SearchFilterMenuCardComponent,
-        SearchFacetFieldComponent
+        SearchFacetFieldComponent,
+        ResetSearchDirective
     ],
     providers: [
         { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService }

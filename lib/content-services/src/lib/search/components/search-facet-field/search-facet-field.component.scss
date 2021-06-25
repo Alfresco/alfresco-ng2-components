@@ -1,5 +1,6 @@
 @mixin adf-search-filter-field-theme($theme) {
     $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
 
     .adf-search-filter-facet {
         .adf-checklist {
@@ -36,7 +37,7 @@
 
             .adf-facet-search-container {
                 border-radius: 6px;
-                background: rgba(33, 33, 33, 0.03);
+                background: mat-color($background, background);
                 display: flex;
                 height: 32px;
 

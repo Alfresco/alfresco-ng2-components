@@ -18,6 +18,8 @@
 import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { SearchCategory } from '../../../models/search-category.interface';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { SearchWidgetContainerComponent } from '../../search-widget-container/search-widget-container.component';
 
 @Component({
   selector: 'adf-search-widget-chip',
@@ -31,6 +33,12 @@ export class SearchWidgetChipComponent  {
 
     @ViewChild('menuContainer', { static: false })
     menuContainer: ElementRef;
+
+    @ViewChild('menuTrigger', { static: false })
+    menuTrigger: MatMenuTrigger;
+
+    @ViewChild(SearchWidgetContainerComponent, { static: false })
+    widgetContainerComponent: SearchWidgetContainerComponent;
 
     focusTrap: ConfigurableFocusTrap;
 
@@ -46,5 +54,15 @@ export class SearchWidgetChipComponent  {
     onClosed() {
         this.focusTrap.destroy();
         this.focusTrap = null;
+    }
+
+    onRemove() {
+        this.widgetContainerComponent.resetInnerWidget();
+        this.menuTrigger.closeMenu();
+    }
+
+    onApply() {
+        this.widgetContainerComponent.applyInnerWidget();
+        this.menuTrigger.closeMenu();
     }
 }

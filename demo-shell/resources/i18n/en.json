@@ -351,6 +351,7 @@
     }
   },
   "SEARCH_FORMS": {
-    "ALL": "All"
+    "DEFAULT": "Default",
+    "OTHER": "Other"
   }
 }

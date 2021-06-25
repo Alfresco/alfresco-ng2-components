@@ -10,7 +10,7 @@
         <span class="adf-search-filter-ellipsis">{{ category.name | translate }}</span>
         <ng-container *ngIf="widget.getDisplayValue() | async">:</ng-container>
     </span>
-    <span class="adf-search-filter-value" *ngIf="widget.getDisplayValue() | async as displayValue">
+    <span class="adf-search-filter-ellipsis" *ngIf="widget.getDisplayValue() | async as displayValue">
         &nbsp;{{ displayValue | translate }}
     </span>
     <mat-icon>keyboard_arrow_down</mat-icon>
@@ -35,10 +35,10 @@
             </ng-container>
 
             <ng-container ngProjectAs="filter-actions">
-                <button mat-flat-button color="accent" (click)="widget.resetInnerWidget()" id="cancel-filter-button">
+                <button mat-flat-button class="adf-search-action-button" color="accent" (click)="onRemove()" id="cancel-filter-button">
                     {{ 'SEARCH.FILTER.BUTTONS.REMOVE' | translate }}
                 </button>
-                <button mat-flat-button color="primary" (click)="widget.applyInnerWidget()" id="apply-filter-button">
+                <button mat-flat-button class="adf-search-action-button" color="primary" (click)="onApply()" id="apply-filter-button">
                     {{ 'SEARCH.FILTER.BUTTONS.APPLY' | translate }}
                 </button>
             </ng-container>

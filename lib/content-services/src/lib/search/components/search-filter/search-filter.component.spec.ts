@@ -510,10 +510,10 @@ describe('SearchFilterComponent', () => {
             searchFacetFiltersService.responseFacets = [];
             component.displayResetButton = true;
             fixture.detectChanges();
-            spyOn(queryBuilder, 'resetToDefaults').and.stub();
+            spyOn(queryBuilder, 'resetToDefaults').and.callThrough();
 
             const resetButton = fixture.debugElement.query(By.css('button'));
-            resetButton.triggerEventHandler('click', {});
+            resetButton.nativeElement.click();
 
             expect(component.queryBuilder.queryFragments).toEqual({});
             expect(queryBuilder.resetToDefaults).toHaveBeenCalled();

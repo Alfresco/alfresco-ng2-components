@@ -118,6 +118,7 @@ export class SearchFacetFieldComponent implements FacetWidget {
 
     reset(): void {
         this.resetSelectedBuckets(this.field);
+        this.updateDisplayValue();
         this.queryBuilder.update();
     }
 
