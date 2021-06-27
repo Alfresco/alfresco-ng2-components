@@ -146,7 +146,7 @@
     "lint-staged": "^10.5.1",
     "lite-server": "^2.6.1",
     "mini-css-extract-plugin": "^1.6.0",
-    "nconf": "^0.11.1",
+    "nconf": "^0.11.3",
     "ng-packagr": "^10.1.2",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "protractor": "^7.0.0",
