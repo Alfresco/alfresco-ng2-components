@@ -904,7 +904,7 @@ describe('FormComponent', () => {
         expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeFalsy();
     });
 
-    it('should disable save outcome button when the form is invalid', () => {
+    it('should save outcome button be enabled when the form is invalid', () => {
         const formModel = new FormModel();
         formComponent.form = formModel;
 
@@ -926,7 +926,7 @@ describe('FormComponent', () => {
             name: FormOutcomeModel.SAVE_ACTION
         });
 
-        expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeTruthy();
     });
 
     it('should disable start process outcome button when disableStartProcessButton is true', () => {
