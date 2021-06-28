@@ -37,18 +37,23 @@ backend services have been tested with each released version of ADF.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
-## v4.4.0
-
-<!--v440 start-->
-
-<!--v440 end-->
-
 ## v4.5.0
 
 <!--v450 start-->
 
+-   [Search filter chips component](content-services/components/search-filter-chips.component.md)
+-   [Search form component](content-services/components/search-form.component.md)
 
 <!--v450 end-->
+
+
+## v4.4.0
+
+<!--v440 start-->
+
+-   [Node counter directive](content-services/directives/node-counter.directive.md)
+
+<!--v440 end-->
 
 ## v4.3.0
 
