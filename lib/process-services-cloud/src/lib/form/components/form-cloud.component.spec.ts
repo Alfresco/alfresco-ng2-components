@@ -870,6 +870,15 @@ describe('FormCloudComponent', () => {
         expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeTruthy();
     });
 
+    it('should save outcome button be enabled when the form is invalid', () => {
+        const formModel = new FormModel(cloudFormMock);
+        formComponent.form = formModel;
+        formModel.isValid = false;
+
+        const saveOutcome = formComponent.form.outcomes.find((outcome) => outcome.name === FormOutcomeModel.SAVE_ACTION);
+        expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeTruthy();
+    });
+
     it('should disable start process outcome button when disableStartProcessButton is true', () => {
         const formModel = new FormModel(cloudFormMock);
         formComponent.form = formModel;
