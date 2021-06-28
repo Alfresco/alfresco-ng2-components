@@ -303,8 +303,9 @@ export class ProcessFilterCloudService {
 
     /**
      * Finds and returns the process instance filters from preferences
-     * @param appName Name of the target app
      * @returns Array of ProcessFilterCloudModel
+     * @param preferences
+     * @param key
      */
     private findFiltersByKeyInPreferences(preferences: any, key: string): ProcessFilterCloudModel[] {
         const result = preferences.find((filter: any) => { return filter.entry.key === key; });
