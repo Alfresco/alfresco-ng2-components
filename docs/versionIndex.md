@@ -12,7 +12,9 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
--   [v4.3.0](#v320)
+-   [v4.5.0](#v450)
+-   [v4.4.0](#v440)
+-   [v4.3.0](#v430)
 -   [v4.2.0](#v420)
 -   [v4.1.0](#v410)
 -   [v4.0.0](#v400)
@@ -34,6 +36,19 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v4.4.0
+
+<!--v440 start-->
+
+<!--v440 end-->
+
+## v4.5.0
+
+<!--v450 start-->
+
+
+<!--v450 end-->
 
 ## v4.3.0
 
