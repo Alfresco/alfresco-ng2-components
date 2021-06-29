@@ -194,6 +194,7 @@
         background-color: mat-color($background, card);
         border: $data-table-dividers-wrapper-border;
         box-sizing: border-box;
+        overflow-x: auto;
 
         @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
             .adf-datatable-center-size-column-ie {
@@ -223,6 +224,8 @@
         .adf-datatable-header {
             display: flex;
             flex-direction: column;
+            width: fit-content;
+            min-width: 100%;
         }
 
         .adf-datatable-cell {
@@ -251,6 +254,8 @@
             display: flex;
             flex-direction: column;
             background-color: inherit;
+            width: fit-content;
+            min-width: 100%;
 
             .adf-datatable-row {
                 @include material-animation-default(0.28s);
@@ -548,6 +553,7 @@
             padding: 0 !important;
             border: none !important;
             width: 100%;
+            justify-content: center;
 
             & > img {
                 width: 100%;
