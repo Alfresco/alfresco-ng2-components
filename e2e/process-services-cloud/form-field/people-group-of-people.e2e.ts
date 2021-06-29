@@ -110,11 +110,11 @@ describe('People and Group of people Widgets', () => {
         await expect (activePeopleField).toBe(false);
     });
 
-    it('[C325004] Should be able to save only for valid input in the People  field if the Required option is selected ', async () => {
+    it('[C325004] Should save button be enabled for both valid and invalid inputs in the People field', async () => {
         await formCloudComponentPage.setConfigToEditor(peopleRequiredFormMock);
 
         await peopleCloudWidget.isPeopleWidgetVisible(peopleValueString.peopleCloudWidgetRequiredField);
-        await expect(await formPage.isSaveButtonDisabled()).toBe(true);
+        await expect(await formPage.isSaveButtonDisabled()).toBe(false);
         await expect(await formPage.isValidationIconRed()).toBe(true);
 
         const requiredPeople = await peopleCloudWidget.getFieldValue(widgets.peopleCloudWidgetRequiredId);
@@ -163,11 +163,11 @@ describe('People and Group of people Widgets', () => {
         await expect (activeGroupField).toBe(false);
     });
 
-    it('[C325005] Should be able to save only for valid input in the Group of people field if the Required option is selected', async () => {
+    it('[C325005] Should save button be enabled for both valid and invalid inputs in the Group of people field', async () => {
         await formCloudComponentPage.setConfigToEditor(groupRequiredFormMock);
 
         await groupCloudWidget.isGroupWidgetVisible(groupValueString.groupCloudWidgetRequiredField);
-        await expect(await formPage.isSaveButtonDisabled()).toBe(true);
+        await expect(await formPage.isSaveButtonDisabled()).toBe(false);
         await expect(await formPage.isValidationIconRed()).toBe(true);
 
         const groupRequired = await groupCloudWidget.getGroupsFieldContent();

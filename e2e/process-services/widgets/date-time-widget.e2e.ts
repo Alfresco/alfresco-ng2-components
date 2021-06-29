@@ -88,23 +88,16 @@ describe('Date and time widget', () => {
     });
 
     it('[C268819] Should be able to set advanced settings for Date Time widget ', async () => {
-        await widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
-        await widget.dateTimeWidget().closeDataTimeWidget();
-
         await widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-17 07:30 PM');
-        await taskPage.formFields().saveForm();
-        await expect(await widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be less than');
-
-        await widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
         await widget.dateTimeWidget().closeDataTimeWidget();
-        await widget.dateTimeWidget().removeFromDatetimeWidget(app.FIELD.date_time_between_input);
+        await taskPage.formFields().completeForm();
+        await expect(await widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be less than');
 
         await browser.refresh();
 
         await widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-19 07:30 PM');
         await widget.dateTimeWidget().closeDataTimeWidget();
-
-        await taskPage.formFields().saveForm();
+        await taskPage.formFields().completeForm();
 
         await expect(await widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be greater than');
     });
