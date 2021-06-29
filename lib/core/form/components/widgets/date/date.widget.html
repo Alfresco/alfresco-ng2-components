@@ -4,13 +4,13 @@
         <input matInput
                [id]="field.id"
                [matDatepicker]="datePicker"
-               [ngModel]="field.value | adfMomentDate: field.dateDisplayFormat"
+               [value]="field.value | adfMomentDate: field.dateDisplayFormat"
                [required]="isRequired()"
                [disabled]="field.readOnly"
                [min]="minDate"
                [max]="maxDate"
                (focusout)="onDateChanged($any($event).srcElement.value)"
-               (dateChange)="onDateChanged($event)"
+               (dateChange)="onDateChanged($any($event).targetElement.value)"
                [placeholder]="field.placeholder">
         <mat-datepicker-toggle  matSuffix [for]="datePicker" [disabled]="field.readOnly" ></mat-datepicker-toggle>
     </mat-form-field>

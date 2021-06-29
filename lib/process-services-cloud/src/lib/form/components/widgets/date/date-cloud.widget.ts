@@ -23,8 +23,10 @@ import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter, WidgetComponent,
-    UserPreferencesService, UserPreferenceValues, FormService } from '@alfresco/adf-core';
+import {
+    MOMENT_DATE_FORMATS, MomentDateAdapter, WidgetComponent,
+    UserPreferencesService, UserPreferenceValues, FormService, FormFieldModel
+} from '@alfresco/adf-core';
 
 @Component({
     selector: 'date-widget',
@@ -88,13 +90,21 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     }
 
     onDateChanged(newDateValue) {
-        if (newDateValue && newDateValue.value) {
-            this.field.value = newDateValue.value.format(this.field.dateDisplayFormat);
-        } else if (newDateValue) {
-            this.field.value = newDateValue;
+        const date = moment(newDateValue, this.field.dateDisplayFormat);
+        if (date.isValid()) {
+            this.field.value = date.format(this.field.dateDisplayFormat);
+            this.onFieldChanged(this.field);
         } else {
-            this.field.value = null;
+            const fieldAux = new FormFieldModel(this.field.form, this.field);
+            fieldAux.value = newDateValue;
+            fieldAux.validate();
+
+            if (fieldAux.isValid) {
+                this.onFieldChanged(this.field);
+            } else {
+                this.field.validationSummary = fieldAux.validationSummary;
+                this.field.markAsInvalid();
+            }
         }
-        this.onFieldChanged(this.field);
     }
 }

@@ -30,6 +30,7 @@ import { FormService } from './../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FormFieldModel } from '../core/form-field.model';
 
 @Component({
     providers: [
@@ -82,14 +83,21 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     }
 
     onDateChanged(newDateValue) {
-        if (newDateValue && newDateValue.value) {
-            this.field.value = newDateValue.value.format(this.field.dateDisplayFormat);
-        } else if (newDateValue) {
-            this.field.value = newDateValue;
+        const date = moment(newDateValue, this.field.dateDisplayFormat).subtract(moment(newDateValue, this.field.dateDisplayFormat).utcOffset(), 'minutes');
+        if (date.isValid()) {
+            this.field.value = date.format(this.field.dateDisplayFormat);
+            this.onFieldChanged(this.field);
         } else {
-            this.field.value = null;
-        }
-        this.onFieldChanged(this.field);
-    }
+            const fieldAux = new FormFieldModel(this.field.form, this.field);
+            fieldAux.value = newDateValue;
+            fieldAux.validate();
 
+            if (fieldAux.isValid) {
+                this.onFieldChanged(this.field);
+            } else {
+                this.field.validationSummary = fieldAux.validationSummary;
+                this.field.markAsInvalid();
+            }
+        }
+    }
 }
