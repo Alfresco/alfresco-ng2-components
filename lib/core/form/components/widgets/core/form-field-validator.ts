@@ -165,6 +165,38 @@ export class DateFieldValidator implements FormFieldValidator {
     }
 }
 
+export class DateTimeFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.DATETIME
+    ];
+
+    // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
+    static isValidDate(inputDate: string, dateFormat: string = 'YYYY-MM-DD HH:mm'): boolean {
+        if (inputDate) {
+            const d = moment(inputDate, dateFormat, true);
+            return d.isValid();
+        }
+
+        return false;
+    }
+
+    isSupported(field: FormFieldModel): boolean {
+        return field && this.supportedTypes.indexOf(field.type) > -1;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (this.isSupported(field) && field.value && field.isVisible) {
+            if (DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
+                return true;
+            }
+            field.validationSummary.message = field.dateDisplayFormat;
+            return false;
+        }
+        return true;
+    }
+}
+
 export abstract class BoundaryDateFieldValidator implements FormFieldValidator {
 
     DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
@@ -539,6 +571,7 @@ export const FORM_FIELD_VALIDATORS = [
     new MaxValueFieldValidator(),
     new RegExFieldValidator(),
     new DateFieldValidator(),
+    new DateTimeFieldValidator(),
     new MinDateFieldValidator(),
     new MaxDateFieldValidator(),
     new FixedValueFieldValidator(),

@@ -30,7 +30,8 @@ import {
     MaxDateTimeFieldValidator,
     MinDateTimeFieldValidator,
     MaxDateFieldValidator,
-    MinDateFieldValidator
+    MinDateFieldValidator,
+    DateTimeFieldValidator
 } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
@@ -1047,4 +1048,31 @@ describe('FormFieldValidator', () => {
             expect(field.validationSummary).not.toBeNull();
         });
    });
+
+   describe('DateTimeFieldValidator', () => {
+
+        let validator: DateTimeFieldValidator;
+
+        beforeEach(() => {
+            validator = new DateTimeFieldValidator();
+        });
+
+        it('should validate dateTime format with dateDisplayFormat', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: '2021-06-09 14:10',
+                dateDisplayFormay: 'YYYY-MM-DD HH:mm'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should validate dateTime format with default format', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: '2021-06-09 14:10',
+            });
+            expect(validator.validate(field)).toBeTruthy();
+        });
+    });
 });
