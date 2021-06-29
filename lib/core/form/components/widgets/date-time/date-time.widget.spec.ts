@@ -102,7 +102,7 @@ describe('DateTimeWidgetComponent', () => {
 
         widget.field = field;
 
-        widget.onDateChanged({ value: moment('1982-03-13T10:00:000Z') });
+        widget.onDateChanged(moment('1982-03-13T10:00:000Z'));
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
 
