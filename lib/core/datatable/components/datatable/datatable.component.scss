@@ -226,6 +226,7 @@
             flex-direction: column;
             width: fit-content;
             min-width: 100%;
+            box-sizing: border-box;
         }
 
         .adf-datatable-cell {
