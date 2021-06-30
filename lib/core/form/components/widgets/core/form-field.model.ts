@@ -408,10 +408,10 @@ export class FormFieldModel extends FormWidgetModel {
                 this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : false;
                 break;
             case FormFieldTypes.PEOPLE:
-                this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : [];
+                this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : null;
                 break;
             case FormFieldTypes.FUNCTIONAL_GROUP:
-                this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : [];
+                this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : null;
                 break;
             default:
                 if (!FormFieldTypes.isReadOnlyType(this.type) && !this.isInvalidFieldType(this.type)) {
