@@ -161,7 +161,7 @@ describe('TaskFiltersCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component.currentFilter).not.toBeDefined();
+        expect(component.currentFilter).toBeUndefined();
     });
 
     it('should select the task filter based on the input by name param', async () => {
@@ -191,7 +191,7 @@ describe('TaskFiltersCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component.currentFilter).not.toBeDefined();
+        expect(component.currentFilter).toBeUndefined();
     });
 
     it('should select the task filter based on the input by index param', async () => {
