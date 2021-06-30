@@ -85,10 +85,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
                     this.selectFilterAndEmit(this.filterParam);
                 }
 
-                if (!this.currentFilter && this.filters.length > 0) {
-                    this.currentFilter = this.filters[0];
-                }
-
                 this.updateFilterCounters();
                 this.success.emit(res);
             },
@@ -158,14 +154,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
                 this.resetFilterCounter(this.currentFilter.key);
                 this.filterSelected.emit(this.currentFilter);
             }
-        }
-
-        this.ensureFilterSelected();
-    }
-
-    private ensureFilterSelected() {
-        if (!this.currentFilter && this.filters.length > 0) {
-            this.currentFilter = this.filters[0];
         }
     }
 
