@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ContentService, ThumbnailService, SitesService, TranslationService, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { Subject, Observable, throwError } from 'rxjs';
@@ -143,9 +143,6 @@ export class ContentNodeDialogService {
         if (this.contentService.hasAllowableOperations(contentEntry, permission)) {
 
             const select = new Subject<Node[]>();
-            select.subscribe({
-                complete: this.close.bind(this)
-            });
 
             const data: ContentNodeSelectorComponentData = {
                 title: this.getTitleTranslation(action, contentEntry.name),
@@ -159,7 +156,11 @@ export class ContentNodeDialogService {
                 select: select
             };
 
-            this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+            const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+
+            select.subscribe({
+                complete: dialogRef.close.bind(this)
+            });
 
             return select;
         } else {
@@ -186,9 +187,6 @@ export class ContentNodeDialogService {
      */
     openUploadFolderDialog(action: NodeAction, contentEntry: Node): Observable<Node[]> {
         const select = new Subject<Node[]>();
-        select.subscribe({
-            complete: this.close.bind(this)
-        });
 
         const data: ContentNodeSelectorComponentData = {
             title: this.getTitleTranslation(action, this.translation.instant('DROPDOWN.MY_FILES_OPTION')),
@@ -201,7 +199,12 @@ export class ContentNodeDialogService {
             select: select
         };
 
-        this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+        const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+
+        select.subscribe({
+            complete: dialogRef.close.bind(this)
+        });
+
         return select;
     }
 
@@ -214,9 +217,6 @@ export class ContentNodeDialogService {
      */
     openUploadFileDialog(action: NodeAction, contentEntry: Node, showFilesInResult = false): Observable<Node[]> {
         const select = new Subject<Node[]>();
-        select.subscribe({
-            complete: this.close.bind(this)
-        });
 
         const data: ContentNodeSelectorComponentData = {
             title: this.getTitleTranslation(action, this.translation.instant('DROPDOWN.MY_FILES_OPTION')),
@@ -229,12 +229,17 @@ export class ContentNodeDialogService {
             showFilesInResult
         };
 
-        this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+        const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
+
+        select.subscribe({
+            complete: dialogRef.close.bind(this)
+        });
+
         return select;
     }
 
-    private openContentNodeDialog(data: ContentNodeSelectorComponentData, panelClass: string, width: string) {
-        this.dialog.open(ContentNodeSelectorComponent, {
+    private openContentNodeDialog(data: ContentNodeSelectorComponentData, panelClass: string, width: string): MatDialogRef<ContentNodeSelectorComponent> {
+        return this.dialog.open(ContentNodeSelectorComponent, {
             data,
             panelClass,
             width,
@@ -271,11 +276,6 @@ export class ContentNodeDialogService {
 
     private isSite(entry) {
         return !!entry.guid || entry.nodeType === 'st:site' || entry.nodeType === 'st:sites';
-    }
-
-    /** Closes the currently open dialog. */
-    close() {
-        this.dialog.closeAll();
     }
 
 }
