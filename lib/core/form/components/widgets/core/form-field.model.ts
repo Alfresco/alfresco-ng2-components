@@ -268,7 +268,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     parseValue(json: any): any {
-        let value = json.hasOwnProperty('value') ? json.value : null;
+        let value = json.hasOwnProperty('value') && json.value !== undefined ? json.value : null;
 
         /*
          This is needed due to Activiti issue related to reading dropdown values as value string
@@ -408,10 +408,10 @@ export class FormFieldModel extends FormWidgetModel {
                 this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : false;
                 break;
             case FormFieldTypes.PEOPLE:
-                this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : null;
+                this.form.values[this.id] = this.value ? this.value : null;
                 break;
             case FormFieldTypes.FUNCTIONAL_GROUP:
-                this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : null;
+                this.form.values[this.id] = this.value ? this.value : null;
                 break;
             default:
                 if (!FormFieldTypes.isReadOnlyType(this.type) && !this.isInvalidFieldType(this.type)) {

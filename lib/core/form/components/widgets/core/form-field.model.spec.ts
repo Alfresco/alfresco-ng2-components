@@ -625,6 +625,9 @@ describe('FormFieldModel', () => {
 
     it('should parse and resolve people undefined value as null', () => {
         const field = new FormFieldModel(new FormModel(), {
+            fieldType: 'HeaderFieldtype',
+            id: 'people_field',
+            name: 'people',
             type: FormFieldTypes.PEOPLE,
             value: undefined
         });
