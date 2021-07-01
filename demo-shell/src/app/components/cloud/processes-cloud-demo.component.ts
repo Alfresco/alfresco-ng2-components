@@ -116,7 +116,10 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     onFilterChange(filter: ProcessFilterCloudModel) {
-        const queryParams = this.cloudProcessFiltersService.writeQueryParams(filter, this.appName, this.filterId);
+        const queryParams = {
+            ...this.cloudProcessFiltersService.writeQueryParams(filter, this.appName, filter.id),
+            filterId: filter.id
+        };
         this.router.navigate([`/cloud/${this.appName}/processes/`], {queryParams});
     }
 
