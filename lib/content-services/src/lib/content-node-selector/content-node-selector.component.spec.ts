@@ -37,6 +37,7 @@ describe('ContentNodeSelectorComponent', () => {
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;
     let data: any;
     let uploadService: UploadService;
+    let dialog: MatDialogRef<ContentNodeSelectorComponent>;
 
     beforeEach(() => {
         data = {
@@ -73,6 +74,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         const documentListService = TestBed.inject(DocumentListService);
         const sitesService: SitesService = TestBed.inject(SitesService);
+        dialog = TestBed.inject(MatDialogRef);
         uploadService = TestBed.inject(UploadService);
 
         spyOn(documentListService, 'getFolder').and.callThrough();
@@ -193,6 +195,23 @@ describe('ContentNodeSelectorComponent', () => {
             const closeButton = fixture.debugElement.query(By.css('[content-node-selector-actions-cancel]'));
             expect(closeButton).toBeNull();
         });
+
+        it('should close the dialog', () => {
+            let cancelButton;
+            data.select.subscribe(
+                () => {
+                },
+                () => {
+                },
+                () => {
+                    cancelButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
+                    expect(cancelButton).not.toBeNull();
+                });
+
+            cancelButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
+            cancelButton.triggerEventHandler('click', {});
+            expect(dialog.close).toHaveBeenCalled();
+        });
     });
 
     describe('Action button for the chosen node', () => {
@@ -226,6 +245,16 @@ describe('ContentNodeSelectorComponent', () => {
             const actionButtonWithoutNodeSelected = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
 
             expect(actionButtonWithoutNodeSelected.nativeElement.disabled).toBe(true);
+        });
+
+        it('should close the dialog when action button is clicked', async () => {
+            component.onSelect([new Node({ id: 'fake' })]);
+            fixture.detectChanges();
+
+            const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+            await actionButton.nativeElement.click();
+
+            expect(dialog.close).toHaveBeenCalled();
         });
     });
 

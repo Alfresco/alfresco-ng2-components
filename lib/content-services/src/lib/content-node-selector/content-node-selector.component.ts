@@ -77,6 +77,7 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     close() {
         this.data.select.complete();
+        this.dialog.close();
     }
 
     onSelect(nodeList: Node[]) {
@@ -94,7 +95,7 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     onClick(): void {
         this.data.select.next(this.chosenNode);
-        this.data.select.complete();
+        this.close();
     }
 
     updateTitle(siteTitle: string) {

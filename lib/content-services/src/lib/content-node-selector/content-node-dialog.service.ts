@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ContentService, ThumbnailService, SitesService, TranslationService, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { Subject, Observable, throwError } from 'rxjs';
@@ -156,11 +156,7 @@ export class ContentNodeDialogService {
                 select: select
             };
 
-            const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
-
-            select.subscribe({
-                complete: dialogRef.close.bind(this)
-            });
+            this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
 
             return select;
         } else {
@@ -199,12 +195,7 @@ export class ContentNodeDialogService {
             select: select
         };
 
-        const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
-
-        select.subscribe({
-            complete: dialogRef.close.bind(this)
-        });
-
+        this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
         return select;
     }
 
@@ -229,17 +220,12 @@ export class ContentNodeDialogService {
             showFilesInResult
         };
 
-        const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
-
-        select.subscribe({
-            complete: dialogRef.close.bind(this)
-        });
-
+        this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
         return select;
     }
 
-    private openContentNodeDialog(data: ContentNodeSelectorComponentData, panelClass: string, width: string): MatDialogRef<ContentNodeSelectorComponent> {
-        return this.dialog.open(ContentNodeSelectorComponent, {
+    private openContentNodeDialog(data: ContentNodeSelectorComponentData, panelClass: string, width: string) {
+        this.dialog.open(ContentNodeSelectorComponent, {
             data,
             panelClass,
             width,
