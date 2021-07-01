@@ -99,11 +99,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
                 if (this.filterParam) {
                     this.selectFilterAndEmit(this.filterParam);
                 }
-
-                if (!this.currentFilter && this.filters.length > 0) {
-                    this.currentFilter = this.filters[0];
-                }
-
                 this.success.emit(res);
             },
             (err: any) => {

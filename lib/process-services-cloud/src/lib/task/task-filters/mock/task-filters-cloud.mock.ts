@@ -30,7 +30,7 @@ export const fakeGlobalFilter: any[] = [
     },
     {
         name: 'FakeMyTasks1',
-        key: 'fake-my-tast1',
+        key: 'fake-my-task1',
         icon: 'done',
         id: '11',
         status: 'open',
@@ -39,7 +39,7 @@ export const fakeGlobalFilter: any[] = [
     },
     {
         name: 'FakeMyTasks2',
-        key: 'fake-my-tast2',
+        key: 'fake-my-task2',
         icon: 'inbox',
         id: '12',
         status: 'open',
@@ -57,14 +57,14 @@ export const fakeGlobalServiceFilters: ServiceTaskFilterCloudModel[] = [
     } as ServiceTaskFilterCloudModel,
     {
         name: 'FakeMyServiceTasks1',
-        key: 'fake-my-tast1',
+        key: 'fake-my-task1',
         icon: 'done',
         id: '11',
         status: 'open'
     } as ServiceTaskFilterCloudModel,
     {
         name: 'FakeMyServiceTasks2',
-        key: 'fake-my-tast2',
+        key: 'fake-my-task2',
         icon: 'inbox',
         id: '12',
         status: 'open'

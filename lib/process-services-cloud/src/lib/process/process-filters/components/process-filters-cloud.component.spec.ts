@@ -81,7 +81,7 @@ describe('ProcessFiltersCloudComponent', () => {
     it('should not attach icons for each filter if hasIcon is false', async () => {
         component.showIcons = false;
         const change = new SimpleChange(undefined, 'my-app-1', true);
-        component.ngOnChanges({'appName': change});
+        component.ngOnChanges({ 'appName': change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -129,6 +129,7 @@ describe('ProcessFiltersCloudComponent', () => {
     });
 
     it('should emit success with the filters when filters are loaded', async () => {
+        const successSpy = spyOn(component.success, 'emit');
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
@@ -136,13 +137,14 @@ describe('ProcessFiltersCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
+        expect(successSpy).toHaveBeenCalledWith(mockProcessFilters);
         expect(component.filters).toBeDefined();
         expect(component.filters[0].name).toEqual('FakeAllProcesses');
         expect(component.filters[1].name).toEqual('FakeRunningProcesses');
         expect(component.filters[2].name).toEqual('FakeCompletedProcesses');
     });
 
-    it('should select the first process cloud filter as default', async () => {
+    it('should not select any filter as default', async () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
@@ -150,69 +152,68 @@ describe('ProcessFiltersCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component.currentFilter).toBeDefined();
-        expect(component.currentFilter.name).toEqual('FakeAllProcesses');
+        expect(component.currentFilter).toBeUndefined();
+    });
+
+    it('should not select any process filter if filter input does not exist', async () => {
+        const change = new SimpleChange(null, { name: 'nonexistentFilter' }, true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        component.ngOnChanges({ 'filterParam': change });
+
+        expect(component.currentFilter).toBeUndefined();
     });
 
     it('should select the filter based on the input by name param', async () => {
-        component.filterParam = { name: 'FakeRunningProcesses' };
-        const appName = 'my-app-1';
-        const change = new SimpleChange(null, appName, true);
-
-        component.ngOnChanges({ 'appName': change });
+        const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
+        const change = new SimpleChange(null, { name: 'FakeRunningProcesses' }, true);
 
         fixture.detectChanges();
         await fixture.whenStable();
+        component.ngOnChanges({ 'filterParam': change });
 
-        expect(component.currentFilter).toBeDefined();
-        expect(component.currentFilter.name).toEqual('FakeRunningProcesses');
+        expect(component.currentFilter).toEqual(mockProcessFilters[1]);
+        expect(filterSelectedSpy).toHaveBeenCalledWith(mockProcessFilters[1]);
    });
 
     it('should select the filter based on the input by key param', async () => {
-        component.filterParam = { key: 'completed-processes' };
-        const appName = 'my-app-1';
-        const change = new SimpleChange(null, appName, true);
-
-        component.ngOnChanges({ 'appName': change });
+        const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
+        const change = new SimpleChange(null, { key: 'completed-processes' }, true);
 
         fixture.detectChanges();
         await fixture.whenStable();
+        component.ngOnChanges({ 'filterParam': change });
 
-        expect(component.currentFilter).toBeDefined();
-        expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
+        expect(component.currentFilter).toEqual(mockProcessFilters[2]);
+        expect(filterSelectedSpy).toHaveBeenCalledWith(mockProcessFilters[2]);
    });
 
     it('should select the filter based on the input by index param', async () => {
-        component.filterParam = { index: 2 };
+        const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
+        const change = new SimpleChange(null, { index: 2 }, true);
 
-        const appName = 'my-app-1';
-        const change = new SimpleChange(null, appName, true);
-
-        component.ngOnChanges({ 'appName': change });
         fixture.detectChanges();
         await fixture.whenStable();
+        component.ngOnChanges({ 'filterParam': change });
 
-        expect(component.currentFilter).toBeDefined();
-        expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
+        expect(component.currentFilter).toEqual(mockProcessFilters[2]);
+        expect(filterSelectedSpy).toHaveBeenCalledWith(mockProcessFilters[2]);
    });
 
     it('should select the filter based on the input by id param', async () => {
-        component.filterParam = { id: '12' };
+        const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
+        const change = new SimpleChange(null, { id: '12' }, true);
 
-        const appName = 'my-app-1';
-        const change = new SimpleChange(null, appName, true);
-
-        component.ngOnChanges({ 'appName': change });
         fixture.detectChanges();
         await fixture.whenStable();
+        component.ngOnChanges({ 'filterParam': change });
 
-        expect(component.currentFilter).toBeDefined();
-        expect(component.currentFilter.name).toEqual('FakeCompletedProcesses');
+        expect(component.currentFilter).toEqual(mockProcessFilters[2]);
+        expect(filterSelectedSpy).toHaveBeenCalledWith(mockProcessFilters[2]);
     });
 
     it('should filterClicked emit when a filter is clicked from the UI', async () => {
-        component.filterParam = { id: '10' };
-
+        const filterClickedSpy = spyOn(component.filterClicked, 'emit');
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
         component.ngOnChanges({ 'appName': change });
@@ -226,19 +227,31 @@ describe('ProcessFiltersCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component.currentFilter).toBeDefined();
-        expect(component.currentFilter.name).toEqual('FakeAllProcesses');
+        expect(component.currentFilter).toEqual(mockProcessFilters[0]);
+        expect(filterClickedSpy).toHaveBeenCalledWith(mockProcessFilters[0]);
     });
 
-    it('should not emit a filter click event on binding changes', () => {
-        spyOn(component, 'selectFilterAndEmit').and.callThrough();
-
-        const change = new SimpleChange(null, undefined, false);
+    it('should reset the filter when the param is undefined', async () => {
+        const change = new SimpleChange(mockProcessFilters[0], undefined, false);
+        component.currentFilter = mockProcessFilters[0];
         component.ngOnChanges({ 'filterParam': change });
-        fixture.detectChanges();
 
-        expect(component.selectFilterAndEmit).toHaveBeenCalled();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.currentFilter).toEqual(undefined);
+    });
+
+    it('should not emit a filter clicked event when a filter is selected through the filterParam input (filterClicked emits only through a UI click action)', async () => {
+        const filterClickedSpy = spyOn(component.filterClicked, 'emit');
+        const change = new SimpleChange(null, { id: '10' }, true);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        component.ngOnChanges({ 'filterParam': change });
+
         expect(component.currentFilter).toBe(mockProcessFilters[0]);
+        expect(filterClickedSpy).not.toHaveBeenCalled();
     });
 
     it('should reload filters by appName on binding changes', () => {
@@ -259,18 +272,6 @@ describe('ProcessFiltersCloudComponent', () => {
         component.ngOnChanges({ 'appName': change });
 
         expect(component.getFilters).not.toHaveBeenCalledWith(appName);
-    });
-
-    it('should change current filter when filterParam (name) changes', () => {
-        component.filters = mockProcessFilters;
-        component.currentFilter = null;
-
-        fixture.whenStable().then(() => {
-            expect(component.currentFilter.name).toEqual(mockProcessFilters[2].name);
-        });
-
-        const change = new SimpleChange(null, { name: mockProcessFilters[2].name }, true);
-        component.ngOnChanges({ 'filterParam': change });
     });
 
     it('should reload filters by app name on binding changes', () => {
