@@ -142,12 +142,6 @@ describe('ContentNodeDialogService', () => {
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
 
-    it('should be able to close the material dialog', () => {
-        spyOn(materialDialog, 'closeAll');
-        service.close();
-        expect(materialDialog.closeAll).toHaveBeenCalled();
-    });
-
     describe('for the copy/move dialog', () => {
         const siteNode: Node = <Node> {
             id: 'site-node-id',
