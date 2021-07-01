@@ -612,6 +612,31 @@ describe('FormFieldModel', () => {
         expect(form.values['dropdown_field'].name).toEqual('Option 1');
     });
 
+    it('should parse and resolve people null value as null', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.PEOPLE,
+            value: null
+        });
+
+        field.updateForm();
+
+        expect(field.value).toBe(null);
+    });
+
+    it('should parse and resolve people undefined value as null', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            fieldType: 'HeaderFieldtype',
+            id: 'people_field',
+            name: 'people',
+            type: FormFieldTypes.PEOPLE,
+            value: undefined
+        });
+
+        field.updateForm();
+
+        expect(field.value).toBe(null);
+    });
+
     describe('variables', () => {
 
         let form: FormModel;
@@ -680,5 +705,6 @@ describe('FormFieldModel', () => {
 
             expect(field.value).toBe('default hello');
         });
+
     });
 });
