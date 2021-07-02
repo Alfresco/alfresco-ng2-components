@@ -223,14 +223,17 @@
     },
     "FILTER": {
       "ACTIONS": {
+        "SEARCH": "Søg",
         "CLEAR": "Ryd",
         "APPLY": "Anvend",
         "CLEAR-ALL": "Ryd alt",
         "SHOW-MORE": "Vis flere",
-        "SHOW-LESS": "Vis færre",
-        "FILTER-CATEGORY": "Filterkategori"
+        "SHOW-LESS": "Vis færre"
       },
       "BUTTONS": {
+        "CLOSE": "Luk",
+        "REMOVE": "Fjern",
+        "APPLY": "Anvend",
         "CLEAR-ALL": {
           "LABEL": "Ryd alt",
           "TOOLTIP": "Denne handling fjerner alle valg"
@@ -290,6 +293,7 @@
         }
       }
     },
+    "UNKNOWN_CONFIGURATION": "Ukendt konfiguration",
     "SEARCH_HEADER": {
       "TITLE": "Filter",
       "TYPE": "Type",
@@ -389,9 +393,9 @@
       "TITLE": "Tilføj tilladelse",
       "TYPE-MESSAGE": "Skriv noget for at begynde at søge efter grupper eller personer",
       "NO-RESULT": "Der blev ikke fundet nogen resultater for denne søgning",
-      "SELECT-ACTION": "VÆLG",
+      "SELECT-ACTION": "Vælg",
       "ADD-ACTION": "Tilføj",
-      "CLOSE-ACTION": "ANNULLER",
+      "CLOSE-ACTION": "Annuller",
       "BASE-DIALOG-TITLE": "Søg efter en gruppe eller personer, du vil tilføje...",
       "EVERYONE": "Alle"
     },

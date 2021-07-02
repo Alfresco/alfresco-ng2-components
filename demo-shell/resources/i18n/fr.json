@@ -349,5 +349,6 @@
       "PROCESS_ID": "ID de l'instance de processus",
       "ACTION_TYPE": "Type d'action"
     }
-  }
+  },
+  "DEFAULT_SEARCH": "Par défaut"
 }

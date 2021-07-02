@@ -223,14 +223,17 @@
     },
     "FILTER": {
       "ACTIONS": {
+        "SEARCH": "Sök",
         "CLEAR": "Rensa",
         "APPLY": "Tillämpa",
         "CLEAR-ALL": "Rensa alla",
         "SHOW-MORE": "Visa mer",
-        "SHOW-LESS": "Visa mindre",
-        "FILTER-CATEGORY": "Filtrera på kategori"
+        "SHOW-LESS": "Visa mindre"
       },
       "BUTTONS": {
+        "CLOSE": "Stäng",
+        "REMOVE": "Ta bort",
+        "APPLY": "Tillämpa",
         "CLEAR-ALL": {
           "LABEL": "Rensa alla",
           "TOOLTIP": "Detta kommer att ta bort alla val"
@@ -290,6 +293,7 @@
         }
       }
     },
+    "UNKNOWN_CONFIGURATION": "Okänd konfiguration",
     "SEARCH_HEADER": {
       "TITLE": "Filter",
       "TYPE": "Typ",

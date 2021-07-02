@@ -223,14 +223,17 @@
     },
     "FILTER": {
       "ACTIONS": {
+        "SEARCH": "Hae",
         "CLEAR": "Tyhjennä",
         "APPLY": "Käytä",
         "CLEAR-ALL": "Tyhjennä kaikki",
         "SHOW-MORE": "Näytä lisää",
-        "SHOW-LESS": "Näytä vähemmän",
-        "FILTER-CATEGORY": "Suodata luokan perusteella"
+        "SHOW-LESS": "Näytä vähemmän"
       },
       "BUTTONS": {
+        "CLOSE": "Sulje",
+        "REMOVE": "Poista",
+        "APPLY": "Käytä",
         "CLEAR-ALL": {
           "LABEL": "Tyhjennä kaikki",
           "TOOLTIP": "Tämä poistaa kaikki valinnat"
@@ -290,6 +293,7 @@
         }
       }
     },
+    "UNKNOWN_CONFIGURATION": "Tuntematon määritys",
     "SEARCH_HEADER": {
       "TITLE": "Suodatin",
       "TYPE": "Tyyppi",

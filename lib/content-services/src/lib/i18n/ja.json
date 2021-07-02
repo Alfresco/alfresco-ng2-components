@@ -223,14 +223,17 @@
     },
     "FILTER": {
       "ACTIONS": {
+        "SEARCH": "検索",
         "CLEAR": "消去",
         "APPLY": "適用",
         "CLEAR-ALL": "すべて消去",
         "SHOW-MORE": "続きを表示",
-        "SHOW-LESS": "詳細を隠す",
-        "FILTER-CATEGORY": "カテゴリをフィルタする"
+        "SHOW-LESS": "詳細を隠す"
       },
       "BUTTONS": {
+        "CLOSE": "閉じる",
+        "REMOVE": "削除",
+        "APPLY": "適用",
         "CLEAR-ALL": {
           "LABEL": "すべて消去",
           "TOOLTIP": "選択した項目がすべて削除されます"
@@ -290,6 +293,7 @@
         }
       }
     },
+    "UNKNOWN_CONFIGURATION": "不明な設定",
     "SEARCH_HEADER": {
       "TITLE": "フィルタ",
       "TYPE": "種類",

@@ -223,14 +223,17 @@
     },
     "FILTER": {
       "ACTIONS": {
+        "SEARCH": "Søk",
         "CLEAR": "Fjern",
         "APPLY": "Bruk",
         "CLEAR-ALL": "Fjern alle",
         "SHOW-MORE": "Vis flere",
-        "SHOW-LESS": "Vis mindre",
-        "FILTER-CATEGORY": "Filtrer etter kategori"
+        "SHOW-LESS": "Vis mindre"
       },
       "BUTTONS": {
+        "CLOSE": "Lukk",
+        "REMOVE": "Fjern",
+        "APPLY": "Bruk",
         "CLEAR-ALL": {
           "LABEL": "Fjern alle",
           "TOOLTIP": "Dette vil fjerne alle valg"
@@ -290,6 +293,7 @@
         }
       }
     },
+    "UNKNOWN_CONFIGURATION": "Ukjent konfigurasjon",
     "SEARCH_HEADER": {
       "TITLE": "Filter",
       "TYPE": "Type",

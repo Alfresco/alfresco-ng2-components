@@ -349,5 +349,6 @@
       "PROCESS_ID": "プロセスインスタンス ID",
       "ACTION_TYPE": "処理のタイプ"
     }
-  }
+  },
+  "DEFAULT_SEARCH": "デフォルト"
 }

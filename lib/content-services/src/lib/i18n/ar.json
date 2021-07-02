@@ -223,14 +223,17 @@
     },
     "FILTER": {
       "ACTIONS": {
+        "SEARCH": "بحث",
         "CLEAR": "مسح",
         "APPLY": "تطبيق",
         "CLEAR-ALL": "مسح الكل",
         "SHOW-MORE": "إظهار المزيد",
-        "SHOW-LESS": "إظهار أقل",
-        "FILTER-CATEGORY": "فئة عامل التصفية"
+        "SHOW-LESS": "إظهار أقل"
       },
       "BUTTONS": {
+        "CLOSE": "إغلاق",
+        "REMOVE": "إزالة",
+        "APPLY": "تطبيق",
         "CLEAR-ALL": {
           "LABEL": "مسح الكل",
           "TOOLTIP": "سيزيل ذلك كل التحديدات"
@@ -290,6 +293,7 @@
         }
       }
     },
+    "UNKNOWN_CONFIGURATION": "تكوين غير معروف",
     "SEARCH_HEADER": {
       "TITLE": "عامل التصفية",
       "TYPE": "النوع",

@@ -349,5 +349,6 @@
       "PROCESS_ID": "Procesforekomst-id",
       "ACTION_TYPE": "Handlingstype"
     }
-  }
+  },
+  "DEFAULT_SEARCH": "Standard"
 }

@@ -349,5 +349,6 @@
       "PROCESS_ID": "Prozessinstanz-ID",
       "ACTION_TYPE": "Aktionstyp"
     }
-  }
+  },
+  "DEFAULT_SEARCH": "Standard"
 }

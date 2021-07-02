@@ -349,5 +349,6 @@
       "PROCESS_ID": "Prosessiesiintymätunnus",
       "ACTION_TYPE": "Toiminnon tyyppi"
     }
-  }
+  },
+  "DEFAULT_SEARCH": "Oletus"
 }

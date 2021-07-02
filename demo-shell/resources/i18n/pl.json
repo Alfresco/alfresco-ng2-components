@@ -349,5 +349,6 @@
       "PROCESS_ID": "Identyfikator wystąpienia procesu",
       "ACTION_TYPE": "Typ czynności"
     }
-  }
+  },
+  "DEFAULT_SEARCH": "Domyślne"
 }
