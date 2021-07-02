@@ -76,7 +76,6 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     close() {
-        this.data.select.complete();
         this.dialog.close();
     }
 

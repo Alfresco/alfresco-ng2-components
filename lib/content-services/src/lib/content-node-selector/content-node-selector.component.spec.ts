@@ -65,7 +65,8 @@ describe('ContentNodeSelectorComponent', () => {
                     useValue: {
                         keydownEvents: () => of(null),
                         backdropClick: () => of(null),
-                        close: jasmine.createSpy('close')
+                        close: jasmine.createSpy('close'),
+                        afterClosed: () => of(null)
                     }
                 }
             ],
