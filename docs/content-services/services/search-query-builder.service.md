@@ -122,7 +122,7 @@ constructor(queryBuilder: SearchQueryBuilderService) {
 
 ## See also
 
--   [Search Configuration Intro](../../user-guide/search-configuration-guide.md)
+-   [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
 -   [Search filter component](../components/search-filter.component.md)
 -   [Search filter chips component](../components/search-filter-chips.component.md)
 -   [Search Form Component](../components/search-form.component.md)

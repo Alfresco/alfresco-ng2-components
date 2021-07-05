@@ -36,7 +36,7 @@ to build and execute the query.
 
 ## See also
 
--   [Search Configuration Intro](../../user-guide/search-configuration-guide.md)
+-   [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
 -   [Search Query Builder service](../services/search-query-builder.service.md)
 -   [Search filter chips component](./search-filter-chips.component.md)
 -   [Search Chip List Component](search-chip-list.component.md)

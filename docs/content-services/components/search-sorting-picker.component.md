@@ -15,5 +15,5 @@ Provides an ability to select one of the predefined sorting definitions for sear
 
 ## See also
 
--   [Search Configuration Intro](../../user-guide/search-configuration-guide.md)
+-   [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
 -   [Search filter chips component](search-filter-chips.component.md)

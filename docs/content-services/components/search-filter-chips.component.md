@@ -61,7 +61,7 @@ here is the [example configuration](https://github.com/Alfresco/alfresco-ng2-com
 
 ## See also
 
--   [Search Configuration Intro](../../user-guide/search-configuration-guide.md)
+-   [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
 -   [Search Query Builder service](../services/search-query-builder.service.md)
 -   [Search Widget Interface](../interfaces/search-widget.interface.md)
 -   [Search check list component](search-check-list.component.md)

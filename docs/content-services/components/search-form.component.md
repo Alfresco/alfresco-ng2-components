@@ -33,5 +33,5 @@ This component pick a configuration for a search from the list of configuration.
 
 ## See also
 
--   [Search Configuration Intro](../../user-guide/search-configuration-guide.md)
+-   [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
 -   [Search Query Builder](../services/search-query-builder.service.md)
