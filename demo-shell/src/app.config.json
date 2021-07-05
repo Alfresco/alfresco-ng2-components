@@ -189,7 +189,7 @@
       "expanded": true,
       "intervals": [
         {
-          "label": "Created",
+          "label": "The Created",
           "field": "cm:created",
           "sets": [
             {
@@ -212,7 +212,7 @@
           ]
         },
         {
-          "label": "Modified",
+          "label": "TheModified",
           "field": "cm:modified",
           "sets": [
             {
