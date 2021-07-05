@@ -18,7 +18,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Pagination, ResultSetPaging } from '@alfresco/js-api';
-import { SearchForm, SearchQueryBuilderService } from '@alfresco/adf-content-services';
+import { SearchConfiguration, SearchForm, SearchQueryBuilderService } from '@alfresco/adf-content-services';
 import { SearchService, ShowHeaderMode, UserPreferencesService } from '@alfresco/adf-core';
 import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -50,6 +50,7 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
         combineLatest([this.route.params, this.queryBuilder.configUpdated])
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(([params, searchConfig]) => {
+                this.updateSearchSetting(searchConfig);
                 this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
                 const query = this.formatSearchQuery(this.searchedWord, searchConfig['app:fields']);
                 if (query) {
@@ -139,5 +140,29 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
         }
 
         return ['name', 'asc'];
+    }
+
+    private updateSearchSetting(config: SearchConfiguration): void {
+        if (config.facetQueries) {
+            this.updateSetting(config.facetQueries);
+        }
+
+        if (config.facetFields?.fields?.length) {
+            config.facetFields.fields.forEach((field) => this.updateSetting(field));
+        }
+
+        if (config.facetIntervals?.intervals?.length) {
+            config.facetIntervals.intervals.forEach((field) => this.updateSetting(field));
+        }
+
+        if (config.categories.length) {
+            config.categories.forEach((field) => this.updateSetting(field.component));
+        }
+    }
+
+    private updateSetting(field) {
+        field.settings = field.settings ?? {};
+        field.settings.allowUpdateOnChange = false;
+        field.settings.hideDefaultAction = true;
     }
 }

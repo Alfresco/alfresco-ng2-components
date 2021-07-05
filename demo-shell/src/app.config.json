@@ -189,7 +189,7 @@
       "expanded": true,
       "intervals": [
         {
-          "label": "The Created",
+          "label": "Created",
           "field": "cm:created",
           "sets": [
             {
@@ -212,7 +212,7 @@
           ]
         },
         {
-          "label": "TheModified",
+          "label": "Modified",
           "field": "cm:modified",
           "sets": [
             {
@@ -459,7 +459,7 @@
         {
           "field": "creator",
           "mincount": 1,
-          "label": "Field created",
+          "label": "Folder created",
           "settings": {
             "allowUpdateOnChange": false,
             "hideDefaultAction": true
