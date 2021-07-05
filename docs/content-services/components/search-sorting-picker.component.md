@@ -12,3 +12,8 @@ Provides an ability to select one of the predefined sorting definitions for sear
 <adf-search-sorting-picker></adf-search-sorting-picker>
 <adf-search-filter></adf-search-filter>
 ```
+
+## See also
+
+-   [Search Configuration Intro](../../user-guide/search-configuration-guide.md)
+-   [Search filter chips component](search-filter-chips.component.md)

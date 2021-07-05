@@ -73,6 +73,8 @@ items in the list.
 
 ## See also
 
+-   [Search Configuration Intro](../../user-guide/search-configuration-guide.md)
+-   [Search filter chips component](search-filter-chips.component.md)
 -   [Search filter component](search-filter.component.md)
 -   [Search date range component](search-date-range.component.md)
 -   [Search number range component](search-number-range.component.md)

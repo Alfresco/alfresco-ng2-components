@@ -14,8 +14,8 @@ Displays search criteria as a set of "chips".
 ## Basic usage
 
 ```html
-<adf-search-chip-list [searchFilter]="searchFilter"></adf-search-chip-list>
-<adf-search-filter #searchFilter></adf-search-filter>
+<adf-search-chip-list></adf-search-chip-list>
+<adf-search-filter></adf-search-filter>
 ```
 
 ## Class members
@@ -25,4 +25,4 @@ Displays search criteria as a set of "chips".
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | clearAll | `boolean` | false | Flag used to enable the display of a clear-all-filters button. |
-| searchFilter | [`SearchFilterComponent`](../../content-services/components/search-filter.component.md) |  | Search filter to supply the data for the chips. |
+| searchFilter | [`SearchFilterComponent`](../../content-services/components/search-filter.component.md) |  | Search filter to supply the data for the chips. Not required from 4.5.0 and later versions |

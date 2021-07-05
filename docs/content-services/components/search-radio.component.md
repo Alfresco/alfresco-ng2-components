@@ -62,6 +62,8 @@ buttons as appropriate.
 
 ## See also
 
+-   [Search Configuration Intro](../../user-guide/search-configuration-guide.md)
+-   [Search filter chips component](search-filter-chips.component.md)
 -   [Search filter component](search-filter.component.md)
 -   [Search check list component](search-check-list.component.md)
 -   [Search date range component](search-date-range.component.md)
