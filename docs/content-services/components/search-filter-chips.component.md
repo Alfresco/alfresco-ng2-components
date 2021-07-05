@@ -19,7 +19,8 @@ Represents a chip based container component for custom search and faceted search
 -   [Basic usage](#basic-usage)
     -   [Properties](#properties)
 -   [Details](#details)
--   [Migration](#migration)
+-   [Widget setting for chip layout](#widget-setting-for-chip-layout)
+-   [Migrate from expansion card layout](#migrate-from-expansion-card-layout)
 -   [See also](#see-also)
 
 ## Basic usage
@@ -40,7 +41,21 @@ The component UI uses dynamically chip based widgets to specify the search query
 options. It then uses the [Search Query Builder service](../services/search-query-builder.service.md)
 to build and execute the query.
 
-### Migration
+
+### Widget setting for chip layout
+Configured widgets(`categories, facetQueries, facetIntervals, facetFields`) should have following setting for smooth interaction.
+```json
+{
+    ...
+    "settings": {
+        "allowUpdateOnChange": false,
+        "hideDefaultAction": true,
+        ...
+    }
+}
+```
+
+### Migrate from expansion card layout
 Here are steps to move from expansion layout to chip layout
  1. Use this component to render the new layout ```<adf-search-filter-chips></adf-search-filter-chips>```
  2. Add the following settings to old configured widgets(`categories, facetQueries, facetIntervals, facetFields`) i.e
@@ -55,7 +70,6 @@ Here are steps to move from expansion layout to chip layout
 
 }
 ``` 
-
 here is the [example configuration](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/demo-shell/src/app.config.json#L373)
 
 
