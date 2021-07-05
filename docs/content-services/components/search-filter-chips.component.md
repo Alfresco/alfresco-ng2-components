@@ -37,9 +37,7 @@ Represents a chip based container component for custom search and faceted search
 
 ## Details
 
-The component UI uses dynamically chip based widgets to specify the search query and its
-options. It then uses the [Search Query Builder service](../services/search-query-builder.service.md)
-to build and execute the query.
+The component creates chip based widgets dynamically from default/selected search configuration. It uses [Search Query Builder service](../services/search-query-builder.service.md) to build and execute the query.
 
 
 ### Widget setting for chip layout
@@ -56,7 +54,7 @@ Configured widgets(`categories, facetQueries, facetIntervals, facetFields`) shou
 ```
 
 ### Migrate from expansion card layout
-Here are steps to move from expansion layout to chip layout
+Here are the steps to move from expansion layout to chip layout
  1. Use this component to render the new layout ```<adf-search-filter-chips></adf-search-filter-chips>```
  2. Add the following settings to old configured widgets(`categories, facetQueries, facetIntervals, facetFields`) i.e
 ```json

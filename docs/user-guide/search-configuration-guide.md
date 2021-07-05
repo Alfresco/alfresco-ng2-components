@@ -83,14 +83,14 @@ ADF support two kinds of search layouts.
 
    ![Search chips layout](../docassets/images/search-chip-layout.png)
 
-The layout is generated for current/selected search configuration.
+The layout is generated for the default/selected search configuration.
 
 ### Steps involved in search configuration
-It consists of three steps to configure a proper search
+In the three steps you can specify the search configuration. i.e
 
     1. Identify the search use case
     2. find/construct search query
-    3. Feed that in adf search configuration section
+    3. Add it in the adf search configuration section
 
 
 You may find it useful to check out the following resources for background information
@@ -428,7 +428,7 @@ If you need to display more resulting collapsible categories, you can group diff
 }
 ```
 
-Note: Widget setting can be controlled by passing `settings` as part the config. i.e
+Note: `settings` property used to control UI actions and interaction. i.e
 
 ```json
 {
@@ -475,7 +475,7 @@ use overlapping ranges if necessary.
 | intervals | array | Specifies the fields to [facet](../../lib/content-services/src/lib/search/models/facet-field.interface.ts) by interval. |
 | expanded | boolean | Toggles expanded state of the facet intervals. |
 
-Note: Interval setting can be controlled by passing [settings](../../lib/content-services/src/lib/search/models/facet-field.interface.ts).
+Note: Interval fields setting can be controlled by passing [settings](../../lib/content-services/src/lib/search/models/facet-field.interface.ts).
 
 Note: the `sets` parameter from the Search API (which sets the intervals for all fields)
 is not yet supported.
