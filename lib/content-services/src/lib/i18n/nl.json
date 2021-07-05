@@ -223,14 +223,17 @@
     },
     "FILTER": {
       "ACTIONS": {
+        "SEARCH": "Zoeken",
         "CLEAR": "Wissen",
         "APPLY": "Toepassen",
         "CLEAR-ALL": "Alles wissen",
         "SHOW-MORE": "Meer weergeven",
-        "SHOW-LESS": "Minder weergeven",
-        "FILTER-CATEGORY": "Categorie filteren"
+        "SHOW-LESS": "Minder weergeven"
       },
       "BUTTONS": {
+        "CLOSE": "Sluiten",
+        "REMOVE": "Verwijderen",
+        "APPLY": "Toepassen",
         "CLEAR-ALL": {
           "LABEL": "Alles wissen",
           "TOOLTIP": "Hiermee verwijdert u alle selecties"
@@ -290,6 +293,7 @@
         }
       }
     },
+    "UNKNOWN_CONFIGURATION": "Onbekende configuratie",
     "SEARCH_HEADER": {
       "TITLE": "Filter",
       "TYPE": "Type",

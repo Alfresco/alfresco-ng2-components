@@ -223,14 +223,17 @@
     },
     "FILTER": {
       "ACTIONS": {
+        "SEARCH": "Buscar",
         "CLEAR": "Borrar",
         "APPLY": "Aplicar",
         "CLEAR-ALL": "Borrar todo",
         "SHOW-MORE": "Mostrar más",
-        "SHOW-LESS": "Mostrar menos",
-        "FILTER-CATEGORY": "Filtrar por categoría"
+        "SHOW-LESS": "Mostrar menos"
       },
       "BUTTONS": {
+        "CLOSE": "Cerrar",
+        "REMOVE": "Eliminar",
+        "APPLY": "Aplicar",
         "CLEAR-ALL": {
           "LABEL": "Borrar todo",
           "TOOLTIP": "Esto eliminará todo lo seleccionado"
@@ -290,6 +293,7 @@
         }
       }
     },
+    "UNKNOWN_CONFIGURATION": "Configuración desconocida",
     "SEARCH_HEADER": {
       "TITLE": "Filtrar",
       "TYPE": "Tipo",
@@ -398,7 +402,7 @@
     "COLUMN": {
       "NAME": "Usuarios y grupos ({{ count }})",
       "LOCATION": "Ubicación",
-      "BULK-ROLE": "Set all roles to"
+      "BULK-ROLE": "Definir todas las funciones a"
     },
     "LABELS": {
       "ON": "Activado",

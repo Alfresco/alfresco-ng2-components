@@ -349,5 +349,6 @@
       "PROCESS_ID": "Processinstans-ID",
       "ACTION_TYPE": "Åtgärdstyp"
     }
-  }
+  },
+  "DEFAULT_SEARCH": "Standard"
 }

@@ -349,5 +349,6 @@
       "PROCESS_ID": "ID istanza di processo",
       "ACTION_TYPE": "Tipo di azione"
     }
-  }
+  },
+  "DEFAULT_SEARCH": "Predefinito"
 }

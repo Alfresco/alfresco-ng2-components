@@ -223,14 +223,17 @@
     },
     "FILTER": {
       "ACTIONS": {
+        "SEARCH": "Cerca",
         "CLEAR": "Cancella",
         "APPLY": "Applica",
         "CLEAR-ALL": "Cancella tutto",
         "SHOW-MORE": "Altro",
-        "SHOW-LESS": "Nascondi",
-        "FILTER-CATEGORY": "Filtra per categoria"
+        "SHOW-LESS": "Nascondi"
       },
       "BUTTONS": {
+        "CLOSE": "Chiudi",
+        "REMOVE": "Rimuovi",
+        "APPLY": "Applica",
         "CLEAR-ALL": {
           "LABEL": "Cancella tutto",
           "TOOLTIP": "Tutte le selezioni verranno rimosse"
@@ -290,6 +293,7 @@
         }
       }
     },
+    "UNKNOWN_CONFIGURATION": "Configurazione sconosciuta",
     "SEARCH_HEADER": {
       "TITLE": "Filtro",
       "TYPE": "Tipo",

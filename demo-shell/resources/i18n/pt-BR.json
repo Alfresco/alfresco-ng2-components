@@ -349,5 +349,6 @@
       "PROCESS_ID": "ID de instância de processo",
       "ACTION_TYPE": "Tipo de ação"
     }
-  }
+  },
+  "DEFAULT_SEARCH": "Padrão"
 }

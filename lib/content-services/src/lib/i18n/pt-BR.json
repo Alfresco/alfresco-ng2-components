@@ -223,14 +223,17 @@
     },
     "FILTER": {
       "ACTIONS": {
+        "SEARCH": "Pesquisar",
         "CLEAR": "Limpar",
         "APPLY": "Aplicar",
         "CLEAR-ALL": "Limpar tudo",
         "SHOW-MORE": "Mostrar mais",
-        "SHOW-LESS": "Mostrar menos",
-        "FILTER-CATEGORY": "Filtrar por categoria"
+        "SHOW-LESS": "Mostrar menos"
       },
       "BUTTONS": {
+        "CLOSE": "Fechar",
+        "REMOVE": "Excluir",
+        "APPLY": "Aplicar",
         "CLEAR-ALL": {
           "LABEL": "Limpar tudo",
           "TOOLTIP": "Fazer isso removerá todas as seleções"
@@ -290,6 +293,7 @@
         }
       }
     },
+    "UNKNOWN_CONFIGURATION": "Configuração desconhecida",
     "SEARCH_HEADER": {
       "TITLE": "Filtro",
       "TYPE": "Tipo",

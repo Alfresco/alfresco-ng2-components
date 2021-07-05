@@ -223,14 +223,17 @@
     },
     "FILTER": {
       "ACTIONS": {
+        "SEARCH": "搜索",
         "CLEAR": "清除",
         "APPLY": "应用",
         "CLEAR-ALL": "全部清除",
         "SHOW-MORE": "显示更多",
-        "SHOW-LESS": "显示更少",
-        "FILTER-CATEGORY": "过滤类别"
+        "SHOW-LESS": "显示更少"
       },
       "BUTTONS": {
+        "CLOSE": "关闭",
+        "REMOVE": "删除",
+        "APPLY": "应用",
         "CLEAR-ALL": {
           "LABEL": "全部清除",
           "TOOLTIP": "这将删除所有选择"
@@ -290,6 +293,7 @@
         }
       }
     },
+    "UNKNOWN_CONFIGURATION": "未知配置",
     "SEARCH_HEADER": {
       "TITLE": "筛选",
       "TYPE": "类型",
