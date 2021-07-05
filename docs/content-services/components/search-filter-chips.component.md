@@ -19,6 +19,8 @@ Represents a chip based container component for custom search and faceted search
 -   [Basic usage](#basic-usage)
     -   [Properties](#properties)
 -   [Details](#details)
+-   [Widget setting for chip layout](#widget-setting-for-chip-layout)
+-   [Migrate from expansion card layout](#migrate-from-expansion-card-layout)
 -   [See also](#see-also)
 
 ## Basic usage
@@ -35,18 +37,43 @@ Represents a chip based container component for custom search and faceted search
 
 ## Details
 
-This component is chip based layout for searching. it just alternate component for [expanded panel search filter](./search-filter.component.md)
+The component creates chip based widgets dynamically from default/selected search configuration. It uses [Search Query Builder service](../services/search-query-builder.service.md) to build and execute the query.
 
-You may find it useful to check out the following resources for background information
-before customizing the search UI:
 
--   [Search API](https://docs.alfresco.com/5.2/concepts/search-api.html)
--   [Alfresco Full Text Search Reference](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-intro.html)
--   [ACS API Explorer](https://api-explorer.alfresco.com/api-explorer/#!/search/search)
+### Widget setting for chip layout
+Configured widgets(`categories, facetQueries, facetIntervals, facetFields`) should have following setting for smooth interaction.
+```json
+{
+    ...
+    "settings": {
+        "allowUpdateOnChange": false,
+        "hideDefaultAction": true,
+        ...
+    }
+}
+```
+
+### Migrate from expansion card layout
+Here are the steps to move from expansion layout to chip layout
+ 1. Use this component to render the new layout ```<adf-search-filter-chips></adf-search-filter-chips>```
+ 2. Add the following settings to old configured widgets(`categories, facetQueries, facetIntervals, facetFields`) i.e
+```json
+{
+    ...
+    "settings": {
+        "allowUpdateOnChange": false,
+        "hideDefaultAction": true,
+        ...
+    }
+
+}
+``` 
+here is the [example configuration](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/demo-shell/src/app.config.json#L373)
+
 
 ## See also
 
--   [Search Filter Component](./search-filter.component.md)
+-   [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
 -   [Search Query Builder service](../services/search-query-builder.service.md)
 -   [Search Widget Interface](../interfaces/search-widget.interface.md)
 -   [Search check list component](search-check-list.component.md)

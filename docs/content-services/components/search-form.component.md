@@ -7,8 +7,6 @@ Last reviewed: 2021-06-11
 
 # [Search Form component](../../../lib/content-services/src/lib/search/components/search-form/search-form.component.ts "Defined in search-form.component.ts")
 
-Selecting a configuration from a set of configured options.
-
 ![Search Form screenshot](../../docassets/images/search-form-component.png)
 
 ## Basic usage
@@ -16,51 +14,14 @@ Selecting a configuration from a set of configured options.
 ```json
 {
   "search": [
-    {
-      "categories": [
-        {
-          "id": "queryName",
-          "name": "Name",
-          "enabled": true,
-          "expanded": true,
-          "component": {
-            "selector": "text",
-            "settings": {
-              "searchPrefix": "",
-              "searchSuffix": "",
-              "pattern": "cm:name:'(.*?)'",
-              "field": "cm:name",
-              "placeholder": "Enter the name",
-              "allowUpdateOnChange": true
-            }
-          }
-        }
-      ],
-      "name": "ALL",
-      "default": true
-    },
-    {
-      "categories": [
-        {
-          "id": "queryName",
-          "name": "Name",
-          "enabled": true,
-          "expanded": true,
-          "component": {
-            "selector": "text",
-            "settings": {
-              "searchPrefix": "",
-              "searchSuffix": "",
-              "pattern": "cm:name:'(.*?)'",
-              "field": "cm:name",
-              "placeholder": "Enter the name",
-              "allowUpdateOnChange": true
-            }
-          }
-        }
-      ],
-      "name": "Other"
-    }
+      {
+        "name": "Default", 
+        ...
+      }, 
+      {
+        "name": "Other",
+        ...
+      }
   ]
 }
 ```
@@ -68,8 +29,9 @@ Selecting a configuration from a set of configured options.
 
 ## Details
 
-This component lets the user pick a configuration for a search.
+This component pick a configuration for a search from the list of configuration.
 
 ## See also
 
+-   [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
 -   [Search Query Builder](../services/search-query-builder.service.md)

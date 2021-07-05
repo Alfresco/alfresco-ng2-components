@@ -601,7 +601,26 @@
         }
       ]
     },
-    "categories": [],
+    "categories": [
+      {
+        "id": "contentSize",
+        "name": "Content Size",
+        "enabled": true,
+        "component": {
+          "selector": "slider",
+          "settings": {
+            "allowUpdateOnChange": false,
+            "hideDefaultAction": true,
+            "unit": "Byte",
+            "field": "cm:content.size",
+            "min": 0,
+            "max": 18,
+            "step": 1,
+            "thumbLabel": true
+          }
+        }
+      }
+    ],
     "highlight": {
       "prefix": " ",
       "postfix": " ",

@@ -78,6 +78,8 @@ in the `dateFormat` and in the `maxDate` setting:
 
 ## See also
 
+-   [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
+-   [Search filter chips component](search-filter-chips.component.md)
 -   [Search filter component](search-filter.component.md)
 -   [Search check list component](search-check-list.component.md)
 -   [Search number range component](search-number-range.component.md)
