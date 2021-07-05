@@ -61,7 +61,7 @@ describe('Info Drawer', () => {
         description: 'I am your Description',
         dueDate: date.form,
         status: 'Running',
-        priority: '50',
+        priority: '0',
         category: 'No category',
         parentName: 'No parent',
         dateFormat: 'll'
