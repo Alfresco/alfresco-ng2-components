@@ -195,7 +195,7 @@ describe('ContentNodeDialogService', () => {
         beforeEach(() => {
             spyOnDialogOpen.and.callFake((_: any, config: any) => {
                 testContentNodeSelectorComponentData = config.data;
-                return { componentInstance: {} };
+                return { componentInstance: {}, afterClosed: () => of(null) };
             });
             service.openCopyMoveDialog(NodeAction.CHOOSE, fakeNode, '!update');
         });
