@@ -231,13 +231,10 @@ describe('ProcessFiltersCloudComponent', () => {
         expect(filterClickedSpy).toHaveBeenCalledWith(mockProcessFilters[0]);
     });
 
-    it('should reset the filter when the param is undefined', async () => {
+    it('should reset the filter when the param is undefined',  () => {
         const change = new SimpleChange(mockProcessFilters[0], undefined, false);
         component.currentFilter = mockProcessFilters[0];
         component.ngOnChanges({ 'filterParam': change });
-
-        fixture.detectChanges();
-        await fixture.whenStable();
 
         expect(component.currentFilter).toEqual(undefined);
     });

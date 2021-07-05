@@ -253,9 +253,6 @@ describe('TaskFiltersCloudComponent', () => {
         component.currentFilter = fakeGlobalFilter[0];
         component.ngOnChanges({ 'filterParam': change });
 
-        fixture.detectChanges();
-        await fixture.whenStable();
-
         expect(component.currentFilter).toEqual(undefined);
     });
 
