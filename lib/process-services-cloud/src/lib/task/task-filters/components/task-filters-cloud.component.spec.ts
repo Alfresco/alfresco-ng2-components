@@ -248,7 +248,7 @@ describe('TaskFiltersCloudComponent', () => {
         expect(filterClickedSpy).not.toHaveBeenCalled();
     });
 
-    it('should reset the filter when the param is undefined', async () => {
+    it('should reset the filter when the param is undefined', () => {
         const change = new SimpleChange(fakeGlobalFilter[0], undefined, false);
         component.currentFilter = fakeGlobalFilter[0];
         component.ngOnChanges({ 'filterParam': change });

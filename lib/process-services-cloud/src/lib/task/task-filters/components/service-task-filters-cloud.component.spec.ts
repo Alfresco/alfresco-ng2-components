@@ -231,7 +231,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         expect(filterClickedSpy).not.toHaveBeenCalled();
     });
 
-    it('should reset the filter when the param is undefined',  () => {
+    it('should reset the filter when the param is undefined', () => {
         const change = new SimpleChange(null, undefined, false);
         component.currentFilter = fakeGlobalServiceFilters[0];
         component.ngOnChanges({ 'filterParam': change });
