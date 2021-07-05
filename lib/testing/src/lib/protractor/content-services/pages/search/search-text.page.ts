@@ -33,5 +33,4 @@ export class SearchTextPage {
         await BrowserActions.clearSendKeys(this.filter.element(this.inputBy), name);
         await this.filter.element(this.inputBy).sendKeys(protractor.Key.ENTER);
     }
-
 }
