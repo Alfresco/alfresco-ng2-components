@@ -80,11 +80,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             (res: TaskFilterCloudModel[]) => {
                 this.resetFilter();
                 this.filters = res || [];
-
-                if (this.filterParam) {
-                    this.selectFilterAndEmit(this.filterParam);
-                }
-
+                this.selectFilterAndEmit(this.filterParam);
                 this.updateFilterCounters();
                 this.success.emit(res);
             },
@@ -154,6 +150,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
                 this.resetFilterCounter(this.currentFilter.key);
                 this.filterSelected.emit(this.currentFilter);
             }
+        } else {
+            this.currentFilter = undefined;
         }
     }
 

@@ -70,10 +70,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
             (res: ServiceTaskFilterCloudModel[]) => {
                 this.resetFilter();
                 this.filters = res || [];
-
-                if (this.filterParam) {
-                    this.selectFilterAndEmit(this.filterParam);
-                }
+                this.selectFilterAndEmit(this.filterParam);
                 this.success.emit(res);
             },
             (err: any) => {
@@ -101,6 +98,8 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
             if (this.currentFilter) {
                 this.filterSelected.emit(this.currentFilter);
             }
+        } else {
+            this.currentFilter = undefined;
         }
     }
 
