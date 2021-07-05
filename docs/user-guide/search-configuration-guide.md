@@ -69,16 +69,18 @@ This configuration considered for searching in the application.
 
 You can have arrayed config. At any point in the application only one of this configuration will be used for search.
 
-The one with default considered as default configuration and user should be able to switch to other configuration (searchform component)
-Search layouts:
+The one with default considered as default configuration and user should be able to switch to other configuration.
 
 ### Supported Layouts
-ADF support two kind search layouts.
+ADF support two kinds of search layouts.
 
 1. [Expansion card based layouts](../content-services/components/search-filter.component.md)
+
+
    ![Search expansion layout](../docassets/images/expansion-card-layout.png)
 
 2. [Chip based layout](../content-services/components/search-filter-chips.component.md)
+
    ![Search chips layout](../docassets/images/search-chip-layout.png)
 
 The layout is generated for current/selected search configuration.
