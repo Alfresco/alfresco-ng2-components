@@ -20,7 +20,7 @@
 
 <mat-menu #menu="matMenu" backdropClass="adf-search-filter-chip-menu" (closed)="onClosed()">
     <div #menuContainer [attr.data-automation-id]="'search-field-' + field.label">
-        <adf-search-filter-menu-card (click)="$event.stopPropagation()"
+        <adf-search-filter-menu-card (click)="recalculateMenuHeight($event)"
                                      (keydown.tab)="$event.stopPropagation();"
                                      (close)="menuTrigger.closeMenu()">
             <ng-container ngProjectAs="filter-title">

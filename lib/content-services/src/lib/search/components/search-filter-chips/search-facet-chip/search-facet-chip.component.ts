@@ -20,6 +20,7 @@ import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cd
 import { FacetField } from '../../../models/facet-field.interface';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { SearchFacetFieldComponent } from '../../search-facet-field/search-facet-field.component';
+import { OverlayRef } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'adf-search-facet-chip',
@@ -63,5 +64,15 @@ export class SearchFacetChipComponent {
     onApply() {
         this.facetFieldComponent.submitValues();
         this.menuTrigger.closeMenu();
+    }
+
+    recalculateMenuHeight(event: Event) {
+        event.stopPropagation();
+
+        // Todo: remove after material fix (https://github.com/angular/components/issues/21420)
+        const overlayRef: OverlayRef = (this.menuTrigger as any)._overlayRef;
+        const overlayConfig = overlayRef.getConfig();
+        (overlayConfig.positionStrategy as any)._isInitialRender = true;
+        overlayConfig.positionStrategy.apply();
     }
 }
