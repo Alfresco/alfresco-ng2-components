@@ -1049,7 +1049,7 @@ describe('FormFieldValidator', () => {
         });
    });
 
-   describe('DateTimeFieldValidator', () => {
+    describe('DateTimeFieldValidator', () => {
 
         let validator: DateTimeFieldValidator;
 
@@ -1070,7 +1070,7 @@ describe('FormFieldValidator', () => {
         it('should validate dateTime format with default format', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
-                value: '2021-06-09 14:10',
+                value: '2021-06-09 14:10'
             });
             expect(validator.validate(field)).toBeTruthy();
         });
