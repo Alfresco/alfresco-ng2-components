@@ -101,6 +101,8 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
             if (this.currentFilter) {
                 this.filterSelected.emit(this.currentFilter);
             }
+        } else {
+            this.currentFilter = undefined;
         }
     }
 

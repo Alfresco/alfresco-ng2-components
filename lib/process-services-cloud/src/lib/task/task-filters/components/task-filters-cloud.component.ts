@@ -154,6 +154,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
                 this.resetFilterCounter(this.currentFilter.key);
                 this.filterSelected.emit(this.currentFilter);
             }
+        } else {
+            this.currentFilter = undefined;
         }
     }
 
