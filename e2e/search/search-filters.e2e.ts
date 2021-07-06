@@ -172,7 +172,7 @@ describe('Search Filters', () => {
         await expect(await paginationPage.getTotalNumberOfFiles()).toEqual(bucketNumberForFilter);
 
         resultFileNames.map(async (nameOfResultFiles) => {
-            await expect(nameOfResultFiles).toContain('.png');
+            await expect(nameOfResultFiles.toLowerCase()).toContain('.png');
         });
     });
 
