@@ -33,6 +33,7 @@ import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { AppConfigService } from './../../app-config/app-config.service';
 import { PDFDocumentProxy, PDFSource } from 'pdfjs-dist';
+import { timer } from 'rxjs';
 
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
@@ -236,14 +237,13 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
 
         if (this.loadingTask) {
-            try {
-                setTimeout(() => {
-                    this.loadingTask.destroy();
-                    this.loadingTask = null;
-                }, 700);
-            } catch {
-            }
+            timer(700).subscribe(() => this.destroyPdJsWorker())
         }
+    }
+
+    private destroyPdJsWorker() {
+        this.loadingTask.destroy();
+        this.loadingTask = null;
     }
 
     toggleThumbnails() {
