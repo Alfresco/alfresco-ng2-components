@@ -6,6 +6,9 @@
         .adf-checklist {
             display: flex;
             flex-direction: column;
+            max-height: 170px;
+            padding: 5px 0;
+            overflow-y: auto;
 
             .mat-checkbox-label {
                 text-overflow: ellipsis;
