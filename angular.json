@@ -316,6 +316,7 @@
             ],
             "exclude": [
               "**/node_modules/**/*",
+              "**/lib/**/*",
               "package.json"
             ]
           }
@@ -354,6 +355,7 @@
               "./e2e/tsconfig.e2e.json"
             ],
             "exclude": [
+              "**/lib/**/*",
               "**/node_modules/**/*"
             ]
           }
@@ -397,6 +399,11 @@
               "lib/core/tsconfig.spec.json"
             ],
             "exclude": [
+              "**/lib/extensions/**/*",
+              "**/lib/content-services/**/*",
+              "**/lib/insights/**/*",
+              "**/lib/process-services-cloud/**/*",
+              "**/lib/process-services/**/*",
               "**/node_modules/**"
             ]
           }
@@ -440,6 +447,11 @@
               "lib/content-services/tsconfig.spec.json"
             ],
             "exclude": [
+              "**/lib/extensions/**/*",
+              "**/lib/core/**/*",
+              "**/lib/insights/**/*",
+              "**/lib/process-services-cloud/**/*",
+              "**/lib/process-services/**/*",
               "**/node_modules/**"
             ]
           }
@@ -483,6 +495,11 @@
               "lib/process-services/tsconfig.spec.json"
             ],
             "exclude": [
+              "**/lib/extensions/**/*",
+              "**/lib/core/**/*",
+              "**/lib/insights/**/*",
+              "**/lib/process-services-cloud/**/*",
+              "**/lib/content-services/**/*",
               "**/node_modules/**"
             ]
           }
@@ -526,6 +543,11 @@
               "lib/process-services-cloud/tsconfig.spec.json"
             ],
             "exclude": [
+              "**/lib/extensions/**/*",
+              "**/lib/core/**/*",
+              "**/lib/insights/**/*",
+              "**/lib/process-services/**/*",
+              "**/lib/content-services/**/*",
               "**/node_modules/**"
             ]
           }
@@ -569,6 +591,11 @@
               "lib/insights/tsconfig.spec.json"
             ],
             "exclude": [
+              "**/lib/extensions/**/*",
+              "**/lib/core/**/*",
+              "**/lib/process-services-cloud/**/*",
+              "**/lib/process-services/**/*",
+              "**/lib/content-services/**/*",
               "**/node_modules/**"
             ]
           }
@@ -611,6 +638,11 @@
               "lib/extensions/tsconfig.spec.json"
             ],
             "exclude": [
+              "**/lib/core/**/*",
+              "**/lib/content-services/**/*",
+              "**/lib/process-services/**/*",
+              "**/lib/process-services-cloud/**/*",
+              "**/lib/insights/**/*",
               "**/node_modules/**"
             ]
           }
@@ -643,6 +675,11 @@
               "lib/testing/tsconfig.spec.json"
             ],
             "exclude": [
+              "**/lib/core/**/*",
+              "**/lib/content-services/**/*",
+              "**/lib/process-services/**/*",
+              "**/lib/process-services-cloud/**/*",
+              "**/lib/insight/**/*",
               "**/node_modules/**"
             ]
           }
