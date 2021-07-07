@@ -1466,8 +1466,6 @@ describe('DocumentList', () => {
         expect(documentList.currentFolderId).toBe('-mysites-');
     });
 
-    //old
-
     it('should reload data upon changing pagination settings', () => {
         spyOn(documentList, 'reload').and.stub();
 
