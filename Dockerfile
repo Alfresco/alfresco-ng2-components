@@ -10,7 +10,7 @@ RUN mkdir -p ./licenses && \
 
 # 2. Generate image
 
-FROM nginxinc/nginx-unprivileged:1.19.3-alpine
+FROM nginxinc/nginx-unprivileged:1.20-alpine
 
 ARG PROJECT_NAME
 
