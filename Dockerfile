@@ -12,6 +12,10 @@ RUN mkdir -p ./licenses && \
 
 FROM nginxinc/nginx-unprivileged:1.21-alpine
 
+USER root
+RUN apk update && apk upgrade
+USER 101
+
 ARG PROJECT_NAME
 
 COPY docker/default.conf.template /etc/nginx/templates/
