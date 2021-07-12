@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { throwError } from 'rxjs';
 import { setupTestBed, AppConfigService, AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -52,13 +52,13 @@ describe('AppsProcessCloudService', () => {
         ]
     });
 
-    beforeEach(fakeAsync(() => {
+    beforeEach(() => {
         apiService = TestBed.inject(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(apiMock);
 
         service = TestBed.inject(AppsProcessCloudService);
         appConfigService = TestBed.inject(AppConfigService);
-    }));
+    });
 
     it('should get the deployed applications no apps are specified in app.config', (done) => {
         spyOn(appConfigService, 'get').and.returnValue([]);
