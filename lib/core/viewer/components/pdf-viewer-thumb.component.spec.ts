@@ -16,7 +16,7 @@
  */
 
 import { DomSanitizer } from '@angular/platform-browser';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PdfThumbComponent } from './pdf-viewer-thumb.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
@@ -52,10 +52,10 @@ describe('PdfThumbComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(PdfThumbComponent);
         component = fixture.componentInstance;
-    }));
+    });
 
     it('should have resolve image data', (done) => {
         component.page = page;

@@ -18,7 +18,7 @@
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { ElementRef } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { ViewerComponent } from '../components/viewer.component';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
 import { setupTestBed } from '../../testing/setup-test-bed';
@@ -47,10 +47,10 @@ describe('ExtensionViewerDirective', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         extensionViewerDirective = TestBed.inject(ViewerExtensionDirective);
         extensionViewerDirective.templateModel = {template: '', isVisible: false};
-    }));
+    });
 
     it('is defined', () => {
         expect(extensionViewerDirective).toBeDefined();

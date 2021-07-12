@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
@@ -49,7 +49,7 @@ describe('Auth Guard SSO role service', () => {
         peopleContentService = TestBed.inject(PeopleContentService);
     });
 
-    it('Should canActivate be true if the Role is present int the JWT token', async(async () => {
+    it('Should canActivate be true if the Role is present int the JWT token', async () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1'] } });
 
@@ -57,9 +57,9 @@ describe('Auth Guard SSO role service', () => {
         router.data = { 'roles': ['role1', 'role2'] };
 
         expect(await authGuard.canActivate(router)).toBeTruthy();
-    }));
+    });
 
-    it('Should canActivate be false if the Role is not present int the JWT token', async(async () => {
+    it('Should canActivate be false if the Role is not present int the JWT token', async () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role3'] } });
 
@@ -67,9 +67,9 @@ describe('Auth Guard SSO role service', () => {
         router.data = { 'roles': ['role1', 'role2'] };
 
         expect(await authGuard.canActivate(router)).toBeFalsy();
-    }));
+    });
 
-    it('Should not redirect if canActivate is', async(async () => {
+    it('Should not redirect if canActivate is', async () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1'] } });
         spyOn(routerService, 'navigate').and.stub();
@@ -79,27 +79,27 @@ describe('Auth Guard SSO role service', () => {
 
         expect(await authGuard.canActivate(router)).toBeTruthy();
         expect(routerService.navigate).not.toHaveBeenCalled();
-    }));
+    });
 
-    it('Should canActivate return false if the data Role to check is empty', async(async () => {
+    it('Should canActivate return false if the data Role to check is empty', async () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1', 'role3'] } });
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
 
         expect(await authGuard.canActivate(router)).toBeFalsy();
-    }));
+    });
 
-    it('Should canActivate return false if the realm_access is not present', async(async () => {
+    it('Should canActivate return false if the realm_access is not present', async () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({});
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
 
         expect(await authGuard.canActivate(router)).toBeFalsy();
-    }));
+    });
 
-    it('Should redirect to the redirectURL if canActivate is false and redirectUrl is in data', async(async () => {
+    it('Should redirect to the redirectURL if canActivate is false and redirectUrl is in data', async () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({});
         spyOn(routerService, 'navigate').and.stub();
@@ -109,9 +109,9 @@ describe('Auth Guard SSO role service', () => {
 
         expect(await authGuard.canActivate(router)).toBeFalsy();
         expect(routerService.navigate).toHaveBeenCalledWith(['/no-role-url']);
-    }));
+    });
 
-    it('Should not redirect if canActivate is false and redirectUrl is not in  data', async(async () => {
+    it('Should not redirect if canActivate is false and redirectUrl is not in  data', async () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({});
         spyOn(routerService, 'navigate').and.stub();
@@ -121,7 +121,7 @@ describe('Auth Guard SSO role service', () => {
 
         expect(await authGuard.canActivate(router)).toBeFalsy();
         expect(routerService.navigate).not.toHaveBeenCalled();
-    }));
+    });
 
     it('Should canActivate be false hasRealm is true and hasClientRole is false', async () => {
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();

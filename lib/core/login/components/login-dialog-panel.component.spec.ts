@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 import { of } from 'rxjs';
@@ -37,7 +37,7 @@ describe('LoginDialogPanelComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(LoginDialogPanelComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
@@ -47,7 +47,7 @@ describe('LoginDialogPanelComponent', () => {
             usernameInput = element.querySelector('#username');
             passwordInput = element.querySelector('#password');
         });
-    }));
+    });
 
     afterEach(() => {
         fixture.destroy();

@@ -16,12 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import {
-    async,
-    ComponentFixture,
-    fakeAsync,
-    TestBed
-} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TaskListService } from './../services/tasklist.service';
 import { setupTestBed } from '@alfresco/adf-core';
@@ -83,13 +78,13 @@ describe('TaskAuditDirective', () => {
         declarations: [BasicButtonComponent]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;
         service = TestBed.inject(TaskListService);
 
         jasmine.Ajax.install();
-    }));
+    });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { FormService } from '../../../services/form.service';
@@ -54,14 +54,14 @@ describe('DropdownWidgetComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(DropdownWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         formService = TestBed.inject(FormService);
         visibilityService = TestBed.inject(WidgetVisibilityService);
         widget.field = new FormFieldModel(new FormModel());
-    }));
+    });
 
     it('should require field with restUrl', () => {
         spyOn(formService, 'getRestFieldValues').and.stub();
@@ -125,12 +125,12 @@ describe('DropdownWidgetComponent', () => {
 
     describe('when is required', () => {
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.DROPDOWN,
                 required: true
             });
-        }));
+        });
 
         it('should be able to display label with asterix', async () => {
             const label = 'MyLabel123';
@@ -165,7 +165,7 @@ describe('DropdownWidgetComponent', () => {
 
         describe('and dropdown is populated via taskId', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(formService, 'getRestFieldValues').and.callFake(() => {
                     return of(fakeOptionList);
@@ -180,7 +180,7 @@ describe('DropdownWidgetComponent', () => {
                 widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
                 widget.field.isVisible = true;
                 fixture.detectChanges();
-            }));
+            });
 
             it('should show visible dropdown widget', async () => {
                 expect(element.querySelector('#dropdown-id')).toBeDefined();
@@ -228,7 +228,7 @@ describe('DropdownWidgetComponent', () => {
 
         describe('and dropdown is populated via processDefinitionId', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(formService, 'getRestFieldValuesByProcessId').and.callFake(() => {
                     return of(fakeOptionList);
@@ -243,7 +243,7 @@ describe('DropdownWidgetComponent', () => {
                 widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
                 widget.field.isVisible = true;
                 fixture.detectChanges();
-            }));
+            });
 
             it('should show visible dropdown widget', () => {
                 expect(element.querySelector('#dropdown-id')).toBeDefined();

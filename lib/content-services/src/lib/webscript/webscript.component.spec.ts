@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { WebscriptComponent } from './webscript.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
@@ -36,7 +36,7 @@ describe('WebscriptComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
@@ -48,7 +48,7 @@ describe('WebscriptComponent', () => {
         component.scriptPath = 'fakePath';
         component.showData = true;
         fixture.detectChanges();
-    }));
+    });
 
     describe('View', () => {
         it('html wrapper should be present', () => {

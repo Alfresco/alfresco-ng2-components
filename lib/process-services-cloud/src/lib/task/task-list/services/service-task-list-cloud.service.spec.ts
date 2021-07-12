@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { ServiceTaskListCloudService } from './service-task-list-cloud.service';
 import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
@@ -59,10 +59,10 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         service = TestBed.inject(ServiceTaskListCloudService);
-    }));
+    });
 
     it('should append to the call all the parameters', (done) => {
         const taskRequest: ServiceTaskQueryCloudRequestModel = <ServiceTaskQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };

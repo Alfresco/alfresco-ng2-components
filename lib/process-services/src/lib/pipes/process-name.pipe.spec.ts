@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { ProcessNamePipe } from './process-name.pipe';
 import { setupTestBed } from 'core';
 import { CoreTestingModule } from 'core/testing/core.testing.module';
@@ -44,10 +44,10 @@ describe('ProcessNamePipe', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         const localizedDatePipe = TestBed.inject(LocalizedDatePipe);
         processNamePipe = new ProcessNamePipe(localizedDatePipe);
-    }));
+    });
 
     it('should not modify the name when there is no identifier', () => {
         const transformResult = processNamePipe.transform(defaultName);

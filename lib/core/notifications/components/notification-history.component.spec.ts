@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { NotificationHistoryComponent } from './notification-history.component';
@@ -48,7 +48,7 @@ describe('Notification History Component', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(NotificationHistoryComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -56,7 +56,7 @@ describe('Notification History Component', () => {
         storage = TestBed.inject(StorageService);
         notificationService = TestBed.inject(NotificationService);
         component.notifications = [];
-    }));
+    });
 
     beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {
         overlayContainerElement = oc.getContainerElement();

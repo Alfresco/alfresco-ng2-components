@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { FormService } from '../services/form.service';
 import { FormListComponent } from './form-list.component';
@@ -28,7 +28,7 @@ describe('TaskAttachmentList', () => {
     let component: FormListComponent;
     let fixture: ComponentFixture<FormListComponent>;
     let service: FormService;
-    let element: any;
+    let element: HTMLElement;
 
     setupTestBed({
         imports: [
@@ -37,14 +37,12 @@ describe('TaskAttachmentList', () => {
         ]
     });
 
-    beforeEach(async(() => {
-
+    beforeEach(() => {
         fixture = TestBed.createComponent(FormListComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
         service = TestBed.inject(FormService);
-
-    }));
+    });
 
     it('should show the forms as a list', async () => {
         spyOn(service, 'getForms').and.returnValue(of([

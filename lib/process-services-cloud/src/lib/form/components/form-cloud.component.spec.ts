@@ -17,7 +17,7 @@
 
 import { Component, DebugElement, SimpleChange, NgModule, Injector, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import {
     CoreModule,
@@ -118,7 +118,7 @@ describe('FormCloudComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         const apiService = TestBed.inject(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
 
@@ -133,7 +133,7 @@ describe('FormCloudComponent', () => {
         fixture = TestBed.createComponent(FormCloudComponent);
         formComponent = fixture.componentInstance;
         fixture.detectChanges();
-    }));
+    });
 
     it('should register custom [upload] widget', () => {
         const widget = buildWidget('upload', fixture.componentRef.injector);
@@ -1154,7 +1154,7 @@ describe('retrieve metadata on submit', () => {
         }
     };
 
-    beforeEach(async(() => {
+    beforeEach(() => {
        const apiService = TestBed.inject(AlfrescoApiService);
        spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
 
@@ -1164,7 +1164,7 @@ describe('retrieve metadata on submit', () => {
        formComponent = fixture.componentInstance;
        formComponent.form = formComponent.parseForm(fakeMetadataForm);
        fixture.detectChanges();
-    }));
+    });
 
     it('should set values when updateFormValuesRequested is updated', async () => {
         formComponent.form.values['pfx_property_three'] = {};

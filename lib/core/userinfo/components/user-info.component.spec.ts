@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService, ContentService } from '../../services';
 import { InitialUsernamePipe } from '../../pipes';
@@ -94,7 +94,7 @@ describe('User info component', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(UserInfoComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -108,7 +108,7 @@ describe('User info component', () => {
         spyOn(window, 'requestAnimationFrame').and.returnValue(1);
         spyOn(bpmUserService, 'getCurrentUserProfileImage').and.returnValue('app/rest/admin/profile-picture');
         spyOn(contentService, 'getContentUrl').and.returnValue('alfresco-logo.svg');
-    }));
+    });
 
     afterEach(() => {
         fixture.destroy();
@@ -209,13 +209,13 @@ describe('User info component', () => {
 
             describe('and has image', () => {
 
-                beforeEach(async(() => {
+                beforeEach(() => {
                     isOauthStub.and.returnValue(false);
                     isEcmLoggedInStub.and.returnValue(true);
                     isLoggedInStub.and.returnValue(true);
                     getCurrenEcmtUserInfoStub.and.returnValue(of(fakeEcmUser));
                     fixture.detectChanges();
-                }));
+                });
 
                 it('should get the ecm current user image from the service', async () => {
                     await fixture.whenStable();
@@ -316,15 +316,15 @@ describe('User info component', () => {
 
         describe('when user is logged on bpm', () => {
 
-            let getCurrentUserInfoStub;
+            let getCurrentUserInfoStub: jasmine.Spy;
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 isOauthStub.and.returnValue(false);
                 isBpmLoggedInStub.and.returnValue(true);
                 isLoggedInStub.and.returnValue(true);
                 isEcmLoggedInStub.and.returnValue(false);
                 getCurrentUserInfoStub = spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmUser));
-            }));
+            });
 
             it('should fetch bpm userInfo', (done) => {
                 getCurrentUserInfoStub.and.returnValue(of(fakeBpmUser));
@@ -427,7 +427,7 @@ describe('User info component', () => {
 
         describe('when user is logged on bpm and ecm', () => {
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 isOauthStub.and.returnValue(false);
                 isEcmLoggedInStub.and.returnValue(true);
                 isBpmLoggedInStub.and.returnValue(true);
@@ -435,7 +435,7 @@ describe('User info component', () => {
 
                 getCurrenEcmtUserInfoStub.and.returnValue(of(fakeEcmUser));
                 spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmUser));
-            }));
+            });
 
             it('should able to fetch ecm userInfo', (done) => {
                 fixture.detectChanges();
@@ -537,14 +537,14 @@ describe('User info component', () => {
 
         describe('when identity user is logged in', () => {
 
-            let getCurrentUserInfoStub;
+            let getCurrentUserInfoStub: jasmine.Spy;
 
-            beforeEach(async(() => {
+            beforeEach(() => {
                 isOauthStub.and.returnValue(true);
                 isLoggedInStub.and.returnValue(true);
                 isEcmLoggedInStub.and.returnValue(false);
                 getCurrentUserInfoStub = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
-            }));
+            });
 
             it('should show the identity user initials if is not ecm user', async () => {
                 fixture.detectChanges();

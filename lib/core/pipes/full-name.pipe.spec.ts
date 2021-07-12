@@ -16,15 +16,14 @@
  */
 
 import { FullNamePipe } from './full-name.pipe';
-import { async } from '@angular/core/testing';
 
 describe('FullNamePipe', () => {
 
     let pipe: FullNamePipe;
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         pipe = new FullNamePipe();
-    }));
+    });
 
     it('should return empty string when there is no name', () => {
         const user = {};

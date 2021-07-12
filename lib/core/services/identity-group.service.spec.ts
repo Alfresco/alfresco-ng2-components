@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { setupTestBed, AlfrescoApiService, IdentityGroupService, IdentityGroupSearchParam } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
@@ -46,10 +46,10 @@ describe('IdentityGroupService', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         service = TestBed.inject(IdentityGroupService);
         apiService = TestBed.inject(AlfrescoApiService);
-    }));
+    });
 
     it('should be able to fetch groups based on group name', (done) => {
         spyOn(apiService, 'getInstance').and.returnValue(groupsMockApi);

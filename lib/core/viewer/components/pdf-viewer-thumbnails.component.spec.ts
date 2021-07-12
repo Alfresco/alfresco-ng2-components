@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
@@ -69,7 +69,7 @@ describe('PdfThumbListComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(PdfThumbListComponent);
         component = fixture.componentInstance;
         component.pdfViewer = viewerMock;
@@ -80,7 +80,7 @@ describe('PdfThumbListComponent', () => {
         fixture.nativeElement.style.overflow = 'scroll';
         fixture.debugElement.query(By.css('.adf-pdf-thumbnails__content'))
             .nativeElement.style.height = '2000px';
-    }));
+    });
 
     it('should render initial rage of items', () => {
         fixture.nativeElement.scrollTop = 0;

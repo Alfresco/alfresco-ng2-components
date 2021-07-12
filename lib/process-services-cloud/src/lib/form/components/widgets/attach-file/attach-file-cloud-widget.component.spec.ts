@@ -405,7 +405,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(widget.rootNodeId).toEqual('-my-');
         });
 
-        it('should return the application name in case -appname- placeholder is present', async() => {
+        it('should return the application name in case -appname- placeholder is present', () => {
             appConfigService.config = Object.assign(appConfigService.config, {
                 'alfresco-deployed-apps': [
                     {
@@ -417,7 +417,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(widget.replaceAppNameAliasWithValue('/myfiles/-appname-/folder')).toBe('/myfiles/fakeapp/folder');
         });
 
-        it('should return the same value in case -appname- placeholder is NOT present', async() => {
+        it('should return the same value in case -appname- placeholder is NOT present', () => {
             expect(widget.replaceAppNameAliasWithValue('/myfiles/fakepath/folder')).toBe('/myfiles/fakepath/folder');
         });
 

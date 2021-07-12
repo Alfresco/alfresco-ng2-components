@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { ProcessListCloudService } from './process-list-cloud.service';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
@@ -56,10 +56,10 @@ describe('ProcessListCloudService', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         service = TestBed.inject(ProcessListCloudService);
-    }));
+    });
 
     it('should append to the call all the parameters', (done) => {
         const processRequest: ProcessQueryCloudRequestModel = <ProcessQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };
