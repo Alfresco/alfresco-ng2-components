@@ -38,7 +38,7 @@ export class TxtViewerComponent implements OnChanges {
     constructor(private http: HttpClient, private appConfigService: AppConfigService) {
     }
 
-    ngOnChanges(changes: SimpleChanges): Promise<any> {
+    ngOnChanges(changes: SimpleChanges): Promise<void> {
 
         const blobFile = changes['blobFile'];
         if (blobFile && blobFile.currentValue) {
@@ -57,7 +57,7 @@ export class TxtViewerComponent implements OnChanges {
         return Promise.resolve();
     }
 
-    private getUrlContent(url: string): Promise<any> {
+    private getUrlContent(url: string): Promise<void> {
         const withCredentialsMode = this.appConfigService.get<boolean>('auth.withCredentials', false);
 
         return new Promise((resolve, reject) => {
@@ -70,7 +70,7 @@ export class TxtViewerComponent implements OnChanges {
         });
     }
 
-    private readBlob(blob: Blob): Promise<any> {
+    private readBlob(blob: Blob): Promise<void> {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
 
