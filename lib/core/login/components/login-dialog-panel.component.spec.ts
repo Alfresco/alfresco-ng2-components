@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 import { of } from 'rxjs';
@@ -26,8 +26,9 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('LoginDialogPanelComponent', () => {
     let component: LoginDialogPanelComponent;
     let fixture: ComponentFixture<LoginDialogPanelComponent>;
-    let element: any;
-    let usernameInput, passwordInput;
+    let element: HTMLElement;
+    let usernameInput: HTMLInputElement;
+    let passwordInput: HTMLInputElement;
     let authService: AuthenticationService;
 
     setupTestBed({
@@ -37,23 +38,24 @@ describe('LoginDialogPanelComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(async () => {
         fixture = TestBed.createComponent(LoginDialogPanelComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
         authService = TestBed.inject(AuthenticationService);
+
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            usernameInput = element.querySelector('#username');
-            passwordInput = element.querySelector('#password');
-        });
-    }));
+        await fixture.whenStable();
+
+        usernameInput = element.querySelector('#username');
+        passwordInput = element.querySelector('#password');
+    });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    function loginWithCredentials(username, password) {
+    function loginWithCredentials(username: string, password: string) {
         usernameInput.value = username;
         passwordInput.value = password;
 

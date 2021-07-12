@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ContentModule, ContentNodeSelectorPanelComponent, DocumentListService } from '@alfresco/adf-content-services';
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -63,7 +63,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         schemas: [NO_ERRORS_SCHEMA]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(AttachFileWidgetDialogComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -83,7 +83,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         spyOn(widget, 'isLoggedIn').and.callFake(() => {
             return isLogged;
         });
-    }));
+    });
 
     afterEach(() => {
         fixture.destroy();
@@ -96,10 +96,10 @@ describe('AttachFileWidgetDialogComponent', () => {
 
     describe('When is not logged in', () => {
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             fixture.detectChanges();
             isLogged = false;
-        }));
+        });
 
         it('should show the login form', () => {
             expect(element.querySelector('#attach-file-login-panel')).not.toBeNull();
@@ -135,11 +135,11 @@ describe('AttachFileWidgetDialogComponent', () => {
 
         let contentNodePanel;
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             isLogged = true;
             fixture.detectChanges();
             contentNodePanel = fixture.debugElement.query(By.directive(ContentNodeSelectorPanelComponent));
-        }));
+        });
 
         it('should show the content node selector', () => {
             expect(element.querySelector('#attach-file-content-node')).not.toBeNull();
@@ -175,21 +175,21 @@ describe('AttachFileWidgetDialogComponent', () => {
    });
 
     describe('login only', () => {
-        beforeEach(async(() => {
+        beforeEach(() => {
             spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket'}));
             spyOn(matDialogRef, 'close').and.callThrough();
             fixture.detectChanges();
             widget.data.loginOnly = true;
             widget.data.registerExternalHost = () => {};
             isLogged = false;
-        }));
+        });
 
         it('should close the dialog once user loggedIn', () => {
             fixture.detectChanges();
             isLogged = true;
-            const loginButton: HTMLButtonElement = element.querySelector('button[data-automation-id="attach-file-dialog-actions-login"]');
-            const usernameInput: HTMLInputElement = element.querySelector('#username');
-            const passwordInput: HTMLInputElement = element.querySelector('#password');
+            const loginButton = element.querySelector<HTMLButtonElement>('button[data-automation-id="attach-file-dialog-actions-login"]');
+            const usernameInput = element.querySelector<HTMLInputElement>('#username');
+            const passwordInput = element.querySelector<HTMLInputElement>('#password');
             usernameInput.value = 'fake-user';
             passwordInput.value = 'fake-user';
             usernameInput.dispatchEvent(new Event('input'));
@@ -211,9 +211,9 @@ describe('AttachFileWidgetDialogComponent', () => {
 
     describe('Attach button', () => {
 
-        beforeEach(async(() => {
+        beforeEach(() => {
            isLogged = true;
-        }));
+        });
 
         it('should be disabled by default', () => {
             fixture.detectChanges();

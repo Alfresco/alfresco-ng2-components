@@ -24,7 +24,7 @@ import {
     SimpleChange,
     ComponentFactoryResolver
 } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DynamicExtensionComponent } from './dynamic.component';
 import { ComponentRegisterService } from '../../services/component-register.service';
@@ -50,7 +50,7 @@ describe('DynamicExtensionComponent', () => {
     let component: DynamicExtensionComponent;
     let componentFactoryResolver: ComponentFactoryResolver;
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         componentRegister = new ComponentRegisterService();
         componentRegister.setComponents({ 'test-component': TestComponent });
 
@@ -61,7 +61,7 @@ describe('DynamicExtensionComponent', () => {
         });
 
         TestBed.compileComponents();
-    }));
+    });
 
     describe('Sub-component creation', () => {
 

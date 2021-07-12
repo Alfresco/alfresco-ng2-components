@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -60,7 +60,7 @@ describe('NotificationCloudService', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         service = TestBed.inject(NotificationCloudService);
         apollo = TestBed.inject(Apollo);
         apiService = TestBed.inject(AlfrescoApiService);
@@ -69,7 +69,7 @@ describe('NotificationCloudService', () => {
         service.appsListening = [];
         apolloCreateSpy = spyOn(apollo, 'createNamed');
         apolloSubscribeSpy = spyOn(apollo, 'use').and.returnValue(useMock);
-    }));
+    });
 
     it('should not create more than one websocket per app if it was already created', () => {
         service.makeGQLQuery('myAppName', queryMock);

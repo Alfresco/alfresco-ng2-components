@@ -16,7 +16,7 @@
  */
 
 import { LocalizedDatePipe } from './localized-date.pipe';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../services/user-preferences.service';
 import { of } from 'rxjs';
@@ -39,11 +39,11 @@ describe('LocalizedDatePipe', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
         pipe = new LocalizedDatePipe(userPreferences, TestBed.inject(AppConfigService));
-    }));
+    });
 
     it('should return time with locale en-US', () => {
         const date = new Date('1990-11-03 00:00');

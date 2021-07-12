@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { ProcessNamePipe } from './process-name.pipe';
 import { setupTestBed } from 'core';
 import { CoreTestingModule } from 'core/testing/core.testing.module';
@@ -30,7 +30,7 @@ describe('ProcessNamePipe', () => {
     const defaultName = 'default-name';
     const datetimeIdentifier = '%{datetime}';
     const processDefinitionIdentifier = '%{processDefinition}';
-    const mockCurrentDate = new Date('Wed Oct 23 2019');
+    const mockCurrentDate: number = new Date('Wed Oct 23 2019').getTime();
     const mockLocalizedCurrentDate = 'Oct 23, 2019, 12:00:00 AM';
     const nameWithProcessDefinitionIdentifier = `${defaultName} - ${processDefinitionIdentifier}`;
     const nameWithDatetimeIdentifier = `${defaultName} - ${datetimeIdentifier}`;
@@ -44,10 +44,10 @@ describe('ProcessNamePipe', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         const localizedDatePipe = TestBed.inject(LocalizedDatePipe);
         processNamePipe = new ProcessNamePipe(localizedDatePipe);
-    }));
+    });
 
     it('should not modify the name when there is no identifier', () => {
         const transformResult = processNamePipe.transform(defaultName);

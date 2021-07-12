@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ProcessFilterCloudService } from './process-filter-cloud.service';
@@ -50,7 +50,7 @@ describe('ProcessFilterCloudService', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         service = TestBed.inject(ProcessFilterCloudService);
 
         const preferenceCloudService = service.preferenceService;
@@ -61,7 +61,7 @@ describe('ProcessFilterCloudService', () => {
         getPreferenceByKeySpy = spyOn(preferenceCloudService, 'getPreferenceByKey').and.returnValue(of(fakeProcessCloudFilters));
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of(fakeProcessCloudFilterEntries));
         getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
-    }));
+    });
 
     it('should create processfilter key by using appName and the username', (done) => {
         service.getProcessFilters('mock-appName').subscribe((res: any) => {

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
 import { UserPreferenceCloudService } from './user-preference-cloud.service';
 import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { mockPreferences, getMockPreference, createMockPreference, updateMockPreference } from '../mock/user-preference.mock';
@@ -63,11 +62,11 @@ describe('PreferenceService', () => {
     ]
   });
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     service = TestBed.inject(UserPreferenceCloudService);
     alfrescoApiMock = TestBed.inject(AlfrescoApiService);
     getInstanceSpy = spyOn(alfrescoApiMock, 'getInstance').and.returnValue(apiMock(mockPreferences));
-  }));
+  });
 
   it('should return the preferences', (done) => {
     service.getPreferences('mock-app-name').subscribe((res: any) => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserProcessModel, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { PeopleSearchComponent } from './people-search.component';
@@ -51,13 +51,13 @@ describe('PeopleSearchComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(PeopleSearchComponent);
         peopleSearchComponent = fixture.componentInstance;
         element = fixture.nativeElement;
         peopleSearchComponent.results = of([]);
         fixture.detectChanges();
-    }));
+    });
 
     it('should show input search text', () => {
         expect(element.querySelector('#userSearchText')).toBeDefined();

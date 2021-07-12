@@ -21,7 +21,9 @@ import { AppConfigService } from './app-config.service';
 import { AppConfigModule } from './app-config.module';
 import { ExtensionConfig, ExtensionService } from '@alfresco/adf-extensions';
 import { of } from 'rxjs';
+import { Injectable } from '@angular/core';
 
+@Injectable({ providedIn: 'root' })
 class TestExtensionService extends ExtensionService {
 
     onSetup(config: ExtensionConfig) {

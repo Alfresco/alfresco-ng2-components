@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 
@@ -28,8 +28,8 @@ describe('JsonCellComponent', () => {
     let component: JsonCellComponent;
     let fixture: ComponentFixture<JsonCellComponent>;
     let dataTableAdapter: ObjectDataTableAdapter;
-    let rowData;
-    let columnData;
+    let rowData: any;
+    let columnData: any;
 
     setupTestBed({
         imports: [
@@ -38,10 +38,10 @@ describe('JsonCellComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(JsonCellComponent);
         component = fixture.componentInstance;
-    }));
+    });
 
     beforeEach(() => {
         rowData = {

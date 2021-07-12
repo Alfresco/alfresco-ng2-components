@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed, LogService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { TaskListService } from '../services/tasklist.service';
@@ -56,7 +56,7 @@ describe('StartTaskComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(StartTaskComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -67,7 +67,7 @@ describe('StartTaskComponent', () => {
         getFormListSpy = spyOn(service, 'getFormList').and.returnValue(of(fakeForms$));
 
         fixture.detectChanges();
-    }));
+    });
 
     afterEach(() => {
         fixture.destroy();

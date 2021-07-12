@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { tick, fakeAsync, async, ComponentFixture, TestBed, flush } from '@angular/core/testing';
+import { tick, fakeAsync, ComponentFixture, TestBed, flush } from '@angular/core/testing';
 import { fakeFormJson } from '../../../../mock';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
@@ -88,7 +88,7 @@ describe('TabsWidgetComponent', () => {
         let fakeTabVisible: TabModel;
         let fakeTabInvisible: TabModel;
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             fixture = TestBed.createComponent(TabsWidgetComponent);
             tabWidgetComponent = fixture.componentInstance;
             element = fixture.nativeElement;
@@ -105,7 +105,7 @@ describe('TabsWidgetComponent', () => {
             fakeTabInvisible.isVisible = false;
             tabWidgetComponent.tabs.push(fakeTabVisible);
             tabWidgetComponent.tabs.push(fakeTabInvisible);
-        }));
+        });
 
         it('should show only visible tabs', fakeAsync(() => {
             fixture.detectChanges();

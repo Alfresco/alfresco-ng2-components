@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { UserProcessModel, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import {
@@ -49,10 +49,10 @@ describe('Activiti TaskList Service', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         service = TestBed.inject(TaskListService);
         jasmine.Ajax.install();
-    }));
+    });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();

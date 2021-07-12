@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../services/user-preferences.service';
 import { of } from 'rxjs';
@@ -36,11 +36,11 @@ describe('DecimalNumberPipe', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
         pipe = new DecimalNumberPipe(userPreferences, TestBed.inject(AppConfigService));
-    }));
+    });
 
     it('should return number localized and rounded following the default config', () => {
         expect(pipe.transform(1234.567)).toBe('1,234.57');

@@ -18,7 +18,7 @@
 /* tslint:disable:component-selector  */
 
 import { Component, Input, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardItemTypeService } from '../../services/card-item-types.service';
@@ -40,7 +40,7 @@ describe('CardViewItemDispatcherComponent', () => {
     let cardItemTypeService: CardItemTypeService;
     let component: CardViewItemDispatcherComponent;
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         cardItemTypeService = new CardItemTypeService();
         cardItemTypeService.setComponentTypeResolver('shiny-custom-element', () => CardViewShinyCustomElementItemComponent);
 
@@ -54,7 +54,7 @@ describe('CardViewItemDispatcherComponent', () => {
         });
 
         TestBed.compileComponents();
-    }));
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewItemDispatcherComponent);

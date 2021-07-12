@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { setupTestBed, AlfrescoApiService, IdentityGroupService, IdentityGroupSearchParam } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
@@ -46,7 +46,7 @@ describe('IdentityGroupService', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         service = TestBed.inject(IdentityGroupService);
         apiService = TestBed.inject(AlfrescoApiService);
     }));

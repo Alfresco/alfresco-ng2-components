@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Router, RouterStateSnapshot } from '@angular/router';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuard } from './auth-guard.service';
@@ -53,33 +53,33 @@ describe('AuthGuardService', () => {
         storageService = TestBed.inject(StorageService);
     });
 
-    it('if the alfresco js api is logged in should canActivate be true', async(async () => {
+    it('if the alfresco js api is logged in should canActivate be true', async () => {
         spyOn(router, 'navigateByUrl');
         spyOn(authService, 'isLoggedIn').and.returnValue(true);
 
         expect(await authGuard.canActivate(null, state)).toBeTruthy();
         expect(router.navigateByUrl).not.toHaveBeenCalled();
-    }));
+    });
 
-    it('if the alfresco js api is NOT logged in should canActivate be false', async(async () => {
+    it('if the alfresco js api is NOT logged in should canActivate be false', async () => {
         state.url = 'some-url';
         spyOn(router, 'navigateByUrl');
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
 
         expect(await authGuard.canActivate(null, state)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
-    }));
+    });
 
-    it('if the alfresco js api is configured with withCredentials true should canActivate be true', async(async () => {
+    it('if the alfresco js api is configured with withCredentials true should canActivate be true', async () => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
         appConfigService.config.auth.withCredentials = true;
 
         const route: RouterStateSnapshot = <RouterStateSnapshot> { url: 'some-url' };
 
         expect(await authGuard.canActivate(null, route)).toBeTruthy();
-    }));
+    });
 
-    it('should not redirect to login', async(async () => {
+    it('should not redirect to login', async () => {
         storageService.setItem('loginFragment', 'login');
 
         spyOn(router, 'navigateByUrl').and.stub();
@@ -89,9 +89,9 @@ describe('AuthGuardService', () => {
 
         expect(await authGuard.canActivate(null, state)).toBeTruthy();
         expect(router.navigateByUrl).not.toHaveBeenCalled();
-    }));
+    });
 
-    it('should redirect url if the User is NOT logged in and isOAuthWithoutSilentLogin', async(async () => {
+    it('should redirect url if the User is NOT logged in and isOAuthWithoutSilentLogin', async () => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
@@ -99,9 +99,9 @@ describe('AuthGuardService', () => {
 
         expect(await authGuard.canActivate(null, state)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
-    }));
+    });
 
-    it('should redirect url if the User is NOT logged in and isOAuth but no silentLogin configured', async(async () => {
+    it('should redirect url if the User is NOT logged in and isOAuth but no silentLogin configured', async () => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
@@ -109,9 +109,9 @@ describe('AuthGuardService', () => {
 
         expect(await authGuard.canActivate(null, state)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
-    }));
+    });
 
-    it('should NOT redirect url if the User is NOT logged in and isOAuth but with silentLogin configured', async(async () => {
+    it('should NOT redirect url if the User is NOT logged in and isOAuth but with silentLogin configured', async () => {
         spyOn(authService, 'ssoImplicitLogin').and.stub();
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
@@ -119,9 +119,9 @@ describe('AuthGuardService', () => {
 
         expect(await authGuard.canActivate(null, state)).toBeFalsy();
         expect(authService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
-    }));
+    });
 
-    it('should set redirect url', async(async () => {
+    it('should set redirect url', async () => {
         state.url = 'some-url';
         appConfigService.config.loginRoute = 'login';
 
@@ -134,9 +134,9 @@ describe('AuthGuardService', () => {
             provider: 'ALL', url: 'some-url'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/login?redirectUrl=some-url'));
-    }));
+    });
 
-    it('should set redirect url with query params', async(async () => {
+    it('should set redirect url with query params', async () => {
         state.url = 'some-url;q=query';
         appConfigService.config.loginRoute = 'login';
         appConfigService.config.provider = 'ALL';
@@ -150,9 +150,9 @@ describe('AuthGuardService', () => {
             provider: 'ALL', url: 'some-url;q=query'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/login?redirectUrl=some-url;q=query'));
-    }));
+    });
 
-    it('should get redirect url from config if there is one configured', async(async () => {
+    it('should get redirect url from config if there is one configured', async () => {
         state.url = 'some-url';
         appConfigService.config.loginRoute = 'fakeLoginRoute';
 
@@ -165,9 +165,9 @@ describe('AuthGuardService', () => {
             provider: 'ALL', url: 'some-url'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
-    }));
+    });
 
-    it('should pass actual redirect when no state segments exists', async(async () => {
+    it('should pass actual redirect when no state segments exists', async () => {
         state.url = '/';
 
         spyOn(router, 'navigateByUrl');
@@ -178,5 +178,5 @@ describe('AuthGuardService', () => {
         expect(authService.setRedirect).toHaveBeenCalledWith({
             provider: 'ALL', url: '/'
         });
-    }));
+    });
 });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserProcessModel, setupTestBed, DataRowActionEvent, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
@@ -41,11 +41,11 @@ describe('PeopleListComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(PeopleListComponent);
         peopleListComponent = fixture.componentInstance;
         fixture.detectChanges();
-    }));
+    });
 
     it('should emit row click event', (done) => {
         const row = new ObjectDataRow(fakeUser);

@@ -16,16 +16,15 @@
  */
 
 import { FileTypePipe } from './file-type.pipe';
-import { async } from '@angular/core/testing';
 
 describe('FileTypePipe', () => {
 
     const altText = 'ft_ic_ms_word';
     let pipe: FileTypePipe;
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         pipe = new FileTypePipe();
-    }));
+    });
 
     it('should return file type from alt text', () => {
         expect(pipe.transform(altText)).toBe('word');

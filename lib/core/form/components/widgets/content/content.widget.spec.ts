@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ContentService } from '../../../../services';
 import { of } from 'rxjs';
@@ -69,10 +69,10 @@ describe('ContentWidgetComponent', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         serviceContent = TestBed.inject(ContentService);
         processContentService = TestBed.inject(ProcessContentService);
-    }));
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentWidgetComponent);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { fakeAppPromise } from '../../mock';
 import { fakeFiltersResponse, fakeAppFilter } from '../../mock/task/task-filters.mock';
 import { FilterRepresentationModel } from '../models/filter.model';
@@ -36,10 +36,10 @@ describe('Activiti Task filter Service', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         service = TestBed.inject(TaskFilterService);
         jasmine.Ajax.install();
-    }));
+    });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
