@@ -17,12 +17,19 @@
 
 import { browser } from 'protractor';
 
-import { createApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
+import {
+    ApplicationsUtil,
+    BrowserVisibility,
+    createApiService,
+    LoginPage, UserModel,
+    UsersActions,
+    Widget
+} from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { TaskActionsApi, TasksApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 import Task = require('../../models/APS/Task');
-import { TaskActionsApi, TasksApi } from '@alfresco/js-api';
 
 describe('Start Task - Task App', () => {
 
@@ -31,8 +38,9 @@ describe('Start Task - Task App', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
+    const widget = new Widget();
 
-    let processUserModel;
+    let processUserModel, anotherUser;
     const noFormMessage = 'No forms attached';
 
     const apiService = createApiService();
@@ -44,18 +52,20 @@ describe('Start Task - Task App', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         processUserModel = await usersActions.createUser();
-
+        anotherUser = await usersActions.createUser(new UserModel({ tenantId: processUserModel.tenantId }));
         await apiService.login(processUserModel.username, processUserModel.password);
 
         await applicationUtil.importApplication(app.file_path);
-
-        await loginPage.login(processUserModel.username, processUserModel.password);
     });
 
     beforeEach(async () => {
-        await browser.refresh();
+        await loginPage.login(processUserModel.username, processUserModel.password);
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+    });
+
+    afterEach( async () => {
+        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C260421] Should a standalone task be displayed when creating a new task without form', async () => {
@@ -130,5 +140,42 @@ describe('Start Task - Task App', () => {
         await taskPage.formFields().noFormIsDisplayed();
         await taskPage.taskDetails().waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
         await expect(await taskDetails.getNoFormMessage()).toEqual(noFormMessage);
+    });
+
+    it('[C329799] Form actions are enabled in assigned task', async () => {
+        const taskName = 'Task on behalf of';
+        const task = await taskPage.createNewTask();
+        await task.addName(taskName);
+        await task.selectForm(app.formName);
+        await task.clickStartButton();
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskName);
+        await taskPage.tasksListPage().selectRow(taskName);
+        await taskPage.taskDetails().updateAssignee(`${anotherUser.firstName} ${anotherUser.lastName}`);
+        await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
+        await navigationBarPage.clickLogoutButton();
+        await loginPage.login(anotherUser.username, anotherUser.password);
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskName);
+        await taskPage.tasksListPage().selectRow(taskName);
+        await taskPage.formFields().checkFormIsDisplayed();
+
+        await widget.textWidget().isWidgetVisible(app.form_fields.form_fieldId);
+        await widget.textWidget().setValue(app.form_fields.form_fieldId, 'value');
+
+        await expect(await taskPage.formFields().isSaveFormButtonEnabled()).toEqual(true);
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        await taskPage.formFields().completeForm();
+
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        await taskPage.tasksListPage().checkContentIsDisplayed(taskName);
+        await taskPage.tasksListPage().selectRow(taskName);
+        await taskPage.formFields().checkFormIsDisplayed();
+
+        await expect(await widget.textWidget().getFieldValue(app.form_fields.form_fieldId)).toEqual('value');
+
+        await BrowserVisibility.waitUntilElementIsNotVisible(await taskPage.formFields().saveButton);
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
     });
 });

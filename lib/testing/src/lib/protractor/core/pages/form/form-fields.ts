@@ -221,6 +221,10 @@ export class FormFields {
         }
     }
 
+    async isSaveFormButtonEnabled(): Promise<boolean> {
+        return this.saveButton.isEnabled();
+    }
+
     async isCompleteFormButtonEnabled(): Promise<boolean> {
         return this.completeButton.isEnabled();
     }
