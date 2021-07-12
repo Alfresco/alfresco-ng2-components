@@ -41,7 +41,6 @@ import { CoreTestingModule } from '../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormRenderingService } from '../services/form-rendering.service';
 import { TextWidgetComponent } from './widgets';
-import moment from 'moment';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
@@ -51,9 +50,9 @@ function typeIntoInput(targetInput: HTMLInputElement, message: string) {
     targetInput.dispatchEvent(new Event('input'));
 }
 
-function typeIntoDate(targetInput: DebugElement, date: { targetElement: { value: moment.Moment } }) {
+function typeIntoDate(targetInput: DebugElement, date: { srcElement: { value: string } }) {
     expect(targetInput).not.toBeNull('Expected input to set to be valid and not null');
-    targetInput.triggerEventHandler('dateChange', date);
+    targetInput.triggerEventHandler('change', date);
 }
 
 function expectElementToBeHidden(targetElement: HTMLElement): void {
@@ -121,7 +120,7 @@ describe('Form Renderer Component', () => {
             let displayTextElementContainer: HTMLInputElement = fixture.nativeElement.querySelector('#field-Text0pqd1u-container');
             expectElementToBeHidden(displayTextElementContainer);
 
-            typeIntoDate(inputDateTestOne, { targetElement: { value: moment('2019-11-19') } });
+            typeIntoDate(inputDateTestOne, { srcElement: { value: '2019-11-19' } });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -138,7 +137,7 @@ describe('Form Renderer Component', () => {
             let displayTextElementContainer: HTMLDivElement = fixture.nativeElement.querySelector('#field-Text0uyqd3-container');
             expectElementToBeVisible(displayTextElementContainer);
 
-            typeIntoDate(inputDateTestOne, { targetElement: { value: moment('2019-11-19') } });
+            typeIntoDate(inputDateTestOne, { srcElement: { value: '2019-11-19' } });
             fixture.detectChanges();
             await fixture.whenStable();
 
