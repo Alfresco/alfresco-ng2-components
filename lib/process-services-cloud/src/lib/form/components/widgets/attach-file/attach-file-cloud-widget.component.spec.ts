@@ -168,7 +168,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     });
 
     it('should be able to attach files coming from all files source', async () => {
-        spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
+        spyOn(contentCloudNodeSelectorService, 'fetchNodeFromRelativePath').and.returnValue(mockNodeId);
         createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceParams);
         fixture.detectChanges();
         await fixture.whenStable();
@@ -208,7 +208,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     describe('destinationFolderPath', () => {
 
         it('should be able to fetch nodeId if destinationFolderPath is defined', async () => {
-            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
+            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeFromRelativePath').and.returnValue(mockNodeId);
 
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceParams);
             fixture.detectChanges();
@@ -227,8 +227,8 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should be able to fetch nodeId based on given alias if the relative path is wrong', async () => {
-            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(new Promise((reject) => reject(undefined)));
-            const fetchAliasNodeIdSpy = spyOn(contentCloudNodeSelectorService, 'fetchAliasNodeId').and.returnValue(mockNodeId);
+            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeFromRelativePath').and.returnValue(new Promise((reject) => reject(undefined)));
+            const fetchAliasNodeIdSpy = spyOn(contentCloudNodeSelectorService, 'fetchAliasNode').and.returnValue(mockNodeId);
 
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceParamsWithWrongRelativePath);
             fixture.detectChanges();
@@ -247,8 +247,8 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should be able to fetch relativePath nodeId if the given relative path is correct', async () => {
-            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
-            const fetchAliasNodeIdSpy = spyOn(contentCloudNodeSelectorService, 'fetchAliasNodeId');
+            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeFromRelativePath').and.returnValue(mockNodeId);
+            const fetchAliasNodeIdSpy = spyOn(contentCloudNodeSelectorService, 'fetchAliasNode');
 
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceParamsWithRelativePath);
             fixture.detectChanges();
@@ -267,7 +267,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should be able to use mapped string variable value if the destinationFolderPath set to string type variable', async () => {
-            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeIdBasedOnStringVariableValue);
+            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeFromRelativePath').and.returnValue(mockNodeIdBasedOnStringVariableValue);
 
             const form = new FormModel({ formVariables, processVariables});
             createUploadWidgetField(form, 'attach-file-alfresco', [], mockAllFileSourceWithStringVariablePathType);
@@ -285,7 +285,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should be able to use default location if mapped string variable value is undefined/empty', async () => {
-            const fetchAliasNodeIdSpy = spyOn(contentCloudNodeSelectorService, 'fetchAliasNodeId').and.returnValue(mockNodeId);
+            const fetchAliasNodeIdSpy = spyOn(contentCloudNodeSelectorService, 'fetchAliasNode').and.returnValue(mockNodeId);
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithStringTypeEmptyValue);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -301,7 +301,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should be able to use mapped folder variable value if destinationFolderPath set to folder type variable', async () => {
-            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath');
+            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeFromRelativePath');
             const form = new FormModel({ formVariables, processVariables});
             createUploadWidgetField(form, 'attach-file-alfresco', [], mockAllFileSourceWithFolderVariablePathType);
             fixture.detectChanges();
@@ -315,7 +315,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should be able to use default location if the mapped folder variable value is undefined/empty', async () => {
-            const fetchAliasNodeIdSpy = spyOn(contentCloudNodeSelectorService, 'fetchAliasNodeId').and.returnValue(mockNodeId);
+            const fetchAliasNodeIdSpy = spyOn(contentCloudNodeSelectorService, 'fetchAliasNode').and.returnValue(mockNodeId);
 
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithFolderTypeEmptyValue);
             fixture.detectChanges();
@@ -423,7 +423,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
         describe('FilesSource', () => {
             it('Should be able to fetch nodeId of default user alias (-my-) if fileSource set only to Alfresco Content', async () => {
-                const fetchAliasNodeIdSpy = spyOn(contentCloudNodeSelectorService, 'fetchAliasNodeId').and.returnValue(mockNodeId);
+                const fetchAliasNodeIdSpy = spyOn(contentCloudNodeSelectorService, 'fetchAliasNode').and.returnValue(mockNodeId);
                 createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], contentSourceParam, false);
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -439,7 +439,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             });
 
             it('Should be able to fetch nodeId of default user alias (-my-) if fileSource set to multiple upload for Alfresco Content', async () => {
-                const fetchAliasNodeIdSpy = spyOn(contentCloudNodeSelectorService, 'fetchAliasNodeId').and.returnValue(mockNodeId);
+                const fetchAliasNodeIdSpy = spyOn(contentCloudNodeSelectorService, 'fetchAliasNode').and.returnValue(mockNodeId);
 
                 createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], contentSourceParam, true);
                 fixture.detectChanges();
@@ -534,7 +534,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     describe('when a file is uploaded', () => {
         beforeEach(async () => {
             apiServiceSpy = spyOn(alfrescoApiService.getInstance().node, 'getNode').and.returnValue(new Promise(resolve => resolve({entry: fakeNodeWithProperties})));
-            spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(new Promise(resolve => resolve('fake-properties')));
+            spyOn(contentCloudNodeSelectorService, 'fetchNodeFromRelativePath').and.returnValue(new Promise(resolve => resolve('fake-properties')));
             openUploadFileDialogSpy.and.returnValue(of([fakeNodeWithProperties]));
             widget.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
