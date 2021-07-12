@@ -28,7 +28,6 @@ import { FormService } from './../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FormFieldModel } from '../core/form-field.model';
 
 @Component({
     selector: 'date-widget',
@@ -91,21 +90,12 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
     }
 
     onDateChanged(newDateValue) {
-        const date = moment(newDateValue, this.field.dateDisplayFormat);
+        const date = moment(newDateValue, this.field.dateDisplayFormat, true);
         if (date.isValid()) {
             this.field.value = date.format(this.field.dateDisplayFormat);
-            this.onFieldChanged(this.field);
         } else {
-            const fieldAux = new FormFieldModel(this.field.form, this.field);
-            fieldAux.value = newDateValue;
-            fieldAux.validate();
-
-            if (fieldAux.isValid) {
-                this.onFieldChanged(this.field);
-            } else {
-                this.field.validationSummary = fieldAux.validationSummary;
-                this.field.markAsInvalid();
-            }
+            this.field.value = newDateValue;
         }
+        this.onFieldChanged(this.field);
     }
 }
