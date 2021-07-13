@@ -152,7 +152,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         if (!rootNodeId) {
             try {
                 const nodeEntry = await this.getNodeBasedOnPath(destinationFolderPath);
-                rootNodeId = nodeEntry && nodeEntry.entry ? nodeEntry.entry.id : destinationFolderPath.alias;
+                rootNodeId = nodeEntry?.entry ? nodeEntry.entry.id : destinationFolderPath.alias;
             } catch (error) {
                 this.logService.error(error);
             }
