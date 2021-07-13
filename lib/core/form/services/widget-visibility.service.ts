@@ -84,28 +84,38 @@ export class WidgetVisibilityService {
         const rightValue = this.getRightValue(form, visibilityObj);
         const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
 
-        if (this.isValidOperator(visibilityObj.nextConditionOperator)) {
-            accumulator.push({ value: actualResult, operator: visibilityObj.nextConditionOperator });
-        }
+        accumulator.push({ value: actualResult, operator: visibilityObj.nextConditionOperator });
 
         if (this.isValidCondition(visibilityObj.nextCondition)) {
             result = this.isFieldVisible(form, visibilityObj.nextCondition, accumulator);
         } else if (accumulator[0] !== undefined) {
-            result = accumulator[0].value;
-            for (let i = 1; i < accumulator.length; i++) {
-                if (accumulator[i] !== undefined) {
-                    result = this.evaluateLogicalOperation(
-                        accumulator[i - 1].operator,
-                        result,
-                        accumulator[i].value
-                    );
-                }
-            }
+            result = Function('"use strict";return (' +
+                 accumulator.map((expression) => this.transformToLiteralExpression(expression)).join('') +
+                ')')();
         } else {
             result = actualResult;
         }
         return !!result;
+    }
 
+    private transformToLiteralExpression(currentExpression: any): string {
+        const currentTransformedValue = !!currentExpression.value ? 'true' : 'false';
+        return currentTransformedValue.concat(this.transformToLiteralOperator(currentExpression.operator));
+    }
+
+    private transformToLiteralOperator(currentOperator): string {
+        switch (currentOperator) {
+            case 'and':
+                return '&&';
+            case 'or' :
+                return '||';
+            case 'and-not':
+                return '&& !';
+            case 'or-not':
+                return '|| !';
+            default:
+                return '';
+        }
     }
 
     getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
@@ -280,22 +290,6 @@ export class WidgetVisibilityService {
         return undefined;
     }
 
-    evaluateLogicalOperation(logicOp: string, previousValue: any, newValue: any): boolean | undefined {
-        switch (logicOp) {
-            case 'and':
-                return previousValue && newValue;
-            case 'or' :
-                return previousValue || newValue;
-            case 'and-not':
-                return previousValue && !newValue;
-            case 'or-not':
-                return previousValue || !newValue;
-            default:
-                this.logService.error(`Invalid operator: ${logicOp}`);
-                return undefined;
-        }
-    }
-
     evaluateCondition(leftValue: any, rightValue: any, operator: string): boolean | undefined {
         switch (operator) {
             case '==':
@@ -338,10 +332,6 @@ export class WidgetVisibilityService {
 
     toJson(res: any): any {
         return res || {};
-    }
-
-    private isValidOperator(operator: string): boolean {
-        return operator !== undefined;
     }
 
     private isValidCondition(condition: WidgetVisibilityModel): boolean {

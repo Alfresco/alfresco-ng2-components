@@ -32,7 +32,8 @@ import {
     fakeFormJson, formTest,
     formValues, complexVisibilityJsonVisible,
     complexVisibilityJsonNotVisible, tabVisibilityJsonMock,
-    tabInvalidFormVisibility
+    tabInvalidFormVisibility,
+    fakeFormChainedVisibilityJson
 } from 'core/mock/form/widget-visibility.service.mock';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -63,50 +64,6 @@ describe('WidgetVisibilityService', () => {
 
     describe('should be able to evaluate logic operations', () => {
 
-        it('using AND and return true', () => {
-            booleanResult = service.evaluateLogicalOperation('and', true, true);
-            expect(booleanResult).toBeTruthy();
-        });
-
-        it('using AND and return false', () => {
-            booleanResult = service.evaluateLogicalOperation('and', true, false);
-            expect(booleanResult).toBeFalsy();
-        });
-
-        it('using OR and return true', () => {
-            booleanResult = service.evaluateLogicalOperation('or', true, false);
-            expect(booleanResult).toBeTruthy();
-        });
-
-        it('using OR and return false', () => {
-            booleanResult = service.evaluateLogicalOperation('or', false, false);
-            expect(booleanResult).toBeFalsy();
-        });
-
-        it('using AND NOT and return true', () => {
-            booleanResult = service.evaluateLogicalOperation('and-not', true, false);
-            expect(booleanResult).toBeTruthy();
-        });
-
-        it('using AND NOT and return false', () => {
-            booleanResult = service.evaluateLogicalOperation('and-not', false, false);
-            expect(booleanResult).toBeFalsy();
-        });
-
-        it('using OR NOT and return true', () => {
-            booleanResult = service.evaluateLogicalOperation('or-not', true, true);
-            expect(booleanResult).toBeTruthy();
-        });
-
-        it('using OR NOT and return false', () => {
-            booleanResult = service.evaluateLogicalOperation('or-not', false, true);
-            expect(booleanResult).toBeFalsy();
-        });
-
-        it('should fail with invalid operation', () => {
-            booleanResult = service.evaluateLogicalOperation(undefined, false, true);
-            expect(booleanResult).toBeUndefined();
-        });
     });
 
     describe('should be able to evaluate next condition operations', () => {
@@ -1122,4 +1079,33 @@ describe('WidgetVisibilityService', () => {
             expect(invalidTabVisibilityJsonModel.isValid).toBeTruthy();
         });
     });
+
+    describe('Visibility calculation in complex forms', () => {
+
+        let fakeFormWithVariables = new FormModel(fakeFormChainedVisibilityJson);
+
+        it('Should be able to validate correctly the visibility for the text field for complex expressions', () => {
+            let instalmentField = fakeFormWithVariables.getFieldById('installments');
+            let scheduleField = fakeFormWithVariables.getFieldById('schedule');
+
+            instalmentField.value = '6';
+            scheduleField.value = scheduleField.options[1].id;
+
+            service.refreshVisibility(fakeFormWithVariables);
+
+            let textField = fakeFormWithVariables.getFieldById('showtext');
+
+            expect(textField.isVisible).toBe(true);
+
+            instalmentField.value = '5';
+            scheduleField.value = scheduleField.options[1].id;
+
+            service.refreshVisibility(fakeFormWithVariables);
+
+            textField = fakeFormWithVariables.getFieldById('showtext');
+
+            expect(textField.isVisible).toBe(false);
+        });
+
+    })
 });
