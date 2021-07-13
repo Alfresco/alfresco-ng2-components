@@ -24,7 +24,6 @@ import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SimpleChanges } from '@angular/core';
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -103,7 +102,7 @@ describe('DateTimeWidgetComponent', () => {
 
         widget.field = field;
 
-        widget.onDateChanged({ value: moment('1982-03-13T10:00:000Z') });
+        widget.onDateChanged(moment('1982-03-13T10:00:000Z'));
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
 
@@ -210,88 +209,11 @@ describe('DateTimeWidgetComponent', () => {
                 const dateElement: any = element.querySelector('#date-field-id');
                 expect(dateElement.value).toContain('12-30-9999 10:30 AM');
 
-                const newField = { ...field, value: '03-02-2020 12:00 AM' };
+                widget.field.value = '03-02-2020 12:00 AM';
 
-                const changes: SimpleChanges = {
-                    'field': {
-                        previousValue: field,
-                        currentValue: newField,
-                        firstChange: false,
-                        isFirstChange(): boolean { return this.firstChange; }
-                    }
-                };
-                widget.ngOnChanges(changes);
-                fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
                         expect(dateElement.value).toContain('03-02-2020 12:00 AM');
-                    });
-            });
-    });
-
-    it('should not call on change when is first change or field is not set or the field value does not change', () => {
-        const field = new FormFieldModel(new FormModel(), {
-            id: 'datetime-field-id',
-            name: 'datetime-field-name',
-            value: '12-30-9999 10:30 AM',
-            type: 'datetime',
-            readOnly: 'false'
-        });
-        field.isVisible = true;
-        field.dateDisplayFormat = 'MM-DD-YYYY HH:mm A',
-        widget.field = field;
-        widget.ngOnInit();
-        fixture.detectChanges();
-        fixture.whenStable()
-            .then(() => {
-                expect(element.querySelector('#datetime-field-id')).toBeDefined();
-                expect(element.querySelector('#datetime-field-id')).not.toBeNull();
-                const dateTimeElement: any = element.querySelector('#datetime-field-id');
-                expect(dateTimeElement.value).toContain('12-30-9999 10:30 AM');
-
-                const newField = { ...field, value: '03-02-2020 12:00 AM' };
-
-                let changes: SimpleChanges = {
-                    'field': {
-                        previousValue: field,
-                        currentValue: newField,
-                        firstChange: true,
-                        isFirstChange(): boolean { return this.firstChange; }
-                    }
-                };
-                widget.ngOnChanges(changes);
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        expect(dateTimeElement.value).toContain('12-30-9999 10:30 AM');
-                        changes = {};
-                        widget.ngOnChanges(changes);
-                        fixture.detectChanges();
-                        fixture.whenStable()
-                            .then(() => {
-                                expect(dateTimeElement.value).toContain('12-30-9999 10:30 AM');
-                                changes = {
-                                    'field': {
-                                        previousValue: field,
-                                        currentValue: field,
-                                        firstChange: false,
-                                        isFirstChange(): boolean { return this.firstChange; }
-                                    }
-                                };
-                                widget.ngOnChanges(changes);
-                                fixture.detectChanges();
-                                fixture.whenStable()
-                                    .then(() => {
-                                        expect(dateTimeElement.value).toContain('12-30-9999 10:30 AM');
-                                        changes = null;
-                                        widget.ngOnChanges(changes);
-                                        fixture.detectChanges();
-                                        fixture.whenStable()
-                                            .then(() => {
-                                                expect(dateTimeElement.value).toContain('12-30-9999 10:30 AM');
-                                            });
-                                    });
-                            });
                     });
             });
     });

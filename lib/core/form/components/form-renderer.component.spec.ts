@@ -19,39 +19,40 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { FormRendererComponent } from './form-renderer.component';
 import { FormBaseModule } from '../form-base.module';
-import { formDisplayValueVisibility,
-         formDisplayValueForm,
-         formDisplayValueCombinedVisibility,
-         formNumberWidgetVisibility,
-         formNumberTextJson,
-         formRequiredNumberWidget,
-         colspanForm,
-         numberNotRequiredForm,
-         numberMinMaxForm,
-         textWidgetVisibility,
-         numberWidgetVisibilityForm,
-         radioWidgetVisibiltyForm,
-         customWidgetForm,
-         formDateVisibility,
-         customWidgetFormWithVisibility } from './mock/form-renderer.component.mock';
+import {
+    formDisplayValueVisibility,
+    formDisplayValueForm,
+    formDisplayValueCombinedVisibility,
+    formNumberWidgetVisibility,
+    formNumberTextJson,
+    formRequiredNumberWidget,
+    colspanForm,
+    numberNotRequiredForm,
+    numberMinMaxForm,
+    textWidgetVisibility,
+    numberWidgetVisibilityForm,
+    radioWidgetVisibiltyForm,
+    customWidgetForm,
+    formDateVisibility,
+    customWidgetFormWithVisibility
+} from './mock/form-renderer.component.mock';
 import { FormService } from '../services/form.service';
 import { CoreTestingModule } from '../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormRenderingService } from '../services/form-rendering.service';
 import { TextWidgetComponent } from './widgets';
-import moment from 'moment';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-function typeIntoInput(targetInput: HTMLInputElement, message: string ) {
+function typeIntoInput(targetInput: HTMLInputElement, message: string) {
     expect(targetInput).not.toBeNull('Expected input to set to be valid and not null');
     targetInput.value = message;
     targetInput.dispatchEvent(new Event('input'));
 }
 
-function typeIntoDate(targetInput: DebugElement, date: { value: moment.Moment} ) {
+function typeIntoDate(targetInput: DebugElement, date: { srcElement: { value: string } }) {
     expect(targetInput).not.toBeNull('Expected input to set to be valid and not null');
-    targetInput.triggerEventHandler('dateChange', date);
+    targetInput.triggerEventHandler('change', date);
 }
 
 function expectElementToBeHidden(targetElement: HTMLElement): void {
@@ -119,7 +120,7 @@ describe('Form Renderer Component', () => {
             let displayTextElementContainer: HTMLInputElement = fixture.nativeElement.querySelector('#field-Text0pqd1u-container');
             expectElementToBeHidden(displayTextElementContainer);
 
-            typeIntoDate(inputDateTestOne, { value: moment('2019-11-19') });
+            typeIntoDate(inputDateTestOne, { srcElement: { value: '2019-11-19' } });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -136,7 +137,7 @@ describe('Form Renderer Component', () => {
             let displayTextElementContainer: HTMLDivElement = fixture.nativeElement.querySelector('#field-Text0uyqd3-container');
             expectElementToBeVisible(displayTextElementContainer);
 
-            typeIntoDate(inputDateTestOne, { value: moment('2019-11-19') });
+            typeIntoDate(inputDateTestOne, { srcElement: { value: '2019-11-19' } });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -371,7 +372,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('[C309654] - Should display Number widget spans on 2 columns when colspan is set to 2 and grid view is active', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(colspanForm.formRepresentation.formDefinition, null , false, true);
+            formRendererComponent.formDefinition = formService.parseForm(colspanForm.formRepresentation.formDefinition, null, false, true);
             fixture.detectChanges();
             await fixture.whenStable();
             const formSizedElement = fixture.nativeElement.querySelector('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container div.adf-grid-list');
@@ -386,7 +387,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('[C309654] - Should display Number widget spans on 2 columns when colspan is set to 2 and grid view is not active', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(colspanForm.formRepresentation.formDefinition, null , false, false);
+            formRendererComponent.formDefinition = formService.parseForm(colspanForm.formRepresentation.formDefinition, null, false, false);
             fixture.detectChanges();
             await fixture.whenStable();
             const formSizedElement = fixture.nativeElement.querySelector('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section.adf-grid-list-column-view');
@@ -629,7 +630,7 @@ describe('Form Renderer Component', () => {
     describe('Custom Widget', () => {
 
         it('Should be able to correctly display a custom process cloud widget', async () => {
-            formRenderingService.register({'bananaforevah': () => TextWidgetComponent}, true);
+            formRenderingService.register({ 'bananaforevah': () => TextWidgetComponent }, true);
             formRendererComponent.formDefinition = formService.parseForm(customWidgetForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -640,7 +641,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('Should be able to correctly use visibility in a custom process cloud widget ', async () => {
-            formRenderingService.register({'bananaforevah': () => TextWidgetComponent}, true);
+            formRenderingService.register({ 'bananaforevah': () => TextWidgetComponent }, true);
             formRendererComponent.formDefinition = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();

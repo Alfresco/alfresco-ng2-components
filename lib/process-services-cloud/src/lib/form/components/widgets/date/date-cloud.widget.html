@@ -3,14 +3,10 @@
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }} ({{field.dateDisplayFormat}})<span *ngIf="isRequired()">*</span></label>
         <input matInput
                [id]="field.id"
-               [matDatepicker]="datePicker"
-               [(ngModel)]="displayDate"
+               [value]="field.value"
                [required]="isRequired()"
                [disabled]="field.readOnly"
-               [min]="minDate"
-               [max]="maxDate"
-               (focusout)="onDateChanged($any($event).srcElement.value)"
-               (dateChange)="onDateChanged($event)"
+               (change)="onDateChanged($any($event).srcElement.value)"
                [placeholder]="field.placeholder"
                [matTooltip]="field.tooltip"
                matTooltipPosition="above"
@@ -19,5 +15,13 @@
     </mat-form-field>
     <error-widget [error]="field.validationSummary"></error-widget>
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
-    <mat-datepicker #datePicker [touchUi]="true" [startAt]="displayDate" ></mat-datepicker>
+    <mat-datepicker #datePicker [touchUi]="true" [startAt]="field.value | adfMomentDate: field.dateDisplayFormat" [disabled]="field.readOnly"></mat-datepicker>
+    <input
+        type="hidden"
+        [matDatepicker]="datePicker"
+        [value]="field.value | adfMomentDate: field.dateDisplayFormat"
+        [min]="minDate"
+        [max]="maxDate"
+        [disabled]="field.readOnly"
+        (dateInput)="onDateChanged($any($event).targetElement.value)">
 </div>

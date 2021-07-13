@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
@@ -43,11 +43,10 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['./date-time.widget.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy, OnChanges {
+export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
     minDate: Moment;
     maxDate: Moment;
-    displayDate: Moment;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -75,17 +74,6 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
                 this.maxDate = moment(this.field.maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
             }
         }
-        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat)
-            .add(
-                moment(this.field.value, this.field.dateDisplayFormat).utcOffset(),
-                'minutes');
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes && changes.field  && !changes.field.firstChange && changes.field.currentValue.value !== changes.field.previousValue.value) {
-            this.displayDate = moment(changes.field.currentValue.value, this.field.dateDisplayFormat)
-                .add(moment(changes.field.currentValue.value, this.field.dateDisplayFormat).utcOffset(), 'minutes');
-        }
     }
 
     ngOnDestroy() {
@@ -94,14 +82,12 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     }
 
     onDateChanged(newDateValue) {
-        if (newDateValue && newDateValue.value) {
-            this.field.value = newDateValue.value.format(this.field.dateDisplayFormat);
-        } else if (newDateValue) {
-            this.field.value = newDateValue;
+        const date = moment(newDateValue, this.field.dateDisplayFormat, true);
+        if (date.isValid()) {
+            this.field.value = date.format(this.field.dateDisplayFormat);
         } else {
-            this.field.value = null;
+            this.field.value = newDateValue;
         }
         this.onFieldChanged(this.field);
     }
-
 }
