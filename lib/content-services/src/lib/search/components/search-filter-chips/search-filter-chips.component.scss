@@ -1,11 +1,12 @@
+@use '~@angular/material' as mat;
 @mixin adf-search-filter-chips-theme($theme) {
     $accent: map-get($theme, accent);
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
-    $unselected-background: mat-color($background, unselected-chip);
-    $unselected-foreground: mat-color($foreground, text);
-    $selected-chip-background:  mat-color($background, card);
-    $chip-placeholder: mat-color($foreground, disabled-text);
+    $unselected-background: mat.get-color-from-palette($background, unselected-chip);
+    $unselected-foreground: mat.get-color-from-palette($foreground, text);
+    $selected-chip-background:  mat.get-color-from-palette($background, card);
+    $chip-placeholder: mat.get-color-from-palette($foreground, disabled-text);
 
     .adf-search-filter-chip {
 
@@ -33,7 +34,7 @@
 
         &.adf-search-toggle-chip {
             background: $selected-chip-background;
-            border: 2px solid  mat-color($accent);
+            border: 2px solid  mat.get-color-from-palette($accent);
 
             &.mat-chip::after {
                 background: unset;
@@ -60,7 +61,7 @@
         &-menu + * .cdk-overlay-pane .mat-menu-panel {
             min-width: 320px;
             border-radius: 12px;
-            @include mat-elevation(2);
+            @include mat.elevation(2);
         }
     }
 }

@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-layout-container-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
@@ -37,8 +38,8 @@
 
     .mat-sidenav {
         overflow: hidden;
-        border-right: 1px solid mat-color($foreground, text, 0.07);
-        background-color: mat-color($background, background);
+        border-right: 1px solid mat.get-color-from-palette($foreground, text, 0.07);
+        background-color: mat.get-color-from-palette($background, background);
     }
 
     mat-sidenav-content.mat-sidenav-content,

@@ -1,6 +1,7 @@
+@use '~@angular/material' as mat;
 @mixin adf-process-comment-theme($theme) {
     $foreground: map-get($theme, foreground);
-    $header-border: 1px solid mat-color($foreground, divider);
+    $header-border: 1px solid mat.get-color-from-palette($foreground, divider);
 
     :host {
         width: 100%;

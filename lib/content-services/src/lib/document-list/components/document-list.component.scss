@@ -1,11 +1,12 @@
+@use '~@angular/material' as mat;
 @mixin adf-document-list-theme($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
     $accent: map-get($theme, accent);
     $primary: map-get($theme, primary);
 
-    $document-list-selection-color: mat-color($accent) !default;
-    $document-list-background: mat-color($background, background) !default;
+    $document-list-selection-color: mat.get-color-from-palette($accent) !default;
+    $document-list-background: mat.get-color-from-palette($background, background) !default;
 
     .adf-document-list {
         min-height: 0;
@@ -65,7 +66,7 @@
         }
 
         &--text {
-            color: mat-color($foreground, text);
+            color: mat.get-color-from-palette($foreground, text);
             font-size: 16px;
         }
     }
@@ -76,7 +77,7 @@
         font-size: 24px;
         line-height: 1.33;
         letter-spacing: -1px;
-        color: mat-color($foreground, text);
+        color: mat.get-color-from-palette($foreground, text);
     }
 
     .adf-document-list__drag-drop {
@@ -85,7 +86,7 @@
         font-size: 56px;
         line-height: 1;
         letter-spacing: -2px;
-        color: mat-color($foreground, text);
+        color: mat.get-color-from-palette($foreground, text);
         margin-top: 40px;
     }
 
@@ -95,7 +96,7 @@
         font-size: 16px;
         line-height: 1.5;
         letter-spacing: -0.4px;
-        color: mat-color($foreground, text) 0;
+        color: mat.get-color-from-palette($foreground, text) 0;
         margin-top: 17px;
     }
 
@@ -123,11 +124,11 @@
         font-size: 24px;
         line-height: 1.33;
         letter-spacing: -1px;
-        color: mat-color($foreground, text);
+        color: mat.get-color-from-palette($foreground, text);
     }
 
     .adf-documentlist-pagination {
-        color: mat-color($foreground, text);
+        color: mat.get-color-from-palette($foreground, text);
 
         .adf-pagination__block {
             border-right: none;
@@ -141,7 +142,7 @@
             font-size: 24px;
             line-height: 1.33;
             letter-spacing: -1px;
-            color: mat-color($foreground, text, 0.54);
+            color: mat.get-color-from-palette($foreground, text, 0.54);
         }
 
         &-drag-drop {
@@ -149,7 +150,7 @@
             font-size: 53px;
             line-height: 1;
             letter-spacing: -2px;
-            color: mat-color($foreground, text, 0.72);
+            color: mat.get-color-from-palette($foreground, text, 0.72);
             margin-top: 40px;
             word-break: break-all;
             white-space: pre-line;
@@ -164,7 +165,7 @@
             font-size: 16px;
             line-height: 1.5;
             letter-spacing: -0.4px;
-            color: mat-color($foreground, text, 0.72);
+            color: mat.get-color-from-palette($foreground, text, 0.72);
             margin-top: 17px;
             word-break: break-all;
             white-space: pre-line;

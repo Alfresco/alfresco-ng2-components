@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-card-view-theme($theme) {
     $foreground: map-get($theme, foreground);
 
@@ -36,14 +37,14 @@
 
             .adf-property-label {
                 font-size: 12px;
-                color: mat-color($foreground, text, 0.54);
+                color: mat.get-color-from-palette($foreground, text, 0.54);
                 word-wrap: break-word;
             }
 
             .adf-property-value,
             .mat-form-field-label {
                 font-size: 14px;
-                color: mat-color($foreground, text, 0.87);
+                color: mat.get-color-from-palette($foreground, text, 0.87);
             }
         }
     }

@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-cloud-group-theme($theme) {
 
     $warn: map-get($theme, warn);
@@ -35,13 +36,13 @@
                     height: 16px;
                     font-size: 12px;
                     line-height: 1.33;
-                    color: mat-color($warn);
+                    color: mat.get-color-from-palette($warn);
                     width: auto;
                 }
 
                 &-icon {
                     font-size: 17px;
-                    color: mat-color($warn);
+                    color: mat.get-color-from-palette($warn);
                 }
             }
         }
@@ -49,7 +50,7 @@
 
 
     .mat-autocomplete-panel .mat-fab {
-        background: mat-color($primary);
+        background: mat.get-color-from-palette($primary);
         width: 40px;
         height: 40px;
         font-weight: bolder;

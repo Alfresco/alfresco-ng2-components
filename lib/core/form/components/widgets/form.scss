@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-form-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -7,7 +8,7 @@
 
     ul > li > form-field > .adf-focus {
         .adf-label {
-            color: mat-color($primary);
+            color: mat.get-color-from-palette($primary);
         }
     }
 
@@ -24,13 +25,13 @@
             font-size: 12px;
             line-height: 1.33;
             float: left;
-            color: mat-color($warn);
+            color: mat.get-color-from-palette($warn);
         }
 
         &-error-icon {
             float: right;
             font-size: 17px;
-            color: mat-color($warn);
+            color: mat.get-color-from-palette($warn);
         }
 
         &-label {
@@ -44,39 +45,39 @@
             }
 
             .mat-checkbox {
-                color: mat-color($warn);
+                color: mat.get-color-from-palette($warn);
                 .mat-checkbox-frame {
-                    border-color: mat-color($warn);
+                    border-color: mat.get-color-from-palette($warn);
                 }
             }
 
             .mat-select {
 
                 &-value {
-                    color: mat-color($warn);
+                    color: mat.get-color-from-palette($warn);
                 }
                 &-arrow {
-                    color: mat-color($warn);
+                    color: mat.get-color-from-palette($warn);
                 }
 
             }
 
             .adf-file {
-                border-color: mat-color($warn);
+                border-color: mat.get-color-from-palette($warn);
             }
 
             .mat-form-field-prefix {
-                color: mat-color($warn);
+                color: mat.get-color-from-palette($warn);
             }
 
             .adf-input {
-                border-color: mat-color($warn);
+                border-color: mat.get-color-from-palette($warn);
             }
 
             .adf-label {
-                color: mat-color($warn);
+                color: mat.get-color-from-palette($warn);
                 &::after {
-                    background-color: mat-color($warn);
+                    background-color: mat.get-color-from-palette($warn);
                 }
             }
         }

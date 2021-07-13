@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-pagination-theme($theme) {
     $foreground: map-get($theme, foreground);
 
@@ -12,7 +13,7 @@
         border-top: $adf-pagination--border;
         height: $adf-pagination--height;
         line-height: 20px;
-        color: mat-color($foreground, text);
+        color: mat.get-color-from-palette($foreground, text);
 
         &__block {
             display: flex;
@@ -59,7 +60,7 @@
             margin-right: 5px;
 
             &, & + button {
-                color: mat-color($foreground, text);
+                color: mat.get-color-from-palette($foreground, text);
             }
 
             & + button {

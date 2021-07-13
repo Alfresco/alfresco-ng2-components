@@ -1,10 +1,11 @@
+@use '~@angular/material' as mat;
 @mixin adf-info-drawer-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
-    $adf-info-drawer-layout-background-color: mat-color($background, background) !default;
-    $adf-info-drawer-layout-title-color: mat-color($foreground, text, 0.54) !default;
+    $adf-info-drawer-layout-background-color: mat.get-color-from-palette($background, background) !default;
+    $adf-info-drawer-layout-title-color: mat.get-color-from-palette($foreground, text, 0.54) !default;
     $adf-info-drawer-layout-title-font-size: 20px !default;
     $adf-info-drawer-icon-size: 48px !default;
 
@@ -23,12 +24,12 @@
             & .mat-tab-label {
                 font-weight: bold;
                 text-align: left;
-                color: mat-color($accent);
+                color: mat.get-color-from-palette($accent);
                 text-transform: uppercase;
                 opacity: 1;
 
                 &-active {
-                    color: mat-color($primary);
+                    color: mat.get-color-from-palette($primary);
                 }
             }
 
@@ -79,7 +80,7 @@
                     .adf-manage-versions-no-permission {
                         margin: 0;
                         padding: $adf-info-drawer-icon-size/2;
-                        color: mat-color($foreground, text, 0.54);
+                        color: mat.get-color-from-palette($foreground, text, 0.54);
                         text-align: center;
                         display: flex;
                         flex-direction: column;

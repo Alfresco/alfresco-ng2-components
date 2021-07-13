@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import 'variables';
 
 @mixin adf-no-select {
@@ -75,7 +75,7 @@
         & .mat-expansion-panel-header.cdk-program-focused,
         &:not(.mat-expanded) .mat-expansion-panel-header:hover {
             &:not([aria-disabled='true']) {
-                background: mat-color($background, hover);
+                background: mat.get-color-from-palette($background, hover);
             }
         }
     }
@@ -87,20 +87,20 @@
     .mat-calendar {
         .mat-calendar-header {
             button {
-                color: mat-color($foreground, text, 0.87);
+                color: mat.get-color-from-palette($foreground, text, 0.87);
 
                 &:disabled {
-                    color: mat-color($foreground, text, 0.54);
+                    color: mat.get-color-from-palette($foreground, text, 0.54);
                 }
             }
         }
         .mat-calendar-content {
             .mat-calendar-table-header th {
-                color: mat-color($foreground, text, 0.54);
+                color: mat.get-color-from-palette($foreground, text, 0.54);
             }
 
             .mat-calendar-body-disabled > div {
-                color: mat-color($foreground, text, 0.54) !important;
+                color: mat.get-color-from-palette($foreground, text, 0.54) !important;
             }
         }
     }
@@ -126,11 +126,11 @@
 
         .mat-datetimepicker-calendar-content {
             .mat-datetimepicker-calendar-table-header th {
-                color: mat-color($foreground, text, 0.54);
+                color: mat.get-color-from-palette($foreground, text, 0.54);
             }
 
             .mat-datetimepicker-calendar-body-disabled > div {
-                color: mat-color($foreground, text, 0.54);
+                color: mat.get-color-from-palette($foreground, text, 0.54);
             }
         }
     }

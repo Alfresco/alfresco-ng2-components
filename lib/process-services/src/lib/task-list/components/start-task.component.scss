@@ -1,9 +1,10 @@
+@use '~@angular/material' as mat;
 @mixin adf-task-list-start-task-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
     $foreground: map-get($theme, foreground);
-    $header-border: 1px solid mat-color($foreground, divider);
+    $header-border: 1px solid mat.get-color-from-palette($foreground, divider);
 
     .adf-new-task-heading {
         padding-top: 12px;
@@ -80,13 +81,13 @@
                 height: 16px;
                 font-size: 12px;
                 line-height: 1.33;
-                color: mat-color($warn);
+                color: mat.get-color-from-palette($warn);
                 width: auto;
             }
 
             &-error-icon {
                 font-size: 17px;
-                color: mat-color($warn);
+                color: mat.get-color-from-palette($warn);
             }
 
             &-label {
@@ -100,21 +101,21 @@
                 }
 
                 .adf-file {
-                    border-color: mat-color($warn);
+                    border-color: mat.get-color-from-palette($warn);
                 }
 
                 .mat-form-field-prefix {
-                    color: mat-color($warn);
+                    color: mat.get-color-from-palette($warn);
                 }
 
                 .adf-input {
-                    border-color: mat-color($warn);
+                    border-color: mat.get-color-from-palette($warn);
                 }
 
                 .adf-label {
-                    color: mat-color($warn);
+                    color: mat.get-color-from-palette($warn);
                     &::after {
-                        background-color: mat-color($warn);
+                        background-color: mat.get-color-from-palette($warn);
                     }
                 }
             }

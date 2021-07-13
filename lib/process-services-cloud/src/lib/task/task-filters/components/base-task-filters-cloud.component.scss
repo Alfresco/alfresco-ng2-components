@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-cloud-task-filters-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -40,15 +41,15 @@
                     margin-top: 5px;
                     padding: 0 5px;
                     border-radius: 15px;
-                    background-color: mat-color($accent);
-                    color: mat-color($mat-grey, 50);
+                    background-color: mat.get-color-from-palette($accent);
+                    color: mat.get-color-from-palette(mat.$grey-palette, 50);
                     font-size: smaller;
                 }
             }
 
 
             &:hover {
-                color: mat-color($primary);
+                color: mat.get-color-from-palette($primary);
 
                 .adf-filter-action-button__counter,
                 .adf-filter-action-button {
@@ -57,7 +58,7 @@
             }
 
             .adf-active {
-                color: mat-color($primary);
+                color: mat.get-color-from-palette($primary);
                 opacity: 1;
             }
         }

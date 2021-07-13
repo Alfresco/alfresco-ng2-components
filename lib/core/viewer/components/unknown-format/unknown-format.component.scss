@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-unknown-viewer-theme($theme) {
     $foreground: map-get($theme, foreground);
 
@@ -8,6 +9,6 @@
         flex: 1;
         flex-direction: column;
         justify-content: center;
-        color: mat-color($foreground, text);
+        color: mat.get-color-from-palette($foreground, text);
     }
 }

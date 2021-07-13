@@ -1,12 +1,13 @@
+@use '~@angular/material' as mat;
 @mixin adf-clipboard-theme($theme) {
     $primary: map-get($theme, primary);
-    $config: mat-typography-config();
+    $config: mat.define-typography-config();
 
     .adf-copy-tooltip {
         position: absolute;
-        background: mat-color($primary);
-        color: mat-color($primary, default-contrast) !important;
-        font-size: mat-font-size($config, caption);
+        background: mat.get-color-from-palette($primary);
+        color: mat.get-color-from-palette($primary, default-contrast) !important;
+        font-size: mat.font-size($config, caption);
         padding: 2px 5px;
         border-radius: 5px;
         bottom: 93%;

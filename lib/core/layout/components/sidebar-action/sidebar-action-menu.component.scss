@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin  adf-sidebar-action-menu-theme($theme) {
 
     $primary: map-get($theme, primary);
@@ -18,13 +19,13 @@
                 box-shadow: none !important;
                 height: $adf-sidebar-action-menu-button-height;
                 font-weight: bold;
-                background-color: mat-color($primary);
-                color: mat-color($primary, default-contrast) !important;
+                background-color: mat.get-color-from-palette($primary);
+                color: mat.get-color-from-palette($primary, default-contrast) !important;
                 border-radius: $adf-sidebar-action-menu-button-border-radius;
                 & mat-icon {
                     width: 24px;
                     height: 25px;
-                    color: mat-color($primary, default-contrast) !important;
+                    color: mat.get-color-from-palette($primary, default-contrast) !important;
                 }
             }
             &-text {
@@ -35,10 +36,10 @@
         }
         &-sidebar-action-menu-icon {
             margin: 18px 0 0 20px;
-            color: mat-color($foreground, text, $adf-sidebar-action-menu-opacity);
+            color: mat.get-color-from-palette($foreground, text, $adf-sidebar-action-menu-opacity);
             cursor: pointer;
             &:hover {
-                color: mat-color($primary);
+                color: mat.get-color-from-palette($primary);
             }
         }
         &-sidebar-action-menu-options {
@@ -46,13 +47,13 @@
             letter-spacing: $adf-sidebar-action-menu-item-line-spacing;
             .mat-menu-item {
                 font-size: $adf-sidebar-action-menu-item-font-size;
-                color: mat-color($foreground, text, $adf-sidebar-action-menu-item-opacity);
+                color: mat.get-color-from-palette($foreground, text, $adf-sidebar-action-menu-item-opacity);
                 text-align: left;
                 line-height: 1.5;
                 letter-spacing: $adf-sidebar-action-menu-item-line-spacing;
             }
             .mat-menu-item:hover {
-                color: mat-color($primary);
+                color: mat.get-color-from-palette($primary);
                 opacity: inherit;
             }
         }
@@ -60,7 +61,7 @@
             margin-top: 7.5px;
             border-radius: 2px;
 
-            @include mat-elevation(2);
+            @include mat.elevation(2);
         }
     }
 }

@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin  adf-header-layout-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -5,7 +6,7 @@
 
     adf-layout-header .mat-toolbar-single-row {
 
-        color: mat-color($primary, default-contrast) !important;
+        color: mat.get-color-from-palette($primary, default-contrast) !important;
         position: relative;
         padding: 0 24px;
 
@@ -37,14 +38,14 @@
             margin: 0 5px;
 
             & > div {
-                background-color: mat-color($background, card, 1);
+                background-color: mat.get-color-from-palette($background, card, 1);
             }
         }
 
         .adf-header-delimiter {
             height: 24px;
             width: 2px;
-            background-color: mat-color($primary, default-contrast);
+            background-color: mat.get-color-from-palette($primary, default-contrast);
         }
 
         .adf-userinfo-container {

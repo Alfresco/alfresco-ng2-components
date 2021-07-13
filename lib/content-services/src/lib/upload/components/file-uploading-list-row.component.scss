@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-file-uploading-row-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
@@ -9,7 +10,7 @@
 
     adf-file-uploading-list-row:not(:first-child) {
         display: block;
-        border-top: 1px solid mat-color($foreground, text, 0.14);
+        border-top: 1px solid mat.get-color-from-palette($foreground, text, 0.14);
     }
 
     .adf-file-uploading-row {
@@ -48,19 +49,19 @@
         }
 
         &__status--done {
-            color: mat-color($accent);
+            color: mat.get-color-from-palette($accent);
         }
 
         &__status--error {
-            color: mat-color($warn);
+            color: mat.get-color-from-palette($warn);
         }
 
         &__action--cancel {
-            color: mat-color($warn);
+            color: mat.get-color-from-palette($warn);
         }
 
         &__action--remove {
-            color: mat-color($warn);
+            color: mat.get-color-from-palette($warn);
         }
     }
 }

@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-search-text-input-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
@@ -31,9 +32,9 @@
 
         &-input-form-field-divider {
             .mat-form-field-underline {
-                background-color: mat-color($primary, 50);
+                background-color: mat.get-color-from-palette($primary, 50);
                 .mat-form-field-ripple {
-                    background-color: mat-color($primary, 50);
+                    background-color: mat.get-color-from-palette($primary, 50);
                 }
             }
             font-size: 16px;
@@ -41,6 +42,6 @@
     }
 
     .adf-highlight {
-        color: mat-color($primary, 900);
+        color: mat.get-color-from-palette($primary, 900);
     }
 }

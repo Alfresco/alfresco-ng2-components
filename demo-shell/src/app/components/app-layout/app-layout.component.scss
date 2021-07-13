@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin app-layout-theme($theme) {
     $primary: map-get($theme, primary);
     $minimumAppWidth: 320px;
@@ -25,7 +26,7 @@
         height: 100%;
 
         .app-sidenav-link--active {
-            color: mat-color($primary);
+            color: mat.get-color-from-palette($primary);
         }
 
         .app-sidenav-link {
