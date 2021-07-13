@@ -20,7 +20,7 @@
       "apollo-angular/http": "apollo-angular/http"
     }
   },
-  "whitelistedNonPeerDependencies": [
+  "allowedNonPeerDependencies": [
     "@apollo/client",
     "apollo-angular",
     "subscriptions-transport-ws"

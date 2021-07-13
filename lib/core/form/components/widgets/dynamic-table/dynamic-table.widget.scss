@@ -1,4 +1,6 @@
+@use 'sass:math';
 @use '~@angular/material' as mat;
+
 @mixin adf-dynamic-table-theme($theme) {
     $foreground: map-get($theme, foreground);
     $dynamic-table-font-size: 14px !default;
@@ -13,9 +15,9 @@
     $dynamic-table-dividers: 1px solid $dynamic-table-divider-color !default;
     $dynamic-table-row-height: 56px !default;
     $dynamic-table-column-spacing: 36px !default;
-    $dynamic-table-column-padding: $dynamic-table-column-spacing / 2;
+    $dynamic-table-column-padding: math.div($dynamic-table-column-spacing, 2);
     $dynamic-table-card-padding: 24px !default;
-    $dynamic-table-cell-top: $dynamic-table-card-padding / 2;
+    $dynamic-table-cell-top: math.div($dynamic-table-card-padding, 2);
     $dynamic-table-drag-border: 1px dashed rgb(68, 138, 255);
 
     dynamic-table-widget .adf-label {
