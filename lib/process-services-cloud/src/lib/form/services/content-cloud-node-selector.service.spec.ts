@@ -81,7 +81,7 @@ describe('ContentCloudNodeSelectorService', () => {
         });
     });
 
-    it('should not be able to show an notification if the relative path is valid', () => {
+    it('should not show a notification if the relative path is valid', () => {
         getNodeSpy.and.returnValue(Promise.resolve(relativePathNodeResponseBody));
         service.openUploadFileDialog('nodeId', 'single', true, true);
 
