@@ -102,6 +102,7 @@ describe('ContentCloudNodeSelectorService', () => {
     it('should be able to fetch given alias node id', async () => {
         getNodeSpy.and.returnValue(Promise.resolve(aliasNodeResponseBody));
         await service.fetchAliasNode('mock-alias');
+
         expect(getNodeSpy).toHaveBeenCalledWith('mock-alias');
     });
 });

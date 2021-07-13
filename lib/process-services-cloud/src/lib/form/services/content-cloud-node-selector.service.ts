@@ -81,7 +81,7 @@ export class ContentCloudNodeSelectorService {
         const contentNodeDialog = this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
         contentNodeDialog.afterOpened().subscribe(() => {
             if (this.sourceNodeNotFound) {
-                this.notificationService.showWarning('ADF_CLOUD_TASK_FORM.ERROR.INCORRECT_DESTINATION_FOLDER_PATH');
+                this.notificationService.showWarning('ADF_CLOUD_TASK_FORM.ERROR.DESTINATION_FOLDER_PATH_ERROR');
             }
         });
         contentNodeDialog.afterClosed().subscribe(() => {
