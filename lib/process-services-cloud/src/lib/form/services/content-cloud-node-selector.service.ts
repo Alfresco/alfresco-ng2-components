@@ -16,11 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, FormValues, LogService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
-import { Observable, Subject, throwError } from 'rxjs';
+import { from, Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,7 @@ export class ContentCloudNodeSelectorService {
 
   constructor(
     private apiService: AlfrescoApiService,
+    private logService: LogService,
     private dialog: MatDialog) {
   }
 
@@ -69,6 +71,27 @@ export class ContentCloudNodeSelectorService {
 
   private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
     this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
+  }
+
+  getMetaData(fileId: string): Observable<FormValues> {
+    const values: FormValues = {};
+    return from(this.apiService.nodesApi.getNode(fileId)).pipe(
+        map((acsNode) => {
+            const metadata = acsNode?.entry?.properties;
+            if (metadata) {
+                const keys = Object.keys(metadata);
+                keys.forEach(key => {
+                    const sanitizedKey = key.replace(':', '_');
+                    values[sanitizedKey] = metadata[key];
+                });
+            }
+            return values;
+        }),
+        catchError((error) => {
+            this.logService.error(error);
+            return of(values);
+        })
+    )
   }
 
   close() {

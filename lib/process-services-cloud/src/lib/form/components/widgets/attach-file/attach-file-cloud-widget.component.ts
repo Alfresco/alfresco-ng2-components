@@ -26,7 +26,6 @@ import {
     FormValues,
     ContentLinkModel,
     AppConfigService,
-    AlfrescoApiService,
     UploadWidgetContentLinkModel
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
@@ -35,7 +34,7 @@ import { ProcessCloudContentService } from '../../../services/process-cloud-cont
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import { ContentNodeSelectorPanelService } from '@alfresco/adf-content-services';
-
+import { Subject } from 'rxjs';
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',
     templateUrl: './attach-file-cloud-widget.component.html',
@@ -66,6 +65,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     typeId = 'AttachFileCloudWidgetComponent';
     rootNodeId = AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
     selectedNode: Node;
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(
         formService: FormService,
@@ -75,7 +75,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         notificationService: NotificationService,
         private contentNodeSelectorService: ContentCloudNodeSelectorService,
         private appConfigService: AppConfigService,
-        private apiService: AlfrescoApiService,
         private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
@@ -221,18 +220,11 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     contentModelFormFileHandler(file?: any) {
         if (file?.id && this.isRetrieveMetadataOptionEnabled()) {
-            const values: FormValues = {};
-            this.apiService.getInstance().node.getNode(file.id).then(acsNode => {
-                const metadata = acsNode?.entry?.properties;
-                if (metadata) {
-                    const keys = Object.keys(metadata);
-                    keys.forEach(key => {
-                        const sanitizedKey = key.replace(':', '_');
-                        values[sanitizedKey] = metadata[key];
-                    });
-                    this.formService.updateFormValuesRequested.next(values);
+            this.contentNodeSelectorService.getMetaData(file.id).subscribe((formValues: FormValues) => {
+                if(!Object.keys(formValues).length) {
+                    this.formService.updateFormValuesRequested.next(formValues);
                 }
-            });
+            })
         }
         this.fileClicked(new UploadWidgetContentLinkModel(file, this.field.id));
     }
@@ -251,5 +243,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     ngOnDestroy() {
         this.contentNodeSelectorPanelService.customModels = [];
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }
