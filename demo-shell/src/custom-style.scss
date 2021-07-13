@@ -1,32 +1,31 @@
 @use '~@angular/material' as mat;
-@import './app/components/app-layout/app-layout.component.scss';
-@import './app/components/files/files.component.scss';
-@import './app/components/login/login.component.scss';
-
+@import '~@alfresco/adf-core/theming';
 @import '~@alfresco/adf-content-services/theming';
 @import '~@alfresco/adf-process-services/theming';
 @import '~@alfresco/adf-process-services-cloud/theming';
 @import '~@alfresco/adf-insights/theming';
-@import '~@alfresco/adf-core/theming';
 
-
-@include mat.core($alfresco-typography);
+@import './app/components/app-layout/app-layout.component.scss';
+@import './app/components/files/files.component.scss';
+@import './app/components/login/login.component.scss';
 
 $primary: mat.define-palette($alfresco-accent-orange);
 $accent:  mat.define-palette($alfresco-accent-purple);
 $warn:    mat.define-palette($alfresco-warn);
 $theme:   mat.define-light-theme($primary, $accent, $warn);
 
+@include mat.core($alfresco-typography);
 @include mat.all-component-themes($theme);
-@include app-layout-theme($theme);
-@include app-file-component-theme($theme);
-@include app-login-component-theme($theme);
 
+@include adf-core-theme($theme);
 @include adf-content-services-theme($theme);
 @include adf-process-services-theme($theme);
 @include adf-process-services-cloud-theme($theme);
 @include adf-insights-theme($theme);
-@include adf-core-theme($theme);
+
+@include app-layout-theme($theme);
+@include app-file-component-theme($theme);
+@include app-login-component-theme($theme);
 
 body, html {
     margin: 0;

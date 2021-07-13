@@ -1,34 +1,35 @@
 @use '~@angular/material' as mat;
-@import './app/components/app-layout/app-layout.component.scss';
-@import './app/components/files/files.component.scss';
-@import './app/components/login/login.component.scss';
-
+@import '../../lib/core/styles/colors';
+@import '../../lib/core/styles/index';
+@import '../../lib/core/styles/typography';
+@import '../../lib/core/styles/mixins';
 
 @import '../../lib/content-services/src/lib/styles/index';
 @import '../../lib/process-services/src/lib/styles/index';
 @import '../../lib/insights/src/lib/styles/index';
-@import '../../lib/core/styles/index';
 @import '../../lib/process-services-cloud/src/lib/styles/index';
 
-
-@include mat.core($alfresco-typography);
+@import './app/components/app-layout/app-layout.component.scss';
+@import './app/components/files/files.component.scss';
+@import './app/components/login/login.component.scss';
 
 $primary: mat.define-palette($alfresco-accent-orange);
 $accent:  mat.define-palette($alfresco-accent-purple);
 $warn:    mat.define-palette($alfresco-warn);
 $theme:   mat.define-light-theme($primary, $accent, $warn);
 
+@include mat.core($alfresco-typography);
 @include mat.all-component-themes($theme);
-@include app-layout-theme($theme);
-@include app-file-component-theme($theme);
-@include app-login-component-theme($theme);
 
-
+@include adf-core-theme($theme);
 @include adf-content-services-theme($theme);
 @include adf-process-services-theme($theme);
 @include adf-process-services-cloud-theme($theme);
 @include adf-insights-theme($theme);
-@include adf-core-theme($theme);
+
+@include app-layout-theme($theme);
+@include app-file-component-theme($theme);
+@include app-login-component-theme($theme);
 
 body, html {
     margin: 0;
