@@ -17,7 +17,7 @@
 import { Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { SearchService, setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
+import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { fakeNodePaging } from './../../../mock/document-list.component.mock';
