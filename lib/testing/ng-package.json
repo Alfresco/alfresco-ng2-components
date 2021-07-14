@@ -10,7 +10,8 @@
       "protractor": "protractor",
       "selenium-webdriver": "selenium-webdriver",
       "fs": "fs",
-      "path": "path"
+      "path": "path",
+      "protractor/built/util": "protractor/built/util"
     }
   }
 }
