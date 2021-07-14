@@ -94,7 +94,7 @@ export class WebscriptComponent implements OnChanges {
         }
 
         return new Promise<void>((resolve, reject) => {
-            this.webScript.executeWebScript('GET', this.scriptPath, this.scriptArgs, this.contextRoot, this.servicePath).then((webScriptData) => {
+            this.webscriptApi.executeWebScript('GET', this.scriptPath, this.scriptArgs, this.contextRoot, this.servicePath).then((webScriptData) => {
 
                 this.data = webScriptData;
 
