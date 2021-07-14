@@ -15,8 +15,8 @@ else
     nx build process-services || exit 1
 fi
 
-echo "====== Build style ======"
-node ./lib/config/bundle-process-services-scss.js || exit 1
+echo "====== Bundle styles ======"
+npm run scss-bundle:process-services || exit 1
 
 echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/process-services/bundles/assets/adf-process-services/i18n

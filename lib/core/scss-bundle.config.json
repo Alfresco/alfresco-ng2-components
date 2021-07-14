@@ -1,0 +1,10 @@
+{
+  "bundlerOptions": {
+    "entryFile": "./lib/core/styles/_index.scss",
+    "rootDir": ".",
+    "project": "../../",
+    "outFile": "./lib/dist/core/_theming.scss",
+    "ignoreImports": ["~@angular/.*"],
+    "logLevel": "info"
+  }
+}

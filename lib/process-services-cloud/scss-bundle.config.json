@@ -1,0 +1,10 @@
+{
+  "bundlerOptions": {
+    "entryFile": "./lib/process-services-cloud/src/lib/styles/_index.scss",
+    "rootDir": ".",
+    "project": "../../",
+    "outFile": "./lib/dist/process-services-cloud/_theming.scss",
+    "ignoreImports": ["~@angular/.*"],
+    "logLevel": "info"
+  }
+}

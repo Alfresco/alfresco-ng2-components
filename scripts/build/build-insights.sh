@@ -15,8 +15,8 @@ else
     nx build insights || exit 1
 fi
 
-echo "====== Build style ======"
-node ./lib/config/bundle-insights-scss.js || exit 1
+echo "====== Bundle styles ======"
+npm run scss-bundle:insights || exit 1
 
 echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/insights/bundles/assets/adf-insights/i18n

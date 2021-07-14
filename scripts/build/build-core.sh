@@ -15,8 +15,8 @@ else
     nx build core || exit 1
 fi
 
-echo "====== Build style ======"
-node ./lib/config/bundle-core-scss.js || exit 1
+echo "====== Bundle styles ======"
+npm run scss-bundle:core || exit 1
 
 echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/core/bundles/assets/adf-core/i18n

@@ -15,8 +15,8 @@ else
     nx build content-services || exit 1
 fi
 
-echo "====== Build style ======"
-node ./lib/config/bundle-content-services-scss.js || exit 1
+echo "====== Bundle styles ======"
+npm run scss-bundle:content-services || exit 1
 
 echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/content-services/bundles/assets/adf-content-services/i18n
