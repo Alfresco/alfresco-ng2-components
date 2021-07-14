@@ -16,12 +16,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {
-    name,
-    version,
-    commit,
-    dependencies
-} from '../../../../../package.json';
+import pkg from '../../../../../package.json';
 import { AppConfigService } from '@alfresco/adf-core';
 
 @Component({
@@ -30,9 +25,9 @@ import { AppConfigService } from '@alfresco/adf-core';
     styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
-    url = `https://github.com/Alfresco/${name}/commits/${commit}`;
-    version = version;
-    dependencies = dependencies;
+    url = `https://github.com/Alfresco/${pkg.name}/commits/${pkg.commit}`;
+    version = pkg.version;
+    dependencies = pkg.dependencies;
     showExtensions = true;
     application = '';
 

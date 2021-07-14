@@ -55,7 +55,7 @@ export class AppExtensionService {
      * The result is filtered by the **disabled** state.
      * @param key Preset key.
      */
-    getDocumentListPreset(key: string) {
+    getDocumentListPreset(key: string): DocumentListPresetRef[] {
         return this.extensionService
           .getElements<DocumentListPresetRef>(
             `features.documentList.${key}`

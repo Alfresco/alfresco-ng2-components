@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "../dist/testing/",
     "baseUrl": "src",
+    "declarationMap": true,
     "allowJs": true,
     "paths": {}
   },

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, tick, fakeAsync, async, discardPeriodicTasks } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick, fakeAsync, discardPeriodicTasks } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
@@ -600,7 +600,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.property.value).toBe(component.editedValue);
         });
 
-        it('should render the default as value if the value is empty, clickable is true and displayEmpty is true', async(async (done) => {
+        it('should render the default as value if the value is empty, clickable is true and displayEmpty is true', fakeAsync(async (done) => {
             const functionTestClick = () => done();
 
             component.property = new CardViewTextItemModel({

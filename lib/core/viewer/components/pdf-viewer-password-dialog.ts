@@ -23,8 +23,7 @@ declare const pdfjsLib: any;
 
 @Component({
     selector: 'adf-pdf-viewer-password-dialog',
-    templateUrl: './pdf-viewer-password-dialog.html',
-    styleUrls: [ './pdf-viewer-password-dialog.scss' ]
+    templateUrl: './pdf-viewer-password-dialog.html'
 })
 export class PdfPasswordDialogComponent implements OnInit {
     passwordFormControl: FormControl;
