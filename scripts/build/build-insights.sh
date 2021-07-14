@@ -9,10 +9,10 @@ echo "====== Build ======"
 
 if [ "$CI" = "true" ]; then
     echo "Building insights for production"
-    NODE_OPTIONS="--max-old-space-size=8192" nx build insights --prod || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" nx build insights --configuration production || exit 1
 else
     echo "Building insights for development"
-    nx build insights || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" nx build insights || exit 1
 fi
 
 echo "====== Bundle styles ======"

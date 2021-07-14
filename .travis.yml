@@ -119,7 +119,7 @@ jobs:
           name:  "Demo Shell :Build && dockerize"
           script:
               # Build Demo shell for production docker"
-              - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --prod
+              - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --configuration production
               - ./scripts/travis/release/release-docker.sh
           workspaces:
               create:

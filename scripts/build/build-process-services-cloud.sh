@@ -9,10 +9,10 @@ echo "====== Build ======"
 
 if [ "$CI" = "true" ]; then
     echo "Building process-services-cloud  for production"
-    NODE_OPTIONS="--max-old-space-size=8192" nx build process-services-cloud --prod || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" nx build process-services-cloud --configuration production || exit 1
 else
     echo "Building process-services-cloud  for development"
-    nx build process-services-cloud || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" nx build process-services-cloud || exit 1
 fi
 
 echo "====== Bundle styles ======"
