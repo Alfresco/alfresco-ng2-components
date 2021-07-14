@@ -9,7 +9,7 @@ language: node_js
 arch: arm64-graviton2
 dist: bionic
 node_js:
-  - '12.18.4'
+  - '14'
 
 before_install: . ./scripts/ci/job_hooks/before_install.sh
 install: ./scripts/ci/job_hooks/install.sh
