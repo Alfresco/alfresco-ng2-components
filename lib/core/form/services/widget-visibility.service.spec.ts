@@ -33,7 +33,8 @@ import {
     formValues, complexVisibilityJsonVisible,
     complexVisibilityJsonNotVisible, tabVisibilityJsonMock,
     tabInvalidFormVisibility,
-    fakeFormChainedVisibilityJson
+    fakeFormChainedVisibilityJson,
+    fakeFormCheckBoxVisibilityJson
 } from 'core/mock/form/widget-visibility.service.mock';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -1106,6 +1107,38 @@ describe('WidgetVisibilityService', () => {
 
             expect(textField.isVisible).toBe(false);
         });
-
     });
-});
+    describe('Visibility calculation in checkbox forms', () => {
+
+        const fakeFormWithValues = new FormModel(fakeFormCheckBoxVisibilityJson);
+
+        fit('Should be able to validate correctly the visibility for the checkbox expression', () => {
+            const field_a = fakeFormWithValues.getFieldById('a');
+            const field_b = fakeFormWithValues.getFieldById('b');
+            const field_c = fakeFormWithValues.getFieldById('c');
+            const field_d = fakeFormWithValues.getFieldById('d');
+            
+            field_a.value = true;
+            field_b.value = true;
+            field_c.value = false;
+            field_d.value = false;
+
+            let textField = fakeFormWithValues.getFieldById('a_b_c_d');
+
+            service.refreshVisibility(fakeFormWithValues);
+            expect(textField.isVisible).toBe(true);   
+
+            field_b.value = false;
+
+            service.refreshVisibility(fakeFormWithValues);
+            expect(textField.isVisible).toBe(false);   
+
+            field_a.value = false;
+            field_c.value = true;
+            field_d.value = true;
+            
+            service.refreshVisibility(fakeFormWithValues);
+            expect(textField.isVisible).toBe(true);   
+        });
+    });
+})
