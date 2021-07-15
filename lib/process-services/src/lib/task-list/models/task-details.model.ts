@@ -22,6 +22,10 @@ import { UserProcessModel } from '@alfresco/adf-core';
 import { TaskRepresentation } from '@alfresco/js-api';
 import { UserGroupModel } from './user-group.model';
 
+export enum TaskStatus {
+    completed = 'completed',
+    running = 'running'
+}
 export class TaskDetailsModel implements TaskRepresentation {
     id?: string;
     name?: string;
@@ -37,6 +41,7 @@ export class TaskDetailsModel implements TaskRepresentation {
     endDate?: Date;
     executionId?: string;
     formKey?: string;
+    status?: string;
     initiatorCanCompleteTask?: boolean;
     managerOfCandidateGroup?: boolean;
     memberOfCandidateGroup?: boolean;
@@ -60,7 +65,7 @@ export class TaskDetailsModel implements TaskRepresentation {
     constructor(obj?: any) {
         if (obj) {
             this.id = obj.id || null;
-            this.name = obj.name || null;
+            this.name = obj.name || 'No name';
             this.priority = obj.priority;
             this.assignee = obj.assignee ? new UserProcessModel(obj.assignee) : null;
             this.adhocTaskCanBeReassigned = obj.adhocTaskCanBeReassigned;
@@ -70,6 +75,7 @@ export class TaskDetailsModel implements TaskRepresentation {
             this.dueDate = obj.dueDate || null;
             this.duration = obj.duration || null;
             this.endDate = obj.endDate || null;
+            this.status = this.isCompleted() ? TaskStatus.completed : TaskStatus.running;
             this.executionId = obj.executionId || null;
             this.formKey = obj.formKey || null;
             this.initiatorCanCompleteTask = !!obj.initiatorCanCompleteTask;

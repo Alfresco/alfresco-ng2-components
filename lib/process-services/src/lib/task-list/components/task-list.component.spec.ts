@@ -282,7 +282,7 @@ describe('TaskListComponent', () => {
             expect(component.rows[0]['processInstanceId']).toEqual(2511);
             expect(component.rows[0]['endDate']).toBeDefined();
             expect(component.rows[1]['name']).toEqual('No name');
-            expect(component.rows[1]['endDate']).toBeUndefined();
+            expect(component.rows[1]['endDate']).toBeNull();
             done();
         });
 
