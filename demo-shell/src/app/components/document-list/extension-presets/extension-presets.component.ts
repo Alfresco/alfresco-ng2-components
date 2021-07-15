@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AppExtensionService } from '@alfresco/adf-extensions';
+import { AppExtensionService, DocumentListPresetRef } from '@alfresco/adf-extensions';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -28,7 +28,7 @@ import { takeUntil } from 'rxjs/operators';
 export class ExtensionPresetsComponent implements OnInit, OnDestroy {
     onDestroy$ = new Subject<boolean>();
 
-    columns: any[] = [];
+    columns: DocumentListPresetRef[] = [];
     isSmallScreen = false;
 
     constructor(
@@ -55,7 +55,7 @@ export class ExtensionPresetsComponent implements OnInit, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    trackById(_: number, obj: { id: string }) {
+    trackById(_: number, obj: DocumentListPresetRef): string {
         return obj.id;
     }
 }

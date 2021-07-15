@@ -35,7 +35,7 @@ export class FileUtils {
                     } else {
                         iterations.push(Promise.all(entries.map((entry) => {
                             if (entry.isFile) {
-                                return new Promise((resolveFile) => {
+                                return new Promise<void>((resolveFile) => {
                                     entry.file(function (file: File) {
                                         files.push({
                                             entry: entry,

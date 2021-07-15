@@ -7,7 +7,7 @@
     "function-comma-space-before": "never",
     "function-name-case": "lower",
     "function-url-quotes": "always",
-    "function-url-scheme-blacklist": [
+    "function-url-scheme-disallowed-list": [
       "data"
     ],
     "function-whitespace-after": "always",
@@ -18,7 +18,7 @@
     "string-quotes": "single",
     "unit-case": "lower",
     "unit-no-unknown": true,
-    "unit-whitelist": [
+    "unit-allowed-list": [
       "px",
       "%",
       "deg",
@@ -48,7 +48,7 @@
     "declaration-block-semicolon-space-after": "always-single-line",
     "declaration-block-semicolon-newline-before": "never-multi-line",
     "declaration-block-semicolon-newline-after": "always-multi-line",
-    "declaration-property-value-blacklist": [
+    "declaration-property-value-disallowed-list": [
       {
         "/.*/": [
           "initial"
@@ -78,7 +78,7 @@
     "selector-max-id": 0,
     "no-missing-end-of-source-newline": true,
     "no-eol-whitespace": true,
-    "max-line-length": 100,
+    "max-line-length": 240,
     "linebreaks": "unix",
     "selector-class-pattern": [
       "^_?(adf|adf-|app|app-|cdk-|example-|demo-|mat-|material-|textLayer|canvasWrapper|page)",

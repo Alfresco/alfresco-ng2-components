@@ -2,6 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "module": "commonjs",
+    "declarationMap": true,
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,

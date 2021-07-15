@@ -2,6 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../dist/process-services-cloud/",
+    "declarationMap": true,
     "baseUrl": "src",
     "resolveJsonModule": true,
     "paths": {

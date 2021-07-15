@@ -29,7 +29,6 @@ import { DynamicTableModel } from './dynamic-table.widget.model';
 @Component({
     selector: 'dynamic-table-widget',
     templateUrl: './dynamic-table.widget.html',
-    styleUrls: ['./dynamic-table.widget.scss'],
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',

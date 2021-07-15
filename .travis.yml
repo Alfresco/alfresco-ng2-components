@@ -9,7 +9,7 @@ language: node_js
 arch: arm64-graviton2
 dist: bionic
 node_js:
-  - '12.18.4'
+  - '14'
 
 before_install: . ./scripts/ci/job_hooks/before_install.sh
 install: ./scripts/ci/job_hooks/install.sh
@@ -119,7 +119,7 @@ jobs:
           name:  "Demo Shell :Build && dockerize"
           script:
               # Build Demo shell for production docker"
-              - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --prod
+              - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --configuration production
               - ./scripts/travis/release/release-docker.sh
           workspaces:
               create:

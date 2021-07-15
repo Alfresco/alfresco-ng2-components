@@ -138,7 +138,7 @@ registerLocaleData(localeSv);
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes, { useHash: true }),
+        RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy' }),
         FormsModule,
         HttpClientModule,
         MaterialModule,

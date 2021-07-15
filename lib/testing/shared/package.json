@@ -2,7 +2,10 @@
   "ngPackage": {
     "lib": {
       "entryFile": "../src/lib/shared/index.ts",
-      "flatModuleFile": "adf-testing-shared"
+      "flatModuleFile": "adf-testing-shared",
+      "umdModuleIds": {
+        "@alfresco/js-api": "@alfresco/js-api"
+      }
     }
   }
 }

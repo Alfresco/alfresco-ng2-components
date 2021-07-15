@@ -21,7 +21,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MAT_LABEL_GLOBAL_OPTIONS, MatNativeDateModule, MatOptionModule, MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule, MatRippleModule } from '@angular/material/core';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -40,7 +41,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     providers: [
-        {provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'never' }}
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'never' } }
     ],
     imports: [
         MatAutocompleteModule, MatButtonModule, MatCardModule, MatDialogModule,

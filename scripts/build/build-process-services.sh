@@ -9,14 +9,14 @@ echo "====== Build ======"
 
 if [ "$CI" = "true" ]; then
     echo "Building process-services for production"
-    NODE_OPTIONS="--max-old-space-size=8192" nx build process-services --prod || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" nx build process-services --configuration production || exit 1
 else
     echo "Building process-services for development"
-    nx build process-services || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" nx build process-services || exit 1
 fi
 
-echo "====== Build style ======"
-node ./lib/config/bundle-process-services-scss.js || exit 1
+echo "====== Bundle styles ======"
+npm run scss-bundle:process-services || exit 1
 
 echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/process-services/bundles/assets/adf-process-services/i18n
