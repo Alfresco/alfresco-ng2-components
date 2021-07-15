@@ -126,10 +126,10 @@ export const fakeFormChainedVisibilityJson: any = {
     taskName: 'TEST',
     fields: [
         {
-            fieldType: "ContainerRepresentation",
-            id: "1615506402205",
-            name: "Label",
-            type: "container",
+            fieldType: 'ContainerRepresentation',
+            id: '1615506402205',
+            name: 'Label',
+            type: 'container',
             value: null,
             required: false,
             readOnly: false,
@@ -161,10 +161,10 @@ export const fakeFormChainedVisibilityJson: any = {
             fields: {
                 1: [
                     {
-                        fieldType: "FormFieldRepresentation",
-                        id: "installments",
-                        name: "Installments",
-                        type: "integer",
+                        fieldType: 'FormFieldRepresentation',
+                        id: 'installments',
+                        name: 'Installments',
+                        type: 'integer',
                         value: null,
                         required: true,
                         readOnly: false,
@@ -204,11 +204,11 @@ export const fakeFormChainedVisibilityJson: any = {
                 ],
                 2: [
                     {
-                        fieldType: "RestFieldRepresentation",
-                        id: "schedule",
-                        name: "Schedule",
-                        type: "dropdown",
-                        value: "Choose one...",
+                        fieldType: 'RestFieldRepresentation',
+                        id: 'schedule',
+                        name: 'Schedule',
+                        type: 'dropdown',
+                        value: 'Choose one...',
                         required: false,
                         readOnly: false,
                         overrideId: false,
@@ -223,20 +223,20 @@ export const fakeFormChainedVisibilityJson: any = {
                         hasEmptyValue: true,
                         options: [
                             {
-                                id: "empty",
-                                name: "Choose one..."
+                                id: 'empty',
+                                name: 'Choose one...'
                             },
                             {
-                                id: "ANNUAL",
-                                name: "Annual"
+                                id: 'ANNUAL',
+                                name: 'Annual'
                             },
                             {
-                                id: "QUARTERLY",
-                                name: "Quarterly"
+                                id: 'QUARTERLY',
+                                name: 'Quarterly'
                             },
                             {
-                                id: "MONTHLY",
-                                name: "Monthly"
+                                id: 'MONTHLY',
+                                name: 'Monthly'
                             }
                         ],
                         restUrl: null,
@@ -267,9 +267,9 @@ export const fakeFormChainedVisibilityJson: any = {
             }
         },
         {
-            fieldType: "ContainerRepresentation",
+            fieldType: 'ContainerRepresentation',
             id: 1615506384790,
-            name: "Label",
+            name: 'Label',
             type: 'container',
             value: null,
             required: false,
@@ -302,11 +302,11 @@ export const fakeFormChainedVisibilityJson: any = {
             fields: {
                 1: [
                     {
-                        fieldType: "FormFieldRepresentation",
-                        id: "showtext",
-                        name: "Show text",
-                        type: "readonly-text",
-                        value: "This test is shown when the visibility logic is displayed.\nThis should only show under the following conditions:\nAnnual and installment > 5\nQuarterly and installment > 20\nMonthly and installment > 60",
+                        fieldType: 'FormFieldRepresentation',
+                        id: 'showtext',
+                        name: 'Show text',
+                        type: 'readonly-text',
+                        value: 'This test is shown when the visibility logic is displayed.\nThis should only show under the following conditions:\nAnnual and installment > 5\nQuarterly and installment > 20\nMonthly and installment > 60',
                         required: false,
                         readOnly: false,
                         overrideId: false,
@@ -341,59 +341,59 @@ export const fakeFormChainedVisibilityJson: any = {
                         row: -1,
                         col: -1,
                         visibilityCondition: {
-                            leftFormFieldId: "schedule",
+                            leftFormFieldId: 'schedule',
                             leftRestResponseId: null,
-                            operator: "==",
-                            rightValue: "ANNUAL",
+                            operator: '==',
+                            rightValue: 'ANNUAL',
                             rightType: null,
-                            rightFormFieldId: "",
-                            rightRestResponseId: "",
-                            nextConditionOperator: "and",
+                            rightFormFieldId: '',
+                            rightRestResponseId: '',
+                            nextConditionOperator: 'and',
                             nextCondition: {
-                                leftFormFieldId: "installments",
+                                leftFormFieldId: 'installments',
                                 leftRestResponseId: null,
-                                operator: ">",
+                                operator: '>',
                                 rightValue: 5,
                                 rightType: null,
-                                rightFormFieldId: "",
-                                rightRestResponseId: "",
-                                nextConditionOperator: "or",
+                                rightFormFieldId: '',
+                                rightRestResponseId: '',
+                                nextConditionOperator: 'or',
                                 nextCondition: {
-                                    leftFormFieldId: "schedule",
+                                    leftFormFieldId: 'schedule',
                                     leftRestResponseId: null,
-                                    operator: "==",
-                                    rightValue: "QUARTERLY",
+                                    operator: '==',
+                                    rightValue: 'QUARTERLY',
                                     rightType: null,
-                                    rightFormFieldId: "",
-                                    rightRestResponseId: "",
-                                    nextConditionOperator: "and",
+                                    rightFormFieldId: '',
+                                    rightRestResponseId: '',
+                                    nextConditionOperator: 'and',
                                     nextCondition: {
-                                        leftFormFieldId: "installments",
+                                        leftFormFieldId: 'installments',
                                         leftRestResponseId: null,
-                                        operator: ">",
+                                        operator: '>',
                                         rightValue: 20,
                                         rightType: null,
-                                        rightFormFieldId: "",
-                                        rightRestResponseId: "",
-                                        nextConditionOperator: "or",
+                                        rightFormFieldId: '',
+                                        rightRestResponseId: '',
+                                        nextConditionOperator: 'or',
                                         nextCondition: {
-                                            leftFormFieldId: "schedule",
+                                            leftFormFieldId: 'schedule',
                                             leftRestResponseId: null,
-                                            operator: "==",
-                                            rightValue: "MONTHLY",
+                                            operator: '==',
+                                            rightValue: 'MONTHLY',
                                             rightType: null,
-                                            rightFormFieldId: "",
-                                            rightRestResponseId: "",
-                                            nextConditionOperator: "and",
+                                            rightFormFieldId: '',
+                                            rightRestResponseId: '',
+                                            nextConditionOperator: 'and',
                                             nextCondition: {
-                                                leftFormFieldId: "installments",
+                                                leftFormFieldId: 'installments',
                                                 leftRestResponseId: null,
-                                                operator: ">",
+                                                operator: '>',
                                                 rightValue: 60,
                                                 rightType: null,
-                                                rightFormFieldId: "",
-                                                rightRestResponseId: "",
-                                                nextConditionOperator: "",
+                                                rightFormFieldId: '',
+                                                rightRestResponseId: '',
+                                                nextConditionOperator: '',
                                                 nextCondition: null
                                             }
                                         }
