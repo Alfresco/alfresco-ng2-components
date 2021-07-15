@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-notification-history-theme($theme) {
     $background: map-get($theme, background);
     $accent: map-get($theme, accent);
@@ -22,11 +23,11 @@
 
             &-item:focus {
                 outline: none;
-                background: mat-color($background, 'hover');
+                background: mat.get-color-from-palette($background, 'hover');
             }
 
             &-item:hover {
-                background-color: mat-color($background, 'hover');
+                background-color: mat.get-color-from-palette($background, 'hover');
             }
 
             &-message, &-no-message {
@@ -45,7 +46,7 @@
 
         &-notification-initiator-pic {
             min-width: 40px;
-            background: mat-color($accent);
+            background: mat.get-color-from-palette($accent);
             display: inline-block;
             height: 40px;
             border-radius: 100px;
@@ -55,7 +56,7 @@
             text-transform: uppercase;
             vertical-align: middle;
             line-height: 40px;
-            color: mat-color($mat-grey, 50);
+            color: mat.get-color-from-palette(mat.$grey-palette, 50);
         }
 
         &-notification-history-load-more {

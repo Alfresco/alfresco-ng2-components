@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-search-forms-theme($theme) {
     $accent: map-get($theme, accent);
 
@@ -34,11 +35,11 @@
         }
 
         &-icon-selected {
-            border-color: mat-color($accent);
+            border-color: mat.get-color-from-palette($accent);
         }
 
         &-menu + * .mat-menu-panel {
-            @include mat-elevation(2);
+            @include mat.elevation(2);
             border-radius: 6px;
 
             .mat-menu-content {

@@ -1,6 +1,7 @@
+@use '~@angular/material' as mat;
 @mixin adf-content-metadata-theme($theme) {
     $background: map-get($theme, background);
-    $panel-header-hover: mat-color($background, hover);
+    $panel-header-hover: mat.get-color-from-palette($background, hover);
 
     .adf {
         &-metadata-properties {

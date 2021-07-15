@@ -1,6 +1,7 @@
+@use '~@angular/material' as mat;
 @mixin adf-task-standalone-component-theme($theme) {
 
-    $config: mat-typography-config();
+    $config: mat.define-typography-config();
     $background: map-get($theme, background);
 
     .adf {
@@ -9,7 +10,7 @@
             box-sizing: border-box;
             margin: 16px auto;
             .mat-card-actions {
-                border-top: solid 1px mat-color($background, status-bar);
+                border-top: solid 1px mat.get-color-from-palette($background, status-bar);
               }
         }
         &-no-form-message-container {
@@ -24,7 +25,7 @@
         }
         &-no-form-message {
             padding-bottom: 10px;
-            font-size: mat-font-size($config, display-1);
+            font-size: mat.font-size($config, display-1);
             line-height: 36px;
             letter-spacing: -1.3px;
             opacity: 0.54;
@@ -32,7 +33,7 @@
             width: fit-content !important;
         }
         &-no-form-submessage {
-            font-size: mat-font-size($config, subheading-2);
+            font-size: mat.font-size($config, subheading-2);
             opacity: 0.54;
             margin: auto;
             width: fit-content !important;
@@ -46,7 +47,7 @@
             }
             & .mat-button-wrapper {
                 opacity: 0.54;
-                font-size: mat-font-size($config, button);
+                font-size: mat.font-size($config, button);
                 font-weight: bold;
             }
         }

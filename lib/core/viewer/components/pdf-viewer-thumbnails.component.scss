@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-pdf-thumbnails-theme($theme) {
     $background: map-get($theme, background);
 
@@ -19,7 +20,7 @@
             cursor: pointer;
             display: block;
             width: 91px;
-            background: mat-color($background, background);
+            background: mat.get-color-from-palette($background, background);
             margin-bottom: 15px;
         }
 
@@ -28,7 +29,7 @@
         }
 
         &__thumb--selected {
-            border: 2px solid mat-color($alfresco-ecm-blue, A200);
+            border: 2px solid mat.get-color-from-palette($alfresco-ecm-blue, A200);
         }
     }
 }

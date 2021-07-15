@@ -1,42 +1,43 @@
-@import './app/components/app-layout/app-layout.component.scss';
-@import './app/components/files/files.component.scss';
-@import './app/components/login/login.component.scss';
-
+@use '~@angular/material' as mat;
+@import '../../lib/core/styles/colors';
+@import '../../lib/core/styles/index';
+@import '../../lib/core/styles/typography';
+@import '../../lib/core/styles/mixins';
 
 @import '../../lib/content-services/src/lib/styles/index';
 @import '../../lib/process-services/src/lib/styles/index';
 @import '../../lib/insights/src/lib/styles/index';
-@import '../../lib/core/styles/index';
 @import '../../lib/process-services-cloud/src/lib/styles/index';
 
-@import '~@angular/material/theming';
+@import './app/components/app-layout/app-layout.component.scss';
+@import './app/components/files/files.component.scss';
+@import './app/components/login/login.component.scss';
 
-@include mat-core($alfresco-typography);
+$primary: mat.define-palette($alfresco-accent-orange);
+$accent:  mat.define-palette($alfresco-accent-purple);
+$warn:    mat.define-palette($alfresco-warn);
+$theme:   mat.define-light-theme($primary, $accent, $warn);
 
-$primary: mat-palette($alfresco-accent-orange);
-$accent:  mat-palette($alfresco-accent-purple);
-$warn:    mat-palette($alfresco-warn);
-$theme:   mat-light-theme($primary, $accent, $warn);
+@include mat.core($alfresco-typography);
+@include mat.all-component-themes($theme);
 
-@include angular-material-theme($theme);
-@include app-layout-theme($theme);
-@include app-file-component-theme($theme);
-@include app-login-component-theme($theme);
-
-
+@include adf-core-theme($theme);
 @include adf-content-services-theme($theme);
 @include adf-process-services-theme($theme);
 @include adf-process-services-cloud-theme($theme);
 @include adf-insights-theme($theme);
-@include adf-core-theme($theme);
+
+@include app-layout-theme($theme);
+@include app-file-component-theme($theme);
+@include app-login-component-theme($theme);
 
 body, html {
     margin: 0;
     height: 100%;
     overflow: hidden;
-    font-size: mat-font-size($alfresco-typography, body-1);
-    font-family: mat-font-family($alfresco-typography);
-    line-height: mat-line-height($alfresco-typography, body-1);
+    font-size: mat.font-size($alfresco-typography, body-1);
+    font-family: mat.font-family($alfresco-typography);
+    line-height: mat.line-height($alfresco-typography, body-1);
 }
 
 body {

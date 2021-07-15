@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-form-people-widget-theme($theme) {
     $primary: map-get($theme, primary);
     $background: map-get($theme, background);
@@ -24,14 +25,14 @@
         }
 
         &-people-widget-pic {
-            background: mat-color($primary);
+            background: mat.get-color-from-palette($primary);
             display: flex;
             justify-content: center;
             align-items: center;
             width: 40px;
             height: 40px;
             border-radius: 100px;
-            color: mat-color($foreground, text);
+            color: mat.get-color-from-palette($foreground, text);
             font-weight: bolder;
             font-size: 18px;
             text-transform: uppercase;
@@ -40,7 +41,7 @@
         &-people-widget-image {
             margin-left: -44px;
             left: 21px;
-            background: mat-color($background, dialog);
+            background: mat.get-color-from-palette($background, dialog);
             border-radius: 100px;
             width: 40px;
             height: 40px;

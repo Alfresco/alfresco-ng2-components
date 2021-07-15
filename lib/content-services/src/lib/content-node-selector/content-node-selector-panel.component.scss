@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-content-node-selector-theme($theme) {
     $primary: map-get($theme, primary);
     $foreground: map-get($theme, foreground);
@@ -11,7 +12,7 @@
         font-stretch: normal;
         line-height: 1.43;
         letter-spacing: -0.2px;
-        color: mat-color($foreground, base, 0.87);
+        color: mat.get-color-from-palette($foreground, base, 0.87);
     }
 
     .adf-toolbar .mat-toolbar {
@@ -41,11 +42,11 @@
                 width: 100%;
 
                 &-icon {
-                    color: mat-color($foreground, icon, 0.54);
+                    color: mat.get-color-from-palette($foreground, icon, 0.54);
                     cursor: pointer;
 
                     &:hover {
-                        color: mat-color($foreground, base);
+                        color: mat.get-color-from-palette($foreground, base);
                     }
                 }
             }
@@ -76,31 +77,31 @@
                 .adf-dropdown-breadcrumb-trigger {
                     outline: none;
                     .mat-icon {
-                        color: mat-color($foreground, base, 0.45);
+                        color: mat.get-color-from-palette($foreground, base, 0.45);
 
                         &:hover {
-                            color: mat-color($foreground, base, 0.65);
+                            color: mat.get-color-from-palette($foreground, base, 0.65);
                         }
                     }
 
                     &:focus .mat-icon {
-                        color: mat-color($primary);
+                        color: mat.get-color-from-palette($primary);
                     }
                 }
 
                 .adf-dropdown-breadcrumb-item-chevron {
-                    color: mat-color($foreground, base, 0.45);
+                    color: mat.get-color-from-palette($foreground, base, 0.45);
                 }
             }
 
             &-list {
                 height: 300px;
                 overflow: auto;
-                border: 1px solid mat-color($foreground, base, 0.07);
+                border: 1px solid mat.get-color-from-palette($foreground, base, 0.07);
                 border-top: 0;
 
                 .adf-highlight {
-                    color: mat-color($primary);
+                    color: mat.get-color-from-palette($primary);
                 }
 
                 .adf-datatable-list {

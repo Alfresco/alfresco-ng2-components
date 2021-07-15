@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-share-link-typography($foreground) {
     letter-spacing: -0.4px;
     line-height: 2;
@@ -5,7 +6,7 @@
     font-style: normal;
     font-stretch: normal;
     font-size: 16px;
-    color: mat-color($foreground, text, 0.87);
+    color: mat.get-color-from-palette($foreground, text, 0.87);
 }
 @mixin adf-content-node-share-theme($theme) {
     $foreground: map-get($theme, foreground);
@@ -32,7 +33,7 @@
 
             &__info {
                 @include adf-share-link-typography($foreground);
-                color: mat-color($foreground, text, 0.54);
+                color: mat.get-color-from-palette($foreground, text, 0.54);
                 font-size: 13px;
             }
 
@@ -44,7 +45,7 @@
             }
 
             &__input {
-                color: mat-color($foreground, text, 0.87);
+                color: mat.get-color-from-palette($foreground, text, 0.87);
             }
         }
 

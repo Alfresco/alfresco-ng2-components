@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-task-list-header-theme($theme) {
     $primary: map-get($theme, primary);
 
@@ -15,7 +16,7 @@
 
         &-switch-to-edit-mode,
         &-save-edit-mode {
-            color: mat-color($primary);
+            color: mat.get-color-from-palette($primary);
         }
 
         &-cancel-edit-mode,

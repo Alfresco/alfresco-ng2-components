@@ -1,6 +1,7 @@
+@use '~@angular/material' as mat;
 @mixin adf-version-comparison-theme($theme) {
 
-    $config: mat-typography-config();
+    $config: mat.define-typography-config();
 
     .adf-version-comparison-content {
         display: flex;
@@ -20,7 +21,7 @@
     }
 
     .adf-version-arrow-icon {
-        font-size: mat-font-size($config, display-4);
+        font-size: mat.font-size($config, display-4);
     }
 
     .adf-version-comparison-node-name, .adf-version-comparison-file-name {

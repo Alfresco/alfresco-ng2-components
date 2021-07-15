@@ -1,11 +1,12 @@
+@use '~@angular/material' as mat;
 @mixin adf-task-list-comment-list-theme($theme) {
     $primary: map-get($theme, primary);
     $foreground: map-get($theme, foreground);
-    $primaryColor: mat-color($primary, 100);
-    $rippleColor: mat-color($primary, 300);
+    $primaryColor: mat.get-color-from-palette($primary, 100);
+    $rippleColor: mat.get-color-from-palette($primary, 300);
 
     .adf-is-selected {
-        background: mat-color($primary, 100);
+        background: mat.get-color-from-palette($primary, 100);
     }
 
     .adf {
@@ -45,8 +46,8 @@
         &-comment-user-icon {
             padding: 10px 5px;
             width: 30px;
-            background-color: mat-color($primary);
-            color: mat-color($primary, default-contrast);
+            background-color: mat.get-color-from-palette($primary);
+            color: mat.get-color-from-palette($primary, default-contrast);
             border-radius: 50%;
             font-size: 16px;
             text-align: center;
@@ -73,7 +74,7 @@
             font-size: 14px;
             letter-spacing: -0.2px;
             line-height: 1.43;
-            color: mat-color($foreground, text, 0.72);
+            color: mat.get-color-from-palette($foreground, text, 0.72);
         }
 
         &-comment-message-time {
@@ -81,7 +82,7 @@
             width: calc(100% - 10%);
             padding: 2px 10px;
             font-size: 12px !important;
-            color: mat-color($foreground, text, 0.72);
+            color: mat.get-color-from-palette($foreground, text, 0.72);
         }
 
         &-comment-contents {

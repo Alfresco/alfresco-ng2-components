@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-form-container-widget-theme($theme) {
     $primary: map-get($theme, primary);
 
@@ -98,11 +99,11 @@
                 transform: scaleX(1);
                 transition: transform 150ms linear,
                 background-color $swift-ease-in-duration $swift-ease-in-timing-function;
-                color: mat-color($primary);
+                color: mat.get-color-from-palette($primary);
             }
 
             .mat-form-field-prefix {
-                color: mat-color($primary);
+                color: mat.get-color-from-palette($primary);
             }
         }
 

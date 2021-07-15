@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-permission-list-theme($theme) {
     $foreground: map-get($theme, foreground);
 
@@ -21,7 +22,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 15px;
-            border: 1px solid mat-color($foreground, base, 0.07);
+            border: 1px solid mat.get-color-from-palette($foreground, base, 0.07);
         }
 
         &-inherit-container {
@@ -86,8 +87,8 @@
         .adf-pop-over-card {
             width: 100%;
             overflow: hidden;
-            box-shadow: 0 8px 9px -5px mat-color($foreground, divider),
-            0 15px 22px 2px mat-color($foreground, divider);
+            box-shadow: 0 8px 9px -5px mat.get-color-from-palette($foreground, divider),
+            0 15px 22px 2px mat.get-color-from-palette($foreground, divider);
         }
     }
 }

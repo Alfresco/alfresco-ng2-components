@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-analytics-report-list-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent );
@@ -25,11 +26,11 @@
         }
 
         .adf-activiti-filters__entry.adf-active {
-            color:  mat-color($primary);
+            color:  mat.get-color-from-palette($primary);
         }
 
         .adf-activiti-filters__entry.adf-active .adf-activiti-filters__entry-icon {
-            color:  mat-color($primary);
+            color:  mat.get-color-from-palette($primary);
         }
 
         .adf-report-card-grids {
@@ -46,7 +47,7 @@
             position: relative;
             min-height: 200px;
             overflow: hidden;
-            background-color: mat-color($background, background);
+            background-color: mat.get-color-from-palette($background, background);
             display: flex;
             flex-direction: column;
             cursor: pointer;
@@ -59,7 +60,7 @@
 
                 &-icon {
                     font-size: 70px;
-                    color: mat-color($accent);
+                    color: mat.get-color-from-palette($accent);
                     width: 1em;
                     height: 1em;
                     display: inline-block;
@@ -82,16 +83,16 @@
             }
 
             &-actions {
-                border-top: 1px solid mat-color($foreground, divider);
+                border-top: 1px solid mat.get-color-from-palette($foreground, divider);
                 padding: 8px;
                 box-sizing: border-box;
                 height: 40px;
 
                 &-icon {
-                    color: mat-color($primary, 50);
+                    color: mat.get-color-from-palette($primary, 50);
 
                     &:hover {
-                        color: mat-color($primary, 100);
+                        color: mat.get-color-from-palette($primary, 100);
                     }
                 }
             }

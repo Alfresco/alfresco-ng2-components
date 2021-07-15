@@ -1,6 +1,7 @@
+@use '~@angular/material' as mat;
 @mixin adf-form-renderer-theme($theme) {
 
-    $config: mat-typography-config();
+    $config: mat.define-typography-config();
     $warn: map-get($theme, warn);
     $accent: map-get($theme, accent);
 
@@ -23,8 +24,8 @@
             }
 
             & .mat-tab-label {
-                font-size: mat-font-size($config, subheading-2);
-                line-height: mat-line-height($config, headline);
+                font-size: mat.font-size($config, subheading-2);
+                line-height: mat.line-height($config, headline);
                 letter-spacing: -0.4px;
                 text-align: left;
                 color: rgba(0, 0, 0, 0.54);
@@ -42,7 +43,7 @@
         }
 
         &-form-title {
-            font-size: mat-font-size($alfresco-typography, title);
+            font-size: mat.font-size($alfresco-typography, title);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -71,10 +72,10 @@
             position: absolute;
             right: 50px;
             top: 39px;
-            color: mat-color($accent);
+            color: mat.get-color-from-palette($accent);
 
             & .adf-invalid-color {
-                color: mat-color($warn);
+                color: mat.get-color-from-palette($warn);
              }
         }
 
@@ -89,8 +90,8 @@
         &-label {
             width: 32px;
             height: 16px;
-            font-size: mat-font-size($config, caption);
-            line-height: mat-line-height($config, headline);
+            font-size: mat.font-size($config, caption);
+            line-height: mat.line-height($config, headline);
             text-align: left;
             white-space: nowrap;
         }
@@ -110,7 +111,7 @@
                 width: 58px;
                 height: 20px;
                 opacity: 0.54;
-                font-size: mat-font-size($config, body-2);
+                font-size: mat.font-size($config, body-2);
                 font-weight: bold;
             }
         }
@@ -120,7 +121,7 @@
         width: 100%;
 
         .mat-input-element {
-            font-size: mat-font-size($config, body-2);
+            font-size: mat.font-size($config, body-2);
             padding-top: 8px;
             line-height: normal;
         }

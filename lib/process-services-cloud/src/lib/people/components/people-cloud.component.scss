@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-cloud-people-theme($theme) {
     $warn: map-get($theme, warn);
     $primary: map-get($theme, primary);
@@ -25,14 +26,14 @@
         }
 
         &-people-cloud-pic {
-            background: mat-color($primary);
+            background: mat.get-color-from-palette($primary);
             display: flex;
             justify-content: center;
             align-items: center;
             width: 40px;
             height: 40px;
             border-radius: 100px;
-            color: mat-color($foreground, text);
+            color: mat.get-color-from-palette($foreground, text);
             font-weight: bolder;
             font-size: 18px;
             text-transform: uppercase;
@@ -51,13 +52,13 @@
                 height: 16px;
                 font-size: 12px;
                 line-height: 1.33;
-                color: mat-color($warn);
+                color: mat.get-color-from-palette($warn);
                 width: auto;
             }
 
             &-icon {
                 font-size: 17px;
-                color: mat-color($warn);
+                color: mat.get-color-from-palette($warn);
             }
         }
 

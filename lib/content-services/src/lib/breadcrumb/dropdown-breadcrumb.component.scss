@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-breadcrumb-dropdown-theme($theme) {
     $primary: map-get($theme, primary);
     $dropdownHorizontalOffset: 30px;
@@ -11,7 +12,7 @@
             font-size: 14px;
             font-weight: 600;
             letter-spacing: -0.2px;
-            color: mat-color($foreground, text, 0.54);
+            color: mat.get-color-from-palette($foreground, text, 0.54);
             overflow: hidden;
             margin-top: 10px;
 
@@ -37,7 +38,7 @@
             width: 25px;
 
             &:focus {
-                color: mat-color($primary);
+                color: mat.get-color-from-palette($primary);
                 outline: none;
             }
         }
@@ -63,7 +64,7 @@
             text-overflow: ellipsis;
             display: inline-block;
             width: 75%;
-            color: mat-color($foreground, text, 0.72);
+            color: mat.get-color-from-palette($foreground, text, 0.72);
         }
 
         &-dropdown-breadcrumb-path-option.mat-option {

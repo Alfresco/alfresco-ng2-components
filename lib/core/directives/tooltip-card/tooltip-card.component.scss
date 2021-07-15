@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-tooltip-card-directive($theme) {
     $primary: map-get($theme, primary);
     $foreground: map-get($theme, foreground);
@@ -8,20 +9,20 @@
     }
 
     div.adf-tooltip-card {
-        @include mat-elevation(8);
-        background-color: mat-color($background, card);
-        border: 1px solid mat-color($primary);
+        @include mat.elevation(8);
+        background-color: mat.get-color-from-palette($background, card);
+        border: 1px solid mat.get-color-from-palette($primary);
         padding: 12px;
         border-radius: 6px;
 
         p, div {
-            font-size: mat-font-size($alfresco-typography, caption);
-            color: mat-color($foreground, text, 0.75);
+            font-size: mat.font-size($alfresco-typography, caption);
+            color: mat.get-color-from-palette($foreground, text, 0.75);
             margin: 0;
         }
 
         hr {
-            border: 1px solid mat-color($primary);
+            border: 1px solid mat.get-color-from-palette($primary);
             margin: 6px 0;
         }
 

@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-add-permission-dialog-theme($theme) {
 
     $primary: map-get($theme, primary);
@@ -15,7 +16,7 @@
             font-stretch: normal;
             line-height: 1.6;
             letter-spacing: -0.5px;
-            color: mat-color($foreground, text, 0.87);
+            color: mat.get-color-from-palette($foreground, text, 0.87);
         }
 
         .mat-dialog-container {
@@ -40,10 +41,10 @@
 
         .mat-dialog-actions {
             padding: 0 24px;
-            background-color: mat-color($background, background);
+            background-color: mat.get-color-from-palette($background, background);
             display: flex;
             justify-content: flex-end;
-            color: mat-color($foreground, text, 0.72);
+            color: mat.get-color-from-palette($foreground, text, 0.72);
 
             button {
                 text-transform: uppercase;
@@ -53,11 +54,11 @@
             .adf-choose-action {
 
                 &[disabled] {
-                    color: mat-color($foreground, secondary-text);
+                    color: mat.get-color-from-palette($foreground, secondary-text);
                 }
 
                 &:enabled {
-                    color: mat-color($primary);
+                    color: mat.get-color-from-palette($primary);
                 }
             }
         }

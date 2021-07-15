@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-userinfo-theme($theme) {
     $primary: map-get($theme, primary);
 
@@ -22,7 +23,7 @@
         }
 
         &-userinfo-pic {
-            background: mat-color($primary, 300);
+            background: mat.get-color-from-palette($primary, 300);
             display: inline-block;
             width: 40px;
             height: 40px;
@@ -36,7 +37,7 @@
         }
 
         &-userinfo-profile-image {
-            background: mat-color($primary, 300);
+            background: mat.get-color-from-palette($primary, 300);
             text-align: center;
             border-radius: 90%;
             width: 40px;
@@ -138,7 +139,7 @@
         }
 
         &-userinfo-profile-picture {
-            background: mat-color($primary, 300);
+            background: mat.get-color-from-palette($primary, 300);
             background-size: cover;
             border-radius: 50%;
             height: 80px;
@@ -150,7 +151,7 @@
         &-userinfo-profile-initials {
             text-transform: uppercase;
             background-size: cover;
-            background: mat-color($primary, 300);
+            background: mat.get-color-from-palette($primary, 300);
             border-radius: 50%;
             height: 80px;
             width: 80px;

@@ -1,20 +1,23 @@
+@use 'sass:math';
+@use '~@angular/material' as mat;
+
 @mixin adf-dynamic-table-theme($theme) {
     $foreground: map-get($theme, foreground);
     $dynamic-table-font-size: 14px !default;
     $dynamic-table-header-font-size: 12px !default;
     $dynamic-table-header-sort-icon-size: 16px !default;
-    $dynamic-table-header-color: mat-color($foreground, text) !default;
-    $dynamic-table-header-sorted-color: mat-color($foreground, text) !default;
-    $dynamic-table-header-sorted-icon-hover-color: mat-color($foreground, disabled-text) !default;
-    $dynamic-table-divider-color: mat-color($foreground, text, 0.07) !default;
+    $dynamic-table-header-color: mat.get-color-from-palette($foreground, text) !default;
+    $dynamic-table-header-sorted-color: mat.get-color-from-palette($foreground, text) !default;
+    $dynamic-table-header-sorted-icon-hover-color: mat.get-color-from-palette($foreground, disabled-text) !default;
+    $dynamic-table-divider-color: mat.get-color-from-palette($foreground, text, 0.07) !default;
     $dynamic-table-hover-color: #eeeeee !default;
     $dynamic-table-selection-color: #e0f7fa !default;
     $dynamic-table-dividers: 1px solid $dynamic-table-divider-color !default;
     $dynamic-table-row-height: 56px !default;
     $dynamic-table-column-spacing: 36px !default;
-    $dynamic-table-column-padding: $dynamic-table-column-spacing / 2;
+    $dynamic-table-column-padding: math.div($dynamic-table-column-spacing, 2);
     $dynamic-table-card-padding: 24px !default;
-    $dynamic-table-cell-top: $dynamic-table-card-padding / 2;
+    $dynamic-table-cell-top: math.div($dynamic-table-card-padding, 2);
     $dynamic-table-drag-border: 1px dashed rgb(68, 138, 255);
 
     dynamic-table-widget .adf-label {
@@ -79,7 +82,7 @@
             }
 
             td {
-                color: mat-color($foreground, text);
+                color: mat.get-color-from-palette($foreground, text);
                 position: relative;
                 vertical-align: middle;
                 height: $dynamic-table-row-height;

@@ -1,15 +1,16 @@
+@use '~@angular/material' as mat;
 @mixin adf-search-filter-theme($theme) {
     $foreground: map-get($theme, foreground);
 
     .adf-search-filter {
         .mat-expansion-panel-header-title {
             font-size: 14px;
-            color: mat-color($foreground, text, 0.87);
+            color: mat.get-color-from-palette($foreground, text, 0.87);
         }
 
         .mat-checkbox-label,
         .mat-radio-label {
-            color: mat-color($foreground, text, 0.54);
+            color: mat.get-color-from-palette($foreground, text, 0.54);
         }
     }
 }

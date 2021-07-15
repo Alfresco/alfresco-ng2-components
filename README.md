@@ -50,15 +50,14 @@ This will create a full working project with all the right libraries and tools.
 
 All components are supported in the following browsers:
 
-|**Browser**   	   |**Version**   	|
-|---        	   |---  	        |
-|Chrome     	   |Latest       	|
-|Safari (OS X)     |9.x          	|
-|Firefox*    	   |Latest       	|
-|Edge       	   |13, 14     	    |
-|Internet Explorer |11     	        |
+| **Browser** | **Version** |
+| --- | --- |
+| Chrome | Latest |
+| Safari (OS X) |Latest |
+| Firefox* | Latest |
+| Microsoft Edge  | Latest |
+| Internet Explorer | 11 |
 
 * Due to a [known issue](https://bugzilla.mozilla.org/show_bug.cgi?id=1188880) in Firefox, the Alfresco Upload Component does not currently support folder upload functionality on Firefox.    
 
 See the [Browser Support](BROWSER-SUPPORT.md) article for more details.
-

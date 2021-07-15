@@ -1,9 +1,10 @@
+@use '~@angular/material' as mat;
 @mixin adf-search-sorting-picker-theme($theme) {
     $foreground: map-get($theme, foreground);
 
     .adf-search-sorting-picker {
         .mat-icon-button {
-            color: mat-color($foreground, text, 0.54);
+            color: mat.get-color-from-palette($foreground, text, 0.54);
         }
     }
 }

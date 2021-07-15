@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-card-view-array-item-theme($theme) {
     $foreground: map-get($theme, foreground);
 
@@ -8,11 +9,11 @@
         }
 
         &-array-item-action {
-            color: mat-color($foreground, text, 0.25);
+            color: mat.get-color-from-palette($foreground, text, 0.25);
         }
 
         &-array-item-action:hover, &-array-item-action:focus {
-            color: mat-color($foreground, text);
+            color: mat.get-color-from-palette($foreground, text);
         }
 
         &-card-array-item-default {

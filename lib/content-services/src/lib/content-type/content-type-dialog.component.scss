@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-content-type-dialog-theme($theme) {
     $primary: map-get($theme, primary);
 
@@ -29,7 +30,7 @@
         }
 
         &-content-type-dialog-apply-button {
-            color: mat-color($primary);
+            color: mat.get-color-from-palette($primary);
         }
 
     }

@@ -1,7 +1,8 @@
+@use '~@angular/material' as mat;
 @mixin adf-cloud-start-task-theme($theme) {
     $warn: map-get($theme, warn);
     $foreground: map-get($theme, foreground);
-    $header-border: 1px solid mat-color($foreground, divider);
+    $header-border: 1px solid mat.get-color-from-palette($foreground, divider);
 
     .adf-cloud-start-task-heading {
         border-bottom: $header-border;
@@ -34,13 +35,13 @@
             height: 16px;
             font-size: 12px;
             line-height: 1.33;
-            color: mat-color($warn);
+            color: mat.get-color-from-palette($warn);
             width: auto;
         }
 
         .adf-error-icon {
             font-size: 17px;
-            color: mat-color($warn);
+            color: mat.get-color-from-palette($warn);
         }
     }
 

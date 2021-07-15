@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-card-view-dateitem-theme($theme) {
     $foreground: map-get($theme, foreground);
 
@@ -31,7 +32,7 @@
 
         &-dateitem-editable {
             cursor: pointer;
-            border-bottom: 1px solid mat-color($foreground, text, 0.42);
+            border-bottom: 1px solid mat.get-color-from-palette($foreground, text, 0.42);
             padding-bottom: 6px;
 
             &-controls {

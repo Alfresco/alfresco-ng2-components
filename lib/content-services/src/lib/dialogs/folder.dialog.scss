@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-dialog-theme($theme) {
 
     $primary: map-get($theme, primary);
@@ -31,10 +32,10 @@
     }
 
     .adf-dialog-action-button:enabled {
-        color: mat-color($primary);
+        color: mat.get-color-from-palette($primary);
     }
 
     .adf-dialog-action-button:disabled > span {
-        color: mat-color($foreground, text, 0.54);
+        color: mat.get-color-from-palette($foreground, text, 0.54);
     }
 }

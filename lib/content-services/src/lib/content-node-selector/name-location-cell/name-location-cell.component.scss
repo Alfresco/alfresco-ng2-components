@@ -1,10 +1,11 @@
+@use '~@angular/material' as mat;
 @mixin adf-name-location-cell-theme($theme) {
     $foreground: map-get($theme, foreground);
 
     .adf-name-location-cell {
         display: grid;
         &-location {
-            color: mat-color($foreground, base, 0.54);
+            color: mat.get-color-from-palette($foreground, base, 0.54);
             font-size: 12px;
         }
     }

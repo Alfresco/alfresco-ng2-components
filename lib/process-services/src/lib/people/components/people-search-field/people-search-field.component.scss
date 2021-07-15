@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-task-list-people-search-field-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -25,7 +26,7 @@
         }
 
         .adf-people-pic {
-            background: mat-color($primary);
+            background: mat.get-color-from-palette($primary);
             width: 30px;
             padding: 10px 5px;
             border-radius: 90%;
