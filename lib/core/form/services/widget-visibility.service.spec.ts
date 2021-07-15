@@ -1082,11 +1082,11 @@ describe('WidgetVisibilityService', () => {
 
     describe('Visibility calculation in complex forms', () => {
 
-        let fakeFormWithVariables = new FormModel(fakeFormChainedVisibilityJson);
+        const fakeFormWithVariables = new FormModel(fakeFormChainedVisibilityJson);
 
         it('Should be able to validate correctly the visibility for the text field for complex expressions', () => {
-            let instalmentField = fakeFormWithVariables.getFieldById('installments');
-            let scheduleField = fakeFormWithVariables.getFieldById('schedule');
+            const instalmentField = fakeFormWithVariables.getFieldById('installments');
+            const scheduleField = fakeFormWithVariables.getFieldById('schedule');
 
             instalmentField.value = '6';
             scheduleField.value = scheduleField.options[1].id;
@@ -1107,5 +1107,5 @@ describe('WidgetVisibilityService', () => {
             expect(textField.isVisible).toBe(false);
         });
 
-    })
+    });
 });
