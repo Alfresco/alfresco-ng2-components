@@ -34,6 +34,7 @@ export interface ContentActionRef extends ExtensionElement {
     children?: Array<ContentActionRef>;
     component?: string;
     data?: any;
+    color?: string;
     actions?: {
         click?: string;
         [key: string]: string;
