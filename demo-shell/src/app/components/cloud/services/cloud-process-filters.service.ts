@@ -28,7 +28,7 @@ export class CloudProcessFiltersService {
         return this.appConfigService.get(
             'adf-edit-process-filter.filterProperties',
             ['status', 'sort', 'order', 'processName']
-        );
+        ).concat('name');
     }
 
     get sortProperties(): string[] {
