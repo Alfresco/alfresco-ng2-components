@@ -1112,7 +1112,7 @@ describe('WidgetVisibilityService', () => {
 
         const fakeFormWithValues = new FormModel(fakeFormCheckBoxVisibilityJson);
 
-        fit('Should be able to validate correctly the visibility for the checkbox expression', () => {
+        it('Should be able to validate correctly the visibility for the checkbox expression', () => {
             const field_a = fakeFormWithValues.getFieldById('a');
             const field_b = fakeFormWithValues.getFieldById('b');
             const field_c = fakeFormWithValues.getFieldById('c');
@@ -1123,9 +1123,9 @@ describe('WidgetVisibilityService', () => {
             field_c.value = false;
             field_d.value = false;
 
+            service.refreshVisibility(fakeFormWithValues);
             let textField = fakeFormWithValues.getFieldById('a_b_c_d');
 
-            service.refreshVisibility(fakeFormWithValues);
             expect(textField.isVisible).toBe(true);   
 
             field_b.value = false;
