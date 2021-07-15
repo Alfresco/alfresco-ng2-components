@@ -49,6 +49,10 @@ export class AttachFormPage {
         await expect(result).toEqual(formTitle);
     }
 
+    async openDropDownForms(): Promise<void> {
+       await BrowserActions.click(this.formDropdown);
+    }
+
     async checkFormDropdownIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.formDropdown);
     }

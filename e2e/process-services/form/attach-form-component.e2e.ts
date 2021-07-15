@@ -57,6 +57,13 @@ describe('Attach Form Component', () => {
         formFieldValue: 'Test value'
     };
 
+    const standaloneTask = {
+        taskName: 'Standalone Task',
+        formTitle: 'Select Form To Attach',
+        formName: 'Simple form',
+        widgetTitle: 'textfield'
+    };
+
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
 
@@ -69,6 +76,7 @@ describe('Attach Form Component', () => {
         appModel = await applicationService.importPublishDeployApp(app.file_path);
 
         await taskUtil.createStandaloneTask(testNames.taskName);
+        await taskUtil.createStandaloneTask(standaloneTask.taskName);
         await loginPage.login(user.username, user.password);
    });
 
@@ -125,5 +133,36 @@ describe('Attach Form Component', () => {
         await taskPage.tasksListPage().selectRow(testNames.taskName);
 
         await expect(await formFields.getFieldValue(formTextField)).toEqual(testNames.formFieldValue);
+    });
+
+    it('[C329804] Attach form from standalone task with no form template', async () => {
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.tasksListPage().selectRow(standaloneTask.taskName);
+
+        await taskPage.taskDetails().clickAttachFormButton();
+        await attachFormPage.checkDefaultFormTitleIsDisplayed(standaloneTask.formTitle);
+        await attachFormPage.checkCancelButtonIsDisplayed();
+        await attachFormPage.checkAttachFormButtonIsDisabled();
+        await attachFormPage.openDropDownForms();
+        await attachFormPage.checkFormDropdownIsDisplayed();
+        await attachFormPage.selectAttachFormOption(standaloneTask.formName);
+        await formFields.checkWidgetIsReadOnlyMode(standaloneTask.widgetTitle);
+        await attachFormPage.clickCancelButton();
+
+        await taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
+
+        await taskDetailsPage.clickAttachFormButton();
+        await attachFormPage.checkDefaultFormTitleIsDisplayed(standaloneTask.formTitle);
+        await attachFormPage.checkCancelButtonIsDisplayed();
+        await attachFormPage.checkAttachFormButtonIsDisabled();
+        await attachFormPage.openDropDownForms();
+        await attachFormPage.checkFormDropdownIsDisplayed();
+        await attachFormPage.selectAttachFormOption(standaloneTask.formName);
+        await formFields.checkWidgetIsReadOnlyMode(standaloneTask.widgetTitle);
+        await attachFormPage.clickAttachFormButton();
+
+        await taskPage.taskDetails().checkAttachFormButtonIsNotDisplayed();
     });
 });

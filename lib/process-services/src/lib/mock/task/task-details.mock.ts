@@ -974,3 +974,43 @@ export const fakeUser = new UserRepresentation({
     tenantPictureId: null,
     tenantName: 'abc'
 });
+
+export const completedProcessTaskWithoutForm = new TaskDetailsModel({
+    id: '49',
+    name: 'process task without form',
+    description: null,
+    category: null,
+    assignee: {
+        id: 3,
+        firstName: 'HR',
+        lastName: 'User',
+        email: 'hruser@example.com'
+    },
+    created: '2021-07-08T07:39:27.046+0000',
+    dueDate: null,
+    endDate: '2021-07-08T07:39:35.817+0000',
+    duration: 8771,
+    priority: 0,
+    parentTaskId: null,
+    parentTaskName: null,
+    processInstanceId: '37',
+    processInstanceName: null,
+    processDefinitionId: 'process:1:36',
+    processDefinitionName: 'process',
+    processDefinitionDescription: null,
+    processDefinitionKey: 'process',
+    processDefinitionCategory: 'http://www.activiti.org/processdef',
+    processDefinitionVersion: 1,
+    processDefinitionDeploymentId: '34',
+    formKey: null,
+    processInstanceStartUserId: '3',
+    initiatorCanCompleteTask: false,
+    adhocTaskCanBeReassigned: false,
+    taskDefinitionKey: 'sid-1E90524A-8270-4031-89B6-5D18F414BFB8',
+    executionId: '41',
+    involvedPeople: [],
+    involvedGroups: [],
+    memberOfCandidateGroup: false,
+    memberOfCandidateUsers: false,
+    managerOfCandidateGroup: false
+});
