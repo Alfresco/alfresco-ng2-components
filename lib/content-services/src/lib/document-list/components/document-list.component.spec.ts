@@ -103,7 +103,7 @@ describe('DocumentList', () => {
 
         spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: {} }));
         spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: {} })));
-        spyOn(apiService.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: {} })));
+        spyOn(documentList['nodesApi'], 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: {} })));
 
         documentList.ngOnInit();
         documentList.currentFolderId = 'no-node';

@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
 import { Component, Input, OnChanges, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
-import { VersionsApi, Node, VersionEntry, VersionPaging } from '@alfresco/js-api';
+import { VersionsApi, Node, VersionEntry, VersionPaging, NodesApi, NodeEntry, ContentApi } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 
@@ -33,6 +33,8 @@ import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 export class VersionListComponent implements OnChanges {
 
     private versionsApi: VersionsApi;
+    private nodesApi: NodesApi;
+    private contentApi: ContentApi;
     versions: VersionEntry[] = [];
     isLoading = true;
 
@@ -71,7 +73,9 @@ export class VersionListComponent implements OnChanges {
     constructor(private alfrescoApi: AlfrescoApiService,
                 private contentService: ContentService,
                 private dialog: MatDialog) {
-        this.versionsApi = this.alfrescoApi.versionsApi;
+        this.versionsApi = new VersionsApi(this.alfrescoApi.getInstance());
+        this.nodesApi = new NodesApi(this.alfrescoApi.getInstance());
+        this.contentApi = new ContentApi(this.alfrescoApi.getInstance());
     }
 
     ngOnChanges() {
@@ -91,7 +95,7 @@ export class VersionListComponent implements OnChanges {
             this.versionsApi
                 .revertVersion(this.node.id, versionId, { majorVersion: true, comment: '' })
                 .then(() =>
-                    this.alfrescoApi.nodesApi.getNodeInfo(
+                    this.nodesApi.getNode(
                         this.node.id,
                         { include: ['permissions', 'path', 'isFavorite', 'allowableOperations'] }
                     )
@@ -133,7 +137,7 @@ export class VersionListComponent implements OnChanges {
 
             dialogRef.afterClosed().subscribe((result) => {
                 if (result === true) {
-                    this.alfrescoApi.versionsApi
+                    this.versionsApi
                         .deleteVersion(this.node.id, versionId)
                         .then(() => this.onVersionDeleted(this.node));
                 }
@@ -146,13 +150,13 @@ export class VersionListComponent implements OnChanges {
         this.deleted.emit(node);
     }
 
-    onVersionRestored(node: any) {
+    onVersionRestored(node: NodeEntry) {
         this.loadVersionHistory();
-        this.restored.emit(node);
+        this.restored.emit(node?.entry);
     }
 
     private getVersionContentUrl(nodeId: string, versionId: string, attachment?: boolean) {
-        const nodeDownloadUrl = this.alfrescoApi.contentApi.getContentUrl(nodeId, attachment);
+        const nodeDownloadUrl = this.contentApi.getContentUrl(nodeId, attachment);
         return nodeDownloadUrl.replace('/content', '/versions/' + versionId + '/content');
     }
 

@@ -24,9 +24,9 @@ import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListModel } from '../models/task-list.model';
 import {
-    TaskQueryRepresentation,
-    AssigneeIdentifierRepresentation,
-    TaskUpdateRepresentation
+    TaskQueryRepresentation, AssigneeIdentifierRepresentation,
+    TaskUpdateRepresentation, ModelsApi, TaskActionsApi, TasksApi,
+    ChecklistsApi
 } from '@alfresco/js-api';
 
 @Injectable({
@@ -34,8 +34,17 @@ import {
 })
 export class TaskListService {
 
+    private modelsApi: ModelsApi;
+    private tasksApi: TasksApi;
+    private taskActionsApi: TaskActionsApi;
+    private checklistsApi: ChecklistsApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.modelsApi = new ModelsApi(this.apiService.getInstance());
+        this.taskActionsApi = new TaskActionsApi(this.apiService.getInstance());
+        this.tasksApi = new TasksApi(this.apiService.getInstance());
+        this.checklistsApi = new ChecklistsApi(this.apiService.getInstance());
     }
 
     /**
@@ -192,7 +201,7 @@ export class TaskListService {
             'modelType': 2 // Integer | modelType
         };
 
-        return from(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
+        return from(this.modelsApi.getModels(opts))
             .pipe(
                 map(response => {
                     const forms: Form[] = [];
@@ -212,7 +221,7 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     attachFormToATask(taskId: string, formId: number): Observable<any> {
-        return from(this.apiService.taskApi.attachForm(taskId, { 'formId': formId }))
+        return from(this.taskActionsApi.attachForm(taskId, { 'formId': formId }))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -263,7 +272,7 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     completeTask(taskId: string) {
-        return from(this.apiService.taskApi.completeTask(taskId))
+        return from(this.taskActionsApi.completeTask(taskId))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -337,7 +346,7 @@ export class TaskListService {
      * @returns Details of the claimed task
      */
     claimTask(taskId: string): Observable<TaskDetailsModel> {
-        return from(this.apiService.taskApi.claimTask(taskId))
+        return from(this.taskActionsApi.claimTask(taskId))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -349,7 +358,7 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     unclaimTask(taskId: string): Observable<TaskDetailsModel> {
-        return from(this.apiService.taskApi.unclaimTask(taskId))
+        return from(this.taskActionsApi.unclaimTask(taskId))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -362,7 +371,7 @@ export class TaskListService {
      * @returns Updated task details
      */
     updateTask(taskId: string, updated: TaskUpdateRepresentation): Observable<TaskDetailsModel> {
-        return from(this.apiService.taskApi.updateTask(taskId, updated))
+        return from(this.tasksApi.updateTask(taskId, updated))
             .pipe(
                 map((result) => <TaskDetailsModel> result),
                 catchError((err) => this.handleError(err))
@@ -375,7 +384,7 @@ export class TaskListService {
      * @returns Binary PDF data
      */
     fetchTaskAuditPdfById(taskId: string): Observable<Blob> {
-        return from(this.apiService.taskApi.getTaskAuditPdf(taskId))
+        return from(this.tasksApi.getTaskAuditPdf(taskId))
             .pipe(
                 map((data) => <Blob> data),
                 catchError((err) => this.handleError(err))
@@ -388,42 +397,42 @@ export class TaskListService {
      * @returns JSON data
      */
     fetchTaskAuditJsonById(taskId: string): Observable<any> {
-        return from(this.apiService.taskApi.getTaskAuditJson(taskId))
+        return from(this.tasksApi.getTaskAuditLog(taskId))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
     }
 
     private callApiTasksFiltered(requestNode: TaskQueryRepresentation): Promise<TaskListModel> {
-        return this.apiService.taskApi.listTasks(requestNode);
+        return this.tasksApi.listTasks(requestNode);
     }
 
     private callApiTaskDetails(taskId: string): Promise<TaskDetailsModel> {
-        return this.apiService.taskApi.getTask(taskId);
+        return this.tasksApi.getTask(taskId);
     }
 
     private callApiAddTask(task: TaskDetailsModel): Promise<TaskDetailsModel> {
-        return this.apiService.taskApi.addSubtask(task.parentTaskId, task);
+        return this.checklistsApi.addSubtask(task.parentTaskId, task);
     }
 
     private callApiDeleteTask(taskId: string): Promise<any> {
-        return this.apiService.taskApi.deleteTask(taskId);
+        return this.tasksApi.deleteTask(taskId);
     }
 
     private callApiDeleteForm(taskId: string): Promise<any> {
-        return this.apiService.taskApi.removeForm(taskId);
+        return this.taskActionsApi.removeForm(taskId);
     }
 
     private callApiTaskChecklist(taskId: string): Promise<TaskListModel> {
-        return this.apiService.taskApi.getChecklist(taskId);
+        return this.checklistsApi.getChecklist(taskId);
     }
 
     private callApiCreateTask(task: TaskDetailsModel): Promise<TaskDetailsModel> {
-        return this.apiService.taskApi.createNewTask(task);
+        return this.tasksApi.createNewTask(task);
     }
 
     private callApiAssignTask(taskId: string, requestNode: AssigneeIdentifierRepresentation): Promise<TaskDetailsModel> {
-        return this.apiService.taskApi.assignTask(taskId, requestNode);
+        return this.taskActionsApi.assignTask(taskId, requestNode);
     }
 
     private handleError(error: any) {

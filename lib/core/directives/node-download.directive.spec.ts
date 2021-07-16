@@ -18,7 +18,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, ViewChild } from '@angular/core';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeDownloadDirective } from './node-download.directive';
@@ -29,6 +29,9 @@ import { TranslateModule } from '@ngx-translate/core';
     template: '<div [adfNodeDownload]="selection" [version]="version"></div>'
 })
 class TestComponent {
+    @ViewChild(NodeDownloadDirective, { static: true })
+    downloadDirective: NodeDownloadDirective;
+
     selection;
     version;
 }
@@ -65,7 +68,7 @@ describe('NodeDownloadDirective', () => {
         element = fixture.debugElement.query(By.directive(NodeDownloadDirective));
         dialog = TestBed.inject(MatDialog);
         apiService = TestBed.inject(AlfrescoApiService);
-        contentService = apiService.getInstance().content;
+        contentService = component.downloadDirective['contentApi'];
         dialogSpy = spyOn(dialog, 'open');
     });
 

@@ -19,13 +19,11 @@ import { TestBed } from '@angular/core/testing';
 import { ThumbnailService } from './thumbnail.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('ThumbnailService', () => {
 
     let service: ThumbnailService;
-    let apiService: AlfrescoApiService;
 
     setupTestBed({
         imports: [
@@ -36,7 +34,6 @@ describe('ThumbnailService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(ThumbnailService);
-        apiService = TestBed.inject(AlfrescoApiService);
     });
 
     it('should return the correct icon for a plain text file', () => {
@@ -56,7 +53,7 @@ describe('ThumbnailService', () => {
     });
 
     it('should return the thumbnail URL for a content item', () => {
-        spyOn(apiService.contentApi, 'getDocumentThumbnailUrl').and.returnValue('/fake-thumbnail.png');
+        spyOn(service['contentApi'], 'getDocumentThumbnailUrl').and.returnValue('/fake-thumbnail.png');
         expect(service.getDocumentThumbnailUrl('some-id')).toContain('/fake-thumbnail.png');
     });
 });

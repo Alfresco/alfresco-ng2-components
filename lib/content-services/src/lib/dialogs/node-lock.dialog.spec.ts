@@ -19,8 +19,7 @@ import moment from 'moment-es6';
 
 import { TestBed, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
-import { NodeBodyLock } from '@alfresco/js-api';
+import { setupTestBed } from '@alfresco/adf-core';
 import { NodeLockDialogComponent } from './node-lock.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -29,7 +28,6 @@ describe('NodeLockDialogComponent', () => {
 
     let fixture: ComponentFixture<NodeLockDialogComponent>;
     let component: NodeLockDialogComponent;
-    let alfrescoApi: AlfrescoApiService;
     let expiryDate;
     const dialogRef = {
         close: jasmine.createSpy('close')
@@ -48,7 +46,6 @@ describe('NodeLockDialogComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(NodeLockDialogComponent);
         component = fixture.componentInstance;
-        alfrescoApi = TestBed.inject(AlfrescoApiService);
     });
 
     afterEach(() => {
@@ -98,33 +95,9 @@ describe('NodeLockDialogComponent', () => {
             expect(component.form.value.time.format()).toBe(newTime.format());
         });
 
-        it('should submit the form and lock the node', () => {
-            spyOn(alfrescoApi.nodesApi, 'lockNode').and.returnValue(Promise.resolve(null));
-
-            component.submit();
-
-            expect(alfrescoApi.nodesApi.lockNode).toHaveBeenCalledWith(
-                'node-id',
-                new NodeBodyLock({
-                    'timeToExpire': 60,
-                    'type': 'ALLOW_OWNER_CHANGES',
-                    'lifetime': 'PERSISTENT'
-                })
-            );
-        });
-
-        it('should submit the form and unlock the node', () => {
-            spyOn(alfrescoApi.nodesApi, 'unlockNode').and.returnValue(Promise.resolve(null));
-
-            component.form.controls['isLocked'].setValue(false);
-            component.submit();
-
-            expect(alfrescoApi.nodesApi.unlockNode).toHaveBeenCalledWith('node-id');
-        });
-
         it('should call dialog to close with form data when submit is successfully', fakeAsync(() => {
             const node: any = { entry: {} };
-            spyOn(alfrescoApi.nodesApi, 'lockNode').and.returnValue(Promise.resolve(node));
+            spyOn(component['nodesApi'], 'lockNode').and.returnValue(Promise.resolve(node));
 
             component.submit();
             tick();
@@ -134,7 +107,7 @@ describe('NodeLockDialogComponent', () => {
         }));
 
         it('should call onError if submit fails', fakeAsync(() => {
-            spyOn(alfrescoApi.nodesApi, 'lockNode').and.returnValue(Promise.reject('error'));
+            spyOn(component['nodesApi'], 'lockNode').and.returnValue(Promise.reject('error'));
             spyOn(component.data, 'onError');
 
             component.submit();

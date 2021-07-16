@@ -24,18 +24,25 @@ import {
     ContentService,
     DownloadService
 } from '@alfresco/adf-core';
-import { Node } from '@alfresco/js-api';
+import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProcessCloudContentService {
+
+    uploadApi: UploadApi;
+    authenticationApi: AuthenticationApi;
+
     constructor(
         private apiService: AlfrescoApiService,
         private logService: LogService,
         public contentService: ContentService,
         private downloadService: DownloadService
-    ) {}
+    ) {
+        this.uploadApi = new UploadApi(this.apiService.getInstance());
+        this.authenticationApi = new AuthenticationApi(this.apiService.getInstance());
+    }
 
     createTemporaryRawRelatedContent(
         file: File,
@@ -43,9 +50,7 @@ export class ProcessCloudContentService {
     ): Observable<Node> {
 
         return from(
-            this.apiService
-                .getInstance()
-                .upload.uploadFile(file, '', nodeId, '', { overwrite: true })
+            this.uploadApi.uploadFile(file, '', nodeId, '', { overwrite: true })
         ).pipe(
             map((res: any) => {
                 return {
@@ -74,8 +79,7 @@ export class ProcessCloudContentService {
     }
 
     async getAuthTicket(): Promise<string> {
-        const { auth } = this.apiService.getInstance();
-        const ticket = await auth.authenticationApi.getTicket();
+        const ticket = await this.authenticationApi.getTicket();
 
         if (ticket && ticket.entry) {
             return ticket.entry.id || '';

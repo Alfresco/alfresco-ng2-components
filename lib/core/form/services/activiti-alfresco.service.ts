@@ -19,7 +19,12 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { SitesService } from '../../services/sites.service';
 import { Injectable } from '@angular/core';
-import { AlfrescoApiCompatibility, MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
+import {
+    IntegrationAlfrescoOnPremiseApi,
+    MinimalNode,
+    RelatedContentRepresentation,
+    ActivitiContentApi
+} from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { ExternalContent } from '../components/widgets/core/external-content';
 import { ExternalContentLink } from '../components/widgets/core/external-content-link';
@@ -33,9 +38,15 @@ export class ActivitiContentService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
+    integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
+    contentApi: ActivitiContentApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private sitesService: SitesService) {
+
+        this.integrationAlfrescoOnPremiseApi = new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
+        this.contentApi = new ActivitiContentApi(this.apiService.getInstance());
     }
 
     /**
@@ -45,9 +56,8 @@ export class ActivitiContentService {
      * @param folderId
      */
     getAlfrescoNodes(accountId: string, folderId: string): Observable<[ExternalContent]> {
-        const apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
         const accountShortId = accountId.replace('alfresco-', '');
-        return from(apiService.activiti.alfrescoApi.getContentInFolder(accountShortId, folderId))
+        return from(this.integrationAlfrescoOnPremiseApi.getContentInFolder(accountShortId, folderId))
             .pipe(
                 map(this.toJsonArray),
                 catchError((err) => this.handleError(err))
@@ -60,12 +70,11 @@ export class ActivitiContentService {
      * @param includeAccount
      */
     getAlfrescoRepositories(tenantId?: number, includeAccount?: boolean): Observable<any> {
-        const apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
         const opts = {
             tenantId,
             includeAccounts: includeAccount ? includeAccount : true
         };
-        return from(apiService.activiti.alfrescoApi.getRepositories(opts))
+        return from(this.integrationAlfrescoOnPremiseApi.getRepositories(opts))
             .pipe(
                 map(this.toJsonArray),
                 catchError((err) => this.handleError(err))
@@ -80,8 +89,7 @@ export class ActivitiContentService {
      * @param siteId
      */
     linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<ExternalContentLink> {
-        const apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
-        return from(apiService.activiti.contentApi.createTemporaryRelatedContent({
+        return from(this.contentApi.createTemporaryRelatedContent({
             link: true,
             name: node.title,
             simpleType: node.simpleType,
@@ -95,7 +103,6 @@ export class ActivitiContentService {
     }
 
     applyAlfrescoNode(node: MinimalNode, siteId: string, accountId: string) {
-        const apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
         const currentSideId = siteId ? siteId : this.sitesService.getSiteNameFromNodePath(node);
         const params: RelatedContentRepresentation = {
             source: accountId,
@@ -104,7 +111,7 @@ export class ActivitiContentService {
             name: node.name,
             link: node.isLink
         };
-        return from(apiService.activiti.contentApi.createTemporaryRelatedContent(params))
+        return from(this.contentApi.createTemporaryRelatedContent(params))
             .pipe(
                 map(this.toJson),
                 catchError((err) => this.handleError(err))

@@ -17,9 +17,11 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DownloadEntry, NodeEntry } from '@alfresco/js-api';
+import { DownloadEntry, MinimalNode } from '@alfresco/js-api';
 import { LogService } from '../../services/log.service';
 import { DownloadZipService } from '../../services/download-zip.service';
+import { ContentService } from '../../services/content.service';
+import { NodesApiService } from '../../services/nodes-api.service';
 
 @Component({
     selector: 'adf-download-zip-dialog',
@@ -38,7 +40,9 @@ export class DownloadZipDialogComponent implements OnInit {
                 @Inject(MAT_DIALOG_DATA)
                 public data: any,
                 private logService: LogService,
-                private downloadZipService: DownloadZipService) {
+                private downloadZipService: DownloadZipService,
+                private nodeService: NodesApiService,
+                private contentService: ContentService) {
     }
 
     ngOnInit() {
@@ -62,11 +66,11 @@ export class DownloadZipDialogComponent implements OnInit {
 
             this.downloadZipService.createDownload({ nodeIds }).subscribe((data: DownloadEntry) => {
                 if (data && data.entry && data.entry.id) {
-                    const url = this.downloadZipService.getContentUrl(data.entry.id, true);
+                    const url = this.contentService.getContentUrl(data.entry.id, true);
 
-                    this.downloadZipService.getNode(data.entry.id).subscribe((downloadNode: NodeEntry) => {
+                    this.nodeService.getNode(data.entry.id).subscribe((downloadNode: MinimalNode) => {
                         this.logService.log(downloadNode);
-                        const fileName = downloadNode.entry.name;
+                        const fileName = downloadNode.name;
                         this.downloadId = data.entry.id;
                         this.waitAndDownload(data.entry.id, url, fileName);
                     });

@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { NodeEntry } from '@alfresco/js-api';
+import { ContentApi, NodeEntry } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -116,7 +116,7 @@ export class ThumbnailService {
         'video/x-ms-asf': './assets/images/ft_ic_video.svg',
         'video/x-ms-wmv': './assets/images/ft_ic_video.svg',
         'video/x-msvideo': './assets/images/ft_ic_video.svg',
-        'video/x-rad-screenplay':  './assets/images/ft_ic_video.svg',
+        'video/x-rad-screenplay': './assets/images/ft_ic_video.svg',
         'video/x-sgi-movie': './assets/images/ft_ic_video.svg',
         'video/x-matroska': './assets/images/ft_ic_video.svg',
         'audio/mpeg': './assets/images/ft_ic_audio.svg',
@@ -164,7 +164,10 @@ export class ThumbnailService {
         'task': './assets/images/task.svg'
     };
 
+    private contentApi: ContentApi;
+
     constructor(protected apiService: AlfrescoApiService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+        this.contentApi = new ContentApi(apiService.getInstance());
         Object.keys(this.mimeTypeIcons).forEach((key) => {
             const url = sanitizer.bypassSecurityTrustResourceUrl(this.mimeTypeIcons[key]);
 
@@ -192,7 +195,7 @@ export class ThumbnailService {
                 nodeId = node.entry.id;
             }
 
-            resultUrl = this.apiService.contentApi.getDocumentThumbnailUrl(nodeId, attachment, ticket);
+            resultUrl = this.contentApi.getDocumentThumbnailUrl(nodeId, attachment, ticket);
         }
 
         return resultUrl || this.DEFAULT_ICON;

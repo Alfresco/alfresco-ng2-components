@@ -28,19 +28,25 @@ import { MultiBarChart } from '../../diagram/models/chart/multi-bar-chart.model'
 import { PieChart } from '../../diagram/models/chart/pie-chart.model';
 import { TableChart } from '../../diagram/models/chart/table-chart.model';
 import { map, catchError } from 'rxjs/operators';
+import { ProcessDefinitionsApi, ReportApi } from '@alfresco/js-api';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
 
+    reportApi: ReportApi;
+    processDefinitionsApi: ProcessDefinitionsApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.reportApi = new ReportApi(this.apiService.getInstance());
+        this.processDefinitionsApi = new ProcessDefinitionsApi(this.apiService.getInstance());
     }
 
     /**
      * Retrieve all the Deployed app
      */
     getReportList(appId: number): Observable<ReportParametersModel[]> {
-        return from(this.apiService.getInstance().activiti.reportApi.getReportList())
+        return from(this.reportApi.getReportList())
             .pipe(
                 map((res: any) => {
                     const reports: ReportParametersModel[] = [];
@@ -61,7 +67,7 @@ export class AnalyticsService {
      * @param reportName - string - The name of report
      */
     getReportByName(reportName: string): Observable<any> {
-        return from(this.apiService.getInstance().activiti.reportApi.getReportList())
+        return from(this.reportApi.getReportList())
             .pipe(
                 map((response: any) => {
                     return response.find((report) => report.name === reportName);
@@ -79,7 +85,7 @@ export class AnalyticsService {
     }
 
     getReportParams(reportId: string): Observable<ReportParametersModel> {
-        return from(this.apiService.getInstance().activiti.reportApi.getReportParams(reportId))
+        return from(this.reportApi.getReportParams(reportId))
             .pipe(
                 map((res: any) => {
                     return new ReportParametersModel(res);
@@ -139,7 +145,7 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValuesNoApp(): Observable<ParameterValueModel[]> {
-        return from(this.apiService.getInstance().activiti.reportApi.getProcessDefinitions())
+        return from(this.reportApi.getProcessDefinitions())
             .pipe(
                 map((res: any) => {
                     const paramOptions: ParameterValueModel[] = [];
@@ -154,7 +160,7 @@ export class AnalyticsService {
 
     getProcessDefinitionsValues(appId: number): Observable<ParameterValueModel[]> {
         const options = { 'appDefinitionId': appId };
-        return from(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(options))
+        return from(this.processDefinitionsApi.getProcessDefinitions(options))
             .pipe(
                 map((res: any) => {
                     const paramOptions: ParameterValueModel[] = [];
@@ -168,7 +174,7 @@ export class AnalyticsService {
     }
 
     getTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): Observable<ParameterValueModel[]> {
-        return from(this.apiService.getInstance().activiti.reportApi.getTasksByProcessDefinitionId(reportId, processDefinitionId))
+        return from(this.reportApi.getTasksByProcessDefinitionId(reportId, processDefinitionId))
             .pipe(
                 map((res: any) => {
                     const paramOptions: ParameterValueModel[] = [];
@@ -182,7 +188,7 @@ export class AnalyticsService {
     }
 
     getReportsByParams(reportId: string, paramsQuery: any): Observable<Chart[]> {
-        return from(this.apiService.getInstance().activiti.reportApi.getReportsByParams(reportId, paramsQuery))
+        return from(this.reportApi.getReportsByParams(reportId, paramsQuery))
             .pipe(
                 map((res: any) => {
                     const elements: Chart[] = [];
@@ -209,7 +215,7 @@ export class AnalyticsService {
     }
 
     createDefaultReports(): Observable<any> {
-        return from(this.apiService.getInstance().activiti.reportApi.createDefaultReports())
+        return from(this.reportApi.createDefaultReports())
             .pipe(
                 map(res => res || {}),
                 catchError((err) => this.handleError(err))
@@ -217,7 +223,7 @@ export class AnalyticsService {
     }
 
     updateReport(reportId: string, name: string): Observable<any> {
-        return from(this.apiService.getInstance().activiti.reportApi.updateReport(reportId, name))
+        return from(this.reportApi.updateReport(reportId, name))
             .pipe(
                 map(() => this.logService.info('upload')),
                 catchError((err) => this.handleError(err))
@@ -225,7 +231,7 @@ export class AnalyticsService {
     }
 
     exportReportToCsv(reportId: string, paramsQuery: any): Observable<any> {
-        return from(this.apiService.getInstance().activiti.reportApi.exportToCsv(reportId, paramsQuery))
+        return from(this.reportApi.exportToCsv(reportId, paramsQuery))
             .pipe(
                 map((res: any) => {
                     this.logService.info('export');
@@ -236,7 +242,7 @@ export class AnalyticsService {
     }
 
     saveReport(reportId: string, paramsQuery: any): Observable<any> {
-        return from(this.apiService.getInstance().activiti.reportApi.saveReport(reportId, paramsQuery))
+        return from(this.reportApi.saveReport(reportId, paramsQuery))
             .pipe(
                 map(() => {
                     this.logService.info('save');
@@ -246,7 +252,7 @@ export class AnalyticsService {
     }
 
     deleteReport(reportId: string): Observable<any> {
-        return from(this.apiService.getInstance().activiti.reportApi.deleteReport(reportId))
+        return from(this.reportApi.deleteReport(reportId))
             .pipe(
                 map(() => {
                     this.logService.info('delete');

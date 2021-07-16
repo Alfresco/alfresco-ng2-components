@@ -20,7 +20,7 @@ import { from, Observable, throwError, Subject } from 'rxjs';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
-import { Activiti, SystemPropertiesRepresentation } from '@alfresco/js-api';
+import { AboutApi, DiscoveryApi, SystemPropertiesApi, SystemPropertiesRepresentation } from '@alfresco/js-api';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({
@@ -51,7 +51,9 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     public getEcmProductInfo(): Observable<EcmProductVersionModel> {
-        return from(this.apiService.getInstance().discovery.discoveryApi.getRepositoryInformation())
+        const discoveryApi = new DiscoveryApi(this.apiService.getInstance());
+
+        return from(discoveryApi.getRepositoryInformation())
             .pipe(
                 map((res) => new EcmProductVersionModel(res)),
                 catchError((err) => throwError(err))
@@ -63,19 +65,19 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     public getBpmProductInfo(): Observable<BpmProductVersionModel> {
-        return from(this.apiService.getInstance().activiti.aboutApi.getAppVersion())
+        const aboutApi = new AboutApi(this.apiService.getInstance());
+
+        return from(aboutApi.getAppVersion())
             .pipe(
                 map((res) => new BpmProductVersionModel(res)),
                 catchError((err) => throwError(err))
             );
     }
 
-    private get systemPropertiesApi(): Activiti.SystemPropertiesApi {
-        return this.apiService.getInstance().activiti.systemPropertiesApi;
-    }
-
     public getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
-        return from(this.systemPropertiesApi.getProperties())
+        const systemPropertiesApi = new SystemPropertiesApi(this.apiService.getInstance());
+
+        return from(systemPropertiesApi.getProperties())
             .pipe(
                 map((res) => {
                     if ('string' === typeof (res)) {

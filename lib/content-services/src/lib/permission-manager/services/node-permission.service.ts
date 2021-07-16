@@ -15,8 +15,22 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, NodesApiService, SearchService, TranslationService, EcmUserModel } from '@alfresco/adf-core';
-import { Group, GroupMemberEntry, GroupMemberPaging, Node, PathElement, PermissionElement, QueryBody } from '@alfresco/js-api';
+import {
+    AlfrescoApiService,
+    NodesApiService,
+    SearchService,
+    TranslationService,
+    EcmUserModel
+} from '@alfresco/adf-core';
+import {
+    Group,
+    GroupMemberEntry,
+    GroupMemberPaging, GroupsApi,
+    Node,
+    PathElement,
+    PermissionElement,
+    QueryBody
+} from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -28,10 +42,13 @@ import { RoleModel } from '../models/role.model';
 })
 export class NodePermissionService {
 
+    groupsApi: GroupsApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private searchApiService: SearchService,
                 private nodeService: NodesApiService,
                 private translation: TranslationService) {
+        this.groupsApi = new GroupsApi(this.apiService.getInstance());
     }
 
     /**
@@ -44,7 +61,7 @@ export class NodePermissionService {
         return this.searchApiService.searchByQueryBody(retrieveSiteQueryBody)
             .pipe(
                 switchMap((siteNodeList: any) => {
-                    if ( siteNodeList.list.entries.length > 0 ) {
+                    if (siteNodeList.list.entries.length > 0) {
                         const siteName = siteNodeList.list.entries[0].entry.name;
                         return this.getGroupMembersBySiteName(siteName);
                     } else {
@@ -80,7 +97,7 @@ export class NodePermissionService {
      * @returns Node with updated permission
      */
     updatePermissionRole(node: Node, updatedPermissionRole: PermissionElement): Observable<Node> {
-        const permissionBody = { permissions: { locallySet: []} };
+        const permissionBody = { permissions: { locallySet: [] } };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(updatedPermissionRole.authorityId);
         permissionBody.permissions.locallySet = permissionBody.permissions.locallySet.concat(node.permissions.locallySet);
         if (index !== -1) {
@@ -98,7 +115,7 @@ export class NodePermissionService {
      * @returns Node with updated permissions
      */
     updateNodePermissions(nodeId: string, permissionList: PermissionElement[]): Observable<Node> {
-       return this.nodeService.getNode(nodeId).pipe(
+        return this.nodeService.getNode(nodeId).pipe(
             switchMap((node) => this.updateLocallySetPermissions(node, permissionList))
         );
     }
@@ -110,12 +127,12 @@ export class NodePermissionService {
      * @returns Node with updated permissions
      */
     updateLocallySetPermissions(node: Node, permissions: PermissionElement[]): Observable<Node> {
-        const permissionBody = { permissions: { locallySet: []} };
+        const permissionBody = { permissions: { locallySet: [] } };
         const permissionList = permissions;
         const duplicatedPermissions = this.getDuplicatedPermissions(node.permissions.locallySet, permissionList);
         if (duplicatedPermissions.length > 0) {
             const list = duplicatedPermissions.map((permission) => 'authority -> ' + permission.authorityId + ' / role -> ' + permission.name).join(', ');
-            const duplicatePermissionMessage: string = this.translation.instant('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION',  {list});
+            const duplicatePermissionMessage: string = this.translation.instant('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION', { list });
             return throwError(duplicatePermissionMessage);
         }
         permissionBody.permissions.locallySet = node.permissions.locallySet ? node.permissions.locallySet.concat(permissionList) : permissionList;
@@ -137,8 +154,8 @@ export class NodePermissionService {
 
     private isEqualPermission(oldPermission: PermissionElement, newPermission: PermissionElement): boolean {
         return oldPermission.accessStatus === newPermission.accessStatus &&
-               oldPermission.authorityId === newPermission.authorityId &&
-               oldPermission.name === newPermission.name;
+            oldPermission.authorityId === newPermission.authorityId &&
+            oldPermission.name === newPermission.name;
     }
 
     /**
@@ -181,7 +198,7 @@ export class NodePermissionService {
      * @returns List of members
      */
     getGroupMemberByGroupName(groupName: string, opts?: any): Observable<GroupMemberPaging> {
-        return from(this.apiService.groupsApi.listGroupMemberships(groupName, opts));
+        return from(this.groupsApi.listGroupMemberships(groupName, opts));
     }
 
     private formattedRoleName(displayName, siteName): string {
@@ -245,10 +262,10 @@ export class NodePermissionService {
         const permissionBody = { permissions: { locallySet: [] } };
 
         permissions.forEach((permission) => {
-                const index = node.permissions.locallySet.findIndex((locallySet) =>  locallySet.authorityId === permission.authorityId);
-                if (index !== -1) {
-                    node.permissions.locallySet.splice(index, 1);
-                }
+            const index = node.permissions.locallySet.findIndex((locallySet) => locallySet.authorityId === permission.authorityId);
+            if (index !== -1) {
+                node.permissions.locallySet.splice(index, 1);
+            }
         });
         permissionBody.permissions.locallySet = node.permissions.locallySet;
         return this.nodeService.updateNode(node.id, permissionBody);
@@ -271,37 +288,37 @@ export class NodePermissionService {
      * @param nodeId Id of the node
      * @returns node and it's associated roles { node: Node; roles: RoleModel[] }
      */
-     getNodeWithRoles(nodeId: string): Observable<{ node: Node; roles: RoleModel[] }> {
-         return this.nodeService.getNode(nodeId).pipe(
+    getNodeWithRoles(nodeId: string): Observable<{ node: Node; roles: RoleModel[] }> {
+        return this.nodeService.getNode(nodeId).pipe(
             switchMap(node => {
                 return forkJoin({
-                     node: of(node),
-                     roles: this.getNodeRoles(node)
-                          .pipe(
-                              catchError(() => of(node.permissions?.settable)),
-                              map(_roles => _roles.map(role => ({ role, label: role }))
-                          )
-                       )
-                    });
-                })
-            );
-     }
+                    node: of(node),
+                    roles: this.getNodeRoles(node)
+                        .pipe(
+                            catchError(() => of(node.permissions?.settable)),
+                            map(_roles => _roles.map(role => ({ role, label: role }))
+                            )
+                        )
+                });
+            })
+        );
+    }
 
-     transformNodeToUserPerson(node: Node): { person: EcmUserModel, group: Group } {
-         let person = null, group = null;
-         if (node.nodeType === 'cm:person') {
-             const firstName = node.properties['cm:firstName'];
-             const lastName =  node.properties['cm:lastName'];
-             const email =  node.properties['cm:email'];
-             const id =  node.properties['cm:userName'];
-             person = new EcmUserModel({ id, firstName, lastName, email});
-         }
+    transformNodeToUserPerson(node: Node): { person: EcmUserModel, group: Group } {
+        let person = null, group = null;
+        if (node.nodeType === 'cm:person') {
+            const firstName = node.properties['cm:firstName'];
+            const lastName = node.properties['cm:lastName'];
+            const email = node.properties['cm:email'];
+            const id = node.properties['cm:userName'];
+            person = new EcmUserModel({ id, firstName, lastName, email });
+        }
 
-         if (node.nodeType === 'cm:authorityContainer') {
-             const displayName = node.properties['cm:authorityDisplayName'] || node.properties['cm:authorityName'];
-             const id = node.properties['cm:authorityName'];
-             group = new Group({ displayName, id });
-         }
-         return  { person, group };
-     }
+        if (node.nodeType === 'cm:authorityContainer') {
+            const displayName = node.properties['cm:authorityDisplayName'] || node.properties['cm:authorityName'];
+            const id = node.properties['cm:authorityName'];
+            group = new Group({ displayName, id });
+        }
+        return { person, group };
+    }
 }

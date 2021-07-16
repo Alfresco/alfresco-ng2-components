@@ -20,7 +20,6 @@ import { CommentModel } from '../models/comment.model';
 import { fakeProcessComment, fakeTasksComment, fakeUser1 } from '../mock/comment-process-service.mock';
 import { CommentProcessService } from './comment-process.service';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -29,7 +28,6 @@ declare let jasmine: any;
 describe('Comment ProcessService Service', () => {
 
     let service: CommentProcessService;
-    let alfrescoApi: any;
 
     setupTestBed({
         imports: [
@@ -40,7 +38,6 @@ describe('Comment ProcessService Service', () => {
 
     beforeEach(() => {
         service = TestBed.inject(CommentProcessService);
-        alfrescoApi = TestBed.inject(AlfrescoApiService).getInstance();
     });
 
     beforeEach(() => {
@@ -60,7 +57,7 @@ describe('Comment ProcessService Service', () => {
             let getProcessInstanceComments: jasmine.Spy;
 
             beforeEach(() => {
-                getProcessInstanceComments = spyOn(alfrescoApi.activiti.commentsApi, 'getProcessInstanceComments')
+                getProcessInstanceComments = spyOn(service['commentsApi'], 'getProcessInstanceComments')
                     .and
                     .returnValue(Promise.resolve({data: [fakeProcessComment, fakeProcessComment]}));
             });
@@ -108,7 +105,7 @@ describe('Comment ProcessService Service', () => {
             let addProcessInstanceComment: jasmine.Spy;
 
             beforeEach(() => {
-                addProcessInstanceComment = spyOn(alfrescoApi.activiti.commentsApi, 'addProcessInstanceComment')
+                addProcessInstanceComment = spyOn(service['commentsApi'], 'addProcessInstanceComment')
                     .and
                     .returnValue(Promise.resolve(fakeProcessComment));
             });

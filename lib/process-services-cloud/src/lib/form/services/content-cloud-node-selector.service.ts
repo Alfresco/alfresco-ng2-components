@@ -18,64 +18,71 @@
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
-import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction } from '@alfresco/adf-content-services';
-import { Node } from '@alfresco/js-api';
+import {
+    ContentNodeSelectorComponent,
+    ContentNodeSelectorComponentData,
+    NodeAction
+} from '@alfresco/adf-content-services';
+import { Node, NodesApi } from '@alfresco/js-api';
 import { Observable, Subject, throwError } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ContentCloudNodeSelectorService {
 
-  constructor(
-    private apiService: AlfrescoApiService,
-    private dialog: MatDialog) {
-  }
+    nodesApi: NodesApi;
 
-  openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {
-    const select = new Subject<Node[]>();
-    select.subscribe({
-      complete: this.close.bind(this)
-    });
-    const data = <ContentNodeSelectorComponentData> {
-      title: 'Select a file',
-      actionName: NodeAction.ATTACH,
-      currentFolderId,
-      restrictRootToCurrentFolderId,
-      select,
-      selectionMode,
-      isSelectionValid: (entry: Node) => entry.isFile,
-      showFilesInResult: true,
-      showDropdownSiteList: false,
-      showLocalUploadButton: isAllFileSources
-  };
-    this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '66%');
-    return select;
-  }
+    constructor(
+        private apiService: AlfrescoApiService,
+        private dialog: MatDialog) {
+        this.nodesApi = new NodesApi(this.apiService.getInstance());
+    }
+
+    openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {
+        const select = new Subject<Node[]>();
+        select.subscribe({
+            complete: this.close.bind(this)
+        });
+        const data = <ContentNodeSelectorComponentData> {
+            title: 'Select a file',
+            actionName: NodeAction.ATTACH,
+            currentFolderId,
+            restrictRootToCurrentFolderId,
+            select,
+            selectionMode,
+            isSelectionValid: (entry: Node) => entry.isFile,
+            showFilesInResult: true,
+            showDropdownSiteList: false,
+            showLocalUploadButton: isAllFileSources
+        };
+        this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '66%');
+        return select;
+    }
 
     async fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
-        const relativePathNodeEntry: any = await this.apiService.getInstance().node
-        .getNode(alias, opts)
-        .catch((err) => this.handleError(err));
+        const relativePathNodeEntry: any = await this.nodesApi
+            .getNode(alias, opts)
+            .catch((err) => this.handleError(err));
         return relativePathNodeEntry?.entry?.id;
     }
 
     async fetchAliasNodeId(alias: string): Promise<string> {
-        const aliasNodeEntry: any = await this.apiService.getInstance().node
-        .getNode(alias)
-        .catch((err) => this.handleError(err));
+        const aliasNodeEntry: any = await this.nodesApi
+            .getNode(alias)
+            .catch((err) => this.handleError(err));
         return aliasNodeEntry?.entry?.id;
     }
 
-  private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
-    this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
-  }
+    private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
+        this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
+    }
 
-  close() {
-    this.dialog.closeAll();
-  }
+    close() {
+        this.dialog.closeAll();
+    }
 
-  private handleError(error: any): Observable<any> {
-    return throwError(error || 'Server error');
-  }
+    private handleError(error: any): Observable<any> {
+        return throwError(error || 'Server error');
+    }
 }

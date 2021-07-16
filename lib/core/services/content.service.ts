@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ContentApi, MinimalNode, Node, NodeEntry } from '@alfresco/js-api';
+import { ContentApi, MinimalNode, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -38,12 +38,17 @@ export class ContentService {
     folderCreate: Subject<MinimalNode> = new Subject<MinimalNode>();
     folderEdit: Subject<MinimalNode> = new Subject<MinimalNode>();
 
+    private contentApi: ContentApi;
+    private nodesApi: NodesApi;
+
     constructor(public authService: AuthenticationService,
                 public apiService: AlfrescoApiService,
                 private logService: LogService,
                 private sanitizer: DomSanitizer,
                 private downloadService: DownloadService,
                 private thumbnailService: ThumbnailService) {
+        this.contentApi = new ContentApi(apiService.getInstance());
+        this.nodesApi = new NodesApi(apiService.getInstance());
     }
 
     /**
@@ -57,26 +62,6 @@ export class ContentService {
     }
 
     /**
-     * @deprecated in 3.2.0, use DownloadService instead.
-     * Invokes content download for a data array with a file name.
-     * @param data Data to download.
-     * @param fileName Name of the resulting file.
-     */
-    downloadData(data: any, fileName: string): void {
-        this.downloadService.downloadData(data, fileName);
-    }
-
-    /**
-     * @deprecated in 3.2.0, use DownloadService instead.
-     * Invokes content download for a JSON object with a file name.
-     * @param json JSON object to download.
-     * @param fileName Name of the resulting file.
-     */
-    downloadJSON(json: any, fileName: string): void {
-        this.downloadService.downloadJSON(json, fileName);
-    }
-
-    /**
      * Creates a trusted object URL from the Blob.
      * WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
      * @param  blob Data to wrap into object URL
@@ -85,10 +70,6 @@ export class ContentService {
     createTrustedUrl(blob: Blob): string {
         const url = window.URL.createObjectURL(blob);
         return <string> this.sanitizer.bypassSecurityTrustUrl(url);
-    }
-
-    private get contentApi(): ContentApi {
-        return this.apiService.getInstance().content;
     }
 
     /**
@@ -132,7 +113,7 @@ export class ContentService {
      * @returns Content data
      */
     getNodeContent(nodeId: string): Observable<any> {
-        return from(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId))
+        return from(this.nodesApi.getNodeContent(nodeId))
             .pipe(
                 catchError((err: any) => this.handleError(err))
             );
@@ -145,7 +126,7 @@ export class ContentService {
      * @returns Details of the folder
      */
     getNode(nodeId: string, opts?: any): Observable<NodeEntry> {
-        return from(this.apiService.getInstance().nodes.getNode(nodeId, opts));
+        return from(this.nodesApi.getNode(nodeId, opts));
     }
 
     /**
@@ -159,13 +140,13 @@ export class ContentService {
         let hasPermissions = false;
         userId = userId ?? this.authService.getEcmUsername();
 
-        const permissions = [ ...(node.permissions?.locallySet || []), ...(node.permissions?.inherited || []) ]
-             .filter((currentPermission) => currentPermission.authorityId === userId);
+        const permissions = [...(node.permissions?.locallySet || []), ...(node.permissions?.inherited || [])]
+            .filter((currentPermission) => currentPermission.authorityId === userId);
         if (permissions.length) {
             if (permission && permission.startsWith('!')) {
-                hasPermissions = permissions.find((currentPermission) => currentPermission.name === permission.replace('!', '')) ? false : true;
+                hasPermissions = !permissions.find((currentPermission) => currentPermission.name === permission.replace('!', ''));
             } else {
-                hasPermissions = permissions.find((currentPermission) => currentPermission.name === permission) ? true : false;
+                hasPermissions = !!permissions.find((currentPermission) => currentPermission.name === permission);
             }
 
         } else {
@@ -193,9 +174,9 @@ export class ContentService {
 
         if (node && node.allowableOperations) {
             if (allowableOperation && allowableOperation.startsWith('!')) {
-                hasAllowableOperations = node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation.replace('!', '')) ? false : true;
+                hasAllowableOperations = !node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation.replace('!', ''));
             } else {
-                hasAllowableOperations = node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation) ? true : false;
+                hasAllowableOperations = !!node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation);
             }
 
         } else {

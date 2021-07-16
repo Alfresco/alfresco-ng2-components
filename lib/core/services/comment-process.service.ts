@@ -22,14 +22,18 @@ import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { map, catchError } from 'rxjs/operators';
+import { ActivitiCommentsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CommentProcessService {
 
+    private commentsApi: ActivitiCommentsApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.commentsApi = new ActivitiCommentsApi(this.apiService.getInstance());
     }
 
     /**
@@ -39,7 +43,7 @@ export class CommentProcessService {
      * @returns Details about the comment
      */
     addTaskComment(taskId: string, message: string): Observable<CommentModel> {
-        return from(this.apiService.getInstance().activiti.taskApi.addTaskComment({ message: message }, taskId))
+        return from(this.commentsApi.addTaskComment({ message: message }, taskId))
             .pipe(
                 map((response) => {
                     return new CommentModel({
@@ -59,7 +63,7 @@ export class CommentProcessService {
      * @returns Details for each comment
      */
     getTaskComments(taskId: string): Observable<CommentModel[]> {
-        return from(this.apiService.getInstance().activiti.taskApi.getTaskComments(taskId))
+        return from(this.commentsApi.getTaskComments(taskId))
             .pipe(
                 map((response) => {
                     const comments: CommentModel[] = [];
@@ -84,7 +88,7 @@ export class CommentProcessService {
      * @returns Details for each comment
      */
     getProcessInstanceComments(processInstanceId: string): Observable<CommentModel[]> {
-        return from(this.apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(processInstanceId))
+        return from(this.commentsApi.getProcessInstanceComments(processInstanceId))
             .pipe(
                 map((response) => {
                     const comments: CommentModel[] = [];
@@ -111,7 +115,7 @@ export class CommentProcessService {
      */
     addProcessInstanceComment(processInstanceId: string, message: string): Observable<CommentModel> {
         return from(
-            this.apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({ message: message }, processInstanceId)
+            this.commentsApi.addProcessInstanceComment({ message: message }, processInstanceId)
         ).pipe(
             map((response) => {
                 return new CommentModel({

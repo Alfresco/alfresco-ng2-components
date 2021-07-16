@@ -18,7 +18,7 @@
 /* tslint:disable:component-selector no-input-rename */
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { DeletedNodeEntry, DeletedNodesPaging, PathInfoEntity } from '@alfresco/js-api';
+import { TrashcanApi, DeletedNodeEntry, DeletedNodesPaging, PathInfoEntity } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
@@ -35,6 +35,7 @@ export class RestoreMessageModel {
 })
 export class NodeRestoreDirective {
     private readonly restoreProcessStatus;
+    private trashcanApi: TrashcanApi;
 
     /** Array of deleted nodes to restore. */
     @Input('adf-restore')
@@ -52,6 +53,7 @@ export class NodeRestoreDirective {
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private translation: TranslationService) {
         this.restoreProcessStatus = this.processStatus();
+        this.trashcanApi = new TrashcanApi(this.alfrescoApiService.getInstance());
     }
 
     private recover(selection: any) {
@@ -100,8 +102,7 @@ export class NodeRestoreDirective {
     }
 
     private getDeletedNodes(): Observable<DeletedNodesPaging> {
-        const promise = this.alfrescoApiService.getInstance()
-            .core.nodesApi.getDeletedNodes({ include: ['path'] });
+        const promise = this.trashcanApi.listDeletedNodes({ include: ['path'] });
 
         return from(promise);
     }
@@ -109,7 +110,7 @@ export class NodeRestoreDirective {
     private restoreNode(node): Observable<any> {
         const { entry } = node;
 
-        const promise = this.alfrescoApiService.getInstance().nodes.restoreNode(entry.id);
+        const promise = this.trashcanApi.restoreDeletedNode(entry.id);
 
         return from(promise).pipe(
             map(() => ({

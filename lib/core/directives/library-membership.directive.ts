@@ -16,7 +16,13 @@
  */
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { SiteEntry, SiteMembershipRequestBody, SiteMemberEntry, SiteMembershipRequestEntry } from '@alfresco/js-api';
+import {
+    SiteEntry,
+    SiteMembershipRequestBody,
+    SiteMemberEntry,
+    SiteMembershipRequestEntry,
+    SitesApi
+} from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { SitesService } from '../services/sites.service';
@@ -42,6 +48,8 @@ export class LibraryMembershipDirective implements OnChanges {
 
     isJoinRequested: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+    private sitesApi: SitesApi;
+
     /** Site for which to toggle the membership request. */
     @Input('adf-library-membership')
     selection: SiteEntry = null;
@@ -66,7 +74,9 @@ export class LibraryMembershipDirective implements OnChanges {
         private alfrescoApiService: AlfrescoApiService,
         private sitesService: SitesService,
         private versionCompatibilityService: VersionCompatibilityService
-    ) {}
+    ) {
+        this.sitesApi = new SitesApi(this.alfrescoApiService.getInstance());
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         if (!changes.selection.currentValue || !changes.selection.currentValue.entry) {
@@ -209,7 +219,7 @@ export class LibraryMembershipDirective implements OnChanges {
         if (this.versionCompatibilityService.isVersionSupported('7.0.0')) {
             memberBody.client = 'workspace';
         }
-        return from(this.alfrescoApiService.peopleApi.addSiteMembershipRequest('-me-', memberBody));
+        return from(this.sitesApi.createSiteMembershipRequestForPerson('-me-', memberBody));
     }
 
     private joinLibrary() {
@@ -220,10 +230,10 @@ export class LibraryMembershipDirective implements OnChanges {
     }
 
     private cancelJoinRequest() {
-        return from(this.alfrescoApiService.peopleApi.removeSiteMembershipRequest('-me-', this.targetSite.id));
+        return from(this.sitesApi.deleteSiteMembershipRequestForPerson('-me-', this.targetSite.id));
     }
 
     private getMembershipRequest() {
-        return from(this.alfrescoApiService.peopleApi.getSiteMembershipRequest('-me-', this.targetSite.id));
+        return from(this.sitesApi.getSiteMembershipRequestForPerson('-me-', this.targetSite.id));
     }
 }

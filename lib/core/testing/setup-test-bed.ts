@@ -44,6 +44,5 @@ export const setupTestBed = (moduleDef: TestModuleMetadata) => {
                 .catch(done.fail);
       }
     );
-​
     afterAll(() => allowAngularToReset());
 };
