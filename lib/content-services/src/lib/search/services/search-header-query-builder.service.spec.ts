@@ -20,11 +20,13 @@ import { AppConfigService, CoreModule, setupTestBed } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from './search-header-query-builder.service';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SearchHeaderQueryBuilderService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreModule.forRoot(),
             ContentTestingModule
         ]
