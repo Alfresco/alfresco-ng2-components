@@ -17,4 +17,3 @@
 
 /** @deprecated */
 // TODO: We need to split adf-testing into smaller chunks
-export * from './src/public-api';
