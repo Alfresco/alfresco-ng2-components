@@ -64,6 +64,10 @@ export class AuthenticationService {
      * @returns True if logged in, false otherwise
      */
     isLoggedIn(): boolean {
+        if (this.isKerberosConfigured()) {
+            return true;
+        }
+
         if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
             return false;
         }
@@ -224,6 +228,10 @@ export class AuthenticationService {
      * @returns True if logged in, false otherwise
      */
     isEcmLoggedIn(): boolean {
+        if (this.isKerberosConfigured()) {
+            return true;
+        }
+
         if (this.isECMProvider() || this.isALLProvider()) {
             if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
                 return false;
@@ -245,6 +253,10 @@ export class AuthenticationService {
             return this.alfrescoApi.getInstance().isBpmLoggedIn();
         }
         return false;
+    }
+
+    isKerberosConfigured(): boolean {
+        return this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false);
     }
 
     /**
