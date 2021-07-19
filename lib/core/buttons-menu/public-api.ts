@@ -15,5 +15,5 @@
  * limitations under the License.
  */
 
-export * from './buttons-menu.component';
+// export * from './buttons-menu.component';
 export * from './buttons-menu.module';
