@@ -396,7 +396,7 @@ These changes are noted with an arrow "->".
 
 -   `adf-material-icons`
 
-#### [../../lib/core/card-view/components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component.scss](../../lib/core/card-view/components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component.scss)
+#### [../../lib/core/card-view/components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component.scss](../../lib/core/card-view/components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.theme.scss)
 
 -   `adf-card-view`
 
