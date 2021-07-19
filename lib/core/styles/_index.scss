@@ -30,7 +30,7 @@
 @import '../layout/components/sidenav-layout/sidenav-layout.component';
 @import '../templates/empty-content/empty-content.component';
 @import '../templates/error-content/error-content.component';
-@import '../../core/clipboard/clipboard.component';
+@import '../clipboard/clipboard.theme';
 @import '../../core/search-text/search-text-input.component';
 @import './snackbar';
 @import '../directives/tooltip-card/tooltip-card.component';
