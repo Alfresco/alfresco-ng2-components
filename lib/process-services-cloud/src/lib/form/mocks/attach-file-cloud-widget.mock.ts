@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Node, NodeEntry } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { FileSourceTypes, DestinationFolderPathType } from '../models/form-cloud-representation.model';
 
 export const fakeLocalPngResponse = {
@@ -227,16 +227,16 @@ export const expectedValues = {
     pfx_property_two: true
 };
 
-export const mockNodeId = new Promise<NodeEntry>(function(resolve) {
-    resolve(<NodeEntry> { entry: { id: 'mock-node-id' } });
+export const mockNodeId = new Promise<string>(function(resolve) {
+    resolve('mock-node-id');
 });
 
-export const mockNodeIdBasedOnStringVariableValue = new Promise<NodeEntry>(function(resolve) {
-    resolve(<NodeEntry> { entry: { id: 'mock-string-value-node-id'} });
+export const mockNodeIdBasedOnStringVariableValue = new Promise<string>(function(resolve) {
+    resolve('mock-string-value-node-id');
 });
 
-export const mockNodeIdBasedOnFolderVariableValue = new Promise<NodeEntry>(function(resolve) {
-    resolve(<NodeEntry> { entry: { id: 'mock-folder-value-node-id' } });
+export const mockNodeIdBasedOnFolderVariableValue = new Promise(function(resolve) {
+    resolve('mock-folder-value-node-id');
 });
 
 export const fakeLocalPngAnswer = {

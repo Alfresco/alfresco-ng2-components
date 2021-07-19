@@ -59,49 +59,65 @@ describe('ContentCloudNodeSelectorService', () => {
             afterOpened: () => of({}),
             afterClosed: () => of({}),
             componentInstance: {
+                body: '',
                 error: new Subject<any>()
             }
         });
         getNodeSpy = spyOn(apiService.nodesApi, 'getNode');
     });
 
-    it('should be able to open the content node select panel dialog', () => {
-        service.openUploadFileDialog('nodeId', 'single', true, true);
-        expect(openDialogSpy).toHaveBeenCalled();
+    it('should be able to set sourceNodeNotFound value to true if the relative path is invalid/deleted', async () => {
+        expect(service.sourceNodeNotFound).toBe(false);
+
+        getNodeSpy.and.returnValue(Promise.reject('Not exists'));
+        await service.fetchNodeIdFromRelativePath('mock-alias', { relativePath: 'mock-wrong-relativePath' });
+
+        expect(getNodeSpy).toHaveBeenCalledWith('mock-alias', {
+            relativePath: 'mock-wrong-relativePath'
+        });
+        expect(service.sourceNodeNotFound).toBe(true);
     });
 
-    it('should be able to show an notification if the relative path is invalid/deleted', async () => {
-        getNodeSpy.and.returnValue(Promise.reject('Not exists'));
-        const relativePathNodeEntry = await service.fetchNodeFromRelativePath('mock-alias', { relativePath: 'mock-relativePath' });
-        service.openUploadFileDialog('nodeId', 'single', true, true).subscribe(() => {
-            expect(openDialogSpy).toHaveBeenCalled();
-            expect(service.sourceNodeNotFound).toBe(true);
-            expect(showWarningSpy).toHaveBeenCalledWith('success');
-            expect(relativePathNodeEntry).toBeNull();
-        });
+    it('should be able to set sourceNodeNotFound value to false after the dialog close', async () => {
+        service.sourceNodeNotFound = true;
+        service.openUploadFileDialog('nodeId', 'single', true, true);
+
+        expect(openDialogSpy).toHaveBeenCalled();
+
+        service.close();
+
+        expect(service.sourceNodeNotFound).toBe(false);
+    });
+
+    it('should be able to show an notification if the relative path is invalid/deleted', () => {
+        service.sourceNodeNotFound = true;
+        service.openUploadFileDialog('nodeId', 'single', true, true);
+
+        expect(openDialogSpy).toHaveBeenCalled();
+        expect(showWarningSpy).toHaveBeenCalledWith('ADF_CLOUD_TASK_FORM.ERROR.DESTINATION_FOLDER_PATH_ERROR');
     });
 
     it('should not show a notification if the relative path is valid', () => {
-        getNodeSpy.and.returnValue(Promise.resolve(relativePathNodeResponseBody));
+        service.sourceNodeNotFound = false;
         service.openUploadFileDialog('nodeId', 'single', true, true);
 
         expect(openDialogSpy).toHaveBeenCalled();
-        expect(service.sourceNodeNotFound).toBe(false);
         expect(showWarningSpy).not.toHaveBeenCalled();
     });
 
     it('should be able to fetch given relative path node id', async () => {
         getNodeSpy.and.returnValue(Promise.resolve(relativePathNodeResponseBody));
-        await service.fetchNodeFromRelativePath('mock-alias', { relativePath: 'mock-relativePath' });
+        await service.fetchNodeIdFromRelativePath('mock-alias', { relativePath: 'mock-relativePath' });
 
         expect(getNodeSpy).toHaveBeenCalledWith('mock-alias', {
             relativePath: 'mock-relativePath'
         });
+        expect(service.sourceNodeNotFound).toBe(false);
     });
 
     it('should be able to fetch given alias node id', async () => {
         getNodeSpy.and.returnValue(Promise.resolve(aliasNodeResponseBody));
-        await service.fetchAliasNode('mock-alias');
+        await service.fetchAliasNodeId('mock-alias');
 
         expect(getNodeSpy).toHaveBeenCalledWith('mock-alias');
     });

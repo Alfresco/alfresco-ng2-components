@@ -29,7 +29,7 @@ import {
     AlfrescoApiService,
     UploadWidgetContentLinkModel
 } from '@alfresco/adf-core';
-import { Node, NodeEntry, RelatedContentRepresentation } from '@alfresco/js-api';
+import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
@@ -151,8 +151,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
         if (!rootNodeId) {
             try {
-                const nodeEntry = await this.getNodeBasedOnPath(destinationFolderPath);
-                rootNodeId = nodeEntry?.entry ? nodeEntry.entry.id : destinationFolderPath.alias;
+                const nodeId = await this.getNodeIdBasedOnPath(destinationFolderPath);
+                rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
             } catch (error) {
                 this.logService.error(error);
             }
@@ -161,17 +161,16 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return rootNodeId;
     }
 
-    private async getNodeBasedOnPath(destinationFolderPath: DestinationFolderPathModel): Promise<NodeEntry> {
-        let nodeEntry: NodeEntry;
+    private async getNodeIdBasedOnPath(destinationFolderPath: DestinationFolderPathModel) {
+        let nodeId: string;
         if (destinationFolderPath.path) {
-            nodeEntry = await this.contentNodeSelectorService.fetchNodeFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
+            nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
+        }
+        if (!nodeId) {
+            nodeId = await this.contentNodeSelectorService.fetchAliasNodeId(destinationFolderPath.alias);
         }
 
-        if (!nodeEntry?.entry?.id) {
-            nodeEntry = await this.contentNodeSelectorService.fetchAliasNode(destinationFolderPath.alias);
-        }
-
-        return nodeEntry;
+        return nodeId;
     }
 
     getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath: string): DestinationFolderPathModel {

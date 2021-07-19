@@ -16,12 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, NotificationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction } from '@alfresco/adf-content-services';
-import { Node, NodeEntry } from '@alfresco/js-api';
-import { from, Observable, of, Subject, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Node } from '@alfresco/js-api';
+import { Observable, Subject, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -32,49 +31,44 @@ export class ContentCloudNodeSelectorService {
 
     constructor(
         private apiService: AlfrescoApiService,
-        private logService: LogService,
         private notificationService: NotificationService,
         private dialog: MatDialog) {
     }
 
     openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {
         const select = new Subject<Node[]>();
-        select.subscribe({
-        complete: this.close.bind(this)
-        });
+        select.subscribe({ complete: this.close.bind(this) });
         const data = <ContentNodeSelectorComponentData> {
-        title: 'Select a file',
-        actionName: NodeAction.ATTACH,
-        currentFolderId,
-        restrictRootToCurrentFolderId,
-        select,
-        selectionMode,
-        isSelectionValid: (entry: Node) => entry.isFile,
-        showFilesInResult: true,
-        showDropdownSiteList: false,
-        showLocalUploadButton: isAllFileSources
-    };
+            title: 'Select a file',
+            actionName: NodeAction.ATTACH,
+            currentFolderId,
+            restrictRootToCurrentFolderId,
+            select,
+            selectionMode,
+            isSelectionValid: (entry: Node) => entry.isFile,
+            showFilesInResult: true,
+            showDropdownSiteList: false,
+            showLocalUploadButton: isAllFileSources
+        };
         this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '66%');
         return select;
     }
 
-    fetchNodeFromRelativePath(alias: string, opts: { relativePath: string }): Promise<NodeEntry> {
-        return from(this.apiService.nodesApi.getNode(alias, opts)).pipe(
-            catchError((error) => {
-                this.sourceNodeNotFound = true;
-                this.handleError(error);
-                return of(<NodeEntry> {});
-            })
-        ).toPromise();
+    async fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
+        const relativePathNodeEntry: any = await this.apiService.nodesApi
+        .getNode(alias, opts)
+        .catch((err) => {
+            this.sourceNodeNotFound = true;
+            return this.handleError(err);
+        });
+        return relativePathNodeEntry?.entry?.id;
     }
 
-    fetchAliasNode(alias: string): Promise<NodeEntry> {
-        return from(this.apiService.nodesApi.getNode(alias)).pipe(
-            catchError((error) => {
-                this.handleError(error);
-                return of(<NodeEntry> {});
-            })
-        ).toPromise();
+    async fetchAliasNodeId(alias: string): Promise<string> {
+        const aliasNodeEntry: any = await this.apiService.nodesApi
+        .getNode(alias)
+        .catch((err) => this.handleError(err));
+        return aliasNodeEntry?.entry?.id;
     }
 
     private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
@@ -94,7 +88,6 @@ export class ContentCloudNodeSelectorService {
     }
 
     private handleError(error: any): Observable<any> {
-        this.logService.error(error);
         return throwError(error || 'Server error');
     }
 }
