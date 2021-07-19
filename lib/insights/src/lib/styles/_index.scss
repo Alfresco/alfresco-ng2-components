@@ -1,6 +1,6 @@
-@import '../analytics-process/components/analytics-report-parameters.component';
-@import '../analytics-process/components/analytics-report-list.component';
-@import '../analytics-process/components/widgets/date-range/date-range.widget';
+@import '../analytics-process/components/analytics-report-parameters.theme';
+@import '../analytics-process/components/analytics-report-list.theme';
+@import '../analytics-process/components/widgets/date-range/date-range.theme';
 
 @mixin adf-insights-theme($theme) {
     @include adf-analytics-report-list-theme($theme);
