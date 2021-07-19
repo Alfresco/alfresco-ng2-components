@@ -1,6 +1,11 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../dist/core/",
+  "assets": [
+    "./styles/**/*.scss",
+    "./theming/**/*.scss",
+    "./**/*.theme.scss"
+  ],
   "whitelistedNonPeerDependencies": [
     "cropperjs"
   ],
