@@ -400,7 +400,7 @@ These changes are noted with an arrow "->".
 
 -   `adf-card-view`
 
-#### [../../lib/core/comments/comment-list.component.scss](../../lib/core/comments/comment-list.component.scss)
+#### [../../lib/core/comments/comment-list.component.scss](../../lib/core/comments/comment-list.theme.scss)
 
 -   `adf-is-selected`
 
