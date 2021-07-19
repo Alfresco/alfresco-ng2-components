@@ -46,7 +46,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     /** Toggles display of the claim/release button. */
     @Input()
-    showClaimRelease = true;
+    showClaimRelease = false;
 
     /** Emitted when the task is claimed. */
     @Output()
