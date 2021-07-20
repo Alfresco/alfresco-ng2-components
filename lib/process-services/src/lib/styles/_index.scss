@@ -1,15 +1,15 @@
-@import '../process-list/components/process-filters.component';
-@import '../process-comments/process-comments.component';
-@import '../people/people.module';
-@import '../task-list/components/start-task.component';
-@import '../task-list/components/task-filters.component';
-@import '../task-list/components/task-header.component';
-@import '../task-list/components/task-standalone.component';
-@import '../app-list/apps-list.component';
-@import '../content-widget/attach-file-widget-dialog.component';
-@import '../form/start-form.component';
-@import '../process-list/components/start-process.component';
-@import '../task-list/components/task-form/task-form.component';
+@import '../process-list/components/process-filters.theme';
+@import '../process-comments/process-comments.theme';
+@import '../people/people.theme';
+@import '../task-list/components/start-task.theme';
+@import '../task-list/components/task-filters.theme';
+@import '../task-list/components/task-header.theme';
+@import '../task-list/components/task-standalone.theme';
+@import '../app-list/apps-list.theme';
+@import '../content-widget/attach-file-widget-dialog.theme';
+@import '../form/start-form.theme';
+@import '../process-list/components/start-process.theme';
+@import '../task-list/components/task-form/task-form.theme';
 
 @mixin adf-process-services-theme($theme) {
     @include adf-process-filters-theme($theme);

@@ -1,37 +1,37 @@
-@import '../breadcrumb/breadcrumb.component';
-@import '../breadcrumb/dropdown-breadcrumb.component';
-@import '../content-node-selector/content-node-selector-panel.component';
-@import '../content-node-selector/name-location-cell/name-location-cell.component';
-@import '../document-list/components/document-list.component';
+@import '../breadcrumb/breadcrumb.theme';
+@import '../breadcrumb/dropdown-breadcrumb.theme';
+@import '../content-node-selector/content-node-selector-panel.theme';
+@import '../content-node-selector/name-location-cell/name-location-cell.theme';
+@import '../document-list/components/document-list.theme';
 
-@import '../upload/components/file-uploading-list-row.component';
-@import '../upload/components/file-uploading-dialog.component';
-@import '../upload/components/upload-drag-area.component';
+@import '../upload/components/file-uploading-list-row.theme';
+@import '../upload/components/file-uploading-dialog.theme';
+@import '../upload/components/upload-drag-area.theme';
 
-@import '../search/components/search-control.component';
-@import '../search/components/search-sorting-picker/search-sorting-picker.component';
-@import '../search/components/search-filter/search-filter.component';
-@import '../search/components/search-chip-list/search-chip-list.component';
-@import '../search/components/search-filter-container/search-filter-container.component';
+@import '../search/components/search-control.theme';
+@import '../search/components/search-sorting-picker/search-sorting-picker.theme';
+@import '../search/components/search-filter/search-filter.theme';
+@import '../search/components/search-chip-list/search-chip-list.theme';
+@import '../search/components/search-filter-container/search-filter-container.theme';
 
-@import '../dialogs/folder.dialog';
+@import '../dialogs/folder.dialog.theme';
 
-@import '../content-node-selector/content-node-selector.component';
-@import '../content-node-share/content-node-share.dialog';
-@import '../content-metadata/content-metadata.module';
-@import '../permission-manager/components/permission-list/permission-list.component';
-@import '../permission-manager/components/add-permission/add-permission.component';
-@import '../permission-manager/components/add-permission/add-permission-dialog.component';
-@import '../permission-manager/components/add-permission/add-permission-panel.component';
-@import '../version-manager/version-comparison.component';
-@import '../content-type/content-type-dialog.component';
-@import '../aspect-list/aspect-list.component';
-@import '../permission-manager/components/user-icon-column/user-icon-column.component';
-@import '../permission-manager/components/user-name-column/user-name-column.component';
-@import '../search/components/search-filter-chips/search-filter-chips.component';
-@import '../search/components/search-facet-field/search-facet-field.component';
-@import '../search/components/search-form/search-form.component';
-@import '../search/components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.component';
+@import '../content-node-selector/content-node-selector.theme';
+@import '../content-node-share/content-node-share.dialog.theme';
+@import '../content-metadata/content-metadata.theme';
+@import '../permission-manager/components/permission-list/permission-list.theme';
+@import '../permission-manager/components/add-permission/add-permission.theme';
+@import '../permission-manager/components/add-permission/add-permission-dialog.theme';
+@import '../permission-manager/components/add-permission/add-permission-panel.theme';
+@import '../version-manager/version-comparison.theme';
+@import '../content-type/content-type-dialog.theme';
+@import '../aspect-list/aspect-list.theme';
+@import '../permission-manager/components/user-icon-column/user-icon-column.theme';
+@import '../permission-manager/components/user-name-column/user-name-column.theme';
+@import '../search/components/search-filter-chips/search-filter-chips.theme';
+@import '../search/components/search-facet-field/search-facet-field.theme';
+@import '../search/components/search-form/search-form.theme';
+@import '../search/components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.theme';
 
 @mixin adf-content-services-theme($theme) {
     @include adf-breadcrumb-theme($theme);

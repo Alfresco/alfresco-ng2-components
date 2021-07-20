@@ -1,9 +1,9 @@
-@import './components/card-view-arrayitem/card-view-arrayitem.component';
-@import './components/card-view-dateitem/card-view-dateitem.component';
-@import './components/card-view-textitem/card-view-textitem.component';
-@import './components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
-@import './components/card-view/card-view.component';
-@import './components/card-view-selectitem/select-filter-input/select-filter-input.component';
+@import './components/card-view-arrayitem/card-view-arrayitem.theme';
+@import './components/card-view-dateitem/card-view-dateitem.theme';
+@import './components/card-view-textitem/card-view-textitem.theme';
+@import './components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.theme';
+@import './components/card-view/card-view.component.theme';
+@import './components/card-view-selectitem/select-filter-input/select-filter-input.theme';
 @import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
 
 @mixin adf-card-view-module-theme($theme) {

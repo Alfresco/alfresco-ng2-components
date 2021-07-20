@@ -1,13 +1,15 @@
-@import './../app/components/app-details-cloud.component';
-@import './../group/components/group-cloud.component';
-@import './../people/components/people-cloud.component.scss';
-@import './../process/process-filters/components/edit-process-filter-cloud.component.scss';
-@import './../task/task-form/components/task-form-cloud.component';
-@import './../task/start-task/components/start-task-cloud.component.scss';
-@import './../task/task-filters/components/edit-task-filters/base-edit-task-filter-cloud.component.scss';
-@import './../task/task-filters/components/base-task-filters-cloud.component.scss';
-@import './../process/start-process/components/start-process-cloud.component';
-@import './../form/components/widgets/attach-file/attach-file-cloud-widget.component.scss';
+@import '../app/components/app-details-cloud.theme';
+@import '../group/components/group-cloud.theme';
+@import '../people/components/people-cloud.theme';
+@import '../process/process-filters/components/edit-process-filter-cloud.theme';
+@import '../process/start-process/components/start-process-cloud.theme';
+@import '../process/process-filters/components/process-filters-cloud.theme';
+@import '../task/task-form/components/task-form-cloud.theme';
+@import '../task/start-task/components/start-task-cloud.theme';
+@import '../task/task-filters/components/edit-task-filters/base-edit-task-filter-cloud.theme';
+@import '../task/task-filters/components/base-task-filters-cloud.theme';
+@import '../task/task-header/components/task-header-cloud.theme';
+@import '../form/components/widgets/attach-file/attach-file-cloud-widget.theme';
 
 
 @mixin adf-process-services-cloud-theme($theme) {
@@ -21,4 +23,6 @@
     @include adf-cloud-task-form-theme($theme);
     @include adf-cloud-start-service-theme($theme);
     @include adf-cloud-attach-file-cloud-widget($theme);
+    @include adf-task-list-header-theme($theme);
+    @include adf-cloud-process-filters-theme($theme);
 }
