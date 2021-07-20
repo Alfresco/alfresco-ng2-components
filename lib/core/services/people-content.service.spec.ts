@@ -18,7 +18,7 @@
 import { fakeEcmUser, fakeEcmUserList, createNewPersonMock, getFakeUserWithContentAdminCapability } from '../mock/ecm-user.service.mock';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { PeopleContentService, PeopleContentQueryResponse } from './people-content.service';
+import { PeopleContentService, PeopleContentQueryResponse, PeopleContentQueryRequestModel } from './people-content.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { TranslateModule } from '@ngx-translate/core';
@@ -90,6 +90,17 @@ describe('PeopleContentService', () => {
         const listPeopleSpy = spyOn(service.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
         service.listPeople().subscribe(() => {
             expect(listPeopleSpy).toHaveBeenCalled();
+            done();
+        });
+    });
+
+    it('should call listPeople api with requested query params', (done) => {
+        const listPeopleSpy = spyOn(service.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
+        const requestQueryParams: PeopleContentQueryRequestModel = { skipCount: 10, maxItems: 20, sorting: { orderBy: 'firstName', direction: 'asc' } };
+        const expectedValue = { skipCount: 10, maxItems: 20, orderBy: ['firstName ASC'] };
+
+        service.listPeople(requestQueryParams).subscribe(() => {
+            expect(listPeopleSpy).toHaveBeenCalledWith(expectedValue);
             done();
         });
     });

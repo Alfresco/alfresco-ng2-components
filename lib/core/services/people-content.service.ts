@@ -38,9 +38,9 @@ export interface PeopleContentSortingModel {
 }
 
 export interface PeopleContentQueryRequestModel {
-    skipCount: number;
-    maxItems: number;
-    sorting: PeopleContentSortingModel;
+    skipCount?: number;
+    maxItems?: number;
+    sorting?: PeopleContentSortingModel;
 }
 
 @Injectable({
@@ -51,6 +51,8 @@ export class PeopleContentService {
     hasCheckedIsContentAdmin: boolean = false;
 
     private _peopleApi: PeopleApi;
+
+    defaultSorting = ['firstName ASC'];
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
 
@@ -85,13 +87,13 @@ export class PeopleContentService {
      * @returns Response containing pagination and list of entries
      */
     listPeople(requestQuery?: PeopleContentQueryRequestModel): Observable<PeopleContentQueryResponse> {
-        const orderBy = this.buildOrderArray(requestQuery.sorting.orderBy, requestQuery.sorting.direction);
-        const queryParams = {
-            skipCount: requestQuery.skipCount,
-            maxItems: requestQuery.maxItems,
+        const orderBy = this.buildOrderArray(requestQuery?.sorting.orderBy, requestQuery?.sorting.direction);
+        const requestQueryParams = {
+            skipCount: requestQuery?.skipCount,
+            maxItems: requestQuery?.maxItems,
             orderBy
         };
-        const promise = this.peopleApi.listPeople(queryParams);
+        const promise = this.peopleApi.listPeople(requestQueryParams);
         return from(promise).pipe(
             map(response => {
                 return {
@@ -126,7 +128,7 @@ export class PeopleContentService {
     }
 
     private buildOrderArray(key: string, direction: string): string[] {
-        return key && direction ? [ `${key} ${direction.toUpperCase()}` ] : ['firstName ASC'];
+        return key && direction ? [ `${key} ${direction.toUpperCase()}` ] : this.defaultSorting ;
     }
 
     private handleError(error: any) {
