@@ -20,7 +20,7 @@ import { AlfrescoApiService, NotificationService, setupTestBed } from '@alfresco
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentCloudNodeSelectorService } from 'process-services-cloud';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData } from '@alfresco/adf-content-services';
 
@@ -46,7 +46,7 @@ describe('ContentCloudNodeSelectorService', () => {
     };
 
     setupTestBed({
-        imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule, MatDialogModule]
+        imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
     });
 
     beforeEach(() => {
@@ -112,7 +112,7 @@ describe('ContentCloudNodeSelectorService', () => {
         expect(service.sourceNodeNotFound).toBe(false);
     });
 
-    it('should be able to show an notification if the relative path is invalid/deleted', () => {
+    it('should be able to show a notification if the relative path is invalid/deleted', () => {
         service.sourceNodeNotFound = true;
         service.openUploadFileDialog('nodeId', 'single', true, true);
 
