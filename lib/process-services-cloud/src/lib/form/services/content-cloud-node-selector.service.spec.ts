@@ -105,8 +105,6 @@ describe('ContentCloudNodeSelectorService', () => {
         service.sourceNodeNotFound = true;
         service.openUploadFileDialog('nodeId', 'single', true, true);
 
-        expect(openDialogSpy).toHaveBeenCalled();
-
         service.close();
 
         expect(service.sourceNodeNotFound).toBe(false);
@@ -116,7 +114,6 @@ describe('ContentCloudNodeSelectorService', () => {
         service.sourceNodeNotFound = true;
         service.openUploadFileDialog('nodeId', 'single', true, true);
 
-        expect(openDialogSpy).toHaveBeenCalled();
         expect(showWarningSpy).toHaveBeenCalledWith('ADF_CLOUD_TASK_FORM.ERROR.DESTINATION_FOLDER_PATH_ERROR');
     });
 
@@ -124,7 +121,6 @@ describe('ContentCloudNodeSelectorService', () => {
         service.sourceNodeNotFound = false;
         service.openUploadFileDialog('nodeId', 'single', true, true);
 
-        expect(openDialogSpy).toHaveBeenCalled();
         expect(showWarningSpy).not.toHaveBeenCalled();
     });
 
