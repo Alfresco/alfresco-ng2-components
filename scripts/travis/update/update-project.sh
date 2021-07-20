@@ -81,7 +81,7 @@ update() {
 
     git push origin $BRANCH_TO_CREATE
 
-    node $BUILD_PIPELINE_DIR/pr-creator.js --token=$TOKEN --title="Update branch for ADF ${PR_NUMBER} and JS-API ${JS_API_INSTALLED}" --head=$BRANCH_TO_CREATE --repo=$NAME_REPO
+    node $BUILD_PIPELINE_DIR/pr-creator.js --token=$TOKEN --title="Update branch for ADF ${PR_NUMBER} and JS-API ${JS_API_INSTALLED} [ci:force]" --head=$BRANCH_TO_CREATE --repo=$NAME_REPO
 
     cd ..
     rm -rf $TEMP_GENERATOR_DIR
