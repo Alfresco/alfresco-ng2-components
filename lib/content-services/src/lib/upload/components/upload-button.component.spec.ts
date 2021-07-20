@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentService, UploadService, setupTestBed, FileUploadErrorEvent } from '@alfresco/adf-core';
+import { ContentService, UploadService, FileUploadErrorEvent } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { UploadButtonComponent } from './upload-button.component';
 import { NodeEntry } from '@alfresco/js-api';
@@ -52,14 +52,13 @@ describe('UploadButtonComponent', () => {
     let uploadService: UploadService;
     let contentService: ContentService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(UploadButtonComponent);
         uploadService = TestBed.inject(UploadService);
         contentService = TestBed.inject(ContentService);
