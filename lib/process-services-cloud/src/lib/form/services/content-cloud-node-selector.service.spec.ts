@@ -22,6 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ContentCloudNodeSelectorService } from 'process-services-cloud';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
+import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData } from '@alfresco/adf-content-services';
 
 describe('ContentCloudNodeSelectorService', () => {
     let service: ContentCloudNodeSelectorService;
@@ -55,15 +56,37 @@ describe('ContentCloudNodeSelectorService', () => {
         dialog = TestBed.inject(MatDialog);
 
         showWarningSpy = spyOn(notificationService, 'showWarning');
-        openDialogSpy = spyOn(dialog, 'open').and.returnValue({
+        openDialogSpy = spyOn(dialog, 'open').and.callFake(() => ({
             afterOpened: () => of({}),
             afterClosed: () => of({}),
             componentInstance: {
                 body: '',
                 error: new Subject<any>()
             }
-        });
+        }));
+
         getNodeSpy = spyOn(apiService.nodesApi, 'getNode');
+    });
+
+    it('should be able to open the content node select panel dialog', () => {
+        const mockData = <ContentNodeSelectorComponentData> {
+            title: 'Select a file',
+            actionName: 'ATTACH',
+            currentFolderId: 'nodeId',
+            selectionMode: 'single'
+        };
+
+        service.openUploadFileDialog('nodeId', 'single', true, true);
+
+        const args = openDialogSpy.calls.allArgs()[0];
+
+        expect(openDialogSpy).toHaveBeenCalled();
+        expect(args[0]).toEqual(ContentNodeSelectorComponent);
+        expect(args[1].data.title).toEqual(mockData.title);
+        expect(args[1].data.actionName).toEqual(mockData.actionName);
+        expect(args[1].panelClass).toEqual('adf-content-node-selector-dialog');
+        expect(args[1].data.selectionMode).toEqual(mockData.selectionMode);
+        expect(args[1].data.currentFolderId).toEqual('nodeId');
     });
 
     it('should be able to set sourceNodeNotFound value to true if the relative path is invalid/deleted', async () => {
