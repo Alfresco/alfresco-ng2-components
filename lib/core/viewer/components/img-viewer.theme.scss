@@ -1,6 +1,7 @@
 @mixin adf-image-viewer-theme($theme) {
+    $accent: map-get($theme, accent);
     $background: map-get($theme, background);
-    $viewer-image-outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;
+    $viewer-image-outline: 1px solid mat-color($accent, A200) !default;
 
     .adf-image-viewer {
         width: 100%;

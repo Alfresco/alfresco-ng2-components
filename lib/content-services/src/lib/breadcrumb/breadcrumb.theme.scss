@@ -5,7 +5,7 @@
     $foreground: map-get($theme, foreground);
 
     $breadcrumb-chevron-spacer: 2px;
-    $breadcrumb-outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;
+    $breadcrumb-outline: 1px solid mat-color($accent, A200) !default;
 
     .adf-breadcrumb {
         display: flex;
