@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserPreferencesService } from '../services/user-preferences.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 
-fdescribe('SearchTextInputComponent', () => {
+describe('SearchTextInputComponent', () => {
 
     let fixture: ComponentFixture<SearchTextInputComponent>;
     let component: SearchTextInputComponent;
