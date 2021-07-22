@@ -16,7 +16,7 @@
  */
 
 import { EcmCompanyModel } from '../models/ecm-company.model';
-import { PersonEntry, Person, PersonPaging } from '@alfresco/js-api';
+import { PersonEntry, Person, PersonPaging, GroupPaging } from '@alfresco/js-api';
 import { EcmUserModel } from '../models';
 
 export const fakeEcmCompany: EcmCompanyModel = {
@@ -119,6 +119,34 @@ export const fakeEcmUserList = new PersonPaging({
             },
             {
                 entry: fakeEcmUser2
+            }
+        ]
+    }
+});
+
+export const fakeUserGroupsList = new GroupPaging({
+    list: {
+        pagination: {
+            count: 2,
+            hasMoreItems: false,
+            totalItems: 2,
+            skipCount: 0,
+            maxItems: 100
+        },
+        entries: [
+            {
+                entry: {
+                    id: 'fake-group-id-1',
+                    displayName: 'fake-group-1',
+                    isRoot: false
+                }
+            },
+            {
+                entry: {
+                    id: 'fake-group-id-2',
+                    displayName: 'fake-group-2',
+                    isRoot: false
+                }
             }
         ]
     }

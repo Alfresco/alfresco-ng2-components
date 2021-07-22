@@ -15,7 +15,13 @@
  * limitations under the License.
  */
 
-import { fakeEcmUser, fakeEcmUserList, createNewPersonMock, getFakeUserWithContentAdminCapability } from '../mock/ecm-user.service.mock';
+import {
+    fakeEcmUser,
+    fakeEcmUserList,
+    createNewPersonMock,
+    getFakeUserWithContentAdminCapability,
+    fakeUserGroupsList
+} from '../mock/ecm-user.service.mock';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { PeopleContentService, PeopleContentQueryResponse } from './people-content.service';
@@ -69,6 +75,22 @@ describe('PeopleContentService', () => {
             expect(getPersonSpy).toHaveBeenCalledWith('-me-');
             done();
         });
+    });
+
+    it('should be able to list the groups a user is a member of', async () => {
+        const spyObj = spyOn(service.groupsApi, 'listGroupMembershipsForPerson').and.returnValue(Promise.resolve(fakeUserGroupsList));
+        const { pagination, entries } = await service.listGroupMemberships('fake-user-id').toPromise();
+
+        expect(spyObj).toHaveBeenCalledWith('fake-user-id', undefined);
+        expect(pagination).toBeDefined();
+        expect(entries).toBeDefined();
+        expect(pagination.count).toEqual(2);
+        expect(pagination.totalItems).toEqual(2);
+        expect(pagination.hasMoreItems).toBeFalsy();
+        expect(pagination.skipCount).toEqual(0);
+        expect(pagination.maxItems).toEqual(100);
+        expect(entries[0].id).toEqual('fake-group-id-1');
+        expect(entries[1].id).toEqual('fake-group-id-2');
     });
 
     it('should be able to list people', (done) => {

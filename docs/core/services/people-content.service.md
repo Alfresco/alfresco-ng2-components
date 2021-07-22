@@ -29,10 +29,15 @@ Gets information about a Content Services user.
 
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<boolean>` - 
 
--   **listPeople**(requestQuery?: [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts#32)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>`<br/>
+-   **listPeople**(requestQuery?: [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts#32)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentQueryResponse`](../../../lib/core/services/people-content.service.ts)`[]>`<br/>
     Gets a list of people.
     -   _requestQuery:_ [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts)  - (Optional) maxItems and skipCount used for pagination
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>` - Array of people
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentQueryResponse`](../../../lib/core/services/people-content.service.ts)`[]>` - Response containing pagination and list of entries
+-   **listGroupMemberships**(personId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentGroupsQueryResponse`](../../../lib/core/services/people-content.service.ts)`[]>`<br/>
+    Gets a list of groups a user is a member of.
+    -   _personId:_ `string`  - ID of the target user
+    -   _opts:_ `any`  - (Optional) Optional parameters
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentGroupsQueryResponse`](../../../lib/core/services/people-content.service.ts)`[]>` - Response containing pagination and list of entries
 
 ## Details
 

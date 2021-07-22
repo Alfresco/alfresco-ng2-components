@@ -19,9 +19,10 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
-import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination } from '@alfresco/js-api';
+import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination, GroupsApi, GroupEntry } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
+import { ContentGroupModel } from '../models/content-group.model';
 
 export enum ContentGroups {
     ALFRESCO_ADMINISTRATORS = 'ALFRESCO_ADMINISTRATORS'
@@ -37,6 +38,11 @@ export interface PeopleContentQueryRequestModel {
     maxItems: number;
 }
 
+export interface PeopleContentGroupsQueryResponse {
+    pagination: Pagination;
+    entries: ContentGroupModel[];
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -45,11 +51,16 @@ export class PeopleContentService {
     hasCheckedIsContentAdmin: boolean = false;
 
     private _peopleApi: PeopleApi;
+    private _groupsApi: GroupsApi;
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
 
     get peopleApi() {
         return this._peopleApi || (this._peopleApi = new PeopleApi(this.apiService.getInstance()));
+    }
+
+    get groupsApi() {
+        return this._groupsApi || (this._groupsApi = new GroupsApi(this.apiService.getInstance()));
     }
 
     /**
@@ -71,6 +82,26 @@ export class PeopleContentService {
      */
     getCurrentPerson(): Observable<any> {
         return this.getPerson('-me-');
+    }
+
+    /**
+     * Gets a list of groups a user is a member of
+     * @param personId ID of the target user
+     * @param options Optional parameters
+     * @returns Response containing pagination and list of entries
+     */
+    listGroupMemberships(personId: string, options?: any): Observable<PeopleContentGroupsQueryResponse> {
+        const promise = this.groupsApi.listGroupMembershipsForPerson(personId, options);
+
+        return from(promise).pipe(
+            map(response => {
+                return {
+                    pagination: response.list.pagination,
+                    entries: response.list.entries.map((group: GroupEntry) => <ContentGroupModel> group.entry)
+                };
+            }),
+            catchError(error => this.handleError(error))
+        );
     }
 
     /**
