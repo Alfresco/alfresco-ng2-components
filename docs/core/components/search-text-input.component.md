@@ -37,7 +37,9 @@ Displays a input text that supports autocompletion
 | inputType | `string` | "text" | Type of the input field to render, e.g. "search" or "text" (default). |
 | liveSearchEnabled | `boolean` | true | Toggles "find-as-you-type" suggestions for possible matches. |
 | searchAutocomplete | `any` | false | Trigger autocomplete results on input change. |
-| searchTerm | `string` | "" | Search term preselected |
+| searchTerm | `string` | "" | Search term preselected. |
+| collapseOnBlur | `boolean` | "true" | Toggles whether to collapse the search on blur. |
+| showClearButton | `boolean` | "false" | Toggles whether to show a clear button that closes the search. |
 
 ### Events
 
@@ -47,3 +49,5 @@ Displays a input text that supports autocompletion
 | searchChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then it is truncated to an empty string. |
 | selectResult | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the result list is selected |
 | submit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the search is submitted by pressing the ENTER key. The search term is provided as the value of the event. |
+| searchVisibility | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the search visibility changes. True when the search is active, false when it is inactive. |
+| clearButtonClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the clear button is clicked. |

@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserPreferencesService } from '../services/user-preferences.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 
-describe('SearchTextInputComponent', () => {
+fdescribe('SearchTextInputComponent', () => {
 
     let fixture: ComponentFixture<SearchTextInputComponent>;
     let component: SearchTextInputComponent;
@@ -258,6 +258,107 @@ describe('SearchTextInputComponent', () => {
             await fixture.whenStable();
 
             expect(element.querySelector('#adf-control-input').getAttribute('autocomplete')).toBe('on');
+        });
+    });
+
+    describe('Search visibility', () => {
+        beforeEach(() => {
+            userPreferencesService.setWithoutStore('textOrientation', 'ltr');
+            fixture.detectChanges();
+        });
+
+        it('should emit an event when the search becomes active', fakeAsync(() => {
+            const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
+            component.toggleSearchBar();
+            tick(200);
+
+            expect(searchVisibilityChangeSpy).toHaveBeenCalledWith(true);
+        }));
+
+        it('should emit an event when the search becomes inactive', fakeAsync(() => {
+            component.toggleSearchBar();
+            tick(200);
+            expect(component.subscriptAnimationState.value).toEqual('active');
+
+            const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
+            component.toggleSearchBar();
+            tick(200);
+
+            expect(component.subscriptAnimationState.value).toEqual('inactive');
+            expect(searchVisibilityChangeSpy).toHaveBeenCalledWith(false);
+        }));
+
+        describe('Clear button', () => {
+            beforeEach(fakeAsync(() => {
+                fixture.detectChanges();
+                component.toggleSearchBar();
+                tick(200);
+            }));
+
+            it('should clear button be visible when showClearButton is set to true', async () => {
+                component.showClearButton = true;
+                fixture.detectChanges();
+                await fixture.whenStable();
+                const clearButton = fixture.debugElement.query(By.css('[data-automation-id="adf-clear-search-button"]'));
+
+                expect(clearButton).not.toBeNull();
+            });
+
+            it('should clear button not be visible when showClearButton is set to false', () => {
+                component.showClearButton = false;
+                fixture.detectChanges();
+                const clearButton = fixture.debugElement.query(By.css('[data-automation-id="adf-clear-search-button"]'));
+
+                expect(clearButton).toBeNull();
+            });
+
+            it('should reset the search when clicking the clear button', async () => {
+                const clearButtonEmitterSpy = spyOn(component.clearButtonClicked, 'emit');
+                const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
+                component.searchTerm = 'fake-search-term';
+                component.showClearButton = true;
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const clearButton = fixture.debugElement.query(By.css('[data-automation-id="adf-clear-search-button"]'));
+                clearButton.nativeElement.dispatchEvent(new MouseEvent('mousedown'));
+
+                expect(clearButtonEmitterSpy).toHaveBeenCalled();
+                expect(searchVisibilityChangeSpy).toHaveBeenCalledWith(false);
+                expect(component.subscriptAnimationState.value).toEqual('inactive');
+                expect(component.searchTerm).toEqual('');
+            });
+
+        });
+
+        describe('Collapse on blur', () => {
+            beforeEach(fakeAsync(() => {
+                fixture.detectChanges();
+                component.toggleSearchBar();
+                tick(200);
+            }));
+
+            it('should collapse search on blur when the collapseOnBlur is set to true', () => {
+                const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
+                component.collapseOnBlur = true;
+                component.searchTerm = 'fake-search-term';
+                component.onBlur({ relatedTarget: null });
+
+                expect(searchVisibilityChangeSpy).toHaveBeenCalledWith(false);
+                expect(component.subscriptAnimationState.value).toEqual('inactive');
+                expect(component.searchTerm).toEqual('');
+            });
+
+            it('should not collapse search on blur when the collapseOnBlur is set to false', () => {
+                const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
+                component.searchTerm = 'fake-search-term';
+                component.collapseOnBlur = false;
+                component.onBlur({ relatedTarget: null });
+
+                expect(searchVisibilityChangeSpy).not.toHaveBeenCalled();
+                expect(component.subscriptAnimationState.value).toEqual('active');
+                expect(component.searchTerm).toEqual('fake-search-term');
+            });
         });
     });
 });
