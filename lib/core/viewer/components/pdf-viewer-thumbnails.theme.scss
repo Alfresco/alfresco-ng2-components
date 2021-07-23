@@ -1,4 +1,5 @@
 @mixin adf-pdf-thumbnails-theme($theme) {
+    $accent: map-get($theme, accent);
     $background: map-get($theme, background);
 
     .adf-pdf-thumbnails {
@@ -28,7 +29,7 @@
         }
 
         &__thumb--selected {
-            border: 2px solid mat-color($alfresco-ecm-blue, A200);
+            border: 2px solid mat-color($accent, A200);
         }
     }
 }

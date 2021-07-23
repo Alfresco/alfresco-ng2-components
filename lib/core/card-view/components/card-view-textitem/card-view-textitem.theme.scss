@@ -1,6 +1,8 @@
 @mixin adf-card-view-textitem-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
     $foreground: map-get($theme, foreground);
-    $outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;
+    $outline: 1px solid mat-color($accent, A200) !default;
 
     .adf {
         &-textitem-edit-icon.mat-icon {
