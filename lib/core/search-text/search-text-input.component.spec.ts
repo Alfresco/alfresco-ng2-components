@@ -288,6 +288,23 @@ describe('SearchTextInputComponent', () => {
             expect(searchVisibilityChangeSpy).toHaveBeenCalledWith(false);
         }));
 
+        it('should reset the search term when the search becomes inactive', fakeAsync(() => {
+            const searchTermEmitSpy = spyOn(component.searchChange, 'emit');
+            const resetSpy = spyOn(component.reset, 'emit');
+
+            component.toggleSearchBar();
+            tick(200);
+            expect(component.subscriptAnimationState.value).toEqual('active');
+            component.searchTerm = 'fake-search-term';
+
+            component.toggleSearchBar();
+            tick(200);
+
+            expect(resetSpy).toHaveBeenCalledWith(true);
+            expect(component.searchTerm).toEqual('');
+            expect(searchTermEmitSpy).toHaveBeenCalledWith('');
+        }));
+
         describe('Clear button', () => {
             beforeEach(fakeAsync(() => {
                 fixture.detectChanges();
@@ -315,6 +332,8 @@ describe('SearchTextInputComponent', () => {
             it('should reset the search when clicking the clear button', async () => {
                 const clearButtonEmitterSpy = spyOn(component.clearButtonClicked, 'emit');
                 const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
+                const searchTermEmitSpy = spyOn(component.searchChange, 'emit');
+
                 component.searchTerm = 'fake-search-term';
                 component.showClearButton = true;
                 fixture.detectChanges();
@@ -327,6 +346,7 @@ describe('SearchTextInputComponent', () => {
                 expect(searchVisibilityChangeSpy).toHaveBeenCalledWith(false);
                 expect(component.subscriptAnimationState.value).toEqual('inactive');
                 expect(component.searchTerm).toEqual('');
+                expect(searchTermEmitSpy).toHaveBeenCalledWith('');
             });
 
         });
@@ -340,6 +360,7 @@ describe('SearchTextInputComponent', () => {
 
             it('should collapse search on blur when the collapseOnBlur is set to true', () => {
                 const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
+                const searchTermEmitSpy = spyOn(component.searchChange, 'emit');
                 component.collapseOnBlur = true;
                 component.searchTerm = 'fake-search-term';
                 component.onBlur({ relatedTarget: null });
@@ -347,6 +368,7 @@ describe('SearchTextInputComponent', () => {
                 expect(searchVisibilityChangeSpy).toHaveBeenCalledWith(false);
                 expect(component.subscriptAnimationState.value).toEqual('inactive');
                 expect(component.searchTerm).toEqual('');
+                expect(searchTermEmitSpy).toHaveBeenCalledWith('');
             });
 
             it('should not collapse search on blur when the collapseOnBlur is set to false', () => {
