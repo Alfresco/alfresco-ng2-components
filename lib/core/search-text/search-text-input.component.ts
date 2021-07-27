@@ -306,6 +306,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         if (this.defaultState === SearchTextStateEnum.collapsed) {
             this.searchTerm = '';
             this.subscriptAnimationState = this.animationStates[this.dir].inactive;
+            this.searchChange.emit('');
             this.clearButtonClicked.emit();
             this.searchVisibility.emit(false);
         }
