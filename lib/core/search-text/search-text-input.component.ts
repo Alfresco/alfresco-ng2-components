@@ -149,6 +149,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
                     this.subscriptAnimationState = this.toggleAnimation();
                     if (this.subscriptAnimationState.value === 'inactive') {
                         this.searchTerm = '';
+                        this.searchChange.emit('');
                         this.reset.emit(true);
                         if (document.activeElement.id === this.searchInput.nativeElement.id) {
                             this.searchInput.nativeElement.blur();
