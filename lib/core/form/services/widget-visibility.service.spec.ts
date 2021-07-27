@@ -1108,37 +1108,37 @@ describe('WidgetVisibilityService', () => {
             expect(textField.isVisible).toBe(false);
         });
     });
+
     describe('Visibility calculation in checkbox forms', () => {
 
         const fakeFormWithValues = new FormModel(fakeFormCheckBoxVisibilityJson);
 
         it('Should be able to validate correctly the visibility for the checkbox expression', () => {
-            const field_a = fakeFormWithValues.getFieldById('a');
-            const field_b = fakeFormWithValues.getFieldById('b');
-            const field_c = fakeFormWithValues.getFieldById('c');
-            const field_d = fakeFormWithValues.getFieldById('d');
-            
-            field_a.value = true;
-            field_b.value = true;
-            field_c.value = false;
-            field_d.value = false;
+            const fieldA = fakeFormWithValues.getFieldById('a');
+            const fieldB = fakeFormWithValues.getFieldById('b');
+            const fieldC = fakeFormWithValues.getFieldById('c');
+            const fieldD = fakeFormWithValues.getFieldById('d');
+            fieldA.value = true;
+            fieldB.value = true;
+            fieldC.value = false;
+            fieldD.value = false;
 
             service.refreshVisibility(fakeFormWithValues);
-            let textField = fakeFormWithValues.getFieldById('a_b_c_d');
+            const textField = fakeFormWithValues.getFieldById('a_b_c_d');
 
-            expect(textField.isVisible).toBe(true);   
+            expect(textField.isVisible).toBe(true);
 
-            field_b.value = false;
+            fieldB.value = false;
 
             service.refreshVisibility(fakeFormWithValues);
-            expect(textField.isVisible).toBe(false);   
+            expect(textField.isVisible).toBe(false);
 
-            field_a.value = false;
-            field_c.value = true;
-            field_d.value = true;
-            
+            fieldA.value = false;
+            fieldC.value = true;
+            fieldD.value = true;
+
             service.refreshVisibility(fakeFormWithValues);
-            expect(textField.isVisible).toBe(true);   
+            expect(textField.isVisible).toBe(true);
         });
     });
-})
+});
