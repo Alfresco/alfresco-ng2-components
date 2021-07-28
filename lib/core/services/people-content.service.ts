@@ -32,9 +32,15 @@ export interface PeopleContentQueryResponse {
     entries: EcmUserModel[];
 }
 
+export interface PeopleContentSortingModel {
+    orderBy: string;
+    direction: string;
+}
+
 export interface PeopleContentQueryRequestModel {
-    skipCount: number;
-    maxItems: number;
+    skipCount?: number;
+    maxItems?: number;
+    sorting?: PeopleContentSortingModel;
 }
 
 @Injectable({
@@ -45,6 +51,8 @@ export class PeopleContentService {
     hasCheckedIsContentAdmin: boolean = false;
 
     private _peopleApi: PeopleApi;
+
+    defaultSorting = ['firstName ASC'];
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
 
@@ -79,7 +87,13 @@ export class PeopleContentService {
      * @returns Response containing pagination and list of entries
      */
     listPeople(requestQuery?: PeopleContentQueryRequestModel): Observable<PeopleContentQueryResponse> {
-        const promise = this.peopleApi.listPeople(requestQuery);
+        const orderBy = this.buildOrderArray(requestQuery?.sorting.orderBy, requestQuery?.sorting.direction);
+        const requestQueryParams = {
+            skipCount: requestQuery?.skipCount,
+            maxItems: requestQuery?.maxItems,
+            orderBy
+        };
+        const promise = this.peopleApi.listPeople(requestQueryParams);
         return from(promise).pipe(
             map(response => {
                 return {
@@ -111,6 +125,10 @@ export class PeopleContentService {
             this.hasCheckedIsContentAdmin = true;
         }
         return this.hasContentAdminRole;
+    }
+
+    private buildOrderArray(key: string, direction: string): string[] {
+        return key && direction ? [ `${key} ${direction.toUpperCase()}` ] : this.defaultSorting ;
     }
 
     private handleError(error: any) {
