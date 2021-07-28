@@ -371,7 +371,8 @@
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "Invalid destination folder path"
+      "INVALID_DESTINATION_FOLDER_PATH": "Invalid destination folder path",
+      "DESTINATION_FOLDER_PATH_ERROR": "The destination path is incorrect or does not exist, rollback to -my- location"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

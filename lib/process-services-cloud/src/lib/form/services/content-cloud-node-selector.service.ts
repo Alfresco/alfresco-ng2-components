@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
@@ -27,55 +27,67 @@ import { Observable, Subject, throwError } from 'rxjs';
 })
 export class ContentCloudNodeSelectorService {
 
-  constructor(
-    private apiService: AlfrescoApiService,
-    private dialog: MatDialog) {
-  }
+    sourceNodeNotFound = false;
 
-  openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {
-    const select = new Subject<Node[]>();
-    select.subscribe({
-      complete: this.close.bind(this)
-    });
-    const data = <ContentNodeSelectorComponentData> {
-      title: 'Select a file',
-      actionName: NodeAction.ATTACH,
-      currentFolderId,
-      restrictRootToCurrentFolderId,
-      select,
-      selectionMode,
-      isSelectionValid: (entry: Node) => entry.isFile,
-      showFilesInResult: true,
-      showDropdownSiteList: false,
-      showLocalUploadButton: isAllFileSources
-  };
-    this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '66%');
-    return select;
-  }
+    constructor(
+        private apiService: AlfrescoApiService,
+        private notificationService: NotificationService,
+        private dialog: MatDialog) {
+    }
+
+    openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {
+        const select = new Subject<Node[]>();
+        select.subscribe({ complete: this.close.bind(this) });
+        const data = <ContentNodeSelectorComponentData> {
+            title: 'Select a file',
+            actionName: NodeAction.ATTACH,
+            currentFolderId,
+            restrictRootToCurrentFolderId,
+            select,
+            selectionMode,
+            isSelectionValid: (entry: Node) => entry.isFile,
+            showFilesInResult: true,
+            showDropdownSiteList: false,
+            showLocalUploadButton: isAllFileSources
+        };
+        this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '66%');
+        return select;
+    }
 
     async fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
-        const relativePathNodeEntry: any = await this.apiService.getInstance().node
+        const relativePathNodeEntry: any = await this.apiService.nodesApi
         .getNode(alias, opts)
-        .catch((err) => this.handleError(err));
+        .catch((err) => {
+            this.sourceNodeNotFound = true;
+            return this.handleError(err);
+        });
         return relativePathNodeEntry?.entry?.id;
     }
 
     async fetchAliasNodeId(alias: string): Promise<string> {
-        const aliasNodeEntry: any = await this.apiService.getInstance().node
+        const aliasNodeEntry: any = await this.apiService.nodesApi
         .getNode(alias)
         .catch((err) => this.handleError(err));
         return aliasNodeEntry?.entry?.id;
     }
 
-  private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
-    this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
-  }
+    private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
+        const contentNodeDialog = this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
+        contentNodeDialog.afterOpened().subscribe(() => {
+            if (this.sourceNodeNotFound) {
+                this.notificationService.showWarning('ADF_CLOUD_TASK_FORM.ERROR.DESTINATION_FOLDER_PATH_ERROR');
+            }
+        });
+        contentNodeDialog.afterClosed().subscribe(() => {
+            this.sourceNodeNotFound = false;
+        });
+    }
 
-  close() {
-    this.dialog.closeAll();
-  }
+    close() {
+        this.dialog.closeAll();
+    }
 
-  private handleError(error: any): Observable<any> {
-    return throwError(error || 'Server error');
-  }
+    private handleError(error: any): Observable<any> {
+        return throwError(error || 'Server error');
+    }
 }
