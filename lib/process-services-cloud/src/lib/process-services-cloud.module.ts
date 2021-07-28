@@ -80,7 +80,7 @@ export class ProcessServicesCloudModule {
                     }
                 },
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useExisting: preferenceServiceInstance ?? LocalPreferenceCloudService },
-                { provide: TASK_FILTERS_SERVICE_TOKEN,  useExisting: preferenceServiceInstance ?? LocalPreferenceCloudService },
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useExisting: preferenceServiceInstance ?? LocalPreferenceCloudService },
                 FormRenderingService,
                 { provide: FormRenderingService, useClass: CloudFormRenderingService }
             ]
