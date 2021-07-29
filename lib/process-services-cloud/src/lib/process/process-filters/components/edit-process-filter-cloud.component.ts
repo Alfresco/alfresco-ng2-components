@@ -525,17 +525,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     hasFormChanged(action: ProcessFilterAction): boolean {
-        if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE) {
-            return !this.formHasBeenChanged;
-        }
-        if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE_AS) {
-            return !this.formHasBeenChanged;
-        }
-        if (action.actionType === EditProcessFilterCloudComponent.ACTION_DELETE) {
-            return false;
-        }
-
-        return false;
+        return action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE ||
+            action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE_AS ?
+            !this.formHasBeenChanged : false;
     }
 
     private setLastModifiedToFilter(formValues: ProcessFilterCloudModel) {
