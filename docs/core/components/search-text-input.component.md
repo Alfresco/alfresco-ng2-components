@@ -50,4 +50,3 @@ Displays a input text that supports autocompletion
 | selectResult | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the result list is selected |
 | submit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the search is submitted by pressing the ENTER key. The search term is provided as the value of the event. |
 | searchVisibility | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the search visibility changes. True when the search is active, false when it is inactive. |
-| clearButtonClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the clear button is clicked. |
