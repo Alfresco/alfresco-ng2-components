@@ -104,7 +104,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     /**  Emitted when the result list is reset */
     @Output()
-    reset: EventEmitter<void> = new EventEmitter();
+    reset: EventEmitter<boolean> = new EventEmitter();
 
     /** Emitted when the search visibility changes. True when the search is active, false when it is inactive */
     @Output()
@@ -145,7 +145,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
                     this.subscriptAnimationState = this.toggleAnimation();
                     if (this.subscriptAnimationState.value === 'inactive') {
                         this.searchTerm = '';
-                        this.reset.emit();
+                        this.reset.emit(true);
                         if (document.activeElement.id === this.searchInput.nativeElement.id) {
                             this.searchInput.nativeElement.blur();
                         }
