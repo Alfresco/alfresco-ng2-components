@@ -288,8 +288,7 @@ describe('SearchTextInputComponent', () => {
             expect(searchVisibilityChangeSpy).toHaveBeenCalledWith(false);
         }));
 
-        it('should reset the search term when the search becomes inactive', fakeAsync(() => {
-            const searchTermEmitSpy = spyOn(component.searchChange, 'emit');
+        it('should reset emit when the search becomes inactive', fakeAsync(() => {
             const resetSpy = spyOn(component.reset, 'emit');
 
             component.toggleSearchBar();
@@ -300,15 +299,15 @@ describe('SearchTextInputComponent', () => {
             component.toggleSearchBar();
             tick(200);
 
-            expect(resetSpy).toHaveBeenCalledWith(true);
+            expect(resetSpy).toHaveBeenCalled();
             expect(component.searchTerm).toEqual('');
-            expect(searchTermEmitSpy).toHaveBeenCalledWith('');
         }));
 
         describe('Clear button', () => {
             beforeEach(fakeAsync(() => {
                 fixture.detectChanges();
-                component.toggleSearchBar();
+                component.subscriptAnimationState.value = 'active';
+                fixture.detectChanges();
                 tick(200);
             }));
 
@@ -330,9 +329,8 @@ describe('SearchTextInputComponent', () => {
             });
 
             it('should reset the search when clicking the clear button', async () => {
-                const clearButtonEmitterSpy = spyOn(component.clearButtonClicked, 'emit');
+                const resetEmitSpy = spyOn(component.reset, 'emit');
                 const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
-                const searchTermEmitSpy = spyOn(component.searchChange, 'emit');
 
                 component.searchTerm = 'fake-search-term';
                 component.showClearButton = true;
@@ -341,12 +339,13 @@ describe('SearchTextInputComponent', () => {
 
                 const clearButton = fixture.debugElement.query(By.css('[data-automation-id="adf-clear-search-button"]'));
                 clearButton.nativeElement.dispatchEvent(new MouseEvent('mousedown'));
+                fixture.detectChanges();
+                await fixture.whenStable();
 
-                expect(clearButtonEmitterSpy).toHaveBeenCalled();
+                expect(resetEmitSpy).toHaveBeenCalled();
                 expect(searchVisibilityChangeSpy).toHaveBeenCalledWith(false);
                 expect(component.subscriptAnimationState.value).toEqual('inactive');
                 expect(component.searchTerm).toEqual('');
-                expect(searchTermEmitSpy).toHaveBeenCalledWith('');
             });
 
         });
@@ -358,18 +357,19 @@ describe('SearchTextInputComponent', () => {
                 tick(200);
             }));
 
-            it('should collapse search on blur when the collapseOnBlur is set to true', () => {
+            it('should collapse search on blur when the collapseOnBlur is set to true', fakeAsync (() => {
                 const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
-                const searchTermEmitSpy = spyOn(component.searchChange, 'emit');
+                const resetEmitSpy = spyOn(component.reset, 'emit');
                 component.collapseOnBlur = true;
                 component.searchTerm = 'fake-search-term';
                 component.onBlur({ relatedTarget: null });
+                tick(200);
 
                 expect(searchVisibilityChangeSpy).toHaveBeenCalledWith(false);
                 expect(component.subscriptAnimationState.value).toEqual('inactive');
                 expect(component.searchTerm).toEqual('');
-                expect(searchTermEmitSpy).toHaveBeenCalledWith('');
-            });
+                expect(resetEmitSpy).toHaveBeenCalled();
+            }));
 
             it('should not collapse search on blur when the collapseOnBlur is set to false', () => {
                 const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
