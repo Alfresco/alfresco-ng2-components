@@ -25,6 +25,7 @@ import { FormCloudModule } from './form/form-cloud.module';
 import { TaskFormModule } from './task/task-form/task-form.module';
 import {
     LocalPreferenceCloudService,
+    PreferenceCloudServiceInterface,
     PROCESS_FILTERS_SERVICE_TOKEN,
     TASK_FILTERS_SERVICE_TOKEN
 } from './services/public-api';
@@ -52,9 +53,7 @@ import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-p
                 name: 'adf-process-services-cloud',
                 source: 'assets/adf-process-services-cloud'
             }
-        },
-        { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
-        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+        }
     ],
     exports: [
         AppListCloudModule,
@@ -68,7 +67,7 @@ import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-p
     ]
 })
 export class ProcessServicesCloudModule {
-    static forRoot(): ModuleWithProviders<ProcessServicesCloudModule> {
+    static forRoot(preferenceServiceInstance?: PreferenceCloudServiceInterface): ModuleWithProviders<ProcessServicesCloudModule> {
         return {
             ngModule: ProcessServicesCloudModule,
             providers: [
@@ -80,8 +79,8 @@ export class ProcessServicesCloudModule {
                         source: 'assets/adf-process-services-cloud'
                     }
                 },
-                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useExisting: preferenceServiceInstance ?? LocalPreferenceCloudService },
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useExisting: preferenceServiceInstance ?? LocalPreferenceCloudService },
                 FormRenderingService,
                 { provide: FormRenderingService, useClass: CloudFormRenderingService }
             ]
