@@ -52,8 +52,6 @@ export class PeopleContentService {
 
     private _peopleApi: PeopleApi;
 
-    defaultSorting = ['firstName ASC'];
-
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
 
     get peopleApi() {
@@ -87,12 +85,12 @@ export class PeopleContentService {
      * @returns Response containing pagination and list of entries
      */
     listPeople(requestQuery?: PeopleContentQueryRequestModel): Observable<PeopleContentQueryResponse> {
-        const orderBy = this.buildOrderArray(requestQuery?.sorting.orderBy, requestQuery?.sorting.direction);
-        const requestQueryParams = {
-            skipCount: requestQuery?.skipCount,
-            maxItems: requestQuery?.maxItems,
-            orderBy
-        };
+        const requestQueryParams = { skipCount: requestQuery?.skipCount, maxItems: requestQuery?.maxItems };
+        const orderBy = this.buildOrderArray(requestQuery?.sorting);
+        if (orderBy.length) {
+            requestQueryParams['orderBy'] = orderBy;
+        }
+
         const promise = this.peopleApi.listPeople(requestQueryParams);
         return from(promise).pipe(
             map(response => {
@@ -127,8 +125,8 @@ export class PeopleContentService {
         return this.hasContentAdminRole;
     }
 
-    private buildOrderArray(key: string, direction: string): string[] {
-        return key && direction ? [ `${key} ${direction.toUpperCase()}` ] : this.defaultSorting ;
+    private buildOrderArray(sorting: PeopleContentSortingModel): string[] {
+        return sorting?.orderBy && sorting?.direction ? [ `${sorting.orderBy} ${sorting.direction.toUpperCase()}` ] : [];
     }
 
     private handleError(error: any) {

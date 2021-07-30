@@ -94,10 +94,20 @@ describe('PeopleContentService', () => {
         });
     });
 
-    it('should call listPeople api with requested query params', async () => {
+    it('should call listPeople api with requested sorting params', async () => {
         const listPeopleSpy = spyOn(service.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
         const requestQueryParams: PeopleContentQueryRequestModel = { skipCount: 10, maxItems: 20, sorting: { orderBy: 'firstName', direction: 'asc' } };
         const expectedValue = { skipCount: 10, maxItems: 20, orderBy: ['firstName ASC'] };
+
+        await service.listPeople(requestQueryParams).toPromise();
+
+        expect(listPeopleSpy).toHaveBeenCalledWith(expectedValue);
+    });
+
+    it('should not call listPeople api with sorting params if sorting is not defined', async () => {
+        const listPeopleSpy = spyOn(service.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
+        const requestQueryParams: PeopleContentQueryRequestModel = { skipCount: 10, maxItems: 20, sorting: undefined };
+        const expectedValue = { skipCount: 10, maxItems: 20 };
 
         await service.listPeople(requestQueryParams).toPromise();
 
