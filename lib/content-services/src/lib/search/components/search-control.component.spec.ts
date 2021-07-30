@@ -321,17 +321,17 @@ describe('SearchControlComponent', () => {
             });
         });
 
-        it('should NOT display a autocomplete list control when configured not to', (done) => {
+        it('should NOT display a autocomplete list control when configured not to', async () => {
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
             component.liveSearchEnabled = false;
             fixture.detectChanges();
+            await fixture.whenStable();
 
             typeWordIntoSearchInput('TEST');
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#autocomplete-search-result-list')).toBeNull();
-                done();
-            });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#autocomplete-search-result-list')).toBeNull();
         });
    });
 

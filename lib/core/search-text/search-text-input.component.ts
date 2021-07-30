@@ -76,6 +76,14 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
      @Input()
     defaultState: SearchTextStateEnum = SearchTextStateEnum.collapsed;
 
+    /** Toggles whether to collapse the search on blur. */
+    @Input()
+    collapseOnBlur: boolean = true;
+
+    /** Toggles whether to show a clear button that closes the search */
+    @Input()
+    showClearButton: boolean = false;
+
     /** Emitted when the search term is changed. The search term is provided
      * in the 'value' property of the returned object.  If the term is less
      * than three characters in length then it is truncated to an empty
@@ -97,6 +105,10 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     /**  Emitted when the result list is reset */
     @Output()
     reset: EventEmitter<boolean> = new EventEmitter();
+
+    /** Emitted when the search visibility changes. True when the search is active, false when it is inactive */
+    @Output()
+    searchVisibility: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('searchInput', { static: true })
     searchInput: ElementRef;
@@ -134,10 +146,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
                     if (this.subscriptAnimationState.value === 'inactive') {
                         this.searchTerm = '';
                         this.reset.emit(true);
-                        if ( document.activeElement.id === this.searchInput.nativeElement.id) {
+                        if (document.activeElement.id === this.searchInput.nativeElement.id) {
                             this.searchInput.nativeElement.blur();
                         }
                     }
+                    this.emitVisibilitySearch();
                 }
             });
     }
@@ -157,7 +170,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     }
 
     applySearchFocus(animationDoneEvent) {
-        if (animationDoneEvent.toState === 'active' && this.defaultState !== SearchTextStateEnum.expanded) {
+        if (animationDoneEvent.toState === 'active' && this.isDefaultStateCollapsed()) {
             this.searchInput.nativeElement.focus();
         }
     }
@@ -186,7 +199,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     }
 
     private getAnimationState(dir: string): SearchAnimationState {
-        if ( this.expandable && this.defaultState === SearchTextStateEnum.expanded ) {
+        if (this.expandable && this.isDefaultStateExpanded()) {
             return this.animationStates[dir].active;
         } else if ( this.expandable ) {
             return this.animationStates[dir].inactive;
@@ -230,9 +243,8 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     }
 
     onBlur($event) {
-        if (!$event.relatedTarget && this.defaultState === SearchTextStateEnum.collapsed) {
-            this.searchTerm = '';
-            this.subscriptAnimationState = this.animationStates[this.dir].inactive;
+        if (this.collapseOnBlur && !$event.relatedTarget) {
+            this.resetSearch();
         }
     }
 
@@ -261,7 +273,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     }
 
     isSearchBarActive(): boolean {
-        return this.subscriptAnimationState.value === 'active' && this.liveSearchEnabled;
+        return this.subscriptAnimationState.value === 'active';
     }
 
     ngOnDestroy() {
@@ -279,4 +291,27 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
+
+    canShowClearSearch(): boolean {
+        return this.showClearButton && this.isSearchBarActive();
+    }
+
+    resetSearch() {
+        if (this.isSearchBarActive()) {
+            this.toggleSearchBar();
+        }
+    }
+
+    private isDefaultStateCollapsed(): boolean {
+        return this.defaultState === SearchTextStateEnum.collapsed;
+    }
+
+    private isDefaultStateExpanded(): boolean {
+        return this.defaultState === SearchTextStateEnum.expanded;
+    }
+
+    private emitVisibilitySearch() {
+        this.isSearchBarActive() ? this.searchVisibility.emit(true) : this.searchVisibility.emit(false);
+    }
+
 }
