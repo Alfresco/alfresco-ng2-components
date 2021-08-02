@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, NotificationService, setupTestBed } from '@alfresco/adf-core';
+import { NotificationService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentCloudNodeSelectorService } from 'process-services-cloud';
@@ -26,7 +26,6 @@ import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData } from '
 
 describe('ContentCloudNodeSelectorService', () => {
     let service: ContentCloudNodeSelectorService;
-    let apiService: AlfrescoApiService;
     let notificationService: NotificationService;
     let getNodeSpy: jasmine.Spy;
     let dialog: MatDialog;
@@ -52,7 +51,6 @@ describe('ContentCloudNodeSelectorService', () => {
     beforeEach(() => {
         service = TestBed.inject(ContentCloudNodeSelectorService);
         notificationService = TestBed.inject(NotificationService);
-        apiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
 
         showWarningSpy = spyOn(notificationService, 'showWarning');
@@ -64,8 +62,6 @@ describe('ContentCloudNodeSelectorService', () => {
                 error: new Subject<any>()
             }
         }));
-
-        getNodeSpy = spyOn(apiService.nodesApi, 'getNode');
     });
 
     it('should be able to open the content node select panel dialog', () => {
