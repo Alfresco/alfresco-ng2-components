@@ -32,6 +32,7 @@ import { Observable, Subject, throwError } from 'rxjs';
 export class ContentCloudNodeSelectorService {
 
     nodesApi: NodesApi;
+    sourceNodeNotFound = false;
 
     constructor(
         private apiService: AlfrescoApiService,
