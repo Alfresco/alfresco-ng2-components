@@ -65,6 +65,7 @@ describe('AuthenticationService', () => {
 
         beforeEach(() => {
             appConfigService.config.providers = 'ECM';
+            appConfigService.config.auth = { withCredentials: false };
             appConfigService.load();
             apiService.reset();
         });
@@ -186,12 +187,20 @@ describe('AuthenticationService', () => {
         it('[ECM] should return isBpmLoggedIn false', () => {
             expect(authService.isBpmLoggedIn()).toBe(false);
         });
+
+        it('[ECM] should return true if kerberos configured', () => {
+            appConfigService.config.auth.withCredentials = true ;
+
+            expect(authService.isLoggedInWith('ECM')).toBe(true);
+            expect(authService.isLoggedIn()).toBe(true);
+        });
     });
 
     describe('when the setting is BPM', () => {
 
         beforeEach(() => {
             appConfigService.config.providers = 'BPM';
+            appConfigService.config.auth = { withCredentials: false };
             appConfigService.load();
             apiService.reset();
         });
@@ -321,6 +330,7 @@ describe('AuthenticationService', () => {
 
         beforeEach(() => {
             appConfigService.config.providers = 'ECM';
+            appConfigService.config.auth = { withCredentials: false };
             appConfigService.load();
             apiService.reset();
         });
@@ -385,6 +395,7 @@ describe('AuthenticationService', () => {
 
         beforeEach(() => {
             appConfigService.config.providers = 'ALL';
+            appConfigService.config.auth = { withCredentials: false };
             appConfigService.load();
             apiService.reset();
         });
