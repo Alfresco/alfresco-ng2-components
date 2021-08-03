@@ -57,13 +57,13 @@ describe('ContentCloudNodeSelectorService', () => {
 
         showWarningSpy = spyOn(notificationService, 'showWarning');
         openDialogSpy = spyOn(dialog, 'open').and.callFake(() => ({
-            afterOpened: () => of({}),
-            afterClosed: () => of({}),
+            afterOpened: () => of(null),
+            afterClosed: () => of(null),
             componentInstance: {
                 body: '',
                 error: new Subject<any>()
-            }
-        }));
+            } as any
+        } as any));
 
         getNodeSpy = spyOn(apiService.nodesApi, 'getNode');
     });
