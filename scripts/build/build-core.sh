@@ -15,9 +15,6 @@ else
     NODE_OPTIONS="--max-old-space-size=8192" nx build core || exit 1
 fi
 
-echo "====== Bundle styles ======"
-npm run scss-bundle:core || exit 1
-
 echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/core/bundles/assets/adf-core/i18n
 cp -R ./lib/core/i18n/* ./lib/dist/core/bundles/assets/adf-core/i18n

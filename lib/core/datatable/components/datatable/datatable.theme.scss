@@ -1,4 +1,6 @@
+@use 'sass:math';
 @use '~@angular/material' as mat;
+
 @mixin adf-datatable-theme($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
@@ -23,9 +25,9 @@
     $data-table-dividers-wrapper-border: $data-table-dividers !default;
     $data-table-row-height: 56px !default;
     $data-table-column-spacing: 36px !default;
-    $data-table-column-padding: $data-table-column-spacing / 2;
+    $data-table-column-padding: math.div($data-table-column-spacing, 2);
     $data-table-card-padding: 24px !default;
-    $data-table-cell-top: $data-table-card-padding / 2;
+    $data-table-cell-top: math.div($data-table-card-padding, 2);
     $data-table-drag-border: 1px dashed mat.get-color-from-palette($accent, A200);
     $data-table-thumbnail-width: 50px !default;
     $data-table-cell-min-width: 50px !default;

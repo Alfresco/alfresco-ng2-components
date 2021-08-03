@@ -15,9 +15,6 @@ else
     NODE_OPTIONS="--max-old-space-size=8192" nx build content-services || exit 1
 fi
 
-echo "====== Bundle styles ======"
-npm run scss-bundle:content-services || exit 1
-
 echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/content-services/bundles/assets/adf-content-services/i18n
 cp -R ./lib/content-services/src/lib/i18n/* ./lib/dist/content-services/bundles/assets/adf-content-services/i18n
