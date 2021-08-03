@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-amount-widget-theme($theme) {
     $foreground: map-get($theme, foreground);
 
@@ -16,7 +17,7 @@
 
             &:not(.mat-focused):not(.mat-form-field-invalid) {
                 .adf-amount-widget__prefix-spacing {
-                    color: mat-color($foreground, secondary-text);
+                    color: mat.get-color-from-palette($foreground, secondary-text);
                 }
             }
         }

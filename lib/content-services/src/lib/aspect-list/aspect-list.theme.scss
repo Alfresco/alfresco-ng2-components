@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-aspect-list-theme($theme) {
     $foreground: map-get($theme, foreground);
 
@@ -15,7 +16,7 @@
             padding-top: 3px;
             height: 400px;
             overflow: auto;
-            border: 1px solid mat-color($foreground, base, 0.07);
+            border: 1px solid mat.get-color-from-palette($foreground, base, 0.07);
 
             .adf-aspect-list-check-button {
                 margin-right: 5px;

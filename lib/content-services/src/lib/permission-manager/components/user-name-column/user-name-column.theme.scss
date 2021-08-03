@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin user-name-column-theme($theme) {
     $foreground: map-get($theme, foreground);
 
@@ -11,7 +12,7 @@
             font-size: 14px;
             letter-spacing: -0.2px;
             line-height: 1.43;
-            color: mat-color($foreground, text, 0.72);
+            color: mat.get-color-from-palette($foreground, text, 0.72);
         }
     }
 }

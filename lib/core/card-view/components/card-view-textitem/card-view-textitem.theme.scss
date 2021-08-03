@@ -1,27 +1,28 @@
+@use '~@angular/material' as mat;
 @mixin adf-card-view-textitem-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $foreground: map-get($theme, foreground);
-    $outline: 1px solid mat-color($accent, A200) !default;
+    $outline: 1px solid mat.get-color-from-palette($accent, A200) !default;
 
     .adf {
         &-textitem-edit-icon.mat-icon {
             font-size: 16px;
             width: 16px;
             height: 16px;
-            color: mat-color($foreground, text, 0.25);
+            color: mat.get-color-from-palette($foreground, text, 0.25);
         }
 
         &-textitem-action.mat-icon-button {
             width: 20px;
             height: 20px;
             line-height: 20px;
-            color: mat-color($foreground, text, 0.25);
+            color: mat.get-color-from-palette($foreground, text, 0.25);
         }
 
         &-textitem-action:hover,
         &-textitem-action:focus {
-            color: mat-color($foreground, text);
+            color: mat.get-color-from-palette($foreground, text);
         }
 
         &-update-icon {
@@ -33,7 +34,7 @@
 
             &:hover .adf-textitem-action,
             &:focus .adf-textitem-action {
-                color: mat-color($foreground, text);
+                color: mat.get-color-from-palette($foreground, text);
             }
         }
 
@@ -55,13 +56,13 @@
             }
 
             &:hover .adf-textitem-action {
-                color: mat-color($foreground, text);
+                color: mat.get-color-from-palette($foreground, text);
             }
         }
 
         &-textitem-clickable-value {
             cursor: pointer !important;
-            color: mat-color($primary) !important;
+            color: mat.get-color-from-palette($primary) !important;
         }
 
         &-textitem-editable {
@@ -70,7 +71,7 @@
                 align-items: center;
 
                 mat-icon:not(.adf-button-disabled):hover {
-                    color: mat-color($foreground, text);
+                    color: mat.get-color-from-palette($foreground, text);
                     cursor: pointer !important;
                 }
 
@@ -102,7 +103,7 @@
         }
 
         &-textitem-default-value {
-            color: mat-color($foreground, text, 0.54);
+            color: mat.get-color-from-palette($foreground, text, 0.54);
         }
 
         &-textitem-editable .mat-form-field-wrapper {
@@ -159,7 +160,7 @@
 
             &:hover::-webkit-scrollbar-thumb {
                 display: block;
-                background-color: mat-color($foreground, text, 0.25);
+                background-color: mat.get-color-from-palette($foreground, text, 0.25);
                 border-radius: 2px;
             }
         }
@@ -177,11 +178,11 @@
                 display: none;
             }
             .adf-property-clear-value {
-                color: mat-color($foreground, text, 0.25);
+                color: mat.get-color-from-palette($foreground, text, 0.25);
                 display: inline;
             }
             .adf-property-clear-value:hover {
-                color: mat-color($foreground, text, 1);
+                color: mat.get-color-from-palette($foreground, text, 1);
             }
         }
     }

@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 @mixin adf-colors-theme($theme) {
 
@@ -9,36 +9,36 @@
     $foreground: map-get($theme, foreground);
 
     .adf-primary-color {
-        color: mat-color($primary) !important;
+        color: mat.get-color-from-palette($primary) !important;
     }
 
     .adf-accent-color {
-        color: mat-color($accent) !important;
+        color: mat.get-color-from-palette($accent) !important;
     }
 
     .adf-warn-color {
-        color: mat-color($warn) !important;
+        color: mat.get-color-from-palette($warn) !important;
     }
 
     .adf-dialog-background-color {
-        background: mat-color($background, dialog) !important;
+        background: mat.get-color-from-palette($background, dialog) !important;
     }
 
     .adf-primary-background-color {
-        color: mat-color($primary, default-contrast) !important;
-        background: mat-color($primary) !important;
+        color: mat.get-color-from-palette($primary, default-contrast) !important;
+        background: mat.get-color-from-palette($primary) !important;
     }
 
     .adf-accent-background-color {
-        color: mat-color($accent, default-contrast) !important;
-        background: mat-color($accent) !important;
+        color: mat.get-color-from-palette($accent, default-contrast) !important;
+        background: mat.get-color-from-palette($accent) !important;
     }
 
     .adf-primary-contrast-text-color {
-        color: mat-color($primary, default-contrast) !important;
+        color: mat.get-color-from-palette($primary, default-contrast) !important;
     }
 
     .adf-accent-contrast-text-color {
-        color: mat-color($accent, default-contrast) !important;
+        color: mat.get-color-from-palette($accent, default-contrast) !important;
     }
 }

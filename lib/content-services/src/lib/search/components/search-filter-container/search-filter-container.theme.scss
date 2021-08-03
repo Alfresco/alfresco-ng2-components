@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-filter-menu-theme($theme) {
     $primary: map-get($theme, primary);
     $foreground: map-get($theme, foreground);
@@ -10,14 +11,14 @@
 
             .adf-icon {
                 opacity: 1;
-                color: mat-color($foreground, icon);
+                color: mat.get-color-from-palette($foreground, icon);
 
                 &-active {
-                    color: mat-color($primary);
+                    color: mat.get-color-from-palette($primary);
                 }
 
                 .mat-badge-active {
-                    border: 2px solid mat-color($background, card) !important;
+                    border: 2px solid mat.get-color-from-palette($background, card) !important;
                 }
             }
 
@@ -38,7 +39,7 @@
             display: flex;
             flex-direction: column;
             padding: 15px 15px 10px;
-            color: mat-color($foreground, text, 0.87) !important;
+            color: mat.get-color-from-palette($foreground, text, 0.87) !important;
 
             .adf-facet-buttons {
                 display: none;
@@ -49,25 +50,25 @@
             }
 
             input {
-                background: 2px solid mat-color($background, card) !important;
+                background: 2px solid mat.get-color-from-palette($background, card) !important;
             }
         }
 
         &-title {
             font-size: 1.1em;
             padding-bottom: 5px;
-            color: mat-color($foreground, text, 0.87);
+            color: mat.get-color-from-palette($foreground, text, 0.87);
         }
 
         &-actions {
             display: flex;
             justify-content: flex-end;
             padding: 15px;
-            background-color: mat-color($background, hover);
+            background-color: mat.get-color-from-palette($background, hover);
 
             > button {
                 font-size: 0.9em;
-                color: mat-color($foreground, text, 0.87);
+                color: mat.get-color-from-palette($foreground, text, 0.87);
             }
         }
     }

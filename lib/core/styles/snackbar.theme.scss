@@ -1,10 +1,11 @@
+@use '~@angular/material' as mat;
 @mixin adf-snackbar-theme($theme) {
     $warn: map-get($theme, warn);
     $accent: map-get($theme, accent);
     $primary: map-get($theme, primary);
 
     .adf-error-snackbar {
-      background-color: mat-color($warn);
+      background-color: mat.get-color-from-palette($warn);
 
       .mat-simple-snackbar-action {
         color: white;
@@ -12,7 +13,7 @@
     }
 
     .adf-warning-snackbar {
-      background-color: mat-color($accent);
+      background-color: mat.get-color-from-palette($accent);
 
       .mat-simple-snackbar-action {
         color: white;
@@ -20,7 +21,7 @@
     }
 
     .adf-info-snackbar {
-      background-color: mat-color($primary);
+      background-color: mat.get-color-from-palette($primary);
 
       .mat-simple-snackbar-action {
         color: white;

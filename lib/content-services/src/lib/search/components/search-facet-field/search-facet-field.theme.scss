@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-search-filter-field-theme($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
@@ -40,7 +41,7 @@
 
             .adf-facet-search-container {
                 border-radius: 6px;
-                background: mat-color($background, background);
+                background: mat.get-color-from-palette($background, background);
                 display: flex;
                 height: 32px;
 
@@ -85,7 +86,7 @@
 
         .mat-checkbox-label,
         .mat-radio-label {
-            color: mat-color($foreground, text, 0.54);
+            color: mat.get-color-from-palette($foreground, text, 0.54);
         }
 
     }

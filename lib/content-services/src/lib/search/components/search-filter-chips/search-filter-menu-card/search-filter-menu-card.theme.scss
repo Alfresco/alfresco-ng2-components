@@ -1,10 +1,11 @@
+@use '~@angular/material' as mat;
 @mixin adf-search-filter-menu-card($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
 
     .adf-search-filter-menu-card {
-        color: mat-color($foreground, text);
-        background: mat-color($background, card);
+        color: mat.get-color-from-palette($foreground, text);
+        background: mat.get-color-from-palette($background, card);
 
         .adf-search-filter-title {
             padding: 16px 12px;

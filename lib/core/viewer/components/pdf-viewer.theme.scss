@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-pdf-viewer-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
@@ -41,7 +42,7 @@
                 justify-content: flex-end;
                 align-items: flex-end;
                 display: flex;
-                color: mat-color($foreground, text, 0.54);
+                color: mat.get-color-from-palette($foreground, text, 0.54);
             }
         }
 
@@ -70,7 +71,7 @@
 
             .adf-toolbar .mat-toolbar {
                 max-height: 48px;
-                background-color: mat-color($background, card);
+                background-color: mat.get-color-from-palette($background, card);
                 border-width: 0;
                 border-radius: 2px;
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
@@ -82,8 +83,8 @@
                 font-size: 14px;
 
                 & > input {
-                    border: 1px solid mat-color($foreground, text, 0.07);
-                    background-color: mat-color($background, card);
+                    border: 1px solid mat.get-color-from-palette($foreground, text, 0.07);
+                    background-color: mat.get-color-from-palette($background, card);
                     color: inherit;
                     font-size: 14px;
                     padding: 5px;

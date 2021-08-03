@@ -1,8 +1,9 @@
+@use '~@angular/material' as mat;
 @mixin adf-text-viewer-theme($theme) {
     $background: map-get($theme, background);
 
     .adf-txt-viewer {
-        background-color: mat-color($background, background);
+        background-color: mat.get-color-from-palette($background, background);
         overflow: auto;
         height: 100%;
         width: 100%;

@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-select-filter-input-theme($theme) {
     $mat-select-panel-max-height: 256px !default;
     $select-filter-height: 4em !default;
@@ -15,11 +16,11 @@
             display: flex;
             z-index: 100;
             font-size: 14px;
-            color: mat-color($foreground, text, 0.87);
+            color: mat.get-color-from-palette($foreground, text, 0.87);
             line-height: 3em;
             height: $select-filter-height;
             padding: 5px 16px 0;
-            background: mat-color($background, card);
+            background: mat.get-color-from-palette($background, card);
         }
 
         .mat-form-field {

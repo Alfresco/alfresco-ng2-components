@@ -1,10 +1,11 @@
+@use '~@angular/material' as mat;
 @mixin adf-upload-dialog-theme($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
 
     .adf-upload-dialog {
-        background: mat-color($background, dialog);
-        color: mat-color($foreground, text, 0.54);
+        background: mat.get-color-from-palette($background, dialog);
+        color: mat.get-color-from-palette($foreground, text, 0.54);
         position: fixed;
         bottom: 20px;
         width: 40%;
@@ -36,7 +37,7 @@
                 min-width: 0;
                 padding: 0;
                 line-height: 0;
-                color: mat-color($foreground, text, 0.54) !important;
+                color: mat.get-color-from-palette($foreground, text, 0.54) !important;
             }
         }
 
@@ -52,8 +53,8 @@
         &__content {
             overflow: auto;
             max-height: 194px;
-            border-top: 1px solid mat-color($foreground, text, 0.14);
-            border-bottom: 1px solid mat-color($foreground, text, 0.14);
+            border-top: 1px solid mat.get-color-from-palette($foreground, text, 0.14);
+            border-bottom: 1px solid mat.get-color-from-palette($foreground, text, 0.14);
         }
 
         &__confirmation {

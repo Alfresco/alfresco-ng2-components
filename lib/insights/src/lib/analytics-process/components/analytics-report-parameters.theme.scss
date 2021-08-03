@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-analytics-report-parameters-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -14,15 +15,15 @@
     }
 
     .adf-dropdown-widget__invalid .adf-dropdown-widget__select {
-        border-color: mat-color($warn);
+        border-color: mat.get-color-from-palette($warn);
     }
 
     .adf-dropdown-widget__invalid .adf-dropdown-widget__label {
-        color: mat-color($warn);
+        color: mat.get-color-from-palette($warn);
     }
 
     .adf-dropdown-widget__invalid .adf-dropdown-widget__label::after {
-        background-color: mat-color($warn);
+        background-color: mat.get-color-from-palette($warn);
     }
 
     .adf-edit-report-title {
@@ -43,7 +44,7 @@
         margin-bottom: 12px;
 
         :hover .adf-report-icon {
-            color: mat-color($primary);
+            color: mat.get-color-from-palette($primary);
             visibility: visible;
         }
     }
@@ -63,7 +64,7 @@
     }
 
     .adf-report-report-container {
-        border-bottom: solid 1px mat-color($foreground, divider);
+        border-bottom: solid 1px mat.get-color-from-palette($foreground, divider);
         padding-top: 10px;
 
         .mat-toolbar {
@@ -81,7 +82,7 @@
     }
 
     .adf-export-message {
-        background-color: mat-color($background, background);
+        background-color: mat.get-color-from-palette($background, background);
     }
 
     .adf-save-export-input {

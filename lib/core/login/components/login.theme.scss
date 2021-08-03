@@ -1,10 +1,11 @@
+@use '~@angular/material' as mat;
 @mixin adf-login-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
-    $text-color-primary: mat-color($foreground, text);
+    $text-color-primary: mat.get-color-from-palette($foreground, text);
 
     .adf-login {
         @include flex-column;
@@ -69,7 +70,7 @@
 
         .adf-login-card-wide {
             border-radius: 8px;
-            background-color: mat-color($background, dialog);
+            background-color: mat.get-color-from-palette($background, dialog);
             box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
             width: 450px;
             min-width: 320px;
@@ -93,7 +94,7 @@
             flex-direction: row;
             justify-content: flex-start;
 
-            color: mat-color($warn);
+            color: mat.get-color-from-palette($warn);
             padding: 0;
             margin-bottom: 4px;
             font-size: 13px;
@@ -129,7 +130,7 @@
         }
 
         .adf-login-button-label {
-            color: mat-contrast($accent, default);
+            color: mat.get-contrast-color-from-palette($accent, default);
         }
 
         .adf-login-button.adf-isChecking {
@@ -137,12 +138,12 @@
         }
 
         .adf-login-button.adf-isChecking .adf-login-button-label {
-            color: mat-color($primary);
+            color: mat.get-color-from-palette($primary);
         }
 
         .adf-login-button.adf-isWelcome {
-            background-color: mat-color($primary);
-            color: mat-contrast($primary, default);
+            background-color: mat.get-color-from-palette($primary);
+            color: mat.get-contrast-color-from-palette($primary, default);
         }
 
         .adf-login-button.adf-isWelcome .adf-welcome-icon {
@@ -211,7 +212,7 @@
             font-size: 12px;
             font-weight: normal;
             line-height: 1.33;
-            color: mat-color($warn);
+            color: mat.get-color-from-palette($warn);
         }
 
         .adf-copyright {
@@ -232,18 +233,18 @@
         }
 
         .adf-login__field input:-webkit-autofill {
-            -webkit-box-shadow: 0 0 0 1000px mat-color($background, dialog) inset;
+            -webkit-box-shadow: 0 0 0 1000px mat.get-color-from-palette($background, dialog) inset;
             -webkit-text-fill-color: $text-color-primary !important;
         }
 
         .adf-login-validation {
             background-color: transparent;
-            color: mat-color($warn);
+            color: mat.get-color-from-palette($warn);
             font-size: 12px;
         }
 
         .adf-login-error {
-            color: mat-color($warn);
+            color: mat.get-color-from-palette($warn);
             position: absolute;
             font-size: 12px;
             margin-top: -12px;

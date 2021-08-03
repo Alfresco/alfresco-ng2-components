@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-datatable-theme($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
@@ -7,16 +8,16 @@
     $data-table-font-size: 14px !default;
     $data-table-header-font-size: 12px !default;
     $data-table-header-sort-icon-size: 16px !default;
-    $data-table-header-color: mat-color($foreground, text) !default;
-    $data-table-header-sorted-color: mat-color($foreground, text) !default;
-    $data-table-header-sorted-icon-hover-color: mat-color($foreground, disabled-text) !default;
-    $data-table-cell-text-color: mat-color($foreground, text) !default;
-    $data-table-cell-link-color: mat-color($foreground, text) !default;
-    $data-table-cell-link-hover-color: mat-color($accent, 500) !default;
-    $data-table-outline: 1px solid mat-color($accent, A200) !default;
-    $data-table-divider-color: mat-color($foreground, text, 0.07) !default;
-    $data-table-hover-color: mat-color($background, 'hover') !default;
-    $data-table-selection-color: mat-color($background, 'selected-button') !default;
+    $data-table-header-color: mat.get-color-from-palette($foreground, text) !default;
+    $data-table-header-sorted-color: mat.get-color-from-palette($foreground, text) !default;
+    $data-table-header-sorted-icon-hover-color: mat.get-color-from-palette($foreground, disabled-text) !default;
+    $data-table-cell-text-color: mat.get-color-from-palette($foreground, text) !default;
+    $data-table-cell-link-color: mat.get-color-from-palette($foreground, text) !default;
+    $data-table-cell-link-hover-color: mat.get-color-from-palette($accent, 500) !default;
+    $data-table-outline: 1px solid mat.get-color-from-palette($accent, A200) !default;
+    $data-table-divider-color: mat.get-color-from-palette($foreground, text, 0.07) !default;
+    $data-table-hover-color: mat.get-color-from-palette($background, 'hover') !default;
+    $data-table-selection-color: mat.get-color-from-palette($background, 'selected-button') !default;
     $data-table-dividers: 1px solid $data-table-divider-color !default;
     $data-table-dividers-edge-row: $data-table-dividers !default;
     $data-table-dividers-wrapper-border: $data-table-dividers !default;
@@ -25,7 +26,7 @@
     $data-table-column-padding: $data-table-column-spacing / 2;
     $data-table-card-padding: 24px !default;
     $data-table-cell-top: $data-table-card-padding / 2;
-    $data-table-drag-border: 1px dashed mat-color($accent, A200);
+    $data-table-drag-border: 1px dashed mat.get-color-from-palette($accent, A200);
     $data-table-thumbnail-width: 50px !default;
     $data-table-cell-min-width: 50px !default;
     $data-table-cell-min-width--no-grow: 100px !default;
@@ -37,7 +38,7 @@
     }
 
     .adf-datatable-card {
-        border: 1px solid mat-color($foreground, divider);
+        border: 1px solid mat.get-color-from-palette($foreground, divider);
 
         .adf-datatable-body {
             flex-flow: row wrap;
@@ -66,8 +67,8 @@
                 margin: 6px;
                 padding: 15px;
 
-                @include mat-elevation-transition;
-                @include mat-overridable-elevation(2);
+                @include mat.elevation-transition;
+                @include mat.overridable-elevation(2);
             }
 
             .adf-datatable-row-empty-card {
@@ -79,7 +80,7 @@
             }
 
             .adf-is-selected {
-                background: mat-color($primary, 100);
+                background: mat.get-color-from-palette($primary, 100);
                 padding-bottom: 31px;
             }
 
@@ -127,7 +128,7 @@
                     margin-left: 10px;
                     text-align: left;
                     content: attr(title);
-                    color: mat-color($foreground, text, 0.4);
+                    color: mat.get-color-from-palette($foreground, text, 0.4);
                     float: left;
                     width: 140px;
                     white-space: nowrap;
@@ -158,7 +159,7 @@
                 margin: 8px;
                 padding: 4px;
                 overflow: visible;
-                border-bottom: 1px solid mat-color($foreground, divider);
+                border-bottom: 1px solid mat.get-color-from-palette($foreground, divider);
 
                 .adf-datatable-cell-container {
                     float: left;
@@ -192,7 +193,7 @@
     .adf-datatable-list {
         display: flex;
         flex-direction: column;
-        background-color: mat-color($background, card);
+        background-color: mat.get-color-from-palette($background, card);
         border: $data-table-dividers-wrapper-border;
         box-sizing: border-box;
         overflow-x: auto;
@@ -483,7 +484,7 @@
         }
 
         .adf-is-selected {
-            background: mat-color($primary, 100);
+            background: mat.get-color-from-palette($primary, 100);
         }
 
         .adf-datatable-link {
@@ -658,7 +659,7 @@
         .adf-datatable-body {
             .adf-datatable-row {
                 height: 100%;
-                background-color: mat-color($background, card);
+                background-color: mat.get-color-from-palette($background, card);
                 border: none !important;
 
                 &:hover, &:focus {
@@ -682,7 +683,7 @@
 
             .adf-datatable-row {
                 height: 100%;
-                background-color: mat-color($background, card);
+                background-color: mat.get-color-from-palette($background, card);
                 border: none !important;
 
                 &:hover, &:focus {

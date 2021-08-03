@@ -1,8 +1,9 @@
+@use '~@angular/material' as mat;
 @mixin adf-error-content-theme($theme) {
     $foreground: map-get($theme, foreground);
 
     .adf-error-content {
-        color: mat-color($foreground, text, 0.54);
+        color: mat.get-color-from-palette($foreground, text, 0.54);
         display: flex;
         flex-direction: column;
         align-items: center;

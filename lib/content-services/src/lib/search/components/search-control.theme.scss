@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-search-control-theme($theme) {
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
@@ -8,7 +9,7 @@
     .adf {
 
         &-search-result-autocomplete {
-            @include mat-overridable-elevation(2);
+            @include mat.overridable-elevation(2);
 
             min-width: $mat-menu-overlay-min-width;
             max-width: $mat-menu-overlay-max-width;
@@ -23,8 +24,8 @@
             margin-top: -22px;
             font-size: 15px;
             z-index: 5;
-            color: mat-color($foreground, text);
-            background-color: mat-color($background, card);
+            color: mat.get-color-from-palette($foreground, text);
+            background-color: mat.get-color-from-palette($background, card);
             border-radius: $mat-menu-border-radius;
 
             @media screen and (max-width: 959px) {
@@ -37,7 +38,7 @@
         &-search-autocomplete-item {
 
             &:hover {
-                background-color: mat-color($background, 'hover');
+                background-color: mat.get-color-from-palette($background, 'hover');
                 opacity: 1;
             }
         }

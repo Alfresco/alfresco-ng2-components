@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-task-list-people-search-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -28,7 +29,7 @@
                 opacity: 0.54;
                 font-weight: bolder;
                 &:hover {
-                    color: mat-color($primary);
+                    color: mat.get-color-from-palette($primary);
                 }
             }
         }

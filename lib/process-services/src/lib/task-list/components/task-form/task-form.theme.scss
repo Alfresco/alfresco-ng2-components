@@ -1,6 +1,7 @@
+@use '~@angular/material' as mat;
 @mixin adf-task-form-theme($theme) {
 
-    $config: mat-typography-config();
+    $config: mat.define-typography-config();
 
     .adf-task-form {
         &-container {
@@ -22,7 +23,7 @@
                 width: 58px;
                 height: 20px;
                 opacity: 0.54;
-                font-size: mat-font-size($config, body-2);
+                font-size: mat.font-size($config, body-2);
                 font-weight: bold;
             }
         }

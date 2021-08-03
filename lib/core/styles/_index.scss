@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import './theme-colors';
 @import './default-class';
 @import './theming';
@@ -71,7 +72,7 @@
     @include adf-sidenav-layout-theme($theme);
     @include adf-clipboard-theme($theme);
     @include adf-snackbar-theme($theme);
-    @include mat-expansion-panel-theme--fix($theme);
+    @include mat.expansion-theme--fix($theme);
     @include mat-calendar-theme--fix($theme);
     @include mat-datetimepicker-theme--fix($theme);
     @include adf-search-text-input-theme($theme);

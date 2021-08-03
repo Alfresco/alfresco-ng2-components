@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin adf-cloud-start-service-theme($theme) {
     .adf {
         &-start-process {
@@ -7,7 +8,7 @@
             }
 
             .mat-form-field-label {
-                color: mat-color($mat-grey, A400);
+                color: mat.get-color-from-palette(mat.$grey-palette, A400);
             }
 
             mat-card-actions {

@@ -1,7 +1,8 @@
+@use '~@angular/material' as mat;
 @mixin adf-image-viewer-theme($theme) {
     $accent: map-get($theme, accent);
     $background: map-get($theme, background);
-    $viewer-image-outline: 1px solid mat-color($accent, A200) !default;
+    $viewer-image-outline: 1px solid mat.get-color-from-palette($accent, A200) !default;
 
     .adf-image-viewer {
         width: 100%;
@@ -36,7 +37,7 @@
 
             .adf-toolbar .mat-toolbar {
                 max-height: 48px;
-                background-color: mat-color($background, card);
+                background-color: mat.get-color-from-palette($background, card);
                 border-width: 0;
                 border-radius: 2px;
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
