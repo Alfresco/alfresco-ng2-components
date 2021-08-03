@@ -58,7 +58,7 @@ export class AuthenticationService {
         private logService: LogService) {
         this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
             this.alfrescoApi.getInstance().reply('logged-in', () => {
-                this.profileApi = new UserProfileApi(alfrescoApi.getInstance())
+                this.profileApi = new UserProfileApi(alfrescoApi.getInstance());
                 this.onLogin.next()});
         });
     }
