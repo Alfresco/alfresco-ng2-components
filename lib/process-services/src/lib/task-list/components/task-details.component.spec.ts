@@ -150,11 +150,14 @@ describe('TaskDetailsComponent', () => {
         expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
     });
 
-    it('should display a form when the task has an associated form', fakeAsync(() => {
+    it('should display a form when the task has an associated form', async () => {
         component.taskId = '123';
+
         fixture.detectChanges();
+        await fixture.whenStable();
+
         expect(fixture.debugElement.query(By.css('adf-form'))).not.toBeNull();
-    }));
+    });
 
     it('should display a form in readonly when the task has an associated form and readOnlyForm is true', fakeAsync(() => {
         component.readOnlyForm = true;
