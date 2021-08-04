@@ -15,8 +15,19 @@
  * limitations under the License.
  */
 
-import { ContentService, EmptyListComponent , ThumbnailService, ProcessContentService } from '@alfresco/adf-core';
-import { AfterContentInit, ContentChild, Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ContentService, EmptyListComponent, ThumbnailService, ProcessContentService } from '@alfresco/adf-core';
+import {
+    AfterContentInit,
+    ContentChild,
+    Component,
+    EventEmitter,
+    Input,
+    NgZone,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
 
 @Component({
     selector: 'adf-process-attachment-list',
@@ -110,8 +121,8 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         if (processInstanceId) {
             this.reset();
             this.isLoading = true;
-            const opts: string =  'true';
-            this.activitiContentService.getProcessRelatedContent(processInstanceId, opts).subscribe(
+            const isRelatedContent = 'true';
+            this.activitiContentService.getProcessRelatedContent(processInstanceId, { isRelatedContent }).subscribe(
                 (res: any) => {
                     res.data.forEach((content) => {
                         this.attachments.push({
