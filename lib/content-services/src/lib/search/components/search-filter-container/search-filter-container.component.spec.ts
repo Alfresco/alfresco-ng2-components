@@ -111,23 +111,6 @@ describe('SearchFilterContainerComponent', () => {
         expect(queryBuilder.getActiveFilters()[0].value).toBe('updated text');
     });
 
-    // it('should emit filterChange after the Apply button is clicked', async (done) => {
-    //     spyOn(component['searchFilterQueryBuilder']['searchApi'], 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-    //     spyOn(queryBuilder, 'buildQuery').and.returnValue(null);
-    //     component.filterChange.subscribe(() => {
-    //         done();
-    //     });
-    //     const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
-    //     menuButton.click();
-    //     fixture.detectChanges();
-    //     await fixture.whenStable();
-    //     component.widgetContainer.componentRef.instance.value = 'searchText';
-    //     const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
-    //     applyButton.triggerEventHandler('click', {});
-    //     fixture.detectChanges();
-    //     await fixture.whenStable();
-    // });
-
     it('should remove active filter after the Clear button is clicked', async () => {
         queryBuilder.setActiveFilter('name', 'searchText');
         const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
@@ -142,24 +125,6 @@ describe('SearchFilterContainerComponent', () => {
         await fixture.whenStable();
         expect(queryBuilder.getActiveFilters().length).toBe(0);
     });
-
-    // it('should emit filterChange after the Clear button is clicked', async (done) => {
-    //     spyOn(component['searchApi'], 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-    //     spyOn(queryBuilder, 'buildQuery').and.returnValue(null);
-    //     component.filterChange.subscribe(() => {
-    //         done();
-    //     });
-    //     const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
-    //     menuButton.click();
-    //     fixture.detectChanges();
-    //     await fixture.whenStable();
-    //     component.widgetContainer.componentRef.instance.value = 'searchText';
-    //     const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
-    //     const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
-    //     clearButton.triggerEventHandler('click', fakeEvent);
-    //     fixture.detectChanges();
-    //     await fixture.whenStable();
-    // });
 
     it('should emit filterChange after the Enter key is pressed', async (done) => {
         spyOn(queryBuilder, 'buildQuery').and.returnValue(null);

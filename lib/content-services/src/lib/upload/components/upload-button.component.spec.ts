@@ -420,17 +420,6 @@ describe('UploadButtonComponent', () => {
             fixture.detectChanges();
         });
 
-        // it('should emit an success for successful upload of a file', (done) => {
-        //     spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadSuccessPromise);
-        //
-        //     component.success.subscribe((success) => {
-        //         expect(success).not.toBeNull();
-        //         done();
-        //     });
-        //
-        //     component.onFilesAdded(fakeEvent);
-        // });
-
         it('should emit error if upload errored', (done) => {
             spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadErrorPromise);
 
