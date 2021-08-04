@@ -25,7 +25,8 @@ import {
     RequestSortDefinitionInner,
     ResultSetPaging,
     RequestHighlight,
-    RequestScope
+    RequestScope,
+    SearchApi
 } from '@alfresco/js-api';
 import { SearchCategory } from '../models/search-category.interface';
 import { FilterQuery } from '../models/filter-query.interface';
@@ -284,7 +285,8 @@ export abstract class BaseQueryBuilderService {
         try {
             const query = queryBody ? queryBody : this.buildQuery();
             if (query) {
-                const resultSetPaging: ResultSetPaging = await this.alfrescoApiService.getInstance().search.searchApi.search(query);
+                const searchApi = new SearchApi(this.alfrescoApiService.getInstance());
+                const resultSetPaging: ResultSetPaging = await searchApi.search(query);
                 this.executed.next(resultSetPaging);
             }
         } catch (error) {
@@ -302,7 +304,8 @@ export abstract class BaseQueryBuilderService {
     }
 
     search(queryBody: QueryBody): Observable<ResultSetPaging> {
-        const promise = this.alfrescoApiService.searchApi.search(queryBody);
+        const searchApi = new SearchApi(this.alfrescoApiService.getInstance());
+        const promise = searchApi.search(queryBody);
 
         promise.then((resultSetPaging) => {
             this.executed.next(resultSetPaging);
@@ -410,7 +413,7 @@ export abstract class BaseQueryBuilderService {
     }
 
     get hasFacetHighlight(): boolean {
-        return this.config && this.config.highlight ? true : false;
+        return !!(this.config && this.config.highlight);
     }
 
     protected get sort(): RequestSortDefinitionInner[] {

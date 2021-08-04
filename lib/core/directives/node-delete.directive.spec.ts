@@ -18,7 +18,6 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
@@ -84,11 +83,10 @@ describe('NodeDeleteDirective', () => {
     let elementWithPermanentDelete: DebugElement;
     let component: TestComponent;
     let componentWithPermanentDelete: TestDeletePermanentComponent;
-    let alfrescoApi: AlfrescoApiService;
-    let nodeApi;
     let deleteNodeSpy: any;
-    let purgeDeletedNodeSpy: any;
     let disposableDelete: any;
+    let deleteNodePermanentSpy: any;
+    let purgeDeletedNodePermanentSpy: any;
 
     setupTestBed({
         imports: [
@@ -103,11 +101,6 @@ describe('NodeDeleteDirective', () => {
     });
 
     beforeEach(() => {
-        alfrescoApi = TestBed.inject(AlfrescoApiService);
-        nodeApi = alfrescoApi.nodesApi;
-        deleteNodeSpy = spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
-        purgeDeletedNodeSpy = spyOn(nodeApi, 'purgeDeletedNode').and.returnValue(Promise.resolve());
-
         fixture = TestBed.createComponent(TestComponent);
         fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
         fixtureWithPermanentComponent = TestBed.createComponent(TestDeletePermanentComponent);
@@ -117,6 +110,12 @@ describe('NodeDeleteDirective', () => {
 
         element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
         elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
+
+        deleteNodeSpy = spyOn(component.deleteDirective['nodesApi'], 'deleteNode').and.returnValue(Promise.resolve());
+
+        deleteNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective['nodesApi'], 'deleteNode').and.returnValue(Promise.resolve());
+        purgeDeletedNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective['trashcanApi'], 'deleteDeletedNode').and.returnValue(Promise.resolve());
+
     });
 
     afterEach(() => {
@@ -357,7 +356,7 @@ describe('NodeDeleteDirective', () => {
                 elementWithPermanentDelete.nativeElement.click();
 
                 fixture.whenStable().then(() => {
-                    expect(deleteNodeSpy).toHaveBeenCalledWith('1', { permanent: true });
+                    expect(deleteNodePermanentSpy).toHaveBeenCalledWith('1', { permanent: true });
                     done();
                 });
             });
@@ -374,7 +373,7 @@ describe('NodeDeleteDirective', () => {
                 elementWithPermanentDelete.nativeElement.click();
 
                 fixture.whenStable().then(() => {
-                    expect(purgeDeletedNodeSpy).toHaveBeenCalledWith('1');
+                    expect(purgeDeletedNodePermanentSpy).toHaveBeenCalledWith('1');
                     done();
                 });
             });

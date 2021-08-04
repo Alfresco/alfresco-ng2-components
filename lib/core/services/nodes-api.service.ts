@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNode, NodeEntry, NodePaging } from '@alfresco/js-api';
+import { MinimalNode, NodeEntry, NodePaging, NodesApi, TrashcanApi } from '@alfresco/js-api';
 import { from, Observable, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
@@ -28,11 +28,13 @@ import { NodeMetadata } from '../models/node-metadata.model';
 })
 export class NodesApiService {
 
-    constructor(private api: AlfrescoApiService,
-                private preferences: UserPreferencesService) {}
+    private nodesApi: NodesApi;
+    private trashcanApi: TrashcanApi;
 
-    private get nodesApi() {
-        return this.api.getInstance().core.nodesApi;
+    constructor(private apiService: AlfrescoApiService,
+                private preferences: UserPreferencesService) {
+        this.nodesApi = new NodesApi(this.apiService.getInstance());
+        this.trashcanApi = new TrashcanApi(this.apiService.getInstance());
     }
 
     private getEntryFromEntity(entity: NodeEntry) {
@@ -47,7 +49,7 @@ export class NodesApiService {
      */
     getNode(nodeId: string, options: any = {}): Observable<MinimalNode> {
         const defaults = {
-            include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
+            include: ['path', 'properties', 'allowableOperations', 'permissions']
         };
         const queryOptions = Object.assign(defaults, options);
 
@@ -67,11 +69,11 @@ export class NodesApiService {
         const defaults = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
-            include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
+            include: ['path', 'properties', 'allowableOperations', 'permissions']
         };
         const queryOptions = Object.assign(defaults, options);
 
-        return from(this.nodesApi.getNodeChildren(nodeId, queryOptions)).pipe(
+        return from(this.nodesApi.listNodeChildren(nodeId, queryOptions)).pipe(
             catchError((err) => throwError(err))
         );
     }
@@ -84,7 +86,7 @@ export class NodesApiService {
      * @returns Details of the new node
      */
     createNode(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNode> {
-        return from(this.nodesApi.addNode(parentNodeId, nodeBody, options)).pipe(
+        return from(this.nodesApi.createNode(parentNodeId, nodeBody, options)).pipe(
             map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
         );
@@ -111,12 +113,12 @@ export class NodesApiService {
      */
     updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNode> {
         const defaults = {
-            include: [ 'path', 'properties', 'allowableOperations', 'permissions', 'definition' ]
+            include: ['path', 'properties', 'allowableOperations', 'permissions', 'definition']
         };
         const queryOptions = Object.assign(defaults, options);
 
         return from(this.nodesApi.updateNode(nodeId, nodeBody, queryOptions)).pipe(
-             map(this.getEntryFromEntity),
+            map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
         );
     }
@@ -139,7 +141,7 @@ export class NodesApiService {
      * @returns Details of the restored node
      */
     restoreNode(nodeId: string): Observable<MinimalNode> {
-        return from(this.nodesApi.restoreNode(nodeId)).pipe(
+        return from(this.trashcanApi.restoreDeletedNode(nodeId)).pipe(
             map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
         );
@@ -190,7 +192,7 @@ export class NodesApiService {
             properties: properties,
             relativePath: path
         };
-        return from(this.nodesApi.addNode('-root-', body, {}));
+        return from(this.nodesApi.createNode('-root-', body, {}));
     }
 
     private generateUuid() {

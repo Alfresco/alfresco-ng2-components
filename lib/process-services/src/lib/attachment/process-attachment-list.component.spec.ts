@@ -92,7 +92,7 @@ describe('ProcessAttachmentListComponent', () => {
         };
 
         getProcessRelatedContentSpy = spyOn(service, 'getProcessRelatedContent').and.returnValue(of(mockAttachment));
-        spyOn(service, 'deleteRelatedContent').and.returnValue(of({successCode: true}));
+        spyOn(service, 'deleteRelatedContent').and.returnValue(of({ successCode: true }));
 
         const blobObj = new Blob();
         spyOn(service, 'getFileRawContent').and.returnValue(of(blobObj));
@@ -128,7 +128,7 @@ describe('ProcessAttachmentListComponent', () => {
             expect(attachments[0].id).toEqual(mockAttachment.data[0].id);
         });
 
-        component.ngOnChanges({'taskId': change});
+        component.ngOnChanges({ 'taskId': change });
     });
 
     it('should not attach when no processInstanceId is specified', () => {
@@ -192,7 +192,7 @@ describe('ProcessAttachmentListComponent', () => {
             'data': []
         }));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'processInstanceId': change});
+        component.ngOnChanges({ 'processInstanceId': change });
         fixture.detectChanges();
         await fixture.whenStable();
         expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
@@ -206,7 +206,7 @@ describe('ProcessAttachmentListComponent', () => {
             'data': []
         }));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'processInstanceId': change});
+        component.ngOnChanges({ 'processInstanceId': change });
         component.disabled = true;
 
         fixture.detectChanges();
@@ -223,20 +223,20 @@ describe('ProcessAttachmentListComponent', () => {
             'data': []
         }));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'processInstanceId': change});
+        component.ngOnChanges({ 'processInstanceId': change });
         component.disabled = true;
 
         fixture.detectChanges();
         await fixture.whenStable();
 
         expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim())
-        .toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
+            .toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
     });
 
     it('should not show the empty list component when the attachments list is not empty for completed process', async () => {
         getProcessRelatedContentSpy.and.returnValue(of(mockAttachment));
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'processInstanceId': change});
+        component.ngOnChanges({ 'processInstanceId': change });
         component.disabled = true;
 
         fixture.detectChanges();
@@ -248,9 +248,9 @@ describe('ProcessAttachmentListComponent', () => {
         getProcessRelatedContentSpy.and.returnValue(of(mockAttachment));
         const change = new SimpleChange(null, '123', true);
         const isRelatedContent = 'true';
-        component.ngOnChanges({'processInstanceId': change});
+        component.ngOnChanges({ 'processInstanceId': change });
         expect(getProcessRelatedContentSpy).toHaveBeenCalled();
-        expect(getProcessRelatedContentSpy).toHaveBeenCalledWith('123', isRelatedContent);
+        expect(getProcessRelatedContentSpy).toHaveBeenCalledWith('123', { isRelatedContent });
     });
 
     describe('change detection', () => {
@@ -266,7 +266,8 @@ describe('ProcessAttachmentListComponent', () => {
 
         it('should fetch new attachments when processInstanceId changed', () => {
             component.ngOnChanges({ 'processInstanceId': change });
-            expect(getProcessRelatedContentSpy).toHaveBeenCalledWith('456', 'true');
+            const isRelatedContent = 'true';
+            expect(getProcessRelatedContentSpy).toHaveBeenCalledWith('456', { isRelatedContent });
         });
 
         it('should NOT fetch new attachments when empty changeset made', () => {
@@ -283,12 +284,12 @@ describe('ProcessAttachmentListComponent', () => {
 
 @Component({
     template: `
-    <adf-process-attachment-list>
-        <adf-empty-list>
-            <div adf-empty-list-header class="adf-empty-list-header">Custom header</div>
-        </adf-empty-list>
-    </adf-process-attachment-list>
-       `
+        <adf-process-attachment-list>
+            <adf-empty-list>
+                <div adf-empty-list-header class="adf-empty-list-header">Custom header</div>
+            </adf-empty-list>
+        </adf-process-attachment-list>
+    `
 })
 class CustomEmptyTemplateComponent {
 }
@@ -302,7 +303,7 @@ describe('Custom CustomEmptyTemplateComponent', () => {
             ProcessTestingModule
         ],
         declarations: [CustomEmptyTemplateComponent],
-        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     beforeEach(() => {

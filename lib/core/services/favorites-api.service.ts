@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodePaging } from '@alfresco/js-api';
+import { FavoritesApi, NodePaging, FavoritePaging } from '@alfresco/js-api';
 import { Observable, from, of } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
@@ -27,6 +27,8 @@ import { catchError } from 'rxjs/operators';
 })
 export class FavoritesApiService {
 
+    private favoritesApi: FavoritesApi;
+
     static remapEntry({ entry }: any): any {
         entry.properties = {
             'cm:title': entry.title,
@@ -36,11 +38,17 @@ export class FavoritesApiService {
         return { entry };
     }
 
-    remapFavoritesData(data: any = {}): NodePaging {
-        const list = (data.list || {});
-        const pagination = (list.pagination || {});
+    constructor(
+        private apiService: AlfrescoApiService,
+        private preferences: UserPreferencesService
+    ) {
+        this.favoritesApi = new FavoritesApi(this.apiService.getInstance());
+    }
+
+    remapFavoritesData(data: FavoritePaging = {}): NodePaging {
+        const pagination = (data?.list?.pagination || {});
         const entries: any[] = this
-            .remapFavoriteEntries(list.entries || []);
+            .remapFavoriteEntries(data?.list?.entries || []);
 
         return <NodePaging> {
             list: { entries, pagination }
@@ -49,20 +57,11 @@ export class FavoritesApiService {
 
     remapFavoriteEntries(entries: any[]) {
         return entries
-            .map(({ entry: { target }}: any) => ({
+            .map(({ entry: { target } }: any) => ({
                 entry: target.file || target.folder
             }))
             .filter(({ entry }) => (!!entry))
             .map(FavoritesApiService.remapEntry);
-    }
-
-    constructor(
-        private apiService: AlfrescoApiService,
-        private preferences: UserPreferencesService
-    ) {}
-
-    private get favoritesApi() {
-       return this.apiService.getInstance().core.favoritesApi;
     }
 
     /**
@@ -76,11 +75,11 @@ export class FavoritesApiService {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
             where: '(EXISTS(target/file) OR EXISTS(target/folder))',
-            include: [ 'properties', 'allowableOperations' ]
+            include: ['properties', 'allowableOperations']
         };
         const queryOptions = Object.assign(defaultOptions, options);
         const promise = this.favoritesApi
-            .getFavorites(personId, queryOptions)
+            .listFavorites(personId, queryOptions)
             .then(this.remapFavoritesData);
 
         return from(promise).pipe(

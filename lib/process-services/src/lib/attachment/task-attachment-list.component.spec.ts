@@ -280,9 +280,9 @@ describe('TaskAttachmentList', () => {
         it('should fetch new attachments when taskId changed', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
-
+            const isRelatedContent = 'true';
             component.ngOnChanges({ 'taskId': change });
-            expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456', 'true');
+            expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456', { isRelatedContent });
         });
 
         it('should NOT fetch new attachments when empty change set made', () => {
@@ -311,7 +311,7 @@ describe('TaskAttachmentList', () => {
 
             expect(deleteContentSpy).toHaveBeenCalled();
         });
-   });
+    });
 });
 
 @Component({

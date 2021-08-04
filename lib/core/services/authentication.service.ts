@@ -22,7 +22,7 @@ import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { RedirectionModel } from '../models/redirection.model';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { UserRepresentation } from '@alfresco/js-api';
+import { UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 import { map, catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from './jwt-helper.service';
@@ -48,6 +48,8 @@ export class AuthenticationService {
      */
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
+    private profileApi: UserProfileApi;
+
     constructor(
         private appConfig: AppConfigService,
         private storageService: StorageService,
@@ -55,7 +57,10 @@ export class AuthenticationService {
         private cookie: CookieService,
         private logService: LogService) {
         this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
-            this.alfrescoApi.getInstance().reply('logged-in', () => this.onLogin.next());
+            this.alfrescoApi.getInstance().reply('logged-in', () => {
+                this.profileApi = new UserProfileApi(alfrescoApi.getInstance());
+                this.onLogin.next();
+            });
         });
     }
 
@@ -295,7 +300,7 @@ export class AuthenticationService {
      * @returns User information
      */
     getBpmLoggedUser(): Observable<UserRepresentation> {
-        return from(this.alfrescoApi.getInstance().activiti.profileApi.getProfile());
+        return from(this.profileApi.getProfile());
     }
 
     private hasValidRedirection(provider: string): boolean {

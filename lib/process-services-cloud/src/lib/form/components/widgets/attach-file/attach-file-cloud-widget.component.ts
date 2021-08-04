@@ -29,7 +29,7 @@ import {
     AlfrescoApiService,
     UploadWidgetContentLinkModel
 } from '@alfresco/adf-core';
-import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
+import { Node, NodesApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
@@ -67,6 +67,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     rootNodeId = AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
     selectedNode: Node;
 
+    private nodesApi: NodesApi;
+
     constructor(
         formService: FormService,
         logger: LogService,
@@ -79,6 +81,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
+        this.nodesApi = new NodesApi(this.apiService.getInstance());
     }
 
     ngOnInit() {
@@ -222,7 +225,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     contentModelFormFileHandler(file?: any) {
         if (file?.id && this.isRetrieveMetadataOptionEnabled()) {
             const values: FormValues = {};
-            this.apiService.getInstance().node.getNode(file.id).then(acsNode => {
+            this.nodesApi.getNode(file.id).then(acsNode => {
                 const metadata = acsNode?.entry?.properties;
                 if (metadata) {
                     const keys = Object.keys(metadata);

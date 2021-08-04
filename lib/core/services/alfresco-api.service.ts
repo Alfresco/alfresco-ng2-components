@@ -16,15 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import {
-    ContentApi,
-    Core,
-    Activiti,
-    SearchApi,
-    Node,
-    GroupsApi,
-    AlfrescoApiCompatibility, AlfrescoApiConfig, AspectsApi, TypesApi
-} from '@alfresco/js-api';
+import { Node, AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { Subject, ReplaySubject } from 'rxjs';
 import { OauthConfigModel } from '../models/oauth-config.model';
@@ -43,70 +35,14 @@ export class AlfrescoApiService {
 
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
-    protected alfrescoApi: AlfrescoApiCompatibility;
+    protected alfrescoApi: AlfrescoApi;
 
     lastConfig: AlfrescoApiConfig;
 
     private excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
 
-    getInstance(): AlfrescoApiCompatibility {
+    getInstance(): AlfrescoApi {
         return this.alfrescoApi;
-    }
-
-    get taskApi(): Activiti.TaskApi {
-        return this.getInstance().activiti.taskApi;
-    }
-
-    get contentApi(): ContentApi {
-        return this.getInstance().content;
-    }
-
-    get nodesApi(): Core.NodesApi {
-        return this.getInstance().nodes;
-    }
-
-    get renditionsApi(): Core.RenditionsApi {
-        return this.getInstance().core.renditionsApi;
-    }
-
-    get sharedLinksApi(): Core.SharedlinksApi {
-        return this.getInstance().core.sharedlinksApi;
-    }
-
-    get sitesApi(): Core.SitesApi {
-        return this.getInstance().core.sitesApi;
-    }
-
-    get favoritesApi(): Core.FavoritesApi {
-        return this.getInstance().core.favoritesApi;
-    }
-
-    get peopleApi(): Core.PeopleApi {
-        return this.getInstance().core.peopleApi;
-    }
-
-    get searchApi(): SearchApi {
-        return this.getInstance().search.searchApi;
-    }
-
-    get versionsApi(): Core.VersionsApi {
-        return this.getInstance().core.versionsApi;
-    }
-
-    get classesApi(): Core.ClassesApi {
-        return this.getInstance().core.classesApi;
-    }
-
-    get groupsApi(): GroupsApi {
-        return new GroupsApi(this.getInstance());
-    }
-
-    get aspectsApi(): AspectsApi {
-        return new AspectsApi(this.getInstance());
-    }
-
-    get typesApi(): TypesApi {
-        return new TypesApi(this.getInstance());
     }
 
     constructor(
@@ -148,10 +84,10 @@ export class AlfrescoApiService {
 
         if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, config)) {
             this.lastConfig = config;
-            this.alfrescoApi.configureJsApi(config);
+            this.alfrescoApi.setConfig(config);
         } else {
             this.lastConfig = config;
-            this.alfrescoApi = new AlfrescoApiCompatibility(config);
+            this.alfrescoApi = new AlfrescoApi(config);
         }
 
     }

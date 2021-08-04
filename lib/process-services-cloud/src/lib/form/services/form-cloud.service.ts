@@ -26,7 +26,7 @@ import {
 import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
-import { CompleteFormRepresentation } from '@alfresco/js-api';
+import { CompleteFormRepresentation, UploadApi } from '@alfresco/js-api';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormContent } from '../../services/form-fields.interfaces';
@@ -36,11 +36,14 @@ import { FormContent } from '../../services/form-fields.interfaces';
 })
 export class FormCloudService extends BaseCloudService {
 
+    uploadApi: UploadApi;
+
     constructor(
         apiService: AlfrescoApiService,
         appConfigService: AppConfigService
     ) {
         super(apiService, appConfigService);
+        this.uploadApi = new UploadApi(apiService.getInstance());
     }
 
     /**
@@ -99,7 +102,7 @@ export class FormCloudService extends BaseCloudService {
         changedConfig.provider = 'ALL';
         changedConfig.hostEcm = contentHost.replace('/alfresco', '');
         this.apiService.getInstance().setConfig(changedConfig);
-        return from(this.apiService.getInstance().upload.uploadFile(
+        return from(this.uploadApi.uploadFile(
             file,
             '',
             nodeId,

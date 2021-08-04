@@ -33,10 +33,7 @@ export class LockService {
         let isLocked = false;
         if (this.hasLockConfigured(node)) {
             if (this.isReadOnlyLock(node)) {
-                isLocked = true;
-                if (this.isLockExpired(node)) {
-                    isLocked = false;
-                }
+                isLocked = !this.isLockExpired(node);
             } else if (this.isLockOwnerAllowed(node)) {
                 isLocked = this.alfrescoApiService.getInstance().getEcmUsername() !== node.properties['cm:lockOwner'].id;
                 if (this.isLockExpired(node)) {

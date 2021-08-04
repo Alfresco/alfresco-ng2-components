@@ -16,7 +16,7 @@
  */
 
 import { Directive, HostListener, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-import { SiteBody, FavoriteBody, FavoriteEntry, Site } from '@alfresco/js-api';
+import { SiteBody, FavoriteBody, FavoriteEntry, Site, FavoritesApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 export interface LibraryEntity {
@@ -38,6 +38,7 @@ export class LibraryFavoriteDirective implements OnChanges {
     @Output() error = new EventEmitter<any>();
 
     private targetLibrary = null;
+    private favoritesApi: FavoritesApi;
 
     @HostListener('click')
     onClick() {
@@ -56,7 +57,9 @@ export class LibraryFavoriteDirective implements OnChanges {
         }
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor(private alfrescoApiService: AlfrescoApiService) {
+        this.favoritesApi = new FavoritesApi(this.alfrescoApiService.getInstance());
+    }
 
     ngOnChanges(changes) {
         if (!changes.library.currentValue) {
@@ -75,7 +78,7 @@ export class LibraryFavoriteDirective implements OnChanges {
     private async markFavoriteLibrary(library: LibraryEntity) {
         if (this.targetLibrary.isFavorite === undefined) {
             try {
-                await this.alfrescoApiService.peopleApi.getFavoriteSite('-me-', library.entry.id);
+                await this.favoritesApi.getFavoriteSite('-me-', library.entry.id);
                 this.targetLibrary.isFavorite = true;
             } catch {
                 this.targetLibrary.isFavorite = false;
@@ -86,8 +89,8 @@ export class LibraryFavoriteDirective implements OnChanges {
     }
 
     private addFavorite(favoriteBody: FavoriteBody) {
-        this.alfrescoApiService.peopleApi
-            .addFavorite('-me-', favoriteBody)
+        this.favoritesApi
+            .createFavorite('-me-', favoriteBody)
             .then((libraryEntry: FavoriteEntry) => {
                 this.targetLibrary.isFavorite = true;
                 this.toggle.emit(libraryEntry);
@@ -96,8 +99,8 @@ export class LibraryFavoriteDirective implements OnChanges {
     }
 
     private removeFavorite(favoriteId: string) {
-        this.alfrescoApiService.favoritesApi
-            .removeFavoriteSite('-me-', favoriteId)
+        this.favoritesApi
+            .deleteFavorite('-me-', favoriteId)
             .then((libraryBody: SiteBody) => {
                 this.targetLibrary.isFavorite = false;
                 this.toggle.emit(libraryBody);

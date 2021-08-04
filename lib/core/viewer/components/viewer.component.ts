@@ -20,7 +20,15 @@ import {
     Input, OnChanges, Output, TemplateRef,
     ViewEncapsulation, OnInit, OnDestroy
 } from '@angular/core';
-import { SharedLinkEntry, Node, Version, RenditionEntry, NodeEntry, VersionEntry } from '@alfresco/js-api';
+import {
+    SharedLinkEntry,
+    Node,
+    Version,
+    RenditionEntry,
+    NodeEntry,
+    VersionEntry,
+    SharedlinksApi, VersionsApi, NodesApi, ContentApi
+} from '@alfresco/js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
@@ -249,6 +257,11 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private shouldCloseViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
+    private sharedLinksApi: SharedlinksApi;
+    private versionsApi: VersionsApi;
+    private nodesApi: NodesApi;
+    private contentApi: ContentApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private viewUtilService: ViewUtilService,
                 private logService: LogService,
@@ -257,6 +270,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 private uploadService: UploadService,
                 private el: ElementRef,
                 public dialog: MatDialog) {
+        this.sharedLinksApi = new SharedlinksApi(this.apiService.getInstance());
+        this.versionsApi = new VersionsApi(this.apiService.getInstance());
+        this.nodesApi = new NodesApi(this.apiService.getInstance());
+        this.contentApi = new ContentApi(this.apiService.getInstance());
         viewUtilService.maxRetries = this.maxRetries;
     }
 
@@ -329,44 +346,52 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 this.setUpUrlFile();
                 this.isLoading = false;
             } else if (this.nodeId) {
-                this.apiService.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] }).then(
-                    (node: NodeEntry) => {
-                        this.nodeEntry = node;
-                        if (this.versionId) {
-                            this.apiService.versionsApi.getVersion(this.nodeId, this.versionId).then(
-                                (version: VersionEntry) => {
-                                    this.versionEntry = version;
-                                    this.setUpNodeFile(node.entry, version.entry).then(() => {
-                                        this.isLoading = false;
-                                    });
-                                }
-                            );
-                        } else {
-                            this.setUpNodeFile(node.entry).then(() => {
+                this.setupNode();
+            } else if (this.sharedLinkId) {
+                this.setupSharedLink();
+            }
+        }
+    }
+
+    private setupSharedLink() {
+        this.allowGoBack = false;
+
+        this.sharedLinksApi.getSharedLink(this.sharedLinkId).then(
+            (sharedLinkEntry: SharedLinkEntry) => {
+                this.setUpSharedLinkFile(sharedLinkEntry);
+                this.isLoading = false;
+            },
+            () => {
+                this.isLoading = false;
+                this.logService.error('This sharedLink does not exist');
+                this.invalidSharedLink.next();
+            });
+    }
+
+    private setupNode() {
+        this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] }).then(
+            (node: NodeEntry) => {
+                this.nodeEntry = node;
+                if (this.versionId) {
+                    this.versionsApi.getVersion(this.nodeId, this.versionId).then(
+                        (version: VersionEntry) => {
+                            this.versionEntry = version;
+                            this.setUpNodeFile(node.entry, version.entry).then(() => {
                                 this.isLoading = false;
                             });
                         }
-                    },
-                    () => {
+                    );
+                } else {
+                    this.setUpNodeFile(node.entry).then(() => {
                         this.isLoading = false;
-                        this.logService.error('This node does not exist');
-                    }
-                );
-            } else if (this.sharedLinkId) {
-                this.allowGoBack = false;
-
-                this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(
-                    (sharedLinkEntry: SharedLinkEntry) => {
-                        this.setUpSharedLinkFile(sharedLinkEntry);
-                        this.isLoading = false;
-                    },
-                    () => {
-                        this.isLoading = false;
-                        this.logService.error('This sharedLink does not exist');
-                        this.invalidSharedLink.next();
                     });
+                }
+            },
+            () => {
+                this.isLoading = false;
+                this.logService.error('This node does not exist');
             }
-        }
+        );
     }
 
     private setUpBlobData() {
@@ -414,8 +439,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         const currentFileVersion = this.nodeEntry?.entry?.properties && this.nodeEntry.entry.properties['cm:versionLabel'] ?
             encodeURI(this.nodeEntry?.entry?.properties['cm:versionLabel']) : encodeURI('1.0');
 
-        this.urlFileContent = versionData ? this.apiService.contentApi.getVersionContentUrl(this.nodeId, versionData.id) :
-            this.apiService.contentApi.getContentUrl(this.nodeId);
+        this.urlFileContent = versionData ? this.contentApi.getVersionContentUrl(this.nodeId, versionData.id) :
+            this.contentApi.getContentUrl(this.nodeId);
         this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + currentFileVersion + '&' + this.cacheBusterNumber :
             this.urlFileContent + '&' + currentFileVersion;
 
@@ -450,7 +475,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.extension = this.getFileExtension(details.entry.name);
         this.fileName = details.entry.name;
 
-        this.urlFileContent = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
+        this.urlFileContent = this.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
 
         this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
         if (this.viewerType === 'unknown') {
@@ -467,7 +492,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     toggleSidebar() {
         this.showRightSidebar = !this.showRightSidebar;
         if (this.showRightSidebar && this.nodeId) {
-            this.apiService.getInstance().nodes.getNode(this.nodeId, { include: ['allowableOperations'] })
+            this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] })
                 .then((nodeEntry: NodeEntry) => {
                     this.sidebarRightTemplateContext.node = nodeEntry.entry;
                 });
@@ -477,7 +502,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     toggleLeftSidebar() {
         this.showLeftSidebar = !this.showLeftSidebar;
         if (this.showRightSidebar && this.nodeId) {
-            this.apiService.getInstance().nodes.getNode(this.nodeId, { include: ['allowableOperations'] })
+            this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] })
                 .then((nodeEntry: NodeEntry) => {
                     this.sidebarLeftTemplateContext.node = nodeEntry.entry;
                 });
@@ -662,18 +687,18 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private async displaySharedLinkRendition(sharedId: string) {
         try {
-            const rendition: RenditionEntry = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'pdf');
+            const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'pdf');
             if (rendition.entry.status.toString() === 'CREATED') {
                 this.viewerType = 'pdf';
-                this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
+                this.urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
             }
         } catch (error) {
             this.logService.error(error);
             try {
-                const rendition: RenditionEntry = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'imgpreview');
+                const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'imgpreview');
                 if (rendition.entry.status.toString() === 'CREATED') {
                     this.viewerType = 'image';
-                    this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
+                    this.urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
                 }
             } catch (error) {
                 this.logService.error(error);

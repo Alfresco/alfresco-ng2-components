@@ -48,7 +48,7 @@ import {
     DataRow
 } from '@alfresco/adf-core';
 
-import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
+import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
 import { Subject, BehaviorSubject, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
@@ -342,6 +342,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
     private loadingTimeout;
     private onDestroy$ = new Subject<boolean>();
+    private nodesApi: NodesApi;
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -352,6 +353,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService,
                 private lockService: LockService) {
+        this.nodesApi = new NodesApi(this.alfrescoApiService.getInstance());
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
@@ -801,7 +803,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                     include: this.includeFields
                 };
 
-                this.alfrescoApiService.nodesApi.getNode(nodeEntry.entry['guid'], options)
+                this.nodesApi.getNode(nodeEntry.entry['guid'], options)
                     .then((node: NodeEntry) => {
                         this.navigateTo(node.entry);
                     });

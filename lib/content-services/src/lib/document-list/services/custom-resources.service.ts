@@ -41,46 +41,22 @@ export class CustomResourcesService {
 
     private CREATE_PERMISSION = 'create';
 
-    private _peopleApi: PeopleApi;
-    private _sitesApi: SitesApi;
-    private _trashcanApi: TrashcanApi;
-    private _searchApi: SearchApi;
-    private _sharedLinksApi: SharedlinksApi;
-    private _favoritesApi: FavoritesApi;
-    private _nodesApi: NodesApi;
+     peopleApi: PeopleApi;
+     sitesApi: SitesApi;
+     trashcanApi: TrashcanApi;
+     searchApi: SearchApi;
+     sharedLinksApi: SharedlinksApi;
+     favoritesApi: FavoritesApi;
+     nodesApi: NodesApi;
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
-
-    private get api() {
-        return this.apiService.getInstance();
-    }
-
-    get peopleApi(): PeopleApi {
-        return this._peopleApi || (this._peopleApi = new PeopleApi(this.api));
-    }
-
-    get sitesApi(): SitesApi {
-        return this._sitesApi || (this._sitesApi = new SitesApi(this.api));
-    }
-
-    get searchApi(): SearchApi {
-        return this._searchApi || (this._searchApi = new SearchApi(this.api));
-    }
-
-    get favoritesApi(): FavoritesApi {
-        return this._favoritesApi || (this._favoritesApi = new FavoritesApi(this.api));
-    }
-
-    get sharedLinksApi(): SharedlinksApi {
-        return this._sharedLinksApi || (this._sharedLinksApi = new SharedlinksApi(this.api));
-    }
-
-    get trashcanApi(): TrashcanApi {
-        return this._trashcanApi || (this._trashcanApi = new TrashcanApi(this.api));
-    }
-
-    get nodesApi(): NodesApi {
-        return this._nodesApi || (this._nodesApi = new NodesApi(this.api));
+    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
+        this.peopleApi = new PeopleApi(this.apiService.getInstance());
+        this.sitesApi = new SitesApi(this.apiService.getInstance());
+        this.favoritesApi = new FavoritesApi(this.apiService.getInstance());
+        this.searchApi = new SearchApi(this.apiService.getInstance());
+        this.sharedLinksApi = new SharedlinksApi(this.apiService.getInstance());
+        this.trashcanApi = new TrashcanApi(this.apiService.getInstance());
+        this.nodesApi = new NodesApi(this.apiService.getInstance());
     }
 
     /**

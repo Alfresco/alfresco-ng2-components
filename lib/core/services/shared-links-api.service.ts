@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodePaging, SharedLinkEntry } from '@alfresco/js-api';
+import { NodePaging, SharedLinkEntry, SharedlinksApi } from '@alfresco/js-api';
 import { Observable, from, of, Subject } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
@@ -28,13 +28,11 @@ import { catchError } from 'rxjs/operators';
 export class SharedLinksApiService {
 
     error = new Subject<{ statusCode: number, message: string }>();
+    private sharedLinksApi: SharedlinksApi;
 
     constructor(private apiService: AlfrescoApiService,
                 private preferences: UserPreferencesService) {
-    }
-
-    private get sharedLinksApi() {
-        return this.apiService.getInstance().core.sharedlinksApi;
+        this.sharedLinksApi = new SharedlinksApi(this.apiService.getInstance());
     }
 
     /**
@@ -49,7 +47,7 @@ export class SharedLinksApiService {
             include: ['properties', 'allowableOperations']
         };
         const queryOptions = Object.assign({}, defaultOptions, options);
-        const promise = this.sharedLinksApi.findSharedLinks(queryOptions);
+        const promise = this.sharedLinksApi.listSharedLinks(queryOptions);
 
         return from(promise).pipe(
             catchError((err) => of(err))
@@ -63,7 +61,7 @@ export class SharedLinksApiService {
      * @returns The shared link just created
      */
     createSharedLinks(nodeId: string, options: any = {}): Observable<SharedLinkEntry> {
-        const promise = this.sharedLinksApi.addSharedLink({ nodeId: nodeId }, options);
+        const promise = this.sharedLinksApi.createSharedLink({ nodeId: nodeId }, options);
 
         return from(promise).pipe(
             catchError((err) => of(err))

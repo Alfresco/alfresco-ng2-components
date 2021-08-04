@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { formModelTabs } from '../../mock';
 import { FormService } from './form.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
@@ -53,7 +52,6 @@ const fakePeopleResponse = {
 describe('Form service', () => {
 
     let service: FormService;
-    let apiService: AlfrescoApiService;
 
     setupTestBed({
         imports: [
@@ -64,7 +62,6 @@ describe('Form service', () => {
 
     beforeEach(() => {
         service = TestBed.inject(FormService);
-        apiService = TestBed.inject(AlfrescoApiService);
         jasmine.Ajax.install();
     });
 
@@ -223,22 +220,6 @@ describe('Form service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(response)
-            });
-        });
-
-        it('should get start form definition by process definition id', (done) => {
-
-            const processApiSpy = jasmine.createSpyObj(['getProcessDefinitionStartForm']);
-            spyOn(apiService, 'getInstance').and.returnValue({
-                activiti: {
-                    processApi: processApiSpy
-                }
-            } as any);
-            processApiSpy.getProcessDefinitionStartForm.and.returnValue(Promise.resolve({ id: '1' }));
-
-            service.getStartFormDefinition('myprocess:1').subscribe(() => {
-                expect(processApiSpy.getProcessDefinitionStartForm).toHaveBeenCalledWith('myprocess:1');
-                done();
             });
         });
 

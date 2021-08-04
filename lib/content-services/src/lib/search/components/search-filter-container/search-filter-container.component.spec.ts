@@ -17,10 +17,10 @@
 import { Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { SearchService, setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
+import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { fakeNodePaging } from './../../../mock/document-list.component.mock';
+// import { fakeNodePaging } from './../../../mock/document-list.component.mock';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { By } from '@angular/platform-browser';
 import { SearchFilterContainerComponent } from './search-filter-container.component';
@@ -47,7 +47,6 @@ describe('SearchFilterContainerComponent', () => {
     let fixture: ComponentFixture<SearchFilterContainerComponent>;
     let component: SearchFilterContainerComponent;
     let queryBuilder: SearchHeaderQueryBuilderService;
-    let alfrescoApiService: AlfrescoApiService;
 
     const searchMock: any = {
         dataLoaded: new Subject()
@@ -68,7 +67,6 @@ describe('SearchFilterContainerComponent', () => {
         fixture = TestBed.createComponent(SearchFilterContainerComponent);
         component = fixture.componentInstance;
         queryBuilder = fixture.componentInstance['searchFilterQueryBuilder'];
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         component.col = {key: '123', type: 'text'};
         spyOn(queryBuilder, 'getCategoryForColumn').and.returnValue(mockCategory);
         fixture.detectChanges();
@@ -113,23 +111,6 @@ describe('SearchFilterContainerComponent', () => {
         expect(queryBuilder.getActiveFilters()[0].value).toBe('updated text');
     });
 
-    it('should emit filterChange after the Apply button is clicked', async (done) => {
-        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-        spyOn(queryBuilder, 'buildQuery').and.returnValue(null);
-        component.filterChange.subscribe(() => {
-            done();
-        });
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
-        menuButton.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
-        component.widgetContainer.componentRef.instance.value = 'searchText';
-        const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
-        applyButton.triggerEventHandler('click', {});
-        fixture.detectChanges();
-        await fixture.whenStable();
-    });
-
     it('should remove active filter after the Clear button is clicked', async () => {
         queryBuilder.setActiveFilter('name', 'searchText');
         const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
@@ -143,24 +124,6 @@ describe('SearchFilterContainerComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         expect(queryBuilder.getActiveFilters().length).toBe(0);
-    });
-
-    it('should emit filterChange after the Clear button is clicked', async (done) => {
-        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-        spyOn(queryBuilder, 'buildQuery').and.returnValue(null);
-        component.filterChange.subscribe(() => {
-            done();
-        });
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
-        menuButton.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
-        component.widgetContainer.componentRef.instance.value = 'searchText';
-        const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
-        const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
-        clearButton.triggerEventHandler('click', fakeEvent);
-        fixture.detectChanges();
-        await fixture.whenStable();
     });
 
     it('should emit filterChange after the Enter key is pressed', async (done) => {

@@ -29,6 +29,7 @@ import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.
 import { AlfrescoApiService } from './alfresco-api.service';
 import { DiscoveryApiService } from './discovery-api.service';
 import { filter } from 'rxjs/operators';
+import { NodesApi, UploadApi, VersionsApi } from '@alfresco/js-api';
 
 const MIN_CANCELLABLE_FILE_SIZE = 1000000;
 const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
@@ -53,28 +54,18 @@ export class UploadService {
 
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadStarting: Subject<FileUploadEvent> = new Subject<
-        FileUploadEvent
-    >();
-    fileUploadCancelled: Subject<FileUploadEvent> = new Subject<
-        FileUploadEvent
-    >();
-    fileUploadProgress: Subject<FileUploadEvent> = new Subject<
-        FileUploadEvent
-    >();
-    fileUploadAborted: Subject<FileUploadEvent> = new Subject<
-        FileUploadEvent
-    >();
-    fileUploadError: Subject<FileUploadErrorEvent> = new Subject<
-        FileUploadErrorEvent
-    >();
-    fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<
-        FileUploadCompleteEvent
-    >();
-    fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<
-        FileUploadDeleteEvent
-    >();
+    fileUploadStarting: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadCancelled: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadProgress: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadAborted: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadError: Subject<FileUploadErrorEvent> = new Subject<FileUploadErrorEvent>();
+    fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
+    fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
     fileDeleted: Subject<string> = new Subject<string>();
+
+    private uploadApi: UploadApi;
+    private nodesApi: NodesApi;
+    private versionsApi: VersionsApi;
 
     constructor(
         protected apiService: AlfrescoApiService,
@@ -85,6 +76,10 @@ export class UploadService {
             .subscribe(({ status }) => {
                 this.isThumbnailGenerationEnabled = status.isThumbnailGenerationEnabled;
             });
+
+        this.uploadApi = new UploadApi(apiService.getInstance());
+        this.nodesApi = new NodesApi(apiService.getInstance());
+        this.versionsApi = new VersionsApi(apiService.getInstance());
     }
 
     /**
@@ -255,19 +250,15 @@ export class UploadService {
         }
 
         if (file.id) {
-            return this.apiService
-                .getInstance()
-                .node.updateNodeContent(file.id, file.file, opts);
+            return this.nodesApi.updateNodeContent(file.id, <any> file.file, opts);
         } else {
-            return this.apiService
-                .getInstance()
-                .upload.uploadFile(
-                    file.file,
-                    file.options.path,
-                    file.options.parentId,
-                    file.options,
-                    opts
-                );
+            return this.uploadApi.uploadFile(
+                file.file,
+                file.options.path,
+                file.options.parentId,
+                file.options,
+                opts
+            );
         }
     }
 
@@ -307,7 +298,8 @@ export class UploadService {
                     }
                 }
             })
-            .catch(() => {});
+            .catch(() => {
+            });
 
         return promise;
     }
@@ -420,16 +412,12 @@ export class UploadService {
     }
 
     private deleteAbortedNode(nodeId: string) {
-        this.apiService
-            .getInstance()
-            .core.nodesApi.deleteNode(nodeId, { permanent: true })
+        this.nodesApi.deleteNode(nodeId, { permanent: true })
             .then(() => (this.abortedFile = undefined));
     }
 
     private deleteAbortedNodeVersion(nodeId: string, versionId: string) {
-        this.apiService
-            .getInstance()
-            .core.versionsApi.deleteVersion(nodeId, versionId)
+        this.versionsApi.deleteVersion(nodeId, versionId)
             .then(() => (this.abortedFile = undefined));
     }
 

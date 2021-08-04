@@ -18,7 +18,7 @@
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
-import { RelatedContentRepresentation } from '@alfresco/js-api';
+import { ActivitiContentApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -30,12 +30,11 @@ export class ProcessContentService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
+    private contentApi: ActivitiContentApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-    }
-
-    private get contentApi(): any {
-        return this.apiService.getInstance().activiti.contentApi;
+        this.contentApi = new ActivitiContentApi(this.apiService.getInstance());
     }
 
     /**
@@ -75,7 +74,7 @@ export class ProcessContentService {
      */
     getContentPreview(contentId: number): Observable<Blob> {
         return new Observable((observer) => {
-            this.contentApi.getContentPreview(contentId).then(
+            this.contentApi.getRawContent(contentId).then(
                 (result) => {
                     observer.next(result);
                     observer.complete();
@@ -111,7 +110,7 @@ export class ProcessContentService {
      * @returns Binary data of the thumbnail image
      */
     getContentThumbnail(contentId: number): Observable<Blob> {
-        return from(this.contentApi.getContentThumbnail(contentId))
+        return from(this.contentApi.getRawContent(contentId, 'thumbnail'))
             .pipe(catchError((err) => this.handleError(err)));
     }
 

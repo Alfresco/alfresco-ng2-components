@@ -18,14 +18,18 @@
 import { AlfrescoApiService, AppConfigService, DiscoveryApiService, UploadService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
+import { ActivitiContentApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskUploadService extends UploadService {
 
+    private contentApi: ActivitiContentApi;
+
     constructor(protected apiService: AlfrescoApiService, appConfigService: AppConfigService, discoveryApiService: DiscoveryApiService) {
         super(apiService, appConfigService, discoveryApiService);
+        this.contentApi = new ActivitiContentApi(apiService.getInstance());
     }
 
     getUploadPromise(file: any): any {
@@ -33,7 +37,7 @@ export class TaskUploadService extends UploadService {
             isRelatedContent: true
         };
         const taskId = file.options.parentId;
-        const promise = this.apiService.getInstance().activiti.contentApi.createRelatedContentOnTask(taskId, file.file, opts);
+        const promise = this.contentApi.createRelatedContentOnTask(taskId, file.file, opts);
 
         promise.catch((err) => this.handleError(err));
 

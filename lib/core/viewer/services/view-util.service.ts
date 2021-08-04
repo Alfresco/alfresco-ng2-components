@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { RenditionEntry, RenditionPaging } from '@alfresco/js-api';
+import { ContentApi, RenditionEntry, RenditionPaging, RenditionsApi, VersionsApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Subject } from 'rxjs';
@@ -33,7 +33,7 @@ export class ViewUtilService {
      * Content groups based on categorization of files that can be viewed in the web browser. This
      * implementation or grouping is tied to the definition the ng component: ViewerComponent
      */
-    // tslint:disable-next-line:variable-name
+        // tslint:disable-next-line:variable-name
     static ContentGroup = {
         IMAGE: 'image',
         MEDIA: 'media',
@@ -74,9 +74,16 @@ export class ViewUtilService {
     viewerTypeChange: Subject<string> = new Subject<string>();
     urlFileContentChange: Subject<string> = new Subject<string>();
 
+    renditionsApi: RenditionsApi;
+    contentApi: ContentApi;
+    versionsApi: VersionsApi;
+
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private translateService: TranslationService) {
+        this.renditionsApi = new RenditionsApi(this.apiService.getInstance());
+        this.contentApi = new ContentApi(this.apiService.getInstance());
+        this.versionsApi = new VersionsApi(this.apiService.getInstance());
     }
 
     /**
@@ -115,7 +122,7 @@ export class ViewUtilService {
 
         this.getRendition(nodeId, ViewUtilService.ContentGroup.PDF)
             .then((value) => {
-                const url: string = this.getRenditionUrl(nodeId, type, (value ? true : false));
+                const url: string = this.getRenditionUrl(nodeId, type, (!!value));
                 const printType = (type === ViewUtilService.ContentGroup.PDF
                     || type === ViewUtilService.ContentGroup.TEXT)
                     ? ViewUtilService.ContentGroup.PDF : type;
@@ -129,12 +136,12 @@ export class ViewUtilService {
 
     getRenditionUrl(nodeId: string, type: string, renditionExists: boolean): string {
         return (renditionExists && type !== ViewUtilService.ContentGroup.IMAGE) ?
-            this.apiService.contentApi.getRenditionUrl(nodeId, ViewUtilService.ContentGroup.PDF) :
-            this.apiService.contentApi.getContentUrl(nodeId, false);
+            this.contentApi.getRenditionUrl(nodeId, ViewUtilService.ContentGroup.PDF) :
+            this.contentApi.getContentUrl(nodeId, false);
     }
 
     private async waitRendition(nodeId: string, renditionId: string, retries: number): Promise<RenditionEntry> {
-        const rendition = await this.apiService.renditionsApi.getRendition(nodeId, renditionId);
+        const rendition = await this.renditionsApi.getRendition(nodeId, renditionId);
 
         if (this.maxRetries < retries) {
             const status = rendition.entry.status.toString();
@@ -170,7 +177,7 @@ export class ViewUtilService {
     }
 
     async getRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
-        const renditionPaging: RenditionPaging = await this.apiService.renditionsApi.getRenditions(nodeId);
+        const renditionPaging: RenditionPaging = await this.renditionsApi.listRenditions(nodeId);
         let rendition: RenditionEntry = renditionPaging.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
 
         if (rendition) {
@@ -178,7 +185,7 @@ export class ViewUtilService {
 
             if (status === 'NOT_CREATED') {
                 try {
-                    await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId });
+                    await this.renditionsApi.createRendition(nodeId, { id: renditionId });
                     rendition = await this.waitRendition(nodeId, renditionId, 0);
                 } catch (err) {
                     this.logService.error(err);
@@ -201,8 +208,8 @@ export class ViewUtilService {
                     this.viewerTypeChange.next('image');
                 }
 
-                const urlFileContent = versionId ? this.apiService.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId) :
-                    this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
+                const urlFileContent = versionId ? this.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId) :
+                    this.contentApi.getRenditionUrl(nodeId, renditionId);
                 this.urlFileContentChange.next(urlFileContent);
             }
         } catch (err) {
@@ -213,8 +220,8 @@ export class ViewUtilService {
     private async resolveNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<RenditionEntry> {
         renditionId = renditionId.toLowerCase();
 
-        const supportedRendition: RenditionPaging = versionId ? await this.apiService.versionsApi.listVersionRenditions(nodeId, versionId) :
-            await this.apiService.renditionsApi.getRenditions(nodeId);
+        const supportedRendition: RenditionPaging = versionId ? await this.versionsApi.listVersionRenditions(nodeId, versionId) :
+            await this.renditionsApi.listRenditions(nodeId);
 
         let rendition: RenditionEntry = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
         if (!rendition) {
@@ -228,11 +235,11 @@ export class ViewUtilService {
             if (status === 'NOT_CREATED') {
                 try {
                     if (versionId) {
-                        await this.apiService.versionsApi.createVersionRendition(nodeId, versionId, { id: renditionId }).then(() => {
+                        await this.versionsApi.createVersionRendition(nodeId, versionId, { id: renditionId }).then(() => {
                             this.viewerTypeChange.next('in_creation');
                         });
                     } else {
-                        await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId }).then(() => {
+                        await this.renditionsApi.createRendition(nodeId, { id: renditionId }).then(() => {
                             this.viewerTypeChange.next('in_creation');
                         });
                     }
@@ -259,7 +266,7 @@ export class ViewUtilService {
                 currentRetry++;
                 if (this.maxRetries >= currentRetry) {
                     if (versionId) {
-                        this.apiService.versionsApi.getVersionRendition(nodeId, versionId, renditionId).then((rendition: RenditionEntry) => {
+                        this.versionsApi.getVersionRendition(nodeId, versionId, renditionId).then((rendition: RenditionEntry) => {
                             const status: string = rendition.entry.status.toString();
 
                             if (status === 'CREATED') {
@@ -271,7 +278,7 @@ export class ViewUtilService {
                             return reject();
                         });
                     } else {
-                        this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition: RenditionEntry) => {
+                        this.renditionsApi.getRendition(nodeId, renditionId).then((rendition: RenditionEntry) => {
                             const status: string = rendition.entry.status.toString();
 
                             if (status === 'CREATED') {
@@ -298,8 +305,8 @@ export class ViewUtilService {
             this.viewerTypeChange.next('image');
         }
 
-        const urlFileContent = versionId ? this.apiService.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId) :
-            this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
+        const urlFileContent = versionId ? this.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId) :
+            this.contentApi.getRenditionUrl(nodeId, renditionId);
         this.urlFileContentChange.next(urlFileContent);
     }
 
@@ -310,7 +317,7 @@ export class ViewUtilService {
                 if (value) {
                     tracks.push({
                         kind: 'subtitles',
-                        src: this.apiService.contentApi.getRenditionUrl(nodeId, ViewUtilService.SUBTITLES_RENDITION_NAME),
+                        src: this.contentApi.getRenditionUrl(nodeId, ViewUtilService.SUBTITLES_RENDITION_NAME),
                         label: this.translateService.instant('ADF_VIEWER.SUBTITLES')
                     });
                 }
@@ -324,7 +331,7 @@ export class ViewUtilService {
     }
 
     private async isRenditionAvailable(nodeId: string, renditionId: string): Promise<boolean> {
-        const renditionPaging: RenditionPaging = await this.apiService.renditionsApi.getRenditions(nodeId);
+        const renditionPaging: RenditionPaging = await this.renditionsApi.listRenditions(nodeId);
         const rendition: RenditionEntry = renditionPaging.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
 
         return rendition?.entry?.status?.toString() === 'CREATED' || false;

@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { NodeEntry, Node, DeletedNodeEntity, DeletedNode } from '@alfresco/js-api';
+import { NodeEntry, Node, DeletedNodeEntity, DeletedNode, TrashcanApi, NodesApi } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
@@ -62,6 +62,9 @@ export class NodeDeleteDirective implements OnChanges {
     @Output()
     delete: EventEmitter<any> = new EventEmitter();
 
+    private trashcanApi: TrashcanApi;
+    private nodesApi: NodesApi;
+
     @HostListener('click')
     onClick() {
         this.process(this.selection);
@@ -70,6 +73,8 @@ export class NodeDeleteDirective implements OnChanges {
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private translation: TranslationService,
                 private elementRef: ElementRef) {
+        this.trashcanApi = new TrashcanApi(this.alfrescoApiService.getInstance());
+        this.nodesApi = new NodesApi(this.alfrescoApiService.getInstance());
     }
 
     ngOnChanges() {
@@ -113,9 +118,9 @@ export class NodeDeleteDirective implements OnChanges {
         let promise: Promise<any>;
 
         if (node.entry.hasOwnProperty('archivedAt') && node.entry['archivedAt']) {
-            promise = this.alfrescoApiService.nodesApi.purgeDeletedNode(id);
+            promise = this.trashcanApi.deleteDeletedNode(id);
         } else {
-            promise = this.alfrescoApiService.nodesApi.deleteNode(id, { permanent: this.permanent });
+            promise = this.nodesApi.deleteNode(id, { permanent: this.permanent });
         }
 
         return from(promise).pipe(
