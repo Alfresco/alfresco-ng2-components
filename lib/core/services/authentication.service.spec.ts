@@ -314,15 +314,25 @@ describe('AuthenticationService', () => {
         });
 
         it('[BPM] should be able to retrieve current logged in user', (done) => {
-            spyOn(authService['profileApi'], 'getProfile').and.returnValue(
-                Promise.resolve((<UserRepresentation> {
-                    email: 'fake-email'
-                })));
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+                spyOn(authService['profileApi'], 'getProfile').and.returnValue(
+                    Promise.resolve((<UserRepresentation> {
+                        email: 'fake-email'
+                    })));
 
-            authService.getBpmLoggedUser().subscribe((fakeUser) => {
-                expect(fakeUser.email).toBe('fake-email');
-                done();
+                authService.getBpmLoggedUser().subscribe((fakeUser) => {
+                    expect(fakeUser.email).toBe('fake-email');
+                    done();
+                });
+
+                disposableLogin.unsubscribe();
             });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json'
+            });
+
         });
     });
 
