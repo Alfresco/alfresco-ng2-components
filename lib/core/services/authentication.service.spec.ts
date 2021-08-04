@@ -189,7 +189,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should return true if kerberos configured', () => {
-            appConfigService.config.auth.withCredentials = true ;
+            appConfigService.config.auth.withCredentials = true;
 
             expect(authService.isLoggedInWith('ECM')).toBe(true);
             expect(authService.isLoggedIn()).toBe(true);
@@ -313,27 +313,6 @@ describe('AuthenticationService', () => {
             expect(authService.isALLProvider()).toBe(false);
         });
 
-        it('[BPM] should be able to retrieve current logged in user', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
-                spyOn(authService['profileApi'], 'getProfile').and.returnValue(
-                    Promise.resolve((<UserRepresentation> {
-                        email: 'fake-email'
-                    })));
-
-                authService.getBpmLoggedUser().subscribe((fakeUser) => {
-                    expect(fakeUser.email).toBe('fake-email');
-                    done();
-                });
-
-                disposableLogin.unsubscribe();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json'
-            });
-
-        });
     });
 
     describe('remember me', () => {
@@ -378,7 +357,8 @@ describe('AuthenticationService', () => {
 
         it('[ECM] should not save the remember me cookie after failed login', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                () => {},
+                () => {
+                },
                 () => {
                     expect(cookie['ALFRESCO_REMEMBER_ME']).toBeUndefined();
                     disposableLogin.unsubscribe();
@@ -435,7 +415,8 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return login fail if only ECM call fail', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                () => {},
+                () => {
+                },
                 () => {
                     expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
                     expect(authService.getTicketEcm()).toBe(null, 'getTicketEcm');
@@ -457,7 +438,8 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return login fail if only BPM call fail', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                () => {},
+                () => {
+                },
                 () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
@@ -480,7 +462,8 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                () => {},
+                () => {
+                },
                 () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
