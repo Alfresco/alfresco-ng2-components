@@ -16,20 +16,17 @@
  */
 
 import { SearchConfiguration } from '../models/search-configuration.interface';
-import { AppConfigService, CoreModule, setupTestBed } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from './search-header-query-builder.service';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('SearchHeaderQueryBuilderService', () => {
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreModule.forRoot(),
-            ContentTestingModule
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [ContentTestingModule]
+        });
     });
 
     const buildConfig = (searchSettings): AppConfigService => {
@@ -47,9 +44,10 @@ describe('SearchHeaderQueryBuilderService', () => {
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
 
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         const builder = new SearchHeaderQueryBuilderService(
             buildConfig(config),
-            null,
+            alfrescoApiService,
             null
         );
 
@@ -74,9 +72,10 @@ describe('SearchHeaderQueryBuilderService', () => {
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
 
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         const service = new SearchHeaderQueryBuilderService(
             buildConfig(config),
-            null,
+            alfrescoApiService,
             null
         );
 
@@ -87,9 +86,10 @@ describe('SearchHeaderQueryBuilderService', () => {
     });
 
     it('should have empty user query by default', () => {
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         const builder = new SearchHeaderQueryBuilderService(
             buildConfig({}),
-            null,
+            alfrescoApiService,
             null
         );
         expect(builder.userQuery).toBe('');
@@ -108,9 +108,10 @@ describe('SearchHeaderQueryBuilderService', () => {
             { query: 'PARENT:"workspace://SpacesStore/fake-node-id"' }
         ];
 
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         const searchHeaderService = new SearchHeaderQueryBuilderService(
             buildConfig(config),
-            null,
+            alfrescoApiService,
             null
         );
 
@@ -133,9 +134,10 @@ describe('SearchHeaderQueryBuilderService', () => {
             filterQueries: expectedResult
         };
 
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         const searchHeaderService = new SearchHeaderQueryBuilderService(
             buildConfig(config),
-            null,
+            alfrescoApiService,
             null
         );
 
@@ -159,9 +161,10 @@ describe('SearchHeaderQueryBuilderService', () => {
             ]
         };
 
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         const searchHeaderService = new SearchHeaderQueryBuilderService(
             buildConfig(config),
-            null,
+            alfrescoApiService,
             null
         );
 
