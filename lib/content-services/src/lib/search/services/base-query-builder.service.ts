@@ -42,6 +42,7 @@ import { SearchForm } from '../models/search-form.interface';
     providedIn: 'root'
 })
 export abstract class BaseQueryBuilderService {
+    private searchApi: SearchApi;
 
     /*  Stream that emits the search configuration whenever the user change the search forms */
     configUpdated = new Subject<SearchConfiguration>();
@@ -87,6 +88,7 @@ export abstract class BaseQueryBuilderService {
     ranges: { [id: string]: SearchRange } = {};
 
     constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
+        this.searchApi = new SearchApi(this.alfrescoApiService.getInstance());
         this.resetToDefaults();
     }
 
@@ -145,9 +147,14 @@ export abstract class BaseQueryBuilderService {
                 name: configuration.name || 'SEARCH.UNKNOWN_CONFIGURATION',
                 default: configuration.default || false,
                 selected: this.selectedConfiguration !== undefined ? index === this.selectedConfiguration : configuration.default
-           }));
+            }));
         } else if (!!configurations) {
-            return [{ index: 0, name: configurations.name || 'SEARCH.UNKNOWN_CONFIGURATION', default: true, selected: true }];
+            return [{
+                index: 0,
+                name: configurations.name || 'SEARCH.UNKNOWN_CONFIGURATION',
+                default: true,
+                selected: true
+            }];
         }
         return [];
     }
@@ -285,8 +292,7 @@ export abstract class BaseQueryBuilderService {
         try {
             const query = queryBody ? queryBody : this.buildQuery();
             if (query) {
-                const searchApi = new SearchApi(this.alfrescoApiService.getInstance());
-                const resultSetPaging: ResultSetPaging = await searchApi.search(query);
+                const resultSetPaging: ResultSetPaging = await this.searchApi.search(query);
                 this.executed.next(resultSetPaging);
             }
         } catch (error) {
@@ -304,8 +310,7 @@ export abstract class BaseQueryBuilderService {
     }
 
     search(queryBody: QueryBody): Observable<ResultSetPaging> {
-        const searchApi = new SearchApi(this.alfrescoApiService.getInstance());
-        const promise = searchApi.search(queryBody);
+        const promise = this.searchApi.search(queryBody);
 
         promise.then((resultSetPaging) => {
             this.executed.next(resultSetPaging);

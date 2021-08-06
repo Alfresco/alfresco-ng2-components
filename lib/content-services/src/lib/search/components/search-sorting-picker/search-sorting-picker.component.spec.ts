@@ -17,7 +17,7 @@
 
 import { SearchSortingPickerComponent } from './search-sorting-picker.component';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { SearchConfiguration } from '../../models/search-configuration.interface';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -53,7 +53,9 @@ describe('SearchSortingPickerComponent', () => {
                 <any> { id: 'cat1', enabled: true }
             ]
         };
-        queryBuilder = new SearchQueryBuilderService(buildConfig(config), null);
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
+
+        queryBuilder = new SearchQueryBuilderService(buildConfig(config), alfrescoApiService);
         component = new SearchSortingPickerComponent(queryBuilder);
     });
 
