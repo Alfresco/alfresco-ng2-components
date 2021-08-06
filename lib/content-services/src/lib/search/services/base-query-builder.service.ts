@@ -88,7 +88,7 @@ export abstract class BaseQueryBuilderService {
     ranges: { [id: string]: SearchRange } = {};
 
     constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
-        this.searchApi = new SearchApi(this.alfrescoApiService.getInstance())
+        this.searchApi = new SearchApi(this.alfrescoApiService.getInstance());
         this.resetToDefaults();
     }
 

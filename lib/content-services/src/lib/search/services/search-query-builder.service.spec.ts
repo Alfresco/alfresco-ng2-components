@@ -258,9 +258,11 @@ describe('SearchQueryBuilder', () => {
     it('should fetch facets from the config by label with spaces and return field with request compatible label (escaped)', () => {
         const config: SearchConfiguration = {
             categories: [],
-            facetFields: { 'fields': [
+            facetFields: {
+                'fields': [
                     { 'field': 'content.size', 'mincount': 1, 'label': 'Label with spaces' }
-                ]}
+                ]
+            }
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
@@ -431,10 +433,26 @@ describe('SearchQueryBuilder', () => {
             categories: [
                 <any> { id: 'cat1', enabled: true }
             ],
-            facetFields: { fields: [
-                    { field: 'field1', label: spacesLabel.configValue, mincount: 1, limit: null, offset: 0, prefix: null },
-                    { field: 'field2', label: noSpacesLabel.configValue, mincount: 1, limit: null, offset: 0, prefix: null }
-                ]}
+            facetFields: {
+                fields: [
+                    {
+                        field: 'field1',
+                        label: spacesLabel.configValue,
+                        mincount: 1,
+                        limit: null,
+                        offset: 0,
+                        prefix: null
+                    },
+                    {
+                        field: 'field2',
+                        label: noSpacesLabel.configValue,
+                        mincount: 1,
+                        limit: null,
+                        offset: 0,
+                        prefix: null
+                    }
+                ]
+            }
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
@@ -459,7 +477,7 @@ describe('SearchQueryBuilder', () => {
                         label: 'test_intervals1',
                         field: 'f1',
                         sets: [
-                            { label: 'interval1', start: 's1', end: 'e1', startInclusive: true, endInclusive: true  },
+                            { label: 'interval1', start: 's1', end: 'e1', startInclusive: true, endInclusive: true },
                             { label: 'interval2', start: 's2', end: 'e2', startInclusive: false, endInclusive: true }
                         ]
                     },
@@ -534,7 +552,7 @@ describe('SearchQueryBuilder', () => {
         expect(compiled.facetIntervals.intervals[1].label).toEqual(noSpacesLabel.configValue);
 
         expect(compiled.facetIntervals.intervals[0].sets[0].label).toEqual(spacesLabelForSet.requestCompatibleValue);
-   });
+    });
 
     it('should build query with sorting', () => {
         const config: SearchConfiguration = {
@@ -754,37 +772,37 @@ describe('SearchQueryBuilder', () => {
         let configs: SearchConfiguration[];
         let builder: SearchQueryBuilderService;
         beforeEach(() => {
-              configs = [
-                  {
-                      categories: [
-                          <any> { id: 'cat1', enabled: true },
-                          <any> { id: 'cat2', enabled: true }
-                      ],
-                      filterQueries: [
-                          { query: 'query1' },
-                          { query: 'query2' }
-                      ],
-                      name: 'config1',
-                      default: true
-                  },
-                  {
-                      categories: [
-                          <any> { id: 'mouse', enabled: true }
-                      ],
-                      filterQueries: [
-                          { query: 'query1' },
-                          { query: 'query2' }
-                      ],
-                      name: 'config2',
-                      default: false
-                  },
-                  {
-                      categories: [
-                          <any> { id: 'cat_and_mouse', enabled: true }
-                      ],
-                      default: false
-                  }
-              ];
+            configs = [
+                {
+                    categories: [
+                        <any> { id: 'cat1', enabled: true },
+                        <any> { id: 'cat2', enabled: true }
+                    ],
+                    filterQueries: [
+                        { query: 'query1' },
+                        { query: 'query2' }
+                    ],
+                    name: 'config1',
+                    default: true
+                },
+                {
+                    categories: [
+                        <any> { id: 'mouse', enabled: true }
+                    ],
+                    filterQueries: [
+                        { query: 'query1' },
+                        { query: 'query2' }
+                    ],
+                    name: 'config2',
+                    default: false
+                },
+                {
+                    categories: [
+                        <any> { id: 'cat_and_mouse', enabled: true }
+                    ],
+                    default: false
+                }
+            ];
             const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
             builder = new SearchQueryBuilderService(buildConfig(configs), alfrescoApiService);
@@ -807,9 +825,9 @@ describe('SearchQueryBuilder', () => {
         it('should list available search form names', (done) => {
             builder.searchForms.subscribe((forms) => {
                 expect(forms).toEqual([
-                    { index: 0,  name: 'config1', default: true, selected: true },
-                    { index: 1,  name: 'config2', default: false, selected: false },
-                    { index: 2,  name: 'SEARCH.UNKNOWN_CONFIGURATION', default: false, selected: false }
+                    { index: 0, name: 'config1', default: true, selected: true },
+                    { index: 1, name: 'config2', default: false, selected: false },
+                    { index: 2, name: 'SEARCH.UNKNOWN_CONFIGURATION', default: false, selected: false }
                 ]);
                 done();
             });
