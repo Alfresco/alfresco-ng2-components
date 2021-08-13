@@ -35,7 +35,7 @@ export class AlfrescoApiService {
 
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
-    protected alfrescoApi: AlfrescoApi;
+    protected alfrescoApi: AlfrescoApi = new AlfrescoApi();
 
     lastConfig: AlfrescoApiConfig;
 
@@ -82,12 +82,9 @@ export class AlfrescoApiService {
             oauth2: oauth
         });
 
-        if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, config)) {
+        if (this.isDifferentConfig(this.lastConfig, config)) {
             this.lastConfig = config;
             this.alfrescoApi.setConfig(config);
-        } else {
-            this.lastConfig = config;
-            this.alfrescoApi = new AlfrescoApi(config);
         }
 
     }
