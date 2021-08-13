@@ -111,7 +111,7 @@ describe('TagActionsComponent', () => {
                 deleteButton.click();
 
                 expect(jasmine.Ajax.requests.at(1).url)
-                    .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
+                    .toBe('http://localhost:9876/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
                 expect(jasmine.Ajax.requests.at(1).method).toBe('DELETE');
 
                 jasmine.Ajax.requests.mostRecent().respondWith({

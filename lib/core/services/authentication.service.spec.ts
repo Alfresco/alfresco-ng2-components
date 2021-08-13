@@ -273,7 +273,7 @@ describe('AuthenticationService', () => {
                 },
                 (err: any) => {
                     expect(err).toBeDefined();
-                    expect(authService.getTicketBpm()).toBe(undefined);
+                    expect(authService.getTicketBpm()).toBe(null);
                     done();
                 });
 
