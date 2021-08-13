@@ -35,7 +35,7 @@ export class AlfrescoApiService {
 
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
-    protected alfrescoApi: AlfrescoApi = new AlfrescoApi();
+    protected alfrescoApi: AlfrescoApi;
 
     lastConfig: AlfrescoApiConfig;
 
@@ -48,6 +48,7 @@ export class AlfrescoApiService {
     constructor(
         protected appConfig: AppConfigService,
         protected storageService: StorageService) {
+        this.alfrescoApi = new AlfrescoApi({});
     }
 
     async load() {
