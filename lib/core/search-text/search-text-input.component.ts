@@ -73,7 +73,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     collapseOnSubmit: boolean = true;
 
     /** Default state expanded or Collapsed. */
-     @Input()
+    @Input()
     defaultState: SearchTextStateEnum = SearchTextStateEnum.collapsed;
 
     /** Toggles whether to collapse the search on blur. */
@@ -83,6 +83,10 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     /** Toggles whether to show a clear button that closes the search */
     @Input()
     showClearButton: boolean = false;
+
+    /** Placeholder text to show in the input field */
+    @Input()
+    placeholder: string = '';
 
     /** Emitted when the search term is changed. The search term is provided
      * in the 'value' property of the returned object.  If the term is less
