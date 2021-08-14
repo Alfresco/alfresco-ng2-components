@@ -48,7 +48,20 @@ export class AlfrescoApiService {
     constructor(
         protected appConfig: AppConfigService,
         protected storageService: StorageService) {
-        this.alfrescoApi = new AlfrescoApi({});
+        const config = new AlfrescoApiConfig({
+            provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
+            hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
+            hostBpm: this.appConfig.get<string>(AppConfigValues.BPMHOST),
+            authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC'),
+            contextRootBpm: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM),
+            contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
+            disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
+            withCredentials: this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
+            domainPrefix : this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX),
+            oauth2: oauth
+        });
+        this.lastConfig = config
+        this.alfrescoApi = new AlfrescoApi(config);
     }
 
     async load() {
@@ -69,19 +82,6 @@ export class AlfrescoApiService {
             oauth.redirectUri = window.location.origin + (oauth.redirectUri || '/');
             oauth.redirectUriLogout = window.location.origin + (oauth.redirectUriLogout || '/');
         }
-
-        const config = new AlfrescoApiConfig({
-            provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
-            hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
-            hostBpm: this.appConfig.get<string>(AppConfigValues.BPMHOST),
-            authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC'),
-            contextRootBpm: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM),
-            contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
-            disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
-            withCredentials: this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
-            domainPrefix : this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX),
-            oauth2: oauth
-        });
 
         if (this.isDifferentConfig(this.lastConfig, config)) {
             this.lastConfig = config;
