@@ -25,8 +25,7 @@ import {
     AuditApp,
     AuditBodyUpdate,
     AuditEntryPaging,
-    AuditEntryEntry,
-    AspectsApi
+    AuditEntryEntry
 } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 

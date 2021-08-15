@@ -65,7 +65,7 @@ export class CustomResourcesService {
         return new FavoritesApi(this.apiService.getInstance());
     }
 
-    get nodes(): NodesApi {
+    get nodesApi(): NodesApi {
         return new NodesApi(this.apiService.getInstance());
     }
 

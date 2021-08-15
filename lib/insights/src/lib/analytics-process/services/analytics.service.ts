@@ -28,7 +28,7 @@ import { MultiBarChart } from '../../diagram/models/chart/multi-bar-chart.model'
 import { PieChart } from '../../diagram/models/chart/pie-chart.model';
 import { TableChart } from '../../diagram/models/chart/table-chart.model';
 import { map, catchError } from 'rxjs/operators';
-import { ActivitiContentApi, ProcessDefinitionsApi, ReportApi } from '@alfresco/js-api';
+import { ProcessDefinitionsApi, ReportApi } from '@alfresco/js-api';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
@@ -37,7 +37,7 @@ export class AnalyticsService {
         return new ReportApi(this.apiService.getInstance());
     }
 
-    get reportApi(): ProcessDefinitionsApi {
+    get processDefinitionsApi(): ProcessDefinitionsApi {
         return new ProcessDefinitionsApi(this.apiService.getInstance());
     }
 

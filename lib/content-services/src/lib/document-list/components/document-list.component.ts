@@ -343,7 +343,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     private loadingTimeout;
     private onDestroy$ = new Subject<boolean>();
 
-    get nodes(): NodesApi {
+    get nodesApi(): NodesApi {
         return new NodesApi(this.alfrescoApiService.getInstance());
     }
 
