@@ -35,7 +35,10 @@ export class RestoreMessageModel {
 })
 export class NodeRestoreDirective {
     private readonly restoreProcessStatus;
-    private trashcanApi: TrashcanApi;
+
+    get trashcanApi(): TrashcanApi {
+        return new TrashcanApi(this.alfrescoApiService.getInstance());
+    }
 
     /** Array of deleted nodes to restore. */
     @Input('adf-restore')
@@ -53,7 +56,6 @@ export class NodeRestoreDirective {
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private translation: TranslationService) {
         this.restoreProcessStatus = this.processStatus();
-        this.trashcanApi = new TrashcanApi(this.alfrescoApiService.getInstance());
     }
 
     private recover(selection: any) {

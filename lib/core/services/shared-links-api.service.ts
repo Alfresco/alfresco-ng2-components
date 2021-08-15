@@ -28,11 +28,13 @@ import { catchError } from 'rxjs/operators';
 export class SharedLinksApiService {
 
     error = new Subject<{ statusCode: number, message: string }>();
-    private sharedLinksApi: SharedlinksApi;
+
+    get sharedLinksApi(): SharedlinksApi {
+        return new SharedlinksApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private preferences: UserPreferencesService) {
-        this.sharedLinksApi = new SharedlinksApi(this.apiService.getInstance());
     }
 
     /**

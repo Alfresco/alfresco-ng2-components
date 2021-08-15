@@ -31,7 +31,9 @@ import { DownloadService } from '../services/download.service';
 })
 export class NodeDownloadDirective {
 
-    private contentApi: ContentApi;
+    get contentApi(): ContentApi {
+        return new ContentApi(this.apiService.getInstance());
+    }
 
     /** Nodes to download. */
     @Input('adfNodeDownload')
@@ -50,7 +52,6 @@ export class NodeDownloadDirective {
         private apiService: AlfrescoApiService,
         private downloadService: DownloadService,
         private dialog: MatDialog) {
-        this.contentApi = new ContentApi(this.apiService.getInstance());
     }
 
     /**

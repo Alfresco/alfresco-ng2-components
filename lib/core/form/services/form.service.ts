@@ -52,15 +52,41 @@ export class FormService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    taskApi: TasksApi;
-    taskFormsApi: TaskFormsApi;
-    modelsApi: ModelsApi;
-    editorApi: FormModelsApi;
-    processDefinitionsApi: ProcessDefinitionsApi;
-    processInstancesApi: ProcessInstancesApi;
-    processInstanceVariablesApi: ProcessInstanceVariablesApi;
-    groupsApi: ActivitiGroupsApi;
-    usersApi: UsersApi;
+    get taskApi(): TasksApi {
+        return new TasksApi(this.apiService.getInstance());
+    }
+
+    get taskFormsApi(): TaskFormsApi {
+        return new TaskFormsApi(this.apiService.getInstance());
+    }
+
+    get modelsApi(): ModelsApi {
+        return new ModelsApi(this.apiService.getInstance());
+    }
+
+    get editorApi(): FormModelsApi {
+        return new FormModelsApi(this.apiService.getInstance());
+    }
+
+    get processDefinitionsApi(): ProcessDefinitionsApi {
+        return new ProcessDefinitionsApi(this.apiService.getInstance());
+    }
+
+    get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
+        return new ProcessInstanceVariablesApi(this.apiService.getInstance());
+    }
+
+    get processInstancesApi(): ProcessInstancesApi {
+        return new ProcessInstancesApi(this.apiService.getInstance());
+    }
+
+    get groupsApi(): ActivitiGroupsApi {
+        return new ActivitiGroupsApi(this.apiService.getInstance());
+    }
+
+    get usersApi(): UsersApi {
+        return new UsersApi(this.apiService.getInstance());
+    }
 
     formLoaded = new Subject<FormEvent>();
     formDataRefreshed = new Subject<FormEvent>();
@@ -83,16 +109,6 @@ export class FormService {
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,
                 protected logService: LogService) {
-
-        this.taskApi = new TasksApi(this.apiService.getInstance());
-        this.modelsApi = new ModelsApi(this.apiService.getInstance());
-        this.editorApi = new FormModelsApi(this.apiService.getInstance());
-        this.processDefinitionsApi = new ProcessDefinitionsApi(this.apiService.getInstance());
-        this.processInstanceVariablesApi = new ProcessInstanceVariablesApi(this.apiService.getInstance());
-        this.processInstancesApi = new ProcessInstancesApi(this.apiService.getInstance());
-        this.usersApi = new UsersApi(this.apiService.getInstance());
-        this.groupsApi = new ActivitiGroupsApi(this.apiService.getInstance());
-        this.taskFormsApi = new TaskFormsApi(this.apiService.getInstance());
     }
 
     /**

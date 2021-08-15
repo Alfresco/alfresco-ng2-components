@@ -28,11 +28,12 @@ import { CommentEntry, CommentsApi } from '@alfresco/js-api';
 })
 export class CommentContentService {
 
-    private commentsApi: CommentsApi;
+    get commentsApi(): CommentsApi {
+        return new CommentsApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.commentsApi = new CommentsApi(this.apiService.getInstance());
     }
 
     /**
@@ -42,7 +43,7 @@ export class CommentContentService {
      * @returns Details of the comment added
      */
     addNodeComment(nodeId: string, message: string): Observable<CommentModel> {
-        return from(this.commentsApi.createComment(nodeId, {content: message}))
+        return from(this.commentsApi.createComment(nodeId, { content: message }))
             .pipe(
                 map((response: CommentEntry) => {
                     return new CommentModel({

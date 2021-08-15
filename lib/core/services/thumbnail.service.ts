@@ -164,10 +164,11 @@ export class ThumbnailService {
         'task': './assets/images/task.svg'
     };
 
-    private contentApi: ContentApi;
+    get contentApi(): ContentApi {
+        return new ContentApi(this.apiService.getInstance());
+    }
 
     constructor(protected apiService: AlfrescoApiService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-        this.contentApi = new ContentApi(apiService.getInstance());
         Object.keys(this.mimeTypeIcons).forEach((key) => {
             const url = sanitizer.bypassSecurityTrustResourceUrl(this.mimeTypeIcons[key]);
 

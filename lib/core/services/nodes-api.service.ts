@@ -28,13 +28,16 @@ import { NodeMetadata } from '../models/node-metadata.model';
 })
 export class NodesApiService {
 
-    private nodesApi: NodesApi;
-    private trashcanApi: TrashcanApi;
+    get trashcanApi(): TrashcanApi {
+        return new TrashcanApi(this.apiService.getInstance());
+    }
+
+    get nodesApi(): NodesApi {
+        return new NodesApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private preferences: UserPreferencesService) {
-        this.nodesApi = new NodesApi(this.apiService.getInstance());
-        this.trashcanApi = new TrashcanApi(this.apiService.getInstance());
     }
 
     private getEntryFromEntity(entity: NodeEntry) {

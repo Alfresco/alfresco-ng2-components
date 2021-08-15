@@ -38,8 +38,13 @@ export class ContentService {
     folderCreate: Subject<MinimalNode> = new Subject<MinimalNode>();
     folderEdit: Subject<MinimalNode> = new Subject<MinimalNode>();
 
-    private contentApi: ContentApi;
-    private nodesApi: NodesApi;
+    get contentApi(): ContentApi {
+        return new ContentApi(this.apiService.getInstance());
+    }
+
+    get nodesApi(): NodesApi {
+        return new NodesApi(this.apiService.getInstance());
+    }
 
     constructor(public authService: AuthenticationService,
                 public apiService: AlfrescoApiService,
@@ -47,8 +52,6 @@ export class ContentService {
                 private sanitizer: DomSanitizer,
                 private downloadService: DownloadService,
                 private thumbnailService: ThumbnailService) {
-        this.contentApi = new ContentApi(apiService.getInstance());
-        this.nodesApi = new NodesApi(apiService.getInstance());
     }
 
     /**

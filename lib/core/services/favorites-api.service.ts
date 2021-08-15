@@ -27,7 +27,9 @@ import { catchError } from 'rxjs/operators';
 })
 export class FavoritesApiService {
 
-    private favoritesApi: FavoritesApi;
+    get favoritesApi(): FavoritesApi {
+        return new FavoritesApi(this.apiService.getInstance());
+    }
 
     static remapEntry({ entry }: any): any {
         entry.properties = {
@@ -42,7 +44,6 @@ export class FavoritesApiService {
         private apiService: AlfrescoApiService,
         private preferences: UserPreferencesService
     ) {
-        this.favoritesApi = new FavoritesApi(this.apiService.getInstance());
     }
 
     remapFavoritesData(data: FavoritePaging = {}): NodePaging {

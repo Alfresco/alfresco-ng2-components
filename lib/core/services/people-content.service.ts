@@ -50,10 +50,11 @@ export class PeopleContentService {
     private hasContentAdminRole: boolean = false;
     hasCheckedIsContentAdmin: boolean = false;
 
-    private peopleApi: PeopleApi;
+    get peopleApi(): PeopleApi {
+        return new PeopleApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-        this.peopleApi = new PeopleApi(this.apiService.getInstance());
     }
 
     /**
@@ -124,7 +125,7 @@ export class PeopleContentService {
     }
 
     private buildOrderArray(sorting: PeopleContentSortingModel): string[] {
-        return sorting?.orderBy && sorting?.direction ? [ `${sorting.orderBy} ${sorting.direction.toUpperCase()}` ] : [];
+        return sorting?.orderBy && sorting?.direction ? [`${sorting.orderBy} ${sorting.direction.toUpperCase()}`] : [];
     }
 
     private handleError(error: any) {

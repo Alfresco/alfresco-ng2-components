@@ -27,13 +27,17 @@ import { SearchConfigurationService } from './search-configuration.service';
 export class SearchService {
 
     dataLoaded: Subject<ResultSetPaging> = new Subject();
-    queriesApi: QueriesApi;
-    searchApi: SearchApi;
+
+    get queriesApi(): QueriesApi {
+        return new QueriesApi(this.apiService.getInstance());
+    }
+
+    get searchApi(): SearchApi {
+        return new SearchApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private searchConfigurationService: SearchConfigurationService) {
-        this.queriesApi = new QueriesApi(this.apiService.getInstance());
-        this.searchApi = new SearchApi(this.apiService.getInstance());
     }
 
     /**

@@ -38,7 +38,10 @@ export class LibraryFavoriteDirective implements OnChanges {
     @Output() error = new EventEmitter<any>();
 
     private targetLibrary = null;
-    private favoritesApi: FavoritesApi;
+
+    get favoritesApi(): FavoritesApi {
+        return new FavoritesApi(this.alfrescoApiService.getInstance());
+    }
 
     @HostListener('click')
     onClick() {
@@ -58,7 +61,6 @@ export class LibraryFavoriteDirective implements OnChanges {
     }
 
     constructor(private alfrescoApiService: AlfrescoApiService) {
-        this.favoritesApi = new FavoritesApi(this.alfrescoApiService.getInstance());
     }
 
     ngOnChanges(changes) {

@@ -30,11 +30,12 @@ export class ProcessContentService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    private contentApi: ActivitiContentApi;
+    get contentApi(): ActivitiContentApi {
+        return new ActivitiContentApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.contentApi = new ActivitiContentApi(this.apiService.getInstance());
     }
 
     /**

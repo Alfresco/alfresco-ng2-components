@@ -21,20 +21,27 @@ import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { catchError, map } from 'rxjs/operators';
-import { TaskActionsApi, UsersApi, ResultListDataRepresentationLightUserRepresentation } from '@alfresco/js-api';
+import {
+    TaskActionsApi,
+    UsersApi,
+    ResultListDataRepresentationLightUserRepresentation
+} from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PeopleProcessService {
 
-    private taskActionsApi: TaskActionsApi;
-    private userApi: UsersApi;
+    get taskActionsApi(): TaskActionsApi {
+        return new TaskActionsApi(this.apiService.getInstance());
+    }
+
+    get userApi(): UsersApi {
+        return new UsersApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.taskActionsApi = new TaskActionsApi(this.apiService.getInstance());
-        this.userApi = new UsersApi(this.apiService.getInstance());
     }
 
     /**
