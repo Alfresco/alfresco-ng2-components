@@ -27,11 +27,12 @@ import { UserFiltersApi } from '@alfresco/js-api';
 })
 export class TaskFilterService {
 
-    private userFiltersApi: UserFiltersApi;
+    get userFiltersApi(): UserFiltersApi {
+        return new UserFiltersApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.userFiltersApi = new UserFiltersApi(this.apiService.getInstance());
     }
 
     /**

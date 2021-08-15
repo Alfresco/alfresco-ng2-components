@@ -67,7 +67,9 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     rootNodeId = AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
     selectedNode: Node;
 
-    private nodesApi: NodesApi;
+    get nodesApi(): NodesApi {
+        return new NodesApi(this.apiService.getInstance());
+    }
 
     constructor(
         formService: FormService,
@@ -81,7 +83,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
-        this.nodesApi = new NodesApi(this.apiService.getInstance());
     }
 
     ngOnInit() {

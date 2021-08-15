@@ -25,11 +25,12 @@ import { throwError } from 'rxjs';
 })
 export class ProcessUploadService extends UploadService {
 
-    contentApi: ActivitiContentApi;
+    get contentApi(): ActivitiContentApi {
+        return new ActivitiContentApi(this.apiService.getInstance());
+    }
 
     constructor(protected apiService: AlfrescoApiService, appConfigService: AppConfigService, discoveryApiService: DiscoveryApiService) {
         super(apiService, appConfigService, discoveryApiService);
-        this.contentApi = new ActivitiContentApi(apiService.getInstance());
     }
 
     getUploadPromise(file: any): any {

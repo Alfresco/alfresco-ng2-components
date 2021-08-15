@@ -31,8 +31,13 @@ import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
 })
 export class ProcessCloudContentService {
 
-    uploadApi: UploadApi;
-    authenticationApi: AuthenticationApi;
+    get uploadApi(): UploadApi {
+        return new UploadApi(this.apiService.getInstance());
+    }
+
+    get authenticationApi(): AuthenticationApi {
+        return new AuthenticationApi(this.apiService.getInstance());
+    }
 
     constructor(
         private apiService: AlfrescoApiService,
@@ -40,8 +45,6 @@ export class ProcessCloudContentService {
         public contentService: ContentService,
         private downloadService: DownloadService
     ) {
-        this.uploadApi = new UploadApi(this.apiService.getInstance());
-        this.authenticationApi = new AuthenticationApi(this.apiService.getInstance());
     }
 
     createTemporaryRawRelatedContent(

@@ -20,17 +20,21 @@ import { Injectable } from '@angular/core';
 import { Observable, from, forkJoin, throwError } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { map, catchError } from 'rxjs/operators';
-import { ResultListDataRepresentationUserProcessInstanceFilterRepresentation, UserFiltersApi } from '@alfresco/js-api';
+import {
+    ResultListDataRepresentationUserProcessInstanceFilterRepresentation,
+    UserFiltersApi
+} from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProcessFilterService {
 
-    private userFiltersApi: UserFiltersApi;
+    get userFiltersApi(): UserFiltersApi {
+        return new UserFiltersApi(this.alfrescoApiService.getInstance());
+    }
 
     constructor(private alfrescoApiService: AlfrescoApiService) {
-        this.userFiltersApi = new UserFiltersApi(this.alfrescoApiService.getInstance());
     }
 
     /**

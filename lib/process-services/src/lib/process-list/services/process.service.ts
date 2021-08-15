@@ -42,16 +42,23 @@ declare let moment: any;
 })
 export class ProcessService {
 
-    private processInstanceVariablesApi: ProcessInstanceVariablesApi;
-    private processInstancesApi: ProcessInstancesApi;
-    private processDefinitionsApi: ProcessDefinitionsApi;
-    private tasksApi: TasksApi;
+    get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
+        return new ProcessInstanceVariablesApi(this.alfrescoApiService.getInstance());
+    }
+
+    get processInstancesApi(): ProcessInstancesApi {
+        return new ProcessInstancesApi(this.alfrescoApiService.getInstance());
+    }
+
+    get processDefinitionsApi(): ProcessDefinitionsApi {
+        return new ProcessDefinitionsApi(this.alfrescoApiService.getInstance());
+    }
+
+    get tasksApi(): TasksApi {
+        return new TasksApi(this.alfrescoApiService.getInstance());
+    }
 
     constructor(private alfrescoApiService: AlfrescoApiService) {
-        this.processInstanceVariablesApi = new ProcessInstanceVariablesApi(this.alfrescoApiService.getInstance());
-        this.processInstancesApi = new ProcessInstancesApi(this.alfrescoApiService.getInstance());
-        this.processDefinitionsApi = new ProcessDefinitionsApi(this.alfrescoApiService.getInstance());
-        this.tasksApi = new TasksApi(this.alfrescoApiService.getInstance());
     }
 
     /**

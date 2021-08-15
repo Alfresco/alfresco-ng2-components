@@ -36,14 +36,15 @@ import { FormContent } from '../../services/form-fields.interfaces';
 })
 export class FormCloudService extends BaseCloudService {
 
-    uploadApi: UploadApi;
+    get uploadApi(): UploadApi {
+        return new UploadApi(this.apiService.getInstance());
+    }
 
     constructor(
         apiService: AlfrescoApiService,
         appConfigService: AppConfigService
     ) {
         super(apiService, appConfigService);
-        this.uploadApi = new UploadApi(apiService.getInstance());
     }
 
     /**

@@ -34,17 +34,24 @@ import {
 })
 export class TaskListService {
 
-    private modelsApi: ModelsApi;
-    private tasksApi: TasksApi;
-    private taskActionsApi: TaskActionsApi;
-    private checklistsApi: ChecklistsApi;
+    get modelsApi(): ModelsApi {
+        return new ModelsApi(this.apiService.getInstance());
+    }
+
+    get tasksApi(): TasksApi {
+        return new TasksApi(this.apiService.getInstance());
+    }
+
+    get taskActionsApi(): TaskActionsApi {
+        return new TaskActionsApi(this.apiService.getInstance());
+    }
+
+    get checklistsApi(): ChecklistsApi {
+        return new ChecklistsApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.modelsApi = new ModelsApi(this.apiService.getInstance());
-        this.taskActionsApi = new TaskActionsApi(this.apiService.getInstance());
-        this.tasksApi = new TasksApi(this.apiService.getInstance());
-        this.checklistsApi = new ChecklistsApi(this.apiService.getInstance());
     }
 
     /**
