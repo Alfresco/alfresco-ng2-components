@@ -24,12 +24,13 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 })
 export class GroupService {
 
-    groupsApi: GroupsApi;
+    get groupsApi(): GroupsApi {
+        return new GroupsApi(this.alfrescoApiService.getInstance());
+    }
 
     constructor(
         private alfrescoApiService: AlfrescoApiService
     ) {
-        this.groupsApi = new GroupsApi(this.alfrescoApiService.getInstance());
     }
 
     async listAllGroupMembershipsForPerson(personId: string, opts?: any, accumulator = []): Promise<GroupEntry[]> {

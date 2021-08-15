@@ -42,13 +42,14 @@ import { RoleModel } from '../models/role.model';
 })
 export class NodePermissionService {
 
-    groupsApi: GroupsApi;
+    get groupsApi(): GroupsApi {
+        return new GroupsApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private searchApiService: SearchService,
                 private nodeService: NodesApiService,
                 private translation: TranslationService) {
-        this.groupsApi = new GroupsApi(this.apiService.getInstance());
     }
 
     /**

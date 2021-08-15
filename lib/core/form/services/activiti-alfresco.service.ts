@@ -35,18 +35,19 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class ActivitiContentService {
 
+    get integrationAlfrescoOnPremiseApi(): IntegrationAlfrescoOnPremiseApi {
+        return new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
+    }
+    get contentApi(): ActivitiContentApi {
+        return new ActivitiContentApi(this.apiService.getInstance());
+    }
+
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
-
-    integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
-    contentApi: ActivitiContentApi;
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private sitesService: SitesService) {
-
-        this.integrationAlfrescoOnPremiseApi = new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
-        this.contentApi = new ActivitiContentApi(this.apiService.getInstance());
     }
 
     /**

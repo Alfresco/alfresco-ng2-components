@@ -34,13 +34,14 @@ export class DocumentListService implements DocumentListLoader {
 
     static ROOT_ID = '-root-';
 
-    nodes: NodesApi;
+    get nodes(): NodesApi {
+        return new NodesApi(this.apiService.getInstance());
+    }
 
     constructor(private contentService: ContentService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private customResourcesService: CustomResourcesService) {
-        this.nodes = new NodesApi(this.apiService.getInstance());
     }
 
     /**

@@ -42,7 +42,10 @@ import { SearchForm } from '../models/search-form.interface';
     providedIn: 'root'
 })
 export abstract class BaseQueryBuilderService {
-    private searchApi: SearchApi;
+
+    get searchApi(): SearchApi {
+        return new SearchApi(this.alfrescoApiService.getInstance());
+    }
 
     /*  Stream that emits the search configuration whenever the user change the search forms */
     configUpdated = new Subject<SearchConfiguration>();
@@ -88,7 +91,6 @@ export abstract class BaseQueryBuilderService {
     ranges: { [id: string]: SearchRange } = {};
 
     constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
-        this.searchApi = new SearchApi(this.alfrescoApiService.getInstance());
         this.resetToDefaults();
     }
 

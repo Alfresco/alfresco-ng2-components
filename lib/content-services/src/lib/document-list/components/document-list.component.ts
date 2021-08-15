@@ -342,7 +342,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
     private loadingTimeout;
     private onDestroy$ = new Subject<boolean>();
-    private nodesApi: NodesApi;
+
+    get nodes(): NodesApi {
+        return new NodesApi(this.alfrescoApiService.getInstance());
+    }
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -353,7 +356,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService,
                 private lockService: LockService) {
-        this.nodesApi = new NodesApi(this.alfrescoApiService.getInstance());
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))

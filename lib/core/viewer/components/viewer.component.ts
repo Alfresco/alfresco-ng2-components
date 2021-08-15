@@ -206,11 +206,11 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()
-    navigateBefore = new EventEmitter<MouseEvent|KeyboardEvent>();
+    navigateBefore = new EventEmitter<MouseEvent | KeyboardEvent>();
 
     /** Emitted when user clicks 'Navigate Next' (">") button. */
     @Output()
-    navigateNext = new EventEmitter<MouseEvent|KeyboardEvent>();
+    navigateNext = new EventEmitter<MouseEvent | KeyboardEvent>();
 
     /** Emitted when the shared link used is not valid. */
     @Output()
@@ -257,10 +257,21 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private shouldCloseViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
-    private sharedLinksApi: SharedlinksApi;
-    private versionsApi: VersionsApi;
-    private nodesApi: NodesApi;
-    private contentApi: ContentApi;
+    get sharedLinksApi(): SharedlinksApi {
+        return new SharedlinksApi(this.apiService.getInstance());
+    }
+
+    get versionsApi(): VersionsApi {
+        return new VersionsApi(this.apiService.getInstance());
+    }
+
+    get nodesApi(): NodesApi {
+        return new NodesApi(this.apiService.getInstance());
+    }
+
+    get contentApi(): ContentApi {
+        return new ContentApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private viewUtilService: ViewUtilService,
@@ -270,10 +281,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 private uploadService: UploadService,
                 private el: ElementRef,
                 public dialog: MatDialog) {
-        this.sharedLinksApi = new SharedlinksApi(this.apiService.getInstance());
-        this.versionsApi = new VersionsApi(this.apiService.getInstance());
-        this.nodesApi = new NodesApi(this.apiService.getInstance());
-        this.contentApi = new ContentApi(this.apiService.getInstance());
         viewUtilService.maxRetries = this.maxRetries;
     }
 
@@ -563,11 +570,11 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.close();
     }
 
-    onNavigateBeforeClick(event: MouseEvent|KeyboardEvent) {
+    onNavigateBeforeClick(event: MouseEvent | KeyboardEvent) {
         this.navigateBefore.next(event);
     }
 
-    onNavigateNextClick(event: MouseEvent|KeyboardEvent) {
+    onNavigateNextClick(event: MouseEvent | KeyboardEvent) {
         this.navigateNext.next(event);
     }
 
@@ -754,7 +761,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             skipWhile(() => !this.overlayMode),
             filter((e: KeyboardEvent) => e.keyCode === 27),
             takeUntil(this.onDestroy$)
-        ).subscribe( (event: KeyboardEvent) => {
+        ).subscribe((event: KeyboardEvent) => {
             event.preventDefault();
 
             if (this.shouldCloseViewer) {

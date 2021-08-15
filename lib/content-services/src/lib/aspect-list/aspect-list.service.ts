@@ -22,20 +22,21 @@ import { from, Observable, of, Subject, zip } from 'rxjs';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
 import { catchError, map } from 'rxjs/operators';
-import { AspectEntry, AspectPaging, AspectsApi } from '@alfresco/js-api';
+import { AspectEntry, AspectPaging, AspectsApi, NodesApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AspectListService {
 
-    private aspectsApi: AspectsApi;
+    get aspectsApi(): AspectsApi {
+        return new AspectsApi(this.alfrescoApiService.getInstance());
+    }
 
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private appConfigService: AppConfigService,
                 private dialog: MatDialog,
                 private logService: LogService) {
-        this.aspectsApi = new AspectsApi(this.alfrescoApiService.getInstance());
     }
 
     getAspects(): Observable<AspectEntry[]> {

@@ -18,7 +18,16 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
-import { AuditApi, AuditAppPaging, AuditAppEntry, AuditApp, AuditBodyUpdate, AuditEntryPaging, AuditEntryEntry } from '@alfresco/js-api';
+import {
+    AuditApi,
+    AuditAppPaging,
+    AuditAppEntry,
+    AuditApp,
+    AuditBodyUpdate,
+    AuditEntryPaging,
+    AuditEntryEntry,
+    AspectsApi
+} from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -26,10 +35,11 @@ import { catchError } from 'rxjs/operators';
 })
 export class AuditService {
 
-    auditApi: AuditApi;
+    get auditApi(): AuditApi {
+        return new AuditApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-        this.auditApi = new AuditApi(this.apiService.getInstance());
     }
 
     getAuditApps(opts?: any): Observable<AuditAppPaging> {

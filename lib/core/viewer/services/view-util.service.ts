@@ -74,16 +74,21 @@ export class ViewUtilService {
     viewerTypeChange: Subject<string> = new Subject<string>();
     urlFileContentChange: Subject<string> = new Subject<string>();
 
-    renditionsApi: RenditionsApi;
-    contentApi: ContentApi;
-    versionsApi: VersionsApi;
+    get renditionsApi(): RenditionsApi {
+        return new RenditionsApi(this.apiService.getInstance());
+    }
+
+    get contentApi(): ContentApi {
+        return new ContentApi(this.apiService.getInstance());
+    }
+
+    get versionsApi(): VersionsApi {
+        return new VersionsApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private translateService: TranslationService) {
-        this.renditionsApi = new RenditionsApi(this.apiService.getInstance());
-        this.contentApi = new ContentApi(this.apiService.getInstance());
-        this.versionsApi = new VersionsApi(this.apiService.getInstance());
     }
 
     /**

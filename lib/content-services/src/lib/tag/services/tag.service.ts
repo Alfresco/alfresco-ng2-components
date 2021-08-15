@@ -27,7 +27,9 @@ import { TagBody, TagPaging, TagEntry, TagsApi } from '@alfresco/js-api';
 // tslint:disable-next-line: directive-class-suffix
 export class TagService {
 
-    private tagsApi: TagsApi;
+    get tagsApi(): TagsApi {
+        return new TagsApi(this.apiService.getInstance());
+    }
 
     /** Emitted when tag information is updated. */
     @Output()
@@ -35,7 +37,6 @@ export class TagService {
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.tagsApi = new TagsApi(this.apiService.getInstance());
     }
 
     /**

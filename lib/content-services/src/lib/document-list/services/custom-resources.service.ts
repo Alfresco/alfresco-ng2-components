@@ -41,22 +41,35 @@ export class CustomResourcesService {
 
     private CREATE_PERMISSION = 'create';
 
-     peopleApi: PeopleApi;
-     sitesApi: SitesApi;
-     trashcanApi: TrashcanApi;
-     searchApi: SearchApi;
-     sharedLinksApi: SharedlinksApi;
-     favoritesApi: FavoritesApi;
-     nodesApi: NodesApi;
+    get peopleApi(): PeopleApi {
+        return new PeopleApi(this.apiService.getInstance());
+    }
+
+    get sitesApi(): SitesApi {
+        return new SitesApi(this.apiService.getInstance());
+    }
+
+    get trashcanApi(): TrashcanApi {
+        return new TrashcanApi(this.apiService.getInstance());
+    }
+
+    get searchApi(): SearchApi {
+        return new SearchApi(this.apiService.getInstance());
+    }
+
+    get sharedLinksApi(): SharedlinksApi {
+        return new SharedlinksApi(this.apiService.getInstance());
+    }
+
+    get favoritesApi(): FavoritesApi {
+        return new FavoritesApi(this.apiService.getInstance());
+    }
+
+    get nodes(): NodesApi {
+        return new NodesApi(this.apiService.getInstance());
+    }
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-        this.peopleApi = new PeopleApi(this.apiService.getInstance());
-        this.sitesApi = new SitesApi(this.apiService.getInstance());
-        this.favoritesApi = new FavoritesApi(this.apiService.getInstance());
-        this.searchApi = new SearchApi(this.apiService.getInstance());
-        this.sharedLinksApi = new SharedlinksApi(this.apiService.getInstance());
-        this.trashcanApi = new TrashcanApi(this.apiService.getInstance());
-        this.nodesApi = new NodesApi(this.apiService.getInstance());
     }
 
     /**
@@ -154,7 +167,7 @@ export class CustomResourcesService {
         const options = {
             maxItems: pagination.maxItems,
             skipCount: pagination.skipCount,
-            where: where ? `${where} AND ${defaultPredicate}` : defaultPredicate ,
+            where: where ? `${where} AND ${defaultPredicate}` : defaultPredicate,
             include: includeFieldsRequest
         };
 
@@ -165,18 +178,18 @@ export class CustomResourcesService {
                             list: {
                                 entries: result.list.entries
                                     .map(({ entry }: any) => {
-                                            const target = entry.target.file || entry.target.folder;
-                                            target.properties = {
-                                                ...(target.properties || {
-                                                        'cm:title': entry.title || target.title,
-                                                        'cm:description': entry.description || target.description
-                                                    }),
-                                                ...(entry.properties || {})
-                                            };
+                                        const target = entry.target.file || entry.target.folder;
+                                        target.properties = {
+                                            ...(target.properties || {
+                                                'cm:title': entry.title || target.title,
+                                                'cm:description': entry.description || target.description
+                                            }),
+                                            ...(entry.properties || {})
+                                        };
 
-                                            return {
-                                                entry: target
-                                            };
+                                        return {
+                                            entry: target
+                                        };
                                     }),
                                 pagination: result.list.pagination
                             }
@@ -209,7 +222,7 @@ export class CustomResourcesService {
         return new Observable((observer) => {
             this.sitesApi.listSiteMembershipsForPerson('-me-', options)
                 .then((result: SiteRolePaging) => {
-                        const page: SiteMemberPaging = new SiteMemberPaging( {
+                        const page: SiteMemberPaging = new SiteMemberPaging({
                             list: {
                                 entries: result.list.entries
                                     .map(({ entry: { site } }: any) => {
