@@ -45,6 +45,12 @@ import { WebscriptApi } from '@alfresco/js-api';
 })
 export class WebscriptComponent implements OnChanges {
 
+    _webscriptApi: WebscriptApi;
+    get webscriptApi(): WebscriptApi {
+        this._webscriptApi = this._webscriptApi ?? new WebscriptApi(this.apiService.getInstance());
+        return this._webscriptApi;
+    }
+
     /** (required) Path to the webscript (as defined by webscript). */
     @Input()
     scriptPath: string;
@@ -81,11 +87,8 @@ export class WebscriptComponent implements OnChanges {
     data: any = undefined;
     showError: boolean = false;
 
-    webscriptApi: WebscriptApi;
-
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.webscriptApi = new WebscriptApi(this.apiService.getInstance());
     }
 
     ngOnChanges() {

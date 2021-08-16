@@ -33,13 +33,20 @@ import { ProcessDefinitionsApi, ReportApi } from '@alfresco/js-api';
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
 
-    reportApi: ReportApi;
-    processDefinitionsApi: ProcessDefinitionsApi;
+    _reportApi: ReportApi;
+    get reportApi(): ReportApi {
+        this._reportApi = this._reportApi ?? new ReportApi(this.apiService.getInstance());
+        return this._reportApi;
+    }
+
+    _processDefinitionsApi: ProcessDefinitionsApi;
+    get processDefinitionsApi(): ProcessDefinitionsApi {
+        this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.apiService.getInstance());
+        return this._processDefinitionsApi;
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.reportApi = new ReportApi(this.apiService.getInstance());
-        this.processDefinitionsApi = new ProcessDefinitionsApi(this.apiService.getInstance());
     }
 
     /**

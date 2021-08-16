@@ -41,22 +41,49 @@ export class CustomResourcesService {
 
     private CREATE_PERMISSION = 'create';
 
-     peopleApi: PeopleApi;
-     sitesApi: SitesApi;
-     trashcanApi: TrashcanApi;
-     searchApi: SearchApi;
-     sharedLinksApi: SharedlinksApi;
-     favoritesApi: FavoritesApi;
-     nodesApi: NodesApi;
+    _peopleApi: PeopleApi;
+    get peopleApi(): PeopleApi {
+        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
+        return this._peopleApi;
+    }
+
+    _sitesApi: SitesApi;
+    get sitesApi(): SitesApi {
+        this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
+        return this._sitesApi;
+    }
+
+    _trashcanApi: TrashcanApi;
+    get trashcanApi(): TrashcanApi {
+        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
+        return this._trashcanApi;
+    }
+
+    _searchApi: SearchApi;
+    get searchApi(): SearchApi {
+        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
+        return this._searchApi;
+    }
+
+    _sharedLinksApi: SharedlinksApi;
+    get sharedLinksApi(): SharedlinksApi {
+        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
+        return this._sharedLinksApi;
+    }
+
+    _favoritesApi: FavoritesApi;
+    get favoritesApi(): FavoritesApi {
+        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
+        return this._favoritesApi;
+    }
+
+    _nodesApi: NodesApi;
+    get nodesApi(): NodesApi {
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        return this._nodesApi;
+    }
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-        this.peopleApi = new PeopleApi(this.apiService.getInstance());
-        this.sitesApi = new SitesApi(this.apiService.getInstance());
-        this.favoritesApi = new FavoritesApi(this.apiService.getInstance());
-        this.searchApi = new SearchApi(this.apiService.getInstance());
-        this.sharedLinksApi = new SharedlinksApi(this.apiService.getInstance());
-        this.trashcanApi = new TrashcanApi(this.apiService.getInstance());
-        this.nodesApi = new NodesApi(this.apiService.getInstance());
     }
 
     /**
@@ -154,7 +181,7 @@ export class CustomResourcesService {
         const options = {
             maxItems: pagination.maxItems,
             skipCount: pagination.skipCount,
-            where: where ? `${where} AND ${defaultPredicate}` : defaultPredicate ,
+            where: where ? `${where} AND ${defaultPredicate}` : defaultPredicate,
             include: includeFieldsRequest
         };
 
@@ -165,18 +192,18 @@ export class CustomResourcesService {
                             list: {
                                 entries: result.list.entries
                                     .map(({ entry }: any) => {
-                                            const target = entry.target.file || entry.target.folder;
-                                            target.properties = {
-                                                ...(target.properties || {
-                                                        'cm:title': entry.title || target.title,
-                                                        'cm:description': entry.description || target.description
-                                                    }),
-                                                ...(entry.properties || {})
-                                            };
+                                        const target = entry.target.file || entry.target.folder;
+                                        target.properties = {
+                                            ...(target.properties || {
+                                                'cm:title': entry.title || target.title,
+                                                'cm:description': entry.description || target.description
+                                            }),
+                                            ...(entry.properties || {})
+                                        };
 
-                                            return {
-                                                entry: target
-                                            };
+                                        return {
+                                            entry: target
+                                        };
                                     }),
                                 pagination: result.list.pagination
                             }
@@ -209,7 +236,7 @@ export class CustomResourcesService {
         return new Observable((observer) => {
             this.sitesApi.listSiteMembershipsForPerson('-me-', options)
                 .then((result: SiteRolePaging) => {
-                        const page: SiteMemberPaging = new SiteMemberPaging( {
+                        const page: SiteMemberPaging = new SiteMemberPaging({
                             list: {
                                 entries: result.list.entries
                                     .map(({ entry: { site } }: any) => {

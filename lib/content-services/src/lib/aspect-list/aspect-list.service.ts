@@ -29,13 +29,16 @@ import { AspectEntry, AspectPaging, AspectsApi } from '@alfresco/js-api';
 })
 export class AspectListService {
 
-    private aspectsApi: AspectsApi;
+    _aspectsApi: AspectsApi;
+    get aspectsApi(): AspectsApi {
+        this._aspectsApi = this._aspectsApi ?? new AspectsApi(this.alfrescoApiService.getInstance());
+        return this._aspectsApi;
+    }
 
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private appConfigService: AppConfigService,
                 private dialog: MatDialog,
                 private logService: LogService) {
-        this.aspectsApi = new AspectsApi(this.alfrescoApiService.getInstance());
     }
 
     getAspects(): Observable<AspectEntry[]> {

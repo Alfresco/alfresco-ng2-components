@@ -48,7 +48,11 @@ export class LibraryMembershipDirective implements OnChanges {
 
     isJoinRequested: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    private sitesApi: SitesApi;
+    _sitesApi: SitesApi;
+    get sitesApi(): SitesApi {
+        this._sitesApi = this._sitesApi ?? new SitesApi(this.alfrescoApiService.getInstance());
+        return this._sitesApi;
+    }
 
     /** Site for which to toggle the membership request. */
     @Input('adf-library-membership')
@@ -75,7 +79,6 @@ export class LibraryMembershipDirective implements OnChanges {
         private sitesService: SitesService,
         private versionCompatibilityService: VersionCompatibilityService
     ) {
-        this.sitesApi = new SitesApi(this.alfrescoApiService.getInstance());
     }
 
     ngOnChanges(changes: SimpleChanges) {

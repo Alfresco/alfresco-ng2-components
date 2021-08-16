@@ -37,13 +37,17 @@ import { TaskFormsApi } from '@alfresco/js-api';
 })
 export class WidgetVisibilityService {
 
-    private taskFormsApi: TaskFormsApi;
+    _taskFormsApi: TaskFormsApi;
+    get taskFormsApi(): TaskFormsApi {
+        this._taskFormsApi = this._taskFormsApi ?? new TaskFormsApi(this.apiService.getInstance());
+        return this._taskFormsApi;
+    }
+
     private processVarList: TaskProcessVariableModel[];
     private form: FormModel;
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.taskFormsApi = new TaskFormsApi(this.apiService.getInstance());
     }
 
     public refreshVisibility(form: FormModel, processVarList?: TaskProcessVariableModel[]) {

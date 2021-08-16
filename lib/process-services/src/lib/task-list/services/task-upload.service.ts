@@ -25,11 +25,14 @@ import { ActivitiContentApi } from '@alfresco/js-api';
 })
 export class TaskUploadService extends UploadService {
 
-    private contentApi: ActivitiContentApi;
+    private _contentApi;
+    get contentApi(): ActivitiContentApi {
+        this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
+        return this._contentApi;
+    }
 
     constructor(protected apiService: AlfrescoApiService, appConfigService: AppConfigService, discoveryApiService: DiscoveryApiService) {
         super(apiService, appConfigService, discoveryApiService);
-        this.contentApi = new ActivitiContentApi(apiService.getInstance());
     }
 
     getUploadPromise(file: any): any {

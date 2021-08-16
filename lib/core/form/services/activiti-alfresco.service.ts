@@ -38,15 +38,21 @@ export class ActivitiContentService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
-    contentApi: ActivitiContentApi;
+    _integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
+    get integrationAlfrescoOnPremiseApi(): IntegrationAlfrescoOnPremiseApi {
+        this._integrationAlfrescoOnPremiseApi = this._integrationAlfrescoOnPremiseApi ?? new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
+        return this._integrationAlfrescoOnPremiseApi;
+    }
+
+    _contentApi: ActivitiContentApi;
+    get contentApi(): ActivitiContentApi {
+        this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
+        return this._contentApi;
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private sitesService: SitesService) {
-
-        this.integrationAlfrescoOnPremiseApi = new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
-        this.contentApi = new ActivitiContentApi(this.apiService.getInstance());
     }
 
     /**

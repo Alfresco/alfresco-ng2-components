@@ -62,8 +62,17 @@ export class NodeDeleteDirective implements OnChanges {
     @Output()
     delete: EventEmitter<any> = new EventEmitter();
 
-    private trashcanApi: TrashcanApi;
-    private nodesApi: NodesApi;
+    _trashcanApi: TrashcanApi;
+    get trashcanApi(): TrashcanApi {
+        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.alfrescoApiService.getInstance());
+        return this._trashcanApi;
+    }
+
+    _nodesApi: NodesApi;
+    get nodesApi(): NodesApi {
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
+        return this._nodesApi;
+    }
 
     @HostListener('click')
     onClick() {
@@ -73,8 +82,6 @@ export class NodeDeleteDirective implements OnChanges {
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private translation: TranslationService,
                 private elementRef: ElementRef) {
-        this.trashcanApi = new TrashcanApi(this.alfrescoApiService.getInstance());
-        this.nodesApi = new NodesApi(this.alfrescoApiService.getInstance());
     }
 
     ngOnChanges() {

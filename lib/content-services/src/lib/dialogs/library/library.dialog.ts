@@ -72,7 +72,11 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     ];
     disableCreateButton = false;
 
-    queriesApi: QueriesApi;
+    _queriesApi: QueriesApi;
+    get queriesApi(): QueriesApi {
+        this._queriesApi = this._queriesApi ?? new QueriesApi(this.alfrescoApiService.getInstance());
+        return this._queriesApi;
+    }
 
     constructor(
         private alfrescoApiService: AlfrescoApiService,
@@ -80,7 +84,6 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         private formBuilder: FormBuilder,
         private dialog: MatDialogRef<LibraryDialogComponent>
     ) {
-        this.queriesApi = new QueriesApi(this.alfrescoApiService.getInstance());
     }
 
     ngOnInit() {

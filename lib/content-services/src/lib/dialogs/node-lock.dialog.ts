@@ -35,7 +35,11 @@ export class NodeLockDialogComponent implements OnInit {
     node: Node = null;
     nodeName: string;
 
-    private nodesApi: NodesApi;
+    _nodesApi: NodesApi;
+    get nodesApi(): NodesApi {
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApi.getInstance());
+        return this._nodesApi;
+    }
 
     constructor(
         private formBuilder: FormBuilder,
@@ -45,7 +49,6 @@ export class NodeLockDialogComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA)
         public data: any
     ) {
-        this.nodesApi = new NodesApi(this.alfrescoApi.getInstance());
     }
 
     ngOnInit() {

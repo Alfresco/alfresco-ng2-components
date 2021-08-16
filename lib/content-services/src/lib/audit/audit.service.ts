@@ -18,7 +18,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
-import { AuditApi, AuditAppPaging, AuditAppEntry, AuditApp, AuditBodyUpdate, AuditEntryPaging, AuditEntryEntry } from '@alfresco/js-api';
+import {
+    AuditApi,
+    AuditAppPaging,
+    AuditAppEntry,
+    AuditApp,
+    AuditBodyUpdate,
+    AuditEntryPaging,
+    AuditEntryEntry
+} from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -26,10 +34,13 @@ import { catchError } from 'rxjs/operators';
 })
 export class AuditService {
 
-    auditApi: AuditApi;
+    _auditApi: AuditApi;
+    get auditApi(): AuditApi {
+        this._auditApi = this._auditApi ?? new AuditApi(this.apiService.getInstance());
+        return this._auditApi;
+    }
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-        this.auditApi = new AuditApi(this.apiService.getInstance());
     }
 
     getAuditApps(opts?: any): Observable<AuditAppPaging> {
@@ -57,7 +68,7 @@ export class AuditService {
     updateAuditApp(auditApplicationId: string, auditAppBodyUpdate: boolean, opts?: any): Observable<AuditApp | {}> {
         const defaultOptions = {};
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.updateAuditApp(auditApplicationId, new AuditBodyUpdate({ isEnabled: auditAppBodyUpdate}), queryOptions))
+        return from(this.auditApi.updateAuditApp(auditApplicationId, new AuditBodyUpdate({ isEnabled: auditAppBodyUpdate }), queryOptions))
             .pipe(
                 catchError((err: any) => this.handleError(err))
             );

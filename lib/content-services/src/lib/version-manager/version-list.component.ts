@@ -32,9 +32,24 @@ import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 })
 export class VersionListComponent implements OnChanges {
 
-    private versionsApi: VersionsApi;
-    private nodesApi: NodesApi;
-    private contentApi: ContentApi;
+    _contentApi: ContentApi;
+    get contentApi(): ContentApi {
+        this._contentApi = this._contentApi ?? new ContentApi(this.alfrescoApi.getInstance());
+        return this._contentApi;
+    }
+
+    _versionsApi: VersionsApi;
+    get versionsApi(): VersionsApi {
+        this._versionsApi = this._versionsApi ?? new VersionsApi(this.alfrescoApi.getInstance());
+        return this._versionsApi;
+    }
+
+    _nodesApi: NodesApi;
+    get nodesApi(): NodesApi {
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApi.getInstance());
+        return this._nodesApi;
+    }
+
     versions: VersionEntry[] = [];
     isLoading = true;
 
@@ -73,9 +88,6 @@ export class VersionListComponent implements OnChanges {
     constructor(private alfrescoApi: AlfrescoApiService,
                 private contentService: ContentService,
                 private dialog: MatDialog) {
-        this.versionsApi = new VersionsApi(this.alfrescoApi.getInstance());
-        this.nodesApi = new NodesApi(this.alfrescoApi.getInstance());
-        this.contentApi = new ContentApi(this.alfrescoApi.getInstance());
     }
 
     ngOnChanges() {

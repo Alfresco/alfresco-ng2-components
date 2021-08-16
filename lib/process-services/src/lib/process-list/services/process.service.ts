@@ -42,16 +42,31 @@ declare let moment: any;
 })
 export class ProcessService {
 
-    private processInstanceVariablesApi: ProcessInstanceVariablesApi;
-    private processInstancesApi: ProcessInstancesApi;
-    private processDefinitionsApi: ProcessDefinitionsApi;
-    private tasksApi: TasksApi;
+    private _tasksApi;
+    get tasksApi(): TasksApi {
+        this._tasksApi = this._tasksApi ?? new TasksApi(this.alfrescoApiService.getInstance());
+        return this._tasksApi;
+    }
+
+    private _processDefinitionsApi;
+    get processDefinitionsApi(): ProcessDefinitionsApi {
+        this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.alfrescoApiService.getInstance());
+        return this._processDefinitionsApi;
+    }
+
+    private _processInstancesApi;
+    get processInstancesApi(): ProcessInstancesApi {
+        this._processInstancesApi = this._processInstancesApi ?? new ProcessInstancesApi(this.alfrescoApiService.getInstance());
+        return this._processInstancesApi;
+    }
+
+    private _processInstanceVariablesApi;
+    get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
+        this._processInstanceVariablesApi = this._processInstanceVariablesApi ?? new ProcessInstanceVariablesApi(this.alfrescoApiService.getInstance());
+        return this._processInstanceVariablesApi;
+    }
 
     constructor(private alfrescoApiService: AlfrescoApiService) {
-        this.processInstanceVariablesApi = new ProcessInstanceVariablesApi(this.alfrescoApiService.getInstance());
-        this.processInstancesApi = new ProcessInstancesApi(this.alfrescoApiService.getInstance());
-        this.processDefinitionsApi = new ProcessDefinitionsApi(this.alfrescoApiService.getInstance());
-        this.tasksApi = new TasksApi(this.alfrescoApiService.getInstance());
     }
 
     /**

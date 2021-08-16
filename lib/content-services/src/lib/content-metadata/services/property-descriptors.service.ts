@@ -26,10 +26,14 @@ import { ClassesApi } from '@alfresco/js-api';
     providedIn: 'root'
 })
 export class PropertyDescriptorsService {
-    private classesApi: ClassesApi;
+
+    private _classesApi;
+    get classesApi(): ClassesApi {
+        this._classesApi = this._classesApi ?? new ClassesApi(this.alfrescoApiService.getInstance());
+        return this._classesApi;
+    }
 
     constructor(private alfrescoApiService: AlfrescoApiService) {
-        this.classesApi = new ClassesApi(this.alfrescoApiService.getInstance());
     }
 
     load(groupNames: string[]): Observable<PropertyGroupContainer> {

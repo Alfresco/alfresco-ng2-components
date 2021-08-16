@@ -31,14 +31,18 @@ import { Observable, Subject, throwError } from 'rxjs';
 })
 export class ContentCloudNodeSelectorService {
 
-    nodesApi: NodesApi;
+    _nodesApi: NodesApi;
+    get nodesApi(): NodesApi {
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        return this._nodesApi;
+    }
+
     sourceNodeNotFound = false;
 
     constructor(
         private apiService: AlfrescoApiService,
         private notificationService: NotificationService,
         private dialog: MatDialog) {
-        this.nodesApi = new NodesApi(this.apiService.getInstance());
     }
 
     openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {

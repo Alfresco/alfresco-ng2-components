@@ -27,11 +27,14 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class AppsProcessService {
 
-    appsApi: RuntimeAppDefinitionsApi;
+    _appsApi: RuntimeAppDefinitionsApi;
+    get appsApi(): RuntimeAppDefinitionsApi {
+        this._appsApi = this._appsApi ?? new RuntimeAppDefinitionsApi(this.apiService.getInstance());
+        return this._appsApi;
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.appsApi = new RuntimeAppDefinitionsApi(this.apiService.getInstance());
     }
 
     /**

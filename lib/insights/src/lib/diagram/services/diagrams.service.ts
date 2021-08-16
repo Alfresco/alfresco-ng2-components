@@ -24,11 +24,14 @@ import { ModelJsonBpmnApi } from '@alfresco/js-api';
 @Injectable({ providedIn: 'root' })
 export class DiagramsService {
 
-    private modelJsonBpmnApi: ModelJsonBpmnApi;
+    _modelJsonBpmnApi: ModelJsonBpmnApi;
+    get modelJsonBpmnApi(): ModelJsonBpmnApi {
+        this._modelJsonBpmnApi = this._modelJsonBpmnApi ?? new ModelJsonBpmnApi(this.apiService.getInstance());
+        return this._modelJsonBpmnApi;
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.modelJsonBpmnApi = new ModelJsonBpmnApi(this.apiService.getInstance());
     }
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {

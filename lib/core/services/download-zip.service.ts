@@ -27,11 +27,14 @@ import { catchError } from 'rxjs/operators';
 })
 export class DownloadZipService {
 
-    downloadsApi: DownloadsApi;
+    _downloadsApi: DownloadsApi;
+    get downloadsApi(): DownloadsApi {
+        this._downloadsApi = this._downloadsApi ?? new DownloadsApi(this.apiService.getInstance());
+        return this._downloadsApi;
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.downloadsApi = new DownloadsApi(this.apiService.getInstance());
     }
 
     /**

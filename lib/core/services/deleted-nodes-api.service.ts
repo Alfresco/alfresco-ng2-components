@@ -28,15 +28,22 @@ import { catchError } from 'rxjs/operators';
 })
 export class DeletedNodesApiService {
 
-    nodesApi: NodesApi;
-    trashcanApi: TrashcanApi;
+    _nodesApi: NodesApi;
+    get nodesApi(): NodesApi {
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        return this._nodesApi;
+    }
+
+    _trashcanApi: TrashcanApi;
+    get trashcanApi(): TrashcanApi {
+        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
+        return this._trashcanApi;
+    }
 
     constructor(
         private apiService: AlfrescoApiService,
         private preferences: UserPreferencesService
     ) {
-        this.nodesApi = new NodesApi(this.apiService.getInstance());
-        this.trashcanApi = new TrashcanApi(this.apiService.getInstance());
     }
 
     /**

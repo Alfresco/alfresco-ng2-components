@@ -26,10 +26,13 @@ import { catchError } from 'rxjs/operators';
 })
 export class RatingService {
 
-    ratingsApi: RatingsApi;
+    _ratingsApi: RatingsApi;
+    get ratingsApi(): RatingsApi {
+        this._ratingsApi = this._ratingsApi ?? new RatingsApi(this.apiService.getInstance());
+        return this._ratingsApi;
+    }
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-        this.ratingsApi = new RatingsApi(this.apiService.getInstance());
     }
 
     /**

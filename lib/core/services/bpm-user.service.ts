@@ -33,11 +33,14 @@ import { UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 })
 export class BpmUserService {
 
-    private profileApi: UserProfileApi;
+    _profileApi: UserProfileApi;
+    get profileApi(): UserProfileApi {
+        this._profileApi = this._profileApi ?? new UserProfileApi(this.apiService.getInstance());
+        return this._profileApi;
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.profileApi = new UserProfileApi(this.apiService.getInstance());
     }
 
     /**

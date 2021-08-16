@@ -63,9 +63,23 @@ export class UploadService {
     fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
     fileDeleted: Subject<string> = new Subject<string>();
 
-    private uploadApi: UploadApi;
-    private nodesApi: NodesApi;
-    private versionsApi: VersionsApi;
+    _uploadApi: UploadApi;
+    get uploadApi(): UploadApi {
+        this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
+        return this._uploadApi;
+    }
+
+    _nodesApi: NodesApi;
+    get nodesApi(): NodesApi {
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        return this._nodesApi;
+    }
+
+    _versionsApi: VersionsApi;
+    get versionsApi(): VersionsApi {
+        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
+        return this._versionsApi;
+    }
 
     constructor(
         protected apiService: AlfrescoApiService,
@@ -76,10 +90,6 @@ export class UploadService {
             .subscribe(({ status }) => {
                 this.isThumbnailGenerationEnabled = status.isThumbnailGenerationEnabled;
             });
-
-        this.uploadApi = new UploadApi(apiService.getInstance());
-        this.nodesApi = new NodesApi(apiService.getInstance());
-        this.versionsApi = new VersionsApi(apiService.getInstance());
     }
 
     /**
