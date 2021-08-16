@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 import { Observable, forkJoin, from, throwError } from 'rxjs';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { map, catchError } from 'rxjs/operators';
-import { ActivitiContentApi, UserFiltersApi } from '@alfresco/js-api';
+import { UserFiltersApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
