@@ -50,8 +50,10 @@ export class PeopleContentService {
     private hasContentAdminRole: boolean = false;
     hasCheckedIsContentAdmin: boolean = false;
 
+    _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
-        return new PeopleApi(this.apiService.getInstance());
+        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
+        return this._peopleApi;
     }
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {

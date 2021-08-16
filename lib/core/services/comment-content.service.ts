@@ -28,8 +28,10 @@ import { CommentEntry, CommentsApi } from '@alfresco/js-api';
 })
 export class CommentContentService {
 
+    _commentsApi: CommentsApi;
     get commentsApi(): CommentsApi {
-        return new CommentsApi(this.apiService.getInstance());
+        this._commentsApi = this._commentsApi ?? new CommentsApi(this.apiService.getInstance());
+        return this._commentsApi;
     }
 
     constructor(private apiService: AlfrescoApiService,

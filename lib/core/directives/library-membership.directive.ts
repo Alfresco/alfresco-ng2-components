@@ -48,8 +48,10 @@ export class LibraryMembershipDirective implements OnChanges {
 
     isJoinRequested: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+    _sitesApi: SitesApi;
     get sitesApi(): SitesApi {
-        return new SitesApi(this.alfrescoApiService.getInstance());
+        this._sitesApi = this._sitesApi ?? new SitesApi(this.alfrescoApiService.getInstance());
+        return this._sitesApi;
     }
 
     /** Site for which to toggle the membership request. */

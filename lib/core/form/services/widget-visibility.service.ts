@@ -30,15 +30,17 @@ import {
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { map, catchError } from 'rxjs/operators';
-import { TaskFormsApi } from '@alfresco/js-api';
+import { RuntimeAppDefinitionsApi, TaskFormsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WidgetVisibilityService {
 
+    _taskFormsApi: TaskFormsApi;
     get taskFormsApi(): TaskFormsApi {
-        return new TaskFormsApi(this.apiService.getInstance());
+        this._taskFormsApi = this._taskFormsApi ?? new TaskFormsApi(this.apiService.getInstance());
+        return this._taskFormsApi;
     }
 
     private processVarList: TaskProcessVariableModel[];

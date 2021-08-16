@@ -23,7 +23,7 @@ import {
     ProcessInstancesApi,
     RestVariable,
     ProcessInstanceRepresentation,
-    ProcessInstanceVariablesApi
+    ProcessInstanceVariablesApi, ActivitiContentApi
 } from '@alfresco/js-api';
 import { Observable, from, throwError, of } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';
@@ -42,20 +42,28 @@ declare let moment: any;
 })
 export class ProcessService {
 
-    get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
-        return new ProcessInstanceVariablesApi(this.alfrescoApiService.getInstance());
-    }
-
-    get processInstancesApi(): ProcessInstancesApi {
-        return new ProcessInstancesApi(this.alfrescoApiService.getInstance());
-    }
-
-    get processDefinitionsApi(): ProcessDefinitionsApi {
-        return new ProcessDefinitionsApi(this.alfrescoApiService.getInstance());
-    }
-
+    private _tasksApi;
     get tasksApi(): TasksApi {
-        return new TasksApi(this.alfrescoApiService.getInstance());
+        this._tasksApi = this._tasksApi ?? new TasksApi(this.alfrescoApiService.getInstance());
+        return this._tasksApi;
+    }
+
+    private _processDefinitionsApi;
+    get processDefinitionsApi(): ProcessDefinitionsApi {
+        this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.alfrescoApiService.getInstance());
+        return this._processDefinitionsApi;
+    }
+
+    private _processInstancesApi;
+    get processInstancesApi(): ProcessInstancesApi {
+        this._processInstancesApi = this._processInstancesApi ?? new ProcessInstancesApi(this.alfrescoApiService.getInstance());
+        return this._processInstancesApi;
+    }
+
+    private _processInstanceVariablesApi;
+    get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
+        this._processInstanceVariablesApi = this._processInstanceVariablesApi ?? new ProcessInstanceVariablesApi(this.alfrescoApiService.getInstance());
+        return this._processInstanceVariablesApi;
     }
 
     constructor(private alfrescoApiService: AlfrescoApiService) {

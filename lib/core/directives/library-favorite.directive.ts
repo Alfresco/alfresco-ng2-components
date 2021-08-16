@@ -39,8 +39,10 @@ export class LibraryFavoriteDirective implements OnChanges {
 
     private targetLibrary = null;
 
+    _favoritesApi: FavoritesApi;
     get favoritesApi(): FavoritesApi {
-        return new FavoritesApi(this.alfrescoApiService.getInstance());
+        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.alfrescoApiService.getInstance());
+        return this._favoritesApi;
     }
 
     @HostListener('click')

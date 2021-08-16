@@ -45,8 +45,10 @@ import { WebscriptApi } from '@alfresco/js-api';
 })
 export class WebscriptComponent implements OnChanges {
 
+    _webscriptApi: WebscriptApi;
     get webscriptApi(): WebscriptApi {
-        return new WebscriptApi(this.apiService.getInstance());
+        this._webscriptApi = this._webscriptApi ?? new WebscriptApi(this.apiService.getInstance());
+        return this._webscriptApi;
     }
 
     /** (required) Path to the webscript (as defined by webscript). */

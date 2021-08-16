@@ -34,8 +34,10 @@ import { catchError } from 'rxjs/operators';
 })
 export class AuditService {
 
+    _auditApi: AuditApi;
     get auditApi(): AuditApi {
-        return new AuditApi(this.apiService.getInstance());
+        this._auditApi = this._auditApi ?? new AuditApi(this.apiService.getInstance());
+        return this._auditApi;
     }
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {
@@ -66,7 +68,7 @@ export class AuditService {
     updateAuditApp(auditApplicationId: string, auditAppBodyUpdate: boolean, opts?: any): Observable<AuditApp | {}> {
         const defaultOptions = {};
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.updateAuditApp(auditApplicationId, new AuditBodyUpdate({ isEnabled: auditAppBodyUpdate}), queryOptions))
+        return from(this.auditApi.updateAuditApp(auditApplicationId, new AuditBodyUpdate({ isEnabled: auditAppBodyUpdate }), queryOptions))
             .pipe(
                 catchError((err: any) => this.handleError(err))
             );

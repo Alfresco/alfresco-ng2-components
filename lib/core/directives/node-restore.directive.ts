@@ -36,8 +36,10 @@ export class RestoreMessageModel {
 export class NodeRestoreDirective {
     private readonly restoreProcessStatus;
 
+    _trashcanApi: TrashcanApi;
     get trashcanApi(): TrashcanApi {
-        return new TrashcanApi(this.alfrescoApiService.getInstance());
+        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
+        return this._trashcanApi;
     }
 
     /** Array of deleted nodes to restore. */

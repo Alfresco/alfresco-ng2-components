@@ -20,7 +20,7 @@ import {
     AlfrescoApiCompatibility,
     ContentApi,
     Core,
-    Node
+    Node, NodesApi
 } from '@alfresco/js-api';
 import { ReplaySubject, Subject } from 'rxjs';
 
@@ -46,8 +46,10 @@ export class ExternalAlfrescoApiService {
         return this.getInstance().content;
     }
 
-    get nodesApi(): Core.NodesApi {
-        return this.getInstance().nodes;
+    _nodesApi: NodesApi;
+    get nodesApi(): NodesApi {
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        return this._nodesApi;
     }
 
     init(ecmHost: string, contextRoot: string) {

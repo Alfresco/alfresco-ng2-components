@@ -31,8 +31,10 @@ import { DownloadService } from '../services/download.service';
 })
 export class NodeDownloadDirective {
 
+    _contentApi: ContentApi;
     get contentApi(): ContentApi {
-        return new ContentApi(this.apiService.getInstance());
+        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
+        return this._contentApi;
     }
 
     /** Nodes to download. */

@@ -20,15 +20,17 @@ import { Injectable } from '@angular/core';
 import { Observable, forkJoin, from, throwError } from 'rxjs';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { map, catchError } from 'rxjs/operators';
-import { UserFiltersApi } from '@alfresco/js-api';
+import { ActivitiContentApi, UserFiltersApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskFilterService {
 
-    get userFiltersApi(): UserFiltersApi {
-        return new UserFiltersApi(this.apiService.getInstance());
+    private _userFiltersApi;
+    get userFiltersApi(): ActivitiContentApi {
+        this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.apiService.getInstance());
+        return this._userFiltersApi;
     }
 
     constructor(private apiService: AlfrescoApiService,

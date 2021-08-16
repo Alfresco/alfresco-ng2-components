@@ -27,8 +27,10 @@ import { catchError } from 'rxjs/operators';
 })
 export class FavoritesApiService {
 
+    _favoritesApi: FavoritesApi;
     get favoritesApi(): FavoritesApi {
-        return new FavoritesApi(this.apiService.getInstance());
+        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
+        return this._favoritesApi;
     }
 
     static remapEntry({ entry }: any): any {

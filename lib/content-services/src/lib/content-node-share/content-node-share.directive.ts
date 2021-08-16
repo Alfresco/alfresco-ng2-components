@@ -44,8 +44,10 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
+    _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        return new NodesApi(this.alfrescoApiService.getInstance());
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
+        return this._nodesApi;
     }
 
     constructor(

@@ -28,12 +28,16 @@ export class SearchService {
 
     dataLoaded: Subject<ResultSetPaging> = new Subject();
 
+    _queriesApi: QueriesApi;
     get queriesApi(): QueriesApi {
-        return new QueriesApi(this.apiService.getInstance());
+        this._queriesApi = this._queriesApi ?? new QueriesApi(this.apiService.getInstance());
+        return this._queriesApi;
     }
 
+    _searchApi: SearchApi;
     get searchApi(): SearchApi {
-        return new SearchApi(this.apiService.getInstance());
+        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
+        return this._searchApi;
     }
 
     constructor(private apiService: AlfrescoApiService,

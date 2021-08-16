@@ -29,8 +29,10 @@ export class SharedLinksApiService {
 
     error = new Subject<{ statusCode: number, message: string }>();
 
+    _sharedLinksApi: SharedlinksApi;
     get sharedLinksApi(): SharedlinksApi {
-        return new SharedlinksApi(this.apiService.getInstance());
+        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
+        return this._sharedLinksApi;
     }
 
     constructor(private apiService: AlfrescoApiService,

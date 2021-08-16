@@ -72,8 +72,10 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     ];
     disableCreateButton = false;
 
+    _queriesApi: QueriesApi;
     get queriesApi(): QueriesApi {
-        return new QueriesApi(this.alfrescoApiService.getInstance());
+        this._queriesApi = this._queriesApi ?? new QueriesApi(this.alfrescoApiService.getInstance());
+        return this._queriesApi;
     }
 
     constructor(

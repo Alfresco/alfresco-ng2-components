@@ -67,8 +67,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     rootNodeId = AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
     selectedNode: Node;
 
+    _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        return new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        return this._nodesApi;
     }
 
     constructor(

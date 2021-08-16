@@ -24,7 +24,7 @@ import { catchError, map } from 'rxjs/operators';
 import {
     TaskActionsApi,
     UsersApi,
-    ResultListDataRepresentationLightUserRepresentation
+    ResultListDataRepresentationLightUserRepresentation, DownloadsApi
 } from '@alfresco/js-api';
 
 @Injectable({
@@ -32,12 +32,16 @@ import {
 })
 export class PeopleProcessService {
 
+    _taskActionsApi: TaskActionsApi;
     get taskActionsApi(): TaskActionsApi {
-        return new TaskActionsApi(this.apiService.getInstance());
+        this._taskActionsApi = this._taskActionsApi ?? new TaskActionsApi(this.apiService.getInstance());
+        return this._taskActionsApi;
     }
 
+    _userApi: UsersApi;
     get userApi(): UsersApi {
-        return new UsersApi(this.apiService.getInstance());
+        this._userApi = this._userApi ?? new UsersApi(this.apiService.getInstance());
+        return this._userApi;
     }
 
     constructor(private apiService: AlfrescoApiService,

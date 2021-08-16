@@ -30,8 +30,10 @@ import {
 })
 export class ProcessFilterService {
 
+    private _userFiltersApi;
     get userFiltersApi(): UserFiltersApi {
-        return new UserFiltersApi(this.alfrescoApiService.getInstance());
+        this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.alfrescoApiService.getInstance());
+        return this._userFiltersApi;
     }
 
     constructor(private alfrescoApiService: AlfrescoApiService) {

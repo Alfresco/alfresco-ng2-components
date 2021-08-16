@@ -30,7 +30,7 @@ import {
     FavoritesApi,
     SharedlinksApi,
     TrashcanApi,
-    NodesApi
+    NodesApi, TypesApi
 } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
@@ -41,32 +41,46 @@ export class CustomResourcesService {
 
     private CREATE_PERMISSION = 'create';
 
+    _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
-        return new PeopleApi(this.apiService.getInstance());
+        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
+        return this._peopleApi;
     }
 
+    _sitesApi: SitesApi;
     get sitesApi(): SitesApi {
-        return new SitesApi(this.apiService.getInstance());
+        this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
+        return this._sitesApi;
     }
 
+    _trashcanApi: TrashcanApi;
     get trashcanApi(): TrashcanApi {
-        return new TrashcanApi(this.apiService.getInstance());
+        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
+        return this._trashcanApi;
     }
 
+    _searchApi: SearchApi;
     get searchApi(): SearchApi {
-        return new SearchApi(this.apiService.getInstance());
+        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
+        return this._searchApi;
     }
 
+    _sharedLinksApi: SharedlinksApi;
     get sharedLinksApi(): SharedlinksApi {
-        return new SharedlinksApi(this.apiService.getInstance());
+        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
+        return this._sharedLinksApi;
     }
 
+    _favoritesApi: FavoritesApi;
     get favoritesApi(): FavoritesApi {
-        return new FavoritesApi(this.apiService.getInstance());
+        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
+        return this._favoritesApi;
     }
 
+    _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        return new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        return this._nodesApi;
     }
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {

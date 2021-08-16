@@ -30,8 +30,10 @@ import { catchError, map } from 'rxjs/operators';
 export class NodeFavoriteDirective implements OnChanges {
     favorites: any[] = [];
 
+    _favoritesApi: FavoritesApi;
     get favoritesApi(): FavoritesApi {
-        return new FavoritesApi(this.alfrescoApiService.getInstance());
+        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.alfrescoApiService.getInstance());
+        return this._favoritesApi;
     }
 
     /** Array of nodes to toggle as favorites. */

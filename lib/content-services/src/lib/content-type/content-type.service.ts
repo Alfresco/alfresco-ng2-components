@@ -25,8 +25,10 @@ import { map } from 'rxjs/operators';
 })
 export class ContentTypeService {
 
+    _typesApi: TypesApi;
     get typesApi(): TypesApi {
-        return new TypesApi(this.alfrescoApiService.getInstance());
+        this._typesApi = this._typesApi ?? new TypesApi(this.alfrescoApiService.getInstance());
+        return this._typesApi;
     }
 
     constructor(private alfrescoApiService: AlfrescoApiService) {

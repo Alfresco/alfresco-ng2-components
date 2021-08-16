@@ -28,14 +28,14 @@ import { PeopleApi } from '@alfresco/js-api';
 })
 export class EcmUserService {
 
-    private _peopleApi: PeopleApi;
+    _peopleApi: PeopleApi;
+    get peopleApi(): PeopleApi {
+        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
+        return this._peopleApi;
+    }
 
     constructor(private apiService: AlfrescoApiService,
                 private contentService: ContentService) {
-    }
-
-    get peopleApi(): PeopleApi {
-        return this._peopleApi || (this._peopleApi = new PeopleApi(this.apiService.getInstance()));
     }
 
     /**

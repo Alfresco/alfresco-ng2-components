@@ -29,8 +29,10 @@ import { AspectEntry, AspectPaging, AspectsApi } from '@alfresco/js-api';
 })
 export class AspectListService {
 
+    _aspectsApi: AspectsApi;
     get aspectsApi(): AspectsApi {
-        return new AspectsApi(this.alfrescoApiService.getInstance());
+        this._aspectsApi = this._aspectsApi ?? new AspectsApi(this.alfrescoApiService.getInstance());
+        return this._aspectsApi;
     }
 
     constructor(private alfrescoApiService: AlfrescoApiService,

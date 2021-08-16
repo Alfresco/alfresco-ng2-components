@@ -23,7 +23,7 @@ import { PropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('PropertyDescriptorLoaderService', () => {
+fdescribe('PropertyDescriptorLoaderService', () => {
 
     let service: PropertyDescriptorsService;
     let classesApi: ClassesApi;

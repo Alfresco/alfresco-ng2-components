@@ -32,8 +32,10 @@ export class EcmModelService {
     public static MODEL_NAME: string = 'activitiFormsModel';
     public static TYPE_MODEL: string = 'cm:folder';
 
+    _customModelApi: CustomModelApi;
     get customModelApi(): CustomModelApi {
-        return new CustomModelApi(this.apiService.getInstance());
+        this._customModelApi = this._customModelApi ?? new CustomModelApi(this.apiService.getInstance());
+        return this._customModelApi;
     }
 
     constructor(private apiService: AlfrescoApiService,

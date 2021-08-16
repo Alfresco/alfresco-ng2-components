@@ -32,16 +32,22 @@ import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 })
 export class VersionListComponent implements OnChanges {
 
+    _contentApi: ContentApi;
     get contentApi(): ContentApi {
-        return new ContentApi(this.alfrescoApi.getInstance());
+        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
+        return this._contentApi;
     }
 
+    _versionsApi: VersionsApi;
     get versionsApi(): VersionsApi {
-        return new VersionsApi(this.alfrescoApi.getInstance());
+        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
+        return this._versionsApi;
     }
 
+    _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        return new NodesApi(this.alfrescoApi.getInstance());
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        return this._nodesApi;
     }
 
     versions: VersionEntry[] = [];

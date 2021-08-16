@@ -36,8 +36,10 @@ import { FormContent } from '../../services/form-fields.interfaces';
 })
 export class FormCloudService extends BaseCloudService {
 
+    private _uploadApi;
     get uploadApi(): UploadApi {
-        return new UploadApi(this.apiService.getInstance());
+        this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
+        return this._uploadApi;
     }
 
     constructor(

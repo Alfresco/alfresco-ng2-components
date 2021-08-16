@@ -48,8 +48,10 @@ export class AuthenticationService {
      */
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
 
+    _profileApi: UserProfileApi;
     get profileApi(): UserProfileApi {
-        return new UserProfileApi(this.alfrescoApi.getInstance());
+        this._profileApi = this._profileApi ?? new UserProfileApi(this.alfrescoApi.getInstance());
+        return this._profileApi;
     }
 
     constructor(

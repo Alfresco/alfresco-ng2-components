@@ -164,8 +164,10 @@ export class ThumbnailService {
         'task': './assets/images/task.svg'
     };
 
+    _contentApi: ContentApi;
     get contentApi(): ContentApi {
-        return new ContentApi(this.apiService.getInstance());
+        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
+        return this._contentApi;
     }
 
     constructor(protected apiService: AlfrescoApiService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {

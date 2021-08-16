@@ -63,16 +63,22 @@ export class UploadService {
     fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
     fileDeleted: Subject<string> = new Subject<string>();
 
+    _uploadApi: UploadApi;
     get uploadApi(): UploadApi {
-        return new UploadApi(this.apiService.getInstance());
+        this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
+        return this._uploadApi;
     }
 
+    _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        return new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        return this._nodesApi;
     }
 
+    _versionsApi: VersionsApi;
     get versionsApi(): VersionsApi {
-        return new VersionsApi(this.apiService.getInstance());
+        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
+        return this._versionsApi;
     }
 
     constructor(

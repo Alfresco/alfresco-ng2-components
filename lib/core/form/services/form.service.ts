@@ -52,40 +52,58 @@ export class FormService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    get taskApi(): TasksApi {
-        return new TasksApi(this.apiService.getInstance());
-    }
-
+    _taskFormsApi: TaskFormsApi;
     get taskFormsApi(): TaskFormsApi {
-        return new TaskFormsApi(this.apiService.getInstance());
+        this._taskFormsApi = this._taskFormsApi ?? new TaskFormsApi(this.apiService.getInstance());
+        return this._taskFormsApi;
     }
 
+    _taskApi: TasksApi;
+    get taskApi(): TasksApi {
+        this._taskApi = this._taskApi ?? new TasksApi(this.apiService.getInstance());
+        return this._taskApi;
+    }
+
+    _modelsApi: ModelsApi;
     get modelsApi(): ModelsApi {
-        return new ModelsApi(this.apiService.getInstance());
+        this._modelsApi = this._modelsApi ?? new ModelsApi(this.apiService.getInstance());
+        return this._modelsApi;
     }
 
+    _editorApi: FormModelsApi;
     get editorApi(): FormModelsApi {
-        return new FormModelsApi(this.apiService.getInstance());
+        this._editorApi = this._editorApi ?? new FormModelsApi(this.apiService.getInstance());
+        return this._editorApi;
     }
 
+    _processDefinitionsApi: ProcessDefinitionsApi;
     get processDefinitionsApi(): ProcessDefinitionsApi {
-        return new ProcessDefinitionsApi(this.apiService.getInstance());
+        this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.apiService.getInstance());
+        return this._processDefinitionsApi;
     }
 
+    _processInstanceVariablesApi: ProcessInstanceVariablesApi;
     get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
-        return new ProcessInstanceVariablesApi(this.apiService.getInstance());
+        this._processInstanceVariablesApi = this._processInstanceVariablesApi ?? new ProcessInstanceVariablesApi(this.apiService.getInstance());
+        return this._processInstanceVariablesApi;
     }
 
+    _processInstancesApi: ProcessInstancesApi;
     get processInstancesApi(): ProcessInstancesApi {
-        return new ProcessInstancesApi(this.apiService.getInstance());
+        this._processInstancesApi= this._processInstancesApi ?? new ProcessInstancesApi(this.apiService.getInstance());
+        return this._processInstancesApi;
     }
 
+    _groupsApi: ActivitiGroupsApi;
     get groupsApi(): ActivitiGroupsApi {
-        return new ActivitiGroupsApi(this.apiService.getInstance());
+        this._groupsApi = this._groupsApi ?? new ActivitiGroupsApi(this.apiService.getInstance());
+        return this._groupsApi;
     }
 
+    _usersApi: UsersApi;
     get usersApi(): UsersApi {
-        return new UsersApi(this.apiService.getInstance());
+        this._usersApi = this._usersApi ?? new UsersApi(this.apiService.getInstance());
+        return this._usersApi;
     }
 
     formLoaded = new Subject<FormEvent>();

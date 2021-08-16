@@ -34,8 +34,10 @@ export class DocumentListService implements DocumentListLoader {
 
     static ROOT_ID = '-root-';
 
-    get nodes(): NodesApi {
-        return new NodesApi(this.apiService.getInstance());
+    _nodesApi: NodesApi;
+    get nodesApi(): NodesApi {
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        return this._nodesApi;
     }
 
     constructor(private contentService: ContentService,

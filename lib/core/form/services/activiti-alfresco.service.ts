@@ -23,7 +23,7 @@ import {
     IntegrationAlfrescoOnPremiseApi,
     MinimalNode,
     RelatedContentRepresentation,
-    ActivitiContentApi
+    ActivitiContentApi, UserProfileApi
 } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { ExternalContent } from '../components/widgets/core/external-content';
@@ -35,11 +35,16 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class ActivitiContentService {
 
+    _integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
     get integrationAlfrescoOnPremiseApi(): IntegrationAlfrescoOnPremiseApi {
-        return new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
+        this._integrationAlfrescoOnPremiseApi= this._integrationAlfrescoOnPremiseApi ?? new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
+        return this._integrationAlfrescoOnPremiseApi;
     }
+
+    _contentApi: ActivitiContentApi;
     get contentApi(): ActivitiContentApi {
-        return new ActivitiContentApi(this.apiService.getInstance());
+        this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
+        return this._contentApi;
     }
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';

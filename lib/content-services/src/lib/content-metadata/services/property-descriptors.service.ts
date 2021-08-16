@@ -27,8 +27,10 @@ import { ClassesApi } from '@alfresco/js-api';
 })
 export class PropertyDescriptorsService {
 
+    private _classesApi;
     get classesApi(): ClassesApi {
-        return new ClassesApi(this.alfrescoApiService.getInstance());
+        this._classesApi = this._classesApi ?? new ClassesApi(this.alfrescoApiService.getInstance());
+        return this._classesApi;
     }
 
     constructor(private alfrescoApiService: AlfrescoApiService) {

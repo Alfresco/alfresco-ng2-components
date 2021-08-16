@@ -42,8 +42,10 @@ import { RoleModel } from '../models/role.model';
 })
 export class NodePermissionService {
 
+    _groupsApi: GroupsApi;
     get groupsApi(): GroupsApi {
-        return new GroupsApi(this.apiService.getInstance());
+        this._groupsApi = this._groupsApi ?? new GroupsApi(this.alfrescoApiService.getInstance());
+        return this._groupsApi;
     }
 
     constructor(private apiService: AlfrescoApiService,
