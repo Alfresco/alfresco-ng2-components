@@ -23,7 +23,7 @@ import {
     IntegrationAlfrescoOnPremiseApi,
     MinimalNode,
     RelatedContentRepresentation,
-    ActivitiContentApi, UserProfileApi
+    ActivitiContentApi
 } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { ExternalContent } from '../components/widgets/core/external-content';

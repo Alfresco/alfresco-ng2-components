@@ -19,7 +19,6 @@ import { Injectable } from '@angular/core';
 import {
     AlfrescoApiCompatibility,
     ContentApi,
-    Core,
     Node, NodesApi
 } from '@alfresco/js-api';
 import { ReplaySubject, Subject } from 'rxjs';

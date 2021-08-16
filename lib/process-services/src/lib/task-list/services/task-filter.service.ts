@@ -28,7 +28,7 @@ import { ActivitiContentApi, UserFiltersApi } from '@alfresco/js-api';
 export class TaskFilterService {
 
     private _userFiltersApi;
-    get userFiltersApi(): ActivitiContentApi {
+    get userFiltersApi(): UserFiltersApi {
         this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.apiService.getInstance());
         return this._userFiltersApi;
     }

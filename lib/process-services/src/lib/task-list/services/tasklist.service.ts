@@ -35,7 +35,7 @@ import {
 export class TaskListService {
 
     private _modelsApi;
-    get modelsApi(): TasksApi {
+    get modelsApi(): ModelsApi {
         this._modelsApi = this._modelsApi ?? new ModelsApi(this.apiService.getInstance());
         return this._modelsApi;
     }

@@ -38,7 +38,7 @@ export class ProcessCloudContentService {
     }
 
     private _authenticationApi;
-    get authenticationApi(): UploadApi {
+    get authenticationApi(): AuthenticationApi {
         this._authenticationApi = this._authenticationApi ?? new AuthenticationApi(this.apiService.getInstance());
         return this._authenticationApi;
     }

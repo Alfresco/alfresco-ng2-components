@@ -23,7 +23,7 @@ import {
     ProcessInstancesApi,
     RestVariable,
     ProcessInstanceRepresentation,
-    ProcessInstanceVariablesApi, ActivitiContentApi
+    ProcessInstanceVariablesApi
 } from '@alfresco/js-api';
 import { Observable, from, throwError, of } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';

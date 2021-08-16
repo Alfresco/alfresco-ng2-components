@@ -24,7 +24,7 @@ import { catchError, map } from 'rxjs/operators';
 import {
     TaskActionsApi,
     UsersApi,
-    ResultListDataRepresentationLightUserRepresentation, DownloadsApi
+    ResultListDataRepresentationLightUserRepresentation
 } from '@alfresco/js-api';
 
 @Injectable({

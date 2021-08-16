@@ -38,7 +38,7 @@ export class NodeRestoreDirective {
 
     _trashcanApi: TrashcanApi;
     get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
+        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.alfrescoApiService.getInstance());
         return this._trashcanApi;
     }
 

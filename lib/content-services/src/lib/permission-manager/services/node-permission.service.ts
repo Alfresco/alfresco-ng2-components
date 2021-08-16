@@ -44,7 +44,7 @@ export class NodePermissionService {
 
     _groupsApi: GroupsApi;
     get groupsApi(): GroupsApi {
-        this._groupsApi = this._groupsApi ?? new GroupsApi(this.alfrescoApiService.getInstance());
+        this._groupsApi = this._groupsApi ?? new GroupsApi(this.apiService.getInstance());
         return this._groupsApi;
     }
 

@@ -30,7 +30,7 @@ import {
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { map, catchError } from 'rxjs/operators';
-import { RuntimeAppDefinitionsApi, TaskFormsApi } from '@alfresco/js-api';
+import { TaskFormsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'

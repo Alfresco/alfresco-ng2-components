@@ -30,7 +30,7 @@ import {
     FavoritesApi,
     SharedlinksApi,
     TrashcanApi,
-    NodesApi, TypesApi
+    NodesApi
 } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
