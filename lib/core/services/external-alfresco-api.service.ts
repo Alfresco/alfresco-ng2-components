@@ -37,6 +37,7 @@ export class ExternalAlfrescoApiService {
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
     protected alfrescoApi: AlfrescoApiCompatibility;
+    _nodesApi: NodesApi;
 
     getInstance(): AlfrescoApiCompatibility {
         return this.alfrescoApi;
@@ -46,9 +47,8 @@ export class ExternalAlfrescoApiService {
         return this.getInstance().content;
     }
 
-    _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
+        this._nodesApi = this._nodesApi ?? new NodesApi(this.getInstance());
         return this._nodesApi;
     }
 

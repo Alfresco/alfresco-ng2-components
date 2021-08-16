@@ -35,9 +35,12 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class ActivitiContentService {
 
+    static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
+    static GENERIC_ERROR_MESSAGE: string = 'Server error';
+
     _integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
     get integrationAlfrescoOnPremiseApi(): IntegrationAlfrescoOnPremiseApi {
-        this._integrationAlfrescoOnPremiseApi= this._integrationAlfrescoOnPremiseApi ?? new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
+        this._integrationAlfrescoOnPremiseApi = this._integrationAlfrescoOnPremiseApi ?? new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
         return this._integrationAlfrescoOnPremiseApi;
     }
 
@@ -46,9 +49,6 @@ export class ActivitiContentService {
         this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
-
-    static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
-    static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService,

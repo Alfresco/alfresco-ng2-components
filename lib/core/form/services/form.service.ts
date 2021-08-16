@@ -90,7 +90,7 @@ export class FormService {
 
     _processInstancesApi: ProcessInstancesApi;
     get processInstancesApi(): ProcessInstancesApi {
-        this._processInstancesApi= this._processInstancesApi ?? new ProcessInstancesApi(this.apiService.getInstance());
+        this._processInstancesApi = this._processInstancesApi ?? new ProcessInstancesApi(this.apiService.getInstance());
         return this._processInstancesApi;
     }
 
