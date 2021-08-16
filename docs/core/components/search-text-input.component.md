@@ -40,6 +40,7 @@ Displays a input text that supports autocompletion
 | searchTerm | `string` | "" | Search term preselected. |
 | collapseOnBlur | `boolean` | "true" | Toggles whether to collapse the search on blur. |
 | showClearButton | `boolean` | "false" | Toggles whether to show a clear button that closes the search. |
+| placeholder | `string` | "" | Placeholder text to show in the input field |
 
 ### Events
 
