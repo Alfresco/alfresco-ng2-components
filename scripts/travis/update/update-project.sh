@@ -113,7 +113,5 @@ rm -rf $TEMP_GENERATOR_DIR
 update "generator-alfresco-adf-app"
 update "alfresco-content-app"
 update "alfresco-apps"
-update "alfresco-digital-workspace-app"
-
 
 exit $?
