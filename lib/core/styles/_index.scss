@@ -39,7 +39,6 @@
 
 @mixin adf-core-theme($theme) {
     @include adf-colors-theme($theme);
-    @include adf-default-class-theme($theme);
     @include adf-card-view-module-theme($theme);
     @include adf-datatable-theme($theme);
     @include adf-form-container-widget-theme($theme);
