@@ -1,5 +1,4 @@
 @import '~@angular/material/theming';
-@import 'variables';
 
 @mixin adf-no-select {
     -webkit-touch-callout: none;
@@ -27,7 +26,7 @@
 
 @mixin material-animation-default($duration: 0.2s) {
     transition-duration: $duration;
-    transition-timing-function: $animation-curve-default;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @mixin adf-line-clamp($line-height: 1.25, $lines: 3) {

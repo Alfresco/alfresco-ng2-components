@@ -1,5 +1,3 @@
-// @import '~@angular/material/theming';
-
 @mixin adf-colors-theme($theme) {
 
     $primary: map-get($theme, primary);
