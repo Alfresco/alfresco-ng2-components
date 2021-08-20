@@ -1,15 +1,14 @@
-@import './app/components/app-layout/app-layout.component.scss';
-@import './app/components/files/files.component.scss';
-@import './app/components/login/login.component.scss';
+@import '~@angular/material/theming';
 
-
+@import '../../lib/core/styles/index';
 @import '../../lib/content-services/src/lib/styles/index';
 @import '../../lib/process-services/src/lib/styles/index';
 @import '../../lib/insights/src/lib/styles/index';
-@import '../../lib/core/styles/index';
 @import '../../lib/process-services-cloud/src/lib/styles/index';
 
-@import '~@angular/material/theming';
+@import './app/components/app-layout/app-layout.component.scss';
+@import './app/components/files/files.component.scss';
+@import './app/components/login/login.component.scss';
 
 @include mat-core($alfresco-typography);
 
@@ -19,16 +18,15 @@ $warn:    mat-palette($alfresco-warn);
 $theme:   mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
-@include app-layout-theme($theme);
-@include app-file-component-theme($theme);
-@include app-login-component-theme($theme);
-
-
+@include adf-core-theme($theme);
 @include adf-content-services-theme($theme);
 @include adf-process-services-theme($theme);
 @include adf-process-services-cloud-theme($theme);
 @include adf-insights-theme($theme);
-@include adf-core-theme($theme);
+
+@include app-layout-theme($theme);
+@include app-file-component-theme($theme);
+@include app-login-component-theme($theme);
 
 body, html {
     margin: 0;
