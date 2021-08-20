@@ -1,4 +1,3 @@
-@import './theme-colors';
 @import './default-class';
 @import './theming';
 
@@ -49,9 +48,9 @@
     $defaults: (
         // material colors
         --theme-primary-color: mat-color($primary),
+        --theme-primary-color-default-contrast: mat-color($primary, default-contrast),
         --theme-warn-color: mat-color($warn),
         // --theme-accent-color: mat-color($accent),
-        // --theme-primary-color-default-contrast: mat-color($primary, default-contrast),
         // --theme-warn-color-default-contrast: mat-color($warn, default-contrast),
 
         // component themes
@@ -111,7 +110,6 @@
         }
     }
 
-    @include adf-colors-theme($theme);
     @include adf-card-view-module-theme($theme);
     @include adf-datatable-theme($theme);
     @include adf-form-container-widget-theme($theme);

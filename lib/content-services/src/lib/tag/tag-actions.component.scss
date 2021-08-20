@@ -1,18 +1,20 @@
-.adf-full-width {
-    width: 100%;
-}
+.adf-tag-node-actions-list {
+    .adf-full-width {
+        width: 100%;
+    }
 
-.adf-tag-actions-delete-icon {
-    float: right;
-    cursor: pointer;
-}
+    .adf-tag-actions-delete-icon {
+        float: right;
+        cursor: pointer;
+    }
 
-.adf-tag-actions-delete-text {
-    font-size: 16px;
-    float: left;
-}
+    .adf-tag-actions-delete-text {
+        font-size: 16px;
+        float: left;
+    }
 
-.adf-tag-actions-container {
-    padding: 8px 0;
-    height: 20px;
+    .adf-tag-actions-container {
+        padding: 8px 0;
+        height: 20px;
+    }
 }

@@ -30,7 +30,8 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'adf-tag-node-list',
     templateUrl: './tag-node-list.component.html',
     styleUrls: ['./tag-node-list.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-tag-node-list' }
 })
 export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     /** The identifier of a node. */
