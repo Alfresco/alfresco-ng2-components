@@ -134,7 +134,6 @@ Any component with the  `add-dark-theme` class will use the dark theme, while ot
 .adf-hide-small                 // Display none vieweport <960px
 .adf-hide-xsmall                // Display none vieweport <600px
 
-.adf-primary-color               // Primary color
 .accent-color                // Accent color
 .warn-color                  // Warn color
 .primary-contrast-text-color // Default contrast color for primary color
