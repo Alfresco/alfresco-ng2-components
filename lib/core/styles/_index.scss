@@ -36,6 +36,7 @@
 @import './snackbar.theme';
 @import '../directives/tooltip-card/tooltip-card.theme';
 @import '../notifications/components/notification-history.theme';
+@import './material.theme';
 
 @mixin adf-core-theme($theme) {
     $foreground: map-get($theme, foreground);
@@ -49,48 +50,58 @@
         // material colors
         --theme-primary-color: mat-color($primary),
         --theme-warn-color: mat-color($warn),
-        --theme-accent-color: mat-color($accent),
-        --theme-primary-color-default-contrast: mat-color($primary, default-contrast),
-        --theme-warn-color-default-contrast: mat-color($warn, default-contrast),
+        // --theme-accent-color: mat-color($accent),
+        // --theme-primary-color-default-contrast: mat-color($primary, default-contrast),
+        // --theme-warn-color-default-contrast: mat-color($warn, default-contrast),
 
         // component themes
-        --theme-background-color: mat-color($background, background),
-        --theme-text-fg-color: mat-color($foreground, text),
+        --adf-snackbar-error-bg-color: mat-color($warn),
+        --adf-snackbar-error-action-color: white,
+        --adf-snackbar-warning-bg-color: mat-color($accent),
+        --adf-snackbar-warning-action-color: white,
+        --adf-snackbar-info-bg-color: mat-color($primary),
+        --adf-snackbar-info-action-color: white,
+
+
+        --theme-hover-bg-color: mat-color($background, hover),
         --theme-text-color: mat-color($foreground, text, 0.54),
         --theme-text-bold-color: mat-color($foreground, text, 0.87),
-        --theme-title-color: mat-color($foreground, text, 0.87),
-        --theme-text-disabled-color: mat-color($foreground, text, 0.38),
-        --theme-text-selection-color: mat-color($foreground, text, 0.3),
-        --theme-border-color: mat-color($foreground, text, 0.07),
-        --theme-border-color-light: mat-color($foreground, text, 0.2),
-        --theme-card-background-color: mat-color($background, card),
-        --theme-foreground-text-color: mat-color($foreground, text, 0.72),
-        --theme-foreground-text-bold-color: mat-color($foreground, text, 0.87),
-        --theme-secondary-text-color: mat-color($foreground, secondary-text),
-        --theme-divider-color: mat-color($foreground, divider, 0.07),
-        --theme-divider-color-light: lighten(mat-color($foreground, divider, 0.07), 30),
-        --theme-dialog-bg-color: mat-color($background, dialog),
-        --theme-app-bar-bg-color: mat-color($background, app-bar),
-        --theme-status-bar-bg-color: mat-color($background, status-bar, 0.7),
-        --theme-unselected-chip-bg-color: mat-color($background, unselected-chip),
-        --theme-disabled-text-color: mat-color($foreground, disabled-text),
-        --theme-selected-button-bg-color: mat-color($background, selected-button),
-        --theme-raised-button-bg-color: mat-color($background, raised-button),
-        --theme-icons-fg-color: mat-color($foreground, icons),
-        --theme-slider-off-fg-color: mat-color($foreground, slider-off),
+
+        // --theme-background-color: mat-color($background, background),
+        // --theme-text-fg-color: mat-color($foreground, text),
+        // --theme-title-color: mat-color($foreground, text, 0.87),
+        // --theme-text-disabled-color: mat-color($foreground, text, 0.38),
+        // --theme-text-selection-color: mat-color($foreground, text, 0.3),
+        // --theme-border-color: mat-color($foreground, text, 0.07),
+        // --theme-border-color-light: mat-color($foreground, text, 0.2),
+        // --theme-card-background-color: mat-color($background, card),
+        // --theme-foreground-text-color: mat-color($foreground, text, 0.72),
+        // --theme-foreground-text-bold-color: mat-color($foreground, text, 0.87),
+        // --theme-secondary-text-color: mat-color($foreground, secondary-text),
+        // --theme-divider-color: mat-color($foreground, divider, 0.07),
+        // --theme-divider-color-light: lighten(mat-color($foreground, divider, 0.07), 30),
+        // --theme-dialog-bg-color: mat-color($background, dialog),
+        // --theme-app-bar-bg-color: mat-color($background, app-bar),
+        // --theme-status-bar-bg-color: mat-color($background, status-bar, 0.7),
+        // --theme-unselected-chip-bg-color: mat-color($background, unselected-chip),
+        // --theme-disabled-text-color: mat-color($foreground, disabled-text),
+        // --theme-selected-button-bg-color: mat-color($background, selected-button),
+        // --theme-raised-button-bg-color: mat-color($background, raised-button),
+        // --theme-icons-fg-color: mat-color($foreground, icons),
+        // --theme-slider-off-fg-color: mat-color($foreground, slider-off),
 
         // fonts
-        --theme-font-family: mat-font-family($alfresco-typography),
-        --theme-body-1-font-size: mat-font-size($alfresco-typography, body-1),
-        --theme-body-1-line-height: mat-line-height($alfresco-typography, body-1),
-        --theme-caption-font-size: mat-font-size($alfresco-typography, caption),
-        --theme-title-font-size: mat-font-size($alfresco-typography, title),
-        --theme-subheading-2-font-size: mat-font-size($alfresco-typography, subheading-2),
-        --theme-button-font-size: mat-font-size($alfresco-typography, button),
+        // --theme-font-family: mat-font-family($alfresco-typography),
+        // --theme-body-1-font-size: mat-font-size($alfresco-typography, body-1),
+        // --theme-body-1-line-height: mat-line-height($alfresco-typography, body-1),
+        // --theme-caption-font-size: mat-font-size($alfresco-typography, caption),
+        // --theme-title-font-size: mat-font-size($alfresco-typography, title),
+        // --theme-subheading-2-font-size: mat-font-size($alfresco-typography, subheading-2),
+        // --theme-button-font-size: mat-font-size($alfresco-typography, button),
 
         // specific colors
-        --theme-colors-mat-grey: mat-color($mat-grey, A200),
-        --theme-colors-mat-blue: mat-color($mat-blue, 50)
+        // --theme-colors-mat-grey: mat-color($mat-grey, A200),
+        // --theme-colors-mat-blue: mat-color($mat-blue, 50)
     );
 
     // propagates SCSS variables into the CSS variables scope
@@ -131,10 +142,8 @@
     @include adf-header-layout-theme($theme);
     @include adf-sidenav-layout-theme($theme);
     @include adf-clipboard-theme($theme);
-    @include adf-snackbar-theme($theme);
-    @include mat-expansion-panel-theme--fix($theme);
-    @include mat-calendar-theme--fix($theme);
-    @include mat-datetimepicker-theme--fix($theme);
+    @include adf-snackbar-theme();
+    @include adf-material-theme();
     @include adf-search-text-input-theme($theme);
     @include adf-tooltip-card-directive($theme);
     @include adf-notification-history-theme($theme);

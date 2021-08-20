@@ -132,7 +132,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     }
 
     quickInfo() {
-        this.notificationService.showInfo(this.message);
+        this.notificationService.showInfo(this.message, 'Agree');
     }
 
     quickWarning() {

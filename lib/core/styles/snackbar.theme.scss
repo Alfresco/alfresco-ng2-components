@@ -1,29 +1,25 @@
-@mixin adf-snackbar-theme($theme) {
-    $warn: map-get($theme, warn);
-    $accent: map-get($theme, accent);
-    $primary: map-get($theme, primary);
-
+@mixin adf-snackbar-theme() {
     .adf-error-snackbar {
-      background-color: mat-color($warn);
+        background-color: var(--adf-snackbar-error-bg-color);
 
-      .mat-simple-snackbar-action {
-        color: white;
-      }
+        .mat-simple-snackbar-action {
+            color: var(--adf-snackbar-error-action-color);
+        }
     }
 
     .adf-warning-snackbar {
-      background-color: mat-color($accent);
+        background-color: var(--adf-snackbar-warning-bg-color);
 
-      .mat-simple-snackbar-action {
-        color: white;
-      }
+        .mat-simple-snackbar-action {
+            color: var(--adf-snackbar-warning-action-color);
+        }
     }
 
     .adf-info-snackbar {
-      background-color: mat-color($primary);
+        background-color: var(--adf-snackbar-info-bg-color);
 
-      .mat-simple-snackbar-action {
-        color: white;
-      }
+        .mat-simple-snackbar-action {
+            color: var(--adf-snackbar-info-action-color);
+        }
     }
-  }
+}
