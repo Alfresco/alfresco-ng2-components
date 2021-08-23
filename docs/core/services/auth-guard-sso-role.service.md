@@ -24,14 +24,14 @@ const appRoutes: Routes = [
         path: 'examplepath',
         component: ExampleComponent,
         canActivate: [ AuthGuardSsoRoleService ],
-        data: { roles: ['USER_ROLE1', 'USER_ROLE2']}
+        data: { roles: ['USER_ROLE1', 'USER_ROLE2'], excludedRoles: ['USER_ROLE3']}
     },
     ...
 ]
 ```
 
-If the user now clicks on a link or button that follows this route, they will be not able to access this content if they do not have the Realms roles.
-<br />**Note**: An additional role ALFRESCO_ADMINISTRATORS can be used in the roles array, which will result in checking whether the logged in user has Content Admin capabilities or not, as this role is not part of the JWT token it will call a Content API to determine it.
+If the user now clicks on a link or button that follows this route, they will be not able to access this content if they do not have the Realms roles. Additionally, the user will not be able to access the resource when they have a role that is part of the excludedRoles array. 
+<br />**Notes**: An additional role ALFRESCO_ADMINISTRATORS can be used in the roles array, which will result in checking whether the logged in user has Content Admin capabilities or not, as this role is not part of the JWT token it will call a Content API to determine it.
 
 
 Client role Example
