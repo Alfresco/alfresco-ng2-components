@@ -178,7 +178,7 @@ export class MyCustomLogin {
         };
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         this.alfrescoLogin.addCustomValidationError('username', 'minlength', 'Username must be at least 8 characters.');
         this.alfrescoLogin.addCustomValidationError('username', 'maxlength', 'Username must not be longer than 11 characters.');
     }
