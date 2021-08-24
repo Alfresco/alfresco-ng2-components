@@ -151,7 +151,14 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             }
 
             if (this.isPathVariableType(DestinationFolderPathType.FOLDER_TYPE)) {
-                rootNodeId = this.field.params.fileSource.destinationFolderPath.value;
+                try {
+                    const isNodeAvailable = await this.contentNodeSelectorService.isNodeAvailable(this.field.params.fileSource.destinationFolderPath.value);
+                    if (isNodeAvailable) {
+                        rootNodeId = this.field.params.fileSource.destinationFolderPath.value;
+                    }
+                } catch (error) {
+                    this.logService.error(error);
+                }
             }
         }
 

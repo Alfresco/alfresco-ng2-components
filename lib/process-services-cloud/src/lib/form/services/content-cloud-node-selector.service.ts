@@ -24,7 +24,8 @@ import {
     NodeAction
 } from '@alfresco/adf-content-services';
 import { Node, NodesApi } from '@alfresco/js-api';
-import { Observable, Subject, throwError } from 'rxjs';
+import { from, Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -79,6 +80,16 @@ export class ContentCloudNodeSelectorService {
             .getNode(alias)
             .catch((err) => this.handleError(err));
         return aliasNodeEntry?.entry?.id;
+    }
+
+    async isNodeAvailable(nodeId: string): Promise<boolean> {
+        return from(this.nodesApi.getNode(nodeId)).pipe(
+            map(() =>  true ),
+            catchError(() => {
+                this.sourceNodeNotFound = true;
+                return of(false);
+            })
+        ).toPromise();
     }
 
     private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
