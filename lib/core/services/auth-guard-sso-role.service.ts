@@ -39,8 +39,9 @@ export class AuthGuardSsoRoleService implements CanActivate {
         if (route.data) {
             if (route.data['roles']) {
                 const rolesToCheck: string[] = route.data['roles'];
-                const isContentAdmin = rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) ? await this.peopleContentService.isContentAdmin() : false;
-                hasRealmRole = this.jwtHelperService.hasRealmRoles(rolesToCheck) || isContentAdmin;
+                const excludedRoles = route.data['excludedRoles'] || [];
+                const isContentAdmin = rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) || excludedRoles.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) ? await this.peopleContentService.isContentAdmin() : false;
+                hasRealmRole = excludedRoles.length ?  this.checkAccessWithExcludedRoles(rolesToCheck, excludedRoles, isContentAdmin) : this.hasRoles(rolesToCheck, isContentAdmin);
             }
 
             if (route.data['clientRoles']) {
@@ -61,5 +62,13 @@ export class AuthGuardSsoRoleService implements CanActivate {
         }
 
         return hasRole;
+    }
+
+    private checkAccessWithExcludedRoles(rolesToCheck: string[], excludedRoles: string[], isContentAdmin: boolean): boolean {
+        return this.hasRoles(rolesToCheck, isContentAdmin) && !this.hasRoles(excludedRoles, isContentAdmin);
+    }
+
+    private hasRoles(rolesToCheck: string[], isContentAdmin: boolean): boolean {
+        return rolesToCheck.includes(ContentGroups.ALFRESCO_ADMINISTRATORS) ? this.jwtHelperService.hasRealmRoles(rolesToCheck) || isContentAdmin : this.jwtHelperService.hasRealmRoles(rolesToCheck);
     }
 }

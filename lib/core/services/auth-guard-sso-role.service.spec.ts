@@ -225,4 +225,38 @@ describe('Auth Guard SSO role service', () => {
             expect(getCurrentPersonSpy).not.toHaveBeenCalled();
         });
     });
+
+    describe('Excluded Roles', () => {
+        it('Should canActivate be false when the user has one of the excluded roles', async () => {
+            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
+            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
+            spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1'] } });
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { 'roles': ['ALFRESCO_ADMINISTRATORS'], 'excludedRoles': ['role1'] };
+
+            expect(await authGuard.canActivate(router)).toBeFalsy();
+        });
+
+        it('Should canActivate be true when the user has none of the excluded roles', async () => {
+            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
+            spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role2'] } });
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { 'roles': ['role1', 'role2'], 'excludedRoles': ['role3'] };
+
+            expect(await authGuard.canActivate(router)).toBeTruthy();
+        });
+
+        it('Should canActivate be false when the user is a content admin and the ALFRESCO_ADMINISTRATORS role is excluded', async () => {
+            spyOn(peopleContentService, 'getCurrentPerson').and.returnValue(of(getFakeUserWithContentAdminCapability()));
+            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
+            spyOn(jwtHelperService, 'decodeToken').and.returnValue({ 'realm_access': { roles: ['role1'] } });
+
+            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            router.data = { 'roles': ['role1'], 'excludedRoles': ['ALFRESCO_ADMINISTRATORS'] };
+
+            expect(await authGuard.canActivate(router)).toBeFalsy();
+        });
+    });
 });
