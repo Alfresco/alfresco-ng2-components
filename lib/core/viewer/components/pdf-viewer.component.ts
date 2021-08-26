@@ -33,7 +33,8 @@ import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { AppConfigService } from './../../app-config/app-config.service';
 import { PDFDocumentProxy, PDFSource } from 'pdfjs-dist';
-import { timer } from 'rxjs';
+import { Subject } from 'rxjs';
+import { catchError, delay, takeUntil } from 'rxjs/operators';
 
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
@@ -106,6 +107,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         disableAutoFetch: true,
         disableStream: true
     };
+    private pdfjsWorkerDestroy$ = new Subject<boolean>();
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(
         private dialog: MatDialog,
@@ -118,6 +121,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.onPageRendered = this.onPageRendered.bind(this);
         this.randomPdfId = this.generateUuid();
         this.currentScale = this.getUserScaling();
+        this.pdfjsWorkerDestroy$.pipe(takeUntil(this.onDestroy$), catchError(() => null), delay(700)).subscribe(() => this.destroyPdJsWorker());
     }
 
     getUserScaling(): number {
@@ -237,8 +241,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
 
         if (this.loadingTask) {
-            timer(700).subscribe(() => this.destroyPdJsWorker());
+            this.pdfjsWorkerDestroy$.next();
         }
+        this.onDestroy$.next();
+        this.pdfjsWorkerDestroy$.complete();
+        this.onDestroy$.complete();
     }
 
     private destroyPdJsWorker() {
