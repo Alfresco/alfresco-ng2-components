@@ -16,16 +16,17 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import {
     ContentNodeSelectorComponent,
     ContentNodeSelectorComponentData,
     NodeAction
 } from '@alfresco/adf-content-services';
-import { Node, NodesApi } from '@alfresco/js-api';
-import { from, Observable, of, Subject, throwError } from 'rxjs';
+import { Node, NodeEntry, NodesApi } from '@alfresco/js-api';
+import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { DestinationFolderPathModel } from '../models/form-cloud-representation.model';
 
 @Injectable({
     providedIn: 'root'
@@ -43,6 +44,7 @@ export class ContentCloudNodeSelectorService {
     constructor(
         private apiService: AlfrescoApiService,
         private notificationService: NotificationService,
+        private logService: LogService,
         private dialog: MatDialog) {
     }
 
@@ -65,33 +67,6 @@ export class ContentCloudNodeSelectorService {
         return select;
     }
 
-    async fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
-        const relativePathNodeEntry: any = await this.nodesApi
-        .getNode(alias, opts)
-        .catch((err) => {
-            this.sourceNodeNotFound = true;
-            return this.handleError(err);
-        });
-        return relativePathNodeEntry?.entry?.id;
-    }
-
-    async fetchAliasNodeId(alias: string): Promise<string> {
-        const aliasNodeEntry: any = await this.nodesApi
-            .getNode(alias)
-            .catch((err) => this.handleError(err));
-        return aliasNodeEntry?.entry?.id;
-    }
-
-    async isNodeAvailable(nodeId: string): Promise<boolean> {
-        return from(this.nodesApi.getNode(nodeId)).pipe(
-            map(() =>  true ),
-            catchError(() => {
-                this.sourceNodeNotFound = true;
-                return of(false);
-            })
-        ).toPromise();
-    }
-
     private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
         const contentNodeDialog = this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
         contentNodeDialog.afterOpened().subscribe(() => {
@@ -111,4 +86,45 @@ export class ContentCloudNodeSelectorService {
     private handleError(error: any): Observable<any> {
         return throwError(error || 'Server error');
     }
+
+    async getNodeIdFromPath(destinationFolderPath: DestinationFolderPathModel): Promise<string> {
+        if (destinationFolderPath.alias && destinationFolderPath.path) {
+            try {
+                const nodeId = await this.getNodeId(destinationFolderPath.alias, destinationFolderPath.path).toPromise();
+                return nodeId;
+            } catch (error) {
+                this.logService.error(error);
+            }
+        }
+
+        return this.getNodeId(destinationFolderPath.alias).toPromise();
+    }
+
+    async verifyFolder(folderId: string): Promise<string> {
+        if (folderId) {
+            try {
+                const nodeId = await this.getNodeId(folderId).toPromise();
+                return nodeId;
+            } catch (error) {
+                this.logService.error(error);
+            }
+        }
+        return this.getNodeId('-my-').toPromise();
+    }
+
+    private getNodeId(nodeId: string, relativePath?: string): Observable<string> {
+        let opts: any;
+        console.log(nodeId, relativePath, 'ff');
+        if (relativePath) {
+            opts = { relativePath };
+        }
+        return from(this.nodesApi.getNode(nodeId, opts)).pipe(
+            map((nodeEntry: NodeEntry) => nodeEntry.entry.id),
+            catchError((error) => {
+                this.sourceNodeNotFound = true;
+                return this.handleError(error);
+            })
+        )
+    }
+
 }

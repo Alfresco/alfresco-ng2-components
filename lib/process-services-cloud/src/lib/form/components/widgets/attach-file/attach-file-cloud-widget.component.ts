@@ -27,7 +27,8 @@ import {
     ContentLinkModel,
     AppConfigService,
     AlfrescoApiService,
-    UploadWidgetContentLinkModel
+    UploadWidgetContentLinkModel,
+    DestinationFolderPath
 } from '@alfresco/adf-core';
 import { Node, NodesApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
@@ -143,47 +144,46 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     private async getDestinationFolderNodeId(): Promise<string> {
         let rootNodeId: string;
-        let destinationFolderPath = <DestinationFolderPathModel> { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: '' };
-        if (this.isAlfrescoAndLocal() && this.hasDestinationFolder()) {
-            if (this.isPathVariableType(DestinationFolderPathType.STRING_TYPE) || this.isPathStaticType()) {
-                destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath.value);
-                destinationFolderPath.path = this.replaceAppNameAliasWithValue(destinationFolderPath.path);
-            }
-
-            if (this.isPathVariableType(DestinationFolderPathType.FOLDER_TYPE)) {
-                try {
-                    const isNodeAvailable = await this.contentNodeSelectorService.isNodeAvailable(this.field.params.fileSource.destinationFolderPath.value);
-                    if (isNodeAvailable) {
-                        rootNodeId = this.field.params.fileSource.destinationFolderPath.value;
-                    }
-                } catch (error) {
-                    this.logService.error(error);
-                }
-            }
+        switch (this.field?.params?.fileSource?.destinationFolderPath?.type) {
+            case DestinationFolderPathType.STATIC_TYPE:
+                rootNodeId =  await this.getNodeIdFromPath(this.field.params.fileSource.destinationFolderPath);
+                break;
+            case DestinationFolderPathType.STRING_TYPE:
+                rootNodeId = await this.getNodeIdFromPath(this.field.params.fileSource.destinationFolderPath);
+                break;
+            case DestinationFolderPathType.FOLDER_TYPE:
+                rootNodeId = await this.getFolderId(this.field.params.fileSource.destinationFolderPath);
+                break;
+            default:
+                rootNodeId =  await this.getNodeIdFromPath({ type: '', value: '-my-' });
+                break;
         }
-
-        if (!rootNodeId) {
-            try {
-                const nodeId = await this.getNodeIdBasedOnPath(destinationFolderPath);
-                rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
-            } catch (error) {
-                this.logService.error(error);
-            }
-        }
-
         return rootNodeId;
     }
 
-    private async getNodeIdBasedOnPath(destinationFolderPath: DestinationFolderPathModel) {
+   async getNodeIdFromPath(destinationFolderPath: DestinationFolderPath) {
         let nodeId: string;
-        if (destinationFolderPath.path) {
-            nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
-        }
-        if (!nodeId) {
-            nodeId = await this.contentNodeSelectorService.fetchAliasNodeId(destinationFolderPath.alias);
+        let destinationPath = { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: '' };
+        destinationPath =  this.getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath.value);
+        destinationPath.path = this.replaceAppNameAliasWithValue(destinationPath.path);
+        try {
+            nodeId = await this.contentNodeSelectorService.getNodeIdFromPath(destinationPath);
+        } catch (error) {
+            this.logService.error(error);
         }
 
         return nodeId;
+    }
+
+    async getFolderId(destinationFolderPath: DestinationFolderPath) {
+        let nodeId: string;
+        try {
+            nodeId = await this.contentNodeSelectorService.verifyFolder(destinationFolderPath.value);
+        } catch (error) {
+            this.logService.error(error);
+        }
+
+        return nodeId
     }
 
     getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath: string): DestinationFolderPathModel {
@@ -256,10 +256,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     isValidAlias(alias: string): boolean {
         return alias && AttachFileCloudWidgetComponent.VALID_ALIAS.includes(alias);
-    }
-
-    private hasDestinationFolder(): boolean {
-        return !!this.field?.params?.fileSource?.destinationFolderPath?.value;
     }
 
     ngOnDestroy() {

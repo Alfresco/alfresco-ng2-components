@@ -39,3 +39,4 @@ export * from './group.model';
 export * from './form-variable.model';
 export * from './process-variable.model';
 export * from './upload-widget-content-link.model';
+export * from './form-field-file-source';
