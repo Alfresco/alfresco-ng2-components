@@ -268,7 +268,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should be able to use mapped folder variable value if destinationFolderPath set to folder type variable', async () => {
-            const verifyFolderSpy = spyOn(contentCloudNodeSelectorService, 'verifyFolder').and.returnValue(mockNodeId);
+            const verifyFolderSpy = spyOn(contentCloudNodeSelectorService, 'verifyAndReturnNodeId').and.returnValue(mockNodeId);
             const form = new FormModel({ formVariables, processVariables});
             createUploadWidgetField(form, 'attach-file-alfresco', [], mockAllFileSourceWithFolderVariablePathType);
             fixture.detectChanges();

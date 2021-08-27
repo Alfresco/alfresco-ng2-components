@@ -33,6 +33,8 @@ import { DestinationFolderPathModel } from '../models/form-cloud-representation.
 })
 export class ContentCloudNodeSelectorService {
 
+    static ALIAS_USER_FOLDER = '-my-';
+
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
@@ -100,7 +102,7 @@ export class ContentCloudNodeSelectorService {
         return this.getNodeId(destinationFolderPath.alias).toPromise();
     }
 
-    async verifyFolder(folderId: string): Promise<string> {
+    async verifyAndReturnNodeId(folderId: string): Promise<string> {
         if (folderId) {
             try {
                 const nodeId = await this.getNodeId(folderId).toPromise();
@@ -109,12 +111,11 @@ export class ContentCloudNodeSelectorService {
                 this.logService.error(error);
             }
         }
-        return this.getNodeId('-my-').toPromise();
+        return this.getNodeId(ContentCloudNodeSelectorService.ALIAS_USER_FOLDER).toPromise();
     }
 
     private getNodeId(nodeId: string, relativePath?: string): Observable<string> {
         let opts: any;
-        console.log(nodeId, relativePath, 'ff');
         if (relativePath) {
             opts = { relativePath };
         }

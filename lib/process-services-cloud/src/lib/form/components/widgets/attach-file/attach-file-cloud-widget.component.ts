@@ -152,18 +152,18 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                 rootNodeId = await this.getNodeIdFromPath(this.field.params.fileSource.destinationFolderPath);
                 break;
             case DestinationFolderPathType.FOLDER_TYPE:
-                rootNodeId = await this.getFolderId(this.field.params.fileSource.destinationFolderPath);
+                rootNodeId = await this.getNodeIdFromFolderVariableValue(this.field.params.fileSource.destinationFolderPath);
                 break;
             default:
-                rootNodeId =  await this.getNodeIdFromPath({ type: '', value: '-my-' });
+                rootNodeId =  await this.getNodeIdFromPath({ type: '', value: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER });
                 break;
         }
         return rootNodeId;
     }
 
-   async getNodeIdFromPath(destinationFolderPath: DestinationFolderPath) {
+   async getNodeIdFromPath(destinationFolderPath: DestinationFolderPath): Promise<string> {
         let nodeId: string;
-        let destinationPath = { alias: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, path: '' };
+        let destinationPath: DestinationFolderPathModel;
         destinationPath =  this.getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath.value);
         destinationPath.path = this.replaceAppNameAliasWithValue(destinationPath.path);
         try {
@@ -175,10 +175,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return nodeId;
     }
 
-    async getFolderId(destinationFolderPath: DestinationFolderPath) {
+    async getNodeIdFromFolderVariableValue(destinationFolderPath: DestinationFolderPath): Promise<string> {
         let nodeId: string;
         try {
-            nodeId = await this.contentNodeSelectorService.verifyFolder(destinationFolderPath.value);
+            nodeId = await this.contentNodeSelectorService.verifyAndReturnNodeId(destinationFolderPath.value);
         } catch (error) {
             this.logService.error(error);
         }
