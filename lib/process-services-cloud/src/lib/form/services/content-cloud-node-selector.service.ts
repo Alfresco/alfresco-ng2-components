@@ -25,7 +25,7 @@ import {
 } from '@alfresco/adf-content-services';
 import { Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { from, Observable, Subject, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, mapTo } from 'rxjs/operators';
 import { DestinationFolderPathModel } from '../models/form-cloud-representation.model';
 
 @Injectable({
@@ -69,6 +69,47 @@ export class ContentCloudNodeSelectorService {
         return select;
     }
 
+    async getNodeIdFromPath(destinationFolderPath: DestinationFolderPathModel): Promise<string> {
+        if (destinationFolderPath.alias && destinationFolderPath.path) {
+            try {
+                const nodeId = await this.getNodeId(destinationFolderPath.alias, destinationFolderPath.path).toPromise();
+                return nodeId;
+            } catch (error) {
+                this.logService.error(error);
+            }
+        }
+
+        return this.getNodeId(destinationFolderPath.alias).toPromise();
+    }
+
+    async verifyAndReturnNodeId(folderId: string): Promise<string> {
+        if (folderId) {
+            try {
+                const isNodeAvailable = await this.getNodeId(folderId).pipe(mapTo(true)).toPromise();
+                if (isNodeAvailable) {
+                    return folderId;
+                }
+            } catch (error) {
+                this.logService.error(error);
+            }
+        }
+        return this.getNodeId(ContentCloudNodeSelectorService.ALIAS_USER_FOLDER).toPromise();
+    }
+
+    private getNodeId(nodeId: string, relativePath?: string): Observable<string> {
+        let opts: any;
+        if (relativePath) {
+            opts = { relativePath };
+        }
+        return from(this.nodesApi.getNode(nodeId, opts)).pipe(
+            map((nodeEntry: NodeEntry) => nodeEntry.entry.id),
+            catchError((error) => {
+                this.sourceNodeNotFound = true;
+                return this.handleError(error);
+            })
+        );
+    }
+
     private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
         const contentNodeDialog = this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
         contentNodeDialog.afterOpened().subscribe(() => {
@@ -88,44 +129,4 @@ export class ContentCloudNodeSelectorService {
     private handleError(error: any): Observable<any> {
         return throwError(error || 'Server error');
     }
-
-    async getNodeIdFromPath(destinationFolderPath: DestinationFolderPathModel): Promise<string> {
-        if (destinationFolderPath.alias && destinationFolderPath.path) {
-            try {
-                const nodeId = await this.getNodeId(destinationFolderPath.alias, destinationFolderPath.path).toPromise();
-                return nodeId;
-            } catch (error) {
-                this.logService.error(error);
-            }
-        }
-
-        return this.getNodeId(destinationFolderPath.alias).toPromise();
-    }
-
-    async verifyAndReturnNodeId(folderId: string): Promise<string> {
-        if (folderId) {
-            try {
-                const nodeId = await this.getNodeId(folderId).toPromise();
-                return nodeId;
-            } catch (error) {
-                this.logService.error(error);
-            }
-        }
-        return this.getNodeId(ContentCloudNodeSelectorService.ALIAS_USER_FOLDER).toPromise();
-    }
-
-    private getNodeId(nodeId: string, relativePath?: string): Observable<string> {
-        let opts: any;
-        if (relativePath) {
-            opts = { relativePath };
-        }
-        return from(this.nodesApi.getNode(nodeId, opts)).pipe(
-            map((nodeEntry: NodeEntry) => nodeEntry.entry.id),
-            catchError((error) => {
-                this.sourceNodeNotFound = true;
-                return this.handleError(error);
-            })
-        )
-    }
-
 }

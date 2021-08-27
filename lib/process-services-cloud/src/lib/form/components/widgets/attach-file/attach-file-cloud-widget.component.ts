@@ -144,9 +144,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     private async getDestinationFolderNodeId(): Promise<string> {
         let rootNodeId: string;
+
         switch (this.field?.params?.fileSource?.destinationFolderPath?.type) {
             case DestinationFolderPathType.STATIC_TYPE:
-                rootNodeId =  await this.getNodeIdFromPath(this.field.params.fileSource.destinationFolderPath);
+                rootNodeId = await this.getNodeIdFromPath(this.field.params.fileSource.destinationFolderPath);
                 break;
             case DestinationFolderPathType.STRING_TYPE:
                 rootNodeId = await this.getNodeIdFromPath(this.field.params.fileSource.destinationFolderPath);
@@ -155,9 +156,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                 rootNodeId = await this.getNodeIdFromFolderVariableValue(this.field.params.fileSource.destinationFolderPath);
                 break;
             default:
-                rootNodeId =  await this.getNodeIdFromPath({ type: '', value: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER });
+                rootNodeId = await this.getNodeIdFromPath({ type: '', value: AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER });
                 break;
         }
+
         return rootNodeId;
     }
 
@@ -183,7 +185,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             this.logService.error(error);
         }
 
-        return nodeId
+        return nodeId;
     }
 
     getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath: string): DestinationFolderPathModel {
