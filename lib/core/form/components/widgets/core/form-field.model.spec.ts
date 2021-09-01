@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import moment from 'moment';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
@@ -247,6 +248,68 @@ describe('FormFieldModel', () => {
             dateDisplayFormat: 'DD-MM-YYYY'
         });
         expect(field.value).toBe('28-04-2017');
+    });
+
+    it('should set the value to today\'s date when the value is today', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'ddmmyyy',
+            name: 'DD-MM-YYYY',
+            type: 'date',
+            value: 'today',
+            required: false,
+            readOnly: false,
+            params: {
+                field: {
+                    id: 'ddmmyyy',
+                    name: 'DD-MM-YYYY',
+                    type: 'date',
+                    value: 'today',
+                    required: false,
+                    readOnly: false
+                }
+            },
+            dateDisplayFormat: 'DD-MM-YYYY'
+        });
+
+        const currentDate = moment(new Date());
+        const expectedDate = moment(currentDate).format('DD-MM-YYYY');
+        const expectedDateFormat = `${currentDate.format('YYYY-MM-DD')}T00:00:00.000Z`;
+
+        expect(field.value).toBe(expectedDate);
+        expect(form.values['ddmmyyy']).toEqual(expectedDateFormat);
+    });
+
+    it('should set the value to now date time when the value is now', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'datetime',
+            name: 'date and time',
+            type: 'datetime',
+            value: 'now',
+            required: false,
+            readOnly: false,
+            params: {
+                field: {
+                    id: 'datetime',
+                    name: 'date and time',
+                    type: 'datetime',
+                    value: 'now',
+                    required: false,
+                    readOnly: false
+                }
+            },
+            dateDisplayFormat: 'YYYY-MM-DD HH:mm'
+        });
+
+        const currentDateTime = moment(new Date());
+        const expectedDateTime = moment(currentDateTime).format('YYYY-MM-DD HH:mm');
+        const expectedDateTimeFormat = `${currentDateTime.utc().format('YYYY-MM-DDTHH:mm:00')}.000Z`;
+
+        expect(field.value).toBe(expectedDateTime);
+        expect(form.values['datetime']).toEqual(expectedDateTimeFormat);
     });
 
     it('should parse the checkbox set to "true" when it is readonly', () => {

@@ -380,6 +380,10 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.DATE:
+                if (typeof this.value === 'string' && this.value === 'today') {
+                    this.value = moment(new Date()).format(this.dateDisplayFormat);
+                }
+
                 const dateValue = moment(this.value, this.dateDisplayFormat, true);
                 if (dateValue && dateValue.isValid()) {
                     this.form.values[this.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
@@ -389,6 +393,10 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.DATETIME:
+                if (typeof this.value === 'string' && this.value === 'now') {
+                    this.value = moment(new Date()).format(this.dateDisplayFormat);
+                }
+
                 const dateTimeValue = moment(this.value, this.dateDisplayFormat, true).utc();
                 if (dateTimeValue && dateTimeValue.isValid()) {
                     /* cspell:disable-next-line */
