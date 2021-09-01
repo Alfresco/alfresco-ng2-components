@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { Node } from '@alfresco/js-api';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Node, Version } from '@alfresco/js-api';
 import { ContentService, FileUploadErrorEvent, FileUploadEvent, UploadService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -35,6 +35,8 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
     uploadVersion: boolean = false;
     disabled: boolean = false;
     onDestroy$ = new Subject();
+    majorVersion = '2.0';
+    minorVersion = '1.1';
 
     /** The target node. */
     @Input()
@@ -51,6 +53,15 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
     /** Toggles showing/hiding of cancel button. */
     @Input()
     showCancelButton: boolean = true;
+
+    /** Current version for a target node */
+    @Input()
+    set currentVersion(version: Version) {
+        if (version) {
+            this.minorVersion = this.getNextMinorVersion(version.id);
+            this.majorVersion = this.getNextMajorVersion(version.id);
+        }
+    }
 
     /** Emitted when the file is uploaded successfully. */
     @Output()
@@ -124,4 +135,19 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
         this.onDestroy$.complete();
     }
 
+    getNextMinorVersion(version: string): string {
+        const { major, minor } = this.getParsedVersion(version);
+        return `${major}.${minor + 1}`;
+    }
+
+    getNextMajorVersion(version: string): string {
+        const { major} = this.getParsedVersion(version);
+        return `${major + 1 }.0`;
+    }
+
+    private getParsedVersion(version: string) {
+        const minor = version.indexOf('.') !== -1 ? Number(version.substr(version.indexOf('.') + 1)) : 0;
+        const major = parseInt(version, 10);
+        return { minor, major };
+    }
 }

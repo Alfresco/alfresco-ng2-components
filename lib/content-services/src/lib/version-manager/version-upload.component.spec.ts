@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { VersionUploadComponent } from 'content-services';
+import { VersionUploadComponent } from './version-upload.component';
 import { ContentService, setupTestBed, UploadService } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { Node } from '@alfresco/js-api';
@@ -93,4 +93,17 @@ describe('VersionUploadComponent', () => {
         fixture.detectChanges();
     });
 
+    it('should update next major version', () => {
+        let majorVersion = component.getNextMajorVersion('1.0');
+        expect(majorVersion).toEqual('2.0');
+        majorVersion = component.getNextMajorVersion('10.0');
+        expect(majorVersion).toEqual('11.0');
+    });
+
+    it('should update next minor version', () => {
+        let minorVersion = component.getNextMinorVersion('1.0');
+        expect(minorVersion).toEqual('1.1');
+        minorVersion = component.getNextMinorVersion('1.10');
+        expect(minorVersion).toEqual('1.11');
+    });
 });
