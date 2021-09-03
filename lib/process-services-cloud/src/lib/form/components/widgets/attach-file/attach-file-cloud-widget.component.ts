@@ -165,8 +165,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
    async getNodeIdFromPath(destinationFolderPath: DestinationFolderPath): Promise<string> {
         let nodeId: string;
-        let destinationPath: DestinationFolderPathModel;
-        destinationPath =  this.getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath.value);
+        let destinationPath =  this.getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath.value);
         destinationPath.path = this.replaceAppNameAliasWithValue(destinationPath.path);
         try {
             nodeId = await this.contentNodeSelectorService.getNodeIdFromPath(destinationPath);

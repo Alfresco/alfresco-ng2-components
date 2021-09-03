@@ -72,8 +72,7 @@ export class ContentCloudNodeSelectorService {
     async getNodeIdFromPath(destinationFolderPath: DestinationFolderPathModel): Promise<string> {
         if (destinationFolderPath.alias && destinationFolderPath.path) {
             try {
-                const nodeId = await this.getNodeId(destinationFolderPath.alias, destinationFolderPath.path).toPromise();
-                return nodeId;
+                return await this.getNodeId(destinationFolderPath.alias, destinationFolderPath.path).toPromise();
             } catch (error) {
                 this.logService.error(error);
             }

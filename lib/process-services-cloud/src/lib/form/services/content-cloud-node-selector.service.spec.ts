@@ -82,7 +82,7 @@ describe('ContentCloudNodeSelectorService', () => {
         });
     });
 
-    it('should fetch nodeId based on alias if the relative path undefined', async () => {
+    it('should fetch nodeId based on alias if the relative path is undefined', async () => {
         getNodeSpy.and.returnValue(Promise.resolve(aliasNodeResponseBody));
         const aliasNodeId = await service.getNodeIdFromPath({ alias: 'mock-alias', path: undefined });
 
@@ -98,7 +98,7 @@ describe('ContentCloudNodeSelectorService', () => {
         expect(getNodeSpy).toHaveBeenCalledWith('mock-folder-id', undefined);
     });
 
-    it('should return defined alias nodeId if the relative path does not exists', async () => {
+    it('should return defined alias nodeId if the relative path does not exist', async () => {
         getNodeSpy.and.returnValues(Promise.reject('Relative does not exists'), Promise.resolve(aliasNodeResponseBody));
         const aliasNodeId = await service.getNodeIdFromPath({ alias: 'mock-alias', path: 'mock-relativePath' });
 
@@ -113,7 +113,7 @@ describe('ContentCloudNodeSelectorService', () => {
         expect(getNodeSpy).toHaveBeenCalledWith('-my-', undefined);
     });
 
-    it('should return default nodeId if the given folder is not exist', async () => {
+    it('should return default nodeId if the given folder does not exist', async () => {
         getNodeSpy.and.returnValues(Promise.reject('Folder does not exists'), Promise.resolve(aliasNodeResponseBody));
         const aliasNodeId = await service.verifyAndReturnNodeId('mock-folder-id');
 
@@ -129,7 +129,7 @@ describe('ContentCloudNodeSelectorService', () => {
         expect(aliasNodeId).toEqual('mock-alias-node-id');
     });
 
-    it('should be able to open the content node select panel dialog', () => {
+    it('should be able to open the content node selector panel dialog', () => {
         service.openUploadFileDialog('nodeId', 'single', true, true);
 
         expect(openDialogSpy).toHaveBeenCalled();
@@ -139,34 +139,38 @@ describe('ContentCloudNodeSelectorService', () => {
         getNodeSpy.and.returnValue(Promise.reject('Relative path does not exists'));
 
         try {
+            expect(service.sourceNodeNotFound).toBe(false);
+
             await service.getNodeIdFromPath({ alias: 'mock-alias', path: 'mock-relativePath' });
             fail('An error should have been thrown');
         } catch (error) {
             expect(error).toEqual('Relative path does not exists');
+            expect(service.sourceNodeNotFound).toBe(true);
         }
 
-        service.openUploadFileDialog('nodeId', 'single', true, true).subscribe(() => {
-            expect(openDialogSpy).toHaveBeenCalled();
-            expect(service.sourceNodeNotFound).toBe(true);
-            expect(showWarningSpy).toHaveBeenCalledWith('success');
-        });
+        await service.openUploadFileDialog('nodeId', 'single', true, true);
+
+        expect(openDialogSpy).toHaveBeenCalled();
+        expect(showWarningSpy).toHaveBeenCalledWith('ADF_CLOUD_TASK_FORM.ERROR.DESTINATION_FOLDER_PATH_ERROR');
     });
 
-    it('should show a warning notification if the defined folderVariable value invalid/deleted', async () => {
+    it('should show a warning notification if the defined folderVariable value is invalid/deleted', async () => {
         getNodeSpy.and.returnValue(Promise.reject('Folder does not exists'));
 
         try {
+            expect(service.sourceNodeNotFound).toBe(false);
+
             await service.verifyAndReturnNodeId('mock-folder-id');
             fail('An error should have been thrown');
         } catch (error) {
             expect(error).toEqual('Folder does not exists');
+            expect(service.sourceNodeNotFound).toBe(true);
         }
 
-        service.openUploadFileDialog('nodeId', 'single', true, true).subscribe(() => {
-            expect(openDialogSpy).toHaveBeenCalled();
-            expect(service.sourceNodeNotFound).toBe(true);
-            expect(showWarningSpy).toHaveBeenCalledWith('success');
-        });
+        await service.openUploadFileDialog('nodeId', 'single', true, true);
+
+        expect(openDialogSpy).toHaveBeenCalled();
+        expect(showWarningSpy).toHaveBeenCalledWith('ADF_CLOUD_TASK_FORM.ERROR.DESTINATION_FOLDER_PATH_ERROR');
     });
 
     it('should not show a notification if the relative path is valid', async () => {
