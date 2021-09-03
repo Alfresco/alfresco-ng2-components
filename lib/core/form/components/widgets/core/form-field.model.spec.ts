@@ -523,10 +523,10 @@ describe('FormFieldModel', () => {
         });
 
         field.value = 'empty';
-        expect(form.values['dropdown-1']).toEqual({});
+        expect(form.values['dropdown-1']).toEqual({ id: null, name: null });
 
         field.value = '';
-        expect(form.values['dropdown-1']).toEqual({});
+        expect(form.values['dropdown-1']).toEqual({ id: null, name: null });
     });
 
     it('should update form with dropdown value', () => {
