@@ -345,7 +345,7 @@ export class FormFieldModel extends FormWidgetModel {
                  but saving back as object: { id: <id>, name: <name> }
                  */
                 if (this.value === 'empty' || this.value === '') {
-                    this.form.values[this.id] = {};
+                    this.form.values[this.id] = { id: null, name: null };
                 } else {
                     const entry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
                     if (entry.length > 0) {
