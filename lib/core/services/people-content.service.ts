@@ -20,6 +20,7 @@ import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
 import { PersonEntry, PeopleApi, PersonBodyCreate, Pagination } from '@alfresco/js-api';
+import { AuthenticationService } from './authentication.service';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { LogService } from './log.service';
 
@@ -56,7 +57,10 @@ export class PeopleContentService {
         return this._peopleApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
+    constructor(private apiService: AlfrescoApiService, private logService: LogService, private authenticationService: AuthenticationService) {
+        this.authenticationService.onLogout.subscribe(() => {
+            this.resetContentAdminRole();
+        });
     }
 
     /**
@@ -124,6 +128,11 @@ export class PeopleContentService {
             this.hasCheckedIsContentAdmin = true;
         }
         return this.hasContentAdminRole;
+    }
+
+    private resetContentAdminRole() {
+        this.hasContentAdminRole = false;
+        this.hasCheckedIsContentAdmin = false;
     }
 
     private buildOrderArray(sorting: PeopleContentSortingModel): string[] {
