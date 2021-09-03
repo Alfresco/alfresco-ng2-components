@@ -371,7 +371,8 @@
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "مسار مجلد وجهة غير صحيح"
+      "INVALID_DESTINATION_FOLDER_PATH": "مسار مجلد وجهة غير صحيح",
+      "DESTINATION_FOLDER_PATH_ERROR": "مسار الوجهة غير صحيح أو غير موجود ، العودة إلى الموقع -خاص بي-"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

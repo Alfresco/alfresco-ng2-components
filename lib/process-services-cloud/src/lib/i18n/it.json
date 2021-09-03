@@ -371,7 +371,8 @@
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "Percorso cartella di destinazione non valido"
+      "INVALID_DESTINATION_FOLDER_PATH": "Percorso cartella di destinazione non valido",
+      "DESTINATION_FOLDER_PATH_ERROR": "Il percorso di destinazione non è corretto o non esiste: eseguire il ripristino alla posizione personale"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

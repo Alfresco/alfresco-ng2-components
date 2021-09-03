@@ -371,7 +371,8 @@
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "Caminho inválido da pasta de destino"
+      "INVALID_DESTINATION_FOLDER_PATH": "Caminho inválido da pasta de destino",
+      "DESTINATION_FOLDER_PATH_ERROR": "O caminho de destino está incorreto ou não existe, voltar para -meu- local"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

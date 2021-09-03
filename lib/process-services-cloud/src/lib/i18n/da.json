@@ -18,7 +18,7 @@
       "APP_NAME": "Appnavn",
       "BUSINESS_KEY": "Forretningsnøgle",
       "DESCRIPTION": "Beskrivelse",
-      "LAST_MODIFIED": "Senest ændret",
+      "LAST_MODIFIED": "Sidst ændret",
       "PROCESS_NAME": "Procesnavn",
       "PROCESS_DEFINITION_NAME": "Processens difinitionsnavn",
       "PARENT_TASK_ID": "Id for overordnet opgave",
@@ -89,7 +89,7 @@
       "STATUS": "Status",
       "PRIORITY": "Prioritet",
       "CREATED_DATE": "Oprettelsesdato",
-      "LAST_MODIFIED": "Senest ændret",
+      "LAST_MODIFIED": "Sidst ændret",
       "DUE_DATE": "Forfaldsdato",
       "CREATED": "Oprettet",
       "JSON_CELL": "Json",
@@ -371,7 +371,8 @@
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "Ugyldig destinationsfolder"
+      "INVALID_DESTINATION_FOLDER_PATH": "Ugyldig destinationsfolder",
+      "DESTINATION_FOLDER_PATH_ERROR": "Destinationsstien er forkert eller findes ikke. Tilbagefør til -min- placering"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
