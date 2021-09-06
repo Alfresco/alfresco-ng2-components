@@ -92,7 +92,7 @@ describe('ContentCloudNodeSelectorService', () => {
 
     it('should be able to verify and return nodeId from given folderId', async () => {
         getNodeSpy.and.returnValue(Promise.resolve(folderVariableValueResponseBody));
-        const relativePathNodeEntry = await service.verifyAndReturnNodeId('mock-folder-id');
+        const relativePathNodeEntry = await service.verifyAndReturnNodeId('mock-folder-id', '-my-');
 
         expect(relativePathNodeEntry).toBe('mock-folder-id');
         expect(getNodeSpy).toHaveBeenCalledWith('mock-folder-id', undefined);
@@ -108,14 +108,14 @@ describe('ContentCloudNodeSelectorService', () => {
 
     it('should fetch default nodeId if the folderId is not defined', async () => {
         getNodeSpy.and.returnValue(Promise.resolve(aliasNodeResponseBody));
-        await service.verifyAndReturnNodeId('');
+        await service.verifyAndReturnNodeId('', '-my-');
 
         expect(getNodeSpy).toHaveBeenCalledWith('-my-', undefined);
     });
 
     it('should return default nodeId if the given folder does not exist', async () => {
         getNodeSpy.and.returnValues(Promise.reject('Folder does not exists'), Promise.resolve(aliasNodeResponseBody));
-        const aliasNodeId = await service.verifyAndReturnNodeId('mock-folder-id');
+        const aliasNodeId = await service.verifyAndReturnNodeId('mock-folder-id', '-my-');
 
         expect(getNodeSpy).toHaveBeenCalledTimes(2);
         expect(aliasNodeId).toEqual('mock-alias-node-id');
@@ -160,7 +160,7 @@ describe('ContentCloudNodeSelectorService', () => {
         try {
             expect(service.sourceNodeNotFound).toBe(false);
 
-            await service.verifyAndReturnNodeId('mock-folder-id');
+            await service.verifyAndReturnNodeId('mock-folder-id', '-my-');
             fail('An error should have been thrown');
         } catch (error) {
             expect(error).toEqual('Folder does not exists');

@@ -33,9 +33,7 @@ import { DestinationFolderPathModel } from '../models/form-cloud-representation.
 })
 export class ContentCloudNodeSelectorService {
 
-    static ALIAS_USER_FOLDER = '-my-';
-
-    _nodesApi: NodesApi;
+    private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
@@ -81,7 +79,7 @@ export class ContentCloudNodeSelectorService {
         return this.getNodeId(destinationFolderPath.alias).toPromise();
     }
 
-    async verifyAndReturnNodeId(folderId: string): Promise<string> {
+    async verifyAndReturnNodeId(folderId: string, defaultAlias?: string): Promise<string> {
         if (folderId) {
             try {
                 const isNodeAvailable = await this.getNodeId(folderId).pipe(mapTo(true)).toPromise();
@@ -92,7 +90,8 @@ export class ContentCloudNodeSelectorService {
                 this.logService.error(error);
             }
         }
-        return this.getNodeId(ContentCloudNodeSelectorService.ALIAS_USER_FOLDER).toPromise();
+
+        return this.getNodeId(defaultAlias).toPromise();
     }
 
     private getNodeId(nodeId: string, relativePath?: string): Observable<string> {

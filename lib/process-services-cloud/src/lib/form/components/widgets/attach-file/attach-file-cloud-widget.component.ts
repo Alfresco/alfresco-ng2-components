@@ -179,7 +179,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     async getNodeIdFromFolderVariableValue(destinationFolderPath: DestinationFolderPath): Promise<string> {
         let nodeId: string;
         try {
-            nodeId = await this.contentNodeSelectorService.verifyAndReturnNodeId(destinationFolderPath.value);
+            nodeId = await this.contentNodeSelectorService.verifyAndReturnNodeId(destinationFolderPath.value, AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER);
         } catch (error) {
             this.logService.error(error);
         }
