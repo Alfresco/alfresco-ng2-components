@@ -79,19 +79,21 @@ export class ContentCloudNodeSelectorService {
         return this.getNodeId(destinationFolderPath.alias).toPromise();
     }
 
-    async verifyAndReturnNodeId(folderId: string, defaultAlias?: string): Promise<string> {
-        if (folderId) {
+    async getNodeIdFromFolderVariableValue(variableValue: string, defaultAlias?: string): Promise<string> {
+        const isExistingNode = await this.isExistingNode(variableValue);
+        return isExistingNode ? variableValue : await this.getNodeId(defaultAlias).toPromise();
+    }
+
+    async isExistingNode(nodeId: string): Promise<boolean> {
+        let isExistingNode = false;
+        if (nodeId) {
             try {
-                const isNodeAvailable = await this.getNodeId(folderId).pipe(mapTo(true)).toPromise();
-                if (isNodeAvailable) {
-                    return folderId;
-                }
+                isExistingNode = await this.getNodeId(nodeId).pipe(mapTo(true)).toPromise();
             } catch (error) {
                 this.logService.error(error);
             }
         }
-
-        return this.getNodeId(defaultAlias).toPromise();
+        return isExistingNode;
     }
 
     private getNodeId(nodeId: string, relativePath?: string): Observable<string> {
