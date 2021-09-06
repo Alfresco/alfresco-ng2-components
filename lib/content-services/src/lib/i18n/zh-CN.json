@@ -32,7 +32,7 @@
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "确认",
-    "ACTION": "是否继续？",
+    "ACTION": "是否要继续？",
     "YES_LABEL": "是",
     "NO_LABEL": "否"
   },

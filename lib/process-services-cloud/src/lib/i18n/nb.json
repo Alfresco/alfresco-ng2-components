@@ -371,7 +371,8 @@
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "Ugyldig målmappebane"
+      "INVALID_DESTINATION_FOLDER_PATH": "Ugyldig målmappebane",
+      "DESTINATION_FOLDER_PATH_ERROR": "Destinasjonsbanen er feil eller finnes ikke. Gjenopprett til mitt sted"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

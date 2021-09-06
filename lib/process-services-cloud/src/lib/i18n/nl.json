@@ -371,7 +371,8 @@
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "Ongeldig pad doelmap"
+      "INVALID_DESTINATION_FOLDER_PATH": "Ongeldig pad doelmap",
+      "DESTINATION_FOLDER_PATH_ERROR": "Het doelpad is onjuist of bestaat niet, terugdraaien naar -mijn- locatie"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

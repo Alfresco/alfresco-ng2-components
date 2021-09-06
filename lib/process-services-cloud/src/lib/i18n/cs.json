@@ -371,7 +371,8 @@
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "Neplatná cesta k cílové složce"
+      "INVALID_DESTINATION_FOLDER_PATH": "Neplatná cesta k cílové složce",
+      "DESTINATION_FOLDER_PATH_ERROR": "Cílová cesta je nesprávná nebo neexistuje, vrácení zpět na -moje- umístění"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

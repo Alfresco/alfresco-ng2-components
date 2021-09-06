@@ -371,7 +371,8 @@
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "无效的目标文件夹路径"
+      "INVALID_DESTINATION_FOLDER_PATH": "无效的目标文件夹路径",
+      "DESTINATION_FOLDER_PATH_ERROR": "目标路径不正确或不存在，回滚到 -my- 位置"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

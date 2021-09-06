@@ -371,7 +371,8 @@
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "Ogiltig sökväg för målmapp"
+      "INVALID_DESTINATION_FOLDER_PATH": "Ogiltig sökväg för målmapp",
+      "DESTINATION_FOLDER_PATH_ERROR": "Målsökvägen är felaktig eller finns inte, återför till -min- plats"
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {

@@ -371,7 +371,8 @@
       }
     },
     "ERROR": {
-      "INVALID_DESTINATION_FOLDER_PATH": "Unzulässiger Pfad für Zielordner"
+      "INVALID_DESTINATION_FOLDER_PATH": "Unzulässiger Pfad für Zielordner",
+      "DESTINATION_FOLDER_PATH_ERROR": "Der Zielpfad ist falsch oder nicht vorhanden. Rollback auf -meinen- Speicherort."
     }
   },
   "ADF_CLOUD_FORM_COMPONENT": {
