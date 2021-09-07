@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, from, forkJoin, throwError, of } from 'rxjs';
+import { Observable, from, forkJoin, throwError, of, Subject } from 'rxjs';
 import { map, catchError, switchMap, flatMap, filter } from 'rxjs/operators';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { Form } from '../models/form.model';
@@ -34,6 +34,7 @@ import {
 })
 export class TaskListService {
 
+    dataChangesDetected$ = new Subject();
     private _modelsApi;
     get modelsApi(): ModelsApi {
         this._modelsApi = this._modelsApi ?? new ModelsApi(this.apiService.getInstance());
@@ -363,6 +364,10 @@ export class TaskListService {
     claimTask(taskId: string): Observable<TaskDetailsModel> {
         return from(this.taskActionsApi.claimTask(taskId))
             .pipe(
+                map((res:any) => {
+                    this.dataChangesDetected$.next();
+                    return res;
+                }),
                 catchError((err) => this.handleError(err))
             );
     }
@@ -375,6 +380,10 @@ export class TaskListService {
     unclaimTask(taskId: string): Observable<TaskDetailsModel> {
         return from(this.taskActionsApi.unclaimTask(taskId))
             .pipe(
+                map((res:any) => {
+                    this.dataChangesDetected$.next();
+                    return res;
+                }),
                 catchError((err) => this.handleError(err))
             );
     }

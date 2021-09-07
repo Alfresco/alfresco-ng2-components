@@ -1,6 +1,11 @@
 <mat-card *ngIf="taskDetails" class="adf-card-container">
     <mat-card-content>
-        <adf-card-view [properties]="properties" [editable]="!isCompleted()" [displayClearAction]="displayDateClearAction"></adf-card-view>
+        <adf-card-view
+            *ngIf="!isLoading; else loadingTemplate"
+            [properties]="properties"
+            [editable]="!isCompleted()"
+            [displayClearAction]="displayDateClearAction">
+        </adf-card-view>
     </mat-card-content>
 
     <mat-card-actions class="adf-controls" *ngIf="showClaimRelease">
@@ -26,3 +31,9 @@
         </button>
     </mat-card-actions>
 </mat-card>
+
+<ng-template #loadingTemplate>
+    <div class="adf-task-header-loading">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

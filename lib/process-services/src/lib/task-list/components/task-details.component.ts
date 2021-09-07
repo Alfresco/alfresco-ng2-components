@@ -197,6 +197,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
             this.loadDetails(this.taskId);
         }
 
+        this.taskListService.dataChangesDetected$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(this.updateTaskDetails.bind(this));
+
         this.cardViewUpdateService.itemUpdated$
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(this.updateTaskDetails.bind(this));

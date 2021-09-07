@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import {
     BpmUserService,
     CardViewDateItemModel,
@@ -29,12 +29,15 @@ import {
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskDescriptionValidator } from '../validators/task-description.validator';
+import { Subject } from 'rxjs';
+import { TaskListService } from '../services/tasklist.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-task-header',
     templateUrl: './task-header.component.html'
 })
-export class TaskHeaderComponent implements OnChanges, OnInit {
+export class TaskHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
     /** The name of the form. */
     @Input()
@@ -63,10 +66,13 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     displayDateClearAction = false;
     dateFormat: string;
     dateLocale: string;
+    private onDestroy$ = new Subject<boolean>();
+    isLoading = true;
 
     constructor(private bpmUserService: BpmUserService,
                 private translationService: TranslationService,
-                private appConfig: AppConfigService) {
+                private appConfig: AppConfigService,
+                private taskListService: TaskListService) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }
@@ -74,11 +80,19 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     ngOnInit() {
         this.loadCurrentBpmUserId();
         this.initData();
+        this.taskListService.dataChangesDetected$
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(() => {
+            this.isLoading = true;
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const taskDetailsChange = changes['taskDetails'];
-        if (taskDetailsChange?.currentValue?.id !== taskDetailsChange?.previousValue?.id) {
+        this.taskDetails = taskDetailsChange.currentValue;
+        if ((taskDetailsChange?.currentValue?.id !== taskDetailsChange?.previousValue?.id) ||
+            (taskDetailsChange?.currentValue?.id === taskDetailsChange?.previousValue?.id &&
+            taskDetailsChange?.currentValue?.assignee !== taskDetailsChange?.previousValue?.assignee)) {
             this.initData();
         } else {
             this.refreshData();
@@ -214,6 +228,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
             const filteredProperties: string[] = this.appConfig.get('adf-task-header.presets.properties');
             this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
         }
+        this.isLoading = false;
     }
 
     /**
@@ -234,6 +249,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                 return cardItem;
             }
         });
+        this.isLoading = false;
     }
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
@@ -329,5 +345,10 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     getTaskDuration(): string {
         return this.taskDetails.duration ? `${this.taskDetails.duration} ms` : '';
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }
