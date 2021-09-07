@@ -269,13 +269,28 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             });
 
-            it('should show the breadcrumb for the selected node when search results are displayed', async () => {
+            it('should show the breadcrumb in search results for a valid node selection', async () => {
                 searchQueryBuilderService.userQuery = 'mock-search-term';
                 searchQueryBuilderService.update();
                 triggerSearchResults(fakeResultSetPaging);
 
                 const chosenNode = new Node({ path: { elements: ['one'] } });
                 component.onCurrentSelection([ { entry: chosenNode } ]);
+                fixture.detectChanges();
+
+                const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
+                expect(breadcrumb).not.toBeNull();
+                expect(breadcrumb.componentInstance.folderNode.path).toBe(chosenNode.path);
+            });
+
+            it('should show the breadcrumb in search results even for an invalid node selection', async () => {
+                component.isSelectionValid = (node: Node) => node.isFile;
+                searchQueryBuilderService.userQuery = 'mock-search-term';
+                searchQueryBuilderService.update();
+                triggerSearchResults(fakeResultSetPaging);
+
+                const chosenNode = new Node({ path: { elements: ['fake-path'] }, isFile: false, isFolder: true });
+                component.onCurrentSelection([{ entry: chosenNode }]);
                 fixture.detectChanges();
 
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
