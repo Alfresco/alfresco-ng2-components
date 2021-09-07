@@ -81,7 +81,7 @@ export class ContentCloudNodeSelectorService {
 
     async getNodeIdFromFolderVariableValue(variableValue: string, defaultAlias?: string): Promise<string> {
         const isExistingNode = await this.isExistingNode(variableValue);
-        return isExistingNode ? variableValue : await this.getNodeId(defaultAlias).toPromise();
+        return isExistingNode ? variableValue : this.getNodeId(defaultAlias).toPromise();
     }
 
     async isExistingNode(nodeId: string): Promise<boolean> {
