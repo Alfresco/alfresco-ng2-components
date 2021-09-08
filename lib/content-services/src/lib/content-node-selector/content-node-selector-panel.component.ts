@@ -248,7 +248,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     showingSearchResults: boolean = false;
     loadingSearchResults: boolean = false;
     inDialog: boolean = false;
-    _chosenNode: Node [] = null;
+    _chosenNode: Node[] = null;
+    selectionWithoutValidation: Node[] = null;
     folderIdToShow: string | null = null;
     breadcrumbFolderTitle: string | null = null;
     startSiteGuid: string | null = null;
@@ -454,8 +455,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     get breadcrumbFolderNode(): Node | null {
         let folderNode: Node;
 
-        if (this.showingSearchResults && this.chosenNode) {
-            folderNode = this.chosenNode[0];
+        if (this.showingSearchResults && this.selectionWithoutValidation?.length) {
+            folderNode = this.selectionWithoutValidation[0];
         } else {
             folderNode = this.documentList.folderNode;
         }
@@ -629,6 +630,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     onCurrentSelection(nodesEntries: NodeEntry[]): void {
         const validNodesEntity = nodesEntries.filter((node) => this.isSelectionValid(node.entry));
         this.chosenNode = validNodesEntity.map((node) => node.entry);
+        this.selectionWithoutValidation = nodesEntries.map(node => node.entry);
     }
 
     setTitleIfCustomSite(site: SiteEntry) {
