@@ -1,0 +1,105 @@
+adf-content-node-selector {
+    .adf-content-node-selector-headless-tabs {
+        .mat-tab-header {
+            display: none;
+        }
+    }
+
+    .adf-upload-dialog {
+        box-shadow: none;
+
+        &__content {
+            max-height: 64%;
+        }
+
+        height: 100%;
+        width: 100%;
+        position: unset;
+        bottom: unset;
+    }
+
+    .adf-upload-dialog-container {
+        height: 380px;
+    }
+
+    .adf-toolbar-title {
+        place-items: center;
+    }
+
+    .adf-content-node-selector-local-upload-content {
+        height: 368px;
+
+        adf-upload-drag-area {
+            adf-empty-list {
+                .adf-empty-folder-drag-drop {
+                    min-height:46px;
+                    font-size: 40px;
+                }
+                .adf-empty-folder-image {
+                    height: 100px;
+                    width: 460px;
+                }
+            }
+        }
+    }
+}
+
+.adf-content-node-selector-dialog {
+    &-content {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .mat-dialog-title {
+        margin-left: 24px;
+        margin-right: 24px;
+        font-size: 20px;
+        font-weight: 600;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.6;
+        letter-spacing: -0.5px;
+        color: var(--theme-text-bold-color);
+
+        h2 {
+            margin: unset;
+            font-size: unset;
+        }
+    }
+
+    .mat-dialog-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .mat-dialog-content {
+        margin: 0;
+        overflow: hidden;
+    }
+
+    .mat-dialog-actions {
+        padding: 8px;
+        height: 61px;
+        background-color: var(--theme-background-color);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: var(--theme-foreground-text-color);
+
+        button {
+            text-transform: uppercase;
+            font-weight: normal;
+        }
+
+        .adf-choose-action {
+
+            &[disabled] {
+                color: var(--theme-secondary-text-color);
+            }
+
+            &:enabled {
+                color: var(--theme-primary-color);
+            }
+        }
+    }
+}
