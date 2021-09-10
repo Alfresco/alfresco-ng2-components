@@ -53,6 +53,7 @@ interface ValidationMessage {
 @Component({
     selector: 'adf-login',
     templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: {
         class: 'adf-login'
