@@ -10,8 +10,6 @@
 @import '../search/components/search-chip-list/search-chip-list.theme';
 @import '../search/components/search-filter-container/search-filter-container.theme';
 
-@import '../dialogs/folder.dialog.theme';
-
 @import '../permission-manager/components/permission-list/permission-list.theme';
 @import '../permission-manager/components/add-permission/add-permission.theme';
 @import '../permission-manager/components/add-permission/add-permission-dialog.theme';
@@ -32,7 +30,6 @@
     @include adf-search-control-theme($theme);
     @include adf-search-sorting-picker-theme($theme);
     @include adf-filter-menu-theme($theme);
-    @include adf-dialog-theme($theme);
     @include adf-permission-list-theme($theme);
     @include adf-user-icon-column-theme($theme);
     @include user-name-column-theme($theme);
