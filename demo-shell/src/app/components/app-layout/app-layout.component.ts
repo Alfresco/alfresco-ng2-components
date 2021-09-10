@@ -24,9 +24,8 @@ import { ThemePalette } from '@angular/material/core';
 
 @Component({
     templateUrl: './app-layout.component.html',
-    host: {
-        'class': 'app-layout'
-    },
+    styleUrls: ['./app-layout.component.scss'],
+    host: { 'class': 'app-layout' },
     encapsulation: ViewEncapsulation.None
 })
 export class AppLayoutComponent implements OnInit, OnDestroy {
