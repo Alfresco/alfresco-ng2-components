@@ -23,7 +23,6 @@
 @import '../permission-manager/components/add-permission/add-permission-panel.theme';
 @import '../version-manager/version-comparison.theme';
 @import '../content-type/content-type-dialog.theme';
-@import '../aspect-list/aspect-list.theme';
 @import '../permission-manager/components/user-icon-column/user-icon-column.theme';
 @import '../permission-manager/components/user-name-column/user-name-column.theme';
 @import '../search/components/search-filter-chips/search-filter-chips.theme';
@@ -55,7 +54,6 @@
     @include adf-search-chip-list-theme($theme);
     @include adf-version-comparison-theme($theme);
     @include adf-content-type-dialog-theme($theme);
-    @include adf-aspect-list-theme($theme);
     @include adf-search-filter-chips-theme($theme);
     @include adf-search-filter-field-theme($theme);
     @include adf-search-forms-theme($theme);
