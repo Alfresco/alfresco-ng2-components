@@ -11,7 +11,6 @@
 @import '../form/components/widgets/people/people.theme';
 @import '../info-drawer/info-drawer-layout.theme';
 @import '../pagination/pagination.theme';
-@import '../toolbar/toolbar.theme';
 @import '../userinfo/components/user-info.theme';
 @import '../viewer/components/viewer.theme';
 @import '../viewer/components/pdf-viewer.theme';
@@ -71,7 +70,7 @@
         // --theme-title-color: mat-color($foreground, text, 0.87),
         // --theme-text-disabled-color: mat-color($foreground, text, 0.38),
         // --theme-text-selection-color: mat-color($foreground, text, 0.3),
-        // --theme-border-color: mat-color($foreground, text, 0.07),
+        --theme-border-color: mat-color($foreground, text, 0.07),
         // --theme-border-color-light: mat-color($foreground, text, 0.2),
         // --theme-card-background-color: mat-color($background, card),
         // --theme-foreground-text-color: mat-color($foreground, text, 0.72),
@@ -120,7 +119,6 @@
     @include adf-form-people-widget-theme($theme);
     @include adf-info-drawer-theme($theme);
     @include adf-pagination-theme($theme);
-    @include adf-toolbar-theme($theme);
     @include adf-userinfo-theme($theme);
     @include adf-viewer-theme($theme);
     @include adf-pdf-viewer-theme($theme);

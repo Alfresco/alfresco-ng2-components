@@ -55,9 +55,7 @@ interface ValidationMessage {
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: {
-        class: 'adf-login'
-    }
+    host: { class: 'adf-login' }
 })
 export class LoginComponent implements OnInit, OnDestroy {
     isPasswordShow: boolean = false;
