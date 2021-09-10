@@ -1,0 +1,100 @@
+$dropdownHorizontalOffset: 30px;
+
+.adf {
+    &-dropdown-breadcrumb {
+        display: flex;
+        flex: 1;
+        line-height: 24px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: -0.2px;
+        color: var(--theme-text-color);
+        overflow: hidden;
+        margin-top: 10px;
+
+        .mat-icon {
+            height: 35px;
+        }
+
+        &-container {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            cursor: default;
+            display: flex;
+            overflow: hidden;
+        }
+    }
+
+    &-dropdown-breadcrumb-trigger {
+        cursor: pointer;
+        padding: 0;
+        border: none;
+        background: transparent;
+        width: 25px;
+
+        &:focus {
+            color: var(--theme-primary-color);
+            outline: none;
+        }
+    }
+
+    &-dropdown-breadcrumb-trigger.adf-isRoot {
+        cursor: not-allowed;
+    }
+
+    &-dropdown-breadcrumb-path {
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        margin-top: 35px;
+
+        &.mat-select {
+            width: 0;
+        }
+    }
+
+    &-current-folder {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        width: 75%;
+        color: var(--theme-foreground-text-color);
+    }
+
+    &-dropdown-breadcrumb-path-option.mat-option {
+        height: 28px;
+        line-height: 28px;
+        padding: 0 12px;
+        font-size: 13px;
+    }
+
+    &-dropdown-breadcrumb-path-option.mat-option:first-child {
+        padding-top: 4px;
+    }
+
+    &-dropdown-breadcrumb-path-option.mat-option:last-child {
+        padding-bottom: 4px;
+    }
+}
+
+[dir='ltr'] .adf {
+    &-dropdown-breadcrumb-path {
+        margin-left: -$dropdownHorizontalOffset;
+    }
+
+    &-current-folder {
+        margin-left: $dropdownHorizontalOffset;
+    }
+}
+
+[dir='rtl'] .adf {
+    &-dropdown-breadcrumb-path {
+        margin-right: -$dropdownHorizontalOffset;
+    }
+
+    &-current-folder {
+        margin-right: $dropdownHorizontalOffset;
+    }
+}
