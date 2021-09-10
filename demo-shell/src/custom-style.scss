@@ -6,8 +6,6 @@
 @import '~@alfresco/adf-process-services-cloud/theming';
 @import '~@alfresco/adf-insights/theming';
 
-@import './app/components/files/files.component.scss';
-
 @include mat-core($alfresco-typography);
 
 $primary: mat-palette($alfresco-accent-orange);
@@ -21,8 +19,6 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include adf-process-services-theme($theme);
 @include adf-process-services-cloud-theme($theme);
 @include adf-insights-theme($theme);
-
-@include app-file-component-theme($theme);
 
 body, html {
     margin: 0;
