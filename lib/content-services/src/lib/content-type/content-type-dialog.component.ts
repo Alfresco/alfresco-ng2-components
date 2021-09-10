@@ -24,6 +24,7 @@ import { ContentTypeService } from './content-type.service';
 @Component({
     selector: 'adf-content-type-dialog',
     templateUrl: './content-type-dialog.component.html',
+    styleUrls: ['./content-type-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ContentTypeDialogComponent implements OnInit {
