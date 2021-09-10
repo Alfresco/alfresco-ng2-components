@@ -1,0 +1,140 @@
+.adf-breadcrumb {
+    display: flex;
+    flex: 1;
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    color: var(--theme-text-color);
+    overflow: hidden;
+
+    &-container {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        cursor: default;
+        display: flex;
+        overflow: hidden;
+    }
+
+    &-dropdown {
+        &-path {
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            margin-top: 35px;
+
+            &.mat-select {
+                width: 0;
+            }
+        }
+
+        &-trigger {
+            cursor: pointer;
+            padding: 0;
+            border: none;
+            background: transparent;
+            width: 30px;
+            margin-top: 2px;
+            margin-right: 5px;
+
+            &:focus {
+                color: var(--theme-primary-color);
+                outline: none;
+            }
+
+            &-icon {
+                position: relative;
+            }
+
+            &-arrow {
+                font-size: 17px;
+                position: absolute;
+                left: 4px;
+                top: 4px;
+                color: white;
+                z-index: 2;
+            }
+
+            &-arrow.adf-isRoot {
+                visibility: hidden;
+            }
+
+            &-arrow.adf-focus {
+                border: none;
+            }
+        }
+
+        &-trigger.adf-isRoot {
+            cursor: not-allowed;
+        }
+    }
+
+    &-item {
+        padding-right: 2px;
+        overflow: hidden;
+        display: flex;
+        line-height: 33px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: -0.2px;
+        text-align: left;
+        color: var(--theme-text-color);
+        flex: 0 1 auto;
+        min-width: 35px;
+        margin-top: auto;
+        text-overflow: ellipsis;
+
+        &:hover,
+        &.adf-active {
+            color: var(--adf-breadcrumb-item-active-hover-color);
+        }
+
+        &.adf-active {
+            color: var(--adf-breadcrumb-item-active-color);
+        }
+
+        &-chevron {
+            opacity: 1;
+            margin-top: 9px;
+            font-size: 17px;
+        }
+
+        &.mat-primary {
+            color: var(--theme-primary-color);
+        }
+
+        &.mat-accent {
+            color: var(--theme-accent-color);
+        }
+
+        &.mat-warn {
+            color: var(--theme-warn-color);
+        }
+
+        &-anchor {
+            box-sizing: border-box;
+            color: inherit;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            flex: 0 1 auto;
+            padding: 0 2px;
+            text-align: center;
+
+            &:focus {
+                outline: 1px solid var(--adf-breadcrumb-outline-color);
+                outline-offset: -1px;
+            }
+        }
+
+        &-current {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
+}

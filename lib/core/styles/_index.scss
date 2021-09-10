@@ -49,7 +49,7 @@
         --theme-primary-color-default-contrast: mat-color($primary, default-contrast),
         --theme-warn-color: mat-color($warn),
         // --theme-warn-color-default-contrast: mat-color($warn, default-contrast),
-        // --theme-accent-color: mat-color($accent),
+        --theme-accent-color: mat-color($accent),
         --theme-accent-color-default-contrast: mat-color($accent, default-contrast),
 
         // component themes
@@ -59,6 +59,9 @@
         --adf-snackbar-warning-action-color: white,
         --adf-snackbar-info-bg-color: mat-color($primary),
         --adf-snackbar-info-action-color: white,
+        --adf-breadcrumb-item-active-color: mat-color($foreground, text, 0.87),
+        --adf-breadcrumb-item-active-hover-color: mat-color($foreground, text, 0.64),
+        --adf-breadcrumb-outline-color: mat-color($accent, A200),
 
 
         --theme-hover-bg-color: mat-color($background, hover),

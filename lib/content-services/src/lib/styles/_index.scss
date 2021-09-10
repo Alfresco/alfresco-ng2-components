@@ -1,4 +1,3 @@
-@import '../breadcrumb/breadcrumb.theme';
 @import '../breadcrumb/dropdown-breadcrumb.theme';
 @import '../content-node-selector/content-node-selector-panel.theme';
 @import '../content-node-selector/name-location-cell/name-location-cell.theme';
@@ -34,7 +33,6 @@
 @import '../search/components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.theme';
 
 @mixin adf-content-services-theme($theme) {
-    @include adf-breadcrumb-theme($theme);
     @include adf-breadcrumb-dropdown-theme($theme);
     @include adf-content-node-selector-theme($theme);
     @include adf-content-node-share-theme($theme);

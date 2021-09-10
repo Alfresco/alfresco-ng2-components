@@ -35,10 +35,9 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'adf-breadcrumb',
     templateUrl: './breadcrumb.component.html',
+    styleUrls: ['./breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: {
-        'class': 'adf-breadcrumb'
-    }
+    host: { 'class': 'adf-breadcrumb' }
 })
 export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
 
