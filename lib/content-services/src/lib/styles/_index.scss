@@ -16,7 +16,6 @@
 
 @import '../content-node-selector/content-node-selector.theme';
 @import '../content-node-share/content-node-share.dialog.theme';
-@import '../content-metadata/content-metadata.theme';
 @import '../permission-manager/components/permission-list/permission-list.theme';
 @import '../permission-manager/components/add-permission/add-permission.theme';
 @import '../permission-manager/components/add-permission/add-permission-dialog.theme';
@@ -43,7 +42,6 @@
     @include adf-filter-menu-theme($theme);
     @include adf-dialog-theme($theme);
     @include adf-content-node-selector-dialog-theme($theme);
-    @include adf-content-metadata-module-theme($theme);
     @include adf-permission-list-theme($theme);
     @include adf-user-icon-column-theme($theme);
     @include user-name-column-theme($theme);

@@ -1,0 +1,24 @@
+.adf-content-metadata-card {
+
+    .mat-card {
+        padding: 0;
+
+        .mat-card-content {
+            margin-bottom: 0;
+        }
+    }
+
+    &-footer.mat-card-footer {
+        margin: 0;
+        padding: 8px 12px;
+        border-top: 1px solid var(--theme-border-color);
+
+        button {
+            color: var(--theme-text-color);
+
+            &:hover {
+                color: var(--theme-text-bold-color);
+            }
+        }
+    }
+}

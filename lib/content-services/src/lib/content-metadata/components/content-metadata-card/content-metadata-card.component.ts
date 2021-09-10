@@ -22,6 +22,7 @@ import { NodeAspectService } from '../../../aspect-list/node-aspect.service';
 @Component({
     selector: 'adf-content-metadata-card',
     templateUrl: './content-metadata-card.component.html',
+    styleUrls: ['./content-metadata-card.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-content-metadata-card' }
 })
