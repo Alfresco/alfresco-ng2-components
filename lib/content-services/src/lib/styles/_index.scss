@@ -12,7 +12,6 @@
 
 @import '../dialogs/folder.dialog.theme';
 
-@import '../content-node-share/content-node-share.dialog.theme';
 @import '../permission-manager/components/permission-list/permission-list.theme';
 @import '../permission-manager/components/add-permission/add-permission.theme';
 @import '../permission-manager/components/add-permission/add-permission-dialog.theme';
@@ -27,7 +26,6 @@
 @import '../search/components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.theme';
 
 @mixin adf-content-services-theme($theme) {
-    @include adf-content-node-share-theme($theme);
     @include adf-document-list-theme($theme) ;
     @include adf-file-uploading-row-theme($theme);
     @include adf-upload-dialog-theme($theme);
