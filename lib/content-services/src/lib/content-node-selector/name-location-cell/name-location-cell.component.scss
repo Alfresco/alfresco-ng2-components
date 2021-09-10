@@ -1,0 +1,7 @@
+.adf-name-location-cell {
+    display: grid;
+    &-location {
+        color: var(--theme-text-color);
+        font-size: 12px;
+    }
+}
