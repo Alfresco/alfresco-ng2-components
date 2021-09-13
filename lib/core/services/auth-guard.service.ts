@@ -60,7 +60,7 @@ export class AuthGuard extends AuthGuardBase {
     }
 
     private ticketChangeRedirect(event: StorageEvent) {
-        if (!event.newValue) {
+        if (event.newValue) {
             this.navigate(this.router.url);
         } else {
             window.location.reload();
