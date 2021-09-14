@@ -38,122 +38,46 @@ Please report issues with this release in the [issue tracker](https://github.com
 
 ## Notable new features
 
-In this release we have focused on enhancing the search components and bug fixing 
-We continue to keep a balance between improving existing components, adding new ones, and also improving the underlying architecture to prepare for future update to Angular 12.
 
-### Multiple search configuration
 
-Thanks this new component is now possible have multiple facet search configurations:
-
-![mulitpl-search](https://user-images.githubusercontent.com/14145706/121013429-71abec80-c7b6-11eb-997f-88fbc0b06266.gif)
-
-### Facet Search chips layout
-
-Our designers have identified a new improved style for the facet filters, and we have implemented it in the new chips layout component.
-This style will be the new facet filter for ACA but if you like you can still use the old style using the previous component.
-
-![image](https://user-images.githubusercontent.com/14145706/123372101-9bc82180-d5a0-11eb-8e36-c9487fc353e1.png)
 
 
 ## PR merged
 
-- [82a57c9c0](https://github.com/Alfresco/alfresco-ng2-components/commit/82a57c9c0) [ACA-4436] - added option for select item to display None (#7113)
-  
-- [26d180e66](https://github.com/Alfresco/alfresco-ng2-components/commit/26d180e66) [ACA-4486] support search widget chips layout (#7122)
-  
-- [462f40827](https://github.com/Alfresco/alfresco-ng2-components/commit/462f40827) Revert &quot;[AAE-5392] - Add find people api call (#7119)&quot; (#7121)
-  
-- [1e251ab8a](https://github.com/Alfresco/alfresco-ng2-components/commit/1e251ab8a) [AAE-5392] - Add find people api call (#7119)
-  
-- [829805e20](https://github.com/Alfresco/alfresco-ng2-components/commit/829805e20) [ADF-5432] component template and code fixes after testing Angular strict mode (#7118)
-  
-- [e2b8557f4](https://github.com/Alfresco/alfresco-ng2-components/commit/e2b8557f4) [AAE-5362] Add option to make actions button visible only on hover (#7117)
-  
-- [b5e4316c0](https://github.com/Alfresco/alfresco-ng2-components/commit/b5e4316c0) Expose shared library as subdirectory (#7114)
-  
-- [1ecc14f18](https://github.com/Alfresco/alfresco-ng2-components/commit/1ecc14f18) Refactor e2e&#x27;s ApiService (#7101)
-  
-- [2d61a2941](https://github.com/Alfresco/alfresco-ng2-components/commit/2d61a2941) Update extensibility.md
-  
-- [3079aa48c](https://github.com/Alfresco/alfresco-ng2-components/commit/3079aa48c) [ADF-5422] remove deprecated &quot;async()&quot; from unit tests (#7109)
-  
-- [ba03c60ad](https://github.com/Alfresco/alfresco-ng2-components/commit/ba03c60ad) [ADF-5417] Support multiple search configuration in app config json (#7096)
-  
-- [ad987a8d3](https://github.com/Alfresco/alfresco-ng2-components/commit/ad987a8d3) [ACA-3611] Create test folder for E2E precondition files (#7088)
-  
-- [eb71a79d1](https://github.com/Alfresco/alfresco-ng2-components/commit/eb71a79d1) prepare tests for ng-12 upgrade (#7099)
-  
-- [558056b05](https://github.com/Alfresco/alfresco-ng2-components/commit/558056b05) test if we can remove compatibility (#7064)
-  
-- [4dc98eb28](https://github.com/Alfresco/alfresco-ng2-components/commit/4dc98eb28) [ADF-5421]Include C307988 test back
-  
-- [60ff0fc38](https://github.com/Alfresco/alfresco-ng2-components/commit/60ff0fc38) [AAE-2617] To get access to datatable component from process-list (#7068)
-  
-- [6400fd6ba](https://github.com/Alfresco/alfresco-ng2-components/commit/6400fd6ba) [ACA-4474]Add isStartProcessButtonEnabled method
-  
-- [9a2a62255](https://github.com/Alfresco/alfresco-ng2-components/commit/9a2a62255) [ADF-5369] HTTP 500 response in adf-upload-button is emitted as a success event (#7087)
-  
-- [acf4b26d7](https://github.com/Alfresco/alfresco-ng2-components/commit/acf4b26d7) [ACA-4474]Add checkWidgetsAreVisible method
-  
-- [91d813e6f](https://github.com/Alfresco/alfresco-ng2-components/commit/91d813e6f) [ACA-4464] Add user/groups - should not be able to select the same user multiple times (#7066)
-  
-- [40bbeb13f](https://github.com/Alfresco/alfresco-ng2-components/commit/40bbeb13f) [AAE-5208] Add pagination info to listPeople function in PeopleContentService (#7055)
-  
-- [2637654db](https://github.com/Alfresco/alfresco-ng2-components/commit/2637654db) [AAE-5280] Better error handling for user task (#7070)
-  
-- [2a9b40649](https://github.com/Alfresco/alfresco-ng2-components/commit/2a9b40649) [AAE-4974] FE - Remove scroll bar from empty &quot;Upload from your device&quot; list (#7049)
-  
-- [1a0f2f5bc](https://github.com/Alfresco/alfresco-ng2-components/commit/1a0f2f5bc) [ADF-5148] ContentService.hasPermissions() should check inhertied permission (#7059)
-  
-- [e94b2f99b](https://github.com/Alfresco/alfresco-ng2-components/commit/e94b2f99b) [ADF-5406] SCSS and HTML template path fixes (#7063)
-  
-- [9e0000a30](https://github.com/Alfresco/alfresco-ng2-components/commit/9e0000a30) disable w3c due getValue problem (#7067)
-  
-- [200cfb8db](https://github.com/Alfresco/alfresco-ng2-components/commit/200cfb8db) fixed overflow issues (#7060)
-  
-- [0fcb15c9c](https://github.com/Alfresco/alfresco-ng2-components/commit/0fcb15c9c) Remove e2e already covered by unit test (#7058)
-  
-- [12c3fec51](https://github.com/Alfresco/alfresco-ng2-components/commit/12c3fec51) e2e: Improve cloud custom filters
-  
-- [bbbdcbdaa](https://github.com/Alfresco/alfresco-ng2-components/commit/bbbdcbdaa) [AAE-5145] Add enum for content node selector actions (#7039)
-  
-- [4b3a7f41f](https://github.com/Alfresco/alfresco-ng2-components/commit/4b3a7f41f) [ADF-5231] The protected flag for properties should not be editable (#7056)
-  
-- [65cbd570f](https://github.com/Alfresco/alfresco-ng2-components/commit/65cbd570f) [MNT-22418] - disabling action for physical records (#7057)
-  
-- [4c1e46236](https://github.com/Alfresco/alfresco-ng2-components/commit/4c1e46236) [ACA-4454] The create library button should get disabled after being clicked once (#7046)
-  
-- [a5c858618](https://github.com/Alfresco/alfresco-ng2-components/commit/a5c858618) [DW-1608] Added username tag in the ID of the dropdown in deploy application admin access (#7045)
-  
-- [bd96dfddd](https://github.com/Alfresco/alfresco-ng2-components/commit/bd96dfddd) [ADF-5387] - Fix dropdown tests, remove call to external API (#7044)
-  
-- [272e2d67e](https://github.com/Alfresco/alfresco-ng2-components/commit/272e2d67e) outline current page thumbnail (#7042)
-  
-- [5478c8868](https://github.com/Alfresco/alfresco-ng2-components/commit/5478c8868) Update activiti-alfresco.service.ts (#7041)
-  
-- [ac6f61624](https://github.com/Alfresco/alfresco-ng2-components/commit/ac6f61624) Fix some build scripts (#7048)
-  
-- [a5e85b44f](https://github.com/Alfresco/alfresco-ng2-components/commit/a5e85b44f) [ACA-4458]Add expand cloud custom filter method
-
-## Localisation
-
-This release includes: Arabic, Brazilian Portuguese, Czech, Danish, Dutch, Finnish, French, German, Italian, Japanese, Norwegian (Bokmål), Polish, Russian, Simplified Chinese, Spanish and Swedish versions.
-
-## References
-
-The following is a brief list of references to help you get started with the new release:
-
--   [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
--   [Alfresco ADF Documentation on the Builder Network](../README.md)
--   [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
--   [ADF examples on GitHub](https://github.com/Alfresco/adf-examples)
--   [Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
--   [Official GitHub Project - alfresco-js-api](https://github.com/Alfresco/alfresco-js-api)
--   [Official GitHub Project - generator-ng2-alfresco-app](https://github.com/Alfresco/generator-ng2-alfresco-app)
-
-Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
-
-## PR merged 
+- [3f44e2e64](https://github.com/Alfresco/alfresco-ng2-components/commit/3f44e2e64) update-doc-viewer (#7246)
+- [cb79b216c](https://github.com/Alfresco/alfresco-ng2-components/commit/cb79b216c) [ACA-4310] - Show the breadcrumb even for invalid selections in searc… (#7241)
+- [20f1ca1cf](https://github.com/Alfresco/alfresco-ng2-components/commit/20f1ca1cf) LOC-323 - Updated UI for ADF 4.6 in 16 languages (#7234)
+- [01f013950](https://github.com/Alfresco/alfresco-ng2-components/commit/01f013950) [ACA-3669] Incorrect Version Number Displayed (#7230)
+- [e5192c10d](https://github.com/Alfresco/alfresco-ng2-components/commit/e5192c10d) Update candidatebaseapp to remove start event referencing unexisting form (#7231)
+- [c54587d90](https://github.com/Alfresco/alfresco-ng2-components/commit/c54587d90) [AAE-5727] Add &#x27;today&#x27; and &#x27;now&#x27; as default values for date and datetime widgets (#7229)
+- [eb95e84ea](https://github.com/Alfresco/alfresco-ng2-components/commit/eb95e84ea) [AAE-5718] change ngOnInit to ngAfterViewInit in Login component docs in Customizing validation rules section (#7223)
+- [aac821a1f](https://github.com/Alfresco/alfresco-ng2-components/commit/aac821a1f) [AAE-5414] - SSO Auth Guard - Add the concept of excluded roles (#7222)
+- [194274a8d](https://github.com/Alfresco/alfresco-ng2-components/commit/194274a8d) Update update-project.sh (#7216)
+- [6dae24d42](https://github.com/Alfresco/alfresco-ng2-components/commit/6dae24d42) [ADF-5460] Add placeholder to SearchTextInputComponent (#7208)
+- [a25923d1f](https://github.com/Alfresco/alfresco-ng2-components/commit/a25923d1f) Improve compatibility (#7214)
+- [6e6ba4602](https://github.com/Alfresco/alfresco-ng2-components/commit/6e6ba4602) add missing api to extensions interface (#7120)
+- [b15b414d0](https://github.com/Alfresco/alfresco-ng2-components/commit/b15b414d0) [AAE-5163] Landing page title tooltip is displayed correctly (#7202)
+- [c01417a08](https://github.com/Alfresco/alfresco-ng2-components/commit/c01417a08) [ADF-5429] Improve search for testability (#7198)
+- [f30b20cc4](https://github.com/Alfresco/alfresco-ng2-components/commit/f30b20cc4) [ADF-5426] Remove compatibility layer from Lib (#7110)
+- [5d5b582e3](https://github.com/Alfresco/alfresco-ng2-components/commit/5d5b582e3) [AAE-5529] Include sorting params in the PeopleContentQueryRequestModel (#7193)
+- [4befb779f](https://github.com/Alfresco/alfresco-ng2-components/commit/4befb779f) [MNT-22334] ADW - User information not displayed when Kerberos is in use (#7172)
+- [94d908e51](https://github.com/Alfresco/alfresco-ng2-components/commit/94d908e51) [AAE-5392] - Make search text input more configurable &amp; add an event … (#7188)
+- [cab016046](https://github.com/Alfresco/alfresco-ng2-components/commit/cab016046) [AAE-5560] ProcessServiceCloudModule - be able to inject a different preference service instance (#7185)
+- [4940ffb00](https://github.com/Alfresco/alfresco-ng2-components/commit/4940ffb00) [AAE-5529] Include sorting params in the PeopleContentQueryRequestModel (#7182)
+- [29b419088](https://github.com/Alfresco/alfresco-ng2-components/commit/29b419088) [ACS-1767] [ADF] - Convert C329803 and C329800 cases (#7170)
+- [bd1b879e4](https://github.com/Alfresco/alfresco-ng2-components/commit/bd1b879e4) [MNT-22348] - Fixed visibility when complex cases are appling (#7176)
+- [deb925679](https://github.com/Alfresco/alfresco-ng2-components/commit/deb925679) [AAE-4740] FE - [ADF] Destination picker it&#x27;s not displaying my files folder if the destination Folder path is set to a folder part of trash (#7173)
+- [635e8bea4](https://github.com/Alfresco/alfresco-ng2-components/commit/635e8bea4) rollback theming enhancements (#7191)
+- [3c5da169b](https://github.com/Alfresco/alfresco-ng2-components/commit/3c5da169b) Theme bugfixes (#7186)
+- [03caaafc6](https://github.com/Alfresco/alfresco-ng2-components/commit/03caaafc6) force CI on the automatic ADF/JS-API upgrades (#7184)
+- [81f7e2af3](https://github.com/Alfresco/alfresco-ng2-components/commit/81f7e2af3) [ADF-5456] improved theming bundling (#7180)
+- [c1860f0c1](https://github.com/Alfresco/alfresco-ng2-components/commit/c1860f0c1) [ADF-5410] code fixes and updates prior to Angular 12 upgrade (#7177)
+- [3d9471132](https://github.com/Alfresco/alfresco-ng2-components/commit/3d9471132) [ADF-5173] - delayed destroying of pdfjs worker to prevent error on c… (#7062)
+- [8be6bbaf3](https://github.com/Alfresco/alfresco-ng2-components/commit/8be6bbaf3) [AAE-4241] Fix date and date time not being populated when node metadata is retrieved (#7025)
+- [a4c3f3a95](https://github.com/Alfresco/alfresco-ng2-components/commit/a4c3f3a95) [ADF-5415] remove deprecated async method (#7171)
+- [794e6d706](https://github.com/Alfresco/alfresco-ng2-components/commit/794e6d706) upadte apk 1.21-alpine
+- [6154cbbc3](https://github.com/Alfresco/alfresco-ng2-components/commit/6154cbbc3) 1.21-alpine update
+- [bce74a974](https://github.com/Alfresco/alfresco-ng2-components/commit/bce74a974) 1.20-alpine (#7159)
 
 If you have any questions about the release, please contact us using [Gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
 
