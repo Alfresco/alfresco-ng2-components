@@ -47,8 +47,8 @@ Manage Process Filters, which are pre-configured Process Instance queries.
 
     -   _value:_ `Object`  - 
     -   _filterProperties:_ `string[]`  - 
-    -   _appName:_ `string`  - (Optional) (Optional) 
-    -   _id:_ `string`  - (Optional) (Optional) 
+    -   _appName:_ `string`  - (Optional) 
+    -   _id:_ `string`  - (Optional) 
     -   **Returns** `Object` -
 
 ## Inject Preference service

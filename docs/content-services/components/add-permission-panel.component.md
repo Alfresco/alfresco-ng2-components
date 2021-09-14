@@ -27,7 +27,7 @@ Searches for people or groups to add to the current node permissions.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| select | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a permission list item is selected. |
+| select | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]>` | Emitted when a permission list item is selected. |
 
 ## Details
 

@@ -59,10 +59,10 @@ when the task list is empty:
 | completedDate | `string` | "" | Filter the tasks. Display only tasks with completedDate equal to the supplied date. |
 | completedFrom | `string` | "" | Filter the tasks. Display only tasks with completedFrom equal to the supplied date. |
 | completedTo | `string` | "" | Filter the tasks. Display only tasks with completedTo equal to the supplied date. |
-| createdDate | `string` | "" | Filter the tasks. Display only tasks created on the supplied date. |
+| createdDate | `Date` |  | Filter the tasks. Display only tasks created on the supplied date. |
 | createdFrom | `string` | "" | Filter the tasks. Display only tasks with createdFrom equal to the supplied date. |
 | createdTo | `string` | "" | Filter the tasks. Display only tasks with createdTo equal to the supplied date. |
-| dueDate | `string` | "" | Filter the tasks. Display only tasks with dueDate equal to the supplied date. |
+| dueDate | `Date` |  | Filter the tasks. Display only tasks with dueDate equal to the supplied date. |
 | dueDateFrom | `string` | "" | Filter the tasks. Display only tasks with dueDate greater or equal than the supplied date. |
 | dueDateTo | `string` | "" | Filter the tasks. Display only tasks with dueDate less or equal to the supplied date. |
 | id | `string` | "" | Filter the tasks. Display only tasks with id equal to the supplied value. |

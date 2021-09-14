@@ -19,6 +19,10 @@ Accesses and manipulates sites from a Content Services repository.
     -   _inviteeId:_ `string`  - The invitee user name.
     -   _opts:_ `any`  - (Optional) Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMembershipRequestWithPersonPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMembershipRequestWithPersonPaging.md)`>` - Null response notifying when the operation is complete
+-   **createSite**(siteBody: [`SiteBodyCreate`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/siteBodyCreate.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>`<br/>
+    Create a site
+    -   _siteBody:_ [`SiteBodyCreate`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/siteBodyCreate.ts)  - [SiteBodyCreate](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/siteBodyCreate.ts) to create site
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`>` - site SiteEntry
 -   **createSiteGroupMembership**(siteId: `string`, siteMembershipBodyCreate: [`SiteMembershipBodyCreate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteMembershipBodyCreate.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteGroupEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/SiteGroupEntry.md)`>`<br/>
     Create a site membership for group
     -   _siteId:_ `string`  - The identifier of a site.

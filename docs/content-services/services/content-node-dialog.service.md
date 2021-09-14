@@ -13,16 +13,14 @@ Displays and manages dialogs for selecting content to open, copy or upload.
 
 ### Methods
 
--   **close**()<br/>
-    Closes the currently open dialog.
 -   **getTitleTranslation**(action: `string`, name: `string`): `string`<br/>
     Gets the translation of the dialog title.
     -   _action:_ `string`  - Name of the action to display in the dialog title
     -   _name:_ `string`  - Name of the item on which the action is being performed
     -   **Returns** `string` - Translated version of the title
--   **openCopyMoveDialog**(action: `string`, contentEntry: `Node`, permission?: `string`, excludeSiteContent?: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node[]>`<br/>
+-   **openCopyMoveDialog**(action: `NodeAction`, contentEntry: `Node`, permission?: `string`, excludeSiteContent?: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node[]>`<br/>
     Opens a dialog to copy or move an item to a new location.
-    -   _action:_ `string`  - Name of the action (eg, "Copy" or "Move") to show in the title
+    -   _action:_ `NodeAction`  - Name of the action (eg, "Copy" or "Move") to show in the title
     -   _contentEntry:_ `Node`  - Item to be copied or moved
     -   _permission:_ `string`  - (Optional) Permission for the operation
     -   _excludeSiteContent:_ `string[]`  - (Optional) The site content that should be filtered out
@@ -48,15 +46,15 @@ Displays and manages dialogs for selecting content to open, copy or upload.
     Opens a lock node dialog.
     -   _contentEntry:_ `Node`  - Node to lock
     -   **Returns** [`Subject`](http://reactivex.io/documentation/subject.html)`<string>` - Error/status message (if any)
--   **openUploadFileDialog**(action: `string`, contentEntry: `Node`, showFilesInResult: `boolean` = `false`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node[]>`<br/>
+-   **openUploadFileDialog**(action: `NodeAction`, contentEntry: `Node`, showFilesInResult: `boolean` = `false`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node[]>`<br/>
     Opens a dialog to choose a file to upload.
-    -   _action:_ `string`  - Name of the action to show in the title
+    -   _action:_ `NodeAction`  - Name of the action to show in the title
     -   _contentEntry:_ `Node`  - Item to upload
     -   _showFilesInResult:_ `boolean`  - Show files in dialog search result
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Node[]>` - Information about the chosen file(s)
--   **openUploadFolderDialog**(action: `string`, contentEntry: `Node`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node[]>`<br/>
+-   **openUploadFolderDialog**(action: `NodeAction`, contentEntry: `Node`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Node[]>`<br/>
     Opens a dialog to choose folders to upload.
-    -   _action:_ `string`  - Name of the action to show in the title
+    -   _action:_ `NodeAction`  - Name of the action to show in the title
     -   _contentEntry:_ `Node`  - Item to upload
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Node[]>` - Information about the chosen folder(s)
 

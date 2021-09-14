@@ -9,13 +9,6 @@ Last reviewed: 2019-03-20
 
 Represents a main container component for custom search and faceted search settings.
 
-## Contents
-
--   [Basic usage](#basic-usage)
-    -   [Properties](#properties)
--   [Details](#details)
--   [See also](#see-also)
-
 ## Basic usage
 
 ```html

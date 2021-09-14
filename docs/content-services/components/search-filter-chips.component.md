@@ -11,17 +11,7 @@ Represents a chip based container component for custom search and faceted search
 
 ![Search Filter Chips](../../docassets/images/search-filter-chips.png)
 
-
 ![Search Filter Chip Menu](../../docassets/images/search-filter-chip-widget.png)
-
-## Contents
-
--   [Basic usage](#basic-usage)
-    -   [Properties](#properties)
--   [Details](#details)
--   [Widget setting for chip layout](#widget-setting-for-chip-layout)
--   [Migrate from expansion card layout](#migrate-from-expansion-card-layout)
--   [See also](#see-also)
 
 ## Basic usage
 
@@ -39,9 +29,10 @@ Represents a chip based container component for custom search and faceted search
 
 The component creates chip based widgets dynamically from default/selected search configuration. It uses [Search Query Builder service](../services/search-query-builder.service.md) to build and execute the query.
 
-
 ### Widget setting for chip layout
+
 Configured widgets(`categories, facetQueries, facetIntervals, facetFields`) should have following setting for smooth interaction.
+
 ```json
 {
     ...
@@ -54,9 +45,11 @@ Configured widgets(`categories, facetQueries, facetIntervals, facetFields`) shou
 ```
 
 ### Migrate from expansion card layout
+
 Here are the steps to move from expansion layout to chip layout
- 1. Use this component to render the new layout ```<adf-search-filter-chips></adf-search-filter-chips>```
- 2. Add the following settings to old configured widgets(`categories, facetQueries, facetIntervals, facetFields`) i.e
+ 1\. Use this component to render the new layout `<adf-search-filter-chips></adf-search-filter-chips>`
+ 2\. Add the following settings to old configured widgets(`categories, facetQueries, facetIntervals, facetFields`) i.e
+
 ```json
 {
     ...
@@ -67,9 +60,9 @@ Here are the steps to move from expansion layout to chip layout
     }
 
 }
-``` 
-here is the [example configuration](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/demo-shell/src/app.config.json#L373)
+```
 
+here is the [example configuration](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/demo-shell/src/app.config.json#L373)
 
 ## See also
 

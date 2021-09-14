@@ -346,8 +346,8 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | ---- | ---- | ------------- | ----------- |
 | actions | `boolean` | false | Toggles the data actions column. |
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
-| actionsVisibleOnHover | `boolean` | false | If set to true, the actions button will only be visible on row hover. |
-| allowFiltering | `boolean` | false | Flag that indicate if the datatable allow the use facet [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) search for filtering. |
+| actionsVisibleOnHover | `boolean` | false | Toggles whether the actions dropdown should only be visible if the row is hovered over or the dropdown menu is open. |
+| allowFiltering | `boolean` | false | Flag that indicate if the datatable allow the use [facet widget](../../../lib/content-services/src/lib/search/models/facet-widget.interface.ts) search for filtering. |
 | columns | `any[]` | \[] | The columns that the datatable will show. |
 | contextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source for the table |
@@ -358,11 +358,11 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | noPermission | `boolean` | false | Flag that indicates if the datatable should show the "no permission" template. |
 | resolverFn | `Function` | null | Custom resolver function which is used to parse dynamic column objects see the docs to learn how to configure a resolverFn. |
 | rowMenuCacheEnabled | `boolean` | true | Should the items for the row actions menu be cached for reuse after they are loaded the first time? |
-| rowStyle | `string` |  | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
+| rowStyle | `Function` |  | The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples. |
 | rowStyleClass | `string` | "" | The CSS class to apply to every row. |
 | rows | `any[]` | \[] | The rows that the datatable will show. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| showHeader | `string` |  | Toggles the header. |
+| showHeader | `ShowHeaderMode` |  | Toggles the header. |
 | sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 

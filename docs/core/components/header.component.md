@@ -38,7 +38,7 @@ body of the element:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| color | `string` |  | Background color for the header. It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'. |
+| color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |  | Background color for the header. It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'. |
 | expandedSidenav | `boolean` | true | expandedSidenav: Toggles the expanded state of the component. |
 | logo | `string` |  | Path to an image file for the application logo. |
 | position | `string` | "start" | The side of the page that the drawer is attached to (can be 'start' or 'end') |

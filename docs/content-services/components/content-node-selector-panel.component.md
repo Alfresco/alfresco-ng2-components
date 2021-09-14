@@ -44,8 +44,8 @@ Opens a [Content Node Selector](content-node-selector.component.md)  in its own 
 | rowFilter | [`RowFilter`](../../../lib/content-services/src/lib/document-list/data/row-filter.model.ts) |  | Custom row filter function. See the [Row Filter Model](row-filter.model.md) page for more information. |
 | showDropdownSiteList | `boolean` |  | Toggle sites list dropdown rendering |
 | showFilesInResult | `void` |  | Shows the files and folders in the search result |
+| showNodeCounter | `boolean` |  | Shows the node counter in the breadcrumb |
 | showSearch | `boolean` |  | Toggle search input rendering |
-| showNodeCounter | `boolean` | false | Shows the node counter in the breadcrumb |
 
 ### Events
 

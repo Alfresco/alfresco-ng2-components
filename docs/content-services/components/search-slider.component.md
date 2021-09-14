@@ -46,8 +46,8 @@ Implements a numeric slider [widget](../../../lib/testing/src/lib/core/pages/for
 | max | number | Maximum numeric value at the right end of the slider |
 | step | number | The step between adjacent positions on the slider |
 | thumbLabel | boolean | Toggles whether the "thumb" of the slider should show the current value |
-| allowUpdateOnChange | boolean | Enable/Disable the update fire event when text has been changed. By default is true.
-| hideDefaultAction | boolean | Show/hide the widget actions. By default is false.
+| allowUpdateOnChange | boolean | Enable/Disable the update fire event when text has been changed. By default is true. |
+| hideDefaultAction | boolean | Show/hide the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) actions. By default is false. |
 
 ## Details
 

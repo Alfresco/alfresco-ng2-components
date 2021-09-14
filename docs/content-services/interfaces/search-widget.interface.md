@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-12
 ---
 
-# [Search widget interface](../../../lib/content-services/src/lib/search/search-widget.interface.ts "Defined in search-widget.interface.ts")
+# [Search widget interface](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts "Defined in search-widget.interface.ts")
 
 Specifies required properties for [Search filter component](../components/search-filter.component.md) widgets.
 
@@ -35,7 +35,7 @@ export interface SearchWidget {
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | id | `string` |  | Unique identifying value for the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) |
-| settings | [`SearchWidgetSettings`](../../../lib/content-services/src/lib/search/search-widget-settings.interface.ts) |  | Settings for component properties |
+| settings | [`SearchWidgetSettings`](../../../lib/content-services/src/lib/search/models/search-widget-settings.interface.ts) |  | Settings for component properties |
 | context | [`SearchQueryBuilderService`](../../content-services/services/search-query-builder.service.md) |  | Instance of the [Search Query Builder service](../services/search-query-builder.service.md) to process the query |
 
 ## Details
@@ -49,7 +49,7 @@ implement the [Search Widget](../../../lib/content-services/search/search-widget
 
 To create a custom Search Filter [widget,](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) start by generating a blank Angular component
 that implements the
-[`SearchWidget`](../../../lib/content-services/src/lib/search/search-widget.interface.ts)
+[`SearchWidget`](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts)
 interface:
 
 ```ts

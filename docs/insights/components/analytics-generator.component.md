@@ -23,7 +23,7 @@ Generates and shows charts
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| reportId | `number` |  | reportId. |
+| reportId | `string` |  | reportId. |
 | reportParamQuery | [`ReportQuery`](../../../lib/insights/src/lib/diagram/models/report/report-query.model.ts) | undefined | reportParamQuery. |
 
 ### Events
