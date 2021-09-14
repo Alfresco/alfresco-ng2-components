@@ -17,7 +17,7 @@
 
 import {
     Component, EventEmitter, Input, OnChanges,
-    Output, SimpleChanges, OnInit
+    Output, SimpleChanges, OnInit, HostListener
 } from '@angular/core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -109,6 +109,11 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
+    }
+
+    @HostListener('keydown', ['$event'])
+    onKeyDown(event: KeyboardEvent) {
+        event.cancelBubble = true;
     }
 
     ngOnInit() {
