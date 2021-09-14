@@ -18,13 +18,13 @@
 import { Component, Input, OnChanges, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ProcessInstance, ProcessService ,
     ProcessAttachmentListComponent, ProcessUploadService } from '@alfresco/adf-process-services';
-import { UploadService, AlfrescoApiService, AppConfigService, DiscoveryApiService } from '@alfresco/adf-core';
+import { UploadService, AlfrescoApiService, AppConfigService, DiscoveryApiService, ContentService, AcsContentService } from '@alfresco/adf-core';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-export function processUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService, discoveryApiService: DiscoveryApiService) {
-    return new ProcessUploadService(api, config, discoveryApiService);
+export function processUploadServiceFactory(contentService: ContentService, api: AlfrescoApiService, config: AppConfigService, discoveryApiService: DiscoveryApiService) {
+    return new ProcessUploadService(contentService, api, config, discoveryApiService);
 }
 
 @Component({
@@ -35,7 +35,7 @@ export function processUploadServiceFactory(api: AlfrescoApiService, config: App
         {
             provide: UploadService,
             useFactory: (processUploadServiceFactory),
-            deps: [AlfrescoApiService, AppConfigService, DiscoveryApiService]
+            deps: [AcsContentService, AlfrescoApiService, AppConfigService, DiscoveryApiService]
         }
     ]
 })

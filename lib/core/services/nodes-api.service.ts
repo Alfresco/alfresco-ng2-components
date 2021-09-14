@@ -16,31 +16,19 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNode, NodeEntry, NodePaging, NodesApi, TrashcanApi } from '@alfresco/js-api';
+import { MinimalNode, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { from, Observable, throwError } from 'rxjs';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { catchError, map } from 'rxjs/operators';
 import { NodeMetadata } from '../models/node-metadata.model';
+import { ContentService } from './content.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class NodesApiService {
 
-    _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
-        return this._trashcanApi;
-    }
-
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
-
-    constructor(private apiService: AlfrescoApiService,
+    constructor(private  contentService: ContentService,
                 private preferences: UserPreferencesService) {
     }
 
@@ -60,7 +48,7 @@ export class NodesApiService {
         };
         const queryOptions = Object.assign(defaults, options);
 
-        return from(this.nodesApi.getNode(nodeId, queryOptions)).pipe(
+        return this.contentService.getNode(nodeId, queryOptions).pipe(
             map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
         );
@@ -80,7 +68,7 @@ export class NodesApiService {
         };
         const queryOptions = Object.assign(defaults, options);
 
-        return from(this.nodesApi.listNodeChildren(nodeId, queryOptions)).pipe(
+        return from(this.contentService.listNodeChildren(nodeId, queryOptions)).pipe(
             catchError((err) => throwError(err))
         );
     }
@@ -93,7 +81,7 @@ export class NodesApiService {
      * @returns Details of the new node
      */
     createNode(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNode> {
-        return from(this.nodesApi.createNode(parentNodeId, nodeBody, options)).pipe(
+        return from(this.contentService.createNode(parentNodeId, nodeBody, options)).pipe(
             map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
         );
@@ -124,7 +112,7 @@ export class NodesApiService {
         };
         const queryOptions = Object.assign(defaults, options);
 
-        return from(this.nodesApi.updateNode(nodeId, nodeBody, queryOptions)).pipe(
+        return from(this.contentService.updateNode(nodeId, nodeBody, queryOptions)).pipe(
             map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
         );
@@ -137,7 +125,7 @@ export class NodesApiService {
      * @returns Empty result that notifies when the deletion is complete
      */
     deleteNode(nodeId: string, options: any = {}): Observable<any> {
-        return from(this.nodesApi.deleteNode(nodeId, options)).pipe(
+        return from(this.contentService.deleteNode(nodeId, options)).pipe(
             catchError((err) => throwError(err))
         );
     }
@@ -148,7 +136,7 @@ export class NodesApiService {
      * @returns Details of the restored node
      */
     restoreNode(nodeId: string): Observable<MinimalNode> {
-        return from(this.trashcanApi.restoreDeletedNode(nodeId)).pipe(
+        return from(this.contentService.restoreDeletedNode(nodeId)).pipe(
             map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
         );
@@ -160,7 +148,7 @@ export class NodesApiService {
      * @returns Node metadata
      */
     public getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
-        return from(this.nodesApi.getNode(nodeId))
+        return this.contentService.getNode(nodeId)
             .pipe(map(this.cleanMetadataFromSemicolon));
     }
 
@@ -199,7 +187,7 @@ export class NodesApiService {
             properties: properties,
             relativePath: path
         };
-        return from(this.nodesApi.createNode('-root-', body, {}));
+        return from(this.contentService.createNode('-root-', body, {}));
     }
 
     private generateUuid() {

@@ -26,10 +26,10 @@ import {
     FormValues,
     ContentLinkModel,
     AppConfigService,
-    AlfrescoApiService,
-    UploadWidgetContentLinkModel
+    UploadWidgetContentLinkModel,
+    ContentService
 } from '@alfresco/adf-core';
-import { Node, NodesApi, RelatedContentRepresentation } from '@alfresco/js-api';
+import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
@@ -67,12 +67,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     rootNodeId = AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
     selectedNode: Node;
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
-
     constructor(
         formService: FormService,
         logger: LogService,
@@ -81,7 +75,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         notificationService: NotificationService,
         private contentNodeSelectorService: ContentCloudNodeSelectorService,
         private appConfigService: AppConfigService,
-        private apiService: AlfrescoApiService,
+        private  contentService: ContentService,
         private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
@@ -228,7 +222,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     contentModelFormFileHandler(file?: any) {
         if (file?.id && this.isRetrieveMetadataOptionEnabled()) {
             const values: FormValues = {};
-            this.nodesApi.getNode(file.id).then(acsNode => {
+            this.contentService.getNode(file.id).subscribe(acsNode => {
                 const metadata = acsNode?.entry?.properties;
                 if (metadata) {
                     const keys = Object.keys(metadata);

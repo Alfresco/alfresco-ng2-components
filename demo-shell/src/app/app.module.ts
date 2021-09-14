@@ -29,7 +29,9 @@ import {
     DebugAppConfigService,
     CoreModule,
     CoreAutomationService,
-    AuthBearerInterceptor
+    AuthBearerInterceptor,
+    registerContentServiceProvider,
+    AcsContentService
 } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
@@ -236,7 +238,8 @@ registerLocaleData(localeSv);
             useFactory: setupAppNotifications,
             deps: [AppNotificationsService],
             multi: true
-        }
+        },
+        registerContentServiceProvider(AcsContentService, true)
     ],
     bootstrap: [AppComponent]
 })

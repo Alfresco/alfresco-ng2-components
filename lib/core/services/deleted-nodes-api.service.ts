@@ -18,30 +18,18 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 
-import { NodePaging, NodesApi, TrashcanApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { NodePaging } from '@alfresco/js-api';
 import { UserPreferencesService } from './user-preferences.service';
 import { catchError } from 'rxjs/operators';
+import { ContentService } from './content.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DeletedNodesApiService {
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
-
-    _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
-        return this._trashcanApi;
-    }
-
     constructor(
-        private apiService: AlfrescoApiService,
+        private  contentService: ContentService,
         private preferences: UserPreferencesService
     ) {
     }
@@ -58,7 +46,7 @@ export class DeletedNodesApiService {
             skipCount: 0
         };
         const queryOptions = Object.assign(defaultOptions, options);
-        const promise = this.trashcanApi.listDeletedNodes(queryOptions);
+        const promise = this.contentService.listDeletedNodes(queryOptions);
 
         return from(promise).pipe(
             catchError((err) => of(err))

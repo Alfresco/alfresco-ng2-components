@@ -19,8 +19,8 @@
 import { Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { ContentApi, NodeEntry } from '@alfresco/js-api';
+import { NodeEntry } from '@alfresco/js-api';
+import { ContentService } from './content.service';
 
 @Injectable({
     providedIn: 'root'
@@ -164,13 +164,7 @@ export class ThumbnailService {
         'task': './assets/images/task.svg'
     };
 
-    _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
-        return this._contentApi;
-    }
-
-    constructor(protected apiService: AlfrescoApiService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    constructor(private contentService: ContentService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
         Object.keys(this.mimeTypeIcons).forEach((key) => {
             const url = sanitizer.bypassSecurityTrustResourceUrl(this.mimeTypeIcons[key]);
 
@@ -198,7 +192,7 @@ export class ThumbnailService {
                 nodeId = node.entry.id;
             }
 
-            resultUrl = this.contentApi.getDocumentThumbnailUrl(nodeId, attachment, ticket);
+            resultUrl = this.contentService.getDocumentThumbnailUrl(nodeId, attachment, ticket);
         }
 
         return resultUrl || this.DEFAULT_ICON;

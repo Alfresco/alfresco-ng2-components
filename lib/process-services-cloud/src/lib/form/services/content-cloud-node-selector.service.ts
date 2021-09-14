@@ -16,14 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
+import { ContentService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import {
     ContentNodeSelectorComponent,
     ContentNodeSelectorComponentData,
     NodeAction
 } from '@alfresco/adf-content-services';
-import { Node, NodesApi } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { Observable, Subject, throwError } from 'rxjs';
 
 @Injectable({
@@ -31,16 +31,10 @@ import { Observable, Subject, throwError } from 'rxjs';
 })
 export class ContentCloudNodeSelectorService {
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
-
     sourceNodeNotFound = false;
 
     constructor(
-        private apiService: AlfrescoApiService,
+        private  contentService: ContentService,
         private notificationService: NotificationService,
         private dialog: MatDialog) {
     }
@@ -65,8 +59,9 @@ export class ContentCloudNodeSelectorService {
     }
 
     async fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
-        const relativePathNodeEntry: any = await this.nodesApi
+        const relativePathNodeEntry: any = await this.contentService
         .getNode(alias, opts)
+        .toPromise()
         .catch((err) => {
             this.sourceNodeNotFound = true;
             return this.handleError(err);
@@ -75,8 +70,9 @@ export class ContentCloudNodeSelectorService {
     }
 
     async fetchAliasNodeId(alias: string): Promise<string> {
-        const aliasNodeEntry: any = await this.nodesApi
+        const aliasNodeEntry: any = await this.contentService
             .getNode(alias)
+            .toPromise()
             .catch((err) => this.handleError(err));
         return aliasNodeEntry?.entry?.id;
     }

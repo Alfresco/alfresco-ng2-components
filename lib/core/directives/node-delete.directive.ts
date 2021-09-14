@@ -18,11 +18,11 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { NodeEntry, Node, DeletedNodeEntity, DeletedNode, TrashcanApi, NodesApi } from '@alfresco/js-api';
+import { NodeEntry, Node, DeletedNodeEntity, DeletedNode } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
 import { map, catchError, retry } from 'rxjs/operators';
+import { ContentService } from '../services/content.service';
 
 interface ProcessedNodeData {
     entry: Node | DeletedNode;
@@ -62,24 +62,12 @@ export class NodeDeleteDirective implements OnChanges {
     @Output()
     delete: EventEmitter<any> = new EventEmitter();
 
-    _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.alfrescoApiService.getInstance());
-        return this._trashcanApi;
-    }
-
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
-        return this._nodesApi;
-    }
-
     @HostListener('click')
     onClick() {
         this.process(this.selection);
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService,
+    constructor(private  contentService: ContentService,
                 private translation: TranslationService,
                 private elementRef: ElementRef) {
     }
@@ -125,9 +113,9 @@ export class NodeDeleteDirective implements OnChanges {
         let promise: Promise<any>;
 
         if (node.entry.hasOwnProperty('archivedAt') && node.entry['archivedAt']) {
-            promise = this.trashcanApi.deleteDeletedNode(id);
+            promise = this.contentService.deleteDeletedNode(id);
         } else {
-            promise = this.nodesApi.deleteNode(id, { permanent: this.permanent });
+            promise = this.contentService.deleteNode(id, { permanent: this.permanent });
         }
 
         return from(promise).pipe(

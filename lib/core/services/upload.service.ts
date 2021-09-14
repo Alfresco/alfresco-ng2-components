@@ -26,10 +26,9 @@ import {
     FileUploadEvent
 } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { DiscoveryApiService } from './discovery-api.service';
 import { filter } from 'rxjs/operators';
-import { NodesApi, UploadApi, VersionsApi } from '@alfresco/js-api';
+import { ContentService } from './content.service';
 
 const MIN_CANCELLABLE_FILE_SIZE = 1000000;
 const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
@@ -63,26 +62,8 @@ export class UploadService {
     fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
     fileDeleted: Subject<string> = new Subject<string>();
 
-    _uploadApi: UploadApi;
-    get uploadApi(): UploadApi {
-        this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
-        return this._uploadApi;
-    }
-
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
-
-    _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
-        return this._versionsApi;
-    }
-
     constructor(
-        protected apiService: AlfrescoApiService,
+        private contentService: ContentService,
         private appConfigService: AppConfigService,
         private discoveryApiService: DiscoveryApiService) {
 
@@ -260,9 +241,9 @@ export class UploadService {
         }
 
         if (file.id) {
-            return this.nodesApi.updateNodeContent(file.id, <any> file.file, opts);
+            return this.contentService.updateNodeContent(file.id, <any> file.file, opts);
         } else {
-            return this.uploadApi.uploadFile(
+            return this.contentService.uploadFile(
                 file.file,
                 file.options.path,
                 file.options.parentId,
@@ -422,12 +403,12 @@ export class UploadService {
     }
 
     private deleteAbortedNode(nodeId: string) {
-        this.nodesApi.deleteNode(nodeId, { permanent: true })
+        this.contentService.deleteNode(nodeId, { permanent: true })
             .then(() => (this.abortedFile = undefined));
     }
 
     private deleteAbortedNodeVersion(nodeId: string, versionId: string) {
-        this.versionsApi.deleteVersion(nodeId, versionId)
+        this.contentService.deleteVersion(nodeId, versionId)
             .then(() => (this.abortedFile = undefined));
     }
 

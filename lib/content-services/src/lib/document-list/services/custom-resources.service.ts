@@ -15,75 +15,27 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, PaginationModel } from '@alfresco/adf-core';
+import { ContentService, LogService, PaginationModel } from '@alfresco/adf-core';
 import {
     NodePaging,
     DeletedNodesPaging,
-    SearchRequest,
     SharedLinkPaging,
-    FavoritePaging,
-    SiteMemberPaging,
-    SiteRolePaging,
-    PeopleApi,
-    SitesApi,
-    SearchApi,
-    FavoritesApi,
-    SharedlinksApi,
-    TrashcanApi,
-    NodesApi
+    SiteMemberPaging
 } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { Observable, from, of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class CustomResourcesService {
 
-    private CREATE_PERMISSION = 'create';
-
-    _peopleApi: PeopleApi;
-    get peopleApi(): PeopleApi {
-        this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
-        return this._peopleApi;
+    constructor(private contentService: ContentService, private logService: LogService) {
     }
 
-    _sitesApi: SitesApi;
-    get sitesApi(): SitesApi {
-        this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
-        return this._sitesApi;
-    }
-
-    _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
-        this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
-        return this._trashcanApi;
-    }
-
-    _searchApi: SearchApi;
-    get searchApi(): SearchApi {
-        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
-        return this._searchApi;
-    }
-
-    _sharedLinksApi: SharedlinksApi;
-    get sharedLinksApi(): SharedlinksApi {
-        this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
-        return this._sharedLinksApi;
-    }
-
-    _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
-        this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
-        return this._favoritesApi;
-    }
-
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
-        return this._nodesApi;
-    }
-
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
+    private getAsNodePaging(nodes: { list?: any }): NodePaging {
+        const result = new NodePaging();
+        result.list = nodes.list;
+        return result;
     }
 
     /**
@@ -94,77 +46,7 @@ export class CustomResourcesService {
      * @returns List of nodes for the recently used files
      */
     getRecentFiles(personId: string, pagination: PaginationModel, filters?: string[]): Observable<NodePaging> {
-        const defaultFilter = [
-            'TYPE:"content"',
-            '-PNAME:"0/wiki"',
-            '-TYPE:"app:filelink"',
-            '-TYPE:"cm:thumbnail"',
-            '-TYPE:"cm:failedThumbnail"',
-            '-TYPE:"cm:rating"',
-            '-TYPE:"dl:dataList"',
-            '-TYPE:"dl:todoList"',
-            '-TYPE:"dl:issue"',
-            '-TYPE:"dl:contact"',
-            '-TYPE:"dl:eventAgenda"',
-            '-TYPE:"dl:event"',
-            '-TYPE:"dl:task"',
-            '-TYPE:"dl:simpletask"',
-            '-TYPE:"dl:meetingAgenda"',
-            '-TYPE:"dl:location"',
-            '-TYPE:"fm:topic"',
-            '-TYPE:"fm:post"',
-            '-TYPE:"ia:calendarEvent"',
-            '-TYPE:"lnk:link"'
-        ];
-
-        return new Observable((observer) => {
-            this.peopleApi.getPerson(personId)
-                .then((person) => {
-                        const username = person.entry.id;
-                        const filterQueries = [
-                            { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
-                            { query: `cm:modifier:${username} OR cm:creator:${username}` },
-                            { query: defaultFilter.join(' AND ') }
-                        ];
-
-                        if (filters && filters.length > 0) {
-                            filterQueries.push({
-                                query: filters.join()
-                            });
-                        }
-
-                        const query = new SearchRequest({
-                            query: {
-                                query: '*',
-                                language: 'afts'
-                            },
-                            filterQueries,
-                            include: ['path', 'properties', 'allowableOperations'],
-                            sort: [{
-                                type: 'FIELD',
-                                field: 'cm:modified',
-                                ascending: false
-                            }],
-                            paging: {
-                                maxItems: pagination.maxItems,
-                                skipCount: pagination.skipCount
-                            }
-                        });
-                        return this.searchApi.search(query)
-                            .then((searchResult) => {
-                                    observer.next(searchResult);
-                                    observer.complete();
-                                },
-                                (err) => {
-                                    observer.error(err);
-                                    observer.complete();
-                                });
-                    },
-                    (err) => {
-                        observer.error(err);
-                        observer.complete();
-                    });
-        }).pipe(catchError((err) => this.handleError(err)));
+        return this.contentService.getRecentFiles(personId, pagination, filters).pipe(map(nodes => this.getAsNodePaging(nodes)), catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -175,48 +57,7 @@ export class CustomResourcesService {
      * @returns List of favorite files
      */
     loadFavorites(pagination: PaginationModel, includeFields: string[] = [], where?: string): Observable<NodePaging> {
-        const includeFieldsRequest = this.getIncludesFields(includeFields);
-        const defaultPredicate = '(EXISTS(target/file) OR EXISTS(target/folder))';
-
-        const options = {
-            maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount,
-            where: where ? `${where} AND ${defaultPredicate}` : defaultPredicate,
-            include: includeFieldsRequest
-        };
-
-        return new Observable((observer) => {
-            this.favoritesApi.listFavorites('-me-', options)
-                .then((result: FavoritePaging) => {
-                        const page: FavoritePaging = {
-                            list: {
-                                entries: result.list.entries
-                                    .map(({ entry }: any) => {
-                                        const target = entry.target.file || entry.target.folder;
-                                        target.properties = {
-                                            ...(target.properties || {
-                                                'cm:title': entry.title || target.title,
-                                                'cm:description': entry.description || target.description
-                                            }),
-                                            ...(entry.properties || {})
-                                        };
-
-                                        return {
-                                            entry: target
-                                        };
-                                    }),
-                                pagination: result.list.pagination
-                            }
-                        };
-
-                        observer.next(page);
-                        observer.complete();
-                    },
-                    (err) => {
-                        observer.error(err);
-                        observer.complete();
-                    });
-        }).pipe(catchError((err) => this.handleError(err)));
+        return this.contentService.loadFavorites(pagination, includeFields, where).pipe(map(nodes => this.getAsNodePaging(nodes)), catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -226,38 +67,7 @@ export class CustomResourcesService {
      * @returns List of sites
      */
     loadMemberSites(pagination: PaginationModel, where?: string): Observable<SiteMemberPaging> {
-        const options = {
-            include: ['properties'],
-            maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount,
-            where
-        };
-
-        return new Observable((observer) => {
-            this.sitesApi.listSiteMembershipsForPerson('-me-', options)
-                .then((result: SiteRolePaging) => {
-                        const page: SiteMemberPaging = new SiteMemberPaging({
-                            list: {
-                                entries: result.list.entries
-                                    .map(({ entry: { site } }: any) => {
-                                        site.allowableOperations = site.allowableOperations ? site.allowableOperations : [this.CREATE_PERMISSION];
-                                        site.name = site.name || site.title;
-                                        return {
-                                            entry: site
-                                        };
-                                    }),
-                                pagination: result.list.pagination
-                            }
-                        });
-
-                        observer.next(page);
-                        observer.complete();
-                    },
-                    (err) => {
-                        observer.error(err);
-                        observer.complete();
-                    });
-        }).pipe(catchError((err) => this.handleError(err)));
+        return this.contentService.loadMemberSites(pagination, where).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -267,32 +77,7 @@ export class CustomResourcesService {
      * @returns List of sites
      */
     loadSites(pagination: PaginationModel, where?: string): Observable<NodePaging> {
-        const options = {
-            include: ['properties', 'aspectNames'],
-            maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount,
-            where
-        };
-
-        return new Observable((observer) => {
-            this.sitesApi
-                .listSites(options)
-                .then(
-                    (page) => {
-                        page.list.entries.map(
-                            ({ entry }: any) => {
-                                entry.name = entry.name || entry.title;
-                                return { entry };
-                            }
-                        );
-                        observer.next(page);
-                        observer.complete();
-                    },
-                    (err) => {
-                        observer.error(err);
-                        observer.complete();
-                    });
-        }).pipe(catchError((err) => this.handleError(err)));
+        return this.contentService.loadSites(pagination, where).pipe(map(nodes => this.getAsNodePaging(nodes)), catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -302,16 +87,7 @@ export class CustomResourcesService {
      * @returns List of deleted items
      */
     loadTrashcan(pagination: PaginationModel, includeFields: string[] = []): Observable<DeletedNodesPaging> {
-        const includeFieldsRequest = this.getIncludesFields(includeFields);
-
-        const options = {
-            include: includeFieldsRequest,
-            maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount
-        };
-
-        return from(this.trashcanApi.listDeletedNodes(options))
-            .pipe(catchError((err) => this.handleError(err)));
+        return this.contentService.loadTrashcan(pagination, includeFields).pipe(catchError((err) => this.handleError(err)));
 
     }
 
@@ -323,17 +99,7 @@ export class CustomResourcesService {
      * @returns List of shared links
      */
     loadSharedLinks(pagination: PaginationModel, includeFields: string[] = [], where?: string): Observable<SharedLinkPaging> {
-        const includeFieldsRequest = this.getIncludesFields(includeFields);
-
-        const options = {
-            include: includeFieldsRequest,
-            maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount,
-            where
-        };
-
-        return from(this.sharedLinksApi.listSharedLinks(options))
-            .pipe(catchError((err) => this.handleError(err)));
+        return this.contentService.loadSharedLinks(pagination, includeFields, where).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -410,29 +176,10 @@ export class CustomResourcesService {
 
         } else if (nodeId) {
             // cases when nodeId is '-my-', '-root-' or '-shared-'
-            return from(this.nodesApi.getNode(nodeId)
-                .then((node) => [node.entry.id]));
+            return this.contentService.getNode(nodeId).pipe(map((node) => [node.entry.id]));
         }
 
         return of([]);
-    }
-
-    /**
-     * Chooses the correct ID for a node entry.
-     * @param node Node object
-     * @param nodeId ID of the node object
-     * @returns ID value
-     */
-    getIdFromEntry(node: any, nodeId: string): string {
-        if (nodeId === '-sharedlinks-') {
-            return node.entry.nodeId;
-        } else if (nodeId === '-sites-' || nodeId === '-mysites-') {
-            return node.entry.guid;
-        } else if (nodeId === '-favorites-') {
-            return node.entry.targetGuid;
-        } else {
-            return node.entry.id;
-        }
     }
 
     /**
@@ -444,9 +191,16 @@ export class CustomResourcesService {
         return this.isCustomSource(nodeId) || this.isSupportedSource(nodeId);
     }
 
-    private getIncludesFields(includeFields: string[]): string[] {
-        return ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
-            .filter((element, index, array) => index === array.indexOf(element));
+    private getIdFromEntry(node: any, nodeId: string): string {
+        if (nodeId === '-sharedlinks-') {
+            return node.entry.nodeId;
+        } else if (nodeId === '-sites-' || nodeId === '-mysites-') {
+            return node.entry.guid;
+        } else if (nodeId === '-favorites-') {
+            return node.entry.targetGuid;
+        } else {
+            return node.entry.id;
+        }
     }
 
     private handleError(error: Response) {

@@ -65,3 +65,5 @@ export * from './version-compatibility.service';
 export * from './auth-bearer.interceptor';
 export * from './oauth2.service';
 export * from './language.service';
+export * from './acs-content.service';
+export * from './content-provider.service';

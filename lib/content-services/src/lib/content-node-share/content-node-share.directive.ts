@@ -17,11 +17,11 @@
 
 import { Directive, Input, HostListener, OnChanges, NgZone, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NodeEntry, NodesApi } from '@alfresco/js-api';
+import { NodeEntry } from '@alfresco/js-api';
 
 import { ShareDialogComponent } from './content-node-share.dialog';
-import { Observable, from, Subject } from 'rxjs';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { Observable, Subject } from 'rxjs';
+import { ContentService } from '@alfresco/adf-core';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
@@ -44,16 +44,10 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
-        return this._nodesApi;
-    }
-
-    constructor(
+   constructor(
         private dialog: MatDialog,
         private zone: NgZone,
-        private alfrescoApiService: AlfrescoApiService) {
+        private contentService: ContentService) {
     }
 
     ngOnDestroy() {
@@ -81,7 +75,7 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
             include: ['allowableOperations']
         };
 
-        return from(this.nodesApi.getNode(nodeId, options));
+        return this.contentService.getNode(nodeId, options);
     }
 
     private openShareLinkDialog(node: NodeEntry) {

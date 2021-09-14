@@ -151,13 +151,13 @@ export class CoreModule {
                 {
                     provide: APP_INITIALIZER,
                     useFactory: directionalityConfigFactory,
-                    deps: [ DirectionalityConfigService ],
+                    deps: [DirectionalityConfigService],
                     multi: true
                 },
                 {
                     provide: APP_INITIALIZER,
                     useFactory: versionCompatibilityFactory,
-                    deps: [ VersionCompatibilityService ],
+                    deps: [VersionCompatibilityService],
                     multi: true
                 }
             ]

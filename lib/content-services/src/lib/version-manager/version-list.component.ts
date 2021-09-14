@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
+import { ContentService } from '@alfresco/adf-core';
 import { Component, Input, OnChanges, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
-import { VersionsApi, Node, VersionEntry, VersionPaging, NodesApi, NodeEntry, ContentApi } from '@alfresco/js-api';
+import { Node, VersionEntry, VersionPaging, NodeEntry } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 
@@ -31,24 +31,6 @@ import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
     }
 })
 export class VersionListComponent implements OnChanges {
-
-    _contentApi: ContentApi;
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.alfrescoApi.getInstance());
-        return this._contentApi;
-    }
-
-    _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
-        this._versionsApi = this._versionsApi ?? new VersionsApi(this.alfrescoApi.getInstance());
-        return this._versionsApi;
-    }
-
-    _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApi.getInstance());
-        return this._nodesApi;
-    }
 
     versions: VersionEntry[] = [];
     isLoading = true;
@@ -85,8 +67,7 @@ export class VersionListComponent implements OnChanges {
     @Output()
     viewVersion: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor(private alfrescoApi: AlfrescoApiService,
-                private contentService: ContentService,
+    constructor(private  contentService: ContentService,
                 private dialog: MatDialog) {
     }
 
@@ -104,15 +85,14 @@ export class VersionListComponent implements OnChanges {
 
     restore(versionId) {
         if (this.canUpdate()) {
-            this.versionsApi
+            this.contentService
                 .revertVersion(this.node.id, versionId, { majorVersion: true, comment: '' })
                 .then(() =>
-                    this.nodesApi.getNode(
+                    this.contentService.getNode(
                         this.node.id,
                         { include: ['permissions', 'path', 'isFavorite', 'allowableOperations'] }
-                    )
-                )
-                .then((node) => this.onVersionRestored(node));
+                    ).subscribe((node) => this.onVersionRestored(node))
+                );
         }
     }
 
@@ -122,7 +102,7 @@ export class VersionListComponent implements OnChanges {
 
     loadVersionHistory() {
         this.isLoading = true;
-        this.versionsApi.listVersionHistory(this.node.id).then((versionPaging: VersionPaging) => {
+        this.contentService.listVersionHistory(this.node.id).then((versionPaging: VersionPaging) => {
             this.versions = versionPaging.list.entries;
             this.isLoading = false;
         });
@@ -149,7 +129,7 @@ export class VersionListComponent implements OnChanges {
 
             dialogRef.afterClosed().subscribe((result) => {
                 if (result === true) {
-                    this.versionsApi
+                    this.contentService
                         .deleteVersion(this.node.id, versionId)
                         .then(() => this.onVersionDeleted(this.node));
                 }
@@ -168,7 +148,7 @@ export class VersionListComponent implements OnChanges {
     }
 
     private getVersionContentUrl(nodeId: string, versionId: string, attachment?: boolean) {
-        const nodeDownloadUrl = this.contentApi.getContentUrl(nodeId, attachment);
+        const nodeDownloadUrl = this.contentService.getContentUrl(nodeId, attachment);
         return nodeDownloadUrl.replace('/content', '/versions/' + versionId + '/content');
     }
 
