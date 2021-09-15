@@ -48,6 +48,7 @@ import { FileModel } from '../../models';
 @Component({
     selector: 'adf-viewer',
     templateUrl: './viewer.component.html',
+    styleUrls: ['./viewer.component.scss'],
     host: { 'class': 'adf-viewer' },
     encapsulation: ViewEncapsulation.None
 })
