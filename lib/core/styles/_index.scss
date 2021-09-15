@@ -2,7 +2,6 @@
 @import './theming';
 
 @import '../card-view/card-view.theme';
-@import '../datatable/components/datatable/datatable.theme';
 @import '../form/components/widgets/container/container.theme';
 @import '../form/components/widgets/dynamic-table/dynamic-table.theme';
 @import '../form/components/widgets/form.theme';
@@ -65,7 +64,9 @@
         --adf-node-selector-icon-color: mat-color($foreground, icon, 0.54),
         --adf-node-selector-base-color: mat-color($foreground, base, 0.45),
         --adf-node-selector-base-bold-color: mat-color($foreground, base, 0.65),
-
+        --adf-datatable-drag-border-color: mat-color($accent, A200),
+        --adf-datatable-cell-link-hover-color: mat-color($accent, 500),
+        --adf-datatable-selected-color: mat-color($primary, 100),
 
         --theme-hover-bg-color: mat-color($background, hover),
         --theme-text-color: mat-color($foreground, text, 0.54),
@@ -77,7 +78,7 @@
         // --theme-text-selection-color: mat-color($foreground, text, 0.3),
         --theme-border-color: mat-color($foreground, text, 0.07),
         // --theme-border-color-light: mat-color($foreground, text, 0.2),
-        // --theme-card-background-color: mat-color($background, card),
+        --theme-card-bg-color: mat-color($background, card),
         --theme-foreground-text-color: mat-color($foreground, text, 0.72),
         // --theme-foreground-text-bold-color: mat-color($foreground, text, 0.87),
         --theme-secondary-text-color: mat-color($foreground, secondary-text),
@@ -86,11 +87,12 @@
         --theme-dialog-bg-color: mat-color($background, dialog),
         --theme-bg-hover-color: mat-color($background, hover),
         --theme-fg-base-color: mat-color($foreground, base),
+        --theme-fg-divider: mat-color($foreground, divider),
         // --theme-app-bar-bg-color: mat-color($background, app-bar),
         // --theme-status-bar-bg-color: mat-color($background, status-bar, 0.7),
         // --theme-unselected-chip-bg-color: mat-color($background, unselected-chip),
-        // --theme-disabled-text-color: mat-color($foreground, disabled-text),
-        // --theme-selected-button-bg-color: mat-color($background, selected-button),
+        --theme-disabled-text-color: mat-color($foreground, disabled-text),
+        --theme-selected-button-bg-color: mat-color($background, selected-button),
         // --theme-raised-button-bg-color: mat-color($background, raised-button),
         // --theme-icons-fg-color: mat-color($foreground, icons),
         // --theme-slider-off-fg-color: mat-color($foreground, slider-off),
@@ -117,7 +119,6 @@
     }
 
     @include adf-card-view-module-theme($theme);
-    @include adf-datatable-theme($theme);
     @include adf-form-container-widget-theme($theme);
     @include adf-dynamic-table-theme($theme);
     @include adf-form-theme($theme);
