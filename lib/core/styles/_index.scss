@@ -9,7 +9,6 @@
 @import '../form/components/widgets/amount/amount.theme';
 @import '../form/components/widgets/people/people.theme';
 @import '../info-drawer/info-drawer-layout.theme';
-@import '../userinfo/components/user-info.theme';
 @import '../form/components/form-renderer.theme';
 @import '../layout/components/sidebar-action/sidebar-action-menu.theme';
 @import '../layout/components/header/header.theme';
@@ -58,6 +57,7 @@
         --adf-node-selector-base-bold-color: mat-color($foreground, base, 0.65),
         --adf-datatable-cell-link-hover-color: mat-color($accent, 500),
         --adf-datatable-selected-color: mat-color($primary, 100),
+        --adf-user-info-color: mat-color($primary, 300),
 
         --theme-hover-bg-color: mat-color($background, hover),
         --theme-text-color: mat-color($foreground, text, 0.54),
@@ -119,7 +119,6 @@
     @include adf-amount-widget-theme($theme);
     @include adf-form-people-widget-theme($theme);
     @include adf-info-drawer-theme($theme);
-    @include adf-userinfo-theme($theme);
     @include adf-form-renderer-theme($theme);
     @include adf-sidebar-action-menu-theme($theme);
     @include adf-task-list-comment-list-theme($theme);

@@ -29,6 +29,7 @@ import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/
 @Component({
     selector: 'adf-userinfo',
     templateUrl: './user-info.component.html',
+    styleUrls: ['./user-info.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class UserInfoComponent implements OnInit {
