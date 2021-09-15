@@ -17,7 +17,6 @@ The release can be found on GitHub at [this location](https://github.com/Alfresc
     -   [Custom type and aspect management](#custom-type-and-aspect-management)
 -   [Localisation](#localisation)
 -   [References](#references)
--   [Notable new features](#notable-new-features)
 -   [PR merged](#pr-merged)
 
 ## New package versions
@@ -35,12 +34,6 @@ The release can be found on GitHub at [this location](https://github.com/Alfresc
 This is a minor release of the Alfresco Application Development Framework, developed to receive the latest and greatest benefits of the bugfixes, and the enhancements planned since the release of the previous version.
 
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
-
-## Notable new features
-
-
-
-
 
 ## PR merged
 
