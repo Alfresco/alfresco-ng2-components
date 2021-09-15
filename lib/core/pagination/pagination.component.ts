@@ -34,6 +34,7 @@ export type PaginationAction =
     selector: 'adf-pagination',
     host: { 'class': 'adf-pagination' },
     templateUrl: './pagination.component.html',
+    styleUrls: ['./pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
