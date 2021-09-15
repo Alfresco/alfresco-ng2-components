@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
 
@@ -23,7 +23,9 @@ declare const pdfjsLib: any;
 
 @Component({
     selector: 'adf-pdf-viewer-password-dialog',
-    templateUrl: './pdf-viewer-password-dialog.html'
+    templateUrl: './pdf-viewer-password-dialog.html',
+    styleUrls: ['./pdf-viewer-password-dialog.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class PdfPasswordDialogComponent implements OnInit {
     passwordFormControl: FormControl;

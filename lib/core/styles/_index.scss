@@ -10,12 +10,6 @@
 @import '../form/components/widgets/people/people.theme';
 @import '../info-drawer/info-drawer-layout.theme';
 @import '../userinfo/components/user-info.theme';
-@import '../viewer/components/pdf-viewer.theme';
-@import '../viewer/components/pdf-viewer-thumbnails.theme';
-@import '../viewer/components/pdf-viewer-password-dialog.theme.scss';
-@import '../viewer/components/txt-viewer.theme';
-@import '../viewer/components/img-viewer.theme';
-@import '../viewer/components/unknown-format/unknown-format.theme';
 @import '../form/components/form-renderer.theme';
 @import '../layout/components/sidebar-action/sidebar-action-menu.theme';
 @import '../layout/components/header/header.theme';
@@ -47,6 +41,7 @@
         --theme-warn-color: mat-color($warn),
         // --theme-warn-color-default-contrast: mat-color($warn, default-contrast),
         --theme-accent-color: mat-color($accent),
+        --theme-accent-color-a200: mat-color($accent, A200),
         --theme-accent-color-default-contrast: mat-color($accent, default-contrast),
 
         // component themes
@@ -58,11 +53,9 @@
         --adf-snackbar-info-action-color: white,
         --adf-breadcrumb-item-active-color: mat-color($foreground, text, 0.87),
         --adf-breadcrumb-item-active-hover-color: mat-color($foreground, text, 0.64),
-        --adf-breadcrumb-outline-color: mat-color($accent, A200),
         --adf-node-selector-icon-color: mat-color($foreground, icon, 0.54),
         --adf-node-selector-base-color: mat-color($foreground, base, 0.45),
         --adf-node-selector-base-bold-color: mat-color($foreground, base, 0.65),
-        --adf-datatable-drag-border-color: mat-color($accent, A200),
         --adf-datatable-cell-link-hover-color: mat-color($accent, 500),
         --adf-datatable-selected-color: mat-color($primary, 100),
 
@@ -127,12 +120,6 @@
     @include adf-form-people-widget-theme($theme);
     @include adf-info-drawer-theme($theme);
     @include adf-userinfo-theme($theme);
-    @include adf-pdf-viewer-theme($theme);
-    @include adf-pdf-thumbnails-theme($theme);
-    @include adf-pdf-viewer-password-dialog-theme($theme);
-    @include adf-image-viewer-theme($theme);
-    @include adf-unknown-viewer-theme($theme);
-    @include adf-text-viewer-theme($theme);
     @include adf-form-renderer-theme($theme);
     @include adf-sidebar-action-menu-theme($theme);
     @include adf-task-list-comment-list-theme($theme);

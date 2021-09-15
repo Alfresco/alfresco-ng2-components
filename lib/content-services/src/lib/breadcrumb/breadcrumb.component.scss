@@ -126,7 +126,7 @@
             text-align: center;
 
             &:focus {
-                outline: 1px solid var(--adf-breadcrumb-outline-color);
+                outline: 1px solid var(--theme-accent-color-a200);
                 outline-offset: -1px;
             }
         }

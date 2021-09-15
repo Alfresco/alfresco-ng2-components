@@ -223,13 +223,13 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
 
         &:focus {
             outline-offset: -1px;
-            outline: 1px solid var(--adf-datatable-drag-border-color);
+            outline: 1px solid var(--theme-accent-color-a200);
         }
 
         .adf-cell-value, .adf-datatable-cell-header {
             &:focus {
                 outline-offset: -1px;
-                outline: 1px solid var(--adf-datatable-drag-border-color);
+                outline: 1px solid var(--theme-accent-color-a200);
             }
         }
     }
@@ -618,15 +618,15 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
 
 .adf-upload__dragging {
     & > div {
-        border-top: 1px dashed var(--adf-datatable-drag-border-color) !important;
-        border-bottom: 1px dashed var(--adf-datatable-drag-border-color) !important;
+        border-top: 1px dashed var(--theme-accent-color-a200) !important;
+        border-bottom: 1px dashed var(--theme-accent-color-a200) !important;
 
         &:first-child {
-            border-left: 1px dashed var(--adf-datatable-drag-border-color);
+            border-left: 1px dashed var(--theme-accent-color-a200);
         }
 
         &:last-child {
-            border-right: 1px dashed var(--adf-datatable-drag-border-color) !important;
+            border-right: 1px dashed var(--theme-accent-color-a200) !important;
         }
     }
 }
