@@ -6,6 +6,7 @@ Title: Upgrade guides
 
 Below are links to the upgrade guides notes for all released versions of ADF back to v2.6.0
 
+- [Upgrading from ADF v4.5 to v4.6](upgrade45-46.md)
 - [Upgrading from ADF v4.4 to v4.5](upgrade44-45.md)
 - [Upgrading from ADF v4.3 to v4.4](upgrade43-44.md)
 - [Upgrading from ADF v4.2 to v4.3](upgrade42-43.md)

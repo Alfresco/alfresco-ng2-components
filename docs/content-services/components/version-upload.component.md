@@ -25,6 +25,7 @@ Displays the new version's minor/major changes and the optional comment of a nod
 | node | `Node` |  | The target node. |
 | showCancelButton | `boolean` | true | Toggles showing/hiding of cancel button. |
 | showUploadButton | `boolean` | true | Toggles showing/hiding upload button. |
+| currentVersion | `void` |  | Current version for a target node |
 
 ### Events
 
@@ -32,8 +33,9 @@ Displays the new version's minor/major changes and the optional comment of a nod
 | ---- | ---- | ----------- |
 | cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an cancelling during upload. |
 | commentChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the comment is changed. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FileUploadErrorEvent`](../../../lib/core/events/file.event.ts)`>` | Emitted when an error occurs. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the file is uploaded successfully. |
+| uploadStarted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FileUploadEvent`](../../../lib/core/events/file.event.ts)`>` | Emitted when the upload starts |
 | versionChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the version is changed. |
 
 ## Details

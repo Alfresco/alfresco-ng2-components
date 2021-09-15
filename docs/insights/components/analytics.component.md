@@ -27,7 +27,7 @@ Shows the charts related to the reportId passed as input
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | appId ID of the target app. |
 | hideParameters | `boolean` | false | hideParameters. |
-| reportId | `number` |  | reportId. |
+| reportId | `string` |  | reportId. |
 
 ### Events
 

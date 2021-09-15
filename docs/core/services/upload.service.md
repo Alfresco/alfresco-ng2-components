@@ -32,9 +32,10 @@ Provides access to various APIs related to file upload features.
 -   **isUploading**(): `boolean`<br/>
     Checks whether the service still has files uploading or awaiting upload.
     -   **Returns** `boolean` - True if files in the queue are still uploading, false otherwise
--   **uploadFilesInTheQueue**(emitter?: [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`)<br/>
+-   **uploadFilesInTheQueue**(successEmitter?: [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`, errorEmitter?: [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`)<br/>
     Finds all the files in the queue that are not yet uploaded and uploads them into the directory folder.
-    -   _emitter:_ [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`  - (Optional) Emitter to invoke on file status change
+    -   _successEmitter:_ [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`  - (Optional) Emitter to invoke on file success status change
+    -   _errorEmitter:_ [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>`  - (Optional) Emitter to invoke on file error status change
 
 ## Events
 

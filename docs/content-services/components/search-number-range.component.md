@@ -40,7 +40,7 @@ Implements a number range [widget](../../../lib/testing/src/lib/core/pages/form/
 | ---- | ---- | ----------- |
 | field | string | Field to to use |
 | format | string | Value format. Uses string substitution to allow all sorts of [range queries](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-ranges.html). |
-| hideDefaultAction | boolean | Show/hide the widget actions. By default is false.
+| hideDefaultAction | boolean | Show/hide the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) actions. By default is false. |
 
 ## Details
 

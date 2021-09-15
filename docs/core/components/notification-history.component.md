@@ -25,8 +25,8 @@ The main purpose of the [Notification history component](../../core/components/n
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | maxNotifications | `number` | 5 | Maximum number of notifications to display. The rest will remain hidden until load more is clicked |
-| menuPositionX | `string` | "after" | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |
-| menuPositionY | `string` | "below" | Custom choice for opening the menu at the bottom. Can be `above` or `below`. |
+| menuPositionX | [`MenuPositionX`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "after" | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |
+| menuPositionY | [`MenuPositionY`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "below" | Custom choice for opening the menu at the bottom. Can be `above` or `below`. |
 
 ## See also
 

@@ -29,10 +29,10 @@ Gets information about a Content Services user.
 
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<boolean>` - 
 
--   **listPeople**(requestQuery?: [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts#32)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>`<br/>
+-   **listPeople**(requestQuery?: [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentQueryResponse`](../../../lib/core/services/people-content.service.ts)`>`<br/>
     Gets a list of people.
-    -   _requestQuery:_ [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts)  - (Optional) maxItems and skipCount used for pagination
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`[]>` - Array of people
+    -   _requestQuery:_ [`PeopleContentQueryRequestModel`](../../../lib/core/services/people-content.service.ts)  - (Optional) maxItems and skipCount parameters supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`PeopleContentQueryResponse`](../../../lib/core/services/people-content.service.ts)`>` - Response containing pagination and list of entries
 
 ## Details
 

@@ -21,14 +21,6 @@ Accesses app-generated data objects via URLs and file downloads.
     (**Deprecated:** in 3.2.0, use [DownloadService](../../../lib/core/services/download.service.ts) instead. Invokes content download for a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) with a file name.) 
     -   _blob:_ [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)  - Content to download.
     -   _fileName:_ `string`  - Name of the resulting file.
--   **downloadData**(data: `any`, fileName: `string`)<br/>
-    (**Deprecated:** in 3.2.0, use [DownloadService](../../../lib/core/services/download.service.ts) instead. Invokes content download for a data array with a file name.) 
-    -   _data:_ `any`  - Data to download.
-    -   _fileName:_ `string`  - Name of the resulting file.
--   **downloadJSON**(json: `any`, fileName: `string`)<br/>
-    (**Deprecated:** in 3.2.0, use [DownloadService](../../../lib/core/services/download.service.ts) instead. Invokes content download for a JSON object with a file name.) 
-    -   _json:_ `any`  - JSON object to download.
-    -   _fileName:_ `string`  - Name of the resulting file.
 -   **getContentUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
     Gets a content URL for the given node.
     -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`  - Node or Node ID to get URL for.
@@ -55,10 +47,11 @@ Accesses app-generated data objects via URLs and file downloads.
     -   _node:_ `Node`  - Node to check allowableOperations
     -   _allowableOperation:_ [`AllowableOperationsEnum`](../../../lib/core/models/allowable-operations.enum.ts)`|string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
--   **hasPermissions**(node: `Node`, permission: [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
+-   **hasPermissions**(node: `Node`, permission: [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`, userId?: `string`): `boolean`<br/>
     Checks if the user has permission on that node
     -   _node:_ `Node`  - Node to check permissions
     -   _permission:_ [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`  - Required permission type
+    -   _userId:_ `string`  - (Optional) Optional current user id will be taken by default
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
 
 ## Details
