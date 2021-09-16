@@ -45,7 +45,7 @@ export class AttachFileWidgetDialogService {
      * @param currentFolderId Upload file from specific folder
      * @returns Information about the chosen file(s)
      */
-    openLogin(repository: AlfrescoEndpointRepresentation, currentFolderId = '-my-'): Observable<Node[]> {
+    openLogin(repository: AlfrescoEndpointRepresentation, currentFolderId = '-my-', accountIdentifier?: string): Observable<Node[]> {
         const { title, ecmHost, selected, registerExternalHost } = this.constructPayload(repository);
         const data: AttachFileWidgetDialogComponentData = {
             title,
@@ -54,7 +54,8 @@ export class AttachFileWidgetDialogService {
             currentFolderId,
             isSelectionValid: (entry: Node) => entry.isFile,
             showFilesInResult: true,
-            registerExternalHost
+            registerExternalHost,
+            accountIdentifier
         };
 
         this.openLoginDialog(data, 'adf-attach-file-widget-dialog', '630px');

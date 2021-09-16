@@ -9,6 +9,7 @@ workspace.xml
 dist/
 e2e/.env.cloud
 tmp
+temp
 e2e-output*/
 /e2e/downloads/
 *.npmrc
@@ -28,3 +29,4 @@ out-tsc
 /reports/
 e2e-result-*
 licenses.txt
+.DS_Store
