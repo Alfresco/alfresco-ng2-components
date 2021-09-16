@@ -121,7 +121,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.onPageRendered = this.onPageRendered.bind(this);
         this.randomPdfId = this.generateUuid();
         this.currentScale = this.getUserScaling();
-        this.pdfjsWorkerDestroy$.pipe(takeUntil(this.onDestroy$), catchError(() => null), delay(700)).subscribe(() => this.destroyPdJsWorker());
+        this.pdfjsWorkerDestroy$.pipe(catchError(() => null), delay(700), takeUntil(this.onDestroy$)).subscribe(() => this.destroyPdJsWorker());
     }
 
     getUserScaling(): number {
