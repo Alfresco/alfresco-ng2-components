@@ -1,0 +1,54 @@
+.adf {
+
+    &-people-widget {
+        width: 100%;
+
+        .mat-form-field-label-wrapper {
+            top: 10px;
+        }
+    }
+
+    &-people-widget-list {
+        margin: 5px 0;
+        padding: 10px 0;
+    }
+
+    &-people-widget-row {
+        display: flex;
+        align-items: center;
+    }
+
+    &-people-widget-pic {
+        background: var(--theme-primary-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 100px;
+        color: var(--theme-text-fg-color);
+        font-weight: bolder;
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+
+    &-people-widget-image {
+        margin-left: -44px;
+        left: 21px;
+        background: var(--theme-dialog-bg-color);
+        border-radius: 100px;
+        width: 40px;
+        height: 40px;
+        vertical-align: middle;
+        display: inline-block;
+        padding: 0;
+    }
+
+    &-people-widget-image-row {
+        display: inline-block;
+    }
+
+    &-people-label-name {
+        padding-left: 10px;
+    }
+}

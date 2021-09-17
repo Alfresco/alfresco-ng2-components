@@ -3,8 +3,6 @@
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
 
-    @include adf-hyperlink-widget-theme($theme);
-
     ul > li > form-field > .adf-focus {
         .adf-label {
             color: mat-color($primary);
