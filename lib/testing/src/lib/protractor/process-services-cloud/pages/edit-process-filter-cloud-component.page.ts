@@ -47,6 +47,8 @@ export class EditProcessFilterCloudComponentPage {
     private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`));
     private locatorProcessDefinitionNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`));
     private locatorSuspendedDateRangeDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-suspendedDateRange']`));
+    private locatorStartedDateRangeDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-startedDateRange']`));
+    private locatorCompletedDateRangeDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`));
 
     private locatorSuspendedDateRangeWithin = element(by.css(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`));
 
@@ -59,6 +61,8 @@ export class EditProcessFilterCloudComponentPage {
     orderDropdown = new DropdownPage(this.locatorOrderDropdown);
     processDefinitionNameDropdown = new DropdownPage(this.locatorProcessDefinitionNameDropdown);
     suspendedDateRangeDropdown = new DropdownPage(this.locatorSuspendedDateRangeDropdown);
+    startedDateRangeDropdown = new DropdownPage(this.locatorStartedDateRangeDropdown);
+    completedDateRangeDropdown = new DropdownPage(this.locatorCompletedDateRangeDropdown);
 
     suspendedDateRangeWithin = new DatePickerPage(this.locatorSuspendedDateRangeWithin);
 
@@ -131,6 +135,14 @@ export class EditProcessFilterCloudComponentPage {
 
     setSuspendedDateRangeDropDown(option: string): Promise<void> {
         return this.suspendedDateRangeDropdown.selectDropdownOption(option);
+    }
+
+    setStartedDateRangeDropDown(option: string): Promise<void> {
+        return this.startedDateRangeDropdown.selectDropdownOption(option);
+    }
+
+    setCompletedDateRangeDropDown(option: string): Promise<void> {
+        return this.completedDateRangeDropdown.selectDropdownOption(option);
     }
 
     async setSuspendedDateRangeWithin(start: Date, end: Date) {
