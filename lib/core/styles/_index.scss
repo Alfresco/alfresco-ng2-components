@@ -5,8 +5,6 @@
 
 @import '../form/components/widgets/form.theme';
 
-@import '../comments/comments.theme';
-@import '../layout/components/layout-container/layout-container.theme';
 @import '../layout/components/sidenav-layout/sidenav-layout.theme';
 @import '../templates/empty-content/empty-content.theme';
 @import '../templates/error-content/error-content.theme';
@@ -108,8 +106,6 @@
     }
 
     @include adf-card-view-module-theme($theme);
-    @include adf-task-list-comment-theme($theme);
-    @include adf-layout-container-theme($theme);
     @include adf-empty-content-theme($theme);
     @include adf-error-content-theme($theme);
     @include adf-sidenav-layout-theme($theme);

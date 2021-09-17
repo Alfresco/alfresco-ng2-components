@@ -1,0 +1,39 @@
+.adf-comments-container {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
+.adf-comments-header {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--theme-fg-divider);
+}
+
+.adf-comments-input-container {
+    width: calc(100% - 30px);
+    padding: 8px 15px 0;
+    border-bottom: 1px solid var(--theme-fg-divider);
+
+    textarea {
+        resize: vertical;
+    }
+}
+
+.adf-comments-input-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.adf-full-width {
+    width: 100%;
+}
+
+adf-comment-list {
+    float: left;
+    overflow: auto;
+    height: calc(100% - 101px);
+    width: 100%;
+}
