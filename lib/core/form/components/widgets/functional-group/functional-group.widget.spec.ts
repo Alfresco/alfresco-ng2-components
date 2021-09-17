@@ -15,23 +15,21 @@
  * limitations under the License.
  */
 
-import { ElementRef } from '@angular/core';
-import { Observable } from 'rxjs';
+import { of, timer } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { GroupModel } from '../core/group.model';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
-import { AlfrescoApiService } from '../../../../services';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule, setupTestBed } from '../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('FunctionalGroupWidgetComponent', () => {
+    let fixture: ComponentFixture<FunctionalGroupWidgetComponent>;
+    let component: FunctionalGroupWidgetComponent;
     let formService: FormService;
-    let elementRef: ElementRef;
-    let widget: FunctionalGroupWidgetComponent;
-    let alfrescoApiService: AlfrescoApiService;
+    let getWorkflowGroupsSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [
@@ -41,71 +39,46 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     beforeEach(() => {
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        formService = TestBed.inject(FormService);
+        getWorkflowGroupsSpy = spyOn(formService, 'getWorkflowGroups').and.returnValue(of([]));
 
-        formService = new FormService(null, alfrescoApiService, null);
-        elementRef = new ElementRef(null);
-        widget = new FunctionalGroupWidgetComponent(formService, elementRef);
-        widget.field = new FormFieldModel(new FormModel());
+        fixture = TestBed.createComponent(FunctionalGroupWidgetComponent);
+        component = fixture.componentInstance;
+        component.field = new FormFieldModel(new FormModel());
+        fixture.detectChanges();
     });
 
-    it('should setup text from underlying field on init', () => {
+    afterEach(() => getWorkflowGroupsSpy.calls.reset());
+
+    it('should setup text from underlying field on init', async () => {
         const group: GroupModel = { name: 'group-1'};
-        widget.field.value = group;
+        component.field.value = group;
+        component.ngOnInit();
 
-        spyOn(formService, 'getWorkflowGroups').and.returnValue(
-            new Observable((observer) => {
-                observer.next(null);
-                observer.complete();
-            })
-        );
-
-        widget.ngOnInit();
-        expect(formService.getWorkflowGroups).toHaveBeenCalled();
-        expect(widget.value).toBe(group.name);
+        await timer(300).toPromise();
+        expect(getWorkflowGroupsSpy).toHaveBeenCalled();
+        expect(component.field.value).toEqual({ name: group.name });
     });
 
     it('should not setup text on init', () => {
-        widget.field.value = null;
-        widget.ngOnInit();
-        expect(widget.value).toBeUndefined();
-    });
-
-    it('should require form field to setup values on init', () => {
-        widget.field = null;
-        widget.ngOnInit();
-
-        expect(widget.value).toBeUndefined();
-        expect(widget.groupId).toBeUndefined();
+        component.field.value = null;
+        component.ngOnInit();
+        expect(component.searchTerm.value).toBeNull();
     });
 
     it('should setup group restriction', () => {
-        widget.ngOnInit();
-        expect(widget.groupId).toBeUndefined();
+        component.ngOnInit();
+        expect(component.groupId).toBeUndefined();
 
-        widget.field.params = { restrictWithGroup: { id: '<id>' } };
-        widget.ngOnInit();
-        expect(widget.groupId).toBe('<id>');
-    });
-
-    it('should prevent default behaviour on option item click', () => {
-        const event = jasmine.createSpyObj('event', ['preventDefault']);
-        widget.onItemClick(null, event);
-        expect(event.preventDefault).toHaveBeenCalled();
-    });
-
-    it('should update values on item click', () => {
-        const item: GroupModel = { name: 'group-1' };
-
-        widget.onItemClick(item, null);
-        expect(widget.field.value).toBe(item);
-        expect(widget.value).toBe(item.name);
+        component.field.params = { restrictWithGroup: { id: '<id>' } };
+        component.ngOnInit();
+        expect(component.groupId).toBe('<id>');
     });
 
     it('should update form on value flush', () => {
-        spyOn(widget.field, 'updateForm').and.callThrough();
-        widget.flushValue();
-        expect(widget.field.updateForm).toHaveBeenCalled();
+        spyOn(component.field, 'updateForm').and.callThrough();
+        component.updateOption();
+        expect(component.field.updateForm).toHaveBeenCalled();
     });
 
     it('should flush selected value', () => {
@@ -113,98 +86,62 @@ describe('FunctionalGroupWidgetComponent', () => {
             { id: '1', name: 'group 1' },
             { id: '2', name: 'group 2' }
         ];
+        getWorkflowGroupsSpy.and.returnValue(of(groups));
 
-        widget.groups = groups;
-        widget.value = 'group 2';
-        widget.flushValue();
+        component.updateOption(groups[1]);
 
-        expect(widget.value).toBe(groups[1].name);
-        expect(widget.field.value).toBe(groups[1]);
+        expect(component.field.value).toBe(groups[1]);
     });
 
-    it('should be case insensitive when flushing value', () => {
-        const groups: GroupModel[] = [
-            { id: '1', name: 'group 1' },
-            { id: '2', name: 'gRoUp 2' }
-        ];
-
-        widget.groups = groups;
-        widget.value = 'GROUP 2';
-        widget.flushValue();
-
-        expect(widget.value).toBe(groups[1].name);
-        expect(widget.field.value).toBe(groups[1]);
-    });
-
-    it('should fetch groups and show popup on key up', () => {
+    it('should fetch groups and show popup on key up',  async () => {
         const groups: GroupModel[] = [{}, {}];
-        spyOn(formService, 'getWorkflowGroups').and.returnValue(
-            new Observable((observer) => {
-                observer.next(groups);
-                observer.complete();
-            })
-        );
+        getWorkflowGroupsSpy.and.returnValue(of(groups));
 
-        const keyboardEvent = new KeyboardEvent('keypress');
-        widget.value = 'group';
-        widget.onKeyUp(keyboardEvent);
+        component.searchTerm.setValue('group');
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        expect(formService.getWorkflowGroups).toHaveBeenCalledWith('group', undefined);
-        expect(widget.groups).toBe(groups);
+        await timer(300).toPromise();
+        expect(getWorkflowGroupsSpy).toHaveBeenCalledWith('group', undefined);
     });
 
-    it('should fetch groups with a group filter', () => {
+    it('should fetch groups with a group filter', async () => {
         const groups: GroupModel[] = [{}, {}];
-        spyOn(formService, 'getWorkflowGroups').and.returnValue(
-            new Observable((observer) => {
-                observer.next(groups);
-                observer.complete();
-            })
-        );
+        getWorkflowGroupsSpy.and.returnValue(of(groups));
+        component.groupId = 'parentGroup';
+        component.searchTerm.setValue('group');
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        const keyboardEvent = new KeyboardEvent('keypress');
-        widget.groupId = 'parentGroup';
-        widget.value = 'group';
-        widget.onKeyUp(keyboardEvent);
-
-        expect(formService.getWorkflowGroups).toHaveBeenCalledWith('group', 'parentGroup');
-        expect(widget.groups).toBe(groups);
+        await timer(300).toPromise();
+        expect(getWorkflowGroupsSpy).toHaveBeenCalledWith('group', 'parentGroup');
     });
 
-    it('should hide popup when fetching empty group list', () => {
-        spyOn(formService, 'getWorkflowGroups').and.returnValue(
-            new Observable((observer) => {
-                observer.next(null);
-                observer.complete();
-            })
-        );
+    it('should hide popup when fetching empty group list', async () => {
+        component.searchTerm.setValue('group');
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        const keyboardEvent = new KeyboardEvent('keypress');
-        widget.value = 'group';
-        widget.onKeyUp(keyboardEvent);
-
-        expect(formService.getWorkflowGroups).toHaveBeenCalledWith('group', undefined);
-        expect(widget.groups.length).toBe(0);
+        await timer(300).toPromise();
+        expect(getWorkflowGroupsSpy).toHaveBeenCalledWith('group', undefined);
     });
 
-    it('should not fetch groups when value is missing', () => {
-        spyOn(formService, 'getWorkflowGroups').and.stub();
+    it('should not fetch groups when value is missing', async  () => {
+        component.searchTerm.setValue('');
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        const keyboardEvent = new KeyboardEvent('keypress');
-        widget.value = null;
-        widget.onKeyUp(keyboardEvent);
-
-        expect(formService.getWorkflowGroups).not.toHaveBeenCalled();
+        await timer(300).toPromise();
+        expect(getWorkflowGroupsSpy).not.toHaveBeenCalled();
     });
 
-    it('should not fetch groups when value violates constraints', () => {
-        spyOn(formService, 'getWorkflowGroups').and.stub();
+    it('should not fetch groups when value violates constraints', async () => {
+        component.minTermLength = 4;
+        component.searchTerm.setValue('123');
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-        const keyboardEvent = new KeyboardEvent('keypress');
-        widget.minTermLength = 4;
-        widget.value = '123';
-        widget.onKeyUp(keyboardEvent);
-
-        expect(formService.getWorkflowGroups).not.toHaveBeenCalled();
+        await timer(300).toPromise();
+        expect(getWorkflowGroupsSpy).not.toHaveBeenCalled();
     });
 });

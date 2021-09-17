@@ -29,8 +29,7 @@ import {
     catchError,
     distinctUntilChanged,
     map,
-    switchMap,
-    tap
+   switchMap
 } from 'rxjs/operators';
 
 @Component({
@@ -55,29 +54,20 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     input: ElementRef;
 
     @Output()
-    peopleSelected: EventEmitter<number>;
+    peopleSelected: EventEmitter<number> = new EventEmitter();
 
     groupId: string;
     value: any;
 
     searchTerm = new FormControl();
-    errorMsg = '';
     searchTerms$: Observable<any> = this.searchTerm.valueChanges;
 
     users$ = this.searchTerms$.pipe(
-        tap(() => {
-            this.errorMsg = '';
-        }),
         distinctUntilChanged(),
         switchMap((searchTerm) => {
             const value = searchTerm.email ? this.getDisplayName(searchTerm) : searchTerm;
             return this.formService.getWorkflowUsers(value, this.groupId)
-                .pipe(
-                    catchError((err) => {
-                        this.errorMsg = err.message;
-                        return of();
-                    })
-                );
+                .pipe(catchError(() => of([])));
         }),
         map((list: UserProcessModel[]) => {
             const value = this.searchTerm.value.email ? this.getDisplayName(this.searchTerm.value) : this.searchTerm.value;
@@ -88,7 +78,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService, public peopleProcessService: PeopleProcessService) {
         super(formService);
-        this.peopleSelected = new EventEmitter();
     }
 
     ngOnInit() {

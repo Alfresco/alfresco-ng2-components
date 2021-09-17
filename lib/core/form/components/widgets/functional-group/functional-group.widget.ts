@@ -17,11 +17,13 @@
 
  /* tslint:disable:component-selector  */
 
-import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from './../core/group.model';
 import { WidgetComponent } from './../widget.component';
+import { catchError, debounceTime, filter, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, merge, of } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'functional-group-widget',
@@ -42,11 +44,17 @@ import { WidgetComponent } from './../widget.component';
 })
 export class FunctionalGroupWidgetComponent extends WidgetComponent implements OnInit {
 
-    value: string;
-    oldValue: string;
-    groups: GroupModel[] = [];
     minTermLength: number = 1;
     groupId: string;
+    searchTerm = new FormControl();
+    initialValue$ = new BehaviorSubject(null);
+    groups$ = merge(this.searchTerm.valueChanges, this.initialValue$.asObservable()).pipe(
+        tap((group) => this.validateGroup(group)),
+        filter((group: string | GroupModel) => typeof group === 'string' && group.length >= this.minTermLength),
+        debounceTime(300),
+        switchMap((searchTerm: string) => this.formService.getWorkflowGroups(searchTerm, this.groupId)
+            .pipe(catchError(() => of([]))))
+    );
 
     constructor(public formService: FormService,
                 public elementRef: ElementRef) {
@@ -55,65 +63,55 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
 
     ngOnInit() {
         if (this.field) {
-            const group = this.field.value;
-            if (group) {
-                this.value = group.name;
+
+            if (this.field.readOnly) {
+                this.searchTerm.disable();
             }
 
             const params = this.field.params;
-            if (params && params['restrictWithGroup']) {
-                const restrictWithGroup = <GroupModel> params['restrictWithGroup'];
+            if (params && params.restrictWithGroup) {
+                const restrictWithGroup = <GroupModel> params.restrictWithGroup;
                 this.groupId = restrictWithGroup.id;
             }
 
             // Load auto-completion for previously saved value
-            if (this.value) {
-                this.formService
-                    .getWorkflowGroups(this.value, this.groupId)
-                    .subscribe(groups => this.groups = groups || []);
+            if (this.field.value?.name) {
+                this.searchTerm.setValue(this.field.value.name);
+                this.initialValue$.next(this.field.value.name);
             }
         }
     }
 
-    onKeyUp(event: KeyboardEvent) {
-        if (this.value && this.value.length >= this.minTermLength  && this.oldValue !== this.value) {
-            if (event.keyCode !== ESCAPE && event.keyCode !== ENTER) {
-                this.oldValue = this.value;
-                this.formService
-                    .getWorkflowGroups(this.value, this.groupId)
-                    .subscribe(groups => this.groups = groups || []);
-            }
-        }
-    }
-
-    flushValue() {
-        const option = this.groups.find((item) => item.name.toLocaleLowerCase() === this.value.toLocaleLowerCase());
-
+   updateOption(option?: GroupModel) {
         if (option) {
             this.field.value = option;
-            this.value = option.name;
         } else {
             this.field.value = null;
-            this.value = null;
         }
 
         this.field.updateForm();
     }
 
-    onItemClick(item: GroupModel, event: Event) {
-        if (item) {
-            this.field.value = item;
-            this.value = item.name;
+    validateGroup(group: GroupModel) {
+        const isEmpty = !this.field.required && !group;
+        const hasValue = this.field.required && group.name;
+        if (isEmpty) {
+            this.updateOption();
         }
-        if (event) {
-            event.preventDefault();
+
+        if (hasValue || isEmpty) {
+            this.field.validate();
+            this.field.form.validateForm();
+        } else {
+            this.field.markAsInvalid();
+            this.field.form.markAsInvalid();
         }
     }
 
-    onItemSelect(item: GroupModel) {
-        if (item) {
-            this.field.value = item;
-            this.value = item.name;
+    getDisplayName(model: GroupModel | string) {
+        if (model) {
+            return typeof model === 'string' ? model : model.name;
         }
+        return '';
     }
 }
