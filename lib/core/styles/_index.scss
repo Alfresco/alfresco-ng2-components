@@ -2,7 +2,6 @@
 @import './theming';
 
 @import '../card-view/card-view.theme';
-@import '../form/components/widgets/dynamic-table/dynamic-table.theme';
 @import '../form/components/widgets/form.theme';
 @import '../form/components/widgets/hyperlink/hyperlink.theme';
 @import '../form/components/widgets/amount/amount.theme';
@@ -111,7 +110,6 @@
     }
 
     @include adf-card-view-module-theme($theme);
-    @include adf-dynamic-table-theme($theme);
     @include adf-form-theme($theme);
     @include adf-hyperlink-widget-theme($theme);
     @include adf-amount-widget-theme($theme);
