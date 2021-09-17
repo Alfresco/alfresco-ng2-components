@@ -6,7 +6,6 @@
 @import '../form/components/widgets/form.theme';
 
 @import '../info-drawer/info-drawer-layout.theme';
-@import '../form/components/form-renderer.theme';
 @import '../layout/components/sidebar-action/sidebar-action-menu.theme';
 @import '../layout/components/header/header.theme';
 @import '../comments/comment-list.theme';
@@ -90,11 +89,13 @@
         // fonts
         // --theme-font-family: mat-font-family($alfresco-typography),
         // --theme-body-1-font-size: mat-font-size($alfresco-typography, body-1),
+        --theme-body-2-font-size: mat-font-size($alfresco-typography, body-2),
         // --theme-body-1-line-height: mat-line-height($alfresco-typography, body-1),
-        // --theme-caption-font-size: mat-font-size($alfresco-typography, caption),
-        // --theme-title-font-size: mat-font-size($alfresco-typography, title),
-        // --theme-subheading-2-font-size: mat-font-size($alfresco-typography, subheading-2),
+        --theme-caption-font-size: mat-font-size($alfresco-typography, caption),
+        --theme-title-font-size: mat-font-size($alfresco-typography, title),
+        --theme-subheading-2-font-size: mat-font-size($alfresco-typography, subheading-2),
         // --theme-button-font-size: mat-font-size($alfresco-typography, button),
+        --theme-headline-line-height: mat-line-height($alfresco-typography, headline),
 
         // specific colors
         // --theme-colors-mat-grey: mat-color($mat-grey, A200),
@@ -110,7 +111,6 @@
 
     @include adf-card-view-module-theme($theme);
     @include adf-info-drawer-theme($theme);
-    @include adf-form-renderer-theme($theme);
     @include adf-sidebar-action-menu-theme($theme);
     @include adf-task-list-comment-list-theme($theme);
     @include adf-task-list-comment-theme($theme);
