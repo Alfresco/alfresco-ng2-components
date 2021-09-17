@@ -1,95 +1,86 @@
-@mixin adf-form-theme($theme) {
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $warn: map-get($theme, warn);
+ul > li > form-field > .adf-focus {
+    .adf-label {
+        color: var(--theme-primary-color);
+    }
+}
 
-    ul > li > form-field > .adf-focus {
+.adf {
+
+    &-error-text-container {
+        height: 20px;
+        margin-top: -12px;
+    }
+
+    &-error-text {
+        padding: 1px;
+        height: 16px;
+        font-size: 12px;
+        line-height: 1.33;
+        float: left;
+        color: var(--theme-warn-color);
+    }
+
+    &-error-icon {
+        float: right;
+        font-size: 17px;
+        color: var(--theme-warn-color);
+    }
+
+    &-label {
+        color: rgb(186, 186, 186);;
+    }
+
+    &-invalid {
+
+        .mat-form-field-underline {
+            background-color: #f44336 !important;
+        }
+
+        .mat-checkbox {
+            color: var(--theme-warn-color);
+            .mat-checkbox-frame {
+                border-color: var(--theme-warn-color);
+            }
+        }
+
+        .mat-select {
+
+            &-value {
+                color: var(--theme-warn-color);
+            }
+            &-arrow {
+                color: var(--theme-warn-color);
+            }
+
+        }
+
+        .adf-file {
+            border-color: var(--theme-warn-color);
+        }
+
+        .mat-form-field-prefix {
+            color: var(--theme-warn-color);
+        }
+
+        .adf-input {
+            border-color: var(--theme-warn-color);
+        }
+
         .adf-label {
-            color: mat-color($primary);
-        }
-    }
-
-    .adf {
-
-        &-error-text-container {
-            height: 20px;
-            margin-top: -12px;
-        }
-
-        &-error-text {
-            padding: 1px;
-            height: 16px;
-            font-size: 12px;
-            line-height: 1.33;
-            float: left;
-            color: mat-color($warn);
-        }
-
-        &-error-icon {
-            float: right;
-            font-size: 17px;
-            color: mat-color($warn);
-        }
-
-        &-label {
-            color: rgb(186, 186, 186);;
-        }
-
-        &-invalid {
-
-            .mat-form-field-underline {
-                background-color: #f44336 !important;
-            }
-
-            .mat-checkbox {
-                color: mat-color($warn);
-                .mat-checkbox-frame {
-                    border-color: mat-color($warn);
-                }
-            }
-
-            .mat-select {
-
-                &-value {
-                    color: mat-color($warn);
-                }
-                &-arrow {
-                    color: mat-color($warn);
-                }
-
-            }
-
-            .adf-file {
-                border-color: mat-color($warn);
-            }
-
-            .mat-form-field-prefix {
-                color: mat-color($warn);
-            }
-
-            .adf-input {
-                border-color: mat-color($warn);
-            }
-
-            .adf-label {
-                color: mat-color($warn);
-                &::after {
-                    background-color: mat-color($warn);
-                }
+            color: var(--theme-warn-color);
+            &::after {
+                background-color: var(--theme-warn-color);
             }
         }
     }
+}
 
 
-    /* query for Microsoft IE 11*/
-    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-        adf-form-field {
-            .mat-input-element, .mat-select, .mat-form-field {
-                display: block !important;
-            }
+/* query for Microsoft IE 11*/
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+    adf-form-field {
+        .mat-input-element, .mat-select, .mat-form-field {
+            display: block !important;
         }
     }
-
-
-
 }

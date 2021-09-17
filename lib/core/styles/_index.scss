@@ -2,7 +2,9 @@
 @import './theming';
 
 @import '../card-view/card-view.theme';
+
 @import '../form/components/widgets/form.theme';
+
 @import '../info-drawer/info-drawer-layout.theme';
 @import '../form/components/form-renderer.theme';
 @import '../layout/components/sidebar-action/sidebar-action-menu.theme';
@@ -107,7 +109,6 @@
     }
 
     @include adf-card-view-module-theme($theme);
-    @include adf-form-theme($theme);
     @include adf-info-drawer-theme($theme);
     @include adf-form-renderer-theme($theme);
     @include adf-sidebar-action-menu-theme($theme);
