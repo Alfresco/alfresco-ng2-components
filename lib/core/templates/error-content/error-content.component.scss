@@ -1,0 +1,61 @@
+.adf-error-content {
+    color: var(--theme-text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    &-code {
+        font-size: 110px;
+        font-weight: 300;
+        margin-top: 200px;
+        margin-bottom: 45px;
+    }
+
+    &-shadow {
+        width: 170px;
+        height: 3px;
+        opacity: 0.54;
+        box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.39);
+    }
+
+    &-title {
+        font-size: 46px;
+        font-weight: normal;
+        margin-top: 40px;
+        margin-bottom: 10px;
+    }
+
+    &-description {
+        font-size: 24px;
+        font-weight: normal;
+        text-align: center;
+        width: 50%;
+        min-width: 250px;
+        margin-bottom: 60px;
+        line-height: 30px;
+    }
+}
+
+@media screen and (max-width: 959px) {
+    .adf-error-content {
+
+        &-code {
+            margin-top: 100px;
+            font-size: 50px;
+            margin-bottom: 25px;
+        }
+
+        &-shadow {
+            width: 100px;
+        }
+
+        &-title {
+            font-size: 24px;
+        }
+
+        &-description {
+            font-size: 17px;
+        }
+    }
+}

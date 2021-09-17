@@ -5,7 +5,6 @@
 
 @import '../form/components/widgets/form.theme';
 
-@import '../templates/error-content/error-content.theme';
 @import '../clipboard/clipboard.theme';
 @import '../search-text/search-text-input.theme';
 @import './snackbar.theme';
@@ -105,7 +104,6 @@
     }
 
     @include adf-card-view-module-theme($theme);
-    @include adf-error-content-theme($theme);
     @include adf-clipboard-theme($theme);
     @include adf-snackbar-theme();
     @include adf-material-theme();
