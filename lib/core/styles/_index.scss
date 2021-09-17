@@ -4,8 +4,8 @@
 @import '../card-view/card-view.theme';
 
 @import '../form/components/widgets/form.theme';
-
 @import '../clipboard/clipboard.theme';
+
 @import '../search-text/search-text-input.theme';
 @import './snackbar.theme';
 @import '../directives/tooltip-card/tooltip-card.theme';
@@ -104,7 +104,6 @@
     }
 
     @include adf-card-view-module-theme($theme);
-    @include adf-clipboard-theme($theme);
     @include adf-snackbar-theme();
     @include adf-material-theme();
     @include adf-search-text-input-theme($theme);
