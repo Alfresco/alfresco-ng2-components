@@ -20,6 +20,7 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { PeopleCloudComponentPage } from './people-cloud-component.page';
+import { DatePickerPage } from '../../core/pages/material/date-picker.page';
 
 export interface FilterProps {
     name?: string;
@@ -28,6 +29,7 @@ export interface FilterProps {
     order?: string;
     initiator?: string;
     processName?: string;
+    suspendedDateRange?: string;
 }
 
 export class EditProcessFilterCloudComponentPage {
@@ -44,6 +46,10 @@ export class EditProcessFilterCloudComponentPage {
     private locatorSortDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-sort']`));
     private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`));
     private locatorProcessDefinitionNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`));
+    private locatorSuspendedDateRangeDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-suspendedDateRange']`));
+
+    private locatorSuspendedDateRangeWithin = element(by.css(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`));
+
     private expansionPanelExtended = this.rootElement.element(by.css('mat-expansion-panel-header.mat-expanded'));
     private content = this.rootElement.element(by.css('div.mat-expansion-panel-content[style*="visible"]'));
 
@@ -52,6 +58,10 @@ export class EditProcessFilterCloudComponentPage {
     sortDropdown = new DropdownPage(this.locatorSortDropdown);
     orderDropdown = new DropdownPage(this.locatorOrderDropdown);
     processDefinitionNameDropdown = new DropdownPage(this.locatorProcessDefinitionNameDropdown);
+    suspendedDateRangeDropdown = new DropdownPage(this.locatorSuspendedDateRangeDropdown);
+
+    suspendedDateRangeWithin = new DatePickerPage(this.locatorSuspendedDateRangeWithin);
+
     peopleCloudComponent = new PeopleCloudComponentPage();
 
     editProcessFilterDialogPage = new EditProcessFilterDialogPage();
@@ -117,6 +127,15 @@ export class EditProcessFilterCloudComponentPage {
 
     setProcessDefinitionNameDropDown(option: string): Promise<void> {
         return this.processDefinitionNameDropdown.selectDropdownOption(option);
+    }
+
+    setSuspendedDateRangeDropDown(option: string): Promise<void> {
+        return this.suspendedDateRangeDropdown.selectDropdownOption(option);
+    }
+
+    async setSuspendedDateRangeWithin(start: Date, end: Date) {
+        await this.setSuspendedDateRangeDropDown('Date within');
+        await this.suspendedDateRangeWithin.setDateRange(start, end);
     }
 
     async getApplicationSelected(): Promise<string> {
@@ -235,6 +254,7 @@ export class EditProcessFilterCloudComponentPage {
         if (props.order) { await this.setOrderFilterDropDown(props.order);   }
         if (props.initiator) { await this.setInitiator(props.initiator);   }
         if (props.processName) { await this.setProcessName(props.processName);   }
+        if (props.suspendedDateRange) { await this.setSuspendedDateRangeDropDown(props.suspendedDateRange); }
         await this.closeFilter();
     }
 }

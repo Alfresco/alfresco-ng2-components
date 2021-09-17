@@ -26,6 +26,7 @@ export class DatePickerCalendarPage {
     nextMonthButton = element(by.css('button[class*="mat-calendar-next-button"]'));
     previousMonthButton = element(by.css('button[class*="mat-calendar-previous-button"]'));
     todayDate = element(by.css('.mat-calendar-body-today'));
+    periodButton = element(by.css('button[class*=mat-calendar-period-button]'));
 
     async getSelectedDate(): Promise<string> {
         return BrowserActions.getAttribute(element(by.css('td[class*="mat-calendar-body-active"]')), 'aria-label');
@@ -78,6 +79,32 @@ export class DatePickerCalendarPage {
         await this.checkDatePickerIsDisplayed();
         await BrowserActions.click(startDayElement);
         await BrowserActions.click(endDayElement);
+        await this.checkDatePickerIsNotDisplayed();
+    }
+
+    private async setDateUsingPeriodButton(date: Date) {
+        const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+        const year = date.getFullYear(), month = months[date.getMonth()], day = date.getDate();
+        const yearElement = element(by.cssContainingText(`div.mat-calendar-body-cell-content.mat-focus-indicator`, `${year}`));
+        const monthElement = element(by.cssContainingText(`div.mat-calendar-body-cell-content.mat-focus-indicator`, `${month}`));
+        const dayElement = element(by.cssContainingText(`div.mat-calendar-body-cell-content.mat-focus-indicator`, `${day}`));
+
+        await BrowserActions.click(this.periodButton);
+        await BrowserActions.click(yearElement);
+        await BrowserActions.click(monthElement);
+        await BrowserActions.click(dayElement);
+    }
+
+    async selectExactDate(date: Date): Promise<void> {
+        await this.checkDatePickerIsDisplayed();
+        await this.setDateUsingPeriodButton(date);
+        await this.checkDatePickerIsNotDisplayed();
+    }
+
+    async selectExactDateRange(start: Date, end: Date): Promise<void> {
+        await this.checkDatePickerIsDisplayed();
+        await this.setDateUsingPeriodButton(start);
+        await this.setDateUsingPeriodButton(end);
         await this.checkDatePickerIsNotDisplayed();
     }
 }
