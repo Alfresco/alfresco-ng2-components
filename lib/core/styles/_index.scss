@@ -6,7 +6,6 @@
 @import '../form/components/widgets/form.theme';
 
 @import '../info-drawer/info-drawer-layout.theme';
-@import '../layout/components/header/header.theme';
 @import '../comments/comment-list.theme';
 @import '../comments/comments.theme';
 @import '../layout/components/layout-container/layout-container.theme';
@@ -115,7 +114,6 @@
     @include adf-layout-container-theme($theme);
     @include adf-empty-content-theme($theme);
     @include adf-error-content-theme($theme);
-    @include adf-header-layout-theme($theme);
     @include adf-sidenav-layout-theme($theme);
     @include adf-clipboard-theme($theme);
     @include adf-snackbar-theme();
