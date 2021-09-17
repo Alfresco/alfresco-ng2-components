@@ -1,0 +1,39 @@
+@import '~@angular/flex-layout/mq';
+@import '../../../styles/mixins';
+
+.adf-sidenav-layout {
+
+    &-full-space {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        height: 100%;
+        overflow: hidden;
+        min-height: 0;
+        width: 100%;
+    }
+
+    @include flex-column;
+    width: 100%;
+
+    .adf-layout__content {
+        flex: 1 1 auto;
+    }
+
+    router-outlet {
+        flex: 0 0;
+    }
+
+    @include layout-bp(lt-sm) {
+        .mat-drawer {
+            width: calc(-50px + 100vw) !important;
+            max-width: 300px !important;
+        }
+    }
+
+    .mat-drawer-content {
+        @include flex-column;
+        position: unset;
+        overflow: auto;
+    }
+}
