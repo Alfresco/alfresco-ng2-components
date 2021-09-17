@@ -6,7 +6,6 @@
 @import '../form/components/widgets/form.theme';
 
 @import '../info-drawer/info-drawer-layout.theme';
-@import '../layout/components/sidebar-action/sidebar-action-menu.theme';
 @import '../layout/components/header/header.theme';
 @import '../comments/comment-list.theme';
 @import '../comments/comments.theme';
@@ -111,7 +110,6 @@
 
     @include adf-card-view-module-theme($theme);
     @include adf-info-drawer-theme($theme);
-    @include adf-sidebar-action-menu-theme($theme);
     @include adf-task-list-comment-list-theme($theme);
     @include adf-task-list-comment-theme($theme);
     @include adf-layout-container-theme($theme);

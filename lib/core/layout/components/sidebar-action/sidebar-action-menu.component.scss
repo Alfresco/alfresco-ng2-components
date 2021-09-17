@@ -1,0 +1,56 @@
+@import '~@angular/material/theming';
+
+.adf {
+    &-sidebar-action-menu {
+        & .mat-raised-button {
+            width: 100%;
+            display: block;
+            box-shadow: none !important;
+            height: 37.5px;
+            font-weight: bold;
+            background-color: var(--theme-primary-color);
+            color: var(--theme-primary-color-default-contrast) !important;
+            border-radius: 4px;
+            & mat-icon {
+                width: 24px;
+                height: 25px;
+                color: var(--theme-primary-color-default-contrast) !important;
+            }
+        }
+        &-text {
+            width: 100%;
+            height: 20px;
+            text-align: left;
+        }
+    }
+    &-sidebar-action-menu-icon {
+        margin: 18px 0 0 20px;
+        color: var(--theme-text-color);
+        cursor: pointer;
+        &:hover {
+            color: var(--theme-primary-color);
+        }
+    }
+    &-sidebar-action-menu-options {
+        text-align: left;
+        letter-spacing: -0.4px;
+
+        .mat-menu-item {
+            font-size: 14px;
+            color: var(--theme-text-bold-color);
+            text-align: left;
+            line-height: 1.5;
+            letter-spacing: -0.4px;
+        }
+        .mat-menu-item:hover {
+            color: var(--theme-primary-color);
+            opacity: inherit;
+        }
+    }
+    &-sidebar-action-menu-panel {
+        margin-top: 7.5px;
+        border-radius: 2px;
+
+        @include mat-elevation(2);
+    }
+}
