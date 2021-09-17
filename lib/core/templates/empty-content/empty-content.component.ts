@@ -20,6 +20,7 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@a
 @Component({
     selector: 'adf-empty-content',
     templateUrl: './empty-content.component.html',
+    styleUrls: ['./empty-content.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-empty-content' }

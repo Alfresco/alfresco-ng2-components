@@ -5,7 +5,6 @@
 
 @import '../form/components/widgets/form.theme';
 
-@import '../templates/empty-content/empty-content.theme';
 @import '../templates/error-content/error-content.theme';
 @import '../clipboard/clipboard.theme';
 @import '../search-text/search-text-input.theme';
@@ -86,6 +85,7 @@
         // --theme-body-1-font-size: mat-font-size($alfresco-typography, body-1),
         --theme-body-2-font-size: mat-font-size($alfresco-typography, body-2),
         // --theme-body-1-line-height: mat-line-height($alfresco-typography, body-1),
+        --theme-display-3-font-size: mat-font-size($alfresco-typography, display-3),
         --theme-caption-font-size: mat-font-size($alfresco-typography, caption),
         --theme-title-font-size: mat-font-size($alfresco-typography, title),
         --theme-subheading-2-font-size: mat-font-size($alfresco-typography, subheading-2),
@@ -105,7 +105,6 @@
     }
 
     @include adf-card-view-module-theme($theme);
-    @include adf-empty-content-theme($theme);
     @include adf-error-content-theme($theme);
     @include adf-clipboard-theme($theme);
     @include adf-snackbar-theme();
