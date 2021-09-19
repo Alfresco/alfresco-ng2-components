@@ -42,6 +42,7 @@ export class ContentNodeSelectorDialogPage {
     tabPage: TabPage = new TabPage();
     uploadButtonComponent = new UploadButtonPage();
 
+    uploadFromLocalTab = element.all(by.css('*[role="tab"]')).get(1);
     uploadFromLocalTabName = 'Upload from your device';
     repositoryTabName = 'Repository';
 
@@ -188,5 +189,11 @@ export class ContentNodeSelectorDialogPage {
 
     contentListPage(): DocumentListPage {
         return this.contentList;
+    }
+
+    async checkUploadFromLocalTabIsDisabled() {
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFromLocalTab);
+        const disabled = await BrowserActions.getAttribute(this.uploadFromLocalTab, 'aria-disabled');
+        expect(disabled).toBe('true');
     }
 }
