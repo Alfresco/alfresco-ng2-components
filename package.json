@@ -129,7 +129,7 @@
     "commander": "6.2.1",
     "concurrently": "^6.2.1",
     "cspell": "^5.5.1",
-    "css-loader": "^5.2.6",
+    "css-loader": "^6.3.0",
     "dotenv": "^8.2.0",
     "github-api": "^3.4.0",
     "graphql": "^15.4.0",
