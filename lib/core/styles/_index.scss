@@ -7,8 +7,6 @@
 @import '../clipboard/clipboard.theme';
 
 @import './snackbar.theme';
-@import '../directives/tooltip-card/tooltip-card.theme';
-@import '../notifications/components/notification-history.theme';
 @import './material.theme';
 
 @mixin adf-core-theme($theme) {
@@ -48,6 +46,7 @@
         --adf-comment-list-ripple-color: mat-color($primary, 300),
         --adf-search-input-bg-color: mat-color($primary, 50),
         --adf-search-input-highlight-color: mat-color($primary, 900),
+        --adf-tooltip-card-color: mat-color($foreground, text, 0.75),
 
         --theme-hover-bg-color: mat-color($background, hover),
         --theme-text-color: mat-color($foreground, text, 0.54),
@@ -93,7 +92,7 @@
         --theme-headline-line-height: mat-line-height($alfresco-typography, headline),
 
         // specific colors
-        // --theme-colors-mat-grey: mat-color($mat-grey, A200),
+        --theme-colors-mat-grey: mat-color($mat-grey, A200),
         // --theme-colors-mat-blue: mat-color($mat-blue, 50)
     );
 
@@ -107,6 +106,4 @@
     @include adf-card-view-module-theme($theme);
     @include adf-snackbar-theme();
     @include adf-material-theme();
-    @include adf-tooltip-card-directive($theme);
-    @include adf-notification-history-theme($theme);
 }

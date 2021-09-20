@@ -1,0 +1,32 @@
+@import '~@angular/material/theming';
+
+:host {
+    display: block;
+}
+
+div.adf-tooltip-card {
+    @include mat-elevation(8);
+    background-color: var(--theme-card-bg-color);
+    border: 1px solid var(--theme-primary-color);
+    padding: 12px;
+    border-radius: 6px;
+
+    p, div {
+        font-size: var(--theme-caption-font-size);
+        color: var(--adf-tooltip-card-color);
+        margin: 0;
+    }
+
+    hr {
+        border: 1px solid var(--theme-primary-color);
+        margin: 6px 0;
+    }
+
+    img {
+        border-radius: 6px;
+    }
+}
+
+::ng-deep .cdk-overlay-connected-position-bounding-box {
+    margin-top: 10px !important;
+}
