@@ -22,7 +22,7 @@ import { FormService } from '../../../services/form.service';
 import { GroupModel } from './../core/group.model';
 import { WidgetComponent } from './../widget.component';
 import { catchError, debounceTime, filter, switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject, merge, of } from 'rxjs';
+import { merge, of } from 'rxjs';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -47,9 +47,13 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
     minTermLength: number = 1;
     groupId: string;
     searchTerm = new FormControl();
-    initialValue$ = new BehaviorSubject(null);
-    groups$ = merge(this.searchTerm.valueChanges, this.initialValue$.asObservable()).pipe(
-        tap((group) => this.validateGroup(group)),
+    groups$ = merge(this.searchTerm.valueChanges).pipe(
+        tap((search: GroupModel | string) => {
+            const isValid = typeof search !== 'string';
+            const empty = search === '';
+            this.updateOption( isValid ? search as GroupModel : null );
+            this.validateGroup(isValid, empty);
+        }),
         filter((group: string | GroupModel) => typeof group === 'string' && group.length >= this.minTermLength),
         debounceTime(300),
         switchMap((searchTerm: string) => this.formService.getWorkflowGroups(searchTerm, this.groupId)
@@ -74,10 +78,8 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
                 this.groupId = restrictWithGroup.id;
             }
 
-            // Load auto-completion for previously saved value
             if (this.field.value?.name) {
                 this.searchTerm.setValue(this.field.value.name);
-                this.initialValue$.next(this.field.value.name);
             }
         }
     }
@@ -92,17 +94,16 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         this.field.updateForm();
     }
 
-    validateGroup(group: GroupModel) {
-        const isEmpty = !this.field.required && !group;
-        const hasValue = this.field.required && group.name;
-        if (isEmpty) {
-            this.updateOption();
-        }
+    validateGroup(valid: boolean, empty: boolean) {
+        const isEmpty = !this.field.required && (empty || valid);
+        const hasValue = this.field.required && valid;
 
         if (hasValue || isEmpty) {
+            this.field.validationSummary.message = '';
             this.field.validate();
             this.field.form.validateForm();
         } else {
+            this.field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
             this.field.markAsInvalid();
             this.field.form.markAsInvalid();
         }

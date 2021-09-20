@@ -30,6 +30,10 @@ describe('FunctionalGroupWidgetComponent', () => {
     let component: FunctionalGroupWidgetComponent;
     let formService: FormService;
     let getWorkflowGroupsSpy: jasmine.Spy;
+    const groups: GroupModel[] = [
+        { id: '1', name: 'group 1' },
+        { id: '2', name: 'group 2' }
+    ];
 
     setupTestBed({
         imports: [
@@ -48,16 +52,34 @@ describe('FunctionalGroupWidgetComponent', () => {
         fixture.detectChanges();
     });
 
-    afterEach(() => getWorkflowGroupsSpy.calls.reset());
+    afterEach(() => {
+        getWorkflowGroupsSpy.calls.reset();
+        fixture.destroy();
+    });
+
+    async function typeIntoInput(text: string) {
+        component.searchTerm.setValue(text);
+        fixture.detectChanges();
+
+        await timer(300).toPromise();
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        const input = fixture.nativeElement.querySelector('input');
+        input.focus();
+        input.dispatchEvent(new Event('focusin'));
+        input.dispatchEvent(new Event('input'));
+
+        await fixture.whenStable();
+        fixture.detectChanges();
+    }
 
     it('should setup text from underlying field on init', async () => {
         const group: GroupModel = { name: 'group-1'};
         component.field.value = group;
         component.ngOnInit();
 
-        await timer(300).toPromise();
-        expect(getWorkflowGroupsSpy).toHaveBeenCalled();
-        expect(component.field.value).toEqual({ name: group.name });
+        expect(component.searchTerm.value).toEqual(group.name);
     });
 
     it('should not setup text on init', () => {
@@ -82,10 +104,6 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should flush selected value', () => {
-        const groups: GroupModel[] = [
-            { id: '1', name: 'group 1' },
-            { id: '2', name: 'group 2' }
-        ];
         getWorkflowGroupsSpy.and.returnValue(of(groups));
 
         component.updateOption(groups[1]);
@@ -94,54 +112,40 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should fetch groups and show popup on key up',  async () => {
-        const groups: GroupModel[] = [{}, {}];
-        getWorkflowGroupsSpy.and.returnValue(of(groups));
-
-        component.searchTerm.setValue('group');
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        await timer(300).toPromise();
-        expect(getWorkflowGroupsSpy).toHaveBeenCalledWith('group', undefined);
-    });
-
-    it('should fetch groups with a group filter', async () => {
-        const groups: GroupModel[] = [{}, {}];
-        getWorkflowGroupsSpy.and.returnValue(of(groups));
         component.groupId = 'parentGroup';
-        component.searchTerm.setValue('group');
-        fixture.detectChanges();
-        await fixture.whenStable();
+        getWorkflowGroupsSpy.and.returnValue(of(groups));
 
-        await timer(300).toPromise();
+        await typeIntoInput('group');
+
+        const options: HTMLElement[] = Array.from(document.querySelectorAll('[id="adf-group-label-name"]'));
+        expect(options.map(option => option.innerText)).toEqual(['group 1', 'group 2']);
         expect(getWorkflowGroupsSpy).toHaveBeenCalledWith('group', 'parentGroup');
     });
 
     it('should hide popup when fetching empty group list', async () => {
-        component.searchTerm.setValue('group');
-        fixture.detectChanges();
-        await fixture.whenStable();
+        component.groupId = 'parentGroup';
+        getWorkflowGroupsSpy.and.returnValues(of(groups), of([]));
 
-        await timer(300).toPromise();
-        expect(getWorkflowGroupsSpy).toHaveBeenCalledWith('group', undefined);
+        await typeIntoInput('group');
+
+        let options: HTMLElement[] = Array.from(document.querySelectorAll('[id="adf-group-label-name"]'));
+        expect(options.map(option => option.innerText)).toEqual(['group 1', 'group 2']);
+
+        await typeIntoInput('unknown-group');
+
+        options = Array.from(document.querySelectorAll('[id="adf-group-label-name"]'));
+        expect(options).toEqual([]);
+        expect(getWorkflowGroupsSpy).toHaveBeenCalledTimes(2);
     });
 
     it('should not fetch groups when value is missing', async  () => {
-        component.searchTerm.setValue('');
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        await timer(300).toPromise();
+        await typeIntoInput('');
         expect(getWorkflowGroupsSpy).not.toHaveBeenCalled();
     });
 
     it('should not fetch groups when value violates constraints', async () => {
         component.minTermLength = 4;
-        component.searchTerm.setValue('123');
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        await timer(300).toPromise();
+        await typeIntoInput('123');
         expect(getWorkflowGroupsSpy).not.toHaveBeenCalled();
     });
 });

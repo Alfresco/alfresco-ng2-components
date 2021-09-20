@@ -29,7 +29,8 @@ import {
     catchError,
     distinctUntilChanged,
     map,
-   switchMap
+    switchMap,
+    tap
 } from 'rxjs/operators';
 
 @Component({
@@ -63,6 +64,11 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     searchTerms$: Observable<any> = this.searchTerm.valueChanges;
 
     users$ = this.searchTerms$.pipe(
+        tap((searchInput) => {
+            if (typeof searchInput === 'string') {
+                this.onItemSelect();
+            }
+        }),
         distinctUntilChanged(),
         switchMap((searchTerm) => {
             const value = searchTerm.email ? this.getDisplayName(searchTerm) : searchTerm;
@@ -111,13 +117,13 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     isValidUser(users: UserProcessModel[], name: string): boolean {
         if (users) {
-            return users.find((user) => {
+            return !!users.find((user) => {
                 const selectedUser = this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
                 if (selectedUser) {
                     this.peopleSelected.emit(user && user.id || undefined);
                 }
                 return selectedUser;
-            }) ? true : false;
+            });
         }
         return false;
     }
@@ -130,9 +136,11 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return '';
     }
 
-    onItemSelect(item: UserProcessModel) {
+    onItemSelect(item?: UserProcessModel) {
         if (item) {
             this.field.value = item;
+        } else {
+            this.field.value = null;
         }
     }
 }
