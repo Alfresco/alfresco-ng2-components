@@ -84,8 +84,8 @@ export class DatePickerCalendarPage {
 
     private async setDateUsingPeriodButton(date: Date) {
         const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-        const year = date.getFullYear()
-        const month = months[date.getMonth()]
+        const year = date.getFullYear();
+        const month = months[date.getMonth()];
         const day = date.getDate();
         const yearElement = element(by.cssContainingText(`div.mat-calendar-body-cell-content.mat-focus-indicator`, `${year}`));
         const monthElement = element(by.cssContainingText(`div.mat-calendar-body-cell-content.mat-focus-indicator`, `${month}`));
