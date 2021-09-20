@@ -1,0 +1,30 @@
+$select-filter-height: 4em !default;
+
+.adf-select-filter-input {
+    height: $select-filter-height;
+    display: flex;
+
+    .adf-select-filter-input-container {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        display: flex;
+        z-index: 100;
+        font-size: 14px;
+        color: var(--theme-text-bold-color);
+        line-height: 3em;
+        height: $select-filter-height;
+        padding: 5px 16px 0;
+        background: var(--theme-card-bg-color);
+    }
+
+    .mat-form-field {
+        width: 100%;
+    }
+}
+
+.mat-select-panel.adf-select-filter {
+    transform: none !important;
+    overflow-x: hidden !important;
+    max-height: calc(256px + #{$select-filter-height});
+}

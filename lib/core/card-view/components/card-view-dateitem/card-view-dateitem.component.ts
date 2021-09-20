@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepicker } from '@mat-datetimepicker/core';
 import { MAT_MOMENT_DATETIME_FORMATS, MomentDatetimeAdapter } from '@mat-datetimepicker/moment';
@@ -41,7 +41,9 @@ import { TranslationService } from '../../../services/translation.service';
         { provide: MAT_DATETIME_FORMATS, useValue: MAT_MOMENT_DATETIME_FORMATS }
     ],
     selector: 'adf-card-view-dateitem',
-    templateUrl: './card-view-dateitem.component.html'
+    templateUrl: './card-view-dateitem.component.html',
+    styleUrls: ['./card-view-dateitem.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnDestroy {
 

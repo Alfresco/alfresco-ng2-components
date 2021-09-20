@@ -1,13 +1,10 @@
 @import './default-class';
 @import './theming';
-
-@import '../card-view/card-view.theme';
-
 @import '../form/components/widgets/form.theme';
 @import '../clipboard/clipboard.theme';
-
 @import './snackbar.theme';
 @import './material.theme';
+@import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
 
 @mixin adf-core-theme($theme) {
     $foreground: map-get($theme, foreground);
@@ -47,6 +44,9 @@
         --adf-search-input-bg-color: mat-color($primary, 50),
         --adf-search-input-highlight-color: mat-color($primary, 900),
         --adf-tooltip-card-color: mat-color($foreground, text, 0.75),
+        --adf-card-view-text-color: mat-color($foreground, text, 0.25),
+        --adf-card-view-label-color: mat-color($foreground, text, 0.4),
+        --adf-card-view-datetime-border-color: mat-color($foreground, text, 0.42),
 
         --theme-hover-bg-color: mat-color($background, hover),
         --theme-text-color: mat-color($foreground, text, 0.54),
@@ -103,7 +103,7 @@
         }
     }
 
-    @include adf-card-view-module-theme($theme);
+    @include mat-datetimepicker-theme($theme);
     @include adf-snackbar-theme();
     @include adf-material-theme();
 }

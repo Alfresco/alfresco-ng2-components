@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { CardViewArrayItemModel } from '../../models/card-view-arrayitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BaseCardView } from '../base-card-view';
 
 @Component({
   selector: 'adf-card-view-arrayitem',
-  templateUrl: './card-view-arrayitem.component.html'
+  templateUrl: './card-view-arrayitem.component.html',
+  styleUrls: ['./card-view-arrayitem.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CardViewArrayItemComponent extends BaseCardView<CardViewArrayItemModel> {
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BaseCardView } from '../base-card-view';
@@ -38,7 +38,9 @@ const templateTypes = {
 
 @Component({
     selector: 'adf-card-view-textitem',
-    templateUrl: './card-view-textitem.component.html'
+    templateUrl: './card-view-textitem.component.html',
+    styleUrls: ['./card-view-textitem.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {
 
