@@ -6,7 +6,6 @@
 @import '../form/components/widgets/form.theme';
 @import '../clipboard/clipboard.theme';
 
-@import '../search-text/search-text-input.theme';
 @import './snackbar.theme';
 @import '../directives/tooltip-card/tooltip-card.theme';
 @import '../notifications/components/notification-history.theme';
@@ -47,6 +46,8 @@
         --adf-user-info-color: mat-color($primary, 300),
         --adf-comment-list-primary-color: mat-color($primary, 100),
         --adf-comment-list-ripple-color: mat-color($primary, 300),
+        --adf-search-input-bg-color: mat-color($primary, 50),
+        --adf-search-input-highlight-color: mat-color($primary, 900),
 
         --theme-hover-bg-color: mat-color($background, hover),
         --theme-text-color: mat-color($foreground, text, 0.54),
@@ -106,7 +107,6 @@
     @include adf-card-view-module-theme($theme);
     @include adf-snackbar-theme();
     @include adf-material-theme();
-    @include adf-search-text-input-theme($theme);
     @include adf-tooltip-card-directive($theme);
     @include adf-notification-history-theme($theme);
 }
