@@ -78,36 +78,36 @@ export class EditProcessFilterCloudComponentPage {
         return BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
-    async openFilter(): Promise<void> {
+    async openFilter(){
         await this.isFilterDisplayed();
         await BrowserActions.click(this.customiseFilter);
         await this.checkHeaderIsExpanded();
     }
 
-    async checkHeaderIsExpanded(): Promise<void> {
+    async checkHeaderIsExpanded() {
         await BrowserVisibility.waitUntilElementIsVisible(this.expansionPanelExtended);
         await BrowserVisibility.waitUntilElementIsVisible(this.content);
     }
 
-    async closeFilter(): Promise<void> {
+    async closeFilter() {
         await BrowserActions.click(this.customiseFilter);
         await this.checkHeaderIsCollapsed();
     }
 
-    async checkHeaderIsCollapsed(): Promise<void> {
+    async checkHeaderIsCollapsed() {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.expansionPanelExtended, 1000);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.content, 1000);
     }
 
-    setStatusFilterDropDown(option: string): Promise<void> {
-        return this.statusDropdown.selectDropdownOption(option);
+    async setStatusFilterDropDown(option: string) {
+        await this.statusDropdown.selectDropdownOption(option);
     }
 
     getStateFilterDropDownValue(): Promise<string> {
         return BrowserActions.getText(element(by.css("mat-form-field[data-automation-id='status'] span")));
     }
 
-    async setSortFilterDropDown(option): Promise<void> {
+    async setSortFilterDropDown(option) {
         await this.sortDropdown.selectDropdownOption(option);
     }
 
@@ -116,7 +116,7 @@ export class EditProcessFilterCloudComponentPage {
         return BrowserActions.getText(sortLocator);
     }
 
-    async setOrderFilterDropDown(option): Promise<void> {
+    async setOrderFilterDropDown(option) {
         await this.orderDropdown.selectDropdownOption(option);
         await browser.sleep(1500);
     }
@@ -125,24 +125,24 @@ export class EditProcessFilterCloudComponentPage {
         return BrowserActions.getText(element(by.css("mat-form-field[data-automation-id='order'] span")));
     }
 
-    setAppNameDropDown(option: string): Promise<void> {
-        return this.appNameDropdown.selectDropdownOption(option);
+    async setAppNameDropDown(option: string) {
+        await this.appNameDropdown.selectDropdownOption(option);
     }
 
-    setProcessDefinitionNameDropDown(option: string): Promise<void> {
-        return this.processDefinitionNameDropdown.selectDropdownOption(option);
+    async setProcessDefinitionNameDropDown(option: string) {
+        await this.processDefinitionNameDropdown.selectDropdownOption(option);
     }
 
-    setSuspendedDateRangeDropDown(option: string): Promise<void> {
-        return this.suspendedDateRangeDropdown.selectDropdownOption(option);
+    async setSuspendedDateRangeDropDown(option: string) {
+        await this.suspendedDateRangeDropdown.selectDropdownOption(option);
     }
 
-    setStartedDateRangeDropDown(option: string): Promise<void> {
-        return this.startedDateRangeDropdown.selectDropdownOption(option);
+    async setStartedDateRangeDropDown(option: string) {
+        await this.startedDateRangeDropdown.selectDropdownOption(option);
     }
 
-    setCompletedDateRangeDropDown(option: string): Promise<void> {
-        return this.completedDateRangeDropdown.selectDropdownOption(option);
+    async setCompletedDateRangeDropDown(option: string) {
+        await this.completedDateRangeDropdown.selectDropdownOption(option);
     }
 
     async setSuspendedDateRangeWithin(start: Date, end: Date) {
@@ -175,20 +175,20 @@ export class EditProcessFilterCloudComponentPage {
         return BrowserVisibility.waitUntilElementIsNotVisible(emptyList);
     }
 
-    setProcessInstanceId(option: string): Promise<void> {
-        return this.setProperty('processInstanceId', option);
+    async setProcessInstanceId(option: string) {
+        await this.setProperty('processInstanceId', option);
     }
 
-    setProcessDefinitionKey(option: string): Promise<void> {
-        return this.setProperty('processDefinitionKey', option);
+    async setProcessDefinitionKey(option: string) {
+        await this.setProperty('processDefinitionKey', option);
     }
 
-    setProcessName(option: string): Promise<void> {
-        return this.setProperty('processName', option);
+    async setProcessName(option: string) {
+        await this.setProperty('processName', option);
     }
 
-    setInitiator(value: string): Promise<void> {
-        return this.peopleCloudComponent.searchAssigneeAndSelect(value);
+    async setInitiator(value: string) {
+        await this.peopleCloudComponent.searchAssigneeAndSelect(value);
     }
 
     getProcessInstanceId(): Promise<string> {
@@ -200,26 +200,26 @@ export class EditProcessFilterCloudComponentPage {
         return BrowserActions.getInputValue(locator);
     }
 
-    async setProperty(property: string, option: string): Promise<void> {
+    async setProperty(property: string, option: string) {
         const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         await BrowserActions.clearSendKeys(locator, option);
     }
 
-    checkSaveButtonIsDisplayed(): Promise<void> {
-        return BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
+    async checkSaveButtonIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.saveButton);
     }
 
-    checkSaveAsButtonIsDisplayed(): Promise<void> {
-        return BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
+    async checkSaveAsButtonIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.saveAsButton);
     }
 
-    checkDeleteButtonIsDisplayed(): Promise<void> {
-        return BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
+    async checkDeleteButtonIsDisplayed() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.deleteButton);
     }
 
-    checkDeleteButtonIsNotDisplayed(): Promise<void> {
-        return BrowserVisibility.waitUntilElementIsNotVisible(this.deleteButton);
+    async checkDeleteButtonIsNotDisplayed() {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.deleteButton);
     }
 
     async checkSaveButtonIsEnabled(): Promise<boolean> {
@@ -237,7 +237,7 @@ export class EditProcessFilterCloudComponentPage {
         return this.deleteButton.isEnabled();
     }
 
-    async saveAs(name: string): Promise<void> {
+    async saveAs(name: string) {
         await this.clickSaveAsButton();
         await this.editProcessFilterDialog().setFilterName(name);
         await this.editProcessFilterDialog().clickOnSaveButton();
@@ -245,20 +245,20 @@ export class EditProcessFilterCloudComponentPage {
         await browser.driver.sleep(1000);
     }
 
-    async clickSaveAsButton(): Promise<void> {
+    async clickSaveAsButton() {
         await BrowserActions.click(this.saveAsButton);
         await browser.driver.sleep(1000);
     }
 
-    clickDeleteButton(): Promise<void> {
-        return BrowserActions.click(this.deleteButton);
+    async clickDeleteButton() {
+        await BrowserActions.click(this.deleteButton);
     }
 
-    clickSaveButton(): Promise<void> {
-        return BrowserActions.click(this.saveButton);
+    async clickSaveButton() {
+        await BrowserActions.click(this.saveButton);
     }
 
-    async setFilter(props: FilterProps): Promise<void> {
+    async setFilter(props: FilterProps) {
         await this.openFilter();
         if (props.name) { await this.setProcessName(props.name); }
         if (props.status) { await this.setStatusFilterDropDown(props.status); }
