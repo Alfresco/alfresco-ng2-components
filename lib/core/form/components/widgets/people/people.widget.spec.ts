@@ -225,6 +225,7 @@ describe('PeopleWidgetComponent', () => {
             peopleHTMLElement.focus();
             peopleHTMLElement.value = '';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('focusin'));
             peopleHTMLElement.dispatchEvent(new Event('input'));
 
             fixture.detectChanges();
