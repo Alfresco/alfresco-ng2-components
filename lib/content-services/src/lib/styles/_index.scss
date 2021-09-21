@@ -2,40 +2,15 @@
 @import '../upload/components/file-uploading-dialog.theme';
 @import '../upload/components/upload-drag-area.theme';
 
-@import '../search/components/search-control.theme';
-@import '../search/components/search-sorting-picker/search-sorting-picker.theme';
-@import '../search/components/search-filter/search-filter.theme';
-@import '../search/components/search-chip-list/search-chip-list.theme';
-@import '../search/components/search-filter-container/search-filter-container.theme';
-
-@import '../permission-manager/components/permission-list/permission-list.theme';
-@import '../permission-manager/components/add-permission/add-permission.theme';
-@import '../permission-manager/components/add-permission/add-permission-panel.theme';
 @import '../version-manager/version-comparison.theme';
 @import '../permission-manager/components/user-icon-column/user-icon-column.theme';
 @import '../permission-manager/components/user-name-column/user-name-column.theme';
-@import '../search/components/search-filter-chips/search-filter-chips.theme';
-@import '../search/components/search-facet-field/search-facet-field.theme';
-@import '../search/components/search-form/search-form.theme';
-@import '../search/components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.theme';
 
 @mixin adf-content-services-theme($theme) {
     @include adf-file-uploading-row-theme($theme);
     @include adf-upload-dialog-theme($theme);
     @include adf-upload-drag-area-theme($theme);
-    @include adf-search-control-theme($theme);
-    @include adf-search-sorting-picker-theme($theme);
-    @include adf-filter-menu-theme($theme);
-    @include adf-permission-list-theme($theme);
     @include adf-user-icon-column-theme($theme);
     @include user-name-column-theme($theme);
-    @include adf-add-permission-theme($theme);
-    @include adf-add-permission-panel-theme($theme);
-    @include adf-search-filter-theme($theme);
-    @include adf-search-chip-list-theme($theme);
     @include adf-version-comparison-theme($theme);
-    @include adf-search-filter-chips-theme($theme);
-    @include adf-search-filter-field-theme($theme);
-    @include adf-search-forms-theme($theme);
-    @include adf-search-filter-menu-card($theme);
 }

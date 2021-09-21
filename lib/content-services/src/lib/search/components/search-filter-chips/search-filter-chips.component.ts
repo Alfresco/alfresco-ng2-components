@@ -23,6 +23,7 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
 @Component({
     selector: 'adf-search-filter-chips',
     templateUrl: './search-filter-chips.component.html',
+    styleUrls: ['./search-filter-chips.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterChipsComponent {

@@ -1,0 +1,9 @@
+.mat-chip:focus {
+    color: var(--theme-accent-color-default-contrast);
+    background-color: var(--theme-accent-color);
+
+    .mat-chip-remove {
+        color: var(--theme-accent-color-default-contrast);
+        opacity: 1;
+    }
+}

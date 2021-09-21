@@ -65,6 +65,8 @@
         --theme-fg-divider: mat-color($foreground, divider),
         --theme-disabled-text-color: mat-color($foreground, disabled-text),
         --theme-selected-button-bg-color: mat-color($background, selected-button),
+        --theme-icon-fg-color: mat-color($foreground, icon),
+        --theme-unselected-chip-bg-color: mat-color($background, unselected-chip),
         // fonts
         --theme-font-family: mat-font-family($alfresco-typography),
         --theme-body-1-font-size: mat-font-size($alfresco-typography, body-1),

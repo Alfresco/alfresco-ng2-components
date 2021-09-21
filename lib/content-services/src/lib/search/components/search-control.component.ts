@@ -27,6 +27,7 @@ import { EmptySearchResultComponent } from './empty-search-result.component';
 @Component({
     selector: 'adf-search-control',
     templateUrl: './search-control.component.html',
+    styleUrls: ['./search-control.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-control' }
 })

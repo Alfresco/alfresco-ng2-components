@@ -1,0 +1,34 @@
+.adf-search-filter-menu-card {
+    color: var(--theme-text-fg-color);
+    background: var(--theme-card-bg-color);
+
+    .adf-search-filter-title {
+        padding: 16px 12px;
+        height: 32px;
+        flex: 1 1 auto;
+        font-size: 14px;
+        letter-spacing: 0.15px;
+        line-height: 24px;
+        font-weight: bold;
+        font-style: inherit;
+
+        &-action {
+            float: right;
+        }
+    }
+
+    .adf-search-filter-content {
+        padding: 16px 12px;
+        overflow: auto;
+    }
+
+    .adf-search-filter-actions {
+        padding: 16px 12px;
+        display: flex;
+        justify-content: space-between;
+
+        .adf-search-action-button {
+            border-radius: 6px;
+        }
+    }
+}

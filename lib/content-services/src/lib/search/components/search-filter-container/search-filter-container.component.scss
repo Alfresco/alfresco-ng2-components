@@ -1,0 +1,73 @@
+.adf-filter {
+
+    &-button {
+        margin-left: -7px !important;
+
+        .adf-icon {
+            opacity: 1;
+            color: var(--theme-icon-fg-color);
+
+            &-active {
+                color: var(--theme-primary-color);
+            }
+
+            .mat-badge-active {
+                border: 2px solid var(--theme-card-bg-color) !important;
+            }
+        }
+
+        .mat-icon {
+            height: 18px;
+            width: 18px;
+        }
+
+        .mat-badge-content {
+            width: 10px;
+            height: 10px;
+            top: -3px !important;
+            right: -6px !important;
+        }
+    }
+
+    &-container {
+        display: flex;
+        flex-direction: column;
+        padding: 15px 15px 10px;
+        color: var(--theme-text-bold-color) !important;
+
+        .adf-facet-buttons {
+            display: none;
+        }
+
+        .adf-search-check-list {
+            padding: 5px 0;
+        }
+
+        input {
+            background: 2px solid var(--theme-card-bg-color) !important;
+        }
+    }
+
+    &-title {
+        font-size: 1.1em;
+        padding-bottom: 5px;
+        color: var(--theme-text-bold-color);
+    }
+
+    &-actions {
+        display: flex;
+        justify-content: flex-end;
+        padding: 15px;
+        background-color: var(--theme-hover-bg-color);
+
+        > button {
+            font-size: 0.9em;
+            color: var(--theme-text-bold-color);
+        }
+    }
+}
+
+.mat-menu-panel.adf-filter-menu .mat-menu-content {
+    min-width: 260px;
+    padding: 0;
+}

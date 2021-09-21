@@ -1,0 +1,87 @@
+.adf-search-filter-facet {
+    .adf-checklist {
+        display: flex;
+        flex-direction: column;
+        max-height: 180px;
+        padding: 5px 0;
+        overflow-y: auto;
+
+        .mat-checkbox-label {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .mat-checkbox-layout {
+            width: 100%;
+        }
+
+        .adf-facet-label {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .mat-checkbox {
+            margin: 5px;
+
+            &.mat-checkbox-checked .mat-checkbox-label {
+                font-weight: bold;
+            }
+        }
+    }
+
+    .adf-facet-result-filter {
+        padding-bottom: 16px;
+
+        .adf-facet-search-container {
+            border-radius: 6px;
+            background: var(--theme-background-color);
+            display: flex;
+            height: 32px;
+
+            .adf-facet-search-icon {
+                width: 27px;
+                margin-top: -4px;
+                .mat-icon {
+                    font-size: 15px;
+                }
+            }
+
+            .adf-facet-search-field {
+                padding: 2px;
+                flex: 1;
+                margin-top: -16px;
+                font-size: 14px;
+                line-height: 24px;
+                letter-spacing: 0.25px;
+
+                .mat-form-field-underline {
+                    display: none;
+                }
+
+                .mat-form-field-suffix {
+                    padding-right: 1px;
+                }
+            }
+        }
+    }
+
+    .adf-facet-buttons {
+        text-align: right;
+
+        .mat-button {
+            text-transform: uppercase;
+        }
+
+        &--topSpace {
+            padding-top: 15px;
+        }
+    }
+
+    .mat-checkbox-label,
+    .mat-radio-label {
+        color: var(--theme-text-color);
+    }
+
+}

@@ -29,6 +29,7 @@ import { Subject } from 'rxjs';
 @Component({
     selector: 'adf-search-facet-field',
     templateUrl: './search-facet-field.component.html',
+    styleUrls: ['./search-facet-field.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetFieldComponent implements FacetWidget {

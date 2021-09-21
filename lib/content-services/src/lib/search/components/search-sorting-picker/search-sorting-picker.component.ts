@@ -23,6 +23,7 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 @Component({
     selector: 'adf-search-sorting-picker',
     templateUrl: './search-sorting-picker.component.html',
+    styleUrls: ['./search-sorting-picker.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-sorting-picker' }
 })

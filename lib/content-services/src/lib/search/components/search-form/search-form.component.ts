@@ -23,6 +23,7 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 @Component({
   selector: 'adf-search-form',
   templateUrl: './search-form.component.html',
+  styleUrls: ['./search-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class SearchFormComponent {

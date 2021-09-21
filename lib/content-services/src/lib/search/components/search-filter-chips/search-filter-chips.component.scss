@@ -1,0 +1,58 @@
+@import '~@angular/material/theming';
+
+.adf-search-filter-chip {
+
+    &.mat-chip {
+        border: 2px solid transparent;
+        transition : border 500ms ease-in-out;
+        max-width: 320px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        background: var(--theme-unselected-chip-bg-color);
+
+        &:focus {
+            color: unset;
+        }
+
+        &.mat-standard-chip::after {
+            background: var(--theme-unselected-chip-bg-color);
+            color: unset;
+        }
+
+        &.mat-chip-list-wrapper {
+            margin: 4px 6px;
+        }
+    }
+
+    &.adf-search-toggle-chip {
+        background: var(--theme-card-bg-color);
+        border: 2px solid var(--theme-accent-color);
+
+        &.mat-chip::after {
+            background: unset;
+        }
+    }
+
+    .adf-search-filter-placeholder {
+        flex: 1 1 auto;
+        white-space: nowrap;
+        color: var(--theme-disabled-text-color);
+    }
+
+    .adf-search-filter-ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .mat-icon {
+        padding-top: 5px;
+        padding-left: 5px;
+    }
+
+    &-menu + * .cdk-overlay-pane .mat-menu-panel {
+        min-width: 320px;
+        border-radius: 12px;
+        @include mat-elevation(2);
+    }
+}
