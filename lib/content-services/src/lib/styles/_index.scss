@@ -10,7 +10,6 @@
 
 @import '../permission-manager/components/permission-list/permission-list.theme';
 @import '../permission-manager/components/add-permission/add-permission.theme';
-@import '../permission-manager/components/add-permission/add-permission-dialog.theme';
 @import '../permission-manager/components/add-permission/add-permission-panel.theme';
 @import '../version-manager/version-comparison.theme';
 @import '../permission-manager/components/user-icon-column/user-icon-column.theme';
@@ -31,7 +30,6 @@
     @include adf-user-icon-column-theme($theme);
     @include user-name-column-theme($theme);
     @include adf-add-permission-theme($theme);
-    @include adf-add-permission-dialog-theme($theme);
     @include adf-add-permission-panel-theme($theme);
     @include adf-search-filter-theme($theme);
     @include adf-search-chip-list-theme($theme);
