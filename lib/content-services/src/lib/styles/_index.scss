@@ -2,15 +2,8 @@
 @import '../upload/components/file-uploading-dialog.theme';
 @import '../upload/components/upload-drag-area.theme';
 
-@import '../version-manager/version-comparison.theme';
-@import '../permission-manager/components/user-icon-column/user-icon-column.theme';
-@import '../permission-manager/components/user-name-column/user-name-column.theme';
-
 @mixin adf-content-services-theme($theme) {
     @include adf-file-uploading-row-theme($theme);
     @include adf-upload-dialog-theme($theme);
     @include adf-upload-drag-area-theme($theme);
-    @include adf-user-icon-column-theme($theme);
-    @include user-name-column-theme($theme);
-    @include adf-version-comparison-theme($theme);
 }

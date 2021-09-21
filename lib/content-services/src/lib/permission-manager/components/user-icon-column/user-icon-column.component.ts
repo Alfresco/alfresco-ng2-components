@@ -17,7 +17,7 @@
 
 import { User } from '@alfresco/adf-core';
 import { NodeEntry } from '@alfresco/js-api';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NodePermissionService } from '../../services/node-permission.service';
 
@@ -34,6 +34,8 @@ import { NodePermissionService } from '../../services/node-permission.service';
             <mat-icon class="adf-people-select-icon adf-datatable-selected" svgIcon="selected"></mat-icon>
         </div>
     `,
+    styleUrls: ['./user-icon-column.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-user-icon-column adf-datatable-content-cell' }
 })
 export class UserIconColumnComponent implements OnInit {

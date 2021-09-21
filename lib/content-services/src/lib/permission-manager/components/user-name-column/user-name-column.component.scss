@@ -1,0 +1,13 @@
+.adf-user {
+    &-name-column {
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    &-email-column {
+        font-size: 14px;
+        letter-spacing: -0.2px;
+        line-height: 1.43;
+        color: var(--theme-foreground-text-color);
+    }
+}

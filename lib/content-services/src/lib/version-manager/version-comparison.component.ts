@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ThumbnailService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-version-comparison',
-    templateUrl: './version-comparison.component.html'
+    templateUrl: './version-comparison.component.html',
+    styleUrls: ['./version-comparison.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class VersionComparisonComponent {
 
