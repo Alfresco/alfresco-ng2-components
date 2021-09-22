@@ -25,6 +25,7 @@ import { Node } from '@alfresco/js-api';
 @Component({
     selector: 'adf-attach-file-widget-dialog',
     templateUrl: './attach-file-widget-dialog.component.html',
+    styleUrls: ['./attach-file-widget-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None,
     providers: [
         AuthenticationService,

@@ -68,11 +68,13 @@
         --theme-selected-button-bg-color: mat-color($background, selected-button),
         --theme-icon-fg-color: mat-color($foreground, icon),
         --theme-unselected-chip-bg-color: mat-color($background, unselected-chip),
+        --theme-status-bar-bg-color: mat-color($background, status-bar),
         // fonts
         --theme-font-family: mat-font-family($alfresco-typography),
         --theme-body-1-font-size: mat-font-size($alfresco-typography, body-1),
         --theme-body-2-font-size: mat-font-size($alfresco-typography, body-2),
         --theme-body-1-line-height: mat-line-height($alfresco-typography, body-1),
+        --theme-display-1-font-size: mat-font-size($alfresco-typography, display-1),
         --theme-display-3-font-size: mat-font-size($alfresco-typography, display-3),
         --theme-display-4-font-size: mat-font-size($alfresco-typography, display-4),
         --theme-caption-font-size: mat-font-size($alfresco-typography, caption),
@@ -82,7 +84,8 @@
         --theme-headline-line-height: mat-line-height($alfresco-typography, headline),
 
         // specific colors
-        --theme-colors-mat-grey: mat-color($mat-grey, A200)
+        --theme-colors-mat-grey: mat-color($mat-grey, A200),
+        --theme-colors-mat-grey-dark: mat-color($mat-grey, A400),
     );
 
     // propagates SCSS variables into the CSS variables scope

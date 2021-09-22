@@ -16,13 +16,16 @@
  */
 
 import { CommentModel, CommentProcessService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Observable, Observer, Subject } from 'rxjs';
 import { share, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-process-instance-comments',
-    templateUrl: './process-comments.component.html'
+    templateUrl: './process-comments.component.html',
+    styleUrls: ['./process-comments.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-process-instance-comments' }
 })
 export class ProcessCommentsComponent implements OnChanges, OnDestroy {
 

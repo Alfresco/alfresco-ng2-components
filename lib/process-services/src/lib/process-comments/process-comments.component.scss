@@ -1,0 +1,56 @@
+.adf-process-instance-comments {
+    width: 100%;
+}
+
+.adf-activiti-label {
+    font-weight: bolder;
+    vertical-align: top;
+}
+
+.adf-activiti-label + .adf-icon {
+    position: relative;
+    top: -2px;
+}
+
+.adf-list-wrap {
+    word-wrap: break-word;
+    word-break: break-all;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    -o-hyphens: auto;
+    hyphens: auto;
+}
+
+.adf-hide-long-names {
+    overflow: auto;
+}
+
+.adf-comments-container {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
+.adf-comments-header {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--theme-fg-divider);
+}
+
+.adf-comments-input-container {
+    width: calc(100% - 30px);
+    padding: 8px 15px 0;
+    border-bottom: 1px solid var(--theme-fg-divider);
+}
+
+.adf-full-width {
+    width: 100%;
+}
+
+adf-comment-list {
+    float: left;
+    overflow: auto;
+    height: calc(100% - 101px);
+    width: 100%;
+}

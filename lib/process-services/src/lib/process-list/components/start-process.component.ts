@@ -43,6 +43,7 @@ import { ProcessNamePipe } from '../../pipes/process-name.pipe';
 @Component({
     selector: 'adf-start-process',
     templateUrl: './start-process.component.html',
+    styleUrls: ['./start-process.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestroy {

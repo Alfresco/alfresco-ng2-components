@@ -33,6 +33,7 @@ import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from
 @Component({
     selector: 'adf-start-task',
     templateUrl: './start-task.component.html',
+    styleUrls: ['./start-task.component.scss'],
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],

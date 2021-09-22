@@ -1,27 +1,7 @@
-@import '../process-list/components/process-filters.theme';
-@import '../process-comments/process-comments.theme';
 @import '../people/people.theme';
-@import '../task-list/components/start-task.theme';
-@import '../task-list/components/task-filters.theme';
-@import '../task-list/components/task-header.theme';
-@import '../task-list/components/task-standalone.theme';
 @import '../app-list/apps-list.theme';
-@import '../content-widget/attach-file-widget-dialog.theme';
-@import '../form/start-form.theme';
-@import '../process-list/components/start-process.theme';
-@import '../task-list/components/task-form/task-form.theme';
 
 @mixin adf-process-services-theme($theme) {
-    @include adf-process-filters-theme($theme);
-    @include adf-process-comment-theme($theme);
-    @include adf-task-list-start-task-theme($theme);
     @include adf-people-module-theme($theme);
-    @include adf-task-list-filters-task-theme($theme);
-    @include adf-task-list-header-theme($theme);
     @include adf-apps-theme($theme);
-    @include adf-task-standalone-component-theme($theme);
-    @include adf-attach-file-widget-dialog-component-theme($theme);
-    @include adf-start-form-component-theme($theme);
-    @include adf-process-services-create-theme($theme);
-    @include adf-task-form-theme($theme);
  }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import {
   FormModel,
   ContentLinkModel,
@@ -32,7 +32,9 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'adf-task-form',
-  templateUrl: './task-form.component.html'
+  templateUrl: './task-form.component.html',
+  styleUrls: ['./task-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TaskFormComponent implements OnInit {
 
