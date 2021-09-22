@@ -1,9 +1,0 @@
-@import './components/people-search/people-search.theme';
-@import './components/people-search-field/people-search-field.theme';
-@import './components/people/people.theme';
-
-@mixin adf-people-module-theme($theme) {
-    @include adf-task-list-people-search-theme($theme);
-    @include adf-task-list-people-search-field-theme($theme);
-    @include adf-task-list-people-theme($theme);
-}

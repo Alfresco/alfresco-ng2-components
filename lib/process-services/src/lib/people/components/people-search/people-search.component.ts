@@ -24,6 +24,7 @@ import { map } from 'rxjs/operators';
 @Component({
     selector: 'adf-people-search',
     templateUrl: './people-search.component.html',
+    styleUrls: ['./people-search.component.scss'],
     host: {
         'class': 'adf-people-search'
     },
