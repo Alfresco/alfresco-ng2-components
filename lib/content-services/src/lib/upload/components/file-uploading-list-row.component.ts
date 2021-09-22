@@ -16,11 +16,13 @@
  */
 
 import { FileModel, FileUploadStatus } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-file-uploading-list-row',
-    templateUrl: './file-uploading-list-row.component.html'
+    templateUrl: './file-uploading-list-row.component.html',
+    styleUrls: ['./file-uploading-list-row.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class FileUploadingListRowComponent {
     @Input()

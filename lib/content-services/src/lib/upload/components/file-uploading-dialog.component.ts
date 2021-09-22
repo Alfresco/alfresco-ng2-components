@@ -16,7 +16,7 @@
  */
 
 import { FileModel, FileUploadStatus, UploadService, UserPreferencesService, FileUploadDeleteEvent, FileUploadCompleteEvent } from '@alfresco/adf-core';
-import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, OnInit, ViewChild, HostBinding, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, OnInit, ViewChild, HostBinding, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Subscription, merge, Subject } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { Direction } from '@angular/cdk/bidi';
@@ -24,7 +24,9 @@ import { takeUntil, delay } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-file-uploading-dialog',
-    templateUrl: './file-uploading-dialog.component.html'
+    templateUrl: './file-uploading-dialog.component.html',
+    styleUrls: ['./file-uploading-dialog.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     /** Dialog direction. Can be 'ltr' or 'rtl. */

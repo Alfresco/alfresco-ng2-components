@@ -1,12 +1,10 @@
 @import '../../../core/styles/index';
-@import '../../../content-services/src/lib/styles/index';
 @import '../../../process-services/src/lib/styles/index';
 @import '../../../process-services-cloud/src/lib/styles/index';
 @import '../../../insights/src/lib/styles/index';
 
 @mixin alfresco-material-theme($theme) {
     @include adf-core-theme($theme);
-    @include adf-content-services-theme($theme);
     @include adf-process-services-theme($theme);
     @include adf-process-services-cloud-theme($theme);
     @include adf-insights-theme($theme);

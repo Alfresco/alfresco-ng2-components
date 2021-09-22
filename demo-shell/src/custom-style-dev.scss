@@ -1,7 +1,6 @@
 @import '~@angular/material/theming';
 
 @import '../../lib/core/styles/index';
-@import '../../lib/content-services/src/lib/styles/index';
 @import '../../lib/process-services/src/lib/styles/index';
 @import '../../lib/insights/src/lib/styles/index';
 @import '../../lib/process-services-cloud/src/lib/styles/index';
@@ -15,7 +14,6 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 @include adf-core-theme($theme);
-@include adf-content-services-theme($theme);
 @include adf-process-services-theme($theme);
 @include adf-process-services-cloud-theme($theme);
 @include adf-insights-theme($theme);
