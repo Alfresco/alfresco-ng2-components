@@ -1,0 +1,93 @@
+.adf-analytics-report-list {
+
+    .adf-activiti-filters__entry {
+        cursor: pointer;
+    }
+
+    .adf-activiti-filters__entry-icon {
+        position: relative;
+        top: 5px;
+    }
+
+    .adf-activiti-filters__label {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .mat-nav-list .mat-list-item .mat-list-item-content {
+        line-height: 48px;
+    }
+
+    .adf-activiti-filters__entry.adf-active {
+        color: var(--theme-primary-color);
+    }
+
+    .adf-activiti-filters__entry.adf-active .adf-activiti-filters__entry-icon {
+        color: var(--theme-primary-color);
+    }
+
+    .adf-report-card-grids {
+        display: flex;
+        padding: 8px;
+        flex-flow: row wrap;
+        margin: 0 auto;
+        align-items: stretch;
+    }
+
+    .adf-report-card {
+        margin: 8px;
+        width: calc(33.3333333333% - 16px);
+        position: relative;
+        min-height: 200px;
+        overflow: hidden;
+        background-color: var(--theme-background-color);
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+
+        &-logo {
+            position: absolute;
+            right: 20px;
+            top: 35px;
+            z-index: 6;
+
+            &-icon {
+                font-size: 70px;
+                color: var(--theme-accent-color);
+                width: 1em;
+                height: 1em;
+                display: inline-block;
+            }
+        }
+
+        &-title {
+            padding: 16px;
+            z-index: 7;
+
+            .adf-application-title {
+                font-size: 24px;
+                margin: 0;
+            }
+        }
+
+        &-content {
+            padding: 16px;
+            flex-grow: 1;
+        }
+
+        &-actions {
+            border-top: 1px solid var(--theme-fg-divider);
+            padding: 8px;
+            box-sizing: border-box;
+            height: 40px;
+
+            &-icon {
+                color: var(--theme-text-color);
+
+                &:hover {
+                    color: var(--theme-text-bold-color);
+                }
+            }
+        }
+    }
+}

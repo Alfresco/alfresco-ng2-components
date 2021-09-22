@@ -24,6 +24,7 @@ import { share } from 'rxjs/operators';
 @Component({
     selector: 'adf-analytics-report-list',
     templateUrl: './analytics-report-list.component.html',
+    styleUrls: ['./analytics-report-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportListComponent implements OnInit {

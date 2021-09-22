@@ -1,0 +1,102 @@
+.adf-dropdown-widget {
+    width: 100%;
+}
+
+.adf-dropdown-widget__select {
+    width: 100%;
+}
+
+.adf-dropdown-widget__invalid .adf-dropdown-widget__select {
+    border-color: var(--theme-warn-color);
+}
+
+.adf-dropdown-widget__invalid .adf-dropdown-widget__label {
+    color: var(--theme-warn-color);
+}
+
+.adf-dropdown-widget__invalid .adf-dropdown-widget__label::after {
+    background-color: var(--theme-warn-color);
+}
+
+.adf-edit-report-title {
+    float: left;
+    font-size: 20px!important;
+    padding-top: 19px;
+}
+
+.adf-report-icon {
+    float: left;
+    padding: 5px 5px 0 0;
+    visibility: hidden;
+}
+
+.adf-report-title-container {
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 12px;
+
+    :hover .adf-report-icon {
+        color: var(--theme-primary-color);
+        visibility: visible;
+    }
+}
+
+.adf-report-title {
+    padding-top: 10px;
+}
+
+.adf-full-width-input {
+    width: 100%;
+}
+
+.adf-is-hide {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.5s;
+}
+
+.adf-report-report-container {
+    border-bottom: solid 1px var(--theme-fg-divider);
+    padding-top: 10px;
+
+    .mat-toolbar {
+        border: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+.adf-report-container-setting {
+    padding-left: 10px;
+}
+
+.adf-option_button_details {
+    padding-top: 20px;
+}
+
+.adf-export-message {
+    background-color: var(--theme-background-color);
+}
+
+.adf-save-export-input {
+    width: 100%;
+}
+
+.adf-delete-parameter {
+    position: absolute;
+    margin-left: 60%;
+    padding-top: 5px;
+}
+
+.adf-hide {
+    display: none;
+}
+
+.adf-report-dialog {
+    .mat-form-field {
+        width: 100%;
+    }
+
+    .mat-dialog-actions {
+        justify-content: flex-end;
+    }
+}
