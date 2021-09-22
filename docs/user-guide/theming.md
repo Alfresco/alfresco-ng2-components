@@ -71,7 +71,6 @@ When you want more customization than a pre-built theme offers, you can create y
  *  Include only packages that you are using (and core by default)
  */
 @import '~@alfresco/adf-process-services/theming';
-@import '~@alfresco/adf-insights/theming';
 @import '~@alfresco/adf-core/theming';
 
 @import '~@angular/material/theming';
@@ -86,7 +85,6 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);
 
 @include adf-process-services-theme($theme);
-@include adf-insights-theme($theme);
 @include adf-core-theme($theme);
 ```
 

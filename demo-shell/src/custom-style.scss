@@ -3,7 +3,6 @@
 @import '~@alfresco/adf-core/theming';
 @import '~@alfresco/adf-process-services/theming';
 @import '~@alfresco/adf-process-services-cloud/theming';
-@import '~@alfresco/adf-insights/theming';
 
 @include mat-core($alfresco-typography);
 
@@ -16,7 +15,6 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include adf-core-theme($theme);
 @include adf-process-services-theme($theme);
 @include adf-process-services-cloud-theme($theme);
-@include adf-insights-theme($theme);
 
 body, html {
     margin: 0;

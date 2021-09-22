@@ -2,7 +2,6 @@
 
 @import '../../lib/core/styles/index';
 @import '../../lib/process-services/src/lib/styles/index';
-@import '../../lib/insights/src/lib/styles/index';
 @import '../../lib/process-services-cloud/src/lib/styles/index';
 
 @include mat-core($alfresco-typography);
@@ -16,7 +15,6 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include adf-core-theme($theme);
 @include adf-process-services-theme($theme);
 @include adf-process-services-cloud-theme($theme);
-@include adf-insights-theme($theme);
 
 body, html {
     margin: 0;
