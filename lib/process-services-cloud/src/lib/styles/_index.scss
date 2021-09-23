@@ -1,6 +1,0 @@
-@import '../app/components/app-details-cloud.theme';
-
-
-@mixin adf-process-services-cloud-theme($theme) {
-    @include adf-cloud-app-details-theme($theme);
-}

@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { ApplicationInstanceModel, DEFAULT_APP_INSTANCE_ICON, DEFAULT_APP_INSTANCE_THEME } from '../models/application-instance.model';
 
 @Component({
   selector: 'adf-cloud-app-details',
-  templateUrl: './app-details-cloud.component.html'
+  templateUrl: './app-details-cloud.component.html',
+  styleUrls: ['./app-details-cloud.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class AppDetailsCloudComponent {
