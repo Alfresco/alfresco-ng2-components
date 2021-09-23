@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
@@ -27,7 +27,9 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 
 @Component({
     selector: 'adf-cloud-task-filters',
-    templateUrl: './base-task-filters-cloud.component.html'
+    templateUrl: './base-task-filters-cloud.component.html',
+    styleUrls: ['./base-task-filters-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
 

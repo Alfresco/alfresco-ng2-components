@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -38,7 +38,9 @@ export interface DropdownOption {
 
 @Component({
     selector: 'adf-cloud-edit-process-filter',
-    templateUrl: './edit-process-filter-cloud.component.html'
+    templateUrl: './edit-process-filter-cloud.component.html',
+    styleUrls: ['./edit-process-filter-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDestroy {
 

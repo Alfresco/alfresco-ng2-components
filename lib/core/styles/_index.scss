@@ -86,6 +86,7 @@
         // specific colors
         --theme-colors-mat-grey: mat-color($mat-grey, A200),
         --theme-colors-mat-grey-dark: mat-color($mat-grey, A400),
+        --theme-colors-mag-grey-light: mat-color($mat-grey, 50),
     );
 
     // propagates SCSS variables into the CSS variables scope

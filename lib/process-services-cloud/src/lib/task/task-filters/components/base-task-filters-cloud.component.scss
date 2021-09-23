@@ -1,0 +1,59 @@
+.adf {
+    &-task-filters__entry {
+        display: flex;
+        padding: 12px 0 !important;
+        height: 24px;
+        width: 100%;
+        font-size: 14px !important;
+        font-weight: bold;
+        opacity: 1;
+
+        .adf-full-width {
+            display: flex;
+            width: 100%;
+        }
+
+        .adf-filter-action-button {
+            opacity: 0.54;
+            padding: 16px;
+            cursor: pointer;
+
+            .adf-filter-action-button__label {
+                padding-left: 20px;
+                margin: 0 8px !important;
+            }
+        }
+
+        .adf-filter-action-button__counter {
+            opacity: 0.54;
+            margin-left: 10px;
+            margin-top: 6px;
+            padding: 0 5px;
+
+            &.adf-active {
+                margin-left: 8px;
+                margin-top: 5px;
+                padding: 0 5px;
+                border-radius: 15px;
+                background-color: var(--theme-accent-color);
+                color: var(--theme-colors-mag-grey-light);
+                font-size: smaller;
+            }
+        }
+
+
+        &:hover {
+            color: var(--theme-primary-color);
+
+            .adf-filter-action-button__counter,
+            .adf-filter-action-button {
+                opacity: 1;
+            }
+        }
+
+        .adf-active {
+            color: var(--theme-primary-color);
+            opacity: 1;
+        }
+    }
+}

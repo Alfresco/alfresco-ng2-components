@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
@@ -25,7 +25,9 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-cloud-process-filters',
-    templateUrl: './process-filters-cloud.component.html'
+    templateUrl: './process-filters-cloud.component.html',
+    styleUrls: ['./process-filters-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
 

@@ -34,6 +34,7 @@ import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 @Component({
     selector: 'adf-cloud-start-process',
     templateUrl: './start-process-cloud.component.html',
+    styleUrls: ['./start-process-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy {

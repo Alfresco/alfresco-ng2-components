@@ -1,0 +1,44 @@
+.adf-edit-task-filter-checkbox {
+    font-size: 16px;
+    padding-top: 10px;
+    text-align: center;
+    flex: 1 23%;
+}
+
+.adf-edit-task-filter-date-error-container {
+    position: absolute;
+    height: 20px;
+    margin-top: 12px;
+    width: 100%;
+
+    & > div {
+        display: flex;
+        flex-flow: row;
+        justify-content: flex-start;
+    }
+
+    .adf-error-text {
+        padding-right: 8px;
+        height: 16px;
+        font-size: 10px;
+        line-height: 1.33;
+        color: var(--theme-warn-color);
+        width: auto;
+    }
+
+    .adf-error-icon {
+        font-size: 16px;
+        color: var(--theme-warn-color);
+    }
+}
+
+.adf-edit-task-filter-dateRange mat-grid-list {
+    width: 450px;
+}
+
+.adf {
+    &-cloud-edit-task-filter-loading-margin {
+        margin-left: calc((100% - 100px) / 2);
+        margin-right: calc((100% - 100px) / 2);
+    }
+}
