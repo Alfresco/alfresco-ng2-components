@@ -27,26 +27,6 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@mixin adf-line-clamp($line-height: 1.25, $lines: 3) {
-    position: relative;
-    line-height: $line-height;
-    padding: 0 !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    @supports (-webkit-line-clamp: 1) {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: $lines;
-        height: calc(0.99em * #{$line-height} * #{$lines});
-    }
-
-    @supports not (-webkit-line-clamp: 1) {
-        white-space: nowrap;
-        width: 100%;
-    }
-}
-
 @mixin flex-column {
     display: flex;
     flex-direction: column;
