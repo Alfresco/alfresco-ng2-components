@@ -20,7 +20,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { By } from '@angular/platform-browser';
 import { InfoDrawerComponent } from './info-drawer.component';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { of } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../testing/core.testing.module';
@@ -31,14 +30,13 @@ describe('InfoDrawerComponent', () => {
     let fixture: ComponentFixture<InfoDrawerComponent>;
     let translateService: TranslateService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         translateService = TestBed.inject(TranslateService);
         spyOn(translateService, 'get').and.callFake((key) => of(key));
 
@@ -84,28 +82,31 @@ class CustomInfoDrawerComponent extends InfoDrawerComponent {
     tabIndex: number;
 }
 
-describe('Custom InfoDrawer', () => {
+fdescribe('Custom InfoDrawer', () => {
     let fixture: ComponentFixture<CustomInfoDrawerComponent>;
     let component: CustomInfoDrawerComponent;
     let translateService: TranslateService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [
-            CustomInfoDrawerComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [
+                CustomInfoDrawerComponent
+            ]
+        });
         translateService = TestBed.inject(TranslateService);
         spyOn(translateService, 'get').and.callFake((key) => of(key));
 
         fixture = TestBed.createComponent(CustomInfoDrawerComponent);
         fixture.detectChanges();
         component = fixture.componentInstance;
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     it('should render the title', () => {
@@ -119,7 +120,7 @@ describe('Custom InfoDrawer', () => {
         fixture.detectChanges();
         const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab.length).toBe(1);
-        expect(tab[0].nativeElement.innerText).toContain('Tab1');
+        expect(tab[0].nativeElement.innerText).toContain('TAB1');
     });
 
     it('should select the tab 2 (index 1)', () => {
@@ -127,7 +128,7 @@ describe('Custom InfoDrawer', () => {
         fixture.detectChanges();
         const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab.length).toBe(1);
-        expect(tab[0].nativeElement.innerText).toContain('Tab2');
+        expect(tab[0].nativeElement.innerText).toContain('TAB2');
     });
 
     it('should render a tab with icon', () => {
@@ -135,7 +136,7 @@ describe('Custom InfoDrawer', () => {
         fixture.detectChanges();
         const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab[0].nativeElement.innerText).not.toBe('Tab3');
-        expect(tab[0].nativeElement.innerText).toContain('tab-icon');
+        expect(tab[0].nativeElement.innerText).toContain('TAB-ICON');
     });
 });
 
@@ -153,17 +154,16 @@ describe('Header visibility InfoDrawer', () => {
     let fixture: ComponentFixture<VisibilityInfoDrawerComponent>;
     let component: VisibilityInfoDrawerComponent;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [
-            VisibilityInfoDrawerComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [
+                VisibilityInfoDrawerComponent
+            ]
+        });
         fixture = TestBed.createComponent(VisibilityInfoDrawerComponent);
         fixture.detectChanges();
         component = fixture.componentInstance;
