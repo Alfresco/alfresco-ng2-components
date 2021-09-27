@@ -82,7 +82,7 @@ class CustomInfoDrawerComponent extends InfoDrawerComponent {
     tabIndex: number;
 }
 
-fdescribe('Custom InfoDrawer', () => {
+describe('Custom InfoDrawer', () => {
     let fixture: ComponentFixture<CustomInfoDrawerComponent>;
     let component: CustomInfoDrawerComponent;
     let translateService: TranslateService;
