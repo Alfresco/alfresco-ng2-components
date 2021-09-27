@@ -191,9 +191,9 @@ export class ContentNodeSelectorDialogPage {
         return this.contentList;
     }
 
-    async checkUploadFromLocalTabIsDisabled() {
+    async isUploadFromLocalTabEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadFromLocalTab);
         const disabled = await BrowserActions.getAttribute(this.uploadFromLocalTab, 'aria-disabled');
-        expect(disabled).toBe('true');
+        return disabled === 'false';
     }
 }
