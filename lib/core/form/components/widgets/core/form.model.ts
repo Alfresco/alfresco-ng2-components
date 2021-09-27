@@ -402,7 +402,7 @@ export class FormModel {
 
     setNodeIdValueForViewersLinkedToUploadWidget(linkedUploadWidgetContentSelected: UploadWidgetContentLinkModel) {
         const subscribedViewers = this.getFormFields().filter(field =>
-            field.type === FormFieldTypes.FILE_VIEWER && linkedUploadWidgetContentSelected.uploadWidgetId === field.params['uploadWidget']
+            linkedUploadWidgetContentSelected.uploadWidgetId === field.params['uploadWidget']
         );
 
         subscribedViewers.forEach(viewer => {
