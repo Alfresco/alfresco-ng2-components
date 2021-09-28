@@ -1,6 +1,9 @@
 <div class="adf-group-widget {{field.className}}"
-     [class.is-dirty]="value"
-     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" id="functional-group-div">
+     [class.is-dirty]="!!field.value"
+     [class.adf-invalid]="!field.isValid"
+     [class.adf-readonly]="field.readOnly"
+     id="functional-group-div">
+
     <mat-form-field>
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
         <input matInput
@@ -8,15 +11,14 @@
                type="text"
                data-automation-id="adf-group-search-input"
                [id]="field.id"
-               [(ngModel)]="value"
-               (keyup)="onKeyUp($event)"
-               [disabled]="field.readOnly"
-               placeholder="{{field.placeholder}}"
+               [formControl]="searchTerm"
+               [placeholder]="field.placeholder"
                [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
-            <mat-option *ngFor="let item of groups; let i = index" id="adf-group-widget-user-{{i}}"
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="updateOption($event.option.value)" [displayWith]="getDisplayName">
+            <mat-option *ngFor="let item of groups$ | async; let i = index"
+                        id="adf-group-widget-user-{{i}}"
                        [id]="field.id +'-'+item.id"
-                       (click)="onItemClick(item, $event)"  [value]="item">
+                       [value]="item">
                 <span id="adf-group-label-name">{{item.name}}</span>
             </mat-option>
         </mat-autocomplete>

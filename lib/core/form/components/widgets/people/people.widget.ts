@@ -55,29 +55,25 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     input: ElementRef;
 
     @Output()
-    peopleSelected: EventEmitter<number>;
+    peopleSelected: EventEmitter<number> = new EventEmitter();
 
     groupId: string;
     value: any;
 
     searchTerm = new FormControl();
-    errorMsg = '';
     searchTerms$: Observable<any> = this.searchTerm.valueChanges;
 
     users$ = this.searchTerms$.pipe(
-        tap(() => {
-            this.errorMsg = '';
+        tap((searchInput) => {
+            if (typeof searchInput === 'string') {
+                this.onItemSelect();
+            }
         }),
         distinctUntilChanged(),
         switchMap((searchTerm) => {
             const value = searchTerm.email ? this.getDisplayName(searchTerm) : searchTerm;
             return this.formService.getWorkflowUsers(value, this.groupId)
-                .pipe(
-                    catchError((err) => {
-                        this.errorMsg = err.message;
-                        return of();
-                    })
-                );
+                .pipe(catchError(() => of([])));
         }),
         map((list: UserProcessModel[]) => {
             const value = this.searchTerm.value.email ? this.getDisplayName(this.searchTerm.value) : this.searchTerm.value;
@@ -88,7 +84,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService, public peopleProcessService: PeopleProcessService) {
         super(formService);
-        this.peopleSelected = new EventEmitter();
     }
 
     ngOnInit() {
@@ -122,13 +117,13 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     isValidUser(users: UserProcessModel[], name: string): boolean {
         if (users) {
-            return users.find((user) => {
+            return !!users.find((user) => {
                 const selectedUser = this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
                 if (selectedUser) {
                     this.peopleSelected.emit(user && user.id || undefined);
                 }
                 return selectedUser;
-            }) ? true : false;
+            });
         }
         return false;
     }
@@ -141,9 +136,11 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return '';
     }
 
-    onItemSelect(item: UserProcessModel) {
+    onItemSelect(item?: UserProcessModel) {
         if (item) {
             this.field.value = item;
+        } else {
+            this.field.value = null;
         }
     }
 }

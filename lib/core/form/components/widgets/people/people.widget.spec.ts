@@ -180,10 +180,11 @@ describe('PeopleWidgetComponent', () => {
             element = fixture.nativeElement;
         });
 
+        afterEach(() => {
+            fixture.destroy();
+        });
+
         afterAll(() => {
-            if (fixture) {
-                fixture.destroy();
-            }
             TestBed.resetTestingModule();
         });
 
@@ -219,17 +220,18 @@ describe('PeopleWidgetComponent', () => {
             expect(fixture.debugElement.query(By.css('#adf-people-widget-user-1'))).not.toBeNull();
         });
 
-        it('should hide result list if input is empty', () => {
+        it('should hide result list if input is empty',  async () => {
             const peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
             peopleHTMLElement.value = '';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('focusin'));
             peopleHTMLElement.dispatchEvent(new Event('input'));
+
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).toBeNull();
-            });
+            await fixture.whenStable();
+
+            expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).toBeNull();
         });
 
         it('should display two options if we tap one letter', async () => {
