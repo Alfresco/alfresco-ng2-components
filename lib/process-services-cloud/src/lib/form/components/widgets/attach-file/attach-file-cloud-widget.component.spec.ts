@@ -64,7 +64,7 @@ import { of } from 'rxjs';
 import { FormCloudModule } from '../../../form-cloud.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('AttachFileCloudWidgetComponent', () => {
+fdescribe('AttachFileCloudWidgetComponent', () => {
     let widget: AttachFileCloudWidgetComponent;
     let fixture: ComponentFixture<AttachFileCloudWidgetComponent>;
     let element: HTMLInputElement;
@@ -572,7 +572,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const inputDebugElement = fixture.debugElement.query(
-                    By.css('#attach-file-attach')
+                    By.css('#adf-attach-widget-readonly-list')
                 );
                 inputDebugElement.triggerEventHandler('change', {
                     target: { files: [fakeLocalPngAnswer] }
@@ -580,26 +580,26 @@ describe('AttachFileCloudWidgetComponent', () => {
                 fixture.detectChanges();
                 const menuButton: HTMLButtonElement = <HTMLButtonElement> (
                     fixture.debugElement.query(
-                        By.css('#file-1155-option-menu')
+                        By.css('#file-fake-option-menu')
                     ).nativeElement
                 );
                 menuButton.click();
                 fixture.detectChanges();
                 const showOption: HTMLButtonElement = <HTMLButtonElement> (
                     fixture.debugElement.query(
-                        By.css('#file-1155-show-file')
+                        By.css('#file-fake-show-file')
                     ).nativeElement
                 );
                 const downloadOption: HTMLButtonElement = <HTMLButtonElement> (
-                    fixture.debugElement.query(By.css('#file-1155-download-file'))
+                    fixture.debugElement.query(By.css('#file-fake-download-file'))
                         .nativeElement
                 );
                 const retrieveMetadataOption: HTMLButtonElement = <HTMLButtonElement> (
-                    fixture.debugElement.query(By.css('#file-1155-retrieve-file-metadata'))
+                    fixture.debugElement.query(By.css('#file-fake-retrieve-file-metadata'))
                         .nativeElement
                 );
                 const removeOption: HTMLButtonElement = <HTMLButtonElement> (
-                    fixture.debugElement.query(By.css('#file-1155-remove'))
+                    fixture.debugElement.query(By.css('#file-fake-remove'))
                         .nativeElement
                 );
 
