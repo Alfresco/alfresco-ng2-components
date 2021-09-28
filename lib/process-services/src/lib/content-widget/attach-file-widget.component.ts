@@ -238,11 +238,12 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     private uploadFileFromExternalCS(repository: AlfrescoEndpointRepresentation, currentFolderId?: string) {
-        this.attachDialogService.openLogin(repository, currentFolderId).subscribe(
+        const accountIdentifier = `alfresco-${repository.id}-${repository.name}`;
+        this.attachDialogService.openLogin(repository, currentFolderId, accountIdentifier).subscribe(
             (selections: any[]) => {
                 selections.forEach((node) => node.isExternal = true);
                 this.tempFilesList.push(...selections);
-                this.uploadFileFromCS(selections, `alfresco-${repository.id}-${repository.name}`);
+                this.uploadFileFromCS(selections, accountIdentifier);
             });
     }
 
