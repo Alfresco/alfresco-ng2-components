@@ -16,22 +16,24 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import {
     ContentNodeSelectorComponent,
     ContentNodeSelectorComponentData,
     NodeAction
 } from '@alfresco/adf-content-services';
-import { Node, NodesApi } from '@alfresco/js-api';
-import { Observable, Subject, throwError } from 'rxjs';
+import { Node, NodeEntry, NodesApi } from '@alfresco/js-api';
+import { from, Observable, Subject, throwError } from 'rxjs';
+import { catchError, map, mapTo } from 'rxjs/operators';
+import { DestinationFolderPathModel } from '../models/form-cloud-representation.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ContentCloudNodeSelectorService {
 
-    _nodesApi: NodesApi;
+    private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
@@ -42,6 +44,7 @@ export class ContentCloudNodeSelectorService {
     constructor(
         private apiService: AlfrescoApiService,
         private notificationService: NotificationService,
+        private logService: LogService,
         private dialog: MatDialog) {
     }
 
@@ -64,21 +67,47 @@ export class ContentCloudNodeSelectorService {
         return select;
     }
 
-    async fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
-        const relativePathNodeEntry: any = await this.nodesApi
-        .getNode(alias, opts)
-        .catch((err) => {
-            this.sourceNodeNotFound = true;
-            return this.handleError(err);
-        });
-        return relativePathNodeEntry?.entry?.id;
+    async getNodeIdFromPath(destinationFolderPath: DestinationFolderPathModel): Promise<string> {
+        if (destinationFolderPath.alias && destinationFolderPath.path) {
+            try {
+                return await this.getNodeId(destinationFolderPath.alias, destinationFolderPath.path).toPromise();
+            } catch (error) {
+                this.logService.error(error);
+            }
+        }
+
+        return this.getNodeId(destinationFolderPath.alias).toPromise();
     }
 
-    async fetchAliasNodeId(alias: string): Promise<string> {
-        const aliasNodeEntry: any = await this.nodesApi
-            .getNode(alias)
-            .catch((err) => this.handleError(err));
-        return aliasNodeEntry?.entry?.id;
+    async getNodeIdFromFolderVariableValue(variableValue: string, defaultAlias?: string): Promise<string> {
+        const isExistingNode = await this.isExistingNode(variableValue);
+        return isExistingNode ? variableValue : this.getNodeId(defaultAlias).toPromise();
+    }
+
+    async isExistingNode(nodeId: string): Promise<boolean> {
+        let isExistingNode = false;
+        if (nodeId) {
+            try {
+                isExistingNode = await this.getNodeId(nodeId).pipe(mapTo(true)).toPromise();
+            } catch (error) {
+                this.logService.error(error);
+            }
+        }
+        return isExistingNode;
+    }
+
+    private getNodeId(nodeId: string, relativePath?: string): Observable<string> {
+        let opts: any;
+        if (relativePath) {
+            opts = { relativePath };
+        }
+        return from(this.nodesApi.getNode(nodeId, opts)).pipe(
+            map((nodeEntry: NodeEntry) => nodeEntry.entry.id),
+            catchError((error) => {
+                this.sourceNodeNotFound = true;
+                return this.handleError(error);
+            })
+        );
     }
 
     private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {

@@ -95,17 +95,6 @@ export const menuTestSourceParam = {
     }
 };
 
-export const allSourceParamsWithWrongRelativePath = {
-    fileSource: {
-        name: 'all file sources',
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        destinationFolderPath: {
-            value: '-shared-/wrongRelativePath',
-            type: DestinationFolderPathType.STATIC_TYPE
-        }
-    }
-};
-
 export const allSourceParamsWithRelativePath = {
     fileSource: {
         name: 'all file sources',
