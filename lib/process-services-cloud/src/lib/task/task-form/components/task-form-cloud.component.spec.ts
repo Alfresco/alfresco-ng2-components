@@ -25,6 +25,7 @@ import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { ESCAPE } from '@angular/cdk/keycodes';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -455,5 +456,13 @@ describe('TaskFormCloudComponent', () => {
         const noFormTemplateTitle = debugElement.query(By.css('.adf-form-title'));
 
         expect(noFormTemplateTitle).toBeNull();
+    });
+
+    // For widgets like File Viewer bubbling the keydown events of the form needs to be cancelled
+    it('should cancel bubbling a keydown event ()', () => {
+        const escapeKeyboardEvent = new KeyboardEvent('keydown', { 'keyCode': ESCAPE } as any);
+        fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
+
+        expect(escapeKeyboardEvent.cancelBubble).toBe(true);
     });
 });
