@@ -1,9 +1,11 @@
 .adf-viewer-content-container {
     width: 100%;
+    height: 100%;
 }
 
 .adf-pdf-viewer {
     width: 100%;
+    height: 100%;
     margin: 0;
 
     .adf-loader-container {
@@ -43,7 +45,7 @@
 
     &__container {
         display: flex;
-        height: 100%;
+        height: 100vh;
     }
 
     &__content {
