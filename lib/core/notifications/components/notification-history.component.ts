@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, OnDestroy, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ViewChild, OnDestroy, OnInit, AfterViewInit, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
@@ -26,7 +26,9 @@ import { Pagination } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-notification-history',
-    templateUrl: 'notification-history.component.html'
+    templateUrl: 'notification-history.component.html',
+    styleUrls: ['./notification-history.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterViewInit {
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -34,7 +34,9 @@ import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-ta
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
-    templateUrl: './base-edit-task-filter-cloud.component.html'
+    templateUrl: './base-edit-task-filter-cloud.component.html',
+    styleUrls: ['./base-edit-task-filter-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<TaskFilterCloudModel> {
     constructor(

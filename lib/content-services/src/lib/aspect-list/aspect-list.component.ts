@@ -25,6 +25,7 @@ import { AspectEntry } from '@alfresco/js-api';
 @Component({
     selector: 'adf-aspect-list',
     templateUrl: './aspect-list.component.html',
+    styleUrls: ['./aspect-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 

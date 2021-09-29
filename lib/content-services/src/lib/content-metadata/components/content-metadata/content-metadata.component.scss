@@ -1,0 +1,22 @@
+.adf {
+    &-metadata-properties {
+        .mat-expansion-panel-header.mat-expanded:hover,
+        .mat-expansion-panel-header.mat-expanded:focus {
+            background: var(--theme-bg-hover-color);
+        }
+
+        mat-expansion-panel-header {
+            height: 64px;
+        }
+
+        .mat-expansion-panel:not([class*='mat-elevation-z']) {
+            box-shadow: none;
+        }
+    }
+
+    &-metadata-action-buttons {
+        display: flex;
+        justify-content: space-evenly;
+        margin: 10px;
+    }
+}

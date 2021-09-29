@@ -27,6 +27,7 @@ import { TranslationService } from '../../services/translation.service';
 @Component({
     selector: 'adf-error-content',
     templateUrl: './error-content.component.html',
+    styleUrls: ['./error-content.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-error-content' }

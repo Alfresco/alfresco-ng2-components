@@ -1,0 +1,57 @@
+.adf-cloud-start-task-heading {
+    border-bottom: 1px solid var(--theme-fg-divider);
+    margin-bottom: 10px;
+
+    .mat-card-title {
+        font-weight: bold;
+        font-size: 18px;
+    }
+}
+
+.adf-cloud-priority-container {
+    padding-top: 1.1em;
+}
+
+.adf-cloud-date-error-container {
+    position: absolute;
+    height: 20px;
+    margin-top: 12px;
+    width: 100%;
+
+    & > div {
+        display: flex;
+        flex-flow: row;
+        justify-content: flex-start;
+    }
+
+    .adf-error-text {
+        padding-right: 8px;
+        height: 16px;
+        font-size: 12px;
+        line-height: 1.33;
+        color: var(--theme-warn-color);
+        width: auto;
+    }
+
+    .adf-error-icon {
+        font-size: 17px;
+        color: var(--theme-warn-color);
+    }
+}
+
+.adf-cloud-start-task-footer {
+    padding: 4px;
+    font-size: 18px;
+    border-top: 1px solid #eee;
+}
+
+adf-cloud-start-task {
+    .adf {
+
+        &-cloud-start-task-footer {
+            .mat-button {
+                text-transform: uppercase !important;
+            }
+        }
+    }
+}

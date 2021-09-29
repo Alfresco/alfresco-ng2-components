@@ -29,6 +29,7 @@ import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './fo
 @Component({
     selector: 'adf-folder-dialog',
     templateUrl: './folder.dialog.html',
+    styleUrls: ['./folder.dialog.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class FolderDialogComponent implements OnInit {

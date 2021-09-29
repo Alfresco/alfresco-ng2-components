@@ -40,6 +40,7 @@ import { ComponentSelectionMode } from '../../types';
 @Component({
     selector: 'adf-cloud-group',
     templateUrl: './group-cloud.component.html',
+    styleUrls: ['./group-cloud.component.scss'],
     animations: [
         trigger('transitionMessages', [
             state('enter', style({ opacity: 1, transform: 'translateY(0%)' })),

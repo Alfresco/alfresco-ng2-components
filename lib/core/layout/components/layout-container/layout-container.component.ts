@@ -23,6 +23,7 @@ import { Direction } from '@angular/cdk/bidi';
 @Component({
     selector: 'adf-layout-container',
     templateUrl: './layout-container.component.html',
+    styleUrls: ['./layout-container.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: [sidenavAnimation, contentAnimation]
 })

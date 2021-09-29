@@ -21,6 +21,7 @@ import { FormModel } from './widgets/core/form.model';
 @Component({
     selector: 'adf-form-renderer',
     templateUrl: './form-renderer.component.html',
+    styleUrls: ['./form-renderer.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class FormRendererComponent {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Group, NodeEntry } from '@alfresco/js-api';
 import { NodePermissionService } from '../../services/node-permission.service';
@@ -32,6 +32,8 @@ import { EcmUserModel } from '@alfresco/adf-core';
             </span>
         </div>
     `,
+    styleUrls: ['./user-name-column.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-user-name-column adf-datatable-content-cell adf-expand-cell-5 adf-ellipsis-cell' }
 })
 export class UserNameColumnComponent implements OnInit {

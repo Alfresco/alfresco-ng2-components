@@ -29,7 +29,8 @@ import { TagEntry } from '@alfresco/js-api';
     selector: 'adf-tag-list',
     templateUrl: './tag-list.component.html',
     styleUrls: ['./tag-list.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-tag-list' }
 })
 export class TagListComponent implements OnInit, OnDestroy {
 

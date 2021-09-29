@@ -36,6 +36,7 @@ import {
 @Component({
     selector: 'people-widget',
     templateUrl: './people.widget.html',
+    styleUrls: ['./people.widget.scss'],
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',

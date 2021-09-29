@@ -30,6 +30,7 @@ export const ADF_AMOUNT_SETTINGS = new InjectionToken<AmountWidgetSettings>('adf
 @Component({
     selector: 'amount-widget',
     templateUrl: './amount.widget.html',
+    styleUrls: ['./amount.widget.scss'],
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',

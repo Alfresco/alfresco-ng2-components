@@ -1,0 +1,59 @@
+@mixin adf-material-theme() {
+
+    .mat-expansion-panel {
+        & .mat-expansion-panel-header.cdk-keyboard-focused,
+        & .mat-expansion-panel-header.cdk-program-focused,
+        &:not(.mat-expanded) .mat-expansion-panel-header:hover {
+            &:not([aria-disabled='true']) {
+                background-color: var(--theme-hover-bg-color);
+            }
+        }
+    }
+
+    .mat-calendar {
+        .mat-calendar-header {
+            button {
+                color: var(--theme-text-bold-color);
+
+                &:disabled {
+                    color: var(--theme-text-color);
+                }
+            }
+        }
+        .mat-calendar-content {
+            .mat-calendar-table-header th {
+                color: var(--theme-text-color);
+            }
+
+            .mat-calendar-body-disabled > div {
+                color: var(--theme-text-color) !important;
+            }
+        }
+    }
+
+    .mat-datetimepicker-calendar {
+        .mat-datetimepicker-calendar-header {
+            .mat-datetimepicker-calendar-header-year {
+                opacity: 1;
+            }
+
+            .mat-datetimepicker-calendar-header-date {
+                opacity: 1;
+            }
+
+            .mat-datetimepicker-calendar-header-time {
+                opacity: 1;
+            }
+        }
+
+        .mat-datetimepicker-calendar-content {
+            .mat-datetimepicker-calendar-table-header th {
+                color: var(--theme-text-color);
+            }
+
+            .mat-datetimepicker-calendar-body-disabled > div {
+                color: var(--theme-text-color);
+            }
+        }
+    }
+}

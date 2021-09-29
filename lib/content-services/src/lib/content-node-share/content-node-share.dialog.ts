@@ -45,6 +45,7 @@ type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 @Component({
     selector: 'adf-share-dialog',
     templateUrl: './content-node-share.dialog.html',
+    styleUrls: ['./content-node-share.dialog.scss'],
     host: { class: 'adf-share-dialog' },
     encapsulation: ViewEncapsulation.None
 })

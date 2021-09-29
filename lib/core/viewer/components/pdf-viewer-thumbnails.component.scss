@@ -1,0 +1,30 @@
+.adf-pdf-thumbnails {
+    display: block;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 100%;
+    position: relative;
+
+    &__content {
+        top: 5px;
+        left: 50%;
+        height: 0;
+        position: absolute;
+    }
+
+    &__thumb {
+        cursor: pointer;
+        display: block;
+        width: 91px;
+        background: var(--theme-background-color);
+        margin-bottom: 15px;
+    }
+
+    &__thumb:hover {
+        box-shadow: 0 0 5px 0 var(--theme-text-bold-color);
+    }
+
+    &__thumb--selected {
+        border: 2px solid var(--theme-accent-color-a200);
+    }
+}

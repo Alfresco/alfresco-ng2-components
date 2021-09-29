@@ -1,6 +1,3 @@
-@import '~@angular/material/theming';
-@import 'variables';
-
 @mixin adf-no-select {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -27,27 +24,7 @@
 
 @mixin material-animation-default($duration: 0.2s) {
     transition-duration: $duration;
-    transition-timing-function: $animation-curve-default;
-}
-
-@mixin adf-line-clamp($line-height: 1.25, $lines: 3) {
-    position: relative;
-    line-height: $line-height;
-    padding: 0 !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    @supports (-webkit-line-clamp: 1) {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: $lines;
-        height: calc(0.99em * #{$line-height} * #{$lines});
-    }
-
-    @supports not (-webkit-line-clamp: 1) {
-        white-space: nowrap;
-        width: 100%;
-    }
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @mixin flex-column {
@@ -65,73 +42,4 @@
     flex: 1;
     height: 100%;
     overflow: hidden;
-}
-
-@mixin mat-expansion-panel-theme--fix($theme) {
-    $background: map-get($theme, background);
-
-    .mat-expansion-panel {
-        & .mat-expansion-panel-header.cdk-keyboard-focused,
-        & .mat-expansion-panel-header.cdk-program-focused,
-        &:not(.mat-expanded) .mat-expansion-panel-header:hover {
-            &:not([aria-disabled='true']) {
-                background: mat-color($background, hover);
-            }
-        }
-    }
-}
-
-@mixin mat-calendar-theme--fix($theme) {
-    $foreground: map-get($theme, foreground);
-
-    .mat-calendar {
-        .mat-calendar-header {
-            button {
-                color: mat-color($foreground, text, 0.87);
-
-                &:disabled {
-                    color: mat-color($foreground, text, 0.54);
-                }
-            }
-        }
-        .mat-calendar-content {
-            .mat-calendar-table-header th {
-                color: mat-color($foreground, text, 0.54);
-            }
-
-            .mat-calendar-body-disabled > div {
-                color: mat-color($foreground, text, 0.54) !important;
-            }
-        }
-    }
-}
-
-@mixin mat-datetimepicker-theme--fix($theme) {
-    $foreground: map-get($theme, foreground);
-
-    .mat-datetimepicker-calendar {
-        .mat-datetimepicker-calendar-header {
-            .mat-datetimepicker-calendar-header-year {
-                opacity: 1;
-            }
-
-            .mat-datetimepicker-calendar-header-date {
-                opacity: 1;
-            }
-
-            .mat-datetimepicker-calendar-header-time {
-                opacity: 1;
-            }
-        }
-
-        .mat-datetimepicker-calendar-content {
-            .mat-datetimepicker-calendar-table-header th {
-                color: mat-color($foreground, text, 0.54);
-            }
-
-            .mat-datetimepicker-calendar-body-disabled > div {
-                color: mat-color($foreground, text, 0.54);
-            }
-        }
-    }
 }

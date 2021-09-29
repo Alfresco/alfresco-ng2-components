@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import {
     BpmUserService,
     CardViewDateItemModel,
@@ -32,7 +32,9 @@ import { TaskDescriptionValidator } from '../validators/task-description.validat
 
 @Component({
     selector: 'adf-task-header',
-    templateUrl: './task-header.component.html'
+    templateUrl: './task-header.component.html',
+    styleUrls: ['./task-header.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TaskHeaderComponent implements OnChanges, OnInit {
 

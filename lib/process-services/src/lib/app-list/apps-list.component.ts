@@ -16,7 +16,7 @@
  */
 
 import { AppsProcessService, TranslationService, CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
-import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild, OnDestroy } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Observable, Observer, of, Subject } from 'rxjs';
 import { AppDefinitionRepresentationModel } from '../task-list';
 import { IconModel } from './icon.model';
@@ -24,7 +24,10 @@ import { share, takeUntil, finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-apps',
-    templateUrl: './apps-list.component.html'
+    templateUrl: './apps-list.component.html',
+    styleUrls: ['./apps-list.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-apps' }
 })
 export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
 

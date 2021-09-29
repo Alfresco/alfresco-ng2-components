@@ -1,69 +1,65 @@
-@mixin app-layout-theme($theme) {
-    $primary: map-get($theme, primary);
-    $minimumAppWidth: 320px;
 
-    @media screen and (max-width: 599px) {
-        app-search-bar {
-            width: 150px;
+@media screen and (max-width: 599px) {
+    app-search-bar {
+        width: 150px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    app-search-bar {
+        width: 100px;
+    }
+}
+
+adf-file-uploading-dialog {
+    z-index: 1100;
+}
+
+.app-layout {
+    display: flex;
+    flex: 1;
+    min-width: 320px;
+    height: 100%;
+
+    .app-sidenav-link--active {
+        color: var(--theme-primary-color);
+    }
+
+    .app-sidenav-link {
+        .mat-list-text {
+            font-size: 14px;
+            white-space: nowrap;
+            min-width: 120px;
+            padding: 0 10px;
         }
     }
 
-    @media screen and (max-width: 350px) {
-        app-search-bar {
-            width: 100px;
-        }
+    .mat-nav-list .mat-list-item.app-sidenav-link {
+        height: 40px;
     }
 
-    adf-file-uploading-dialog {
-        z-index: 1100;
+    &-menu-spacer {
+        flex: 1 1 auto;
     }
+}
 
-    .app-layout {
-        display: flex;
-        flex: 1;
-        min-width: $minimumAppWidth;
-        height: 100%;
-
-        .app-sidenav-link--active {
-            color: mat-color($primary);
-        }
-
-        .app-sidenav-link {
-            .mat-list-text {
-                font-size: 14px;
-                white-space: nowrap;
-                min-width: 120px;
-                padding: 0 10px;
-            }
-        }
-
-        .mat-nav-list .mat-list-item.app-sidenav-link {
-            height: 40px;
-        }
-
-        &-menu-spacer {
-            flex: 1 1 auto;
-        }
+@media screen and (max-width: 959px) {
+    .app-menu {
+        padding-top: 0;
     }
+}
 
-    @media screen and (max-width: 959px) {
-        .app-menu {
-            padding-top: 0;
-        }
+@media screen and (max-width: 599px) {}
+
+mat-sidenav-content > div {
+    display: flex;
+    height: 100%;
+
+    > div {
+        flex: auto;
     }
+}
 
-    @media screen and (max-width: 599px) {}
-
-    mat-sidenav-content > div {
-        display: flex;
-        height: 100%;
-
-        > div {
-            flex: auto;
-        }
-    }
-
-    [dir='rtl'] .app-sidenav-link__expand-button {
-        transform: rotateY(180deg);
-    }
+[dir='rtl'] .app-sidenav-link__expand-button {
+    transform: rotateY(180deg);
 }

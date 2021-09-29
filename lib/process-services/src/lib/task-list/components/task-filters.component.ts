@@ -16,7 +16,7 @@
  */
 
 import { AppsProcessService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './../services/task-filter.service';
@@ -25,7 +25,9 @@ import { IconModel } from '../../app-list/icon.model';
 
 @Component({
     selector: 'adf-task-filters',
-    templateUrl: './task-filters.component.html'
+    templateUrl: './task-filters.component.html',
+    styleUrls: ['./task-filters.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersComponent implements OnInit, OnChanges {
 

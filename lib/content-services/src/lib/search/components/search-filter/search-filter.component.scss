@@ -1,0 +1,11 @@
+.adf-search-filter {
+    .mat-expansion-panel-header-title {
+        font-size: 14px;
+        color: var(--theme-text-bold-color);
+    }
+
+    .mat-checkbox-label,
+    .mat-radio-label {
+        color: var(--theme-text-color);
+    }
+}

@@ -1,0 +1,72 @@
+.adf-add-permission-dialog {
+
+    .mat-dialog-title {
+        margin-left: 24px;
+        margin-right: 24px;
+        font-size: 20px;
+        font-weight: 600;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.6;
+        letter-spacing: -0.5px;
+        color: var(--theme-text-bold-color);
+    }
+
+    .mat-dialog-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .mat-dialog-content {
+        margin: 0;
+        overflow: hidden;
+        flex-grow: 1;
+        height: 80vh;
+
+        .adf-new-permission-table {
+            height: 90%;
+        }
+
+        .adf-search-container {
+            height: 100%;
+        }
+    }
+
+    .mat-dialog-actions {
+        padding: 0 24px;
+        background-color: var(--theme-background-color);
+        display: flex;
+        justify-content: flex-end;
+        color: var(--theme-foreground-text-color);
+
+        button {
+            text-transform: uppercase;
+            font-weight: normal;
+        }
+
+        .adf-choose-action {
+
+            &[disabled] {
+                color: var(--theme-secondary-text-color);
+            }
+
+            &:enabled {
+                color: var(--theme-primary-color);
+            }
+        }
+    }
+
+    .adf {
+        &-search-user-button {
+            width: 100%;
+            .mat-button-wrapper {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        &-add-member-action {
+            padding: 0 15px;
+        }
+    }
+}

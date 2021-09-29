@@ -1,0 +1,87 @@
+@import '~@angular/flex-layout/mq';
+
+$adf-pagination--height: 48px !default;
+$adf-pagination--icon-button-size: 32px !default;
+$adf-pagination--border: none !default;
+$adf-pagination__empty--height: 48px !default;
+$adf-pagination__empty--border: none !default;
+
+.adf-pagination {
+    display: flex;
+    border-top: $adf-pagination--border;
+    height: $adf-pagination--height;
+    line-height: 20px;
+    color: var(--theme-text-fg-color);
+
+    &__block {
+        display: flex;
+        align-items: center;
+        padding: 0 8px;
+        border-right: $adf-pagination--border;
+
+        &:first-child {
+            flex: 1 1 auto;
+            padding-left: 24px;
+        }
+
+        &:last-child {
+            border-right-width: 0;
+        }
+    }
+
+    @include layout-bp(lt-sm) {
+        & {
+            flex-wrap: wrap;
+            padding: 0 16px;
+            justify-content: space-between;
+        }
+
+        &__range-block,
+        &__perpage-block {
+            display: none;
+        }
+
+        &__actualinfo-block {
+            border-right: none;
+        }
+
+        &__controls-block {
+            padding-right: 0;
+        }
+    }
+
+    &__max-items {
+        margin-left: 10px;
+    }
+
+    &__max-items, &__current-page {
+        margin-right: 5px;
+
+        &, & + button {
+            color: var(--theme-text-fg-color);
+        }
+
+        & + button {
+            margin-left: -10px;
+        }
+    }
+
+    &__previous-button, &__next-button {
+        margin: 0 5px;
+    }
+
+    &__page-selector {
+        max-height: 250px !important;
+    }
+
+    &.adf-pagination__empty {
+        border-top: $adf-pagination__empty--border;
+        height: $adf-pagination__empty--height;
+    }
+
+    button[mat-icon-button] {
+        width: $adf-pagination--icon-button-size;
+        height: $adf-pagination--icon-button-size;
+        line-height: $adf-pagination--icon-button-size;
+    }
+}

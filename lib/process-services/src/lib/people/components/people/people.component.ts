@@ -16,7 +16,7 @@
  */
 
 import { LogService, UserProcessModel, PeopleProcessService } from '@alfresco/adf-core';
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleSearchComponent } from '../people-search/people-search.component';
@@ -24,7 +24,9 @@ import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-people',
-    templateUrl: './people.component.html'
+    templateUrl: './people.component.html',
+    styleUrls: ['./people.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class PeopleComponent {
 

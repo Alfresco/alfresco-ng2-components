@@ -19,7 +19,8 @@ import { Component, ContentChildren, EventEmitter, HostListener, Input, Output, 
 import { MatTabChangeEvent } from '@angular/material/tabs';
 @Component({
     selector: 'adf-info-drawer-tab',
-    template: '<ng-template><ng-content></ng-content></ng-template>'
+    template: '<ng-template><ng-content></ng-content></ng-template>',
+    encapsulation: ViewEncapsulation.None
 })
 export class InfoDrawerTabComponent {
     /** The title of the tab (string or translation key). */

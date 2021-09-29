@@ -21,6 +21,7 @@ import { ThemePalette } from '@angular/material/core';
 @Component({
     selector: 'adf-layout-header',
     templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-layout-header' }
 })

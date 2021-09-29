@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'adf-search-filter-menu-card',
-  templateUrl: './search-filter-menu-card.component.html'
+  templateUrl: './search-filter-menu-card.component.html',
+  styleUrls: ['./search-filter-menu-card.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterMenuCardComponent {
     @Output()

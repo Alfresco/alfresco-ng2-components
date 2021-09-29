@@ -39,6 +39,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 @Component({
     selector: 'adf-search-filter-container',
     templateUrl: './search-filter-container.component.html',
+    styleUrls: ['./search-filter-container.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterContainerComponent implements OnInit, OnDestroy {

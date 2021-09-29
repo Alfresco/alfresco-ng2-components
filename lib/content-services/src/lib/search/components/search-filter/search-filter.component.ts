@@ -25,6 +25,7 @@ import { SearchFacetFiltersService } from '../../services/search-facet-filters.s
 @Component({
     selector: 'adf-search-filter',
     templateUrl: './search-filter.component.html',
+    styleUrls: ['./search-filter.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-filter' }
 })

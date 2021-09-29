@@ -53,6 +53,7 @@ export enum ShowHeaderMode {
 @Component({
     selector: 'adf-datatable',
     templateUrl: './datatable.component.html',
+    styleUrls: ['./datatable.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable' }
 })

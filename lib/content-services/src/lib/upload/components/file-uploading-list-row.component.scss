@@ -1,0 +1,58 @@
+$file-uploading-row-hover-color: #eeeeee !default;
+
+adf-file-uploading-list-row:not(:first-child) {
+    display: block;
+    border-top: 1px solid var(--adf-upload-border-color);
+}
+
+.adf-file-uploading-row {
+    display: flex;
+    align-items: center;
+    padding: 0.3em 1em;
+    cursor: default;
+
+    &:hover {
+        background: $file-uploading-row-hover-color;
+    }
+
+    &__name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1 1 auto;
+        padding: 0 1em 0 0.5em;
+    }
+
+    &__group, &__block, &__file-version {
+        min-width: 100px;
+        display: flex !important;
+        justify-content: flex-end;
+        line-height: 40px;
+        height: 40px;
+        align-items: center;
+    }
+
+    &__group--toggle {
+        cursor: pointer;
+        display:flex;
+        align-items: center;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    &__status--done {
+        color: var(--theme-accent-color);
+    }
+
+    &__status--error {
+        color: var(--theme-warn-color);
+    }
+
+    &__action--cancel {
+        color: var(--theme-warn-color);
+    }
+
+    &__action--remove {
+        color: var(--theme-warn-color);
+    }
+}

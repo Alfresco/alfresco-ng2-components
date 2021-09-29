@@ -15,9 +15,6 @@ else
     NODE_OPTIONS="--max-old-space-size=8192" nx build process-services || exit 1
 fi
 
-echo "====== Bundle styles ======"
-npm run scss-bundle:process-services || exit 1
-
 echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/process-services/bundles/assets/adf-process-services/i18n
 cp -R ./lib/process-services/src/lib/i18n/* ./lib/dist/process-services/bundles/assets/adf-process-services/i18n

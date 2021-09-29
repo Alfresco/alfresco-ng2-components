@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnChanges, OnDestroy, Optional, EventEmitter, ViewChild, SimpleChanges, Output } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, OnDestroy, Optional, EventEmitter, ViewChild, SimpleChanges, Output, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -55,6 +55,8 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
 @Component({
     selector: 'app-files-component',
     templateUrl: './files.component.html',
+    styleUrls: ['./files.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     providers: [
         { provide: FormRenderingService, useClass: ProcessFormRenderingService }
     ]

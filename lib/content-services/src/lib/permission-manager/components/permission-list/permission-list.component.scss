@@ -1,0 +1,94 @@
+.adf {
+    &-permission-card {
+        height: 100%;
+        box-sizing: border-box;
+        display: flex !important;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    &-permission-loader {
+        margin-left: 45%;
+        overflow: hidden;
+    }
+
+    &-permission-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        border: 1px solid var(--theme-border-color);
+    }
+
+    &-inherit-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        &-header {
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+    }
+
+    &-inherit-toggle {
+        padding-left: 30px;
+    }
+
+    &-inherit-subtitle {
+        padding-bottom: 5px;
+    }
+
+    &-permission-content-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 5px 15px;
+    }
+
+    &-permission-role-column-header {
+        position: relative !important;
+        height: 40px;
+        .mat-form-field-infix {
+            border: none;
+        }
+    }
+
+    &-permission-header {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        height: 100%;
+        overflow: hidden;
+        min-height: 0;
+    }
+
+    &-permission-list {
+        display: flex;
+        height: calc(100% - 63px);
+    }
+
+    &-local-permission-container {
+        overflow: hidden;
+        flex: 1 1 auto;
+    }
+}
+
+[aria-sort='Ascending'] adf-user-role-column,
+[aria-sort='Descending'] adf-user-role-column {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.adf-permission-pop-over {
+    padding-right: 15px;
+    width: 100%;
+
+    .adf-pop-over-card {
+        width: 100%;
+        overflow: hidden;
+        box-shadow: 0 8px 9px -5px var(--theme-fg-divider),
+        0 15px 22px 2px var(--theme-fg-divider);
+    }
+}

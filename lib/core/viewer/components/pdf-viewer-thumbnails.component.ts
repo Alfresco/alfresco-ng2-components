@@ -28,6 +28,7 @@ import { delay } from 'rxjs/operators';
 @Component({
     selector: 'adf-pdf-thumbnails',
     templateUrl: './pdf-viewer-thumbnails.component.html',
+    styleUrls: ['./pdf-viewer-thumbnails.component.scss'],
     host: { class: 'adf-pdf-thumbnails' },
     encapsulation: ViewEncapsulation.None
 })

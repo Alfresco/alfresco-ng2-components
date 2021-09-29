@@ -1,80 +1,102 @@
-@import './theme-colors';
 @import './default-class';
 @import './theming';
-
-@import '../card-view/card-view.theme';
-@import '../datatable/components/datatable/datatable.theme';
-@import '../form/components/widgets/container/container.theme';
-@import '../form/components/widgets/dynamic-table/dynamic-table.theme';
 @import '../form/components/widgets/form.theme';
-@import '../form/components/widgets/hyperlink/hyperlink.theme';
-@import '../form/components/widgets/amount/amount.theme';
-@import '../form/components/widgets/people/people.theme';
-@import '../info-drawer/info-drawer-layout.theme';
-@import '../login/components/login.theme';
-@import '../pagination/pagination.theme';
-@import '../toolbar/toolbar.theme';
-@import '../userinfo/components/user-info.theme';
-@import '../viewer/components/viewer.theme';
-@import '../viewer/components/pdf-viewer.theme';
-@import '../viewer/components/pdf-viewer-thumbnails.theme';
-@import '../viewer/components/pdf-viewer-password-dialog.theme.scss';
-@import '../viewer/components/txt-viewer.theme';
-@import '../viewer/components/img-viewer.theme';
-@import '../viewer/components/unknown-format/unknown-format.theme';
-@import '../form/components/form-renderer.theme';
-@import '../layout/components/sidebar-action/sidebar-action-menu.theme';
-@import '../layout/components/header/header.theme';
-@import '../comments/comment-list.theme';
-@import '../comments/comments.theme';
-@import '../layout/components/layout-container/layout-container.theme';
-@import '../layout/components/sidenav-layout/sidenav-layout.theme';
-@import '../templates/empty-content/empty-content.theme';
-@import '../templates/error-content/error-content.theme';
 @import '../clipboard/clipboard.theme';
-@import '../search-text/search-text-input.theme';
 @import './snackbar.theme';
-@import '../directives/tooltip-card/tooltip-card.theme';
-@import '../notifications/components/notification-history.theme';
+@import './material.theme';
+@import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
 
 @mixin adf-core-theme($theme) {
-    @include adf-colors-theme($theme);
-    @include adf-default-class-theme($theme);
-    @include adf-card-view-module-theme($theme);
-    @include adf-datatable-theme($theme);
-    @include adf-form-container-widget-theme($theme);
-    @include adf-dynamic-table-theme($theme);
-    @include adf-form-theme($theme);
-    @include adf-hyperlink-widget-theme($theme);
-    @include adf-amount-widget-theme($theme);
-    @include adf-form-people-widget-theme($theme);
-    @include adf-info-drawer-theme($theme);
-    @include adf-login-theme($theme);
-    @include adf-pagination-theme($theme);
-    @include adf-toolbar-theme($theme);
-    @include adf-userinfo-theme($theme);
-    @include adf-viewer-theme($theme);
-    @include adf-pdf-viewer-theme($theme);
-    @include adf-pdf-thumbnails-theme($theme);
-    @include adf-pdf-viewer-password-dialog-theme($theme);
-    @include adf-image-viewer-theme($theme);
-    @include adf-unknown-viewer-theme($theme);
-    @include adf-text-viewer-theme($theme);
-    @include adf-form-renderer-theme($theme);
-    @include adf-sidebar-action-menu-theme($theme);
-    @include adf-task-list-comment-list-theme($theme);
-    @include adf-task-list-comment-theme($theme);
-    @include adf-layout-container-theme($theme);
-    @include adf-empty-content-theme($theme);
-    @include adf-error-content-theme($theme);
-    @include adf-header-layout-theme($theme);
-    @include adf-sidenav-layout-theme($theme);
-    @include adf-clipboard-theme($theme);
-    @include adf-snackbar-theme($theme);
-    @include mat-expansion-panel-theme--fix($theme);
-    @include mat-calendar-theme--fix($theme);
-    @include mat-datetimepicker-theme--fix($theme);
-    @include adf-search-text-input-theme($theme);
-    @include adf-tooltip-card-directive($theme);
-    @include adf-notification-history-theme($theme);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    $warn: map-get($theme, warn);
+    $accent: map-get($theme, accent);
+    $primary: map-get($theme, primary);
+
+    // map SCSS variables to expose as CSS variables
+    $defaults: (
+        // material colors
+        --theme-primary-color: mat-color($primary),
+        --theme-primary-color-default-contrast: mat-color($primary, default-contrast),
+        --theme-warn-color: mat-color($warn),
+        --theme-warn-color-default-contrast: mat-color($warn, default-contrast),
+        --theme-accent-color: mat-color($accent),
+        --theme-accent-color-a200: mat-color($accent, A200),
+        --theme-accent-color-default-contrast: mat-color($accent, default-contrast),
+
+        // component themes
+        --adf-snackbar-error-bg-color: mat-color($warn),
+        --adf-snackbar-error-action-color: white,
+        --adf-snackbar-warning-bg-color: mat-color($accent),
+        --adf-snackbar-warning-action-color: white,
+        --adf-snackbar-info-bg-color: mat-color($primary),
+        --adf-snackbar-info-action-color: white,
+        --adf-breadcrumb-item-active-color: mat-color($foreground, text, 0.87),
+        --adf-breadcrumb-item-active-hover-color: mat-color($foreground, text, 0.64),
+        --adf-node-selector-icon-color: mat-color($foreground, icon, 0.54),
+        --adf-node-selector-base-color: mat-color($foreground, base, 0.45),
+        --adf-node-selector-base-bold-color: mat-color($foreground, base, 0.65),
+        --adf-datatable-cell-link-hover-color: mat-color($accent, 500),
+        --adf-datatable-selected-color: mat-color($primary, 100),
+        --adf-user-info-color: mat-color($primary, 300),
+        --adf-comment-list-primary-color: mat-color($primary, 100),
+        --adf-comment-list-ripple-color: mat-color($primary, 300),
+        --adf-search-input-bg-color: mat-color($primary, 50),
+        --adf-search-input-highlight-color: mat-color($primary, 900),
+        --adf-tooltip-card-color: mat-color($foreground, text, 0.75),
+        --adf-card-view-text-color: mat-color($foreground, text, 0.25),
+        --adf-card-view-label-color: mat-color($foreground, text, 0.4),
+        --adf-card-view-datetime-border-color: mat-color($foreground, text, 0.42),
+        --adf-upload-border-color: mat-color($foreground, text, 0.14),
+
+        --theme-hover-bg-color: mat-color($background, hover),
+        --theme-text-color: mat-color($foreground, text, 0.54),
+        --theme-text-bold-color: mat-color($foreground, text, 0.87),
+        --theme-background-color: mat-color($background, background),
+        --theme-text-fg-color: mat-color($foreground, text),
+        --theme-text-fg-shadow-color: mat-color($foreground, text, 0.27),
+        --theme-border-color: mat-color($foreground, text, 0.07),
+        --theme-card-bg-color: mat-color($background, card),
+        --theme-card-bg-bold-color: mat-color($background, card, 0.87),
+        --theme-foreground-text-color: mat-color($foreground, text, 0.72),
+        --theme-secondary-text-color: mat-color($foreground, secondary-text),
+        --theme-dialog-bg-color: mat-color($background, dialog),
+        --theme-bg-hover-color: mat-color($background, hover),
+        --theme-fg-base-color: mat-color($foreground, base),
+        --theme-fg-divider: mat-color($foreground, divider),
+        --theme-disabled-text-color: mat-color($foreground, disabled-text),
+        --theme-selected-button-bg-color: mat-color($background, selected-button),
+        --theme-icon-fg-color: mat-color($foreground, icon),
+        --theme-unselected-chip-bg-color: mat-color($background, unselected-chip),
+        --theme-status-bar-bg-color: mat-color($background, status-bar),
+        // fonts
+        --theme-font-family: mat-font-family($alfresco-typography),
+        --theme-body-1-font-size: mat-font-size($alfresco-typography, body-1),
+        --theme-body-2-font-size: mat-font-size($alfresco-typography, body-2),
+        --theme-body-1-line-height: mat-line-height($alfresco-typography, body-1),
+        --theme-display-1-font-size: mat-font-size($alfresco-typography, display-1),
+        --theme-display-3-font-size: mat-font-size($alfresco-typography, display-3),
+        --theme-display-4-font-size: mat-font-size($alfresco-typography, display-4),
+        --theme-caption-font-size: mat-font-size($alfresco-typography, caption),
+        --theme-title-font-size: mat-font-size($alfresco-typography, title),
+        --theme-subheading-2-font-size: mat-font-size($alfresco-typography, subheading-2),
+        --theme-button-font-size: mat-font-size($alfresco-typography, button),
+        --theme-headline-line-height: mat-line-height($alfresco-typography, headline),
+
+        // specific colors
+        --theme-colors-mat-grey: mat-color($mat-grey, A200),
+        --theme-colors-mat-grey-dark: mat-color($mat-grey, A400),
+        --theme-colors-mag-grey-light: mat-color($mat-grey, 50),
+    );
+
+    // propagates SCSS variables into the CSS variables scope
+    :root {
+        @each $name, $value in $defaults {
+        #{$name}: #{$value};
+        }
+    }
+
+    @include mat-datetimepicker-theme($theme);
+    @include adf-snackbar-theme();
+    @include adf-material-theme();
 }

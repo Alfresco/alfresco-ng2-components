@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, EventEmitter, Output, OnDestroy, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnDestroy, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeUntil, concatMap, catchError, finalize } from 'rxjs/operators';
 import { Subject, of, forkJoin } from 'rxjs';
 import {
@@ -37,7 +37,9 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 
 @Component({
     selector: 'adf-cloud-task-header',
-    templateUrl: './task-header-cloud.component.html'
+    templateUrl: './task-header-cloud.component.html',
+    styleUrls: ['./task-header-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
 

@@ -17,7 +17,7 @@
 
 import {
     Component, EventEmitter, Input, OnChanges,
-    Output, SimpleChanges, OnInit, HostListener
+    Output, SimpleChanges, OnInit, HostListener, ViewEncapsulation
 } from '@angular/core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -28,7 +28,9 @@ import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/
 
 @Component({
     selector: 'adf-cloud-task-form',
-    templateUrl: './task-form-cloud.component.html'
+    templateUrl: './task-form-cloud.component.html',
+    styleUrls: ['./task-form-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TaskFormCloudComponent implements OnInit, OnChanges {
 

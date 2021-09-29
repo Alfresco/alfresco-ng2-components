@@ -31,7 +31,8 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'adf-tag-node-actions-list',
     templateUrl: './tag-actions.component.html',
     styleUrls: ['./tag-actions.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-tag-node-actions-list' }
 })
 export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
 

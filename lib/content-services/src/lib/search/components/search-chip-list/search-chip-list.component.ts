@@ -22,6 +22,7 @@ import { SearchFacetFiltersService } from '../../services/search-facet-filters.s
 @Component({
     selector: 'adf-search-chip-list',
     templateUrl: './search-chip-list.component.html',
+    styleUrls: ['./search-chip-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-chip-list' }
 })

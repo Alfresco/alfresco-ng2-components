@@ -1,0 +1,115 @@
+.adf-new-task-heading {
+    padding-top: 12px;
+    border-bottom: 1px solid var(--theme-fg-divider);
+    .mat-card-title {
+        font-weight: bold;
+        font-size: 18px;
+    }
+}
+
+.adf-new-task-form {
+    width: 100%;
+}
+
+.adf-new-task-layout-card {
+    margin: 10px auto;
+}
+
+.adf-new-task-footer {
+    padding: 4px;
+    font-size: 18px;
+    border-top: 1px solid #eee;
+}
+
+.adf-mat-select {
+    padding-top: 0;
+}
+
+adf-start-task {
+
+    .mat-button.adf-uppercase {
+        text-transform: uppercase;
+    }
+
+    people-widget {
+        width: 100%;
+        .mat-form-field-label-wrapper {
+            top: -14px !important;
+        }
+    }
+
+    .adf-people-widget-content {
+        .mat-form-field {
+            width: 100%;
+        }
+        .adf-label {
+            line-height: 0;
+        }
+        .adf-error-text-container {
+            margin-top: -10px;
+        }
+    }
+
+    .adf {
+        &-start-task-input-container .mat-form-field-wrapper {
+            padding-top: 8px;
+        }
+
+        &-error-text-container {
+            position: absolute;
+            height: 20px;
+            margin-top: 12px;
+            width: 100%;
+
+            & > div {
+                display: flex;
+                flex-flow: row;
+                justify-content: flex-start;
+            }
+        }
+
+        &-error-text {
+            padding-right: 8px;
+            height: 16px;
+            font-size: 12px;
+            line-height: 1.33;
+            color: var(--theme-warn-color);
+            width: auto;
+        }
+
+        &-error-icon {
+            font-size: 17px;
+            color: var(--theme-warn-color);
+        }
+
+        &-label {
+            color: rgb(186, 186, 186);;
+        }
+
+        &-invalid {
+
+            .mat-form-field-underline {
+                background-color: #f44336 !important;
+            }
+
+            .adf-file {
+                border-color: var(--theme-warn-color);
+            }
+
+            .mat-form-field-prefix {
+                color: var(--theme-warn-color);
+            }
+
+            .adf-input {
+                border-color: var(--theme-warn-color);
+            }
+
+            .adf-label {
+                color: var(--theme-warn-color);
+                &::after {
+                    background-color: var(--theme-warn-color);
+                }
+            }
+        }
+    }
+}

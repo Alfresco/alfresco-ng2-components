@@ -70,9 +70,6 @@ When you want more customization than a pre-built theme offers, you can create y
 /*
  *  Include only packages that you are using (and core by default)
  */
-@import '~@alfresco/adf-content-services/theming';
-@import '~@alfresco/adf-process-services/theming';
-@import '~@alfresco/adf-insights/theming';
 @import '~@alfresco/adf-core/theming';
 
 @import '~@angular/material/theming';
@@ -86,9 +83,6 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 
-@include adf-content-services-theme($theme);
-@include adf-process-services-theme($theme);
-@include adf-insights-theme($theme);
 @include adf-core-theme($theme);
 ```
 
@@ -134,7 +128,6 @@ Any component with the  `add-dark-theme` class will use the dark theme, while ot
 .adf-hide-small                 // Display none vieweport <960px
 .adf-hide-xsmall                // Display none vieweport <600px
 
-.adf-primary-color               // Primary color
 .accent-color                // Accent color
 .warn-color                  // Warn color
 .primary-contrast-text-color // Default contrast color for primary color

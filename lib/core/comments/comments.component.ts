@@ -18,13 +18,15 @@
 import { CommentProcessService } from '../services/comment-process.service';
 import { CommentContentService } from '../services/comment-content.service';
 import { CommentModel } from '../models/comment.model';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-comments',
-    templateUrl: './comments.component.html'
+    templateUrl: './comments.component.html',
+    styleUrls: ['./comments.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CommentsComponent implements OnChanges {
 

@@ -1,0 +1,55 @@
+.adf {
+    &-array-item-icon {
+        font-size: 16px;
+        padding-top: 8px;
+    }
+
+    &-array-item-action {
+        color: var(--adf-card-view-text-color);
+    }
+
+    &-array-item-action:hover, &-array-item-action:focus {
+        color: var(--theme-text-fg-color);
+    }
+
+    &-card-array-item-default {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+    }
+
+    &-array-item-more-chip-container {
+        &.mat-card {
+            box-shadow: none;
+        }
+
+        &.mat-card {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .mat-chip {
+            cursor: pointer;
+        }
+    }
+
+    &-property-value {
+        .mat-chip-list {
+            width: 100%;
+            padding-top: 6px;
+            cursor: pointer;
+        }
+        .mat-chip {
+            cursor: pointer;
+        }
+    }
+
+    &-card-view-array-item-container {
+        flex-direction: row;
+        box-sizing: border-box;
+        display: flex;
+        place-content: center space-between;
+        align-items: center;
+    }
+}

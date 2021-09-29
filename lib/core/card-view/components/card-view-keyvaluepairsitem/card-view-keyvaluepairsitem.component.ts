@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view.models';
 import { CardViewKeyValuePairsItemType } from '../../interfaces/card-view.interfaces';
@@ -24,7 +24,9 @@ import { BaseCardView } from '../base-card-view';
 
 @Component({
     selector: 'adf-card-view-boolitem',
-    templateUrl: './card-view-keyvaluepairsitem.component.html'
+    templateUrl: './card-view-keyvaluepairsitem.component.html',
+    styleUrls: ['./card-view-keyvaluepairsitem.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class CardViewKeyValuePairsItemComponent extends BaseCardView<CardViewKeyValuePairsItemModel> implements OnChanges {

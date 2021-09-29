@@ -1,20 +1,31 @@
-.adf-tag-chips-list {
-    display: flex;
-    flex-direction: column;
-
-    & div {
+.adf-tag-list {
+    .adf-tag-chips-list {
         display: flex;
         flex-direction: column;
+
+        & div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .adf-list-tag {
+            display: block;
+            font-size: 16px;
+
+            .mat-chip {
+                color: var(--theme-primary-color-default-contrast);
+                background-color: var(--theme-primary-color);
+
+                .mat-icon {
+                    color: var(--theme-primary-color-default-contrast);
+                }
+            }
+        }
     }
-}
 
-.adf-list-tag {
-    display: block;
-    font-size: 16px;
-}
-
-.adf-tag-list-controls {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
+    .adf-tag-list-controls {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+    }
 }

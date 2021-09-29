@@ -1,0 +1,69 @@
+.adf-float-label {
+    padding-top: 20px;
+}
+
+.adf-share-link-dialog {
+
+    .adf-share-link {
+        &__dialog-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__label,
+        &__title,
+        &__info {
+            letter-spacing: -0.4px;
+            line-height: 2;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            font-size: 16px;
+            color: var(--theme-text-bold-color);
+        }
+
+        &__label {
+            flex: 1 1 auto;
+        }
+
+        &__info {
+            color: var(--theme-text-color);
+            font-size: 13px;
+        }
+
+        &--row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        &__input {
+            color: var(--theme-text-bold-color);
+        }
+    }
+
+    .adf-input-action {
+        cursor: pointer;
+    }
+
+    .adf-full-width {
+        width: 100%;
+    }
+
+    .mat-form-field-infix {
+        border-top: unset;
+    }
+
+    .mat-dialog-actions {
+        justify-content: flex-end;
+
+        & > button {
+            text-transform: uppercase;
+        }
+    }
+
+    .mat-form-field-flex {
+        align-items: center;
+    }
+}

@@ -24,6 +24,7 @@ import { PermissionListService } from './permission-list.service';
 @Component({
     selector: 'adf-permission-list',
     templateUrl: './permission-list.component.html',
+    styleUrls: ['./permission-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class PermissionListComponent {

@@ -1,0 +1,10 @@
+.adf {
+    &-permission-action {
+        &[disabled] {
+            opacity: 0.6;
+        }
+        &:enabled {
+            color: var(--theme-primary-color);
+        }
+    }
+}

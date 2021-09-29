@@ -29,6 +29,7 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'adf-date-range-widget',
     templateUrl: './date-range.widget.html',
+    styleUrls: ['./date-range.widget.scss'],
     providers: [
         {provide: DateAdapter, useClass: MomentDateAdapter},
         {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],

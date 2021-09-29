@@ -1,0 +1,36 @@
+.adf-toolbar {
+    &--spacer {
+        flex: 1 1 auto;
+    }
+
+    &-title {
+        overflow: hidden;
+        display: flex;
+        width: 100%;
+    }
+
+    .mat-toolbar {
+        min-height: 48px;
+        border: 1px solid var(--theme-border-color);
+        color: var(--theme-text-color);
+    }
+
+    .mat-toolbar-row {
+        height: 48px;
+        font-size: 14px;
+        white-space: normal;
+    }
+
+    .mat-toolbar-single-row {
+        padding: 0 16px;
+        height: 64px;
+    }
+
+    &.adf-toolbar--inline {
+        .mat-toolbar {
+            background-color: inherit;
+            border: none !important;
+            padding: 0;
+        }
+    }
+}
