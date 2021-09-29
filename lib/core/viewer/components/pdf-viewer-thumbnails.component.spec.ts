@@ -78,8 +78,11 @@ describe('PdfThumbListComponent', () => {
         fixture.nativeElement.style.display = 'block';
         fixture.nativeElement.style.height = '700px';
         fixture.nativeElement.style.overflow = 'scroll';
-        fixture.debugElement.query(By.css('.adf-pdf-thumbnails__content'))
-            .nativeElement.style.height = '2000px';
+
+        const content = fixture.debugElement.query(By.css('.adf-pdf-thumbnails__content')).nativeElement;
+
+        content.style.height = '2000px';
+        content.style.position = 'unset';
     });
 
     it('should render initial rage of items', () => {
