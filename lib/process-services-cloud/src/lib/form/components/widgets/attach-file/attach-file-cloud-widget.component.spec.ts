@@ -64,7 +64,7 @@ import { of } from 'rxjs';
 import { FormCloudModule } from '../../../form-cloud.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-fdescribe('AttachFileCloudWidgetComponent', () => {
+describe('AttachFileCloudWidgetComponent', () => {
     let widget: AttachFileCloudWidgetComponent;
     let fixture: ComponentFixture<AttachFileCloudWidgetComponent>;
     let element: HTMLInputElement;
@@ -449,12 +449,7 @@ fdescribe('AttachFileCloudWidgetComponent', () => {
             apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(new Promise(resolve => resolve({entry: fakeNodeWithProperties})));
             spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(new Promise(resolve => resolve('fake-properties')));
             openUploadFileDialogSpy.and.returnValue(of([fakeNodeWithProperties]));
-            widget.field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.UPLOAD,
-                value: []
-            });
-            widget.field.id = 'attach-file-alfresco';
-            widget.field.params = <FormFieldMetadata> menuTestSourceParam;
+            createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], <FormFieldMetadata>menuTestSourceParam, false, null, false);
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -568,38 +563,40 @@ fdescribe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should display the default menu options if no options are provided', () => {
+            widget.hasFile = false;
             widget.field.params = <FormFieldMetadata> onlyLocalParams;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const inputDebugElement = fixture.debugElement.query(
-                    By.css('#adf-attach-widget-readonly-list')
+                    By.css('#attach-file-alfresco')
                 );
                 inputDebugElement.triggerEventHandler('change', {
                     target: { files: [fakeLocalPngAnswer] }
                 });
+                widget.hasFile = true;
                 fixture.detectChanges();
                 const menuButton: HTMLButtonElement = <HTMLButtonElement> (
                     fixture.debugElement.query(
-                        By.css('#file-fake-option-menu')
+                        By.css('#file-1155-option-menu')
                     ).nativeElement
                 );
                 menuButton.click();
                 fixture.detectChanges();
                 const showOption: HTMLButtonElement = <HTMLButtonElement> (
                     fixture.debugElement.query(
-                        By.css('#file-fake-show-file')
+                        By.css('#file-1155-show-file')
                     ).nativeElement
                 );
                 const downloadOption: HTMLButtonElement = <HTMLButtonElement> (
-                    fixture.debugElement.query(By.css('#file-fake-download-file'))
+                    fixture.debugElement.query(By.css('#file-1155-download-file'))
                         .nativeElement
                 );
                 const retrieveMetadataOption: HTMLButtonElement = <HTMLButtonElement> (
-                    fixture.debugElement.query(By.css('#file-fake-retrieve-file-metadata'))
+                    fixture.debugElement.query(By.css('#file-1155-retrieve-file-metadata'))
                         .nativeElement
                 );
                 const removeOption: HTMLButtonElement = <HTMLButtonElement> (
-                    fixture.debugElement.query(By.css('#file-fake-remove'))
+                    fixture.debugElement.query(By.css('#file-1155-remove'))
                         .nativeElement
                 );
 
