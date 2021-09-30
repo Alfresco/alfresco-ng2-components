@@ -1,0 +1,8 @@
+{
+  "ngPackage": {
+    "lib": {
+      "entryFile": "./index.ts",
+      "flatModuleFile": "adf-cli-tooling"
+    }
+  }
+}
