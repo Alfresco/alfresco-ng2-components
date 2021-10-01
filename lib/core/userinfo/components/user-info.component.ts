@@ -81,7 +81,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
        this.authService.onLogin
            .pipe(
                startWith(this.authService.isLoggedIn()),
-               debounceTime(800),
+               debounceTime(500),
                takeUntil(this.destroy$)
            ).subscribe(() => this.getUserInfo());
     }

@@ -69,9 +69,10 @@ describe('AuthenticationService', () => {
         it('should emit login event for kerberos', (done) => {
             spyOn(authService.peopleApi, 'getPerson').and.returnValue(Promise.resolve({}));
             spyOn(authService.profileApi, 'getProfile').and.returnValue(Promise.resolve({}));
-            authService.onLogin.subscribe(() => {
+            const disposableLogin = authService.onLogin.subscribe(() => {
                 expect(authService.profileApi.getProfile).toHaveBeenCalledTimes(1);
                 expect(authService.peopleApi.getPerson).toHaveBeenCalledTimes(1);
+                disposableLogin.unsubscribe();
                 done();
             });
             appConfigService.load();
