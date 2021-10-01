@@ -73,6 +73,13 @@ if [[ -n "${APP_CONFIG_ECM_HOST}" ]]; then
     -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
 fi
 
+if [[ -n "${APP_CONFIG_KERBEROS_ENABLED}" ]]; then
+  replace="\/"
+  encoded=${APP_CONFIG_KERBEROS_ENABLED//\//$replace}
+  sed -e "s/\"withCredentials\": \".*\"/\"withCredentials\": \"${encoded}\"/g" \
+    -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
+fi
+
 if [ -n "${APP_CONFIG_APPS_DEPLOYED}" ]; then
   sed -e "s/\"alfresco-deployed-apps\": \[.*\]/\"alfresco-deployed-apps\": ${APP_CONFIG_APPS_DEPLOYED}/g" \
     -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"

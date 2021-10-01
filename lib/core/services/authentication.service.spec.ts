@@ -60,6 +60,24 @@ describe('AuthenticationService', () => {
         jasmine.Ajax.uninstall();
     });
 
+    describe('kerberos', () => {
+        beforeEach(() => {
+            appConfigService.config.providers = 'ALL';
+            appConfigService.config.auth = { withCredentials: true };
+        });
+
+        it('should emit login event for kerberos', (done) => {
+            spyOn(authService.peopleApi, 'getPerson').and.returnValue(Promise.resolve({}));
+            spyOn(authService.profileApi, 'getProfile').and.returnValue(Promise.resolve({}));
+            authService.onLogin.subscribe(() => {
+                expect(authService.profileApi.getProfile).toHaveBeenCalledTimes(1);
+                expect(authService.peopleApi.getPerson).toHaveBeenCalledTimes(1);
+                done();
+            });
+            appConfigService.load();
+        });
+    });
+
     describe('when the setting is ECM', () => {
 
         beforeEach(() => {

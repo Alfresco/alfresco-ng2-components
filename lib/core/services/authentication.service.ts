@@ -16,13 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError, Observer, ReplaySubject } from 'rxjs';
+import { Observable, from, throwError, Observer, ReplaySubject, forkJoin } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { RedirectionModel } from '../models/redirection.model';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { UserProfileApi, UserRepresentation } from '@alfresco/js-api';
+import { PeopleApi, UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 import { map, catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from './jwt-helper.service';
@@ -39,7 +39,7 @@ export class AuthenticationService {
 
     private bearerExcludedUrls: string[] = ['auth/realms', 'resources/', 'assets/'];
     /**
-     * Emits Basic auth login event
+     * Emits login event
      */
     onLogin: ReplaySubject<any> = new ReplaySubject<any>(1);
 
@@ -47,6 +47,12 @@ export class AuthenticationService {
      * Emits logout event
      */
     onLogout: ReplaySubject<any> = new ReplaySubject<any>(1);
+
+    _peopleApi: PeopleApi;
+    get peopleApi(): PeopleApi {
+        this._peopleApi = this._peopleApi ?? new PeopleApi(this.alfrescoApi.getInstance());
+        return this._peopleApi;
+    }
 
     _profileApi: UserProfileApi;
     get profileApi(): UserProfileApi {
@@ -64,7 +70,24 @@ export class AuthenticationService {
             this.alfrescoApi.getInstance().reply('logged-in', () => {
                 this.onLogin.next();
             });
+
+            if (this.isKerberosEnabled()) {
+                this.loadUserDetails();
+            }
         });
+    }
+
+    private loadUserDetails() {
+        const ecmUser$ = from(this.peopleApi.getPerson('-me-'));
+        const bpmUser$ = this.getBpmLoggedUser();
+
+        if (this.isALLProvider()) {
+            forkJoin([ecmUser$, bpmUser$]).subscribe(() => this.onLogin.next());
+        } else if (this.isECMProvider()) {
+            ecmUser$.subscribe(() => this.onLogin.next());
+        } else {
+            bpmUser$.subscribe(() => this.onLogin.next());
+        }
     }
 
     /**
@@ -86,6 +109,14 @@ export class AuthenticationService {
         } else {
             return this.isLoggedIn();
         }
+    }
+
+    /**
+     * Does kerberos enabled?
+     * @returns True if enabled, false otherwise
+     */
+    isKerberosEnabled(): boolean {
+        return this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false);
     }
 
     /**
