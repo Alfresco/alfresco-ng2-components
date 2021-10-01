@@ -37,8 +37,5 @@
   "devDependencies": {
     "@types/shelljs": "^0.8.7",
     "typescript": "3.9.3"
-  },
-  "peerDependencies": {
-    "dotenv-expand": "^5.1.0"
   }
 }
