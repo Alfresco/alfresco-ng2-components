@@ -21,7 +21,6 @@ import { ExtensionService } from '../services/extension.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ViewerExtensionRef } from '../config/viewer.extensions';
 import { DocumentListPresetRef } from '../config/document-list.extensions';
-import { TaskListPresetRef } from '../config/task-list.extensions';
 import { ProcessListPresetRef } from '../config/process-list.extensions';
 
 @Injectable({
@@ -65,19 +64,15 @@ export class AppExtensionService {
           .filter((entry) => !entry.disabled);
     }
 
-    processesColumnPreset(): ProcessListPresetRef[] {
+    /**
+     * Provides a collection of process list columns for the particular preset.
+     * The result is filtered by the **disabled** state.
+     * @param key Preset key.
+     */
+    getProcessListPreset(): ProcessListPresetRef[] {
         return this.extensionService
           .getElements<any>(
             `features.processList`
-          )
-          .filter((entry) => !entry.disabled);
-    }
-
-
-    tasksColumnPreset(): TaskListPresetRef[] {
-        return this.extensionService
-          .getElements<any>(
-            `features.taskList`
           )
           .filter((entry) => !entry.disabled);
     }

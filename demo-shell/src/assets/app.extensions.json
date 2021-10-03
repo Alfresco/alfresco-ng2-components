@@ -32,18 +32,6 @@
         "desktopOnly": false
       }
     ],
-    "taskList": [
-      {
-        "id": "id",
-        "key": "name",
-        "title": "Name",
-        "type": "text",
-        "class": "adf-ellipsis-cell adf-expand-cell-5",
-        "sortable": true,
-        "template": "app.columns.processname",
-        "desktopOnly": false
-      }
-    ],
     "documentList": {
       "files": [
         {

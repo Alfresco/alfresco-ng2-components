@@ -40,7 +40,6 @@ export class ProcessStatusComponent implements OnInit {
 
   protected updateValue() {
       this.displayValue = this.context.row?.obj;
-      console.log(this.context.row?.obj?.name);
   }
 
 }

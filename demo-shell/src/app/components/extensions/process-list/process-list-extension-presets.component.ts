@@ -44,8 +44,7 @@ export class ProcessListExtensionPresetsComponent implements OnInit {
     constructor(private extensions: AppExtensionService) {}
 
     ngOnInit() {
-        this.columns = this.extensions.processesColumnPreset();
-        console.log(this.columns, 's');
+        this.columns = this.extensions.getProcessListPreset();
     }
 
     trackById(_: number, obj: ProcessListPresetRef): string {
