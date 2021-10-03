@@ -298,6 +298,11 @@ export const appRoutes: Routes = [
                 loadChildren: () => import('./components/document-list/extension-presets/extension-presets.module').then(m => m.ExtensionPresetsModule)
             },
             {
+                path: 'extensions/process-list/presets',
+                canActivate: [AuthGuardEcm],
+                loadChildren: () => import('./components/extensions/process-list/process-list-extension.module').then(m => m.ProcessExtensionPresetsModule)
+            },
+            {
                 path: 'files/:id',
                 component: FilesComponent,
                 canActivate: [AuthGuardEcm]

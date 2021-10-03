@@ -27,6 +27,8 @@ export * from './lib/config/routing.extensions';
 export * from './lib/config/rule.extensions';
 export * from './lib/config/sidebar.extensions';
 export * from './lib/config/viewer.extensions';
+export * from './lib/config/process-list.extensions';
+export * from './lib/config/task-list.extensions';
 
 export * from './lib/services/extension-loader.service';
 export * from './lib/services/extension.service';

@@ -1,0 +1,7 @@
+<mat-chip-list>
+    <mat-chip class="">
+        <mat-icon *ngIf="displayValue.status === 'COMPLETED'">check_circle</mat-icon>
+        <mat-icon *ngIf="displayValue.status === 'RUNNING'">settings</mat-icon>
+        <span>{{displayValue.status}}</span>
+    </mat-chip>
+</mat-chip-list> 

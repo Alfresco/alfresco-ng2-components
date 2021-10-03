@@ -10,7 +10,40 @@
     "viewer": {
       "content": []
     },
-
+    "processList": [
+      {
+        "id": "id",
+        "key": "name",
+        "title": "Name",
+        "type": "text",
+        "class": "adf-ellipsis-cell adf-expand-cell-5",
+        "sortable": true,
+        "template": "app.processList.columns.name",
+        "desktopOnly": false
+      },
+      {
+        "id": "status",
+        "key": "status",
+        "title": "Status",
+        "type": "text",
+        "class": "adf-ellipsis-cell adf-expand-cell-5",
+        "sortable": true,
+        "template": "app.processList.columns.status",
+        "desktopOnly": false
+      }
+    ],
+    "taskList": [
+      {
+        "id": "id",
+        "key": "name",
+        "title": "Name",
+        "type": "text",
+        "class": "adf-ellipsis-cell adf-expand-cell-5",
+        "sortable": true,
+        "template": "app.columns.processname",
+        "desktopOnly": false
+      }
+    ],
     "documentList": {
       "files": [
         {

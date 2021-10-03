@@ -21,6 +21,8 @@ import { ExtensionService } from '../services/extension.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ViewerExtensionRef } from '../config/viewer.extensions';
 import { DocumentListPresetRef } from '../config/document-list.extensions';
+import { TaskListPresetRef } from '../config/task-list.extensions';
+import { ProcessListPresetRef } from '../config/process-list.extensions';
 
 @Injectable({
     providedIn: 'root'
@@ -59,6 +61,23 @@ export class AppExtensionService {
         return this.extensionService
           .getElements<DocumentListPresetRef>(
             `features.documentList.${key}`
+          )
+          .filter((entry) => !entry.disabled);
+    }
+
+    processesColumnPreset(): ProcessListPresetRef[] {
+        return this.extensionService
+          .getElements<any>(
+            `features.processList`
+          )
+          .filter((entry) => !entry.disabled);
+    }
+
+
+    tasksColumnPreset(): TaskListPresetRef[] {
+        return this.extensionService
+          .getElements<any>(
+            `features.taskList`
           )
           .filter((entry) => !entry.disabled);
     }

@@ -1,0 +1,9 @@
+<mat-list>
+    <mat-list-item>
+        <div mat-line>{{ displayValue.name }}</div>
+        <div mat-line [ngStyle]="{ 'padding-top': '5px' }">
+            <span [ngStyle]="{ 'font-weight': 'bold' }">Started By:</span>
+            <span> {{ displayValue.initiator }}</span>
+        </div>
+    </mat-list-item>
+</mat-list>
