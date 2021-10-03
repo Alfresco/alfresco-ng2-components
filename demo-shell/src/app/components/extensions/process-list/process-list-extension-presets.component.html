@@ -1,17 +1,30 @@
 <div>
     <div fxLayout="column" fxFill fxLayoutGap="2px">
-        <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="editedFilter">
-            <adf-cloud-process-list #processCloud
+        <div
+            fxLayout="column"
+            fxFlex
+            fxLayoutAlign="space-between"
+            *ngIf="editedFilter">
+            <adf-cloud-process-list
+                #processCloud
                 fxFlex
                 class="app-cloud-layout-overflow"
                 [appName]="editedFilter.appName"
                 [status]="editedFilter.status"
-                [sorting]="[{orderBy: editedFilter.sort,  direction: editedFilter.order}]">
+                [sorting]="[
+                    {
+                        orderBy: editedFilter.sort,
+                        direction: editedFilter.order
+                    }
+                ]">
                 <data-columns>
-                    <ng-container *ngFor="let column of columns; trackBy: trackById">
+                    <ng-container
+                        *ngFor="let column of columns; trackBy: trackById"
+                    >
                         <ng-container
                             *ngIf="
-                                column.template && !(column.desktopOnly && isSmallScreen)
+                                column.template &&
+                                !(column.desktopOnly && isSmallScreen)
                             "
                         >
                             <data-column
@@ -31,10 +44,11 @@
                                 </ng-template>
                             </data-column>
                         </ng-container>
-            
+
                         <ng-container
                             *ngIf="
-                                !column.template && !(column.desktopOnly && isSmallScreen)
+                                !column.template &&
+                                !(column.desktopOnly && isSmallScreen)
                             "
                         >
                             <data-column
@@ -52,5 +66,4 @@
             </adf-cloud-process-list>
         </div>
     </div>
-    
 </div>

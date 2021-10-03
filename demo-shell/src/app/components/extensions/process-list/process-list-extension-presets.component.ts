@@ -34,10 +34,10 @@ export class ProcessListExtensionPresetsComponent implements OnInit {
     editedFilter = new ProcessFilterCloudModel({
         name: "ADF_CLOUD_PROCESS_FILTERS.RUNNING_PROCESSES",
         icon: "inbox",
-        key: "running-processes",
+        key: "all-processes",
         appName: "simpleapp",
         sort: "startDate",
-        status: "RUNNING",
+        status: "",
         order: "DESC"
     });
 
