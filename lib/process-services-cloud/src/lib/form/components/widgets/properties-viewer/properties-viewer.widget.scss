@@ -1,0 +1,22 @@
+properties-viewer-widget {
+    height: 100%;
+    width: 100%;
+
+    properties-viewer-wrapper {
+        display: block;
+        height: 100%;
+        width: 100%;
+        border: 1px solid var(--theme-border-color);
+        border-radius: 6px;
+
+        .properties-viewer-wrapper-loading {
+            height: 100%;
+            width: 100%;
+
+            mat-progress-spinner {
+                display: block;
+                margin: auto;
+            }
+        }
+    }
+}

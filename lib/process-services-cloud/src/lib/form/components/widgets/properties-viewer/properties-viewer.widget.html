@@ -1,0 +1,18 @@
+<div class="adf-file-viewer-widget {{field.className}}" [class.adf-invalid]="!field.isValid"
+    [class.adf-readonly]="field.readOnly">
+    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span
+            *ngIf="isRequired()">*</span></label>
+    <properties-viewer-wrapper *ngIf="field.value"
+        [nodeId]="field.value"
+        [displayDefaultProperties]="field.params['displayDefaultProperties'] !== undefined ?  field.params['displayDefaultProperties'] : true"
+        [expanded]="field.params['expanded'] !== undefined ? field.params['expanded'] : true"
+        [preset]="field.params['preset']"
+        [displayEmpty]="field.params['displayEmpty'] !== undefined ? field.params['displayEmpty'] : false"
+        [editable]="field.params['editable'] !== undefined ? field.params['editable'] : false"
+        [multi]="field.params['multi'] !== undefined ? field.params['multi'] : false"
+        [displayAspect]="field.params['displayAspect'] !== undefined ? field.params['displayAspect'] : null"
+        [copyToClipboardAction]="field.params['copyToClipboardAction'] !== undefined ? field.params['copyToClipboardAction'] : true"
+        [useChipsForMultiValueProperty]="field.params['useChipsForMultiValueProperty'] !== undefined ? field.params['useChipsForMultiValueProperty'] : true">
+    </properties-viewer-wrapper>
+    <error-widget [error]="field.validationSummary"></error-widget>
+</div>
