@@ -28,9 +28,6 @@ export class ProcessStatusComponent implements OnInit {
   @Input()
   context: any;
 
-  @Input()
-  key = 'name';
-
   displayValue: ProcessInstanceCloud;
 
   constructor() {}

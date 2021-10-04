@@ -30,9 +30,6 @@ export class ProcessNameComponent implements OnInit {
   @Input()
   context: any;
 
-  @Input()
-  key = 'name';
-
   displayValue: ProcessInstanceCloud;
 
   constructor() {}
