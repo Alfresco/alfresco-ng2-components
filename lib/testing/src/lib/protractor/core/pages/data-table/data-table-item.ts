@@ -16,16 +16,16 @@
  */
 
 import { Column } from './column';
-import { by, element, ElementFinder, Locator, protractor, browser } from 'protractor';
+import { by, element, ElementFinder, protractor, browser, $$ } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 
 export class DataTableItem {
     columns = new Array<Column>();
     rootElement: ElementFinder;
-    rows: Locator = by.css(`div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`);
+    rows = `div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`;
 
-    constructor(rootElement = element.all(by.css('adf-datatable')).first()) {
+    constructor(rootElement = $$('adf-datatable').first()) {
         this.rootElement = rootElement;
     }
 
@@ -58,7 +58,7 @@ export class DataTableItem {
     }
 
     async waitForFirstRow(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(this.rows).first());
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$$(this.rows).first());
     }
 
     async clickAndEnterOnRow(columnName: string, columnValue: string): Promise<void> {
@@ -70,7 +70,7 @@ export class DataTableItem {
     async getColumnValueForRow(identifyingColumnName: string, identifyingColumnValue: string, columnName: string): Promise<string> {
         const row = await this.getRow(identifyingColumnName, identifyingColumnValue);
         await BrowserVisibility.waitUntilElementIsVisible(row);
-        const rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
+        const rowColumn = row.$(`div[title="${columnName}"] span`);
         return BrowserActions.getText(rowColumn);
     }
 

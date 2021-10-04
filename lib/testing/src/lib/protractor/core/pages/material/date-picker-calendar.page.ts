@@ -15,26 +15,26 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, $ } from 'protractor';
 import { DateUtil } from '../../utils/date-util';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
 
 export class DatePickerCalendarPage {
 
-    datePicker = element(by.css('mat-calendar'));
-    nextMonthButton = element(by.css('button[class*="mat-calendar-next-button"]'));
-    previousMonthButton = element(by.css('button[class*="mat-calendar-previous-button"]'));
-    todayDate = element(by.css('.mat-calendar-body-today'));
-    periodButton = element(by.css('button[class*=mat-calendar-period-button]'));
+    datePicker = $('mat-calendar');
+    nextMonthButton = $('button[class*="mat-calendar-next-button"]');
+    previousMonthButton = $('button[class*="mat-calendar-previous-button"]');
+    todayDate = $('.mat-calendar-body-today');
+    periodButton = $('button[class*=mat-calendar-period-button]');
 
     async getSelectedDate(): Promise<string> {
-        return BrowserActions.getAttribute(element(by.css('td[class*="mat-calendar-body-active"]')), 'aria-label');
+        return BrowserActions.getAttribute($('td[class*="mat-calendar-body-active"]'), 'aria-label');
     }
 
     async checkDatesAfterDateAreDisabled(date): Promise<void> {
         const afterDate = DateUtil.formatDate('DD-MM-YY', date, 1);
-        const afterCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`));
+        const afterCalendar = $(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`);
         if (await afterCalendar.isPresent()) {
             const aria = await BrowserActions.getAttribute(afterCalendar, 'aria-disabled');
             await expect(aria).toBe('true');
@@ -45,7 +45,7 @@ export class DatePickerCalendarPage {
 
     async checkDatesBeforeDateAreDisabled(date): Promise<void> {
         const beforeDate = DateUtil.formatDate('DD-MM-YY', date, -1);
-        const beforeCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`));
+        const beforeCalendar = $(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`);
         if (await beforeCalendar.isPresent()) {
             const aria = await BrowserActions.getAttribute(beforeCalendar, 'aria-disabled');
             await expect(aria).toBe('true');

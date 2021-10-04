@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { $ } from 'protractor';
 import { FiltersPage } from './filters.page';
 
 export class ProcessFiltersPage {
@@ -27,10 +27,10 @@ export class ProcessFiltersPage {
 
     filtersPage = new FiltersPage();
 
-    runningFilter = element(by.css('button[data-automation-id="Running_filter"]'));
-    completedFilter = element(by.css('button[data-automation-id="Completed_filter"]'));
-    allFilter = element(by.css('button[data-automation-id="All_filter"]'));
-    accordionMenu = element(by.css('.app-processes-menu mat-accordion'));
+    runningFilter = $('button[data-automation-id="Running_filter"]');
+    completedFilter = $('button[data-automation-id="Completed_filter"]');
+    allFilter = $('button[data-automation-id="All_filter"]');
+    accordionMenu = $('.app-processes-menu mat-accordion');
 
     async clickRunningFilterButton(): Promise<void> {
         await this.filtersPage.clickFilterButton(this.runningFilter);

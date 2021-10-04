@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-import { element, by, Locator } from 'protractor';
+import { $$, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import { FormFields } from '../form-fields';
 
 export class AmountWidgetPage {
 
-    currency: Locator = by.css('.adf-amount-widget__prefix-spacing');
+    currency = '.adf-amount-widget__prefix-spacing';
     formFields: FormFields = new FormFields();
 
     async getAmountFieldLabel(fieldId: string): Promise<string> {
-        const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
+        const label = $$(`adf-form-field div[id="field-${fieldId}-container"] label`).first();
         return BrowserActions.getText(label);
     }
 
     async getAmountFieldCurrency(fieldId: string): Promise<string> {
         const widget = await this.formFields.getWidget(fieldId);
-        return BrowserActions.getText(widget.element(this.currency));
+        return BrowserActions.getText(widget.$(this.currency));
     }
 
     async setFieldValue(fieldId: string, value: any): Promise<void> {
@@ -39,12 +39,12 @@ export class AmountWidgetPage {
     }
 
     async removeFromAmountWidget(fieldId: string) {
-        const amountWidgetInput = element(by.id(fieldId));
+        const amountWidgetInput = $(fieldId);
         await BrowserActions.clearWithBackSpace(amountWidgetInput);
     }
 
     async clearFieldValue(fieldId: string): Promise<void> {
-        const numberField = element(by.id(fieldId));
+        const numberField = $(fieldId);
         await BrowserVisibility.waitUntilElementIsVisible(numberField);
         await numberField.clear();
     }
@@ -54,7 +54,7 @@ export class AmountWidgetPage {
     }
 
     async getErrorMessage(fieldId: string): Promise<string> {
-        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] .adf-error-text`));
+        const errorMessage = $(`adf-form-field div[id="field-${fieldId}-container"] .adf-error-text`);
         return BrowserActions.getText(errorMessage);
     }
 

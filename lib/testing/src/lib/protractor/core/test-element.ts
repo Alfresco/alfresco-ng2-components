@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder, protractor } from 'protractor';
+import { by, element, ElementFinder, protractor, $ } from 'protractor';
 import { BrowserActions } from './utils/browser-actions';
 import { BrowserVisibility } from './utils/browser-visibility';
 
@@ -39,7 +39,7 @@ export class TestElement {
      * @param selector The CSS class name to lookup
      */
     static byCss(selector: string): TestElement {
-        return new TestElement(element(by.css(selector)));
+        return new TestElement($(selector));
     }
 
     /**

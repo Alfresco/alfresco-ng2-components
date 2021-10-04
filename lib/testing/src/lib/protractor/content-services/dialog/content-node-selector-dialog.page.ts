@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { $, $$, by } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -27,22 +27,22 @@ import { UploadButtonPage } from '../pages/upload-button.page';
 import { FileModel } from '../../core/models/file.model';
 
 export class ContentNodeSelectorDialogPage {
-    dialog = element(by.css(`adf-content-node-selector`));
-    header = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
-    searchInputElement = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
-    searchLabel = this.dialog.element(by.css('.adf-content-node-selector-content-input .mat-form-field-label'));
-    selectedRow = this.dialog.element(by.css(`adf-datatable-row[class*="adf-is-selected"]`));
-    cancelButton = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
-    moveCopyButton = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
+    dialog = $(`adf-content-node-selector`);
+    header = this.dialog.$(`header[data-automation-id='content-node-selector-title']`);
+    searchInputElement = this.dialog.$(`input[data-automation-id='content-node-selector-search-input']`);
+    searchLabel = this.dialog.$('.adf-content-node-selector-content-input .mat-form-field-label');
+    selectedRow = this.dialog.$(`adf-datatable-row[class*="adf-is-selected"]`);
+    cancelButton = $(`button[data-automation-id='content-node-selector-actions-cancel']`);
+    moveCopyButton = $(`button[data-automation-id='content-node-selector-actions-choose']`);
 
     contentList = new DocumentListPage(this.dialog);
     dataTable = this.contentList.dataTablePage();
-    siteListDropdown = new DropdownPage(this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
+    siteListDropdown = new DropdownPage(this.dialog.$(`mat-select[data-automation-id='site-my-files-option']`));
     breadcrumbDropdown = new BreadcrumbDropdownPage();
     tabPage: TabPage = new TabPage();
     uploadButtonComponent = new UploadButtonPage();
 
-    uploadFromLocalTab = element.all(by.css('*[role="tab"]')).get(1);
+    uploadFromLocalTab = $$('*[role="tab"]').get(1);
     uploadFromLocalTabName = 'Upload from your device';
     repositoryTabName = 'Repository';
 

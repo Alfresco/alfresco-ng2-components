@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
+import { browser, by, element, ElementArrayFinder, ElementFinder, protractor, $ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { Logger } from './logger';
 
@@ -68,7 +68,7 @@ export class BrowserActions {
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {
         Logger.info(`Click execute script ${elementCssSelector}`);
 
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(elementCssSelector)));
+        await BrowserVisibility.waitUntilElementIsVisible($(elementCssSelector));
         await browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
 
@@ -195,7 +195,7 @@ export class BrowserActions {
     static async closeMenuAndDialogs(): Promise<void> {
         Logger.info(`Close Menu And Dialogs`);
 
-        const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
+        const container = $('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing');
         await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
         await BrowserVisibility.waitUntilElementIsNotVisible(container, 1000);
     }

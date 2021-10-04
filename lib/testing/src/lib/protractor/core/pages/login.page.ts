@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser, protractor } from 'protractor';
+import { element, by, browser, protractor, $ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { LocalStorageUtil } from '../utils/local-storage.util';
@@ -25,17 +25,17 @@ export class LoginPage {
 
     loginUrl = `${browser.baseUrl}/login`;
 
-    ssoButton = element(by.css(`[data-automation-id="login-button-sso"]`));
-    usernameField = element(by.id('username'));
-    passwordField = element(by.id('password'));
-    loginButton = element(by.css('input[type="submit"]'));
+    ssoButton = $(`[data-automation-id="login-button-sso"]`);
+    usernameField = $('#username');
+    passwordField = $('#password');
+    loginButton = $('input[type="submit"]');
     header = element(by.tagName('adf-layout-header'));
-    loginError = element(by.css(`div[data-automation-id="login-error"]`));
-    visibilityLabel = element(by.id('v'));
+    loginError = $(`div[data-automation-id="login-error"]`);
+    visibilityLabel = $('#v');
 
-    txtUsernameBasicAuth = element(by.css('input[id="username"]'));
-    txtPasswordBasicAuth = element(by.css('input[id="password"]'));
-    signInButtonBasicAuth = element(by.id('login-button'));
+    txtUsernameBasicAuth = $('input[id="username"]');
+    txtPasswordBasicAuth = $('input[id="password"]');
+    signInButtonBasicAuth = $('#login-button');
 
     async goToLoginPage(): Promise<void> {
         let currentUrl;
@@ -144,7 +144,7 @@ export class LoginPage {
 
     async displayPassword(): Promise<void> {
         await BrowserActions.click(this.visibilityLabel);
-        const passwordInputTypeText = element(by.css(`input[name="password"][type="text"]`));
+        const passwordInputTypeText = $(`input[name="password"][type="text"]`);
         await BrowserVisibility.waitUntilElementIsVisible(passwordInputTypeText);
     }
 

@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { $ } from 'protractor';
 import { BrowserActions } from '@alfresco/adf-testing';
 
 export class SocialPage {
 
-    nodeIdField = element(by.css(`input[id="nodeId"]`));
+    nodeIdField = $(`input[id="nodeId"]`);
 
     async getNodeIdFieldValue(): Promise<string> {
         return BrowserActions.getInputValue(this.nodeIdField);

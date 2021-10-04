@@ -38,7 +38,7 @@ export class MultilineTextWidgetPage {
     }
 
     setValue(fieldId, value): Promise<void> {
-        return this.formFields.setFieldValue(by.id, fieldId, value);
+        return this.formFields.setFieldValue(fieldId, value);
     }
 
     getErrorMessage(fieldId): Promise<string> {

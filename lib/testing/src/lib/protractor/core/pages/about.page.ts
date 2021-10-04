@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { $ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { DataTableComponentPage } from './data-table-component.page';
 
@@ -47,21 +47,21 @@ export class AboutPage {
         version: 'version'
     };
 
-    appTitle = element(by.css('[data-automation-id="adf-github-app-title"]'));
-    sourceCodeTitle = element(by.css('[data-automation-id="adf-github-source-code-title"]'));
-    githubUrl = element(by.css('[data-automation-id="adf-github-url"]'));
-    githubVersion = element(by.css('[data-automation-id="adf-github-version"]'));
-    bpmHost = element(by.css('[data-automation-id="adf-process-service-host"]'));
-    ecmHost = element(by.css('[data-automation-id="adf-content-service-host"]'));
-    productVersionTitle = element(by.css('[data-automation-id="adf-about-product-version-title"]'));
-    bpmEdition = element(by.css('[data-automation-id="adf-about-bpm-edition"]'));
-    ecmEdition = element(by.css('[data-automation-id="adf-about-ecm-edition"]'));
-    bpmVersion = element(by.css('[data-automation-id="adf-about-bpm-version"]'));
-    ecmVersion = element(by.css('[data-automation-id="adf-about-ecm-version"]'));
-    ecmStatusTitle = element(by.css('[data-automation-id="adf-about-ecm-status-title"]'));
-    ecmLicenseTitle = element(by.css('[data-automation-id="adf-about-ecm-license-title"]'));
-    ecmModulesTitle = element(by.css('[data-automation-id="adf-about-ecm-modules-title"]'));
-    aboutModulesTitle = element(by.css('[data-automation-id="adf-about-modules-title"]'));
+    appTitle = $('[data-automation-id="adf-github-app-title"]');
+    sourceCodeTitle = $('[data-automation-id="adf-github-source-code-title"]');
+    githubUrl = $('[data-automation-id="adf-github-url"]');
+    githubVersion = $('[data-automation-id="adf-github-version"]');
+    bpmHost = $('[data-automation-id="adf-process-service-host"]');
+    ecmHost = $('[data-automation-id="adf-content-service-host"]');
+    productVersionTitle = $('[data-automation-id="adf-about-product-version-title"]');
+    bpmEdition = $('[data-automation-id="adf-about-bpm-edition"]');
+    ecmEdition = $('[data-automation-id="adf-about-ecm-edition"]');
+    bpmVersion = $('[data-automation-id="adf-about-bpm-version"]');
+    ecmVersion = $('[data-automation-id="adf-about-ecm-version"]');
+    ecmStatusTitle = $('[data-automation-id="adf-about-ecm-status-title"]');
+    ecmLicenseTitle = $('[data-automation-id="adf-about-ecm-license-title"]');
+    ecmModulesTitle = $('[data-automation-id="adf-about-ecm-modules-title"]');
+    aboutModulesTitle = $('[data-automation-id="adf-about-modules-title"]');
 
     dataTable = new DataTableComponentPage();
 
@@ -158,7 +158,7 @@ export class AboutPage {
     }
 
     async checkColumnIsDisplayed(column: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="auto_id_${column}"]`)));
+        await BrowserVisibility.waitUntilElementIsVisible($(`div[data-automation-id="auto_id_${column}"]`));
     }
 
 }

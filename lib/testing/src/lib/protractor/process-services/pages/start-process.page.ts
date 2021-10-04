@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, Key, protractor, browser } from 'protractor';
+import { by, element, Key, protractor, browser, $ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
@@ -24,20 +24,20 @@ import { Logger } from '../../core/utils/logger';
 
 export class StartProcessPage {
 
-    defaultProcessName = element(by.css('input[id="processName"]'));
-    processNameInput = element(by.id('processName'));
-    disabledSelectProcessDropdown = element(by.css('input[id="processDefinitionName"][disabled]'));
-    selectProcessDropdownArrow = element(by.css('button[id="adf-select-process-dropdown"]'));
-    cancelProcessButton = element(by.id('cancel_process'));
-    formStartProcessButton = element(by.css('button[data-automation-id="adf-form-start process"]'));
-    startProcessButton = element(by.css('button[data-automation-id="btn-start"]'));
-    startProcessButtonDisabled = element(by.css('button[data-automation-id="btn-start"][disabled]'));
-    noProcess = element(by.css('.adf-empty-content__title'));
-    processDefinition = element(by.css('input[id="processDefinitionName"]'));
-    processDefinitionOptionsPanel = element(by.css('div[class*="mat-autocomplete-panel"]'));
+    defaultProcessName = $('input[id="processName"]');
+    processNameInput = $('#processName');
+    disabledSelectProcessDropdown = $('input[id="processDefinitionName"][disabled]');
+    selectProcessDropdownArrow = $('button[id="adf-select-process-dropdown"]');
+    cancelProcessButton = $('#cancel_process');
+    formStartProcessButton = $('button[data-automation-id="adf-form-start process"]');
+    startProcessButton = $('button[data-automation-id="btn-start"]');
+    startProcessButtonDisabled = $('button[data-automation-id="btn-start"][disabled]');
+    noProcess = $('.adf-empty-content__title');
+    processDefinition = $('input[id="processDefinitionName"]');
+    processDefinitionOptionsPanel = $('div[class*="mat-autocomplete-panel"]')
 
-    processDefinitionDropdown = new DropdownPage(element(by.id('adf-select-process-dropdown')));
-    applicationDropdown = new DropdownPage(element(by.css('[data-automation-id*="start-process-app"] .mat-select-arrow')));
+    processDefinitionDropdown = new DropdownPage($('#adf-select-process-dropdown'));
+    applicationDropdown = new DropdownPage($('[data-automation-id*="start-process-app"] .mat-select-arrow'));
 
     async checkNoProcessMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);

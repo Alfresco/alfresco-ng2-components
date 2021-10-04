@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
 import { DropdownPage } from '../material/dropdown.page';
 
 export class CardSelectItemPage {
 
     rootElement: ElementFinder;
-    labelLocator: Locator = by.css('div[data-automation-id*="card-select-label"]');
-    readOnlyField: Locator = by.css('[data-automation-class="read-only-value"]');
+    labelLocator = 'div[data-automation-id*="card-select-label"]';
+    readOnlyField = '[data-automation-class="read-only-value"]';
     dropdown: DropdownPage;
 
     constructor(label: string = 'fileSource') {
         this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-selectitem`));
-        this.dropdown = new DropdownPage(this.rootElement.element(by.css('mat-select')));
+        this.dropdown = new DropdownPage(this.rootElement.$('mat-select'));
     }
 
     async checkLabelIsPresent(): Promise<void> {
-        const labelElement = this.rootElement.element(this.labelLocator);
+        const labelElement = this.rootElement.$(this.labelLocator);
         await BrowserVisibility.waitUntilElementIsPresent(labelElement);
     }
 
@@ -41,8 +41,8 @@ export class CardSelectItemPage {
     }
 
     async getReadonlyValue(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.readOnlyField));
-        return BrowserActions.getText(this.rootElement.element(this.readOnlyField));
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$(this.readOnlyField));
+        return BrowserActions.getText(this.rootElement.$(this.readOnlyField));
     }
 
     async selectDropdownOption(option: string): Promise<void> {
@@ -50,6 +50,6 @@ export class CardSelectItemPage {
     }
 
     async checkElementIsReadonly(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.readOnlyField));
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$(this.readOnlyField));
     }
 }

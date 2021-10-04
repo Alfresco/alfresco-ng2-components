@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { ElementFinder, $ } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 import { DateTimePickerCalendarPage } from './date-time-picker-calendar.page';
 
 export class DateTimePickerPage {
 
     rootElement: ElementFinder;
-    dateTimePicker = element(by.css('.mat-datetimepicker-toggle'));
+    dateTimePicker = $('.mat-datetimepicker-toggle');
     dateTime = new DateTimePickerCalendarPage();
 
     constructor(rootElement?: ElementFinder) {
         if (rootElement) {
             this.rootElement = rootElement;
-            this.dateTimePicker  = this.rootElement.element(by.css('.mat-datetimepicker-toggle'));
+            this.dateTimePicker  = this.rootElement.$('.mat-datetimepicker-toggle');
         }
     }
 

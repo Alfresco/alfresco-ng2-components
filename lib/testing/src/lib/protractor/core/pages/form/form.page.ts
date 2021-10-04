@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, $ } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/public-api';
 
 export class FormPage {
 
-    errorLog = element(by.css('div[class*="console"]'));
+    errorLog = $('div[class*="console"]');
     saveButton = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
 
     async checkErrorMessageForWidgetIsDisplayed(errorMessage: string): Promise<void> {
@@ -47,7 +47,7 @@ export class FormPage {
     }
 
     async isSaveButtonDisabled(): Promise<boolean> {
-        const saveButtonDisabled = element(by.css('.adf-form-mat-card-actions [disabled]'));
+        const saveButtonDisabled = $('.adf-form-mat-card-actions [disabled]');
         try {
             await saveButtonDisabled.isDisplayed();
             return true;
@@ -57,7 +57,7 @@ export class FormPage {
     }
 
     async isValidationIconBlue(): Promise<boolean> {
-        const validationIcon = element(by.css('#adf-valid-form-icon'));
+        const validationIcon = $('#adf-valid-form-icon');
         try {
             await validationIcon.isDisplayed();
             return true;
@@ -67,7 +67,7 @@ export class FormPage {
     }
 
     async isValidationIconRed(): Promise<boolean> {
-        const validationIcon = element(by.css('#adf-invalid-form-icon'));
+        const validationIcon = $('#adf-invalid-form-icon');
         try {
             await validationIcon.isDisplayed();
             return true;

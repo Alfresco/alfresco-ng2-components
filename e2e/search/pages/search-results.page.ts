@@ -16,12 +16,12 @@
  */
 
 import { BrowserVisibility, DataTableComponentPage, SearchSortingPickerPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { $ } from 'protractor';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 
 export class SearchResultsPage {
 
-    noResultsMessage = element(by.css('.app-no-result-message'));
+    noResultsMessage = $('.app-no-result-message');
     dataTable = new DataTableComponentPage();
     searchSortingPicker = new SearchSortingPickerPage();
     contentServices = new ContentServicesPage();

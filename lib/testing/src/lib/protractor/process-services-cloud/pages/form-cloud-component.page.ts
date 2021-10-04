@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { $$, $ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { ConfigEditorPage } from '../../core/pages/config-editor-page';
 
 export class FormCloudComponentPage {
 
-    formCloudEditor = element.all(by.css('.mat-tab-list .mat-tab-label')).get(1);
-    formCloudRender = element.all(by.css('.mat-tab-list .mat-tab-label')).get(0);
+    formCloudEditor = $$('.mat-tab-list .mat-tab-label').get(1);
+    formCloudRender = $$('.mat-tab-list .mat-tab-label').get(0);
 
     configEditorPage = new ConfigEditorPage();
 
@@ -36,8 +36,8 @@ export class FormCloudComponentPage {
     }
 
     async setConfigToEditor(text): Promise<void> {
-        const configEditor = element(by.id('adf-form-config-editor'));
-        const form = element(by.css('adf-cloud-form'));
+        const configEditor = $('#adf-form-config-editor');
+        const form = $('adf-cloud-form');
         await this.goToEditor();
         await BrowserVisibility.waitUntilElementIsVisible(configEditor);
         await this.configEditorPage.enterBulkConfiguration(text);

@@ -16,19 +16,19 @@
  */
 
 import { BrowserActions, BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
-import { Locator, element, by, browser } from 'protractor';
+import { browser, $$, $ } from 'protractor';
 
 export class TrashcanPage {
 
-    contentList = new DocumentListPage(element(by.css('adf-document-list')));
-    rows: Locator = by.css('adf-document-list div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
-    tableBody = element.all(by.css('adf-document-list .adf-datatable-body')).first();
-    pagination = element(by.css('adf-pagination'));
-    emptyTrashcan = element(by.css('adf-empty-content'));
-    restoreButton = element(by.css(`button[title='Restore']`));
+    contentList = new DocumentListPage($('adf-document-list'));
+    rows = $$('adf-document-list div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
+    tableBody = $$('adf-document-list .adf-datatable-body').first();
+    pagination = $('adf-pagination');
+    emptyTrashcan = $('adf-empty-content');
+    restoreButton = $(`button[title='Restore']`);
 
     async numberOfResultsDisplayed(): Promise<number> {
-        return element.all(this.rows).count();
+        return this.rows.count();
     }
 
     async waitForTableBody(): Promise<void> {

@@ -17,7 +17,7 @@
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
-import { Locator, element, by, browser } from 'protractor';
+import { browser, $, $$ } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessListCloudComponentPage {
@@ -28,10 +28,10 @@ export class ProcessListCloudComponentPage {
         processDefinitionName: 'Process Definition Name'
     };
 
-    processList = element(by.css('adf-cloud-process-list'));
-    noProcessFound = element.all(by.css('.adf-empty-content__title')).first();
-    actionMenu = element(by.css('*[role="menu"]'));
-    optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
+    processList = $('adf-cloud-process-list');
+    noProcessFound = $$('.adf-empty-content__title').first();
+    actionMenu = $('*[role="menu"]');
+    optionButton = 'button[data-automation-id*="action_menu_"]';
 
     dataTable = new DataTableComponentPage(this.processList);
 
@@ -111,17 +111,17 @@ export class ProcessListCloudComponentPage {
         await BrowserActions.closeMenuAndDialogs();
         const row = this.dataTable.getRow('Id', content);
         await browser.sleep(1000);
-        await BrowserActions.click(row.element(this.optionButton));
+        await BrowserActions.click(row.$(this.optionButton));
         await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
     }
 
     async clickOnCustomActionMenu(action: string): Promise<void> {
-        const actionButton = element(by.css(`button[data-automation-id*="${action}"]`));
+        const actionButton = $(`button[data-automation-id*="${action}"]`);
         await BrowserActions.click(actionButton);
     }
 
     async isCustomActionEnabled(action: string): Promise<boolean> {
-        const actionButton = element(by.css(`button[data-automation-id*="${action}"]`));
+        const actionButton = $(`button[data-automation-id*="${action}"]`);
         return actionButton.isEnabled();
     }
 
@@ -134,7 +134,7 @@ export class ProcessListCloudComponentPage {
     }
 
     async getNumberOfOptions(): Promise<number> {
-        const options = await this.actionMenu.all(by.css(`button`));
+        const options = await this.actionMenu.$$(`button`);
         return options.length;
     }
 

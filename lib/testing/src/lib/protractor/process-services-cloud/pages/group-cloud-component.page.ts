@@ -15,15 +15,18 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, $, ElementFinder, $$ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
 
 export class GroupCloudComponentPage {
 
-    groupCloudSearch = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
+    groupCloudSearch = $('input[data-automation-id="adf-cloud-group-search-input"]');
+    groupField = $('group-cloud-widget .adf-readonly');
     formFields = new FormFields();
+
+    getGroupRowLocatorByName = async (name: string): Promise<ElementFinder> => $$(`mat-option[data-automation-id="adf-cloud-group-chip-${name}"]`).first();
 
     async searchGroups(name: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.groupCloudSearch, name);
@@ -38,19 +41,19 @@ export class GroupCloudComponentPage {
     }
 
     async selectGroupFromList(name: string): Promise<void> {
-        const groupRow = element.all(by.css(`mat-option[data-automation-id="adf-cloud-group-chip-${name}"]`)).first();
+        const groupRow = await this.getGroupRowLocatorByName(name)
 
         await BrowserActions.click(groupRow);
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
     }
 
     async checkGroupIsDisplayed(name: string): Promise<void> {
-        const groupRow = element.all(by.css(`mat-option[data-automation-id="adf-cloud-group-chip-${name}"]`)).first();
+        const groupRow = await this.getGroupRowLocatorByName(name)
         await BrowserVisibility.waitUntilElementIsVisible(groupRow);
     }
 
     async checkGroupIsNotDisplayed(name: string): Promise<void> {
-        const groupRow = element.all(by.css(`mat-option[data-automation-id="adf-cloud-group-chip-${name}"]`)).first();
+        const groupRow = await this.getGroupRowLocatorByName(name)
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
     }
 
@@ -63,7 +66,7 @@ export class GroupCloudComponentPage {
     }
 
     async removeSelectedGroup(group: string): Promise<void> {
-        const locator = element(by.css(`mat-chip[data-automation-id*="adf-cloud-group-chip-${group}"] mat-icon`));
+        const locator = $(`mat-chip[data-automation-id*="adf-cloud-group-chip-${group}"] mat-icon`);
         await BrowserActions.click(locator);
     }
 
@@ -77,9 +80,8 @@ export class GroupCloudComponentPage {
     }
 
     async checkGroupWidgetIsReadOnly (): Promise <boolean> {
-        const readOnlyGroup = element(by.css('group-cloud-widget .adf-readonly'));
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(readOnlyGroup);
+            await BrowserVisibility.waitUntilElementIsVisible(this.groupField);
             return true;
         } catch {
             return false;
@@ -87,9 +89,8 @@ export class GroupCloudComponentPage {
     }
 
     async checkGroupActiveField(name: string): Promise <boolean> {
-        const activeGroupField = element(by.css('group-cloud-widget .adf-readonly'));
         try {
-            await BrowserActions.clearSendKeys(activeGroupField, name);
+            await BrowserActions.clearSendKeys(this.groupField, name);
             return true;
         } catch {
             return false;
@@ -97,7 +98,7 @@ export class GroupCloudComponentPage {
     }
 
     async checkNoResultsFoundError(): Promise<void> {
-        const errorLocator = element(by.css('[data-automation-id="adf-cloud-group-no-results"]'));
+        const errorLocator = $('[data-automation-id="adf-cloud-group-no-results"]');
         await BrowserVisibility.waitUntilElementIsVisible(errorLocator);
     }
 

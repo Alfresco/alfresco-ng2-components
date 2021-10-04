@@ -16,18 +16,18 @@
  */
 
 import { BrowserActions, BrowserVisibility, TabsPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { $, $$ } from 'protractor';
 
 export class CommentsPage {
 
     tabsPage = new TabsPage();
-    numberOfComments = element(by.id('comment-header'));
-    commentUserIcon = element.all(by.id('comment-user-icon'));
-    commentUserName = element.all(by.id('comment-user'));
-    commentMessage = element.all(by.id('comment-message'));
-    commentTime = element.all(by.id('comment-time'));
-    commentInput = element(by.id('comment-input'));
-    addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
+    numberOfComments = $('#comment-header');
+    commentUserIcon = $$('#comment-user-icon');
+    commentUserName = $$('#comment-user');
+    commentMessage = $$('#comment-message');
+    commentTime = $$('#comment-time');
+    commentInput = $('#comment-input');
+    addCommentButton = $("[data-automation-id='comments-input-add']");
 
     async getTotalNumberOfComments(text: string): Promise<void> {
         await BrowserVisibility.waitUntilElementHasText(this.numberOfComments, text);

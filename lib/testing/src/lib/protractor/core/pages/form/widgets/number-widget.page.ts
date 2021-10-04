@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { $$, $ } from 'protractor';
 import { FormFields } from '../form-fields';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
@@ -24,7 +24,7 @@ export class NumberWidgetPage {
     formFields = new FormFields();
 
     async getNumberFieldLabel(fieldId: string): Promise<string> {
-        const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
+        const label = $$(`adf-form-field div[id="field-${fieldId}-container"] label`).first();
         return BrowserActions.getText(label);
     }
 
@@ -37,7 +37,7 @@ export class NumberWidgetPage {
     }
 
     async clearFieldValue(fieldId: string): Promise<void> {
-        const numberField = element(by.id(fieldId));
+        const numberField = $(fieldId);
         await BrowserVisibility.waitUntilElementIsVisible(numberField);
         await numberField.clear();
     }
@@ -47,7 +47,7 @@ export class NumberWidgetPage {
     }
 
     async getErrorMessage(fieldId: string): Promise<string> {
-        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] .adf-error-text`));
+        const errorMessage = $(`adf-form-field div[id="field-${fieldId}-container"] .adf-error-text`);
         return BrowserActions.getText(errorMessage);
     }
 

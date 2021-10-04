@@ -148,7 +148,7 @@ describe('Start Task - Custom App', () => {
 
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
 
-        await taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue);
+        await taskPage.formFields().setFieldValue(formTextField, formFieldValue);
 
         await taskPage.formFields().refreshForm();
 
@@ -156,7 +156,7 @@ describe('Start Task - Custom App', () => {
 
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
 
-        await taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue);
+        await taskPage.formFields().setFieldValue(formTextField, formFieldValue);
 
         await taskPage.formFields().checkFieldValue(by.id, formTextField, formFieldValue);
 

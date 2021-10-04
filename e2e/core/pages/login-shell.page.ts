@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { $, browser, by, element } from 'protractor';
 import { TogglePage, BrowserActions, BrowserVisibility, LoginPage } from '@alfresco/adf-testing';
 
 export class LoginShellPage {
@@ -24,33 +24,33 @@ export class LoginShellPage {
     loginSSOPage = new LoginPage();
 
     togglePage = new TogglePage();
-    txtUsername = element(by.css('input[id="username"]'));
-    txtPassword = element(by.css('input[id="password"]'));
-    logoImg = element(by.css('img[id="adf-login-img-logo"]'));
-    successRouteTxt = element(by.css('input[data-automation-id="adf-success-route"]'));
-    logoTxt = element(by.css('input[data-automation-id="adf-url-logo"]'));
-    usernameError = element(by.css('span[data-automation-id="username-error"]'));
-    passwordError = element(by.css('span[data-automation-id="password-required"]'));
-    loginError = element(by.css('.adf-login-error-message'));
-    usernameInactive = element(by.css('input[id="username"][aria-invalid="false"]'));
-    passwordInactive = element(by.css('input[id="password"][aria-invalid="false"]'));
-    adfLogo = element(by.css('.adf-img-logo'));
+    txtUsername = $('input[id="username"]');
+    txtPassword = $('input[id="password"]');
+    logoImg = $('img[id="adf-login-img-logo"]');
+    successRouteTxt = $('input[data-automation-id="adf-success-route"]');
+    logoTxt = $('input[data-automation-id="adf-url-logo"]');
+    usernameError = $('span[data-automation-id="username-error"]');
+    passwordError = $('span[data-automation-id="password-required"]');
+    loginError = $('.adf-login-error-message');
+    usernameInactive = $('input[id="username"][aria-invalid="false"]');
+    passwordInactive = $('input[id="password"][aria-invalid="false"]');
+    adfLogo = $('.adf-img-logo');
 
-    usernameHighlighted = element(by.css('input[id="username"][aria-invalid="true"]'));
-    passwordHighlighted = element(by.css('input[id="password"][aria-invalid="true"]'));
-    signInButton = element(by.id('login-button'));
-    showPasswordElement = element(by.css('button[data-automation-id="show_password"]'));
-    hidePasswordElement = element(by.css('button[data-automation-id="hide_password"]'));
-    rememberMe = element(by.css('mat-checkbox[id="adf-login-remember"]'));
-    needHelp = element(by.id('adf-login-action-left'));
-    register = element(by.id('adf-login-action-right'));
-    footerSwitch = element(by.id('switch4'));
-    rememberMeSwitch = element(by.id('adf-toggle-show-rememberme'));
-    successRouteSwitch = element(by.id('adf-toggle-show-successRoute'));
-    logoSwitch = element(by.id('adf-toggle-logo'));
-    header = element(by.id('adf-header'));
+    usernameHighlighted = $('input[id="username"][aria-invalid="true"]');
+    passwordHighlighted = $('input[id="password"][aria-invalid="true"]');
+    signInButton = $('#login-button');
+    showPasswordElement = $('button[data-automation-id="show_password"]');
+    hidePasswordElement = $('button[data-automation-id="hide_password"]');
+    rememberMe = $('mat-checkbox[id="adf-login-remember"]');
+    needHelp = $('#adf-login-action-left');
+    register = $('#adf-login-action-right');
+    footerSwitch = $('#switch4');
+    rememberMeSwitch = $('#adf-toggle-show-rememberme');
+    successRouteSwitch = $('#adf-toggle-show-successRoute');
+    logoSwitch = $('#adf-toggle-logo');
+    header = $('#adf-header');
     settingsIcon = element(by.cssContainingText('a[data-automation-id="settings"] mat-icon', 'settings'));
-    sidenavLayout = element(by.css(`[data-automation-id="sidenav-layout"]`));
+    sidenavLayout = $(`[data-automation-id="sidenav-layout"]`);
 
     async goToLoginPage(): Promise<void> {
         await BrowserActions.getUrl(this.loginURL);

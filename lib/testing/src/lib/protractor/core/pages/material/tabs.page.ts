@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, $$ } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 
 export class TabsPage {
 
-    tabs = element.all(by.css("div[id*='mat-tab-label']"));
+    tabs = $$("div[id*='mat-tab-label']");
 
     async clickTabByTitle(tabTitle): Promise<void> {
         const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));

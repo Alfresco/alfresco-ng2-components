@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../form-fields';
-import { Locator, by, element } from 'protractor';
+import { Locator, by, $$ } from 'protractor';
 import { BrowserActions } from '../../../utils/public-api';
 
 export class HyperlinkWidgetPage {
@@ -33,7 +33,7 @@ export class HyperlinkWidgetPage {
     }
 
     async getFieldLabel(fieldId: string): Promise<string> {
-        const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
+        const label = $$(`adf-form-field div[id="field-${fieldId}-container"] label`).first();
         return BrowserActions.getText(label);
     }
 }

@@ -51,7 +51,6 @@ describe('Comment component for Processes', () => {
         await apiService.loginWithProfile('admin');
 
         user = await usersActions.createUser();
-
         await apiService.login(user.username, user.password);
 
         const importedApp = await applicationsService.importPublishDeployApp(app.file_path);

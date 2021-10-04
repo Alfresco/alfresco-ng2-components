@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { element, by, protractor } from 'protractor';
+import { element, by, protractor, $, $$ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TreeViewPage {
 
     treeViewTitle = element(by.cssContainingText('app-tree-view div', 'TREE VIEW TEST'));
-    nodeIdInput = element(by.css('input[data-placeholder="Node Id"]'));
-    noNodeMessage = element(by.id('adf-tree-view-missing-node'));
-    nodesOnPage = element.all(by.css('mat-tree-node'));
+    nodeIdInput = $('input[data-placeholder="Node Id"]');
+    noNodeMessage = $('#adf-tree-view-missing-node');
+    nodesOnPage = $$('mat-tree-node');
 
     async checkTreeViewTitleIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.treeViewTitle);
@@ -34,17 +34,17 @@ export class TreeViewPage {
     }
 
     async clickNode(nodeName: string): Promise<void> {
-        const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"] button'));
+        const node = $('mat-tree-node[id="' + nodeName + '-tree-child-node"] button');
         await BrowserActions.click(node);
     }
 
     async checkNodeIsDisplayedAsClosed(nodeName: string): Promise<void> {
-        const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="false"]'));
+        const node = $('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="false"]');
         await BrowserVisibility.waitUntilElementIsVisible(node);
     }
 
     async checkNodeIsDisplayedAsOpen(nodeName: string): Promise<void> {
-        const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="true"]'));
+        const node = $('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="true"]');
         await BrowserVisibility.waitUntilElementIsVisible(node);
     }
 
@@ -54,7 +54,7 @@ export class TreeViewPage {
     }
 
     async checkNodeIsNotDisplayed(nodeName: string): Promise<void> {
-        const node = element(by.id('' + nodeName + '-tree-child-node'));
+        const node = $('#' + nodeName + '-tree-child-node');
         await BrowserVisibility.waitUntilElementIsNotVisible(node);
     }
 

@@ -16,12 +16,12 @@
  */
 
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
-import { element, by } from 'protractor';
+import { $ } from 'protractor';
 
 export class ProcessListPage {
 
-    processListTitle = element(by.css('.adf-empty-content__title'));
-    processInstanceList = element(by.css('adf-process-instance-list'));
+    processListTitle = $('.adf-empty-content__title');
+    processInstanceList = $('adf-process-instance-list');
 
     getDisplayedProcessListTitle(): Promise<string> {
         return BrowserActions.getText(this.processListTitle);

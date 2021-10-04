@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Locator, browser, by, element, protractor, ElementFinder, ElementArrayFinder } from 'protractor';
+import { browser, by, element, protractor, ElementFinder, ElementArrayFinder, $, $$ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { Logger } from '../utils/logger';
@@ -26,7 +26,6 @@ export class DataTableComponentPage {
     list: ElementArrayFinder;
     contents: ElementArrayFinder;
     tableBody: ElementFinder;
-    rows: Locator = by.css(`adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`);
     allColumns: ElementArrayFinder;
     selectedRowNumber: ElementFinder;
     allSelectedRows: ElementArrayFinder;
@@ -36,21 +35,27 @@ export class DataTableComponentPage {
     emptyListTitle: ElementFinder;
     emptyListSubtitle: ElementFinder;
 
+    rows = `adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`;
+
     MAX_LOADING_TIME = 120000;
 
-    constructor(rootElement = element.all(by.css('adf-datatable')).first()) {
+    constructor(rootElement = $$('adf-datatable').first()) {
         this.rootElement = rootElement;
-        this.list = this.rootElement.all(by.css(`div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`));
-        this.contents = this.rootElement.all(by.css('.adf-datatable-body span'));
-        this.tableBody = this.rootElement.all(by.css(`.adf-datatable-body`)).first();
-        this.allColumns = this.rootElement.all(by.css('div[data-automation-id*="auto_id_entry."]'));
-        this.selectedRowNumber = this.rootElement.element(by.css(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`));
-        this.allSelectedRows = this.rootElement.all(by.css(`adf-datatable-row[class*='is-selected']`));
-        this.selectAll = this.rootElement.element(by.css(`div[class*='adf-datatable-header'] mat-checkbox`));
-        this.copyColumnTooltip = this.rootElement.element(by.css(`adf-copy-content-tooltip span`));
-        this.emptyList = this.rootElement.element(by.css(`adf-empty-content`));
-        this.emptyListTitle = this.rootElement.element(by.css(`.adf-empty-content__title`));
-        this.emptyListSubtitle = this.rootElement.element(by.css(`.adf-empty-content__subtitle`));
+        this.list = this.rootElement.$$(`div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`);
+        this.contents = this.rootElement.$$('.adf-datatable-body span');
+        this.tableBody = this.rootElement.$$(`.adf-datatable-body`).first();
+        this.allColumns = this.rootElement.$$('div[data-automation-id*="auto_id_entry."]');
+        this.selectedRowNumber = this.rootElement.$(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`);
+        this.allSelectedRows = this.rootElement.$$(`adf-datatable-row[class*='is-selected']`);
+        this.selectAll = this.rootElement.$(`div[class*='adf-datatable-header'] mat-checkbox`);
+        this.copyColumnTooltip = this.rootElement.$(`adf-copy-content-tooltip span`);
+        this.emptyList = this.rootElement.$(`adf-empty-content`);
+        this.emptyListTitle = this.rootElement.$(`.adf-empty-content__title`);
+        this.emptyListSubtitle = this.rootElement.$(`.adf-empty-content__subtitle`);
+    }
+
+    geCellElementDetail(detail: string): ElementArrayFinder {
+        return $$(`adf-datatable div[title="${detail}"] span`);
     }
 
     async checkAllRowsButtonIsDisplayed(): Promise<void> {
@@ -59,12 +64,12 @@ export class DataTableComponentPage {
 
     async checkAllRows(): Promise<void> {
         await BrowserActions.click(this.selectAll);
-        await BrowserVisibility.waitUntilElementIsVisible(this.selectAll.element(by.css('input[aria-checked="true"]')));
+        await BrowserVisibility.waitUntilElementIsVisible(this.selectAll.$('input[aria-checked="true"]'));
     }
 
     async uncheckAllRows(): Promise<void> {
         await BrowserActions.click(this.selectAll);
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.selectAll.element(by.css('input[aria-checked="true"]')));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.selectAll.$('input[aria-checked="true"]'));
     }
 
     async clickCheckbox(columnName: string, columnValue: string): Promise<void> {
@@ -73,16 +78,16 @@ export class DataTableComponentPage {
     }
 
     async checkRowIsNotChecked(columnName: string, columnValue: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.getRowCheckbox(columnName, columnValue).element(by.css('input[aria-checked="true"]')));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.getRowCheckbox(columnName, columnValue).$('input[aria-checked="true"]'));
     }
 
     async checkRowIsChecked(columnName: string, columnValue: string): Promise<void> {
         const rowCheckbox = this.getRowCheckbox(columnName, columnValue);
-        await BrowserVisibility.waitUntilElementIsVisible(rowCheckbox.element(by.css('input[aria-checked="true"]')));
+        await BrowserVisibility.waitUntilElementIsVisible(rowCheckbox.$('input[aria-checked="true"]'));
     }
 
     getRowCheckbox(columnName: string, columnValue: string): ElementFinder {
-        return this.getRow(columnName, columnValue).element(by.css('mat-checkbox'));
+        return this.getRow(columnName, columnValue).$('mat-checkbox');
     }
 
     async checkNoRowIsSelected(): Promise<void> {
@@ -140,7 +145,7 @@ export class DataTableComponentPage {
     async getColumnValueForRow(identifyingColumn: string, identifyingValue: string, columnName: string): Promise<string> {
         const row = this.getRow(identifyingColumn, identifyingValue);
         await BrowserVisibility.waitUntilElementIsVisible(row);
-        const rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
+        const rowColumn = row.$(`div[title="${columnName}"] span`);
         return BrowserActions.getText(rowColumn);
     }
 
@@ -153,7 +158,7 @@ export class DataTableComponentPage {
      * @return 'true' if the list is sorted as await expected and 'false' if it isn't
      */
     async checkListIsSorted(sortOrder: string, columnTitle: string, listType: string = 'STRING'): Promise<any> {
-        const column = element.all(by.css(`div.adf-datatable-cell[title='${columnTitle}'] span`));
+        const column = $$(`div.adf-datatable-cell[title='${columnTitle}'] span`);
         await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
 
@@ -212,7 +217,7 @@ export class DataTableComponentPage {
 
     async rightClickOnRow(columnName: string, columnValue: string): Promise<void> {
         await this.rightClickOnItem(columnName, columnValue);
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
+        await BrowserVisibility.waitUntilElementIsVisible($('#adf-context-menu-content'));
     }
 
     async getTooltip(columnName: string, columnValue: string): Promise<string> {
@@ -222,7 +227,7 @@ export class DataTableComponentPage {
     async rightClickOnRowByIndex(index: number): Promise<void> {
         const row = this.getRowByIndex(index);
         await BrowserActions.rightClick(row);
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
+        await BrowserVisibility.waitUntilElementIsVisible($('#adf-context-menu-content'));
     }
 
     async rightClickOnItem(columnName: string, columnValue: string): Promise<void> {
@@ -237,35 +242,37 @@ export class DataTableComponentPage {
     async numberOfRows(): Promise<number> {
         try {
             await this.waitForFirstRow();
-            return this.rootElement.all(this.rows).count();
+            return this.rootElement.$$(this.rows).count();
         } catch (e) {
             return 0;
         }
     }
 
     async waitForFirstRow(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(this.rows).first());
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$$(this.rows).first());
     }
 
     async getAllRowsColumnValues(column: string): Promise<string[]> {
         let columnValues: string[] = [];
-        const columnLocator: Locator = by.css("adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title='" + column + "'] span");
+        const columnLocator = $$(`adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title="${column}"] span`);
 
+        await BrowserVisibility.waitUntilElementIsPresent(await columnLocator.first(), 1000);
         try {
             await BrowserVisibility.waitUntilElementIsPresent(element.all(columnLocator).first(), 1000);
-            columnValues = <string[]> await element.all(columnLocator)
+            columnValues = await element.all(columnLocator)
                 .filter(async (el) => el.isPresent())
                 .map(async (el) => el.getText());
         } catch (error) {
+            Logger.log(error)
         }
 
         return columnValues;
     }
 
     async getRowsWithSameColumnValues(columnName: string, columnValue: string) {
-        const columnLocator: Locator = by.css(`div[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`);
-        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(columnLocator).first());
-        return this.rootElement.all(columnLocator).getText();
+        const columnLocator = `div[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`;
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$$(columnLocator).first());
+        return this.rootElement.$$(columnLocator).getText();
     }
 
     async doubleClickRow(columnName: string, columnValue: string): Promise<void> {
@@ -279,12 +286,8 @@ export class DataTableComponentPage {
     }
 
     async getFirstElementDetail(detail: string): Promise<string> {
-        const firstNode = element.all(by.css(`adf-datatable div[title="${detail}"] span`)).first();
+        const firstNode = $$(`adf-datatable div[title="${detail}"] span`).first();
         return BrowserActions.getText(firstNode);
-    }
-
-    geCellElementDetail(detail: string): ElementArrayFinder {
-        return element.all(by.css(`adf-datatable div[title="${detail}"] span`));
     }
 
     /**
@@ -293,22 +296,22 @@ export class DataTableComponentPage {
      * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
      */
     async sortByColumn(sortOrder: string, titleColumn: string): Promise<void> {
-        const locator: Locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
-        await BrowserVisibility.waitUntilElementIsVisible(element(locator));
-        const result = await BrowserActions.getAttribute(element(locator), 'class');
+        const locator = $(`div[data-automation-id="auto_id_${titleColumn}"]`);
+        await BrowserVisibility.waitUntilElementIsVisible(locator);
+        const result = await BrowserActions.getAttribute(locator, 'class');
 
         if (sortOrder.toLocaleLowerCase() === 'asc') {
             if (!result.includes('sorted-asc')) {
                 if (result.includes('sorted-desc') || result.includes('sortable')) {
-                    await BrowserActions.click(element(locator));
+                    await BrowserActions.click(locator);
                 }
             }
         } else {
             if (result.includes('sorted-asc')) {
-                await BrowserActions.click(element(locator));
+                await BrowserActions.click(locator);
             } else if (result.includes('sortable')) {
-                await BrowserActions.click(element(locator));
-                await BrowserActions.click(element(locator));
+                await BrowserActions.click(locator);
+                await BrowserActions.click(locator);
             }
         }
     }
@@ -359,7 +362,7 @@ export class DataTableComponentPage {
     }
 
     getCellElementByValue(columnName: string, columnValue: string, columnPrefix = 'text_'): ElementFinder {
-        return this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="${columnPrefix}${columnValue}"] span`)).first();
+        return this.rootElement.$$(`div[title="${columnName}"] div[data-automation-id="${columnPrefix}${columnValue}"] span`).first();
     }
 
     async tableIsLoaded(): Promise<void> {
@@ -456,7 +459,7 @@ export class DataTableComponentPage {
     }
 
     async checkColumnIsDisplayed(column: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="auto_id_entry.${column}"]`)));
+        await BrowserVisibility.waitUntilElementIsVisible($(`div[data-automation-id="auto_id_entry.${column}"]`));
     }
 
     async getNumberOfColumns(): Promise<number> {
@@ -468,11 +471,11 @@ export class DataTableComponentPage {
     }
 
     getCellByRowNumberAndColumnName(rowNumber: number, columnName: string): ElementFinder {
-        return this.list.get(rowNumber).all(by.css(`div[title="${columnName}"] span`)).first();
+        return this.list.get(rowNumber).$$(`div[title="${columnName}"] span`).first();
     }
 
     getCellByRowContentAndColumn(rowColumn: string, rowContent: string, columnName: string): ElementFinder {
-        return this.getRow(rowColumn, rowContent).element(by.css(`div[title='${columnName}']`));
+        return this.getRow(rowColumn, rowContent).$(`div[title='${columnName}']`);
     }
 
     async selectRowByContent(content: string): Promise<void> {
@@ -500,33 +503,33 @@ export class DataTableComponentPage {
     }
 
     async clickRowByContent(name: string): Promise<void> {
-        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first();
+        const resultElement = this.rootElement.$$(`div[data-automation-id='${name}']`).first();
         await BrowserActions.click(resultElement);
     }
 
     async clickRowByContentCheckbox(name: string): Promise<void> {
-        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first().element(by.xpath(`ancestor::adf-datatable-row/div/mat-checkbox`));
+        const resultElement = this.rootElement.$$(`div[data-automation-id='${name}']`).first().element(by.xpath(`ancestor::adf-datatable-row/div/mat-checkbox`));
         await browser.actions().mouseMove(resultElement);
         await BrowserActions.click(resultElement);
     }
 
     async checkRowContentIsDisplayed(content: string): Promise<void> {
-        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}']`)).first();
+        const resultElement = this.rootElement.$$(`div[data-automation-id='${content}']`).first();
         await BrowserVisibility.waitUntilElementIsVisible(resultElement);
     }
 
     async checkRowContentIsNotDisplayed(content: string): Promise<void> {
-        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}']`)).first();
+        const resultElement = this.rootElement.$$(`div[data-automation-id='${content}']`).first();
         await BrowserVisibility.waitUntilElementIsNotVisible(resultElement);
     }
 
     async checkRowContentIsDisabled(content: string): Promise<void> {
-        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${content}'] div.adf-cell-value img[aria-label='Disabled']`)).first();
+        const resultElement = this.rootElement.$$(`div[data-automation-id='${content}'] div.adf-cell-value img[aria-label='Disabled']`).first();
         await BrowserVisibility.waitUntilElementIsVisible(resultElement);
     }
 
     async doubleClickRowByContent(name: string): Promise<void> {
-        const resultElement = this.rootElement.all(by.css(`div[data-automation-id='${name}']`)).first();
+        const resultElement = this.rootElement.$$(`div[data-automation-id='${name}']`).first();
         await BrowserActions.click(resultElement);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
@@ -566,7 +569,7 @@ export class DataTableComponentPage {
     async getEmptyListText(): Promise<string> {
         const isEmpty = await this.isEmpty();
         if (isEmpty) {
-            return this.rootElement.by.css('adf-custom-empty-content-template').getText();
+            return this.rootElement.$('adf-custom-empty-content-template').getText();
         }
         return '';
     }

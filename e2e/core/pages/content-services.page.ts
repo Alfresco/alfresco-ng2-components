@@ -25,7 +25,7 @@ import {
     DropdownPage,
     Logger
 } from '@alfresco/adf-testing';
-import { Locator, $$, browser, by, element, ElementFinder, protractor } from 'protractor';
+import { $$, browser, by, element, ElementFinder, protractor, $ } from 'protractor';
 import { CreateLibraryDialogPage } from './dialog/create-library-dialog.page';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
@@ -42,74 +42,73 @@ export class ContentServicesPage {
         created: 'Created'
     };
 
-    contentList = new DocumentListPage(element.all(by.css('adf-upload-drag-area adf-document-list')).first());
+    contentList = new DocumentListPage($$('adf-upload-drag-area adf-document-list').first());
     togglePage = new TogglePage();
     createFolderDialog = new FolderDialogPage();
     createLibraryDialog = new CreateLibraryDialogPage();
 
-    multipleFileUploadToggle = element(by.id('adf-document-list-enable-drop-files'));
-    uploadBorder = element(by.id('document-list-container'));
-    contentServices = element(by.css('.app-sidenav-link[data-automation-id="Content Services"]'));
-    currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
-    createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
-    editFolderButton = element(by.css('button[data-automation-id="edit-folder"]'));
-    deleteNodesButton = element(by.css('button[data-automation-id="delete-toolbar-button"]'));
-    createLibraryButton = element(by.css('button[data-automation-id="create-new-library"]'));
-    activeBreadcrumb = element(by.css('div[class*="active"]'));
-    tooltip: Locator = by.css('div[class*="--text adf-full-width"] span');
-    uploadFileButton = element(by.css('.adf-upload-button-file-container button'));
-    uploadFileButtonInput = element(by.css('input[data-automation-id="upload-single-file"]'));
-    uploadMultipleFileButton = element(by.css('input[data-automation-id="upload-multiple-files"]'));
-    uploadFolderButton = element(by.css('input[data-automation-id="uploadFolder"]'));
-    errorSnackBar = element(by.css('simple-snack-bar[class*="mat-simple-snackbar"]'));
-    emptyPagination = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
-    dragAndDrop = element.all(by.css('adf-upload-drag-area div')).first();
-    nameHeader = element.all(by.css('div[data-automation-id="auto_id_name"] > span')).first();
-    sizeHeader = element.all(by.css('div[data-automation-id="auto_id_content.sizeInBytes"] > span')).first();
-    createdByHeader = element.all(by.css('div[data-automation-id="auto_id_createdByUser.displayName"] > span')).first();
-    createdHeader = element.all(by.css('div[data-automation-id="auto_id_createdAt"] > span')).first();
-    recentFiles = element(by.css('.app-container-recent'));
-    recentFilesExpanded = element(by.css('.app-container-recent mat-expansion-panel-header.mat-expanded'));
-    recentFilesClosed = element(by.css('.app-container-recent mat-expansion-panel-header'));
-    recentFileIcon = element(by.css('.app-container-recent mat-expansion-panel-header mat-icon'));
-    emptyFolder = element(by.css('.adf-empty-folder-this-space-is-empty'));
-    emptyFolderImage = element(by.css('.adf-empty-folder-image'));
-    emptyRecent = element(by.css('.app-container-recent .app-empty-list__title'));
-    gridViewButton = element(by.css('button[data-automation-id="document-list-grid-view"]'));
-    cardViewContainer = element(by.css('div.app-document-list-container div.adf-datatable-card'));
+    multipleFileUploadToggle = $('#adf-document-list-enable-drop-files');
+    uploadBorder = $('#document-list-container');
+    contentServices = $('.app-sidenav-link[data-automation-id="Content Services"]');
+    currentFolder = $('div[class*="adf-breadcrumb-item adf-active"] div');
+    createFolderButton = $('button[data-automation-id="create-new-folder"]');
+    editFolderButton = $('button[data-automation-id="edit-folder"]');
+    deleteNodesButton = $('button[data-automation-id="delete-toolbar-button"]');
+    createLibraryButton = $('button[data-automation-id="create-new-library"]');
+    activeBreadcrumb = $('div[class*="active"]');
+    uploadFileButton = $('.adf-upload-button-file-container button');
+    uploadFileButtonInput = $('input[data-automation-id="upload-single-file"]');
+    uploadMultipleFileButton = $('input[data-automation-id="upload-multiple-files"]');
+    uploadFolderButton = $('input[data-automation-id="uploadFolder"]');
+    errorSnackBar = $('simple-snack-bar[class*="mat-simple-snackbar"]');
+    emptyPagination = $('adf-pagination[class*="adf-pagination__empty"]');
+    dragAndDrop = $$('adf-upload-drag-area div').first();
+    nameHeader = $$('div[data-automation-id="auto_id_name"] > span').first();
+    sizeHeader = $$('div[data-automation-id="auto_id_content.sizeInBytes"] > span').first();
+    createdByHeader = $$('div[data-automation-id="auto_id_createdByUser.displayName"] > span').first();
+    createdHeader = $$('div[data-automation-id="auto_id_createdAt"] > span').first();
+    recentFiles = $('.app-container-recent');
+    recentFilesExpanded = $('.app-container-recent mat-expansion-panel-header.mat-expanded');
+    recentFilesClosed = $('.app-container-recent mat-expansion-panel-header');
+    recentFileIcon = $('.app-container-recent mat-expansion-panel-header mat-icon');
+    emptyFolder = $('.adf-empty-folder-this-space-is-empty');
+    emptyFolderImage = $('.adf-empty-folder-image');
+    emptyRecent = $('.app-container-recent .app-empty-list__title');
+    gridViewButton = $('button[data-automation-id="document-list-grid-view"]');
+    cardViewContainer = $('div.app-document-list-container div.adf-datatable-card');
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
     nameColumnHeader = 'name';
     createdByColumnHeader = 'createdByUser.displayName';
     createdColumnHeader = 'createdAt';
-    deleteContentElement = element(by.css('button[data-automation-id*="DELETE"]'));
-    metadataAction = element(by.css('button[data-automation-id*="METADATA"]'));
-    versionManagerAction = element(by.css('button[data-automation-id*="VERSIONS"]'));
-    moveContentElement = element(by.css('button[data-automation-id*="MOVE"]'));
-    copyContentElement = element(by.css('button[data-automation-id*="COPY"]'));
-    lockContentElement = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
-    downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
-    downloadButton = element(by.css('button[title="Download"]'));
-    favoriteButton = element(by.css('button[data-automation-id="favorite"]'));
+    deleteContentElement = $('button[data-automation-id*="DELETE"]');
+    metadataAction = $('button[data-automation-id*="METADATA"]');
+    versionManagerAction = $('button[data-automation-id*="VERSIONS"]');
+    moveContentElement = $('button[data-automation-id*="MOVE"]');
+    copyContentElement = $('button[data-automation-id*="COPY"]');
+    lockContentElement = $('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]');
+    downloadContent = $('button[data-automation-id*="DOWNLOAD"]');
+    downloadButton = $('button[title="Download"]');
+    favoriteButton = $('button[data-automation-id="favorite"]');
     markedFavorite = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star'));
     notMarkedFavorite = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star_border'));
-    multiSelectToggle = element(by.css('[data-automation-id="multiSelectToggle"]'));
-    selectAllCheckbox = element.all(by.css('.adf-checkbox-sr-only')).first();
-    selectionModeDropdown = element(by.css('.mat-select[aria-label="Selection Mode"]'));
-    selectedNodesList = element.all(by.css('.app-content-service-settings li'));
-    siteListDropdown = new DropdownPage(element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
-    sortingDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="grid-view-sorting"]')));
+    multiSelectToggle = $('[data-automation-id="multiSelectToggle"]');
+    selectAllCheckbox = $$('.adf-checkbox-sr-only').first();
+    selectionModeDropdown = $('.mat-select[aria-label="Selection Mode"]');
+    selectedNodesList = $$('.app-content-service-settings li');
+    siteListDropdown = new DropdownPage($(`mat-select[data-automation-id='site-my-files-option']`));
+    sortingDropdown = new DropdownPage($('mat-select[data-automation-id="grid-view-sorting"]'));
 
     async pressContextMenuActionNamed(actionName): Promise<void> {
         await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
     }
 
     async checkContextActionIsVisible(actionName) {
-        const actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
+        const actionButton = $(`button[data-automation-id="context-${actionName}"`);
         await BrowserVisibility.waitUntilElementIsVisible(actionButton);
     }
 
     async isContextActionEnabled(actionName): Promise<boolean> {
-        const actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
+        const actionButton = $(`button[data-automation-id="context-${actionName}"`);
         await BrowserVisibility.waitUntilElementIsVisible(actionButton);
         return actionButton.isEnabled();
     }
@@ -132,7 +131,7 @@ export class ContentServicesPage {
 
     async checkDeleteIsDisabled(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
-        const disabledDelete = element(by.css(`button[data-automation-id*='DELETE'][disabled='true']`));
+        const disabledDelete = $(`button[data-automation-id*='DELETE'][disabled='true']`);
         await BrowserVisibility.waitUntilElementIsVisible(disabledDelete);
     }
 
@@ -489,12 +488,12 @@ export class ContentServicesPage {
     }
 
     async enableMediumTimeFormat(): Promise<void> {
-        const mediumTimeFormat = element(by.css('#enableMediumTimeFormat'));
+        const mediumTimeFormat = $('#enableMediumTimeFormat');
         await BrowserActions.click(mediumTimeFormat);
     }
 
     async enableThumbnails(): Promise<void> {
-        const thumbnailSlide = element(by.id('adf-thumbnails-upload-switch'));
+        const thumbnailSlide = $('#adf-thumbnails-upload-switch');
         await BrowserActions.click(thumbnailSlide);
     }
 
@@ -503,7 +502,7 @@ export class ContentServicesPage {
     }
 
     async getDocumentListRowNumber(): Promise<number> {
-        const documentList = element(by.css('adf-upload-drag-area adf-document-list'));
+        const documentList = $('adf-upload-drag-area adf-document-list');
         await BrowserVisibility.waitUntilElementIsVisible(documentList);
         return $$('adf-upload-drag-area adf-document-list .adf-datatable-row').count();
     }
@@ -539,7 +538,7 @@ export class ContentServicesPage {
     }
 
     async checkLockIsDisplayedForElement(name): Promise<void> {
-        const lockButton = element(by.css(`div.adf-datatable-cell[data-automation-id="${name}"] button`));
+        const lockButton = $(`div.adf-datatable-cell[data-automation-id="${name}"] button`);
         await BrowserVisibility.waitUntilElementIsVisible(lockButton);
     }
 
@@ -548,7 +547,7 @@ export class ContentServicesPage {
     }
 
     async getStyleValueForRowText(rowName, styleName): Promise<string> {
-        const row = element(by.css(`div.adf-datatable-cell[data-automation-id="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`));
+        const row = $(`div.adf-datatable-cell[data-automation-id="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(row);
         return row.getCssValue(styleName);
     }
@@ -567,7 +566,7 @@ export class ContentServicesPage {
     }
 
     async getRowIconImageUrl(fileName): Promise<string> {
-        const iconRow = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`));
+        const iconRow = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`);
         return BrowserActions.getAttribute(iconRow, 'src');
     }
 
@@ -590,30 +589,30 @@ export class ContentServicesPage {
     }
 
     async getDocumentCardIconForElement(elementName): Promise<string> {
-        const elementIcon = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"] img`));
+        const elementIcon = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"] img`);
         return BrowserActions.getAttribute(elementIcon, 'src');
     }
 
     async checkDocumentCardPropertyIsShowed(elementName, propertyName): Promise<void> {
-        const elementProperty = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`));
+        const elementProperty = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(elementProperty);
     }
 
     async getAttributeValueForElement(elementName, propertyName): Promise<string> {
-        const elementSize = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`));
+        const elementSize = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`);
         return BrowserActions.getText(elementSize);
     }
 
     async checkMenuIsShowedForElementIndex(elementIndex): Promise<void> {
-        const elementMenu = element(by.css(`button[data-automation-id="action_menu_${elementIndex}"]`));
+        const elementMenu = $(`button[data-automation-id="action_menu_${elementIndex}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(elementMenu);
     }
 
     async navigateToCardFolder(folderName): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        const folderCard = element(by.css(`.app-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`));
+        const folderCard = $(`.app-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`);
         await BrowserActions.click(folderCard);
-        const folderSelected = element(by.css(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`));
+        const folderSelected = $(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`);
         await BrowserVisibility.waitUntilElementIsVisible(folderSelected);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
@@ -660,7 +659,7 @@ export class ContentServicesPage {
     }
 
     async selectFolder(folderName: string): Promise<void> {
-        const folderSelected = element(by.css(`div[data-automation-id="${folderName}"] .adf-datatable-center-img-ie`));
+        const folderSelected = $(`div[data-automation-id="${folderName}"] .adf-datatable-center-img-ie`);
         await BrowserVisibility.waitUntilElementIsVisible(folderSelected);
         await BrowserActions.click(folderSelected);
     }
@@ -681,13 +680,13 @@ export class ContentServicesPage {
     }
 
     async selectItemWithCheckbox(itemName: string): Promise<void> {
-        const item = element(by.css(`adf-datatable-row[aria-label="${itemName}"] mat-checkbox .mat-checkbox-input`));
+        const item = $(`adf-datatable-row[aria-label="${itemName}"] mat-checkbox .mat-checkbox-input`);
         await BrowserVisibility.waitUntilElementIsVisible(item);
         await BrowserActions.click(item);
     }
 
     async unSelectItemWithCheckbox(itemName: string): Promise<void> {
-        const item = element(by.css(`adf-datatable-row[aria-label="${itemName} selected"] mat-checkbox .mat-checkbox-input`));
+        const item = $(`adf-datatable-row[aria-label="${itemName} selected"] mat-checkbox .mat-checkbox-input`);
         await BrowserVisibility.waitUntilElementIsVisible(item);
         await BrowserActions.click(item);
     }

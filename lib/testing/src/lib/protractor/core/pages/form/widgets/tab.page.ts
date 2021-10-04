@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, $ } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class TabPage {
 
-    changeTabAnimation = element(by.css('div[class="mat-ripple-element"]'));
+    changeTabAnimation = $('div[class="mat-ripple-element"]');
 
     async clickTabByLabel(tabLabel): Promise<void> {
         const user = element(by.cssContainingText('.mat-tab-label-content', tabLabel));

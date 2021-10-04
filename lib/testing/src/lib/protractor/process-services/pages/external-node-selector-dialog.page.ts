@@ -15,27 +15,27 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { $ } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { ContentNodeSelectorDialogPage } from '../../content-services/dialog/content-node-selector-dialog.page';
 import { DocumentListPage } from '../../content-services/pages/document-list.page';
 import { Logger } from '../../core/utils/logger';
 export class ExternalNodeSelectorDialogPage extends ContentNodeSelectorDialogPage {
-    txtUsername = element(by.css('input[id="username"]'));
-    txtPassword = element(by.css('input[id="password"]'));
-    loginElement = element(by.css('[data-automation-id="attach-file-dialog-actions-login"]'));
-    title = element(by.css('[data-automation-id="content-node-selector-title"]'));
+    txtUsername = $('input[id="username"]');
+    txtPassword = $('input[id="password"]');
+    loginElement = $('[data-automation-id="attach-file-dialog-actions-login"]');
+    title = $('[data-automation-id="content-node-selector-title"]');
 
     constructor() {
         super();
-        this.dialog = element(by.css(`adf-content-node-selector-panel`));
+        this.dialog = $(`adf-content-node-selector-panel`);
         this.contentList = new DocumentListPage(this.dialog);
         this.dataTable = this.contentList.dataTablePage();
-        this.header = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
-        this.searchInputElement = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
-        this.selectedRow = this.dialog.element(by.css(`adf-datatable-row[class*="adf-is-selected"]`));
-        this.moveCopyButton = element(by.css(`button[data-automation-id="attach-file-dialog-actions-choose"]`));
+        this.header = this.dialog.$(`header[data-automation-id='content-node-selector-title']`);
+        this.searchInputElement = this.dialog.$(`input[data-automation-id='content-node-selector-search-input']`);
+        this.selectedRow = this.dialog.$(`adf-datatable-row[class*="adf-is-selected"]`);
+        this.moveCopyButton = $(`button[data-automation-id="attach-file-dialog-actions-choose"]`);
     }
 
     async getTitle(): Promise<string> {

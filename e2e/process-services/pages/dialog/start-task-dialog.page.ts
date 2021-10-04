@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { element, by, Key, ElementFinder } from 'protractor';
+import { element, by, Key, ElementFinder, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions, DropdownPage } from '@alfresco/adf-testing';
 
 export class StartTaskDialogPage {
 
-    name = element(by.css('input[id="name_id"]'));
-    dueDate = element(by.css('input[id="date_id"]'));
-    description = element(by.css('textarea[id="description_id"]'));
-    assignee = element(by.css('div#people-widget-content input'));
-    startButton = element(by.css('button[id="button-start"]'));
-    startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
-    cancelButton = element(by.css('button[id="button-cancel"]'));
+    name = $('input[id="name_id"]');
+    dueDate = $('input[id="date_id"]');
+    description = $('textarea[id="description_id"]');
+    assignee = $('div#people-widget-content input');
+    startButton = $('button[id="button-start"]');
+    startButtonEnabled = $('button[id="button-start"]:not(disabled)');
+    cancelButton = $('button[id="button-cancel"]');
 
-    selectFormDropdown = new DropdownPage(element(by.css('mat-select[id="form_id"]')));
+    selectFormDropdown = new DropdownPage($('mat-select[id="form_id"]'));
     selectAssigneeDropdown = new DropdownPage();
 
     async addName(userName: string): Promise<void> {
@@ -74,7 +74,7 @@ export class StartTaskDialogPage {
     }
 
     async checkStartButtonIsDisabled(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="button-start"]:disabled')));
+        await BrowserVisibility.waitUntilElementIsVisible($('button[id="button-start"]:disabled'));
     }
 
     async clickCancelButton(): Promise<void> {

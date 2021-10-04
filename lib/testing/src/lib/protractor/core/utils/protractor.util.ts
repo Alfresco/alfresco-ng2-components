@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ElementFinder, browser, by } from 'protractor';
+import { ElementFinder, browser } from 'protractor';
 
 /**
  * Tagged template to convert a sting to an `ElementFinder`.
@@ -28,5 +28,5 @@ export function byCss(
     ...placeholders: string[]
 ): ElementFinder {
     const selector = literals[0] || placeholders[0];
-    return browser.element(by.css(selector));
+    return browser.$(selector);
 }

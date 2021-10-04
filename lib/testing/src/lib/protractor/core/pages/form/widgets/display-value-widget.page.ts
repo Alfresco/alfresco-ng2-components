@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element, Locator } from 'protractor';
+import { by, Locator, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import { EditJsonDialog } from '../../../dialog/public-api';
 
@@ -45,7 +45,7 @@ export class DisplayValueWidgetPage {
     }
 
     async checkDisplayValueWidgetIsHidden(fieldId: string): Promise<boolean> {
-        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
+        const hiddenElement = $(`adf-form-field div[id='field-${fieldId}-container'][hidden]`);
         try {
             await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement);
             return true;
@@ -55,7 +55,7 @@ export class DisplayValueWidgetPage {
     }
 
     async clickOnDisplayJsonValueWidget(fieldId: string) {
-        const jsonButton = element(by.css(`adf-form-field div[id='field-${fieldId}-container'] button`));
+        const jsonButton = $(`adf-form-field div[id='field-${fieldId}-container'] button`);
         await BrowserActions.click(jsonButton);
         await this.editJsonDialog.checkDialogIsDisplayed();
     }

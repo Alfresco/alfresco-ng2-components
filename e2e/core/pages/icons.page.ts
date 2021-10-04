@@ -15,18 +15,13 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder } from 'protractor';
+import { $, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class IconsPage {
 
-    locateCustomIcon(name: string): ElementFinder {
-        return element(by.css(`adf-icon[value='${name}'] svg`));
-    }
-
-    locateLigatureIcon(name: string): ElementFinder {
-        return element(by.css(`adf-icon[value='${name}'] .material-icons`));
-    }
+    locateCustomIcon = (name: string): ElementFinder => $(`adf-icon[value='${name}'] svg`);
+    locateLigatureIcon = (name: string): ElementFinder => $(`adf-icon[value='${name}'] .material-icons`);
 
     async isCustomIconDisplayed(name: string) {
         const present = await BrowserVisibility.waitUntilElementIsVisible(this.locateCustomIcon(name));

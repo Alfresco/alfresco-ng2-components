@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { $, browser } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class LikePage {
 
-    likeCounter = element(by.css(`div[id="adf-like-counter"]`));
-    likeButton = element(by.css(`.adf-like-grey`));
-    unlikeButton = element(by.css(`.adf-like-select`));
+    likeCounter = $(`div[id="adf-like-counter"]`);
+    likeButton = $(`.adf-like-grey`);
+    unlikeButton = $(`.adf-like-select`);
 
     async checkLikeCounter(counter: number): Promise<void> {
         await BrowserVisibility.waitUntilElementHasText(this.likeCounter, counter);

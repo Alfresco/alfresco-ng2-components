@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { $, browser } from 'protractor';
 import { BrowserActions, BrowserVisibility, TogglePage } from '@alfresco/adf-testing';
 
 export class UploadTogglesPage {
 
     togglePage = new TogglePage();
-    multipleFileUploadToggle = element(by.id('adf-multiple-upload-switch'));
-    uploadFolderToggle = element(by.css('#adf-folder-upload-switch'));
-    extensionFilterToggle = element(by.id('adf-extension-filter-upload-switch'));
-    maxSizeToggle = element(by.id('adf-max-size-filter-upload-switch'));
-    versioningToggle = element(by.id('adf-version-upload-switch'));
-    extensionAcceptedField = element(by.css('input[data-automation-id="accepted-files-type"]'));
-    maxSizeField = element(by.css('input[data-automation-id="max-files-size"]'));
-    disableUploadCheckbox = element(by.css('[id="adf-disable-upload"]'));
+    multipleFileUploadToggle = $('#adf-multiple-upload-switch');
+    uploadFolderToggle = $('#adf-folder-upload-switch');
+    extensionFilterToggle = $('#adf-extension-filter-upload-switch');
+    maxSizeToggle = $('#adf-max-size-filter-upload-switch');
+    versioningToggle = $('#adf-version-upload-switch');
+    extensionAcceptedField = $('input[data-automation-id="accepted-files-type"]');
+    maxSizeField = $('input[data-automation-id="max-files-size"]');
+    disableUploadCheckbox = $('[id="adf-disable-upload"]');
 
     async enableMultipleFileUpload(): Promise<void> {
         await browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
@@ -46,7 +46,7 @@ export class UploadTogglesPage {
 
     async checkFolderUploadToggleIsEnabled(): Promise<boolean> {
         try {
-            const enabledFolderUpload = element(by.css('mat-slide-toggle[id="adf-folder-upload-switch"][class*="mat-checked"]'));
+            const enabledFolderUpload = $('mat-slide-toggle[id="adf-folder-upload-switch"][class*="mat-checked"]');
             await BrowserVisibility.waitUntilElementIsVisible(enabledFolderUpload);
             return true;
         } catch {
@@ -55,17 +55,17 @@ export class UploadTogglesPage {
     }
 
     async checkMultipleFileUploadToggleIsEnabled(): Promise<void> {
-        const enabledToggle = element(by.css('mat-slide-toggle[id="adf-multiple-upload-switch"][class*="mat-checked"]'));
+        const enabledToggle = $('mat-slide-toggle[id="adf-multiple-upload-switch"][class*="mat-checked"]');
         await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
     }
 
     async checkMaxSizeToggleIsEnabled(): Promise<void> {
-        const enabledToggle = element(by.css('mat-slide-toggle[id="adf-max-size-filter-upload-switch"][class*="mat-checked"]'));
+        const enabledToggle = $('mat-slide-toggle[id="adf-max-size-filter-upload-switch"][class*="mat-checked"]');
         await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
     }
 
     async checkVersioningToggleIsEnabled(): Promise<void> {
-        const enabledToggle = element(by.css('mat-slide-toggle[id="adf-version-upload-switch"][class*="mat-checked"]'));
+        const enabledToggle = $('mat-slide-toggle[id="adf-version-upload-switch"][class*="mat-checked"]');
         await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
     }
 
@@ -74,7 +74,7 @@ export class UploadTogglesPage {
     }
     async checkFolderUploadToggleIsNotEnabled(): Promise<boolean> {
         try {
-            const inactiveToggleFolder = element(by.css('#adf-folder-upload-switch .mat-slide-toggle-label'));
+            const inactiveToggleFolder = $('#adf-folder-upload-switch .mat-slide-toggle-label');
             await BrowserVisibility.waitUntilElementIsVisible(inactiveToggleFolder);
             return true;
         } catch {

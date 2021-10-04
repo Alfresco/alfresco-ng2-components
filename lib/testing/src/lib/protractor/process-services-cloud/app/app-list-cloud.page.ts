@@ -15,16 +15,18 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { $$, $, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class AppListCloudPage {
 
-    apsAppsContainer = element(by.css('adf-cloud-app-list'));
-    allApps = element.all(by.css('adf-cloud-app-details'));
-    nameOfAllApps = element.all(by.css('adf-cloud-app-details div[class*="item-card-title"] h1'));
-    firstApp = element.all(by.css('adf-cloud-app-details div[class*="item-card-title"] h1')).first();
+    apsAppsContainer = $('adf-cloud-app-list');
+    allApps = $$('adf-cloud-app-details');
+    nameOfAllApps = $$('adf-cloud-app-details div[class*="item-card-title"] h1');
+    firstApp = $$('adf-cloud-app-details div[class*="item-card-title"] h1').first();
+
+    getAppNameLocatorByAppName = (appName: string): ElementFinder => $(`mat-card[title="${appName}"]`)
 
     async checkApsContainer(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
@@ -44,12 +46,12 @@ export class AppListCloudPage {
     }
 
     async checkAppIsNotDisplayed(applicationName: string): Promise<void> {
-        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
+        const app = this.getAppNameLocatorByAppName(applicationName);
         await BrowserVisibility.waitUntilElementIsNotVisible(app);
     }
 
     async checkAppIsDisplayed(applicationName: string): Promise<void> {
-        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
+        const app = this.getAppNameLocatorByAppName(applicationName);
         await BrowserVisibility.waitUntilElementIsVisible(app);
     }
 

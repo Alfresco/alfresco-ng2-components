@@ -15,23 +15,25 @@
  * limitations under the License.
  */
 
-import { Locator, browser, by, element, ElementFinder, protractor } from 'protractor';
+import { browser, ElementFinder, protractor, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions, TestElement } from '@alfresco/adf-testing';
 
 export class SearchBarPage {
 
-    searchIcon = element(by.css(`button[class*='adf-search-button']`));
-    searchBar = element(by.css(`adf-search-control input`));
+    searchIcon = $(`button[class*='adf-search-button']`);
+    searchBar = $(`adf-search-control input`);
     searchBarExpanded: TestElement = TestElement.byCss(`adf-search-control mat-form-field[class*="mat-focused"] input`);
-    noResultMessage = element(by.css(`p[class*='adf-search-fixed-text']`));
-    rowsAuthor: Locator = by.css(`.mat-list-text p[class*='adf-search-fixed-text']`);
-    completeName: Locator = by.css(`h4[class*='adf-search-fixed-text']`);
-    highlightName: Locator = by.css(`.adf-highlight`);
-    searchBarPage = element(by.css(`mat-list[id='autocomplete-search-result-list']`));
+    noResultMessage = $(`p[class*='adf-search-fixed-text']`);
+    rowsAuthor = `.mat-list-text p[class*='adf-search-fixed-text']`;
+    completeName = `h4[class*='adf-search-fixed-text']`;
+    highlightName = `.adf-highlight`;
+    searchBarPage = $(`mat-list[id='autocomplete-search-result-list']`);
+
+    getRowByRowName = (name: string): ElementFinder => $(`mat-list-item[data-automation-id='autocomplete_for_${name}']`);
 
     async pressDownArrowAndEnter(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
-        await this.searchBar.sendKeys(protractor.Key.ARROW_DOWN);
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar)
+        await BrowserActions.clearSendKeys(this.searchBar, protractor.Key.ARROW_DOWN)
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
@@ -80,20 +82,16 @@ export class SearchBarPage {
         await BrowserActions.click(this.getRowByRowName(fileName));
     }
 
-    getRowByRowName(name: string): ElementFinder {
-        return element(by.css(`mat-list-item[data-automation-id='autocomplete_for_${name}']`));
-    }
-
     async getSpecificRowsHighlightName(fileName: string): Promise<string> {
-        return BrowserActions.getText(this.getRowByRowName(fileName).element(this.highlightName));
+        return BrowserActions.getText(this.getRowByRowName(fileName).$(this.highlightName));
     }
 
     async getSpecificRowsCompleteName(fileName: string): Promise<string> {
-        return BrowserActions.getText(this.getRowByRowName(fileName).element(this.completeName));
+        return BrowserActions.getText(this.getRowByRowName(fileName).$(this.completeName));
     }
 
     async getSpecificRowsAuthor(fileName: string): Promise<string> {
-        return BrowserActions.getText(this.getRowByRowName(fileName).element(this.rowsAuthor));
+        return BrowserActions.getText(this.getRowByRowName(fileName).$(this.rowsAuthor));
     }
 
     async clearText(): Promise<void> {

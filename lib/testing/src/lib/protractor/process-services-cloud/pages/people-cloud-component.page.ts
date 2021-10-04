@@ -15,21 +15,23 @@
  * limitations under the License.
  */
 
-import { Locator, by, element, protractor } from 'protractor';
+import { Locator, by, element, protractor, $, $$, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
 
 export class PeopleCloudComponentPage {
 
-    peopleCloudSearch = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
-    assigneeField = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
-    selectionReady = element(by.css('div[data-automation-id="adf-people-cloud-row"]'));
+    peopleCloudSearch = $('input[data-automation-id="adf-people-cloud-search-input"]');
+    assigneeField = $('input[data-automation-id="adf-people-cloud-search-input"]');
+    selectionReady = $('div[data-automation-id="adf-people-cloud-row"]');
     formFields = new FormFields();
     labelLocator: Locator = by.css("label[class*='adf-label']");
     inputLocator: Locator = by.css('input');
-    assigneeChipList = element(by.css('mat-chip-list[data-automation-id="adf-cloud-people-chip-list"]'));
-    noOfUsersDisplayed = element.all(by.css('mat-option span.adf-people-label-name'));
+    assigneeChipList = $('mat-chip-list[data-automation-id="adf-cloud-people-chip-list"]');
+    noOfUsersDisplayed = $$('mat-option span.adf-people-label-name');
+
+    getAssigneeRowLocatorByContainingName = async (name: string): Promise<ElementFinder> => element.all(by.cssContainingText('mat-option span.adf-people-label-name', name)).first();
 
     async clearAssignee(): Promise<void> {
         await BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
@@ -37,7 +39,7 @@ export class PeopleCloudComponentPage {
     }
 
     async clearAssigneeFromChip(username: string): Promise<void> {
-        const assigneeChipRemoveIcon = element(by.css(`[data-automation-id="adf-people-cloud-chip-remove-icon-${username}"]`));
+        const assigneeChipRemoveIcon = $(`[data-automation-id="adf-people-cloud-chip-remove-icon-${username}"]`);
         await assigneeChipRemoveIcon.click();
     }
 
@@ -51,7 +53,7 @@ export class PeopleCloudComponentPage {
     }
 
     async selectAssigneeFromList(name: string): Promise<void> {
-        const assigneeRow = element.all(by.cssContainingText('mat-option span.adf-people-label-name', name)).first();
+        const assigneeRow = await this.getAssigneeRowLocatorByContainingName(name);
         await BrowserActions.click(assigneeRow);
         await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
     }
@@ -72,7 +74,7 @@ export class PeopleCloudComponentPage {
 
     async checkUserIsDisplayed(name: string): Promise<boolean> {
         try {
-            const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+            const assigneeRow = await this.getAssigneeRowLocatorByContainingName(name);
             await BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
             return true;
         } catch {
@@ -82,7 +84,7 @@ export class PeopleCloudComponentPage {
 
     async checkUserIsNotDisplayed(name: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.selectionReady);
-        const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+        const assigneeRow = await this.getAssigneeRowLocatorByContainingName(name);
         await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
     }
 
@@ -91,12 +93,12 @@ export class PeopleCloudComponentPage {
     }
 
     async checkOptionIsDisplayed(): Promise<void> {
-        const optionList = element(by.css('.adf-people-cloud-list'));
+        const optionList = $('.adf-people-cloud-list');
         await BrowserVisibility.waitUntilElementIsVisible(optionList);
     }
 
     async checkOptionIsNotDisplayed(): Promise<void> {
-        const optionList = element(by.css('.adf-people-cloud-list'));
+        const optionList = $('.adf-people-cloud-list');
         await BrowserVisibility.waitUntilElementIsNotVisible(optionList);
     }
 
@@ -126,7 +128,7 @@ export class PeopleCloudComponentPage {
     }
 
     async checkPeopleWidgetIsHidden(fieldId: string): Promise<boolean> {
-        const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container'][hidden]`));
+        const hiddenElement = $(`adf-form-field div[id='field-${fieldId}-container'][hidden]`);
         try {
             await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement);
             return true;
@@ -141,7 +143,7 @@ export class PeopleCloudComponentPage {
     }
 
     async checkPeopleWidgetIsReadOnly(): Promise<boolean> {
-        const readOnlyAttribute = element(by.css('people-cloud-widget .adf-readonly'));
+        const readOnlyAttribute = $('people-cloud-widget .adf-readonly');
         try {
             await BrowserVisibility.waitUntilElementIsVisible(readOnlyAttribute);
             return true;
@@ -151,7 +153,7 @@ export class PeopleCloudComponentPage {
     }
 
     async checkPeopleActiveField(name: string): Promise<boolean> {
-        const activePeopleField = element(by.css('people-cloud-widget .adf-readonly'));
+        const activePeopleField = $('people-cloud-widget .adf-readonly');
         try {
             await BrowserActions.clearSendKeys(activePeopleField, name);
             return true;
@@ -161,7 +163,7 @@ export class PeopleCloudComponentPage {
     }
 
     async checkNoResultsFoundError(): Promise<void> {
-        const errorLocator = element(by.css('[data-automation-id="adf-people-cloud-no-results"]'));
+        const errorLocator = $('[data-automation-id="adf-people-cloud-no-results"]');
         await BrowserVisibility.waitUntilElementIsVisible(errorLocator);
     }
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { $, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 import { DatePickerCalendarPage } from './date-picker-calendar.page';
 
@@ -25,8 +25,8 @@ export class DatePickerPage {
     dateTime = new DatePickerCalendarPage();
 
     constructor(datePickerElement?: ElementFinder) {
-        const locator = by.css('.mat-datepicker-toggle');
-        this.datePicker = datePickerElement ? datePickerElement : element(locator);
+        const locator = $('.mat-datepicker-toggle');
+        this.datePicker = datePickerElement ? datePickerElement : locator;
     }
 
     async clickDatePicker() {

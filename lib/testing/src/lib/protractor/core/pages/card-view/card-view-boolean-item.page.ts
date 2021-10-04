@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
 
 export class CardBooleanItemPage {
 
     rootElement: ElementFinder;
-    labelLocator: Locator = by.css('div[data-automation-id*="card-boolean-label"]');
-    checkbox: Locator = by.css('mat-checkbox[data-automation-id*="card-boolean"]');
+    labelLocator = 'div[data-automation-id*="card-boolean-label"]';
+    checkbox = 'mat-checkbox[data-automation-id*="card-boolean"]';
 
     constructor(label: string = 'required') {
         this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-boolitem`));
     }
 
     async checkboxClick(): Promise<void> {
-        await BrowserActions.click(this.rootElement.element(this.checkbox));
+        await BrowserActions.click(this.rootElement.$(this.checkbox));
     }
 
     async checkLabelIsPresent(): Promise<void> {
-        const labelElement = this.rootElement.element(this.labelLocator);
+        const labelElement = this.rootElement.$(this.labelLocator);
         await BrowserVisibility.waitUntilElementIsPresent(labelElement);
     }
 }

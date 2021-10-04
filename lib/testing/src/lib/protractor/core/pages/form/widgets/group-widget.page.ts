@@ -16,13 +16,13 @@
  */
 
 import { FormFields } from '../form-fields';
-import { Locator, by, element } from 'protractor';
+import { Locator, by, element, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class GroupWidgetPage {
 
-    groupField = element(by.css('input[data-automation-id="adf-group-search-input"]'));
-    firstResult = element(by.id('adf-group-widget-user-0'));
+    groupField = $('input[data-automation-id="adf-group-search-input"]');
+    firstResult = $('#adf-group-widget-user-0');
     formFields = new FormFields();
     groupDropDownList: Locator = by.css('.mat-autocomplete-panel');
 

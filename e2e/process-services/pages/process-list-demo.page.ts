@@ -16,18 +16,18 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
-import { by, element, protractor } from 'protractor';
+import { $, by, element, protractor } from 'protractor';
 
 export class ProcessListDemoPage {
 
-    appIdInput = element(by.css('input[data-automation-id="app-id"]'));
+    appIdInput = $('input[data-automation-id="app-id"]');
     resetButton = element(by.cssContainingText('button span', 'Reset'));
-    emptyProcessContent = element(by.css('.adf-empty-content'));
-    processDefinitionInput = element(by.css('input[data-automation-id="process-definition-id"]'));
-    processInstanceInput = element(by.css('input[data-automation-id="process-instance-id"]'));
+    emptyProcessContent = $('.adf-empty-content');
+    processDefinitionInput = $('input[data-automation-id="process-definition-id"]');
+    processInstanceInput = $('input[data-automation-id="process-instance-id"]')
 
-    stateDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="state"')));
-    sortDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="sort"')));
+    stateDropdown = new DropdownPage($('mat-select[data-automation-id="state"'));
+    sortDropdown = new DropdownPage($('mat-select[data-automation-id="sort"'));
 
     dataTable = new DataTableComponentPage();
 

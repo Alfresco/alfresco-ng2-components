@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element, Locator } from 'protractor';
+import { $$, by, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class RadioButtonsWidgetPage {
@@ -46,7 +46,7 @@ export class RadioButtonsWidgetPage {
     }
 
     async getRadioWidgetLabel(fieldId): Promise<string> {
-        const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
+        const label = $$(`adf-form-field div[id="field-${fieldId}-container"] label`).first();
         return BrowserActions.getText(label);
     }
 

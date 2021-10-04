@@ -17,7 +17,7 @@
 
 import * as path from 'path';
 import { BrowserActions, TestElement, TogglePage } from '@alfresco/adf-testing';
-import { browser, by, element } from 'protractor';
+import { $, browser} from 'protractor';
 
 export class VersionManagePage {
 
@@ -31,9 +31,9 @@ export class VersionManagePage {
     majorRadio = TestElement.byId('adf-new-version-major');
     minorRadio = TestElement.byId('adf-new-version-minor');
     commentText = TestElement.byId('adf-new-version-text-area');
-    readOnlySwitch = element(by.id('adf-version-manager-switch-readonly'));
-    downloadSwitch = element(by.id('adf-version-manager-switch-download'));
-    commentsSwitch = element(by.id('adf-version-manager-switch-comments'));
+    readOnlySwitch = $('#adf-version-manager-switch-readonly');
+    downloadSwitch = $('#adf-version-manager-switch-download');
+    commentsSwitch = $('#adf-version-manager-switch-comments');
     confirmAccept = TestElement.byId('adf-confirm-accept');
     confirmCancel = TestElement.byId('adf-confirm-cancel');
 

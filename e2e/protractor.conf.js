@@ -64,7 +64,7 @@ let specs = function () {
     } else {
         const FOLDER = process.env.FOLDER || '';
         setProvider(FOLDER);
-        const specsToRun = FOLDER ? `./${FOLDER}/**/*.e2e.ts` : './**/*.ts';
+        const specsToRun = FOLDER ? `./${FOLDER}/**/*.e2e.ts` : './**/*.e2e.ts';
         arraySpecs = [specsToRun];
     }
 

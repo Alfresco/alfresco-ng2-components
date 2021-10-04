@@ -15,29 +15,32 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder } from 'protractor';
+import { ElementFinder, $, $$ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class TaskFiltersCloudComponentPage {
 
     filter: ElementFinder;
-    taskFilters = element(by.css(`mat-expansion-panel[data-automation-id='Task Filters']`));
-    activeFilter = element(by.css('.adf-active [data-automation-id="adf-filter-label"]'));
+    taskFilters = $(`mat-expansion-panel[data-automation-id='Task Filters']`);
+    activeFilter = $('.adf-active [data-automation-id="adf-filter-label"]');
+
+    getTaskFilterLocatorByFilterName = async (filterName: string): Promise<ElementFinder> => $$(`button[data-automation-id="${filterName}_filter"]`).first();
+    getFilterCounterLocatorByFilterName = async (filterName: string): Promise<ElementFinder> => $$(`[data-automation-id="${filterName}_filter-counter"]`).first();
 
     async checkTaskFilterIsDisplayed(filterName: string): Promise<void> {
-        this.filter = this.getTaskFilterLocatorByFilterName(filterName);
+        this.filter = await this.getTaskFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
     async clickTaskFilter(filterName): Promise<void> {
-        this.filter = this.getTaskFilterLocatorByFilterName(filterName);
+        this.filter = await this.getTaskFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         await BrowserActions.click(this.filter);
     }
 
     async checkTaskFilterNotDisplayed(filterName: string): Promise<void> {
-        this.filter = this.getTaskFilterLocatorByFilterName(filterName);
+        this.filter = await this.getTaskFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
     }
 
@@ -50,22 +53,19 @@ export class TaskFiltersCloudComponentPage {
     }
 
     async getTaskFilterCounter(filterName: string): Promise<string> {
-        const filterCounter = element.all(by.css(`[data-automation-id="${filterName}_filter-counter"]`)).first();
+        const filterCounter = await this.getFilterCounterLocatorByFilterName(filterName)
         return BrowserActions.getText(filterCounter);
     }
 
     async checkTaskFilterCounter(filterName: string): Promise<void> {
-        const filterCounter = element.all(by.css(`[data-automation-id="${filterName}_filter-counter"]`)).first();
+        const filterCounter = await this.getFilterCounterLocatorByFilterName(filterName)
         await BrowserVisibility.waitUntilElementHasText(filterCounter, '0');
     }
 
     async checkNotificationCounterValue(filterName: string, counterValue: string): Promise<void> {
-        const filterCounter = element(by.css(`[data-automation-id="${filterName}_filter-counter"][class*="adf-active"]`));
+        const filterCounter = $(`[data-automation-id="${filterName}_filter-counter"][class*="adf-active"]`);
         await BrowserVisibility.waitUntilElementIsVisible(filterCounter);
         await BrowserVisibility.waitUntilElementHasText(filterCounter, counterValue);
     }
 
-    getTaskFilterLocatorByFilterName(filterName: string): ElementFinder {
-        return element.all(by.css(`button[data-automation-id="${filterName}_filter"]`)).first();
-    }
 }

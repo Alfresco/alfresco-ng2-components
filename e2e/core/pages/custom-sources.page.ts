@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { $ } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 const source = {
@@ -39,8 +39,8 @@ export class CustomSourcesPage {
     dataTable = new DataTableComponentPage();
     navigationBarPage = new NavigationBarPage();
 
-    toolbar = element(by.css('app-custom-sources .adf-toolbar-title'));
-    selectModeDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="custom-sources-select"]')));
+    toolbar = $('app-custom-sources .adf-toolbar-title');
+    selectModeDropdown = new DropdownPage($('mat-select[data-automation-id="custom-sources-select"]'));
 
     async waitForToolbarToBeVisible(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.toolbar);

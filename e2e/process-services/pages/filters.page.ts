@@ -16,11 +16,11 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { $ } from 'protractor';
 
 export class FiltersPage {
 
-    activeFilter = element(by.css('.adf-active'));
+    activeFilter = $('.adf-active');
     dataTable: DataTableComponentPage = new DataTableComponentPage();
 
     async getActiveFilter(): Promise<string> {
@@ -29,7 +29,7 @@ export class FiltersPage {
 
     async goToFilter(filterName): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        const filter = element(by.css(`button[data-automation-id="${filterName}_filter"]`));
+        const filter = $(`button[data-automation-id="${filterName}_filter"]`);
         await BrowserActions.click(filter);
         await this.dataTable.waitTillContentLoaded();
     }
@@ -43,7 +43,7 @@ export class FiltersPage {
     }
 
     async checkFilterIsHighlighted(filterName: string): Promise<void> {
-        const highlightedFilter = element(by.css(`.adf-active [data-automation-id='${filterName}_filter']`));
+        const highlightedFilter = $(`.adf-active [data-automation-id='${filterName}_filter']`);
         await BrowserVisibility.waitUntilElementIsVisible(highlightedFilter);
     }
 }

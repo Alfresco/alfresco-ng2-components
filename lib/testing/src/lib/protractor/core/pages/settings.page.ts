@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { $, browser, by, element } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
@@ -23,23 +23,23 @@ import { DropdownPage } from '../../core/pages/material/dropdown.page';
 export class SettingsPage {
 
     settingsURL: string = browser.baseUrl + '/settings';
-    ecmText = element(by.css('input[data-automation-id*="ecmHost"]'));
-    bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
-    clientIdText = element(by.css('input[id="clientId"]'));
-    authHostText = element(by.css('input[id="oauthHost"]'));
-    logoutUrlText = element(by.css('input[id="logout-url"]'));
+    ecmText = $('input[data-automation-id*="ecmHost"]');
+    bpmText = $('input[data-automation-id*="bpmHost"]');
+    clientIdText = $('input[id="clientId"]');
+    authHostText = $('input[id="oauthHost"]');
+    logoutUrlText = $('input[id="logout-url"]');
     basicAuthRadioButton = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'Basic Authentication'));
-    identityHostText = element(by.css('input[id="identityHost"]'));
+    identityHostText = $('input[id="identityHost"]');
     ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
-    silentLoginToggleLabel = element(by.css('mat-slide-toggle[name="silentLogin"] label'));
-    silentLoginToggleElement = element(by.css('mat-slide-toggle[name="silentLogin"]'));
-    implicitFlowLabel = element(by.css('mat-slide-toggle[name="implicitFlow"] label'));
-    implicitFlowElement = element(by.css('mat-slide-toggle[name="implicitFlow"]'));
-    applyButton = element(by.css('button[data-automation-id*="host-button"]'));
+    silentLoginToggleLabel = $('mat-slide-toggle[name="silentLogin"] label');
+    silentLoginToggleElement = $('mat-slide-toggle[name="silentLogin"]');
+    implicitFlowLabel = $('mat-slide-toggle[name="implicitFlow"] label');
+    implicitFlowElement = $('mat-slide-toggle[name="implicitFlow"]');
+    applyButton = $('button[data-automation-id*="host-button"]');
     backButton = element(by.cssContainingText('button .mat-button-wrapper', 'Back'));
     validationMessage = element(by.cssContainingText('mat-error', 'This field is required'));
 
-    providerDropdown = new DropdownPage(element(by.css('mat-select[id="adf-provider-selector"]')));
+    providerDropdown = new DropdownPage($('mat-select[id="adf-provider-selector"]'));
 
     async goToSettingsPage(): Promise<void> {
         let currentUrl;
@@ -208,7 +208,7 @@ export class SettingsPage {
     }
 
     async checkApplyButtonIsDisabled() {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[data-automation-id*="host-button"]:disabled')));
+        await BrowserVisibility.waitUntilElementIsVisible($('button[data-automation-id*="host-button"]:disabled'));
     }
 
     async checkProviderDropdownIsDisplayed() {

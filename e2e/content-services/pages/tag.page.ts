@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser } from 'protractor';
+import { by, protractor, browser, $, $$ } from 'protractor';
 import { BrowserActions, TestElement } from '@alfresco/adf-testing';
 
 export class TagPage {
 
     addTagButton = TestElement.byCss('#add-tag');
-    insertNodeIdElement = element(by.css('input[id="nodeId"]'));
+    insertNodeIdElement = $('input[id="nodeId"]');
     newTagInput = TestElement.byCss('input[id="new-tag-text"]');
     tagListRow = TestElement.byCss('adf-tag-node-actions-list mat-list-item');
     tagListByNodeIdRow = TestElement.byCss('adf-tag-node-list mat-chip');
@@ -30,7 +30,7 @@ export class TagPage {
     showDeleteButton = TestElement.byCss('#adf-remove-button-tag');
     showMoreButton = TestElement.byCss('button[data-automation-id="show-more-tags"]');
     showLessButton = TestElement.byCss('button[data-automation-id="show-fewer-tags"]');
-    tagsOnPage = element.all(by.css('div[class*="adf-list-tag"]'));
+    tagsOnPage = $$('div[class*="adf-list-tag"]');
     confirmTag = TestElement.byCss('#adf-tag-node-send');
 
     getNodeId(): Promise<string> {

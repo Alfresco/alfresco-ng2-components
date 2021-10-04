@@ -16,73 +16,73 @@
  */
 
 import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage } from '@alfresco/adf-testing';
-import { browser, by, element, Key } from 'protractor';
+import { browser, by, element, Key, $, $$ } from 'protractor';
 import { AppSettingsTogglesPage } from './dialog/app-settings-toggles.page';
 
 export class TaskDetailsPage {
 
     appSettingsTogglesClass = new AppSettingsTogglesPage();
 
-    formContent = element(by.css('adf-form'));
+    formContent = $('adf-form');
 
-    formNameField = element(by.css('[data-automation-id="card-textitem-value-formName"]'));
-    formNameButton = element(by.css('[data-automation-id="card-textitem-toggle-formName"]'));
-    assigneeField = element(by.css('[data-automation-id="card-textitem-value-assignee"]'));
-    assigneeButton = element(by.css('[data-automation-id="card-textitem-toggle-assignee"]'));
-    statusField = element(by.css('[data-automation-id="card-textitem-value-status"]'));
-    categoryField = element(by.css('[data-automation-id="card-textitem-value-category"] '));
-    parentNameField = element(by.css('span[data-automation-id*="parentName"] span'));
-    parentTaskIdField = element(by.css('[data-automation-id="card-textitem-value-parentTaskId"] '));
-    durationField = element(by.css('[data-automation-id="card-textitem-value-duration"] '));
-    endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
-    createdField = element(by.css('span[data-automation-id="card-dateitem-created"]'));
-    idField = element.all(by.css('[data-automation-id="card-textitem-value-id"]')).first();
-    descriptionField = element(by.css('[data-automation-id="card-textitem-value-description"]'));
-    dueDateField = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
-    activitiesTitle = element(by.css('div[class*="adf-info-drawer-layout-header-title"] div'));
-    commentField = element(by.id('comment-input'));
-    addCommentButton = element(by.css('[data-automation-id="comments-input-add"]'));
-    involvePeopleButton = element(by.css('div[class*="add-people"]'));
-    addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
-    addInvolvedUserButton = element(by.css('button[id="add-people"]'));
+    formNameField = $('[data-automation-id="card-textitem-value-formName"]');
+    formNameButton = $('[data-automation-id="card-textitem-toggle-formName"]');
+    assigneeField = $('[data-automation-id="card-textitem-value-assignee"]');
+    assigneeButton = $('[data-automation-id="card-textitem-toggle-assignee"]');
+    statusField = $('[data-automation-id="card-textitem-value-status"]');
+    categoryField = $('[data-automation-id="card-textitem-value-category"] ');
+    parentNameField = $('span[data-automation-id*="parentName"] span');
+    parentTaskIdField = $('[data-automation-id="card-textitem-value-parentTaskId"] ');
+    durationField = $('[data-automation-id="card-textitem-value-duration"] ');
+    endDateField = $$('span[data-automation-id*="endDate"] span').first();
+    createdField = $('span[data-automation-id="card-dateitem-created"]');
+    idField = $$('[data-automation-id="card-textitem-value-id"]').first();
+    descriptionField = $('[data-automation-id="card-textitem-value-description"]');
+    dueDateField = $$('span[data-automation-id*="dueDate"] span').first();
+    activitiesTitle = $('div[class*="adf-info-drawer-layout-header-title"] div');
+    commentField = $('#comment-input');
+    addCommentButton = $('[data-automation-id="comments-input-add"]');
+    involvePeopleButton = $('div[class*="add-people"]');
+    addPeopleField = $('input[data-automation-id="adf-people-search-input"]');
+    addInvolvedUserButton = $('button[id="add-people"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
-    taskDetailsSection = element(by.css('div[data-automation-id="app-tasks-details"]'));
-    taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
-    completeTask = element(by.css('button[id="adf-no-form-complete-button"]'));
-    completeFormTask = element(by.css('button[id="adf-form-complete"]'));
-    taskDetailsTitle = element(by.css('.adf-activiti-task-details__header span'));
-    auditLogButton = element(by.css('button[adf-task-audit]'));
-    noPeopleInvolved = element(by.id('no-people-label'));
-    cancelInvolvePeopleButton = element(by.id('close-people-search'));
-    involvePeopleHeader = element(by.css('.adf-search-text-header'));
-    removeInvolvedPeople = element(by.css('button[data-automation-id="Remove"]'));
-    peopleTitle = element(by.id('people-title'));
-    noFormMessage = element(by.css('span[id*="no-form-message"]'));
-    cancelAttachForm = element(by.id('adf-no-form-cancel-button'));
-    attachFormButton = element(by.id('adf-no-form-attach-form-button'));
-    disabledAttachFormButton = element(by.css('button[id="adf-no-form-attach-form-button"][disabled]'));
-    removeAttachForm = element(by.id('adf-attach-form-remove-button'));
-    attachFormName = element(by.css('.adf-form-title'));
-    emptyTaskDetails = element(by.css('adf-task-details > div > div'));
-    priority = element(by.css('[data-automation-id*="card-textitem-value-priority"]'));
-    editableAssignee = element(by.css('[data-automation-id="card-textitem-value-assignee"][class*="clickable"]'));
-    claimElement = element(by.css('[data-automation-id="header-claim-button"]'));
-    releaseElement = element(by.css('[data-automation-id="header-unclaim-button"]'));
-    saveFormButton = element(by.css('button[id="adf-form-save"]'));
+    taskDetailsSection = $('div[data-automation-id="app-tasks-details"]');
+    taskDetailsEmptySection = $('div[data-automation-id="adf-tasks-details--empty"]');
+    completeTask = $('button[id="adf-no-form-complete-button"]');
+    completeFormTask = $('button[id="adf-form-complete"]');
+    taskDetailsTitle = $('.adf-activiti-task-details__header span');
+    auditLogButton = $('button[adf-task-audit]');
+    noPeopleInvolved = $('#no-people-label');
+    cancelInvolvePeopleButton = $('#close-people-search');
+    involvePeopleHeader = $('.adf-search-text-header');
+    removeInvolvedPeople = $('button[data-automation-id="Remove"]');
+    peopleTitle = $('#people-title');
+    noFormMessage = $('span[id*="no-form-message"]');
+    cancelAttachForm = $('#adf-no-form-cancel-button');
+    attachFormButton = $('#adf-no-form-attach-form-button');
+    disabledAttachFormButton = $('button[id="adf-no-form-attach-form-button"][disabled]');
+    removeAttachForm = $('#adf-attach-form-remove-button');
+    attachFormName = $('.adf-form-title');
+    emptyTaskDetails = $('adf-task-details > div > div');
+    priority = $('[data-automation-id*="card-textitem-value-priority"]');
+    editableAssignee = $('[data-automation-id="card-textitem-value-assignee"][class*="clickable"]');
+    claimElement = $('[data-automation-id="header-claim-button"]');
+    releaseElement = $('[data-automation-id="header-unclaim-button"]');
+    saveFormButton = $('button[id="adf-form-save"]');
 
-    attachFormDropdown = new DropdownPage(element(by.css('.adf-attach-form-row')));
+    attachFormDropdown = new DropdownPage($('.adf-attach-form-row'));
 
     async checkEditableAssigneeIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.editableAssignee);
     }
 
     async checkEditableFormIsNotDisplayed(): Promise<void> {
-        const editableForm = element(by.css('[data-automation-id="card-textitem-value-formName"][class*="clickable"]'));
+        const editableForm = $('[data-automation-id="card-textitem-value-formName"][class*="clickable"]');
         await BrowserVisibility.waitUntilElementIsNotVisible(editableForm);
     }
 
     async checkDueDatePickerButtonIsNotDisplayed(): Promise<void> {
-        const dueDatePickerButton = element(by.css('mat-datetimepicker-toggle[data-automation-id="datepickertoggle-dueDate"]'));
+        const dueDatePickerButton = $('mat-datetimepicker-toggle[data-automation-id="datepickertoggle-dueDate"]');
         await BrowserVisibility.waitUntilElementIsNotVisible(dueDatePickerButton);
     }
 
@@ -219,33 +219,33 @@ export class TaskDetailsPage {
     async updatePriority(priority?: string): Promise<void> {
         await BrowserActions.click(this.priority);
         await BrowserActions.clearWithBackSpace(this.priority);
-        await BrowserActions.clearSendKeys(element(by.css('input[data-automation-id="card-textitem-value-priority"]')), priority, 500);
+        await BrowserActions.clearSendKeys($('input[data-automation-id="card-textitem-value-priority"]'), priority, 500);
         await this.priority.sendKeys(Key.TAB);
         await browser.sleep(1000);
     }
 
     async updateDueDate(): Promise<void> {
         await BrowserActions.click(this.dueDateField);
-        await BrowserActions.click(element.all(by.css('.mat-datetimepicker-calendar-body-cell')).first());
+        await BrowserActions.click($$('.mat-datetimepicker-calendar-body-cell').first());
         await browser.sleep(1000);
     }
 
     async updateDescription(description?: string): Promise<void> {
         await BrowserActions.click(this.descriptionField);
         await BrowserActions.clearWithBackSpace(this.descriptionField);
-        await BrowserActions.clearSendKeys(element(by.css('[data-automation-id="card-textitem-value-description"]')), description ? description : '');
+        await BrowserActions.clearSendKeys($('[data-automation-id="card-textitem-value-description"]'), description ? description : '');
         await this.descriptionField.sendKeys(Key.TAB);
         await browser.sleep(1000);
     }
 
     async updateAssignee(fullName: string): Promise<void> {
         await BrowserActions.click(this.assigneeButton);
-        await BrowserActions.clearSendKeys(element(by.css('[id="userSearchText"]')), fullName);
+        await BrowserActions.clearSendKeys($('[id="userSearchText"]'), fullName);
         await BrowserActions.click(element(by.cssContainingText('.adf-people-full-name', fullName)));
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`adf-datatable-row[class*='is-selected']`)));
+        await BrowserVisibility.waitUntilElementIsVisible($(`adf-datatable-row[class*='is-selected']`));
 
         await browser.sleep(2000);
-        await BrowserActions.click(element(by.css('button[id="add-people"]')));
+        await BrowserActions.click($('button[id="add-people"]'));
     }
 
     getTitle(): Promise<string> {
@@ -304,19 +304,19 @@ export class TaskDetailsPage {
     }
 
     getRowsUser(user: string) {
-        return element(by.css(`div[data-automation-id="adf-people-full-name-${user.replace(' ', '-')}"]`));
+        return $(`div[data-automation-id="adf-people-full-name-${user.replace(' ', '-')}"]`);
     }
 
     async removeInvolvedUser(user): Promise<void> {
         const row = this.getRowsUser(user).element(by.xpath('ancestor::adf-datatable-row[contains(@class, "adf-datatable-row")]'));
-        await BrowserActions.click(row.element(by.css('button[data-automation-id="action_menu_0"]')));
+        await BrowserActions.click(row.$('button[data-automation-id="action_menu_0"]'));
         await BrowserVisibility.waitUntilElementIsVisible(this.removeInvolvedPeople);
         await BrowserActions.click(this.removeInvolvedPeople);
 
     }
 
     async getInvolvedUserEmail(user): Promise<string> {
-        return BrowserActions.getText(element(by.css(`div[data-automation-id="adf-people-email-${user.replace(' ', '-')}"]`)));
+        return BrowserActions.getText($(`div[data-automation-id="adf-people-email-${user.replace(' ', '-')}"]`));
     }
 
     async clickAuditLogButton(): Promise<void> {

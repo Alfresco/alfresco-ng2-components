@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { $, browser, by, element } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { DropdownPage } from '../../../core/pages/material/dropdown.page';
 
 export class SearchSortingPickerPage {
 
-    sortingDropdown = new DropdownPage(element(by.css('.adf-sorting-picker .mat-select-arrow')));
-    orderArrow = element(by.css('adf-sorting-picker button mat-icon'));
+    sortingDropdown = new DropdownPage($('.adf-sorting-picker .mat-select-arrow'));
+    orderArrow = $('adf-sorting-picker button mat-icon');
 
     async sortBy(sortOrder: string, sortType: string | RegExp): Promise<void> {
         await this.sortingDropdown.clickDropdown();

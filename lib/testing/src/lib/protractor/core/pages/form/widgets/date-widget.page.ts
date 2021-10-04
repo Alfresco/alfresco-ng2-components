@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../form-fields';
-import { element, by } from 'protractor';
+import { $$, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DateWidgetPage {
@@ -32,7 +32,7 @@ export class DateWidgetPage {
     }
 
     async getDateLabel(fieldId: string): Promise<string> {
-        const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
+        const label = $$(`adf-form-field div[id="field-${fieldId}-container"] label`).first();
         return BrowserActions.getText(label);
     }
 
@@ -46,7 +46,7 @@ export class DateWidgetPage {
     }
 
     async clearDateInput(fieldId: string): Promise<void> {
-        const dateInput = element(by.id(fieldId));
+        const dateInput = $(`#${fieldId}`);
         await BrowserActions.clearWithBackSpace(dateInput);
     }
 
@@ -56,18 +56,18 @@ export class DateWidgetPage {
     }
 
     async checkErrorMessageIsNotDisplayed(fieldId: string): Promise<void> {
-        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] .adf-error-text`));
+        const errorMessage = $(`adf-form-field div[id="field-${fieldId}-container"] .adf-error-text`);
         await BrowserVisibility.waitUntilElementIsNotVisible(errorMessage);
     }
 
     async getErrorMessage(fieldId: string): Promise<string> {
-        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] .adf-error-text`));
+        const errorMessage = $(`adf-form-field div[id="field-${fieldId}-container"] .adf-error-text`);
         return BrowserActions.getText(errorMessage);
     }
 
     async removeFromDatetimeWidget(fieldId: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
         await BrowserVisibility.waitUntilElementIsVisible(widget);
-        await BrowserActions.clearSendKeys(element(by.id(fieldId)), '');
+        await BrowserActions.clearSendKeys($(`#${fieldId}`), '');
     }
 }

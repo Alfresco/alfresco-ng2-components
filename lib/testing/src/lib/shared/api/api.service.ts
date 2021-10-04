@@ -54,6 +54,7 @@ export class ApiService {
             this.logger.log(`try to login with ${profile.username} on HOST: ${this.apiService.config.hostEcm} AUTHTYPE: ${this.apiService.config.authType} PROVIDER: ${this.apiService.config.provider}`);
             try {
                 await this.apiService.login(profile.username, profile.password);
+                this.logger.log(`Successfuly logged in as ${profile.username}`);
             } catch (error) {
                 this.logger.error(`Failed to login with ${profile.username}`, error?.message);
                 throw new Error(`Login failed with ${profile.username}`);

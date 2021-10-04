@@ -22,7 +22,7 @@ import {
     DropdownPage,
     TestElement
 } from '@alfresco/adf-testing';
-import { browser, by } from 'protractor';
+import { browser } from 'protractor';
 
 export class PermissionsPage {
 
@@ -55,7 +55,7 @@ export class PermissionsPage {
     async clickRoleDropdownByUserOrGroupName(name: string): Promise<void> {
         const row = this.dataTableComponentPage.getRow('Users and Groups', name);
         await row.click();
-        await BrowserActions.click(row.element(by.css('[id="adf-select-role-permission"] .mat-select-trigger')));
+        await BrowserActions.click(row.$('[id="adf-select-role-permission"] .mat-select-trigger'));
         await TestElement.byCss('.mat-select-panel').waitVisible();
     }
 

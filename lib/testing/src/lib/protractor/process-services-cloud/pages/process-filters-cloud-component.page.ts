@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Locator, by, element, ElementFinder } from 'protractor';
+import { ElementFinder, $ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
@@ -27,12 +27,11 @@ const FILTERS = {
 
 export class ProcessFiltersCloudComponentPage {
 
-    filterIcon: Locator = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
+    processFilters = $("mat-expansion-panel[data-automation-id='Process Filters']")
+    activeFilter = $('.adf-active [data-automation-id="adf-filter-label"]');
+    processFiltersList = $('adf-cloud-process-filters');
 
-    processFilters = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
-
-    activeFilter = element(by.css('.adf-active [data-automation-id="adf-filter-label"]'));
-    processFiltersList = element(by.css('adf-cloud-process-filters'));
+    getProcessFilterLocatorByFilterName = (filterName: string): ElementFinder => $(`button[data-automation-id="${filterName}_filter"]`);
 
     async checkProcessFilterIsDisplayed(filterName: string): Promise<void> {
         const filter = this.getProcessFilterLocatorByFilterName(filterName);
@@ -90,9 +89,5 @@ export class ProcessFiltersCloudComponentPage {
 
     async isProcessFiltersListVisible(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.processFiltersList);
-    }
-
-    getProcessFilterLocatorByFilterName(filterName: string): ElementFinder {
-        return element(by.css(`button[data-automation-id="${filterName}_filter"]`));
     }
 }

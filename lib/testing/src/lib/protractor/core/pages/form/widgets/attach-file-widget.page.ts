@@ -17,33 +17,35 @@
 
 import { FormFields } from '../form-fields';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
-import { Locator, element, by, browser } from 'protractor';
+import { by, browser, $ } from 'protractor';
 import { TestElement } from '../../../test-element';
+import { Logger } from '../../../utils/logger';
 
 export class AttachFileWidgetPage {
 
     formFields = new FormFields();
-    alfrescoTypeUploadLocator: Locator = by.css('button[id="attachfile"]');
-    localStorageButton = element(by.css('input[id="attachfile"]'));
-    filesListLocator: Locator = by.css('div[id="adf-attach-widget-readonly-list"]');
-    attachFileWidget = element(by.css('#attachfile'));
-    attachedFileMenu = element(by.css('mat-list-item button'));
-    attachedFileOptions = element(by.css('.mat-menu-panel .mat-menu-content'));
-    viewFileOptionButton = element(by.css(`.mat-menu-panel .mat-menu-content button[id$="show-file"]`));
-    downloadFileOptionButton = element(by.css(`.mat-menu-panel .mat-menu-content button[id$="download-file"]`));
+    alfrescoTypeUploadLocator = 'button[id="attachfile"]';
+    localStorageButton = $('input[id="attachfile"]');
+    filesListLocator = 'div[id="adf-attach-widget-readonly-list"]';
+    attachFileWidget = $('#attachfile');
+    attachedFileMenu = $('mat-list-item button');
+    attachedFileOptions = $('.mat-menu-panel .mat-menu-content');
+    viewFileOptionButton = $(`.mat-menu-panel .mat-menu-content button[id$="show-file"]`);
+    downloadFileOptionButton = $(`.mat-menu-panel .mat-menu-content button[id$="download-file"]`);
     removeFileOptionButton = TestElement.byCss(`.mat-menu-panel .mat-menu-content button[id$="remove"]`);
 
-    async attachFile(fieldId, fileLocation): Promise<void> {
+    async attachFile(fieldId: string, fileLocation: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
-        const uploadButton = await widget.element(this.alfrescoTypeUploadLocator);
+        const uploadButton = await widget.$(this.alfrescoTypeUploadLocator);
+        Logger.log(`This is uploadButton: ${uploadButton}`)
         await BrowserActions.click(uploadButton);
         await BrowserVisibility.waitUntilElementIsPresent(this.localStorageButton);
         await this.localStorageButton.sendKeys(fileLocation);
     }
 
-    async checkNoFileIsAttached(fieldId): Promise<void> {
+    async checkNoFileIsAttached(fieldId: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
-        const fileItem = widget.element(this.filesListLocator).element(by.css('mat-list-item'));
+        const fileItem = widget.$(this.filesListLocator).$('mat-list-item');
         await BrowserVisibility.waitUntilElementIsNotVisible(fileItem);
     }
 
@@ -54,8 +56,7 @@ export class AttachFileWidgetPage {
     }
 
     async checkFileIsAttached(fieldId: string, name: string): Promise<void> {
-        const widget = await this.formFields.getWidget(fieldId);
-        const fileAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
+        const fileAttached = await this.getFileAttachedNotAttachedLocator(fieldId, name)
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
@@ -65,14 +66,13 @@ export class AttachFileWidgetPage {
         }
     }
 
-    async checkFileIsNotAttached(fieldId, name): Promise<void> {
-        const widget = await this.formFields.getWidget(fieldId);
-        const fileNotAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
+    async checkFileIsNotAttached(fieldId: string, name: string): Promise<void> {
+        const fileNotAttached = await this.getFileAttachedNotAttachedLocator(fieldId, name)
         await BrowserVisibility.waitUntilElementIsNotVisible(fileNotAttached);
     }
 
     async viewFile(name: string): Promise<void> {
-        const fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
+        const fileView = $(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
         await BrowserActions.click(fileView);
         await browser.actions().doubleClick(fileView).perform();
     }
@@ -84,10 +84,10 @@ export class AttachFileWidgetPage {
     async toggleAttachedFileMenu(fieldId: string, fileName: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const widget = await this.formFields.getWidget(fieldId);
-        const fileAttached = await widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', fileName));
+        const fileAttached = await this.getFileAttachedNotAttachedLocator(fieldId, fileName)
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
         const id = await BrowserActions.getAttribute(fileAttached, 'id');
-        const optionMenu = widget.element(by.css(`button[id='${id}-option-menu']`));
+        const optionMenu = widget.$(`button[id='${id}-option-menu']`);
         await BrowserActions.click(optionMenu);
     }
 
@@ -129,39 +129,44 @@ export class AttachFileWidgetPage {
         return this.removeFileOptionButton.isEnabled();
     }
 
-    async checkUploadIsNotVisible(fieldId): Promise<void> {
-        const alfrescoTypeUploadLocator = by.css(`button[id="${fieldId}"]`);
+    async checkUploadIsNotVisible(fieldId: string): Promise<void> {
+        const alfrescoTypeUploadLocator = `button[id="${fieldId}"]`;
         const widget = await this.formFields.getWidget(fieldId);
-        const uploadButton = await widget.element(alfrescoTypeUploadLocator);
+        const uploadButton = await widget.$(alfrescoTypeUploadLocator);
         await BrowserVisibility.waitUntilElementIsNotPresent(uploadButton);
     }
 
-    async checkUploadIsVisible(fieldId): Promise<void> {
-        const alfrescoTypeUploadLocator = by.css(`button[id="${fieldId}"]`);
+    async checkUploadIsVisible(fieldId: string): Promise<void> {
+        const alfrescoTypeUploadLocator = `button[id="${fieldId}"]`;
         const widget = await this.formFields.getWidget(fieldId);
-        const uploadButton = await widget.element(alfrescoTypeUploadLocator);
+        const uploadButton = await widget.$(alfrescoTypeUploadLocator);
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
     }
 
-    async checkLocalTypeUploadIsPresent(fieldId): Promise<void> {
-        const localTypeUpload = element(by.css(`input[id="${fieldId}"]`));
+    async checkLocalTypeUploadIsPresent(fieldId: string): Promise<void> {
+        const localTypeUpload = $(`input[id="${fieldId}"]`);
         await BrowserVisibility.waitUntilElementIsPresent(localTypeUpload);
     }
 
-    async checkLocalTypeUploadIsNotPresent(fieldId): Promise<void> {
-        const localTypeUpload = element(by.css(`input[id="${fieldId}"]`));
+    async checkLocalTypeUploadIsNotPresent(fieldId: string): Promise<void> {
+        const localTypeUpload = $(`input[id="${fieldId}"]`);
         await BrowserVisibility.waitUntilElementIsNotPresent(localTypeUpload);
     }
 
     async selectUploadSource(name: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.attachedFileOptions);
-        await BrowserActions.click(element(by.css(`button[id="attach-${name}"]`)));
+        await BrowserActions.click($(`button[id="attach-${name}"]`));
     }
 
-    async clickUploadButton(fieldId): Promise<void> {
+    async clickUploadButton(fieldId: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const widget = await this.formFields.getWidget(fieldId);
-        const uploadButton = await widget.element(this.alfrescoTypeUploadLocator);
+        const uploadButton = await widget.$(this.alfrescoTypeUploadLocator);
         await BrowserActions.click(uploadButton);
+    }
+
+    private async getFileAttachedNotAttachedLocator(fieldId: string, name: string) {
+        const widget = await this.formFields.getWidget(fieldId);
+        return widget.$(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
     }
 }

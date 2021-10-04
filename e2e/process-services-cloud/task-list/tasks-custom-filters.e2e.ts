@@ -44,7 +44,6 @@ describe('Task filters cloud', () => {
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
         const taskList = new TaskListCloudComponentPage();
-
         const apiService = createApiService();
         const identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);

@@ -15,24 +15,26 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, browser } from 'protractor';
+import { ElementFinder, browser, $ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
 
 export class TaskFormCloudComponent {
 
-    cancelButton = element(by.css('button[id="adf-cloud-cancel-task"]'));
-    completeButton = element(by.css('button[id="adf-form-complete"]'));
-    releaseButton = element(by.css('button[adf-cloud-unclaim-task]'));
-    saveButton = element(by.css('button[id="adf-form-save"]'));
-    claimButton = element(by.css('button[adf-cloud-claim-task]'));
-    form = element(by.css('adf-cloud-form'));
-    formTitle = element(by.css(`span.adf-form-title`));
-    emptyContentIcon = element(by.css(`div.adf-empty-content adf-icon.adf-empty-content__icon`));
-    emptyContentTitle = element(by.css(`div.adf-empty-content div.adf-empty-content__title`));
-    emptyContentSubtitle = element(by.css(`div.adf-empty-content div.adf-empty-content__subtitle`));
-    readOnlyForm = element(by.css('div[class="adf-readonly-form"]'));
+    cancelButton = $('button[id="adf-cloud-cancel-task"]');
+    completeButton = $('button[id="adf-form-complete"]');
+    releaseButton = $('button[adf-cloud-unclaim-task]');
+    saveButton = $('button[id="adf-form-save"]');
+    claimButton = $('button[adf-cloud-claim-task]');
+    form = $('adf-cloud-form');
+    formTitle = $(`span.adf-form-title`);
+    emptyContentIcon = $(`div.adf-empty-content adf-icon.adf-empty-content__icon`);
+    emptyContentTitle = $(`div.adf-empty-content div.adf-empty-content__title`);
+    emptyContentSubtitle = $(`div.adf-empty-content div.adf-empty-content__subtitle`);
+    readOnlyForm = $('div[class="adf-readonly-form"]');
+
+    getButtonLocatorByName = (name: string): ElementFinder => $(`button[id="adf-form-${name}"]`);
 
     async isCompleteButtonEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
@@ -86,15 +88,15 @@ export class TaskFormCloudComponent {
     }
 
     async checkFormOutcomeButtonIsDisplayedByName(name: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`button[id="adf-form-${name}"]`)));
+        await BrowserVisibility.waitUntilElementIsVisible(this.getButtonLocatorByName(name));
     }
 
     async checkFormOutcomeButtonIsNotDisplayedByName(name: string) {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`button[id="adf-form-${name}"]`)));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.getButtonLocatorByName(name));
     }
 
     async clickFormOutcomeButtonByName(name: string): Promise<void> {
-        await BrowserActions.click(element(by.css(`button[id="adf-form-${name}"]`)));
+        await BrowserActions.click(this.getButtonLocatorByName(name));
     }
 
     async clickCancelButton(): Promise<void> {

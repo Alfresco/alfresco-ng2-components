@@ -128,7 +128,6 @@ describe('Process Task - Attach content file', () => {
 
         await processList.checkContentIsDisplayedById(processInstance.entry.id);
         await processList.selectRowById(processInstance.entry.id);
-
         await taskList.checkTaskListIsLoaded();
         await taskList.selectRow(taskName);
 

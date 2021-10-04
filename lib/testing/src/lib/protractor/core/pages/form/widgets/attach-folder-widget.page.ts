@@ -15,42 +15,45 @@
  * limitations under the License.
  */
 
-import { Locator, by, element } from 'protractor';
+import { by, $ } from 'protractor';
 import { FormFields } from '../form-fields';
 import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class AttachFolderWidgetPage {
 
     formFields: FormFields = new FormFields();
-    foldersListLocator: Locator = by.css('.adf-attach-folder-result');
+    foldersListLocator = '.adf-attach-folder-result';
 
     async clickWidget(fieldId: string): Promise<void> {
-        const widget = await this.formFields.getWidget(fieldId).element(by.css(`button[id="folder-${fieldId}-button"]`));
+        const widget = await this.formFields.getWidget(fieldId).$(`button[id="folder-${fieldId}-button"]`);
         await BrowserActions.click(widget);
     }
 
-    async checkFolderIsAttached(fieldId, name): Promise<void> {
-        const widget = await this.formFields.getWidget(fieldId);
-        const folderAttached = widget.element(this.foldersListLocator).element(by.cssContainingText('span', name));
+    async checkFolderIsAttached(fieldId: string, name: string): Promise<void> {
+        const folderAttached = await this.getFolderAttachedLocator(fieldId, name)
         await BrowserVisibility.waitUntilElementIsVisible(folderAttached);
     }
 
-    async checkFolderIsNotAttached(fieldId, name): Promise<void> {
-        const widget = await this.formFields.getWidget(fieldId);
-        const folderAttached = widget.element(this.foldersListLocator).element(by.cssContainingText('span', name));
+    async checkFolderIsNotAttached(fieldId: string, name: string): Promise<void> {
+        const folderAttached = await this.getFolderAttachedLocator(fieldId, name)
         await BrowserVisibility.waitUntilElementIsNotPresent(folderAttached);
     }
 
     async attachFileWidgetDisplayed(id: string): Promise<void> {
-        const locator =  element(by.css(id ? id : '#attachfolder'));
+        const locator = $(id ? id : '#attachfolder');
         await BrowserVisibility.waitUntilElementIsVisible(locator);
     }
 
     async removeFolder(fieldId: string, name: string): Promise<void> {
         await this.checkFolderIsAttached(fieldId, name);
         const widget = await this.formFields.getWidget(fieldId);
-        const folderToBeRemoved = widget.element(this.foldersListLocator).element(by.css(`[id="folder-${fieldId}-remove"]`));
+        const folderToBeRemoved = widget.$(this.foldersListLocator).$(`[id="folder-${fieldId}-remove"]`);
         await BrowserActions.click(folderToBeRemoved);
+    }
+
+    private async getFolderAttachedLocator(fieldId: string, name: string) {
+        const widget = await this.formFields.getWidget(fieldId);
+        return widget.$(this.foldersListLocator).element(by.cssContainingText('span', name));
     }
 
 }

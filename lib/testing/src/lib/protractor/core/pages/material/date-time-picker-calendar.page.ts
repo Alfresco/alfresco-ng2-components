@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { Locator, element, by } from 'protractor';
+import { element, by, $, $$ } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
 
 export class DateTimePickerCalendarPage {
 
-    datePicker = element(by.css(`.mat-datetimepicker-calendar`));
-    today = element(by.css(`.mat-datetimepicker-calendar-body-today`));
-    timePicker = element(by.css('.mat-datetimepicker-clock'));
-    hourTime = element.all(by.css('.mat-datetimepicker-clock-hours .mat-datetimepicker-clock-cell')).first();
-    minutesTime = element.all(by.css('.mat-datetimepicker-clock-minutes .mat-datetimepicker-clock-cell')).first();
-    firstEnabledHourSelector: Locator = by.css('.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)');
-    firstEnabledMinutesSelector: Locator = by.css('.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)');
-    hoursPicker = element(by.css('.mat-datetimepicker-clock-hours'));
-    minutePicker = element(by.css('.mat-datetimepicker-clock-minutes'));
+    datePicker = $(`.mat-datetimepicker-calendar`);
+    today = $(`.mat-datetimepicker-calendar-body-today`);
+    timePicker = $('.mat-datetimepicker-clock');
+    hourTime = $$('.mat-datetimepicker-clock-hours .mat-datetimepicker-clock-cell').first();
+    minutesTime = $$('.mat-datetimepicker-clock-minutes .mat-datetimepicker-clock-cell').first();
+    firstEnabledHourSelector = '.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)';
+    firstEnabledMinutesSelector = '.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)';
+    hoursPicker = $('.mat-datetimepicker-clock-hours');
+    minutePicker = $('.mat-datetimepicker-clock-minutes');
 
     async waitTillDateDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.datePicker);
@@ -63,10 +63,10 @@ export class DateTimePickerCalendarPage {
     }
 
     async setDefaultEnabledHour(): Promise<void> {
-        await BrowserActions.click(this.hoursPicker.all(this.firstEnabledHourSelector).first());
+        await BrowserActions.click(this.hoursPicker.$$(this.firstEnabledHourSelector).first());
     }
 
     async setDefaultEnabledMinutes() {
-        await BrowserActions.click(this.minutePicker.all(this.firstEnabledMinutesSelector).first());
+        await BrowserActions.click(this.minutePicker.$$(this.firstEnabledMinutesSelector).first());
     }
 }

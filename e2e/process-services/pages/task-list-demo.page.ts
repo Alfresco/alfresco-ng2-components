@@ -16,26 +16,26 @@
  */
 
 import { BrowserActions, BrowserVisibility, DropdownPage, PaginationPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { $ } from 'protractor';
 import { TasksListPage } from './tasks-list.page';
 
 export class TaskListDemoPage {
 
     taskListPage = new TasksListPage();
-    appId = element(by.css("input[data-automation-id='appId input']"));
-    itemsPerPage = element(by.css("input[data-automation-id='items per page']"));
-    itemsPerPageForm = element(by.css("mat-form-field[data-automation-id='items per page']"));
-    processDefinitionId = element(by.css("input[data-automation-id='process definition id']"));
-    processInstanceId = element(by.css("input[data-automation-id='process instance id']"));
-    page = element(by.css("input[data-automation-id='page']"));
-    pageForm = element(by.css("mat-form-field[data-automation-id='page']"));
-    taskName = element(by.css("input[data-automation-id='task name']"));
-    resetButton = element(by.css('.app-reset-button button'));
-    dueBefore = element(by.css("input[data-automation-id='due before']"));
-    dueAfter = element(by.css("input[data-automation-id='due after']"));
-    taskId = element(by.css("input[data-automation-id='task id']"));
+    appId = $("input[data-automation-id='appId input']");
+    itemsPerPage = $("input[data-automation-id='items per page']");
+    itemsPerPageForm = $("mat-form-field[data-automation-id='items per page']");
+    processDefinitionId = $("input[data-automation-id='process definition id']");
+    processInstanceId = $("input[data-automation-id='process instance id']");
+    page = $("input[data-automation-id='page']");
+    pageForm = $("mat-form-field[data-automation-id='page']");
+    taskName = $("input[data-automation-id='task name']");
+    resetButton = $('.app-reset-button button');
+    dueBefore = $("input[data-automation-id='due before']");
+    dueAfter = $("input[data-automation-id='due after']");
+    taskId = $("input[data-automation-id='task id']");
 
-    stateDropDownArrow = element(by.css("mat-form-field[data-automation-id='state']"));
+    stateDropDownArrow = $("mat-form-field[data-automation-id='state']");
     stateDropdown = new DropdownPage(this.stateDropDownArrow);
 
     taskList(): TasksListPage {
@@ -97,7 +97,7 @@ export class TaskListDemoPage {
 
     async getItemsPerPageFieldErrorMessage(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPageForm);
-        const errorMessage = this.itemsPerPageForm.element(by.css('mat-error'));
+        const errorMessage = this.itemsPerPageForm.$('mat-error');
         return BrowserActions.getText(errorMessage);
     }
 
@@ -111,7 +111,7 @@ export class TaskListDemoPage {
 
     async getPageFieldErrorMessage(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.pageForm);
-        const errorMessage = this.pageForm.element(by.css('mat-error'));
+        const errorMessage = this.pageForm.$('mat-error');
         return BrowserActions.getText(errorMessage);
     }
 

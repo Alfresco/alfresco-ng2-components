@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { $ } from 'protractor';
 import {
     BrowserVisibility,
     BrowserActions,
@@ -24,15 +24,15 @@ import {
 
 export class ServiceTaskListPage {
     dataTableComponentPage = new DataTableComponentPage();
-    allServiceTaskButton = element(by.css('button[data-automation-id="my-service-tasks_filter"]'));
-    completedServiceTaskButton = element(by.css('button[data-automation-id="completed-tasks_filter"]'));
-    errorServiceTaskButton = element(by.css('button[data-automation-id="errored-service-tasks_filter"]'));
-    searchHeader = element(by.css('adf-cloud-edit-service-task-filter mat-expansion-panel-header'));
-    serviceTaskList = element(by.css('adf-cloud-service-task-list'));
-    activityNameField = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-activityName"]'));
-    activityStatus = element(by.css('[data-automation-id="datatable-row-0"] div[aria-label="Status"]'));
-    activityName = element(by.css('[data-automation-id="datatable-row-0"] div[aria-label="Activity name"]'));
-    resultList = element(by.css('div[role="rowgroup"].adf-datatable-body'));
+    allServiceTaskButton = $('button[data-automation-id="my-service-tasks_filter"]');
+    completedServiceTaskButton = $('button[data-automation-id="completed-tasks_filter"]');
+    errorServiceTaskButton = $('button[data-automation-id="errored-service-tasks_filter"]');
+    searchHeader = $('adf-cloud-edit-service-task-filter mat-expansion-panel-header');
+    serviceTaskList = $('adf-cloud-service-task-list');
+    activityNameField = $('input[data-automation-id="adf-cloud-edit-task-property-activityName"]');
+    activityStatus = $('[data-automation-id="datatable-row-0"] div[aria-label="Status"]');
+    activityName = $('[data-automation-id="datatable-row-0"] div[aria-label="Activity name"]');
+    resultList = $('div[role="rowgroup"].adf-datatable-body');
 
     async checkServiceTaskFiltersDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.allServiceTaskButton);

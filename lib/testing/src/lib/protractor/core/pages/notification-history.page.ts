@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { $ } from 'protractor';
 import { BrowserActions } from '../utils/browser-actions';
 import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class NotificationHistoryPage {
 
-    notificationList = element(by.css('.adf-notification-history-list'));
+    notificationList = $('.adf-notification-history-list');
 
     async clickNotificationButton(): Promise<void> {
         await BrowserActions.clickExecuteScript('#adf-notification-history-open-button');
     }
 
     async clickMarkAsRead(): Promise<void> {
-        await BrowserActions.click(element(by.id('adf-notification-history-mark-as-read')));
+        await BrowserActions.click($('#adf-notification-history-mark-as-read'));
     }
 
     async checkNotificationIsPresent(text: string): Promise<void> {
@@ -36,7 +36,7 @@ export class NotificationHistoryPage {
     }
 
     async checkNotificationCenterHasNewNotifications(): Promise<void> {
-        const notificationListButton = element(by.css('#adf-notification-history-open-button [class*="mat-badge-active"]'));
+        const notificationListButton = $('#adf-notification-history-open-button [class*="mat-badge-active"]');
         await BrowserVisibility.waitUntilElementIsVisible(notificationListButton);
     }
 
