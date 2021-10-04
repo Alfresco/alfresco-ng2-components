@@ -1,9 +1,11 @@
 <mat-chip-list>
     <mat-chip class="">
-        <mat-icon *ngIf="displayValue.status === 'COMPLETED'" [ngStyle]="{ 'color': 'green' }">check_circle</mat-icon>
-        <mat-icon *ngIf="displayValue.status === 'RUNNING'" [ngStyle]="{ 'color': 'green' }">settings</mat-icon>
-        <mat-icon *ngIf="displayValue.status === 'SUSPENDED'" [ngStyle]="{ 'color': 'red' }">block</mat-icon>
-        <mat-icon *ngIf="displayValue.status === 'CANCELLED'" [ngStyle]="{ 'color': 'red' }">highlight_off</mat-icon>
+        <div [ngStyle]="{ 'padding-right': '5px' }">
+            <mat-icon *ngIf="displayValue.status === 'COMPLETED'" [ngStyle]="{ 'color': 'green' }">check_circle</mat-icon>
+            <mat-icon *ngIf="displayValue.status === 'RUNNING'"   [ngStyle]="{ 'color': 'green' }">settings</mat-icon>
+            <mat-icon *ngIf="displayValue.status === 'SUSPENDED'" [ngStyle]="{ 'color': 'red' }">block</mat-icon>
+            <mat-icon *ngIf="displayValue.status === 'CANCELLED'" [ngStyle]="{ 'color': 'red' }">highlight_off</mat-icon>
+        </div>
         <span>{{displayValue.status}}</span>
     </mat-chip>
 </mat-chip-list> 

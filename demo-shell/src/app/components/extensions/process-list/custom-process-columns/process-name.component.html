@@ -2,7 +2,7 @@
     <mat-list-item>
         <div mat-line>{{ displayValue.name }}</div>
         <div mat-line [ngStyle]="{ 'padding-top': '5px' }">
-            <span [ngStyle]="{ 'font-weight': 'bold' }">Started By:</span>
+            <span [ngStyle]="{ 'font-weight': 'bold' }">{{ 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.STARTED_BY' | translate }} :</span>
             <span> {{ displayValue.initiator }}</span>
         </div>
     </mat-list-item>

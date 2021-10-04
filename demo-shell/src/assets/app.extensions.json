@@ -14,7 +14,7 @@
       {
         "id": "id",
         "key": "name",
-        "title": "Name",
+        "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME",
         "type": "text",
         "class": "adf-ellipsis-cell adf-expand-cell-5",
         "sortable": true,
@@ -24,7 +24,7 @@
       {
         "id": "status",
         "key": "status",
-        "title": "Status",
+        "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.STATUS",
         "type": "text",
         "class": "adf-ellipsis-cell adf-expand-cell-5",
         "sortable": true,

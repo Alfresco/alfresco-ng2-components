@@ -16,6 +16,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ProcessInstanceCloud } from '@alfresco/adf-process-services-cloud';
 
 @Component({
   selector: 'app-process-name',
@@ -32,15 +33,11 @@ export class ProcessNameComponent implements OnInit {
   @Input()
   key = 'name';
 
-  displayValue: any;
+  displayValue: ProcessInstanceCloud;
 
   constructor() {}
 
   ngOnInit() {
-      this.updateValue();
-  }
-
-  protected updateValue() {
-      this.displayValue = this.context.row?.obj;
+    this.displayValue = this.context?.row?.obj;
   }
 }

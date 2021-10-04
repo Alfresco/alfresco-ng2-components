@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { ProcessInstanceCloud } from '@alfresco/adf-process-services-cloud';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -30,16 +31,12 @@ export class ProcessStatusComponent implements OnInit {
   @Input()
   key = 'name';
 
-  displayValue: any;
+  displayValue: ProcessInstanceCloud;
 
   constructor() {}
 
   ngOnInit() {
-      this.updateValue();
-  }
-
-  protected updateValue() {
-      this.displayValue = this.context.row?.obj;
+    this.displayValue = this.context?.row?.obj;
   }
 
 }
