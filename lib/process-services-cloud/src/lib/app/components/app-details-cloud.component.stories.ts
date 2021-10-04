@@ -19,5 +19,5 @@ const Template: Story<AppDetailsCloudComponent> = (args: AppDetailsCloudComponen
 
 export const Primary = Template.bind({});
 Primary.args = {
-    applicationInstance:  ,
+    applicationInstance: undefined ,
 }
