@@ -1,0 +1,23 @@
+import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { FormDefinitionSelectorCloudComponent } from './form-definition-selector-cloud.component';
+
+export default {
+  title: 'FormDefinitionSelectorCloudComponent',
+  component: FormDefinitionSelectorCloudComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [],
+    })
+  ],
+} as Meta<FormDefinitionSelectorCloudComponent>;
+
+const Template: Story<FormDefinitionSelectorCloudComponent> = (args: FormDefinitionSelectorCloudComponent) => ({
+  component: FormDefinitionSelectorCloudComponent,
+  props: args,
+});
+
+
+export const Primary = Template.bind({});
+Primary.args = {
+    appName:  '',
+}

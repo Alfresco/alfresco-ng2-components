@@ -1,23 +1,49 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../dist/process-services-cloud/",
+    "target": "es2015",
+    "declaration": true,
     "declarationMap": true,
-    "baseUrl": "src",
-    "resolveJsonModule": true,
+    "inlineSources": true,
+    "types": [],
+    "lib": [
+      "dom",
+      "es2018"
+    ],
     "paths": {
-      "@alfresco/adf-extensions": ["../../dist/extensions"],
-      "@alfresco/adf-extensions/*": ["../../dist/extensions/*"],
-      "@alfresco/adf-core": ["../../dist/core"],
-      "@alfresco/adf-core/*": ["../../dist/core/*"],
-      "@alfresco/adf-content-services": ["../../dist/content-services"],
-      "@alfresco/adf-content-services/*": ["../../dist/content-services/*"]
+      "@alfresco/adf-extensions": [
+        "../../dist/extensions"
+      ],
+      "@alfresco/adf-extensions/*": [
+        "../../dist/extensions/*"
+      ],
+      "@alfresco/adf-core": [
+        "../../dist/core"
+      ],
+      "@alfresco/adf-core/*": [
+        "../../dist/core/*"
+      ],
+      "@alfresco/adf-content-services": [
+        "../../dist/content-services"
+      ],
+      "@alfresco/adf-content-services/*": [
+        "../../dist/content-services/*"
+      ]
     }
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
-    "enableResourceInlining": true,
-    "strictTemplates": true
-  }
+    "enableResourceInlining": true
+  },
+  "exclude": [
+    "src/test.ts",
+    "**/*.spec.ts",
+    "**/*.stories.ts",
+    "**/*.stories.js"
+  ],
+  "include": [
+    "**/*.ts"
+  ]
 }

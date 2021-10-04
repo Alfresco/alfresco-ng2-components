@@ -1,0 +1,30 @@
+import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { FormCloudComponent } from './form-cloud.component';
+
+export default {
+  title: 'FormCloudComponent',
+  component: FormCloudComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [],
+    })
+  ],
+} as Meta<FormCloudComponent>;
+
+const Template: Story<FormCloudComponent> = (args: FormCloudComponent) => ({
+  component: FormCloudComponent,
+  props: args,
+});
+
+
+export const Primary = Template.bind({});
+Primary.args = {
+    appName:  '',
+    appVersion:  0,
+    formId:  '',
+    processInstanceId:  '',
+    form:  ,
+    taskId:  '',
+    data:  ,
+    fieldValidators:  [...FORM_FIELD_VALIDATORS],
+}

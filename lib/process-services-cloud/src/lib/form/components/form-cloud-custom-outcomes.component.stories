@@ -1,0 +1,22 @@
+import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { FormCustomOutcomesComponent } from './form-cloud-custom-outcomes.component';
+
+export default {
+  title: 'FormCustomOutcomesComponent',
+  component: FormCustomOutcomesComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [],
+    })
+  ],
+} as Meta<FormCustomOutcomesComponent>;
+
+const Template: Story<FormCustomOutcomesComponent> = (args: FormCustomOutcomesComponent) => ({
+  component: FormCustomOutcomesComponent,
+  props: args,
+});
+
+
+export const Primary = Template.bind({});
+Primary.args = {
+}

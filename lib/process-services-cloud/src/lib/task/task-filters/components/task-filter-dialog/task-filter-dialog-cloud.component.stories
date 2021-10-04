@@ -1,0 +1,22 @@
+import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
+
+export default {
+  title: 'TaskFilterDialogCloudComponent',
+  component: TaskFilterDialogCloudComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [],
+    })
+  ],
+} as Meta<TaskFilterDialogCloudComponent>;
+
+const Template: Story<TaskFilterDialogCloudComponent> = (args: TaskFilterDialogCloudComponent) => ({
+  component: TaskFilterDialogCloudComponent,
+  props: args,
+});
+
+
+export const Primary = Template.bind({});
+Primary.args = {
+}

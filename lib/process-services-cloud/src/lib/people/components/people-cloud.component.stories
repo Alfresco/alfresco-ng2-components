@@ -1,0 +1,32 @@
+import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { PeopleCloudComponent } from './people-cloud.component';
+
+export default {
+  title: 'PeopleCloudComponent',
+  component: PeopleCloudComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [],
+    })
+  ],
+} as Meta<PeopleCloudComponent>;
+
+const Template: Story<PeopleCloudComponent> = (args: PeopleCloudComponent) => ({
+  component: PeopleCloudComponent,
+  props: args,
+});
+
+
+export const Primary = Template.bind({});
+Primary.args = {
+    appName:  '',
+    mode:  'single',
+    roles:  ,
+    validate:  false,
+    readOnly:  false,
+    preSelectUsers:  [],
+    excludedUsers:  [],
+    userChipsCtrl:  new FormControl({ value: '', disabled: false }),
+    searchUserCtrl:  new FormControl({ value: '', disabled: false }),
+    title:  '',
+}

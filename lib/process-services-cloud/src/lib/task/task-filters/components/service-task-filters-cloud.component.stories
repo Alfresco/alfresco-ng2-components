@@ -1,0 +1,22 @@
+import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { ServiceTaskFiltersCloudComponent } from './service-task-filters-cloud.component';
+
+export default {
+  title: 'ServiceTaskFiltersCloudComponent',
+  component: ServiceTaskFiltersCloudComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [],
+    })
+  ],
+} as Meta<ServiceTaskFiltersCloudComponent>;
+
+const Template: Story<ServiceTaskFiltersCloudComponent> = (args: ServiceTaskFiltersCloudComponent) => ({
+  component: ServiceTaskFiltersCloudComponent,
+  props: args,
+});
+
+
+export const Primary = Template.bind({});
+Primary.args = {
+}

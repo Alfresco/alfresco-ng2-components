@@ -1,0 +1,46 @@
+import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { TaskListCloudComponent } from './task-list-cloud.component';
+
+export default {
+  title: 'TaskListCloudComponent',
+  component: TaskListCloudComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [],
+    })
+  ],
+} as Meta<TaskListCloudComponent>;
+
+const Template: Story<TaskListCloudComponent> = (args: TaskListCloudComponent) => ({
+  component: TaskListCloudComponent,
+  props: args,
+});
+
+
+export const Primary = Template.bind({});
+Primary.args = {
+    assignee:  '',
+    createdDate:  ,
+    createdFrom:  '',
+    createdTo:  '',
+    dueDate:  ,
+    lastModifiedFrom:  '',
+    lastModifiedTo:  '',
+    dueDateFrom:  '',
+    dueDateTo:  '',
+    id:  '',
+    name:  '',
+    parentTaskId:  '',
+    processDefinitionName:  '',
+    processDefinitionId:  '',
+    processInstanceId:  '',
+    status:  '',
+    owner:  '',
+    priority:  0,
+    completedBy:  0,
+    standalone:  false,
+    completedDate:  '',
+    completedFrom:  '',
+    completedTo:  '',
+    candidateGroupId:  '',
+}
