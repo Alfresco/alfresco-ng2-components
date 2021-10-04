@@ -1,6 +1,3 @@
-import:
-  - source: Alfresco/alfresco-build-tools:.travis.docker_hub_login.yml@v1.1.1
-
 git:
   depth: 3
   quiet: true
