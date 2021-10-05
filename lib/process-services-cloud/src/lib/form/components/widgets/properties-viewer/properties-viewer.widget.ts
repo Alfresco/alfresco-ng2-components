@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { FormService, WidgetComponent } from '@alfresco/adf-core';
+import { Node } from '@alfresco/js-api';
 
 /* tslint:disable:component-selector  */
 
@@ -39,7 +40,14 @@ import { FormService, WidgetComponent } from '@alfresco/adf-core';
 })
 export class PropertiesViewerWidgetComponent extends WidgetComponent {
 
+    @Output()
+    nodeContentLoaded: EventEmitter<Node>;
+
     constructor(formService: FormService) {
         super(formService);
+    }
+
+    onNodeContentLoaded(node: Node) {
+        this.nodeContentLoaded.emit(node);
     }
 }

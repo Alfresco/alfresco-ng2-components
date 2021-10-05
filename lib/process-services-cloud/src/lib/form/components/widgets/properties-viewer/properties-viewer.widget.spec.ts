@@ -24,6 +24,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { PropertiesViewerWidgetComponent } from './properties-viewer.widget';
 import { ProcessServiceCloudTestingModule } from 'process-services-cloud/src/lib/testing/process-service-cloud.testing.module';
+import { fakeNodeWithProperties } from '../../../mocks/attach-file-cloud-widget.mock';
 
 describe('PropertiesViewerWidgetComponent', () => {
     let widget: PropertiesViewerWidgetComponent;
@@ -67,5 +68,16 @@ describe('PropertiesViewerWidgetComponent', () => {
         const propertiesViewer = element.querySelector('properties-viewer-wrapper');
 
         expect(propertiesViewer).not.toBeNull();
+    });
+
+    it('should emit the node when node content is loaded', async () => {
+        const nodeContentLoadedSpy = spyOn(widget.nodeContentLoaded, 'emit');
+
+        widget.onNodeContentLoaded(fakeNodeWithProperties);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(nodeContentLoadedSpy).toHaveBeenCalledWith(fakeNodeWithProperties);
     });
 });

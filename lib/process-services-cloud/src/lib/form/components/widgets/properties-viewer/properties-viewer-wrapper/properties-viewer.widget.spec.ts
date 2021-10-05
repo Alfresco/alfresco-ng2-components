@@ -74,4 +74,17 @@ describe('PropertiesViewerWidgetComponent', () => {
 
         expect(nodesApiServiceSpy).toHaveBeenCalledWith('1234');
     });
+
+    it('should emit the node when node is retrieved', async () => {
+        component.nodeId = '1234';
+        spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeNodeWithProperties));
+        const nodeContentLoadedSpy = spyOn(component.nodeContentLoaded, 'emit');
+
+        component.ngOnInit();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(nodeContentLoadedSpy).toHaveBeenCalledWith(fakeNodeWithProperties);
+    });
 });

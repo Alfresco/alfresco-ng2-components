@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { NodesApiService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 
@@ -72,6 +72,9 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
     @Input()
     useChipsForMultiValueProperty;
 
+    @Output()
+    nodeContentLoaded: EventEmitter<Node>;
+
     constructor(private nodesApiService: NodesApiService) { }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -91,6 +94,7 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
         this.nodesApiService.getNode(nodeId).subscribe(retrievedNode => {
             this.node = retrievedNode;
             this.loading = false;
+            this.nodeContentLoaded.emit(retrievedNode);
         });
     }
 }
