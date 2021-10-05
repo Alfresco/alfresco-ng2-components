@@ -1,0 +1,11 @@
+{
+  "ngPackage": {
+    "lib": {
+      "entryFile": "./index.ts",
+      "flatModuleFile": "adf-cli-tooling"
+    }
+  },
+  "peerDependencies": {
+    "dotenv-expand": "^5.1.0"
+  }
+}
