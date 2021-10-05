@@ -18,7 +18,10 @@
           <input matStartDate formControlName="from" placeholder="{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.START_DATE' | translate }}">
           <input matEndDate formControlName="to" placeholder="{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.END_DATE' | translate }}">
         </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+            [attr.data-automation-id]="'adf-cloud-edit-process-property-date-range-' + processFilterProperty.key"></mat-datepicker-toggle>
         <mat-date-range-picker #picker (closed)="onDateRangeClosed()"></mat-date-range-picker>
     </mat-form-field>
 </ng-container>
