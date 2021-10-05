@@ -1,23 +1,27 @@
-import { CoreModule, MaterialModule, UserPreferencesService } from '@alfresco/adf-core';
+import { TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { TaskCloudServiceMock } from '../mocks/task-cloud.service.mock';
-import { of } from 'rxjs';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProcessServicesCloudModule } from '../../../process-services-cloud.module';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { TaskHeaderCloudModule } from '../task-header-cloud.module';
 
 export default {
   title: 'TaskHeaderCloudComponent',
   component: TaskHeaderCloudComponent,
   decorators: [
     moduleMetadata({
-      imports: [TranslateModule.forRoot(), CoreModule.forRoot(), MaterialModule, BrowserAnimationsModule, ProcessServicesCloudModule.forRoot()],
+      imports: [TaskHeaderCloudModule, BrowserAnimationsModule],
       providers: [
-        TranslateService,
-        { provide: TaskCloudService, useClass: TaskCloudServiceMock },
-        { provide: UserPreferencesService, useValue: { select: () => of() } }
+        {
+          provide: TRANSLATION_PROVIDER,
+          multi: true,
+          useValue: {
+              name: 'adf-process-services-cloud',
+              source: 'assets/adf-process-services-cloud'
+          }
+        },
+        { provide: TaskCloudService, useClass: TaskCloudServiceMock }
       ]
     })
   ],
