@@ -1,9 +1,9 @@
-import { MaterialModule, TranslateLoaderService, UserPreferencesService } from '@alfresco/adf-core';
+import { CoreModule, MaterialModule, UserPreferencesService } from '@alfresco/adf-core';
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { TaskCloudServiceMock } from '../mocks/task-cloud.service.mock';
 import { of } from 'rxjs';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProcessServicesCloudModule } from '../../../process-services-cloud.module';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -13,12 +13,7 @@ export default {
   component: TaskHeaderCloudComponent,
   decorators: [
     moduleMetadata({
-      imports: [TranslateModule.forRoot({
-        loader: {
-            provide: TranslateLoader,
-            useClass: TranslateLoaderService,
-        },
-    }), MaterialModule, BrowserAnimationsModule, ProcessServicesCloudModule.forRoot()],
+      imports: [TranslateModule.forRoot(), CoreModule.forRoot(), MaterialModule, BrowserAnimationsModule, ProcessServicesCloudModule.forRoot()],
       providers: [
         TranslateService,
         { provide: TaskCloudService, useClass: TaskCloudServiceMock },
