@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { BpmUserModel } from '../../models/bpm-user.model';
 import { EcmUserModel } from '../../models/ecm-user.model';
@@ -23,8 +23,9 @@ import { IdentityUserModel } from '../../models/identity-user.model';
 import { BpmUserService } from '../../services/bpm-user.service';
 import { EcmUserService } from '../../services/ecm-user.service';
 import { IdentityUserService } from '../../services/identity-user.service';
-import { of, Observable } from 'rxjs';
+import { of, Observable, Subject } from 'rxjs';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
+import { debounceTime, startWith, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-userinfo',
@@ -32,7 +33,7 @@ import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/
     styleUrls: ['./user-info.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class UserInfoComponent implements OnInit {
+export class UserInfoComponent implements OnInit, OnDestroy {
 
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
@@ -68,6 +69,7 @@ export class UserInfoComponent implements OnInit {
     bpmUser$: Observable<BpmUserModel>;
     identityUser$: Observable<IdentityUserModel>;
     selectedIndex: number;
+    private destroy$ = new Subject();
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
@@ -76,7 +78,17 @@ export class UserInfoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getUserInfo();
+       this.authService.onLogin
+           .pipe(
+               startWith(this.authService.isLoggedIn()),
+               debounceTime(500),
+               takeUntil(this.destroy$)
+           ).subscribe(() => this.getUserInfo());
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next(true);
+        this.destroy$.complete();
     }
 
     getUserInfo() {

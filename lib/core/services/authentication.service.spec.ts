@@ -60,11 +60,29 @@ describe('AuthenticationService', () => {
         jasmine.Ajax.uninstall();
     });
 
+    describe('kerberos', () => {
+        beforeEach(() => {
+            appConfigService.config.providers = 'ALL';
+            appConfigService.config.auth = { withCredentials: true };
+        });
+
+        it('should emit login event for kerberos', (done) => {
+            spyOn(authService.peopleApi, 'getPerson').and.returnValue(Promise.resolve({}));
+            spyOn(authService.profileApi, 'getProfile').and.returnValue(Promise.resolve({}));
+            const disposableLogin = authService.onLogin.subscribe(() => {
+                expect(authService.profileApi.getProfile).toHaveBeenCalledTimes(1);
+                expect(authService.peopleApi.getPerson).toHaveBeenCalledTimes(1);
+                disposableLogin.unsubscribe();
+                done();
+            });
+            appConfigService.load();
+        });
+    });
+
     describe('when the setting is ECM', () => {
 
         beforeEach(() => {
             appConfigService.config.providers = 'ECM';
-            appConfigService.config.auth = { withCredentials: false };
             appConfigService.load();
             apiService.reset();
         });
@@ -186,20 +204,12 @@ describe('AuthenticationService', () => {
         it('[ECM] should return isBpmLoggedIn false', () => {
             expect(authService.isBpmLoggedIn()).toBe(false);
         });
-
-        it('[ECM] should return true if kerberos configured', () => {
-            appConfigService.config.auth.withCredentials = true;
-
-            expect(authService.isLoggedInWith('ECM')).toBe(true);
-            expect(authService.isLoggedIn()).toBe(true);
-        });
     });
 
     describe('when the setting is BPM', () => {
 
         beforeEach(() => {
             appConfigService.config.providers = 'BPM';
-            appConfigService.config.auth = { withCredentials: false };
             appConfigService.load();
             apiService.reset();
         });
@@ -311,14 +321,12 @@ describe('AuthenticationService', () => {
         it('[BPM] should return isALLProvider false', () => {
             expect(authService.isALLProvider()).toBe(false);
         });
-
     });
 
     describe('remember me', () => {
 
         beforeEach(() => {
             appConfigService.config.providers = 'ECM';
-            appConfigService.config.auth = { withCredentials: false };
             appConfigService.load();
             apiService.reset();
         });
@@ -356,8 +364,7 @@ describe('AuthenticationService', () => {
 
         it('[ECM] should not save the remember me cookie after failed login', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                () => {
-                },
+                () => {},
                 () => {
                     expect(cookie['ALFRESCO_REMEMBER_ME']).toBeUndefined();
                     disposableLogin.unsubscribe();
@@ -384,7 +391,6 @@ describe('AuthenticationService', () => {
 
         beforeEach(() => {
             appConfigService.config.providers = 'ALL';
-            appConfigService.config.auth = { withCredentials: false };
             appConfigService.load();
             apiService.reset();
         });
@@ -414,8 +420,7 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return login fail if only ECM call fail', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                () => {
-                },
+                () => {},
                 () => {
                     expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
                     expect(authService.getTicketEcm()).toBe(null, 'getTicketEcm');
@@ -437,8 +442,7 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return login fail if only BPM call fail', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                () => {
-                },
+                () => {},
                 () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
@@ -461,8 +465,7 @@ describe('AuthenticationService', () => {
 
         it('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                () => {
-                },
+                () => {},
                 () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
