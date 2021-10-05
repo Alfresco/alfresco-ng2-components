@@ -73,7 +73,7 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
     useChipsForMultiValueProperty;
 
     @Output()
-    nodeContentLoaded: EventEmitter<Node>;
+    nodeContentLoaded: EventEmitter<Node> = new EventEmitter();
 
     constructor(private nodesApiService: NodesApiService) { }
 

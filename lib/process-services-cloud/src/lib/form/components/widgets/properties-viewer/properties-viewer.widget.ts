@@ -41,7 +41,7 @@ import { Node } from '@alfresco/js-api';
 export class PropertiesViewerWidgetComponent extends WidgetComponent {
 
     @Output()
-    nodeContentLoaded: EventEmitter<Node>;
+    nodeContentLoaded: EventEmitter<Node> = new EventEmitter();
 
     constructor(formService: FormService) {
         super(formService);
