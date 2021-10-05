@@ -246,6 +246,15 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         return this.viewerExtensions.map(ext => ext.fileExtension);
     }
 
+    private _externalViewer: ViewerExtensionRef;
+    get externalViewer(): ViewerExtensionRef {
+        if (!this._externalViewer) {
+            this._externalViewer = this.viewerExtensions.find(ext => ext.fileExtension === '*');
+        }
+
+        return this._externalViewer;
+    }
+
     readOnly = true;
 
     private cacheBusterNumber: number;
@@ -433,7 +442,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.urlFileContent = this.urlFile;
         this.fileName = this.displayName;
         this.viewerType = this.urlFileViewer || this.getViewerType(this.extension, this.mimeType);
-
 
         this.extensionChange.emit(this.extension);
         this.scrollTop();
@@ -634,15 +642,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private isExternalViewer(): boolean {
         return !!this.viewerExtensions.find(ext => ext.fileExtension === '*');
-    }
-
-    private _externalViewer: ViewerExtensionRef;
-    get externalViewer(): ViewerExtensionRef {
-        if (!this._externalViewer) {
-            this._externalViewer = this.viewerExtensions.find(ext => ext.fileExtension === '*');
-        }
-
-        return this._externalViewer;
     }
 
     isCustomViewerExtension(extension: string): boolean {
