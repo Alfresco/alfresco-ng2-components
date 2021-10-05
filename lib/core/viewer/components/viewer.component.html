@@ -199,8 +199,17 @@
                  fxFlexOrder="1"
                  fxFlex="1 1 auto">
                 <div class="adf-viewer-layout-content adf-viewer__fullscreen-container">
-                    <div class="adf-viewer-content-container"
-                         [ngSwitch]="viewerType">
+                    <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
+                        <ng-container *ngSwitchCase="'external'">
+                            <adf-preview-extension
+                                *ngIf="!!externalViewer"
+                                [id]="externalViewer.component"
+                                [node]="nodeEntry?.entry"
+                                [url]="urlFileContent"
+                                [extension]="externalViewer"
+                                [attr.data-automation-id]="externalViewer.component">
+                            </adf-preview-extension>
+                        </ng-container>
 
                         <ng-container *ngSwitchCase="'pdf'">
                             <adf-pdf-viewer (close)="onBackButtonClick()"
