@@ -78,7 +78,7 @@ export class EditProcessFilterCloudComponentPage {
         return BrowserVisibility.waitUntilElementIsVisible(this.filter);
     }
 
-    async openFilter(){
+    async openFilter() {
         await this.isFilterDisplayed();
         await BrowserActions.click(this.customiseFilter);
         await this.checkHeaderIsExpanded();
