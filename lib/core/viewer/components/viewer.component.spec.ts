@@ -33,6 +33,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { UploadService } from '../../services/upload.service';
 import { FileModel } from '../../models';
+import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -137,6 +138,7 @@ describe('ViewerComponent', () => {
     let element: HTMLElement;
     let dialog: MatDialog;
     let uploadService: UploadService;
+    let extensionService: AppExtensionService;
 
     setupTestBed({
         imports: [
@@ -173,12 +175,65 @@ describe('ViewerComponent', () => {
         uploadService = TestBed.inject(UploadService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
+        extensionService = TestBed.inject(AppExtensionService);
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     describe('Extension Type Test', () => {
+        it('should use external viewer via wildcard notation', async () => {
+            const extension: ViewerExtensionRef = {
+                component: 'custom.component',
+                id: 'custom.component.id',
+                fileExtension: '*'
+            };
+            spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
-        afterEach(() => {
-            fixture.destroy();
+            fixture = TestBed.createComponent(ViewerComponent);
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+
+            component.urlFile = 'fake-test-file.pdf';
+            component.ngOnChanges();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(component.externalExtensions.includes('*')).toBe(true);
+            expect(component.externalViewer).toBe(extension);
+            expect(component.viewerType).toBe('external');
+            expect(element.querySelector('[data-automation-id="custom.component"]')).not.toBeNull();
+        });
+
+        it('should use first external viewer provided', async () => {
+            const extensions: ViewerExtensionRef[] = [
+                {
+                    component: 'custom.component.1',
+                    id: 'custom.component.id',
+                    fileExtension: '*'
+                },
+                {
+                    component: 'custom.component.2',
+                    id: 'custom.component.id',
+                    fileExtension: '*'
+                }
+            ];
+            spyOn(extensionService, 'getViewerExtensions').and.returnValue(extensions);
+
+            fixture = TestBed.createComponent(ViewerComponent);
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+
+            component.urlFile = 'fake-test-file.pdf';
+            component.ngOnChanges();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('[data-automation-id="custom.component.1"]')).not.toBeNull();
+            expect(element.querySelector('[data-automation-id="custom.component.2"]')).toBeNull();
         });
 
         it('should  extension file pdf  be loaded', (done) => {
@@ -244,11 +299,6 @@ describe('ViewerComponent', () => {
     });
 
     describe('MimeType handling', () => {
-
-        afterEach(() => {
-            fixture.destroy();
-        });
-
         it('should display an image file identified by mimetype when the filename has no extension', (done) => {
             component.urlFile = 'fake-content-img';
             component.mimeType = 'image/png';

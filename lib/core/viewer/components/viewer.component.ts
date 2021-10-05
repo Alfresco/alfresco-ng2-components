@@ -225,17 +225,39 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     versionEntry: VersionEntry;
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
-    externalExtensions: string[] = [];
     urlFileContent: string;
     otherMenu: any;
     extension: string;
     sidebarRightTemplateContext: { node: Node } = { node: null };
     sidebarLeftTemplateContext: { node: Node } = { node: null };
     fileTitle: string;
-    viewerExtensions: Array<ViewerExtensionRef> = [];
+
+    /**
+     * Returns a list of the active Viewer content extensions.
+     */
+    get viewerExtensions(): ViewerExtensionRef[] {
+        return this.extensionService.getViewerExtensions();
+    }
+
+    /**
+     * Provides a list of file extensions supported by external plugins.
+     */
+    get externalExtensions(): string[] {
+        return this.viewerExtensions.map(ext => ext.fileExtension);
+    }
+
+    private _externalViewer: ViewerExtensionRef;
+    get externalViewer(): ViewerExtensionRef {
+        if (!this._externalViewer) {
+            this._externalViewer = this.viewerExtensions.find(ext => ext.fileExtension === '*');
+        }
+
+        return this._externalViewer;
+    }
+
     readOnly = true;
 
-    private cacheBusterNumber;
+    private cacheBusterNumber: number;
     cacheTypeForContent = '';
 
     // Extensions that are supported by the Viewer without conversion
@@ -316,16 +338,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         });
 
         this.closeOverlayManager();
-        this.loadExtensions();
         this.cacheTypeForContent = '';
-    }
-
-    private loadExtensions() {
-        this.viewerExtensions = this.extensionService.getViewerExtensions();
-        this.viewerExtensions
-            .forEach((extension: ViewerExtensionRef) => {
-                this.externalExtensions.push(extension.fileExtension);
-            });
     }
 
     private getNodeVersionProperty(node: Node): string {
@@ -427,13 +440,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.fileTitle = this.getDisplayName(filenameFromUrl);
         this.extension = this.getFileExtension(filenameFromUrl);
         this.urlFileContent = this.urlFile;
-
         this.fileName = this.displayName;
-
-        this.viewerType = this.urlFileViewer || this.getViewerTypeByExtension(this.extension);
-        if (this.viewerType === 'unknown') {
-            this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
-        }
+        this.viewerType = this.urlFileViewer || this.getViewerType(this.extension, this.mimeType);
 
         this.extensionChange.emit(this.extension);
         this.scrollTop();
@@ -441,8 +449,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private async setUpNodeFile(nodeData: Node, versionData?: Version) {
         this.readOnly = !this.contentService.hasAllowableOperations(nodeData, 'update');
-
-        let setupNode;
 
         if (versionData && versionData.content) {
             this.mimeType = versionData.content.mimeType;
@@ -461,13 +467,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.urlFileContent + '&' + currentFileVersion;
 
         this.extension = this.getFileExtension(versionData ? versionData.name : nodeData.name);
-
         this.fileName = versionData ? versionData.name : nodeData.name;
+        this.viewerType = this.getViewerType(this.extension, this.mimeType);
 
-        this.viewerType = this.getViewerTypeByExtension(this.extension);
-        if (this.viewerType === 'unknown') {
-            this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
-        }
+        let setupNode: Promise<void>;
 
         if (this.viewerType === 'unknown') {
             if (versionData) {
@@ -485,18 +488,23 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         return setupNode;
     }
 
+    private getViewerType(extension: string, mimeType: string): string {
+        let viewerType = this.getViewerTypeByExtension(extension);
+
+        if (viewerType === 'unknown') {
+            viewerType = this.getViewerTypeByMimeType(mimeType);
+        }
+
+        return viewerType;
+    }
+
     private setUpSharedLinkFile(details: any) {
         this.mimeType = details.entry.content.mimeType;
         this.fileTitle = this.getDisplayName(details.entry.name);
         this.extension = this.getFileExtension(details.entry.name);
         this.fileName = details.entry.name;
-
         this.urlFileContent = this.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
-
-        this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
-        if (this.viewerType === 'unknown') {
-            this.viewerType = this.getViewerTypeByExtension(this.extension);
-        }
+        this.viewerType = this.getViewerType(this.extension, this.mimeType);
 
         if (this.viewerType === 'unknown') {
             this.displaySharedLinkRendition(this.sharedLinkId);
@@ -550,6 +558,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     getViewerTypeByExtension(extension: string) {
         if (extension) {
             extension = extension.toLowerCase();
+        }
+
+        if (this.isExternalViewer()) {
+            return 'external';
         }
 
         if (this.isCustomViewerExtension(extension)) {
@@ -628,8 +640,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         return null;
     }
 
+    private isExternalViewer(): boolean {
+        return !!this.viewerExtensions.find(ext => ext.fileExtension === '*');
+    }
+
     isCustomViewerExtension(extension: string): boolean {
-        const extensions: any = this.externalExtensions || [];
+        const extensions = this.externalExtensions || [];
 
         if (extension && extensions.length > 0) {
             extension = extension.toLowerCase();

@@ -96,6 +96,29 @@ You also need to provide a [viewer component](../../core/components/viewer.compo
 }
 ```
 
+You can also use `*` wildcard to register a single component that opens all files:
+
+```json
+{
+  "$version": "1.0.0",
+  "$name": "my viewer extension",
+  "$description": "my viewer  plugin",
+  "features": {
+    "viewer": {
+      "content": [
+        {
+          "id": "dev.tools.viewer.viewer",
+          "fileExtension": ["*"],
+          "component": "your-extension.main.component"
+        }
+      ]
+    }
+  }
+}
+```
+
+> It is recommended to use wildcard replacement only when introducing your own Viewer implementation.
+
 See the [App extensions](../../user-guide/app-extensions.md) page for
 further details of how to develop extensions.
 
