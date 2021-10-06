@@ -45,20 +45,6 @@ if [ -n "${APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI}" ]; then
     -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
 fi
 
-if [ -n "${APP_CONFIG_OAUTH2_REDIRECT_LOGIN}" ]; then
-  replace="\/"
-  encoded=${APP_CONFIG_OAUTH2_REDIRECT_LOGIN//\//$replace}
-  sed -e "s/\"redirectUri\": \".*\"/\"redirectUri\": \"${encoded}\"/g" \
-    -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
-fi
-
-if [ -n "${APP_CONFIG_OAUTH2_REDIRECT_LOGOUT}" ]; then
-  replace="\/"
-  encoded=${APP_CONFIG_OAUTH2_REDIRECT_LOGOUT//\//$replace}
-  sed -e "s/\"redirectUriLogout\": \".*\"/\"redirectUriLogout\": \"${encoded}\"/g" \
-    -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
-fi
-
 if [[ -n "${APP_CONFIG_BPM_HOST}" ]]; then
   replace="\/"
   encoded=${APP_CONFIG_BPM_HOST//\//$replace}
