@@ -208,3 +208,8 @@ export const suspendedTaskDetailsCloudMock: TaskDetailsCloudModel = {
     'lastModifiedFrom': null,
     'standalone': true
 };
+
+export const taskDetailsContainer = {
+    '68d54a8f-01f3-11e9-8e36-0a58646002ad': assignedTaskDetailsCloudMock,
+    'mock-task-id': completedTaskDetailsCloudMock
+};

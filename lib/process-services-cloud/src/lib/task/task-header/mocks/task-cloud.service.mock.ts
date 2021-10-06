@@ -19,45 +19,47 @@ import { AppConfigService } from '@alfresco/adf-core';
 import { DEFAULT_TASK_PRIORITIES, TaskDetailsCloudModel, TaskPriorityOption } from '@alfresco/adf-process-services-cloud';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { taskAssignedDetails } from './fake-task-response.mock';
+import { taskDetailsContainer } from './task-details-cloud.mock';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TaskCloudServiceMock {
-  dataChangesDetected$ = new Subject();
-  TASK_ASSIGNED_STATE = 'ASSIGNED';
+    dataChangesDetected$ = new Subject();
+    TASK_ASSIGNED_STATE = 'ASSIGNED';
 
-  getTaskById(_appName?: string, _taskId?: string): Observable<TaskDetailsCloudModel> {
-    return of(taskAssignedDetails);
-  }
+    getTaskById(_appName?: string, taskId?: string): Observable<TaskDetailsCloudModel> {
+        console.log(taskId);
 
-  getCandidateUsers(_appName: string, _taskId: string): Observable<string[]> {
-    return of(['user1', 'user2']);
-  }
+        return of(taskDetailsContainer[taskId]);
+    }
 
-  getCandidateGroups(_appName: string, _taskId: string): Observable<string[]> {
-    return of(['group1', 'group2']);
-  }
+    getCandidateUsers(_appName: string, _taskId: string): Observable<string[]> {
+        return of(['user1', 'user2']);
+    }
 
-  getPriorityLabel(priority: number): string {
-    const priorityItem = this.priorities.find((item) => item.value === priority.toString()) || this.priorities[0];
-    return priorityItem.label;
-  }
+    getCandidateGroups(_appName: string, _taskId: string): Observable<string[]> {
+        return of(['group1', 'group2']);
+    }
 
-  get priorities(): TaskPriorityOption[] {
-    return this.appConfigService.get('adf-cloud-priority-values') || DEFAULT_TASK_PRIORITIES;
-  }
+    getPriorityLabel(priority: number): string {
+        const priorityItem = this.priorities.find((item) => item.value === priority.toString()) || this.priorities[0];
+        return priorityItem.label;
+    }
 
-  isTaskEditable(taskDetails: TaskDetailsCloudModel) {
-    return taskDetails.status === this.TASK_ASSIGNED_STATE;
-  }
+    get priorities(): TaskPriorityOption[] {
+        return this.appConfigService.get('adf-cloud-priority-values') || DEFAULT_TASK_PRIORITIES;
+    }
 
-  isAssigneePropertyClickable = () => false;
+    isTaskEditable(taskDetails: TaskDetailsCloudModel) {
+        return taskDetails.status === this.TASK_ASSIGNED_STATE;
+    }
 
-  constructor(private appConfigService: AppConfigService) {}
+    isAssigneePropertyClickable = () => false;
 
-  updateTask(_appName?: string, _taskId?: string, _payload?: any): Observable<TaskDetailsCloudModel> {
-    return of(taskAssignedDetails);
-  }
+    constructor(private appConfigService: AppConfigService) { }
+
+    updateTask(_appName?: string, taskId?: string, _payload?: any): Observable<TaskDetailsCloudModel> {
+        return of(taskDetailsContainer[taskId]);
+    }
 }
