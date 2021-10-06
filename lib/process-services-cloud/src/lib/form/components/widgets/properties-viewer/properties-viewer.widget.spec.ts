@@ -30,7 +30,7 @@ import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper/pr
 import { BasicPropertiesService } from 'content-services';
 import { of } from 'rxjs';
 
-fdescribe('PropertiesViewerWidgetComponent', () => {
+describe('PropertiesViewerWidgetComponent', () => {
     let widget: PropertiesViewerWidgetComponent;
     let fixture: ComponentFixture<PropertiesViewerWidgetComponent>;
     let element: HTMLElement;
