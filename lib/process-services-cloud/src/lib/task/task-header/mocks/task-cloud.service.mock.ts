@@ -28,8 +28,7 @@ export class TaskCloudServiceMock {
   dataChangesDetected$ = new Subject();
   TASK_ASSIGNED_STATE = 'ASSIGNED';
 
-  getTaskById(appName?: string, _taskId?: string): Observable<TaskDetailsCloudModel> {
-    console.log(appName)
+  getTaskById(_appName?: string, _taskId?: string): Observable<TaskDetailsCloudModel> {
     return of(taskAssignedDetails);
   }
 
@@ -43,7 +42,6 @@ export class TaskCloudServiceMock {
 
   getPriorityLabel(priority: number): string {
     const priorityItem = this.priorities.find((item) => item.value === priority.toString()) || this.priorities[0];
-    // return this.translateService.instant(priorityItem.label);
     return priorityItem.label;
   }
 
@@ -59,8 +57,7 @@ export class TaskCloudServiceMock {
 
   constructor(private appConfigService: AppConfigService) {}
 
-  updateTask(appName?: string, _taskId?: string, _payload?: any): Observable<TaskDetailsCloudModel> {
-    console.log(appName)
+  updateTask(_appName?: string, _taskId?: string, _payload?: any): Observable<TaskDetailsCloudModel> {
     return of(taskAssignedDetails);
   }
 }

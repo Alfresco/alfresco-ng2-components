@@ -7,7 +7,7 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskHeaderCloudModule } from '../task-header-cloud.module';
 
 export default {
-  title: 'TaskHeaderCloudComponent',
+  title: 'Process Services Cloud/Components/Task Header',
   component: TaskHeaderCloudComponent,
   decorators: [
     moduleMetadata({
@@ -28,7 +28,6 @@ export default {
 } as Meta<TaskHeaderCloudComponent>;
 
 const Template: Story<TaskHeaderCloudComponent> = (args: TaskHeaderCloudComponent) => ({
-  component: TaskHeaderCloudComponent,
   props: args,
 });
 
