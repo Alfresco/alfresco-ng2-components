@@ -22,7 +22,7 @@ import { Node } from '@alfresco/js-api';
 /* tslint:disable:component-selector  */
 
 @Component({
-    selector: 'properties-viewer-widget',
+    selector: 'adf-properties-viewer-widget',
     templateUrl: './properties-viewer.widget.html',
     styleUrls: ['./properties-viewer.widget.scss'],
     host: {

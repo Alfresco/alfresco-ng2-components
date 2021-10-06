@@ -19,31 +19,43 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     FormFieldModel,
     FormModel,
+    NodesApiService,
     setupTestBed
 } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PropertiesViewerWidgetComponent } from './properties-viewer.widget';
 import { ProcessServiceCloudTestingModule } from 'process-services-cloud/src/lib/testing/process-service-cloud.testing.module';
 import { fakeNodeWithProperties } from '../../../mocks/attach-file-cloud-widget.mock';
+import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper/properties-viewer-wrapper.component';
+import { BasicPropertiesService } from 'content-services';
+import { of } from 'rxjs';
 
-describe('PropertiesViewerWidgetComponent', () => {
+fdescribe('PropertiesViewerWidgetComponent', () => {
     let widget: PropertiesViewerWidgetComponent;
     let fixture: ComponentFixture<PropertiesViewerWidgetComponent>;
     let element: HTMLElement;
+    let nodesApiService: NodesApiService;
 
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule
+        ],
+        declarations: [PropertiesViewerWrapperComponent],
+        providers: [
+            NodesApiService,
+            { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }
         ]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PropertiesViewerWidgetComponent);
+        nodesApiService = TestBed.inject(NodesApiService);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
 
         widget.field = new FormFieldModel(new FormModel());
+        spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeNodeWithProperties));
     });
 
     afterEach(() => fixture.destroy());
@@ -65,7 +77,7 @@ describe('PropertiesViewerWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const propertiesViewer = element.querySelector('properties-viewer-wrapper');
+        const propertiesViewer = element.querySelector('adf-properties-viewer-wrapper');
 
         expect(propertiesViewer).not.toBeNull();
     });

@@ -3,7 +3,7 @@
     <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span
             *ngIf="isRequired()">*</span></label>
     <ng-template #properties [ngTemplateOutlet]="properties" let-properties="properties" [ngTemplateOutletContext]="{ properties: field.params?.propertiesViewerOptions }">
-        <properties-viewer-wrapper *ngIf="field.value" [nodeId]="field.value"
+        <adf-properties-viewer-wrapper *ngIf="field.value" [nodeId]="field.value"
             [displayDefaultProperties]="properties?.displayDefaultProperties !== undefined ?  properties?.displayDefaultProperties : true"
             [expanded]="properties?.expanded !== undefined ? properties?.expanded : true"
             [preset]="properties?.preset"
@@ -14,7 +14,7 @@
             [copyToClipboardAction]="properties?.copyToClipboardAction !== undefined ? properties?.copyToClipboardAction : true"
             [useChipsForMultiValueProperty]="properties?.useChipsForMultiValueProperty !== undefined ? properties?.useChipsForMultiValueProperty : true"
             (nodeContentLoaded)="onNodeContentLoaded($event)">
-        </properties-viewer-wrapper>
+        </adf-properties-viewer-wrapper>
     </ng-template>
     <error-widget [error]="field.validationSummary"></error-widget>
 </div>
