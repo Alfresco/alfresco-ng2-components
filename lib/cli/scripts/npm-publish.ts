@@ -82,8 +82,8 @@ function changeRegistry(args: PublishArgs, project: string) {
     logger.info(`Change registry... `);
     const folder = `${args.pathProject}/lib/dist/${project}`;
     const content =
-        `strict-ssl=false
-registry=http://${args.npmRegistry}
+        `strict-ssl=true
+registry=https://${args.npmRegistry}
 //${args.npmRegistry}/:_authToken="${args.tokenRegistry}"`;
 
     try {
