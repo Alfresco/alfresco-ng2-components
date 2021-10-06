@@ -29,8 +29,6 @@ export class TaskCloudServiceMock {
     TASK_ASSIGNED_STATE = 'ASSIGNED';
 
     getTaskById(_appName?: string, taskId?: string): Observable<TaskDetailsCloudModel> {
-        console.log(taskId);
-
         return of(taskDetailsContainer[taskId]);
     }
 
