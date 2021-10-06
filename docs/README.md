@@ -454,10 +454,7 @@ for more information about installing and using the source code.
 | [Form cloud component](process-services-cloud/components/form-cloud.component.md) | Shows a form from Process Services. | [Source](../lib/process-services-cloud/src/lib/form/components/form-cloud.component.ts) |
 | [Form Definition Selector Cloud](process-services-cloud/components/form-definition-selector-cloud.component.md) | Allows one form to be selected from a dropdown list. For forms to be displayed in this component they will need to be compatible with standAlone tasks. | [Source](../lib/process-services-cloud/src/lib/form/components/form-definition-selector-cloud.component.ts) |
 | [Group Cloud component](process-services-cloud/components/group-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches Groups. | [Source](../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts) |
-| [](process-services-cloud/components/people-cloud.component.md) | Title: People Cloud Component |  |
-
-Added: v3.0.0
-Status: Experimental | [Source](<>) |
+| [People Cloud Component](process-services-cloud/components/people-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png)  | Added: v3.0.0 | [Source](<>) |
 | [Process Filters Cloud Component](process-services-cloud/components/process-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.ts) |
 | [Process Header Cloud Component](process-services-cloud/components/process-header-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all the information related to a process instance. | [Source](../lib/process-services-cloud/src/lib/process/process-header/components/process-header-cloud.component.ts) |
 | [Process Instance List Cloud component](process-services-cloud/components/process-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.ts) |
@@ -503,6 +500,13 @@ Status: Experimental | [Source](<>) |
 | [User Preference Cloud Service](process-services-cloud/services/user-preference-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages user preferences. | [Source](../lib/process-services-cloud/src/lib/services/user-preference-cloud.service.ts) |
 
 <!--process-services-cloud end-->
+
+### Widgets
+
+| Name | Description | Source link |
+| ---- | ----------- | ----------- |
+| [APA Properties Viewer Widget](process-services-cloud/widgets/properties-viewer.widget.md) | Display the metadata of the file selected in the linked attach widget. | [Source](../lib/process-services-cloud/src/lib/form/components/widgets/properties-viewer/properties-viewer.widget.ts) |
+
 
 [(Back to Contents)](#contents)
 

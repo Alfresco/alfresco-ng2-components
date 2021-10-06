@@ -24,7 +24,7 @@ import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
 import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
-import { ContentNodeSelectorModule } from '@alfresco/adf-content-services';
+import { ContentMetadataModule, ContentNodeSelectorModule } from '@alfresco/adf-content-services';
 
 import { DateCloudWidgetComponent } from './components/widgets/date/date-cloud.widget';
 import { DropdownCloudWidgetComponent } from './components/widgets/dropdown/dropdown-cloud.widget';
@@ -35,6 +35,8 @@ import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file
 import { UploadCloudWidgetComponent } from './components/widgets/attach-file/upload-cloud.widget';
 import { PeopleCloudModule } from '../people/people-cloud.module';
 import { GroupCloudModule } from '../group/group-cloud.module';
+import { PropertiesViewerWidgetComponent } from './components/widgets/properties-viewer/properties-viewer.widget';
+import { PropertiesViewerWrapperComponent } from './components/widgets/properties-viewer/properties-viewer-wrapper/properties-viewer-wrapper.component';
 
 @NgModule({
     imports: [
@@ -46,7 +48,8 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         CoreModule,
         ContentNodeSelectorModule,
         PeopleCloudModule,
-        GroupCloudModule
+        GroupCloudModule,
+        ContentMetadataModule
     ],
     declarations: [
         FormCloudComponent,
@@ -57,7 +60,9 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         AttachFileCloudWidgetComponent,
         DateCloudWidgetComponent,
         PeopleCloudWidgetComponent,
-        GroupCloudWidgetComponent
+        GroupCloudWidgetComponent,
+        PropertiesViewerWrapperComponent,
+        PropertiesViewerWidgetComponent
     ],
     exports: [
         FormCloudComponent,
@@ -68,7 +73,8 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         AttachFileCloudWidgetComponent,
         DateCloudWidgetComponent,
         PeopleCloudWidgetComponent,
-        GroupCloudWidgetComponent
+        GroupCloudWidgetComponent,
+        PropertiesViewerWidgetComponent
     ]
 })
 export class FormCloudModule {

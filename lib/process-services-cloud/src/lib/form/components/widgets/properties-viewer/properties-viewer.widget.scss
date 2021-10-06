@@ -1,0 +1,22 @@
+adf-properties-viewer-widget {
+    height: 100%;
+    width: 100%;
+
+    adf-properties-viewer-wrapper {
+        display: block;
+        height: 100%;
+        width: 100%;
+        border: 1px solid var(--theme-border-color);
+        border-radius: 6px;
+
+        .adf-properties-viewer-wrapper-loading {
+            height: 100%;
+            width: 100%;
+
+            mat-progress-spinner {
+                display: block;
+                margin: auto;
+            }
+        }
+    }
+}

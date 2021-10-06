@@ -1,0 +1,10 @@
+<adf-content-metadata [displayDefaultProperties]="displayDefaultProperties" [expanded]="expanded" [node]="node"
+    [preset]="preset" [displayEmpty]="displayEmpty" [editable]="editable" [multi]="multi"
+    [displayAspect]="displayAspect" [copyToClipboardAction]="copyToClipboardAction"
+    [useChipsForMultiValueProperty]="useChipsForMultiValueProperty" *ngIf="!loading; else loadingTemplate">
+</adf-content-metadata>
+<ng-template #loadingTemplate>
+    <div class="adf-properties-viewer-wrapper-loading">
+        <mat-progress-spinner></mat-progress-spinner>
+    </div>
+</ng-template>
