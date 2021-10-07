@@ -46,6 +46,11 @@ export class FormFields {
         await BrowserActions.clearSendKeys(fieldElement, value);
     }
 
+    async checkFieldValue(field: string, value: string): Promise<void> {
+        const fieldElement = $(`#${field}`);
+        await BrowserVisibility.waitUntilElementHasValue(fieldElement, value);
+    }
+
     async checkWidgetIsVisible(fieldId: string): Promise<void> {
         const fieldElement = $$(`adf-form-field div[id='field-${fieldId}-container']`).first();
         await BrowserVisibility.waitUntilElementIsVisible(fieldElement);
@@ -93,10 +98,6 @@ export class FormFields {
         const placeHolderLocator = $(`${locator}#${fieldId}`);
         await BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
         return BrowserActions.getAttribute(placeHolderLocator, 'data-placeholder');
-    }
-
-    async checkFieldValue(locator, field, val): Promise<void> {
-        await BrowserVisibility.waitUntilElementHasValue(element(locator(field)), val);
     }
 
     async refreshForm(): Promise<void> {
