@@ -108,16 +108,12 @@ do
  fi
 
   if [ ! -f package/_theming.scss ]; then
-    if [ $PACKAGE == 'adf-extensions' ]; then
-       echo "no style needed"
-    elif [ $PACKAGE == 'adf-testing' ]; then
-       echo "no style needed"
-    else
+    if [ $PACKAGE == 'adf-core' ]; then
        error_out '31;1' "$PACKAGE style not found!" >&2
        exit 1
     fi
  else
-     echo "style ok!"
+     echo "no style needed"
  fi
 
  if [ ! -f package/README.md ]; then
