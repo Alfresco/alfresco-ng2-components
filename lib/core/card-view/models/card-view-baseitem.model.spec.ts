@@ -45,7 +45,7 @@ describe('CardViewBaseItemModel', () => {
             expect(itemModel.data).toBe(properties.data);
         });
 
-        it('should persist the params\' properties as own propertis', () => {
+        it('should persist the params\' properties as own properties', () => {
             const allProperties = {
                 ...properties,
                 default: 'default-value',
