@@ -75,7 +75,6 @@ describe('Start Task - Task App', () => {
         await taskUtil.createStandaloneTask(showHeaderTask);
 
         await loginPage.login(processUserModel.username, processUserModel.password);
-        console.log(processUserModel.username, processUserModel.password)
     });
 
     beforeEach(async () => {
