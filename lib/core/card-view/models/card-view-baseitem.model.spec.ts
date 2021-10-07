@@ -44,6 +44,32 @@ describe('CardViewBaseItemModel', () => {
 
             expect(itemModel.data).toBe(properties.data);
         });
+
+        it('should persist the params\' properties as own propertis', () => {
+            const allProperties = {
+                ...properties,
+                default: 'default-value',
+                editable: true,
+                clickable: true,
+                icon: 'dummy-icon',
+                hint: 'Some hint text',
+                validators: [{} as unknown as CardViewItemValidator],
+                multivalued: true
+            };
+
+            const itemModel = new CarViewCustomItemModel(allProperties);
+
+            expect(itemModel.label).toBe(allProperties.label);
+            expect(itemModel.value).toBe(allProperties.value);
+            expect(itemModel.key).toBe(allProperties.key);
+            expect(itemModel.default).toBe(allProperties.default);
+            expect(itemModel.editable).toBe(allProperties.editable);
+            expect(itemModel.clickable).toBe(allProperties.clickable);
+            expect(itemModel.icon).toBe(allProperties.icon);
+            expect(itemModel.hint).toBe(allProperties.hint);
+            expect(itemModel.validators).toBe(allProperties.validators);
+            expect(itemModel.multivalued).toBe(allProperties.multivalued);
+        });
     });
 
     describe('isValid & Validation errors', () => {

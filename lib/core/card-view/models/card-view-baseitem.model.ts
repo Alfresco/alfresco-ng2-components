@@ -26,6 +26,7 @@ export abstract class CardViewBaseItemModel {
     editable: boolean;
     clickable: boolean;
     icon?: string;
+    hint?: string;
     validators?: CardViewItemValidator[];
     data?: any;
     type?: string;
@@ -39,6 +40,7 @@ export abstract class CardViewBaseItemModel {
         this.editable = !!cardViewItemProperties.editable;
         this.clickable = !!cardViewItemProperties.clickable;
         this.icon = cardViewItemProperties.icon || '';
+        this.hint = cardViewItemProperties.hint || '';
         this.validators = cardViewItemProperties.validators || [];
         this.data = cardViewItemProperties.data || null;
         this.multivalued = !!cardViewItemProperties.multivalued;

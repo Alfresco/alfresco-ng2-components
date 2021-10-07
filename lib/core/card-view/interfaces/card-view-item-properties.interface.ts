@@ -26,6 +26,7 @@ export interface CardViewItemProperties {
     editable?: boolean;
     clickable?: any;
     icon?: string;
+    hint?: string;
     validators?: CardViewItemValidator[];
     data?: any;
     constraints?: Constraint[];
