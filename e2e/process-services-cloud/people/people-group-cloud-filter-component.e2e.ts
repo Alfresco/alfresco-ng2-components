@@ -58,8 +58,6 @@ describe('People Groups Cloud Component', () => {
             users = [apsUser.idIdentityService, noRoleUser.idIdentityService, testUser.idIdentityService];
 
             await loginSSOPage.login(apsUser.username, apsUser.password);
-            console.log(apsUser.username, apsUser.password)
-            console.log(hrGroup)
         });
 
         afterAll(async () => {
