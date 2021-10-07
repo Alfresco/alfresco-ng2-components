@@ -97,7 +97,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     action = new EventEmitter<ProcessFilterAction>();
 
     private _filter: ProcessFilterCloudModel;
-    protected formHasBeenChanged = false;
+    protected filterHasBeenChanged = false;
 
     get processFilter() {
         return this._filter;
@@ -221,7 +221,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .getFilterById(this.appName, this.id)
             .pipe(finalize(() => this.isLoading = false))
             .subscribe(response => {
-                this.formHasBeenChanged = false;
+                this.filterHasBeenChanged = false;
                 this.processFilter = new ProcessFilterCloudModel(
                     Object.assign({}, response || {}, this.processFilter || {})
                 );
@@ -248,7 +248,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
                 const newValue = new ProcessFilterCloudModel(Object.assign({}, this.processFilter, formValues));
                 const changed = !this.compareFilters(newValue, this.processFilter);
-                this.formHasBeenChanged = changed;
+                this.filterHasBeenChanged = changed;
 
                 if (changed) {
                     this._filter = newValue;
@@ -433,7 +433,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .updateFilter(this.processFilter)
             .subscribe(() => {
                 saveAction.filter = this.processFilter;
-                this.formHasBeenChanged = false;
+                this.filterHasBeenChanged = false;
                 this.action.emit(saveAction);
             });
     }
@@ -480,7 +480,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     .addFilter(resultFilter)
                     .subscribe(() => {
                         saveAsAction.filter = resultFilter;
-                        this.formHasBeenChanged = false;
+                        this.filterHasBeenChanged = false;
                         this.action.emit(saveAsAction);
                     });
             }
@@ -521,13 +521,13 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return (
             this.processFilterCloudService.isDefaultFilter(this.processFilter.name) &&
             this.actionDisabledForDefault.includes(action.actionType)
-        ) ? true : this.hasFormChanged(action);
+        ) ? true : this.hasFilterChanged(action);
     }
 
-    hasFormChanged(action: ProcessFilterAction): boolean {
+    hasFilterChanged(action: ProcessFilterAction): boolean {
         return action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE ||
             action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE_AS ?
-            !this.formHasBeenChanged : false;
+            !this.filterHasBeenChanged : false;
     }
 
     private setLastModifiedToFilter(formValues: ProcessFilterCloudModel) {
