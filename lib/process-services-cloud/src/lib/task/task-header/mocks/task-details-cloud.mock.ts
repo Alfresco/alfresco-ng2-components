@@ -146,6 +146,7 @@ export const completedTaskDetailsCloudMock: TaskDetailsCloudModel = {
     'description': 'This is the description ',
     'createdDate': new Date(1545048055900),
     'dueDate': new Date(1545091200000),
+    'completedDate': new Date(1546091200000),
     'claimedDate': null,
     'priority': 5,
     'category': null,
@@ -207,4 +208,12 @@ export const suspendedTaskDetailsCloudMock: TaskDetailsCloudModel = {
     'lastModifiedTo': null,
     'lastModifiedFrom': null,
     'standalone': true
+};
+
+export const taskDetailsContainer = {
+    'mock-assigned-task': assignedTaskDetailsCloudMock,
+    'mock-completed-task': completedTaskDetailsCloudMock,
+    'mock-created-task': createdStateTaskDetailsCloudMock,
+    'mock-parent-task-id': taskDetailsWithParentTaskIdMock,
+    'mock-suspended-task': suspendedTaskDetailsCloudMock
 };
