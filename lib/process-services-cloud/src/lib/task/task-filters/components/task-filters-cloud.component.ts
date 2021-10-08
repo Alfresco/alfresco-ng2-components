@@ -57,6 +57,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     ngOnInit() {
+        console.log('init');
+
         this.enableNotifications = this.appConfigService.get('notifications', true);
         this.initFilterCounterNotifications();
         this.getFilters(this.appName);
@@ -134,6 +136,10 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     public selectFilter(paramFilter: FilterParamsModel) {
         if (paramFilter) {
+            console.log('filters:');
+            console.log(this.filters);
+            console.log('currentFilter:');
+            console.log(this.currentFilter);
             this.currentFilter = this.filters.find((filter, index) =>
                 paramFilter.index === index ||
                 paramFilter.key === filter.key ||

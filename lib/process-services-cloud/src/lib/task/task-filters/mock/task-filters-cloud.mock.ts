@@ -47,6 +47,41 @@ export const fakeGlobalFilter: any[] = [
     }
 ];
 
+export const defaultFilterMock: any[] = [
+    {
+        name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
+        key: 'my-tasks',
+        icon: 'inbox',
+        appName: 'app',
+        status: 'ASSIGNED',
+        assignee: 'test',
+        sort: 'createdDate',
+        order: 'DESC',
+        showCounter: true
+    },
+    {
+        name: 'ADF_CLOUD_TASK_FILTERS.QUEUED_TASKS',
+        key: 'queued-tasks',
+        icon: 'queue',
+        appName: 'app',
+        status: 'CREATED',
+        assignee: '',
+        sort: 'createdDate',
+        order: 'DESC',
+        showCounter: true
+    },
+    {
+        name: 'ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS',
+        key: 'completed-tasks',
+        icon: 'done',
+        appName: 'app',
+        status: 'COMPLETED',
+        assignee: '',
+        sort: 'createdDate',
+        order: 'DESC'
+    }
+];
+
 export const fakeGlobalServiceFilters: ServiceTaskFilterCloudModel[] = [
     {
         name: 'FakeServiceTasks',

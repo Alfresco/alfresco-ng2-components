@@ -33,9 +33,11 @@ import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog/
 import { ServiceTaskFiltersCloudComponent } from './components/service-task-filters-cloud.component';
 import { TaskAssignmentFilterCloudComponent } from './components/task-assignment-filter/task-assignment-filter.component';
 import { GroupCloudModule } from '../../group/group-cloud.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
+        TranslateModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -43,7 +45,7 @@ import { GroupCloudModule } from '../../group/group-cloud.module';
         FlexLayoutModule,
         MaterialModule,
         AppListCloudModule,
-        CoreModule,
+        CoreModule.forRoot(),
         GroupCloudModule,
         ProcessCommonModule,
         PeopleCloudModule
