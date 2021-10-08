@@ -43,7 +43,7 @@ then
         DOCKER_PROJECT_ARGS="PROJECT_NAME=storybook/process-services-cloud"
 
         # Publish Image to docker
-        ./node_modules/@alfresco/adf-cli/bin/adf-cli docker --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY" --buildArgs "$DOCKER_PROJECT_ARGS" --dockerTags "$TAGS" --pathProject "$(pwd)"
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli docker --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY_STORYBOOK" --buildArgs "$DOCKER_PROJECT_ARGS" --dockerTags "$TAGS" --pathProject "$(pwd)"
 
     fi;
 else
