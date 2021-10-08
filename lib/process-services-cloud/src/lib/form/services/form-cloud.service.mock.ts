@@ -20,8 +20,8 @@ import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { FormContent } from '../../services/form-fields.interfaces';
 import { TaskDetailsCloudModel } from '../../task/public-api';
+import { taskDetailsContainer } from '../../task/task-header/mocks/task-details-cloud.mock';
 import { formCloudDisplayMock } from '../mocks/cloud-form.mock';
-import { taskWithFormDetails } from '../mocks/task-with-form.mock';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 
 export class FormCloudServiceMock {
@@ -46,8 +46,8 @@ export class FormCloudServiceMock {
         );
     }
 
-    getTask(_appName: string, _taskId: string): Observable<TaskDetailsCloudModel> {
-        return of(taskWithFormDetails);
+    getTask(_appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+        return of(taskDetailsContainer[taskId]);
     }
 
     getForm(_appName: string, _formKey: string, _version?: number): Observable<FormContent> {
@@ -60,23 +60,23 @@ export class FormCloudServiceMock {
 
     saveTaskForm(
         _appName: string,
-        _taskId: string,
+        taskId: string,
         _processInstanceId: string,
         _formId: string,
         _values: FormValues
     ): Observable<TaskDetailsCloudModel> {
-        return of(taskWithFormDetails);
+        return of(taskDetailsContainer[taskId]);
     }
 
     completeTaskForm(
         _appName: string,
-        _taskId: string,
+        taskId: string,
         _processInstanceId: string,
         _formId: string,
         _formValues: FormValues,
         _outcome: string,
         _version: number
     ): Observable<TaskDetailsCloudModel> {
-        return of(taskWithFormDetails);
+        return of(taskDetailsContainer[taskId]);
     }
 }

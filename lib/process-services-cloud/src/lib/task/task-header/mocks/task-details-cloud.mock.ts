@@ -260,6 +260,23 @@ export const noCandidateGroupsTaskDetailsCloudMock: TaskDetailsCloudModel = {
     'standalone': false
 };
 
+export const taskWithFormDetailsMock: TaskDetailsCloudModel = {
+    appName: 'simple-app',
+    assignee: 'admin.adf',
+    completedDate: null,
+    createdDate: new Date(1555419255340),
+    dueDate: new Date(1558419255340),
+    description: null,
+    formKey: '4',
+    priority: 1,
+    parentTaskId: 'bd6b1741-6046-11e9-80f0-0a586460040d',
+    id: 'bd6b1741-6046-11e9-80f0-0a586460040d',
+    name: 'Task1',
+    owner: 'admin.adf',
+    standalone: true,
+    status: 'ASSIGNED'
+};
+
 export const taskDetailsContainer = {
     'mock-assigned-task': assignedTaskDetailsCloudMock,
     'mock-completed-task': completedTaskDetailsCloudMock,
@@ -267,5 +284,6 @@ export const taskDetailsContainer = {
     'mock-parent-task-id': taskDetailsWithParentTaskIdMock,
     'mock-suspended-task': suspendedTaskDetailsCloudMock,
     'mock-no-candidate-users': noCandidateUsersTaskDetailsCloudMock,
-    'mock-no-candidate-groups': noCandidateGroupsTaskDetailsCloudMock
+    'mock-no-candidate-groups': noCandidateGroupsTaskDetailsCloudMock,
+    'mock-task-with-form': taskWithFormDetailsMock
 };

@@ -23,6 +23,7 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskFormModule } from '../task-form.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { FormCloudServiceMock } from '../../../form/services/form-cloud.service.mock';
+import { TaskCloudServiceMock } from '../../services/task-cloud.service.mock';
 
 export default {
     component: TaskFormCloudComponent,
@@ -40,7 +41,7 @@ export default {
                         source: 'assets/adf-process-services-cloud'
                     }
                 },
-                { provide: TaskCloudService, useClass: TaskCloudService },
+                { provide: TaskCloudService, useClass: TaskCloudServiceMock },
                 { provide: FormCloudService, useClass: FormCloudServiceMock }
             ]
         })
@@ -64,7 +65,7 @@ primary.args = {
     showRefreshButton: false,
     showTitle: true,
     showValidationIcon: true,
-    taskId: 'task'
+    taskId: 'mock-task-with-form'
 };
 
 export const readOnly = template.bind({});
