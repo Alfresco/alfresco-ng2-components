@@ -16,7 +16,15 @@
  */
 
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { WidgetComponent, FormService, LogService, FormFieldOption } from '@alfresco/adf-core';
+import {
+    WidgetComponent,
+    FormService,
+    LogService,
+    FormFieldOption,
+    FormFieldEvent,
+    FormFieldModel,
+    FormFieldTypes
+} from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -52,12 +60,90 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     ngOnInit() {
-        if (this.field && this.field.restUrl) {
+        // Missing requirement. In case replacing the restUrl with the parent selection will be done in BE we don't need to distinguish the 2 scenarios.
+        if (this.hasRestUrl() && !this.isLinkedDropdown()) {
             this.getValuesFromRestApi();
+        }
+
+        if (this.isLinkedDropdown()) {
+            this.formService.formFieldValueChanged
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe((event: FormFieldEvent) => {
+                    if (this.isFormFieldEventOfTypeDropdown(event) && this.hasParentDropdownSelectionChanged(event)) {
+                        const valueOfParentDropdown = event.field.value;
+
+                        if (!!valueOfParentDropdown && valueOfParentDropdown !== 'empty') {
+                            this.hasRestUrl() && this.isRestUrlContainingLinkedDropdownId() ? this.getValuesFromRestApiWithLinkedWidget(valueOfParentDropdown) : this.getManualValuesWithLinkedWidget(valueOfParentDropdown);
+                        } else if (valueOfParentDropdown === 'empty') {
+                            this.addDefaultOption();
+                        }
+                    }
+                });
         }
     }
 
-    getValuesFromRestApi() {
+    private getManualValuesWithLinkedWidget(valueOfLinkedWidget: string) {
+        const rulesMap = new Map<string, FormFieldOption[]>(Object.entries(this.field.params['rules']));
+        for (const [key, value] of rulesMap.entries()) {
+            if (key === valueOfLinkedWidget) {
+                this.field.options = value;
+            }
+        }
+    }
+
+    private getValuesFromRestApiWithLinkedWidget(valueOfLinkedWidget: string) {
+        // Missing requirement. Temporarily doing the replacement in the FE
+        const newRestUrl = this.replaceLinkedWidgetRestUrlWithSelection(valueOfLinkedWidget);
+        this.getValuesFromRestApi(newRestUrl);
+    }
+
+    private hasDefaultOption(): boolean {
+        return !!this.field.options.find((option: {id, name}) => option.id === 'empty' && option.name === 'Choose one...');
+    }
+
+    private addDefaultOption() {
+        // Missing requirement about default options when using linked widgets
+        this.field.options = this.hasDefaultOption() ? [{ id: 'empty', name: 'Choose one...' }] : [];
+    }
+
+    // Missing requirement. Temporarily added the replacement in FE
+    private replaceLinkedWidgetRestUrlWithSelection(valueOfLinkedWidget: string): string {
+        const linkedWidgetId = this.getLinkedDropdownId();
+        return this.isRestUrlContainingLinkedDropdownId() ? this.field.restUrl.replace('${' + linkedWidgetId + '}', valueOfLinkedWidget) : this.field.restUrl;
+    }
+
+    selectionChangedForField(field: FormFieldModel) {
+        const formFieldValueChangedEvent = new FormFieldEvent(field.form, field);
+        this.formService.formFieldValueChanged.next(formFieldValueChangedEvent);
+        this.onFieldChanged(field);
+    }
+
+    private hasParentDropdownSelectionChanged(event: FormFieldEvent): boolean {
+        return event.field.id === this.getLinkedDropdownId();
+    }
+
+    private isRestUrlContainingLinkedDropdownId(): boolean {
+        const linkedWidgetId = this.getLinkedDropdownId();
+        return this.field.restUrl?.includes(linkedWidgetId) || false;
+    }
+
+    private isFormFieldEventOfTypeDropdown(event: FormFieldEvent): boolean {
+        return event.field.type === FormFieldTypes.DROPDOWN;
+    }
+
+    hasRestUrl(): boolean {
+        return !!this?.field?.restUrl;
+    }
+
+    isLinkedDropdown(): boolean {
+        return !!this.getLinkedDropdownId();
+    }
+
+    getLinkedDropdownId(): string {
+        return this?.field?.params['linkedDropdownId'];
+    }
+
+    getValuesFromRestApi(restUrl?: string) {
         if (this.isValidRestType()) {
             this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id)
                 .pipe(takeUntil(this.onDestroy$))

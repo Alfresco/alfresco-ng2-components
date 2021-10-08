@@ -30,6 +30,7 @@ import {
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { dropdownMockRules, mockRestDropdownOptions } from '../../../mocks/linked-dropdown.mock';
 
 describe('DropdownCloudWidgetComponent', () => {
 
@@ -347,6 +348,118 @@ describe('DropdownCloudWidgetComponent', () => {
                 { id: 'opt_1', name: 'option_1' },
                 { id: 'opt_2', name: 'option_2' }
             ]);
+        });
+    });
+
+    describe('Linked Dropdown', () => {
+
+        describe('Rest URL options', () => {
+
+            const parentDropdown = new FormFieldModel(new FormModel(), { id: 'parentDropdown', type: 'dropdown' });
+            beforeEach(() => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'child-dropdown-id',
+                    name: 'child-dropdown',
+                    type: 'dropdown-cloud',
+                    readOnly: 'false',
+                    optionType: 'rest',
+                    restUrl: 'myFakeDomain.com/cities?country=${parentDropdown}',
+                    params: { linkedDropdownId: 'parentDropdown' }
+                });
+                fixture.detectChanges();
+            });
+
+            it('should fetch the options from a rest url for a linked dropdown, replacing in the restUrl the selection of the parent dropdown', async () => {
+                const jsonDataSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(mockRestDropdownOptions));
+                parentDropdown.value = 'UK';
+                widget.selectionChangedForField(parentDropdown);
+
+                fixture.detectChanges();
+                openSelect('child-dropdown-id');
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const optOne: any = fixture.debugElement.query(By.css('[id="LO"]'));
+                const optTwo: any = fixture.debugElement.query(By.css('[id="MA"]'));
+
+                expect(jsonDataSpy).toHaveBeenCalledWith('myFakeDomain.com/cities?country=UK');
+                expect(optOne.context.value).toBe('LO');
+                expect(optOne.context.viewValue).toBe('LONDON');
+                expect(optTwo.context.value).toBe('MA');
+                expect(optTwo.context.viewValue).toBe('MANCHESTER');
+            });
+
+            it('should reset the options for a linked dropdown with restUrl when the parent dropdown selection changes to empty', async () => {
+                widget.field.options = dropdownMockRules.Italy;
+                parentDropdown.value = 'empty';
+                widget.selectionChangedForField(parentDropdown);
+
+                fixture.detectChanges();
+                openSelect('child-dropdown-id');
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
+
+                expect(widget.field.options).toEqual([{ 'id': 'empty', 'name': 'Choose one...' }]);
+                expect(defaultOption.context.value).toBe('empty');
+                expect(defaultOption.context.viewValue).toBe('Choose one...');
+            });
+        });
+
+        describe('Manual options', () => {
+            const parentDropdown = new FormFieldModel(new FormModel(), { id: 'parentDropdown', type: 'dropdown' });
+
+            beforeEach(() => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'child-dropdown-id',
+                    name: 'child-dropdown',
+                    type: 'dropdown-cloud',
+                    readOnly: 'false',
+                    optionType: 'manual',
+                    params: { linkedDropdownId: 'parentDropdown', rules: dropdownMockRules }
+                });
+                fixture.detectChanges();
+            });
+
+            it('Should display the options for a linked dropdown based on the parent dropdown selection', async () => {
+                parentDropdown.value = 'United Kingdom';
+                widget.selectionChangedForField(parentDropdown);
+                fixture.detectChanges();
+                openSelect('child-dropdown-id');
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const optOne: any = fixture.debugElement.query(By.css('[id="empty"]'));
+                const optTwo: any = fixture.debugElement.query(By.css('[id="LO"]'));
+                const optThree: any = fixture.debugElement.query(By.css('[id="MA"]'));
+
+                expect(widget.field.options).toEqual(dropdownMockRules['United Kingdom']);
+                expect(optOne.context.value).toBe('empty');
+                expect(optOne.context.viewValue).toBe('Choose one...');
+                expect(optTwo.context.value).toBe('LO');
+                expect(optTwo.context.viewValue).toBe('LONDON');
+                expect(optThree.context.value).toBe('MA');
+                expect(optThree.context.viewValue).toBe('MANCHESTER');
+            });
+
+            it('should reset the options for a linked dropdown when the parent dropdown selection changes to empty', async () => {
+                widget.field.options = dropdownMockRules.Italy;
+                parentDropdown.value = 'empty';
+                widget.selectionChangedForField(parentDropdown);
+
+                fixture.detectChanges();
+                openSelect('child-dropdown-id');
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
+
+                expect(widget.field.options).toEqual([{ 'id': 'empty', 'name': 'Choose one...' }]);
+                expect(defaultOption.context.value).toBe('empty');
+                expect(defaultOption.context.viewValue).toBe('Choose one...');
+            });
         });
     });
 });

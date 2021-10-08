@@ -1428,6 +1428,9 @@
     },
     {
       "name": "subprocessapp"
+    },
+    {
+      "name": "dropdown-test"
     }
   ],
   "aspect-visible": {
