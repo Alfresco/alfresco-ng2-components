@@ -268,4 +268,9 @@ export class EditProcessFilterCloudComponentPage {
         if (props.suspendedDateRange) { await this.setSuspendedDateRangeDropDown(props.suspendedDateRange); }
         await this.closeFilter();
     }
+
+    async isCustomFilterNameDisplayed(name: string): Promise<boolean> {
+        const title = element(by.cssContainingText(`[id='adf-edit-process-filter-title-id']`, name));
+        return BrowserVisibility.waitUntilElementIsVisible(title);
+    }
 }

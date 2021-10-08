@@ -25,7 +25,7 @@ import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import CONSTANTS = require('../../util/constants');
+const CONSTANTS = require('../../util/constants');
 
 describe('Edit process filters cloud', () => {
 
@@ -88,6 +88,9 @@ describe('Edit process filters cloud', () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setSortFilterDropDown('Start Date');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
+        await expect(await editProcessFilter.getStateFilterDropDownValue()).toEqual('All');
+        await expect(await editProcessFilter.getOrderFilterDropDownValue()).toEqual('Descending');
+        await expect(await editProcessFilter.isCustomFilterNameDisplayed('New')).toBe(true);
 
         await editProcessFilter.checkSaveButtonIsDisplayed();
         await editProcessFilter.checkSaveAsButtonIsDisplayed();
@@ -142,8 +145,9 @@ describe('Edit process filters cloud', () => {
     });
 
     it('[C291810] Process filter should not be created when process filter dialog is closed', async () => {
-        await editProcessFilter.setSortFilterDropDown('Id');
         await processFilter.clickAllProcessesFilter();
+        await editProcessFilter.setSortFilterDropDown('Id');
+        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
         await editProcessFilter.clickSaveAsButton();
         await editProcessFilter.editProcessFilterDialog().setFilterName('Cancel');
         await expect(await editProcessFilter.editProcessFilterDialog().getFilterName()).toEqual('Cancel');
@@ -164,6 +168,7 @@ describe('Edit process filters cloud', () => {
         await editProcessFilter.clickSaveAsButton();
 
         const dialog = editProcessFilter.editProcessFilterDialog();
+        await dialog.clearFilterName();
 
         await expect(await dialog.getFilterName()).toEqual('');
         await expect(await dialog.checkSaveButtonIsEnabled()).toEqual(false);
@@ -178,9 +183,9 @@ describe('Edit process filters cloud', () => {
         const dialog = editProcessFilter.editProcessFilterDialog();
 
         await expect(await dialog.checkCancelButtonIsEnabled()).toEqual(true);
-        await expect(await dialog.checkSaveButtonIsEnabled()).toEqual(false);
+        await expect(await dialog.checkSaveButtonIsEnabled()).toEqual(true);
         await expect(await dialog.getTitle()).toEqual('Save filter as');
-        await expect(await dialog.getFilterName()).toEqual('');
+        await expect(await dialog.getFilterName()).toEqual('All');
         await dialog.clickOnCancelButton();
     });
 
