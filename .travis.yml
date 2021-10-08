@@ -113,10 +113,11 @@ jobs:
               use: node_modules_cache
 
         - stage: "Build Demo shell"
-          name:  "Demo Shell :Build && dockerize"
+          name:  "Demo Shell & Storybook :Build && dockerize"
           script:
-              # Build Demo shell for production docker"
+              # Build Demo shell & Storybook for production docker"
               - NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --configuration production
+              - NODE_OPTIONS=--max_old_space_size=8192 nx run process-services-cloud:build-storybook --configuration ci
               - ./scripts/travis/release/release-docker.sh
           workspaces:
               create:
