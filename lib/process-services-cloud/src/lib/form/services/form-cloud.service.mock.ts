@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*!
  * @license
  * Copyright 2019 Alfresco Software, Ltd.
@@ -30,6 +31,18 @@ export class FormCloudServiceMock implements FormCloudInterface {
 
     uploadApi: UploadApi;
 
+=======
+import { FormValues } from '@alfresco/adf-core';
+import { Observable, of } from "rxjs";
+import { map, switchMap } from "rxjs/operators";
+import { FormContent } from "../../services/form-fields.interfaces";
+import { TaskDetailsCloudModel } from "../../task/public-api";
+import { formCloudDisplayMock } from "../mocks/cloud-form.mock";
+import { taskWithFormDetails } from '../mocks/task-with-form.mock';
+import { TaskVariableCloud } from "../models/task-variable-cloud.model";
+
+export class FormCloudServiceMock {
+>>>>>>> 4f6281928 ([AAE-5953] migrated stories and mocks)
     getTaskForm(appName: string, taskId: string, version?: number): Observable<any> {
         return this.getTask(appName, taskId).pipe(
             switchMap((task) => {
@@ -51,8 +64,13 @@ export class FormCloudServiceMock implements FormCloudInterface {
         );
     }
 
+<<<<<<< HEAD
     getTask(_appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         return of(taskDetailsContainer[taskId]);
+=======
+    getTask(_appName: string, _taskId: string): Observable<TaskDetailsCloudModel> {
+        return of(taskWithFormDetails);
+>>>>>>> 4f6281928 ([AAE-5953] migrated stories and mocks)
     }
 
     getForm(_appName: string, _formKey: string, _version?: number): Observable<FormContent> {
@@ -65,23 +83,36 @@ export class FormCloudServiceMock implements FormCloudInterface {
 
     saveTaskForm(
         _appName: string,
+<<<<<<< HEAD
         taskId: string,
+=======
+        _taskId: string,
+>>>>>>> 4f6281928 ([AAE-5953] migrated stories and mocks)
         _processInstanceId: string,
         _formId: string,
         _values: FormValues
     ): Observable<TaskDetailsCloudModel> {
+<<<<<<< HEAD
         return of(taskDetailsContainer[taskId]);
+=======
+        return of(taskWithFormDetails);
+>>>>>>> 4f6281928 ([AAE-5953] migrated stories and mocks)
     }
 
     completeTaskForm(
         _appName: string,
+<<<<<<< HEAD
         taskId: string,
+=======
+        _taskId: string,
+>>>>>>> 4f6281928 ([AAE-5953] migrated stories and mocks)
         _processInstanceId: string,
         _formId: string,
         _formValues: FormValues,
         _outcome: string,
         _version: number
     ): Observable<TaskDetailsCloudModel> {
+<<<<<<< HEAD
         return of(taskDetailsContainer[taskId]);
     }
 
@@ -95,5 +126,8 @@ export class FormCloudServiceMock implements FormCloudInterface {
 
     parseForm(_json: any, _data?: TaskVariableCloud[], _readOnly: boolean = false): FormModel {
         throw new Error('Method not implemented.');
+=======
+        return of(taskWithFormDetails);
+>>>>>>> 4f6281928 ([AAE-5953] migrated stories and mocks)
     }
 }
