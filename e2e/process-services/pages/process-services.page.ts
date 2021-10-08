@@ -27,7 +27,7 @@ export class ProcessServicesPage {
     iconTypeLocator = 'mat-icon[class*="card-logo-icon"]';
     descriptionLocator = 'mat-card-subtitle[class*="subtitle"]';
 
-    getApplicationNameLocator = (name: string): ElementFinder => $(`mat-card[title="${name}"]`)
+    getApplicationNameLocator = (name: string): ElementFinder => $(`mat-card[title="${name}"]`);
 
     async checkApsContainer(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
@@ -42,7 +42,7 @@ export class ProcessServicesPage {
     }
 
     async goToTaskApp(): Promise<ProcessServiceTabBarPage> {
-        const taskAppLocator = this.getApplicationNameLocator('Task App')
+        const taskAppLocator = this.getApplicationNameLocator('Task App');
         await BrowserActions.click(taskAppLocator);
         return new ProcessServiceTabBarPage();
     }

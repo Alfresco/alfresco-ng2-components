@@ -263,7 +263,7 @@ export class DataTableComponentPage {
                 .filter(async (el) => el.isPresent())
                 .map(async (el) => el.getText());
         } catch (error) {
-            Logger.log(error)
+            Logger.log(error);
         }
 
         return columnValues;

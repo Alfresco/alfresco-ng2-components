@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ElementFinder} from 'protractor';
+import { ElementFinder } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 
 export class TogglePage {

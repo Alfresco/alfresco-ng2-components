@@ -71,35 +71,35 @@ export class ViewerPage {
     canvasLayer = $$('.canvasWrapper > canvas').first();
 
     openWithSwitch = $('#adf-switch-openwith');
-    openWith = $('#adf-viewer-openwith')
+    openWith = $('#adf-viewer-openwith');
 
     moreActionsMenuSwitch = $('#adf-switch-moreactionsmenu');
-    moreActionsMenu = $('button[data-automation-id="adf-toolbar-more-actions"]')
+    moreActionsMenu = $('button[data-automation-id="adf-toolbar-more-actions"]');
 
     customNameSwitch = $('#adf-switch-custoname');
     customToolbarToggle = $('#adf-toggle-custom-toolbar');
-    customToolbar = $('adf-viewer-toolbar[data-automation-id="adf-viewer-custom-toolbar"]')
+    customToolbar = $('adf-viewer-toolbar[data-automation-id="adf-viewer-custom-toolbar"]');
 
     showRightSidebarSwitch = $('#adf-switch-showrightsidebar');
-    showLeftSidebarSwitch = $('#adf-switch-showleftsidebar')
+    showLeftSidebarSwitch = $('#adf-switch-showleftsidebar');
 
     moreActionsSwitch = $('#adf-switch-moreactions');
     pdfPageLoaded = $('[data-page-number="1"][data-loaded="true"], adf-img-viewer, adf-txt-viewer');
 
     downloadSwitch = $('#adf-switch-download');
-    downloadButton = $('#adf-viewer-download')
+    downloadButton = $('#adf-viewer-download');
 
     printSwitch = $('#adf-switch-print');
     printButton = $('#adf-viewer-print');
 
     allowSidebarSwitch = $('#adf-switch-allowsidebar');
-    allowLeftSidebarSwitch = $('#adf-switch-allowLeftSidebar')
+    allowLeftSidebarSwitch = $('#adf-switch-allowLeftSidebar');
 
     uploadButton = $('#adf-viewer-upload');
     timeButton = $('#adf-viewer-time');
-    bugButton = $('#adf-viewer-bug')
+    bugButton = $('#adf-viewer-bug');
 
-    codeViewer = $('#adf-monaco-file-editor')
+    codeViewer = $('#adf-monaco-file-editor');
 
     showTabWithIconSwitch = $('#adf-tab-with-icon');
     showTabWithIconAndLabelSwitch = $('#adf-icon-and-label-tab');

@@ -30,7 +30,7 @@ import { AttachmentListPage } from './../pages/attachment-list.page';
 import { ChecklistDialog } from './../pages/dialog/create-checklist-dialog.page';
 import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
 import { TasksPage } from './../pages/tasks.page';
-import * as CONSTANTS from '../../util/constants'
+import * as CONSTANTS from '../../util/constants';
 
 describe('Start Task - Task App', () => {
 
@@ -136,14 +136,14 @@ describe('Start Task - Task App', () => {
         await formFields.setFieldValue(formTextField, formFieldValue);
 
         await formFields.refreshForm();
-        await formFields.checkFieldValue(by.id, formTextField, '');
+        await formFields.checkFieldValue(formTextField, '');
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
 
         await formFields.setFieldValue(formTextField, formFieldValue);
-        await formFields.checkFieldValue(by.id, formTextField, formFieldValue);
+        await formFields.checkFieldValue(formTextField, formFieldValue);
 
         await taskPage.formFields().saveForm();
-        await formFields.checkFieldValue(by.id, formTextField, formFieldValue);
+        await formFields.checkFieldValue(formTextField, formFieldValue);
     });
 
     it('[C260425] Should be possible to assign a user', async () => {

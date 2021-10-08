@@ -39,7 +39,7 @@ export class EditProcessFilterCloudComponentPage {
     saveButton = $('button[data-automation-id="adf-filter-action-save"]');
     saveAsButton = $('button[data-automation-id="adf-filter-action-saveAs"]');
     deleteButton = $('button[data-automation-id="adf-filter-action-delete"]');
-    filter = $(`adf-cloud-edit-process-filter mat-expansion-panel-header`)
+    filter = $(`adf-cloud-edit-process-filter mat-expansion-panel-header`);
 
     private locatorAppNameDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-appName']`);
     private locatorStatusDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-status']`);

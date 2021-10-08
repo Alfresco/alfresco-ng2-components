@@ -30,12 +30,12 @@ export class AttachFolderWidgetPage {
     }
 
     async checkFolderIsAttached(fieldId: string, name: string): Promise<void> {
-        const folderAttached = await this.getFolderAttachedLocator(fieldId, name)
+        const folderAttached = await this.getFolderAttachedLocator(fieldId, name);
         await BrowserVisibility.waitUntilElementIsVisible(folderAttached);
     }
 
     async checkFolderIsNotAttached(fieldId: string, name: string): Promise<void> {
-        const folderAttached = await this.getFolderAttachedLocator(fieldId, name)
+        const folderAttached = await this.getFolderAttachedLocator(fieldId, name);
         await BrowserVisibility.waitUntilElementIsNotPresent(folderAttached);
     }
 

@@ -37,7 +37,6 @@ export class AttachFileWidgetPage {
     async attachFile(fieldId: string, fileLocation: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
         const uploadButton = await widget.$(this.alfrescoTypeUploadLocator);
-        Logger.log(`This is uploadButton: ${uploadButton}`)
         await BrowserActions.click(uploadButton);
         await BrowserVisibility.waitUntilElementIsPresent(this.localStorageButton);
         await this.localStorageButton.sendKeys(fileLocation);
@@ -56,7 +55,7 @@ export class AttachFileWidgetPage {
     }
 
     async checkFileIsAttached(fieldId: string, name: string): Promise<void> {
-        const fileAttached = await this.getFileAttachedNotAttachedLocator(fieldId, name)
+        const fileAttached = await this.getFileAttachedNotAttachedLocator(fieldId, name);
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
@@ -67,7 +66,7 @@ export class AttachFileWidgetPage {
     }
 
     async checkFileIsNotAttached(fieldId: string, name: string): Promise<void> {
-        const fileNotAttached = await this.getFileAttachedNotAttachedLocator(fieldId, name)
+        const fileNotAttached = await this.getFileAttachedNotAttachedLocator(fieldId, name);
         await BrowserVisibility.waitUntilElementIsNotVisible(fileNotAttached);
     }
 
@@ -84,7 +83,7 @@ export class AttachFileWidgetPage {
     async toggleAttachedFileMenu(fieldId: string, fileName: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const widget = await this.formFields.getWidget(fieldId);
-        const fileAttached = await this.getFileAttachedNotAttachedLocator(fieldId, fileName)
+        const fileAttached = await this.getFileAttachedNotAttachedLocator(fieldId, fileName);
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
         const id = await BrowserActions.getAttribute(fileAttached, 'id');
         const optionMenu = widget.$(`button[id='${id}-option-menu']`);

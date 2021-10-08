@@ -28,7 +28,7 @@ export class AttachFileWidgetCloudPage {
         this.assignWidget(fieldId);
     }
 
-    getFileAttachedLocatorByContainingText = async(text: string): Promise<ElementFinder> =>{
+    getFileAttachedLocatorByContainingText = async(text: string): Promise<ElementFinder> => {
         const filesListLocator = 'div[id="adf-attach-widget-readonly-list"]';
         return this.widget.$(filesListLocator).element(by.cssContainingText('mat-list-item span ', text));
     }

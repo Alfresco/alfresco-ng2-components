@@ -32,8 +32,8 @@ export class SearchBarPage {
     getRowByRowName = (name: string): ElementFinder => $(`mat-list-item[data-automation-id='autocomplete_for_${name}']`);
 
     async pressDownArrowAndEnter(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar)
-        await BrowserActions.clearSendKeys(this.searchBar, protractor.Key.ARROW_DOWN)
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
+        await BrowserActions.clearSendKeys(this.searchBar, protractor.Key.ARROW_DOWN);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 

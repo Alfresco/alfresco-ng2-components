@@ -32,7 +32,7 @@ export class ProcessFiltersPage {
     processIcon = 'adf-icon[data-automation-id="adf-filter-icon"]';
     startProcessEl = $('adf-start-process .adf-start-process');
 
-    getButtonFilterLocatorByName = (name: string) => $(`button[data-automation-id='${name}_filter']`)
+    getButtonFilterLocatorByName = (name: string) => $(`button[data-automation-id='${name}_filter']`);
 
     async startProcess(): Promise<StartProcessPage> {
         await this.clickCreateProcessButton();

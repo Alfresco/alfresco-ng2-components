@@ -26,7 +26,7 @@ export class AppListCloudPage {
     nameOfAllApps = $$('adf-cloud-app-details div[class*="item-card-title"] h1');
     firstApp = $$('adf-cloud-app-details div[class*="item-card-title"] h1').first();
 
-    getAppNameLocatorByAppName = (appName: string): ElementFinder => $(`mat-card[title="${appName}"]`)
+    getAppNameLocatorByAppName = (appName: string): ElementFinder => $(`mat-card[title="${appName}"]`);
 
     async checkApsContainer(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);

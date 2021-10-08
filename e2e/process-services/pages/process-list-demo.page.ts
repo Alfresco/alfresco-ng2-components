@@ -24,7 +24,7 @@ export class ProcessListDemoPage {
     resetButton = element(by.cssContainingText('button span', 'Reset'));
     emptyProcessContent = $('.adf-empty-content');
     processDefinitionInput = $('input[data-automation-id="process-definition-id"]');
-    processInstanceInput = $('input[data-automation-id="process-instance-id"]')
+    processInstanceInput = $('input[data-automation-id="process-instance-id"]');
 
     stateDropdown = new DropdownPage($('mat-select[data-automation-id="state"'));
     sortDropdown = new DropdownPage($('mat-select[data-automation-id="sort"'));

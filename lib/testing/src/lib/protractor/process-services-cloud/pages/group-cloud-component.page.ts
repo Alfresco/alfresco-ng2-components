@@ -41,19 +41,19 @@ export class GroupCloudComponentPage {
     }
 
     async selectGroupFromList(name: string): Promise<void> {
-        const groupRow = await this.getGroupRowLocatorByName(name)
+        const groupRow = await this.getGroupRowLocatorByName(name);
 
         await BrowserActions.click(groupRow);
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
     }
 
     async checkGroupIsDisplayed(name: string): Promise<void> {
-        const groupRow = await this.getGroupRowLocatorByName(name)
+        const groupRow = await this.getGroupRowLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsVisible(groupRow);
     }
 
     async checkGroupIsNotDisplayed(name: string): Promise<void> {
-        const groupRow = await this.getGroupRowLocatorByName(name)
+        const groupRow = await this.getGroupRowLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
     }
 

@@ -17,7 +17,7 @@
 
 import * as path from 'path';
 import { BrowserActions, TestElement, TogglePage } from '@alfresco/adf-testing';
-import { $, browser} from 'protractor';
+import { $, browser } from 'protractor';
 
 export class VersionManagePage {
 

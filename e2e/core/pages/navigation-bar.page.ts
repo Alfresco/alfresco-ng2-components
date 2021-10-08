@@ -40,7 +40,6 @@ export class NavigationBarPage {
 
     getMenuItemLocator = (title: string) => $(`.app-sidenav-link[data-automation-id="${title}"]`);
 
-
     async clickNavigationBarItem(title: string, untilElementIsVisible?: ElementFinder): Promise<void> {
         Logger.log(`clickNavigationBarItem ${title}`);
 

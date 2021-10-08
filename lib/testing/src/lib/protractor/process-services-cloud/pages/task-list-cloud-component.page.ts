@@ -38,10 +38,9 @@ export class TaskListCloudComponentPage {
     noTasksFound = $$('.adf-empty-content__title').first();
     actionMenu = $('*[role="menu"]');
     optionButton = 'button[data-automation-id*="action_menu_"]';
+    dataTable = new DataTableComponentPage(this.taskList);
 
     getButtonLocatorByAction = (action: string): ElementFinder => $(`button[data-automation-id*="${action}"]`);
-
-    dataTable = new DataTableComponentPage(this.taskList);
 
     getDataTable(): DataTableComponentPage {
         return this.dataTable;

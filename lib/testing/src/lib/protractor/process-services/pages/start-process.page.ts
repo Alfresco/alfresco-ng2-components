@@ -34,7 +34,7 @@ export class StartProcessPage {
     startProcessButtonDisabled = $('button[data-automation-id="btn-start"][disabled]');
     noProcess = $('.adf-empty-content__title');
     processDefinition = $('input[id="processDefinitionName"]');
-    processDefinitionOptionsPanel = $('div[class*="mat-autocomplete-panel"]')
+    processDefinitionOptionsPanel = $('div[class*="mat-autocomplete-panel"]');
 
     processDefinitionDropdown = new DropdownPage($('#adf-select-process-dropdown'));
     applicationDropdown = new DropdownPage($('[data-automation-id*="start-process-app"] .mat-select-arrow'));

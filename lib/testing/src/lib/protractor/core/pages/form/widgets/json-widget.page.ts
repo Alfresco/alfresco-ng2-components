@@ -19,7 +19,6 @@ import { FormFields } from '../form-fields';
 import { BrowserActions } from '../../../utils/public-api';
 
 export class JsonWidgetPage {
-    
     formFields = new FormFields();
     jsonButtonLocator = 'button';
 

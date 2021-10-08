@@ -53,12 +53,12 @@ export class TaskFiltersCloudComponentPage {
     }
 
     async getTaskFilterCounter(filterName: string): Promise<string> {
-        const filterCounter = await this.getFilterCounterLocatorByFilterName(filterName)
+        const filterCounter = await this.getFilterCounterLocatorByFilterName(filterName);
         return BrowserActions.getText(filterCounter);
     }
 
     async checkTaskFilterCounter(filterName: string): Promise<void> {
-        const filterCounter = await this.getFilterCounterLocatorByFilterName(filterName)
+        const filterCounter = await this.getFilterCounterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementHasText(filterCounter, '0');
     }
 

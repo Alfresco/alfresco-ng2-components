@@ -39,7 +39,7 @@ export class CardViewComponentPage {
     editableSwitch = $('#app-toggle-editable');
     clearDateSwitch = $('#app-toggle-clear-date');
     noneOptionSwitch = $('#app-toggle-none-option');
-    clickableField = $(`[data-automation-id="card-textitem-toggle-click"]`)
+    clickableField = $(`[data-automation-id="card-textitem-toggle-click"]`);
 
     selectDropdown = new DropdownPage($('mat-select[data-automation-class="select-box"]'));
 
