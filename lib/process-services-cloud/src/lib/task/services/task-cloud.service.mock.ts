@@ -16,11 +16,19 @@ export class TaskCloudServiceMock {
         return of(taskDetailsContainer[taskId]);
     }
 
-    getCandidateUsers(_appName: string, _taskId: string): Observable<string[]> {
+    getCandidateUsers(_appName: string, taskId: string): Observable<string[]> {
+        if(taskId === 'mock-no-candidate-users'){
+            return of([]);
+        }
+
         return of(['user1', 'user2']);
     }
 
-    getCandidateGroups(_appName: string, _taskId: string): Observable<string[]> {
+    getCandidateGroups(_appName: string, taskId: string): Observable<string[]> {
+        if(taskId === 'mock-no-candidate-groups'){
+            return of([]);
+        }
+        
         return of(['group1', 'group2']);
     }
 

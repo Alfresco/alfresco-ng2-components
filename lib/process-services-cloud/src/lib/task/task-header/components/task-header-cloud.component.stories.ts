@@ -69,9 +69,26 @@ WithoutAssignee.args = {
     taskId: 'mock-created-task'
 };
 
-export const EmptyOrInvalid = Template.bind({});
-EmptyOrInvalid.args = {
+export const NotClaimableByUser = Template.bind({});
+NotClaimableByUser.args = {
+    ...AssignedAndEditable.args,
+    taskId: 'mock-no-candidate-users'
+};
+
+export const TaskNotClaimableByGroupUser = Template.bind({});
+TaskNotClaimableByGroupUser.args = {
+    ...AssignedAndEditable.args,
+    taskId: 'mock-no-candidate-groups'
+};
+
+export const InvalidForMissingApp = Template.bind({});
+InvalidForMissingApp.args = {
     ...AssignedAndEditable.args,
     appName: undefined,
+};
+
+export const InvalidForMissingTaskId = Template.bind({});
+InvalidForMissingTaskId.args = {
+    ...AssignedAndEditable.args,
     taskId: undefined
 };
