@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { element, by, browser, $ } from 'protractor';
 import {
     TogglePage,
     TaskFiltersCloudComponentPage,
@@ -30,12 +30,12 @@ export class TasksCloudDemoPage {
     newTaskButton = TestElement.byCss('button[data-automation-id="btn-start-task"]');
     settingsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
     appButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'App')).first();
-    displayTaskDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
-    displayProcessDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="processDetailsRedirection"]'));
-    actionMenuToggle = element(by.css('mat-slide-toggle[data-automation-id="actionmenu"]'));
-    contextMenuToggle = element(by.css('mat-slide-toggle[data-automation-id="contextmenu"]'));
-    multiSelectionToggle = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
-    testingModeToggle = element(by.css('mat-slide-toggle[data-automation-id="testingMode"]'));
+    displayTaskDetailsToggle = $('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]');
+    displayProcessDetailsToggle = $('mat-slide-toggle[data-automation-id="processDetailsRedirection"]');
+    actionMenuToggle = $('mat-slide-toggle[data-automation-id="actionmenu"]');
+    contextMenuToggle = $('mat-slide-toggle[data-automation-id="contextmenu"]');
+    multiSelectionToggle = $('mat-slide-toggle[data-automation-id="multiSelection"]');
+    testingModeToggle = $('mat-slide-toggle[data-automation-id="testingMode"]');
     selectedRows = element(by.xpath("//div[text()=' Selected Rows: ']"));
     noOfSelectedRows = element.all(by.xpath("//div[text()=' Selected Rows: ']//li"));
     addActionTitle = element(by.cssContainingText('.mat-card-title', 'Add Action'));
@@ -46,7 +46,7 @@ export class TasksCloudDemoPage {
     disableCheckbox = TestElement.byCss(`mat-checkbox[formcontrolname='disabled']`);
     visibleCheckbox = TestElement.byCss(`mat-checkbox[formcontrolname='visible']`);
     spinner = TestElement.byTag('mat-progress-spinner');
-    modeDropdown = new DropdownPage(element(by.css('mat-form-field[data-automation-id="selectionMode"]')));
+    modeDropdown = new DropdownPage($('mat-form-field[data-automation-id="selectionMode"]'));
 
     togglePage = new TogglePage();
 

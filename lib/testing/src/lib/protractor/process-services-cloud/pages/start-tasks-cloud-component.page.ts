@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-import { element, by, Key, ElementFinder } from 'protractor';
+import { element, by, Key, ElementFinder, $, $$ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class StartTasksCloudPage {
 
-    name = element(by.css('input[id="name_id"]'));
-    dueDate = element(by.css('input[id="date_id"]'));
-    description = element(by.css('textarea[id="description_id"]'));
-    priority = element(by.css('mat-select[formcontrolname="priority"]'));
-    startButton = element(by.css('button[id="button-start"]'));
-    startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
-    cancelButton = element(by.css('button[id="button-cancel"]'));
-    form = element.all(by.css('adf-cloud-start-task form')).first();
-    formDefinitionSelector = element(by.css('.adf-form-definition-selector'));
-    priorityStartTaskField = element(by.css('input[formControlName="priority"]'));
+    name = $('input[id="name_id"]');
+    dueDate = $('input[id="date_id"]');
+    description = $('textarea[id="description_id"]');
+    priority = $('mat-select[formcontrolname="priority"]');
+    startButton = $('button[id="button-start"]');
+    startButtonEnabled = $('button[id="button-start"]:not(disabled)');
+    cancelButton = $('button[id="button-cancel"]');
+    form = $$('adf-cloud-start-task form').first();
+    formDefinitionSelector = $('.adf-form-definition-selector');
+    priorityStartTaskField = $('input[formControlName="priority"]');
 
     async checkFormIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.form);
@@ -65,7 +65,7 @@ export class StartTasksCloudPage {
     }
 
     async checkStartButtonIsDisabled(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="button-start"]:disabled')));
+        await BrowserVisibility.waitUntilElementIsVisible($('button[id="button-start"]:disabled'));
     }
 
     async clickCancelButton(): Promise<void> {

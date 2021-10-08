@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { $ } from 'protractor';
 import { BrowserVisibility, BrowserActions, DropdownPage } from '@alfresco/adf-testing';
 
 export class AttachFormPage {
 
-    noFormMessage = element(by.css('.adf-empty-content__title'));
-    attachFormButton = element(by.id('adf-attach-form-attach-button'));
-    completeButton = element(by.id('adf-attach-form-complete-button'));
-    formDropdown = element(by.id('form_id'));
-    cancelButton = element(by.id('adf-attach-form-cancel-button'));
-    defaultTitle = element(by.css('.mat-card-title'));
-    attachFormDropdown = new DropdownPage(element(by.css('.adf-attach-form-row')));
+    noFormMessage = $('.adf-empty-content__title');
+    attachFormButton = $('#adf-attach-form-attach-button');
+    completeButton = $('#adf-attach-form-complete-button');
+    formDropdown = $('#form_id');
+    cancelButton = $('#adf-attach-form-cancel-button');
+    defaultTitle = $('.mat-card-title');
+    attachFormDropdown = new DropdownPage($('.adf-attach-form-row'));
 
     async checkNoFormMessageIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noFormMessage);
@@ -70,6 +70,6 @@ export class AttachFormPage {
     }
 
     async checkAttachFormButtonIsDisabled(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="adf-attach-form-attach-button"][disabled]')));
+        await BrowserVisibility.waitUntilElementIsVisible($('button[id="adf-attach-form-attach-button"][disabled]'));
     }
 }

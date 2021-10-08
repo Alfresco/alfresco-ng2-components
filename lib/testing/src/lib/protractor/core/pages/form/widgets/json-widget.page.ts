@@ -17,16 +17,14 @@
 
 import { FormFields } from '../form-fields';
 import { BrowserActions } from '../../../utils/public-api';
-import { Locator, by } from 'protractor';
 
 export class JsonWidgetPage {
-
     formFields = new FormFields();
-    jsonButtonLocator: Locator = by.css('button');
+    jsonButtonLocator = 'button';
 
-    async clickJsonButton(fieldId): Promise<void> {
+    async clickJsonButton(fieldId: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
-        const uploadButton = await widget.element(this.jsonButtonLocator);
+        const uploadButton = await widget.$(this.jsonButtonLocator);
         await BrowserActions.click(uploadButton);
     }
 

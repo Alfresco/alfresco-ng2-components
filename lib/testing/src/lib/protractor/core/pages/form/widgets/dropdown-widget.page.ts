@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element } from 'protractor';
+import { by, element, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DropdownWidgetPage {
@@ -35,12 +35,12 @@ export class DropdownWidgetPage {
 
     async openDropdown(locator: string = '#dropdown'): Promise<void> {
         await this.checkDropdownIsDisplayed(locator);
-        const dropdown = locator ? element(by.css(`${locator}`)) : element(by.css(`#dropdown`));
+        const dropdown = locator ? $(`${locator}`) : $(`#dropdown`);
         await BrowserActions.click(dropdown);
     }
 
     async checkDropdownIsDisplayed(locator: string = '#dropdown'): Promise<void> {
-        const dropdown = element(by.css(`${locator}`));
+        const dropdown = $(`${locator}`);
         await BrowserVisibility.waitUntilElementIsVisible(dropdown);
     }
 

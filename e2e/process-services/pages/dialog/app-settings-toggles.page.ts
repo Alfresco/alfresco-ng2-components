@@ -16,15 +16,15 @@
  */
 
 import { TogglePage } from '@alfresco/adf-testing';
-import { element, by } from 'protractor';
+import { $ } from 'protractor';
 
 export class AppSettingsTogglesPage {
 
     togglePage = new TogglePage();
 
-    showDetailsHeaderToggle = element(by.id('adf-show-header'));
-    showTaskFilterIconsToggle = element(by.id('adf-show-task-filter-icon'));
-    showProcessFilterIconsToggle = element(by.id('adf-show-process-filter-icon'));
+    showDetailsHeaderToggle = $('#adf-show-header');
+    showTaskFilterIconsToggle = $('#adf-show-task-filter-icon');
+    showProcessFilterIconsToggle = $('#adf-show-process-filter-icon');
 
     async enableShowHeader(): Promise<void> {
         await this.togglePage.enableToggle(this.showDetailsHeaderToggle);

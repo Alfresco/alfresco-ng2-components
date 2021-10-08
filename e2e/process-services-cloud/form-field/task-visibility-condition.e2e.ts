@@ -25,7 +25,7 @@ import {
     TaskFormCloudComponent,
     StartProcessCloudPage, ProcessCloudWidgetPage
 } from '@alfresco/adf-testing';
-import { browser, by } from 'protractor';
+import { browser } from 'protractor';
 
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from '.././pages/tasks-cloud-demo.page';
@@ -96,11 +96,11 @@ describe('Task cloud visibility', async () => {
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '5');
+        await taskFormCloudComponent.formFields().setFieldValue('Number1', '5');
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number2');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(true);
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '123');
+        await taskFormCloudComponent.formFields().setFieldValue('Number1', '123');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
     });
@@ -125,15 +125,15 @@ describe('Task cloud visibility', async () => {
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '5');
+        await taskFormCloudComponent.formFields().setFieldValue('Number1', '5');
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number2');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(true);
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '123');
+        await taskFormCloudComponent.formFields().setFieldValue('Number1', '123');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '4');
+        await taskFormCloudComponent.formFields().setFieldValue('Number1', '4');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(true);
         await taskFormCloudComponent.clickCompleteButton();
     });

@@ -21,22 +21,20 @@ import { TaskDetailsPage } from './task-details.page';
 import { FiltersPage } from './filters.page';
 import { ChecklistDialog } from './dialog/create-checklist-dialog.page';
 import { TasksListPage } from './tasks-list.page';
-import { Locator, element, by } from 'protractor';
+import { element, by, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions, FormFields } from '@alfresco/adf-testing';
 
 export class TasksPage {
-    createButton = element(by.css('button[data-automation-id="create-button"'));
-    newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
-    addChecklistButton = element(by.css('button[class*="adf-add-to-checklist-button"]'));
+    createButton = $('button[data-automation-id="create-button"');
+    newTaskButton = $('button[data-automation-id="btn-start-task"]');
+    addChecklistButton = $('button[class*="adf-add-to-checklist-button"]');
     rowByRowName = by.xpath('ancestor::mat-chip');
-    checklistContainer: Locator = by.css('div[class*="checklist-menu"]');
+    checklistContainer = $('div[class*="checklist-menu"]');
     taskTitle = '.adf-activiti-task-details__header span';
-    rows: Locator = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[class*="adf-datatable-cell"]');
-    completeButtonNoForm = element(by.id('adf-no-form-complete-button'));
-    checklistDialog = element(by.id('checklist-dialog'));
-    checklistNoMessage = element(by.id('checklist-none-message'));
-    numberOfChecklists = element(by.css('[data-automation-id="checklist-label"] mat-chip'));
-    sortByName: Locator = by.css('div[data-automation-id="auto_id_name"]');
+    completeButtonNoForm = $('#adf-no-form-complete-button');
+    checklistDialog = $('#checklist-dialog');
+    checklistNoMessage = $('#checklist-none-message');
+    numberOfChecklists = $('[data-automation-id="checklist-label"] mat-chip');
 
     async createNewTask(): Promise<StartTaskDialogPage> {
         await this.clickOnCreateButton();
@@ -89,7 +87,7 @@ export class TasksPage {
     }
 
     getRowsName(name: string) {
-        return element(this.checklistContainer).element(by.cssContainingText('span', name));
+        return this.checklistContainer.element(by.cssContainingText('span', name));
     }
 
     getChecklistByName(name: string) {
@@ -104,11 +102,11 @@ export class TasksPage {
     }
 
     async checkChecklistIsNotDisplayed(name: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(this.checklistContainer).element(by.cssContainingText('span', name)));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.checklistContainer.element(by.cssContainingText('span', name)));
     }
 
     async checkTaskTitle(taskName: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(this.taskTitle)));
+        await BrowserVisibility.waitUntilElementIsVisible($(this.taskTitle));
         const title = element(by.cssContainingText(this.taskTitle, taskName));
         await BrowserVisibility.waitUntilElementIsVisible(title);
     }
@@ -140,13 +138,13 @@ export class TasksPage {
     async removeChecklists(name: string): Promise<void> {
         const elem = this.getRowsName(name);
         const row = elem.element(this.rowByRowName);
-        await BrowserActions.click(row.element(by.css('mat-icon')));
+        await BrowserActions.click(row.$('mat-icon'));
     }
 
     async checkChecklistsRemoveButtonIsNotDisplayed(name: string): Promise<void> {
         const elem = this.getRowsName(name);
         const row = elem.element(this.rowByRowName);
-        await BrowserVisibility.waitUntilElementIsNotVisible(row.element(by.css('mat-icon')));
+        await BrowserVisibility.waitUntilElementIsNotVisible(row.$('mat-icon'));
     }
 
     async clickSortByNameAsc(): Promise<any> {

@@ -16,15 +16,15 @@
  */
 
 import { FormFields } from '../form-fields';
-import { Locator, by, element } from 'protractor';
+import { by, element, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class TypeaheadWidgetPage {
 
-    field = element(by.css('input[data-automation-id="adf-typeahed-search-input"]'));
-    firstResult = element(by.id('adf-typeahed-widget-user-0'));
+    field = $('input[data-automation-id="adf-typeahed-search-input"]');
+    firstResult = $('#adf-typeahed-widget-user-0');
+    groupDropDownList = $('.mat-autocomplete-panel');
     formFields = new FormFields();
-    groupDropDownList: Locator = by.css('.mat-autocomplete-panel');
 
     getFieldLabel(fieldId: string): Promise<string> {
         return this.formFields.getFieldLabel(fieldId);
@@ -43,7 +43,7 @@ export class TypeaheadWidgetPage {
     }
 
     async checkDropDownListIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(this.groupDropDownList));
+        await BrowserVisibility.waitUntilElementIsVisible(this.groupDropDownList);
     }
 
     async checkOptionIsListed(option: string): Promise<void> {
@@ -51,9 +51,9 @@ export class TypeaheadWidgetPage {
         await BrowserVisibility.waitUntilElementIsVisible(optionElement);
     }
 
-    async getDropDownList(): Promise<any[]> {
-        const option: Locator = by.css('[id="adf-typeahed-label-name"]');
-        await BrowserVisibility.waitUntilElementIsVisible(element(option));
+    async getDropDownList(): Promise<string[]> {
+        const option = $('[id="adf-typeahed-label-name"]');
+        await BrowserVisibility.waitUntilElementIsVisible(option);
         return element.all(option).map((elementFinder) => elementFinder.getText());
     }
 

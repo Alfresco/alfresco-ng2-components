@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser } from 'protractor';
+import { element, by, protractor, browser, $, $$ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class HeaderPage {
 
     checkBox = element(by.cssContainingText('.mat-checkbox-label', 'Show menu button'));
-    headerColor = element(by.css('option[value="primary"]'));
-    titleInput = element(by.css('input[name="title"]'));
-    iconInput = element(by.css('input[placeholder="URL path"]'));
-    hexColorInput = element(by.css('input[placeholder="hex color code"]'));
-    logoHyperlinkInput = element(by.css('input[placeholder="Redirect URL"]'));
-    logoTooltipInput = element(by.css('input[placeholder="Tooltip text"]'));
-    positionStart = element.all(by.css('mat-radio-button[value="start"]')).first();
-    positionEnd = element.all(by.css('mat-radio-button[value="end"]')).first();
-    sideBarPositionRight = element(by.css('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end'));
-    sideBarPositionLeft = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
+    headerColor = $('option[value="primary"]');
+    titleInput = $('input[name="title"]');
+    iconInput = $('input[placeholder="URL path"]');
+    hexColorInput = $('input[placeholder="hex color code"]');
+    logoHyperlinkInput = $('input[placeholder="Redirect URL"]');
+    logoTooltipInput = $('input[placeholder="Tooltip text"]');
+    positionStart = $$('mat-radio-button[value="start"]').first();
+    positionEnd = $$('mat-radio-button[value="end"]').first();
+    sideBarPositionRight = $('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end');
+    sideBarPositionLeft = $('mat-sidenav.mat-drawer.mat-sidenav');
 
     async checkShowMenuCheckBoxIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
@@ -50,12 +50,12 @@ export class HeaderPage {
     }
 
     async clickShowMenuButton(): Promise<void> {
-        const checkBox = element.all(by.css('mat-checkbox')).first();
+        const checkBox = $$('mat-checkbox').first();
         await BrowserActions.click(checkBox);
     }
 
     async changeHeaderColor(color: string): Promise<void> {
-        const headerColor = element(by.css('option[value="' + color + '"]'));
+        const headerColor = $('option[value="' + color + '"]');
         await BrowserActions.click(headerColor);
     }
 
@@ -71,7 +71,7 @@ export class HeaderPage {
     }
 
     async checkIconIsDisplayed(url: string): Promise<void> {
-        const icon = element(by.css('img[src="' + url + '"]'));
+        const icon = $('img[src="' + url + '"]');
         await BrowserVisibility.waitUntilElementIsVisible(icon);
     }
 

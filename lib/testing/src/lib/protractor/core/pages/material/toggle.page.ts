@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, ElementFinder } from 'protractor';
+import { ElementFinder } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 
 export class TogglePage {
@@ -23,7 +23,7 @@ export class TogglePage {
     async enableToggle(toggle: ElementFinder): Promise<void> {
         const check = await BrowserActions.getAttribute(toggle, 'class');
         if (check.indexOf('mat-checked') < 0) {
-            const elem = toggle.all(by.css('input')).first();
+            const elem = toggle.$$('input').first();
             await BrowserActions.clickScript(elem);
         }
     }
@@ -31,7 +31,7 @@ export class TogglePage {
     async disableToggle(toggle: ElementFinder): Promise<void> {
         const check = await BrowserActions.getAttribute(toggle, 'class');
         if (check.indexOf('mat-checked') >= 0) {
-            const elem = toggle.all(by.css('input')).first();
+            const elem = toggle.$$('input').first();
             await BrowserActions.clickScript(elem);
         }
     }

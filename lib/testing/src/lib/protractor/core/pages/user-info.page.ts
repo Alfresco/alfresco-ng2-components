@@ -15,30 +15,30 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { $, $$ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { TabsPage } from '../../core/pages/material/tabs.page';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class UserInfoPage {
 
-    dialog = element.all(by.css('mat-card[class*="adf-userinfo-card"]')).first();
-    userImage = element(by.css('div[id="user-initial-image"]'));
-    userInfoEcmHeaderTitle = element(by.css('div[id="ecm-username"]'));
-    userInfoEcmTitle = element(by.css('mat-card-content span[id="ecm-full-name"]'));
-    ecmEmail = element(by.css('span[id="ecm-email"]'));
-    ecmJobTitle = element(by.css('span[id="ecm-job-title"]'));
-    userInfoProcessHeaderTitle = element(by.css('div[id="bpm-username"]'));
-    userInfoProcessTitle = element(by.css('mat-card-content span[id="bpm-full-name"]'));
-    processEmail = element(by.css('span[id="bpm-email"]'));
-    processTenant = element(by.css('.detail-profile'));
-    apsImage = element(by.css('img[id="bpm-user-detail-image"]'));
-    acsImage = element(by.css('img[id="ecm-user-detail-image"]'));
-    initialImage = element.all(by.css('div[id="user-initials-image"]')).first();
-    userInfoSsoHeaderTitle = this.dialog.element(by.css('div[id="identity-username"]'));
-    userInfoSsoTitle = element(by.css('.adf-userinfo__detail-title'));
-    ssoEmail = element(by.id('identity-email'));
-    userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
+    dialog = $$('mat-card[class*="adf-userinfo-card"]').first();
+    userImage = $('div[id="user-initial-image"]');
+    userInfoEcmHeaderTitle = $('div[id="ecm-username"]');
+    userInfoEcmTitle = $('mat-card-content span[id="ecm-full-name"]');
+    ecmEmail = $('span[id="ecm-email"]');
+    ecmJobTitle = $('span[id="ecm-job-title"]');
+    userInfoProcessHeaderTitle = $('div[id="bpm-username"]');
+    userInfoProcessTitle = $('mat-card-content span[id="bpm-full-name"]');
+    processEmail = $('span[id="bpm-email"]');
+    processTenant = $('.detail-profile');
+    apsImage = $('img[id="bpm-user-detail-image"]');
+    acsImage = $('img[id="ecm-user-detail-image"]');
+    initialImage = $$('div[id="user-initials-image"]').first();
+    userInfoSsoHeaderTitle = this.dialog.$('div[id="identity-username"]');
+    userInfoSsoTitle = $('.adf-userinfo__detail-title');
+    ssoEmail = $('#identity-email');
+    userProfileButton = $('button[data-automation-id="adf-user-profile"]');
     tabsPage = new TabsPage();
 
     async dialogIsDisplayed(): Promise<void> {

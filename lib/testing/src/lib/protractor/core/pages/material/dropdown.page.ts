@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, browser } from 'protractor';
+import { element, by, ElementFinder, browser, $$, $ } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
 import { Logger } from '../../utils/logger';
@@ -24,7 +24,7 @@ export class DropdownPage {
 
     dropDownElement: ElementFinder;
 
-    constructor(dropDownElement = element.all(by.css('div[class="mat-select-arrow-wrapper"]')).first()) {
+    constructor(dropDownElement = $$('div[class="mat-select-arrow-wrapper"]').first()) {
         this.dropDownElement = dropDownElement;
     }
 
@@ -41,11 +41,11 @@ export class DropdownPage {
     }
 
     async getValue(): Promise<string> {
-        return BrowserActions.getText(element(by.css('mat-form-field span')));
+        return BrowserActions.getText($('mat-form-field span'));
     }
 
     async getNumberOfOptions(): Promise<number> {
-        const dropdownOptions = element.all(by.css('.mat-select-panel mat-option'));
+        const dropdownOptions = $$('.mat-select-panel mat-option');
         return dropdownOptions.count();
     }
 
@@ -68,11 +68,11 @@ export class DropdownPage {
     }
 
     async checkOptionsPanelIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('.mat-select-panel')));
+        await BrowserVisibility.waitUntilElementIsVisible($('.mat-select-panel'));
     }
 
     async getSelectedOptionText(): Promise<string> {
-        const selectedOption = this.dropDownElement.element(by.css('.mat-select-value-text span'));
+        const selectedOption = this.dropDownElement.$('.mat-select-value-text span');
         return BrowserActions.getText(selectedOption);
     }
 

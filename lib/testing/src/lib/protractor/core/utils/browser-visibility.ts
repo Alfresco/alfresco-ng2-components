@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder, protractor, until } from 'protractor';
+import { browser, ElementFinder, protractor, until, $ } from 'protractor';
 import { Logger } from './logger';
 import { falseIfMissing } from 'protractor/built/util';
 
@@ -120,7 +120,7 @@ export class BrowserVisibility {
     static async waitUntilDialogIsClose(): Promise<void> {
         Logger.info(`Wait Until dialog close`);
 
-        const dialog = element(by.css('mat-dialog-container'));
+        const dialog = $('mat-dialog-container');
         await this.waitUntilElementIsNotPresent(dialog);
     }
 

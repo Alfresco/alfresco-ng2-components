@@ -15,27 +15,27 @@
  * limitations under the License.
  */
 
-import { element, by, browser, ElementFinder } from 'protractor';
+import { browser, ElementFinder, $, $$ } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchRadioPage {
 
     filter: ElementFinder;
-    showMoreButton = element(by.css('adf-search-radio button[title="Show more"]'));
-    showLessButton = element(by.css('adf-search-radio button[title="Show less"]'));
+    showMoreButton = $('adf-search-radio button[title="Show more"]');
+    showLessButton = $('adf-search-radio button[title="Show less"]');
 
     constructor(filter: ElementFinder) {
         this.filter = filter;
     }
 
     async checkFilterRadioButtonIsDisplayed(filterName: string): Promise<void> {
-        const filterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"]'));
+        const filterType = $(`mat-radio-button[data-automation-id="search-radio-${filterName}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(filterType);
     }
 
     async checkFilterRadioButtonIsChecked(filterName: string): Promise<void> {
-        const selectedFilterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"][class*="checked"]'));
+        const selectedFilterType = $(`mat-radio-button[data-automation-id="search-radio-${filterName}"][class*="checked"]`);
         await BrowserVisibility.waitUntilElementIsVisible(selectedFilterType);
     }
 
@@ -44,7 +44,7 @@ export class SearchRadioPage {
     }
 
     async getRadioButtonsNumberOnPage(): Promise<number> {
-        const radioButtons = element.all(by.css('mat-radio-button'));
+        const radioButtons = $$('mat-radio-button');
         return radioButtons.count();
     }
 

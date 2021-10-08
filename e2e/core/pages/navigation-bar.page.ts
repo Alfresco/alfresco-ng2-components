@@ -16,32 +16,34 @@
  */
 
 import { AppListCloudPage, BrowserActions, BrowserVisibility, Logger } from '@alfresco/adf-testing';
-import { browser, by, element, ElementFinder } from 'protractor';
+import { $, browser, ElementFinder } from 'protractor';
 import { ProcessServicesPage } from '../../process-services/pages/process-services.page';
 
 export class NavigationBarPage {
 
-    linkListContainer = element(by.css('.app-sidenav-linklist'));
-    linkMenuChildrenContainer = element(by.css('.nestedMenu'));
-    dataTableNestedButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Datatable"]'));
-    dataTableCopyContentButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Copy Content"]'));
-    dataTableDragAndDropButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Drag and Drop"]'));
-    processServicesNestedButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="App"]'));
-    processServicesCloudHomeButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Home"]'));
-    themeButton = element(by.css('button[data-automation-id="theme menu"]'));
-    themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
-    appTitle = element(by.css('.adf-app-title'));
-    menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
-    formButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Form"]'));
-    peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="People/Group Cloud"]'));
-    serviceTaskListButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Service Task List"]'));
-    logoutSection: ElementFinder = element(by.css('div[data-automation-id="adf-logout-section"]'));
-    personalFiles: ElementFinder = element(by.css('div [title="Personal Files"]'));
+    linkListContainer = $('.app-sidenav-linklist');
+    linkMenuChildrenContainer = $('.nestedMenu');
+    dataTableNestedButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Datatable"]');
+    dataTableCopyContentButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Copy Content"]');
+    dataTableDragAndDropButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Drag and Drop"]');
+    processServicesNestedButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="App"]');
+    processServicesCloudHomeButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Home"]');
+    themeButton = $('button[data-automation-id="theme menu"]');
+    themeMenuContent = $('div[class*="mat-menu-panel"]');
+    appTitle = $('.adf-app-title');
+    menuButton = $('button[data-automation-id="adf-menu-icon"]');
+    formButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Form"]');
+    peopleGroupCloudButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="People/Group Cloud"]');
+    serviceTaskListButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Service Task List"]');
+    logoutSection = $('div[data-automation-id="adf-logout-section"]');
+    personalFiles = $('div [title="Personal Files"]');
+
+    getMenuItemLocator = (title: string) => $(`.app-sidenav-link[data-automation-id="${title}"]`);
 
     async clickNavigationBarItem(title: string, untilElementIsVisible?: ElementFinder): Promise<void> {
         Logger.log(`clickNavigationBarItem ${title}`);
 
-        const menu = element(by.css(`.app-sidenav-link[data-automation-id="${title}"]`));
+        const menu = $(`.app-sidenav-link[data-automation-id="${title}"]`);
         await BrowserActions.closeMenuAndDialogs();
 
         if (untilElementIsVisible) {
@@ -69,7 +71,7 @@ export class NavigationBarPage {
 
     async clickProcessCloudButton() {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.clickUntilIsNotVisible(this.getMenuItem('Process Cloud'), this.linkMenuChildrenContainer);
+        await BrowserActions.clickUntilIsNotVisible(this.getMenuItemLocator('Process Cloud'), this.linkMenuChildrenContainer);
     }
 
     async navigateToProcessServicesCloudPage(): Promise<AppListCloudPage> {
@@ -99,11 +101,7 @@ export class NavigationBarPage {
 
     private async clickProcessServicesButton() {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.clickUntilIsNotVisible(this.getMenuItem('Process Services'), this.linkMenuChildrenContainer);
-    }
-
-    private getMenuItem(title: string) {
-        return element(by.css(`.app-sidenav-link[data-automation-id="${title}"]`));
+        await BrowserActions.clickUntilIsNotVisible(this.getMenuItemLocator('Process Services'), this.linkMenuChildrenContainer);
     }
 
     async navigateToProcessServicesPage(): Promise<ProcessServicesPage> {
@@ -205,7 +203,7 @@ export class NavigationBarPage {
     }
 
     async clickOnSpecificThemeButton(themeName): Promise<void> {
-        const themeElement = element(by.css(`button[data-automation-id="${themeName}"]`));
+        const themeElement = $(`button[data-automation-id="${themeName}"]`);
         await BrowserActions.click(themeElement);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
@@ -223,12 +221,12 @@ export class NavigationBarPage {
     }
 
     async checkToolbarColor(color: string): Promise<void> {
-        const toolbarColor = element(by.css(`mat-toolbar[class*="mat-${color}"]`));
+        const toolbarColor = $(`mat-toolbar[class*="mat-${color}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(toolbarColor);
     }
 
     async clickAppLogo(logoTitle: string): Promise<void> {
-        const appLogo = element(by.css('a[title="' + logoTitle + '"]'));
+        const appLogo = $('a[title="' + logoTitle + '"]');
         await BrowserActions.click(appLogo);
     }
 
@@ -237,7 +235,7 @@ export class NavigationBarPage {
     }
 
     async checkLogoTooltip(logoTooltipTitle: string): Promise<void> {
-        const logoTooltip = element(by.css('a[title="' + logoTooltipTitle + '"]'));
+        const logoTooltip = $('a[title="' + logoTooltipTitle + '"]');
         await BrowserVisibility.waitUntilElementIsVisible(logoTooltip);
     }
 

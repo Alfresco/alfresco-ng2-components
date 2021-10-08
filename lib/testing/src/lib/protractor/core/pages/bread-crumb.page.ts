@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { $ } from 'protractor';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class BreadcrumbPage {
 
-    breadcrumb = element(by.css(`adf-breadcrumb nav[data-automation-id='breadcrumb']`));
-    currentItem = element(by.css('.adf-breadcrumb-item-current'));
+    breadcrumb = $(`adf-breadcrumb nav[data-automation-id='breadcrumb']`);
+    currentItem = $('.adf-breadcrumb-item-current');
 
     async chooseBreadCrumb(breadCrumbItem: string): Promise<void> {
-        const path = this.breadcrumb.element(by.css(`a[data-automation-id='breadcrumb_${breadCrumbItem}']`));
+        const path = this.breadcrumb.$(`a[data-automation-id='breadcrumb_${breadCrumbItem}']`);
         await BrowserActions.click(path);
     }
 

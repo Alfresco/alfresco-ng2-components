@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { $$, $ } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { CardTextItemPage } from '../../core/pages/card-view/card-view-text-item.page';
@@ -26,15 +26,15 @@ export class TaskHeaderCloudPage {
     assigneeCardTextItem = new CardTextItemPage('assignee');
     statusCardTextItem = new CardTextItemPage('status');
     priorityCardSelectItem = new CardSelectItemPage('priority');
-    dueDateField = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
+    dueDateField = $$('span[data-automation-id*="dueDate"] span').first();
     categoryCardTextItem = new CardTextItemPage('category');
-    createdField = element(by.css('span[data-automation-id="card-dateitem-created"]'));
+    createdField = $('span[data-automation-id="card-dateitem-created"]');
     parentNameCardTextItem = new CardTextItemPage('parentName');
     parentTaskIdCardTextItem = new CardTextItemPage('parentTaskId');
-    endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
+    endDateField = $$('span[data-automation-id*="endDate"] span').first();
     idCardTextItem = new CardTextItemPage('id');
     descriptionCardTextItem = new CardTextItemPage('description');
-    taskPropertyList = element(by.css('adf-cloud-task-header adf-card-view .adf-property-list'));
+    taskPropertyList = $('adf-cloud-task-header adf-card-view .adf-property-list');
 
     async getAssignee(): Promise<string> {
         return this.assigneeCardTextItem.getFieldValue();

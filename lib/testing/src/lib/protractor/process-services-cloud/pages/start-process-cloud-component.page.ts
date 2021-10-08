@@ -15,23 +15,25 @@
  * limitations under the License.
  */
 
-import { by, element, Key, protractor, browser, ElementFinder } from 'protractor';
+import { by, element, Key, protractor, browser, ElementFinder, $, $$ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
 
 export class StartProcessCloudPage {
 
-    defaultProcessName = element(by.css('input[id="processName"]'));
-    processNameInput = element(by.id('processName'));
-    selectProcessDropdownArrow = element(by.css('button[id="adf-select-process-dropdown"]'));
-    cancelProcessButton = element(by.id('cancel_process'));
-    formStartProcessButton = element(by.css('button[data-automation-id="adf-form-start process"]'));
-    startProcessButton = element(by.css('button[data-automation-id="btn-start"]'));
-    startProcessButtonDisabled = element(by.css('button[data-automation-id="btn-start"][disabled]'));
-    noProcess = element(by.id('no-process-message'));
-    processDefinition = element(by.css('input[id="processDefinitionName"]'));
-    processDefinitionOptionsPanel = element(by.css('div[class*="processDefinitionOptions"]'));
+    defaultProcessName = $('input[id="processName"]');
+    processNameInput = $('#processName');
+    selectProcessDropdownArrow = $('button[id="adf-select-process-dropdown"]');
+    cancelProcessButton = $('#cancel_process');
+    formStartProcessButton = $('button[data-automation-id="adf-form-start process"]');
+    startProcessButton = $('button[data-automation-id="btn-start"]');
+    startProcessButtonDisabled = $('button[data-automation-id="btn-start"][disabled]');
+    noProcess = $('#no-process-message');
+    processDefinition = $('input[id="processDefinitionName"]');
+    processDefinitionOptionsPanel = $('div[class*="processDefinitionOptions"]');
+
+    getSelectProcessDropdownLocatorByName = (name: string): ElementFinder => element(by.cssContainingText('.mat-option-text', name));
 
     async checkNoProcessMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
@@ -61,7 +63,7 @@ export class StartProcessCloudPage {
 
     async selectFirstOptionFromProcessDropdown(): Promise<void> {
         await this.clickProcessDropdownArrow();
-        const selectFirstProcessDropdown = element.all(by.css('.mat-option-text')).first();
+        const selectFirstProcessDropdown = $$('.mat-option-text').first();
         await BrowserActions.click(selectFirstProcessDropdown);
     }
 
@@ -70,13 +72,13 @@ export class StartProcessCloudPage {
     }
 
     async checkOptionIsDisplayed(name: string): Promise<void> {
-        const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
+        const selectProcessDropdown = this.getSelectProcessDropdownLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsVisible(selectProcessDropdown);
         await BrowserVisibility.waitUntilElementIsClickable(selectProcessDropdown);
     }
 
     async selectOption(name: string): Promise<void> {
-        const selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
+        const selectProcessDropdown = this.getSelectProcessDropdownLocatorByName(name);
         await BrowserActions.click(selectProcessDropdown);
     }
 

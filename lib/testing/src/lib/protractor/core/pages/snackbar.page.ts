@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import { Locator, element, by } from 'protractor';
+import { $, $$ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class SnackbarPage {
 
-    notificationSnackBar = element.all(by.css('simple-snack-bar span')).first();
-    snackBarAction = element(by.css('simple-snack-bar button span'));
-    snackBarContainerCss: Locator = by.css('.mat-snack-bar-container');
+    notificationSnackBar = $$('simple-snack-bar span').first();
+    snackBarAction = $('simple-snack-bar button span');
+    snackBarContainerCss = $$('.mat-snack-bar-container');
 
     async waitForSnackBarToAppear(timeout = 5000) {
-        return BrowserVisibility.waitUntilElementIsVisible(element.all(this.snackBarContainerCss).first(), timeout,
+        return BrowserVisibility.waitUntilElementIsVisible(this.snackBarContainerCss.first(), timeout,
             'snackbar did not appear'
         );
     }
 
     async waitForSnackBarToClose(timeout = 5000) {
-        return BrowserVisibility.waitUntilElementIsNotVisible(element.all(this.snackBarContainerCss).first(), timeout);
+        return BrowserVisibility.waitUntilElementIsNotVisible(this.snackBarContainerCss.first(), timeout);
     }
 
     async getSnackBarMessage(): Promise<string> {

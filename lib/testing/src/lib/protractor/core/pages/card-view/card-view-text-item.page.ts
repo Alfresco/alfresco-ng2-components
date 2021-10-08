@@ -15,63 +15,63 @@
  * limitations under the License.
  */
 
-import { Locator, element, by, ElementFinder, Key } from 'protractor';
+import { element, by, ElementFinder, Key } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
 export class CardTextItemPage {
 
     rootElement: ElementFinder;
-    textField: Locator = by.css('[data-automation-id*="card-textitem-value"]');
-    saveButton: Locator = by.css('button[data-automation-id*="card-textitem-update"]');
-    clearButton: Locator = by.css('button[data-automation-id*="card-textitem-reset"]');
-    field: Locator = by.css('[data-automation-id*="card-textitem-value"]');
-    labelLocator: Locator = by.css('div[data-automation-id*="card-textitem-label"]');
-    errorMessage: Locator = by.css('.adf-textitem-editable-error');
-    clickableElement: Locator = by.css('.adf-textitem-clickable');
-    readOnlyField: Locator = by.css('.adf-property-read-only');
+    textField = '[data-automation-id*="card-textitem-value"]';
+    saveButton = 'button[data-automation-id*="card-textitem-update"]';
+    clearButton = 'button[data-automation-id*="card-textitem-reset"]';
+    field = '[data-automation-id*="card-textitem-value"]';
+    labelLocator = 'div[data-automation-id*="card-textitem-label"]';
+    errorMessage = '.adf-textitem-editable-error';
+    clickableElement = '.adf-textitem-clickable';
+    readOnlyField = '.adf-property-read-only';
 
     constructor(label: string = 'assignee') {
         this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "card-textitem-label-${label}")]//ancestor::adf-card-view-textitem`));
     }
 
     async getFieldValue(): Promise<string> {
-        const fieldElement = this.rootElement.element(this.field);
+        const fieldElement = this.rootElement.$(this.field);
         return BrowserActions.getInputValue(fieldElement);
     }
 
     async checkLabelIsPresent(): Promise<void> {
-        const labelElement = this.rootElement.element(this.labelLocator);
+        const labelElement = this.rootElement.$(this.labelLocator);
         await BrowserVisibility.waitUntilElementIsPresent(labelElement);
     }
 
     async checkLabelIsVisible(): Promise<void> {
-        const labelElement = this.rootElement.element(this.labelLocator);
+        const labelElement = this.rootElement.$(this.labelLocator);
         await BrowserVisibility.waitUntilElementIsVisible(labelElement);
     }
 
     async enterTextField(text: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.textField));
-        await BrowserActions.clearSendKeys(this.rootElement.element(this.textField), text, 500);
-        await this.rootElement.element(this.textField).sendKeys(Key.TAB);
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$(this.textField));
+        await BrowserActions.clearSendKeys(this.rootElement.$(this.textField), text, 500);
+        await this.rootElement.$(this.textField).sendKeys(Key.TAB);
     }
 
     async clickOnSaveButton(): Promise<void> {
-        await BrowserActions.click(this.rootElement.element(this.saveButton));
+        await BrowserActions.click(this.rootElement.$(this.saveButton));
     }
 
     async clickOnClearButton(): Promise<void> {
-        await BrowserActions.click(this.rootElement.element(this.clearButton));
+        await BrowserActions.click(this.rootElement.$(this.clearButton));
     }
 
     async getErrorMessage(): Promise<string> {
-        const errorField = this.rootElement.element(this.errorMessage);
+        const errorField = this.rootElement.$(this.errorMessage);
         return BrowserActions.getText(errorField);
     }
 
     async checkElementIsReadonly(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.readOnlyField));
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$(this.readOnlyField));
     }
 
     async clickField(): Promise<void> {
-        await BrowserActions.click(this.rootElement.element(by.css(`button[data-automation-id*='clickable-icon']`)));
+        await BrowserActions.click(this.rootElement.$(`button[data-automation-id*='clickable-icon']`));
     }
 }

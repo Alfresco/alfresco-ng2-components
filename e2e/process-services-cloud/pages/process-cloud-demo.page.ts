@@ -16,12 +16,12 @@
  */
 
 import { BrowserActions, BrowserVisibility, EditProcessFilterCloudComponentPage, ProcessFiltersCloudComponentPage, ProcessListCloudComponentPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { by, element, $ } from 'protractor';
 
 export class ProcessCloudDemoPage {
 
-    createButton = element(by.css('button[data-automation-id="create-button"'));
-    newProcessButton = element(by.css('button[data-automation-id="btn-start-process"]'));
+    createButton = $('button[data-automation-id="create-button"');
+    newProcessButton = $('button[data-automation-id="btn-start-process"]');
 
     processListCloud = new ProcessListCloudComponentPage();
     editProcessFilterCloud = new EditProcessFilterCloudComponentPage();

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { $$, $ } from 'protractor';
 import { BrowserVisibility, TogglePage, BrowserActions, DateTimePickerPage } from '@alfresco/adf-testing';
 import moment = require('moment');
 
@@ -23,18 +23,18 @@ export class ShareDialogPage {
 
     togglePage = new TogglePage();
     dateTimePickerPage = new DateTimePickerPage();
-    shareDialog = element(by.css('adf-share-dialog'));
-    dialogTitle = element.all(by.css('[data-automation-id="adf-share-dialog-title"]')).first();
-    shareToggle = element(by.css('[data-automation-id="adf-share-toggle"] label'));
-    expireToggle = element(by.css(`[data-automation-id="adf-expire-toggle"] label`));
-    shareToggleChecked = element(by.css('mat-dialog-container mat-slide-toggle.mat-checked'));
-    shareLink = element(by.css('[data-automation-id="adf-share-link"]'));
-    closeButton = element(by.css('button[data-automation-id="adf-share-dialog-close"]'));
-    copySharedLinkButton = element(by.css('.adf-input-action'));
-    expirationDateInput = element(by.css('input[formcontrolname="time"]'));
-    confirmationDialog = element(by.css('adf-confirm-dialog'));
-    confirmationCancelButton = element(by.id('adf-confirm-cancel'));
-    confirmationRemoveButton = element(by.id('adf-confirm-accept'));
+    shareDialog = $('adf-share-dialog');
+    dialogTitle = $$('[data-automation-id="adf-share-dialog-title"]').first();
+    shareToggle = $('[data-automation-id="adf-share-toggle"] label');
+    expireToggle = $(`[data-automation-id="adf-expire-toggle"] label`);
+    shareToggleChecked = $('mat-dialog-container mat-slide-toggle.mat-checked');
+    shareLink = $('[data-automation-id="adf-share-link"]');
+    closeButton = $('button[data-automation-id="adf-share-dialog-close"]');
+    copySharedLinkButton = $('.adf-input-action');
+    expirationDateInput = $('input[formcontrolname="time"]');
+    confirmationDialog = $('adf-confirm-dialog');
+    confirmationCancelButton = $('#adf-confirm-cancel');
+    confirmationRemoveButton = $('#adf-confirm-accept');
 
     async checkDialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialogTitle);
@@ -106,7 +106,7 @@ export class ShareDialogPage {
     }
 
     async dateTimePickerDialogIsClosed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsStale(element(by.css('mat-datetimepicker-content')));
+        await BrowserVisibility.waitUntilElementIsStale($('mat-datetimepicker-content'));
     }
 
     async getExpirationDate(): Promise<string> {

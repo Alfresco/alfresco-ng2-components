@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../form-fields';
-import { Locator, by, element, protractor } from 'protractor';
+import { Locator, by, element, protractor, $, $$ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DynamicTableWidgetPage {
@@ -27,14 +27,16 @@ export class DynamicTableWidgetPage {
     columnNameLocator: Locator = by.css('table[id*="dynamic-table"] th');
     cancelButton = element(by.cssContainingText('button span', 'Cancel'));
     editButton = element(by.cssContainingText('button span', 'edit'));
-    columnDateTime = element(by.id('columnDateTime'));
-    columnDate = element(by.id('columnDate'));
-    calendarHeader = element(by.css('.mat-datetimepicker-calendar-header-date-time'));
-    calendarContent = element(by.css('.mat-datetimepicker-calendar-content'));
+    columnDateTime = $('#columnDateTime');
+    columnDate = $('#columnDate');
+    calendarHeader = $('.mat-datetimepicker-calendar-header-date-time');
+    calendarContent = $('.mat-datetimepicker-calendar-content');
     saveButton = element(by.cssContainingText('button span', 'Save'));
-    errorMessage = element(by.css('.adf-error-text'));
-    dateWidget = element.all(by.css('mat-datepicker-toggle button')).first();
-    tableRow = element.all(by.css('tbody tr'));
+    errorMessage = $('.adf-error-text');
+    dateWidget = $$('mat-datepicker-toggle button').first();
+    tableRow = $$('tbody tr');
+
+    private getTableRowByIndex = (idx: string) => $(`#dynamictable-row-${idx}`);
 
     getFieldLabel(fieldId: string): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
@@ -45,12 +47,12 @@ export class DynamicTableWidgetPage {
     }
 
     async clickAddRow(id?: string): Promise<void> {
-        const rowButton = element(by.id(`${id ? id : 'label'}-add-row`));
+        const rowButton = $(`#${id ? id : 'label'}-add-row`);
         await BrowserActions.click(rowButton);
     }
 
     async clickTableRow(rowNumber): Promise<void> {
-        const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
+        const tableRowByIndex = this.getTableRowByIndex(rowNumber);
         await BrowserActions.click(tableRowByIndex);
     }
 
@@ -63,18 +65,18 @@ export class DynamicTableWidgetPage {
     }
 
     async setDatatableInput(text, id = 'id'): Promise<void> {
-        const dataTableInput = element(by.id(id));
+        const dataTableInput = $(`#${id}`);
         await BrowserVisibility.waitUntilElementIsVisible(dataTableInput);
         await BrowserActions.clearSendKeys(dataTableInput, text);
      }
 
     async getTableRowText(rowNumber): Promise<string> {
-        const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
+        const tableRowByIndex = this.getTableRowByIndex(rowNumber);
         return BrowserActions.getText(tableRowByIndex);
     }
 
     async checkTableRowIsNotVisible(rowNumber): Promise<void> {
-        const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
+        const tableRowByIndex = this.getTableRowByIndex(rowNumber);
         await BrowserVisibility.waitUntilElementIsNotVisible(tableRowByIndex);
     }
 

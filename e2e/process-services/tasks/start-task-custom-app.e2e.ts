@@ -16,7 +16,7 @@
  */
 
 import { createApiService, ApplicationsUtil, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
-import { browser, by } from 'protractor';
+import { browser } from 'protractor';
 
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -148,21 +148,21 @@ describe('Start Task - Custom App', () => {
 
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
 
-        await taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue);
+        await taskPage.formFields().setFieldValue(formTextField, formFieldValue);
 
         await taskPage.formFields().refreshForm();
 
-        await taskPage.formFields().checkFieldValue(by.id, formTextField, '');
+        await taskPage.formFields().checkFieldValue(formTextField, '');
 
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
 
-        await taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue);
+        await taskPage.formFields().setFieldValue(formTextField, formFieldValue);
 
-        await taskPage.formFields().checkFieldValue(by.id, formTextField, formFieldValue);
+        await taskPage.formFields().checkFieldValue(formTextField, formFieldValue);
 
         await taskPage.formFields().saveForm();
 
-        await taskPage.formFields().checkFieldValue(by.id, formTextField, formFieldValue);
+        await taskPage.formFields().checkFieldValue(formTextField, formFieldValue);
     });
 
     it('[C263951] Should be possible to assign a user', async () => {

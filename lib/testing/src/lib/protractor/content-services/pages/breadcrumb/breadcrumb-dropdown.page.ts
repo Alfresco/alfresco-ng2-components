@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { $, $$ } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { DropdownPage } from '../../../core/pages/material/dropdown.page';
 
 export class BreadcrumbDropdownPage {
 
-    breadCrumb = element(by.css(`adf-dropdown-breadcrumb[data-automation-id='content-node-selector-content-breadcrumb']`));
-    parentFolder = this.breadCrumb.element(by.css(`button[data-automation-id='dropdown-breadcrumb-trigger']`));
-    currentFolder = this.breadCrumb.element(by.css(`div span[data-automation-id="current-folder"]`));
+    breadCrumb = $(`adf-dropdown-breadcrumb[data-automation-id='content-node-selector-content-breadcrumb']`);
+    parentFolder = this.breadCrumb.$(`button[data-automation-id='dropdown-breadcrumb-trigger']`);
+    currentFolder = this.breadCrumb.$(`div span[data-automation-id="current-folder"]`);
 
-    breadCrumbDropdown = new DropdownPage(element.all(by.css(`div[class*='mat-select-panel']`)).first());
+    breadCrumbDropdown = new DropdownPage($$(`div[class*='mat-select-panel']`).first());
 
     async choosePath(pathName: string): Promise<void> {
         await this.breadCrumbDropdown.selectOption(pathName);

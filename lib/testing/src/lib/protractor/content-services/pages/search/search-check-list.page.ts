@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { Locator, element, by, ElementFinder, browser } from 'protractor';
+import { element, by, ElementFinder, browser } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchCheckListPage {
 
     filter: ElementFinder;
-    inputBy: Locator = by.css('div[class*="mat-expansion-panel-content"] input');
-    showMoreBy: Locator = by.css('button[title="Show more"]');
-    showLessBy: Locator = by.css('button[title="Show less"]');
-    clearAllButton: Locator = by.css('button');
+    inputBy = 'div[class*="mat-expansion-panel-content"] input';
+    showMoreBy = 'button[title="Show more"]';
+    showLessBy = 'button[title="Show less"]';
+    clearAllButton = 'button';
 
     constructor(filter: ElementFinder) {
         this.filter = filter;
@@ -33,20 +33,20 @@ export class SearchCheckListPage {
 
     async clickCheckListOption(option: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const result = this.filter.all(by.css(`mat-checkbox[data-automation-id*='${option}'] .mat-checkbox-inner-container`)).first();
+        const result = this.filter.$$(`mat-checkbox[data-automation-id*='${option}'] .mat-checkbox-inner-container`).first();
         await BrowserActions.click(result);
     }
 
     async checkChipIsDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon')));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip', option)).$('mat-icon'));
     }
 
     async checkChipIsNotDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon')));
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip', option)).$('mat-icon'));
     }
 
     async removeFilterOption(option: string): Promise<void> {
-        const cancelChipButton = element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon'));
+        const cancelChipButton = element(by.cssContainingText('mat-chip', option)).$('mat-icon');
         await BrowserActions.click(cancelChipButton);
     }
 
@@ -59,50 +59,50 @@ export class SearchCheckListPage {
     }
 
     async checkSearchFilterInputIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter.all(this.inputBy).first());
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.$$(this.inputBy).first());
     }
 
     async searchInFilter(option: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.filter);
-        const inputElement = this.filter.all(this.inputBy).first();
+        const inputElement = this.filter.$$(this.inputBy).first();
         await BrowserVisibility.waitUntilElementIsClickable(inputElement);
         await BrowserActions.clearSendKeys(inputElement, option);
     }
 
     async checkShowLessButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.showLessBy));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.$(this.showLessBy));
     }
 
     async checkShowLessButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.showLessBy));
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.$(this.showLessBy));
     }
 
     async checkShowMoreButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.showMoreBy));
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.$(this.showMoreBy));
     }
 
     async checkShowMoreButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.showMoreBy));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.$(this.showMoreBy));
     }
 
     async clickShowMoreButtonUntilIsNotDisplayed(): Promise<void> {
-        const visible = await browser.isElementPresent(this.filter.element(this.showMoreBy));
+        const visible = await browser.isElementPresent(this.filter.$(this.showMoreBy));
         if (visible) {
-            await BrowserActions.click(this.filter.element(this.showMoreBy));
+            await BrowserActions.click(this.filter.$(this.showMoreBy));
             await this.clickShowMoreButtonUntilIsNotDisplayed();
         }
     }
 
     async clickShowLessButtonUntilIsNotDisplayed(): Promise<void> {
-        const visible = await browser.isElementPresent(this.filter.element(this.showLessBy));
+        const visible = await browser.isElementPresent(this.filter.$(this.showLessBy));
         if (visible) {
-            await BrowserActions.click(this.filter.element(this.showLessBy));
+            await BrowserActions.click(this.filter.$(this.showLessBy));
             await this.clickShowLessButtonUntilIsNotDisplayed();
         }
     }
 
     async getBucketNumberOfFilterType(option: string): Promise<any> {
-        const fileTypeFilter = this.filter.all(by.css('mat-checkbox[data-automation-id*=".' + option + '"] span')).first();
+        const fileTypeFilter = this.filter.$$('mat-checkbox[data-automation-id*=".' + option + '"] span').first();
         await BrowserVisibility.waitUntilElementIsVisible(fileTypeFilter);
         const valueOfBucket = await BrowserActions.getText(fileTypeFilter);
         const numberOfBucket = valueOfBucket.split('(')[1];
@@ -112,47 +112,47 @@ export class SearchCheckListPage {
 
     async checkCheckListOptionIsDisplayed(option: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}']`));
+        const result = this.filter.$(`mat-checkbox[data-automation-id*='-${option}']`);
         await BrowserVisibility.waitUntilElementIsVisible(result);
     }
 
     async checkCheckListOptionIsNotSelected(option: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
+        const result = this.filter.$(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`);
         await BrowserVisibility.waitUntilElementIsNotVisible(result);
     }
 
     async checkCheckListOptionIsSelected(option: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
+        const result = this.filter.$(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`);
         await BrowserVisibility.waitUntilElementIsVisible(result);
     }
 
     async checkClearAllButtonIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const result = this.filter.element(this.clearAllButton);
+        const result = this.filter.$(this.clearAllButton);
         await BrowserVisibility.waitUntilElementIsVisible(result);
     }
 
     async clickClearAllButton(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const result = this.filter.element(this.clearAllButton);
+        const result = this.filter.$(this.clearAllButton);
         await BrowserActions.click(result);
 
     }
 
     async getCheckListOptionsNumberOnPage(): Promise<number> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const checkListOptions = this.filter.all(by.css('.checklist mat-checkbox'));
+        const checkListOptions = this.filter.$$('.checklist mat-checkbox');
         return checkListOptions.count();
     }
 
     async clickShowMoreButton(): Promise<void> {
-        await BrowserActions.click(this.filter.element(this.showMoreBy));
+        await BrowserActions.click(this.filter.$(this.showMoreBy));
     }
 
     async clickShowLessButton(): Promise<void> {
-        await BrowserActions.click(this.filter.element(this.showLessBy));
+        await BrowserActions.click(this.filter.$(this.showLessBy));
     }
 
 }

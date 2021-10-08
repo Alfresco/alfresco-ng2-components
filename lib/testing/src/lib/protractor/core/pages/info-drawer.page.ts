@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { Locator, element, by, ElementFinder } from 'protractor';
+import { ElementFinder, $ } from 'protractor';
 import { BrowserVisibility } from './../utils/browser-visibility';
 import { TabsPage } from './material/tabs.page';
 
 export class InfoDrawerPage {
 
     rootElement: ElementFinder;
-    infoDrawerHeader: Locator = by.css('adf-info-drawer-layout-header');
+    infoDrawerHeader = ('adf-info-drawer-layout-header');
     tabsPage: TabsPage = new TabsPage();
 
     constructor(classLocator: string = 'adf-info-drawer') {
-        this.rootElement = element(by.css(`adf-info-drawer[class*='${classLocator}']`));
+        this.rootElement = $(`adf-info-drawer[class*='${classLocator}']`);
     }
 
     async isInfoDrawerDisplayed(): Promise<boolean> {
@@ -49,7 +49,7 @@ export class InfoDrawerPage {
 
     async isInfoDrawerHeaderDisplayed(): Promise<boolean> {
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.infoDrawerHeader));
+            await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$(this.infoDrawerHeader));
             return true;
         } catch (error) {
             return false;
@@ -58,7 +58,7 @@ export class InfoDrawerPage {
 
     async isInfoDrawerHeaderNotDisplayed(): Promise<boolean> {
         try {
-            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(this.infoDrawerHeader));
+            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.$(this.infoDrawerHeader));
             return true;
         } catch (error) {
             return false;

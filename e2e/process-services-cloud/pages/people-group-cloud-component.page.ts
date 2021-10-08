@@ -15,30 +15,30 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, $, $$ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class PeopleGroupCloudComponentPage {
 
-    peopleCloudSingleSelectionChecked = element(by.css('mat-radio-button[data-automation-id="app-people-single-mode"][class*="mat-radio-checked"]'));
-    peopleCloudMultipleSelectionChecked = element(by.css('mat-radio-button[data-automation-id="app-people-multiple-mode"][class*="mat-radio-checked"]'));
-    peopleCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="app-people-single-mode"]'));
-    peopleCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="app-people-multiple-mode"]'));
-    peopleCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="app-people-filter-role"]'));
-    groupCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="app-group-single-mode"]'));
-    groupCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="app-group-multiple-mode"]'));
-    groupCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="app-group-filter-role"]'));
-    peopleRoleInput = element(by.css('input[data-automation-id="app-people-roles-input"]'));
-    peopleAppInput = element(by.css('input[data-automation-id="app-people-app-input"]'));
-    peoplePreselect = element(by.css('input[data-automation-id="app-people-preselect-input"]'));
-    groupRoleInput = element(by.css('input[data-automation-id="app-group-roles-input"]'));
-    groupAppInput = element(by.css('input[data-automation-id="app-group-app-input"]'));
+    peopleCloudSingleSelectionChecked = $('mat-radio-button[data-automation-id="app-people-single-mode"][class*="mat-radio-checked"]');
+    peopleCloudMultipleSelectionChecked = $('mat-radio-button[data-automation-id="app-people-multiple-mode"][class*="mat-radio-checked"]');
+    peopleCloudSingleSelection = $('mat-radio-button[data-automation-id="app-people-single-mode"]');
+    peopleCloudMultipleSelection = $('mat-radio-button[data-automation-id="app-people-multiple-mode"]');
+    peopleCloudFilterRole = $('mat-radio-button[data-automation-id="app-people-filter-role"]');
+    groupCloudSingleSelection = $('mat-radio-button[data-automation-id="app-group-single-mode"]');
+    groupCloudMultipleSelection = $('mat-radio-button[data-automation-id="app-group-multiple-mode"]');
+    groupCloudFilterRole = $('mat-radio-button[data-automation-id="app-group-filter-role"]');
+    peopleRoleInput = $('input[data-automation-id="app-people-roles-input"]');
+    peopleAppInput = $('input[data-automation-id="app-people-app-input"]');
+    peoplePreselect = $('input[data-automation-id="app-people-preselect-input"]');
+    groupRoleInput = $('input[data-automation-id="app-group-roles-input"]');
+    groupAppInput = $('input[data-automation-id="app-group-app-input"]');
     peopleCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
     groupCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
-    preselectValidation = element.all(by.css('mat-checkbox.app-preselect-value')).first();
-    preselectValidationStatus = element.all(by.css('mat-checkbox.app-preselect-value label input')).first();
-    peopleFilterByAppName = element(by.css('.app-people-control-options mat-radio-button[value="appName"]'));
-    groupFilterByAppName = element(by.css('.app-groups-control-options mat-radio-button[value="appName"]'));
+    preselectValidation = $$('mat-checkbox.app-preselect-value').first();
+    preselectValidationStatus = $$('mat-checkbox.app-preselect-value label input').first();
+    peopleFilterByAppName = $('.app-people-control-options mat-radio-button[value="appName"]');
+    groupFilterByAppName = $('.app-groups-control-options mat-radio-button[value="appName"]');
 
     async checkPeopleCloudComponentTitleIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudComponentTitle);

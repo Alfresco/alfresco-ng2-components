@@ -23,7 +23,7 @@ import { createApiService,
     TaskUtil,
     UsersActions
 } from '@alfresco/adf-testing';
-import { browser, by } from 'protractor';
+import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { AttachFormPage } from './../pages/attach-form.page';
 import { TasksPage } from './../pages/tasks.page';
@@ -126,7 +126,7 @@ describe('Attach Form Component', () => {
         await attachFormPage.selectAttachFormOption(testNames.formName);
         await attachFormPage.clickAttachFormButton();
 
-        await formFields.setFieldValue(by.id, formTextField, testNames.formFieldValue);
+        await formFields.setFieldValue(formTextField, testNames.formFieldValue);
         await formFields.completeForm();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);

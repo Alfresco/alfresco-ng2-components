@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Locator, by, element, ElementFinder, browser } from 'protractor';
+import { by, ElementFinder, browser, $$ } from 'protractor';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -24,14 +24,14 @@ import { Logger } from '../../core/utils/logger';
 export class DocumentListPage {
 
     rootElement: ElementFinder;
-    optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
+    optionButton = 'button[data-automation-id*="action_menu_"]';
     tableBody: ElementFinder;
     dataTable: DataTableComponentPage;
 
-    constructor(rootElement = element.all(by.css('adf-document-list')).first()) {
+    constructor(rootElement = $$('adf-document-list').first()) {
         this.rootElement = rootElement;
         this.dataTable = new DataTableComponentPage(this.rootElement);
-        this.tableBody = rootElement.all(by.css('.adf-datatable-body')).first();
+        this.tableBody = rootElement.$$('.adf-datatable-body').first();
     }
 
     async checkLockedIcon(content: string): Promise<void> {
@@ -70,7 +70,7 @@ export class DocumentListPage {
         Logger.log(`Click action menu ${content}`);
         await BrowserActions.closeMenuAndDialogs();
         const row = this.dataTable.getRow('Display name', content);
-        await BrowserActions.click(row.element(this.optionButton));
+        await BrowserActions.click(row.$(this.optionButton));
         await BrowserActions.waitUntilActionMenuIsVisible();
         await browser.sleep(500);
     }
@@ -96,7 +96,7 @@ export class DocumentListPage {
     }
 
     async getLibraryRole(name: string): Promise<string> {
-        return this.dataTable.getRow('Display name', name).element(by.css('adf-library-role-column')).getText();
+        return this.dataTable.getRow('Display name', name).$('adf-library-role-column').getText();
     }
 
 }

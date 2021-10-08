@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
+import { $ } from 'protractor';
 import { BrowserActions } from '../utils/browser-actions';
-import { element, by } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class ContextMenuPage {
-    contextMenu = element(by.id('adf-context-menu-content'));
+    contextMenu = $('#adf-context-menu-content');
 
     async isContextMenuDisplayed(): Promise<boolean> {
         try {
@@ -32,6 +32,6 @@ export class ContextMenuPage {
     }
 
     async clickContextMenuActionNamed(actionName: string): Promise<void> {
-        await BrowserActions.click(element(by.css(`button[data-automation-id="context-${actionName}"]`)));
+        await BrowserActions.click($(`button[data-automation-id="context-${actionName}"]`));
     }
 }

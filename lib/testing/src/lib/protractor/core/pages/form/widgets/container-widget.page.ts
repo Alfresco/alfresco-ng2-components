@@ -24,7 +24,7 @@ export class ContainerWidgetPage {
 
     fileLocator: Locator = by.css("div [class*='upload-widget__content-text']");
 
-    getFieldText(fieldId): Promise<string> {
+    getFieldText(fieldId: string): Promise<string> {
         return this.formFields.getFieldText(fieldId, this.fileLocator);
     }
 }

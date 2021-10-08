@@ -17,7 +17,7 @@
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { by, ElementFinder, $$, $ } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 const column = {
@@ -34,12 +34,13 @@ const column = {
 
 export class TaskListCloudComponentPage {
 
-    taskList = element(by.css('adf-cloud-task-list'));
-    noTasksFound = element.all(by.css('.adf-empty-content__title')).first();
-    actionMenu = element(by.css('*[role="menu"]'));
-    optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
-
+    taskList = $('adf-cloud-task-list');
+    noTasksFound = $$('.adf-empty-content__title').first();
+    actionMenu = $('*[role="menu"]');
+    optionButton = 'button[data-automation-id*="action_menu_"]';
     dataTable = new DataTableComponentPage(this.taskList);
+
+    getButtonLocatorByAction = (action: string): ElementFinder => $(`button[data-automation-id*="${action}"]`);
 
     getDataTable(): DataTableComponentPage {
         return this.dataTable;
@@ -174,17 +175,17 @@ export class TaskListCloudComponentPage {
     async clickOptionsButton(content: string) {
         await BrowserActions.closeMenuAndDialogs();
         const row = this.dataTable.getRow('Id', content);
-        await BrowserActions.click(row.element(this.optionButton));
+        await BrowserActions.click(row.$(this.optionButton));
         await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
     }
 
     async clickOnCustomActionMenu(action: string): Promise<void> {
-        const actionButton = element(by.css(`button[data-automation-id*="${action}"]`));
+        const actionButton = this.getButtonLocatorByAction(action);
         await BrowserActions.click(actionButton);
     }
 
     async isCustomActionEnabled(action: string): Promise<boolean> {
-        const actionButton = element(by.css(`button[data-automation-id*="${action}"]`));
+        const actionButton = this.getButtonLocatorByAction(action);
         return actionButton.isEnabled();
     }
 

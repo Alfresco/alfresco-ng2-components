@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { $ } from 'protractor';
 import { createApiService,
     BreadcrumbPage,
     BreadcrumbDropdownPage,
@@ -47,7 +47,7 @@ describe('Document List Component - Actions', () => {
     const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
-    const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
+    const infinitePaginationPage = new InfinitePaginationPage($('adf-content-node-selector'));
 
     describe('Folder Actions - Copy and Move', () => {
         const folderModel1 = new FolderModel({ name: StringUtil.generateRandomString() });

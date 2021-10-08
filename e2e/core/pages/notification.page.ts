@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { element, by, browser, $, $$ } from 'protractor';
 import { BrowserVisibility, BrowserActions, DropdownPage, SnackbarPage } from '@alfresco/adf-testing';
 
 export class NotificationDemoPage {
 
     snackbarPage = new SnackbarPage();
 
-    messageField = element(by.css('input[data-automation-id="notification-message"]'));
-    durationField = element(by.css('input[data-automation-id="notification-duration"]'));
-    actionToggle = element(by.css('mat-slide-toggle[data-automation-id="notification-action-toggle"]'));
-    notificationSnackBar = element.all(by.css('simple-snack-bar')).first();
-    actionOutput = element(by.css('div[data-automation-id="notification-action-output"]'));
-    notificationsPage = element(by.css('.app-sidenav-link[data-automation-id="Notifications"]'));
-    notificationConfig = element(by.css('p[data-automation-id="notification-custom-object"]'));
+    messageField = $('input[data-automation-id="notification-message"]');
+    durationField = $('input[data-automation-id="notification-duration"]');
+    actionToggle = $('mat-slide-toggle[data-automation-id="notification-action-toggle"]');
+    notificationSnackBar = $$('simple-snack-bar').first();
+    actionOutput = $('div[data-automation-id="notification-action-output"]');
+    notificationsPage = $('.app-sidenav-link[data-automation-id="Notifications"]');
+    notificationConfig = $('p[data-automation-id="notification-custom-object"]');
 
-    horizontalPositionDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="notification-horizontal-position"]')));
-    verticalPositionDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="notification-vertical-position"]')));
-    directionDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="notification-direction"]')));
+    horizontalPositionDropdown = new DropdownPage($('mat-select[data-automation-id="notification-horizontal-position"]'));
+    verticalPositionDropdown = new DropdownPage($('mat-select[data-automation-id="notification-vertical-position"]'));
+    directionDropdown = new DropdownPage($('mat-select[data-automation-id="notification-direction"]'));
 
     async checkNotifyContains(message): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('simple-snack-bar', message)).first());
@@ -79,7 +79,7 @@ export class NotificationDemoPage {
     }
 
     async clickNotificationButton(): Promise<void> {
-        const button = element(by.css('button[data-automation-id="notification-custom-config-button"]'));
+        const button = $('button[data-automation-id="notification-custom-config-button"]');
         await BrowserActions.click(button);
     }
 

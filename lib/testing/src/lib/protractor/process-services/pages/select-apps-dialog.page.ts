@@ -16,16 +16,16 @@
  */
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
-import { by, element } from 'protractor';
+import { $ } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class SelectAppsDialog {
 
-    selectAppsDialog = element(by.css('mat-dialog-container[aria-labelledby="adf-select-app-dialog-title"]'));
-    title = element(by.id('adf-select-app-dialog-title'));
-    appsDropdown = new DropdownPage(element(by.id('adf-select-app-dialog-dropdown')));
-    continueButton = element(by.css('adf-select-apps-dialog .mat-button-wrapper'));
+    selectAppsDialog = $('mat-dialog-container[aria-labelledby="adf-select-app-dialog-title"]');
+    title = $('#adf-select-app-dialog-title');
+    appsDropdown = new DropdownPage($('#adf-select-app-dialog-dropdown'));
+    continueButton = $('adf-select-apps-dialog .mat-button-wrapper');
 
     async checkSelectAppsDialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.selectAppsDialog);

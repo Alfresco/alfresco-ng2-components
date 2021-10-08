@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { ElementFinder, $, $$ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class InfinitePaginationPage {
 
     rootElement: ElementFinder;
-    loadMoreButton;
-    loading = element(by.css('[data-automation-id="adf-infinite-pagination-spinner"]'));
+    loadMoreButton: ElementFinder;
+    loading = $('[data-automation-id="adf-infinite-pagination-spinner"]');
 
-    constructor(rootElement = element.all(by.css('adf-infinite-pagination')).first()) {
+    constructor(rootElement = $$('adf-infinite-pagination').first()) {
         this.rootElement = rootElement;
-        this.loadMoreButton = this.rootElement.element(by.css('button[data-automation-id="adf-infinite-pagination-button"]'));
+        this.loadMoreButton = this.rootElement.$('button[data-automation-id="adf-infinite-pagination-button"]');
     }
 
     async clickLoadMoreButton(): Promise<void> {

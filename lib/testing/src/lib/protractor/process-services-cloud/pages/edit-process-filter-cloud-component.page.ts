@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { browser, by, element } from 'protractor';
+import { browser, $$, $ } from 'protractor';
 import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -34,26 +34,25 @@ export interface FilterProps {
 
 export class EditProcessFilterCloudComponentPage {
 
-    rootElement = element.all(by.css('adf-cloud-edit-process-filter')).first();
-    customiseFilter = element(by.id('adf-edit-process-filter-sub-title-id'));
-    saveButton = element(by.css('button[data-automation-id="adf-filter-action-save"]'));
-    saveAsButton = element(by.css('button[data-automation-id="adf-filter-action-saveAs"]'));
-    deleteButton = element(by.css('button[data-automation-id="adf-filter-action-delete"]'));
-    filter = element(by.css(`adf-cloud-edit-process-filter mat-expansion-panel-header`));
+    rootElement = $$('adf-cloud-edit-process-filter').first();
+    customiseFilter = $('#adf-edit-process-filter-sub-title-id');
+    saveButton = $('button[data-automation-id="adf-filter-action-save"]');
+    saveAsButton = $('button[data-automation-id="adf-filter-action-saveAs"]');
+    deleteButton = $('button[data-automation-id="adf-filter-action-delete"]');
+    filter = $(`adf-cloud-edit-process-filter mat-expansion-panel-header`);
 
-    private locatorAppNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-appName']`));
-    private locatorStatusDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-status']`));
-    private locatorSortDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-sort']`));
-    private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`));
-    private locatorProcessDefinitionNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`));
-    private locatorSuspendedDateRangeDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-suspendedDateRange']`));
-    private locatorStartedDateRangeDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-startedDateRange']`));
-    private locatorCompletedDateRangeDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`));
+    private locatorAppNameDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-appName']`);
+    private locatorStatusDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-status']`);
+    private locatorSortDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-sort']`);
+    private locatorOrderDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`);
+    private locatorProcessDefinitionNameDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`);
+    private expansionPanelExtended = this.rootElement.$('mat-expansion-panel-header.mat-expanded');
+    private locatorSuspendedDateRangeDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-suspendedDateRange']`);
+    private locatorStartedDateRangeDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-startedDateRange']`);
+    private locatorCompletedDateRangeDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`);
 
-    private locatorSuspendedDateRangeWithin = element(by.css(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`));
-
-    private expansionPanelExtended = this.rootElement.element(by.css('mat-expansion-panel-header.mat-expanded'));
-    private content = this.rootElement.element(by.css('div.mat-expansion-panel-content[style*="visible"]'));
+    private locatorSuspendedDateRangeWithin = $(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`);
+    private content = this.rootElement.$('div.mat-expansion-panel-content[style*="visible"]');
 
     appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
     statusDropdown = new DropdownPage(this.locatorStatusDropdown);
@@ -104,7 +103,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     getStateFilterDropDownValue(): Promise<string> {
-        return BrowserActions.getText(element(by.css("mat-form-field[data-automation-id='status'] span")));
+        return BrowserActions.getText($("mat-form-field[data-automation-id='status'] span"));
     }
 
     async setSortFilterDropDown(option) {
@@ -112,7 +111,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
-        const sortLocator = element.all(by.css("mat-form-field[data-automation-id='sort'] span")).first();
+        const sortLocator = $$("mat-form-field[data-automation-id='sort'] span").first();
         return BrowserActions.getText(sortLocator);
     }
 
@@ -122,7 +121,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     getOrderFilterDropDownValue(): Promise<string> {
-        return BrowserActions.getText(element(by.css("mat-form-field[data-automation-id='order'] span")));
+        return BrowserActions.getText($("mat-form-field[data-automation-id='order'] span"));
     }
 
     async setAppNameDropDown(option: string) {
@@ -151,12 +150,12 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async getApplicationSelected(): Promise<string> {
-        const applicationDropdown = element(by.css(`[data-automation-id='adf-cloud-edit-process-property-appName']`));
+        const applicationDropdown = $(`[data-automation-id='adf-cloud-edit-process-property-appName']`);
         return applicationDropdown.getText();
     }
 
     async checkAppNamesAreUnique(): Promise<boolean> {
-        const appNameList = element.all(by.css('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span'));
+        const appNameList = $$('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span');
         const appTextList: any = await appNameList.getText();
         const uniqueArray = appTextList.filter((appName) => {
             const sameAppNameArray = appTextList.filter((eachApp) => eachApp === appName);
@@ -171,7 +170,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     isApplicationListLoaded(): Promise<boolean> {
-        const emptyList = element(by.css(`[data-automation-id='adf-cloud-edit-process-property-appName'] .mat-select-placeholder`));
+        const emptyList = $(`[data-automation-id='adf-cloud-edit-process-property-appName'] .mat-select-placeholder`);
         return BrowserVisibility.waitUntilElementIsNotVisible(emptyList);
     }
 
@@ -196,12 +195,12 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async getProperty(property: string): Promise<string> {
-        const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
+        const locator = $$('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]').first();
         return BrowserActions.getInputValue(locator);
     }
 
-    async setProperty(property: string, option: string) {
-        const locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
+    async setProperty(property: string, option: string): Promise<void> {
+        const locator = $$('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]').first();
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         await BrowserActions.clearSendKeys(locator, option);
     }

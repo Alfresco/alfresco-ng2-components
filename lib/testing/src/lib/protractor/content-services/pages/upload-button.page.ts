@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { $ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { FileModel } from '../../core/models/file.model';
 
 export class UploadButtonPage {
 
-    uploadButton = element(by.css('adf-upload-button input'));
+    uploadButton = $('adf-upload-button input');
 
     async attachFiles(files: FileModel[]): Promise<void> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadButton);
@@ -31,11 +31,13 @@ export class UploadButtonPage {
     }
 
     async isButtonNotDisplayed(): Promise<boolean> {
+        let result = false;
+
         try {
             await BrowserVisibility.waitUntilElementIsNotVisible(this.uploadButton);
-            return true;
-        } catch (e) {
-            return false;
-        }
+            result = true;
+        } catch (e) { /* do nothing */ }
+
+        return result;
     }
 }

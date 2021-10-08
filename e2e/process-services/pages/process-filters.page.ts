@@ -16,25 +16,23 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, StartProcessPage } from '@alfresco/adf-testing';
-import { Locator, by, element } from 'protractor';
+import { $, $$ } from 'protractor';
 
 export class ProcessFiltersPage {
 
     dataTable = new DataTableComponentPage();
-    runningFilter = element(by.css('button[data-automation-id="Running_filter"]'));
-    completedFilter = element(by.css('button[data-automation-id="Completed_filter"]'));
-    allFilter = element(by.css('button[data-automation-id="All_filter"]'));
-    createProcessButton = element(by.css('.app-processes-menu button[data-automation-id="create-button"] > span'));
-    newProcessButton = element(by.css('div > button[data-automation-id="btn-start-process"]'));
-    processesPage = element(by.id('app-processes-menu'));
-    accordionMenu = element(by.css('.app-processes-menu mat-accordion'));
-    buttonWindow = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
-    noContentMessage = element.all(by.css('.adf-empty-content__title')).first();
-    rows: Locator = by.css('adf-process-instance-list .adf-datatable-body adf-datatable-row[class*="adf-datatable-row"]');
-    tableBody = element.all(by.css('adf-datatable .adf-datatable-body')).first();
-    nameColumn: Locator = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[title="Name"] span');
-    processIcon: Locator = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
-    startProcessEl = element(by.css('adf-start-process .adf-start-process'));
+    createProcessButton = $('.app-processes-menu button[data-automation-id="create-button"] > span');
+    newProcessButton = $('div > button[data-automation-id="btn-start-process"]');
+    processesPage = $('#app-processes-menu');
+    accordionMenu = $('.app-processes-menu mat-accordion');
+    buttonWindow = $('div > button[data-automation-id="btn-start-process"] > div');
+    noContentMessage = $$('.adf-empty-content__title').first();
+    rows = $$('adf-process-instance-list .adf-datatable-body adf-datatable-row[class*="adf-datatable-row"]');
+    tableBody = $$('adf-datatable .adf-datatable-body').first();
+    processIcon = 'adf-icon[data-automation-id="adf-filter-icon"]';
+    startProcessEl = $('adf-start-process .adf-start-process');
+
+    getButtonFilterLocatorByName = (name: string) => $(`button[data-automation-id='${name}_filter']`);
 
     async startProcess(): Promise<StartProcessPage> {
         await this.clickCreateProcessButton();
@@ -43,17 +41,19 @@ export class ProcessFiltersPage {
     }
 
     async clickRunningFilterButton(): Promise<void> {
-        await BrowserActions.click(this.runningFilter);
+        await BrowserActions.click(await this.getButtonFilterLocatorByName('Running'));
     }
 
     async clickCompletedFilterButton(): Promise<void> {
-        await BrowserActions.click(this.completedFilter);
-        await expect(await this.completedFilter.isEnabled()).toBe(true);
+        const completedFilterButtonLocator = await this.getButtonFilterLocatorByName('Completed');
+        await BrowserActions.click(completedFilterButtonLocator);
+        await expect(await completedFilterButtonLocator.isEnabled()).toBe(true);
     }
 
     async clickAllFilterButton(): Promise<void> {
-        await BrowserActions.click(this.allFilter);
-        await expect(await this.allFilter.isEnabled()).toBe(true);
+        const allFilterButtonLocator = await this.getButtonFilterLocatorByName('All');
+        await BrowserActions.click(allFilterButtonLocator);
+        await expect(await allFilterButtonLocator.isEnabled()).toBe(true);
     }
 
     async clickCreateProcessButton(): Promise<void> {
@@ -78,18 +78,18 @@ export class ProcessFiltersPage {
 
     async selectFromProcessList(title: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        const processName = element.all(by.css(`div[data-automation-id="text_${title}"]`)).first();
+        const processName = $$(`div[data-automation-id="text_${title}"]`).first();
         await BrowserActions.click(processName);
     }
 
     async checkFilterIsHighlighted(filterName: string): Promise<void> {
-        const processNameHighlighted = element(by.css(`adf-process-instance-filters .adf-active button[data-automation-id='${filterName}_filter']`));
+        const processNameHighlighted = $(`adf-process-instance-filters .adf-active button[data-automation-id='${filterName}_filter']`);
         await BrowserVisibility.waitUntilElementIsVisible(processNameHighlighted);
     }
 
     async numberOfProcessRows(): Promise<number> {
-        await BrowserVisibility.waitUntilElementIsVisible(element.all(this.rows).first());
-        return element.all(this.rows).count();
+        await BrowserVisibility.waitUntilElementIsVisible(await this.rows.first());
+        return this.rows.count();
     }
 
     async waitForTableBody(): Promise<void> {
@@ -110,25 +110,25 @@ export class ProcessFiltersPage {
     }
 
     async checkFilterIsDisplayed(name: string): Promise<void> {
-        const filterName = element(by.css(`button[data-automation-id='${name}_filter']`));
+        const filterName = await this.getButtonFilterLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
     }
 
     async checkFilterHasNoIcon(name: string): Promise<void> {
-        const filterName = element(by.css(`button[data-automation-id='${name}_filter']`));
+        const filterName = await this.getButtonFilterLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
-        await BrowserVisibility.waitUntilElementIsNotVisible(filterName.element(this.processIcon));
+        await BrowserVisibility.waitUntilElementIsNotVisible(filterName.$(this.processIcon));
     }
 
     async getFilterIcon(name: string): Promise<string> {
-        const filterName = element(by.css(`button[data-automation-id='${name}_filter']`));
+        const filterName = await this.getButtonFilterLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
-        const icon = filterName.element(this.processIcon);
+        const icon = filterName.$(this.processIcon);
         return BrowserActions.getText(icon);
     }
 
     async checkFilterIsNotDisplayed(name: string): Promise<void> {
-        const filterName = element(by.css(`button[data-automation-id='${name}_filter']`));
+        const filterName = await this.getButtonFilterLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsNotVisible(filterName);
     }
 

@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
-import { browser, by, element, ElementFinder, protractor } from 'protractor';
+import { $, $$, browser, by, element, ElementFinder, protractor } from 'protractor';
 
 export class DataTablePage {
 
@@ -33,30 +33,30 @@ export class DataTablePage {
     };
 
     dataTable: DataTableComponentPage;
-    multiSelect = element(by.css(`div[data-automation-id='multiselect'] label > .mat-checkbox-inner-container`));
+    multiSelect = $(`div[data-automation-id='multiselect'] label > .mat-checkbox-inner-container`);
     reset = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
-    allSelectedRows = element.all(by.css(`adf-datatable-row[class*='is-selected']`));
-    selectedRowNumber = element(by.css(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`));
-    selectAll = element(by.css(`div[class*='header'] label`));
+    allSelectedRows = $$(`adf-datatable-row[class*='is-selected']`);
+    selectedRowNumber = $(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`);
+    selectAll = $(`div[class*='header'] label`);
     addRowElement = element(by.xpath(`//span[contains(text(),'Add row')]/..`));
     replaceRowsElement = element(by.xpath(`//span[contains(text(),'Replace rows')]/..`));
     replaceColumnsElement = element(by.xpath(`//span[contains(text(),'Replace columns')]/..`));
-    createdOnColumn = element(by.css(`div[data-automation-id='auto_id_createdOn']`));
-    idColumnHeader = element(by.css(`div[data-automation-id='auto_id_id']`));
-    pasteClipboardInput = element(by.css(`input[data-automation-id='paste clipboard input']`));
+    createdOnColumn = $(`div[data-automation-id='auto_id_createdOn']`);
+    idColumnHeader = $(`div[data-automation-id='auto_id_id']`);
+    pasteClipboardInput = $(`input[data-automation-id='paste clipboard input']`);
 
-    selectModeDropdown = new DropdownPage(element(by.css(`mat-select[data-automation-id='datatable-selection-mode']`)));
+    selectModeDropdown = new DropdownPage($(`mat-select[data-automation-id='datatable-selection-mode']`));
 
     constructor(data?) {
         if (this.data[data]) {
-            this.dataTable = new DataTableComponentPage(element(by.css(`div[data-automation-id='` + this.data[data] + `']`)));
+            this.dataTable = new DataTableComponentPage($(`div[data-automation-id='` + this.data[data] + `']`));
         } else {
-            this.dataTable = new DataTableComponentPage(element(by.css(`div[data-automation-id='` + this.data.defaultTable + `']`)));
+            this.dataTable = new DataTableComponentPage($(`div[data-automation-id='` + this.data.defaultTable + `']`));
         }
     }
 
     async insertFilter(filterText: string): Promise<void> {
-        const inputFilter = element(by.css(`#adf-datatable-filter-input`));
+        const inputFilter = $(`#adf-datatable-filter-input`);
         await BrowserActions.clearSendKeys(inputFilter, filterText);
     }
 

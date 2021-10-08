@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { $, by, element } from 'protractor';
 import {
     BrowserVisibility,
     BrowserActions,
@@ -29,19 +29,19 @@ export class CardViewComponentPage {
     addButton = element(by.className('adf-card-view__key-value-pairs__add-btn'));
     nameCardTextItem = new CardTextItemPage('name');
     booleanCardBooleanItem = new CardBooleanItemPage('boolean');
-    intField = element(by.css(`input[data-automation-id='card-textitem-editinput-int']`));
-    floatField = element(by.css(`input[data-automation-id='card-textitem-editinput-float']`));
+    intField = $(`input[data-automation-id='card-textitem-editinput-int']`);
+    floatField = $(`input[data-automation-id='card-textitem-editinput-float']`);
     valueInputField = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Value']`));
     nameInputField = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Name']`));
     consoleLog = element(by.className('app-console'));
     deleteButton = element.all(by.className('adf-card-view__key-value-pairs__remove-btn')).first();
-    resetButton = element(by.css(`#adf-reset-card-log`));
-    editableSwitch = element(by.id('app-toggle-editable'));
-    clearDateSwitch = element(by.id('app-toggle-clear-date'));
-    noneOptionSwitch = element(by.id('app-toggle-none-option'));
-    clickableField = element(by.css(`[data-automation-id="card-textitem-toggle-click"]`));
+    resetButton = $(`#adf-reset-card-log`);
+    editableSwitch = $('#app-toggle-editable');
+    clearDateSwitch = $('#app-toggle-clear-date');
+    noneOptionSwitch = $('#app-toggle-none-option');
+    clickableField = $(`[data-automation-id="card-textitem-toggle-click"]`);
 
-    selectDropdown = new DropdownPage(element(by.css('mat-select[data-automation-class="select-box"]')));
+    selectDropdown = new DropdownPage($('mat-select[data-automation-class="select-box"]'));
 
     async clickOnAddButton(): Promise<void> {
         await BrowserActions.click(this.addButton);
@@ -72,18 +72,18 @@ export class CardViewComponentPage {
     }
 
     async clickOnIntField(): Promise<void> {
-        const toggleText = element(by.css('div[data-automation-id="card-textitem-toggle-int"]'));
+        const toggleText = $('div[data-automation-id="card-textitem-toggle-int"]');
         await BrowserActions.click(toggleText);
         await BrowserVisibility.waitUntilElementIsVisible(this.intField);
     }
 
     async clickOnIntClearIcon(): Promise<void> {
-        const clearIcon = element(by.css('button[data-automation-id="card-textitem-reset-int"]'));
+        const clearIcon = $('button[data-automation-id="card-textitem-reset-int"]');
         await BrowserActions.click(clearIcon);
     }
 
     async clickOnIntSaveIcon(): Promise<void> {
-        const saveIcon = element(by.css('button[data-automation-id="card-textitem-update-int"]'));
+        const saveIcon = $('button[data-automation-id="card-textitem-update-int"]');
         await BrowserActions.click(saveIcon);
     }
 
@@ -92,28 +92,28 @@ export class CardViewComponentPage {
     }
 
     getIntFieldText(): Promise<string> {
-        const textField = element(by.css('span[data-automation-id="card-textitem-value-int"]'));
+        const textField = $('span[data-automation-id="card-textitem-value-int"]');
         return BrowserActions.getText(textField);
     }
 
     getErrorInt(): Promise<string> {
-        const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
+        const errorElement = $('mat-error[data-automation-id="card-textitem-error-int"]');
         return BrowserActions.getText(errorElement);
     }
 
     async clickOnFloatField(): Promise<void> {
-        const toggleText = element(by.css('div[data-automation-id="card-textitem-toggle-float"]'));
+        const toggleText = $('div[data-automation-id="card-textitem-toggle-float"]');
         await BrowserActions.click(toggleText);
         await BrowserVisibility.waitUntilElementIsVisible(this.floatField);
     }
 
     async clickOnFloatClearIcon(): Promise<void> {
-        const clearIcon = element(by.css(`button[data-automation-id="card-textitem-reset-float"]`));
+        const clearIcon = $(`button[data-automation-id="card-textitem-reset-float"]`);
         await BrowserActions.click(clearIcon);
     }
 
     async clickOnFloatSaveIcon(): Promise<void> {
-        const saveIcon = element(by.css(`button[data-automation-id="card-textitem-update-float"]`));
+        const saveIcon = $(`button[data-automation-id="card-textitem-update-float"]`);
         await BrowserActions.click(saveIcon);
     }
 
@@ -122,12 +122,12 @@ export class CardViewComponentPage {
     }
 
     getFloatFieldText(): Promise<string> {
-        const textField = element(by.css('span[data-automation-id="card-textitem-value-float"]'));
+        const textField = $('span[data-automation-id="card-textitem-value-float"]');
         return BrowserActions.getText(textField);
     }
 
     getErrorFloat(): Promise<string> {
-        const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-float"]'));
+        const errorElement = $('mat-error[data-automation-id="card-textitem-error-float"]');
         return BrowserActions.getText(errorElement);
     }
 
@@ -144,7 +144,7 @@ export class CardViewComponentPage {
     }
 
     getOutputText(index: number): Promise<string> {
-        return BrowserActions.getText(this.consoleLog.all(by.css('p')).get(index));
+        return BrowserActions.getText(this.consoleLog.$$('p').get(index));
     }
 
     async deletePairsValues(): Promise<void> {
@@ -177,22 +177,22 @@ export class CardViewComponentPage {
     }
 
     async getDateValue(): Promise<string> {
-        const dateValue = element(by.css('span[data-automation-id="card-date-value-date"]'));
+        const dateValue = $('span[data-automation-id="card-date-value-date"]');
         return dateValue.getText();
     }
 
     async getDateTimeValue(): Promise<string> {
-        const dateTimeValue = element(by.css('span[data-automation-id="card-datetime-value-datetime"]'));
+        const dateTimeValue = $('span[data-automation-id="card-datetime-value-datetime"]');
         return dateTimeValue.getText();
     }
 
     async clearDateField(): Promise<void> {
-        const clearDateButton = element(by.css('mat-icon[data-automation-id="datepicker-date-clear-date"]'));
+        const clearDateButton = $('mat-icon[data-automation-id="datepicker-date-clear-date"]');
         await BrowserActions.click(clearDateButton);
     }
 
     async clearDateTimeField(): Promise<void> {
-        const clearDateButton = element(by.css('mat-icon[data-automation-id="datepicker-date-clear-datetime"]'));
+        const clearDateButton = $('mat-icon[data-automation-id="datepicker-date-clear-datetime"]');
         await BrowserActions.click(clearDateButton);
     }
 
@@ -200,7 +200,7 @@ export class CardViewComponentPage {
         const switchClass = await BrowserActions.getAttribute(this.editableSwitch, 'class');
         if (switchClass.indexOf('mat-checked') === -1) {
             await this.clearDateSwitch.click();
-            const clearDateChecked = element(by.css('mat-slide-toggle[id="app-toggle-clear-date"][class*="mat-checked"]'));
+            const clearDateChecked = $('mat-slide-toggle[id="app-toggle-clear-date"][class*="mat-checked"]');
             await BrowserVisibility.waitUntilElementIsVisible(clearDateChecked);
         }
     }
@@ -209,13 +209,13 @@ export class CardViewComponentPage {
         const switchClass = await BrowserActions.getAttribute(this.noneOptionSwitch, 'class');
         if (switchClass.indexOf('mat-checked') === -1) {
             await this.noneOptionSwitch.click();
-            const noneOptionChecked = element(by.css('mat-slide-toggle[id="app-toggle-none-option"][class*="mat-checked"]'));
+            const noneOptionChecked = $('mat-slide-toggle[id="app-toggle-none-option"][class*="mat-checked"]');
             await BrowserVisibility.waitUntilElementIsVisible(noneOptionChecked);
         }
     }
 
     async isErrorNotDisplayed(): Promise<boolean> {
-        const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
+        const errorElement = $('mat-error[data-automation-id="card-textitem-error-int"]');
         try {
             await BrowserVisibility.waitUntilElementIsNotVisible(errorElement);
             return true;
@@ -231,10 +231,10 @@ export class CardViewComponentPage {
     async updateClickableField(text: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.clickableField);
         await BrowserActions.click(this.clickableField);
-        const inputField = element(by.css('input[data-automation-id="card-textitem-editinput-click"]'));
+        const inputField = $('input[data-automation-id="card-textitem-editinput-click"]');
         await BrowserVisibility.waitUntilElementIsPresent(inputField);
         await BrowserActions.clearSendKeys(inputField, text);
-        const save = element(by.css('[data-automation-id="card-textitem-update-click"]'));
+        const save = $('[data-automation-id="card-textitem-update-click"]');
         await BrowserVisibility.waitUntilElementIsVisible(save);
         await BrowserActions.click(save);
     }

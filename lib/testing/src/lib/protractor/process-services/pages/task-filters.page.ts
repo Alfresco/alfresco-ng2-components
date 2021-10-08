@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { $ } from 'protractor';
 import { FiltersPage } from './filters.page';
 
 export class TaskFiltersPage {
@@ -28,11 +28,11 @@ export class TaskFiltersPage {
 
     filtersPage = new FiltersPage();
 
-    myTasks = element(by.css('[data-automation-id="My Tasks_filter"]'));
-    queuedTask = element(by.css('[data-automation-id="Queued Tasks_filter"]'));
-    completedTask = element(by.css('[data-automation-id="Completed Tasks_filter"]'));
-    involvedTask = element(by.css('[data-automation-id="Involved Tasks_filter"]'));
-    accordionMenu = element(by.css('.app-processes-menu mat-accordion'));
+    myTasks = $('[data-automation-id="My Tasks_filter"]');
+    queuedTask = $('[data-automation-id="Queued Tasks_filter"]');
+    completedTask = $('[data-automation-id="Completed Tasks_filter"]');
+    involvedTask = $('[data-automation-id="Involved Tasks_filter"]');
+    accordionMenu = $('.app-processes-menu mat-accordion');
 
     async clickMyTasksFilterButton(): Promise<void> {
         await this.filtersPage.clickFilterButton(this.myTasks);
@@ -51,7 +51,7 @@ export class TaskFiltersPage {
     }
 
     async clickCustomFilterButton(customFilterName): Promise<void> {
-        await this.filtersPage.clickFilterButton(element(by.css(`[data-automation-id="${customFilterName}_filter"]`)));
+        await this.filtersPage.clickFilterButton($(`[data-automation-id="${customFilterName}_filter"]`));
     }
 
     async isMyTasksFilterHighlighted(): Promise<boolean> {

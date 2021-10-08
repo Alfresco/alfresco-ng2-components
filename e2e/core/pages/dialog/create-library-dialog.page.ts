@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { $, $$ } from 'protractor';
 import { BrowserActions, TestElement } from '@alfresco/adf-testing';
 
 export class CreateLibraryDialogPage {
@@ -30,11 +30,11 @@ export class CreateLibraryDialogPage {
     cancelButton = TestElement.byCss('button[data-automation-id="cancel-library-id"]');
     createButton = TestElement.byCss('button[data-automation-id="create-library-id"]');
     errorMessage = TestElement.byCss('.mat-dialog-content .mat-error');
-    errorMessages = element.all(by.css('.mat-dialog-content .mat-error'));
+    errorMessages = $$('.mat-dialog-content .mat-error');
     libraryNameHint = TestElement.byCss('adf-library-dialog .mat-hint');
 
     async getSelectedRadio(): Promise<string> {
-        const radio = element(by.css('.mat-radio-button[class*="checked"]'));
+        const radio = $('.mat-radio-button[class*="checked"]');
         return BrowserActions.getText(radio);
     }
 

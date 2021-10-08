@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Locator, element, by, ElementFinder, browser } from 'protractor';
+import { by, ElementFinder, browser, $ } from 'protractor';
 import { BrowserActions } from '../../../../core/utils/browser-actions';
 import { Logger } from '../../../../core/utils/logger';
 import { BrowserVisibility } from '../../../../core/utils/browser-visibility';
@@ -23,33 +23,37 @@ import { BrowserVisibility } from '../../../../core/utils/browser-visibility';
 export class AttachFileWidgetCloudPage {
 
     widget: ElementFinder;
-    filesListLocator: Locator = by.css('div[id="adf-attach-widget-readonly-list"]');
 
     constructor(fieldId: string) {
         this.assignWidget(fieldId);
     }
 
+    getFileAttachedLocatorByContainingText = async(text: string): Promise<ElementFinder> => {
+        const filesListLocator = 'div[id="adf-attach-widget-readonly-list"]';
+        return this.widget.$(filesListLocator).element(by.cssContainingText('mat-list-item span ', text));
+    }
+
     assignWidget(fieldId: string): void {
-        this.widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
+        this.widget = $(`adf-form-field div[id='field-${fieldId}-container']`);
     }
 
     async clickAttachContentFile(fileId: string): Promise<void> {
-        const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
+        const uploadButton = this.widget.$(`button[id=${fileId}]`);
         await BrowserActions.click(uploadButton);
     }
 
     async checkUploadContentButtonIsDisplayed(fileId: string): Promise<void> {
-        const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
+        const uploadButton = this.widget.$(`button[id=${fileId}]`);
         await BrowserVisibility.waitUntilElementIsVisible(uploadButton);
     }
 
     async checkUploadContentButtonIsNotDisplayed(fileId: string): Promise<void> {
-        const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
+        const uploadButton = this.widget.$(`button[id=${fileId}]`);
         await BrowserVisibility.waitUntilElementIsNotVisible(uploadButton);
     }
 
     async checkFileIsAttached(name): Promise<void> {
-        const fileAttached = this.widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
+        const fileAttached = await this.getFileAttachedLocatorByContainingText(name);
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
@@ -60,12 +64,12 @@ export class AttachFileWidgetCloudPage {
     }
 
     async checkFileIsNotAttached(name): Promise<void> {
-        const fileAttached = this.widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
+        const fileAttached = await this.getFileAttachedLocatorByContainingText(name);
         await BrowserVisibility.waitUntilElementIsNotVisible(fileAttached);
     }
 
     async getFileId(name: string): Promise<string> {
-        const fileAttached = this.widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
+        const fileAttached = await this.getFileAttachedLocatorByContainingText(name);
         return BrowserActions.getAttribute(fileAttached, 'id');
     }
 
@@ -74,11 +78,11 @@ export class AttachFileWidgetCloudPage {
         await BrowserActions.closeMenuAndDialogs();
         const fileId = await this.getFileId(fileName);
         Logger.info(`FileId ${fileId}`);
-        const optionMenu = this.widget.element(by.css(`button[id='${fileId}-option-menu']`));
+        const optionMenu = this.widget.$(`button[id='${fileId}-option-menu']`);
         await BrowserActions.click(optionMenu);
         await BrowserActions.waitUntilActionMenuIsVisible();
         await browser.waitForAngular();
-        const actionButton = element(by.css(`button#${fileId}-${actionName}`));
+        const actionButton = $(`button#${fileId}-${actionName}`);
         await BrowserActions.click(actionButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(actionButton);
         await browser.waitForAngular();

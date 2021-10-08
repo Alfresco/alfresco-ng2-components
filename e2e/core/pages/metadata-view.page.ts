@@ -15,45 +15,48 @@
  * limitations under the License.
  */
 
-import { by, element, Key, Locator, protractor } from 'protractor';
+import { $, by, element, Key, protractor, ElementFinder } from 'protractor';
 import { BrowserActions, BrowserVisibility, DropdownPage, TestElement, Logger } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
 
-    title = element(by.css(`div[info-drawer-title]`));
-    expandedAspect = element(by.css(`mat-expansion-panel-header[aria-expanded='true']`));
-    aspectTitle: Locator = by.css(`mat-panel-title`);
-    name = element(by.css(`[data-automation-id='card-textitem-value-properties.cm:name']`));
-    creator = element(by.css(`[data-automation-id='card-textitem-value-createdByUser.displayName']`));
-    createdDate = element(by.css(`span[data-automation-id='card-dateitem-createdAt']`));
-    modifier = element(by.css(`[data-automation-id='card-textitem-value-modifiedByUser.displayName']`));
-    modifiedDate = element(by.css(`span[data-automation-id='card-dateitem-modifiedAt']`));
-    mimetypeName = element(by.css(`[data-automation-id='card-textitem-value-content.mimeTypeName']`));
-    size = element(by.css(`[data-automation-id='card-textitem-value-content.sizeInBytes']`));
-    description = element(by.css(`span[data-automation-id='card-textitem-value-properties.cm:description']`));
-    author = element(by.css(`[data-automation-id='card-textitem-value-properties.cm:author']`));
-    titleProperty = element(by.css(`span[data-automation-id='card-textitem-value-properties.cm:title'] span`));
-    editIcon = element(by.css(`button[data-automation-id='meta-data-card-toggle-edit']`));
-    informationButton = element(by.css(`button[data-automation-id='meta-data-card-toggle-expand']`));
-    informationSpan = element(by.css(`span[data-automation-id='meta-data-card-toggle-expand-label']`));
-    informationIcon = element(by.css(`span[data-automation-id='meta-data-card-toggle-expand-label'] ~ mat-icon`));
-    displayEmptySwitch = element(by.id(`adf-metadata-empty`));
-    readonlySwitch = element(by.id(`adf-metadata-readonly`));
-    multiSwitch = element(by.id(`adf-metadata-multi`));
-    presetSwitch = element(by.id('adf-toggle-custom-preset'));
-    defaultPropertiesSwitch = element(by.id('adf-metadata-default-properties'));
+    title = $(`div[info-drawer-title]`);
+    expandedAspect = $(`mat-expansion-panel-header[aria-expanded='true']`);
+    aspectTitle = `mat-panel-title`;
+    name = $(`[data-automation-id='card-textitem-value-properties.cm:name']`);
+    creator = $(`[data-automation-id='card-textitem-value-createdByUser.displayName']`);
+    createdDate = $(`span[data-automation-id='card-dateitem-createdAt']`);
+    modifier = $(`[data-automation-id='card-textitem-value-modifiedByUser.displayName']`);
+    modifiedDate = $(`span[data-automation-id='card-dateitem-modifiedAt']`);
+    mimetypeName = $(`[data-automation-id='card-textitem-value-content.mimeTypeName']`);
+    size = $(`[data-automation-id='card-textitem-value-content.sizeInBytes']`);
+    description = $(`span[data-automation-id='card-textitem-value-properties.cm:description']`);
+    author = $(`[data-automation-id='card-textitem-value-properties.cm:author']`);
+    titleProperty = $(`span[data-automation-id='card-textitem-value-properties.cm:title'] span`);
+    editIcon = $(`button[data-automation-id='meta-data-card-toggle-edit']`);
+    informationButton = $(`button[data-automation-id='meta-data-card-toggle-expand']`);
+    informationSpan = $(`span[data-automation-id='meta-data-card-toggle-expand-label']`);
+    informationIcon = $(`span[data-automation-id='meta-data-card-toggle-expand-label'] ~ mat-icon`);
+    displayEmptySwitch = $(`#adf-metadata-empty`);
+    readonlySwitch = $(`#adf-metadata-readonly`);
+    multiSwitch = $(`#adf-metadata-multi`);
+    presetSwitch = $('#adf-toggle-custom-preset');
+    defaultPropertiesSwitch = $('#adf-metadata-default-properties');
     closeButton = element(by.cssContainingText('button.mat-button span', 'Close'));
-    displayAspect = element(by.css(`input[data-placeholder='Display Aspect']`));
+    displayAspect = $(`input[data-placeholder='Display Aspect']`);
     applyAspect = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
-    saveMetadataButton = element(by.css(`[data-automation-id='save-metadata']`));
-    resetMetadataButton = element(by.css(`[data-automation-id='reset-metadata']`));
+    saveMetadataButton = $(`[data-automation-id='save-metadata']`);
+    resetMetadataButton = $(`[data-automation-id='reset-metadata']`);
+
+    private getMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> => $(`mat-expansion-panel[data-automation-id="adf-metadata-group-${groupName}"]`);
+    private getExpandedMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> => $(`mat-expansion-panel[data-automation-id="adf-metadata-group-${groupName}"] > mat-expansion-panel-header`);
 
     async getTitle(): Promise<string> {
         return BrowserActions.getText(this.title);
     }
 
     async getExpandedAspectName(): Promise<string> {
-        return BrowserActions.getText(this.expandedAspect.element(this.aspectTitle));
+        return BrowserActions.getText(this.expandedAspect.$(this.aspectTitle));
     }
 
     async getName(): Promise<string> {
@@ -138,79 +141,79 @@ export class MetadataViewPage {
     }
 
     async editPropertyIconIsDisplayed(propertyName: string) {
-        const editPropertyIcon = element(by.css('[data-automation-id="header-' + propertyName + '"] .adf-textitem-edit-icon'));
+        const editPropertyIcon = $('[data-automation-id="header-' + propertyName + '"] .adf-textitem-edit-icon');
         await BrowserVisibility.waitUntilElementIsPresent(editPropertyIcon);
     }
 
     async clickResetButton(): Promise<void> {
-        const clearPropertyIcon = element(by.css('button[data-automation-id="reset-metadata"]'));
+        const clearPropertyIcon = $('button[data-automation-id="reset-metadata"]');
         await BrowserActions.click(clearPropertyIcon);
     }
 
     async enterPropertyText(propertyName: string, text: string | number): Promise<void> {
-        const textField = element(by.css('input[data-automation-id="card-textitem-value-' + propertyName + '"]'));
+        const textField = $('input[data-automation-id="card-textitem-value-' + propertyName + '"]');
         await BrowserActions.clearSendKeys(textField, text.toString());
         await textField.sendKeys(protractor.Key.ENTER);
     }
 
     async enterPresetText(text: string): Promise<void> {
-        const presetField = element(by.css('input[data-automation-id="adf-text-custom-preset"]'));
+        const presetField = $('input[data-automation-id="adf-text-custom-preset"]');
         await BrowserActions.clearSendKeys(presetField, text.toString());
         await presetField.sendKeys(protractor.Key.ENTER);
-        const applyButton = element(by.css('button[id="adf-metadata-aplly"]'));
+        const applyButton = $('button[id="adf-metadata-aplly"]');
         await BrowserActions.click(applyButton);
     }
 
     async enterDescriptionText(text: string): Promise<void> {
-        const textField = element(by.css('textarea[data-automation-id="card-textitem-value-properties.cm:description"]'));
+        const textField = $('textarea[data-automation-id="card-textitem-value-properties.cm:description"]');
         await BrowserActions.clearSendKeys(textField, text);
         await textField.sendKeys(Key.TAB);
     }
 
     async getPropertyText(propertyName: string, type?: string): Promise<string> {
         const propertyType = type || 'textitem';
-        const textField = element(by.css('[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]'));
+        const textField = $('[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]');
 
         return BrowserActions.getInputValue(textField);
     }
 
     async getPropertyIconTooltip(propertyName: string): Promise<string> {
-        const editPropertyIcon = element(by.css('[data-automation-id="header-' + propertyName + '"] .adf-textitem-edit-icon'));
+        const editPropertyIcon = $('[data-automation-id="header-' + propertyName + '"] .adf-textitem-edit-icon');
         return BrowserActions.getAttribute(editPropertyIcon, 'title');
     }
 
     async clickMetadataGroup(groupName: string): Promise<void> {
-        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
+        const group = await this.getMetadataGroupLocator(groupName);
         await BrowserActions.click(group);
     }
 
     async checkMetadataGroupIsPresent(groupName: string): Promise<void> {
-        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
+        const group = await this.getMetadataGroupLocator(groupName);
         await BrowserVisibility.waitUntilElementIsVisible(group);
     }
 
     async checkMetadataGroupIsNotPresent(groupName: string): Promise<void> {
-        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
+        const group = await this.getMetadataGroupLocator(groupName);
         await BrowserVisibility.waitUntilElementIsNotVisible(group);
     }
 
     async checkMetadataGroupIsExpand(groupName: string): Promise<void> {
-        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
+        const group = await this.getExpandedMetadataGroupLocator(groupName);
         await expect(await BrowserActions.getAttribute(group, 'class')).toContain('mat-expanded');
     }
 
     async checkMetadataGroupIsNotExpand(groupName: string): Promise<void> {
-        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
+        const group = await this.getExpandedMetadataGroupLocator(groupName);
         await expect(await BrowserActions.getAttribute(group, 'class')).not.toContain('mat-expanded');
     }
 
     async getMetadataGroupTitle(groupName: string): Promise<string> {
-        const group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
+        const group = $('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title');
         return BrowserActions.getText(group);
     }
 
     async checkPropertyIsVisible(propertyName: string, type: string): Promise<void> {
-        const property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
+        const property = $('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]');
         await BrowserVisibility.waitUntilElementIsVisible(property);
     }
 

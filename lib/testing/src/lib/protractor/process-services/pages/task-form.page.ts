@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { $ } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../core/utils/public-api';
 
 export class TaskFormPage {
 
-    saveButton = element(by.id('adf-form-save'));
-    claimButton = element(by.css('button[data-automation-id="adf-task-form-claim-button"]'));
-    releaseButton = element(by.css('button[data-automation-id="adf-task-form-unclaim-button"]'));
+    saveButton = $('#adf-form-save');
+    claimButton = $('button[data-automation-id="adf-task-form-claim-button"]');
+    releaseButton = $('button[data-automation-id="adf-task-form-unclaim-button"]');
 
     async clickOnClaimButton(): Promise<void> {
         await BrowserActions.click(this.claimButton);

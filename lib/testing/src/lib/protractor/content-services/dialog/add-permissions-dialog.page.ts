@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { $, by, element, $$ } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
@@ -29,13 +29,17 @@ const column = {
 export class AddPermissionsDialogPage {
 
     dataTableComponentPage: DataTableComponentPage = new DataTableComponentPage();
-    userRoleDataTableComponentPage: DataTableComponentPage = new DataTableComponentPage(element(by.css('[data-automation-id="adf-user-role-selection-table"]')));
+    userRoleDataTableComponentPage: DataTableComponentPage = new DataTableComponentPage($('[data-automation-id="adf-user-role-selection-table"]'));
 
-    addPermissionDialog = element(by.css('adf-add-permission-dialog'));
-    searchUserInput = element(by.id('searchInput'));
-    searchResults = element(by.css('#adf-add-permission-authority-results #adf-search-results-content'));
-    addButton = element(by.css('[data-automation-id="add-permission-dialog-confirm-button"]'));
-    closeButton = element(by.id('add-permission-dialog-close-button'));
+    addPermissionDialog = $('adf-add-permission-dialog');
+    searchUserInput = $('#searchInput');
+    searchResults = $('#adf-add-permission-authority-results #adf-search-results-content');
+    addButton = $('[data-automation-id="add-permission-dialog-confirm-button"]');
+    closeButton = $('#add-permission-dialog-close-button');
+
+    getRoleDropdownOptions() {
+        return $$('.mat-option-text');
+    }
 
     async clickCloseButton(): Promise<void> {
         await BrowserActions.click(this.closeButton);
@@ -69,7 +73,7 @@ export class AddPermissionsDialogPage {
     }
 
     async checkPermissionsDatatableIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('[class*="adf-datatable-permission"]')));
+        await BrowserVisibility.waitUntilElementIsVisible($('[class*="adf-datatable-permission"]'));
     }
 
     async getRoleCellValue(rowName: string): Promise<string> {
@@ -79,11 +83,7 @@ export class AddPermissionsDialogPage {
 
     async clickRoleDropdownByUserOrGroupName(name: string): Promise<void> {
         const row = this.dataTableComponentPage.getRow('Users and Groups', name);
-        await BrowserActions.click(row.element(by.id('adf-select-role-permission')));
-    }
-
-    getRoleDropdownOptions() {
-        return element.all(by.css('.mat-option-text'));
+        await BrowserActions.click(row.$('adf-select-role-permission'));
     }
 
     async selectOption(name: string): Promise<void> {
@@ -105,7 +105,7 @@ export class AddPermissionsDialogPage {
 
     async selectRole(name: string, role: string) {
         const row = this.userRoleDataTableComponentPage.getRow('Users and Groups', name);
-        await BrowserActions.click(row.element(by.css('[id="adf-select-role-permission"] .mat-select-trigger')));
+        await BrowserActions.click(row.$('[id="adf-select-role-permission"] .mat-select-trigger'));
         await TestElement.byCss('.mat-select-panel').waitVisible();
         await this.selectOption(role);
     }

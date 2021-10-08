@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Locator, element, by, ElementFinder } from 'protractor';
+import { element, by, ElementFinder, $$ } from 'protractor';
 import { DateTimePickerPage } from '../material/date-time-picker.page';
 import { DatePickerPage } from '../material/date-picker.page';
 import { BrowserVisibility } from '../../utils/browser-visibility';
@@ -26,10 +26,10 @@ export class CardDateItemPage {
     dateTimePickerPage: DateTimePickerPage;
     datePickerPage = new DatePickerPage();
 
-    labelLocator: Locator = by.css('div[data-automation-id*="card-dateitem-label"]');
-    valueLocator: Locator = by.css('span[data-automation-id*="card-date"]');
-    dateTimePicker = element.all(by.css('.mat-datetimepicker-toggle')).first();
-    saveButton: Locator = by.css('button[data-automation-id*="card-dateitem-update"]');
+    labelLocator = 'div[data-automation-id*="card-dateitem-label"]';
+    valueLocator = 'span[data-automation-id*="card-date"]';
+    dateTimePicker = $$('.mat-datetimepicker-toggle').first();
+    saveButton = 'button[data-automation-id*="card-dateitem-update"]';
 
     constructor(label: string = 'minDate') {
         this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-dateitem`));
@@ -45,11 +45,11 @@ export class CardDateItemPage {
     }
 
     async getDateValue(): Promise<string> {
-        return this.rootElement.element(this.valueLocator).getText();
+        return this.rootElement.$(this.valueLocator).getText();
     }
 
     async checkLabelIsVisible(): Promise<void> {
-        const labelElement = this.rootElement.element(this.labelLocator);
+        const labelElement = this.rootElement.$(this.labelLocator);
         await BrowserVisibility.waitUntilElementIsVisible(labelElement);
     }
 }

@@ -33,7 +33,7 @@ export class TextWidgetPage {
     }
 
     async setValue(fieldId, value): Promise<void> {
-        await this.formFields.setFieldValue(by.id, fieldId, value);
+        await this.formFields.setFieldValue(fieldId, value);
     }
 
     getFieldValue(fieldId): Promise<string> {

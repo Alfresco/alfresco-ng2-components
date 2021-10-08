@@ -15,64 +15,64 @@
  * limitations under the License.
  */
 
-import { Locator, browser, by, ElementFinder } from 'protractor';
+import { browser, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 
 export class SearchSliderPage {
 
     filter: ElementFinder;
-    slider: Locator = by.css('mat-slider[data-automation-id="slider-range"]');
-    clearButton: Locator = by.css('button[data-automation-id="slider-btn-clear"]');
-    sliderWithThumbLabel: Locator = by.css('mat-slider[data-automation-id="slider-range"][class*="mat-slider-thumb-label-showing"]');
+    slider = 'mat-slider[data-automation-id="slider-range"]';
+    clearButton = 'button[data-automation-id="slider-btn-clear"]';
+    sliderWithThumbLabel = 'mat-slider[data-automation-id="slider-range"][class*="mat-slider-thumb-label-showing"]';
 
     constructor(filter: ElementFinder) {
         this.filter = filter;
     }
 
     async getMaxValue() {
-        return BrowserActions.getAttribute(this.filter.element(this.slider), 'aria-valuemax');
+        return BrowserActions.getAttribute(this.filter.$(this.slider), 'aria-valuemax');
     }
 
     async getMinValue() {
-        return BrowserActions.getAttribute(this.filter.element(this.slider), 'aria-valuemin');
+        return BrowserActions.getAttribute(this.filter.$(this.slider), 'aria-valuemin');
     }
 
     async getValue() {
-        return BrowserActions.getAttribute(this.filter.element(this.slider), 'aria-valuenow');
+        return BrowserActions.getAttribute(this.filter.$(this.slider), 'aria-valuenow');
     }
 
     async setValue(value: number): Promise<void> {
-        const elem = this.filter.element(this.slider).element(by.css('.mat-slider-wrapper'));
+        const elem = this.filter.$(this.slider).$('.mat-slider-wrapper');
         await browser.actions().mouseMove(elem, { x: 0, y: 0 }).perform();
         await browser.actions().mouseDown().mouseMove({x: value * 10, y: 0}).mouseUp().perform();
     }
 
     async checkSliderIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.slider));
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.$(this.slider));
     }
 
     async checkSliderIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.slider));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.$(this.slider));
     }
 
     async checkSliderWithThumbLabelIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.sliderWithThumbLabel));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.$(this.sliderWithThumbLabel));
     }
 
     async clickClearButton(): Promise<void> {
-        await BrowserActions.click(this.filter.element(this.clearButton));
+        await BrowserActions.click(this.filter.$(this.clearButton));
     }
 
     async checkClearButtonIsEnabled() {
-        return this.filter.element(this.clearButton).isEnabled();
+        return this.filter.$(this.clearButton).isEnabled();
     }
 
     async checkClearButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter.element(this.clearButton));
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter.$(this.clearButton));
     }
 
     async checkClearButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.element(this.clearButton));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.$(this.clearButton));
     }
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, ElementFinder } from 'protractor';
+import { ElementFinder } from 'protractor';
 import { SearchTextPage } from './search-text.page';
 import { SearchCheckListPage } from './search-check-list.page';
 import { SearchRadioPage } from './search-radio.page';
@@ -56,11 +56,11 @@ export class SearchCategoriesPage {
     }
 
     async clickFilter(filter: ElementFinder): Promise<void> {
-        await BrowserActions.click(filter.element(by.css('mat-expansion-panel-header')));
+        await BrowserActions.click(filter.$('mat-expansion-panel-header'));
     }
 
     async clickFilterHeader(filter: ElementFinder): Promise<void> {
-        const fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
+        const fileSizeFilterHeader = filter.$('mat-expansion-panel-header');
         await BrowserActions.click(fileSizeFilterHeader);
     }
 

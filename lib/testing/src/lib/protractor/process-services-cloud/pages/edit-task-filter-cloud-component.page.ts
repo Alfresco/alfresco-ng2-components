@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor, ElementFinder } from 'protractor';
+import { browser, protractor, ElementFinder, $$, $ } from 'protractor';
 import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -28,31 +28,31 @@ export type StatusType = 'All' | 'Created' | 'Assigned' | 'Cancelled' | 'Suspend
 
 export class EditTaskFilterCloudComponentPage {
 
-    rootElement = element.all(by.css('adf-cloud-edit-task-filter')).first();
-    customiseFilter = element(by.id('adf-edit-task-filter-sub-title-id'));
-    assignee = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
-    priority = element(by.css('[data-automation-id="adf-cloud-edit-task-property-priority"]'));
-    taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
-    id = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskId"]'));
-    processDefinitionId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
-    processInstanceId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'));
-    lastModifiedFrom = element(by.css('input[data-placeholder="LastModifiedFrom"]'));
-    lastModifiedTo = element(by.css('input[data-placeholder="LastModifiedTo"]'));
-    parentTaskId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]'));
-    owner = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-owner"]'));
-    saveButton = element(by.css('[data-automation-id="adf-filter-action-save"]'));
-    saveAsButton = element(by.css('[data-automation-id="adf-filter-action-saveAs"]'));
-    deleteButton = element(by.css('[data-automation-id="adf-filter-action-delete"]'));
-    filter = element(by.css(`adf-cloud-edit-task-filter mat-expansion-panel-header`));
+    rootElement = $$('adf-cloud-edit-task-filter').first();
+    customiseFilter = $('#adf-edit-task-filter-sub-title-id');
+    assignee = $('input[data-automation-id="adf-cloud-edit-task-property-assignee"]');
+    priority = $('[data-automation-id="adf-cloud-edit-task-property-priority"]');
+    taskName = $('input[data-automation-id="adf-cloud-edit-task-property-taskName"]');
+    id = $('input[data-automation-id="adf-cloud-edit-task-property-taskId"]');
+    processDefinitionId = $('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]');
+    processInstanceId = $('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]');
+    lastModifiedFrom = $('input[data-placeholder="LastModifiedFrom"]');
+    lastModifiedTo = $('input[data-placeholder="LastModifiedTo"]');
+    parentTaskId = $('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]');
+    owner = $('input[data-automation-id="adf-cloud-edit-task-property-owner"]');
+    saveButton = $('[data-automation-id="adf-filter-action-save"]');
+    saveAsButton = $('[data-automation-id="adf-filter-action-saveAs"]');
+    deleteButton = $('[data-automation-id="adf-filter-action-delete"]');
+    filter = $(`adf-cloud-edit-task-filter mat-expansion-panel-header`);
 
-    private locatorAppNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-appName']`));
-    private locatorStatusDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-status']`));
-    private locatorSortDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-sort']`));
-    private locatorOrderDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`));
-    private locatorCompletedDateDropdown = element(by.css(`mat-select[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`));
-    private locatorAssignmentDropdown = element(by.css(`.adf-task-assignment-filter`));
-    private expansionPanelExtended = this.rootElement.element(by.css('mat-expansion-panel-header.mat-expanded'));
-    private content = this.rootElement.element(by.css('div.mat-expansion-panel-content[style*="visible"]'));
+    private locatorAppNameDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-task-property-appName']`);
+    private locatorStatusDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-task-property-status']`);
+    private locatorSortDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-task-property-sort']`);
+    private locatorOrderDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`);
+    private locatorCompletedDateDropdown = $(`mat-select[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`);
+    private locatorAssignmentDropdown = $(`.adf-task-assignment-filter`);
+    private expansionPanelExtended = this.rootElement.$('mat-expansion-panel-header.mat-expanded');
+    private content = this.rootElement.$('div.mat-expansion-panel-content[style*="visible"]');
 
     appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
     statusDropdown = new DropdownPage(this.locatorStatusDropdown);
@@ -66,7 +66,7 @@ export class EditTaskFilterCloudComponentPage {
     peopleCloudComponent = new PeopleCloudComponentPage();
     groupCloudComponent = new GroupCloudComponentPage();
 
-    dataTable = new DataTableComponentPage( element(by.css('adf-cloud-task-list')));
+    dataTable = new DataTableComponentPage( $('adf-cloud-task-list'));
 
     editTaskFilterDialog(): EditTaskFilterDialogPage {
         return this.editTaskFilterDialogPage;
@@ -275,7 +275,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async setProperty(property: string, option: string): Promise<void> {
-        const locator = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-' + property + '"]'));
+        const locator = $('input[data-automation-id="adf-cloud-edit-task-property-' + property + '"]');
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         await locator.clear();
         await locator.sendKeys(option);

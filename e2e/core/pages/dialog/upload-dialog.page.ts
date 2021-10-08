@@ -15,28 +15,28 @@
  * limitations under the License.
  */
 
-import { element, by, browser, ElementFinder, Locator } from 'protractor';
+import { element, by, browser, ElementFinder, $, $$ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class UploadDialogPage {
 
-    closeButton = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]')));
-    dialog = element(by.css('div[id="upload-dialog"]'));
-    minimizedDialog = element(by.css('div[class*="upload-dialog--minimized"]'));
-    uploadedStatusIcon: Locator = by.css('mat-icon[class*="status--done"]');
-    cancelledStatusIcon: Locator = by.css('div[class*="status--cancelled"]');
-    errorStatusIcon: Locator = by.css('div[class*="status--error"] mat-icon');
-    errorTooltip = element(by.css('div.mat-tooltip'));
+    closeButton = $('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]');
+    dialog = $('div[id="upload-dialog"]');
+    minimizedDialog = $('div[class*="upload-dialog--minimized"]');
+    uploadedStatusIcon = 'mat-icon[class*="status--done"]';
+    cancelledStatusIcon = 'div[class*="status--cancelled"]';
+    errorStatusIcon = 'div[class*="status--error"] mat-icon';
+    errorTooltip = $('div.mat-tooltip');
     rowByRowName = by.xpath('ancestor::adf-file-uploading-list-row');
-    title = element(by.css('span[class*="upload-dialog__title"]'));
-    minimizeButton = element(by.css('mat-icon[title="Minimize"]'));
-    maximizeButton = element(by.css('mat-icon[title="Maximize"]'));
-    canUploadConfirmationTitle = element(by.css('.upload-dialog__confirmation--title'));
-    canUploadConfirmationDescription = element(by.css('.upload-dialog__confirmation--text'));
+    title = $('span[class*="upload-dialog__title"]');
+    minimizeButton = $('mat-icon[title="Minimize"]');
+    maximizeButton = $('mat-icon[title="Maximize"]');
+    canUploadConfirmationTitle = $('.upload-dialog__confirmation--title');
+    canUploadConfirmationDescription = $('.upload-dialog__confirmation--text');
     confirmationDialogNoButton = element(by.partialButtonText('No'));
     confirmationDialogYesButton = element(by.partialButtonText('Yes'));
-    cancelUploadsElement = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-cancel-all"]')));
-    cancelUploadInProgressButton = element(by.css('div[data-automation-id="cancel-upload-progress"]'));
+    cancelUploadsElement = $('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-cancel-all"]');
+    cancelUploadInProgressButton = $('div[data-automation-id="cancel-upload-progress"]');
 
     async clickOnCloseButton(): Promise<void> {
         await this.checkCloseButtonIsDisplayed();
@@ -59,24 +59,20 @@ export class UploadDialogPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.dialog);
     }
 
-    getRowsByName(content: string): ElementFinder {
-        return element.all(by.css(`div[class*='uploading-row'] span[title="${content}"]`)).first();
-    }
-
     async getRowByRowName(content: string): Promise<ElementFinder> {
-        const rows = this.getRowsByName(content);
-        await BrowserVisibility.waitUntilElementIsVisible(rows);
-        return rows.element(this.rowByRowName);
+        const row = await $$(`div[class*='uploading-row'] span[title="${content}"]`).last();
+        await BrowserVisibility.waitUntilElementIsVisible(row);
+        return row.element(this.rowByRowName);
     }
 
     async fileIsUploaded(content: string): Promise<void> {
-        const row = await this.getRowByRowName(content);
-        await BrowserVisibility.waitUntilElementIsVisible(row.element(this.uploadedStatusIcon), 60000);
+        const row: ElementFinder = await this.getRowByRowName(content);
+        await BrowserVisibility.waitUntilElementIsVisible(row.$(this.uploadedStatusIcon), 10000);
     }
 
     async fileIsError(content: string) {
-        const row = await this.getRowByRowName(content);
-        await BrowserVisibility.waitUntilElementIsVisible(row.element(this.errorStatusIcon));
+        const row: ElementFinder = await this.getRowByRowName(content);
+        await BrowserVisibility.waitUntilElementIsVisible(row.$(this.errorStatusIcon));
     }
 
     async filesAreUploaded(content: string[]): Promise<void> {
@@ -86,7 +82,7 @@ export class UploadDialogPage {
     }
 
     async fileIsNotDisplayedInDialog(content: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`div[class*='uploading-row'] span[title="${content}"]`)));
+        await BrowserVisibility.waitUntilElementIsNotVisible($(`div[class*='uploading-row'] span[title="${content}"]`));
     }
 
     async cancelUploads(): Promise<void> {
@@ -102,16 +98,16 @@ export class UploadDialogPage {
     }
 
     async fileIsCancelled(content: string): Promise<void> {
-        const row = await this.getRowByRowName(content);
+        const row: ElementFinder = await this.getRowByRowName(content);
         await BrowserVisibility.waitUntilElementIsVisible(row);
-        await BrowserVisibility.waitUntilElementIsVisible(row.element(this.cancelledStatusIcon), 10000);
+        await BrowserVisibility.waitUntilElementIsVisible(row.$(this.cancelledStatusIcon), 10000);
     }
 
     async removeUploadedFile(content: string): Promise<void> {
-        const row = await this.getRowByRowName(content);
-        await BrowserVisibility.waitUntilElementIsVisible(row.element(this.uploadedStatusIcon));
+        const row: ElementFinder = await this.getRowByRowName(content);
+        await BrowserVisibility.waitUntilElementIsVisible(row.$(this.uploadedStatusIcon));
         const elementRow = await this.getRowByRowName(content);
-        await BrowserActions.click(elementRow.element(this.uploadedStatusIcon));
+        await BrowserActions.click(elementRow.$(this.uploadedStatusIcon));
     }
 
     async getTitleText(): Promise<string> {
@@ -156,8 +152,8 @@ export class UploadDialogPage {
     }
 
     async displayTooltip(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(this.errorStatusIcon));
-        await browser.actions().mouseMove(element(this.errorStatusIcon)).perform();
+        await BrowserVisibility.waitUntilElementIsVisible($(this.errorStatusIcon));
+        await browser.actions().mouseMove($(this.errorStatusIcon)).perform();
     }
 
     async getTooltip(): Promise<string> {

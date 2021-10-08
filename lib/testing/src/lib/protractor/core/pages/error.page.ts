@@ -16,14 +16,14 @@
  */
 
 import { BrowserVisibility } from '../utils/browser-visibility';
-import { element, by } from 'protractor';
+import { $ } from 'protractor';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class ErrorPage {
 
-    errorPageCode = element(by.css('adf-error-content .adf-error-content-code'));
-    errorPageTitle = element(by.css('adf-error-content .adf-error-content-title'));
-    errorPageDescription = element(by.css('adf-error-content .adf-error-content-description'));
+    errorPageCode = $('adf-error-content .adf-error-content-code');
+    errorPageTitle = $('adf-error-content .adf-error-content-title');
+    errorPageDescription = $('adf-error-content .adf-error-content-description');
 
     async checkErrorCode(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.errorPageCode);
