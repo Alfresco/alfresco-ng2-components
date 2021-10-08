@@ -19,7 +19,6 @@ import { FormFields } from '../form-fields';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import { by, browser, $ } from 'protractor';
 import { TestElement } from '../../../test-element';
-import { Logger } from '../../../utils/logger';
 
 export class AttachFileWidgetPage {
 
