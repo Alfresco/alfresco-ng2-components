@@ -37,7 +37,7 @@ export class NumberWidgetPage {
     }
 
     async clearFieldValue(fieldId: string): Promise<void> {
-        const numberField = $(fieldId);
+        const numberField = $(`#${fieldId}`);
         await BrowserVisibility.waitUntilElementIsVisible(numberField);
         await numberField.clear();
     }

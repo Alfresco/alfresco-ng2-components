@@ -106,18 +106,14 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
-
         let list = await contentServicesPage.getAllRowsNameColumn();
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
-
         await paginationPage.clickOnNextPage();
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-
         list = await contentServicesPage.getAllRowsNameColumn();
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(5, 6))).toEqual(true);
-
         await contentServicesPage.deleteContent(lastFile);
         await contentServicesPage.checkContentIsNotDisplayed(lastFile);
 

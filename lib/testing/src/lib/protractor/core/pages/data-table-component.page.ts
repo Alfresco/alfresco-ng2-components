@@ -258,8 +258,8 @@ export class DataTableComponentPage {
 
         await BrowserVisibility.waitUntilElementIsPresent(await columnLocator.first(), 1000);
         try {
-            await BrowserVisibility.waitUntilElementIsPresent(element.all(columnLocator).first(), 1000);
-            columnValues = await element.all(columnLocator)
+            await BrowserVisibility.waitUntilElementIsPresent(columnLocator.first(), 1000);
+            columnValues = await columnLocator
                 .filter(async (el) => el.isPresent())
                 .map(async (el) => el.getText());
         } catch (error) {

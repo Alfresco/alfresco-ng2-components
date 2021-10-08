@@ -39,7 +39,7 @@ export class AmountWidgetPage {
     }
 
     async removeFromAmountWidget(fieldId: string) {
-        const amountWidgetInput = $(fieldId);
+        const amountWidgetInput = $(`#${fieldId}`);
         await BrowserActions.clearWithBackSpace(amountWidgetInput);
     }
 

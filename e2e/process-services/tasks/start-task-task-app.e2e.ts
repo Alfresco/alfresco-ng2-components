@@ -23,7 +23,7 @@ import { createApiService,
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { browser, by } from 'protractor';
+import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { AttachmentListPage } from './../pages/attachment-list.page';

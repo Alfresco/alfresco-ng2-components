@@ -22,16 +22,16 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 export class RatePage {
 
     private ratingsCounter = $(`div[id="adf-rating-counter"]`);
-    private coloredStar = (rateValue: number) => $(`span[id="adf-rate-${rateValue}"]`);
-    private greyStar = (rateValue: number) => $(`mat-icon[id="adf-grey-star-${rateValue}"]`);
+    private coloredStar = async (rateValue: number) => $(`span[id="adf-rate-${rateValue}"] mat-icon`);
+    private greyStar = async (rateValue: number) => $(`mat-icon[id="adf-grey-star-${rateValue}"]`);
 
     async rateComponent(rateValue: number) {
-        const unratedStar = this.coloredStar(rateValue);
+        const unratedStar = await this.coloredStar(rateValue);
         await BrowserActions.click(unratedStar);
     }
 
     async removeRating(rateValue: number): Promise<void> {
-        const ratedStar = this.coloredStar(rateValue);
+        const ratedStar = await this.coloredStar(rateValue);
         await BrowserActions.click(ratedStar);
     }
 
@@ -40,27 +40,27 @@ export class RatePage {
     }
 
     async isStarRated(rateValue: number): Promise<void> {
-        const ratedStar = this.coloredStar(rateValue);
+        const ratedStar = await this.coloredStar(rateValue);
         await BrowserVisibility.waitUntilElementIsVisible(ratedStar);
     }
 
     async isNotStarRated(rateValue: number): Promise<void> {
-        const unratedStar = this.greyStar(rateValue);
+        const unratedStar = await this.greyStar(rateValue);
         await BrowserVisibility.waitUntilElementIsVisible(unratedStar);
     }
 
     async getRatedStarColor(rateValue: number): Promise<string> {
-        const ratedStar = this.coloredStar(rateValue);
+        const ratedStar = await this.coloredStar(rateValue);
         return BrowserActions.getColor(ratedStar);
     }
 
     async getUnratedStarColor(rateValue: number): Promise<string> {
-        const unratedStar = this.greyStar(rateValue);
+        const unratedStar = await this.greyStar(rateValue);
         return BrowserActions.getColor(unratedStar);
     }
 
     async getAverageStarColor(rateValue: number): Promise<string> {
-        const coloredStar = this.coloredStar(rateValue);
+        const coloredStar = await this.coloredStar(rateValue);
         return BrowserActions.getColor(coloredStar);
     }
 
