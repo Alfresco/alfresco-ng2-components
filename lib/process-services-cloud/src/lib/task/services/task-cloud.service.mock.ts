@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { AppConfigService } from '@alfresco/adf-core';
-import { Observable, of, Subject } from "rxjs";
-import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from "../models/task.model";
-import { TaskDetailsCloudModel } from "../start-task/public-api";
-import { taskDetailsContainer } from "../task-header/mocks/task-details-cloud.mock";
+import { Injectable } from '@angular/core';
+import { AppConfigService, CardViewArrayItem } from '@alfresco/adf-core';
+import { Observable, of, Subject } from 'rxjs';
+import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
+import { TaskDetailsCloudModel } from '../start-task/public-api';
+import { taskDetailsContainer } from '../task-header/mocks/task-details-cloud.mock';
 
 @Injectable({
     providedIn: 'root'
@@ -17,18 +17,16 @@ export class TaskCloudServiceMock {
     }
 
     getCandidateUsers(_appName: string, taskId: string): Observable<string[]> {
-        if(taskId === 'mock-no-candidate-users'){
+        if (taskId === 'mock-no-candidate-users') {
             return of([]);
         }
-
         return of(['user1', 'user2']);
     }
 
     getCandidateGroups(_appName: string, taskId: string): Observable<string[]> {
-        if(taskId === 'mock-no-candidate-groups'){
+        if (taskId === 'mock-no-candidate-groups') {
             return of([]);
         }
-        
         return of(['group1', 'group2']);
     }
 
@@ -42,18 +40,37 @@ export class TaskCloudServiceMock {
     }
 
     isTaskEditable(taskDetails: TaskDetailsCloudModel) {
-        return taskDetails.status === this.TASK_ASSIGNED_STATE;
+        return taskDetails.status === this.TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
-    isAssigneePropertyClickable = () => true;
+    isAssigneePropertyClickable(taskDetails: TaskDetailsCloudModel, candidateUsers: CardViewArrayItem[], candidateGroups: CardViewArrayItem[]): boolean {
+        let isClickable = false;
+        const states = [this.TASK_ASSIGNED_STATE];
+        if (candidateUsers?.length || candidateGroups?.length) {
+            isClickable = states.includes(taskDetails.status);
+        }
+        return isClickable;
+    }
 
     updateTask(_appName: string, taskId: string, _payload: any): Observable<TaskDetailsCloudModel> {
         return of(taskDetailsContainer[taskId]);
     }
 
-    canCompleteTask = () => true;
+    canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
+        return taskDetails && taskDetails.status === this.TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
+    }
 
-    canClaimTask = () => true;
+    canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
+        return taskDetails && taskDetails.status === 'CREATED';
+    }
+
+    private isAssignedToMe(assignee: string): boolean {
+        if (assignee === 'AssignedTaskUser') {
+            return true;
+        }
+
+        return false;
+    }
 
     constructor(private appConfigService: AppConfigService) { }
 }
