@@ -103,3 +103,15 @@ hideValidationIcon.args = {
     ...primary.args,
     showValidationIcon: false
 };
+
+export const invalidOrMissingApp = template.bind({});
+invalidOrMissingApp.args = {
+    ...primary.args,
+    appName: undefined
+};
+
+export const invalidOrMissingTaskId = template.bind({});
+invalidOrMissingTaskId.args = {
+    ...primary.args,
+    taskId: undefined
+};

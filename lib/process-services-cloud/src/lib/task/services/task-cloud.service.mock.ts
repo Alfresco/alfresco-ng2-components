@@ -43,6 +43,7 @@ export class TaskCloudServiceMock implements TaskCloudInterface {
         if (taskId === 'mock-no-candidate-users') {
             return of([]);
         }
+
         return of(['user1', 'user2']);
     }
 
@@ -50,6 +51,7 @@ export class TaskCloudServiceMock implements TaskCloudInterface {
         if (taskId === 'mock-no-candidate-groups') {
             return of([]);
         }
+
         return of(['group1', 'group2']);
     }
 

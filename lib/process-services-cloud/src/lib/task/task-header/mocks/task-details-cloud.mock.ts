@@ -262,7 +262,7 @@ export const noCandidateGroupsTaskDetailsCloudMock: TaskDetailsCloudModel = {
 
 export const taskWithFormDetailsMock: TaskDetailsCloudModel = {
     appName: 'simple-app',
-    assignee: 'admin.adf',
+    assignee: 'AssignedTaskUser',
     completedDate: null,
     createdDate: new Date(1555419255340),
     dueDate: new Date(1558419255340),
