@@ -48,7 +48,8 @@ export default {
     ],
     argTypes: {
         appName: { table: { disable: true } },
-        taskId: { table: { disable: true } }
+        taskId: { table: { disable: true } },
+        readOnly: { table: { disable: true} }
     }
 } as Meta;
 
