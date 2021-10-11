@@ -23,8 +23,8 @@ import { TaskRepresentation } from '@alfresco/js-api';
 import { UserGroupModel } from './user-group.model';
 
 export enum TaskStatus {
-    completed = 'completed',
-    running = 'running'
+    completed = 'Completed',
+    running = 'Running'
 }
 export class TaskDetailsModel implements TaskRepresentation {
     id?: string;
