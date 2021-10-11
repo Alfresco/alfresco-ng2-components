@@ -23,9 +23,10 @@ import { logger } from './logger';
 import { resolve } from 'path';
 
 enum TARGETS {
- Publish = 'publish',
- Link = 'link'
+    Publish = 'publish',
+    Link = 'link'
 }
+
 export interface PublishArgs {
     tag?: string;
     loginCheck?: boolean;
@@ -33,7 +34,7 @@ export interface PublishArgs {
     loginPassword?: string;
     loginRepo?: string;
     dockerRepo?: string;
-    buildArgs?: string;
+    buildArgs?: string[];
     dockerTags?: string;
     pathProject: string;
 }
@@ -46,7 +47,14 @@ function loginPerform(args: PublishArgs) {
 
 function buildImagePerform(args: PublishArgs, tag: string) {
     logger.info(`Perform docker build...${args.dockerRepo}:${tag}`);
-    const response = exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, `--build-arg=${args.buildArgs}`, args.pathProject], {});
+
+    let buildArgs = [];
+
+    args.buildArgs.forEach((envVar) => {
+        buildArgs.push (`--build-arg=${envVar}`);
+    })
+
+    const response = exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, ...buildArgs, args.pathProject], {});
     logger.info(response);
 }
 
@@ -56,7 +64,7 @@ function tagImagePerform(args: PublishArgs, tagImage: string, newTag: string) {
     logger.info(response);
 }
 
-function pullImagePerform(dockerRepo: string,  sourceTag: string) {
+function pullImagePerform(dockerRepo: string, sourceTag: string) {
     logger.info(`Perform docker pull... ${dockerRepo}:${sourceTag}`);
     const response = exec('docker', ['pull', `${dockerRepo}:${sourceTag}`], {});
     logger.info(response);
@@ -74,7 +82,7 @@ function cleanImagePerform(args: PublishArgs, tag: string) {
     logger.info(response);
 }
 
-export default function (args: PublishArgs)  {
+export default function (args: PublishArgs) {
     main(args);
 }
 
@@ -89,7 +97,7 @@ function main(args) {
         .option('--loginCheck [type]', 'perform login')
         .option('--pathProject [type]', 'the path build context')
         .option('--sourceTag [type]', 'sourceTag')
-        .option('--buildArgs [type]', 'buildArgs')
+        .option('--buildArgs [type...]', 'buildArgs')
         .option('--target [type]', 'target: publish or link', TARGETS.Publish)
         .requiredOption('--dockerRepo [type]', 'docker repo')
         .requiredOption('--dockerTags [type]', ' tags')
@@ -125,7 +133,7 @@ function main(args) {
 
     let mainTag;
     if (args.dockerTags !== '') {
-        args.dockerTags.split(',').forEach( (tag, index) => {
+        args.dockerTags.split(',').forEach((tag, index) => {
             if (tag) {
                 logger.info(`Analyzing tag:${tag} ... for target ${program.opts().target}`);
                 if (program.opts().target === TARGETS.Publish) {
