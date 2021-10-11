@@ -28,15 +28,15 @@ export default {
     argTypes: {
         appName: { table: { disable: true } },
         taskId: { table: { disable: true } },
-        // filterParam: {
-        //     options: ['my', 'queued', 'completed'],
-        //     mapping: {
-        //         my: new FilterParamsModel({ name: 'My tasks' }),
-        //         queued: new FilterParamsModel({ name: 'Queued tasks' }),
-        //         completed: new FilterParamsModel({ name: 'Completed tasks' })
-        //     },
-        //     defaultValue: new FilterParamsModel({ name: 'Queued tasks' })
-        // }
+        filterParam: {
+            options: ['my', 'queued', 'completed'],
+            mapping: {
+                my: new FilterParamsModel({ name: 'My tasks' }),
+                queued: new FilterParamsModel({ name: 'Queued tasks' }),
+                completed: new FilterParamsModel({ name: 'Completed tasks' })
+            },
+            defaultValue: new FilterParamsModel({ name: 'Queued tasks' })
+        }
     }
 } as Meta;
 
@@ -55,6 +55,6 @@ Default.args = {
 export const FilterParams = Template.bind({});
 FilterParams.args = {
     appName: 'app',
-    filterParam: new FilterParamsModel({ id: '2', key: 'run-fake-task' }),
+    filterParam: new FilterParamsModel({ name: 'Queued tasks' }),
     showIcons: true
 };
