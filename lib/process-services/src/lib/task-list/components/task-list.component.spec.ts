@@ -278,11 +278,15 @@ describe('TaskListComponent', () => {
             expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.rows.length).toEqual(2);
-            expect(component.rows[0]['name']).toEqual('nameFake1');
-            expect(component.rows[0]['processInstanceId']).toEqual(2511);
-            expect(component.rows[0]['endDate']).toBeDefined();
-            expect(component.rows[1]['name']).toEqual('No name');
-            expect(component.rows[1]['endDate']).toBeUndefined();
+
+            const completedTask = component.rows[0];
+            const activeTask = component.rows[1];
+
+            expect(completedTask['name']).toEqual('nameFake1');
+            expect(completedTask['processInstanceId']).toEqual(2511);
+            expect(completedTask['endDate']).toBeDefined();
+            expect(activeTask['name']).toEqual('No name');
+            expect(activeTask['endDate']).toBeNull();
             done();
         });
 
