@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { FormValues } from '@alfresco/adf-core';
+import { FormModel, FormValues } from '@alfresco/adf-core';
+import { UploadApi } from '@alfresco/js-api';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { FormContent } from '../../services/form-fields.interfaces';
@@ -23,8 +24,12 @@ import { TaskDetailsCloudModel } from '../../task/public-api';
 import { taskDetailsContainer } from '../../task/task-header/mocks/task-details-cloud.mock';
 import { formCloudDisplayMock } from '../mocks/cloud-form.mock';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
+import { FormCloudInterface } from './form-cloud.interface';
 
-export class FormCloudServiceMock {
+export class FormCloudServiceMock implements FormCloudInterface {
+
+    uploadApi: UploadApi;
+
     getTaskForm(appName: string, taskId: string, version?: number): Observable<any> {
         return this.getTask(appName, taskId).pipe(
             switchMap((task) => {
@@ -78,5 +83,17 @@ export class FormCloudServiceMock {
         _version: number
     ): Observable<TaskDetailsCloudModel> {
         return of(taskDetailsContainer[taskId]);
+    }
+
+    createTemporaryRawRelatedContent(_file: any, _nodeId: string, _contentHost: string): Observable<any> {
+        throw new Error('Method not implemented.');
+    }
+
+    getDropDownJsonData(_url: string): Observable<any> {
+        throw new Error('Method not implemented.');
+    }
+
+    parseForm(_json: any, _data?: TaskVariableCloud[], _readOnly: boolean = false): FormModel {
+        throw new Error('Method not implemented.');
     }
 }
