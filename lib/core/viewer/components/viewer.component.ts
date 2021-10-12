@@ -18,7 +18,7 @@
 import {
     Component, ContentChild, EventEmitter, HostListener, ElementRef,
     Input, OnChanges, Output, TemplateRef,
-    ViewEncapsulation, OnInit, OnDestroy
+    ViewEncapsulation, OnInit, OnDestroy, ChangeDetectorRef
 } from '@angular/core';
 import {
     SharedLinkEntry,
@@ -311,7 +311,8 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 private contentService: ContentService,
                 private uploadService: UploadService,
                 private el: ElementRef,
-                public dialog: MatDialog) {
+                public dialog: MatDialog,
+                private cdr: ChangeDetectorRef) {
         viewUtilService.maxRetries = this.maxRetries;
     }
 
@@ -413,6 +414,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 } else {
                     this.setUpNodeFile(node.entry).then(() => {
                         this.isLoading = false;
+                        this.cdr.detectChanges();
                     });
                 }
             },
@@ -447,7 +449,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.scrollTop();
     }
 
-    private async setUpNodeFile(nodeData: Node, versionData?: Version) {
+    private async setUpNodeFile(nodeData: Node, versionData?: Version): Promise<void> {
         this.readOnly = !this.contentService.hasAllowableOperations(nodeData, 'update');
 
         if (versionData && versionData.content) {
@@ -470,13 +472,11 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.fileName = versionData ? versionData.name : nodeData.name;
         this.viewerType = this.getViewerType(this.extension, this.mimeType);
 
-        let setupNode: Promise<void>;
-
         if (this.viewerType === 'unknown') {
             if (versionData) {
-                setupNode = this.viewUtilService.displayNodeRendition(nodeData.id, versionData.id);
+                await this.viewUtilService.displayNodeRendition(nodeData.id, versionData.id);
             } else {
-                setupNode = this.viewUtilService.displayNodeRendition(nodeData.id);
+                await this.viewUtilService.displayNodeRendition(nodeData.id);
             }
         }
 
@@ -484,8 +484,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.sidebarRightTemplateContext.node = nodeData;
         this.sidebarLeftTemplateContext.node = nodeData;
         this.scrollTop();
-
-        return setupNode;
     }
 
     private getViewerType(extension: string, mimeType: string): string {

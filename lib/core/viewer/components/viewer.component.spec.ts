@@ -183,7 +183,7 @@ describe('ViewerComponent', () => {
     });
 
     describe('Extension Type Test', () => {
-        it('should use external viewer via wildcard notation', async () => {
+        it('should display pdf external viewer via wildcard notation', async () => {
             const extension: ViewerExtensionRef = {
                 component: 'custom.component',
                 id: 'custom.component.id',
@@ -207,7 +207,7 @@ describe('ViewerComponent', () => {
             expect(element.querySelector('[data-automation-id="custom.component"]')).not.toBeNull();
         });
 
-        it('should use first external viewer provided', async () => {
+        it('should display pdf with the first external viewer provided', async () => {
             const extensions: ViewerExtensionRef[] = [
                 {
                     component: 'custom.component.1',
@@ -235,6 +235,56 @@ describe('ViewerComponent', () => {
             expect(element.querySelector('[data-automation-id="custom.component.1"]')).not.toBeNull();
             expect(element.querySelector('[data-automation-id="custom.component.2"]')).toBeNull();
         });
+
+        it('should display url with the external viewer provided', async () => {
+            const extension: ViewerExtensionRef = {
+                component: 'custom.component',
+                id: 'custom.component.id',
+                fileExtension: '*'
+            };
+            spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
+
+            fixture = TestBed.createComponent(ViewerComponent);
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+
+            component.urlFile = 'http://localhost:4200/alfresco';
+            component.ngOnChanges();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(component.externalExtensions.includes('*')).toBe(true);
+            expect(component.externalViewer).toBe(extension);
+            expect(component.viewerType).toBe('external');
+            expect(element.querySelector('[data-automation-id="custom.component"]')).not.toBeNull();
+        });
+
+        it('should use external viewer to display node by id', fakeAsync(() => {
+            const extension: ViewerExtensionRef = {
+                component: 'custom.component',
+                id: 'custom.component.id',
+                fileExtension: '*'
+            };
+            spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
+
+            fixture = TestBed.createComponent(ViewerComponent);
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+
+            spyOn(component.nodesApi, 'getNode').and.callFake(() => Promise.resolve({ entry: {} }));
+
+            component.nodeId = '37f7f34d-4e64-4db6-bb3f-5c89f7844251';
+            component.ngOnChanges();
+
+            fixture.detectChanges();
+            tick(100);
+
+            expect(component.nodesApi.getNode).toHaveBeenCalled();
+            expect(component.viewerType).toBe('external');
+            expect(component.isLoading).toBeFalsy();
+            expect(element.querySelector('[data-automation-id="custom.component"]')).not.toBeNull();
+        }));
 
         it('should  extension file pdf  be loaded', (done) => {
             component.urlFile = 'fake-test-file.pdf';
