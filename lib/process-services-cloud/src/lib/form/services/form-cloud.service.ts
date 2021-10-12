@@ -30,11 +30,12 @@ import { CompleteFormRepresentation, UploadApi } from '@alfresco/js-api';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormContent } from '../../services/form-fields.interfaces';
+import { FormCloudInterface } from './form-cloud.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class FormCloudService extends BaseCloudService {
+export class FormCloudService extends BaseCloudService implements FormCloudInterface {
 
     private _uploadApi;
     get uploadApi(): UploadApi {
