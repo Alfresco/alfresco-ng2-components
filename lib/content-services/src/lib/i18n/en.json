@@ -405,6 +405,8 @@
       "BULK-ROLE": "Set all role to"
     },
     "LABELS": {
+      "HIDE": "Hide",
+      "SHOW": "Show",
       "ON": "On",
       "OFF": "Off",
       "DIRECT-PERMISSIONS": "Directly Applied Permission",
