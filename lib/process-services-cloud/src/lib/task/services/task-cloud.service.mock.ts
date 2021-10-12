@@ -115,6 +115,7 @@ export class TaskCloudServiceMock implements TaskCloudInterface {
             return throwError('AppName/TaskId not configured');
         }
     }
+
     createNewTask(_startTaskRequest: StartTaskCloudRequestModel, _appName: string): Observable<TaskDetailsCloudModel> {
         window.alert('Create new task mock');
 
