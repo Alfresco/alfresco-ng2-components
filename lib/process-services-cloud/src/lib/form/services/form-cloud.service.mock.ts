@@ -22,7 +22,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { FormContent } from '../../services/form-fields.interfaces';
 import { TaskDetailsCloudModel } from '../../task/public-api';
 import { taskDetailsContainer } from '../../task/task-header/mocks/task-details-cloud.mock';
-import { formCloudDisplayMock } from '../mocks/cloud-form.mock';
+import { fakeCloudForm } from '../mocks/cloud-form.mock';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { FormCloudInterface } from './form-cloud.interface';
 
@@ -56,7 +56,7 @@ export class FormCloudServiceMock implements FormCloudInterface {
     }
 
     getForm(_appName: string, _formKey: string, _version?: number): Observable<FormContent> {
-        return of(formCloudDisplayMock);
+        return of(fakeCloudForm);
     }
 
     getTaskVariables(_appName: string, _taskId: string): Observable<TaskVariableCloud[]> {
