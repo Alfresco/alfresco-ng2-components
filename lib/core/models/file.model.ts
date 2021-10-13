@@ -24,8 +24,15 @@ export interface FileUploadProgress {
 }
 
 export class FileUploadOptions {
+    /**
+     * Add a version comment which will appear in version history.
+     * Setting this parameter also enables versioning of this node, if it is not already versioned.
+     */
     comment?: string;
     newVersion?: boolean;
+    /**
+     * If true, then created node will be version 1.0 MAJOR. If false, then created node will be version 0.1 MINOR.
+     */
     majorVersion?: boolean;
     parentId?: string;
     path?: string;
@@ -34,6 +41,9 @@ export class FileUploadOptions {
     association?: any;
     secondaryChildren?: AssocChildBody[];
     targets?: AssociationBody[];
+    /**
+     * If true, then created node will be versioned. If false, then created node will be unversioned and auto-versioning disabled.
+     */
     versioningEnabled?: boolean;
 }
 

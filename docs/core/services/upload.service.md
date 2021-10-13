@@ -89,7 +89,7 @@ node module.
 }
 ```
 
-From vesion 3.8.0 It's  possible filter also for the folder whilst uploading a whole folder.
+From version `3.8.0` it is also possible to filter out the folders:
 
 **app.config.json**
 
@@ -110,4 +110,18 @@ From vesion 3.8.0 It's  possible filter also for the folder whilst uploading a w
 ```
 
 In this way all the files present in the .git folder won't be uploaded.
-Please note that the filtering options available for the folders is the same as the one for the files.
+> Please note that the filtering options available for the folders is the same as the one for the files.
+
+### Enabling Versioning
+
+You can toggle auto-versioning for the uploaded nodes by setting the `upload.versioningEnabled` property:
+
+```json
+{
+    "upload": {
+        "versioningEnabled": true
+    }
+}
+```
+
+It is also possible to provide the `versioningEnabled` value as part of the `FileUploadOptions` when using upload service from the code.
