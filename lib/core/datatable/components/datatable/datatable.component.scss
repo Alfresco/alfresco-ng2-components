@@ -16,6 +16,10 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
 .adf-datatable {
     overflow-y: scroll;
     height: 100%;
+
+    .adf-full-width {
+        width: 100%;
+    }
 }
 
 .adf-datatable-card {

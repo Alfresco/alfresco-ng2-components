@@ -43,7 +43,7 @@
                 [target]="target"
                 #popOver="adfPopOver"
                 *ngIf="model.node.permissions.isInheritanceEnabled">
-                {{ popOver.open ? "Hide" : "Show" }}
+                {{ (popOver.open ? 'PERMISSION_MANAGER.LABELS.HIDE' : 'PERMISSION_MANAGER.LABELS.SHOW') | translate }}
                 <mat-icon *ngIf="popOver.open"> keyboard_arrow_up </mat-icon>
                 <mat-icon *ngIf="!popOver.open"> keyboard_arrow_down </mat-icon>
             </button>
