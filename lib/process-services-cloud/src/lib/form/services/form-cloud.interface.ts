@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*!
  * @license
  * Copyright 2019 Alfresco Software, Ltd.
@@ -16,8 +15,6 @@
  * limitations under the License.
  */
 
-=======
->>>>>>> a0f10c7c6 ([AAE-5953] added form cloud service interface)
 import { UploadApi } from '@alfresco/js-api';
 import { FormModel, FormValues } from '@alfresco/adf-core';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
