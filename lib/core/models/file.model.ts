@@ -34,6 +34,7 @@ export class FileUploadOptions {
     association?: any;
     secondaryChildren?: AssocChildBody[];
     targets?: AssociationBody[];
+    versioningEnabled?: boolean;
 }
 
 export enum FileUploadStatus {
