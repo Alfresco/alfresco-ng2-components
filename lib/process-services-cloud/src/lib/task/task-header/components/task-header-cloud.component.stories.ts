@@ -1,3 +1,20 @@
+/*!
+ * @license
+ * Copyright 2019 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 import { TaskHeaderCloudModule } from '../task-header-cloud.module';
@@ -22,7 +39,7 @@ export default {
                         name: 'adf-process-services-cloud',
                         source: 'assets/adf-process-services-cloud'
                     }
-                },
+                }
             ]
         })
     ],
@@ -32,63 +49,63 @@ export default {
     }
 } as Meta;
 
-const Template: Story<TaskHeaderCloudComponent> = (args) => ({
+const template: Story<TaskHeaderCloudComponent> = (args) => ({
     props: {
         ...args
     }
 });
 
-export const AssignedAndEditable = Template.bind({});
-AssignedAndEditable.args = {
+export const assignedAndEditable = template.bind({});
+assignedAndEditable.args = {
     appName: 'app',
     showTitle: true,
     taskId: 'mock-assigned-task'
 };
 
-export const CompletedAndReadonly = Template.bind({});
-CompletedAndReadonly.args = {
-    ...AssignedAndEditable.args,
+export const completedAndReadonly = template.bind({});
+completedAndReadonly.args = {
+    ...assignedAndEditable.args,
     taskId: 'mock-completed-task'
 };
 
-export const Suspended = Template.bind({});
-Suspended.args = {
-    ...AssignedAndEditable.args,
+export const suspended = template.bind({});
+suspended.args = {
+    ...assignedAndEditable.args,
     taskId: 'mock-suspended-task'
 };
 
-export const WithParentId = Template.bind({});
-WithParentId.args = {
-    ...AssignedAndEditable.args,
+export const withParentId = template.bind({});
+withParentId.args = {
+    ...assignedAndEditable.args,
     taskId: 'mock-parent-task-id'
 };
 
-export const WithoutAssignee = Template.bind({});
-WithoutAssignee.args = {
-    ...AssignedAndEditable.args,
+export const withoutAssignee = template.bind({});
+withoutAssignee.args = {
+    ...assignedAndEditable.args,
     taskId: 'mock-created-task'
 };
 
-export const NotClaimableByUser = Template.bind({});
-NotClaimableByUser.args = {
-    ...AssignedAndEditable.args,
+export const notClaimableByUser = template.bind({});
+notClaimableByUser.args = {
+    ...assignedAndEditable.args,
     taskId: 'mock-no-candidate-users'
 };
 
-export const TaskNotClaimableByGroupUser = Template.bind({});
-TaskNotClaimableByGroupUser.args = {
-    ...AssignedAndEditable.args,
+export const taskNotClaimableByGroupUser = template.bind({});
+taskNotClaimableByGroupUser.args = {
+    ...assignedAndEditable.args,
     taskId: 'mock-no-candidate-groups'
 };
 
-export const InvalidForMissingApp = Template.bind({});
-InvalidForMissingApp.args = {
-    ...AssignedAndEditable.args,
-    appName: undefined,
+export const invalidForMissingApp = template.bind({});
+invalidForMissingApp.args = {
+    ...assignedAndEditable.args,
+    appName: undefined
 };
 
-export const InvalidForMissingTaskId = Template.bind({});
-InvalidForMissingTaskId.args = {
-    ...AssignedAndEditable.args,
+export const invalidForMissingTaskId = template.bind({});
+invalidForMissingTaskId.args = {
+    ...assignedAndEditable.args,
     taskId: undefined
 };

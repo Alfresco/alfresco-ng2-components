@@ -27,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
         TranslateModule.forRoot(),
         CommonModule,
         MaterialModule,
-        CoreModule.forRoot(),
+        CoreModule.forRoot()
     ],
     declarations: [
         TaskHeaderCloudComponent
