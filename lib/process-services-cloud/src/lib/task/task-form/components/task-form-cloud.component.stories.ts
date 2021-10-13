@@ -22,8 +22,8 @@ import { FormCloudService } from '../../../form/public-api';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskFormModule } from '../task-form.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
-import { FormCloudServiceMock } from '../../../form/services/form-cloud.service.mock';
-import { TaskCloudServiceMock } from '../../services/task-cloud.service.mock';
+import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
+import { FormCloudServiceMock } from '../../../form/mocks/form-cloud.service.mock';
 
 export default {
     component: TaskFormCloudComponent,

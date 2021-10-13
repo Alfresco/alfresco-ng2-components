@@ -21,7 +21,7 @@ import { TaskHeaderCloudModule } from '../task-header-cloud.module';
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { TaskCloudServiceMock } from '../../services/task-cloud.service.mock';
+import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
 import { TranslateModule } from '@ngx-translate/core';
 
 export default {

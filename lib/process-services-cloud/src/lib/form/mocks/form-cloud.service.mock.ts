@@ -24,7 +24,7 @@ import { TaskDetailsCloudModel } from '../../task/public-api';
 import { taskDetailsContainer } from '../../task/task-header/mocks/task-details-cloud.mock';
 import { fakeCloudForm } from '../mocks/cloud-form.mock';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
-import { FormCloudInterface } from './form-cloud.interface';
+import { FormCloudInterface } from '../services/form-cloud.interface';
 
 export class FormCloudServiceMock implements FormCloudInterface {
 
