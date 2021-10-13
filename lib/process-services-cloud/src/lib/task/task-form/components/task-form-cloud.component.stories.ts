@@ -59,7 +59,7 @@ const template: Story<TaskFormCloudComponent> = (args: TaskFormCloudComponent) =
 
 export const primary = template.bind({});
 primary.args = {
-    appName: 'taskAssigned',
+    appName: 'app',
     readOnly: false,
     showCancelButton: true,
     showCompleteButton: true,
@@ -75,28 +75,10 @@ readOnly.args = {
     readOnly: true
 };
 
-export const hideCancelButton = template.bind({});
-hideCancelButton.args = {
-    ...primary.args,
-    showCancelButton: false
-};
-
-export const hideCompleteButton = template.bind({});
-hideCompleteButton.args = {
-    ...primary.args,
-    showCompleteButton: false
-};
-
 export const showRefreshButton = template.bind({});
 showRefreshButton.args = {
     ...primary.args,
     showRefreshButton: true
-};
-
-export const hideTitle = template.bind({});
-hideTitle.args = {
-    ...primary.args,
-    showTitle: false
 };
 
 export const hideValidationIcon = template.bind({});
