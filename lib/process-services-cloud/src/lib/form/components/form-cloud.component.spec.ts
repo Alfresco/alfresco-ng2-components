@@ -1223,7 +1223,6 @@ describe('retrieve metadata on submit', () => {
         expect(formContentClicked).toHaveBeenCalledWith(contentLinkModel);
     });
 
-    // For widgets like File Viewer bubbling the keydown events of the form needs to be cancelled
     it('should cancel bubbling a keydown event', () => {
         const escapeKeyboardEvent = new KeyboardEvent('keydown', { 'keyCode': ESCAPE } as any);
         fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);

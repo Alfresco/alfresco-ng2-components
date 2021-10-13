@@ -827,7 +827,6 @@ describe('StartProcessCloudComponent', () => {
             expect(component.processInstanceName.value).toEqual('fake-transformed-name');
         });
 
-        // The keydown events need to be cancelled in order to prevent the form reacting (e.g. changing the name of the process should not make the form respond to shortcuts)
         it('should cancel bubbling a keydown event ()', () => {
             const escapeKeyboardEvent = new KeyboardEvent('keydown', { 'keyCode': ESCAPE } as any);
             fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
