@@ -146,6 +146,7 @@ export const completedTaskDetailsCloudMock: TaskDetailsCloudModel = {
     'description': 'This is the description ',
     'createdDate': new Date(1545048055900),
     'dueDate': new Date(1545091200000),
+    'completedDate': new Date(1546091200000),
     'claimedDate': null,
     'priority': 5,
     'category': null,
@@ -207,4 +208,64 @@ export const suspendedTaskDetailsCloudMock: TaskDetailsCloudModel = {
     'lastModifiedTo': null,
     'lastModifiedFrom': null,
     'standalone': true
+};
+
+export const noCandidateUsersTaskDetailsCloudMock: TaskDetailsCloudModel = {
+    'appName': 'mock-app-name',
+    'appVersion': 1,
+    'id': 'mock-task-id',
+    'assignee': '',
+    'name': 'This is a new task',
+    'description': 'This is the description ',
+    'createdDate': new Date(1545048055900),
+    'dueDate': new Date(1545091200000),
+    'claimedDate': null,
+    'priority': 5,
+    'category': null,
+    'processDefinitionId': null,
+    'processInstanceId': null,
+    'status': 'CREATED',
+    'owner': 'ownerUser',
+    'candidateUsers': null,
+    'parentTaskId': null,
+    'formKey': null,
+    'lastModified': new Date(1545048055900),
+    'lastModifiedTo': null,
+    'lastModifiedFrom': null,
+    'standalone': false
+};
+
+export const noCandidateGroupsTaskDetailsCloudMock: TaskDetailsCloudModel = {
+    'appName': 'mock-app-name',
+    'appVersion': 1,
+    'id': 'mock-task-id',
+    'assignee': '',
+    'name': 'This is a new task',
+    'description': 'This is the description ',
+    'createdDate': new Date(1545048055900),
+    'dueDate': new Date(1545091200000),
+    'claimedDate': null,
+    'priority': 5,
+    'category': null,
+    'processDefinitionId': null,
+    'processInstanceId': null,
+    'status': 'CREATED',
+    'owner': 'ownerUser',
+    'candidateGroups': null,
+    'parentTaskId': null,
+    'formKey': null,
+    'lastModified': new Date(1545048055900),
+    'lastModifiedTo': null,
+    'lastModifiedFrom': null,
+    'standalone': false
+};
+
+export const taskDetailsContainer = {
+    'mock-assigned-task': assignedTaskDetailsCloudMock,
+    'mock-completed-task': completedTaskDetailsCloudMock,
+    'mock-created-task': createdStateTaskDetailsCloudMock,
+    'mock-parent-task-id': taskDetailsWithParentTaskIdMock,
+    'mock-suspended-task': suspendedTaskDetailsCloudMock,
+    'mock-no-candidate-users': noCandidateUsersTaskDetailsCloudMock,
+    'mock-no-candidate-groups': noCandidateGroupsTaskDetailsCloudMock
 };
