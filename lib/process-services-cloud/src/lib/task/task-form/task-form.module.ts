@@ -24,12 +24,10 @@ import { TaskDirectiveModule } from '../directives/task-directive.module';
 import { TaskFormCloudComponent } from './components/task-form-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
-        TranslateModule.forRoot(),
-        CoreModule.forRoot(),
+        CoreModule,
         CommonModule,
         MaterialModule,
         FormCloudModule,
