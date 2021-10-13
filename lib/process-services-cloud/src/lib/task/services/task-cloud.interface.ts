@@ -1,7 +1,9 @@
 import { CardViewArrayItem } from '@alfresco/adf-core';
-import { ProcessDefinitionCloud, TaskDetailsCloudModel, TaskPriorityOption } from '@alfresco/adf-process-services-cloud';
 import { Observable, Subject } from 'rxjs';
+import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
+import { TaskPriorityOption } from '../models/task.model';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
+import { TaskDetailsCloudModel } from '../start-task/models/task-details-cloud.model';
 export interface TaskCloudInterface {
 
     dataChangesDetected$: Subject<unknown>;
