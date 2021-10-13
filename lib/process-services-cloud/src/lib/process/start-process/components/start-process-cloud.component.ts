@@ -17,7 +17,7 @@
 
 import {
     Component, EventEmitter, Input, OnChanges, OnInit,
-    Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy
+    Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy, HostListener
 } from '@angular/core';
 
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
@@ -155,6 +155,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
                 this.loadProcessDefinitions();
             }
         }
+    }
+
+    @HostListener('keydown', ['$event'])
+    onKeyDown(event: KeyboardEvent) {
+        event.cancelBubble = true;
     }
 
     hasForm(): boolean {

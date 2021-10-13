@@ -43,6 +43,7 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
+import { ESCAPE } from '@angular/cdk/keycodes';
 
 describe('StartProcessCloudComponent', () => {
 
@@ -824,6 +825,13 @@ describe('StartProcessCloudComponent', () => {
             expect(component.processInstanceName.dirty).toBe(true);
             expect(component.processInstanceName.touched).toBe(true);
             expect(component.processInstanceName.value).toEqual('fake-transformed-name');
+        });
+
+        it('should cancel bubbling a keydown event ()', () => {
+            const escapeKeyboardEvent = new KeyboardEvent('keydown', { 'keyCode': ESCAPE } as any);
+            fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
+
+            expect(escapeKeyboardEvent.cancelBubble).toBe(true);
         });
     });
 });
