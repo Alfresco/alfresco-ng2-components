@@ -52,6 +52,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { Node } from '@alfresco/js-api';
+import { ESCAPE } from '@angular/cdk/keycodes';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -1220,5 +1221,13 @@ describe('retrieve metadata on submit', () => {
         expect(setNodeIdValueForViewersLinkedToUploadWidget).not.toHaveBeenCalled();
         expect(formDataRefreshed).not.toHaveBeenCalled();
         expect(formContentClicked).toHaveBeenCalledWith(contentLinkModel);
+    });
+
+    // For widgets like File Viewer bubbling the keydown events of the form needs to be cancelled
+    it('should cancel bubbling a keydown event', () => {
+        const escapeKeyboardEvent = new KeyboardEvent('keydown', { 'keyCode': ESCAPE } as any);
+        fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
+
+        expect(escapeKeyboardEvent.cancelBubble).toBe(true);
     });
 });
