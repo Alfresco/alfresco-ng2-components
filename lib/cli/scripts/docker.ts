@@ -50,9 +50,13 @@ function buildImagePerform(args: PublishArgs, tag: string) {
 
     let buildArgs = [];
 
-    args.buildArgs.forEach((envVar) => {
-        buildArgs.push (`--build-arg=${envVar}`);
-    });
+    if (typeof args.buildArgs  === "string") {
+        buildArgs.push(`--build-arg=${args.buildArgs}`);
+    } else {
+        args.buildArgs.forEach((envVar) => {
+            buildArgs.push (`--build-arg=${envVar}`);
+        });
+    }
 
     const response = exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, ...buildArgs, args.pathProject], {});
     logger.info(response);
