@@ -34,7 +34,7 @@
             <mat-option *ngFor="let user of searchUsers$ | async; let i = index" [value]="user">
                 <div class="adf-people-cloud-row" id="adf-people-cloud-user-{{user.username}}"
                      data-automation-id="adf-people-cloud-row">
-                    <div [outerHTML]="user | usernameInitials:'adf-people-widget-pic'"></div>
+                    <div [outerHTML]="user | usernameInitials:'adf-people-cloud-pic'"></div>
                     <span class="adf-people-label-name"> {{user | fullName}}</span>
                 </div>
             </mat-option>
