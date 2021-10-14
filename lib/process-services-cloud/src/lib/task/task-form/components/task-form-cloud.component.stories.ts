@@ -17,30 +17,29 @@
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { TranslationMock, TranslationService, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { TranslateLoaderService, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../form/public-api';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskFormModule } from '../task-form.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
 import { FormCloudServiceMock } from '../../../form/mocks/form-cloud.service.mock';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 export default {
     component: TaskFormCloudComponent,
     title: 'Process Services Cloud/Components/Task Form',
     decorators: [
         moduleMetadata({
-            declarations: [],
             imports: [TaskFormModule, BrowserAnimationsModule, TranslateModule.forRoot()],
             providers: [
-                { provide: TranslationService, useClass: TranslationMock },
+                { provide: TranslateLoader, useClass: TranslateLoaderService },
                 {
                     provide: TRANSLATION_PROVIDER,
                     multi: true,
                     useValue: {
-                        name: 'adf-core',
-                        source: 'assets/adf-core'
+                        name: 'adf-process-services-cloud',
+                        source: 'assets/adf-process-services-cloud'
                     }
                 },
                 { provide: TaskCloudService, useClass: TaskCloudServiceMock },
@@ -51,7 +50,7 @@ export default {
     argTypes: {
         appName: { table: { disable: true } },
         taskId: { table: { disable: true } },
-        readOnly: { table: { disable: true} }
+        readOnly: { table: { disable: true } }
     }
 } as Meta;
 
