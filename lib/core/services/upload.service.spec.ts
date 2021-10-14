@@ -394,37 +394,7 @@ describe('UploadService', () => {
             );
         });
 
-        it('should upload with "versioningEnabled" parameter taken from app config', () => {
-            appConfigService.config.upload = { versioningEnabled: true };
-
-            const model = new FileModel(
-                <File> { name: 'file-name', size: 10 },
-                <FileUploadOptions> {}
-            );
-
-            service.addToQueue(model);
-            service.uploadFilesInTheQueue();
-
-            expect(uploadFileSpy).toHaveBeenCalledWith(
-                {
-                    name: 'file-name',
-                    size: 10
-                },
-                undefined,
-                undefined,
-                { newVersion: false },
-                {
-                    include: [ 'allowableOperations' ],
-                    renditions: 'doclib',
-                    versioningEnabled: true,
-                    autoRename: true
-                }
-            );
-        });
-
         it('should not use "versioningEnabled" if not explicitly provided', () => {
-            appConfigService.config.upload = {};
-
             const model = new FileModel(
                 <File> { name: 'file-name', size: 10 },
                 <FileUploadOptions> {}

@@ -29,17 +29,44 @@ export class FileUploadOptions {
      * Setting this parameter also enables versioning of this node, if it is not already versioned.
      */
     comment?: string;
+    /**
+     * Overwrite the content of the node with a new version.
+     */
     newVersion?: boolean;
     /**
      * If true, then created node will be version 1.0 MAJOR. If false, then created node will be version 0.1 MINOR.
      */
     majorVersion?: boolean;
+    /**
+     * Root folder id.
+     */
     parentId?: string;
+    /**
+     * Defines the **relativePath** value.
+     * The relativePath specifies the folder structure to create relative to the node nodeId.
+     * Folders in the relativePath that do not exist are created before the node is created.
+     */
     path?: string;
+    /**
+     * You can use the nodeType field to create a specific type. The default is **cm:content**.
+     */
     nodeType?: string;
+    /**
+     * You can set multi-value properties when you create a new node which supports properties of type multiple.
+     */
     properties?: any;
+    /**
+     * If the content model allows then it is also possible to create primary children with a different assoc type.
+     */
     association?: any;
+    /**
+     * You can optionally specify an array of **secondaryChildren** to create one or more secondary child associations,
+     * such that the newly created node acts as a parent node.
+     */
     secondaryChildren?: AssocChildBody[];
+    /**
+     * You can optionally specify an array of **targets** to create one or more peer associations such that the newly created node acts as a source node.
+     */
     targets?: AssociationBody[];
     /**
      * If true, then created node will be versioned. If false, then created node will be unversioned and auto-versioning disabled.

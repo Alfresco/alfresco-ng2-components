@@ -248,12 +248,6 @@ export class UploadService {
 
         if (file.options && file.options.versioningEnabled !== undefined) {
             opts.versioningEnabled = file.options.versioningEnabled;
-        } else {
-            const appConfigFlag = this.appConfigService.get('upload.versioningEnabled');
-
-            if (appConfigFlag !== undefined) {
-                opts.versioningEnabled = appConfigFlag;
-            }
         }
 
         if (file.options.newVersion === true) {
