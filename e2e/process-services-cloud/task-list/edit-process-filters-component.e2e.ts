@@ -88,11 +88,14 @@ describe('Edit process filters cloud', () => {
         await editProcessFilter.openFilter();
         await editProcessFilter.setSortFilterDropDown('Start Date');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
+        await expect(await editProcessFilter.getOrderFilterDropDownValue()).toEqual('Descending');
+        await expect(await editProcessFilter.getStateFilterDropDownValue()).toEqual('All')
 
         await editProcessFilter.checkSaveButtonIsDisplayed();
         await editProcessFilter.checkSaveAsButtonIsDisplayed();
         await editProcessFilter.checkDeleteButtonIsDisplayed();
 
+        await expect(await editProcessFilter.isCustomFilterNameDisplayed('New')).toEqual(true);
         await expect(await editProcessFilter.checkSaveButtonIsEnabled()).toEqual(true);
         await expect(await editProcessFilter.checkSaveAsButtonIsEnabled()).toEqual(true);
         await expect(await editProcessFilter.checkDeleteButtonIsEnabled()).toEqual(true);
@@ -143,7 +146,6 @@ describe('Edit process filters cloud', () => {
 
     it('[C291810] Process filter should not be created when process filter dialog is closed', async () => {
         await editProcessFilter.setSortFilterDropDown('Id');
-        await processFilter.clickAllProcessesFilter();
         await editProcessFilter.clickSaveAsButton();
         await editProcessFilter.editProcessFilterDialog().setFilterName('Cancel');
         await expect(await editProcessFilter.editProcessFilterDialog().getFilterName()).toEqual('Cancel');
@@ -164,6 +166,7 @@ describe('Edit process filters cloud', () => {
         await editProcessFilter.clickSaveAsButton();
 
         const dialog = editProcessFilter.editProcessFilterDialog();
+        await dialog.clearFilterName();
 
         await expect(await dialog.getFilterName()).toEqual('');
         await expect(await dialog.checkSaveButtonIsEnabled()).toEqual(false);
@@ -176,6 +179,7 @@ describe('Edit process filters cloud', () => {
         await editProcessFilter.clickSaveAsButton();
 
         const dialog = editProcessFilter.editProcessFilterDialog();
+        await dialog.clearFilterName();
 
         await expect(await dialog.checkCancelButtonIsEnabled()).toEqual(true);
         await expect(await dialog.checkSaveButtonIsEnabled()).toEqual(false);
