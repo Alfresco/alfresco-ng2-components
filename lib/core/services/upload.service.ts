@@ -246,6 +246,10 @@ export class UploadService {
             opts.renditions = 'doclib';
         }
 
+        if (file.options && file.options.versioningEnabled !== undefined) {
+            opts.versioningEnabled = file.options.versioningEnabled;
+        }
+
         if (file.options.newVersion === true) {
             opts.overwrite = true;
             opts.majorVersion = file.options.majorVersion;
@@ -262,11 +266,14 @@ export class UploadService {
         if (file.id) {
             return this.nodesApi.updateNodeContent(file.id, <any> file.file, opts);
         } else {
+            const nodeBody = { ... file.options };
+            delete nodeBody['versioningEnabled'];
+
             return this.uploadApi.uploadFile(
                 file.file,
                 file.options.path,
                 file.options.parentId,
-                file.options,
+                nodeBody,
                 opts
             );
         }

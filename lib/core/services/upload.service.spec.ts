@@ -34,6 +34,9 @@ declare let jasmine: any;
 
 describe('UploadService', () => {
     let service: UploadService;
+    let appConfigService: AppConfigService;
+    let uploadFileSpy: jasmine.Spy;
+
     const mockProductInfo = new BehaviorSubject<EcmProductVersionModel>(null);
 
     setupTestBed({
@@ -53,8 +56,8 @@ describe('UploadService', () => {
     });
 
     beforeEach(() => {
-        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
-        appConfig.config = {
+        appConfigService = TestBed.inject(AppConfigService);
+        appConfigService.config = {
             ecmHost: 'http://localhost:9876/ecm',
             files: {
                 excluded: ['.DS_Store', 'desktop.ini', '.git', '*.git', '*.SWF'],
@@ -75,6 +78,9 @@ describe('UploadService', () => {
         service = TestBed.inject(UploadService);
         service.queue = [];
         service.activeTask = null;
+
+        uploadFileSpy = spyOn(service.uploadApi, 'uploadFile').and.callThrough();
+
         jasmine.Ajax.install();
         mockProductInfo.next({ status: { isThumbnailGenerationEnabled: true } } as EcmProductVersionModel);
     });
@@ -203,7 +209,7 @@ describe('UploadService', () => {
         });
     });
 
-    it('should abort file only if it\'s safe to abort', (done) => {
+    it('should abort file only if it is safe to abort', (done) => {
         const emitter = new EventEmitter();
 
         const emitterDisposable = emitter.subscribe((event) => {
@@ -220,7 +226,7 @@ describe('UploadService', () => {
         service.cancelUpload(...file);
     });
 
-    it('should let file complete and then delete node if it\'s not safe to abort', (done) => {
+    it('should let file complete and then delete node if it is not safe to abort', (done) => {
         const emitter = new EventEmitter();
 
         const emitterDisposable = emitter.subscribe((event) => {
@@ -261,7 +267,7 @@ describe('UploadService', () => {
         });
     });
 
-    it('should delete node\'s version when cancelling the upload of the new file version', (done) => {
+    it('should delete node version when cancelling the upload of the new file version', (done) => {
         const emitter = new EventEmitter();
 
         const emitterDisposable = emitter.subscribe((event) => {
@@ -306,27 +312,31 @@ describe('UploadService', () => {
     });
 
     it('If newVersion is set, name should be a param', () => {
-        const uploadFileSpy = spyOn(service['uploadApi'], 'uploadFile').and.callThrough();
-
         const emitter = new EventEmitter();
-
-        const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 }, {
-            newVersion: true
-        });
+        const filesFake = new FileModel(
+            <File> { name: 'fake-name', size: 10 },
+            { newVersion: true }
+        );
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
-        expect(uploadFileSpy).toHaveBeenCalledWith({
-            name: 'fake-name',
-            size: 10
-        }, undefined, undefined, { newVersion: true }, {
-            renditions: 'doclib',
-            include: ['allowableOperations'],
-            overwrite: true,
-            majorVersion: undefined,
-            comment: undefined,
-            name: 'fake-name'
-        });
+        expect(uploadFileSpy).toHaveBeenCalledWith(
+            {
+                name: 'fake-name',
+                size: 10
+            },
+            undefined,
+            undefined,
+            { newVersion: true },
+            {
+                renditions: 'doclib',
+                include: ['allowableOperations'],
+                overwrite: true,
+                majorVersion: undefined,
+                comment: undefined,
+                name: 'fake-name'
+            }
+        );
     });
 
     it('should use custom root folder ID given to the service', (done) => {
@@ -355,41 +365,98 @@ describe('UploadService', () => {
         });
     });
 
-    it('should append to the request the extra upload options', () => {
-        const uploadFileSpy = spyOn(service['uploadApi'], 'uploadFile').and.callThrough();
-        const emitter = new EventEmitter();
+    describe('versioningEnabled', () => {
+        it('should upload with "versioningEnabled" parameter taken from file options', () => {
+            const model = new FileModel(
+                <File> { name: 'file-name', size: 10 },
+                <FileUploadOptions> {
+                    versioningEnabled: true
+                }
+            );
 
+            service.addToQueue(model);
+            service.uploadFilesInTheQueue();
+
+            expect(uploadFileSpy).toHaveBeenCalledWith(
+                {
+                    name: 'file-name',
+                    size: 10
+                },
+                undefined,
+                undefined,
+                { newVersion: false },
+                {
+                    include: [ 'allowableOperations' ],
+                    renditions: 'doclib',
+                    versioningEnabled: true,
+                    autoRename: true
+                }
+            );
+        });
+
+        it('should not use "versioningEnabled" if not explicitly provided', () => {
+            const model = new FileModel(
+                <File> { name: 'file-name', size: 10 },
+                <FileUploadOptions> {}
+            );
+
+            service.addToQueue(model);
+            service.uploadFilesInTheQueue();
+
+            expect(uploadFileSpy).toHaveBeenCalledWith(
+                {
+                    name: 'file-name',
+                    size: 10
+                },
+                undefined,
+                undefined,
+                { newVersion: false },
+                {
+                    include: [ 'allowableOperations' ],
+                    renditions: 'doclib',
+                    autoRename: true
+                }
+            );
+        });
+    });
+
+    it('should append the extra upload options to the request', () => {
         const filesFake = new FileModel(
             <File> { name: 'fake-name', size: 10 },
             <FileUploadOptions> {
-                parentId: '123', path: 'fake-dir',
+                parentId: '123',
+                path: 'fake-dir',
                 secondaryChildren: [<AssocChildBody> { assocType: 'assoc-1', childId: 'child-id' }],
                 association: { assocType: 'fake-assoc' },
                 targets: [<AssociationBody> { assocType: 'target-assoc', targetId: 'fake-target-id' }]
             });
         service.addToQueue(filesFake);
-        service.uploadFilesInTheQueue(emitter);
+        service.uploadFilesInTheQueue();
 
-        expect(uploadFileSpy).toHaveBeenCalledWith({
-            name: 'fake-name',
-            size: 10
-        }, 'fake-dir', '123', {
-            newVersion: false,
-            parentId: '123',
-            path: 'fake-dir',
-            secondaryChildren: [<AssocChildBody> { assocType: 'assoc-1', childId: 'child-id' }],
-            association: { assocType: 'fake-assoc' },
-            targets: [<AssociationBody> { assocType: 'target-assoc', targetId: 'fake-target-id' }]
-        }, {
-            renditions: 'doclib',
-            include: ['allowableOperations'],
-            autoRename: true
-        });
+        expect(uploadFileSpy).toHaveBeenCalledWith(
+            {
+                name: 'fake-name',
+                size: 10
+            },
+            'fake-dir',
+            '123',
+            {
+                newVersion: false,
+                parentId: '123',
+                path: 'fake-dir',
+                secondaryChildren: [<AssocChildBody> { assocType: 'assoc-1', childId: 'child-id' }],
+                association: { assocType: 'fake-assoc' },
+                targets: [<AssociationBody> { assocType: 'target-assoc', targetId: 'fake-target-id' }]
+            },
+            {
+                renditions: 'doclib',
+                include: ['allowableOperations'],
+                autoRename: true
+            }
+        );
     });
 
     it('should start downloading the next one if a file of the list is aborted', (done) => {
-        const emitter = new EventEmitter();
-
         service.fileUploadAborted.subscribe((e) => {
             expect(e).not.toBeNull();
         });
@@ -403,7 +470,7 @@ describe('UploadService', () => {
         const fileFake2 = new FileModel(<File> { name: 'fake-name2', size: 10 });
         const fileList = [fileFake1, fileFake2];
         service.addToQueue(...fileList);
-        service.uploadFilesInTheQueue(emitter);
+        service.uploadFilesInTheQueue();
 
         const file = service.getQueue();
         service.cancelUpload(...file);
@@ -445,7 +512,7 @@ describe('UploadService', () => {
     });
 
     it('should call onUploadDeleted if file was deleted', () => {
-        const file = <any> ({ status: FileUploadStatus.Deleted });
+        const file = <FileModel> { status: FileUploadStatus.Deleted };
         spyOn(service.fileUploadDeleted, 'next');
 
         service.cancelUpload(file);
@@ -474,24 +541,28 @@ describe('UploadService', () => {
     it('Should not pass rendition if it is disabled', () => {
         mockProductInfo.next({ status: { isThumbnailGenerationEnabled: false } } as EcmProductVersionModel);
 
-        const uploadFileSpy = spyOn(service['uploadApi'], 'uploadFile').and.callThrough();
-        const emitter = new EventEmitter();
-
-        const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 }, {
-            newVersion: true
-        });
+        const filesFake = new FileModel(
+            <File> { name: 'fake-name', size: 10 },
+            { newVersion: true}
+        );
         service.addToQueue(filesFake);
-        service.uploadFilesInTheQueue(emitter);
+        service.uploadFilesInTheQueue();
 
-        expect(uploadFileSpy).toHaveBeenCalledWith({
-            name: 'fake-name',
-            size: 10
-        }, undefined, undefined, { newVersion: true }, {
-            include: ['allowableOperations'],
-            overwrite: true,
-               majorVersion: undefined,
-            comment: undefined,
-            name: 'fake-name'
-        });
+        expect(uploadFileSpy).toHaveBeenCalledWith(
+            {
+                name: 'fake-name',
+                size: 10
+            },
+            undefined,
+            undefined,
+            { newVersion: true },
+            {
+                include: ['allowableOperations'],
+                overwrite: true,
+                majorVersion: undefined,
+                comment: undefined,
+                name: 'fake-name'
+            }
+        );
     });
 });
