@@ -44,6 +44,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     typeId = 'DropdownCloudWidgetComponent';
     protected onDestroy$ = new Subject<boolean>();
+    appName: string;
 
     constructor(public formService: FormService,
                 private formCloudService: FormCloudService,
@@ -59,10 +60,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     getValuesFromRestApi() {
         if (this.isValidRestType()) {
-            this.formCloudService.getDropDownJsonData(this.field.restUrl)
+            this.formCloudService.getRestWidgetData(this.appName, this.field.form.name, this.field.id)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe((result: FormFieldOption[]) => {
-                    this.field.options = this.mapJsonData(result);
+                    this.field.options = result;
                 }, (err) => this.handleError(err));
         }
     }

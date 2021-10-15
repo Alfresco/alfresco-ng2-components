@@ -31,6 +31,7 @@ import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormContent } from '../../services/form-fields.interfaces';
 import { FormCloudServiceInterface } from './form-cloud.service.interface';
+import { FormFieldOption } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
@@ -191,13 +192,9 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         return this.get(url);
     }
 
-    /**
-     * Parses JSON data to create a corresponding form.
-     * @param url String data to make the request
-     * @returns Array of FormFieldOption object
-     */
-    getDropDownJsonData(url: string): Observable<any> {
-        return this.get<any>(url);
+    getRestWidgetData(appName: string, formId: string, widgetId: string): Observable<FormFieldOption[]> {
+        const apiUrl = `${this.getBasePath(appName)}/v1/forms/${formId}/values/${widgetId}`;
+        return this.post(apiUrl);
     }
 
     /**

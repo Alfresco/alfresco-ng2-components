@@ -146,7 +146,7 @@ describe('DropdownCloudWidgetComponent', () => {
             });
 
             it('should load data from restUrl and populate options', async () => {
-                const jsonDataSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(fakeOptionList));
+                const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(fakeOptionList));
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
@@ -166,9 +166,9 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const optOne = fixture.debugElement.queryAll(By.css('[id="option_1"]'));
-                const optTwo = fixture.debugElement.queryAll(By.css('[id="option_2"]'));
-                const optThree = fixture.debugElement.queryAll(By.css('[id="option_3"]'));
+                const optOne = fixture.debugElement.queryAll(By.css('[id="opt_1"]'));
+                const optTwo = fixture.debugElement.queryAll(By.css('[id="opt_2"]'));
+                const optThree = fixture.debugElement.queryAll(By.css('[id="opt_3"]'));
                 const allOptions = fixture.debugElement.queryAll(By.css('mat-option'));
 
                 expect(jsonDataSpy).toHaveBeenCalled();
@@ -195,7 +195,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     }
                 });
 
-                spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of([
+                spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
                     {
                         id: 'opt1',
                         name: 'default1_value'
@@ -230,7 +230,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     value: 'opt1'
                 });
 
-                spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of([
+                spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
                     {
                         id: 'opt1',
                         name: 'default1_value'
@@ -265,98 +265,11 @@ describe('DropdownCloudWidgetComponent', () => {
                     restResponsePath: 'path'
                 });
 
-                const dropdownSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of({
-                    id: 1,
-                    path: [
+                const dropdownSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of( [
                         { id: 'opt_1', name: 'option_1' },
                         { id: 'opt_2', name: 'option_2' },
-                        { id: 'opt_3', name: 'option_3' }],
-                    name: ''
-                }));
-
-                widget.ngOnInit();
-                fixture.detectChanges();
-
-                openSelect('#dropdown-id');
-
-                fixture.whenStable().then(() => {
-                    expect(dropdownSpy).toHaveBeenCalled();
-
-                    const optOne: any = fixture.debugElement.queryAll(By.css('[id="opt_1"]'));
-                    expect(optOne[0].context.value).toBe('opt_1');
-                    expect(optOne[0].context.viewValue).toBe('option_1');
-                    const optTwo: any = fixture.debugElement.queryAll(By.css('[id="opt_2"]'));
-                    expect(optTwo[0].context.value).toBe('opt_2');
-                    expect(optTwo[0].context.viewValue).toBe('option_2');
-                    const optThree: any = fixture.debugElement.queryAll(By.css('[id="opt_3"]'));
-                    expect(optThree[0].context.value).toBe('opt_3');
-                    expect(optThree[0].context.viewValue).toBe('option_3');
-                    done();
-                });
-            });
-
-            it('should map correct label if restLabelProperty is set', (done) => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                    id: 'dropdown-id',
-                    name: 'date-name',
-                    type: 'dropdown-cloud',
-                    readOnly: 'false',
-                    restUrl: 'fake-rest-url',
-                    optionType: 'rest',
-                    restResponsePath: 'path',
-                    restLabelProperty: 'first_name'
-                });
-
-                const dropdownSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of({
-                    id: 1,
-                    path: [
-                        { id: 'opt_1', first_name: 'option_1' },
-                        { id: 'opt_2', first_name: 'option_2' },
-                        { id: 'opt_3', first_name: 'option_3' }],
-                    name: ''
-                }));
-
-                widget.ngOnInit();
-                fixture.detectChanges();
-
-                openSelect('#dropdown-id');
-
-                fixture.whenStable().then(() => {
-                    expect(dropdownSpy).toHaveBeenCalled();
-
-                    const optOne: any = fixture.debugElement.queryAll(By.css('[id="opt_1"]'));
-                    expect(optOne[0].context.value).toBe('opt_1');
-                    expect(optOne[0].context.viewValue).toBe('option_1');
-                    const optTwo: any = fixture.debugElement.queryAll(By.css('[id="opt_2"]'));
-                    expect(optTwo[0].context.value).toBe('opt_2');
-                    expect(optTwo[0].context.viewValue).toBe('option_2');
-                    const optThree: any = fixture.debugElement.queryAll(By.css('[id="opt_3"]'));
-                    expect(optThree[0].context.value).toBe('opt_3');
-                    expect(optThree[0].context.viewValue).toBe('option_3');
-                    done();
-                });
-            });
-
-            it('should map correct id if restIdProperty is set', (done) => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                    id: 'dropdown-id',
-                    name: 'date-name',
-                    type: 'dropdown-cloud',
-                    readOnly: 'false',
-                    restUrl: 'fake-rest-url',
-                    optionType: 'rest',
-                    restResponsePath: 'path',
-                    restIdProperty: 'my_id'
-                });
-
-                const dropdownSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of({
-                    id: 1,
-                    path: [
-                        { my_id: 'opt_1', name: 'option_1' },
-                        { my_id: 'opt_2', name: 'option_2' },
-                        { my_id: 'opt_3', name: 'option_3' }],
-                    name: ''
-                }));
+                        { id: 'opt_3', name: 'option_3' }]
+                ));
 
                 widget.ngOnInit();
                 fixture.detectChanges();

@@ -1,0 +1,20 @@
+.adf {
+
+    &-radio-button-container {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-radio-group {
+        margin-top: 15px;
+        margin-left: 5px;
+        display: inline-flex;
+        flex-direction: column;
+    }
+
+    &-radio-button {
+        margin: 5px;
+    }
+
+ }
