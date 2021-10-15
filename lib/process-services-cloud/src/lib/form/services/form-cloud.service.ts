@@ -192,8 +192,8 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         return this.get(url);
     }
 
-    getRestWidgetData(appName: string, formId: string, widgetId: string): Observable<FormFieldOption[]> {
-        const apiUrl = `${this.getBasePath(appName)}/v1/forms/${formId}/values/${widgetId}`;
+    getRestWidgetData(appName: string, formName: string, widgetId: string): Observable<FormFieldOption[]> {
+        const apiUrl = `${this.getBasePath(appName)}/v1/forms/${formName}/values/${widgetId}`;
         return this.post(apiUrl);
     }
 
