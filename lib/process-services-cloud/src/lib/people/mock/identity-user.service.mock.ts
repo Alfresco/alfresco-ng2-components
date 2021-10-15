@@ -67,7 +67,10 @@ export class IdentityUserServiceMock {
             return of([]);
         }
 
-        return of(mockUsers);
+        return of(mockUsers.filter(user => {
+            return user.username === username;
+            }
+        ));
     }
 
     findUserByEmail(email: string): Observable<IdentityUserModel[]> {
@@ -75,7 +78,10 @@ export class IdentityUserServiceMock {
             return of([]);
         }
 
-        return of(mockUsers);
+        return of(mockUsers.filter(user => {
+            return user.email === email;
+            }
+        ));
     }
 
     findUserById(id: string): Observable<any> {
@@ -83,7 +89,10 @@ export class IdentityUserServiceMock {
             return of([]);
         }
 
-        return of(cloudMockUser);
+        return of(mockUsers.find(user => {
+            return user.id === id;
+            }
+        ));
     }
 
     getClientRoles(_userId: string, _clientId: string): Observable<any[]> {
@@ -210,19 +219,7 @@ export class IdentityUserServiceMock {
     }
 
     queryUsers(_requestQuery: IdentityUserQueryCloudRequestModel): Observable<IdentityUserQueryResponse> {
-        /*
-        return {
-            entries: mockUsers,
-            pagination: {
-              skipCount: requestQuery.first,
-              maxItems: requestQuery.max,
-              count: this.getTotalUsersCount(),
-              hasMoreItems: false,
-              totalItems: this.getTotalUsersCount()
-            }
-        };
-        */
-       return of();
+        return of();
     }
 
     getTotalUsersCount(): Observable<number> {
@@ -267,11 +264,6 @@ export class IdentityUserServiceMock {
         return of(mockRoles);
     }
 
-    /**
-     * Gets assigned roles.
-     * @param userId Id of the user.
-     * @returns Array of assigned roles information objects
-     */
     getAssignedRoles(_userId: string): Observable<IdentityRoleModel[]> {
         return of(mockRoles);
     }
@@ -280,23 +272,11 @@ export class IdentityUserServiceMock {
         return of(mockRoles);
     }
 
-    /**
-     * Assigns roles to the user.
-     * @param userId Id of the user.
-     * @param roles Array of roles.
-     * @returns Empty response when the role assigned.
-     */
     assignRoles(userId: string, roles: IdentityRoleModel[]): Observable<any> {
         window.alert(`Assign roles: ${roles} for user with ID: ${userId}`);
         return of([]);
     }
 
-    /**
-     * Removes assigned roles.
-     * @param userId Id of the user.
-     * @param roles Array of roles.
-     * @returns Empty response when the role removed.
-     */
     removeRoles(userId: string, removedRoles: IdentityRoleModel[]): Observable<any> {
         window.alert(`Remove roles: ${removedRoles} for user with ID: ${userId}`);
         return of([]);

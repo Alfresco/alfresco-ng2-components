@@ -53,6 +53,33 @@ export default {
     }
 } as Meta;
 
+/*
+const search =  new FormControl({value: '', disabled: false}, []);
+
+search.statusChanges
+            .pipe(
+                filter((value: string) => {
+                    return value === 'INVALID';
+                })
+            )
+            .subscribe(() => {
+                this.field.markAsInvalid();
+                this.field.form.markAsInvalid();
+            });
+
+search.statusChanges
+            .pipe(
+                filter((value: string) => {
+                    return value === 'VALID';
+                }),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(() => {
+                this.field.validate();
+                this.field.form.validateForm();
+            });
+*/
+
 const template: Story<PeopleCloudComponent> = (args: PeopleCloudComponent) => ({
     props: args
 });
@@ -60,15 +87,23 @@ const template: Story<PeopleCloudComponent> = (args: PeopleCloudComponent) => ({
 export const primary = template.bind({});
 primary.args = {
     appName: 'app',
-    mode: 'multiple'
-    // mode: 'single',
-    // preSelectUsers: [],
-    // readOnly: false,
-    // roles: [],
+    excludedUsers: [],
+    mode: 'single',
+    preSelectUsers: [],
+    readOnly: false,
+    // roles: undefined,
     // searchUserCtrl: undefined,
-    // title: 'title',
+    title: 'Users',
     // userChipsCtrl: undefined,
-    // validate: false
+    validate: false
+};
+
+export const preselectedUsers = template.bind({});
+preselectedUsers.args = {
+    ...primary.args,
+    validate: true,
+    mode: 'multiple',
+    preSelectUsers: mockUsers
 };
 
 export const excludedUsers = template.bind({});
