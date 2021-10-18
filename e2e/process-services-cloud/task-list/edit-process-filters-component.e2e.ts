@@ -89,7 +89,7 @@ describe('Edit process filters cloud', () => {
         await editProcessFilter.setSortFilterDropDown('Start Date');
         await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
         await expect(await editProcessFilter.getOrderFilterDropDownValue()).toEqual('Descending');
-        await expect(await editProcessFilter.getStateFilterDropDownValue()).toEqual('All')
+        await expect(await editProcessFilter.getStateFilterDropDownValue()).toEqual('All');
 
         await editProcessFilter.checkSaveButtonIsDisplayed();
         await editProcessFilter.checkSaveAsButtonIsDisplayed();
