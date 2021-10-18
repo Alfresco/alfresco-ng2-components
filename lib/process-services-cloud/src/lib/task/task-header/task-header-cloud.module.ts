@@ -20,11 +20,9 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { TaskHeaderCloudComponent } from './components/task-header-cloud.component';
-import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
-        TranslateModule,
         CommonModule,
         MaterialModule,
         CoreModule.forChild()
