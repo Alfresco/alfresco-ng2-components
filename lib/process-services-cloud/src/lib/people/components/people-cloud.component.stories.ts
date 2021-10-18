@@ -49,6 +49,16 @@ export default {
         mode: {
             options: ['single', 'multiple'],
             control: { type: 'radio' }
+        },
+        roles: {
+            options: ['empty', 'user', 'admin'],
+            control: {type: 'radio' },
+            mapping: {
+                empty: [],
+                user: ['MOCK-USER-ROLE'],
+                admin: ['MOCK-ADMIN-ROLE']
+            },
+            defaultValue: []
         }
     }
 } as Meta;
@@ -91,19 +101,27 @@ primary.args = {
     mode: 'single',
     preSelectUsers: [],
     readOnly: false,
-    // roles: undefined,
+    roles: [],
     // searchUserCtrl: undefined,
     title: 'Users',
     // userChipsCtrl: undefined,
     validate: false
 };
 
-export const preselectedUsers = template.bind({});
-preselectedUsers.args = {
+export const validPreselectedUsers = template.bind({});
+validPreselectedUsers.args = {
     ...primary.args,
     validate: true,
     mode: 'multiple',
     preSelectUsers: mockUsers
+};
+
+export const invalidPreselectedUsers = template.bind({});
+invalidPreselectedUsers.args = {
+    ...primary.args,
+    validate: true,
+    mode: 'multiple',
+    preSelectUsers: [{ id: 'invalid-user', username: 'invalid user', firstName: 'invalid', lastName: 'user', email: 'invalid@xyz.com' }]
 };
 
 export const excludedUsers = template.bind({});
@@ -113,6 +131,12 @@ excludedUsers.args = {
         { id: 'fake-id-2' },
         { id: 'fake-id-3' }
     ]
+};
+
+export const adminRoleUser = template.bind({});
+adminRoleUser.args = {
+    ...primary.args,
+    roles: ['MOCK-ADMIN-ROLE']
 };
 
 export const noUsers = template.bind({});

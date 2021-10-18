@@ -95,8 +95,12 @@ export class IdentityUserServiceMock {
         ));
     }
 
-    getClientRoles(_userId: string, _clientId: string): Observable<any[]> {
-        return of(mockRoles);
+    getClientRoles(userId: string, _clientId: string): Observable<any[]> {
+        if (userId === 'fake-id-1') {
+            return of([{ id: 'id-1', name: 'MOCK-ADMIN-ROLE'}]);
+        }
+
+        return of([{id: 'id-2', name: 'MOCK-USER-ROLE'}]);
     }
 
     checkUserHasClientApp(userId: string, clientId: string): Observable<boolean> {
