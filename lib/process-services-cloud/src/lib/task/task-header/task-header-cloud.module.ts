@@ -24,10 +24,10 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
-        TranslateModule.forRoot(),
+        TranslateModule,
         CommonModule,
         MaterialModule,
-        CoreModule.forRoot()
+        CoreModule.forChild()
     ],
     declarations: [
         TaskHeaderCloudComponent
