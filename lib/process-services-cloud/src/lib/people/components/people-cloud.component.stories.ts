@@ -63,33 +63,6 @@ export default {
     }
 } as Meta;
 
-/*
-const search =  new FormControl({value: '', disabled: false}, []);
-
-search.statusChanges
-            .pipe(
-                filter((value: string) => {
-                    return value === 'INVALID';
-                })
-            )
-            .subscribe(() => {
-                this.field.markAsInvalid();
-                this.field.form.markAsInvalid();
-            });
-
-search.statusChanges
-            .pipe(
-                filter((value: string) => {
-                    return value === 'VALID';
-                }),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe(() => {
-                this.field.validate();
-                this.field.form.validateForm();
-            });
-*/
-
 const template: Story<PeopleCloudComponent> = (args: PeopleCloudComponent) => ({
     props: args
 });
@@ -102,9 +75,7 @@ primary.args = {
     preSelectUsers: [],
     readOnly: false,
     roles: [],
-    // searchUserCtrl: undefined,
     title: 'Users',
-    // userChipsCtrl: undefined,
     validate: false
 };
 
