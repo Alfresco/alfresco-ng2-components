@@ -27,10 +27,11 @@ import {
     IdentityGroupCountModel
 } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
+import { IdentityGroupInterface } from './identity-group.interface';
 import { OAuth2Service } from './oauth2.service';
 
 @Injectable({ providedIn: 'root' })
-export class IdentityGroupService {
+export class IdentityGroupService implements IdentityGroupInterface {
 
     constructor(
         private oAuth2Service: OAuth2Service,

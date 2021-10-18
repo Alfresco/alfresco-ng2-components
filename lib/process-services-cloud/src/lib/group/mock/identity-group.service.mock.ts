@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { IdentityGroupCountModel, IdentityGroupModel, IdentityGroupQueryCloudRequestModel, IdentityGroupQueryResponse, IdentityGroupSearchParam, IdentityRoleModel, mockIdentityGroups, mockIdentityRoles } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { IdentityGroupInterface } from '../../../../../core/services/identity-group.interface';
 
 Injectable({ providedIn: 'root' });
-export class IdentityGroupServiceMock {
+export class IdentityGroupServiceMock implements IdentityGroupInterface {
 
     getGroups(): Observable<IdentityGroupModel[]> {
         return of(mockIdentityGroups);
