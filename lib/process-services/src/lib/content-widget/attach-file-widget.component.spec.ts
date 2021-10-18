@@ -600,4 +600,29 @@ describe('AttachFileWidgetComponent', () => {
 
         expect(element.querySelector('#file-1155-icon')).not.toBeNull();
     });
+
+    it('should pass a valid repository id to open the external login', async () => {
+        widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.UPLOAD, value: [] });
+        widget.field.id = 'attach-external-file-attach';
+        widget.field.params = <FormFieldMetadata> externalDefinedSourceParams;
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
+        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of(fakePngAnswer));
+        const openLoginSpy = spyOn(attachFileWidgetDialogService, 'openLogin').and.returnValue(of([fakeMinimalNode]));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const attachButton = element.querySelector<HTMLButtonElement>('#attach-external-file-attach');
+        attachButton.click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        fixture.debugElement.query(By.css('#attach-external')).nativeElement.click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(openLoginSpy).toHaveBeenCalledWith(fakeRepositoryListAnswer[2], undefined, 'alfresco-2000-external')
+    });
 });
