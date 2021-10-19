@@ -39,12 +39,26 @@ export default {
                         source: 'assets/adf-process-services-cloud'
                     }
                 },
-                { provide: IdentityGroupService, useClass: IdentityGroupServiceMock}
+                { provide: IdentityGroupService, useClass: IdentityGroupServiceMock }
             ]
         })
     ],
     argTypes: {
-        appName: { table: { disable: true } }
+        appName: { table: { disable: true } },
+        mode: {
+            options: ['single', 'multiple'],
+            control: { type: 'radio' }
+        },
+        roles: {
+            options: ['empty', 'user', 'admin'],
+            control: { type: 'radio' },
+            mapping: {
+                empty: [],
+                user: ['MOCK-USER-ROLE'],
+                admin: ['MOCK-ADMIN-ROLE']
+            },
+            defaultValue: []
+        }
     }
 } as Meta;
 
@@ -78,9 +92,9 @@ mandatoryPreselectedGroups.args = {
     ...primary.args,
     validate: true,
     mode: 'multiple',
-    preSelectGroups: [{id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [], readonly: true},
-                      {id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: []},
-                      {id: 'mock-group-id-3', name: 'Mock Group 3', path: '', subGroups: [], readonly: true}]
+    preSelectGroups: [{ id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [], readonly: true },
+                      { id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] },
+                      { id: 'mock-group-id-3', name: 'Mock Group 3', path: '', subGroups: [], readonly: true }]
 };
 
 export const invalidPreselectedGroups = template.bind({});
@@ -91,10 +105,10 @@ invalidPreselectedGroups.args = {
     preSelectGroups: [{ id: 'invalid-group', name: 'invalid group' }]
 };
 
-export const adminRoleUser = template.bind({});
-adminRoleUser.args = {
+export const adminRoleGroups = template.bind({});
+adminRoleGroups.args = {
     ...primary.args,
-    roles: ['MOCK-ADMIN-ROLE']
+    roles: 'admin'
 };
 
 export const invalidOrEmptyAppName = template.bind({});
