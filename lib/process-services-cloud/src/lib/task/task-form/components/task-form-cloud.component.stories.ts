@@ -15,33 +15,22 @@
  * limitations under the License.
  */
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { TranslateLoaderService, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../form/public-api';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskFormModule } from '../task-form.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
 import { FormCloudServiceMock } from '../../../form/mocks/form-cloud.service.mock';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { ProcessServicesCloudStoryModule } from '../../../process-services-cloud-story.module';
 
 export default {
     component: TaskFormCloudComponent,
     title: 'Process Services Cloud/Components/Task Form',
     decorators: [
         moduleMetadata({
-            imports: [TaskFormModule, BrowserAnimationsModule, TranslateModule.forRoot()],
+            imports: [ProcessServicesCloudStoryModule, TaskFormModule],
             providers: [
-                { provide: TranslateLoader, useClass: TranslateLoaderService },
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'adf-process-services-cloud',
-                        source: 'assets/adf-process-services-cloud'
-                    }
-                },
                 { provide: TaskCloudService, useClass: TaskCloudServiceMock },
                 { provide: FormCloudService, useClass: FormCloudServiceMock }
             ]
