@@ -116,7 +116,7 @@ excludedUsers.args = {
 export const adminRoleUser = template.bind({});
 adminRoleUser.args = {
     ...primary.args,
-    roles: ['MOCK-ADMIN-ROLE']
+    roles: 'admin'
 };
 
 export const noUsers = template.bind({});
