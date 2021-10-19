@@ -15,40 +15,17 @@
  * limitations under the License.
  */
 
-import { Pagination } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { IdentityGroupModel, IdentityRoleModel, IdentityUserModel, mockIdentityGroups } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { cloudMockUser, mockRoles, mockUsers } from './user-cloud.mock';
-
-export interface IdentityUserQueryResponse {
-
-    entries: IdentityUserModel[];
-    pagination: Pagination;
-}
-
-export interface IdentityUserPasswordModel {
-    type?: string;
-    value?: string;
-    temporary?: boolean;
-}
-
-export interface IdentityUserQueryCloudRequestModel {
-    first: number;
-    max: number;
-}
-
-export interface IdentityJoinGroupRequestModel {
-    realm: string;
-    userId: string;
-    groupId: string;
-}
+import { IdentityJoinGroupRequestModel, IdentityUserInterface, IdentityUserPasswordModel, IdentityUserQueryCloudRequestModel, IdentityUserQueryResponse } from '../../../../../core/services/identity-user.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class IdentityUserServiceMock {
+export class IdentityUserServiceMock implements IdentityUserInterface {
 
     getCurrentUserInfo(): IdentityUserModel {
         return cloudMockUser;
@@ -59,7 +36,9 @@ export class IdentityUserServiceMock {
             return of([]);
         }
 
-        return of(mockUsers);
+        return of(mockUsers.filter(user =>
+             user.username.includes(search)
+        ));
     }
 
     findUserByUsername(username: string): Observable<IdentityUserModel[]> {
@@ -67,10 +46,7 @@ export class IdentityUserServiceMock {
             return of([]);
         }
 
-        return of(mockUsers.filter(user => {
-            return user.username === username;
-            }
-        ));
+        return of(mockUsers.filter(user => user.username === username));
     }
 
     findUserByEmail(email: string): Observable<IdentityUserModel[]> {
@@ -78,10 +54,7 @@ export class IdentityUserServiceMock {
             return of([]);
         }
 
-        return of(mockUsers.filter(user => {
-            return user.email === email;
-            }
-        ));
+        return of(mockUsers.filter(user => user.email === email));
     }
 
     findUserById(id: string): Observable<any> {
@@ -89,10 +62,7 @@ export class IdentityUserServiceMock {
             return of([]);
         }
 
-        return of(mockUsers.find(user => {
-            return user.id === id;
-            }
-        ));
+        return of(mockUsers.find(user => user.id === id));
     }
 
     getClientRoles(userId: string, _clientId: string): Observable<any[]> {
