@@ -261,20 +261,20 @@ export const noCandidateGroupsTaskDetailsCloudMock: TaskDetailsCloudModel = {
 };
 
 export const taskWithFormDetailsMock: TaskDetailsCloudModel = {
-    appName: 'simple-app',
-    assignee: 'AssignedTaskUser',
-    completedDate: null,
-    createdDate: new Date(1555419255340),
-    dueDate: new Date(1558419255340),
-    description: null,
-    formKey: '4',
-    priority: 1,
-    parentTaskId: 'bd6b1741-6046-11e9-80f0-0a586460040d',
-    id: 'bd6b1741-6046-11e9-80f0-0a586460040d',
-    name: 'Task1',
-    owner: 'admin.adf',
-    standalone: true,
-    status: 'ASSIGNED'
+    'appName': 'mock-app-name',
+    'assignee': 'fakeAssignedTaskUser',
+    'completedDate': null,
+    'createdDate': new Date(1555419255340),
+    'dueDate': new Date(1558419255340),
+    'description': null,
+    'formKey': '4',
+    'priority': 1,
+    'parentTaskId': 'bd6b1741-6046-11e9-80f0-0a586460040d',
+    'id': 'bd6b1741-6046-11e9-80f0-0a586460040d',
+    'name': 'Task1',
+    'owner': 'fakeAdmin',
+    'standalone': true,
+    'status': 'ASSIGNED'
 };
 
 export const taskDetailsContainer = {

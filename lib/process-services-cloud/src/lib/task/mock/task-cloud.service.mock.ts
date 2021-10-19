@@ -30,7 +30,7 @@ import { TaskCloudInterface } from '../services/task-cloud.interface';
 })
 export class TaskCloudServiceMock implements TaskCloudInterface {
 
-    currentUserMock = 'AssignedTaskUser';
+    currentUserMock = 'fakeAssignedTaskUser';
     dataChangesDetected$ = new Subject();
 
     constructor(private appConfigService: AppConfigService, private logService: LogService) { }
