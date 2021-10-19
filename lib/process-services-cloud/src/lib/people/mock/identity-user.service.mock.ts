@@ -37,7 +37,7 @@ export class IdentityUserServiceMock implements IdentityUserInterface {
         }
 
         return of(mockUsers.filter(user =>
-             user.username.includes(search)
+            user.username.toUpperCase().includes(search.toUpperCase())
         ));
     }
 
@@ -67,10 +67,10 @@ export class IdentityUserServiceMock implements IdentityUserInterface {
 
     getClientRoles(userId: string, _clientId: string): Observable<any[]> {
         if (userId === 'fake-id-1') {
-            return of([{ id: 'id-1', name: 'MOCK-ADMIN-ROLE'}]);
+            return of([{ id: 'id-1', name: 'MOCK-ADMIN-ROLE' }]);
         }
 
-        return of([{id: 'id-2', name: 'MOCK-USER-ROLE'}]);
+        return of([{ id: 'id-2', name: 'MOCK-USER-ROLE' }]);
     }
 
     checkUserHasClientApp(userId: string, clientId: string): Observable<boolean> {
@@ -99,7 +99,6 @@ export class IdentityUserServiceMock implements IdentityUserInterface {
     }
 
     getClientIdByApplicationName(_applicationName: string): Observable<string> {
-
         return of('fake-id-1');
     }
 
@@ -124,7 +123,6 @@ export class IdentityUserServiceMock implements IdentityUserInterface {
     }
 
     getUserRoles(_userId: string): Observable<IdentityRoleModel[]> {
-
         return of(mockRoles);
     }
 

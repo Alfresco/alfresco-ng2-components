@@ -45,14 +45,14 @@ export default {
         })
     ],
     argTypes: {
-        appName: { table: { disable: true} },
+        appName: { table: { disable: true } },
         mode: {
             options: ['single', 'multiple'],
             control: { type: 'radio' }
         },
         roles: {
             options: ['empty', 'user', 'admin'],
-            control: {type: 'radio' },
+            control: { type: 'radio' },
             mapping: {
                 empty: [],
                 user: ['MOCK-USER-ROLE'],
@@ -93,7 +93,7 @@ mandatoryPreselectedUsers.args = {
     validate: true,
     mode: 'multiple',
     preSelectUsers: [{ id: 'fake-id-1', username: 'first-name-1 last-name-1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com', readonly: true },
-                     { id: 'fake-id-2', username: 'first-name-2 last-name-2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcd@xyz.com'}]
+                     { id: 'fake-id-2', username: 'first-name-2 last-name-2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcd@xyz.com' }]
 };
 
 export const invalidPreselectedUsers = template.bind({});
