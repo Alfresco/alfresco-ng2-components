@@ -51,8 +51,14 @@ export class IdentityGroupServiceMock implements IdentityGroupInterface {
         return of();
     }
 
-    findGroupsByName(_searchParams: IdentityGroupSearchParam): Observable<IdentityGroupModel[]> {
-        return of(mockIdentityGroups);
+    findGroupsByName(searchParams: IdentityGroupSearchParam): Observable<IdentityGroupModel[]> {
+        if (searchParams.name === '') {
+            return of([]);
+        }
+
+        return of(mockIdentityGroups.filter(group =>
+             group.name.toUpperCase().includes(searchParams.name.toUpperCase())
+        ));
     }
 
     getGroupRoles(_groupId: string): Observable<IdentityRoleModel[]> {

@@ -17,7 +17,7 @@
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CoreModule, IdentityGroupService, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { CoreModule, IdentityGroupService, mockIdentityGroups, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -57,5 +57,48 @@ const template: Story<GroupCloudComponent> = (args) => ({
 export const primary = template.bind({});
 primary.args = {
     appName: 'app',
-    title: 'title'
+    mode: 'single',
+    preSelectGroups: [],
+    readOnly: false,
+    roles: [],
+    title: 'Groups',
+    validate: false
+};
+
+export const validPreselectedGroups = template.bind({});
+validPreselectedGroups.args = {
+    ...primary.args,
+    validate: true,
+    mode: 'multiple',
+    preSelectGroups: mockIdentityGroups
+};
+
+export const mandatoryPreselectedGroups = template.bind({});
+mandatoryPreselectedGroups.args = {
+    ...primary.args,
+    validate: true,
+    mode: 'multiple',
+    preSelectGroups: [{id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [], readonly: true},
+                      {id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: []},
+                      {id: 'mock-group-id-3', name: 'Mock Group 3', path: '', subGroups: [], readonly: true}]
+};
+
+export const invalidPreselectedGroups = template.bind({});
+invalidPreselectedGroups.args = {
+    ...primary.args,
+    validate: true,
+    mode: 'multiple',
+    preSelectGroups: [{ id: 'invalid-group', name: 'invalid group' }]
+};
+
+export const adminRoleUser = template.bind({});
+adminRoleUser.args = {
+    ...primary.args,
+    roles: ['MOCK-ADMIN-ROLE']
+};
+
+export const invalidOrEmptyAppName = template.bind({});
+invalidOrEmptyAppName.args = {
+    ...primary.args,
+    appName: null
 };
