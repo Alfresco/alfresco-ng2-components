@@ -24,6 +24,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from './date-range-filter.service';
 import moment from 'moment-es6';
+import { mockFilterProperty } from '../mock/date-range-filter.mock';
 
 describe('DateRangeFilterComponent', () => {
     let component: DateRangeFilterComponent;
@@ -122,22 +123,6 @@ describe('DateRangeFilterComponent', () => {
     });
 
     it('should preselect values if filterProperty has attribute', () => {
-        const mockFilterProperty = {
-            key: 'createdDate',
-            label: 'mock-filter',
-            value: {
-                createdDateType: DateCloudFilterType.RANGE,
-                _startFrom: new Date().toISOString(),
-                _startTo: new Date().toISOString()
-            },
-            type: 'dateRange',
-            options: null,
-            attributes: {
-                dateType: 'createdDateType',
-                from: '_startFrom',
-                to: '_startTo'
-            }
-        };
         component.processFilterProperty = mockFilterProperty;
         component.ngOnInit();
         fixture.detectChanges();
