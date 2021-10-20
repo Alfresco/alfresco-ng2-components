@@ -36,7 +36,7 @@ export default {
     }
 } as Meta;
 
-const template: Story<AppListCloudComponent> = (args: AppListCloudComponent) => ({
+const template: Story<AppListCloudComponent> = (args) => ({
     props: args
 });
 
