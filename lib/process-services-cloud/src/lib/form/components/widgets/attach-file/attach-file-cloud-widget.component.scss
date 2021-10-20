@@ -1,3 +1,7 @@
+table {
+    width: 100%;
+}
+
 .adf {
     &-attach-widget-container {
         margin-bottom: 15px;
@@ -85,16 +89,17 @@
     }
 }
 
-
-.mat-column-prefixedName {
-    flex: 0 0 50% !important;
-    mat-cell {
-        &:first-of-type {
-            padding-left: 0%;
-        }
-    }
+.mat-column-name {
+    font-weight: bold;
 }
 
-.mat-column-dataType {
-    flex: 0 0 50% !important;
+.mat-column-cmOptions {
+    font-weight: bold;
+}
+
+.mat-column-action {
+    font-weight: bold;
+}
+
+.mat-line {
 }

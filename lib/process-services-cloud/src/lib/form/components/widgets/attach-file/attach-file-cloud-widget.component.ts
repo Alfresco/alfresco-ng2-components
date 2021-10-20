@@ -69,6 +69,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     rootNodeId = AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
     selectedNode: Node;
 
+    contentModelProps = [ 'cm:versionLabel', 'cm:versionType'];
+    fileData = [];
+    displayedColumns = ['name', ...this.contentModelProps, 'action'];
+
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
@@ -95,6 +99,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             const files = this.field.value || this.field.form.values[this.field.id];
             this.contentModelFormFileHandler(files[0]);
         }
+        this.fileData = this.uploadedFiles;
     }
 
     isPathStaticType(): boolean {
@@ -140,6 +145,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                 if (this.field.value.length === 1) {
                     this.contentModelFormFileHandler(selections && selections.length > 0 ? selections[0] : null);
                 }
+                this.fileData = this.uploadedFiles;
             });
     }
 
