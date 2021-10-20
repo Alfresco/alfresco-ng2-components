@@ -19,6 +19,7 @@ import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@
 import { Node } from '@alfresco/js-api';
 import { ContentService, AllowableOperationsEnum, VersionCompatibilityService } from '@alfresco/adf-core';
 import { NodeAspectService } from '../../../aspect-list/node-aspect.service';
+import { PresetConfig } from '../../interfaces/content-metadata.interfaces';
 @Component({
     selector: 'adf-content-metadata-card',
     templateUrl: './content-metadata-card.component.html',
@@ -44,11 +45,11 @@ export class ContentMetadataCardComponent implements OnChanges {
     @Input()
     displayAspect: string = null;
 
-    /** (required) Name of the metadata preset, which defines aspects
+    /** (required) Name or configuration of the metadata preset, which defines aspects
      * and their properties.
      */
     @Input()
-    preset: string;
+    preset: string | PresetConfig;
 
     /** (optional) This flag sets the metadata in read only mode
      * preventing changes.
