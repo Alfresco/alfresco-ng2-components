@@ -24,19 +24,7 @@ import { ProcessHeaderCloudComponent } from './process-header-cloud.component';
 import { ProcessHeaderCloudModule } from '../process-header-cloud.module';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
-
-const processInstanceDetailsCloudMock: ProcessInstanceCloud = {
-    appName: 'app-form-mau',
-    businessKey: 'MyBusinessKey',
-    id: '00fcc4ab-4290-11e9-b133-0a586460016a',
-    initiator: 'devopsuser',
-    lastModified: new Date(1552152187081),
-    name: 'new name',
-    parentId: '00fcc4ab-4290-11e9-b133-0a586460016b',
-    startDate: new Date(1552152187080),
-    status: 'RUNNING'
-};
+import { processInstanceDetailsCloudMock } from '../../mock/process-instance-details-cloud.mock';
 
 describe('ProcessHeaderCloudComponent', () => {
     let component: ProcessHeaderCloudComponent;
