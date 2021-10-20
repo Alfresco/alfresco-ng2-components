@@ -175,7 +175,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     hasCandidateUsersOrGroups(): boolean {
         let hasCandidateUsersOrGroups = false;
 
-        if (this.taskDetails.status === 'ASSIGNED') {
+        if (this.taskDetails?.status === 'ASSIGNED') {
             hasCandidateUsersOrGroups = this.hasCandidateUsers() || this.hasCandidateGroups();
         }
         return hasCandidateUsersOrGroups;

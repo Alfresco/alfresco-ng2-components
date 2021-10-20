@@ -21,9 +21,9 @@ import { from, Observable, of, Subject, throwError } from 'rxjs';
 import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption, TASK_ASSIGNED_STATE, TASK_CREATED_STATE } from '../models/task.model';
 import { TaskDetailsCloudModel } from '../start-task/public-api';
 import { taskDetailsContainer } from '../task-header/mocks/task-details-cloud.mock';
-import { TaskCloudInterface } from './task-cloud.interface';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
+import { TaskCloudInterface } from '../services/task-cloud.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -43,6 +43,7 @@ export class TaskCloudServiceMock implements TaskCloudInterface {
         if (taskId === 'mock-no-candidate-users') {
             return of([]);
         }
+
         return of(['user1', 'user2']);
     }
 
@@ -50,6 +51,7 @@ export class TaskCloudServiceMock implements TaskCloudInterface {
         if (taskId === 'mock-no-candidate-groups') {
             return of([]);
         }
+
         return of(['group1', 'group2']);
     }
 
