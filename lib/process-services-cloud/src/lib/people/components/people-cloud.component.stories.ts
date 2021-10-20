@@ -15,31 +15,21 @@
  * limitations under the License.
  */
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { TranslateLoaderService, TRANSLATION_PROVIDER, IdentityUserService } from '@alfresco/adf-core';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { IdentityUserService } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from './people-cloud.component';
 import { PeopleCloudModule } from '../people-cloud.module';
 import { IdentityUserServiceMock } from '../mock/identity-user.service.mock';
 import { mockUsers } from '../mock/user-cloud.mock';
+import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 
 export default {
     component: PeopleCloudComponent,
     title: 'Process Services Cloud/Components/People',
     decorators: [
         moduleMetadata({
-            imports: [PeopleCloudModule, BrowserAnimationsModule, TranslateModule.forRoot()],
+            imports: [ProcessServicesCloudStoryModule, PeopleCloudModule],
             providers: [
-                { provide: TranslateLoader, useClass: TranslateLoaderService },
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'adf-process-services-cloud',
-                        source: 'assets/adf-process-services-cloud'
-                    }
-                },
                 { provide: IdentityUserService, useClass: IdentityUserServiceMock }
             ]
         })
@@ -48,11 +38,11 @@ export default {
         appName: { table: { disable: true } },
         mode: {
             options: ['single', 'multiple'],
-            control: { type: 'radio' }
+            control: 'radio'
         },
         roles: {
             options: ['empty', 'user', 'admin'],
-            control: { type: 'radio' },
+            control: 'radio',
             mapping: {
                 empty: [],
                 user: ['MOCK-USER-ROLE'],
