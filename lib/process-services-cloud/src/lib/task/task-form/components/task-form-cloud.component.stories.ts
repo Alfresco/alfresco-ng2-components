@@ -22,7 +22,7 @@ import { TaskFormModule } from '../task-form.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
 import { FormCloudServiceMock } from '../../../form/mocks/form-cloud.service.mock';
-import { ProcessServicesCloudStoryModule } from '../../../process-services-cloud-story.module';
+import { ProcessServicesCloudStoryModule } from '../../../testing/process-services-cloud-story.module';
 
 export default {
     component: TaskFormCloudComponent,

@@ -20,7 +20,7 @@ import { TaskHeaderCloudModule } from '../task-header-cloud.module';
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
-import { ProcessServicesCloudStoryModule } from '../../../process-services-cloud-story.module';
+import { ProcessServicesCloudStoryModule } from '../../../testing/process-services-cloud-story.module';
 
 export default {
     component: TaskHeaderCloudComponent,
