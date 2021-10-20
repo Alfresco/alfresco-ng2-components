@@ -25,11 +25,13 @@ import { of } from 'rxjs';
 import { Node, VersionPaging, VersionEntry, NodeEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ContentVersionService } from './content-version.service';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
     let fixture: ComponentFixture<VersionListComponent>;
     let dialog: MatDialog;
+    let contentVersionService: ContentVersionService;
 
     const nodeId = 'test-id';
     const versionId = '1.0';
@@ -59,6 +61,7 @@ describe('VersionListComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(VersionListComponent);
         dialog = TestBed.inject(MatDialog);
+        contentVersionService = TestBed.inject(ContentVersionService);
 
         component = fixture.componentInstance;
         component.node = <Node> { id: nodeId, allowableOperations: ['update'] };
@@ -218,12 +221,12 @@ describe('VersionListComponent', () => {
                 }
             };
             spyOn(component['versionsApi'], 'listVersionHistory').and.returnValue(Promise.resolve(new VersionPaging({ list: { entries: [versionEntry] } })));
-            spyOn(component['contentApi'], 'getContentUrl').and.returnValue('the/download/url');
+            spyOn(contentVersionService.contentApi, 'getContentUrl').and.returnValue('the/download/url');
 
             fixture.detectChanges();
 
             component.downloadVersion('1.0');
-            expect(component['contentApi'].getContentUrl).toHaveBeenCalledWith(nodeId, true);
+            expect(contentVersionService.contentApi.getContentUrl).toHaveBeenCalledWith(nodeId, true);
         });
 
         it('should be able to view a version', () => {
