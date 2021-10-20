@@ -52,6 +52,11 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
+    displayableCmProperties: string[] = ['prefixedName', 'dataType'];
+    dataSourceCmProperties = [
+        {prefixedName: 'bookstore:bkname', dataType: 'd:text'},
+        {prefixedName: 'bookstore:authname', dataType: 'd:text'}];
+
     constructor(
         formService: FormService,
         private thumbnailService: ThumbnailService,

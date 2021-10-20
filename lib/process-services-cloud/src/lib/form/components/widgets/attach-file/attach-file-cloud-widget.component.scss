@@ -84,3 +84,17 @@
         }
     }
 }
+
+
+.mat-column-prefixedName {
+    flex: 0 0 50% !important;
+    mat-cell {
+        &:first-of-type {
+            padding-left: 0%;
+        }
+    }
+}
+
+.mat-column-dataType {
+    flex: 0 0 50% !important;
+}

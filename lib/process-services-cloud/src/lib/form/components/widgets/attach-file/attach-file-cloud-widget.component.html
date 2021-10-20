@@ -52,12 +52,34 @@
                     <span>{{ 'FORM.FIELD.REMOVE_FILE' | translate }}</span>
                 </button>
             </mat-menu>
+            <div class="display-cm-properties">
+                <mat-table [dataSource]="dataSourceCmProperties" class="cm-properties mat-elevation-z8">
+
+                    <!-- prefixedName Column -->
+                    <ng-container matColumnDef="prefixedName">
+                        <mat-header-cell *matHeaderCellDef> Content Model Name </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.prefixedName}} </mat-cell>
+                    </ng-container>
+
+                    <!-- dataType Column -->
+                    <ng-container matColumnDef="dataType">
+                        <mat-header-cell *matHeaderCellDef> Content Model Type </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.dataType}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayableCmProperties"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayableCmProperties"
+                             class="expandable-cm-properties"
+                             [class.expandable-cm-properties]
+                    ></mat-row>
+
+                </mat-table>
+            </div>
         </mat-list-item>
     </mat-list>
     <div *ngIf="!hasFile && field.readOnly" id="{{'adf-attach-empty-list-'+field.id}}">
         {{ 'FORM.FIELD.NO_FILE_ATTACHED' | translate }}
     </div>
-
 </div>
 
 <error-widget [error]="field.validationSummary"></error-widget>
