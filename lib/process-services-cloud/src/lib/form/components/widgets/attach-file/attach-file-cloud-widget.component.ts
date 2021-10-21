@@ -71,7 +71,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     contentModelProps = [ 'cm:versionLabel', 'cm:versionType'];
     fileData = [];
-    displayedColumns = ['name', ...this.contentModelProps, 'action'];
+    displayedColumns = ['icon', 'name', ...this.contentModelProps, 'action'];
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
