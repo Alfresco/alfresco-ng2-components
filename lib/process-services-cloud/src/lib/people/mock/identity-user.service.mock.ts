@@ -16,11 +16,20 @@
  */
 
 import { Injectable } from '@angular/core';
-import { IdentityGroupModel, IdentityRoleModel, IdentityUserModel, mockIdentityGroups } from '@alfresco/adf-core';
+import {
+    IdentityGroupModel,
+    IdentityRoleModel,
+    IdentityUserModel,
+    mockIdentityGroups,
+    IdentityJoinGroupRequestModel,
+    IdentityUserServiceInterface,
+    IdentityUserPasswordModel,
+    IdentityUserQueryCloudRequestModel,
+    IdentityUserQueryResponse
+} from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { cloudMockUser, mockRoles, mockUsers } from './user-cloud.mock';
-import { IdentityJoinGroupRequestModel, IdentityUserServiceInterface, IdentityUserPasswordModel, IdentityUserQueryCloudRequestModel, IdentityUserQueryResponse } from '../../../../../core/services/identity-user.service.interface';
 
 @Injectable({
     providedIn: 'root'
