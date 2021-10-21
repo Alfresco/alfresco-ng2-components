@@ -24,11 +24,12 @@ import { ApplicationVersionModel } from '../../models/application-version.model'
 import { processInstanceDetailsCloudMock } from './process-instance-details-cloud.mock';
 import { fakeProcessDefinitions } from '../start-process/mock/start-process.component.mock';
 import { mockAppVersions } from '../process-filters/mock/process-filters-cloud.mock';
+import { ProcessCloudInterface } from '../services/process-cloud.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ProcessCloudServiceMock {
+export class ProcessCloudServiceMock implements ProcessCloudInterface {
 
     dataChangesDetected = new Subject<ProcessInstanceCloud>();
 

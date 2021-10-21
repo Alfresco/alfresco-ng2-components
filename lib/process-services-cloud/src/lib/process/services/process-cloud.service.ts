@@ -23,11 +23,12 @@ import { ProcessInstanceCloud } from '../start-process/models/process-instance-c
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import { ApplicationVersionModel, ApplicationVersionResponseModel } from '../../models/application-version.model';
+import { ProcessCloudInterface } from './process-cloud.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ProcessCloudService extends BaseCloudService {
+export class ProcessCloudService extends BaseCloudService implements ProcessCloudInterface {
 
     dataChangesDetected = new Subject<ProcessInstanceCloud>();
 
