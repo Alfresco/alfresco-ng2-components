@@ -47,8 +47,7 @@ export default {
                 empty: [],
                 user: ['MOCK-USER-ROLE'],
                 admin: ['MOCK-ADMIN-ROLE']
-            },
-            defaultValue: []
+            }
         }
     }
 } as Meta;
