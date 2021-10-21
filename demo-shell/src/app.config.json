@@ -1205,7 +1205,8 @@
       "status",
       "sort",
       "order",
-      "processName"
+      "processName",
+      "name"
     ],
     "sortProperties": [
       "id",

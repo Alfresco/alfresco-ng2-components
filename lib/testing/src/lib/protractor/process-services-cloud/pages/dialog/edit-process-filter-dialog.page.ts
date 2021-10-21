@@ -36,7 +36,7 @@ export class EditProcessFilterDialogPage {
 
     async checkSaveButtonIsEnabled(): Promise<boolean> {
         await BrowserVisibility.waitUntilElementIsVisible(this.componentElement.$(this.saveButtonLocator));
-        return this.componentElement.element(this.saveButtonLocator).isEnabled();
+        return this.componentElement.$(this.saveButtonLocator).isEnabled();
     }
 
     async clickOnCancelButton(): Promise<void> {

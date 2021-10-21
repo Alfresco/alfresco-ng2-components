@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { browser, $$, $ } from 'protractor';
+import { browser, $$, $, by, element } from 'protractor';
 import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -267,5 +267,10 @@ export class EditProcessFilterCloudComponentPage {
         if (props.processName) { await this.setProcessName(props.processName);   }
         if (props.suspendedDateRange) { await this.setSuspendedDateRangeDropDown(props.suspendedDateRange); }
         await this.closeFilter();
+    }
+
+    async isCustomFilterNameDisplayed(name: string): Promise<boolean> {
+        const title = element(by.cssContainingText(`[id='adf-edit-process-filter-title-id']`, name));
+        return BrowserVisibility.waitUntilElementIsVisible(title);
     }
 }
