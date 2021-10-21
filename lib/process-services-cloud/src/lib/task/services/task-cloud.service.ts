@@ -24,12 +24,12 @@ import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption, TASK_ASSIGNED_STATE, TASK_CREATED_STATE } from '../models/task.model';
-import { TaskCloudInterface } from './task-cloud.interface';
+import { TaskCloudServiceInterface } from './task-cloud.service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskCloudService extends BaseCloudService implements TaskCloudInterface {
+export class TaskCloudService extends BaseCloudService implements TaskCloudServiceInterface {
 
     dataChangesDetected$ = new Subject();
 

@@ -22,14 +22,14 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { IdentityUserModel } from '../models/identity-user.model';
-import { IdentityJoinGroupRequestModel, IdentityUserInterface, IdentityUserPasswordModel, IdentityUserQueryCloudRequestModel, IdentityUserQueryResponse } from './identity-user.interface';
+import { IdentityJoinGroupRequestModel, IdentityUserServiceInterface, IdentityUserPasswordModel, IdentityUserQueryCloudRequestModel, IdentityUserQueryResponse } from './identity-user.service.interface';
 import { JwtHelperService } from './jwt-helper.service';
 import { OAuth2Service } from './oauth2.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class IdentityUserService implements IdentityUserInterface {
+export class IdentityUserService implements IdentityUserServiceInterface {
 
     constructor(
         private jwtHelperService: JwtHelperService,

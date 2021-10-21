@@ -44,7 +44,7 @@ export interface IdentityJoinGroupRequestModel {
     groupId: string;
 }
 
-export interface IdentityUserInterface {
+export interface IdentityUserServiceInterface {
     getCurrentUserInfo(): IdentityUserModel;
     findUsersByName(search: string): Observable<IdentityUserModel[]>;
     findUserByUsername(username: string): Observable<IdentityUserModel[]>;

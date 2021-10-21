@@ -20,12 +20,12 @@ import { IdentityGroupModel, IdentityRoleModel, IdentityUserModel, mockIdentityG
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { cloudMockUser, mockRoles, mockUsers } from './user-cloud.mock';
-import { IdentityJoinGroupRequestModel, IdentityUserInterface, IdentityUserPasswordModel, IdentityUserQueryCloudRequestModel, IdentityUserQueryResponse } from '../../../../../core/services/identity-user.interface';
+import { IdentityJoinGroupRequestModel, IdentityUserServiceInterface, IdentityUserPasswordModel, IdentityUserQueryCloudRequestModel, IdentityUserQueryResponse } from '../../../../../core/services/identity-user.service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class IdentityUserServiceMock implements IdentityUserInterface {
+export class IdentityUserServiceMock implements IdentityUserServiceInterface {
 
     getCurrentUserInfo(): IdentityUserModel {
         return cloudMockUser;

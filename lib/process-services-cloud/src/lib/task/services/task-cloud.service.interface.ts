@@ -21,7 +21,7 @@ import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.mo
 import { TaskPriorityOption } from '../models/task.model';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
 import { TaskDetailsCloudModel } from '../start-task/models/task-details-cloud.model';
-export interface TaskCloudInterface {
+export interface TaskCloudServiceInterface {
 
     dataChangesDetected$: Subject<unknown>;
     priorities: TaskPriorityOption[];
