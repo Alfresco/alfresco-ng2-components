@@ -17,6 +17,7 @@
 
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { DateCloudFilterType } from '../../../../..';
+import { ApplicationVersionModel } from '../../../models/application-version.model';
 
 export const fakeProcessCloudFilters = [
     {
@@ -167,3 +168,21 @@ export const fakeProcessCloudFilterWithDifferentEntries = {
         }
     }
 };
+
+const mockAppVersion1: ApplicationVersionModel = {
+    entry: {
+        id: 'mock-version-1-id',
+        name: 'mock-version-1-name',
+        version: '1'
+    }
+};
+
+const mockAppVersion2: ApplicationVersionModel = {
+    entry: {
+        id: 'mock-version-2-id',
+        name: 'mock-version-2-name',
+        version: '2'
+    }
+};
+
+export const mockAppVersions = [mockAppVersion1, mockAppVersion2];

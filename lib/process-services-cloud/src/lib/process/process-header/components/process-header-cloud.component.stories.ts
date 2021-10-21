@@ -44,5 +44,17 @@ const template: Story<ProcessHeaderCloudComponent> = (args: ProcessHeaderCloudCo
 export const primary = template.bind({});
 primary.args = {
     appName: 'app',
-    processInstanceId: 'mock'
+    processInstanceId: 'mock-process-id'
+};
+
+export const invalidOrMissingAppName = template.bind({});
+invalidOrMissingAppName.args = {
+    appName: undefined,
+    processInstanceId: 'mock-process-id'
+};
+
+export const invalidOrMissingProcessInstanceID = template.bind({});
+invalidOrMissingProcessInstanceID.args = {
+    appName: 'app',
+    processInstanceId: undefined
 };

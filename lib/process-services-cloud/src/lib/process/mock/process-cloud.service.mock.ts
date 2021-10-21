@@ -22,6 +22,8 @@ import { ProcessInstanceCloud } from '../start-process/models/process-instance-c
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import { ApplicationVersionModel } from '../../models/application-version.model';
 import { processInstanceDetailsCloudMock } from './process-instance-details-cloud.mock';
+import { fakeProcessDefinitions } from '../start-process/mock/start-process.component.mock';
+import { mockAppVersions } from '../process-filters/mock/process-filters-cloud.mock';
 
 @Injectable({
     providedIn: 'root'
@@ -44,7 +46,7 @@ export class ProcessCloudServiceMock {
 
     getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
         if (appName || appName === '') {
-            return of();
+            return of(fakeProcessDefinitions);
 
         } else {
             this.logService.error('AppName is mandatory for querying task');
@@ -54,7 +56,7 @@ export class ProcessCloudServiceMock {
 
     getApplicationVersions(appName: string): Observable<ApplicationVersionModel[]> {
         if (appName) {
-            return of();
+            return of(mockAppVersions);
         } else {
             this.logService.error('AppName is mandatory for querying the versions of an application');
             return throwError('AppName not configured');
