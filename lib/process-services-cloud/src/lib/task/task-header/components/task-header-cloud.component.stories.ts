@@ -39,10 +39,8 @@ export default {
     }
 } as Meta;
 
-const template: Story<TaskHeaderCloudComponent> = (args) => ({
-    props: {
-        ...args
-    }
+const template: Story<TaskHeaderCloudComponent> = (args: TaskHeaderCloudComponent) => ({
+    props: args
 });
 
 export const assignedAndEditable = template.bind({});

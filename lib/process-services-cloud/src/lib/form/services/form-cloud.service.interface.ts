@@ -22,7 +22,7 @@ import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { FormContent } from '../../services/form-fields.interfaces';
 import { Observable } from 'rxjs';
 
-export interface FormCloudInterface {
+export interface FormCloudServiceInterface {
 
     uploadApi: UploadApi;
 

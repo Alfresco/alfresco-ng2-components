@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { Pagination } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -23,36 +22,14 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { IdentityUserModel } from '../models/identity-user.model';
+import { IdentityJoinGroupRequestModel, IdentityUserServiceInterface, IdentityUserPasswordModel, IdentityUserQueryCloudRequestModel, IdentityUserQueryResponse } from './identity-user.service.interface';
 import { JwtHelperService } from './jwt-helper.service';
 import { OAuth2Service } from './oauth2.service';
-
-export interface IdentityUserQueryResponse {
-
-    entries: IdentityUserModel[];
-    pagination: Pagination;
-}
-
-export interface IdentityUserPasswordModel {
-    type?: string;
-    value?: string;
-    temporary?: boolean;
-}
-
-export interface IdentityUserQueryCloudRequestModel {
-    first: number;
-    max: number;
-}
-
-export interface IdentityJoinGroupRequestModel {
-    realm: string;
-    userId: string;
-    groupId: string;
-}
 
 @Injectable({
     providedIn: 'root'
 })
-export class IdentityUserService {
+export class IdentityUserService implements IdentityUserServiceInterface {
 
     constructor(
         private jwtHelperService: JwtHelperService,

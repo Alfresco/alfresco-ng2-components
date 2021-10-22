@@ -23,12 +23,12 @@ import { TaskDetailsCloudModel } from '../start-task/public-api';
 import { taskDetailsContainer } from '../task-header/mocks/task-details-cloud.mock';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
-import { TaskCloudInterface } from '../services/task-cloud.interface';
+import { TaskCloudServiceInterface } from '../services/task-cloud.service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskCloudServiceMock implements TaskCloudInterface {
+export class TaskCloudServiceMock implements TaskCloudServiceInterface {
 
     currentUserMock = 'AssignedTaskUser';
     dataChangesDetected$ = new Subject();
