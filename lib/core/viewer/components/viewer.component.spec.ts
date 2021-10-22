@@ -546,8 +546,7 @@ describe('ViewerComponent', () => {
         spyOn(component['nodesApi'], 'getNode').and.returnValues(
             Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } }))
         );
-        spyOn(component['contentApi'], 'getContentUrl').and.returnValues('http://iam-fake.url');
-        spyOn(component, 'getViewerTypeByExtension').and.returnValue('pdf');
+        spyOn(component, 'getViewerTypeByExtension').and.returnValue('jpg');
 
         component.urlFile = null;
         component.displayName = null;
