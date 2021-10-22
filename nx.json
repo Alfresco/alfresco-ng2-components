@@ -49,6 +49,9 @@
     },
     "cli": {
       "tags": ["scope:cli", "type:lib"]
+    },
+    "stories": {
+      "tags": ["scope:stories", "type:lib"]
     }
   }
 }
