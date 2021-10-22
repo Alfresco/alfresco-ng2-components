@@ -53,7 +53,7 @@ export class EditProcessFilterCloudComponentPage {
     private locatorCompletedDateRangeDropdown = $(`mat-select[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`);
 
     private locatorSuspendedDateRangeWithin = $(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`);
-    private content = TestElement.byCss('adf-cloud-edit-process-filter mat-expansion-panel [style="visibility: visible;"]');
+    private content = TestElement.byCss('adf-cloud-edit-process-filter mat-expansion-panel [style*="visible"]');
 
     appNameDropdown = new DropdownPage(this.locatorAppNameDropdown);
     statusDropdown = new DropdownPage(this.locatorStatusDropdown);
