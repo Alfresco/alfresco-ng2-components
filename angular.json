@@ -737,6 +737,46 @@
           }
         }
       }
+    },
+    "stories": {
+      "root": "lib/stories",
+      "sourceRoot": "lib/stories",
+      "projectType": "library",
+      "architect": {
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "port": 4400,
+            "config": {
+              "configFolder": "lib/stories/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "outputPath": "dist/storybook/stories",
+            "config": {
+              "configFolder": "lib/stories/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
     }
   },
   "defaultProject": "demoshell",
