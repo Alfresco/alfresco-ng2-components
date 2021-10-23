@@ -19,6 +19,7 @@ import { Locator, by, element, protractor, $, $$, ElementFinder } from 'protract
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
+import { TestElement } from '../../core/test-element';
 
 export class PeopleCloudComponentPage {
 
@@ -39,7 +40,7 @@ export class PeopleCloudComponentPage {
     }
 
     async clearAssigneeFromChip(username: string): Promise<void> {
-        const assigneeChipRemoveIcon = $(`[data-automation-id="adf-people-cloud-chip-remove-icon-${username}"]`);
+        const assigneeChipRemoveIcon = TestElement.byCss(`[data-automation-id="adf-people-cloud-chip-remove-icon-${username}"]`);
         await assigneeChipRemoveIcon.click();
     }
 
