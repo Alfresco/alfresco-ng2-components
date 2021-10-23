@@ -18,6 +18,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { NodesApiService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
+import { PresetConfig } from '@alfresco/adf-content-services';
 
 /* tslint:disable:component-selector  */
 
@@ -52,9 +53,9 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
     @Input()
     multi;
 
-    /** Name of the metadata preset, which defines aspects and their properties */
+    /** Name or configuration of the metadata preset, which defines aspects and their properties */
     @Input()
-    preset: string;
+    preset: string | PresetConfig;
 
     /** Toggles whether the metadata properties should be shown */
     @Input()

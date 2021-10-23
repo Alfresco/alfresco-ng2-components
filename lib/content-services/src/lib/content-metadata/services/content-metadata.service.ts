@@ -21,7 +21,7 @@ import { BasicPropertiesService } from './basic-properties.service';
 import { Observable, of, iif, Subject } from 'rxjs';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';
 import { CardViewItem } from '@alfresco/adf-core';
-import { CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
+import { CardViewGroup, OrganisedPropertyGroup, PresetConfig } from '../interfaces/content-metadata.interfaces';
 import { ContentMetadataConfigFactory } from './config/content-metadata-config.factory';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { map, switchMap } from 'rxjs/operators';
@@ -52,14 +52,20 @@ export class ContentMetadataService {
         return this.contentTypePropertyService.openContentTypeDialogConfirm(changedProperties.nodeType);
     }
 
-    getGroupedProperties(node: Node, presetName: string = 'default'): Observable<CardViewGroup[]> {
+    getGroupedProperties(node: Node, preset: string | PresetConfig = 'default'): Observable<CardViewGroup[]> {
         let groupedProperties = of([]);
 
         if (node.aspectNames) {
-            const contentMetadataConfig = this.contentMetadataConfigFactory.get(presetName),
-                groupNames = node.aspectNames
-                    .concat(node.nodeType)
-                    .filter((groupName) => contentMetadataConfig.isGroupAllowed(groupName));
+            let contentMetadataConfig;
+            if (typeof preset === 'string') {
+                contentMetadataConfig = this.contentMetadataConfigFactory.get(preset);
+            } else {
+                contentMetadataConfig = this.contentMetadataConfigFactory.createConfig(preset);
+            }
+
+            const groupNames = node.aspectNames
+                .concat(node.nodeType)
+                .filter((groupName) => contentMetadataConfig.isGroupAllowed(groupName));
 
             if (groupNames.length > 0) {
                 groupedProperties = this.propertyDescriptorsService.load(groupNames).pipe(

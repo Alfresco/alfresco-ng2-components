@@ -28,4 +28,6 @@ export * from './services/config/indifferent-config.service';
 export * from './services/config/layout-oriented-config.service';
 export * from './services/config/aspect-oriented-config.service';
 
+export * from './interfaces/content-metadata.interfaces';
+
 export * from './content-metadata.module';
