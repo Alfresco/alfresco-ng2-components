@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { TranslateModule } from '@ngx-translate/core';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CoreModule } from '../core.module';
+import { CoreStoryModule } from '../testing/core.story.module';
 import { ToolbarComponent } from './toolbar.component';
 import { ToolbarModule } from './toolbar.module';
 
@@ -26,7 +25,7 @@ export default {
     title: 'Core/Components/Toolbar',
     decorators: [
         moduleMetadata({
-            imports: [ToolbarModule, TranslateModule.forRoot(), CoreModule.forRoot()]
+            imports: [CoreStoryModule, ToolbarModule]
         })
     ],
     argTypes: {
