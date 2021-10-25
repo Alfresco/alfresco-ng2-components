@@ -90,7 +90,8 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.DROPDOWN,
                 value: [],
                 hasEmptyValue: true,
-                required: true
+                required: true,
+                selectionType: 'multiple'
             });
 
             field.emptyOption = <FormFieldOption> { id: 'empty' };
