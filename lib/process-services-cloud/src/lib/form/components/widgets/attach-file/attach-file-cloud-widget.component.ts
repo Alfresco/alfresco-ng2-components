@@ -74,6 +74,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
+    displayableCMProperties = [];
+    displayedColumns = ['icon', 'fileName', 'action'];
 
     constructor(
         formService: FormService,
@@ -95,6 +97,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             const files = this.field.value || this.field.form.values[this.field.id];
             this.contentModelFormFileHandler(files[0]);
         }
+        this.displayableCMProperties = this.field.params.displayableCMProperties?.
+            map(property => ({ name: property['name'], title: property['title'], prefixedName: property['prefixedName']}))
+            ?? [];
+        this.displayedColumns.splice(2, 0, ...this.displayableCMProperties.map(property => property['name']));
     }
 
     isPathStaticType(): boolean {
@@ -258,6 +264,14 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     isValidAlias(alias: string): boolean {
         return alias && AttachFileCloudWidgetComponent.VALID_ALIAS.includes(alias);
+    }
+
+    getColumnValue(row, columnName) {
+        if (!row.properties[columnName.prefixedName]) {
+            const fieldProperty = this.field.params.displayableCMProperties?.find(property => property.name === columnName.name);
+            return fieldProperty.defaultValue ? fieldProperty.defaultValue : '--' ;
+        }
+        return row.properties[columnName.prefixedName] ? row.properties[columnName.prefixedName] : '--' ;
     }
 
     ngOnDestroy() {

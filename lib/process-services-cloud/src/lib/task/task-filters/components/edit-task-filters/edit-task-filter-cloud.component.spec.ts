@@ -40,6 +40,7 @@ import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model'
 import { TaskFilterCloudModel } from '../../models/filter-cloud.model';
 import { PeopleCloudModule } from '../../../../people/people-cloud.module';
 import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 describe('EditTaskFilterCloudComponent', () => {
     let component: EditTaskFilterCloudComponent;
@@ -67,7 +68,8 @@ describe('EditTaskFilterCloudComponent', () => {
             TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule,
             TaskFiltersCloudModule,
-            PeopleCloudModule
+            PeopleCloudModule,
+            MatIconTestingModule
         ],
         providers: [
             MatDialog,

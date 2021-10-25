@@ -54,7 +54,9 @@ import {
     processVariables,
     mockAllFileSourceWithRenamedFolderVariablePathType,
     allSourceParamsWithRelativePath,
-    fakeLocalPhysicalRecordResponse
+    fakeLocalPhysicalRecordResponse,
+    displayableCMParams,
+    fakeLocalPngHavingCMProperties
 } from '../../../mocks/attach-file-cloud-widget.mock';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -195,6 +197,37 @@ describe('AttachFileCloudWidgetComponent', () => {
         widget.ngOnDestroy();
 
         expect(contentNodeSelectorPanelService.customModels).toEqual([]);
+    });
+
+    describe('Upload widget with displayable ContentModel properties', () => {
+
+        it('should display CM Properties if the file contains value', async() => {
+            createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [fakeLocalPngHavingCMProperties], displayableCMParams);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#file-1155-icon')).not.toBeNull();
+            expect(element.querySelector('#fileProperty-1155-name').textContent).toBe('Alex');
+            expect(element.querySelector('#fileProperty-1155-age').textContent).toBe('34');
+        });
+
+        it('should display defaultValue if the file does not contain value for respective displayableCMProperties', async() => {
+            createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [fakeLocalPngResponse], displayableCMParams);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#fileProperty-1155-name').textContent).toBe('Bob');
+            expect(element.querySelector('#fileProperty-1155-age').textContent).toBe('--');
+        });
+
+        it('should not display CM Properties in table if the field does not contain displayableCMProperties', async() => {
+            createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [fakeLocalPngHavingCMProperties], allSourceParams);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#fileProperty-1155-name')).toBeNull();
+            expect(element.querySelector('#fileProperty-1155-age')).toBeNull();
+        });
     });
 
     describe('destinationFolderPath', () => {

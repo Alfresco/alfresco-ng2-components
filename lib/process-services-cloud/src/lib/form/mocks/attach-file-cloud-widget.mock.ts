@@ -69,6 +69,32 @@ export const fakeLocalPhysicalRecordResponse = {
     }
 };
 
+export const fakeLocalPngHavingCMProperties = {
+    id: 1155,
+    nodeId: 1155,
+    name: 'a_png_file.png',
+    created: '2017-07-25T17:17:37.099Z',
+    createdBy: {
+        id: 1001,
+        firstName: 'Admin',
+        lastName: 'admin',
+        email: 'admin'
+    },
+    relatedContent: false,
+    contentAvailable: true,
+    link: false,
+    mimeType: null,
+    simpleType: 'image',
+    previewStatus: 'queued',
+    thumbnailStatus: 'queued',
+    properties: {
+        'pfx:property_one': 'testValue',
+        'pfx:property_two': true,
+        'a:name': 'Alex',
+        'a:age': '34'
+    }
+};
+
 export const onlyLocalParams = {
     fileSource: {
         serviceId: 'local-file'
@@ -115,6 +141,49 @@ export const allSourceParams = {
             type: DestinationFolderPathType.STATIC_TYPE
         }
     }
+};
+
+export const displayableCMParams = {
+    fileSource: {
+        name: 'all file sources',
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        destinationFolderPath: {
+            value: '-root-/myfiles',
+            type: DestinationFolderPathType.STATIC_TYPE
+        }
+    },
+    displayableCMProperties: [
+        {
+            'name': 'name',
+            'prefixedName': 'a:name',
+            'title': '',
+            'description': '',
+            'dataType': 'd:text',
+            'multiValued': false,
+            'mandatory': false,
+            'defaultValue': 'Bob',
+            'mandatoryEnforced': false,
+            'indexed': false,
+            'facetable': 'FALSE',
+            'indexTokenisationMode': '',
+            'constraints': []
+        },
+        {
+            'name': 'age',
+            'prefixedName': 'a:age',
+            'title': 'Age',
+            'description': '',
+            'dataType': 'd:text',
+            'multiValued': false,
+            'mandatory': false,
+            'defaultValue': '',
+            'mandatoryEnforced': false,
+            'indexed': false,
+            'facetable': 'FALSE',
+            'indexTokenisationMode': '',
+            'constraints': []
+        }
+    ]
 };
 
 export const allSourceWithStringTypeEmptyValue = {
