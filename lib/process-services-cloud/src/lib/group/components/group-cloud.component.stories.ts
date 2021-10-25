@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CoreModule, IdentityGroupService, mockIdentityGroups, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { IdentityGroupService, mockIdentityGroups } from '@alfresco/adf-core';
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { IdentityGroupServiceMock } from '../mock/identity-group.service.mock';
+import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 
 export default {
     component: GroupCloudComponent,
@@ -29,16 +28,8 @@ export default {
     decorators: [
         moduleMetadata({
             declarations: [],
-            imports: [GroupCloudModule, BrowserAnimationsModule, TranslateModule.forRoot(), CoreModule.forRoot()],
+            imports: [ProcessServicesCloudStoryModule, GroupCloudModule],
             providers: [
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'adf-process-services-cloud',
-                        source: 'assets/adf-process-services-cloud'
-                    }
-                },
                 { provide: IdentityGroupService, useClass: IdentityGroupServiceMock }
             ]
         })
@@ -47,25 +38,22 @@ export default {
         appName: { table: { disable: true } },
         mode: {
             options: ['single', 'multiple'],
-            control: { type: 'radio' }
+            control: 'radio'
         },
         roles: {
             options: ['empty', 'user', 'admin'],
-            control: { type: 'radio' },
+            control: 'radio',
             mapping: {
                 empty: [],
                 user: ['MOCK-USER-ROLE'],
                 admin: ['MOCK-ADMIN-ROLE']
-            },
-            defaultValue: []
+            }
         }
     }
 } as Meta;
 
-const template: Story<GroupCloudComponent> = (args) => ({
-    props: {
-        ...args
-    }
+const template: Story<GroupCloudComponent> = (args: GroupCloudComponent) => ({
+    props: args
 });
 
 export const primary = template.bind({});
@@ -93,8 +81,8 @@ mandatoryPreselectedGroups.args = {
     validate: true,
     mode: 'multiple',
     preSelectGroups: [{ id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: [], readonly: true },
-                      { id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] },
-                      { id: 'mock-group-id-3', name: 'Mock Group 3', path: '', subGroups: [], readonly: true }]
+    { id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: [] },
+    { id: 'mock-group-id-3', name: 'Mock Group 3', path: '', subGroups: [], readonly: true }]
 };
 
 export const invalidPreselectedGroups = template.bind({});
@@ -114,5 +102,5 @@ adminRoleGroups.args = {
 export const invalidOrEmptyAppName = template.bind({});
 invalidOrEmptyAppName.args = {
     ...primary.args,
-    appName: null
+    appName: undefined
 };
