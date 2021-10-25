@@ -87,10 +87,12 @@
 
 table {
     width: 100%;
+    border: 1px solid;
+    box-shadow: none;
     .adf-datatable-selected {
         padding: 6px;
     }
-    
+
     th {
         font-weight: bold;
         padding-right: 0px !important;
@@ -112,5 +114,5 @@ table {
     td.mat-footer-cell:last-of-type {
         width: 18% !important;
     }
-     
+
 }
