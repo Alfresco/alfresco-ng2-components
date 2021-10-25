@@ -164,7 +164,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.maxValue = json.maxValue;
             this.regexPattern = json.regexPattern;
             this.options = <FormFieldOption[]> json.options || [];
-            this.hasEmptyValue = <boolean> json.hasEmptyValue;
+            this.hasEmptyValue = <boolean> json.hasEmptyValue ?? !!this.options.find(({ id }) => id === 'empty');
             this.className = json.className;
             this.optionType = json.optionType;
             this.params = <FormFieldMetadata> json.params || {};
@@ -370,7 +370,6 @@ export class FormFieldModel extends FormWidgetModel {
                         this.form.values[this.id] = entry[0];
                     }
                 }
-
                 break;
             case FormFieldTypes.RADIO_BUTTONS:
                 /*
