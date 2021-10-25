@@ -1,6 +1,10 @@
+
 adf-layout-header .mat-toolbar-single-row {
 
-    color: var(--theme-primary-color-default-contrast) !important;
+    &:not(.adf-custom-text-color) {
+        color: var(--theme-primary-color-default-contrast) !important;
+    }
+
     position: relative;
     padding: 0 24px;
 

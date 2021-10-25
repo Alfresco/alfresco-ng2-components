@@ -101,6 +101,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     enableRedirect = true;
     color: ThemePalette = 'primary';
     title = 'APP_LAYOUT.APP_NAME';
+    headerTextColor = '';
     logo: string;
     redirectUrl: string | any[] = ['/home'];
     tooltip = 'APP_LAYOUT.APP_NAME';
@@ -126,6 +127,10 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         this.headerService.title
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(title => this.title = title);
+
+        this.headerService.headerTextColor
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(headerTextColor => this.headerTextColor = headerTextColor);
 
         this.headerService.logo
             .pipe(takeUntil(this.onDestroy$))

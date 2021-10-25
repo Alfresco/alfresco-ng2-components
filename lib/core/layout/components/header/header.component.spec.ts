@@ -93,6 +93,22 @@ describe('HeaderLayoutComponent', () => {
             expect(logoAnchor.title).toEqual('logo title');
         });
 
+        it('should have custom color text class when textColor is set', () => {
+            component.textColor = '#eb348f';
+            fixture.detectChanges();
+
+            const toolbar = fixture.nativeElement.querySelector('.adf-custom-color-text');
+            expect(toolbar).toBeTruthy();
+        });
+
+        it('should not have custom color text class when textColor is not set', () => {
+            component.textColor = undefined;
+            fixture.detectChanges();
+
+            const toolbar = fixture.nativeElement.querySelector('.adf-custom-color-text');
+            expect(toolbar).toBeFalsy();
+        });
+
         it('test click on sidenav button', () => {
             component.showSidenavToggle = true;
             fixture.detectChanges();

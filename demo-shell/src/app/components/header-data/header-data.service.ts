@@ -28,6 +28,7 @@ export class HeaderDataService {
 
     @Output() hideMenu = new EventEmitter<boolean>();
     @Output() color = new EventEmitter<ThemePalette>();
+    @Output() headerTextColor = new EventEmitter<string>();
     @Output() title = new EventEmitter<string>();
     @Output() logo = new EventEmitter<string>();
     @Output() redirectUrl = new EventEmitter<string | any[]>();
@@ -51,6 +52,10 @@ export class HeaderDataService {
 
     changeLogo(logoPath: string) {
         this.logo.emit(logoPath);
+    }
+
+    changeHeaderTextColor(color: string): void {
+        this.headerTextColor.emit(color);
     }
 
     changeRedirectUrl(redirectUrl: string | any[]) {
