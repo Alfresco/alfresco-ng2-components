@@ -45,3 +45,9 @@ primary.args = {
     title: 'Alfresco Storybook App',
     color: 'primary'
 };
+
+export const invalidOrMissingColor = template.bind({});
+invalidOrMissingColor.args = {
+    title: 'Alfresco Storybook App',
+    color: undefined
+};
