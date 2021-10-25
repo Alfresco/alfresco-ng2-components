@@ -460,16 +460,17 @@ describe('FormFieldModel', () => {
         const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
             options: [
-                {id: 'fake-option-1', name: 'fake label 1'},
+                {id: 'empty', name: 'Choose option...'},
                 {id: 'fake-option-2', name: 'fake label 2'},
                 {id: 'fake-option-3', name: 'fake label 3'}
             ],
             value: 'fake-option-2'
         });
         expect(field.getOptionName()).toBe('fake label 2');
+        expect(field.hasEmptyValue).toBe(true);
     });
 
-    it('should parse multiple options', () => {
+    it('should parse dropdown with multiple options', () => {
         const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
             options: [
@@ -481,6 +482,7 @@ describe('FormFieldModel', () => {
             selectionType: 'multiple'
         });
         expect(field.hasMultipleValues).toBe(true);
+        expect(field.hasEmptyValue).toBe(false);
     });
 
     it('should parse and resolve radio button value', () => {

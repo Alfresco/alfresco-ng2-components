@@ -164,6 +164,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.maxValue = json.maxValue;
             this.regexPattern = json.regexPattern;
             this.options = <FormFieldOption[]> json.options || [];
+            this.hasEmptyValue = <boolean> json.hasEmptyValue;
             this.className = json.className;
             this.optionType = json.optionType;
             this.params = <FormFieldMetadata> json.params || {};
@@ -211,9 +212,12 @@ export class FormFieldModel extends FormWidgetModel {
             }
         }
 
-        if (this.options && this.options.length > 0) {
-            const emptyOption = this.options.find(({ id }) => id === 'empty');
+        const emptyOption = Array.isArray(this.options) ? this.options.find(({ id }) => id === 'empty') : undefined;
+        if (this.hasEmptyValue === undefined) {
             this.hasEmptyValue = json?.hasEmptyValue ?? !!emptyOption;
+        }
+
+        if (this.options && this.options.length > 0 && this.hasEmptyValue) {
             this.emptyOption = emptyOption;
         }
 

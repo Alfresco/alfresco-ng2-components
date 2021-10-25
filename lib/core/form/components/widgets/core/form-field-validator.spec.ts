@@ -71,6 +71,9 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,
                 value: '<empty>',
+                options: [
+                    {id: 'empty', name: 'Choose option...'}
+                ],
                 hasEmptyValue: true,
                 required: true
             });
