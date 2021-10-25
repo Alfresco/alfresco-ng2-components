@@ -10,7 +10,8 @@
                     (ngModelChange)="onFieldChanged(field)"
                     [matTooltip]="field.tooltip"
                     matTooltipPosition="above"
-                    matTooltipShowDelay="1000">
+                    matTooltipShowDelay="1000"
+                    [multiple]="field.hasMultipleValues">
             <mat-option *ngFor="let opt of field.options"
                         [value]="getOptionValue(opt, field.value)"
                         [id]="opt.id">{{opt.name}}

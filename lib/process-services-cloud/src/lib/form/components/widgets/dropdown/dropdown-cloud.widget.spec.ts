@@ -380,4 +380,60 @@ describe('DropdownCloudWidgetComponent', () => {
             });
         });
     });
+
+    describe('multiple selection', () => {
+
+        it('should show preselected option', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'dropdown-id',
+                name: 'date-name',
+                type: 'dropdown-cloud',
+                readOnly: 'false',
+                options: fakeOptionList,
+                selectionType: 'multiple',
+                value: [
+                    { id: 'opt_1', name: 'option_1' },
+                    { id: 'opt_2', name: 'option_2' }
+                ]
+            });
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const selectedPlaceHolder = fixture.debugElement.query(By.css('.mat-select-value-text span'));
+            expect(selectedPlaceHolder.nativeElement.getInnerHTML()).toEqual('option_1, option_2');
+
+            openSelect('#dropdown-id');
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const options = fixture.debugElement.queryAll(By.css('.mat-selected span'));
+            expect(Array.from(options).map(({ nativeElement }) => nativeElement.getInnerHTML().trim()))
+                .toEqual(['option_1', 'option_2']);
+        });
+
+        it('should support multiple options', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'dropdown-id',
+                name: 'date-name',
+                type: 'dropdown-cloud',
+                readOnly: 'false',
+                selectionType: 'multiple',
+                options: fakeOptionList
+            });
+            fixture.detectChanges();
+            openSelect('#dropdown-id');
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const optionOne = fixture.debugElement.query(By.css('[id="opt_1"]'));
+            const optionTwo = fixture.debugElement.query(By.css('[id="opt_2"]'));
+            optionOne.triggerEventHandler('click', null);
+            optionTwo.triggerEventHandler('click', null);
+            expect(widget.field.value).toEqual([
+                { id: 'opt_1', name: 'option_1' },
+                { id: 'opt_2', name: 'option_2' }
+            ]);
+        });
+    });
 });

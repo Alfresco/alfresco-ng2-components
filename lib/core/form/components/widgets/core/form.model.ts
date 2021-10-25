@@ -385,7 +385,7 @@ export class FormModel {
 
     addValuesNotPresent(valuesToSetIfNotPresent: FormValues) {
         this.getFormFields().forEach(field => {
-            if (valuesToSetIfNotPresent[field.id] && (!this.values[field.id] || this.isEmptyDropdownOption(field.id))) {
+            if (valuesToSetIfNotPresent[field.id] && (!this.values[field.id] || this.isValidDropDown(field.id))) {
                 this.values[field.id] = valuesToSetIfNotPresent[field.id];
                 field.json.value = this.values[field.id];
                 field.value = field.parseValue(field.json);
@@ -393,8 +393,12 @@ export class FormModel {
         });
     }
 
-    private isEmptyDropdownOption(key: string): boolean {
-        if (this.getFieldById(key) && (this.getFieldById(key).type === FormFieldTypes.DROPDOWN)) {
+    private isValidDropDown(key: string): boolean {
+        const field = this.getFieldById(key);
+        if (field.type === FormFieldTypes.DROPDOWN) {
+            if (field.hasMultipleValues) {
+                return Array.isArray(this.values[key]);
+            }
             return typeof this.values[key] === 'string' ? this.values[key] === 'empty' : Object.keys(this.values[key]).length === 0;
         }
         return false;

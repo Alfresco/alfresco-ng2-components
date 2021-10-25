@@ -469,6 +469,20 @@ describe('FormFieldModel', () => {
         expect(field.getOptionName()).toBe('fake label 2');
     });
 
+    it('should parse multiple options', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.DROPDOWN,
+            options: [
+                {id: 'fake-option-1', name: 'fake label 1'},
+                {id: 'fake-option-2', name: 'fake label 2'},
+                {id: 'fake-option-3', name: 'fake label 3'}
+            ],
+            value: [],
+            selectionType: 'multiple'
+        });
+        expect(field.hasMultipleValues).toBe(true);
+    });
+
     it('should parse and resolve radio button value', () => {
         const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.RADIO_BUTTONS,

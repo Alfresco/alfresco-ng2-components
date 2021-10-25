@@ -80,11 +80,31 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         });
     }
 
-    compareDropdownValues(opt1: string, opt2: FormFieldOption | string): boolean {
-        return opt1 && opt2 && typeof opt2 !== 'string' ? (opt1 === opt2.id || opt1 === opt2.name) : opt1 === opt2;
+    compareDropdownValues(opt1: FormFieldOption | string, opt2: FormFieldOption | string): boolean {
+        if (!opt1 || !opt2) {
+            return false;
+        }
+
+        if (typeof opt1 === 'string' && typeof opt2 === 'object') {
+            return opt1 === opt2.id || opt1 === opt2.name;
+        }
+
+        if (typeof opt1 === 'object' && typeof opt2 === 'string') {
+            return opt1.id === opt2 || opt1.name === opt2;
+        }
+
+        if (typeof opt1 === 'object' && typeof opt2 === 'object') {
+            return  opt1.id === opt2.id && opt1.name === opt2.name;
+        }
+
+        return opt1 === opt2;
     }
 
-    getOptionValue(option: FormFieldOption, fieldValue: string): string {
+    getOptionValue(option: FormFieldOption, fieldValue: string): string | FormFieldOption {
+        if (this.field.hasMultipleValues) {
+            return option;
+        }
+
         let optionValue: string = '';
         if (option.id === 'empty' || option.name !== fieldValue) {
             optionValue = option.id;
