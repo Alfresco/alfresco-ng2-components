@@ -23,7 +23,7 @@ import { TestElement } from '../../test-element';
 
 export class DatePickerCalendarPage {
 
-    datePicker = $('#mat-datepicker-0');
+    datePicker = $('mat-calendar[id*="mat-datepicker"]');
     nextMonthButton = $('button[class*="mat-calendar-next-button"]');
     previousMonthButton = $('button[class*="mat-calendar-previous-button"]');
     todayDate = TestElement.byCss('div.mat-calendar-body-today');
