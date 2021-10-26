@@ -15,26 +15,20 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
-import { DisplayableCMProperties } from './displayable-cm-properties.model';
-import { FormFieldFileSource } from './form-field-file-source';
-
-export interface FormFieldMetadata {
-    [key: string]: any;
-    fileSource?: FormFieldFileSource;
-    link?: boolean;
-    field?: {
-        id: string;
-        name: string;
-        type: string;
-    };
-    responseVariable?: boolean;
-    menuOptions?: {
-        show?: boolean,
-        download?: boolean,
-        retrieveMetadata?: boolean,
-        remove?: boolean
-    };
-    displayableCMProperties?: DisplayableCMProperties[];
+export interface DisplayableCMProperties {
+    name?: string,
+    prefixedName?: string,
+    title?: string,
+    description?: string,
+    dataType?: string,
+    multiValued?: boolean,
+    mandatory?: boolean,
+    defaultValue?: string,
+    mandatoryEnforced?: boolean,
+    indexed?: boolean,
+    facetable?: string,
+    indexTokenisationMode?: string,
+    constraints?: []
 }
