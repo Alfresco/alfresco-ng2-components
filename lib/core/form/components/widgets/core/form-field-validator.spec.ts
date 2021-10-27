@@ -71,6 +71,9 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,
                 value: '<empty>',
+                options: [
+                    {id: 'empty', name: 'Choose option...'}
+                ],
                 hasEmptyValue: true,
                 required: true
             });
@@ -80,6 +83,22 @@ describe('FormFieldValidator', () => {
 
             field.value = '<non-empty>';
             expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should fail for dropdown with zero selection', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                value: [],
+                hasEmptyValue: true,
+                required: true,
+                selectionType: 'multiple'
+            });
+
+            field.emptyOption = <FormFieldOption> { id: 'empty' };
+            expect(validator.validate(field)).toBeFalsy();
+
+            field.value = [];
+            expect(validator.validate(field)).toBe(false);
         });
 
         it('should fail for radio buttons', () => {

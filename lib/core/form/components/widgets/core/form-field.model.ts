@@ -71,6 +71,7 @@ export class FormFieldModel extends FormWidgetModel {
     enableFractions: boolean = false;
     currency: string = null;
     dateDisplayFormat: string = this.defaultDateFormat;
+    selectionType: 'single' | 'multiple' = null;
 
     // container model members
     numberOfColumns: number = 1;
@@ -113,6 +114,10 @@ export class FormFieldModel extends FormWidgetModel {
 
     get isValid(): boolean {
         return this._isValid;
+    }
+
+    get hasMultipleValues() {
+        return this.selectionType === 'multiple';
     }
 
     markAsInvalid() {
@@ -172,6 +177,7 @@ export class FormFieldModel extends FormWidgetModel {
             this._value = this.parseValue(json);
             this.validationSummary = new ErrorMessageModel();
             this.tooltip = json.tooltip;
+            this.selectionType = json.selectionType;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;
@@ -206,8 +212,13 @@ export class FormFieldModel extends FormWidgetModel {
             }
         }
 
-        if (this.hasEmptyValue && this.options && this.options.length > 0) {
-            this.emptyOption = this.options[0];
+        const emptyOption = Array.isArray(this.options) ? this.options.find(({ id }) => id === 'empty') : undefined;
+        if (this.hasEmptyValue === undefined) {
+            this.hasEmptyValue = json?.hasEmptyValue ?? !!emptyOption;
+        }
+
+        if (this.options && this.options.length > 0 && this.hasEmptyValue) {
+            this.emptyOption = emptyOption;
         }
 
         this.updateForm();
@@ -291,6 +302,10 @@ export class FormFieldModel extends FormWidgetModel {
                     }
                 }
             }
+
+            if (this.hasMultipleValues) {
+                value = Array.isArray(json.value) ? json.value : [];
+            }
         }
 
         /*
@@ -344,9 +359,17 @@ export class FormFieldModel extends FormWidgetModel {
                  This is needed due to Activiti reading dropdown values as string
                  but saving back as object: { id: <id>, name: <name> }
                  */
-                if (this.value === 'empty' || this.value === '') {
-                    this.form.values[this.id] = {};
-                } else {
+                if (Array.isArray(this.value)) {
+                    this.form.values[this.id] = this.value;
+                    break;
+                }
+
+                if (typeof this.value === 'string') {
+                    if (this.value === 'empty' || this.value === '') {
+                        this.form.values[this.id] = {};
+                        break;
+                    }
+
                     const entry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
                     if (entry.length > 0) {
                         this.form.values[this.id] = entry[0];

@@ -35,7 +35,7 @@ import {
     tabInvalidFormVisibility,
     fakeFormChainedVisibilityJson,
     fakeFormCheckBoxVisibilityJson
-} from 'core/mock/form/widget-visibility.service.mock';
+} from '../../mock/form/widget-visibility.service.mock';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -61,10 +61,6 @@ describe('WidgetVisibilityService', () => {
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
-    });
-
-    describe('should be able to evaluate logic operations', () => {
-
     });
 
     describe('should be able to evaluate next condition operations', () => {
@@ -142,6 +138,26 @@ describe('WidgetVisibilityService', () => {
         it('should return undefined for invalid operation', () => {
             booleanResult = service.evaluateCondition(null, null, undefined);
             expect(booleanResult).toBeUndefined();
+        });
+
+        it('should return true when element contains', () => {
+            booleanResult = service.evaluateCondition(['one', 'two'], ['one'], 'contains');
+            expect(booleanResult).toBe(true);
+        });
+
+        it('should return false when element not contains', () => {
+            booleanResult = service.evaluateCondition(['two'], ['one'], 'contains');
+            expect(booleanResult).toBe(false);
+        });
+
+        it('should return true when element not contains', () => {
+            booleanResult = service.evaluateCondition(['two'], ['one'], '!contains');
+            expect(booleanResult).toBe(true);
+        });
+
+        it('should return false when element contains', () => {
+            booleanResult = service.evaluateCondition(['one', 'two'], ['one'], '!contains');
+            expect(booleanResult).toBe(false);
         });
     });
 
