@@ -27,7 +27,7 @@ import { IdentityUserService } from '../../services/identity-user.service';
 import { BpmUserModel } from '../../models/bpm-user.model';
 import { EcmUserModel } from '../../models/ecm-user.model';
 import { UserInfoComponent } from './user-info.component';
-import { of, timer } from 'rxjs';
+import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -88,7 +88,7 @@ describe('User info component', () => {
 
     async function whenFixtureReady() {
         fixture.detectChanges();
-        await timer(500).toPromise();
+        await fixture.whenStable();
         fixture.detectChanges();
     }
 

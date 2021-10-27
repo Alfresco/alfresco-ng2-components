@@ -94,7 +94,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
 
         if (typeof opt1 === 'object' && typeof opt2 === 'object') {
-            return  opt1.id === opt2.id && opt1.name === opt2.name;
+            return  opt1.id === opt2.id || opt1.name === opt2.name;
         }
 
         return opt1 === opt2;

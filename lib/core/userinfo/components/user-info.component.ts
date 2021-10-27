@@ -25,7 +25,7 @@ import { EcmUserService } from '../../services/ecm-user.service';
 import { IdentityUserService } from '../../services/identity-user.service';
 import { of, Observable, Subject } from 'rxjs';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
-import { debounceTime, startWith, takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-userinfo',
@@ -75,15 +75,15 @@ export class UserInfoComponent implements OnInit, OnDestroy {
                 private bpmUserService: BpmUserService,
                 private identityUserService: IdentityUserService,
                 private authService: AuthenticationService) {
+        this.authService.onLogin
+            .pipe(
+                filter(() => this.authService.isKerberosEnabled()),
+                takeUntil(this.destroy$)
+            ).subscribe(() => this.getUserInfo());
     }
 
     ngOnInit() {
-       this.authService.onLogin
-           .pipe(
-               startWith(this.authService.isLoggedIn()),
-               debounceTime(500),
-               takeUntil(this.destroy$)
-           ).subscribe(() => this.getUserInfo());
+        this.getUserInfo();
     }
 
     ngOnDestroy(): void {
