@@ -27,7 +27,6 @@ export default {
     title: 'Process Services Cloud/Components/Group',
     decorators: [
         moduleMetadata({
-            declarations: [],
             imports: [ProcessServicesCloudStoryModule, GroupCloudModule],
             providers: [
                 { provide: IdentityGroupService, useClass: IdentityGroupServiceMock }
