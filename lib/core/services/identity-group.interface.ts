@@ -25,7 +25,7 @@ import {
 } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 
-export interface IdentityGroupInterface {
+export interface IdentityGroupServiceInterface {
 
     getGroups(): Observable<IdentityGroupModel[]>;
     getAvailableRoles(groupId: string): Observable<IdentityRoleModel[]>;
