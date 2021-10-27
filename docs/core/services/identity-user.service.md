@@ -18,10 +18,10 @@ Gets OAuth2 personal details and roles for users and performs CRUD operations on
     -   _userId:_ `string`  - Id of the user.
     -   _roles:_ [`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]`  - Array of roles.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty response when the role assigned.
--   **changePassword**(userId: `string`, newPassword: [`IdentityUserPasswordModel`](../../../lib/core/services/identity-user.interface.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **changePassword**(userId: `string`, newPassword: [`IdentityUserPasswordModel`](../../../lib/core/services/identity-user.service.interface.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Changes user password.
     -   _userId:_ `string`  - Id of the user.
-    -   _newPassword:_ [`IdentityUserPasswordModel`](../../../lib/core/services/identity-user.interface.ts)  - 
+    -   _newPassword:_ [`IdentityUserPasswordModel`](../../../lib/core/services/identity-user.service.interface.ts)  - 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty response when the password changed.
 -   **checkUserHasAnyApplicationRole**(userId: `string`, applicationName: `string`, roleNames: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
     Checks if a user has any application role.
@@ -120,19 +120,19 @@ Gets OAuth2 personal details and roles for users and performs CRUD operations on
     Gets an array of users (not including the current user) who have any of the roles in the supplied list.
     -   _roleNames:_ `string[]`  - List of role names to look for
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]>` - Array of user info objects
--   **joinGroup**(joinGroupRequest: [`IdentityJoinGroupRequestModel`](../../../lib/core/services/identity-user.interface.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **joinGroup**(joinGroupRequest: [`IdentityJoinGroupRequestModel`](../../../lib/core/services/identity-user.service.interface.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Joins group.
-    -   _joinGroupRequest:_ [`IdentityJoinGroupRequestModel`](../../../lib/core/services/identity-user.interface.ts)  - Details of join group request (IdentityJoinGroupRequestModel).
+    -   _joinGroupRequest:_ [`IdentityJoinGroupRequestModel`](../../../lib/core/services/identity-user.service.interface.ts)  - Details of join group request (IdentityJoinGroupRequestModel).
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty response when the user joined the group.
 -   **leaveGroup**(userId: `any`, groupId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Leaves group.
     -   _userId:_ `any`  - Id of the user.
     -   _groupId:_ `string`  - Id of the  group.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty response when the user left the group.
--   **queryUsers**(requestQuery: [`IdentityUserQueryCloudRequestModel`](../../../lib/core/services/identity-user.interface.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserQueryResponse`](../../../lib/core/services/identity-user.interface.ts)`>`<br/>
+-   **queryUsers**(requestQuery: [`IdentityUserQueryCloudRequestModel`](../../../lib/core/services/identity-user.service.interface.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserQueryResponse`](../../../lib/core/services/identity-user.service.interface.ts)`>`<br/>
     Gets details for all users.
-    -   _requestQuery:_ [`IdentityUserQueryCloudRequestModel`](../../../lib/core/services/identity-user.interface.ts)  - 
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserQueryResponse`](../../../lib/core/services/identity-user.interface.ts)`>` - Array of user information objects.
+    -   _requestQuery:_ [`IdentityUserQueryCloudRequestModel`](../../../lib/core/services/identity-user.service.interface.ts)  - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserQueryResponse`](../../../lib/core/services/identity-user.service.interface.ts)`>` - Array of user information objects.
 -   **removeRoles**(userId: `string`, removedRoles: [`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Removes assigned roles.
     -   _userId:_ `string`  - Id of the user.

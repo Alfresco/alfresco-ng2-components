@@ -14,8 +14,8 @@ This a form widget so it receives the [`FormFieldModel`](../../core/models/form-
 
 | Accessor | Type | Description |
 | -------- | ---- | ----------- |
-|`field.value`| `string` | The nodeId of the node which properties are going to be displayed |
-|`field.params.propertiesViewerOptions` | `object` | An object containing all the [properties of the content metadata card](../../content-services/components/content-metadata-card.component.md#properties "content-metadata-card properties") |
+| `field.value` | `string` | The nodeId of the node which properties are going to be displayed |
+| `field.params.propertiesViewerOptions` | `object` | An object containing all the [properties of the content metadata card](../../content-services/components/content-metadata-card.component.md#properties "content-metadata-card properties") |
 
 ## Class members
 
@@ -23,11 +23,11 @@ This a form widget so it receives the [`FormFieldModel`](../../core/models/form-
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| field | `FormFieldModel` |  | The field information |
+| field | [`FormFieldModel`](../../core/models/form-field.model.md) |  | The field information |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| nodeContentLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Node>` | Emitted when the properties to be displayed are retrieved from the content service. |
+| nodeContentLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Node>` | Emitted when the properties to be displayed are retrieved from the [content service](../../core/services/content.service.md). |
 | fieldChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the field changes |
