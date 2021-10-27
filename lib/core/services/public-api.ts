@@ -66,3 +66,4 @@ export * from './auth-bearer.interceptor';
 export * from './oauth2.service';
 export * from './language.service';
 export * from './identity-user.service.interface';
+export * from './identity-group.interface';

@@ -16,10 +16,19 @@
  */
 
 import { Injectable } from '@angular/core';
-import { IdentityGroupCountModel, IdentityGroupModel, IdentityGroupQueryCloudRequestModel, IdentityGroupQueryResponse, IdentityGroupSearchParam, IdentityRoleModel, mockIdentityGroups, mockIdentityRoles } from '@alfresco/adf-core';
+import {
+    IdentityGroupCountModel,
+    IdentityGroupModel,
+    IdentityGroupQueryCloudRequestModel,
+    IdentityGroupQueryResponse,
+    IdentityGroupSearchParam,
+    IdentityRoleModel,
+    mockIdentityGroups,
+    mockIdentityRoles,
+    IdentityGroupServiceInterface
+} from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IdentityGroupServiceInterface } from '../../../../../core/services/identity-group.interface';
 
 Injectable({ providedIn: 'root' });
 export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
@@ -29,7 +38,7 @@ export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
     }
 
     getAvailableRoles(_groupId: string): Observable<IdentityRoleModel[]> {
-        return of (mockIdentityRoles);
+        return of(mockIdentityRoles);
     }
 
     getAssignedRoles(_groupId: string): Observable<IdentityRoleModel[]> {
@@ -53,7 +62,7 @@ export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
     }
 
     getTotalGroupsCount(): Observable<IdentityGroupCountModel> {
-        return of({count: mockIdentityGroups.length});
+        return of({ count: mockIdentityGroups.length });
     }
 
     createGroup(_newGroup: IdentityGroupModel): Observable<any> {
@@ -74,15 +83,15 @@ export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
         }
 
         return of(mockIdentityGroups.filter(group =>
-             group.name.toUpperCase().includes(searchParams.name.toUpperCase())
+            group.name.toUpperCase().includes(searchParams.name.toUpperCase())
         ));
     }
 
     getGroupRoles(_groupId: string): Observable<IdentityRoleModel[]> {
-        return of (mockIdentityRoles);
+        return of(mockIdentityRoles);
     }
 
-    checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean>  {
+    checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean> {
         return this.getGroupRoles(groupId).pipe(map((groupRoles) => {
             let hasRole = false;
             if (groupRoles && groupRoles.length > 0) {
