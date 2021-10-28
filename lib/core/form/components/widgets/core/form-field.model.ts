@@ -372,10 +372,12 @@ export class FormFieldModel extends FormWidgetModel {
 
                     const entry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
                     if (entry.length > 0) {
-                        if(this.optionType === 'rest' && !!this.restUrl){
+                        if (this.optionType === 'rest' && !!this.restUrl) {
                             const restEntry = {};
-                            restEntry[this.restIdProperty] = entry[0].id;
-                            restEntry[this.restLabelProperty] = entry[0].name;
+                            const restIdProperty = this.restIdProperty || 'id';
+                            const restLabelProperty = this.restLabelProperty || 'name';
+                            restEntry[restIdProperty] = entry[0].id;
+                            restEntry[restLabelProperty] = entry[0].name;
                             this.form.values[this.id] = restEntry;
                         } else {
                             this.form.values[this.id] = entry[0];
