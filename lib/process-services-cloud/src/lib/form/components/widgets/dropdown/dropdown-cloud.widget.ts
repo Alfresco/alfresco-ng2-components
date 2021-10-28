@@ -93,7 +93,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     parentValueChanged(valueOfParentDropdown: string) {
         if (!!valueOfParentDropdown && valueOfParentDropdown !== 'empty') {
-            this.hasRestUrl() && this.isRestUrlContainingLinkedDropdownId() ? this.getValuesFromRestApiWithLinkedWidget(valueOfParentDropdown) : this.getManualValuesWithLinkedWidget(valueOfParentDropdown);
+            this.hasRestUrl() && this.isRestUrlContainingLinkedDropdownId() ? this.getValuesFromRestApi() : this.getManualValuesWithLinkedWidget(valueOfParentDropdown);
         } else if (valueOfParentDropdown === 'empty') {
             this.addDefaultOption();
         }
@@ -112,22 +112,12 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         });
     }
 
-    private getValuesFromRestApiWithLinkedWidget(valueOfLinkedWidget: string) {
-        const newRestUrl = this.replaceLinkedWidgetRestUrlWithSelection(valueOfLinkedWidget);
-        this.getValuesFromRestApi(newRestUrl);
-    }
-
     private hasDefaultOption(): boolean {
         return !!this.field.options.find((option: {id, name}) => option.id === 'empty' && option.name === 'Choose one...');
     }
 
     private addDefaultOption() {
         this.field.options = this.hasDefaultOption() ? [{ id: 'empty', name: 'Choose one...' }] : [];
-    }
-
-    private replaceLinkedWidgetRestUrlWithSelection(valueOfLinkedWidget: string): string {
-        const linkedWidgetId = this.getLinkedWidgetId();
-        return this.isRestUrlContainingLinkedDropdownId() ? this.field.restUrl.replace('${' + linkedWidgetId + '}', valueOfLinkedWidget) : this.field.restUrl;
     }
 
     selectionChangedForField(field: FormFieldModel) {
@@ -161,7 +151,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return this.field?.rule?.ruleOn;
     }
 
-    getValuesFromRestApi(restUrl?: string) {
+    getValuesFromRestApi() {
         if (this.isValidRestType()) {
             this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id)
                 .pipe(takeUntil(this.onDestroy$))
@@ -169,6 +159,28 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                     this.field.options = result;
                 }, (err) => this.handleError(err));
         }
+    }
+
+    buildBodyParam(): any {
+        const bodyParam = Object.assign({});
+        if (this.isLinkedWidget()) {
+            const parentWidgetValue = this.getParentWidgetValue();
+            const parentWidgetId = this.getLinkedWidgetId();
+            bodyParam[parentWidgetId] = parentWidgetValue;
+        }
+        return bodyParam;
+    }
+
+    mapJsonData(data: any[]): FormFieldOption[] {
+        const idProperty = this.field.restIdProperty || 'id';
+        const restLabelProperty = this.field.restLabelProperty || 'name';
+
+        return data.map((value: any) => {
+            return {
+                name: value[restLabelProperty],
+                id: value[idProperty]
+            };
+        });
     }
 
     compareDropdownValues(opt1: FormFieldOption | string, opt2: FormFieldOption | string): boolean {
