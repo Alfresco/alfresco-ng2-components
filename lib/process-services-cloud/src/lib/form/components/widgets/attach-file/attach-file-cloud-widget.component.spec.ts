@@ -228,6 +228,15 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(element.querySelector('#fileProperty-1155-name')).toBeNull();
             expect(element.querySelector('#fileProperty-1155-age')).toBeNull();
         });
+
+        it('should display date property in converted form based on dataType', async() => {
+            createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [fakeLocalPngHavingCMProperties], displayableCMParams);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('#fileProperty-1155-dob').textContent).toBe('Oct 28, 2000');
+            expect(element.querySelector('#fileProperty-1155-doj').textContent).toBe('Oct 21, 2021, 9:24:02 AM');
+        });
     });
 
     describe('destinationFolderPath', () => {

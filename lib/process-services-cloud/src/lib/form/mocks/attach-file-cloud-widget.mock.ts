@@ -91,7 +91,9 @@ export const fakeLocalPngHavingCMProperties = {
         'pfx:property_one': 'testValue',
         'pfx:property_two': true,
         'a:name': 'Alex',
-        'a:age': '34'
+        'a:age': '34',
+        'a:dob': 'Thu Oct 28 2000 11:24:02 GMT+0530',
+        'a:doj': 'Thu Oct 21 2021 09:24:02 GMT+0530'
     }
 };
 
@@ -157,31 +159,29 @@ export const displayableCMParams = {
             'name': 'name',
             'prefixedName': 'a:name',
             'title': '',
-            'description': '',
             'dataType': 'd:text',
-            'multiValued': false,
-            'mandatory': false,
-            'defaultValue': 'Bob',
-            'mandatoryEnforced': false,
-            'indexed': false,
-            'facetable': 'FALSE',
-            'indexTokenisationMode': '',
-            'constraints': []
+            'defaultValue': 'Bob'
         },
         {
             'name': 'age',
             'prefixedName': 'a:age',
             'title': 'Age',
-            'description': '',
             'dataType': 'd:text',
-            'multiValued': false,
-            'mandatory': false,
-            'defaultValue': '',
-            'mandatoryEnforced': false,
-            'indexed': false,
-            'facetable': 'FALSE',
-            'indexTokenisationMode': '',
-            'constraints': []
+            'defaultValue': ''
+        },
+        {
+            'name': 'dob',
+            'prefixedName': 'a:dob',
+            'title': 'Date of Birth',
+            'dataType': 'd:date',
+            'defaultValue': ''
+        },
+        {
+            'name': 'doj',
+            'prefixedName': 'a:doj',
+            'title': 'Date of Joining',
+            'dataType': 'd:datetime',
+            'defaultValue': ''
         }
     ]
 };

@@ -21,14 +21,6 @@ export interface DisplayableCMProperties {
     name?: string,
     prefixedName?: string,
     title?: string,
-    description?: string,
     dataType?: string,
-    multiValued?: boolean,
-    mandatory?: boolean,
-    defaultValue?: string,
-    mandatoryEnforced?: boolean,
-    indexed?: boolean,
-    facetable?: string,
-    indexTokenisationMode?: string,
-    constraints?: []
+    defaultValue?: string
 }

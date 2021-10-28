@@ -28,9 +28,7 @@ import {
     AppConfigService,
     AlfrescoApiService,
     UploadWidgetContentLinkModel,
-    DestinationFolderPath,
-    LocalizedDatePipe,
-    DisplayableCMProperties
+    DestinationFolderPath
 } from '@alfresco/adf-core';
 import { Node, NodesApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
@@ -76,7 +74,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
-    displayableCMProperties: DisplayableCMProperties[] = [];
     displayedColumns = ['icon', 'fileName', 'action'];
 
     constructor(
@@ -88,8 +85,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         private contentNodeSelectorService: ContentCloudNodeSelectorService,
         private appConfigService: AppConfigService,
         private apiService: AlfrescoApiService,
-        private contentNodeSelectorPanelService: ContentNodeSelectorPanelService,
-        private localizedDatePipe: LocalizedDatePipe
+        private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
     }
@@ -100,9 +96,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             const files = this.field.value || this.field.form.values[this.field.id];
             this.contentModelFormFileHandler(files[0]);
         }
-        this.displayableCMProperties = this.field.params.displayableCMProperties?.
-            map(({name, title, prefixedName, dataType}) => ({ name, title, prefixedName, dataType})) ?? [];
-        this.displayedColumns.splice(2, 0, ...this.displayableCMProperties.map(property => property?.name));
+        this.field.params.displayableCMProperties = this.field.params.displayableCMProperties ?? [];
+        this.displayedColumns.splice(2, 0, ...this.field.params.displayableCMProperties?.map(property => property?.name));
     }
 
     isPathStaticType(): boolean {
@@ -229,10 +224,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return this.isAlfrescoAndLocal() ? 'file_upload' : 'attach_file';
     }
 
-    displayMenuOption(option: string): boolean {
-        return this.field?.params?.menuOptions ? this.field.params.menuOptions[option] : option !== AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION;
-    }
-
     onRowClicked(file?: Node) {
         if (this.selectedNode?.id === file?.id) {
             this.selectedNode = null;
@@ -266,25 +257,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     isValidAlias(alias: string): boolean {
         return alias && AttachFileCloudWidgetComponent.VALID_ALIAS.includes(alias);
-    }
-
-    getColumnValue(file, displayableCMProperty: DisplayableCMProperties): string {
-        if (!file.properties[displayableCMProperty.prefixedName]) {
-            const fieldProperty = this.field.params.displayableCMProperties?.find(property => property.name === displayableCMProperty.name);
-            return fieldProperty.defaultValue ? this.checkDateTypeAndTransform(displayableCMProperty.dataType, fieldProperty.defaultValue) : '--' ;
-        }
-        return file.properties[displayableCMProperty.prefixedName] ?
-            this.checkDateTypeAndTransform(displayableCMProperty.dataType, file.properties[displayableCMProperty.prefixedName]) :
-            '--' ;
-    }
-
-    checkDateTypeAndTransform(dataType, value): string {
-        if (dataType === 'd:date') {
-            return this.localizedDatePipe.transform(value);
-        } else if (dataType === 'd:datetime') {
-            return this.localizedDatePipe.transform(value, 'medium');
-        }
-        return value;
     }
 
     ngOnDestroy() {

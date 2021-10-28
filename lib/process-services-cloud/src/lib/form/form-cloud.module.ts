@@ -64,7 +64,8 @@ import { RadioButtonsCloudWidgetComponent } from './components/widgets/radio-but
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent,
         PropertiesViewerWrapperComponent,
-        PropertiesViewerWidgetComponent
+        PropertiesViewerWidgetComponent,
+        FilePropertiesTableCloud
     ],
     exports: [
         FormCloudComponent,
