@@ -89,7 +89,7 @@ invalidPreselectedGroups.args = {
     ...primary.args,
     validate: true,
     mode: 'multiple',
-    preSelectGroups: [{ id: 'invalid-group', name: 'invalid group' }]
+    preSelectGroups: [{ id: 'invalid-group', name: 'invalid groups' }]
 };
 
 export const adminRoleGroups = template.bind({});
