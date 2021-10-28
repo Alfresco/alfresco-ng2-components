@@ -381,8 +381,8 @@ export class FormFieldModel extends FormWidgetModel {
                 if (radioButton.length > 0) {
                     if (this.optionType === 'rest' && !!this.restUrl) {
                         const restEntry = {};
-                        const restIdProperty = this.restIdProperty || "id";
-                        const restLabelProperty = this.restLabelProperty || "name";
+                        const restIdProperty = this.restIdProperty || 'id';
+                        const restLabelProperty = this.restLabelProperty || 'name';
                         restEntry[restIdProperty] = radioButton[0].id;
                         restEntry[restLabelProperty] = radioButton[0].name;
                         this.form.values[this.id] = restEntry;
