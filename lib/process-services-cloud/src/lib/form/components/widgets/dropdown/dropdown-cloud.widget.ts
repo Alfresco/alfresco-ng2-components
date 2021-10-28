@@ -61,7 +61,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     ngOnInit() {
-        if (this.hasRestUrl() && !this.isLinkedWidget()) {
+        if (this.hasRestUrl() && !this.isRestUrlContainingLinkedDropdownId()) {
             this.getValuesFromRestApi();
         }
 
@@ -104,12 +104,22 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private getManualValuesWithLinkedWidget(valueOfLinkedWidget: string) {
-        const rulesEntries = Object.values(this.field.rule.entries);
-        rulesEntries.forEach((ruleEntry: RuleEntry) => {
-            if (ruleEntry.key === valueOfLinkedWidget) {
-                this.field.options = ruleEntry.options;
-            }
-        });
+        if (this.hasConditionalEntries()) {
+            const rulesEntries = this.getConditionalEntries();
+            rulesEntries.forEach((ruleEntry: RuleEntry) => {
+                if (ruleEntry.key === valueOfLinkedWidget) {
+                    this.field.options = ruleEntry.options;
+                }
+            });
+        }
+    }
+
+    private getConditionalEntries(): RuleEntry[] {
+        return this.field.rule.entries;
+    }
+
+    private hasConditionalEntries(): boolean {
+        return !!this.getConditionalEntries().length;
     }
 
     private hasDefaultOption(): boolean {
