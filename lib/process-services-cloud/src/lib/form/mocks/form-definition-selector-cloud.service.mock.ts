@@ -30,6 +30,6 @@ export class FormDefinitionSelectorCloudServiceMock {
     }
 
     getStandAloneTaskForms(_appName: string): Observable<FormRepresentation[]> {
-        return of(responseBody.map(response => <FormRepresentation> response.formRepresentation).filter(form => form.standAlone));
+        return of(responseBody.map(response => <FormRepresentation> response.formRepresentation).filter((form: any) => form.standalone ? form : undefined));
     }
 }
