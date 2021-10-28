@@ -19,11 +19,12 @@ import { Injectable } from '@angular/core';
 import { RatingEntry } from '@alfresco/js-api';
 import { Observable, of } from 'rxjs';
 import { ratingOneMock, ratingThreeMock } from './rating-response.mock';
+import { RatingServiceInterface } from '../services/rating.service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class RatingServiceMock {
+export class RatingServiceMock implements RatingServiceInterface {
 
     getRating(nodeId: string, _ratingType: any): Observable<RatingEntry | {}> {
         if (nodeId === 'fake-like-node-id') {

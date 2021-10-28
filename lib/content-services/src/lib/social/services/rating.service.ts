@@ -20,11 +20,12 @@ import { Injectable } from '@angular/core';
 import { RatingEntry, RatingBody, RatingsApi } from '@alfresco/js-api';
 import { from, throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { RatingServiceInterface } from './rating.service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class RatingService {
+export class RatingService implements RatingServiceInterface {
 
     _ratingsApi: RatingsApi;
     get ratingsApi(): RatingsApi {
