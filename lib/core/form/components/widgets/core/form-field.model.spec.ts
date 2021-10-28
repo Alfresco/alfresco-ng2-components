@@ -691,6 +691,30 @@ describe('FormFieldModel', () => {
         expect(form.values['dropdown_field'].name).toEqual('Option 1');
     });
 
+    it('dropdown field type should be formatted on rest properties', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'HeaderFieldtype',
+            id: 'dropdown_field',
+            name: 'header',
+            type: FormFieldTypes.DROPDOWN,
+            value: 'opt1',
+            required: false,
+            readOnly: true,
+            restUrl: 'fake-url-just-to-show',
+            optionType: 'rest',
+            restIdProperty: 'fake-id-property',
+            restLabelProperty: 'fake-label-property',
+            options: [
+                {id: 'opt1', name: 'Option 1'},
+                {id: 'opt2', name: 'Option 2'}
+            ]
+        });
+        field.updateForm();
+        expect(form.values['dropdown_field']['fake-id-property']).toEqual('opt1');
+        expect(form.values['dropdown_field']['fake-label-property']).toEqual('Option 1');
+    });
+
     it('should parse and resolve people null value as null', () => {
         const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.PEOPLE,
