@@ -31,7 +31,10 @@ export default {
                 { provide: RatingService, useClass: RatingServiceMock }
             ]
         })
-    ]
+    ],
+    argTypes: {
+        nodeId: { table: { disable: true } }
+    }
 } as Meta;
 
 const template: Story<LikeComponent> = (args: LikeComponent) => ({
