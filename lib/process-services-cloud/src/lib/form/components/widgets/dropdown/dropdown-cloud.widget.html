@@ -4,9 +4,9 @@
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span
             *ngIf="isRequired()">*</span></label>
         <label class="adf-label adf-dropdown-widget-linked"
-               *ngIf="isLinkedDropdown()"
+               *ngIf="isLinkedWidget()"
                [attr.for]="field.id">
-            {{ 'FORM.FIELD.DEPENDS_ON' | translate: { widgetId: getLinkedDropdownId() } }}
+            {{ 'FORM.FIELD.DEPENDS_ON' | translate: { widgetId: getLinkedWidgetId() } }}
         </label>
     </div>
     <mat-form-field>

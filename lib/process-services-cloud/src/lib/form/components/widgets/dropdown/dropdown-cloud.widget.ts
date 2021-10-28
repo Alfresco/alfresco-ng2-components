@@ -23,7 +23,8 @@ import {
     FormFieldOption,
     FormFieldEvent,
     FormFieldModel,
-    FormFieldTypes
+    FormFieldTypes,
+    RuleEntry
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { Subject } from 'rxjs';
@@ -60,39 +61,58 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     ngOnInit() {
-        // Missing requirement. In case replacing the restUrl with the parent selection will be done in BE we don't need to distinguish the 2 scenarios.
-        if (this.hasRestUrl() && !this.isLinkedDropdown()) {
+        if (this.hasRestUrl() && !this.isLinkedWidget()) {
             this.getValuesFromRestApi();
         }
 
-        if (this.isLinkedDropdown()) {
+        if (this.isLinkedWidget()) {
+            this.loadLinkedWidget();
+
             this.formService.formFieldValueChanged
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe((event: FormFieldEvent) => {
                     if (this.isFormFieldEventOfTypeDropdown(event) && this.hasParentDropdownSelectionChanged(event)) {
-                        const valueOfParentDropdown = event.field.value;
-
-                        if (!!valueOfParentDropdown && valueOfParentDropdown !== 'empty') {
-                            this.hasRestUrl() && this.isRestUrlContainingLinkedDropdownId() ? this.getValuesFromRestApiWithLinkedWidget(valueOfParentDropdown) : this.getManualValuesWithLinkedWidget(valueOfParentDropdown);
-                        } else if (valueOfParentDropdown === 'empty') {
-                            this.addDefaultOption();
-                        }
+                        const valueOfParentWidget = event.field.value;
+                        this.parentValueChanged(valueOfParentWidget);
                     }
                 });
         }
     }
 
-    private getManualValuesWithLinkedWidget(valueOfLinkedWidget: string) {
-        const rulesMap = new Map<string, FormFieldOption[]>(Object.entries(this.field.params['rules']));
-        for (const [key, value] of rulesMap.entries()) {
-            if (key === valueOfLinkedWidget) {
-                this.field.options = value;
-            }
+    private loadLinkedWidget() {
+        const parentWidgetValue = this.getParentWidgetValue();
+        this.parentValueChanged(parentWidgetValue);
+        this.field.updateForm();
+    }
+
+    private getParentWidgetValue(): string {
+        const parentWidgetId = this.getLinkedWidgetId();
+        const parentWidget = this.getFormFieldById(parentWidgetId);
+        return parentWidget?.value;
+    }
+
+    parentValueChanged(valueOfParentDropdown: string) {
+        if (!!valueOfParentDropdown && valueOfParentDropdown !== 'empty') {
+            this.hasRestUrl() && this.isRestUrlContainingLinkedDropdownId() ? this.getValuesFromRestApiWithLinkedWidget(valueOfParentDropdown) : this.getManualValuesWithLinkedWidget(valueOfParentDropdown);
+        } else if (valueOfParentDropdown === 'empty') {
+            this.addDefaultOption();
         }
     }
 
+    private getFormFieldById(fieldId): FormFieldModel {
+        return this.field.form.getFormFields().filter((field: FormFieldModel) => field.id === fieldId)[0];
+    }
+
+    private getManualValuesWithLinkedWidget(valueOfLinkedWidget: string) {
+        const rulesEntries = Object.values(this.field.rule.entries);
+        rulesEntries.forEach((ruleEntry: RuleEntry) => {
+            if (ruleEntry.key === valueOfLinkedWidget) {
+                this.field.options = ruleEntry.options;
+            }
+        });
+    }
+
     private getValuesFromRestApiWithLinkedWidget(valueOfLinkedWidget: string) {
-        // Missing requirement. Temporarily doing the replacement in the FE
         const newRestUrl = this.replaceLinkedWidgetRestUrlWithSelection(valueOfLinkedWidget);
         this.getValuesFromRestApi(newRestUrl);
     }
@@ -102,13 +122,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private addDefaultOption() {
-        // Missing requirement about default options when using linked widgets
         this.field.options = this.hasDefaultOption() ? [{ id: 'empty', name: 'Choose one...' }] : [];
     }
 
-    // Missing requirement. Temporarily added the replacement in FE
     private replaceLinkedWidgetRestUrlWithSelection(valueOfLinkedWidget: string): string {
-        const linkedWidgetId = this.getLinkedDropdownId();
+        const linkedWidgetId = this.getLinkedWidgetId();
         return this.isRestUrlContainingLinkedDropdownId() ? this.field.restUrl.replace('${' + linkedWidgetId + '}', valueOfLinkedWidget) : this.field.restUrl;
     }
 
@@ -119,11 +137,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private hasParentDropdownSelectionChanged(event: FormFieldEvent): boolean {
-        return event.field.id === this.getLinkedDropdownId();
+        return event.field.id === this.getLinkedWidgetId();
     }
 
     private isRestUrlContainingLinkedDropdownId(): boolean {
-        const linkedWidgetId = this.getLinkedDropdownId();
+        const linkedWidgetId = this.getLinkedWidgetId();
         return this.field.restUrl?.includes(linkedWidgetId) || false;
     }
 
@@ -132,15 +150,15 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     hasRestUrl(): boolean {
-        return !!this?.field?.restUrl;
+        return !!this.field?.restUrl;
     }
 
-    isLinkedDropdown(): boolean {
-        return !!this.getLinkedDropdownId();
+    isLinkedWidget(): boolean {
+        return !!this.getLinkedWidgetId();
     }
 
-    getLinkedDropdownId(): string {
-        return this?.field?.params['linkedDropdownId'];
+    getLinkedWidgetId(): string {
+        return this.field?.rule?.ruleOn;
     }
 
     getValuesFromRestApi(restUrl?: string) {
