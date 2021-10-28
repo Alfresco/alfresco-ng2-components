@@ -45,11 +45,6 @@ export class HeaderLayoutComponent implements OnInit {
     @Input() color: ThemePalette;
 
     /**
-     * Text color for the header. Should be hex color code
-     */
-    @Input() textColor: string;
-
-    /**
      * Toggles whether the sidenav button will be displayed in the header
      * or not.
      */
@@ -73,9 +68,5 @@ export class HeaderLayoutComponent implements OnInit {
         if (!this.logo) {
             this.logo = './assets/images/logo.png';
         }
-    }
-
-    get hasCustomColorText(): boolean {
-        return !!this.textColor;
     }
 }

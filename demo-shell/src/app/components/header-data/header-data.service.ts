@@ -47,7 +47,6 @@ export class HeaderDataService {
 
     changeTitle(title: string) {
         this.title.emit(title);
-
     }
 
     changeLogo(logoPath: string) {

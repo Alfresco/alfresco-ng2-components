@@ -101,7 +101,6 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     enableRedirect = true;
     color: ThemePalette = 'primary';
     title = 'APP_LAYOUT.APP_NAME';
-    headerTextColor = '';
     logo: string;
     redirectUrl: string | any[] = ['/home'];
     tooltip = 'APP_LAYOUT.APP_NAME';
@@ -122,7 +121,14 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
         this.headerService.color
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(color => this.color = color);
+            .subscribe(color => {
+                if (['primary', 'accent', 'warn'].includes(color)) {
+                    this.color = color;
+                } else {
+                    this.color = undefined;
+                    document.documentElement.style.setProperty('--theme-header-background-color', color);
+                }
+            });
 
         this.headerService.title
             .pipe(takeUntil(this.onDestroy$))
@@ -130,7 +136,9 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
         this.headerService.headerTextColor
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(headerTextColor => this.headerTextColor = headerTextColor);
+            .subscribe(headerTextColor => {
+                document.documentElement.style.setProperty('--theme-header-text-color', headerTextColor);
+            });
 
         this.headerService.logo
             .pipe(takeUntil(this.onDestroy$))
