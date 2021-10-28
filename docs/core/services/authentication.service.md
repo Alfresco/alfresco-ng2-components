@@ -63,9 +63,10 @@ Provides authentication to ACS and APS.
 -   **isEcmLoggedIn**(): `boolean`<br/>
     Checks if the user is logged in on an ECM provider.
     -   **Returns** `boolean` - True if logged in, false otherwise
--   **isKerberosEnabled**(): `boolean`<br/>
-    Does kerberos enabled?
-    -   **Returns** `boolean` - True if enabled, false otherwise
+-   **isKerberosConfigured**(): `boolean`<br/>
+
+    -   **Returns** `boolean` - 
+
 -   **isLoggedIn**(): `boolean`<br/>
     Checks if the user logged in.
     -   **Returns** `boolean` - True if logged in, false otherwise

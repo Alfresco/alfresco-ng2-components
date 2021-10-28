@@ -23,34 +23,34 @@ Manages Audit apps and entries.
     -   _auditApplicationId:_ `string`  - The identifier of an audit application.
     -   _auditEntryId:_ `string`  - The identifier of an audit entry.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - 
--   **getAuditApp**(auditApplicationId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditAppEntry>`<br/>
+-   **getAuditApp**(auditApplicationId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AuditAppEntry`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/auditAppEntry.ts)`>`<br/>
     Get audit application info.
     -   _auditApplicationId:_ `string`  - The identifier of an audit application.
-    -   _opts:_ `any`  - (Optional) (Optional)Options.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditAppEntry>` - 
--   **getAuditApps**(opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditAppPaging>`<br/>
+    -   _opts:_ `any`  - (Optional)Options.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AuditAppEntry`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/auditAppEntry.ts)`>` - 
+-   **getAuditApps**(opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AuditAppPaging`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/auditAppPaging.ts)`>`<br/>
     List audit applications.
-    -   _opts:_ `any`  - (Optional) (Optional)Options.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditAppPaging>` - 
--   **getAuditEntries**(auditApplicationId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditEntryPaging>`<br/>
+    -   _opts:_ `any`  - (Optional)Options.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AuditAppPaging`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/auditAppPaging.ts)`>` - 
+-   **getAuditEntries**(auditApplicationId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AuditEntryPaging`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/auditEntryPaging.ts)`>`<br/>
     List audit entries for an audit application.
     -   _auditApplicationId:_ `string`  - The identifier of an audit application.
-    -   _opts:_ `any`  - (Optional) (Optional)Options.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditEntryPaging>` - 
--   **getAuditEntriesForNode**(nodeId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditEntryPaging>`<br/>
+    -   _opts:_ `any`  - (Optional)Options.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AuditEntryPaging`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/auditEntryPaging.ts)`>` - 
+-   **getAuditEntriesForNode**(nodeId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AuditEntryPaging`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/auditEntryPaging.ts)`>`<br/>
     List audit entries for a node.
     -   _nodeId:_ `string`  - The identifier of a node.
-    -   _opts:_ `any`  - (Optional) (Optional)Options.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditEntryPaging>` - 
--   **getAuditEntry**(auditApplicationId: `string`, auditEntryId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditEntryEntry>`<br/>
+    -   _opts:_ `any`  - (Optional)Options.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AuditEntryPaging`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/auditEntryPaging.ts)`>` - 
+-   **getAuditEntry**(auditApplicationId: `string`, auditEntryId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AuditEntryEntry`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/auditEntryEntry.ts)`>`<br/>
     Get audit entry.
     -   _auditApplicationId:_ `string`  - The identifier of an audit application.
     -   _auditEntryId:_ `string`  - The identifier of an audit entry.
-    -   _opts:_ `any`  - (Optional) (Optional)Options.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditEntryEntry>` - 
--   **updateAuditApp**(auditApplicationId: `string`, auditAppBodyUpdate: `boolean`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditApp|__type>`<br/>
+    -   _opts:_ `any`  - (Optional)Options.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AuditEntryEntry`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/auditEntryEntry.ts)`>` - 
+-   **updateAuditApp**(auditApplicationId: `string`, auditAppBodyUpdate: `boolean`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AuditApp`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/auditApp.ts)`|__type>`<br/>
     Update audit application info.
     -   _auditApplicationId:_ `string`  - The identifier of an audit application.
     -   _auditAppBodyUpdate:_ `boolean`  - The audit application to update.
-    -   _opts:_ `any`  - (Optional) (Optional)Options.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditApp|__type>` -
+    -   _opts:_ `any`  - (Optional)Options.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AuditApp`](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/auditApp.ts)`|__type>` -

@@ -48,7 +48,7 @@ Displays and edits metadata related to a node.
 | displayEmpty | `boolean` | false | (optional) This flag displays/hides empty metadata fields. |
 | multi | `boolean` | false | (optional) This flag allows the component to display more than one accordion at a time. |
 | node | `Node` |  | (required) The node entity to fetch metadata about |
-| preset | `string \| `[`PresetConfig`](../../../lib/content-services/src/lib/content-metadata/interfaces/preset-config.interface.ts) |  | (required) Name or configuration of the metadata preset, which defines aspects and their properties. |
+| preset | `string` or `PresetConfig` |  | (required) Name or configuration of the metadata preset, which defines aspects and their properties. |
 | readOnly | `boolean` | false | (optional) This flag sets the metadata in read only mode preventing changes. |
 | displayDefaultProperties | `boolean` |  | (optional) This flag displays/hides the metadata properties. |
 
@@ -58,7 +58,7 @@ The component shows metadata related to a given node. It uses the
 [Card View component](../../core/components/card-view.component.md) to render the properties of metadata aspects.
 The different aspects and their properties to be shown can be configured as application config
 presets (see below) or the preset config can be provided directly as 
-[`PresetConfig`](../../../lib/content-services/src/lib/content-metadata/interfaces/preset-config.interface.ts).
+[PresetConfig](../../../lib/content-services/src/lib/content-metadata/interfaces/preset-config.interface.ts "PresetConfig in preset-config.interface.ts").
 By default the component only shows the basic properties of the node.
 The user can click on the pencil icon at the bottom of the component to edit the metadata
 properties.
