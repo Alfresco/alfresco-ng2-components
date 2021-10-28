@@ -192,7 +192,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         return this.get(url);
     }
 
-    getRestWidgetData(formName: string, widgetId: string, body: any = { id: 'pollo'}): Observable<FormFieldOption[]> {
+    getRestWidgetData(formName: string, widgetId: string, body: any = {}): Observable<FormFieldOption[]> {
         const appName = this.appConfigService.get('alfresco-deployed-apps')[0]?.name;
         const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formName}/values/${widgetId}`;
         return this.post(apiUrl, body);
