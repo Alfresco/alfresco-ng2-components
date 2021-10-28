@@ -20,37 +20,9 @@ import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { FormDefinitionSelectorCloudService } from './form-definition-selector-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { responseBody } from '../mocks/form-representation.mock';
 
 declare let jasmine: any;
-
-const responseBody = [
-    {
-        formRepresentation: {
-            id: 'form-de8895be-d0d7-4434-beef-559b15305d72',
-            name: 'Form 1',
-            description: '',
-            version: 0,
-            standalone: true
-        }
-    },
-    {
-        formRepresentation: {
-            id: 'form-de8895be-d0d7-4434-beef-fgr34ttgrtgd',
-            name: 'Form 2',
-            description: '',
-            version: 0,
-            standalone: false
-        }
-    },
-    {
-        formRepresentation: {
-            id: 'form-de8895be-d0d7-4434-beef-53453453452',
-            name: 'Form 3',
-            description: '',
-            version: 0
-        }
-    }
-];
 
 const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi', 'on']);
 
