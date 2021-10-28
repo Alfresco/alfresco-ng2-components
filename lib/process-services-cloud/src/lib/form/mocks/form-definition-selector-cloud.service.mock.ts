@@ -18,12 +18,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { FormRepresentation } from '../../services/form-fields.interfaces';
+import { FormDefinitionSelectorCloudServiceInterface } from '../services/form-definition-selector-cloud.service.interface';
 import { responseBody } from './form-representation.mock';
 
 @Injectable({
     providedIn: 'root'
 })
-export class FormDefinitionSelectorCloudServiceMock {
+export class FormDefinitionSelectorCloudServiceMock implements FormDefinitionSelectorCloudServiceInterface {
 
     getForms(_appName: string): Observable<FormRepresentation[]> {
         return of(responseBody.map(response => <FormRepresentation> response.formRepresentation));
