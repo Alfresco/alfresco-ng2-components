@@ -44,7 +44,6 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
 
     typeId = 'RadioButtonsCloudWidgetComponent';
     protected onDestroy$ = new Subject<boolean>();
-    appName: string;
 
     constructor(public formService: FormService,
                 private formCloudService: FormCloudService,
@@ -59,7 +58,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
     }
 
     getValuesFromRestApi() {
-        this.formCloudService.getRestWidgetData(this.appName, this.field.form.name, this.field.id)
+        this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((result: FormFieldOption[]) => {
                 this.field.options = result;

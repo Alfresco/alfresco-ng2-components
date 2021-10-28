@@ -377,13 +377,18 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.RADIO_BUTTONS:
-                /*
-                 This is needed due to Activiti issue related to reading radio button values as value string
-                 but saving back as object: { id: <id>, name: <name> }
-                 */
                 const radioButton: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
                 if (radioButton.length > 0) {
-                    this.form.values[this.id] = radioButton[0];
+                    if (this.optionType === 'rest' && !!this.restUrl) {
+                        const restEntry = {};
+                        const restIdProperty = this.restIdProperty || "id";
+                        const restLabelProperty = this.restLabelProperty || "name";
+                        restEntry[restIdProperty] = radioButton[0].id;
+                        restEntry[restLabelProperty] = radioButton[0].name;
+                        this.form.values[this.id] = restEntry;
+                    } else {
+                        this.form.values[this.id] = radioButton[0];
+                    }
                 }
                 break;
             case FormFieldTypes.UPLOAD:

@@ -44,7 +44,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     typeId = 'DropdownCloudWidgetComponent';
     protected onDestroy$ = new Subject<boolean>();
-    appName: string;
 
     constructor(public formService: FormService,
                 private formCloudService: FormCloudService,
@@ -60,25 +59,12 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     getValuesFromRestApi() {
         if (this.isValidRestType()) {
-            this.formCloudService.getRestWidgetData(this.appName, this.field.form.name, this.field.id)
+            this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe((result: FormFieldOption[]) => {
                     this.field.options = result;
                 }, (err) => this.handleError(err));
         }
-    }
-
-    mapJsonData(data: any[]): FormFieldOption[] {
-        const dataToMap: any[] = this.field.restResponsePath ? data[this.field.restResponsePath] : data;
-        const idProperty = this.field.restIdProperty || 'id';
-        const restLabelProperty = this.field.restLabelProperty || 'name';
-
-        return dataToMap.map((value: any) => {
-            return {
-                name: value[restLabelProperty],
-                id: value[idProperty]
-            };
-        });
     }
 
     compareDropdownValues(opt1: FormFieldOption | string, opt2: FormFieldOption | string): boolean {

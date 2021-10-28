@@ -16,7 +16,7 @@
  */
 
 import { UploadApi } from '@alfresco/js-api';
-import { FormModel, FormValues } from '@alfresco/adf-core';
+import { FormFieldOption, FormModel, FormValues } from '@alfresco/adf-core';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { FormContent } from '../../services/form-fields.interfaces';
@@ -33,6 +33,6 @@ export interface FormCloudServiceInterface {
     getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel>;
     getTaskVariables(appName: string, taskId: string): Observable<TaskVariableCloud[]>;
     getForm(appName: string, formKey: string, version?: number): Observable<FormContent>;
-    getDropDownJsonData(url: string): Observable<any>;
     parseForm(json: any, data?: TaskVariableCloud[], readOnly?: boolean): FormModel;
+    getRestWidgetData(formName: string, widgetId: string, body: Map<String, String>): Observable<FormFieldOption[]>;
 }

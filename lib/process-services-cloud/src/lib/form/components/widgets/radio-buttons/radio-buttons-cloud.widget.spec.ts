@@ -173,28 +173,5 @@ describe('RadioButtonsCloudWidgetComponent', () => {
             expect(selectedOption.innerText).toBe('opt-name-2');
             expect(radioButtonWidget.field.isValid).toBe(true);
         });
-
-        describe('and radioButton is populated via processDefinitionId', () => {
-
-            // beforeEach(() => {
-            //     radioButtonWidget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'proc-id' }), {
-            //         id: 'radio-id',
-            //         name: 'radio-name',
-            //         type: FormFieldTypes.RADIO_BUTTONS,
-            //         restUrl: 'rest-url'
-            //     });
-            //     spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(of(restOption));
-            //     radioButtonWidget.field.isVisible = true;
-            //     fixture.detectChanges();
-            // });
-
-            // it('should show visible radio buttons', () => {
-            //     expect(element.querySelector('#radio-id')).toBeDefined();
-            //     expect(element.querySelector('#radio-id-opt-1-input')).not.toBeNull();
-            //     expect(element.querySelector('#radio-id-opt-1')).not.toBeNull();
-            //     expect(element.querySelector('#radio-id-opt-2-input')).not.toBeNull();
-            //     expect(element.querySelector('#radio-id-opt-2')).not.toBeNull();
-            // });
-        });
     });
 });
