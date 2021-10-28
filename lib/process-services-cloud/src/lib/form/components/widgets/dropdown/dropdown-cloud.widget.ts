@@ -50,6 +50,10 @@ import { takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+    static DEFAULT_OPTION = {
+        id: 'empty',
+        name: 'Choose one...'
+    };
 
     typeId = 'DropdownCloudWidgetComponent';
     protected onDestroy$ = new Subject<boolean>();
@@ -92,9 +96,9 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     parentValueChanged(valueOfParentDropdown: string) {
-        if (!!valueOfParentDropdown && valueOfParentDropdown !== 'empty') {
+        if (!!valueOfParentDropdown && valueOfParentDropdown !== DropdownCloudWidgetComponent.DEFAULT_OPTION.id) {
             this.hasRestUrl() && this.isRestUrlContainingLinkedDropdownId() ? this.getValuesFromRestApi() : this.getManualValuesWithLinkedWidget(valueOfParentDropdown);
-        } else if (valueOfParentDropdown === 'empty') {
+        } else if (valueOfParentDropdown === DropdownCloudWidgetComponent.DEFAULT_OPTION.id) {
             this.addDefaultOption();
         }
     }
@@ -127,7 +131,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private addDefaultOption() {
-        this.field.options = this.hasDefaultOption() ? [{ id: 'empty', name: 'Choose one...' }] : [];
+        this.field.options = [DropdownCloudWidgetComponent.DEFAULT_OPTION];
     }
 
     selectionChangedForField(field: FormFieldModel) {
@@ -163,7 +167,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     getValuesFromRestApi() {
         if (this.isValidRestType()) {
-            this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id)
+            const bodyParam = this.buildBodyParam();
+            this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe((result: FormFieldOption[]) => {
                     this.field.options = result;
@@ -219,7 +224,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
 
         let optionValue: string = '';
-        if (option.id === 'empty' || option.name !== fieldValue) {
+        if (option.id === DropdownCloudWidgetComponent.DEFAULT_OPTION.id || option.name !== fieldValue) {
             optionValue = option.id;
         } else {
             optionValue = option.name;

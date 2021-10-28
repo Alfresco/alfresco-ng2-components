@@ -388,6 +388,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 const optOne: any = fixture.debugElement.query(By.css('[id="LO"]'));
                 const optTwo: any = fixture.debugElement.query(By.css('[id="MA"]'));
 
+                // Remove app name before marking the PR as ready
                 expect(jsonDataSpy).toHaveBeenCalledWith('linked-dropdown-app', 'child-dropdown-id', 'fake-form-id', { parentDropdown: 'mock-value' });
                 expect(optOne.context.value).toBe('LO');
                 expect(optOne.context.viewValue).toBe('LONDON');
@@ -515,6 +516,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
 
                 expect(updateFormSpy).toHaveBeenCalled();
+                // Remove app name before marking the PR as ready
                 expect(jsonDataSpy).toHaveBeenCalledWith('linked-dropdown-app', 'child-dropdown-id', 'fake-form-id', { country: 'UK' });
                 expect(widget.field.options).toEqual(mockRestDropdownOptions);
             });
