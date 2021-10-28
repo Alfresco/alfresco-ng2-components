@@ -93,22 +93,6 @@ describe('HeaderLayoutComponent', () => {
             expect(logoAnchor.title).toEqual('logo title');
         });
 
-        it('should not have "has-mat-color" class when "mat-toolbar" does not get "color" atribute', () => {
-            component.color = 'primary';
-            fixture.detectChanges();
-
-            const toolbar = fixture.nativeElement.querySelector('.has-mat-color');
-            expect(toolbar).toBeFalsy();
-        });
-
-        it('should have "has-mat-color" class when "color" is passed to "mat-toolbar"', () => {
-            component.color = undefined;
-            fixture.detectChanges();
-
-            const toolbar = fixture.nativeElement.querySelector('.has-mat-color');
-            expect(toolbar).toBeTruthy();
-        });
-
         it('test click on sidenav button', () => {
             component.showSidenavToggle = true;
             fixture.detectChanges();
