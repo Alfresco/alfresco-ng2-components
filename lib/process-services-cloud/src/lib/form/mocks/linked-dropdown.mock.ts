@@ -17,36 +17,67 @@
 
 import { FormFieldOption } from '@alfresco/adf-core';
 
-export const dropdownMockRules = {
-    Italy: [
-        {
-            id: 'empty',
-            name: 'Choose one...'
-        },
-        {
-            id: 'MI',
-            name: 'MILAN'
-        },
-        {
-            id: 'RM',
-            name: 'ROME'
-        }
-    ],
-    'United Kingdom': [
-        {
-            id: 'empty',
-            name: 'Choose one...'
-        },
-        {
-            id: 'LO',
-            name: 'LONDON'
-        },
-        {
-            id: 'MA',
-            name: 'MANCHESTER'
-        }
-    ]
-};
+export const mockConditionalEntries = [
+    {
+        key: 'GR',
+        options: [
+            {
+                id: 'empty',
+                name: 'Choose one...'
+            },
+            {
+                id: 'ATH',
+                name: 'Athens'
+            },
+            {
+                id: 'SKG',
+                name: 'Thessaloniki'
+            }
+        ]
+    },
+    {
+        key: 'IT',
+        options: [
+            {
+                id: 'empty',
+                name: 'Choose one...'
+            },
+            {
+                id: 'MI',
+                name: 'MILAN'
+            },
+            {
+                id: 'RM',
+                name: 'ROME'
+            }
+        ]
+    },
+    {
+        key: 'UK',
+        options: [
+            {
+                id: 'empty',
+                name: 'Choose one...'
+            },
+            {
+                id: 'LDN',
+                name: 'London'
+            },
+            {
+                id: 'MAN',
+                name: 'Manchester'
+            },
+            {
+                id: 'SHE',
+                name: 'Sheffield'
+            },
+            {
+                id: 'LEE',
+                name: 'Leeds'
+            }
+        ]
+    }
+];
 
 export const mockRestDropdownOptions: FormFieldOption[] = [
     { id: 'LO', name: 'LONDON' },

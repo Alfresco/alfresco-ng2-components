@@ -30,7 +30,7 @@ import {
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { dropdownMockRules, mockRestDropdownOptions } from '../../../mocks/linked-dropdown.mock';
+import { mockConditionalEntries, mockRestDropdownOptions } from '../../../mocks/linked-dropdown.mock';
 
 describe('DropdownCloudWidgetComponent', () => {
 
@@ -364,13 +364,19 @@ describe('DropdownCloudWidgetComponent', () => {
                     readOnly: 'false',
                     optionType: 'rest',
                     restUrl: 'myFakeDomain.com/cities?country=${parentDropdown}',
-                    params: { linkedDropdownId: 'parentDropdown' }
+                    rule: {
+                        ruleOn: 'parentDropdown',
+                        entries: null
+                    }
                 });
+                widget.field.form.id = 'fake-form-id';
                 fixture.detectChanges();
             });
 
-            it('should fetch the options from a rest url for a linked dropdown, replacing in the restUrl the selection of the parent dropdown', async () => {
+            it('should fetch the options from a rest url for a linked dropdown', async () => {
                 const jsonDataSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(mockRestDropdownOptions));
+                const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value' };
+                spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
                 parentDropdown.value = 'UK';
                 widget.selectionChangedForField(parentDropdown);
 
@@ -382,7 +388,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 const optOne: any = fixture.debugElement.query(By.css('[id="LO"]'));
                 const optTwo: any = fixture.debugElement.query(By.css('[id="MA"]'));
 
-                expect(jsonDataSpy).toHaveBeenCalledWith('myFakeDomain.com/cities?country=UK');
+                expect(jsonDataSpy).toHaveBeenCalledWith('linked-dropdown-app', 'child-dropdown-id', 'fake-form-id', { parentDropdown: 'mock-value' });
                 expect(optOne.context.value).toBe('LO');
                 expect(optOne.context.viewValue).toBe('LONDON');
                 expect(optTwo.context.value).toBe('MA');
@@ -390,7 +396,7 @@ describe('DropdownCloudWidgetComponent', () => {
             });
 
             it('should reset the options for a linked dropdown with restUrl when the parent dropdown selection changes to empty', async () => {
-                widget.field.options = dropdownMockRules.Italy;
+                widget.field.options = mockConditionalEntries[1].options;
                 parentDropdown.value = 'empty';
                 widget.selectionChangedForField(parentDropdown);
 
@@ -417,13 +423,16 @@ describe('DropdownCloudWidgetComponent', () => {
                     type: 'dropdown-cloud',
                     readOnly: 'false',
                     optionType: 'manual',
-                    params: { linkedDropdownId: 'parentDropdown', rules: dropdownMockRules }
+                    rule: {
+                        ruleOn: 'parentDropdown',
+                        entries: mockConditionalEntries
+                    }
                 });
                 fixture.detectChanges();
             });
 
             it('Should display the options for a linked dropdown based on the parent dropdown selection', async () => {
-                parentDropdown.value = 'United Kingdom';
+                parentDropdown.value = 'GR';
                 widget.selectionChangedForField(parentDropdown);
                 fixture.detectChanges();
                 openSelect('child-dropdown-id');
@@ -432,20 +441,20 @@ describe('DropdownCloudWidgetComponent', () => {
                 await fixture.whenStable();
 
                 const optOne: any = fixture.debugElement.query(By.css('[id="empty"]'));
-                const optTwo: any = fixture.debugElement.query(By.css('[id="LO"]'));
-                const optThree: any = fixture.debugElement.query(By.css('[id="MA"]'));
+                const optTwo: any = fixture.debugElement.query(By.css('[id="ATH"]'));
+                const optThree: any = fixture.debugElement.query(By.css('[id="SKG"]'));
 
-                expect(widget.field.options).toEqual(dropdownMockRules['United Kingdom']);
+                expect(widget.field.options).toEqual(mockConditionalEntries[0].options);
                 expect(optOne.context.value).toBe('empty');
                 expect(optOne.context.viewValue).toBe('Choose one...');
-                expect(optTwo.context.value).toBe('LO');
-                expect(optTwo.context.viewValue).toBe('LONDON');
-                expect(optThree.context.value).toBe('MA');
-                expect(optThree.context.viewValue).toBe('MANCHESTER');
+                expect(optTwo.context.value).toBe('ATH');
+                expect(optTwo.context.viewValue).toBe('Athens');
+                expect(optThree.context.value).toBe('SKG');
+                expect(optThree.context.viewValue).toBe('Thessaloniki');
             });
 
             it('should reset the options for a linked dropdown when the parent dropdown selection changes to empty', async () => {
-                widget.field.options = dropdownMockRules.Italy;
+                widget.field.options = mockConditionalEntries[1].options;
                 parentDropdown.value = 'empty';
                 widget.selectionChangedForField(parentDropdown);
 
@@ -459,6 +468,55 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(widget.field.options).toEqual([{ 'id': 'empty', 'name': 'Choose one...' }]);
                 expect(defaultOption.context.value).toBe('empty');
                 expect(defaultOption.context.viewValue).toBe('Choose one...');
+            });
+        });
+
+        describe('Load selection for linked dropdown (i.e. saved, completed forms)', () => {
+
+            it('should load the selection of a manual type linked dropdown', () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'child-dropdown-id',
+                    name: 'child-dropdown',
+                    type: 'dropdown-cloud',
+                    readOnly: 'false',
+                    optionType: 'manual',
+                    rule: {
+                        ruleOn: 'parentDropdown',
+                        entries: mockConditionalEntries
+                    }
+                });
+                const updateFormSpy = spyOn(widget.field, 'updateForm');
+                const mockParentDropdown = { id: 'parentDropdown', value: 'IT' };
+                spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
+                fixture.detectChanges();
+
+                expect(updateFormSpy).toHaveBeenCalled();
+                expect(widget.field.options).toEqual(mockConditionalEntries[1].options);
+            });
+
+            it('should load the selection of a rest type linked dropdown', () => {
+                const jsonDataSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(mockRestDropdownOptions));
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'child-dropdown-id',
+                    name: 'child-dropdown',
+                    type: 'dropdown-cloud',
+                    readOnly: 'false',
+                    restUrl: 'mock-url.com/country=${country}',
+                    optionType: 'rest',
+                    rule: {
+                        ruleOn: 'country',
+                        entries: null
+                    }
+                });
+                widget.field.form.id = 'fake-form-id';
+                const updateFormSpy = spyOn(widget.field, 'updateForm');
+                const mockParentDropdown = { id: 'country', value: 'UK' };
+                spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
+                fixture.detectChanges();
+
+                expect(updateFormSpy).toHaveBeenCalled();
+                expect(jsonDataSpy).toHaveBeenCalledWith('linked-dropdown-app', 'child-dropdown-id', 'fake-form-id', { country: 'UK' });
+                expect(widget.field.options).toEqual(mockRestDropdownOptions);
             });
         });
     });
