@@ -21,7 +21,8 @@ import {
     FormValues,
     AppConfigService,
     FormOutcomeModel,
-    FormModel
+    FormModel,
+    FormFieldOption
 } from '@alfresco/adf-core';
 import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -31,7 +32,6 @@ import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormContent } from '../../services/form-fields.interfaces';
 import { FormCloudServiceInterface } from './form-cloud.service.interface';
-import { FormFieldOption } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'

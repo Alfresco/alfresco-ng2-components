@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
- import { Component, OnInit, ViewEncapsulation } from '@angular/core';
- import { WidgetComponent, FormService, LogService, FormFieldOption } from '@alfresco/adf-core';
- import { FormCloudService } from '../../../services/form-cloud.service';
- import { Subject } from 'rxjs';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { WidgetComponent, FormService, LogService, FormFieldOption } from '@alfresco/adf-core';
+import { FormCloudService } from '../../../services/form-cloud.service';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
