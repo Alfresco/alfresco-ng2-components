@@ -33,7 +33,7 @@
         </ng-container>
     
         <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef>{{ 'FORM.FIELD.ACTIONS' | translate }}</th>
+            <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
                 <button id="{{'file-'+element?.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu"
                     *ngIf="!!element.content?.mimeType">

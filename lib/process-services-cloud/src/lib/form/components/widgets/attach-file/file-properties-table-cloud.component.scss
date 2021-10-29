@@ -6,28 +6,29 @@
         .adf-datatable-selected {
             padding: 6px;
         }
-    
+
+        tr.mat-header-row {
+            height: 32px;
+        }
+
         th {
             font-weight: bold;
-            padding-right: 0px !important;
+            padding-right: 0 !important;
         }
-    
+
         td {
             max-width: 50px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            padding-right: 0px !important;
+            padding-right: 0 !important;
         }
-    
-        th.mat-header-cell:first-of-type,
+
         td.mat-cell:first-of-type,
         td.mat-footer-cell:first-of-type,
-        th.mat-header-cell:last-of-type,
         td.mat-cell:last-of-type,
         td.mat-footer-cell:last-of-type {
             width: 18% !important;
         }
-    
     }
 }

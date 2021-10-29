@@ -43,7 +43,6 @@
       "UPLOAD": "UPLOAD",
       "REQUIRED": "*Required",
       "FILE_NAME": "File Name",
-      "ACTIONS": "Actions",
       "NO_FILE_ATTACHED" : "No file attached",
       "VALIDATOR": {
         "INVALID_NUMBER": "Use a different number format",

@@ -1,6 +1,5 @@
 .adf {
     &-attach-widget-container {
-        margin-bottom: 15px;
         display: flex;
         align-items: center;
 
@@ -19,6 +18,26 @@
     &-attach-widget__menu-upload {
         display: flex;
         align-items: center;
+        margin-right: 8px;
+
+        .mat-raised-button {
+            line-height: 28px;
+            font-size: 12px;
+        }
+
+        button span {
+            font-size: 12px;
+
+            mat-icon {
+                line-height: 12px;
+                height: 12px;
+                width: 12px;
+            }
+
+            .material-icons {
+                font-size: 18px;
+            }
+        }
     }
 
     &-attach-widget__input-type {
@@ -47,10 +66,22 @@
     }
 
     &-attach-widget {
-        width: 100%;
+        display: flex;
+        justify-content: space-between;
         word-break: break-all;
-        padding: 0.4375em 0;
-        border-top: 0.84375em solid transparent;
+        padding: 0.4375em;
+        border-bottom: none;
+        background: rgb(0, 0, 0, 0.04);
+        min-height: 27px;
+
+        .adf-label {
+            width: 32px;
+            font-size: var(--theme-caption-font-size);
+            line-height: var(--theme-headline-line-height);
+            text-align: left;
+            white-space: nowrap;
+            margin-left: 8px;
+        }
     }
 
     &-attach-widget__icon {
