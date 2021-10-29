@@ -62,7 +62,7 @@ export class FormFieldModel extends FormWidgetModel {
     restLabelProperty: string;
     hasEmptyValue: boolean;
     className: string;
-    optionType: string;
+    optionType: 'rest' | 'manual' ;
     params: FormFieldMetadata = {};
     hyperlinkUrl: string;
     displayText: string;
@@ -372,23 +372,14 @@ export class FormFieldModel extends FormWidgetModel {
 
                     const entry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
                     if (entry.length > 0) {
-                        this.form.values[this.id] = entry[0];
+                        this.setFormFieldValueOption(entry[0]);
                     }
                 }
                 break;
             case FormFieldTypes.RADIO_BUTTONS:
                 const radioButton: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
                 if (radioButton.length > 0) {
-                    if (this.optionType === 'rest' && !!this.restUrl) {
-                        const restEntry = {};
-                        const restIdProperty = this.restIdProperty || 'id';
-                        const restLabelProperty = this.restLabelProperty || 'name';
-                        restEntry[restIdProperty] = radioButton[0].id;
-                        restEntry[restLabelProperty] = radioButton[0].name;
-                        this.form.values[this.id] = restEntry;
-                    } else {
-                        this.form.values[this.id] = radioButton[0];
-                    }
+                    this.setFormFieldValueOption(radioButton[0]);
                 }
                 break;
             case FormFieldTypes.UPLOAD:
@@ -494,6 +485,19 @@ export class FormFieldModel extends FormWidgetModel {
             json.params.field &&
             json.params.field.type === FormFieldTypes.BOOLEAN) ||
             json.type === FormFieldTypes.BOOLEAN;
+    }
+
+    private setFormFieldValueOption(option: FormFieldOption ) {
+        if (this.optionType === 'rest' && !!this.restUrl) {
+            const restEntry = {};
+            const restIdProperty = this.restIdProperty || 'id';
+            const restLabelProperty = this.restLabelProperty || 'name';
+            restEntry[restIdProperty] = option.id;
+            restEntry[restLabelProperty] = option.name;
+            this.form.values[this.id] = restEntry;
+        } else {
+            this.form.values[this.id] = option;
+        }
     }
 
 }
