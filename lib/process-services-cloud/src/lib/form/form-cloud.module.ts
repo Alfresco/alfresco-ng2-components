@@ -37,6 +37,7 @@ import { PeopleCloudModule } from '../people/people-cloud.module';
 import { GroupCloudModule } from '../group/group-cloud.module';
 import { PropertiesViewerWidgetComponent } from './components/widgets/properties-viewer/properties-viewer.widget';
 import { PropertiesViewerWrapperComponent } from './components/widgets/properties-viewer/properties-viewer-wrapper/properties-viewer-wrapper.component';
+import { RadioButtonsCloudWidgetComponent } from './components/widgets/radio-buttons/radio-buttons-cloud.widget';
 
 @NgModule({
     imports: [
@@ -57,6 +58,7 @@ import { PropertiesViewerWrapperComponent } from './components/widgets/propertie
         FormDefinitionSelectorCloudComponent,
         FormCustomOutcomesComponent,
         DropdownCloudWidgetComponent,
+        RadioButtonsCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
         DateCloudWidgetComponent,
         PeopleCloudWidgetComponent,
@@ -70,6 +72,7 @@ import { PropertiesViewerWrapperComponent } from './components/widgets/propertie
         FormDefinitionSelectorCloudComponent,
         FormCustomOutcomesComponent,
         DropdownCloudWidgetComponent,
+        RadioButtonsCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
         DateCloudWidgetComponent,
         PeopleCloudWidgetComponent,

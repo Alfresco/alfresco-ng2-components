@@ -691,6 +691,98 @@ describe('FormFieldModel', () => {
         expect(form.values['dropdown_field'].name).toEqual('Option 1');
     });
 
+    it('dropdown field type should be formatted on rest properties', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'HeaderFieldtype',
+            id: 'dropdown_field',
+            name: 'header',
+            type: FormFieldTypes.DROPDOWN,
+            value: 'opt1',
+            required: false,
+            readOnly: true,
+            restUrl: 'fake-url-just-to-show',
+            optionType: 'rest',
+            restIdProperty: 'fake-id-property',
+            restLabelProperty: 'fake-label-property',
+            options: [
+                {id: 'opt1', name: 'Option 1'},
+                {id: 'opt2', name: 'Option 2'}
+            ]
+        });
+        field.updateForm();
+        expect(form.values['dropdown_field']['fake-id-property']).toEqual('opt1');
+        expect(form.values['dropdown_field']['fake-label-property']).toEqual('Option 1');
+    });
+
+    it('dropdown field type should be formatted on id and name properties if rest properties are not set', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'HeaderFieldtype',
+            id: 'dropdown_field',
+            name: 'header',
+            type: FormFieldTypes.DROPDOWN,
+            value: 'opt1',
+            required: false,
+            readOnly: true,
+            restUrl: 'fake-url-just-to-show',
+            optionType: 'rest',
+            options: [
+                {id: 'opt1', name: 'Option 1'},
+                {id: 'opt2', name: 'Option 2'}
+            ]
+        });
+        field.updateForm();
+        expect(form.values['dropdown_field']['id']).toEqual('opt1');
+        expect(form.values['dropdown_field']['name']).toEqual('Option 1');
+    });
+
+    it('radio button field rest type should appear with its configured label and id into the rest values', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'HeaderFieldtype',
+            id: 'radio_bananan_field',
+            name: 'banana',
+            type: FormFieldTypes.RADIO_BUTTONS,
+            value: 'opt1',
+            required: false,
+            readOnly: true,
+            restUrl: '<whatever-url-you-like-we-do-not-mind>',
+            restIdProperty: 'banana',
+            restLabelProperty: 'banLabel',
+            optionType: 'rest',
+            options: [
+                {id: 'opt1', name: 'Option 1'},
+                {id: 'opt2', name: 'Option 2'}
+            ]
+        });
+        field.updateForm();
+        expect(form.values['radio_bananan_field']['banana']).toEqual('opt1');
+        expect(form.values['radio_bananan_field']['banLabel']).toEqual('Option 1');
+    });
+
+    it('radio button field rest type should appear with id / name properties when rest properties are not configured', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'HeaderFieldtype',
+            id: 'radio_bananan_field',
+            name: 'banana',
+            type: FormFieldTypes.RADIO_BUTTONS,
+            value: 'opt1',
+            required: false,
+            readOnly: true,
+            restUrl: '<whatever-url-you-like-we-do-not-mind>',
+            optionType: 'rest',
+            options: [
+                {id: 'opt1', name: 'Option 1'},
+                {id: 'opt2', name: 'Option 2'}
+            ]
+        });
+        field.updateForm();
+        expect(form.values['radio_bananan_field']['id']).toEqual('opt1');
+        expect(form.values['radio_bananan_field']['name']).toEqual('Option 1');
+    });
+
     it('should parse and resolve people null value as null', () => {
         const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.PEOPLE,

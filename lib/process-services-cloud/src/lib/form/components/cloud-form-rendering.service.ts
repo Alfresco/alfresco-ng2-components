@@ -23,6 +23,7 @@ import { DateCloudWidgetComponent } from './widgets/date/date-cloud.widget';
 import { PeopleCloudWidgetComponent } from './widgets/people/people-cloud.widget';
 import { GroupCloudWidgetComponent } from './widgets/group/group-cloud.widget';
 import { PropertiesViewerWidgetComponent } from './widgets/properties-viewer/properties-viewer.widget';
+import { RadioButtonsCloudWidgetComponent } from './widgets/radio-buttons/radio-buttons-cloud.widget';
 
 @Injectable({
     providedIn: 'root'
@@ -37,7 +38,8 @@ export class CloudFormRenderingService extends FormRenderingService {
             'date': () => DateCloudWidgetComponent,
             'people': () => PeopleCloudWidgetComponent,
             'functional-group': () => GroupCloudWidgetComponent,
-            'properties-viewer': () => PropertiesViewerWidgetComponent
+            'properties-viewer': () => PropertiesViewerWidgetComponent,
+            'radio-buttons': () => RadioButtonsCloudWidgetComponent
         }, true);
     }
 }
