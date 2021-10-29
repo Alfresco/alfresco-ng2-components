@@ -254,44 +254,6 @@ describe('DropdownCloudWidgetComponent', () => {
                     done();
                 });
             });
-
-            it('should map properties if restResponsePath is set', (done) => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                    id: 'dropdown-id',
-                    name: 'date-name',
-                    type: 'dropdown-cloud',
-                    readOnly: 'false',
-                    restUrl: 'fake-rest-url',
-                    optionType: 'rest',
-                    restResponsePath: 'path'
-                });
-
-                const dropdownSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of( [
-                        { id: 'opt_1', name: 'option_1' },
-                        { id: 'opt_2', name: 'option_2' },
-                        { id: 'opt_3', name: 'option_3' }]
-                ));
-
-                widget.ngOnInit();
-                fixture.detectChanges();
-
-                openSelect('#dropdown-id');
-
-                fixture.whenStable().then(() => {
-                    expect(dropdownSpy).toHaveBeenCalled();
-
-                    const optOne: any = fixture.debugElement.queryAll(By.css('[id="opt_1"]'));
-                    expect(optOne[0].context.value).toBe('opt_1');
-                    expect(optOne[0].context.viewValue).toBe('option_1');
-                    const optTwo: any = fixture.debugElement.queryAll(By.css('[id="opt_2"]'));
-                    expect(optTwo[0].context.value).toBe('opt_2');
-                    expect(optTwo[0].context.viewValue).toBe('option_2');
-                    const optThree: any = fixture.debugElement.queryAll(By.css('[id="opt_3"]'));
-                    expect(optThree[0].context.value).toBe('opt_3');
-                    expect(optThree[0].context.viewValue).toBe('option_3');
-                    done();
-                });
-            });
         });
     });
 
@@ -374,7 +336,7 @@ describe('DropdownCloudWidgetComponent', () => {
             });
 
             it('should fetch the options from a rest url for a linked dropdown', async () => {
-                const jsonDataSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(mockRestDropdownOptions));
+                const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
                 const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value' };
                 spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
                 parentDropdown.value = 'UK';
@@ -388,8 +350,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 const optOne: any = fixture.debugElement.query(By.css('[id="LO"]'));
                 const optTwo: any = fixture.debugElement.query(By.css('[id="MA"]'));
 
-                // Remove app name before marking the PR as ready
-                expect(jsonDataSpy).toHaveBeenCalledWith('linked-dropdown-app', 'child-dropdown-id', 'fake-form-id', { parentDropdown: 'mock-value' });
+                expect(jsonDataSpy).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', { parentDropdown: 'mock-value' });
                 expect(optOne.context.value).toBe('LO');
                 expect(optOne.context.viewValue).toBe('LONDON');
                 expect(optTwo.context.value).toBe('MA');
@@ -496,7 +457,7 @@ describe('DropdownCloudWidgetComponent', () => {
             });
 
             it('should load the selection of a rest type linked dropdown', () => {
-                const jsonDataSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of(mockRestDropdownOptions));
+                const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
@@ -516,8 +477,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
 
                 expect(updateFormSpy).toHaveBeenCalled();
-                // Remove app name before marking the PR as ready
-                expect(jsonDataSpy).toHaveBeenCalledWith('linked-dropdown-app', 'child-dropdown-id', 'fake-form-id', { country: 'UK' });
+                expect(jsonDataSpy).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', { country: 'UK' });
                 expect(widget.field.options).toEqual(mockRestDropdownOptions);
             });
         });

@@ -65,7 +65,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     ngOnInit() {
-        if (this.hasRestUrl() && !this.isRestUrlContainingLinkedDropdownId()) {
+        if (this.hasRestUrl() && !this.isLinkedWidget()) {
             this.getValuesFromRestApi();
         }
 
@@ -81,6 +81,27 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                     }
                 });
         }
+    }
+
+    getValuesFromRestApi() {
+        if (this.isValidRestType()) {
+            const bodyParam = this.buildBodyParam();
+            this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe((result: FormFieldOption[]) => {
+                    this.field.options = result;
+                }, (err) => this.handleError(err));
+        }
+    }
+
+    buildBodyParam(): any {
+        const bodyParam = Object.assign({});
+        if (this.isLinkedWidget()) {
+            const parentWidgetValue = this.getParentWidgetValue();
+            const parentWidgetId = this.getLinkedWidgetId();
+            bodyParam[parentWidgetId] = parentWidgetValue;
+        }
+        return bodyParam;
     }
 
     private loadLinkedWidget() {
@@ -126,10 +147,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return !!this.getConditionalEntries().length;
     }
 
-    private hasDefaultOption(): boolean {
-        return !!this.field.options.find((option: {id, name}) => option.id === 'empty' && option.name === 'Choose one...');
-    }
-
     private addDefaultOption() {
         this.field.options = [DropdownCloudWidgetComponent.DEFAULT_OPTION];
     }
@@ -163,39 +180,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     getLinkedWidgetId(): string {
         return this.field?.rule?.ruleOn;
-    }
-
-    getValuesFromRestApi() {
-        if (this.isValidRestType()) {
-            const bodyParam = this.buildBodyParam();
-            this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe((result: FormFieldOption[]) => {
-                    this.field.options = result;
-                }, (err) => this.handleError(err));
-        }
-    }
-
-    buildBodyParam(): any {
-        const bodyParam = Object.assign({});
-        if (this.isLinkedWidget()) {
-            const parentWidgetValue = this.getParentWidgetValue();
-            const parentWidgetId = this.getLinkedWidgetId();
-            bodyParam[parentWidgetId] = parentWidgetValue;
-        }
-        return bodyParam;
-    }
-
-    mapJsonData(data: any[]): FormFieldOption[] {
-        const idProperty = this.field.restIdProperty || 'id';
-        const restLabelProperty = this.field.restLabelProperty || 'name';
-
-        return data.map((value: any) => {
-            return {
-                name: value[restLabelProperty],
-                id: value[idProperty]
-            };
-        });
     }
 
     compareDropdownValues(opt1: FormFieldOption | string, opt2: FormFieldOption | string): boolean {
