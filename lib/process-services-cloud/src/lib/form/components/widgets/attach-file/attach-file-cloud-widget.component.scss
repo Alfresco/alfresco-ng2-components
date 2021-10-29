@@ -71,7 +71,7 @@
         word-break: break-all;
         padding: 0.4375em;
         border-bottom: none;
-        background: rgb(0, 0, 0, 0.04);
+        background: var(--theme-colors-mat-grey);
         min-height: 27px;
 
         .adf-label {
