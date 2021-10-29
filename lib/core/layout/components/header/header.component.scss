@@ -1,6 +1,7 @@
-adf-layout-header .mat-toolbar-single-row {
 
-    color: var(--theme-primary-color-default-contrast) !important;
+adf-layout-header .mat-toolbar-single-row {
+    color: var(--adf-header-text-color) !important;
+    background-color: var(--adf-header-background-color);
     position: relative;
     padding: 0 24px;
 

@@ -27,6 +27,11 @@ export class HeaderDataComponent {
     checkbox = true;
     position: 'start' | 'end' = 'start';
     hideSidenavToggle = false;
+    colorsHashesTests = [
+        /#[a-z0-9]{3}/i,
+        /#[a-z0-9]{4}/i,
+        /#[a-z0-9]{6}/i
+    ];
 
     constructor(private headerService: HeaderDataService) {
     }
@@ -42,6 +47,14 @@ export class HeaderDataComponent {
     submitTitle(title: string) {
         if (title) {
             this.headerService.changeTitle(title);
+        }
+    }
+
+    submitHeaderTextColor(color: string): void {
+        const isColorHashValid = this.colorsHashesTests.some(colorTest => colorTest.test(color));
+
+        if (isColorHashValid || !color) {
+            this.headerService.changeHeaderTextColor(color);
         }
     }
 

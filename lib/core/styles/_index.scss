@@ -48,6 +48,8 @@
         --adf-card-view-label-color: mat-color($foreground, text, 0.4),
         --adf-card-view-datetime-border-color: mat-color($foreground, text, 0.42),
         --adf-upload-border-color: mat-color($foreground, text, 0.14),
+        --adf-header-background-color: mat-color($primary),
+        --adf-header-text-color: mat-color($primary, default-contrast),
 
         --theme-hover-bg-color: mat-color($background, hover),
         --theme-text-color: mat-color($foreground, text, 0.54),
