@@ -34,7 +34,7 @@ import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { AppConfigService } from './../../app-config/app-config.service';
 import { PDFDocumentProxy, PDFSource } from 'pdfjs-dist';
 import { Subject } from 'rxjs';
-import { catchError, delay, takeUntil } from 'rxjs/operators';
+import { catchError, delay } from 'rxjs/operators';
 
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
