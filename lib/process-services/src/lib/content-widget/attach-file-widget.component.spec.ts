@@ -623,6 +623,6 @@ describe('AttachFileWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(openLoginSpy).toHaveBeenCalledWith(fakeRepositoryListAnswer[2], undefined, 'alfresco-2000-external')
+        expect(openLoginSpy).toHaveBeenCalledWith(fakeRepositoryListAnswer[2], undefined, 'alfresco-2000-external');
     });
 });

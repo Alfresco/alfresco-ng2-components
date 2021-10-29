@@ -78,10 +78,10 @@ export class AttachFileWidgetDialogService {
     downloadURL(repository: AlfrescoEndpointRepresentation, sourceId: string): Observable<string> {
         const { accountIdentifier } = this.constructPayload(repository);
 
-        if (this.externalApis[accountIdentifier]?.getInstance()){
+        if (this.externalApis[accountIdentifier]?.getInstance()) {
             const contentApi = new ContentApi(this.externalApis[accountIdentifier].getInstance());
 
-            if(this.externalApis[accountIdentifier].getInstance().isLoggedIn()) {
+            if (this.externalApis[accountIdentifier].getInstance().isLoggedIn()) {
                 return of(contentApi.getContentUrl(sourceId));
             }
         }
