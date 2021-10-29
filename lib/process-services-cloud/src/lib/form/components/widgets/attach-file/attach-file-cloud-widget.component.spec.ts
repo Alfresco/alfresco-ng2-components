@@ -29,7 +29,8 @@ import {
     FormService,
     DownloadService,
     AppConfigService,
-    UploadWidgetContentLinkModel
+    UploadWidgetContentLinkModel,
+    LocalizedDatePipe
 } from '@alfresco/adf-core';
 import {
     allSourceParams,
@@ -81,6 +82,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     let updateFormSpy: jasmine.Spy;
     let contentClickedSpy: jasmine.Spy;
     let openUploadFileDialogSpy: jasmine.Spy;
+    let localizedDataPipe: LocalizedDatePipe;
 
     function createUploadWidgetField(form: FormModel, fieldId: string, value?: any, params?: any, multiple?: boolean, name?: string, readOnly?: boolean) {
         widget.field = new FormFieldModel(form, {
@@ -124,6 +126,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         formService = TestBed.inject(FormService);
         contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
         openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeMinimalNode]));
+        localizedDataPipe = new LocalizedDatePipe();
     });
 
     afterEach(() => {
@@ -234,8 +237,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('#fileProperty-1155-dob').textContent).toBe('Oct 28, 2000');
-            expect(element.querySelector('#fileProperty-1155-doj').textContent).toBe('Oct 21, 2021, 9:24:02 AM');
+            expect(element.querySelector('#fileProperty-1155-dob').textContent).toBe(localizedDataPipe.transform(new Date()));
         });
     });
 

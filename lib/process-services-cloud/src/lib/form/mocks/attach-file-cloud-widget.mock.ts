@@ -92,8 +92,8 @@ export const fakeLocalPngHavingCMProperties = {
         'pfx:property_two': true,
         'a:name': 'Alex',
         'a:age': '34',
-        'a:dob': 'Thu Oct 28 2000 11:24:02 GMT+0530',
-        'a:doj': 'Thu Oct 21 2021 09:24:02 GMT+0530'
+        'a:dob': new Date(),
+        'a:doj': new Date()
     }
 };
 
