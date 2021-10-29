@@ -60,7 +60,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
 
             if (field.type === FormFieldTypes.DROPDOWN) {
                 if (field.hasMultipleValues) {
-                    return !!field.value.length;
+                    return Array.isArray(field.value) && !!field.value.length;
                 }
 
                 if (field.hasEmptyValue && field.emptyOption) {

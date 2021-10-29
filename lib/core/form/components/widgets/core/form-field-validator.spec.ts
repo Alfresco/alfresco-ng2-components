@@ -101,6 +101,18 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBe(false);
         });
 
+        it('should fail for dropdown with null value', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                value: null,
+                required: true,
+                options: [{ id: 'one', name: 'one' }],
+                selectionType: 'multiple'
+            });
+
+            expect(validator.validate(field)).toBe(false);
+        });
+
         it('should fail for radio buttons', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.RADIO_BUTTONS,
