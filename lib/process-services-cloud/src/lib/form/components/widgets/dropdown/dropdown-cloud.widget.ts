@@ -28,7 +28,7 @@ import {
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 
 /* tslint:disable:component-selector  */
 
@@ -66,24 +66,24 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     ngOnInit() {
         if (this.hasRestUrl() && !this.isLinkedWidget()) {
-            this.getValuesFromRestApi();
+            this.persistFieldOptionsFromRestApi();
         }
 
         if (this.isLinkedWidget()) {
-            this.loadLinkedWidget();
+            this.loadFieldOptionsForLinkedWidget();
 
             this.formService.formFieldValueChanged
-                .pipe(takeUntil(this.onDestroy$))
+                .pipe(
+                    takeUntil(this.onDestroy$),
+                    filter((event: FormFieldEvent) => this.isFormFieldEventOfTypeDropdown(event) && this.isParentFormFieldEvent(event)))
                 .subscribe((event: FormFieldEvent) => {
-                    if (this.isFormFieldEventOfTypeDropdown(event) && this.hasParentDropdownSelectionChanged(event)) {
-                        const valueOfParentWidget = event.field.value;
-                        this.parentValueChanged(valueOfParentWidget);
-                    }
+                    const valueOfParentWidget = event.field.value;
+                    this.parentValueChanged(valueOfParentWidget);
                 });
         }
     }
 
-    getValuesFromRestApi() {
+    private persistFieldOptionsFromRestApi() {
         if (this.isValidRestType()) {
             const bodyParam = this.buildBodyParam();
             this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
@@ -94,7 +94,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
     }
 
-    buildBodyParam(): any {
+    private buildBodyParam(): any {
         const bodyParam = Object.assign({});
         if (this.isLinkedWidget()) {
             const parentWidgetValue = this.getParentWidgetValue();
@@ -104,7 +104,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return bodyParam;
     }
 
-    private loadLinkedWidget() {
+    private loadFieldOptionsForLinkedWidget() {
         const parentWidgetValue = this.getParentWidgetValue();
         this.parentValueChanged(parentWidgetValue);
         this.field.updateForm();
@@ -116,35 +116,43 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return parentWidget?.value;
     }
 
-    parentValueChanged(valueOfParentDropdown: string) {
-        if (!!valueOfParentDropdown && valueOfParentDropdown !== DropdownCloudWidgetComponent.DEFAULT_OPTION.id) {
-            this.hasRestUrl() && this.isRestUrlContainingLinkedDropdownId() ? this.getValuesFromRestApi() : this.getManualValuesWithLinkedWidget(valueOfParentDropdown);
-        } else if (valueOfParentDropdown === DropdownCloudWidgetComponent.DEFAULT_OPTION.id) {
+    private parentValueChanged(value: string) {
+        if (this.isValidValue(value)) {
+            this.isValidRestType() ? this.persistFieldOptionsFromRestApi() : this.persistFieldOptionsFromManualList(value);
+        } else if (this.isDefaultValue(value)) {
             this.addDefaultOption();
         }
+    }
+
+    private isValidValue(value: string): boolean {
+        return !!value && value !== DropdownCloudWidgetComponent.DEFAULT_OPTION.id;
+    }
+
+    private isDefaultValue(value: string): boolean {
+        return value === DropdownCloudWidgetComponent.DEFAULT_OPTION.id;
     }
 
     private getFormFieldById(fieldId): FormFieldModel {
         return this.field.form.getFormFields().filter((field: FormFieldModel) => field.id === fieldId)[0];
     }
 
-    private getManualValuesWithLinkedWidget(valueOfLinkedWidget: string) {
-        if (this.hasConditionalEntries()) {
-            const rulesEntries = this.getConditionalEntries();
+    private persistFieldOptionsFromManualList(value: string) {
+        if (this.hasRuleEntries()) {
+            const rulesEntries = this.getRuleEntries();
             rulesEntries.forEach((ruleEntry: RuleEntry) => {
-                if (ruleEntry.key === valueOfLinkedWidget) {
+                if (ruleEntry.key === value) {
                     this.field.options = ruleEntry.options;
                 }
             });
         }
     }
 
-    private getConditionalEntries(): RuleEntry[] {
+    private getRuleEntries(): RuleEntry[] {
         return this.field.rule.entries;
     }
 
-    private hasConditionalEntries(): boolean {
-        return !!this.getConditionalEntries().length;
+    private hasRuleEntries(): boolean {
+        return !!this.getRuleEntries().length;
     }
 
     private addDefaultOption() {
@@ -157,20 +165,15 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         this.onFieldChanged(field);
     }
 
-    private hasParentDropdownSelectionChanged(event: FormFieldEvent): boolean {
+    private isParentFormFieldEvent(event: FormFieldEvent): boolean {
         return event.field.id === this.getLinkedWidgetId();
-    }
-
-    private isRestUrlContainingLinkedDropdownId(): boolean {
-        const linkedWidgetId = this.getLinkedWidgetId();
-        return this.field.restUrl?.includes(linkedWidgetId) || false;
     }
 
     private isFormFieldEventOfTypeDropdown(event: FormFieldEvent): boolean {
         return event.field.type === FormFieldTypes.DROPDOWN;
     }
 
-    hasRestUrl(): boolean {
+    private hasRestUrl(): boolean {
         return !!this.field?.restUrl;
     }
 
@@ -216,11 +219,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return optionValue;
     }
 
-    isValidRestType(): boolean {
+    private isValidRestType(): boolean {
         return this.field.optionType === 'rest' && !!this.field.restUrl;
     }
 
-    handleError(error: any) {
+    private handleError(error: any) {
         this.logService.error(error);
     }
 
