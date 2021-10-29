@@ -18,9 +18,9 @@
 /* tslint:disable:component-selector  */
 
 export interface DisplayableCMProperties {
-    name?: string,
-    prefixedName?: string,
-    title?: string,
-    dataType?: string,
-    defaultValue?: string
+    name?: string;
+    prefixedName?: string;
+    title?: string;
+    dataType?: string;
+    defaultValue?: string;
 }
