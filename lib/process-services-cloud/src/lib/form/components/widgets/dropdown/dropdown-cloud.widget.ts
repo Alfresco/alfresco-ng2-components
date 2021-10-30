@@ -74,8 +74,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
             this.formService.formFieldValueChanged
                 .pipe(
-                    takeUntil(this.onDestroy$),
-                    filter((event: FormFieldEvent) => this.isFormFieldEventOfTypeDropdown(event) && this.isParentFormFieldEvent(event)))
+                    filter((event: FormFieldEvent) => this.isFormFieldEventOfTypeDropdown(event) && this.isParentFormFieldEvent(event)),
+                    takeUntil(this.onDestroy$))
                 .subscribe((event: FormFieldEvent) => {
                     const valueOfParentWidget = event.field.value;
                     this.parentValueChanged(valueOfParentWidget);
