@@ -69,6 +69,34 @@ export const fakeLocalPhysicalRecordResponse = {
     }
 };
 
+export const fakeLocalPngHavingCMProperties = {
+    id: 1155,
+    nodeId: 1155,
+    name: 'a_png_file.png',
+    created: '2017-07-25T17:17:37.099Z',
+    createdBy: {
+        id: 1001,
+        firstName: 'Admin',
+        lastName: 'admin',
+        email: 'admin'
+    },
+    relatedContent: false,
+    contentAvailable: true,
+    link: false,
+    mimeType: null,
+    simpleType: 'image',
+    previewStatus: 'queued',
+    thumbnailStatus: 'queued',
+    properties: {
+        'pfx:property_one': 'testValue',
+        'pfx:property_two': true,
+        'a:name': 'Alex',
+        'a:age': '34',
+        'a:dob': new Date(),
+        'a:doj': new Date()
+    }
+};
+
 export const onlyLocalParams = {
     fileSource: {
         serviceId: 'local-file'
@@ -115,6 +143,47 @@ export const allSourceParams = {
             type: DestinationFolderPathType.STATIC_TYPE
         }
     }
+};
+
+export const displayableCMParams = {
+    fileSource: {
+        name: 'all file sources',
+        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        destinationFolderPath: {
+            value: '-root-/myfiles',
+            type: DestinationFolderPathType.STATIC_TYPE
+        }
+    },
+    displayableCMProperties: [
+        {
+            'name': 'name',
+            'prefixedName': 'a:name',
+            'title': '',
+            'dataType': 'd:text',
+            'defaultValue': 'Bob'
+        },
+        {
+            'name': 'age',
+            'prefixedName': 'a:age',
+            'title': 'Age',
+            'dataType': 'd:text',
+            'defaultValue': ''
+        },
+        {
+            'name': 'dob',
+            'prefixedName': 'a:dob',
+            'title': 'Date of Birth',
+            'dataType': 'd:date',
+            'defaultValue': ''
+        },
+        {
+            'name': 'doj',
+            'prefixedName': 'a:doj',
+            'title': 'Date of Joining',
+            'dataType': 'd:datetime',
+            'defaultValue': ''
+        }
+    ]
 };
 
 export const allSourceWithStringTypeEmptyValue = {
