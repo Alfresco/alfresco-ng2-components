@@ -43,7 +43,7 @@ export class AttachFileWidgetPage {
 
     async checkNoFileIsAttached(fieldId: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
-        const fileItem = widget.$(this.filesListLocator).$('table tbody tr td');
+        const fileItem = widget.$(this.filesListLocator).$('mat-list-item');
         await BrowserVisibility.waitUntilElementIsNotVisible(fileItem);
     }
 
@@ -70,7 +70,7 @@ export class AttachFileWidgetPage {
     }
 
     async viewFile(name: string): Promise<void> {
-        const fileView = $(this.filesListLocator).element(by.cssContainingText('table tbody tr td span ', name));
+        const fileView = $(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
         await BrowserActions.click(fileView);
         await browser.actions().doubleClick(fileView).perform();
     }
@@ -165,6 +165,6 @@ export class AttachFileWidgetPage {
 
     private async getFileAttachedNotAttachedLocator(fieldId: string, name: string) {
         const widget = await this.formFields.getWidget(fieldId);
-        return widget.$(this.filesListLocator).element(by.cssContainingText('table tbody tr td span ', name));
+        return widget.$(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
     }
 }
