@@ -21,6 +21,8 @@ import { Directive, Input, Component, OnInit, OnChanges, ComponentFactoryResolve
     selector: '[adf-node-counter]'
 })
 export class NodeCounterDirective implements OnInit, OnChanges {
+
+    /** Number to display in the counter badge */
     @Input('adf-node-counter')
     counter: number;
 
