@@ -26,6 +26,7 @@ import { FormFieldTypes } from './form-field-types';
 import { NumberFieldValidator } from './form-field-validator';
 import { FormWidgetModel } from './form-widget.model';
 import { FormModel } from './form.model';
+import { FormFieldRule } from './form-field-rule';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -72,6 +73,7 @@ export class FormFieldModel extends FormWidgetModel {
     currency: string = null;
     dateDisplayFormat: string = this.defaultDateFormat;
     selectionType: 'single' | 'multiple' = null;
+    rule?: FormFieldRule;
 
     // container model members
     numberOfColumns: number = 1;
@@ -178,6 +180,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.validationSummary = new ErrorMessageModel();
             this.tooltip = json.tooltip;
             this.selectionType = json.selectionType;
+            this.rule = json.rule;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;

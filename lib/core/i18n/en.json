@@ -43,6 +43,7 @@
       "UPLOAD": "UPLOAD",
       "REQUIRED": "*Required",
       "FILE_NAME": "File Name",
+      "DEPENDS_ON": "Depends on: {{widgetId}}",
       "NO_FILE_ATTACHED" : "No file attached",
       "VALIDATOR": {
         "INVALID_NUMBER": "Use a different number format",
