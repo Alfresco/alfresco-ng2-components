@@ -1,8 +1,8 @@
 ---
-Title: License info, alfresco-ng2-components 4.6.0
+Title: License info, alfresco-ng2-components 4.7.0
 ---
 
-# License information for alfresco-ng2-components 4.6.0
+# License information for alfresco-ng2-components 4.7.0
 
 This page lists all third party libraries the project depends on.
 
@@ -10,7 +10,7 @@ This page lists all third party libraries the project depends on.
 
 | Name | Version | License |
 | --- | --- | --- |
-| [@alfresco/js-api](https://github.com/Alfresco/alfresco-js-api) | 4.7.0-3897 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [@alfresco/js-api](https://github.com/Alfresco/alfresco-js-api) | 4.7.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [@angular/animations](https://github.com/angular/angular) | 10.0.12 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [@angular/cdk](https://github.com/angular/components) | 10.1.3 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [@angular/common](https://github.com/angular/angular) | 10.0.12 | [MIT](http://www.opensource.org/licenses/MIT) |
@@ -39,7 +39,7 @@ This page lists all third party libraries the project depends on.
 | [@wry/equality](https://github.com/benjamn/wryware) | 0.5.2 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [@wry/trie](https://github.com/benjamn/wryware) | 0.3.1 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [adf-tslint-rules](https://github.com/Alfresco/alfresco-ng2-components) | 0.0.7 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
-| [alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components) | 4.6.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
+| [alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components) | 4.7.0 | [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0) |
 | [ansi-styles](https://github.com/chalk/ansi-styles) | 3.2.1 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [apollo-angular](https://github.com/kamilkisiela/apollo-angular) | 2.6.0 | [MIT](http://www.opensource.org/licenses/MIT) |
 | [app-root-path](https://github.com/inxilpro/node-app-root-path) | 2.0.1 | [MIT](http://www.opensource.org/licenses/MIT) |
