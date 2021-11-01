@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-cli",
   "description": "Alfresco ADF cli and utils",
-  "version": "4.6.0",
+  "version": "4.7.0",
   "author": "Alfresco Software, Ltd.",
   "bin": {
     "adf-cli": "./bin/adf-cli",
@@ -20,7 +20,7 @@
     "dist": "rm -rf ./dist/ && npm run build && cp -R ./bin ./dist/ && cp -R ./resources ./dist && cp -R ./templates ./dist && cp ./package.json ./dist/"
   },
   "dependencies": {
-    "@alfresco/js-api": "4.7.0-3897",
+    "@alfresco/js-api": "4.7.0",
     "commander": "^4.0.0",
     "ejs": "^2.6.1",
     "license-checker": "^25.0.1",
