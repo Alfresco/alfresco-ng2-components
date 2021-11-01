@@ -328,7 +328,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Search widget interface](content-services/interfaces/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/src/lib/search/search-widget.interface.ts) |
+| [Search widget interface](content-services/interfaces/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/src/lib/search/models/search-widget.interface.ts) |
 
 ### Models
 
@@ -357,8 +357,8 @@ for more information about installing and using the source code.
 | [Node permission dialog service](content-services/services/node-permission-dialog.service.md) | Displays dialogs to let the user set node permissions. | [Source](../lib/content-services/src/lib/permission-manager/services/node-permission-dialog.service.ts) |
 | [Node Permission service](content-services/services/node-permission.service.md) | Manages role permissions for content nodes. | [Source](../lib/content-services/src/lib/permission-manager/services/node-permission.service.ts) |
 | [Rating service](content-services/services/rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/src/lib/social/services/rating.service.ts) |
-| [Search filter service](content-services/services/search-filter.service.md) | Registers widgets for use with the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-filter/search-filter.service.ts) |
-| [Search Query Builder service](content-services/services/search-query-builder.service.md) | Stores information from all the custom search and faceted search widgets, compiles and runs the final search query. | [Source](../lib/content-services/src/lib/search/search-query-builder.service.ts) |
+| [Search filter service](content-services/services/search-filter.service.md) | Registers widgets for use with the Search Filter component. | [Source](../lib/content-services/src/lib/search/services/search-filter.service.ts) |
+| [Search Query Builder service](content-services/services/search-query-builder.service.md) | Stores information from all the custom search and faceted search widgets, compiles and runs the final search query. | [Source](../lib/content-services/src/lib/search/services/search-query-builder.service.ts) |
 | [Tag service](content-services/services/tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/src/lib/tag/services/tag.service.ts) |
 
 <!--content-services end-->
@@ -454,7 +454,10 @@ for more information about installing and using the source code.
 | [Form cloud component](process-services-cloud/components/form-cloud.component.md) | Shows a form from Process Services. | [Source](../lib/process-services-cloud/src/lib/form/components/form-cloud.component.ts) |
 | [Form Definition Selector Cloud](process-services-cloud/components/form-definition-selector-cloud.component.md) | Allows one form to be selected from a dropdown list. For forms to be displayed in this component they will need to be compatible with standAlone tasks. | [Source](../lib/process-services-cloud/src/lib/form/components/form-definition-selector-cloud.component.ts) |
 | [Group Cloud component](process-services-cloud/components/group-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches Groups. | [Source](../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts) |
-| [People Cloud Component](process-services-cloud/components/people-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png)  | Added: v3.0.0 | [Source](<>) |
+| [](process-services-cloud/components/people-cloud.component.md) | Title: People Cloud Component |  |
+
+Added: v3.0.0
+Status: Experimental | [Source](<>) |
 | [Process Filters Cloud Component](process-services-cloud/components/process-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.ts) |
 | [Process Header Cloud Component](process-services-cloud/components/process-header-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all the information related to a process instance. | [Source](../lib/process-services-cloud/src/lib/process/process-header/components/process-header-cloud.component.ts) |
 | [Process Instance List Cloud component](process-services-cloud/components/process-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.ts) |
@@ -499,6 +502,12 @@ for more information about installing and using the source code.
 | [Task List Cloud Service](process-services-cloud/services/task-list-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches tasks. | [Source](../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
 | [User Preference Cloud Service](process-services-cloud/services/user-preference-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages user preferences. | [Source](../lib/process-services-cloud/src/lib/services/user-preference-cloud.service.ts) |
 
+### Widgets
+
+| Name | Description | Source link |
+| ---- | ----------- | ----------- |
+| [APA Properties Viewer Widget](process-services-cloud/widgets/properties-viewer.widget.md) | It makes use of the content-metadata-card to display the properties of the selected file in an attach widget in a form. | [Source](../lib/process-services-cloud/src/lib/form/components/widgets/properties-viewer/properties-viewer.widget.ts) |
+
 <!--process-services-cloud end-->
 
 ### Widgets
@@ -506,7 +515,6 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [APA Properties Viewer Widget](process-services-cloud/widgets/properties-viewer.widget.md) | Display the metadata of the file selected in the linked attach widget. | [Source](../lib/process-services-cloud/src/lib/form/components/widgets/properties-viewer/properties-viewer.widget.ts) |
-
 
 [(Back to Contents)](#contents)
 

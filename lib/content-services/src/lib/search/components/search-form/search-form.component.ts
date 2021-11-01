@@ -27,6 +27,8 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
   encapsulation: ViewEncapsulation.None
 })
 export class SearchFormComponent {
+
+    /** Emitted when the form change */
     @Output()
     formChange: EventEmitter<SearchForm> = new EventEmitter<SearchForm>();
 

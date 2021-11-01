@@ -26,8 +26,6 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
     -   [Content Renditions](#content-renditions)
     -   [Configuring PDF.js library](#configuring-pdfjs-library)
     -   [Extending the Viewer](#extending-the-viewer)
-        - [Internal extension mechanism](#internal-extension-mechanism)
-        - [Code extension mechanism](#code-extension-mechanism)
     -   [Custom layout](#custom-layout)
     -   [Printing](#printing)
 -   [See also](#see-also)
@@ -269,9 +267,11 @@ The [Viewer component](viewer.component.md) should now be able to display PDF fi
 ### Extending the Viewer
 
 #### Internal extension mechanism
+
 The Viewer supports dynamically-loaded viewer preview extensions, to know more about it [Preview Extension component](../../extensions/components/preview-extension.component.md). This 
 
 #### Code extension mechanism]
+
 You can define your own custom handler to handle other file formats that are not yet supported by
 the [Viewer component](viewer.component.md). Below is an example that shows how to use the `adf-viewer-extension`
 to handle 3D data files:

@@ -24,3 +24,4 @@ The pages linked below contain the licenses for all third party dependencies of 
 - [ADF 4.4.0](license-info-4.4.0.md)
 - [ADF 4.5.0](license-info-4.5.0.md)
 - [ADF 4.6.0](license-info-4.6.0.md)
+- [ADF 4.7.0](license-info-4.7.0.md)

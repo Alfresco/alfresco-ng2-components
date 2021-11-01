@@ -25,4 +25,4 @@ Appends a counter to an element.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| counter | `number` |  | Number of nodes selected. |
+| counter | `number` |  | Number to display in the counter badge |
