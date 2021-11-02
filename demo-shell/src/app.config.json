@@ -10,7 +10,7 @@
   "locale": "en",
   "notificationDefaultDuration": 2000,
   "auth": {
-    "withCredentials": true
+    "withCredentials": false
   },
   "oauth2": {
     "host": "{protocol}//{hostname}{:port}/auth/realms/alfresco",

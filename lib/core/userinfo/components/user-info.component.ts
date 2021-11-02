@@ -73,7 +73,8 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
                 private identityUserService: IdentityUserService,
-                private authService: AuthenticationService) {}
+                private authService: AuthenticationService) {
+    }
 
     ngOnInit() {
         this.getUserInfo();
