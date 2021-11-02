@@ -20,6 +20,8 @@
 import * as shell from 'shelljs';
 import * as path from 'path';
 import * as program from 'commander';
+import * as fs from 'fs';
+import * as ejs from 'ejs';
 
 interface Commit {
     hash: string;
@@ -98,17 +100,60 @@ export default function main(_args: string[], workingDir: string) {
 
     const dir = path.resolve(program.dir || workingDir);
     const range = program.range;
-    // const remote = getRemote(dir);
+    const remote = getRemote(dir);
+
+    let repo_url = remote;
+    if (repo_url.endsWith('.git')) {
+        repo_url = repo_url.substring(0, repo_url.length - 4);
+    }
+
     // const template = program.template;
     const skip = program.skip;
     const max = program.max;
 
-    const diff = getDiff({
+    const commits = getDiff({
         dir,
         range,
         skip,
         max
     });
 
-    console.log(diff);
+    let packagePath = path.resolve(dir, 'package.json');
+    if (!fs.existsSync(packagePath)) {
+        console.error('The package.json file was not found');
+        process.exit(1);
+    }
+
+    const templatePath = path.resolve(__dirname, '../templates/changelog-md.ejs');
+    if (!fs.existsSync(templatePath)) {
+        console.error(`Cannot find the report template: ${templatePath}`);
+        process.exit(1);
+    }
+
+    return new Promise((resolve, reject) => {
+        const packageJson = JSON.parse(fs.readFileSync(packagePath).toString());
+
+        ejs.renderFile(templatePath, {
+            remote,
+            repo_url,
+            commits,
+            projVersion: packageJson.version,
+            projName: packageJson.name
+        }, {}, (err: any, mdText: string) => {
+            if (err) {
+                console.error(err);
+                reject(1);
+            } else {
+                console.log(mdText);
+                // const outputPath = path.resolve(program.outDir || workingDir);
+                // const outputFile = path.join(outputPath, `audit-info-${packageJson.version}.md`);
+
+                // fs.writeFileSync(outputFile, mdText);
+
+                // tslint:disable-next-line: no-console
+                // console.log(`Report saved as ${outputFile}`);
+                resolve(0);
+            }
+        });
+    });
 }
