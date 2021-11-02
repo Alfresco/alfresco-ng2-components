@@ -63,6 +63,12 @@ export class AttachFileWidgetCloudPage {
         }
     }
 
+    async checkNoFileIsAttached(): Promise<void> {
+        const filesListLocator = 'div[class="adf-file-properties-table"]';
+        const fileItem = this.widget.$(filesListLocator).$('table');
+        await BrowserVisibility.waitUntilElementIsNotVisible(fileItem);
+    }
+
     async checkFileIsNotAttached(name): Promise<void> {
         const fileAttached = await this.getFileAttachedLocatorByContainingText(name);
         await BrowserVisibility.waitUntilElementIsNotVisible(fileAttached);
