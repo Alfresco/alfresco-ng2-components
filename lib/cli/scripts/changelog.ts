@@ -88,9 +88,9 @@ export default function main(_args: string[], workingDir: string) {
         .option('-r, --range <range>', 'Commit range, e.g. master..develop', 'master..develop')
         .option('-d, --dir <dir>', 'Working directory (default: working directory)')
         .option('-m, --max <number>', 'Limit the number of commits to output')
-        .option('-o, --output <output>', 'Output file, will use console output if not defined')
+        .option('-o, --output <dir>', 'Output directory, will use console output if not defined')
         .option('--skip <number>', 'Skip number commits before starting to show the commit output')
-        .option('-t, --template <template>', 'Path to the custom output template', 'md.hbs')
+        .option('-f, --format <format>', 'Output format (md, html)', 'md')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
@@ -99,17 +99,14 @@ export default function main(_args: string[], workingDir: string) {
     }
 
     const dir = path.resolve(program.dir || workingDir);
-    const range = program.range;
+    const { range, skip, max, format, output } = program;
+
     const remote = getRemote(dir);
 
     let repo_url = remote;
     if (repo_url.endsWith('.git')) {
         repo_url = repo_url.substring(0, repo_url.length - 4);
     }
-
-    // const template = program.template;
-    const skip = program.skip;
-    const max = program.max;
 
     const commits = getDiff({
         dir,
@@ -118,13 +115,13 @@ export default function main(_args: string[], workingDir: string) {
         max
     });
 
-    let packagePath = path.resolve(dir, 'package.json');
+    const packagePath = path.resolve(dir, 'package.json');
     if (!fs.existsSync(packagePath)) {
         console.error('The package.json file was not found');
         process.exit(1);
     }
 
-    const templatePath = path.resolve(__dirname, '../templates/changelog-md.ejs');
+    const templatePath = path.resolve(__dirname, `../templates/changelog-${format}.ejs`);
     if (!fs.existsSync(templatePath)) {
         console.error(`Cannot find the report template: ${templatePath}`);
         process.exit(1);
@@ -139,19 +136,20 @@ export default function main(_args: string[], workingDir: string) {
             commits,
             projVersion: packageJson.version,
             projName: packageJson.name
-        }, {}, (err: any, mdText: string) => {
+        }, {}, (err: any, text: string) => {
             if (err) {
                 console.error(err);
                 reject(1);
             } else {
-                console.log(mdText);
-                // const outputPath = path.resolve(program.outDir || workingDir);
-                // const outputFile = path.join(outputPath, `audit-info-${packageJson.version}.md`);
+                if (output) {
+                    const outputDir = path.resolve(output);
+                    const outputFile = path.join(outputDir, `changelog-${packageJson.version}.md`);
+                    console.log('Writing changelog to', outputFile);
 
-                // fs.writeFileSync(outputFile, mdText);
-
-                // tslint:disable-next-line: no-console
-                // console.log(`Report saved as ${outputFile}`);
+                    fs.writeFileSync(outputFile, text);
+                } else {
+                    console.log(text);
+                }
                 resolve(0);
             }
         });
