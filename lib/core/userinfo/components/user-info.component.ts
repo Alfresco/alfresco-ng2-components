@@ -25,7 +25,7 @@ import { EcmUserService } from '../../services/ecm-user.service';
 import { IdentityUserService } from '../../services/identity-user.service';
 import { of, Observable, Subject } from 'rxjs';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
-import { filter, takeUntil } from 'rxjs/operators';
+import { delay, filter, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-userinfo',
@@ -78,8 +78,13 @@ export class UserInfoComponent implements OnInit, OnDestroy {
         this.authService.onLogin
             .pipe(
                 filter(() => this.authService.isKerberosEnabled()),
+                delay(300),
                 takeUntil(this.destroy$)
-            ).subscribe(() => this.getUserInfo());
+            ).subscribe(() => {
+            // tslint:disable-next-line:no-console
+                console.log('kerberos logged in');
+                this.getUserInfo();
+        });
     }
 
     ngOnInit() {
