@@ -143,7 +143,7 @@ export default function main(_args: string[], workingDir: string) {
             } else {
                 if (output) {
                     const outputDir = path.resolve(output);
-                    const outputFile = path.join(outputDir, `changelog-${packageJson.version}.md`);
+                    const outputFile = path.join(outputDir, `changelog-${packageJson.version}.${format}`);
                     console.log('Writing changelog to', outputFile);
 
                     fs.writeFileSync(outputFile, text);
