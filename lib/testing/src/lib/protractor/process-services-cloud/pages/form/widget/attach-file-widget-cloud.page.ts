@@ -19,7 +19,7 @@ import { by, ElementFinder, browser, $ } from 'protractor';
 import { BrowserActions } from '../../../../core/utils/browser-actions';
 import { Logger } from '../../../../core/utils/logger';
 import { BrowserVisibility } from '../../../../core/utils/browser-visibility';
-import { TestElement } from '@alfresco/adf-testing';
+import { TestElement } from '../../../../core/test-element';
 
 export class AttachFileWidgetCloudPage {
 
