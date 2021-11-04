@@ -42,6 +42,8 @@
       "REMOVE_FILE": "Fjern",
       "UPLOAD": "Upload",
       "REQUIRED": "*Påkrævet",
+      "FILE_NAME": "Filnavn",
+      "DEPENDS_ON": "Afhænger af: {{widgetId}}",
       "NO_FILE_ATTACHED": "Der er ikke vedhæftet en fil",
       "VALIDATOR": {
         "INVALID_NUMBER": "Brug et andet talformat",

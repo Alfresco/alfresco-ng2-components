@@ -42,6 +42,8 @@
       "REMOVE_FILE": "Eliminar",
       "UPLOAD": "Cargar",
       "REQUIRED": "*Obligatorio",
+      "FILE_NAME": "Nombre del fichero",
+      "DEPENDS_ON": "Depende de: {{widgetId}}",
       "NO_FILE_ATTACHED": "Sin fichero adjunto",
       "VALIDATOR": {
         "INVALID_NUMBER": "Utilizar un formato de número diferente",

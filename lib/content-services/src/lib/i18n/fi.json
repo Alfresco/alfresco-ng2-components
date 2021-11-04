@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "Lataa uusi versio",
         "TOOLTIP": "Rajoitus: jos haluat luoda tiedostosta uuden version, sinun täytyy ladata tiedosto samalla nimellä",
-        "MAJOR": "merkittäviä muutoksia (2.0)",
-        "MINOR": "vähäisiä muutoksia (1.1)",
+        "MAJOR": "merkittäviä muutoksia ({{version}})",
+        "MINOR": "vähäisiä muutoksia ({{version}})",
         "COMMENT": "Jätä kommentti",
         "ADD": "Lisää uusi versio",
         "CANCEL": "Peruuta"
@@ -405,6 +405,8 @@
       "BULK-ROLE": "Määritä kaikki roolit seuraavaan:"
     },
     "LABELS": {
+      "HIDE": "Piilota",
+      "SHOW": "Näytä",
       "ON": "Päällä",
       "OFF": "Pois",
       "DIRECT-PERMISSIONS": "Suoraan määrätty oikeus",

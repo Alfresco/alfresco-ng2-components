@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "Nieuwe versie uploaden",
         "TOOLTIP": "Beperking: u moet een bestand met dezelfde naam uploaden om een nieuwe versie van het bestand te maken",
-        "MAJOR": "belangrijke wijzigingen (2.0)",
-        "MINOR": "kleine wijzigingen (1.1)",
+        "MAJOR": "belangrijke wijzigingen ({{version}})",
+        "MINOR": "kleine wijzigingen ({{version}})",
         "COMMENT": "Opmerking toevoegen",
         "ADD": "Nieuwe versie toevoegen",
         "CANCEL": "Annuleren"
@@ -405,6 +405,8 @@
       "BULK-ROLE": "Alle rollen instellen op"
     },
     "LABELS": {
+      "HIDE": "Verbergen",
+      "SHOW": "Weergeven",
       "ON": "Aan",
       "OFF": "Uit",
       "DIRECT-PERMISSIONS": "Rechtstreeks toegepaste rechten",

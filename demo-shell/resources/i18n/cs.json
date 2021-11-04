@@ -55,6 +55,7 @@
   },
   "APP_LAYOUT": {
     "APP": "Aplikace",
+    "HEADER_TEXT_COLOR": "Barva textu záhlaví",
     "APP_NAME": "Ukázková aplikace ADF",
     "FILTERED_SEARCH": "Záhlaví filtru",
     "HOME": "Domů",

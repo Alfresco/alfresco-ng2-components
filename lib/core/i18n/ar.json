@@ -42,6 +42,8 @@
       "REMOVE_FILE": "إزالة",
       "UPLOAD": "تحميل",
       "REQUIRED": "*مطلوب",
+      "FILE_NAME": "اسم الملف",
+      "DEPENDS_ON": "يعتمد على: {{widgetId}}",
       "NO_FILE_ATTACHED": "لا ملف مرفق",
       "VALIDATOR": {
         "INVALID_NUMBER": "استخدم تنسيق رقم مختلفًا",

@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "Carregar nova versão",
         "TOOLTIP": "Restrição: você deve carregar um arquivo com o mesmo nome para criar uma versão dele",
-        "MAJOR": "alterações principais (2.0)",
-        "MINOR": "alterações secundárias (1.1)",
+        "MAJOR": "alterações principais ({{version}})",
+        "MINOR": "alterações secundárias ({{version}})",
         "COMMENT": "Deixe um comentário",
         "ADD": "Adicionar nova versão",
         "CANCEL": "Cancelar"
@@ -405,6 +405,8 @@
       "BULK-ROLE": "Definir todas as funções como"
     },
     "LABELS": {
+      "HIDE": "Ocultar",
+      "SHOW": "Mostrar",
       "ON": "Ativada",
       "OFF": "Desativada",
       "DIRECT-PERMISSIONS": "Permissão aplicada diretamente",

@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "Last opp ny versjon",
         "TOOLTIP": "Begrensning: Du må laste opp en fil med samme navn for å opprette en ny versjon av den",
-        "MAJOR": "større endringer (2.0)",
-        "MINOR": "mindre endringer (1.1)",
+        "MAJOR": "større endringer ({{version}})",
+        "MINOR": "mindre endringer ({{version}})",
         "COMMENT": "Gi en kommentar",
         "ADD": "Legg til ny versjon",
         "CANCEL": "Avbryt"
@@ -405,6 +405,8 @@
       "BULK-ROLE": "Angi alle roller til"
     },
     "LABELS": {
+      "HIDE": "Skjul",
+      "SHOW": "Vis",
       "ON": "På",
       "OFF": "Av",
       "DIRECT-PERMISSIONS": "Direkte brukt tillatelse",

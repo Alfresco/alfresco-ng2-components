@@ -42,6 +42,8 @@
       "REMOVE_FILE": "Entfernen",
       "UPLOAD": "Hochladen",
       "REQUIRED": "*Erforderlich",
+      "FILE_NAME": "Dateiname",
+      "DEPENDS_ON": "Abhängig von: {{widgetId}}",
       "NO_FILE_ATTACHED": "Keine Datei angehängt",
       "VALIDATOR": {
         "INVALID_NUMBER": "Verwenden Sie ein anderes Zahlenformat",

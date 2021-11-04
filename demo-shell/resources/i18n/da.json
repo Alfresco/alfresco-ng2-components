@@ -55,6 +55,7 @@
   },
   "APP_LAYOUT": {
     "APP": "App",
+    "HEADER_TEXT_COLOR": "Farve på tekst i overskrift",
     "APP_NAME": "ADF-demoapp",
     "FILTERED_SEARCH": "Filter-overskrift",
     "HOME": "Hjem",

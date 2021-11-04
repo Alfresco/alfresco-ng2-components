@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "Carica la nuova versione",
         "TOOLTIP": "Limite: è necessario caricare un file con lo stesso nome per crearne una nuova versione.",
-        "MAJOR": "modifiche maggiori (2.0)",
-        "MINOR": "modifiche minori (1.1)",
+        "MAJOR": "modifiche essenziali ({{version}})",
+        "MINOR": "modifiche non essenziali ({{version}})",
         "COMMENT": "Lasciare un commento",
         "ADD": "Aggiungi nuova versione",
         "CANCEL": "Annulla"
@@ -405,6 +405,8 @@
       "BULK-ROLE": "Imposta tutti i ruoli su"
     },
     "LABELS": {
+      "HIDE": "Nascondi",
+      "SHOW": "Mostra",
       "ON": "Attivata",
       "OFF": "Disattivata",
       "DIRECT-PERMISSIONS": "Autorizzazione applicata direttamente",

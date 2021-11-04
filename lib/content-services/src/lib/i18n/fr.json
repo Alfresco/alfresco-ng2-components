@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "Importer une nouvelle version",
         "TOOLTIP": "Restriction : pour créer une nouvelle version d'un fichier vous devez importer un fichier du même nom",
-        "MAJOR": "changements majeurs (2.0)",
-        "MINOR": "changements mineurs (1.1)",
+        "MAJOR": "changements majeurs ({{version}})",
+        "MINOR": "changements mineurs ({{version}})",
         "COMMENT": "Laisser un commentaire",
         "ADD": "Ajouter une nouvelle version",
         "CANCEL": "Annuler"
@@ -228,7 +228,7 @@
         "APPLY": "Appliquer",
         "CLEAR-ALL": "Supprimer tout",
         "SHOW-MORE": "Afficher plus",
-        "SHOW-LESS": "Montrer moins"
+        "SHOW-LESS": "Afficher moins"
       },
       "BUTTONS": {
         "CLOSE": "Fermer",
@@ -405,6 +405,8 @@
       "BULK-ROLE": "Définir tous les rôles sur"
     },
     "LABELS": {
+      "HIDE": "Masquer",
+      "SHOW": "Afficher",
       "ON": "Activé",
       "OFF": "Désactivé",
       "DIRECT-PERMISSIONS": "Droits d'accès directement appliqués",

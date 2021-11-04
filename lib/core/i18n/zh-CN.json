@@ -42,6 +42,8 @@
       "REMOVE_FILE": "删除",
       "UPLOAD": "上传",
       "REQUIRED": "*必需",
+      "FILE_NAME": "文件名",
+      "DEPENDS_ON": "取决于: {{widgetId}}",
       "NO_FILE_ATTACHED": "无附加文件",
       "VALIDATOR": {
         "INVALID_NUMBER": "使用其他数字格式",

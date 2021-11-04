@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "Upload ny version",
         "TOOLTIP": "Begrænsning: Du skal uploade en fil med det samme navn for at oprette en ny version af filen",
-        "MAJOR": "større ændringer (2.0)",
-        "MINOR": "mindre ændringer (1.1)",
+        "MAJOR": "større ændringer ({{version}})",
+        "MINOR": "mindre ændringer ({{version}})",
         "COMMENT": "Skriv en kommentar",
         "ADD": "Tilføj ny version",
         "CANCEL": "Annuller"
@@ -405,6 +405,8 @@
       "BULK-ROLE": "Sæt alle roller til"
     },
     "LABELS": {
+      "HIDE": "Skjul",
+      "SHOW": "Vis",
       "ON": "On",
       "OFF": "Off",
       "DIRECT-PERMISSIONS": "Direkte tilføjet tilladelse",

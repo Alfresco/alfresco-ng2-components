@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "Neue Version hochladen",
         "TOOLTIP": "Einschränkung: Sie müssen eine Datei mit dem gleichen Namen hochladen, wenn Sie eine neue Version der Datei erstellen möchten.",
-        "MAJOR": "bedeutende Änderungen (2.0)",
-        "MINOR": "kleine Änderungen (1.1)",
+        "MAJOR": "bedeutende Änderungen ({{version}})",
+        "MINOR": "kleine Änderungen ({{version}})",
         "COMMENT": "Kommentar abgeben",
         "ADD": "Neue Version hinzufügen",
         "CANCEL": "Abbrechen"
@@ -405,6 +405,8 @@
       "BULK-ROLE": "Alle Rollen festlegen auf"
     },
     "LABELS": {
+      "HIDE": "Ausblenden",
+      "SHOW": "Anzeigen",
       "ON": "Ein",
       "OFF": "Aus",
       "DIRECT-PERMISSIONS": "Direkt angewendete Berechtigung",

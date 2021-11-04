@@ -42,6 +42,8 @@
       "REMOVE_FILE": "Odstranit",
       "UPLOAD": "Odeslat",
       "REQUIRED": "*Požadováno",
+      "FILE_NAME": "Název souboru",
+      "DEPENDS_ON": "Závisí na: {{widgetId}}",
       "NO_FILE_ATTACHED": "Není připojen žádný soubor",
       "VALIDATOR": {
         "INVALID_NUMBER": "Použijte jiný formát čísla",

@@ -55,6 +55,7 @@
   },
   "APP_LAYOUT": {
     "APP": "App",
+    "HEADER_TEXT_COLOR": "Kleur van koptekst",
     "APP_NAME": "ADF-demotoepassing",
     "FILTERED_SEARCH": "Filterkop",
     "HOME": "Home",
