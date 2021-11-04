@@ -19,6 +19,7 @@ import { by, ElementFinder, browser, $ } from 'protractor';
 import { BrowserActions } from '../../../../core/utils/browser-actions';
 import { Logger } from '../../../../core/utils/logger';
 import { BrowserVisibility } from '../../../../core/utils/browser-visibility';
+import { TestElement } from '@alfresco/adf-testing';
 
 export class AttachFileWidgetCloudPage {
 
@@ -65,8 +66,8 @@ export class AttachFileWidgetCloudPage {
 
     async checkNoFileIsAttached(): Promise<void> {
         const filesListLocator = 'div[class="adf-file-properties-table"]';
-        const fileItem = this.widget.$(filesListLocator).$('table');
-        await BrowserVisibility.waitUntilElementIsNotVisible(fileItem);
+        const fileItem = new TestElement(this.widget.$(filesListLocator).$('table'));
+        await fileItem.waitNotVisible();
     }
 
     async checkFileIsNotAttached(name): Promise<void> {
