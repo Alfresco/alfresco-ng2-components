@@ -25,7 +25,6 @@ import { EcmUserService } from '../../services/ecm-user.service';
 import { IdentityUserService } from '../../services/identity-user.service';
 import { of, Observable, Subject } from 'rxjs';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
-import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-userinfo',
@@ -75,11 +74,6 @@ export class UserInfoComponent implements OnInit, OnDestroy {
                 private bpmUserService: BpmUserService,
                 private identityUserService: IdentityUserService,
                 private authService: AuthenticationService) {
-        this.authService.onLogin
-            .pipe(
-                filter(() => this.authService.isKerberosEnabled()),
-                takeUntil(this.destroy$)
-            ).subscribe(() => this.getUserInfo());
     }
 
     ngOnInit() {
@@ -100,14 +94,14 @@ export class UserInfoComponent implements OnInit, OnDestroy {
                 this.loadEcmUserInfo();
             }
 
-        } else if (this.authService.isEcmLoggedIn() && this.authService.isBpmLoggedIn()) {
+        } else if (this.isAllLoggedIn()) {
             this.loadEcmUserInfo();
             this.loadBpmUserInfo();
             this.mode = 'ALL';
-        } else if (this.authService.isEcmLoggedIn()) {
+        } else if (this.isEcmLoggedIn()) {
             this.loadEcmUserInfo();
             this.mode = 'CONTENT';
-        } else if (this.authService.isBpmLoggedIn()) {
+        } else if (this.isBpmLoggedIn()) {
             this.loadBpmUserInfo();
             this.mode = 'PROCESS';
         }
@@ -124,6 +118,9 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     }
 
     get isLoggedIn(): boolean {
+        if (this.authService.isKerberosEnabled()) {
+            return true;
+        }
         return this.authService.isLoggedIn();
     }
 
@@ -137,6 +134,18 @@ export class UserInfoComponent implements OnInit, OnDestroy {
 
     private loadIdentityUserInfo() {
         this.identityUser$ = of(this.identityUserService.getCurrentUserInfo());
+    }
+
+    private isAllLoggedIn() {
+        return (this.authService.isEcmLoggedIn() && this.authService.isBpmLoggedIn()) || (this.authService.isALLProvider() && this.authService.isKerberosEnabled());
+    }
+
+    private isBpmLoggedIn() {
+        return this.authService.isBpmLoggedIn() || (this.authService.isECMProvider() && this.authService.isKerberosEnabled());
+    }
+
+    private isEcmLoggedIn() {
+        return this.authService.isEcmLoggedIn() || (this.authService.isECMProvider() && this.authService.isKerberosEnabled());
     }
 
     stopClosing(event: Event) {

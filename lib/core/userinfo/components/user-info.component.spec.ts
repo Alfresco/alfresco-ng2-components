@@ -567,5 +567,44 @@ describe('User info component', () => {
                 expect(element.querySelector('.adf-userinfo-profile-image')).not.toBeNull();
             });
         });
+
+        describe('kerberos', () => {
+
+            beforeEach(async () => {
+                isOauthStub.and.returnValue(false);
+                isEcmLoggedInStub.and.returnValue(false);
+                isBpmLoggedInStub.and.returnValue(false);
+                isLoggedInStub.and.returnValue(false);
+                spyOn(authService, 'isKerberosEnabled').and.returnValue(true);
+                spyOn(authService, 'isALLProvider').and.returnValue(true);
+                spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmUser));
+                getCurrenEcmtUserInfoStub.and.returnValue(of(fakeEcmUser));
+
+                await whenFixtureReady();
+            });
+
+            it('should show the bpm user information', async () => {
+                openUserInfo();
+                const bpmTab = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'))[1];
+                bpmTab.triggerEventHandler('click', null);
+                fixture.detectChanges();
+                await fixture.whenStable();
+                const bpmUsername = fixture.debugElement.query(By.css('#bpm-username'));
+                const bpmImage = fixture.debugElement.query(By.css('#bpm-user-detail-image'));
+                expect(bpmImage.properties.src).toContain('app/rest/admin/profile-picture');
+                expect(bpmUsername.nativeElement.textContent).toContain('fake-bpm-first-name fake-bpm-last-name');
+                expect(fixture.debugElement.query(By.css('#bpm-tenant')).nativeElement.textContent).toContain('fake-tenant-name');
+            });
+
+            it('should show the ecm user information', async () => {
+                openUserInfo();
+                const ecmTab = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'))[0];
+                ecmTab.triggerEventHandler('click', null);
+                fixture.detectChanges();
+                await fixture.whenStable();
+                expect(fixture.debugElement.query(By.css('#ecm-full-name')).nativeElement.textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
+                expect(fixture.debugElement.query(By.css('#ecm-job-title')).nativeElement.textContent).toContain('job-ecm-test');
+            });
+        });
     });
 });
