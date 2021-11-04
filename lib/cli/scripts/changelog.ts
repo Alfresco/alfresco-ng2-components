@@ -32,22 +32,56 @@ interface Commit {
 }
 
 interface DiffOptions {
+    /**
+     * Commit range, e.g. "master..develop"
+     */
     range: string;
+    /**
+     * Working directory
+     */
     dir: string;
+    /**
+     * Max number of commits
+     */
     max?: number;
+    /**
+     * Number of commits to skip from the top
+     */
     skip?: number;
+    /**
+     * Exclude commits by the author
+     */
+    exclude?: string;
 }
 
+/**
+ * Get the remote URL for the cloned git repository
+ * @param workingDir Repository directory
+ * @returns URL pointing to the git remote
+ */
 function getRemote(workingDir: string): string {
     const command = 'git config --get remote.origin.url';
+    const remote = shell.exec(command, { cwd: workingDir, silent: true }).toString();
 
-    let remote = shell.exec(command, { cwd: workingDir, silent: true }).toString();
-    remote = remote.trim();
-
-    return remote;
+    return remote.trim();
 }
 
-function getDiff(options: DiffOptions): Array<Commit> {
+/**
+ * Get the list of commits based on the configuration options
+ * @param options Logging options
+ * @returns Collection of Commit objects
+ */
+function getCommits(options: DiffOptions): Array<Commit> {
+    let authorFilter = (options.exclude || '')
+        .split(',')
+        .map(str => str.trim())
+        .join('\|');
+
+    if (!authorFilter) {
+        authorFilter = "bot\|Alfresco Build User";
+    }
+
+
     const args = [
         `git`,
         `log`,
@@ -55,7 +89,8 @@ function getDiff(options: DiffOptions): Array<Commit> {
         `--no-merges`,
         `--first-parent`,
         `--invert-grep`,
-        `--author="bot\|Alfresco Build User"`,
+        `--author="${authorFilter}"`,
+        // this format is needed to allow parsing all characters in the commit message and safely convert to JSON
         `--format="{ ^@^hash^@^: ^@^%h^@^, ^@^author^@^: ^@^%an^@^, ^@^author_email^@^: ^@^%ae^@^, ^@^date^@^: ^@^%ad^@^, ^@^subject^@^: ^@^%s^@^ }"`
     ];
 
@@ -91,6 +126,7 @@ export default function main(_args: string[], workingDir: string) {
         .option('-o, --output <dir>', 'Output directory, will use console output if not defined')
         .option('--skip <number>', 'Skip number commits before starting to show the commit output')
         .option('-f, --format <format>', 'Output format (md, html)', 'md')
+        .option('-e --exclude <string>', 'Exclude authors from the output, comma-delimited list')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
@@ -99,7 +135,7 @@ export default function main(_args: string[], workingDir: string) {
     }
 
     const dir = path.resolve(program.dir || workingDir);
-    const { range, skip, max, format, output } = program;
+    const { range, skip, max, format, output, exclude } = program;
 
     const remote = getRemote(dir);
 
@@ -108,11 +144,12 @@ export default function main(_args: string[], workingDir: string) {
         repo_url = repo_url.substring(0, repo_url.length - 4);
     }
 
-    const commits = getDiff({
+    const commits = getCommits({
         dir,
         range,
         skip,
-        max
+        max,
+        exclude
     });
 
     const packagePath = path.resolve(dir, 'package.json');
