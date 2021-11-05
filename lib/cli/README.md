@@ -42,6 +42,7 @@ In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 
 | **Commands** |**Description** |
 |--- |--- |
+| changelog | Generate changelog report for two branches of git repository |
 |check-cs-env |Check cs env is up |
 |check-ps-env |Check ps env is up |
 |check-plugin-env |Check plugin status |
@@ -60,6 +61,61 @@ In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 |scan-env   |Scan the environment to show its status    |
 
 ## Examples
+
+### Changelog
+
+You can get command details by using `--help` argument
+
+```bash
+adf-cli changelog --help
+```
+
+The format of the command is as following:
+
+```bash
+Usage: adf-cli changelog [options]
+
+Generate changelog report for two branches of git repository
+
+Options:
+  -v, --version          output the version number
+  -r, --range <range>    Commit range, e.g. master..develop (default: "master..develop")
+  -d, --dir <dir>        Working directory (default: working directory)
+  -m, --max <number>     Limit the number of commits to output
+  -o, --output <dir>     Output directory, will use console output if not defined
+  --skip <number>        Skip number commits before starting to show the commit output
+  -f, --format <format>  Output format (md, html) (default: "md")
+  -e --exclude <string>  Exclude authors from the output, comma-delimited list
+  -h, --help             output usage information
+```
+
+#### Usage examples
+
+```sh
+# show changelog in the console for the current directory
+adf-cli changelog -r master..develop -d .
+
+# show changelog in the console for a specific folder 
+adf-cli changelog -d ~/github/alfresco-ng2-components
+
+# generate changelog for specific folder and pipe the console output to a file
+adf-cli changelog -d ~/github/alfresco-ng2-components > log.md
+
+# generate changelog report in the default format as "changelog-X.X.X.md" and save to the current folder
+adf-cli changelog -d ~/github/alfresco-ng2-components -o .  
+
+# generate changelog report and save it to a specific folder
+adf-cli changelog -d ~/github/alfresco-ng2-components -o ../reports
+
+# generate changelog report in the HTML format and save to the current folder
+adf-cli changelog -d ~/github/alfresco-ng2-components -f html -o .
+
+# generate report in the default format and save to the current folder, reset all filters (including embedded ones for bots)
+adf-cli changelog -d ~/github/alfresco-ng2-components -e ""
+
+# generate report in the default format excluding commits made by certain authors
+adf-cli changelog -d ~/github/alfresco-ng2-components -e "bot,user1,user2"
+```
 
 ### License Check
 

@@ -5,12 +5,18 @@ const minimist = require('minimist');
 const path = require('path');
 const fs = require('fs');
 
+function printHelp() {
+    const pkgData = fs.readFileSync(path.resolve(__dirname, '..', 'package.json'));
+    const { name, version } = JSON.parse(pkgData);
+    console.log(`${name} v${version}`);
+}
+
 const args = minimist(process.argv.slice(2), {
     boolean: ['verbose']
 });
 
 if (args._.length === 0) {
-    console.error('Error: no commands provided');
+    printHelp();
     process.exit(1);
 }
 
