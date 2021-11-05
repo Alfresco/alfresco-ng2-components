@@ -5,7 +5,6 @@ ul > li > form-field > .adf-focus {
 }
 
 .adf {
-
     &-error-text-container {
         height: 20px;
         margin-top: -12px;
@@ -27,7 +26,7 @@ ul > li > form-field > .adf-focus {
     }
 
     &-label {
-        color: rgb(186, 186, 186);;
+        color: rgb(186, 186, 186);
     }
 
     &-invalid {
@@ -49,14 +48,12 @@ ul > li > form-field > .adf-focus {
         }
 
         .mat-select {
-
             &-value {
                 color: var(--theme-warn-color);
             }
             &-arrow {
                 color: var(--theme-warn-color);
             }
-
         }
 
         .adf-file {
@@ -80,11 +77,13 @@ ul > li > form-field > .adf-focus {
     }
 }
 
-
 /* query for Microsoft IE 11*/
-@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+@media screen and (-ms-high-contrast: active),
+    screen and (-ms-high-contrast: none) {
     adf-form-field {
-        .mat-input-element, .mat-select, .mat-form-field {
+        .mat-input-element,
+        .mat-select,
+        .mat-form-field {
             display: block !important;
         }
     }
