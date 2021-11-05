@@ -30,12 +30,6 @@ ul > li > form-field > .adf-focus {
     }
 
     &-invalid {
-        .mat-form-field-label,
-        .mat-form-field-required-marker,
-        .mat-input-element ::placeholder {
-            color: #f44336 !important;
-        }
-
         .mat-form-field-underline {
             background-color: #f44336 !important;
         }
