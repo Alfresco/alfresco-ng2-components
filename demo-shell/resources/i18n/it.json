@@ -55,6 +55,7 @@
   },
   "APP_LAYOUT": {
     "APP": "Applicazione",
+    "HEADER_TEXT_COLOR": "Colore testo intestazione",
     "APP_NAME": "Applicazione demo ADF",
     "FILTERED_SEARCH": "Intestazione filtro",
     "HOME": "Home",

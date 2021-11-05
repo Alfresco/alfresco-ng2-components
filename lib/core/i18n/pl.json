@@ -42,6 +42,8 @@
       "REMOVE_FILE": "Usuń",
       "UPLOAD": "Prześlij",
       "REQUIRED": "*Wymagane",
+      "FILE_NAME": "Nazwa pliku",
+      "DEPENDS_ON": "Zależy od: {{widgetId}}",
       "NO_FILE_ATTACHED": "Nie załączono pliku",
       "VALIDATOR": {
         "INVALID_NUMBER": "Użyj innego formatu liczby.",

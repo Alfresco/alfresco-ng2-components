@@ -55,6 +55,7 @@
   },
   "APP_LAYOUT": {
     "APP": "APP",
+    "HEADER_TEXT_COLOR": "标题文本颜色",
     "APP_NAME": "ADF 演示应用程序",
     "FILTERED_SEARCH": "筛选标题",
     "HOME": "主页",

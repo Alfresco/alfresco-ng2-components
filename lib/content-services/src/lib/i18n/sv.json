@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "Ladda upp ny version",
         "TOOLTIP": "Begränsning: du måste ladda upp en fil med samma namn för att skapa en ny version av den.",
-        "MAJOR": "större förändringar (2.0)",
-        "MINOR": "mindre förändringar (1.1)",
+        "MAJOR": "större förändringar ({{version}})",
+        "MINOR": "mindre förändringar ({{version}})",
         "COMMENT": "Lämna en kommentar",
         "ADD": "Lägg till ny version",
         "CANCEL": "Avbryt"
@@ -405,6 +405,8 @@
       "BULK-ROLE": "Ställ in alla roller till"
     },
     "LABELS": {
+      "HIDE": "Dölj",
+      "SHOW": "Visa",
       "ON": "På",
       "OFF": "Av",
       "DIRECT-PERMISSIONS": "Direkt tillämpat behörighet",

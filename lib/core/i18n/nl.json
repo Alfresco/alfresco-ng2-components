@@ -42,6 +42,8 @@
       "REMOVE_FILE": "Verwijderen",
       "UPLOAD": "Uploaden",
       "REQUIRED": "*Vereist",
+      "FILE_NAME": "Bestandsnaam",
+      "DEPENDS_ON": "Is afhankelijk van: {{widgetId}}",
       "NO_FILE_ATTACHED": "Geen bestand bijgevoegd",
       "VALIDATOR": {
         "INVALID_NUMBER": "Gebruik een andere getalnotatie",

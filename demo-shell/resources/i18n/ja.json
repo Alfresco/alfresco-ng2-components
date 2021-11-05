@@ -55,6 +55,7 @@
   },
   "APP_LAYOUT": {
     "APP": "アプリ",
+    "HEADER_TEXT_COLOR": "ヘッダーテキストカラー",
     "APP_NAME": "ADF デモアプリケーション",
     "FILTERED_SEARCH": "フィルタヘッダー",
     "HOME": "ホーム",

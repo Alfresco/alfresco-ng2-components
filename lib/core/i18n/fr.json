@@ -42,6 +42,8 @@
       "REMOVE_FILE": "Supprimer",
       "UPLOAD": "Importer",
       "REQUIRED": "*Obligatoire",
+      "FILE_NAME": "Nom de fichier",
+      "DEPENDS_ON": "Dépend de: {{widgetId}}",
       "NO_FILE_ATTACHED": "Aucun fichier joint",
       "VALIDATOR": {
         "INVALID_NUMBER": "Utiliser un format de numéro différent",

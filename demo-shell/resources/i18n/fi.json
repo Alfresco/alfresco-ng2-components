@@ -55,6 +55,7 @@
   },
   "APP_LAYOUT": {
     "APP": "Sovellus",
+    "HEADER_TEXT_COLOR": "Otsikkotekstin väri",
     "APP_NAME": "ADF-demosovellus",
     "FILTERED_SEARCH": "Suodattimet",
     "HOME": "Aloitussivu",

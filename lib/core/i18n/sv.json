@@ -42,6 +42,8 @@
       "REMOVE_FILE": "Ta bort",
       "UPLOAD": "Ladda upp",
       "REQUIRED": "*Obligatorisk",
+      "FILE_NAME": "Filnamn",
+      "DEPENDS_ON": "Beror på: {{widgetId}}",
       "NO_FILE_ATTACHED": "Ingen fil bifogad",
       "VALIDATOR": {
         "INVALID_NUMBER": "Använd ett annat nummerformat",

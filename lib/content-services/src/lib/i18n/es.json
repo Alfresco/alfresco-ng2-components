@@ -8,8 +8,8 @@
       "UPLOAD": {
         "TITLE": "Cargar nueva versión",
         "TOOLTIP": "Restricción: debe cargar un fichero con el mismo nombre para crear una nueva versión del mismo",
-        "MAJOR": "cambios mayores (2.0)",
-        "MINOR": "cambios menores (1.1)",
+        "MAJOR": "cambios mayores ({{version}})",
+        "MINOR": "cambios menores ({{version}})",
         "COMMENT": "Dejar un comentario",
         "ADD": "Añadir nueva versión",
         "CANCEL": "Cancelar"
@@ -405,6 +405,8 @@
       "BULK-ROLE": "Definir todas las funciones a"
     },
     "LABELS": {
+      "HIDE": "Ocultar",
+      "SHOW": "Mostrar",
       "ON": "Activado",
       "OFF": "Desactivado",
       "DIRECT-PERMISSIONS": "Permiso aplicado directamente",
