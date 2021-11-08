@@ -52,6 +52,7 @@ import { FileViewerWidgetComponent } from './file-viewer/file-viewer.widget';
 // core
 export * from './widget.component';
 export * from './core/index';
+export * from './invalid-error-state-matcher';
 
 // containers
 export * from './tabs/tabs.widget';
@@ -91,9 +92,6 @@ export * from './dynamic-table/editors/text/text.editor';
 export * from './dynamic-table/editors/datetime/datetime.editor';
 export * from './dynamic-table/editors/amount/amount.editor';
 export * from './text/text-mask.component';
-
-// matcher
-export * from './invalid-error-state-matcher';
 
 export const WIDGET_DIRECTIVES: any[] = [
     UnknownWidgetComponent,
