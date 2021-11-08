@@ -17,30 +17,30 @@
 
 import { Injectable } from '@angular/core';
 import { DiscoveryApiService } from './discovery-api.service';
-import { VersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { filter } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
+import { VersionInfo, RepositoryInfo } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class VersionCompatibilityService {
-    private acsVersion: VersionModel;
+    private acsVersion: VersionInfo;
 
     acsVersionInitialized$ = new ReplaySubject();
 
     constructor(private discoveryApiService: DiscoveryApiService) {
         this.discoveryApiService.ecmProductInfo$
             .pipe(filter(acsInfo => !!acsInfo))
-            .subscribe((acsInfo: EcmProductVersionModel) => this.initializeAcsVersion(acsInfo.version));
+            .subscribe((acsInfo: RepositoryInfo) => this.initializeAcsVersion(acsInfo.version));
     }
 
-    private initializeAcsVersion(acsVersion: VersionModel) {
+    private initializeAcsVersion(acsVersion: VersionInfo) {
         this.acsVersion = acsVersion;
         this.acsVersionInitialized$.next();
     }
 
-    getAcsVersion(): VersionModel {
+    getAcsVersion(): VersionInfo {
         return this.acsVersion;
     }
 
@@ -66,7 +66,7 @@ export class VersionCompatibilityService {
         return versionSupported;
     }
 
-    private parseVersion(version: string): VersionModel {
+    private parseVersion(version: string): VersionInfo {
         const major = version.split('.')[0];
         const minor = version.split('.')[1] || '0';
         const patch = version.split('.')[2] || '0';
@@ -75,6 +75,6 @@ export class VersionCompatibilityService {
             major: major,
             minor: minor,
             patch: patch
-        } as VersionModel;
+        } as VersionInfo;
     }
 }

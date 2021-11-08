@@ -15,27 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import pkg from '../../../../../package.json';
-import { AppConfigService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-about-page',
     templateUrl: './about.component.html',
     styleUrls: ['./about.component.scss']
 })
-export class AboutComponent implements OnInit {
-    url = `https://github.com/Alfresco/${pkg.name}/commits/${pkg.commit}`;
-    version = pkg.version;
-    dependencies = pkg.dependencies;
-    showExtensions = true;
-    application = '';
+export class AboutComponent {
+    pkg: any;
 
-    constructor(private appConfigService: AppConfigService) {}
-
-    ngOnInit() {
-        this.application = this.appConfigService.get<string>(
-            'application.name'
-        );
+    constructor() {
+        this.pkg = pkg;
     }
+
 }
