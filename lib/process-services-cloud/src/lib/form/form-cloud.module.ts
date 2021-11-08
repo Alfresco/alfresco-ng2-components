@@ -18,7 +18,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { CoreModule } from '@alfresco/adf-core';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { CoreModule, InvalidErrorStateMatcher } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
@@ -80,6 +81,9 @@ import { FilePropertiesTableCloudComponent } from './components/widgets/attach-f
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent,
         PropertiesViewerWidgetComponent
+    ],
+    providers: [
+        { provide: ErrorStateMatcher, useClass: InvalidErrorStateMatcher }
     ]
 })
 export class FormCloudModule {

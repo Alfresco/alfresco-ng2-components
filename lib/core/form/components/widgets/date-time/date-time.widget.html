@@ -4,6 +4,7 @@
         <input matInput
                [id]="field.id"
                [value]="field.value"
+               [(ngModel)]="field.value"
                [required]="isRequired()"
                [disabled]="field.readOnly"
                (change)="onDateChanged($any($event).srcElement.value)"

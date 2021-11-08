@@ -92,6 +92,9 @@ export * from './dynamic-table/editors/datetime/datetime.editor';
 export * from './dynamic-table/editors/amount/amount.editor';
 export * from './text/text-mask.component';
 
+// matcher
+export * from './invalid-error-state-matcher';
+
 export const WIDGET_DIRECTIVES: any[] = [
     UnknownWidgetComponent,
     TabsWidgetComponent,

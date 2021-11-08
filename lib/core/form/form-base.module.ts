@@ -40,6 +40,8 @@ import { EditJsonDialogModule } from '../dialogs/edit-json/edit-json.dialog.modu
 import { A11yModule } from '@angular/cdk/a11y';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ViewerModule } from '../viewer/viewer.module';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { InvalidErrorStateMatcher } from './components/widgets/invalid-error-state-matcher';
 
 @NgModule({
     imports: [
@@ -76,6 +78,9 @@ import { ViewerModule } from '../viewer/viewer.module';
         FormRendererComponent,
         StartFormCustomButtonDirective,
         ...WIDGET_DIRECTIVES
+    ],
+    providers: [
+        { provide: ErrorStateMatcher, useClass: InvalidErrorStateMatcher }
     ]
 })
 export class FormBaseModule {
