@@ -254,6 +254,42 @@ describe('DropdownCloudWidgetComponent', () => {
                     done();
                 });
             });
+
+            it('should update the form values when a preselected value is loaded', (done) => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'dropdown-id',
+                    name: 'date-name',
+                    type: 'dropdown',
+                    readOnly: 'false',
+                    restUrl: 'fake-rest-url',
+                    optionType: 'rest',
+                    value: 'opt1'
+                });
+
+                spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
+                    {
+                        id: 'opt1',
+                        name: 'default1_value'
+                    },
+                    {
+                        id: 2,
+                        name: 'default2_value'
+                    }
+                ]));
+
+                widget.ngOnInit();
+                fixture.detectChanges();
+
+                openSelect();
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                    expect(options[0].nativeElement.innerText).toBe('default1_value');
+                    expect(widget.field.form.values['dropdown-id']).toEqual({id: 'opt1', name: 'default1_value'});
+                    done();
+                });
+            });
         });
     });
 
@@ -335,6 +371,23 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
             });
 
+            it('should reset the options for a linked dropdown with restUrl when the parent dropdown selection changes to empty', async () => {
+                widget.field.options = mockConditionalEntries[1].options;
+                parentDropdown.value = 'empty';
+                widget.selectionChangedForField(parentDropdown);
+
+                fixture.detectChanges();
+                openSelect('child-dropdown-id');
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
+
+                expect(widget.field.options).toEqual([{ 'id': 'empty', 'name': 'Choose one...' }]);
+                expect(defaultOption.context.value).toBe('empty');
+                expect(defaultOption.context.viewValue).toBe('Choose one...');
+            });
+
             it('should fetch the options from a rest url for a linked dropdown', async () => {
                 const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
                 const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value' };
@@ -355,23 +408,6 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(optOne.context.viewValue).toBe('LONDON');
                 expect(optTwo.context.value).toBe('MA');
                 expect(optTwo.context.viewValue).toBe('MANCHESTER');
-            });
-
-            it('should reset the options for a linked dropdown with restUrl when the parent dropdown selection changes to empty', async () => {
-                widget.field.options = mockConditionalEntries[1].options;
-                parentDropdown.value = 'empty';
-                widget.selectionChangedForField(parentDropdown);
-
-                fixture.detectChanges();
-                openSelect('child-dropdown-id');
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
-
-                expect(widget.field.options).toEqual([{ 'id': 'empty', 'name': 'Choose one...' }]);
-                expect(defaultOption.context.value).toBe('empty');
-                expect(defaultOption.context.viewValue).toBe('Choose one...');
             });
         });
 

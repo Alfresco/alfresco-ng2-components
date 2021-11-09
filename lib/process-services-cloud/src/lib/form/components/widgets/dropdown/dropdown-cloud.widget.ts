@@ -90,6 +90,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe((result: FormFieldOption[]) => {
                     this.field.options = result;
+                    this.field.updateForm();
                 }, (err) => this.handleError(err));
         }
     }
