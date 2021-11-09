@@ -62,3 +62,5 @@ then
 else
     echo -e "\e[32mVulnerability info is already added for version: $VERSION, nothing to do here.\e[0m"
 fi
+
+npx @alfresco/adf-cli@alpha changelog -o $ROOTDIR/docs/changelog
