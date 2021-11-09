@@ -59,6 +59,9 @@ export class AboutComponent implements OnInit {
     dependencies: string;
     application: string;
 
+    /** If active show more information about the app and the platform useful in debug*/
+    @Input() dev: boolean = false;
+
     /** pkg json*/
     @Input() pkg: any;
 

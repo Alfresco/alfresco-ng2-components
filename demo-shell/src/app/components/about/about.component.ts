@@ -25,6 +25,7 @@ import pkg from '../../../../../package.json';
 })
 export class AboutComponent {
     pkg: any;
+    dev: true;
 
     constructor() {
         this.pkg = pkg;

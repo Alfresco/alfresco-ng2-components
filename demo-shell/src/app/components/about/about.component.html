@@ -1,2 +1,4 @@
-<adf-about [pkg]="pkg"> </adf-about>
+<mat-slide-toggle [(ngModel)]="dev">{{'APP.ABOUT.DEVELOPMENT' | translate }}</mat-slide-toggle>
+
+<adf-about [dev]="dev" [pkg]="pkg"> </adf-about>
 
