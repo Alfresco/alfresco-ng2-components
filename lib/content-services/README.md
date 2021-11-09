@@ -36,17 +36,17 @@ npm install @alfresco/adf-content-services
 
 ## Storybook
 
-In case you would like to aggregate all the stories from core library use
+In case you would like to aggregate all the stories from content services library use
 
 ```
-nx run core:storybook
+nx run content-services:storybook
 ```
 And navigate to `http://localhost:4400/`.
 
-To create a Storybook core library build use
+To create a Storybook content services library build use
 
 ```
-nx run core:build-storybook
+nx run content-services:build-storybook
 ```
 
 ## License
