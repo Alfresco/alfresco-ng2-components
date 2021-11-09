@@ -28,6 +28,10 @@ adf-layout-header .mat-toolbar-single-row {
         font-weight: 100;
     }
 
+    .adf-toolbar--spacer {
+        flex: 1 1 auto;
+    }
+
     .adf-toolbar-divider {
         margin: 0 5px;
 
