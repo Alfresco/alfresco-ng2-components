@@ -24,12 +24,10 @@ import { ProcessServiceCloudTestingModule } from '../../../../testing/process-se
 import { of } from 'rxjs';
 
 describe('RadioButtonsCloudWidgetComponent', () => {
-    let radioButtonWidget: RadioButtonsCloudWidgetComponent;
     let fixture: ComponentFixture<RadioButtonsCloudWidgetComponent>;
-    let element: HTMLElement;
-    let formCloudService: FormCloudService;
     let widget: RadioButtonsCloudWidgetComponent;
-
+    let formCloudService: FormCloudService;
+    let element: HTMLElement;
     const restOption: FormFieldOption[] = [
         {
             id: 'opt-1',
@@ -53,6 +51,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(restOption));
         fixture = TestBed.createComponent(RadioButtonsCloudWidgetComponent);
         widget = fixture.componentInstance;
+        element = fixture.nativeElement;
         widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
     });
 
@@ -82,14 +81,8 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         expect(widget.field.value).toEqual('fake-opt');
     });
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(RadioButtonsCloudWidgetComponent);
-        radioButtonWidget = fixture.componentInstance;
-        element = fixture.nativeElement;
-    });
-
     it('should show radio buttons as text when is readonly', async () => {
-        radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+        widget.field = new FormFieldModel(new FormModel({}), {
             id: 'radio-id',
             name: 'radio-name',
             type: FormFieldTypes.RADIO_BUTTONS,
@@ -102,7 +95,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     });
 
     it('should be able to set label property for Radio Button widget', () => {
-        radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+        widget.field = new FormFieldModel(new FormModel({}), {
             id: 'radio-id',
             name: 'radio-name-label',
             type: FormFieldTypes.RADIO_BUTTONS,
@@ -113,7 +106,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     });
 
     it('should be able to set a Radio Button widget as required', async () => {
-        radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+        widget.field = new FormFieldModel(new FormModel({}), {
             id: 'radio-id',
             name: 'radio-name-label',
             type: FormFieldTypes.RADIO_BUTTONS,
@@ -129,7 +122,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         fixture.detectChanges();
         const widgetLabel = element.querySelector('label');
         expect(widgetLabel.innerText).toBe('radio-name-label*');
-        expect(radioButtonWidget.field.isValid).toBe(false);
+        expect(widget.field.isValid).toBe(false);
 
         const option: HTMLElement = <HTMLElement> element.querySelector('#radio-id-opt-1 label');
         option.click();
@@ -139,11 +132,11 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         fixture.detectChanges();
         const selectedOption: HTMLElement = <HTMLElement> element.querySelector('[class*="mat-radio-checked"]');
         expect(selectedOption.innerText).toBe('opt-name-1');
-        expect(radioButtonWidget.field.isValid).toBe(true);
+        expect(widget.field.isValid).toBe(true);
     });
 
     it('should be able to set a Radio Button widget as required', () => {
-        radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+        widget.field = new FormFieldModel(new FormModel({}), {
             id: 'radio-id',
             name: 'radio-name-label',
             type: FormFieldTypes.RADIO_BUTTONS,
@@ -158,11 +151,11 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         fixture.detectChanges();
         const selectedOption: HTMLElement = <HTMLElement> element.querySelector('[class*="mat-radio-checked"]');
         expect(selectedOption.innerText).toBe('opt-name-2');
-        expect(radioButtonWidget.field.isValid).toBe(true);
+        expect(widget.field.isValid).toBe(true);
     });
 
     it('should be able to set a Radio Button widget when rest option enabled', () => {
-        radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+        widget.field = new FormFieldModel(new FormModel({}), {
             id: 'radio-id',
             name: 'radio-name-label',
             type: FormFieldTypes.RADIO_BUTTONS,
@@ -177,6 +170,6 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         fixture.detectChanges();
         const selectedOption: HTMLElement = <HTMLElement> element.querySelector('[class*="mat-radio-checked"]');
         expect(selectedOption.innerText).toBe('opt-name-1');
-        expect(radioButtonWidget.field.isValid).toBe(true);
+        expect(widget.field.isValid).toBe(true);
     });
 });
