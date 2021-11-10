@@ -30,6 +30,17 @@ You can find the sources for all ADF components in the
 Full documentation for all components is available at the
 [ADF Component Catalog](https://alfresco.github.io/adf-component-catalog/).
 
+## Libraries
+
+ADF Libraries list:
+- [Content services](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/content-services)
+- [Core](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/core)
+- [Extensions](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/extensions)
+- [Insights](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/insights)
+- [Process Service Cloud](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/process-services-cloud)
+- [Process service](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/process-services)
+- [Stories](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/stories) 
+    
 ## Demo Application
 
 A separate application showcasing integration of components can be found
