@@ -151,7 +151,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
-                    type: 'dropdown-cloud',
+                    type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url',
                     optionType: 'rest',
@@ -186,7 +186,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
-                    type: 'dropdown-cloud',
+                    type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url',
                     optionType: 'rest',
@@ -224,7 +224,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
-                    type: 'dropdown-cloud',
+                    type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url',
                     optionType: 'rest',
@@ -254,6 +254,42 @@ describe('DropdownCloudWidgetComponent', () => {
                     done();
                 });
             });
+
+            it('should update the form values when a preselected value is loaded', (done) => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'dropdown-id',
+                    name: 'date-name',
+                    type: 'dropdown',
+                    readOnly: 'false',
+                    restUrl: 'fake-rest-url',
+                    optionType: 'rest',
+                    value: 'opt1'
+                });
+
+                spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
+                    {
+                        id: 'opt1',
+                        name: 'default1_value'
+                    },
+                    {
+                        id: 2,
+                        name: 'default2_value'
+                    }
+                ]));
+
+                widget.ngOnInit();
+                fixture.detectChanges();
+
+                openSelect();
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                    expect(options[0].nativeElement.innerText).toBe('default1_value');
+                    expect(widget.field.form.values['dropdown-id']).toEqual({id: 'opt1', name: 'default1_value'});
+                    done();
+                });
+            });
         });
     });
 
@@ -263,7 +299,7 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'dropdown-id',
                 name: 'date-name',
-                type: 'dropdown-cloud',
+                type: 'dropdown',
                 readOnly: 'false',
                 options: fakeOptionList,
                 selectionType: 'multiple',
@@ -292,7 +328,7 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'dropdown-id',
                 name: 'date-name',
-                type: 'dropdown-cloud',
+                type: 'dropdown',
                 readOnly: 'false',
                 selectionType: 'multiple',
                 options: fakeOptionList
@@ -317,12 +353,12 @@ describe('DropdownCloudWidgetComponent', () => {
 
         describe('Rest URL options', () => {
 
-            const parentDropdown = new FormFieldModel(new FormModel(), { id: 'parentDropdown', type: 'dropdown' });
+            const parentDropdown = new FormFieldModel(new FormModel(), { id: 'parentDropdown', type: 'dropdown', validate: () => true });
             beforeEach(() => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
-                    type: 'dropdown-cloud',
+                    type: 'dropdown',
                     readOnly: 'false',
                     optionType: 'rest',
                     restUrl: 'myFakeDomain.com/cities?country=${parentDropdown}',
@@ -333,28 +369,6 @@ describe('DropdownCloudWidgetComponent', () => {
                 });
                 widget.field.form.id = 'fake-form-id';
                 fixture.detectChanges();
-            });
-
-            it('should fetch the options from a rest url for a linked dropdown', async () => {
-                const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
-                const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value' };
-                spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
-                parentDropdown.value = 'UK';
-                widget.selectionChangedForField(parentDropdown);
-
-                fixture.detectChanges();
-                openSelect('child-dropdown-id');
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                const optOne: any = fixture.debugElement.query(By.css('[id="LO"]'));
-                const optTwo: any = fixture.debugElement.query(By.css('[id="MA"]'));
-
-                expect(jsonDataSpy).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', { parentDropdown: 'mock-value' });
-                expect(optOne.context.value).toBe('LO');
-                expect(optOne.context.viewValue).toBe('LONDON');
-                expect(optTwo.context.value).toBe('MA');
-                expect(optTwo.context.viewValue).toBe('MANCHESTER');
             });
 
             it('should reset the options for a linked dropdown with restUrl when the parent dropdown selection changes to empty', async () => {
@@ -373,6 +387,28 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(defaultOption.context.value).toBe('empty');
                 expect(defaultOption.context.viewValue).toBe('Choose one...');
             });
+
+            it('should fetch the options from a rest url for a linked dropdown', async () => {
+                const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
+                const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value', validate: () => true };
+                spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
+                parentDropdown.value = 'UK';
+                widget.selectionChangedForField(parentDropdown);
+
+                fixture.detectChanges();
+                openSelect('child-dropdown-id');
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const optOne: any = fixture.debugElement.query(By.css('[id="LO"]'));
+                const optTwo: any = fixture.debugElement.query(By.css('[id="MA"]'));
+
+                expect(jsonDataSpy).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', { parentDropdown: 'mock-value' });
+                expect(optOne.context.value).toBe('LO');
+                expect(optOne.context.viewValue).toBe('LONDON');
+                expect(optTwo.context.value).toBe('MA');
+                expect(optTwo.context.viewValue).toBe('MANCHESTER');
+            });
         });
 
         describe('Manual options', () => {
@@ -382,7 +418,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
-                    type: 'dropdown-cloud',
+                    type: 'dropdown',
                     readOnly: 'false',
                     optionType: 'manual',
                     rule: {
@@ -422,6 +458,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
                 fixture.detectChanges();
                 openSelect('child-dropdown-id');
+                await fixture.whenStable();
                 fixture.detectChanges();
                 await fixture.whenStable();
 
@@ -439,7 +476,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
-                    type: 'dropdown-cloud',
+                    type: 'dropdown',
                     readOnly: 'false',
                     optionType: 'manual',
                     rule: {
@@ -461,7 +498,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
-                    type: 'dropdown-cloud',
+                    type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'mock-url.com/country=${country}',
                     optionType: 'rest',

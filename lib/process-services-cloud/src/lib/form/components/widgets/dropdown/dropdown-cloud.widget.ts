@@ -90,6 +90,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe((result: FormFieldOption[]) => {
                     this.field.options = result;
+                    this.field.updateForm();
                 }, (err) => this.handleError(err));
         }
     }
@@ -107,7 +108,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private loadFieldOptionsForLinkedWidget() {
         const parentWidgetValue = this.getParentWidgetValue();
         this.parentValueChanged(parentWidgetValue);
-        this.field.updateForm();
     }
 
     private getParentWidgetValue(): string {
@@ -142,6 +142,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             rulesEntries.forEach((ruleEntry: RuleEntry) => {
                 if (ruleEntry.key === value) {
                     this.field.options = ruleEntry.options;
+                    this.field.updateForm();
                 }
             });
         }
