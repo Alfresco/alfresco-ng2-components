@@ -16,6 +16,7 @@
  */
 
 import { DomSanitizer } from '@angular/platform-browser';
+import { IdentityUserModel } from 'core/models/identity-user.model';
 import { UserProcessModel } from '../models/user-process.model';
 import { InitialUsernamePipe } from './user-initial.pipe';
 
@@ -85,6 +86,17 @@ describe('UserInitialPipe', () => {
         fakeUser.firstName = undefined;
         fakeUser.lastName = 'FAKE-SURNAME';
         const result = pipe.transform(fakeUser);
+        expect(result).toBe('<div id="user-initials-image" class="">F</div>');
+    });
+
+    it('should return a single letter from username if we do not have first and last name', () => {
+        const fakeIdentityUser: IdentityUserModel = {
+            firstName: undefined,
+            lastName: undefined,
+            username: 'FAKE-USERNAME'
+        };
+
+        const result = pipe.transform(fakeIdentityUser);
         expect(result).toBe('<div id="user-initials-image" class="">F</div>');
     });
 

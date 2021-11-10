@@ -21,7 +21,7 @@ import { UserProcessModel } from '../models/user-process.model';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { IdentityUserModel } from '../models/identity-user.model';
 
-export type User = (EcmUserModel | UserProcessModel  | IdentityUserModel) & { displayName?: string };
+export type User = (EcmUserModel | UserProcessModel  | IdentityUserModel) & { displayName?: string, username?: string };
 
 @Pipe({
     name: 'usernameInitials'
@@ -34,15 +34,25 @@ export class InitialUsernamePipe implements PipeTransform {
     transform(user: User, className: string = '', delimiter: string = ''): SafeHtml {
         let safeHtml: SafeHtml = '';
         if (user) {
-            const initialResult = this.getInitialUserName(user.firstName || user.displayName, user.lastName, delimiter);
+            const initialResult = this.getInitialUserName(
+                user.firstName ?? user.displayName,
+                user.lastName,
+                delimiter,
+                user.username
+            );
             safeHtml = this.sanitized.bypassSecurityTrustHtml(`<div id="user-initials-image" class="${className}">${initialResult}</div>`);
         }
         return safeHtml;
     }
 
-    getInitialUserName(firstName: string, lastName: string, delimiter: string): string {
+    getInitialUserName(firstName: string, lastName: string, delimiter: string, username?: string): string {
         firstName = (firstName ? firstName[0] : '');
         lastName = (lastName ? lastName[0] : '');
-        return firstName + delimiter + lastName;
+
+        if (firstName && lastName) {
+            return firstName + delimiter + lastName;
+        }
+
+        return username ? username[0] : '';
     }
 }
