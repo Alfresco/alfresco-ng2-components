@@ -10,7 +10,7 @@
                 [id]="field.id + '-' + opt.id"
                 [name]="field.id"
                 [value]="opt.id"
-                [checked]="field.value === opt.id"
+                [checked]="isChecked(opt)"
                 (change)="onOptionClick(opt.id)"
                 color="primary"
                 class="adf-radio-button" *ngFor="let opt of field.options" >
