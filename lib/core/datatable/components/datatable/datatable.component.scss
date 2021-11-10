@@ -18,7 +18,14 @@ $data-table-cell-min-width--fileSize: $data-table-cell-min-width !default;
     height: 100%;
 
     .adf-full-width {
+        min-width: 800px;
         width: 100%;
+    }
+
+    &-container {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        height: 100%;
     }
 }
 
