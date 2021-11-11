@@ -18,22 +18,29 @@
 import { Observable, of, throwError } from 'rxjs';
 import { RedirectionModel } from '../models/redirection.model';
 
-// TODO: should be extending AuthenticationService
-export class AuthenticationMock /*extends AuthenticationService*/ {
+export class AuthenticationMock {
     private redirectUrl: RedirectionModel = null;
 
     setRedirectUrl(url: RedirectionModel) {
         this.redirectUrl = url;
     }
 
-    getRedirectUrl(): string|null {
+    isEcmLoggedIn(): boolean {
+        return true;
+    }
+
+    isBpmLoggedIn(): boolean {
+        return true;
+    }
+
+    getRedirectUrl(): string | null {
         return this.redirectUrl ? this.redirectUrl.url : null;
     }
 
     // TODO: real auth service returns Observable<string>
     login(username: string, password: string): Observable<{ type: string, ticket: any }> {
         if (username === 'fake-username' && password === 'fake-password') {
-            return of({ type: 'type', ticket: 'ticket'});
+            return of({ type: 'type', ticket: 'ticket' });
         }
 
         if (username === 'fake-username-CORS-error' && password === 'fake-password') {
@@ -46,11 +53,14 @@ export class AuthenticationMock /*extends AuthenticationService*/ {
         }
 
         if (username === 'fake-username-CSRF-error' && password === 'fake-password') {
-            return throwError({message: 'ERROR: Invalid CSRF-token', status: 403});
+            return throwError({ message: 'ERROR: Invalid CSRF-token', status: 403 });
         }
 
         if (username === 'fake-username-ECM-access-error' && password === 'fake-password') {
-            return throwError({message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode', status: 403});
+            return throwError({
+                message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode',
+                status: 403
+            });
         }
 
         return throwError('Fake server error');

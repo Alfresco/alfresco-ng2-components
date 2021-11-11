@@ -81,9 +81,9 @@ export class AboutComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.url = `https://github.com/Alfresco/${this.pkg.name}/commits/${this.pkg.commit}`;
-        this.version = this.pkg.version;
-        this.dependencies = this.pkg.dependencies;
+        this.url = `https://github.com/Alfresco/${this.pkg?.name}/commits/${this.pkg?.commit}`;
+        this.version = this.pkg?.version;
+        this.dependencies = this.pkg?.dependencies;
 
         if (this.dependencies) {
             const alfrescoPackages = Object.keys(this.dependencies).filter((val) => {
