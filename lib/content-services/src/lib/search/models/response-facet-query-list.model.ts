@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FacetQuery } from '../../../facet-query.interface';
+import { FacetQuery } from './facet-query.interface';
 import { SearchFilterList } from './search-filter-list.model';
 
 export class ResponseFacetQueryList extends SearchFilterList<FacetQuery> {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormModel, FormValues } from '@alfresco/adf-core';
+import { FormFieldOption, FormModel, FormValues } from '@alfresco/adf-core';
 import { UploadApi } from '@alfresco/js-api';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -94,6 +94,10 @@ export class FormCloudServiceMock implements FormCloudServiceInterface {
     }
 
     parseForm(_json: any, _data?: TaskVariableCloud[], _readOnly: boolean = false): FormModel {
+        throw new Error('Method not implemented.');
+    }
+
+    getRestWidgetData(_formName: string, _widgetId: string, _body: Map<String, String>): Observable<FormFieldOption[]> {
         throw new Error('Method not implemented.');
     }
 }
