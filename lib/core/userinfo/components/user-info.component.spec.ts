@@ -281,10 +281,8 @@ describe('User info component', () => {
                     fixture.detectChanges();
                     const pipe = new InitialUsernamePipe(new FakeSanitizer());
                     const expected = pipe.transform({
-                        id: 13,
                         firstName: 'Wilbur',
-                        lastName: 'Adams',
-                        email: 'wilbur@app.com'
+                        lastName: 'Adams'
                     });
                     expect(expected).toBe('<div id="user-initials-image" class="">WA</div>');
                     component.ecmUser$.subscribe((response: EcmUserModel) => {

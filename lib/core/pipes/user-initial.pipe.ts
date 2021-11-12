@@ -21,38 +21,59 @@ import { UserProcessModel } from '../models/user-process.model';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { IdentityUserModel } from '../models/identity-user.model';
 
-export type User = (EcmUserModel | UserProcessModel  | IdentityUserModel) & { displayName?: string, username?: string };
+export type User = Partial<
+        Pick<UserProcessModel, 'firstName' | 'lastName'> &
+        Pick<EcmUserModel, 'firstName' | 'lastName' | 'displayName'> &
+        Pick<IdentityUserModel, 'firstName' | 'lastName' | 'username'>
+    >;
 
 @Pipe({
     name: 'usernameInitials'
 })
 export class InitialUsernamePipe implements PipeTransform {
-
     constructor(private sanitized: DomSanitizer) {
     }
 
-    transform(user: User, className: string = '', delimiter: string = ''): SafeHtml {
+    transform(
+        user: User | undefined,
+        className: string = '',
+        delimiter: string = ''
+    ): SafeHtml {
         let safeHtml: SafeHtml = '';
+
         if (user) {
-            const initialResult = this.getInitialUserName(
-                user.firstName ?? user.displayName,
-                user.lastName,
-                delimiter,
-                user.username
-            );
-            safeHtml = this.sanitized.bypassSecurityTrustHtml(`<div id="user-initials-image" class="${className}">${initialResult}</div>`);
+            const {
+                firstName,
+                lastName,
+                displayName,
+                username
+            } = user;
+
+            const canCreateInitialsForName = !!firstName || !!lastName || !!displayName;
+
+            if (canCreateInitialsForName) {
+                const initialResult = this.getInitialUserName(
+                    firstName ?? displayName,
+                    lastName,
+                    delimiter
+                );
+
+                safeHtml = this.getSafeHtml(initialResult, className);
+            } else if (username) {
+                safeHtml = this.getSafeHtml(username[0].toUpperCase(), className);
+            }
         }
+
         return safeHtml;
     }
 
-    getInitialUserName(firstName: string, lastName: string, delimiter: string, username?: string): string {
-        firstName = (firstName ? firstName[0] : '');
-        lastName = (lastName ? lastName[0] : '');
+    getInitialUserName(firstName?: string, lastName?: string, delimiter?: string): string {
+        return `${firstName?.[0] ?? ''}${delimiter}${lastName?.[0] ?? ''}`;
+    }
 
-        if (firstName && lastName) {
-            return firstName + delimiter + lastName;
-        }
-
-        return username ? username[0] : '';
+    getSafeHtml(initials: string, className: string): SafeHtml {
+        return this.sanitized.bypassSecurityTrustHtml(
+            `<div id="user-initials-image" class="${className}">${initials}</div>`
+        );
     }
 }

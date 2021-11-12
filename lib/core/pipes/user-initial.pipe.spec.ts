@@ -52,7 +52,6 @@ class FakeSanitizer extends DomSanitizer {
 }
 
 describe('UserInitialPipe', () => {
-
     let pipe: InitialUsernamePipe;
     let fakeUser: UserProcessModel;
 
@@ -94,6 +93,17 @@ describe('UserInitialPipe', () => {
             firstName: undefined,
             lastName: undefined,
             username: 'FAKE-USERNAME'
+        };
+
+        const result = pipe.transform(fakeIdentityUser);
+        expect(result).toBe('<div id="user-initials-image" class="">F</div>');
+    });
+
+    it('should return an uppercase letter for username', () => {
+        const fakeIdentityUser: IdentityUserModel = {
+            firstName: undefined,
+            lastName: undefined,
+            username: 'fake-username'
         };
 
         const result = pipe.transform(fakeIdentityUser);
