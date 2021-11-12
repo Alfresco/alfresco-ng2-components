@@ -67,8 +67,8 @@ export class InitialUsernamePipe implements PipeTransform {
         return safeHtml;
     }
 
-    getInitialUserName(firstName?: string, lastName?: string, delimiter?: string): string {
-        return `${firstName?.[0] ?? ''}${delimiter}${lastName?.[0] ?? ''}`;
+    getInitialUserName(firstName: string = '', lastName: string = '', delimiter: string = ''): string {
+        return `${firstName[0]}${delimiter}${lastName[0]}`;
     }
 
     getSafeHtml(initials: string, className: string): SafeHtml {
