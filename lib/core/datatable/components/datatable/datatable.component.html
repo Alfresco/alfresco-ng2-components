@@ -1,4 +1,4 @@
-<div class="adf-datatable-container">
+<div class="adf-datatable-container" [class.adf-sticky-header]="isStickyHeaderEnabled()">
     <div
         role="grid"
         *ngIf="data" class="adf-full-width"
